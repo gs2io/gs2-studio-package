@@ -1,0 +1,72 @@
+{
+  "category": "consume",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "WithdrawCurrency",
+  "outputs": [
+    {
+      "actionName": "Gs2Money2:WithdrawByUserId",
+      "conditions": [],
+      "id": "out_01KNH9V1VN9CBEKY8XXTXX7SFD",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "slot",
+          "value": "#{slot}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "withdrawCount",
+          "sourceParameter": "count"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "paidOnly",
+          "sourceParameter": "paidOnly"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KQ90M60EBS2MFJW7D5P9AG47",
+      "name": "paidOnly",
+      "required": false,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "bool"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KNH9V1VN1MA5PF1QWFZEST5P",
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "anchorTimestamp",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+            "typeName": "UsageLimit"
+          },
+          "propertyId": "prop_01M0C5HJ9H18WFD7HQJ6BVRQ54"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "days",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+            "typeName": "UsageLimit"
+          },
+          "propertyId": "prop_01M0C5HJ9HN7J7K686N7G6PM4E"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+            "typeName": "UsageLimit"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetDayOfMonth",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+            "typeName": "UsageLimit"
+          },
+          "propertyId": "prop_01M0C5HJ9HCVBQ4JVCH9JKNY9H"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetDayOfWeek",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+            "typeName": "UsageLimit"
+          },
+          "propertyId": "prop_01M0C5HJ9H8A68TH51QQXSQAFS"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetHour",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+            "typeName": "UsageLimit"
+          },
+          "propertyId": "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetType",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+            "typeName": "UsageLimit"
+          },
+          "propertyId": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1"
+        }
+      }
+    ]
+  },
+  "id": "7f43c37d-e124-5bd2-84ff-dd9866eeca50",
+  "location": {
+    "modelName": "LimitModel",
+    "service": "limit"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+    "typeName": "UsageLimit"
+  }
+}

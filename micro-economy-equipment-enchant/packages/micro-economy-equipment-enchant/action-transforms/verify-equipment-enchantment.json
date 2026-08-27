@@ -1,0 +1,97 @@
+{
+  "category": "verify",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "996567a7-c9e0-5629-89e1-2979a6dd9bc2",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyEquipmentEnchantment",
+  "outputs": [
+    {
+      "actionName": "Gs2Enchant:VerifyRarityParameterStatusByUserId",
+      "conditions": [],
+      "id": "out_01M0C84Y33PKQ7TWV4T3N8EMV2",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "parameterName",
+          "sourceParameter": "enchant"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "have"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "parameterValueName",
+          "sourceParameter": "option"
+        },
+        {
+          "kind": "static",
+          "parameterName": "parameterCount",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "multiplyValueSpecifyingQuantity",
+          "value": false
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "996567a7-c9e0-5629-89e1-2979a6dd9bc2",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01M0C84Y333S5PZQXN5JE5HMZH",
+      "name": "enchant",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0C84Y33M0X2SZE99QB3PGKG",
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0C84Y33MABXN8CQ0CYS9NP1",
+      "name": "option",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK"
+      }
+    }
+  ]
+}

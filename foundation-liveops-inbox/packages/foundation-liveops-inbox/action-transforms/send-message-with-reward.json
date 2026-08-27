@@ -1,0 +1,82 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "babfdf44-2b23-460c-97c6-8389cdef0430",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "SendMessageWithReward",
+  "outputs": [
+    {
+      "actionName": "Gs2Inbox:SendMessageByUserId",
+      "conditions": [],
+      "id": "out_01KJSDKP7X11680BNBAEC8Q1TA",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "metadata",
+          "sourceParameter": "metadata"
+        },
+        {
+          "kind": "static",
+          "parameterName": "expiresAt",
+          "value": null
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "expiresTimeSpan.days",
+          "sourceParameter": "expireDays"
+        },
+        {
+          "kind": "static",
+          "parameterName": "expiresTimeSpan.hours",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "expiresTimeSpan.minutes",
+          "value": null
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "babfdf44-2b23-460c-97c6-8389cdef0430",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KJSDJVENAEK0ZNEMEQECV1RV",
+      "name": "metadata",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KJSDJVZBTNRQF89XDB4AZTB6",
+      "name": "expireDays",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

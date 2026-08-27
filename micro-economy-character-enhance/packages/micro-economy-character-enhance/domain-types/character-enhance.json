@@ -1,0 +1,51 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C7T1166P354AK6Q48J86RN"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Item metadata suffix the granted experience is read from",
+        "id": "prop_01M0C7T1166P354AK6Q48J86RN",
+        "isId": false,
+        "name": "acquireExperienceSuffix",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C7T116VP42973VYFS2PRV0",
+  "kind": "local",
+  "name": "CharacterEnhance",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

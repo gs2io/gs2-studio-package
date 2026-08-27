@@ -1,0 +1,99 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_DH1MQSPSZ68EZDG80Q3KWZNQW8",
+      "prop_N44ZVTGEN3XNPFT4YSNP5R8222",
+      "prop_RP2T1J9MWSNMXEXJQF15E76R42",
+      "prop_E7ANH0AETFGP8XNYN524JTT1KG"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_DH1MQSPSZ68EZDG80Q3KWZNQW8",
+        "isId": false,
+        "name": "todayValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_N44ZVTGEN3XNPFT4YSNP5R8222",
+        "isId": false,
+        "name": "weeklyValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_RP2T1J9MWSNMXEXJQF15E76R42",
+        "isId": false,
+        "name": "monthlyValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_E7ANH0AETFGP8XNYN524JTT1KG",
+        "isId": false,
+        "name": "totalValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_8PNR995T1Y2063NYZJMVKSHZNE",
+  "kind": "local",
+  "name": "MissionCounter",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

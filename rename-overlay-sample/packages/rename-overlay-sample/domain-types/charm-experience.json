@@ -1,0 +1,28 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "order": [],
+    "properties": []
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_NVTS1C25Z64WF21XFV8NPBVF27",
+  "kind": "overlay",
+  "name": "CharmExperience",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  },
+  "source": {
+    "directSourcePackageId": "foundation-economy-character",
+    "directSourceTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+    "kind": "dependency",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01"
+  }
+}

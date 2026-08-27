@@ -1,0 +1,57 @@
+{
+  "category": "consume",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyReceipt",
+  "outputs": [
+    {
+      "actionName": "Gs2Money2:VerifyReceiptByUserId",
+      "conditions": [],
+      "id": "out_01KMYVXWW036DD3X8Y92MEYD2P",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "contentName",
+          "sourceParameter": "contentName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "receipt",
+          "value": "#{receipt}"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KMYVXWW09ZCYN1MPE4TNV9GF",
+      "name": "contentName",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB"
+      }
+    }
+  ]
+}

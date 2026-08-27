@@ -1,0 +1,43 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "count",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C84Y32MFW05C5TXC61W1SR",
+            "typeName": "EquipmentEnchantSlotChance"
+          },
+          "propertyId": "prop_01M0C84Y32TQRT07W6CT9MCVZM"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "weight",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C84Y32MFW05C5TXC61W1SR",
+            "typeName": "EquipmentEnchantSlotChance"
+          },
+          "propertyId": "prop_01M0C84Y32K8455NCTCVPXBKC0"
+        }
+      }
+    ]
+  },
+  "id": "76098694-c7cb-579c-bbec-3cf89285ba4f",
+  "index": 0,
+  "location": {
+    "modelName": "RarityParameterCountModel",
+    "service": "enchant"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C84Y32MFW05C5TXC61W1SR",
+    "typeName": "EquipmentEnchantSlotChance"
+  }
+}

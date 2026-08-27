@@ -1,0 +1,91 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "acquireScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "bigItemAcquireScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "bigItemConsumeScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "consumeScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Inventory"
+      },
+      {
+        "kind": "static",
+        "parameterName": "overflowScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "simpleItemAcquireScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "simpleItemConsumeScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      }
+    ]
+  },
+  "id": "6be9ee5f-63ea-4819-91f1-6d4d2a015c61",
+  "location": {
+    "modelName": "Namespace",
+    "service": "inventory"
+  }
+}

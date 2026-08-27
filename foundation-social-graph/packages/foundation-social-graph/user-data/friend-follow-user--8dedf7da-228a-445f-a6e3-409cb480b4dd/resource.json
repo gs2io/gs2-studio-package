@@ -1,0 +1,59 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "followerProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_12CDXGXXRQVPJVMA9VGATG195G",
+              "typeName": "Follow"
+            },
+            "propertyId": "prop_WEZ74QQWTQ37ZYH7GKQCJ9C1W8"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "publicProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_12CDXGXXRQVPJVMA9VGATG195G",
+              "typeName": "Follow"
+            },
+            "propertyId": "prop_00CYS22DM7RCY5V2S2MSP7YH5Y"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "userId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_12CDXGXXRQVPJVMA9VGATG195G",
+            "typeName": "Follow"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_12CDXGXXRQVPJVMA9VGATG195G",
+      "typeName": "Follow"
+    }
+  },
+  "id": "8dedf7da-228a-445f-a6e3-409cb480b4dd",
+  "location": {
+    "modelName": "FollowUser",
+    "service": "friend"
+  }
+}

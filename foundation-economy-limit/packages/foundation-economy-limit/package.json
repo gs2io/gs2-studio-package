@@ -1,0 +1,30 @@
+{
+  "id": "foundation-economy-limit",
+  "name": "foundation-economy-limit",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Handles allowances such as 'three times a day': one reset schedule, a separate counter per thing being counted, and a maximum supplied by the caller.",
+      "ja": "「1日3回まで」のような回数制限を扱います。リセットのタイミングを共有しつつ、数える対象ごとにカウンターを分けられます。上限は使う側が指定します。"
+    },
+    "domainTypes": {
+      "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R": {
+        "label": {
+          "en": "Reset schedule",
+          "ja": "リセット設定"
+        }
+      },
+      "dt_01M0C6M2N38KVHBHTC1JBRT5YA": {
+        "label": {
+          "en": "Usage counter",
+          "ja": "回数カウンター"
+        }
+      }
+    },
+    "label": {
+      "en": "Usage Limits",
+      "ja": "回数制限"
+    }
+  }
+}

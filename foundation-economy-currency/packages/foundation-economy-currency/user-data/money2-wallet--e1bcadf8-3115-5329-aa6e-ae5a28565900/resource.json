@@ -1,0 +1,80 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "sharedFreeCurrency"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "slot",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
+            "typeName": "Wallet"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "summary.free",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
+            "typeName": "Wallet"
+          },
+          "propertyId": "prop_6KNY5JMXVS2AX21X1HAHP3A4X0"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "summary.paid",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
+            "typeName": "Wallet"
+          },
+          "propertyId": "prop_V0BFHW3E05XZXMY0DWANC3G4C9"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "summary.total",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
+            "typeName": "Wallet"
+          },
+          "propertyId": "prop_FEXJWZ3Q38NQ44J3C070EK1CJ8"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "walletId"
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
+      "typeName": "Wallet"
+    }
+  },
+  "id": "e1bcadf8-3115-5329-aa6e-ae5a28565900",
+  "location": {
+    "modelName": "Wallet",
+    "service": "money2"
+  }
+}

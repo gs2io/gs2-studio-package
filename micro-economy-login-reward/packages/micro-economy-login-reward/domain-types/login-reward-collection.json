@@ -1,0 +1,67 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_A2TYYY7WW1Z4306M5CGDJRBEKJ",
+      "prop_NFHPA3CG7FM9RX44J7NAWPT1ET"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_A2TYYY7WW1Z4306M5CGDJRBEKJ",
+        "isId": false,
+        "name": "schedule",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_NFHPA3CG7FM9RX44J7NAWPT1ET",
+        "isId": false,
+        "name": "resetHour",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+  "kind": "local",
+  "name": "LoginRewardCollection",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

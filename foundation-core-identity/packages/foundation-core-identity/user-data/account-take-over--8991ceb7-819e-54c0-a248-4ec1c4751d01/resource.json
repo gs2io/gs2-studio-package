@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "existence",
+        "parameterName": "$existence",
+        "propertyId": "prop_5Z93QPG4VQED3EX517PW0H7BWA"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "type"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userIdentifier"
+      }
+    ],
+    "declaredMasterLinkId": "912e8c6f-d936-4253-a13e-69a3b57fc821"
+  },
+  "id": "8991ceb7-819e-54c0-a248-4ec1c4751d01",
+  "location": {
+    "modelName": "TakeOver",
+    "service": "account"
+  }
+}

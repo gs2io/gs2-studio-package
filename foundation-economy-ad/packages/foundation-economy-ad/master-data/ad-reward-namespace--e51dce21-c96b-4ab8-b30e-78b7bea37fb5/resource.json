@@ -1,0 +1,117 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "acquirePointScript",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "admob.allowAdUnitIds",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
+            "typeName": "AdPlatform"
+          },
+          "propertyId": "prop_9R4GKC9MHQ0RWWG542MD6RRBQ9"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "changePointNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "changePointNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "changePointNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "changePointNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "consumePointScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Ad"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "unityAd.keys",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
+            "typeName": "AdPlatform"
+          },
+          "propertyId": "prop_8GAGKPX7FHKJSQQCWN9J6ZE9M5"
+        }
+      }
+    ]
+  },
+  "id": "e51dce21-c96b-4ab8-b30e-78b7bea37fb5",
+  "location": {
+    "modelName": "Namespace",
+    "service": "adReward"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
+    "typeName": "AdPlatform"
+  }
+}

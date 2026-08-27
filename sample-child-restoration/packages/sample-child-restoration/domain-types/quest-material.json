@@ -1,0 +1,106 @@
+{
+  "compositeKey": [
+    "prop_01KTXANDTH445WKYNYCWB4WMK1",
+    "prop_01KTXANDTHM6FZWEEQGG6WNR6Q",
+    "prop_01KTXANDTHR27K8R3FBY2PJ3YA"
+  ],
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01KTXANDTH445WKYNYCWB4WMK1",
+      "prop_01KTXANDTHM6FZWEEQGG6WNR6Q",
+      "prop_01KTXANDTHR27K8R3FBY2PJ3YA",
+      "prop_01KTXANDTHR8FA3AYET9MWGNV8"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_01KTXANDTH445WKYNYCWB4WMK1",
+        "isId": false,
+        "name": "quest",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_XFRY8WZYW69AATA1GJV7SA5GTN"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01KTXANDTHM6FZWEEQGG6WNR6Q",
+        "isId": false,
+        "name": "resourceType",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "material",
+            "item"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01KTXANDTHR27K8R3FBY2PJ3YA",
+        "isId": false,
+        "name": "resourceId",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01KTXANDTHR8FA3AYET9MWGNV8",
+        "isId": false,
+        "name": "count",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_XS2NWXE5Q03HPYJ8E48BAQT9J1",
+  "kind": "local",
+  "name": "QuestMaterial",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

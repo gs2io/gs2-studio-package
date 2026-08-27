@@ -1,0 +1,83 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "progressId",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+              "typeName": "Progress"
+            },
+            "propertyId": "prop_reserved_id"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "questModelId",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+              "typeName": "Progress"
+            },
+            "propertyId": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "randomSeed"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "rewards"
+      },
+      {
+        "fieldMappings": [
+          {
+            "fieldName": "itemId",
+            "targetPropertyId": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B"
+          },
+          {
+            "fieldName": "value",
+            "targetPropertyId": "prop_RYDWJ2B6D96NAN85AF8SDXD12F"
+          }
+        ],
+        "kind": "modelArrayDecode",
+        "parameterName": "rewards",
+        "targetMountPath": {
+          "kind": "local",
+          "typeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+          "typeName": "Progress"
+        },
+        "targetPropertyId": "prop_NJ83FK0CB975M336Z7THVNWE7P"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "transactionId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "2e3a67b1-c335-4cc2-9c86-09b26d8f45ce",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+      "typeName": "Progress"
+    }
+  },
+  "id": "9ac18116-1a82-4675-a9d9-99d273856fea",
+  "location": {
+    "modelName": "Progress",
+    "service": "quest"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "category": "consume",
+  "importedResourceRefs": [],
+  "name": "ConsumeResource",
+  "outputs": [
+    {
+      "conditions": [
+        {
+          "id": "cond_01KTXANDTH2Q56V7EDQ98Y97W6",
+          "operator": "eq",
+          "sourceParameter": "resourceType",
+          "value": "material"
+        }
+      ],
+      "id": "out_01KTXANDTHR15W4YVK7NNHABAG",
+      "kind": "delegation",
+      "parameterBindings": [
+        {
+          "kind": "parameter",
+          "sourceParameter": "resourceId",
+          "targetParameter": "itemName"
+        },
+        {
+          "kind": "parameter",
+          "sourceParameter": "count",
+          "targetParameter": "count"
+        }
+      ],
+      "targetName": "ConsumeMaterial",
+      "targetPackageId": "sample-child-restoration"
+    },
+    {
+      "conditions": [
+        {
+          "id": "cond_01KTXANDTHJDN5JAQA22MZ541S",
+          "operator": "eq",
+          "sourceParameter": "resourceType",
+          "value": "item"
+        }
+      ],
+      "id": "out_01KTXANDTH0TVZA0JH9Z92C93X",
+      "kind": "delegation",
+      "parameterBindings": [
+        {
+          "kind": "parameter",
+          "sourceParameter": "resourceId",
+          "targetParameter": "itemName"
+        },
+        {
+          "kind": "parameter",
+          "sourceParameter": "count",
+          "targetParameter": "count"
+        }
+      ],
+      "targetName": "ConsumeItem",
+      "targetPackageId": "sample-child-restoration"
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KTXANDTHX6V449N7SKMKQWEV",
+      "name": "resourceType",
+      "type": {
+        "kind": "enum",
+        "values": [
+          "material",
+          "item"
+        ]
+      },
+      "required": true
+    },
+    {
+      "description": "",
+      "id": "param_01KTXANDTHEH61AJDZY74K36VM",
+      "name": "resourceId",
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      },
+      "required": true
+    },
+    {
+      "description": "",
+      "id": "param_01KTXANDTHMBNZ44Q9Q1M8YM1J",
+      "name": "count",
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      },
+      "required": true
+    }
+  ]
+}

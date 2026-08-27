@@ -1,0 +1,30 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6",
+            "typeName": "Item"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "54fbf22f-18c1-458c-8bde-2d2f651dbf65",
+  "index": 0,
+  "location": {
+    "modelName": "SimpleItemModel",
+    "service": "inventory"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6",
+    "typeName": "Item"
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1",
+      "prop_01M0C5HJ9H8A68TH51QQXSQAFS",
+      "prop_01M0C5HJ9HCVBQ4JVCH9JKNY9H",
+      "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3",
+      "prop_01M0C5HJ9HN7J7K686N7G6PM4E",
+      "prop_01M0C5HJ9H18WFD7HQJ6BVRQ54"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "When the counts return to zero",
+        "id": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1",
+        "isId": false,
+        "name": "resetType",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "notReset",
+            "daily",
+            "weekly",
+            "monthly",
+            "days"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Reset weekday (weekly only)",
+        "id": "prop_01M0C5HJ9H8A68TH51QQXSQAFS",
+        "isId": false,
+        "name": "resetDayOfWeek",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "sunday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Reset day (monthly only)",
+        "id": "prop_01M0C5HJ9HCVBQ4JVCH9JKNY9H",
+        "isId": false,
+        "name": "resetDayOfMonth",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Reset hour, UTC",
+        "id": "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3",
+        "isId": false,
+        "name": "resetHour",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Reset interval in days (days only)",
+        "id": "prop_01M0C5HJ9HN7J7K686N7G6PM4E",
+        "isId": false,
+        "name": "days",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Interval origin (days only)",
+        "id": "prop_01M0C5HJ9H18WFD7HQJ6BVRQ54",
+        "isId": false,
+        "name": "anchorTimestamp",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+  "kind": "local",
+  "name": "UsageLimit",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

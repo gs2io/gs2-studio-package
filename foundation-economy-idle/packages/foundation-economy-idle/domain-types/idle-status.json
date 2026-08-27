@@ -1,0 +1,133 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_CGEEBE9H9P5MW0MD82N6AW2GZJ",
+      "prop_Y84GE13M8Y5K1KVMS5X9E2TEF8",
+      "prop_6H5QKHHDFSEX65W9HT71FFAY0P",
+      "prop_MRM77NEZWMCQ5ACA4EBXFBWQQ4",
+      "prop_K3CBE560Z2HRY7DXXW6F5JCR2R",
+      "prop_SHSB8VCSJJT91AWA17EV2DWNJ9"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_CGEEBE9H9P5MW0MD82N6AW2GZJ",
+        "isId": false,
+        "name": "rewardIntervalMinutes",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_Y84GE13M8Y5K1KVMS5X9E2TEF8",
+        "isId": false,
+        "name": "defaultMaximumIdleMinutes",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_6H5QKHHDFSEX65W9HT71FFAY0P",
+        "isId": false,
+        "name": "currentIdleMinutes",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_MRM77NEZWMCQ5ACA4EBXFBWQQ4",
+        "isId": false,
+        "name": "nextRewardsAt",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_K3CBE560Z2HRY7DXXW6F5JCR2R",
+        "isId": false,
+        "name": "maximumIdleMinutes",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_SHSB8VCSJJT91AWA17EV2DWNJ9",
+        "isId": false,
+        "name": "acquireActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
+  "kind": "local",
+  "name": "IdleStatus",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

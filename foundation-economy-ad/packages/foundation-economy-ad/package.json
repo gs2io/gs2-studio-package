@@ -1,0 +1,30 @@
+{
+  "id": "foundation-economy-ad",
+  "name": "foundation-economy-ad",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Tracks ad views and manages the points you can use to reward players for watching them.",
+      "ja": "広告視聴の実績を記録し、広告経由の報酬付与に使えるポイントを管理します。"
+    },
+    "domainTypes": {
+      "dt_AFCBM1Z879DZAF9085SFW63Z5S": {
+        "label": {
+          "en": "Ad platform",
+          "ja": "広告プラットフォーム"
+        }
+      },
+      "dt_RTQJBJN6VK3VTEX3WKNGGK17JW": {
+        "label": {
+          "en": "Ad view point",
+          "ja": "広告視聴枠"
+        }
+      }
+    },
+    "label": {
+      "en": "Ads",
+      "ja": "広告"
+    }
+  }
+}

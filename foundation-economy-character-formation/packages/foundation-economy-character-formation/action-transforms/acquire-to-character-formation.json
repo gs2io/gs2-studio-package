@@ -1,0 +1,66 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "01c53022-dec4-4a7a-8bf2-3fea442cdb05",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "AcquireToCharacterFormation",
+  "outputs": [
+    {
+      "actionName": "Gs2Formation:AcquireActionsToFormProperties",
+      "conditions": [],
+      "id": "out_01KST7J5EYJ440HZDD2Y8G4200",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "moldModelName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "index",
+          "sourceParameter": "index"
+        },
+        {
+          "kind": "static",
+          "parameterName": "acquireAction.action",
+          "value": ""
+        },
+        {
+          "kind": "static",
+          "parameterName": "acquireAction.request",
+          "value": ""
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "01c53022-dec4-4a7a-8bf2-3fea442cdb05",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KST7JJYTQWHF7XYJES9DW54E",
+      "name": "index",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterFormation"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "updateFormScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "updateMoldScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "updatePropertyFormScript",
+        "value": null
+      }
+    ]
+  },
+  "id": "53038065-fcd8-4f03-ad13-8dc4d88af341",
+  "location": {
+    "modelName": "Namespace",
+    "service": "formation"
+  }
+}

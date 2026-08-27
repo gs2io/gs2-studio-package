@@ -1,0 +1,67 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "parameterName"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "parameterValues"
+      },
+      {
+        "fieldMappings": [
+          {
+            "fieldName": "resourceName",
+            "targetPropertyId": "prop_01M0C84Y32ECEHBF3RZEE5D62D"
+          },
+          {
+            "fieldName": "resourceValue",
+            "targetPropertyId": "prop_01M0C84Y32JTY6HCNCJZ7922GH"
+          }
+        ],
+        "idSourceField": "name",
+        "kind": "modelArrayDecode",
+        "parameterName": "parameterValues",
+        "targetMountPath": {
+          "kind": "local",
+          "typeId": "dt_01M0C84Y321K5KHKYHWHMAVTH5",
+          "typeName": "Equipment"
+        },
+        "targetPropertyId": "prop_01M0C84Y32CKRCM57ZVFNSN5KJ"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "propertyId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C84Y321K5KHKYHWHMAVTH5",
+            "typeName": "Equipment"
+          },
+          "propertyId": "prop_S5796CZNBGWDHWSSHHT1EC00T6"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "rarityParameterStatusId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "996567a7-c9e0-5629-89e1-2979a6dd9bc2",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_01M0C84Y321K5KHKYHWHMAVTH5",
+      "typeName": "Equipment"
+    }
+  },
+  "id": "a1763895-ae2e-5087-bf00-22fe57daa952",
+  "location": {
+    "modelName": "RarityParameterStatus",
+    "service": "enchant"
+  }
+}

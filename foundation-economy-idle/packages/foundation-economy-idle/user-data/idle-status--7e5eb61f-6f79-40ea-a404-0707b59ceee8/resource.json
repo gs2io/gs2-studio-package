@@ -1,0 +1,69 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "categoryName"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "idleMinutes",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
+              "typeName": "IdleStatus"
+            },
+            "propertyId": "prop_6H5QKHHDFSEX65W9HT71FFAY0P"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "maximumIdleMinutes",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
+              "typeName": "IdleStatus"
+            },
+            "propertyId": "prop_K3CBE560Z2HRY7DXXW6F5JCR2R"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "nextRewardsAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
+              "typeName": "IdleStatus"
+            },
+            "propertyId": "prop_MRM77NEZWMCQ5ACA4EBXFBWQQ4"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "statusId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "e2079f30-5204-49e7-8898-254c4f59f23e"
+  },
+  "id": "7e5eb61f-6f79-40ea-a404-0707b59ceee8",
+  "location": {
+    "modelName": "Status",
+    "service": "idle"
+  }
+}

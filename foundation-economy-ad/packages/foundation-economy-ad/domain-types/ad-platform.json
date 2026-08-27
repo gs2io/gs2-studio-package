@@ -1,0 +1,73 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_9R4GKC9MHQ0RWWG542MD6RRBQ9",
+      "prop_8GAGKPX7FHKJSQQCWN9J6ZE9M5"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_9R4GKC9MHQ0RWWG542MD6RRBQ9",
+        "isId": false,
+        "name": "adMobAdUnitIds",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "elementType": {
+            "kind": "primitive",
+            "primitiveType": "string"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_8GAGKPX7FHKJSQQCWN9J6ZE9M5",
+        "isId": false,
+        "name": "unityAdKeys",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "primitive",
+            "primitiveType": "string"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
+  "kind": "local",
+  "name": "AdPlatform",
+  "singleEntry": true,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

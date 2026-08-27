@@ -1,0 +1,76 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "AcquireEquipment",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:AcquireItemSetByUserId",
+      "conditions": [],
+      "id": "out_01KJSZ9MEHE2E60MS4JZ0DJM86",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "itemName",
+          "sourceParameter": "equipment"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "static",
+          "parameterName": "acquireCount",
+          "value": 1
+        },
+        {
+          "kind": "static",
+          "parameterName": "expiresAt",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "createNewItemSet",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "itemSetName",
+          "value": null
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KJSZ97WF877V5M2X1T86ZYN3",
+      "name": "equipment",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D"
+      }
+    }
+  ]
+}

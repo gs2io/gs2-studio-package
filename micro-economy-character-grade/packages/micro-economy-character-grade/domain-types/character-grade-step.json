@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C826WJ4ZPNGK1JNNQD7GCM",
+      "prop_01M0C826WJ6E8SVGPGFX2Z52T3",
+      "prop_01M0C826WJN2XGK5PMWPSYNZ5W"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Level cap this grade raises the character to",
+        "id": "prop_01M0C826WJ4ZPNGK1JNNQD7GCM",
+        "isId": false,
+        "name": "rankCapValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Which characters this step applies to",
+        "id": "prop_01M0C826WJ6E8SVGPGFX2Z52T3",
+        "isId": false,
+        "name": "propertyIdRegex",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Which characters may be spent to reach it",
+        "id": "prop_01M0C826WJN2XGK5PMWPSYNZ5W",
+        "isId": false,
+        "name": "gradeUpPropertyIdRegex",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+  "kind": "local",
+  "name": "CharacterGradeStep",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_57TKVNCPPA7DHSTZRX4QJ4W45K",
+      "prop_HPG95V898A9A7JCSM2KEV88PVG",
+      "prop_925R3E1XPBXGDG9D4H5MZBXMBK"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_57TKVNCPPA7DHSTZRX4QJ4W45K",
+        "isId": false,
+        "name": "payload",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_HPG95V898A9A7JCSM2KEV88PVG",
+        "isId": false,
+        "name": "begin",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_925R3E1XPBXGDG9D4H5MZBXMBK",
+        "isId": false,
+        "name": "end",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+  "kind": "local",
+  "name": "GlobalMessage",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

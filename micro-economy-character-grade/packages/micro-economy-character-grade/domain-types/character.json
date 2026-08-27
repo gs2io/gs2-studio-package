@@ -1,0 +1,46 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "order": [
+      "prop_01M0C826WJ0M7QGYB50KVWBD98"
+    ],
+    "properties": [
+      {
+        "bindingHint": "userData",
+        "description": "Grades promoted so far",
+        "id": "prop_01M0C826WJ0M7QGYB50KVWBD98",
+        "isId": false,
+        "name": "grade",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C826WJ0HDTQG636AHV341M",
+  "kind": "overlay",
+  "name": "Character",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  },
+  "source": {
+    "directSourcePackageId": "foundation-economy-character",
+    "directSourceTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+    "kind": "dependency",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+  }
+}

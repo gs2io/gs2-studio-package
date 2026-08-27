@@ -1,0 +1,45 @@
+{
+  "id": "foundation-economy-character-formation",
+  "name": "foundation-economy-character-formation",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-character": "file:../../../foundation-economy-character/packages/foundation-economy-character"
+  },
+  "display": {
+    "description": {
+      "en": "Lets players build formations by combining characters from their collection.",
+      "ja": "手持ちキャラクターを組み合わせて編成を作る機能です。"
+    },
+    "domainTypes": {
+      "dt_1YKD2ZM08CX2D22TCPED995K2N": {
+        "label": {
+          "en": "Formation",
+          "ja": "編成"
+        }
+      },
+      "dt_JY9NED2YYCSG1HXPQ1J0X9WQXW": {
+        "label": {
+          "en": "Formation form",
+          "ja": "編成フォーム"
+        }
+      },
+      "dt_MZT04J9C7W1562STKR3XCTC257": {
+        "label": {
+          "en": "Form slot",
+          "ja": "フォームスロット"
+        }
+      },
+      "dt_Z73MGN3WHWKHC8PF714HS91E62": {
+        "label": {
+          "en": "Formation slot",
+          "ja": "編成スロット"
+        }
+      }
+    },
+    "label": {
+      "en": "Party Formation",
+      "ja": "パーティ編成"
+    }
+  }
+}

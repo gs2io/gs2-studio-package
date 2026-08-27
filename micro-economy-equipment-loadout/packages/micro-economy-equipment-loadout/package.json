@@ -1,0 +1,39 @@
+{
+  "id": "micro-economy-equipment-loadout",
+  "name": "micro-economy-equipment-loadout",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-character": "file:../../../foundation-economy-character/packages/foundation-economy-character"
+  },
+  "display": {
+    "description": {
+      "en": "Gives each character its own equipment slots, with per-slot restrictions on what fits.",
+      "ja": "キャラクターごとの装備スロットを扱います。スロットごとに装着できる装備を制限できます。"
+    },
+    "domainTypes": {
+      "dt_01M0CDYNB5V74MMX3SWDK4ZRCH": {
+        "label": {
+          "en": "Character",
+          "ja": "キャラクター"
+        }
+      },
+      "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ": {
+        "label": {
+          "en": "Equipment slot",
+          "ja": "装備スロット"
+        }
+      },
+      "dt_01M0CDYNB5ZBC95MZSW2NTSPXM": {
+        "label": {
+          "en": "Worn equipment",
+          "ja": "装着中の装備"
+        }
+      }
+    },
+    "label": {
+      "en": "Equipment Loadout",
+      "ja": "装備の装着"
+    }
+  }
+}

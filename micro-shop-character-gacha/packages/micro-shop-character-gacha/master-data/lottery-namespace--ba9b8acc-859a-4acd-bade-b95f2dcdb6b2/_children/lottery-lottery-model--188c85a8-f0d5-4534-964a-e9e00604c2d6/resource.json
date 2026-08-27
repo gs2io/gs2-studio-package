@@ -1,0 +1,52 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "method",
+        "value": "prize_table"
+      },
+      {
+        "kind": "static",
+        "parameterName": "mode",
+        "value": "normal"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+            "typeName": "Gacha"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "prizeTableName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+            "typeName": "Gacha"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "188c85a8-f0d5-4534-964a-e9e00604c2d6",
+  "location": {
+    "modelName": "LotteryModel",
+    "service": "lottery"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+    "typeName": "Gacha"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "category": "verify",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "f7557773-8f8f-58cb-b0b9-2f178f988a1f",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyGuildRankingScoreReached",
+  "outputs": [
+    {
+      "actionName": "Gs2Ranking2:VerifyClusterRankingScoreByUserId",
+      "conditions": [],
+      "id": "out_01M0CE422W9AKR175NDAZ6KER1",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "rankingName",
+          "sourceParameter": "ranking"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "clusterName",
+          "sourceParameter": "guildName"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "greaterEqual"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "season",
+          "sourceParameter": "season"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "score",
+          "sourceParameter": "score"
+        },
+        {
+          "kind": "static",
+          "parameterName": "multiplyValueSpecifyingQuantity",
+          "value": false
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "f7557773-8f8f-58cb-b0b9-2f178f988a1f",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01M0CE422WM05J955JF4Z6GSDJ",
+      "name": "ranking",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0CE422W0G7W7F4YTBJM9TNZ",
+      "name": "guildName",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0CE422WS766NQRQRGCS82P0",
+      "name": "season",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0CE422WZKT7TF9QJMPMGN0B",
+      "name": "score",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}

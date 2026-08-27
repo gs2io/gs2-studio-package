@@ -1,0 +1,139 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_PFYYCZ2ZB3XBM0A06C1VSTJWCP",
+      "prop_TF2ETMFVHGYGRWYBZ8YJZXZG4S",
+      "prop_H5KJSRGM60K4AQHSJMM28D7JQV",
+      "prop_WAYKZ6HMTNGKPMNBTAZHR37SH3",
+      "prop_NYZ7PF2EANTJ3R35DJQX6XWXHG",
+      "prop_VDP1SG91F48991CRKFPAYR4KEZ"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_PFYYCZ2ZB3XBM0A06C1VSTJWCP",
+        "isId": false,
+        "name": "collection",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_8KGQ5PW8KF4540B06JKKQ6QF96"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_TF2ETMFVHGYGRWYBZ8YJZXZG4S",
+        "isId": false,
+        "name": "consumeActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "consumeAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_H5KJSRGM60K4AQHSJMM28D7JQV",
+        "isId": false,
+        "name": "firstCompleteAcquireActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_WAYKZ6HMTNGKPMNBTAZHR37SH3",
+        "isId": false,
+        "name": "completeAcquireActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_NYZ7PF2EANTJ3R35DJQX6XWXHG",
+        "isId": false,
+        "name": "failedAcquireActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
+        "isId": false,
+        "name": "completed",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+  "kind": "local",
+  "name": "Quest",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "openIdConnectSetting.additionalReturnValues",
+        "value": []
+      },
+      {
+        "kind": "static",
+        "parameterName": "openIdConnectSetting.additionalScopeValues",
+        "value": []
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "openIdConnectSetting.appleKeyId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+            "typeName": "TakeOverSetting"
+          },
+          "propertyId": "prop_V75V0JS2DKK9J1HT58G6EHB6VF"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "openIdConnectSetting.applePrivateKeyPem",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+            "typeName": "TakeOverSetting"
+          },
+          "propertyId": "prop_6HQHD05HT2SH78G79FXNV4WJVT"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "openIdConnectSetting.appleTeamId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+            "typeName": "TakeOverSetting"
+          },
+          "propertyId": "prop_2EJBCGDAH1TVRBGY75S05SJ801"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "openIdConnectSetting.clientId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+            "typeName": "TakeOverSetting"
+          },
+          "propertyId": "prop_01B0AANDTTY7MQTFTBP6WQK6CD"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "openIdConnectSetting.clientSecret",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+            "typeName": "TakeOverSetting"
+          },
+          "propertyId": "prop_CAMZZS3CCJ4K9MSA217ARZ7K6Z"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "openIdConnectSetting.configurationPath",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+            "typeName": "TakeOverSetting"
+          },
+          "propertyId": "prop_A2D1ZJ9DZ5AMTXXE3XHZGGR0AJ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "openIdConnectSetting.doneEndpointUrl",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+            "typeName": "TakeOverSetting"
+          },
+          "propertyId": "prop_XDRZ798BRBRW9W35MRHXEXCAAX"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "type",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+            "typeName": "TakeOverSetting"
+          },
+          "propertyId": "prop_JXHFG6A90WH8TQJAD96FQC1S5M"
+        }
+      }
+    ]
+  },
+  "id": "912e8c6f-d936-4253-a13e-69a3b57fc821",
+  "location": {
+    "modelName": "TakeOverTypeModel",
+    "service": "account"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+    "typeName": "TakeOverSetting"
+  }
+}

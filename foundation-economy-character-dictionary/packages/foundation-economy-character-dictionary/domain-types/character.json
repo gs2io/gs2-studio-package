@@ -1,0 +1,62 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "order": [
+      "prop_TC9NBD65ZXWPT09PFSRX1REHPF",
+      "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6"
+    ],
+    "properties": [
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_TC9NBD65ZXWPT09PFSRX1REHPF",
+        "isId": false,
+        "name": "acquired",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6",
+        "isId": false,
+        "name": "acquiredAt",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV",
+  "kind": "overlay",
+  "name": "Character",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  },
+  "source": {
+    "directSourcePackageId": "foundation-economy-character",
+    "directSourceTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+    "kind": "dependency",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+  }
+}

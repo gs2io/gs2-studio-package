@@ -1,0 +1,40 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "contentName",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
+                  "typeName": "StoreProduct"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "VerifyReceipt",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    ]
+  },
+  "id": "26b9eab3-68dc-5123-abd0-8c374f62969c",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
+    "typeName": "StoreProduct"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "order": [
+      "prop_01M0C84Y32CKRCM57ZVFNSN5KJ"
+    ],
+    "properties": [
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_01M0C84Y32CKRCM57ZVFNSN5KJ",
+        "isId": false,
+        "name": "enchantments",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "elementType": {
+            "kind": "inline",
+            "targetTypeId": "dt_01M0C84Y323XGX5N856QJ5Z61Q"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C84Y321K5KHKYHWHMAVTH5",
+  "kind": "overlay",
+  "name": "Equipment",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  },
+  "source": {
+    "directSourcePackageId": "foundation-economy-equipment",
+    "directSourceTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D",
+    "kind": "dependency",
+    "sourcePackageId": "foundation-economy-equipment",
+    "sourceTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D"
+  }
+}

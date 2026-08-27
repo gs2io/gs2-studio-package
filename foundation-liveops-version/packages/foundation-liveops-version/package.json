@@ -1,0 +1,30 @@
+{
+  "id": "foundation-liveops-version",
+  "name": "foundation-liveops-version",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Tracks agreement (terms of service) versions and the app's embedded version.",
+      "ja": "利用規約の同意バージョンやアプリの埋め込みバージョンを管理します。"
+    },
+    "domainTypes": {
+      "dt_39GHCE719ZNVPNJCZ2M921Q32H": {
+        "label": {
+          "en": "App version",
+          "ja": "アプリバージョン"
+        }
+      },
+      "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4": {
+        "label": {
+          "en": "Agreement version",
+          "ja": "規約バージョン"
+        }
+      }
+    },
+    "label": {
+      "en": "Version Gate",
+      "ja": "バージョン管理"
+    }
+  }
+}

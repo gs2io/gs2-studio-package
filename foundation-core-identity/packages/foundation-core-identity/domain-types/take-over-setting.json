@@ -1,0 +1,179 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_JXHFG6A90WH8TQJAD96FQC1S5M",
+      "prop_A2D1ZJ9DZ5AMTXXE3XHZGGR0AJ",
+      "prop_01B0AANDTTY7MQTFTBP6WQK6CD",
+      "prop_CAMZZS3CCJ4K9MSA217ARZ7K6Z",
+      "prop_XDRZ798BRBRW9W35MRHXEXCAAX",
+      "prop_2EJBCGDAH1TVRBGY75S05SJ801",
+      "prop_V75V0JS2DKK9J1HT58G6EHB6VF",
+      "prop_6HQHD05HT2SH78G79FXNV4WJVT",
+      "prop_5Z93QPG4VQED3EX517PW0H7BWA"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Setting Type Number",
+        "id": "prop_JXHFG6A90WH8TQJAD96FQC1S5M",
+        "isId": false,
+        "name": "type",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "OIDC Configuration URL",
+        "id": "prop_A2D1ZJ9DZ5AMTXXE3XHZGGR0AJ",
+        "isId": false,
+        "name": "configurationPath",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "OIDC Client ID",
+        "id": "prop_01B0AANDTTY7MQTFTBP6WQK6CD",
+        "isId": false,
+        "name": "clientId",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "OIDC Secret",
+        "id": "prop_CAMZZS3CCJ4K9MSA217ARZ7K6Z",
+        "isId": false,
+        "name": "clientSecret",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Redirect URL when login completed",
+        "id": "prop_XDRZ798BRBRW9W35MRHXEXCAAX",
+        "isId": false,
+        "name": "doneEndpointUrl",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Apple Team ID(if Sign-in Apple Account)",
+        "id": "prop_2EJBCGDAH1TVRBGY75S05SJ801",
+        "isId": false,
+        "name": "appleTeamId",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Apple Key ID(if Sign-in Apple Account)",
+        "id": "prop_V75V0JS2DKK9J1HT58G6EHB6VF",
+        "isId": false,
+        "name": "appleKeyId",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Apple Private Key PEM(if Sign-in Apple Account)",
+        "id": "prop_6HQHD05HT2SH78G79FXNV4WJVT",
+        "isId": false,
+        "name": "applePrivateKeyPem",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Whether the user has TakeOver data",
+        "id": "prop_5Z93QPG4VQED3EX517PW0H7BWA",
+        "isId": false,
+        "name": "hasTakeOver",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+  "kind": "local",
+  "name": "TakeOverSetting",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

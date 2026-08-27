@@ -1,0 +1,36 @@
+{
+  "id": "foundation-economy-character",
+  "name": "foundation-economy-character",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Handles character ownership, level, and experience.",
+      "ja": "キャラクターの所持・レベル・経験値を扱います。"
+    },
+    "domainTypes": {
+      "dt_HAZCRJ576BHDWFVB28NQW77Y01": {
+        "label": {
+          "en": "Character experience",
+          "ja": "キャラクター経験値"
+        }
+      },
+      "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5": {
+        "label": {
+          "en": "Character",
+          "ja": "キャラクター"
+        }
+      },
+      "dt_ZR7PA0W682HX7ZFXGBE4BRF37K": {
+        "label": {
+          "en": "Character slots",
+          "ja": "キャラクター所持枠"
+        }
+      }
+    },
+    "label": {
+      "en": "Characters",
+      "ja": "キャラクター"
+    }
+  }
+}

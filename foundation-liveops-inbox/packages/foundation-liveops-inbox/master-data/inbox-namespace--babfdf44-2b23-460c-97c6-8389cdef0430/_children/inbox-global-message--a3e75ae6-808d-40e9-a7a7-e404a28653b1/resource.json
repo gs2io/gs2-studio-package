@@ -1,0 +1,65 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "expiresTimeSpan",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "messageReceptionPeriodEventId.grnKey.eventName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+            "typeName": "GlobalMessage"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "messageReceptionPeriodEventId.grnKey.namespaceName",
+        "value": "InboxSchedule"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "metadata",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+            "typeName": "GlobalMessage"
+          },
+          "propertyId": "prop_57TKVNCPPA7DHSTZRX4QJ4W45K"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+            "typeName": "GlobalMessage"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "a3e75ae6-808d-40e9-a7a7-e404a28653b1",
+  "location": {
+    "modelName": "GlobalMessage",
+    "service": "inbox"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+    "typeName": "GlobalMessage"
+  }
+}

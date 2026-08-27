@@ -1,0 +1,30 @@
+{
+  "id": "foundation-social-guild",
+  "name": "foundation-social-guild",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Handles player guilds — capacity, permission roles, and which guild a player belongs to.",
+      "ja": "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。"
+    },
+    "domainTypes": {
+      "dt_01M0C5T6AF24NKHPZ1Z4R946FT": {
+        "label": {
+          "en": "Guild kind",
+          "ja": "ギルド種別"
+        }
+      },
+      "dt_01M0C5T6AFT4RWZEQQFJ1D89M0": {
+        "label": {
+          "en": "Guild role",
+          "ja": "ギルド権限"
+        }
+      }
+    },
+    "label": {
+      "en": "Guilds",
+      "ja": "ギルド"
+    }
+  }
+}

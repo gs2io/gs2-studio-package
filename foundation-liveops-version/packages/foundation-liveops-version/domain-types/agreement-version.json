@@ -1,0 +1,281 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_GMMBV2TGK8XPGGR6QZA7CB0F1Y",
+      "prop_D6BXRZGRA97SHWEH9KKJNK8F18",
+      "prop_0Q39Q60DC894H8BTR4B3C7WDHE",
+      "prop_2K3FPSX7JS2XSAEGTR89RCDBNX",
+      "prop_AWG1AAHD6ZCQ1Z2DR8Q2E4F4DT",
+      "prop_GWSJYQBMKYCRXTBZ9WJB3JQE04",
+      "prop_01M0PWK4QGM5B5CWGZE3GAZ3PC",
+      "prop_01M0PWK4QG52B50F2Q3HMPJDQS",
+      "prop_01M0PWK4QGB6FARGAKYTJCE3GD",
+      "prop_01M0PWK4QG0W3BR71K2BSE1A8S",
+      "prop_01M0PWK4QGQ6V970FH4XQPDM3D",
+      "prop_01M0PWK4QGZBDE3TA5C6D6G07J",
+      "prop_01M0PX2G6Q6Q7SQGM4Z51XENCC",
+      "prop_01M0PX2G6QJXF59DXKXFRSEJRT",
+      "prop_01M0PX2G6QK5P9VPEKCCMAQ20R"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_GMMBV2TGK8XPGGR6QZA7CB0F1Y",
+        "isId": false,
+        "name": "required",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "required",
+            "optional"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_D6BXRZGRA97SHWEH9KKJNK8F18",
+        "isId": false,
+        "name": "currentMajor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_0Q39Q60DC894H8BTR4B3C7WDHE",
+        "isId": false,
+        "name": "currentMinor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_2K3FPSX7JS2XSAEGTR89RCDBNX",
+        "isId": false,
+        "name": "currentMicro",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_AWG1AAHD6ZCQ1Z2DR8Q2E4F4DT",
+        "isId": false,
+        "name": "status",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "accept",
+            "reject"
+          ]
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_GWSJYQBMKYCRXTBZ9WJB3JQE04",
+        "isId": false,
+        "name": "exists",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0PWK4QGM5B5CWGZE3GAZ3PC",
+        "isId": false,
+        "name": "warningMajor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0PWK4QG52B50F2Q3HMPJDQS",
+        "isId": false,
+        "name": "warningMinor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0PWK4QGB6FARGAKYTJCE3GD",
+        "isId": false,
+        "name": "warningMicro",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0PWK4QG0W3BR71K2BSE1A8S",
+        "isId": false,
+        "name": "errorMajor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0PWK4QGQ6V970FH4XQPDM3D",
+        "isId": false,
+        "name": "errorMinor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0PWK4QGZBDE3TA5C6D6G07J",
+        "isId": false,
+        "name": "errorMicro",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_01M0PX2G6Q6Q7SQGM4Z51XENCC",
+        "isId": false,
+        "name": "acceptedMajor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_01M0PX2G6QJXF59DXKXFRSEJRT",
+        "isId": false,
+        "name": "acceptedMinor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_01M0PX2G6QK5P9VPEKCCMAQ20R",
+        "isId": false,
+        "name": "acceptedMicro",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+  "kind": "local",
+  "name": "AgreementVersion",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

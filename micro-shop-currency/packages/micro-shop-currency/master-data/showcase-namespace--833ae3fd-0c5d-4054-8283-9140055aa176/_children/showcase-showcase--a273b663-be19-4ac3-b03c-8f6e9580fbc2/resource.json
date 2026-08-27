@@ -1,0 +1,34 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_QM3KC8SJTDM4W54DTSPXM8HTRD",
+            "typeName": "CurrencyType"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "salesPeriodEventId",
+        "value": null
+      }
+    ]
+  },
+  "id": "a273b663-be19-4ac3-b03c-8f6e9580fbc2",
+  "location": {
+    "modelName": "Showcase",
+    "service": "showcase"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_QM3KC8SJTDM4W54DTSPXM8HTRD",
+    "typeName": "CurrencyType"
+  }
+}

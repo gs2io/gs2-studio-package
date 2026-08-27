@@ -1,0 +1,27 @@
+{
+  "id": "micro-shop-energy",
+  "name": "micro-shop-energy",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-energy": "file:../../../foundation-economy-energy/packages/foundation-economy-energy"
+  },
+  "display": {
+    "description": {
+      "en": "A shop that sells products to refill stamina.",
+      "ja": "スタミナを回復する商品を販売するショップ機能です。"
+    },
+    "domainTypes": {
+      "dt_B6ACHCG26EEPJHVNQ7SA1WX2XS": {
+        "label": {
+          "en": "Stamina product",
+          "ja": "スタミナ商品"
+        }
+      }
+    },
+    "label": {
+      "en": "Stamina Shop",
+      "ja": "スタミナショップ"
+    }
+  }
+}

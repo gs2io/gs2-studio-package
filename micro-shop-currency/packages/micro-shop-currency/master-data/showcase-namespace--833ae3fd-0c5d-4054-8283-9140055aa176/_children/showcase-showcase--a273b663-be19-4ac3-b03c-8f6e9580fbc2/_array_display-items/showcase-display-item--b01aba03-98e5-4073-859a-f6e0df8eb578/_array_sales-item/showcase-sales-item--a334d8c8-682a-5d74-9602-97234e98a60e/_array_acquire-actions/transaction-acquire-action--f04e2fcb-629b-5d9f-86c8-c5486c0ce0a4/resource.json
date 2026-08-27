@@ -1,0 +1,90 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
+                  "typeName": "StoreProduct"
+                },
+                "propertyId": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7"
+              }
+            }
+          },
+          {
+            "parameterName": "currencyType",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "innerSource": {
+                    "innerSource": {
+                      "kind": "direct",
+                      "mountPath": {
+                        "kind": "local",
+                        "typeId": "dt_QM3KC8SJTDM4W54DTSPXM8HTRD",
+                        "typeName": "CurrencyType"
+                      },
+                      "propertyId": "prop_reserved_id"
+                    },
+                    "kind": "parent",
+                    "parentResourceId": "a273b663-be19-4ac3-b03c-8f6e9580fbc2"
+                  },
+                  "kind": "parent",
+                  "parentResourceId": "b01aba03-98e5-4073-859a-f6e0df8eb578"
+                },
+                "kind": "parent",
+                "parentResourceId": "a334d8c8-682a-5d74-9602-97234e98a60e"
+              }
+            }
+          },
+          {
+            "parameterName": "price",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "innerSource": {
+                    "kind": "direct",
+                    "mountPath": {
+                      "kind": "local",
+                      "typeId": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
+                      "typeName": "StorePrice"
+                    },
+                    "propertyId": "prop_NW3JXP6ZEQE4DP99TJHZEB68AD"
+                  },
+                  "kind": "parent",
+                  "parentResourceId": "b01aba03-98e5-4073-859a-f6e0df8eb578"
+                },
+                "kind": "parent",
+                "parentResourceId": "a334d8c8-682a-5d74-9602-97234e98a60e"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "DepositCurrency",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    ]
+  },
+  "id": "f04e2fcb-629b-5d9f-86c8-c5486c0ce0a4",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
+    "typeName": "StoreProduct"
+  }
+}

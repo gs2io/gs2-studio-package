@@ -1,0 +1,136 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "applyPeriodScheduleEventId.grnKey.eventName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C89EMY1KAND5SNBFR7N0GQ",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_01M0C89EMZR18VJ7SD7SHZYYWH"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "expression",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C89EMY1KAND5SNBFR7N0GQ",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_01M0C89EMY0MGFC92HZCRAXG3M"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C89EMY1KAND5SNBFR7N0GQ",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "priority",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C89EMY1KAND5SNBFR7N0GQ",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_01M0C89EMZHA1Y39YTQZ9227ET"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "targetAction.conditionGrns",
+        "value": []
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "targetAction.rate",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C89EMY1KAND5SNBFR7N0GQ",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_01M0C89EMZN9KJE2M0EAK71926"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "targetAction.targetActionName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C89EMY1KAND5SNBFR7N0GQ",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_01M0C89EMZPTFXVVWJ02HQV42R"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "targetAction.targetFieldName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C89EMY1KAND5SNBFR7N0GQ",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_01M0C89EMZW9H9204T4H2A3A8M"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "targetType",
+        "value": "action"
+      }
+    ]
+  },
+  "id": "801dabca-f630-546b-b66b-9deeef6ecfc1",
+  "location": {
+    "modelName": "BuffEntryModel",
+    "service": "buff"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C89EMY1KAND5SNBFR7N0GQ",
+    "typeName": "Buff"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          }
+        ],
+        "mountedResourceId": "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d",
+        "parameterName": "applyPeriodScheduleEventId"
+      }
+    ]
+  }
+}

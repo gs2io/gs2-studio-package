@@ -1,0 +1,96 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [],
+  "name": "Reward",
+  "outputs": [
+    {
+      "conditions": [
+        {
+          "id": "cond_01KM4M0XNYF1WK7NGMGCBXEAXM",
+          "operator": "eq",
+          "sourceParameter": "rewardType",
+          "value": "currency"
+        }
+      ],
+      "id": "out_01KM4E6ER86WSMPC0M5QGR1FWX",
+      "kind": "delegation",
+      "parameterBindings": [
+        {
+          "kind": "parameter",
+          "sourceParameter": "count",
+          "targetParameter": "count"
+        },
+        {
+          "kind": "static",
+          "targetParameter": "currencyType",
+          "value": ""
+        },
+        {
+          "kind": "static",
+          "targetParameter": "price",
+          "value": 0
+        }
+      ],
+      "targetName": "DepositCurrency",
+      "targetPackageId": "foundation-economy-currency"
+    },
+    {
+      "conditions": [
+        {
+          "id": "cond_01KM4M3NTRQJ2QD5A5BTS1NQF4",
+          "operator": "eq",
+          "sourceParameter": "rewardType",
+          "value": "character"
+        }
+      ],
+      "id": "out_01KM4M178Q0DKJ8PWMYP58J725",
+      "kind": "delegation",
+      "parameterBindings": [
+        {
+          "kind": "parameter",
+          "sourceParameter": "contentsId",
+          "targetParameter": "character"
+        },
+        {
+          "kind": "parameter",
+          "sourceParameter": "count",
+          "targetParameter": "count"
+        }
+      ],
+      "targetName": "AcquireCharacter",
+      "targetPackageId": "foundation-economy-character"
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KM2NMRK3CVHP5KR6AZG0DM6H",
+      "name": "rewardType",
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_FEXHRRAKNBN76PEX2C2VZGWSDV"
+      },
+      "required": true
+    },
+    {
+      "description": "",
+      "id": "param_01KM4M2XSRCBF2K6JNZJMRX2G0",
+      "name": "contentsId",
+      "required": false,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KM2NMSDNAF6QH90S850MK4Y4",
+      "name": "count",
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      },
+      "required": true
+    }
+  ]
+}

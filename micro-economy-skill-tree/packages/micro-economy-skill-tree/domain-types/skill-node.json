@@ -1,0 +1,104 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0Q02DXK9YCRGGAJHADRMVS6",
+      "prop_01M0C87BJC76SJF2PA9P05K5QH",
+      "prop_01M0C87BJCQ0PCKG2FJQ0H767B",
+      "prop_01M0C87BJCSHPHEB1N0DRT0ACA"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "What unlocking this node costs",
+        "id": "prop_01M0Q02DXK9YCRGGAJHADRMVS6",
+        "isId": false,
+        "name": "releaseConsumeActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "consumeAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Nodes that must be released first",
+        "id": "prop_01M0C87BJC76SJF2PA9P05K5QH",
+        "isId": false,
+        "name": "premiseNodes",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "elementType": {
+            "kind": "primitive",
+            "primitiveType": "string"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Share of the cost refunded when the node is reset",
+        "id": "prop_01M0C87BJCQ0PCKG2FJQ0H767B",
+        "isId": false,
+        "name": "restrainReturnRate",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "float32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Unlocked by this player",
+        "id": "prop_01M0C87BJCSHPHEB1N0DRT0ACA",
+        "isId": false,
+        "name": "released",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+  "kind": "local",
+  "name": "SkillNode",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

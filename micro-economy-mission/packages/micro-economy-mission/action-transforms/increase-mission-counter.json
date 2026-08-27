@@ -1,0 +1,72 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "bf3c01f3-3c65-4c02-ab65-3a5f8ab7ab17",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "IncreaseMissionCounter",
+  "outputs": [
+    {
+      "actionName": "Gs2Mission:IncreaseCounterByUserId",
+      "conditions": [],
+      "id": "out_01KM1TTVKFPM1953XHQVN7WTMH",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "mountedResourceProperty",
+          "parameterName": "namespaceName",
+          "resourceRef": {
+            "kind": "local",
+            "resourceId": "bf3c01f3-3c65-4c02-ab65-3a5f8ab7ab17",
+            "resourceKind": "masterData"
+          }
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "counterName",
+          "sourceParameter": "counter"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "value",
+          "sourceParameter": "value"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "bf3c01f3-3c65-4c02-ab65-3a5f8ab7ab17",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KM1TV861YK00N79SSHN64C9R",
+      "name": "counter",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KM1TV8XGP0YK3PG808P2ARD9",
+      "name": "value",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

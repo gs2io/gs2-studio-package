@@ -1,0 +1,51 @@
+{
+  "id": "micro-economy-equipment-enchant",
+  "name": "micro-economy-equipment-enchant",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-equipment": "file:../../../foundation-economy-equipment/packages/foundation-economy-equipment"
+  },
+  "display": {
+    "description": {
+      "en": "Rolls random bonuses onto equipment, with configurable slot counts, options and weights.",
+      "ja": "装備にランダムな追加効果を付与します。抽選されるスロット数と効果の種類・重みを設定できます。"
+    },
+    "domainTypes": {
+      "dt_01M0C84Y321K5KHKYHWHMAVTH5": {
+        "label": {
+          "en": "Equipment",
+          "ja": "装備"
+        }
+      },
+      "dt_01M0C84Y323XGX5N856QJ5Z61Q": {
+        "label": {
+          "en": "Rolled bonus",
+          "ja": "付与済み効果"
+        }
+      },
+      "dt_01M0C84Y32FM1BC8Y88H1VN16Q": {
+        "label": {
+          "en": "Enchantment pool",
+          "ja": "エンチャント設定"
+        }
+      },
+      "dt_01M0C84Y32MFW05C5TXC61W1SR": {
+        "label": {
+          "en": "Slot chance",
+          "ja": "スロット数抽選"
+        }
+      },
+      "dt_01M0C84Y32ZDSA8TEZHPNG3MNK": {
+        "label": {
+          "en": "Enchant option",
+          "ja": "エンチャント効果"
+        }
+      }
+    },
+    "label": {
+      "en": "Equipment Enchantment",
+      "ja": "装備エンチャント"
+    }
+  }
+}

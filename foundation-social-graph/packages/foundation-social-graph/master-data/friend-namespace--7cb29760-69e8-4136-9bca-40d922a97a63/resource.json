@@ -1,0 +1,201 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "acceptRequestNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "acceptRequestNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "acceptRequestNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "acceptRequestNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "acceptRequestScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "cancelRequestNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "cancelRequestNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "cancelRequestNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "cancelRequestNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "cancelRequestScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "deleteFriendNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "deleteFriendNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "deleteFriendNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "deleteFriendNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "deleteFriendScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "followNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "followScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Friend"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "rejectRequestNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "rejectRequestNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "rejectRequestNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "rejectRequestNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "rejectRequestScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "sendRequestScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "unfollowScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "updateProfileScript",
+        "value": null
+      }
+    ]
+  },
+  "id": "7cb29760-69e8-4136-9bca-40d922a97a63",
+  "location": {
+    "modelName": "Namespace",
+    "service": "friend"
+  }
+}

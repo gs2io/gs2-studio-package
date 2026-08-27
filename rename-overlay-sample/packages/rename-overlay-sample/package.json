@@ -1,0 +1,10 @@
+{
+  "id": "rename-overlay-sample",
+  "name": "rename-overlay-sample",
+  "version": "0.0.0",
+  "description": "Fixture for DomainType overlay rename (Charm <- Character)",
+  "dependencies": {
+    "foundation-economy-character": "file:../../../foundation-economy-character/packages/foundation-economy-character",
+    "micro-shop-character-gacha": "file:../../../micro-shop-character-gacha/packages/micro-shop-character-gacha"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "action",
+        "value": "Gs2Lottery:DrawByUserId"
+      },
+      {
+        "kind": "static",
+        "parameterName": "request.config",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "request.count",
+        "value": 1
+      },
+      {
+        "kind": "resourceKey",
+        "parameterName": "request.lotteryName"
+      },
+      {
+        "kind": "resourceKey",
+        "parameterName": "request.namespaceName"
+      },
+      {
+        "kind": "placeholder",
+        "parameterName": "request.userId",
+        "value": "#{userId}"
+      }
+    ]
+  },
+  "id": "e3e7d127-65d3-506f-996c-98733f159e21",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "resourceLinks": {
+    "resourceRef": {
+      "kind": "local",
+      "resourceId": "188c85a8-f0d5-4534-964a-e9e00604c2d6",
+      "resourceKind": "masterData"
+    }
+  }
+}

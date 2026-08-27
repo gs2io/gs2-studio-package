@@ -1,0 +1,86 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "authenticationScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "banScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "createAccountScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "createTakeOverScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "doTakeOverScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Account"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "unBanScript",
+        "value": null
+      }
+    ]
+  },
+  "id": "678d5a28-b9c6-4225-baee-d4a6d0d95b4b",
+  "location": {
+    "modelName": "Namespace",
+    "service": "account"
+  }
+}

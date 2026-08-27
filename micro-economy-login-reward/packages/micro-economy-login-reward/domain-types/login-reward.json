@@ -1,0 +1,99 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_0N4V6CN66SVVQH7S0S3Z909D1A",
+      "prop_JPGJM6CM0TRQGXTAVJBYATVNCG",
+      "prop_ZXRNPBQQCJM49N2Z27FQETSRWY"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_0N4V6CN66SVVQH7S0S3Z909D1A",
+        "isId": false,
+        "name": "loginRewardCollection",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_JPGJM6CM0TRQGXTAVJBYATVNCG",
+        "isId": false,
+        "name": "acquireActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_ZXRNPBQQCJM49N2Z27FQETSRWY",
+        "isId": false,
+        "name": "receivedSteps",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "primitive",
+            "primitiveType": "bool"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Receive",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2LoginReward:ReceiveStatus.Receive",
+      "targetResource": {
+        "resourceId": "36085262-1664-4dfe-a472-c1f8a886ec52",
+        "resourceKind": "userData",
+        "sourcePackageId": "micro-economy-login-reward"
+      }
+    }
+  ],
+  "description": "",
+  "id": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+  "kind": "local",
+  "name": "LoginReward",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

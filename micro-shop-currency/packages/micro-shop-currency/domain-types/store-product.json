@@ -1,0 +1,46 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "order": [
+      "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7"
+    ],
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7",
+        "isId": false,
+        "name": "count",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
+  "kind": "overlay",
+  "name": "StoreProduct",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  },
+  "source": {
+    "directSourcePackageId": "foundation-economy-currency",
+    "directSourceTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+    "kind": "dependency",
+    "sourcePackageId": "foundation-economy-currency",
+    "sourceTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB"
+  }
+}

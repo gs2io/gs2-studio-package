@@ -1,0 +1,45 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "displayItemId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
+            "typeName": "StorePrice"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "salesItemGroup",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "salesPeriodEventId",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "type",
+        "value": "salesItem"
+      }
+    ]
+  },
+  "id": "b01aba03-98e5-4073-859a-f6e0df8eb578",
+  "index": 0,
+  "location": {
+    "modelName": "DisplayItem",
+    "service": "showcase"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
+    "typeName": "StorePrice"
+  }
+}

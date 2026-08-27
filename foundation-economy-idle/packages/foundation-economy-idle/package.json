@@ -1,0 +1,30 @@
+{
+  "id": "foundation-economy-idle",
+  "name": "foundation-economy-idle",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Accrues and grants rewards that build up while the player is away.",
+      "ja": "遊んでいない間にたまる放置報酬を計算・付与します。"
+    },
+    "domainTypes": {
+      "dt_4201EMDQW9HN9AMKXT0WQHMKJY": {
+        "label": {
+          "en": "Idle reward",
+          "ja": "放置報酬"
+        }
+      },
+      "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY": {
+        "label": {
+          "en": "Idle status",
+          "ja": "放置状況"
+        }
+      }
+    },
+    "label": {
+      "en": "Idle Rewards",
+      "ja": "放置報酬"
+    }
+  }
+}

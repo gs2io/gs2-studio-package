@@ -1,0 +1,51 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP",
+        "isId": false,
+        "name": "schedule",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_8KGQ5PW8KF4540B06JKKQ6QF96",
+  "kind": "local",
+  "name": "QuestCollection",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

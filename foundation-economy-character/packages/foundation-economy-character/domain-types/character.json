@@ -1,0 +1,115 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_A5DDXX9AZGPBWRFX70X1ZKNR0E",
+      "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD",
+      "prop_0J6H8XWJG1W95S2S7HRDRQSWF2",
+      "prop_T2TXPQVC3TS41W3CY3RB4X4G8C",
+      "prop_WP10EQVMMV82DJXCEN4AJYVEKB"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_A5DDXX9AZGPBWRFX70X1ZKNR0E",
+        "isId": false,
+        "name": "sort",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD",
+        "isId": false,
+        "name": "propertyId",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_0J6H8XWJG1W95S2S7HRDRQSWF2",
+        "isId": false,
+        "name": "level",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_T2TXPQVC3TS41W3CY3RB4X4G8C",
+        "isId": false,
+        "name": "levelCap",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_WP10EQVMMV82DJXCEN4AJYVEKB",
+        "isId": false,
+        "name": "experience",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+  "kind": "local",
+  "name": "Character",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

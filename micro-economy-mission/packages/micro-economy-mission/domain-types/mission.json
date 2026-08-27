@@ -1,0 +1,144 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_8ADCCWBXRK8X69EAFY30PGN4SD",
+      "prop_01M0R2YRXVYSPEEDYSRE7SR9GQ",
+      "prop_2KV74FVT69TN7Z0QZ804K1CA6F",
+      "prop_JW1ZWH5B4R6FXJM3X2K41NRZ6P",
+      "prop_13Z46E8S0DVQMD9QXBE6CDS0CF",
+      "prop_EV356KV2B8PS2XDNDGM7JRFDSC"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_8ADCCWBXRK8X69EAFY30PGN4SD",
+        "isId": false,
+        "name": "missionCollection",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_ZXWN4GKT975S371YFYF3E1DRZ0"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0R2YRXVYSPEEDYSRE7SR9GQ",
+        "isId": false,
+        "name": "completeAcquireActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_2KV74FVT69TN7Z0QZ804K1CA6F",
+        "isId": false,
+        "name": "counter",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_JW1ZWH5B4R6FXJM3X2K41NRZ6P",
+        "isId": false,
+        "name": "targetValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_13Z46E8S0DVQMD9QXBE6CDS0CF",
+        "isId": false,
+        "name": "completed",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_EV356KV2B8PS2XDNDGM7JRFDSC",
+        "isId": false,
+        "name": "received",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Receive",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2Mission:MissionTaskModel.Complete",
+      "targetResource": {
+        "resourceId": "97e2eb72-ce85-4fdd-8c8d-01bcfdd8498b",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-mission"
+      }
+    }
+  ],
+  "description": "",
+  "id": "dt_P8YA8929576H08C2Q4YBE5KJXT",
+  "kind": "local",
+  "name": "Mission",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Inventory"
+      }
+    ]
+  },
+  "id": "afdb24fa-c015-4d1f-acd4-44b973213010",
+  "location": {
+    "modelName": "SimpleInventoryModel",
+    "service": "inventory"
+  }
+}

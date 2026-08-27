@@ -1,0 +1,74 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+            "typeName": "EquipmentEnchantOption"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resourceName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+            "typeName": "EquipmentEnchantOption"
+          },
+          "propertyId": "prop_01M0C84Y322KQSQH802HVDHC06"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resourceValue",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+            "typeName": "EquipmentEnchantOption"
+          },
+          "propertyId": "prop_01M0C84Y32ZBF6RHYW41VPWFA2"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "weight",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+            "typeName": "EquipmentEnchantOption"
+          },
+          "propertyId": "prop_01M0C84Y32EXX5ACY856FE9P29"
+        }
+      }
+    ]
+  },
+  "id": "edd100a0-19f7-5c09-87f3-4c2582410c07",
+  "index": 0,
+  "location": {
+    "modelName": "RarityParameterValueModel",
+    "service": "enchant"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+    "typeName": "EquipmentEnchantOption"
+  }
+}

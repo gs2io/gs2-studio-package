@@ -1,0 +1,91 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_3K3QTNRR66PZ8K2AQ3WCNYPT2R",
+      "prop_01M0R2YRXVDV9PNGK6TPKY0V1E",
+      "prop_0PJDRHCVVR80R8R1SEY2KMGEQH"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_3K3QTNRR66PZ8K2AQ3WCNYPT2R",
+        "isId": false,
+        "name": "resetDayOfWeek",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "sunday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0R2YRXVDV9PNGK6TPKY0V1E",
+        "isId": false,
+        "name": "resetDayOfMonth",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_0PJDRHCVVR80R8R1SEY2KMGEQH",
+        "isId": false,
+        "name": "resetHour",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
+  "kind": "local",
+  "name": "MissionSetting",
+  "singleEntry": true,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

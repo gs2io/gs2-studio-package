@@ -1,0 +1,28 @@
+{
+  "id": "c1ba1ae8-a642-47cd-928d-fa477649d268",
+  "items": [
+    {
+      "componentClassName": "PriceValue",
+      "id": "65de7fc5-b2c3-4d77-95d8-6ec5ed49331c",
+      "kind": "value",
+      "name": "StorePrice",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_NW3JXP6ZEQE4DP99TJHZEB68AD"
+      }
+    },
+    {
+      "componentClassName": "PriceLabel",
+      "id": "bb869c48-ea89-4e61-91e3-161e1208a2e2",
+      "kind": "label",
+      "name": "StorePrice",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_NW3JXP6ZEQE4DP99TJHZEB68AD"
+      }
+    }
+  ],
+  "name": "StorePrice",
+  "targetDomainType": "StorePrice",
+  "targetDomainTypeId": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M"
+}

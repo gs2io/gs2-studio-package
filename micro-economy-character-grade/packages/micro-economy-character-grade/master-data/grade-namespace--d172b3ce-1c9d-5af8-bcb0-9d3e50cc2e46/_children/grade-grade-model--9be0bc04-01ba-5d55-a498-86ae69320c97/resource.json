@@ -1,0 +1,39 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterGrade"
+      }
+    ]
+  },
+  "id": "9be0bc04-01ba-5d55-a498-86ae69320c97",
+  "location": {
+    "modelName": "GradeModel",
+    "service": "grade"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          },
+          {
+            "grnKeyName": "experienceName",
+            "sourceKeyName": "experienceName"
+          }
+        ],
+        "mountedResourceId": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
+        "parameterName": "experienceModelId"
+      }
+    ]
+  }
+}

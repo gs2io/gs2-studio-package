@@ -1,0 +1,54 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_F0JZV41MJ57SFQPQ6BMB80HDAZ"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_F0JZV41MJ57SFQPQ6BMB80HDAZ",
+        "isId": false,
+        "name": "enableFakeReceipt",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "Accept",
+            "Reject"
+          ]
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_BMT0H7ME2SSDZRHGNZF012YZVR",
+  "kind": "local",
+  "name": "CurrencyStore",
+  "singleEntry": true,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

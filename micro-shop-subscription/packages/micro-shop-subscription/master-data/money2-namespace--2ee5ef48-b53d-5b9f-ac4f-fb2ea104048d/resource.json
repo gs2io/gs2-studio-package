@@ -1,0 +1,130 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "changeSubscriptionStatusNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "currencyUsagePriority",
+        "value": "PrioritizeFree"
+      },
+      {
+        "kind": "static",
+        "parameterName": "depositBalanceScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Subscription"
+      },
+      {
+        "kind": "static",
+        "parameterName": "platformSetting.appleAppStore",
+        "value": {
+          "bundleId": null,
+          "issuerId": null,
+          "keyId": null,
+          "privateKeyPem": null,
+          "sharedSecretKey": null
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "platformSetting.fake.acceptFakeReceipt",
+        "value": "Reject"
+      },
+      {
+        "kind": "static",
+        "parameterName": "platformSetting.googlePlay",
+        "value": {
+          "packageName": null,
+          "publicKey": null
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "renewScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "sharedFreeCurrency",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "subscribeScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "takeOverScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "unsubscribeScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "verifyReceiptScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "withdrawBalanceScript",
+        "value": null
+      }
+    ]
+  },
+  "id": "2ee5ef48-b53d-5b9f-ac4f-fb2ea104048d",
+  "location": {
+    "modelName": "Namespace",
+    "service": "money2"
+  }
+}

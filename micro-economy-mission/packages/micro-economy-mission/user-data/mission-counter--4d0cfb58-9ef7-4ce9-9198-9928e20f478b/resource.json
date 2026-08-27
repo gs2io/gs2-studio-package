@@ -1,0 +1,111 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "counterId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "name"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "values"
+      },
+      {
+        "entries": [
+          {
+            "projections": [
+              {
+                "fieldName": "value",
+                "targetPropertyId": "prop_DH1MQSPSZ68EZDG80Q3KWZNQW8"
+              }
+            ],
+            "selectors": [
+              {
+                "fieldName": "scopeType",
+                "value": "resetTiming"
+              },
+              {
+                "fieldName": "resetType",
+                "value": "daily"
+              }
+            ]
+          },
+          {
+            "projections": [
+              {
+                "fieldName": "value",
+                "targetPropertyId": "prop_N44ZVTGEN3XNPFT4YSNP5R8222"
+              }
+            ],
+            "selectors": [
+              {
+                "fieldName": "scopeType",
+                "value": "resetTiming"
+              },
+              {
+                "fieldName": "resetType",
+                "value": "weekly"
+              }
+            ]
+          },
+          {
+            "projections": [
+              {
+                "fieldName": "value",
+                "targetPropertyId": "prop_RP2T1J9MWSNMXEXJQF15E76R42"
+              }
+            ],
+            "selectors": [
+              {
+                "fieldName": "scopeType",
+                "value": "resetTiming"
+              },
+              {
+                "fieldName": "resetType",
+                "value": "monthly"
+              }
+            ]
+          },
+          {
+            "projections": [
+              {
+                "fieldName": "value",
+                "targetPropertyId": "prop_E7ANH0AETFGP8XNYN524JTT1KG"
+              }
+            ],
+            "selectors": [
+              {
+                "fieldName": "scopeType",
+                "value": "resetTiming"
+              },
+              {
+                "fieldName": "resetType",
+                "value": "notReset"
+              }
+            ]
+          }
+        ],
+        "kind": "elementProjection",
+        "parameterName": "values",
+        "targetMountPath": {
+          "kind": "local",
+          "typeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE",
+          "typeName": "MissionCounter"
+        }
+      }
+    ],
+    "declaredMasterLinkId": "bf3c01f3-3c65-4c02-ab65-3a5f8ab7ab17"
+  },
+  "id": "4d0cfb58-9ef7-4ce9-9198-9928e20f478b",
+  "location": {
+    "modelName": "Counter",
+    "service": "mission"
+  }
+}

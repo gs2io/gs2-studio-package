@@ -1,0 +1,88 @@
+{
+  "compositeKey": [
+    "prop_01M0C5QTC1PT2SC2DM4MFFH880",
+    "prop_01M0C5QTC1DSVX6VMXA31P7T1R"
+  ],
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C5QTC1PT2SC2DM4MFFH880",
+      "prop_01M0C5QTC1DSVX6VMXA31P7T1R",
+      "prop_01M0C5QTC1XDPQC02MC3PAHSFT"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_01M0C5QTC1PT2SC2DM4MFFH880",
+        "isId": false,
+        "name": "ranking",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Best rank that misses this reward tier",
+        "id": "prop_01M0C5QTC1DSVX6VMXA31P7T1R",
+        "isId": false,
+        "name": "thresholdRank",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0C5QTC1XDPQC02MC3PAHSFT",
+        "isId": false,
+        "name": "acquireActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C5QTC12JW853EKK38QN42Z",
+  "kind": "local",
+  "name": "RankingReward",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

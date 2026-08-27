@@ -1,0 +1,47 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "initialMaxCapacity",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1YKD2ZM08CX2D22TCPED995K2N",
+            "typeName": "CharacterFormation"
+          },
+          "propertyId": "prop_1X7P75QB2PQR3A35AG6CAWPXZ6"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maxCapacity",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1YKD2ZM08CX2D22TCPED995K2N",
+            "typeName": "CharacterFormation"
+          },
+          "propertyId": "prop_ASEE9H5F0YR01T0HPZTY19XY2V"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterFormation"
+      }
+    ]
+  },
+  "id": "37387f56-db71-4fd6-a740-7b076aef652e",
+  "location": {
+    "modelName": "MoldModel",
+    "service": "formation"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_1YKD2ZM08CX2D22TCPED995K2N",
+    "typeName": "CharacterFormation"
+  }
+}

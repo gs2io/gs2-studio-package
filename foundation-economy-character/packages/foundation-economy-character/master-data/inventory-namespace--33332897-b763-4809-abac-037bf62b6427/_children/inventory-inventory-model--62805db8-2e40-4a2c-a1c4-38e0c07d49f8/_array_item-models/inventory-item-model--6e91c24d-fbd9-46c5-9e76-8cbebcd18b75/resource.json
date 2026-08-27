@@ -1,0 +1,53 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "allowMultipleStacks",
+        "value": true
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+            "typeName": "Character"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "sortValue",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+            "typeName": "Character"
+          },
+          "propertyId": "prop_A5DDXX9AZGPBWRFX70X1ZKNR0E"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "stackingLimit",
+        "value": 1
+      }
+    ]
+  },
+  "id": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75",
+  "index": 0,
+  "location": {
+    "modelName": "ItemModel",
+    "service": "inventory"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+    "typeName": "Character"
+  }
+}

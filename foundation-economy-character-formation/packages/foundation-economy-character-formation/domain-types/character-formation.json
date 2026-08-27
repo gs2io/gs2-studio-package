@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_1X7P75QB2PQR3A35AG6CAWPXZ6",
+      "prop_ASEE9H5F0YR01T0HPZTY19XY2V",
+      "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_1X7P75QB2PQR3A35AG6CAWPXZ6",
+        "isId": false,
+        "name": "initialSaveArea",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_ASEE9H5F0YR01T0HPZTY19XY2V",
+        "isId": false,
+        "name": "maximumSaveArea",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6",
+        "isId": false,
+        "name": "currentSaveArea",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_1YKD2ZM08CX2D22TCPED995K2N",
+  "kind": "local",
+  "name": "CharacterFormation",
+  "singleEntry": true,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

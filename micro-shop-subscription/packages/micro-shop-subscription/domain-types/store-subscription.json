@@ -1,0 +1,169 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0CE237D5ER8RDFM5F4F4QCQ",
+      "prop_01M0CE237DEBCTSTSKYSEH3BPN",
+      "prop_01M0CE237D2Q5QJSYBCJE3DYDF",
+      "prop_01M0CE237DZ14S65879MV4WY1P",
+      "prop_01M0CE237DDMQT88WD8W9RPTW6",
+      "prop_01M0CE237D39D2M4M4KB0M0KCV",
+      "prop_01M0CE237DDQTHVY262VCGK4M1",
+      "prop_01M0CE237D2M31JVETVEWNWH0G"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "App Store subscription group",
+        "id": "prop_01M0CE237D5ER8RDFM5F4F4QCQ",
+        "isId": false,
+        "name": "appleSubscriptionGroupIdentifier",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Google Play subscription product",
+        "id": "prop_01M0CE237DEBCTSTSKYSEH3BPN",
+        "isId": false,
+        "name": "googlePlayProductId",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "Trigger pulled each time the subscription renews",
+        "id": "prop_01M0CE237D2Q5QJSYBCJE3DYDF",
+        "isId": false,
+        "name": "renewalTrigger",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Whether a renewal extends exactly or rounds to an hour",
+        "id": "prop_01M0CE237DZ14S65879MV4WY1P",
+        "isId": false,
+        "name": "triggerExtendMode",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "just",
+            "rollupHour"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Hour renewals round to",
+        "id": "prop_01M0CE237DDMQT88WD8W9RPTW6",
+        "isId": false,
+        "name": "rollupHour",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Days before expiry that the store may re-bill",
+        "id": "prop_01M0CE237D39D2M4M4KB0M0KCV",
+        "isId": false,
+        "name": "reallocateSpanDays",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Whether the player currently holds it",
+        "id": "prop_01M0CE237DDQTHVY262VCGK4M1",
+        "isId": false,
+        "name": "status",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "active",
+            "inactive"
+          ]
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "When it lapses",
+        "id": "prop_01M0CE237D2M31JVETVEWNWH0G",
+        "isId": false,
+        "name": "expiresAt",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0CE237DZF21KW81CJ2BP1WN",
+  "kind": "local",
+  "name": "StoreSubscription",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "challengePeriodEventId",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE",
+            "typeName": "MissionCounter"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "bf3c01f3-3c65-4c02-ab65-3a5f8ab7ab17",
+  "location": {
+    "modelName": "CounterModel",
+    "service": "mission"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE",
+    "typeName": "MissionCounter"
+  }
+}

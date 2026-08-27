@@ -1,0 +1,57 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "defaultMaximumIdleMinutes",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
+            "typeName": "IdleStatus"
+          },
+          "propertyId": "prop_Y84GE13M8Y5K1KVMS5X9E2TEF8"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "idlePeriodScheduleId",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Idle"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receivePeriodScheduleId",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "rewardIntervalMinutes",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
+            "typeName": "IdleStatus"
+          },
+          "propertyId": "prop_CGEEBE9H9P5MW0MD82N6AW2GZJ"
+        }
+      }
+    ]
+  },
+  "id": "e2079f30-5204-49e7-8898-254c4f59f23e",
+  "location": {
+    "modelName": "CategoryModel",
+    "service": "idle"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
+    "typeName": "IdleStatus"
+  }
+}

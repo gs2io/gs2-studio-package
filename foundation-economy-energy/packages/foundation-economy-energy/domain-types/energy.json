@@ -1,0 +1,163 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_3ED1FAC3V82FG3Z4QEMXRF1BJE",
+      "prop_1QXN33T7DVRHC1P1C2D0ECXPQP",
+      "prop_64XY03QAD08E4FQMCQQG039HZ9",
+      "prop_XCA5D46XQKYD37PNGVYA1HH9S9",
+      "prop_NQG4GN9X1R4HTWE275H4JXJHFK",
+      "prop_XFMYM93GTF2261GG2KNVHC9V5K",
+      "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR",
+      "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_3ED1FAC3V82FG3Z4QEMXRF1BJE",
+        "isId": false,
+        "name": "defaultMaximum",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_1QXN33T7DVRHC1P1C2D0ECXPQP",
+        "isId": false,
+        "name": "useOverflow",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_64XY03QAD08E4FQMCQQG039HZ9",
+        "isId": false,
+        "name": "overflowedMaximum",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_XCA5D46XQKYD37PNGVYA1HH9S9",
+        "isId": false,
+        "name": "recoveryIntervalMinutes",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_NQG4GN9X1R4HTWE275H4JXJHFK",
+        "isId": false,
+        "name": "recoveryValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_XFMYM93GTF2261GG2KNVHC9V5K",
+        "isId": false,
+        "name": "currentValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR",
+        "isId": false,
+        "name": "currentMaximumValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ",
+        "isId": false,
+        "name": "nextRecoverdAt",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
+  "kind": "local",
+  "name": "Energy",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

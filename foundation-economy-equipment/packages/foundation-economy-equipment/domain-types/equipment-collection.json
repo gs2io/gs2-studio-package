@@ -1,0 +1,99 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_0W6ZJVBD4FKRF1KAVPN5HE001Y",
+      "prop_J93B9BA3YNMZ1C1K5TDZRDA17W",
+      "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4",
+      "prop_SNZ882933CSX0MRPEPQ1VVE4EQ"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_0W6ZJVBD4FKRF1KAVPN5HE001Y",
+        "isId": false,
+        "name": "defaultCapacity",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_J93B9BA3YNMZ1C1K5TDZRDA17W",
+        "isId": false,
+        "name": "maximumCapacity",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4",
+        "isId": false,
+        "name": "currentCapacityUsage",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ",
+        "isId": false,
+        "name": "currentMaximumCapacity",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_FANPG561806ENHYPWV5YRDSHC7",
+  "kind": "local",
+  "name": "EquipmentCollection",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

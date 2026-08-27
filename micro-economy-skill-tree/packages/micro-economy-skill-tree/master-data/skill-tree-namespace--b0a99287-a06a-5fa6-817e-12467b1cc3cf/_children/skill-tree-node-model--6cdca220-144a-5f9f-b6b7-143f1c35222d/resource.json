@@ -1,0 +1,60 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+            "typeName": "SkillNode"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "premiseNodeNames",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+            "typeName": "SkillNode"
+          },
+          "propertyId": "prop_01M0C87BJC76SJF2PA9P05K5QH"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "restrainReturnRate",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+            "typeName": "SkillNode"
+          },
+          "propertyId": "prop_01M0C87BJCQ0PCKG2FJQ0H767B"
+        }
+      }
+    ]
+  },
+  "id": "6cdca220-144a-5f9f-b6b7-143f1c35222d",
+  "location": {
+    "modelName": "NodeModel",
+    "service": "skillTree"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+    "typeName": "SkillNode"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "action",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+              "typeName": "Gacha"
+            },
+            "propertyId": "prop_RG77EYB1G23KWGEYNTSCG96JNN"
+          },
+          "kind": "parent",
+          "parentResourceId": "0247d4b6-2edd-5cbd-b4f7-673903721915"
+        }
+      }
+    ]
+  },
+  "id": "a0e5b492-134a-5c5c-886e-773664d0f084",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+    "typeName": "Gacha"
+  }
+}

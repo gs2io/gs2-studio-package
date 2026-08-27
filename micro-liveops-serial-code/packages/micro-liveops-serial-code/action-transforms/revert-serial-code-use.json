@@ -1,0 +1,52 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "a87d46cf-c8fd-58d7-8a96-8cb2419a3f32",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "RevertSerialCodeUse",
+  "outputs": [
+    {
+      "actionName": "Gs2SerialKey:RevertUseByUserId",
+      "conditions": [],
+      "id": "out_01M0C5VXZYNQ8HDGY7XTSR7VK9",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "code",
+          "sourceParameter": "code"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "a87d46cf-c8fd-58d7-8a96-8cb2419a3f32",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01M0C5VXZYG5SYSJABGF8Z0B9R",
+      "name": "code",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_JV8X380AFH866SVX2HJR3FMP4V",
+      "prop_Q1QVGEVNDQ31WXBSQ3CTK8PEYS",
+      "prop_JNSG2T4XZEK7T0RFFT4FHYS77N",
+      "prop_3YR1D04DTCR3QXF2102W5Z73PM",
+      "prop_BMCEB6H2XZYTXR2M1MCXV4M605",
+      "prop_E9DY9TY2D9Y1CY09MT7Z6DEYYF"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_JV8X380AFH866SVX2HJR3FMP4V",
+        "isId": false,
+        "name": "warningMajor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_Q1QVGEVNDQ31WXBSQ3CTK8PEYS",
+        "isId": false,
+        "name": "warningMinor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_JNSG2T4XZEK7T0RFFT4FHYS77N",
+        "isId": false,
+        "name": "warningMicro",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_3YR1D04DTCR3QXF2102W5Z73PM",
+        "isId": false,
+        "name": "errorMajor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_BMCEB6H2XZYTXR2M1MCXV4M605",
+        "isId": false,
+        "name": "errorMinor",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_E9DY9TY2D9Y1CY09MT7Z6DEYYF",
+        "isId": false,
+        "name": "errorMicro",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+  "kind": "local",
+  "name": "EmbeddedVersion",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

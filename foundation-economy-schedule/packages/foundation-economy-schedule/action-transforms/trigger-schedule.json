@@ -1,0 +1,67 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "TriggerSchedule",
+  "outputs": [
+    {
+      "actionName": "Gs2Schedule:ExtendTriggerByUserId",
+      "conditions": [],
+      "id": "out_01KKR3P8NQB54BE66VPKND2ZHS",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "triggerName",
+          "sourceParameter": "trigger"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "extendSeconds",
+          "sourceParameter": "extendSeconds"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KKR3P8NPJDAJKYTAF2R1S1G0",
+      "name": "trigger",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KKR3P8NQM08ZGAD9RMXRT5MT",
+      "name": "extendSeconds",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

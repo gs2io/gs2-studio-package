@@ -1,0 +1,88 @@
+{
+  "compositeKey": [
+    "prop_01M0CE422VGSQB9SXT2CHKNFFP",
+    "prop_01M0CE422VB0QC0K8VTSFSJ02Z"
+  ],
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0CE422VGSQB9SXT2CHKNFFP",
+      "prop_01M0CE422VB0QC0K8VTSFSJ02Z",
+      "prop_01M0CE422V7MQAXCS77903V6Y2"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_01M0CE422VGSQB9SXT2CHKNFFP",
+        "isId": false,
+        "name": "ranking",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Best rank that misses this reward tier",
+        "id": "prop_01M0CE422VB0QC0K8VTSFSJ02Z",
+        "isId": false,
+        "name": "thresholdRank",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0CE422V7MQAXCS77903V6Y2",
+        "isId": false,
+        "name": "acquireActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0CE422VDT5R1HBS4KHAF8RE",
+  "kind": "local",
+  "name": "GuildRankingReward",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

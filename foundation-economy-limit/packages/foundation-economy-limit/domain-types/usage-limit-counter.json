@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C6M2N3NJ15T88Q5QET2KVA",
+      "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3",
+      "prop_01M0C6M2N34YDGP2NCGNER2T39"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "The reset cadence this counter follows",
+        "id": "prop_01M0C6M2N3NJ15T88Q5QET2KVA",
+        "isId": false,
+        "name": "limit",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Times used since the last reset",
+        "id": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3",
+        "isId": false,
+        "name": "count",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Next reset time",
+        "id": "prop_01M0C6M2N34YDGP2NCGNER2T39",
+        "isId": false,
+        "name": "nextResetAt",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C6M2N38KVHBHTC1JBRT5YA",
+  "kind": "local",
+  "name": "UsageLimitCounter",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

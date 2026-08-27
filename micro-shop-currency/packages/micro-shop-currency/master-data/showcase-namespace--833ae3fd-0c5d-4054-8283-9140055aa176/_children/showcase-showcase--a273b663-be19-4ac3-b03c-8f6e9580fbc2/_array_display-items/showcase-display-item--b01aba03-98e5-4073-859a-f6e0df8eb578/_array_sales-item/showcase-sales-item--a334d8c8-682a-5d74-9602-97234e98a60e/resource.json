@@ -1,0 +1,35 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
+            "typeName": "StoreProduct"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "a334d8c8-682a-5d74-9602-97234e98a60e",
+  "index": 0,
+  "location": {
+    "modelName": "SalesItem",
+    "service": "showcase"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
+    "typeName": "StoreProduct"
+  }
+}

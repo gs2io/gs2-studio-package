@@ -1,0 +1,135 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C89EMY0MGFC92HZCRAXG3M",
+      "prop_01M0C89EMZPTFXVVWJ02HQV42R",
+      "prop_01M0C89EMZW9H9204T4H2A3A8M",
+      "prop_01M0C89EMZN9KJE2M0EAK71926",
+      "prop_01M0C89EMZHA1Y39YTQZ9227ET",
+      "prop_01M0C89EMZR18VJ7SD7SHZYYWH"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "How the rate combines with the original value",
+        "id": "prop_01M0C89EMY0MGFC92HZCRAXG3M",
+        "isId": false,
+        "name": "expression",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "rate_add",
+            "mul",
+            "value_add"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Action whose result is scaled, e.g. Gs2Inventory:AcquireItemSetByUserId",
+        "id": "prop_01M0C89EMZPTFXVVWJ02HQV42R",
+        "isId": false,
+        "name": "targetActionName",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Field of that action's request to scale, e.g. acquireCount",
+        "id": "prop_01M0C89EMZW9H9204T4H2A3A8M",
+        "isId": false,
+        "name": "targetFieldName",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Multiplier applied",
+        "id": "prop_01M0C89EMZN9KJE2M0EAK71926",
+        "isId": false,
+        "name": "rate",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "float32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Order among buffs touching the same field",
+        "id": "prop_01M0C89EMZHA1Y39YTQZ9227ET",
+        "isId": false,
+        "name": "priority",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "Period the buff is active for",
+        "id": "prop_01M0C89EMZR18VJ7SD7SHZYYWH",
+        "isId": false,
+        "name": "schedule",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C89EMY1KAND5SNBFR7N0GQ",
+  "kind": "local",
+  "name": "Buff",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

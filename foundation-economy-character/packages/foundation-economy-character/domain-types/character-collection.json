@@ -1,0 +1,99 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_3THQSBRP9PCYM426V54R4CZ8BF",
+      "prop_A3GQRDCNGWBQCT773D3173ZMN1",
+      "prop_3MYYM6EEDJBYJCPMK4SRJFM58Q",
+      "prop_WJ08C0DHN3KEMP4GW454S2KM0Q"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_3THQSBRP9PCYM426V54R4CZ8BF",
+        "isId": false,
+        "name": "maximumCapacity",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_A3GQRDCNGWBQCT773D3173ZMN1",
+        "isId": false,
+        "name": "defaultCapacity",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_3MYYM6EEDJBYJCPMK4SRJFM58Q",
+        "isId": false,
+        "name": "currentCpacityUsage",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_WJ08C0DHN3KEMP4GW454S2KM0Q",
+        "isId": false,
+        "name": "currentCpacity",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
+  "kind": "local",
+  "name": "CharacterCollection",
+  "singleEntry": true,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

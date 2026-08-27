@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C84Y3236PN0MXQNS8GXGKR",
+      "prop_01M0C84Y32TQRT07W6CT9MCVZM",
+      "prop_01M0C84Y32K8455NCTCVPXBKC0"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_01M0C84Y3236PN0MXQNS8GXGKR",
+        "isId": false,
+        "name": "enchant",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Number of bonuses rolled",
+        "id": "prop_01M0C84Y32TQRT07W6CT9MCVZM",
+        "isId": false,
+        "name": "count",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Relative draw weight",
+        "id": "prop_01M0C84Y32K8455NCTCVPXBKC0",
+        "isId": false,
+        "name": "weight",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C84Y32MFW05C5TXC61W1SR",
+  "kind": "local",
+  "name": "EquipmentEnchantSlotChance",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

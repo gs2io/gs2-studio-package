@@ -1,0 +1,12 @@
+{
+  "id": "login-bonus-event",
+  "kind": "authored",
+  "rowKey": "row_0X5P3WSVPACK6FQZ1QBMP8X7DG",
+  "typeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+  "values": {
+    "prop_763BX5C31PKQPVJ692CKG0C998": 1735689600000,
+    "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6": "absolute",
+    "prop_XSTG0QAVN2ADJHS1Q50PXHNY89": "always",
+    "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T": 1704067200000
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_1CD4Q461VBGWZXEWXYD3WZAT37"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_1CD4Q461VBGWZXEWXYD3WZAT37",
+        "isId": false,
+        "name": "slots",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "elementType": {
+            "kind": "inline",
+            "targetTypeId": "dt_MZT04J9C7W1562STKR3XCTC257"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_JY9NED2YYCSG1HXPQ1J0X9WQXW",
+  "kind": "local",
+  "name": "CharacterFormationForm",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

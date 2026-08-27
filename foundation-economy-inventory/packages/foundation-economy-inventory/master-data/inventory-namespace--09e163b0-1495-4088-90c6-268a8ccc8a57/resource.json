@@ -1,0 +1,16 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Inventory"
+      }
+    ]
+  },
+  "id": "09e163b0-1495-4088-90c6-268a8ccc8a57",
+  "location": {
+    "modelName": "Namespace",
+    "service": "inventory"
+  }
+}

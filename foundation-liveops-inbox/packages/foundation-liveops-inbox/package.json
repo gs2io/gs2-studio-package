@@ -1,0 +1,30 @@
+{
+  "id": "foundation-liveops-inbox",
+  "name": "foundation-liveops-inbox",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Delivers announcements and item-attached messages from the operator to players.",
+      "ja": "運営からのお知らせや、アイテム付きメッセージをプレイヤーに届けます。"
+    },
+    "domainTypes": {
+      "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD": {
+        "label": {
+          "en": "Global message",
+          "ja": "全体メッセージ"
+        }
+      },
+      "dt_GVTDXY1KW1X831ABJENERKSHZA": {
+        "label": {
+          "en": "Message",
+          "ja": "メッセージ"
+        }
+      }
+    },
+    "label": {
+      "en": "Inbox",
+      "ja": "お知らせ・受信箱"
+    }
+  }
+}

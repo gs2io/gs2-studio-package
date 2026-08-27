@@ -1,0 +1,21 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterEquipment"
+      }
+    ]
+  },
+  "id": "ecd79306-b165-53b0-8b2c-5baf0db143a8",
+  "location": {
+    "modelName": "PropertyFormModel",
+    "service": "formation"
+  }
+}

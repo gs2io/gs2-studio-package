@@ -1,0 +1,76 @@
+{
+  "category": "consume",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "DeleteEquipment",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:ConsumeItemSetByUserId",
+      "conditions": [],
+      "id": "out_01KJSZCR4RJ05MYX523F1NRBFZ",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "itemName",
+          "sourceParameter": "equipment"
+        },
+        {
+          "kind": "static",
+          "parameterName": "consumeCount",
+          "value": 1
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "itemSetName",
+          "sourceParameter": "equipmentPropertyId"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KJSZDBSX9FKEMJW6AZEN8VWJ",
+      "name": "equipment",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KJSZCDH2E1VKT8CVBJRJJAH4",
+      "name": "equipmentPropertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

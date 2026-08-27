@@ -1,0 +1,36 @@
+{
+  "id": "foundation-economy-currency",
+  "name": "foundation-economy-currency",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Manages an in-game currency balance (wallet) and the products it can buy.",
+      "ja": "ゲーム内通貨の残高（ウォレット）と、通貨で買える商品を扱います。"
+    },
+    "domainTypes": {
+      "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5": {
+        "label": {
+          "en": "Wallet",
+          "ja": "ウォレット"
+        }
+      },
+      "dt_BMT0H7ME2SSDZRHGNZF012YZVR": {
+        "label": {
+          "en": "Currency store",
+          "ja": "通貨ストア"
+        }
+      },
+      "dt_JQQFPC83PRYTWMZ43RV3T4SKSB": {
+        "label": {
+          "en": "Store product",
+          "ja": "ストア商品"
+        }
+      }
+    },
+    "label": {
+      "en": "Currency",
+      "ja": "通貨"
+    }
+  }
+}

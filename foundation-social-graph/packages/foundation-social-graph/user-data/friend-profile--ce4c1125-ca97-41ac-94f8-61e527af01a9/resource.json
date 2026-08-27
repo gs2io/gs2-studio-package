@@ -1,0 +1,69 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "followerProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
+              "typeName": "Profile"
+            },
+            "propertyId": "prop_WN6CSPS3DDQ40TR3VG8PYNTMPM"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "friendProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
+              "typeName": "Profile"
+            },
+            "propertyId": "prop_5N09J4Q6RV5N2EGDPKMW77WWD0"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "profileId"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "publicProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
+              "typeName": "Profile"
+            },
+            "propertyId": "prop_6KVAE2J57GWW44BA6BWE76HNX4"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
+      "typeName": "Profile"
+    }
+  },
+  "id": "ce4c1125-ca97-41ac-94f8-61e527af01a9",
+  "location": {
+    "modelName": "Profile",
+    "service": "friend"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "foundation-economy-inventory",
+  "name": "foundation-economy-inventory",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Basic inventory management for items the player owns.",
+      "ja": "プレイヤーが所持するアイテムの基本的な在庫管理です。"
+    },
+    "domainTypes": {
+      "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6": {
+        "label": {
+          "en": "Item",
+          "ja": "アイテム"
+        }
+      }
+    },
+    "label": {
+      "en": "Items",
+      "ja": "アイテム"
+    }
+  }
+}

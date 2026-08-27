@@ -1,0 +1,9 @@
+{
+  "id": "sample-child-restoration",
+  "name": "sample-child-restoration",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+  }
+}

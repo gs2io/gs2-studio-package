@@ -1,0 +1,22 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterFormation"
+      }
+    ]
+  },
+  "id": "01c53022-dec4-4a7a-8bf2-3fea442cdb05",
+  "index": 0,
+  "location": {
+    "modelName": "FormModel",
+    "service": "formation"
+  }
+}

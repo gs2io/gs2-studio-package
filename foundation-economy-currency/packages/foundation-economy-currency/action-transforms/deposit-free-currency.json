@@ -1,0 +1,67 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "DepositFreeCurrency",
+  "outputs": [
+    {
+      "actionName": "Gs2Money2:DepositByUserId",
+      "conditions": [],
+      "id": "out_01KMYVXWW0VPQBFM6RHHBYJ8R2",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "slot",
+          "value": "#{slot}"
+        },
+        {
+          "kind": "static",
+          "parameterName": "depositTransactions[0].price",
+          "value": 0
+        },
+        {
+          "kind": "static",
+          "parameterName": "depositTransactions[0].currency",
+          "value": ""
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "depositTransactions[0].count",
+          "sourceParameter": "count"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KMYVXWVZT5FGVJAPKRDBVAPP",
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

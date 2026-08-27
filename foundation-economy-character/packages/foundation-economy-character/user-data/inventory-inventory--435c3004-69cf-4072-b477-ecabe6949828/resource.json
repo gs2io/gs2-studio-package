@@ -1,0 +1,54 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "currentInventoryCapacityUsage",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
+              "typeName": "CharacterCollection"
+            },
+            "propertyId": "prop_3MYYM6EEDJBYJCPMK4SRJFM58Q"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "currentInventoryMaxCapacity",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
+              "typeName": "CharacterCollection"
+            },
+            "propertyId": "prop_WJ08C0DHN3KEMP4GW454S2KM0Q"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "inventoryId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "inventoryName"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "62805db8-2e40-4a2c-a1c4-38e0c07d49f8"
+  },
+  "id": "435c3004-69cf-4072-b477-ecabe6949828",
+  "location": {
+    "modelName": "Inventory",
+    "service": "inventory"
+  }
+}

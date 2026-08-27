@@ -1,0 +1,44 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "bonusModelName"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "receiveStatusId"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "receivedSteps",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+              "typeName": "LoginReward"
+            },
+            "propertyId": "prop_ZXRNPBQQCJM49N2Z27FQETSRWY"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "3bdf98b6-23a1-57f3-9e76-518e6a1eb187",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+      "typeName": "LoginReward"
+    }
+  },
+  "id": "36085262-1664-4dfe-a472-c1f8a886ec52",
+  "location": {
+    "modelName": "ReceiveStatus",
+    "service": "loginReward"
+  }
+}

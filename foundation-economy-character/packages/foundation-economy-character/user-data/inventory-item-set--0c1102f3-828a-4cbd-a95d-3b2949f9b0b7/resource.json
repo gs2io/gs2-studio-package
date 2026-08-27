@@ -1,0 +1,51 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "count"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "inventoryName"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "itemName"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "itemSetId",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+              "typeName": "Character"
+            },
+            "propertyId": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "name"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "sortValue"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75"
+  },
+  "id": "0c1102f3-828a-4cbd-a95d-3b2949f9b0b7",
+  "location": {
+    "modelName": "ItemSet",
+    "service": "inventory"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Version"
+      }
+    ]
+  },
+  "id": "95af84e6-cd24-4944-8bed-f69cde2524c5",
+  "location": {
+    "modelName": "Namespace",
+    "service": "version"
+  }
+}

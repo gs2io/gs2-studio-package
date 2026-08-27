@@ -1,0 +1,11 @@
+{
+  "id": "tier3.JPY",
+  "kind": "authored",
+  "rowKey": "row_0BYQSGC5AVJNP2D2FCP3HDBJAJ",
+  "typeId": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
+  "values": {
+    "prop_4QH1Q546W880NVDGJRGNVCWV07": "tier3",
+    "prop_HWY29H9JCBTCX27T4BQDSTJMV0": "JPY",
+    "prop_NW3JXP6ZEQE4DP99TJHZEB68AD": 300
+  }
+}

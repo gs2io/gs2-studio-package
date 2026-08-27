@@ -1,0 +1,73 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "absoluteBegin",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+              "typeName": "GlobalMessage"
+            },
+            "propertyId": "prop_HPG95V898A9A7JCSM2KEV88PVG"
+          },
+          "kind": "parent",
+          "parentResourceId": "24e0afbb-a250-4a3f-ab0c-92598ecbd50b"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "absoluteEnd",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+              "typeName": "GlobalMessage"
+            },
+            "propertyId": "prop_925R3E1XPBXGDG9D4H5MZBXMBK"
+          },
+          "kind": "parent",
+          "parentResourceId": "24e0afbb-a250-4a3f-ab0c-92598ecbd50b"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+            "typeName": "GlobalMessage"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "repeatSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "scheduleType",
+        "value": "absolute"
+      }
+    ]
+  },
+  "id": "bebd57f3-e725-4e2b-8a79-994b1403fde4",
+  "location": {
+    "modelName": "Event",
+    "service": "schedule"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+    "typeName": "GlobalMessage"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "micro-economy-character-grade",
+  "name": "micro-economy-character-grade",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-character": "file:../../../foundation-economy-character/packages/foundation-economy-character"
+  },
+  "display": {
+    "description": {
+      "en": "Promotes a character through grades, each raising its level cap, with per-step caps and eligibility.",
+      "ja": "キャラクターのグレードを上げてレベル上限を引き上げます。段階ごとに上限値と対象キャラクターを設定できます。"
+    },
+    "domainTypes": {
+      "dt_01M0C826WJ0HDTQG636AHV341M": {
+        "label": {
+          "en": "Character",
+          "ja": "キャラクター"
+        }
+      },
+      "dt_01M0C826WJAVB4NEKDQ1MYZY4X": {
+        "label": {
+          "en": "Grade step",
+          "ja": "グレード段階"
+        }
+      }
+    },
+    "label": {
+      "en": "Character Grades",
+      "ja": "キャラクター限界突破"
+    }
+  }
+}

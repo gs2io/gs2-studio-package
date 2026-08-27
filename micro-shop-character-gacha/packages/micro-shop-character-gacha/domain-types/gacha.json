@@ -1,0 +1,80 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_G9FT5R5K079VNPHKK15D46TRPC",
+      "prop_RG77EYB1G23KWGEYNTSCG96JNN"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_G9FT5R5K079VNPHKK15D46TRPC",
+        "isId": false,
+        "name": "schedule",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_RG77EYB1G23KWGEYNTSCG96JNN",
+        "isId": false,
+        "name": "consumeActions",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "consumeAction"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Buy",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
+      "targetResource": {
+        "resourceId": "b6c5895e-3066-423a-9090-04d803ad89e9",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-shop-character-gacha"
+      }
+    }
+  ],
+  "description": "",
+  "id": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+  "kind": "local",
+  "name": "Gacha",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

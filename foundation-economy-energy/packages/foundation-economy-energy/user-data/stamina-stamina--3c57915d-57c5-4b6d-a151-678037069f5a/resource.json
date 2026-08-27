@@ -1,0 +1,74 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "maxValue",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
+              "typeName": "Energy"
+            },
+            "propertyId": "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "nextRecoverAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
+              "typeName": "Energy"
+            },
+            "propertyId": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "overflowValue"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "staminaName"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "value",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
+              "typeName": "Energy"
+            },
+            "propertyId": "prop_XFMYM93GTF2261GG2KNVHC9V5K"
+          }
+        ]
+      }
+    ],
+    "declaredMasterLinkId": "a0e059f6-3e69-4083-8dd4-dbfc9161cbe5",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
+      "typeName": "Energy"
+    }
+  },
+  "id": "3c57915d-57c5-4b6d-a151-678037069f5a",
+  "location": {
+    "modelName": "Stamina",
+    "service": "stamina"
+  }
+}

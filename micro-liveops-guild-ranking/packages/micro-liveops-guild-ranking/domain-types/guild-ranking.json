@@ -1,0 +1,134 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0CE422VC02GDNEZDYXGVD89",
+      "prop_01M0CE422VHSW4QC9AHYXV815S",
+      "prop_01M0CE422VX2GRKKR10S2S34BA",
+      "prop_01M0CE422VR4DWYG9WPJ57GAVK",
+      "prop_01M0CE422VYRN7SXXKDDE3ET2G",
+      "prop_01M0CE422VSC746FPJK5JNQ11R"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_01M0CE422VC02GDNEZDYXGVD89",
+        "isId": false,
+        "name": "schedule",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Whether a higher or a lower score ranks first",
+        "id": "prop_01M0CE422VHSW4QC9AHYXV815S",
+        "isId": false,
+        "name": "orderDirection",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "asc",
+            "desc"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Accumulate submitted scores instead of keeping the best",
+        "id": "prop_01M0CE422VX2GRKKR10S2S34BA",
+        "isId": false,
+        "name": "sum",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Lowest score accepted",
+        "id": "prop_01M0CE422VR4DWYG9WPJ57GAVK",
+        "isId": false,
+        "name": "minimumValue",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Highest score accepted",
+        "id": "prop_01M0CE422VYRN7SXXKDDE3ET2G",
+        "isId": false,
+        "name": "maximumValue",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "The player's own score",
+        "id": "prop_01M0CE422VSC746FPJK5JNQ11R",
+        "isId": false,
+        "name": "score",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+  "kind": "local",
+  "name": "GuildRanking",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

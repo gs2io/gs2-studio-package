@@ -1,0 +1,30 @@
+{
+  "id": "foundation-economy-schedule",
+  "name": "foundation-economy-schedule",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Shared date-range and trigger infrastructure other features build on.",
+      "ja": "期間限定イベントなど、他の機能が使う日程・トリガーの共通基盤です。"
+    },
+    "domainTypes": {
+      "dt_55N8HND2SNZV1ZMCJS4NA2BTFD": {
+        "label": {
+          "en": "Schedule",
+          "ja": "スケジュール"
+        }
+      },
+      "dt_Y9Y1H4ZR4MS74D3YME76CEGJST": {
+        "label": {
+          "en": "Trigger",
+          "ja": "トリガー"
+        }
+      }
+    },
+    "label": {
+      "en": "Scheduling",
+      "ja": "スケジュール基盤"
+    }
+  }
+}

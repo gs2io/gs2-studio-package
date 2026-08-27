@@ -1,0 +1,103 @@
+{
+  "compositeKey": [
+    "prop_4QH1Q546W880NVDGJRGNVCWV07",
+    "prop_HWY29H9JCBTCX27T4BQDSTJMV0"
+  ],
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_4QH1Q546W880NVDGJRGNVCWV07",
+      "prop_HWY29H9JCBTCX27T4BQDSTJMV0",
+      "prop_NW3JXP6ZEQE4DP99TJHZEB68AD"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_4QH1Q546W880NVDGJRGNVCWV07",
+        "isId": false,
+        "name": "product",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_HWY29H9JCBTCX27T4BQDSTJMV0",
+        "isId": false,
+        "name": "currencyType",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_QM3KC8SJTDM4W54DTSPXM8HTRD"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_NW3JXP6ZEQE4DP99TJHZEB68AD",
+        "isId": false,
+        "name": "price",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "float64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Buy",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "quantity",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
+      "targetResource": {
+        "resourceId": "b01aba03-98e5-4073-859a-f6e0df8eb578",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-shop-currency"
+      }
+    }
+  ],
+  "description": "",
+  "id": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
+  "kind": "local",
+  "name": "StorePrice",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "id": "foundation-social-graph",
+  "name": "foundation-social-graph",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Handles friend requests, follows, and profiles — the connections between players.",
+      "ja": "フレンド申請・フォロー・プロフィールなど、プレイヤー同士のつながりを扱います。"
+    },
+    "domainTypes": {
+      "dt_12CDXGXXRQVPJVMA9VGATG195G": {
+        "label": {
+          "en": "Follow",
+          "ja": "フォロー"
+        }
+      },
+      "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C": {
+        "label": {
+          "en": "Incoming friend request",
+          "ja": "フレンド申請（受信）"
+        }
+      },
+      "dt_2NM467EMK37WAPSYGR7JJGVY8W": {
+        "label": {
+          "en": "Friend",
+          "ja": "フレンド"
+        }
+      },
+      "dt_TBCFR2E0A8DGCGR2RVHN4EQGR8": {
+        "label": {
+          "en": "Outgoing friend request",
+          "ja": "フレンド申請（送信）"
+        }
+      },
+      "dt_YHKCS7SG3P32HV1NWCAAT47AFB": {
+        "label": {
+          "en": "Profile",
+          "ja": "プロフィール"
+        }
+      }
+    },
+    "label": {
+      "en": "Friends & Profile",
+      "ja": "フレンド・プロフィール"
+    }
+  }
+}

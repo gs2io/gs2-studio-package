@@ -1,0 +1,51 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "completeId"
+      },
+      {
+        "childKeyPropertyId": "prop_reserved_id",
+        "childMountPath": {
+          "kind": "local",
+          "typeId": "dt_P8YA8929576H08C2Q4YBE5KJXT",
+          "typeName": "Mission"
+        },
+        "childTargetPropertyId": "prop_13Z46E8S0DVQMD9QXBE6CDS0CF",
+        "kind": "arrayMembership",
+        "parameterName": "completedMissionTaskNames"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "missionGroupName"
+      },
+      {
+        "childKeyPropertyId": "prop_reserved_id",
+        "childMountPath": {
+          "kind": "local",
+          "typeId": "dt_P8YA8929576H08C2Q4YBE5KJXT",
+          "typeName": "Mission"
+        },
+        "childTargetPropertyId": "prop_EV356KV2B8PS2XDNDGM7JRFDSC",
+        "kind": "arrayMembership",
+        "parameterName": "receivedMissionTaskNames"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "daff2a34-703e-4aea-a777-19e8fa874bd4",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_ZXWN4GKT975S371YFYF3E1DRZ0",
+      "typeName": "MissionCollection"
+    }
+  },
+  "id": "5af20f8e-719b-4ce5-bc6f-b98ef2a82f6e",
+  "location": {
+    "modelName": "Complete",
+    "service": "mission"
+  }
+}

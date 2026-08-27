@@ -1,0 +1,56 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "AddEquipmentCapacity",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:AddCapacityByUserId",
+      "conditions": [],
+      "id": "out_01KJSZFRFR8WP2S011GE4XENW7",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "addCapacityValue",
+          "sourceParameter": "value"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KJSZFHJ4CFGNT217PBF95XK6",
+      "name": "value",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

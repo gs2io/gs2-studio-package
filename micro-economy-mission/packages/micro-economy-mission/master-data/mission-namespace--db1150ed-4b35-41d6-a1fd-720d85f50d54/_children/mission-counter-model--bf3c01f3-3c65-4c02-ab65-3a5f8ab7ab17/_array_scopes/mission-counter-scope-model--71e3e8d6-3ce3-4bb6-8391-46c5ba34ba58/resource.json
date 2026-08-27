@@ -1,0 +1,69 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetDayOfWeek",
+        "source": {
+          "innerSource": {
+            "innerSource": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
+                "typeName": "MissionSetting"
+              },
+              "propertyId": "prop_3K3QTNRR66PZ8K2AQ3WCNYPT2R"
+            },
+            "kind": "parent",
+            "parentResourceId": "db1150ed-4b35-41d6-a1fd-720d85f50d54"
+          },
+          "kind": "parent",
+          "parentResourceId": "bf3c01f3-3c65-4c02-ab65-3a5f8ab7ab17"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetHour",
+        "source": {
+          "innerSource": {
+            "innerSource": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
+                "typeName": "MissionSetting"
+              },
+              "propertyId": "prop_0PJDRHCVVR80R8R1SEY2KMGEQH"
+            },
+            "kind": "parent",
+            "parentResourceId": "db1150ed-4b35-41d6-a1fd-720d85f50d54"
+          },
+          "kind": "parent",
+          "parentResourceId": "bf3c01f3-3c65-4c02-ab65-3a5f8ab7ab17"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "resetType",
+        "value": "weekly"
+      },
+      {
+        "kind": "static",
+        "parameterName": "scopeType",
+        "value": "resetTiming"
+      }
+    ]
+  },
+  "id": "71e3e8d6-3ce3-4bb6-8391-46c5ba34ba58",
+  "index": 1,
+  "location": {
+    "modelName": "CounterScopeModel",
+    "service": "mission"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE",
+    "typeName": "MissionCounter"
+  }
+}

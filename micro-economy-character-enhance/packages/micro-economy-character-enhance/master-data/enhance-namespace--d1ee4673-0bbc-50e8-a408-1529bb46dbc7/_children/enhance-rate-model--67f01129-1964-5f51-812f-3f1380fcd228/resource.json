@@ -1,0 +1,122 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "acquireExperienceHierarchy",
+        "value": []
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "acquireExperienceSuffix",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C7T116VP42973VYFS2PRV0",
+            "typeName": "CharacterEnhance"
+          },
+          "propertyId": "prop_01M0C7T1166P354AK6Q48J86RN"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "description",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "experienceModelId.grnKey.namespaceName",
+        "value": "CharacterExperience"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "materialInventoryModelId.grnKey.inventoryName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C7T116VP42973VYFS2PRV0",
+            "typeName": "CharacterEnhance"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C7T116VP42973VYFS2PRV0",
+            "typeName": "CharacterEnhance"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "targetInventoryModelId.grnKey.inventoryName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C7T116VP42973VYFS2PRV0",
+            "typeName": "CharacterEnhance"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "67f01129-1964-5f51-812f-3f1380fcd228",
+  "location": {
+    "modelName": "RateModel",
+    "service": "enhance"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C7T116VP42973VYFS2PRV0",
+    "typeName": "CharacterEnhance"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          }
+        ],
+        "mountedResourceId": "62805db8-2e40-4a2c-a1c4-38e0c07d49f8",
+        "parameterName": "targetInventoryModelId"
+      },
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          }
+        ],
+        "mountedResourceId": "62805db8-2e40-4a2c-a1c4-38e0c07d49f8",
+        "parameterName": "materialInventoryModelId"
+      },
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "experienceName",
+            "sourceKeyName": "experienceName"
+          }
+        ],
+        "mountedResourceId": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
+        "parameterName": "experienceModelId"
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "9be0bc04-01ba-5d55-a498-86ae69320c97",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "PromoteCharacterGrade",
+  "outputs": [
+    {
+      "actionName": "Gs2Grade:AddGradeByUserId",
+      "conditions": [],
+      "id": "out_01M0C826WKSESSEVV0C453ZPZS",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "gradeName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "gradeValue",
+          "sourceParameter": "gradeValue"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "9be0bc04-01ba-5d55-a498-86ae69320c97",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01M0C826WJA2S7B46606GV62Y1",
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0C826WKGWK7N81T7ETYQP4C",
+      "name": "gradeValue",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}

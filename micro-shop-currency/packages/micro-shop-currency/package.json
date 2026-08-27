@@ -1,0 +1,39 @@
+{
+  "id": "micro-shop-currency",
+  "name": "micro-shop-currency",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-currency": "file:../../../foundation-economy-currency/packages/foundation-economy-currency"
+  },
+  "display": {
+    "description": {
+      "en": "A shop for purchasing currency, with configurable products and prices.",
+      "ja": "通貨を購入できる商品と価格を扱うショップ機能です。"
+    },
+    "domainTypes": {
+      "dt_4C1ZT24FH0ST09YC0VE1TB7SK8": {
+        "label": {
+          "en": "Store product",
+          "ja": "ストア商品"
+        }
+      },
+      "dt_NRHGV2T8Z964H3HMPZ454WEZ9M": {
+        "label": {
+          "en": "Store price",
+          "ja": "販売価格"
+        }
+      },
+      "dt_QM3KC8SJTDM4W54DTSPXM8HTRD": {
+        "label": {
+          "en": "Currency type",
+          "ja": "通貨種別"
+        }
+      }
+    },
+    "label": {
+      "en": "Currency Shop",
+      "ja": "通貨ショップ"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "changeMemberNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "changeMemberNotificationIgnoreChangeMetadata",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "changeNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "changeRoleScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "createGuildScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "deleteGuildScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinGuildScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveGuildScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Guild"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveJoinRequestScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "removeRequestNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "updateGuildScript",
+        "value": null
+      }
+    ]
+  },
+  "id": "55e0457f-1ec9-5c60-bf61-690eda56263a",
+  "location": {
+    "modelName": "Namespace",
+    "service": "guild"
+  }
+}

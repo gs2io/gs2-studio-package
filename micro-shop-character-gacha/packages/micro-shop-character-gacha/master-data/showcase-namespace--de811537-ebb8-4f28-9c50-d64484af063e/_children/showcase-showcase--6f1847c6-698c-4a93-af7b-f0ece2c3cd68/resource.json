@@ -1,0 +1,21 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Showcase"
+      },
+      {
+        "kind": "static",
+        "parameterName": "salesPeriodEventId",
+        "value": null
+      }
+    ]
+  },
+  "id": "6f1847c6-698c-4a93-af7b-f0ece2c3cd68",
+  "location": {
+    "modelName": "Showcase",
+    "service": "showcase"
+  }
+}

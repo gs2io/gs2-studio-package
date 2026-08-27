@@ -1,0 +1,52 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "defaultExperience",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "defaultRankCap",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+            "typeName": "CharacterExperience"
+          },
+          "propertyId": "prop_B2ZMJ5P9J9QVBZTGHD6816BX7Z"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maxRankCap",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+            "typeName": "CharacterExperience"
+          },
+          "propertyId": "prop_88HQTS8WPSVYE7PAJ2BYRE0D4C"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Experience"
+      }
+    ]
+  },
+  "id": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
+  "location": {
+    "modelName": "ExperienceModel",
+    "service": "experience"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+    "typeName": "CharacterExperience"
+  }
+}

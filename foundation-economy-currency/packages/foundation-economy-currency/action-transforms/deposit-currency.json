@@ -1,0 +1,87 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "DepositCurrency",
+  "outputs": [
+    {
+      "actionName": "Gs2Money2:DepositByUserId",
+      "conditions": [],
+      "id": "out_01KMYVXWW0KFTFAA58G00GJABH",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "slot",
+          "value": "#{slot}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "depositTransactions[0].price",
+          "sourceParameter": "price"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "depositTransactions[0].currency",
+          "sourceParameter": "currencyType"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "depositTransactions[0].count",
+          "sourceParameter": "count"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KMYVXWW09S418P0ZRRBQT0RE",
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KMYVXWW0K3RYB953PFHCTQTV",
+      "name": "currencyType",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KMYVXWW0A879WGKRYW1Q5E6N",
+      "name": "price",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "float64"
+      }
+    }
+  ]
+}

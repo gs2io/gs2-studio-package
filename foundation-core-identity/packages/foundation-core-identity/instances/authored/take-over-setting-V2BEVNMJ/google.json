@@ -1,0 +1,13 @@
+{
+  "id": "google",
+  "kind": "authored",
+  "rowKey": "row_0E1BZ05RKKKQT8YBG6NXYEFSXF",
+  "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+  "values": {
+    "prop_01B0AANDTTY7MQTFTBP6WQK6CD": "dummy",
+    "prop_A2D1ZJ9DZ5AMTXXE3XHZGGR0AJ": "https://accounts.google.com/.well-known/openid-configuration",
+    "prop_CAMZZS3CCJ4K9MSA217ARZ7K6Z": "dummy",
+    "prop_JXHFG6A90WH8TQJAD96FQC1S5M": 1,
+    "prop_XDRZ798BRBRW9W35MRHXEXCAAX": "dummy"
+  }
+}

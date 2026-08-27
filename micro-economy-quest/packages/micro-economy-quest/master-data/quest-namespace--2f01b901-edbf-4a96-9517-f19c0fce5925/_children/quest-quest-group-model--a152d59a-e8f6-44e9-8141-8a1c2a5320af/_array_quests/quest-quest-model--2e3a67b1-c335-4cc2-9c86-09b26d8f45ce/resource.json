@@ -1,0 +1,35 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "challengePeriodEventId",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+            "typeName": "Quest"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "2e3a67b1-c335-4cc2-9c86-09b26d8f45ce",
+  "index": 0,
+  "location": {
+    "modelName": "QuestModel",
+    "service": "quest"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+    "typeName": "Quest"
+  }
+}

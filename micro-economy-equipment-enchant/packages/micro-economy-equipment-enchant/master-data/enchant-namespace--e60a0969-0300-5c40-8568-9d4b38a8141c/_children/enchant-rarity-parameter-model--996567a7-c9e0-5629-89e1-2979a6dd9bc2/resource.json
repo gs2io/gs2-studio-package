@@ -1,0 +1,47 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "maximumParameterCount",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
+            "typeName": "EquipmentEnchant"
+          },
+          "propertyId": "prop_01M0C84Y32NTFEV004CWFSAF5R"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
+            "typeName": "EquipmentEnchant"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "996567a7-c9e0-5629-89e1-2979a6dd9bc2",
+  "location": {
+    "modelName": "RarityParameterModel",
+    "service": "enchant"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
+    "typeName": "EquipmentEnchant"
+  }
+}

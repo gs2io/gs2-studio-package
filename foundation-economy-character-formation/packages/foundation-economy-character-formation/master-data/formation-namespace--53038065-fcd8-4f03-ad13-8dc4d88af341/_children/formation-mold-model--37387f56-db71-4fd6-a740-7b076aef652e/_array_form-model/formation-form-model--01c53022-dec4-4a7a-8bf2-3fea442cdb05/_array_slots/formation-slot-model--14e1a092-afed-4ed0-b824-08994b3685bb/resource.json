@@ -1,0 +1,43 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_Z73MGN3WHWKHC8PF714HS91E62",
+            "typeName": "CharacterFormationSlot"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "propertyRegex",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_Z73MGN3WHWKHC8PF714HS91E62",
+            "typeName": "CharacterFormationSlot"
+          },
+          "propertyId": "prop_6F9A9WPY3YAQ0SS8E7F5H2YXFA"
+        }
+      }
+    ]
+  },
+  "id": "14e1a092-afed-4ed0-b824-08994b3685bb",
+  "index": 0,
+  "location": {
+    "modelName": "SlotModel",
+    "service": "formation"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_Z73MGN3WHWKHC8PF714HS91E62",
+    "typeName": "CharacterFormationSlot"
+  }
+}

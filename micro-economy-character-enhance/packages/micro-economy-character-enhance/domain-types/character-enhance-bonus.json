@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C7T116EE8PEHMGMD3AWB3N",
+      "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
+      "prop_01M0C7T11668CNMKJ4725QV6M0"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_01M0C7T116EE8PEHMGMD3AWB3N",
+        "isId": false,
+        "name": "enhance",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_01M0C7T116VP42973VYFS2PRV0"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Experience multiplier when drawn",
+        "id": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
+        "isId": false,
+        "name": "rate",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "float32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Relative draw weight",
+        "id": "prop_01M0C7T11668CNMKJ4725QV6M0",
+        "isId": false,
+        "name": "weight",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+  "kind": "local",
+  "name": "CharacterEnhanceBonus",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

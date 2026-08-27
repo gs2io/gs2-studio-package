@@ -1,0 +1,67 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "6cdca220-144a-5f9f-b6b7-143f1c35222d",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ReleaseSkillNode",
+  "outputs": [
+    {
+      "actionName": "Gs2SkillTree:MarkReleaseByUserId",
+      "conditions": [],
+      "id": "out_01M0C87BJCBF8FS8VWRGNWGG6A",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "nodeModelNames[0]",
+          "sourceParameter": "node"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "6cdca220-144a-5f9f-b6b7-143f1c35222d",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01M0C87BJCT5SCBFGZ8F7EEHCP",
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0C87BJC99C9Z8BB3MCEVSKT",
+      "name": "node",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6"
+      }
+    }
+  ]
+}

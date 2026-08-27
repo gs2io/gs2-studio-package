@@ -1,0 +1,27 @@
+{
+  "id": "micro-economy-buff",
+  "name": "micro-economy-buff",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+  },
+  "display": {
+    "description": {
+      "en": "Temporarily scales what an action hands out, targeted by action and limited to a period.",
+      "ja": "報酬の獲得量などを一時的に倍率で増減させます。対象のアクションと期間を指定できます。"
+    },
+    "domainTypes": {
+      "dt_01M0C89EMY1KAND5SNBFR7N0GQ": {
+        "label": {
+          "en": "Buff",
+          "ja": "バフ"
+        }
+      }
+    },
+    "label": {
+      "en": "Buffs",
+      "ja": "バフ"
+    }
+  }
+}

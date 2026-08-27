@@ -1,0 +1,84 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "existence",
+        "parameterName": "$existence",
+        "propertyId": "prop_GWSJYQBMKYCRXTBZ9WJB3JQE04"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "status",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+              "typeName": "AgreementVersion"
+            },
+            "propertyId": "prop_AWG1AAHD6ZCQ1Z2DR8Q2E4F4DT"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "version.major",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_01M0PX2G6Q6Q7SQGM4Z51XENCC"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "version.micro",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_01M0PX2G6QK5P9VPEKCCMAQ20R"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "version.minor",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_01M0PX2G6QJXF59DXKXFRSEJRT"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "versionName"
+      }
+    ],
+    "declaredMasterLinkId": "6149ce8d-9f29-4770-8a8c-c09eb4d2ff22",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+      "typeName": "AgreementVersion"
+    }
+  },
+  "id": "e5b9fb94-4e0c-4412-afef-2905a30591b3",
+  "location": {
+    "modelName": "AcceptVersion",
+    "service": "version"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "expiresAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+              "typeName": "Message"
+            },
+            "propertyId": "prop_WF69EWKXA0B3G4XTZ5KG7CBB62"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "isRead",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+              "typeName": "Message"
+            },
+            "propertyId": "prop_EBMPTGK9PGCVVK6XYH81KPEDFK"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "messageId"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "metadata",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+              "typeName": "Message"
+            },
+            "propertyId": "prop_ZKT412G1WTM0BJ5XF28KBQMQDP"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+            "typeName": "Message"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "receivedAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+              "typeName": "Message"
+            },
+            "propertyId": "prop_1BC9A22CA5YCR027Q5HP2R1JNG"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+      "typeName": "Message"
+    }
+  },
+  "id": "ab1356e1-d8f4-49cf-aeb3-2ef2f0649c75",
+  "location": {
+    "modelName": "Message",
+    "service": "inbox"
+  }
+}

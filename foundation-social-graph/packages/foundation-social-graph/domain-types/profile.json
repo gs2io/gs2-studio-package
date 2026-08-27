@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_6KVAE2J57GWW44BA6BWE76HNX4",
+      "prop_WN6CSPS3DDQ40TR3VG8PYNTMPM",
+      "prop_5N09J4Q6RV5N2EGDPKMW77WWD0"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_6KVAE2J57GWW44BA6BWE76HNX4",
+        "isId": false,
+        "name": "publicProfile",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_WN6CSPS3DDQ40TR3VG8PYNTMPM",
+        "isId": false,
+        "name": "followerProfile",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_5N09J4Q6RV5N2EGDPKMW77WWD0",
+        "isId": false,
+        "name": "friendProfile",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
+  "kind": "local",
+  "name": "Profile",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

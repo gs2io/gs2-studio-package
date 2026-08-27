@@ -1,0 +1,34 @@
+{
+  "id": "micro-liveops-guild-ranking",
+  "name": "micro-liveops-guild-ranking",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule",
+    "foundation-social-guild": "file:../../../foundation-social-guild/packages/foundation-social-guild"
+  },
+  "display": {
+    "description": {
+      "en": "A leaderboard partitioned by guild, so members compete inside their own guild, with rewards by rank.",
+      "ja": "ギルド単位で区切られたランキングです。所属ギルド内で競い、順位に応じた報酬を配れます。"
+    },
+    "domainTypes": {
+      "dt_01M0CE422VDT5R1HBS4KHAF8RE": {
+        "label": {
+          "en": "Ranking reward",
+          "ja": "ランキング報酬"
+        }
+      },
+      "dt_01M0CE422VWKB1V6XFZWXFJQZ9": {
+        "label": {
+          "en": "Guild ranking",
+          "ja": "ギルドランキング"
+        }
+      }
+    },
+    "label": {
+      "en": "Guild Rankings",
+      "ja": "ギルドランキング"
+    }
+  }
+}

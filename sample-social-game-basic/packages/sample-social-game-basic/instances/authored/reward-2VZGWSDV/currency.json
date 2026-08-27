@@ -1,0 +1,10 @@
+{
+  "id": "currency",
+  "kind": "authored",
+  "rowKey": "row_04A8G3Z5FNFCRF2FYG7RCZ1RC3",
+  "typeId": "dt_FEXHRRAKNBN76PEX2C2VZGWSDV",
+  "values": {
+    "prop_2CA1PNCBX70AHBRH33NSR3YAYP": "icon/currency.asset",
+    "prop_G10WWJ3CENA14CX8DKP2CBV1E9": "reward.currency"
+  }
+}

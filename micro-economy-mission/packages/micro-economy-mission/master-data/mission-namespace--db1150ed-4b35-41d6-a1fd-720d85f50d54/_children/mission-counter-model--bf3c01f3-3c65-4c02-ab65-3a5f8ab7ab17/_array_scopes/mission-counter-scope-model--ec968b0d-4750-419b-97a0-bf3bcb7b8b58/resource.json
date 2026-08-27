@@ -1,0 +1,48 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetHour",
+        "source": {
+          "innerSource": {
+            "innerSource": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
+                "typeName": "MissionSetting"
+              },
+              "propertyId": "prop_0PJDRHCVVR80R8R1SEY2KMGEQH"
+            },
+            "kind": "parent",
+            "parentResourceId": "db1150ed-4b35-41d6-a1fd-720d85f50d54"
+          },
+          "kind": "parent",
+          "parentResourceId": "bf3c01f3-3c65-4c02-ab65-3a5f8ab7ab17"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "resetType",
+        "value": "daily"
+      },
+      {
+        "kind": "static",
+        "parameterName": "scopeType",
+        "value": "resetTiming"
+      }
+    ]
+  },
+  "id": "ec968b0d-4750-419b-97a0-bf3bcb7b8b58",
+  "index": 0,
+  "location": {
+    "modelName": "CounterScopeModel",
+    "service": "mission"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE",
+    "typeName": "MissionCounter"
+  }
+}

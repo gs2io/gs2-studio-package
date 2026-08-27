@@ -1,0 +1,56 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "9be0bc04-01ba-5d55-a498-86ae69320c97",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ApplyCharacterGradeRankCap",
+  "outputs": [
+    {
+      "actionName": "Gs2Grade:ApplyRankCapByUserId",
+      "conditions": [],
+      "id": "out_01M0C826WKTFVP49QPBQZYX1R8",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "gradeName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "9be0bc04-01ba-5d55-a498-86ae69320c97",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01M0C826WK092B8J1DFWS8NM7G",
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

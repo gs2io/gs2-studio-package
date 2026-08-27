@@ -1,0 +1,86 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "AcquireCharacter",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:AcquireItemSetByUserId",
+      "conditions": [],
+      "id": "out_01KJJKZ2WPK0SQM8WNCP9QWV2A",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "itemName",
+          "sourceParameter": "character"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "acquireCount",
+          "sourceParameter": "count"
+        },
+        {
+          "kind": "static",
+          "parameterName": "expiresAt",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "createNewItemSet",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "itemSetName",
+          "value": null
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KJJKZ30ABCDEFGHJKMNPQRST",
+      "name": "character",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KJJKZ31TVWXYZ0123456789A",
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

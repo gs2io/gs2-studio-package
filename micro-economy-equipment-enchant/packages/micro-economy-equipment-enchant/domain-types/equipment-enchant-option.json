@@ -1,0 +1,99 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C84Y322HQ5SXAZ4NRD8HCB",
+      "prop_01M0C84Y322KQSQH802HVDHC06",
+      "prop_01M0C84Y32ZBF6RHYW41VPWFA2",
+      "prop_01M0C84Y32EXX5ACY856FE9P29"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_01M0C84Y322HQ5SXAZ4NRD8HCB",
+        "isId": false,
+        "name": "enchant",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Stat this bonus applies to",
+        "id": "prop_01M0C84Y322KQSQH802HVDHC06",
+        "isId": false,
+        "name": "resourceName",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "How much it applies",
+        "id": "prop_01M0C84Y32ZBF6RHYW41VPWFA2",
+        "isId": false,
+        "name": "resourceValue",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Relative draw weight",
+        "id": "prop_01M0C84Y32EXX5ACY856FE9P29",
+        "isId": false,
+        "name": "weight",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+  "kind": "local",
+  "name": "EquipmentEnchantOption",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+            "typeName": "Gacha"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "53d26b27-c20f-4d48-8b1d-fe3f6d23469c",
+  "location": {
+    "modelName": "PrizeTable",
+    "service": "lottery"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+    "typeName": "Gacha"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "prizeId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_32H335ZJ31J4690TMPCRQFC04B",
+            "typeName": "GachaRarityRate"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "prizeTableName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_32H335ZJ31J4690TMPCRQFC04B",
+            "typeName": "GachaRarityRate"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "type",
+        "value": "prize_table"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "weight",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_32H335ZJ31J4690TMPCRQFC04B",
+            "typeName": "GachaRarityRate"
+          },
+          "propertyId": "prop_HZZ3R7AT0DB8DS34X1K0QQR3Q8"
+        }
+      }
+    ]
+  },
+  "id": "3824193c-0745-4c3e-af60-8f50d80f26c8",
+  "index": 0,
+  "location": {
+    "modelName": "Prize",
+    "service": "lottery"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_32H335ZJ31J4690TMPCRQFC04B",
+    "typeName": "GachaRarityRate"
+  }
+}

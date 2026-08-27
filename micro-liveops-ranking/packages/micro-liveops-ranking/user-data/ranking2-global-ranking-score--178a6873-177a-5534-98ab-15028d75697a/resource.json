@@ -1,0 +1,52 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "globalRankingScoreId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "metadata"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "rankingName"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "score",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV",
+              "typeName": "Ranking"
+            },
+            "propertyId": "prop_01M0C5QTC1549A0YHZY5YSS2EZ"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "season"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "009c7ff2-77d5-5cd1-9241-e153a51d9718",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV",
+      "typeName": "Ranking"
+    }
+  },
+  "id": "178a6873-177a-5534-98ab-15028d75697a",
+  "location": {
+    "modelName": "GlobalRankingScore",
+    "service": "ranking2"
+  }
+}

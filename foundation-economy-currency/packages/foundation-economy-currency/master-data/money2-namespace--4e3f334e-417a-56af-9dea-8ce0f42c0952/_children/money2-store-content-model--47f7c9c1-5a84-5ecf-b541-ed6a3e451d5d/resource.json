@@ -1,0 +1,55 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "appleAppStore.productId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+            "typeName": "StoreProduct"
+          },
+          "propertyId": "prop_A26C5NBX039V9DNV0ERPSWVPD8"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "googlePlay.productId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+            "typeName": "StoreProduct"
+          },
+          "propertyId": "prop_Z99QWHNS8G1DEFWGT2MB00NRJA"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+            "typeName": "StoreProduct"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "47f7c9c1-5a84-5ecf-b541-ed6a3e451d5d",
+  "location": {
+    "modelName": "StoreContentModel",
+    "service": "money2"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+    "typeName": "StoreProduct"
+  }
+}

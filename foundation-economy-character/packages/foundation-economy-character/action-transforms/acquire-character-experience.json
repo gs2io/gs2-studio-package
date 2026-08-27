@@ -1,0 +1,77 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "AcquireCharacterExperience",
+  "outputs": [
+    {
+      "actionName": "Gs2Experience:AddExperienceByUserId",
+      "conditions": [],
+      "id": "out_01KJSWSZ82H5H51D4FT8J5GEQH",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "static",
+          "parameterName": "experienceName",
+          "value": ""
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "experienceValue",
+          "sourceParameter": "value"
+        },
+        {
+          "kind": "static",
+          "parameterName": "truncateExperienceWhenRankUp",
+          "value": null
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KJSWTJ2ZWAA7TA008H55DJ63",
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KJSWSKBTVBA45HN61GTA2HTC",
+      "name": "value",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

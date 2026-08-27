@@ -1,0 +1,128 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "accessPeriodEventId",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "clusterType",
+        "value": "Gs2Guild::Guild"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "entryPeriodEventId.grnKey.eventName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+            "typeName": "GuildRanking"
+          },
+          "propertyId": "prop_01M0CE422VC02GDNEZDYXGVD89"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maximumValue",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+            "typeName": "GuildRanking"
+          },
+          "propertyId": "prop_01M0CE422VYRN7SXXKDDE3ET2G"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "minimumValue",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+            "typeName": "GuildRanking"
+          },
+          "propertyId": "prop_01M0CE422VR4DWYG9WPJ57GAVK"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+            "typeName": "GuildRanking"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "orderDirection",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+            "typeName": "GuildRanking"
+          },
+          "propertyId": "prop_01M0CE422VHSW4QC9AHYXV815S"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "rewardCalculationIndex",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "sum",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+            "typeName": "GuildRanking"
+          },
+          "propertyId": "prop_01M0CE422VX2GRKKR10S2S34BA"
+        }
+      }
+    ]
+  },
+  "id": "f7557773-8f8f-58cb-b0b9-2f178f988a1f",
+  "location": {
+    "modelName": "ClusterRankingModel",
+    "service": "ranking2"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+    "typeName": "GuildRanking"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          }
+        ],
+        "mountedResourceId": "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d",
+        "parameterName": "entryPeriodEventId"
+      }
+    ]
+  }
+}

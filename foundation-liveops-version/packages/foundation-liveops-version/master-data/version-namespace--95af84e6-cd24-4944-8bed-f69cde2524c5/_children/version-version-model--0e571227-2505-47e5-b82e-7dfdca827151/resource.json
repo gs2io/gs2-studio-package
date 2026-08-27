@@ -1,0 +1,122 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "errorVersion.major",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+            "typeName": "EmbeddedVersion"
+          },
+          "propertyId": "prop_3YR1D04DTCR3QXF2102W5Z73PM"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "errorVersion.micro",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+            "typeName": "EmbeddedVersion"
+          },
+          "propertyId": "prop_E9DY9TY2D9Y1CY09MT7Z6DEYYF"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "errorVersion.minor",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+            "typeName": "EmbeddedVersion"
+          },
+          "propertyId": "prop_BMCEB6H2XZYTXR2M1MCXV4M605"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+            "typeName": "EmbeddedVersion"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "needSignature",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "scope",
+        "value": "passive"
+      },
+      {
+        "kind": "static",
+        "parameterName": "type",
+        "value": "simple"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "warningVersion.major",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+            "typeName": "EmbeddedVersion"
+          },
+          "propertyId": "prop_JV8X380AFH866SVX2HJR3FMP4V"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "warningVersion.micro",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+            "typeName": "EmbeddedVersion"
+          },
+          "propertyId": "prop_JNSG2T4XZEK7T0RFFT4FHYS77N"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "warningVersion.minor",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+            "typeName": "EmbeddedVersion"
+          },
+          "propertyId": "prop_Q1QVGEVNDQ31WXBSQ3CTK8PEYS"
+        }
+      }
+    ]
+  },
+  "id": "0e571227-2505-47e5-b82e-7dfdca827151",
+  "location": {
+    "modelName": "VersionModel",
+    "service": "version"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+    "typeName": "EmbeddedVersion"
+  }
+}

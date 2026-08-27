@@ -1,0 +1,92 @@
+{
+  "id": "b38e6f00-ad0d-46d0-a7fd-b8b8060920fc",
+  "items": [
+    {
+      "componentClassName": "LevelLabel",
+      "id": "11d858c3-68b1-4f6d-a00e-9cb34e5e5e72",
+      "kind": "label",
+      "name": "Character",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_0J6H8XWJG1W95S2S7HRDRQSWF2"
+      }
+    },
+    {
+      "componentClassName": "LevelCapLabel",
+      "id": "9b45050f-eb2f-4bb5-a0b7-2ac571777a54",
+      "kind": "label",
+      "name": "Character",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_T2TXPQVC3TS41W3CY3RB4X4G8C"
+      }
+    },
+    {
+      "componentClassName": "ExperienceLabel",
+      "id": "e7248a23-a04a-46f9-8671-9744866ba9bd",
+      "kind": "label",
+      "name": "Character",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_WP10EQVMMV82DJXCEN4AJYVEKB"
+      }
+    },
+    {
+      "componentClassName": "LevelActiveToggle",
+      "condition": {
+        "kind": "eq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_0J6H8XWJG1W95S2S7HRDRQSWF2"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_T2TXPQVC3TS41W3CY3RB4X4G8C"
+        }
+      },
+      "id": "b9b73163-57e0-4cc4-8240-1da2100860d3",
+      "kind": "activeToggle",
+      "name": "CharacterReachLevelCap"
+    },
+    {
+      "componentClassName": "LevelInteractable",
+      "condition": {
+        "kind": "eq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_0J6H8XWJG1W95S2S7HRDRQSWF2"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_T2TXPQVC3TS41W3CY3RB4X4G8C"
+        }
+      },
+      "id": "7b6a5e18-2490-43dc-a0f1-c1ab45c16434",
+      "kind": "interactable",
+      "name": "CharacterReachLevelCap"
+    },
+    {
+      "componentClassName": "IdValue",
+      "id": "6a5c9fcb-a700-4311-be4b-952d0b764def",
+      "kind": "value",
+      "name": "Character",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_reserved_id"
+      }
+    },
+    {
+      "componentClassName": "PropertyIdValue",
+      "id": "1a3576ee-e4a4-4921-8e85-13408ffee40c",
+      "kind": "value",
+      "name": "Character",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD"
+      }
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+}

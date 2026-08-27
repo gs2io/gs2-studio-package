@@ -1,0 +1,86 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "challengePeriodEventId",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_P8YA8929576H08C2Q4YBE5KJXT",
+            "typeName": "Mission"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "targetCounter.conditionName",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "targetCounter.counterName",
+        "source": {
+          "kind": "idRef",
+          "propertyId": "prop_reserved_id",
+          "refChain": [
+            {
+              "refPropertyId": "prop_2KV74FVT69TN7Z0QZ804K1CA6F",
+              "targetMountPath": {
+                "kind": "local",
+                "typeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE",
+                "typeName": "MissionCounter"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "targetCounter.resetType",
+        "value": "notReset"
+      },
+      {
+        "kind": "static",
+        "parameterName": "targetCounter.scopeType",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "targetCounter.value",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_P8YA8929576H08C2Q4YBE5KJXT",
+            "typeName": "Mission"
+          },
+          "propertyId": "prop_JW1ZWH5B4R6FXJM3X2K41NRZ6P"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "verifyCompleteType",
+        "value": "counter"
+      }
+    ]
+  },
+  "id": "97e2eb72-ce85-4fdd-8c8d-01bcfdd8498b",
+  "index": 0,
+  "location": {
+    "modelName": "MissionTaskModel",
+    "service": "mission"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_P8YA8929576H08C2Q4YBE5KJXT",
+    "typeName": "Mission"
+  }
+}

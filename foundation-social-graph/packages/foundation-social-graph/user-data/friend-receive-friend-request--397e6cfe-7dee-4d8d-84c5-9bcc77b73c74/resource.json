@@ -1,0 +1,48 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "publicProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C",
+              "typeName": "ReceiveFriendRequest"
+            },
+            "propertyId": "prop_8385BCWPDH6PVR79CSMQ19ZNZP"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "targetUserId"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "userId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C",
+            "typeName": "ReceiveFriendRequest"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C",
+      "typeName": "ReceiveFriendRequest"
+    }
+  },
+  "id": "397e6cfe-7dee-4d8d-84c5-9bcc77b73c74",
+  "location": {
+    "modelName": "ReceiveFriendRequest",
+    "service": "friend"
+  }
+}

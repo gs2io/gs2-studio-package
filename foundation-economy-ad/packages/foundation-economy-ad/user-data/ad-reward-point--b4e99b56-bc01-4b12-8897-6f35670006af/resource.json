@@ -1,0 +1,50 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "point",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
+              "typeName": "AdViewPoint"
+            },
+            "propertyId": "prop_A5PTNHJYSCXW55G2TW376GP36E"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "pointId",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
+              "typeName": "AdViewPoint"
+            },
+            "propertyId": "prop_reserved_id"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
+      "typeName": "AdViewPoint"
+    }
+  },
+  "id": "b4e99b56-bc01-4b12-8897-6f35670006af",
+  "location": {
+    "modelName": "Point",
+    "service": "adReward"
+  }
+}

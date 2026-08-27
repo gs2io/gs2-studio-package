@@ -1,0 +1,47 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "initialCapacity",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
+            "typeName": "CharacterCollection"
+          },
+          "propertyId": "prop_A3GQRDCNGWBQCT773D3173ZMN1"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maxCapacity",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
+            "typeName": "CharacterCollection"
+          },
+          "propertyId": "prop_3THQSBRP9PCYM426V54R4CZ8BF"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Character"
+      }
+    ]
+  },
+  "id": "62805db8-2e40-4a2c-a1c4-38e0c07d49f8",
+  "location": {
+    "modelName": "InventoryModel",
+    "service": "inventory"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
+    "typeName": "CharacterCollection"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "approveRequirement",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_GMMBV2TGK8XPGGR6QZA7CB0F1Y"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "currentVersion.major",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_D6BXRZGRA97SHWEH9KKJNK8F18"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "currentVersion.micro",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_2K3FPSX7JS2XSAEGTR89RCDBNX"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "currentVersion.minor",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_0Q39Q60DC894H8BTR4B3C7WDHE"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "errorVersion.major",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_01M0PWK4QG0W3BR71K2BSE1A8S"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "errorVersion.micro",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_01M0PWK4QGZBDE3TA5C6D6G07J"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "errorVersion.minor",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_01M0PWK4QGQ6V970FH4XQPDM3D"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "scope",
+        "value": "active"
+      },
+      {
+        "kind": "static",
+        "parameterName": "type",
+        "value": "simple"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "warningVersion.major",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_01M0PWK4QGM5B5CWGZE3GAZ3PC"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "warningVersion.micro",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_01M0PWK4QGB6FARGAKYTJCE3GD"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "warningVersion.minor",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_01M0PWK4QG52B50F2Q3HMPJDQS"
+        }
+      }
+    ]
+  },
+  "id": "6149ce8d-9f29-4770-8a8c-c09eb4d2ff22",
+  "location": {
+    "modelName": "VersionModel",
+    "service": "version"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+    "typeName": "AgreementVersion"
+  }
+}

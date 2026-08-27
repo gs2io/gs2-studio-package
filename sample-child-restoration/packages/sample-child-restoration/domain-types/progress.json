@@ -1,0 +1,70 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
+      "prop_4ERYTK018DNDJ04E9HCMJEG26S"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
+        "isId": false,
+        "name": "quest",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_XFRY8WZYW69AATA1GJV7SA5GTN"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_4ERYTK018DNDJ04E9HCMJEG26S",
+        "isId": false,
+        "name": "rewards",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "elementType": {
+            "kind": "inline",
+            "targetTypeId": "dt_3V7D4XQ96QZ9TFSSBB54R73QRK"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_B1FD36T1515W68CPMCQP54TVAR",
+  "kind": "local",
+  "name": "Progress",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

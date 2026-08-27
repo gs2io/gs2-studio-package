@@ -1,0 +1,99 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_ZKT412G1WTM0BJ5XF28KBQMQDP",
+      "prop_EBMPTGK9PGCVVK6XYH81KPEDFK",
+      "prop_1BC9A22CA5YCR027Q5HP2R1JNG",
+      "prop_WF69EWKXA0B3G4XTZ5KG7CBB62"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_ZKT412G1WTM0BJ5XF28KBQMQDP",
+        "isId": false,
+        "name": "payload",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_EBMPTGK9PGCVVK6XYH81KPEDFK",
+        "isId": false,
+        "name": "isRead",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_1BC9A22CA5YCR027Q5HP2R1JNG",
+        "isId": false,
+        "name": "receivedAt",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_WF69EWKXA0B3G4XTZ5KG7CBB62",
+        "isId": false,
+        "name": "expiresAt",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+  "kind": "local",
+  "name": "Message",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

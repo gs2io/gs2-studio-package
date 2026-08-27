@@ -1,0 +1,48 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0",
+            "typeName": "GuildRole"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "policyDocument",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0",
+            "typeName": "GuildRole"
+          },
+          "propertyId": "prop_01M0C5T6AF0SDEH7DPDWXDST0T"
+        }
+      }
+    ]
+  },
+  "id": "da1b038b-6a0b-55c6-8406-d95a8b34d663",
+  "index": 0,
+  "location": {
+    "modelName": "RoleModel",
+    "service": "guild"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0",
+    "typeName": "GuildRole"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "friendProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_2NM467EMK37WAPSYGR7JJGVY8W",
+              "typeName": "Friend"
+            },
+            "propertyId": "prop_8JHGTPH2PWBM7H3AV8B87CS72E"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "publicProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_2NM467EMK37WAPSYGR7JJGVY8W",
+              "typeName": "Friend"
+            },
+            "propertyId": "prop_BGKVKEXBMCJX62Q18PSFR909HW"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "userId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_2NM467EMK37WAPSYGR7JJGVY8W",
+            "typeName": "Friend"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_2NM467EMK37WAPSYGR7JJGVY8W",
+      "typeName": "Friend"
+    }
+  },
+  "id": "f9d95420-4559-4667-87f7-f04686fef424",
+  "location": {
+    "modelName": "FriendUser",
+    "service": "friend"
+  }
+}

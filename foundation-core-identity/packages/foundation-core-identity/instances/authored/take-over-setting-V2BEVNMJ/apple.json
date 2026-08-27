@@ -1,0 +1,16 @@
+{
+  "id": "apple",
+  "kind": "authored",
+  "rowKey": "row_00S01SNZHH4M1H63XE12H2G0SP",
+  "typeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+  "values": {
+    "prop_01B0AANDTTY7MQTFTBP6WQK6CD": "dummy",
+    "prop_2EJBCGDAH1TVRBGY75S05SJ801": "dummy",
+    "prop_6HQHD05HT2SH78G79FXNV4WJVT": "dummy",
+    "prop_A2D1ZJ9DZ5AMTXXE3XHZGGR0AJ": "https://appleid.apple.com/.well-known/openid-configuration",
+    "prop_CAMZZS3CCJ4K9MSA217ARZ7K6Z": "dummy",
+    "prop_JXHFG6A90WH8TQJAD96FQC1S5M": 0,
+    "prop_V75V0JS2DKK9J1HT58G6EHB6VF": "dummy",
+    "prop_XDRZ798BRBRW9W35MRHXEXCAAX": "dummy"
+  }
+}

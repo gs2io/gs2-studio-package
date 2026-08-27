@@ -1,0 +1,39 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "capacity",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_1YKD2ZM08CX2D22TCPED995K2N",
+              "typeName": "CharacterFormation"
+            },
+            "propertyId": "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "moldId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "name"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "37387f56-db71-4fd6-a740-7b076aef652e"
+  },
+  "id": "ba337043-3785-4369-ba48-99ac41a470a9",
+  "location": {
+    "modelName": "Mold",
+    "service": "formation"
+  }
+}

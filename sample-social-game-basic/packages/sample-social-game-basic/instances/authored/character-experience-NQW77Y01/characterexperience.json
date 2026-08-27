@@ -1,0 +1,18 @@
+{
+  "id": "characterexperience",
+  "kind": "authored",
+  "rowKey": "row_0RJXZQ3JHCTGYKW2JWQYK6YGWM",
+  "typeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+  "values": {
+    "prop_88HQTS8WPSVYE7PAJ2BYRE0D4C": 100,
+    "prop_B2ZMJ5P9J9QVBZTGHD6816BX7Z": 100,
+    "prop_CP6T6EBWNEYWASFRXVMH0A8RPF": [
+      10,
+      30,
+      90,
+      270,
+      810,
+      2430
+    ]
+  }
+}

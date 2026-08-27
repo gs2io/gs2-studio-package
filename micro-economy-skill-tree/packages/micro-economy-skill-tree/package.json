@@ -1,0 +1,30 @@
+{
+  "id": "micro-economy-skill-tree",
+  "name": "micro-economy-skill-tree",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per player.",
+      "ja": "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはプレイヤーごとに記録されます。"
+    },
+    "domainTypes": {
+      "dt_01M0C87BJCHGRBT6T7MVKFRRYF": {
+        "label": {
+          "en": "Tree owner",
+          "ja": "スキルツリー所有者"
+        }
+      },
+      "dt_01M0C87BJCRTK0Y3JKH8EHKAR6": {
+        "label": {
+          "en": "Skill node",
+          "ja": "スキルノード"
+        }
+      }
+    },
+    "label": {
+      "en": "Skill Tree",
+      "ja": "スキルツリー"
+    }
+  }
+}

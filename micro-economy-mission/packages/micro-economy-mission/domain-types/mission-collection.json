@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_K7KPHSFXNH3RA12P7NEZ6JNVPB",
+      "prop_MTPT2W75JMKRGK9CXSREB6ZW49"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_K7KPHSFXNH3RA12P7NEZ6JNVPB",
+        "isId": false,
+        "name": "schedule",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_MTPT2W75JMKRGK9CXSREB6ZW49",
+        "isId": false,
+        "name": "scope",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "daily",
+            "weekly",
+            "monthly",
+            "notReset"
+          ]
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Receive",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2Mission:MissionGroupModel.BatchComplete",
+      "targetResource": {
+        "resourceId": "daff2a34-703e-4aea-a777-19e8fa874bd4",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-mission"
+      }
+    }
+  ],
+  "description": "",
+  "id": "dt_ZXWN4GKT975S371YFYF3E1DRZ0",
+  "kind": "local",
+  "name": "MissionCollection",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "experienceName"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "experienceValue",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+              "typeName": "Character"
+            },
+            "propertyId": "prop_WP10EQVMMV82DJXCEN4AJYVEKB"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "propertyId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+            "typeName": "Character"
+          },
+          "propertyId": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD"
+        }
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "rankCapValue",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+              "typeName": "Character"
+            },
+            "propertyId": "prop_T2TXPQVC3TS41W3CY3RB4X4G8C"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "rankValue",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+              "typeName": "Character"
+            },
+            "propertyId": "prop_0J6H8XWJG1W95S2S7HRDRQSWF2"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "statusId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+      "typeName": "Character"
+    }
+  },
+  "id": "6a0a5ab0-ed4c-490f-b231-bcb1873fb409",
+  "location": {
+    "modelName": "Status",
+    "service": "experience"
+  }
+}

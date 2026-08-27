@@ -1,0 +1,43 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "rate",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+            "typeName": "CharacterEnhanceBonus"
+          },
+          "propertyId": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "weight",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+            "typeName": "CharacterEnhanceBonus"
+          },
+          "propertyId": "prop_01M0C7T11668CNMKJ4725QV6M0"
+        }
+      }
+    ]
+  },
+  "id": "bf692436-39c5-5a66-94a0-2bd70058df41",
+  "index": 0,
+  "location": {
+    "modelName": "BonusRate",
+    "service": "enhance"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+    "typeName": "CharacterEnhanceBonus"
+  }
+}

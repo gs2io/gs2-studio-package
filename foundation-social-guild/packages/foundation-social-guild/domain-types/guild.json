@@ -1,0 +1,179 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_01M0C5T6AF4Q3NKD9YJQ8F6119",
+      "prop_01M0C5T6AFQRJ8K9V4AY6N1X1S",
+      "prop_01M0C5T6AFE1EJ9CXYGJSJMT8Y",
+      "prop_01M0C5T6AF1GMQB80XDAVM0NJ2",
+      "prop_01M0C5T6AFC4H9ESF7ZV7XRVXK",
+      "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
+      "prop_01M0C5T6AFTPHZP6VRDZBYPK8F",
+      "prop_01M0C5T6AFMZ7YHRK3TF8G9T6F",
+      "prop_01M0C5T6AFPW7S477FQF46NT07"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Member capacity a newly created guild starts with",
+        "id": "prop_01M0C5T6AF4Q3NKD9YJQ8F6119",
+        "isId": false,
+        "name": "defaultMaximumMemberCount",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Highest capacity a guild can be raised to",
+        "id": "prop_01M0C5T6AFQRJ8K9V4AY6N1X1S",
+        "isId": false,
+        "name": "maximumMemberCount",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Days of guild-master inactivity before the seat opens up",
+        "id": "prop_01M0C5T6AFE1EJ9CXYGJSJMT8Y",
+        "isId": false,
+        "name": "inactivityPeriodDays",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Wait before a player may rejoin a guild they left",
+        "id": "prop_01M0C5T6AF1GMQB80XDAVM0NJ2",
+        "isId": false,
+        "name": "rejoinCoolTimeMinutes",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0C5T6AFC4H9ESF7ZV7XRVXK",
+        "isId": false,
+        "name": "maxConcurrentJoinGuilds",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
+        "isId": false,
+        "name": "maxConcurrentGuildMasterCount",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_01M0C5T6AFTPHZP6VRDZBYPK8F",
+        "isId": false,
+        "name": "guildMasterRole",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_01M0C5T6AFMZ7YHRK3TF8G9T6F",
+        "isId": false,
+        "name": "guildMemberDefaultRole",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "The guild this player belongs to",
+        "id": "prop_01M0C5T6AFPW7S477FQF46NT07",
+        "isId": false,
+        "name": "joinedGuildName",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_01M0C5T6AF24NKHPZ1Z4R946FT",
+  "kind": "local",
+  "name": "Guild",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

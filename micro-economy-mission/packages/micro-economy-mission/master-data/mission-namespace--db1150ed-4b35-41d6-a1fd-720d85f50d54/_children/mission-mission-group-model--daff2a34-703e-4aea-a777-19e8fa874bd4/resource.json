@@ -1,0 +1,98 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "completeNotificationNamespaceId",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_ZXWN4GKT975S371YFYF3E1DRZ0",
+            "typeName": "MissionCollection"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetDayOfMonth",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
+              "typeName": "MissionSetting"
+            },
+            "propertyId": "prop_01M0R2YRXVDV9PNGK6TPKY0V1E"
+          },
+          "kind": "parent",
+          "parentResourceId": "db1150ed-4b35-41d6-a1fd-720d85f50d54"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetDayOfWeek",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
+              "typeName": "MissionSetting"
+            },
+            "propertyId": "prop_3K3QTNRR66PZ8K2AQ3WCNYPT2R"
+          },
+          "kind": "parent",
+          "parentResourceId": "db1150ed-4b35-41d6-a1fd-720d85f50d54"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetHour",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
+              "typeName": "MissionSetting"
+            },
+            "propertyId": "prop_0PJDRHCVVR80R8R1SEY2KMGEQH"
+          },
+          "kind": "parent",
+          "parentResourceId": "db1150ed-4b35-41d6-a1fd-720d85f50d54"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetType",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_ZXWN4GKT975S371YFYF3E1DRZ0",
+            "typeName": "MissionCollection"
+          },
+          "propertyId": "prop_MTPT2W75JMKRGK9CXSREB6ZW49"
+        }
+      }
+    ]
+  },
+  "id": "daff2a34-703e-4aea-a777-19e8fa874bd4",
+  "location": {
+    "modelName": "MissionGroupModel",
+    "service": "mission"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_ZXWN4GKT975S371YFYF3E1DRZ0",
+    "typeName": "MissionCollection"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "values",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+            "typeName": "CharacterExperience"
+          },
+          "propertyId": "prop_CP6T6EBWNEYWASFRXVMH0A8RPF"
+        }
+      }
+    ]
+  },
+  "id": "f76eb342-15e9-4910-bd1b-fdf5f91e6b61",
+  "index": 0,
+  "location": {
+    "modelName": "Threshold",
+    "service": "experience"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+    "typeName": "CharacterExperience"
+  }
+}

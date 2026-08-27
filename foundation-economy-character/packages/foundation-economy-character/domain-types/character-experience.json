@@ -1,0 +1,86 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_CP6T6EBWNEYWASFRXVMH0A8RPF",
+      "prop_B2ZMJ5P9J9QVBZTGHD6816BX7Z",
+      "prop_88HQTS8WPSVYE7PAJ2BYRE0D4C"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_CP6T6EBWNEYWASFRXVMH0A8RPF",
+        "isId": false,
+        "name": "threshold",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "elementType": {
+            "kind": "primitive",
+            "primitiveType": "int64"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_B2ZMJ5P9J9QVBZTGHD6816BX7Z",
+        "isId": false,
+        "name": "defaultLevelCap",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_88HQTS8WPSVYE7PAJ2BYRE0D4C",
+        "isId": false,
+        "name": "maxLevelCap",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+  "kind": "local",
+  "name": "CharacterExperience",
+  "singleEntry": true,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

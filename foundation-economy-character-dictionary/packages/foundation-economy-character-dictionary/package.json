@@ -1,0 +1,27 @@
+{
+  "id": "foundation-economy-character-dictionary",
+  "name": "foundation-economy-character-dictionary",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-character": "file:../../../foundation-economy-character/packages/foundation-economy-character"
+  },
+  "display": {
+    "description": {
+      "en": "Keeps a dex of every character species the player has ever obtained.",
+      "ja": "これまでに入手したキャラクターの種類を記録する図鑑機能です。"
+    },
+    "domainTypes": {
+      "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV": {
+        "label": {
+          "en": "Character",
+          "ja": "キャラクター"
+        }
+      }
+    },
+    "label": {
+      "en": "Character Dex",
+      "ja": "キャラクター図鑑"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "category": "consume",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ByeCharacter",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:ConsumeItemSetByUserId",
+      "conditions": [],
+      "id": "out_01KSZ28R69KRNTZEGP95Y5JRCJ",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "itemName",
+          "sourceParameter": "character"
+        },
+        {
+          "kind": "static",
+          "parameterName": "consumeCount",
+          "value": 1
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "itemSetName",
+          "sourceParameter": "propertyId"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KSZ27ZVMTPX91YA56A68NFH2",
+      "name": "character",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KSZ28A1ZSKDKP7DQZJ1J7R16",
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

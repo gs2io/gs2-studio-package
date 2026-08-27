@@ -1,0 +1,48 @@
+{
+  "id": "d021a1c5-7691-4aa3-a5a3-b3aecef247ff",
+  "items": [
+    {
+      "componentClassName": "TodayValueLabel",
+      "id": "c3e6a0de-2885-4a3a-b56d-384f9c7aec51",
+      "kind": "label",
+      "name": "MissionCounter",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_DH1MQSPSZ68EZDG80Q3KWZNQW8"
+      }
+    },
+    {
+      "componentClassName": "WeeklyValueLabel",
+      "id": "30c4aa5c-112a-4de9-97fe-e0f10986ef4c",
+      "kind": "label",
+      "name": "MissionCounter",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_N44ZVTGEN3XNPFT4YSNP5R8222"
+      }
+    },
+    {
+      "componentClassName": "MonthlyValueLabel",
+      "id": "3eaa1d7e-fa2a-4873-9fce-e59c2da18f0b",
+      "kind": "label",
+      "name": "MissionCounter",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_RP2T1J9MWSNMXEXJQF15E76R42"
+      }
+    },
+    {
+      "componentClassName": "TotalValueLabel",
+      "id": "9335b342-6a56-406c-9d03-6d3f1146a875",
+      "kind": "label",
+      "name": "MissionCounter",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_E7ANH0AETFGP8XNYN524JTT1KG"
+      }
+    }
+  ],
+  "name": "MissionCounter",
+  "targetDomainType": "MissionCounter",
+  "targetDomainTypeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE"
+}

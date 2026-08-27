@@ -1,0 +1,58 @@
+{
+  "id": "901c5493-7504-41d5-ba0c-046894675ca7",
+  "items": [
+    {
+      "componentClassName": "CountLabel",
+      "id": "221229e6-cc35-42f9-b0ab-77adf28c1c9a",
+      "kind": "label",
+      "name": "StoreProduct",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7"
+      }
+    },
+    {
+      "componentClassName": "CountValue",
+      "id": "7da6c696-03f5-45fc-ac42-d27d3b794813",
+      "kind": "value",
+      "name": "StoreProduct",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7"
+      }
+    },
+    {
+      "componentClassName": "IdValue",
+      "id": "b9be0f39-5cc6-45ab-8b1b-c8f821e84c99",
+      "kind": "value",
+      "name": "StoreProduct",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_reserved_id"
+      }
+    },
+    {
+      "componentClassName": "AppleAppStoreProductIdValue",
+      "id": "095b88fd-ddbe-469e-9c17-b90ef86d50b5",
+      "kind": "value",
+      "name": "StoreProduct",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_A26C5NBX039V9DNV0ERPSWVPD8"
+      }
+    },
+    {
+      "componentClassName": "GooglePlayProductIdValue",
+      "id": "fb0c91c1-5846-42a0-a405-1618f93d3341",
+      "kind": "value",
+      "name": "StoreProduct",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_Z99QWHNS8G1DEFWGT2MB00NRJA"
+      }
+    }
+  ],
+  "name": "StoreProduct",
+  "targetDomainType": "StoreProduct",
+  "targetDomainTypeId": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8"
+}

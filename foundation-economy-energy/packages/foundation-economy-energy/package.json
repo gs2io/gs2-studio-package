@@ -1,0 +1,24 @@
+{
+  "id": "foundation-economy-energy",
+  "name": "foundation-economy-energy",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Manages a stamina/energy meter that recovers over time.",
+      "ja": "時間経過で回復するスタミナ（行動力）を管理します。"
+    },
+    "domainTypes": {
+      "dt_TX5D50PD77NCTNGR3SKBGETDFY": {
+        "label": {
+          "en": "Stamina",
+          "ja": "スタミナ"
+        }
+      }
+    },
+    "label": {
+      "en": "Stamina",
+      "ja": "スタミナ"
+    }
+  }
+}

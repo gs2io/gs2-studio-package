@@ -1,0 +1,296 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6",
+      "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T",
+      "prop_763BX5C31PKQPVJ692CKG0C998",
+      "prop_K8ZPEG5KAWZN5N4HNCS0S3ZQ0E",
+      "prop_XSTG0QAVN2ADJHS1Q50PXHNY89",
+      "prop_QT1RYWCPGQF7TX098APWRW2ACV",
+      "prop_D2RWEZDYGM3RT887E0EA182FC3",
+      "prop_KP4RNR37Z8RE0D5WTAA5HC2ZYJ",
+      "prop_WZC2GBZJT3CEWP77QMK8PM169J",
+      "prop_TXGKQD0ZE9EKJT77Q25HHWP6SQ",
+      "prop_2R6ZHPN0RG508XWNJXACHEQPJZ",
+      "prop_3HHJJZ4553TC0VTT84VAF8KF74",
+      "prop_S23T3MDNBFNQTJ9PA126DR19V9",
+      "prop_7QB1J2FB3XJJGD80SC5DBX508J"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6",
+        "isId": false,
+        "name": "scheduleType",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "absolute",
+            "relative"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T",
+        "isId": false,
+        "name": "startAt",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"absolute\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_763BX5C31PKQPVJ692CKG0C998",
+        "isId": false,
+        "name": "endAt",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"absolute\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_K8ZPEG5KAWZN5N4HNCS0S3ZQ0E",
+        "isId": false,
+        "name": "trigger",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"relative\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_XSTG0QAVN2ADJHS1Q50PXHNY89",
+        "isId": false,
+        "name": "repeatType",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "always",
+            "daily",
+            "weekly",
+            "monthly",
+            "custom"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_QT1RYWCPGQF7TX098APWRW2ACV",
+        "isId": false,
+        "name": "beginHour",
+        "requirement": {
+          "condition": "{\"kind\":\"or\",\"conditions\":[{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"daily\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}]}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_D2RWEZDYGM3RT887E0EA182FC3",
+        "isId": false,
+        "name": "endHour",
+        "requirement": {
+          "condition": "{\"kind\":\"or\",\"conditions\":[{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"daily\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}]}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_KP4RNR37Z8RE0D5WTAA5HC2ZYJ",
+        "isId": false,
+        "name": "beginDayOfWeek",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "sunday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_WZC2GBZJT3CEWP77QMK8PM169J",
+        "isId": false,
+        "name": "endDayOfWeek",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "sunday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_TXGKQD0ZE9EKJT77Q25HHWP6SQ",
+        "isId": false,
+        "name": "beginDayOfMonth",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_2R6ZHPN0RG508XWNJXACHEQPJZ",
+        "isId": false,
+        "name": "endDayOfMonth",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_3HHJJZ4553TC0VTT84VAF8KF74",
+        "isId": false,
+        "name": "anchorTimestamp",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_S23T3MDNBFNQTJ9PA126DR19V9",
+        "isId": false,
+        "name": "activeDays",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_7QB1J2FB3XJJGD80SC5DBX508J",
+        "isId": false,
+        "name": "inactiveDays",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+  "kind": "local",
+  "name": "Schedule",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "category": "verify",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "009c7ff2-77d5-5cd1-9241-e153a51d9718",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyRankingScoreReached",
+  "outputs": [
+    {
+      "actionName": "Gs2Ranking2:VerifyGlobalRankingScoreByUserId",
+      "conditions": [],
+      "id": "out_01M0C5QTC1KK98KDVV8XSGZZH5",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "rankingName",
+          "sourceParameter": "ranking"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "greaterEqual"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "season",
+          "sourceParameter": "season"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "score",
+          "sourceParameter": "score"
+        },
+        {
+          "kind": "static",
+          "parameterName": "multiplyValueSpecifyingQuantity",
+          "value": false
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "009c7ff2-77d5-5cd1-9241-e153a51d9718",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01M0C5QTC1EM8RWNPAVJT2T9BV",
+      "name": "ranking",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0C5QTC1903Z6A3Y1KRK4F79",
+      "name": "season",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0C5QTC1BS2R2J6CGS7M64AZ",
+      "name": "score",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}

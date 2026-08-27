@@ -1,0 +1,70 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "resourceType",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_XS2NWXE5Q03HPYJ8E48BAQT9J1",
+                  "typeName": "QuestMaterial"
+                },
+                "propertyId": "prop_01KTXANDTHM6FZWEEQGG6WNR6Q"
+              }
+            }
+          },
+          {
+            "parameterName": "resourceId",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_XS2NWXE5Q03HPYJ8E48BAQT9J1",
+                  "typeName": "QuestMaterial"
+                },
+                "propertyId": "prop_01KTXANDTHR27K8R3FBY2PJ3YA"
+              }
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_XS2NWXE5Q03HPYJ8E48BAQT9J1",
+                  "typeName": "QuestMaterial"
+                },
+                "propertyId": "prop_01KTXANDTHR8FA3AYET9MWGNV8"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ConsumeResource",
+        "transformPackageId": "sample-child-restoration"
+      }
+    ]
+  },
+  "id": "88037e35-5d78-4194-9fb0-f81a34a51ebf",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_XS2NWXE5Q03HPYJ8E48BAQT9J1",
+    "typeName": "QuestMaterial"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "micro-economy-quest",
+  "name": "micro-economy-quest",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+  },
+  "display": {
+    "description": {
+      "en": "Manages quests players progress through, along with their progress and completion rewards.",
+      "ja": "プレイヤーが進行させるクエストと、達成時の進捗・報酬を管理します。"
+    },
+    "domainTypes": {
+      "dt_1P091J81MXDA5VBTFMMT4PP0RQ": {
+        "label": {
+          "en": "Quest reward",
+          "ja": "クエスト報酬"
+        }
+      },
+      "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4": {
+        "label": {
+          "en": "Quest progress",
+          "ja": "クエスト進行"
+        }
+      },
+      "dt_8KGQ5PW8KF4540B06JKKQ6QF96": {
+        "label": {
+          "en": "Quest group",
+          "ja": "クエストグループ"
+        }
+      },
+      "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC": {
+        "label": {
+          "en": "Quest",
+          "ja": "クエスト"
+        }
+      }
+    },
+    "label": {
+      "en": "Quests",
+      "ja": "クエスト"
+    }
+  }
+}

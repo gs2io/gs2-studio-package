@@ -1,0 +1,522 @@
+{
+  "version": 1,
+  "features": [
+    {
+      "id": "foundation-core-identity",
+      "role": "core",
+      "label": {
+        "ja": "引き継ぎ設定",
+        "en": "Account Transfer"
+      },
+      "description": {
+        "ja": "機種変更時のアカウント引き継ぎコードを発行・管理します。",
+        "en": "Issues and manages transfer codes so players can move their account to a new device."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-ad",
+      "role": "economy",
+      "label": {
+        "ja": "広告",
+        "en": "Ads"
+      },
+      "description": {
+        "ja": "広告視聴の実績を記録し、広告経由の報酬付与に使えるポイントを管理します。",
+        "en": "Tracks ad views and manages the points you can use to reward players for watching them."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-character-dictionary",
+      "role": "character",
+      "label": {
+        "ja": "キャラクター図鑑",
+        "en": "Character Dex"
+      },
+      "description": {
+        "ja": "これまでに入手したキャラクターの種類を記録する図鑑機能です。",
+        "en": "Keeps a dex of every character species the player has ever obtained."
+      },
+      "dependsOn": ["foundation-economy-character"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-character-formation",
+      "role": "character",
+      "label": {
+        "ja": "パーティ編成",
+        "en": "Party Formation"
+      },
+      "description": {
+        "ja": "手持ちキャラクターを組み合わせて編成を作る機能です。",
+        "en": "Lets players build formations by combining characters from their collection."
+      },
+      "dependsOn": ["foundation-economy-character"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-character",
+      "role": "character",
+      "label": {
+        "ja": "キャラクター",
+        "en": "Characters"
+      },
+      "description": {
+        "ja": "キャラクターの所持・レベル・経験値を扱います。",
+        "en": "Handles character ownership, level, and experience."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-currency",
+      "role": "economy",
+      "label": {
+        "ja": "通貨",
+        "en": "Currency"
+      },
+      "description": {
+        "ja": "ゲーム内通貨の残高（ウォレット）と、通貨で買える商品を扱います。",
+        "en": "Manages an in-game currency balance (wallet) and the products it can buy."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-energy",
+      "role": "economy",
+      "label": {
+        "ja": "スタミナ",
+        "en": "Stamina"
+      },
+      "description": {
+        "ja": "時間経過で回復するスタミナ（行動力）を管理します。",
+        "en": "Manages a stamina/energy meter that recovers over time."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-equipment",
+      "role": "character",
+      "label": {
+        "ja": "装備",
+        "en": "Equipment"
+      },
+      "description": {
+        "ja": "キャラクターに装備させる武器や防具の所持・カテゴリを管理します。",
+        "en": "Manages the weapons and gear characters own and equip, grouped by category."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-idle",
+      "role": "economy",
+      "label": {
+        "ja": "放置報酬",
+        "en": "Idle Rewards"
+      },
+      "description": {
+        "ja": "遊んでいない間にたまる放置報酬を計算・付与します。",
+        "en": "Accrues and grants rewards that build up while the player is away."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-inventory",
+      "role": "economy",
+      "label": {
+        "ja": "アイテム",
+        "en": "Items"
+      },
+      "description": {
+        "ja": "プレイヤーが所持するアイテムの基本的な在庫管理です。",
+        "en": "Basic inventory management for items the player owns."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-limit",
+      "role": "economy",
+      "label": {
+        "ja": "回数制限",
+        "en": "Usage Limits"
+      },
+      "description": {
+        "ja": "「1日3回まで」のような回数制限を扱います。リセットのタイミングを共有しつつ、数える対象ごとにカウンターを分けられます。上限は使う側が指定します。",
+        "en": "Handles allowances such as 'three times a day': one reset schedule, a separate counter per thing being counted, and a maximum supplied by the caller."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-economy-schedule",
+      "role": "core",
+      "label": {
+        "ja": "スケジュール基盤",
+        "en": "Scheduling"
+      },
+      "description": {
+        "ja": "期間限定イベントなど、他の機能が使う日程・トリガーの共通基盤です。",
+        "en": "Shared date-range and trigger infrastructure other features build on."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-liveops-inbox",
+      "role": "liveops",
+      "label": {
+        "ja": "お知らせ・受信箱",
+        "en": "Inbox"
+      },
+      "description": {
+        "ja": "運営からのお知らせや、アイテム付きメッセージをプレイヤーに届けます。",
+        "en": "Delivers announcements and item-attached messages from the operator to players."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-liveops-version",
+      "role": "liveops",
+      "label": {
+        "ja": "バージョン管理",
+        "en": "Version Gate"
+      },
+      "description": {
+        "ja": "利用規約の同意バージョンやアプリの埋め込みバージョンを管理します。",
+        "en": "Tracks agreement (terms of service) versions and the app's embedded version."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-social-graph",
+      "role": "social",
+      "label": {
+        "ja": "フレンド・プロフィール",
+        "en": "Friends & Profile"
+      },
+      "description": {
+        "ja": "フレンド申請・フォロー・プロフィールなど、プレイヤー同士のつながりを扱います。",
+        "en": "Handles friend requests, follows, and profiles — the connections between players."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "foundation-social-guild",
+      "role": "social",
+      "label": {
+        "ja": "ギルド",
+        "en": "Guilds"
+      },
+      "description": {
+        "ja": "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。",
+        "en": "Handles player guilds — capacity, permission roles, and which guild a player belongs to."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-liveops-guild-ranking",
+      "role": "liveops",
+      "label": {
+        "ja": "ギルドランキング",
+        "en": "Guild Rankings"
+      },
+      "description": {
+        "ja": "ギルド単位で区切られたランキングです。所属ギルド内で競い、順位に応じた報酬を配れます。",
+        "en": "A leaderboard partitioned by guild, so members compete inside their own guild, with rewards by rank."
+      },
+      "dependsOn": ["foundation-economy-schedule", "foundation-social-guild"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-liveops-ranking",
+      "role": "liveops",
+      "label": {
+        "ja": "ランキング",
+        "en": "Rankings"
+      },
+      "description": {
+        "ja": "全プレイヤーを対象としたランキングです。開催期間をスケジュールで指定し、順位に応じた報酬を配れます。",
+        "en": "A global leaderboard with a scheduled entry period and rewards handed out by rank."
+      },
+      "dependsOn": ["foundation-economy-schedule"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-liveops-serial-code",
+      "role": "liveops",
+      "label": {
+        "ja": "シリアルコード",
+        "en": "Serial Codes"
+      },
+      "description": {
+        "ja": "配布したシリアルコードを引き換える機能です。コードのまとまり（キャンペーン）を定義します。",
+        "en": "Redeems serial codes you hand out, organised into campaigns."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-economy-buff",
+      "role": "economy",
+      "label": {
+        "ja": "バフ",
+        "en": "Buffs"
+      },
+      "description": {
+        "ja": "報酬の獲得量などを一時的に倍率で増減させます。対象のアクションと期間を指定できます。",
+        "en": "Temporarily scales what an action hands out, targeted by action and limited to a period."
+      },
+      "dependsOn": ["foundation-economy-schedule"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-economy-character-enhance",
+      "role": "character",
+      "label": {
+        "ja": "キャラクター強化",
+        "en": "Character Enhancement"
+      },
+      "description": {
+        "ja": "手持ちのキャラクターを素材にして、別のキャラクターに経験値を与えます。大成功の倍率も設定できます。",
+        "en": "Feeds characters to another character as material, turning them into experience, with configurable bonus multipliers."
+      },
+      "dependsOn": ["foundation-economy-character"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-economy-character-grade",
+      "role": "character",
+      "label": {
+        "ja": "キャラクター限界突破",
+        "en": "Character Grades"
+      },
+      "description": {
+        "ja": "キャラクターのグレードを上げてレベル上限を引き上げます。段階ごとに上限値と対象キャラクターを設定できます。",
+        "en": "Promotes a character through grades, each raising its level cap, with per-step caps and eligibility."
+      },
+      "dependsOn": ["foundation-economy-character"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-economy-equipment-enchant",
+      "role": "character",
+      "label": {
+        "ja": "装備エンチャント",
+        "en": "Equipment Enchantment"
+      },
+      "description": {
+        "ja": "装備にランダムな追加効果を付与します。抽選されるスロット数と効果の種類・重みを設定できます。",
+        "en": "Rolls random bonuses onto equipment, with configurable slot counts, options and weights."
+      },
+      "dependsOn": ["foundation-economy-equipment"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-economy-skill-tree",
+      "role": "character",
+      "label": {
+        "ja": "スキルツリー",
+        "en": "Skill Tree"
+      },
+      "description": {
+        "ja": "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはプレイヤーごとに記録されます。",
+        "en": "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per player."
+      },
+      "dependsOn": [],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-economy-equipment-loadout",
+      "role": "character",
+      "label": {
+        "ja": "装備の装着",
+        "en": "Equipment Loadout"
+      },
+      "description": {
+        "ja": "キャラクターごとの装備スロットを扱います。スロットごとに装着できる装備を制限できます。",
+        "en": "Gives each character its own equipment slots, with per-slot restrictions on what fits."
+      },
+      "dependsOn": ["foundation-economy-character"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-economy-login-reward",
+      "role": "economy",
+      "label": {
+        "ja": "ログインボーナス",
+        "en": "Login Rewards"
+      },
+      "description": {
+        "ja": "毎日・連続ログインなどに応じて報酬を配布します。",
+        "en": "Grants rewards for daily or consecutive-day logins."
+      },
+      "dependsOn": ["foundation-economy-schedule"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-economy-mission",
+      "role": "economy",
+      "label": {
+        "ja": "ミッション",
+        "en": "Missions"
+      },
+      "description": {
+        "ja": "条件を満たすと達成になるミッションと、その進捗カウンターを管理します。",
+        "en": "Manages missions that complete when their conditions are met, along with progress counters."
+      },
+      "dependsOn": ["foundation-economy-schedule"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-economy-quest",
+      "role": "economy",
+      "label": {
+        "ja": "クエスト",
+        "en": "Quests"
+      },
+      "description": {
+        "ja": "プレイヤーが進行させるクエストと、達成時の進捗・報酬を管理します。",
+        "en": "Manages quests players progress through, along with their progress and completion rewards."
+      },
+      "dependsOn": ["foundation-economy-schedule"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-shop-character-gacha",
+      "role": "shop",
+      "label": {
+        "ja": "キャラガチャ",
+        "en": "Character Gacha"
+      },
+      "description": {
+        "ja": "通貨を消費してキャラクターを排出するガチャです。排出率をレアリティごとに設定できます。",
+        "en": "A currency-funded gacha that draws characters, with per-rarity drop rates."
+      },
+      "dependsOn": [
+        "foundation-economy-character",
+        "foundation-economy-character-dictionary",
+        "foundation-economy-schedule",
+        "micro-shop-currency"
+      ],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-shop-subscription",
+      "role": "shop",
+      "label": {
+        "ja": "サブスクリプション",
+        "en": "Subscriptions"
+      },
+      "description": {
+        "ja": "月額パスなどの継続課金を扱います。更新のたびにスケジュールのトリガーが引かれ、加入状況と有効期限を保持します。",
+        "en": "Handles recurring store purchases such as a monthly pass, pulling a schedule trigger on each renewal and tracking who currently holds it."
+      },
+      "dependsOn": ["foundation-economy-schedule"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-shop-currency",
+      "role": "shop",
+      "label": {
+        "ja": "通貨ショップ",
+        "en": "Currency Shop"
+      },
+      "description": {
+        "ja": "通貨を購入できる商品と価格を扱うショップ機能です。",
+        "en": "A shop for purchasing currency, with configurable products and prices."
+      },
+      "dependsOn": ["foundation-economy-currency"],
+      "install": {
+        "kind": "bundled"
+      }
+    },
+    {
+      "id": "micro-shop-energy",
+      "role": "shop",
+      "label": {
+        "ja": "スタミナショップ",
+        "en": "Stamina Shop"
+      },
+      "description": {
+        "ja": "スタミナを回復する商品を販売するショップ機能です。",
+        "en": "A shop that sells products to refill stamina."
+      },
+      "dependsOn": ["foundation-economy-energy"],
+      "install": {
+        "kind": "bundled"
+      }
+    }
+  ]
+}

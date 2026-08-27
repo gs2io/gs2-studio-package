@@ -1,0 +1,112 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "rewardType",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_7BNP79J6Y7F8GEG0T6KHC790V0"
+              }
+            },
+            {
+              "parameterName": "contentsId",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_RCQNX4MEVGDF7TJ7V7FSADT82S"
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_G6DZB9WB3V5Q15XXP8MWQ6Z3ZD"
+              }
+            }
+          ],
+          "transformName": "Reward",
+          "transformPackageId": "sample-social-game-basic"
+        }
+      ],
+      "kind": "transformEntries",
+      "targetPropertyId": "prop_JPGJM6CM0TRQGXTAVJBYATVNCG"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "order": [
+      "prop_7BNP79J6Y7F8GEG0T6KHC790V0",
+      "prop_RCQNX4MEVGDF7TJ7V7FSADT82S",
+      "prop_G6DZB9WB3V5Q15XXP8MWQ6Z3ZD"
+    ],
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_7BNP79J6Y7F8GEG0T6KHC790V0",
+        "isId": false,
+        "name": "rewardType",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_FEXHRRAKNBN76PEX2C2VZGWSDV"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_RCQNX4MEVGDF7TJ7V7FSADT82S",
+        "isId": false,
+        "name": "contentsId",
+        "requirement": {
+          "kind": "never",
+          "required": false
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_G6DZB9WB3V5Q15XXP8MWQ6Z3ZD",
+        "isId": false,
+        "name": "count",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_P5MSKRE68S4BZ3BQ40RKQ4HF4V",
+  "kind": "overlay",
+  "name": "LoginReward",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  },
+  "source": {
+    "directSourcePackageId": "micro-economy-login-reward",
+    "directSourceTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+    "kind": "dependency",
+    "sourcePackageId": "micro-economy-login-reward",
+    "sourceTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV"
+  }
+}

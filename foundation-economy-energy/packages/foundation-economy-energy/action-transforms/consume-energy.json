@@ -1,0 +1,56 @@
+{
+  "category": "consume",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "a0e059f6-3e69-4083-8dd4-dbfc9161cbe5",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ConsumeEnergy",
+  "outputs": [
+    {
+      "actionName": "Gs2Stamina:ConsumeStaminaByUserId",
+      "conditions": [],
+      "id": "out_01KJSWEC171NCTKBC9FFAKXXZH",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "staminaName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "consumeValue",
+          "sourceParameter": "value"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "a0e059f6-3e69-4083-8dd4-dbfc9161cbe5",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KJSWEQFV1RRMDAGH2SZ0V69H",
+      "name": "value",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

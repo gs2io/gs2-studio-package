@@ -1,0 +1,28 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "order": [],
+    "properties": []
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_M6M6F3GTMTWDDTR7DJ0N84PGWJ",
+  "kind": "overlay",
+  "name": "Schedule",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  },
+  "source": {
+    "directSourcePackageId": "foundation-economy-schedule",
+    "directSourceTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+    "kind": "dependency",
+    "sourcePackageId": "foundation-economy-schedule",
+    "sourceTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+  }
+}

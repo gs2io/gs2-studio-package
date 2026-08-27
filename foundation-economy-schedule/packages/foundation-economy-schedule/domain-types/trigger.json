@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_6MCAB8KE6ZN15EJK6Q592XR7GA",
+      "prop_F9RRQHZFBAHE291G11WATKA2YB",
+      "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_6MCAB8KE6ZN15EJK6Q592XR7GA",
+        "isId": false,
+        "name": "triggered",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_F9RRQHZFBAHE291G11WATKA2YB",
+        "isId": false,
+        "name": "triggeredAt",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "",
+        "id": "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF",
+        "isId": false,
+        "name": "expiresAt",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST",
+  "kind": "local",
+  "name": "Trigger",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "gradeUpPropertyIdRegex",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+            "typeName": "CharacterGradeStep"
+          },
+          "propertyId": "prop_01M0C826WJN2XGK5PMWPSYNZ5W"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "propertyIdRegex",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+            "typeName": "CharacterGradeStep"
+          },
+          "propertyId": "prop_01M0C826WJ6E8SVGPGFX2Z52T3"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "rankCapValue",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+            "typeName": "CharacterGradeStep"
+          },
+          "propertyId": "prop_01M0C826WJ4ZPNGK1JNNQD7GCM"
+        }
+      }
+    ]
+  },
+  "id": "cfa7aebb-248f-55f1-8bd5-8b8b7986a2b4",
+  "index": 0,
+  "location": {
+    "modelName": "GradeEntryModel",
+    "service": "grade"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+    "typeName": "CharacterGradeStep"
+  }
+}

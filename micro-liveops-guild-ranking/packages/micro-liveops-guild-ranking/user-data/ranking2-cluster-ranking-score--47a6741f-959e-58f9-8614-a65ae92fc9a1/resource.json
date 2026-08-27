@@ -1,0 +1,56 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "clusterName"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "clusterRankingScoreId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "metadata"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "rankingName"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "score",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+              "typeName": "GuildRanking"
+            },
+            "propertyId": "prop_01M0CE422VSC746FPJK5JNQ11R"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "season"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "f7557773-8f8f-58cb-b0b9-2f178f988a1f",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+      "typeName": "GuildRanking"
+    }
+  },
+  "id": "47a6741f-959e-58f9-8614-a65ae92fc9a1",
+  "location": {
+    "modelName": "ClusterRankingScore",
+    "service": "ranking2"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV",
+            "typeName": "Character"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "a0dadc95-666a-48c1-89f9-86f35904b889",
+  "location": {
+    "modelName": "EntryModel",
+    "service": "dictionary"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV",
+    "typeName": "Character"
+  }
+}

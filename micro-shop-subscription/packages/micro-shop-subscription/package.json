@@ -1,0 +1,27 @@
+{
+  "id": "micro-shop-subscription",
+  "name": "micro-shop-subscription",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+  },
+  "display": {
+    "description": {
+      "en": "Handles recurring store purchases such as a monthly pass, pulling a schedule trigger on each renewal and tracking who currently holds it.",
+      "ja": "月額パスなどの継続課金を扱います。更新のたびにスケジュールのトリガーが引かれ、加入状況と有効期限を保持します。"
+    },
+    "domainTypes": {
+      "dt_01M0CE237DZF21KW81CJ2BP1WN": {
+        "label": {
+          "en": "Subscription",
+          "ja": "サブスク商品"
+        }
+      }
+    },
+    "label": {
+      "en": "Subscriptions",
+      "ja": "サブスクリプション"
+    }
+  }
+}

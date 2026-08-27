@@ -1,0 +1,34 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "action",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+              "typeName": "SkillNode"
+            },
+            "propertyId": "prop_01M0Q02DXK9YCRGGAJHADRMVS6"
+          },
+          "kind": "parent",
+          "parentResourceId": "6cdca220-144a-5f9f-b6b7-143f1c35222d"
+        }
+      }
+    ]
+  },
+  "id": "4cde971c-c1d9-5fa4-ac27-8b3646c3c38e",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+    "typeName": "SkillNode"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "completeNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "completeNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "completeNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "completeNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "counterIncrementScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "missionCompleteScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Mission"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRewardsScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      }
+    ]
+  },
+  "id": "db1150ed-4b35-41d6-a1fd-720d85f50d54",
+  "location": {
+    "modelName": "Namespace",
+    "service": "mission"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
+    "typeName": "MissionSetting"
+  }
+}

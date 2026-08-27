@@ -1,0 +1,82 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "7f43c37d-e124-5bd2-84ff-dd9866eeca50",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "CountDownUsageLimit",
+  "outputs": [
+    {
+      "actionName": "Gs2Limit:CountDownByUserId",
+      "conditions": [],
+      "id": "out_01M0C5HJ9HYE63F6J76WX9B46N",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "limitName",
+          "sourceParameter": "limit"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "counterName",
+          "sourceParameter": "counter"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "countDownValue",
+          "sourceParameter": "countDownValue"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "7f43c37d-e124-5bd2-84ff-dd9866eeca50",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01M0C5HJ9HWEYZ4H371ZBV46PZ",
+      "name": "limit",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0C6M2N3F5P8VN7BW32S9QEV",
+      "name": "counter",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_01M0C6M2N38KVHBHTC1JBRT5YA"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01M0C6M2N3ABZKZYQ192V6GV64",
+      "name": "countDownValue",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

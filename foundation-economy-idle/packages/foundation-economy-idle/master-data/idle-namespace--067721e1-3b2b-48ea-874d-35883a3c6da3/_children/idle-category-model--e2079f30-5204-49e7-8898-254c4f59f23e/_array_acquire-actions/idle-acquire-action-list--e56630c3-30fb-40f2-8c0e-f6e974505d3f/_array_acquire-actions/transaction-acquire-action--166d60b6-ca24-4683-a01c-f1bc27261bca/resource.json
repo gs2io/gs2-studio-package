@@ -1,0 +1,34 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "action",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4201EMDQW9HN9AMKXT0WQHMKJY",
+              "typeName": "IdleReward"
+            },
+            "propertyId": "prop_01M0PRB5RFJJP0NG8XT0WHEGD2"
+          },
+          "kind": "parent",
+          "parentResourceId": "e56630c3-30fb-40f2-8c0e-f6e974505d3f"
+        }
+      }
+    ]
+  },
+  "id": "166d60b6-ca24-4683-a01c-f1bc27261bca",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_4201EMDQW9HN9AMKXT0WQHMKJY",
+    "typeName": "IdleReward"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "micro-liveops-serial-code",
+  "name": "micro-liveops-serial-code",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Redeems serial codes you hand out, organised into campaigns.",
+      "ja": "配布したシリアルコードを引き換える機能です。コードのまとまり（キャンペーン）を定義します。"
+    },
+    "domainTypes": {
+      "dt_01M0C5VXZY2ZJKK4DERTCAZHXD": {
+        "label": {
+          "en": "Code campaign",
+          "ja": "コードキャンペーン"
+        }
+      }
+    },
+    "label": {
+      "en": "Serial Codes",
+      "ja": "シリアルコード"
+    }
+  }
+}

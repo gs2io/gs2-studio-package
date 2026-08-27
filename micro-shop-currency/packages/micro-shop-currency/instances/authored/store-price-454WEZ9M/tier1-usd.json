@@ -1,0 +1,11 @@
+{
+  "id": "tier1.USD",
+  "kind": "authored",
+  "rowKey": "row_029BNWFXPGH19HQ4FC937P4QPQ",
+  "typeId": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
+  "values": {
+    "prop_4QH1Q546W880NVDGJRGNVCWV07": "tier1",
+    "prop_HWY29H9JCBTCX27T4BQDSTJMV0": "USD",
+    "prop_NW3JXP6ZEQE4DP99TJHZEB68AD": 1
+  }
+}

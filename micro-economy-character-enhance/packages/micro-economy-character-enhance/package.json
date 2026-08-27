@@ -1,0 +1,33 @@
+{
+  "id": "micro-economy-character-enhance",
+  "name": "micro-economy-character-enhance",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-character": "file:../../../foundation-economy-character/packages/foundation-economy-character"
+  },
+  "display": {
+    "description": {
+      "en": "Feeds characters to another character as material, turning them into experience, with configurable bonus multipliers.",
+      "ja": "手持ちのキャラクターを素材にして、別のキャラクターに経験値を与えます。大成功の倍率も設定できます。"
+    },
+    "domainTypes": {
+      "dt_01M0C7T116ST3H2Z9X2ANQRRD2": {
+        "label": {
+          "en": "Bonus rate",
+          "ja": "大成功倍率"
+        }
+      },
+      "dt_01M0C7T116VP42973VYFS2PRV0": {
+        "label": {
+          "en": "Enhancement recipe",
+          "ja": "強化レシピ"
+        }
+      }
+    },
+    "label": {
+      "en": "Character Enhancement",
+      "ja": "キャラクター強化"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "micro-liveops-ranking",
+  "name": "micro-liveops-ranking",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+  },
+  "display": {
+    "description": {
+      "en": "A global leaderboard with a scheduled entry period and rewards handed out by rank.",
+      "ja": "全プレイヤーを対象としたランキングです。開催期間をスケジュールで指定し、順位に応じた報酬を配れます。"
+    },
+    "domainTypes": {
+      "dt_01M0C5QTC12JW853EKK38QN42Z": {
+        "label": {
+          "en": "Ranking reward",
+          "ja": "ランキング報酬"
+        }
+      },
+      "dt_01M0C5QTC1BDRSX4T1WSDJXDQV": {
+        "label": {
+          "en": "Ranking",
+          "ja": "ランキング"
+        }
+      }
+    },
+    "label": {
+      "en": "Rankings",
+      "ja": "ランキング"
+    }
+  }
+}

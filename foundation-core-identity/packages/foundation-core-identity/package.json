@@ -1,0 +1,24 @@
+{
+  "id": "foundation-core-identity",
+  "name": "foundation-core-identity",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Issues and manages transfer codes so players can move their account to a new device.",
+      "ja": "機種変更時のアカウント引き継ぎコードを発行・管理します。"
+    },
+    "domainTypes": {
+      "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ": {
+        "label": {
+          "en": "Take-over setting",
+          "ja": "引き継ぎ設定"
+        }
+      }
+    },
+    "label": {
+      "en": "Account Transfer",
+      "ja": "引き継ぎ設定"
+    }
+  }
+}

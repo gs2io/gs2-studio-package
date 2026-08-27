@@ -1,0 +1,86 @@
+{
+  "compositeKey": [
+    "prop_6MY41PGG6DAVSR3YSY4YDTYSPX",
+    "prop_AATTCTRXX4J382EEVEGE9ZYV6W"
+  ],
+  "declared": {
+    "order": [
+      "prop_reserved_id",
+      "prop_6MY41PGG6DAVSR3YSY4YDTYSPX",
+      "prop_AATTCTRXX4J382EEVEGE9ZYV6W",
+      "prop_2YWD79NQ991RBGDCA3HEZHGDT8"
+    ],
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "isId": true,
+        "name": "id",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_6MY41PGG6DAVSR3YSY4YDTYSPX",
+        "isId": false,
+        "name": "rarity",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_GX6NYQD4P54A7TXS08MA9F3X7Z"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "",
+        "id": "prop_AATTCTRXX4J382EEVEGE9ZYV6W",
+        "isId": false,
+        "name": "character",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "",
+        "id": "prop_2YWD79NQ991RBGDCA3HEZHGDT8",
+        "isId": false,
+        "name": "weight",
+        "requirement": {
+          "kind": "always",
+          "required": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "description": "",
+  "id": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+  "kind": "local",
+  "name": "CharacterRate",
+  "singleEntry": false,
+  "sort": {
+    "direction": "asc",
+    "key": null
+  }
+}

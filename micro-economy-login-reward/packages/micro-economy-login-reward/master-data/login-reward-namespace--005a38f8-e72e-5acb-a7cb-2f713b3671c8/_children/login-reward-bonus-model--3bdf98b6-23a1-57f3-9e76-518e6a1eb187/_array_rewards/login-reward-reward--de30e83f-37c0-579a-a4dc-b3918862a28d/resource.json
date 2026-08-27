@@ -1,0 +1,16 @@
+{
+  "authored": {
+    "declaredBindings": []
+  },
+  "id": "de30e83f-37c0-579a-a4dc-b3918862a28d",
+  "index": 0,
+  "location": {
+    "modelName": "Reward",
+    "service": "loginReward"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+    "typeName": "LoginReward"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "foundation-economy-equipment",
+  "name": "foundation-economy-equipment",
+  "version": "0.0.0",
+  "description": "",
+  "display": {
+    "description": {
+      "en": "Manages the weapons and gear characters own and equip, grouped by category.",
+      "ja": "キャラクターに装備させる武器や防具の所持・カテゴリを管理します。"
+    },
+    "domainTypes": {
+      "dt_FANPG561806ENHYPWV5YRDSHC7": {
+        "label": {
+          "en": "Equipment slots",
+          "ja": "装備所持枠"
+        }
+      },
+      "dt_QQR152BQFJSTM2W1WYZR4RPA98": {
+        "label": {
+          "en": "Equipment category",
+          "ja": "装備カテゴリ"
+        }
+      },
+      "dt_R7W960WC22J1FD8E239HDFMD8D": {
+        "label": {
+          "en": "Equipment",
+          "ja": "装備"
+        }
+      }
+    },
+    "label": {
+      "en": "Equipment",
+      "ja": "装備"
+    }
+  }
+}

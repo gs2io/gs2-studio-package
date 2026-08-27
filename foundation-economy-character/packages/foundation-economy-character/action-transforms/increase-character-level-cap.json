@@ -1,0 +1,71 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "IncreaseCharacterLevelCap",
+  "outputs": [
+    {
+      "actionName": "Gs2Experience:AddRankCapByUserId",
+      "conditions": [],
+      "id": "out_01KTXR15A1M4JA2KED0ZMC0WQZ",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "experienceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "rankCapValue",
+          "sourceParameter": "value"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "description": "",
+      "id": "param_01KTXR0EH3E0BSPZ7253SZ45NN",
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      }
+    },
+    {
+      "description": "",
+      "id": "param_01KTXR0AGNYGQ861PP6DY9MZWX",
+      "name": "value",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}
