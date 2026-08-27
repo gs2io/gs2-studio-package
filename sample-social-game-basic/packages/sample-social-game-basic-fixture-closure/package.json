@@ -1,0 +1,10 @@
+{
+  "id": "sample-social-game-basic-fixture-closure",
+  "name": "sample-social-game-basic-fixture-closure",
+  "version": "0.0.0",
+  "description": "Test-only local closure for public package dependencies",
+  "dependencies": {
+    "foundation-economy-character-dictionary": "file:../../../foundation-economy-character-dictionary/packages/foundation-economy-character-dictionary",
+    "foundation-economy-currency": "file:../../../foundation-economy-currency/packages/foundation-economy-currency"
+  }
+}

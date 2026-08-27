@@ -1,0 +1,12 @@
+{
+  "id": "rename-overlay-sample-fixture-closure",
+  "name": "rename-overlay-sample-fixture-closure",
+  "version": "0.0.0",
+  "description": "Test-only local closure for public package dependencies",
+  "dependencies": {
+    "foundation-economy-character-dictionary": "file:../../../foundation-economy-character-dictionary/packages/foundation-economy-character-dictionary",
+    "foundation-economy-currency": "file:../../../foundation-economy-currency/packages/foundation-economy-currency",
+    "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule",
+    "micro-shop-currency": "file:../../../micro-shop-currency/packages/micro-shop-currency"
+  }
+}
