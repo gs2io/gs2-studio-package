@@ -14,7 +14,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-core-identity/packages/foundation-core-identity"
       }
     },
     {
@@ -30,7 +30,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-ad/packages/foundation-economy-ad"
       }
     },
     {
@@ -46,7 +46,7 @@
       },
       "dependsOn": ["foundation-economy-character"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-character-dictionary/packages/foundation-economy-character-dictionary"
       }
     },
     {
@@ -62,7 +62,7 @@
       },
       "dependsOn": ["foundation-economy-character"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-character-formation/packages/foundation-economy-character-formation"
       }
     },
     {
@@ -78,7 +78,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-character/packages/foundation-economy-character"
       }
     },
     {
@@ -94,7 +94,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-currency/packages/foundation-economy-currency"
       }
     },
     {
@@ -110,7 +110,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-energy/packages/foundation-economy-energy"
       }
     },
     {
@@ -126,7 +126,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-equipment/packages/foundation-economy-equipment"
       }
     },
     {
@@ -142,7 +142,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-idle/packages/foundation-economy-idle"
       }
     },
     {
@@ -158,7 +158,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-inventory/packages/foundation-economy-inventory"
       }
     },
     {
@@ -174,7 +174,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-limit/packages/foundation-economy-limit"
       }
     },
     {
@@ -190,7 +190,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-schedule/packages/foundation-economy-schedule"
       }
     },
     {
@@ -206,7 +206,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-liveops-inbox/packages/foundation-liveops-inbox"
       }
     },
     {
@@ -222,7 +222,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-liveops-version/packages/foundation-liveops-version"
       }
     },
     {
@@ -238,7 +238,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-social-graph/packages/foundation-social-graph"
       }
     },
     {
@@ -254,7 +254,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-social-guild/packages/foundation-social-guild"
       }
     },
     {
@@ -270,7 +270,7 @@
       },
       "dependsOn": ["foundation-economy-schedule", "foundation-social-guild"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-liveops-guild-ranking/packages/micro-liveops-guild-ranking"
       }
     },
     {
@@ -286,7 +286,7 @@
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-liveops-ranking/packages/micro-liveops-ranking"
       }
     },
     {
@@ -302,7 +302,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-liveops-serial-code/packages/micro-liveops-serial-code"
       }
     },
     {
@@ -318,7 +318,7 @@
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-buff/packages/micro-economy-buff"
       }
     },
     {
@@ -334,7 +334,7 @@
       },
       "dependsOn": ["foundation-economy-character"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-character-enhance/packages/micro-economy-character-enhance"
       }
     },
     {
@@ -350,7 +350,7 @@
       },
       "dependsOn": ["foundation-economy-character"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-character-grade/packages/micro-economy-character-grade"
       }
     },
     {
@@ -366,7 +366,7 @@
       },
       "dependsOn": ["foundation-economy-equipment"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-equipment-enchant/packages/micro-economy-equipment-enchant"
       }
     },
     {
@@ -382,7 +382,7 @@
       },
       "dependsOn": [],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-skill-tree/packages/micro-economy-skill-tree"
       }
     },
     {
@@ -398,7 +398,7 @@
       },
       "dependsOn": ["foundation-economy-character"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-equipment-loadout/packages/micro-economy-equipment-loadout"
       }
     },
     {
@@ -414,7 +414,7 @@
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-login-reward/packages/micro-economy-login-reward"
       }
     },
     {
@@ -430,7 +430,7 @@
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-mission/packages/micro-economy-mission"
       }
     },
     {
@@ -446,7 +446,7 @@
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-quest/packages/micro-economy-quest"
       }
     },
     {
@@ -467,7 +467,7 @@
         "micro-shop-currency"
       ],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-shop-character-gacha/packages/micro-shop-character-gacha"
       }
     },
     {
@@ -483,7 +483,7 @@
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-shop-subscription/packages/micro-shop-subscription"
       }
     },
     {
@@ -499,7 +499,7 @@
       },
       "dependsOn": ["foundation-economy-currency"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-shop-currency/packages/micro-shop-currency"
       }
     },
     {
@@ -515,7 +515,7 @@
       },
       "dependsOn": ["foundation-economy-energy"],
       "install": {
-        "kind": "bundled"
+        "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-shop-energy/packages/micro-shop-energy"
       }
     }
   ]
