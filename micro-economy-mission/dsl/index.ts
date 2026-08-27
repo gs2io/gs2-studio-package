@@ -193,7 +193,7 @@ export const microEconomyMission = definePackage("micro-economy-mission", "0.0.0
   .displayType(Mission, { label: { ja: "ミッション", en: "Mission" } })
   .dependency(
     "foundation-economy-schedule",
-    "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(MissionCollection)
   .domainType(MissionCounter)

@@ -98,7 +98,7 @@ export const microEconomyLoginReward = definePackage("micro-economy-login-reward
   .displayType(Schedule, { label: { ja: "スケジュール", en: "Schedule" } })
   .dependency(
     "foundation-economy-schedule",
-    "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(LoginRewardCollection)
   .domainType(LoginReward)

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "",
   "dependencies": {
-    "foundation-economy-energy": "file:../../../foundation-economy-energy/packages/foundation-economy-energy"
+    "foundation-economy-energy": "github:gs2io/gs2-studio-package"
   },
   "display": {
     "description": {

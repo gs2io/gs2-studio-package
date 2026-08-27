@@ -89,7 +89,7 @@ export const microShopSubscription = definePackage("micro-shop-subscription", "0
   .displayType(StoreSubscription, { label: { ja: "サブスク商品", en: "Subscription" } })
   .dependency(
     "foundation-economy-schedule",
-    "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(StoreSubscription)
 

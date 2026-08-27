@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "",
   "dependencies": {
-    "foundation-economy-character": "file:../../../foundation-economy-character/packages/foundation-economy-character"
+    "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
   "display": {
     "description": {

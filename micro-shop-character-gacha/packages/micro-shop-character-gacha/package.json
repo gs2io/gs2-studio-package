@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "description": "",
   "dependencies": {
-    "foundation-economy-character": "file:../../../foundation-economy-character/packages/foundation-economy-character",
-    "foundation-economy-character-dictionary": "file:../../../foundation-economy-character-dictionary/packages/foundation-economy-character-dictionary",
-    "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule",
-    "micro-shop-currency": "file:../../../micro-shop-currency/packages/micro-shop-currency"
+    "foundation-economy-character": "github:gs2io/gs2-studio-package",
+    "foundation-economy-character-dictionary": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
     "description": {

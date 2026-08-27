@@ -130,7 +130,7 @@ export const microEconomyEquipmentEnchant = definePackage(
   .displayType(Equipment, { label: { ja: "装備", en: "Equipment" } })
   .dependency(
     "foundation-economy-equipment",
-    "file:../../../foundation-economy-equipment/packages/foundation-economy-equipment"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(EquipmentEnchant)
   .domainType(EquipmentEnchantSlotChance)

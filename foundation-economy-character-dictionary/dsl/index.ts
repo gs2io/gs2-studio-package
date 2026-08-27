@@ -48,7 +48,7 @@ export const foundationEconomyCharacterDictionary = definePackage(
   .displayType(Character, { label: { ja: "キャラクター", en: "Character" } })
   .dependency(
     "foundation-economy-character",
-    "file:../../../foundation-economy-character/packages/foundation-economy-character"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(Character)
 

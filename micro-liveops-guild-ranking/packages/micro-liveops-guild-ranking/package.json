@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "description": "",
   "dependencies": {
-    "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule",
-    "foundation-social-guild": "file:../../../foundation-social-guild/packages/foundation-social-guild"
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "foundation-social-guild": "github:gs2io/gs2-studio-package"
   },
   "display": {
     "description": {

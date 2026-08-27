@@ -100,7 +100,7 @@ export const microEconomyCharacterEnhance = definePackage(
   .displayType(CharacterEnhanceBonus, { label: { ja: "大成功倍率", en: "Bonus rate" } })
   .dependency(
     "foundation-economy-character",
-    "file:../../../foundation-economy-character/packages/foundation-economy-character"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(CharacterEnhance)
   .domainType(CharacterEnhanceBonus)

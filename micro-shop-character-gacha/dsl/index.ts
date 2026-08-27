@@ -195,19 +195,19 @@ export const microShopCharacterGacha = definePackage("micro-shop-character-gacha
   .displayType(Gacha, { label: { ja: "ガチャ", en: "Gacha" } })
   .dependency(
     "foundation-economy-character",
-    "file:../../../foundation-economy-character/packages/foundation-economy-character"
+    "github:gs2io/gs2-studio-package"
   )
   .dependency(
     "foundation-economy-character-dictionary",
-    "file:../../../foundation-economy-character-dictionary/packages/foundation-economy-character-dictionary"
+    "github:gs2io/gs2-studio-package"
   )
   .dependency(
     "foundation-economy-schedule",
-    "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+    "github:gs2io/gs2-studio-package"
   )
   .dependency(
     "micro-shop-currency",
-    "file:../../../micro-shop-currency/packages/micro-shop-currency"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(CharacterRate)
   .domainType(GachaRarityRate)

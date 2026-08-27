@@ -100,11 +100,11 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
   .displayType(GuildRankingReward, { label: { ja: "ランキング報酬", en: "Ranking reward" } })
   .dependency(
     "foundation-economy-schedule",
-    "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+    "github:gs2io/gs2-studio-package"
   )
   .dependency(
     "foundation-social-guild",
-    "file:../../../foundation-social-guild/packages/foundation-social-guild"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(GuildRanking)
   .domainType(GuildRankingReward)

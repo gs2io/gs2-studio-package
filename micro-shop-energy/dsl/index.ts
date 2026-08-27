@@ -56,7 +56,7 @@ export const microShopEnergy = definePackage("micro-shop-energy", "0.0.0")
   .displayType(EnergyProduct, { label: { ja: "スタミナ商品", en: "Stamina product" } })
   .dependency(
     "foundation-economy-energy",
-    "file:../../../foundation-economy-energy/packages/foundation-economy-energy"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(EnergyProduct)
   .masterDataResource(r =>

@@ -14,6 +14,8 @@ GS2 Studio で利用する公式パッケージ定義とサンプルプロジェ
 `package.json` の `id` と一致させます。`dependsOn` は各パッケージの直接依存だけを
 列挙します。`install.url` には公開 GitHub リポジトリ内の生成済みパッケージ
 ディレクトリを指す `https://github.com/<owner>/<repo>/tree/<ref>/<path>` URL を指定します。
+インデックス掲載パッケージの `package.json` に記録する依存元は
+`github:gs2io/gs2-studio-package` とし、ローカルの `file:` URL は使用しません。
 
 GS2 Studio は `main` のような可変 ref を index 取得時のコミット SHA に固定し、
 同じコミットから index、`package.json`、パッケージアーカイブを取得します。

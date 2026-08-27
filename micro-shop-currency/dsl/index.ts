@@ -133,7 +133,7 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
   .displayType(StoreProduct, { label: { ja: "ストア商品", en: "Store product" } })
   .dependency(
     "foundation-economy-currency",
-    "file:../../../foundation-economy-currency/packages/foundation-economy-currency"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(CurrencyType)
   .domainType(StorePrice)

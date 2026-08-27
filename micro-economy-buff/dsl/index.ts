@@ -87,7 +87,7 @@ export const microEconomyBuff = definePackage("micro-economy-buff", "0.0.0")
   .displayType(Buff, { label: { ja: "バフ", en: "Buff" } })
   .dependency(
     "foundation-economy-schedule",
-    "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(Buff)
 

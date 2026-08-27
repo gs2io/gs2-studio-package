@@ -127,7 +127,7 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
   .displayType(Quest, { label: { ja: "クエスト", en: "Quest" } })
   .dependency(
     "foundation-economy-schedule",
-    "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(ProgressReward)
   .domainType(Progress)

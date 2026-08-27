@@ -77,7 +77,7 @@ export const foundationEconomyCharacterFormation = definePackage(
   .displayType(CharacterFormation, { label: { ja: "編成", en: "Formation" } })
   .dependency(
     "foundation-economy-character",
-    "file:../../../foundation-economy-character/packages/foundation-economy-character"
+    "github:gs2io/gs2-studio-package"
   )
   .domainType(CharacterFormationFormSlot)
   .domainType(CharacterFormationForm)
