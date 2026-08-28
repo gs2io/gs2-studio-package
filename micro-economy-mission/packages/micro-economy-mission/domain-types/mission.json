@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the mission.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ミッションを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "",
         "id": "prop_8ADCCWBXRK8X69EAFY30PGN4SD",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Mission group this mission belongs to.",
+            "label": "Mission group"
+          },
+          "ja": {
+            "description": "このミッションが属するグループです。",
+            "label": "ミッショングループ"
+          }
+        },
         "name": "missionCollection",
         "requirement": {
           "kind": "always",
@@ -46,6 +66,16 @@
         "description": "",
         "id": "prop_01M0R2YRXVYSPEEDYSRE7SR9GQ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions executed when the mission is completed.",
+            "label": "Completion rewards"
+          },
+          "ja": {
+            "description": "ミッション完了時に実行する獲得アクションです。",
+            "label": "完了報酬"
+          }
+        },
         "name": "completeAcquireActions",
         "requirement": {
           "kind": "always",
@@ -63,6 +93,16 @@
         "description": "",
         "id": "prop_2KV74FVT69TN7Z0QZ804K1CA6F",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Mission counter used to determine completion.",
+            "label": "Progress counter"
+          },
+          "ja": {
+            "description": "達成判定に使用するミッションカウンターです。",
+            "label": "進捗カウンター"
+          }
+        },
         "name": "counter",
         "requirement": {
           "kind": "always",
@@ -78,6 +118,16 @@
         "description": "",
         "id": "prop_JW1ZWH5B4R6FXJM3X2K41NRZ6P",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Counter value required to complete the mission.",
+            "label": "Target value"
+          },
+          "ja": {
+            "description": "ミッションを完了するために必要なカウンター値です。",
+            "label": "目標値"
+          }
+        },
         "name": "targetValue",
         "requirement": {
           "kind": "always",
@@ -93,6 +143,16 @@
         "description": "",
         "id": "prop_13Z46E8S0DVQMD9QXBE6CDS0CF",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has completed this mission.",
+            "label": "Completed"
+          },
+          "ja": {
+            "description": "プレイヤーがこのミッションを完了したかを示します。",
+            "label": "完了済み"
+          }
+        },
         "name": "completed",
         "requirement": {
           "kind": "always",
@@ -108,6 +168,16 @@
         "description": "",
         "id": "prop_EV356KV2B8PS2XDNDGM7JRFDSC",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has claimed the completion reward.",
+            "label": "Reward claimed"
+          },
+          "ja": {
+            "description": "プレイヤーが完了報酬を受け取ったかを示します。",
+            "label": "報酬受取済み"
+          }
+        },
         "name": "received",
         "requirement": {
           "kind": "always",

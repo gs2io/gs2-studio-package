@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the store product.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ストア商品を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,16 @@
         "description": "",
         "id": "prop_A26C5NBX039V9DNV0ERPSWVPD8",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Product identifier registered in App Store Connect.",
+            "label": "App Store product ID"
+          },
+          "ja": {
+            "description": "App Store Connectで登録した商品の識別子です。",
+            "label": "App Store商品ID"
+          }
+        },
         "name": "appleAppStoreProductId",
         "requirement": {
           "kind": "never",
@@ -42,6 +62,16 @@
         "description": "",
         "id": "prop_Z99QWHNS8G1DEFWGT2MB00NRJA",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Product identifier registered in Google Play Console.",
+            "label": "Google Play product ID"
+          },
+          "ja": {
+            "description": "Google Play Consoleで登録した商品の識別子です。",
+            "label": "Google Play商品ID"
+          }
+        },
         "name": "googlePlayProductId",
         "requirement": {
           "kind": "never",

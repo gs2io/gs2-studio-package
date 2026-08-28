@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the usage counter.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "回数カウンターを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,16 @@
         "description": "The reset cadence this counter follows",
         "id": "prop_01M0C6M2N3NJ15T88Q5QET2KVA",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Reset schedule followed by this counter.",
+            "label": "Reset schedule"
+          },
+          "ja": {
+            "description": "このカウンターが従うリセット設定です。",
+            "label": "リセット設定"
+          }
+        },
         "name": "limit",
         "requirement": {
           "kind": "always",
@@ -43,6 +63,18 @@
         "description": "Times used since the last reset",
         "id": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Number of uses since the previous reset.",
+            "label": "Usage count",
+            "unit": "uses"
+          },
+          "ja": {
+            "description": "前回のリセット以降に利用した回数です。",
+            "label": "利用回数",
+            "unit": "回"
+          }
+        },
         "name": "count",
         "requirement": {
           "kind": "always",
@@ -58,6 +90,16 @@
         "description": "Next reset time",
         "id": "prop_01M0C6M2N34YDGP2NCGNER2T39",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when this counter will next be reset.",
+            "label": "Next reset time"
+          },
+          "ja": {
+            "description": "このカウンターを次にリセットする日時です。",
+            "label": "次回リセット日時"
+          }
+        },
         "name": "nextResetAt",
         "requirement": {
           "kind": "always",

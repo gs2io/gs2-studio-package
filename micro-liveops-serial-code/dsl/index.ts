@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /**
  * A batch of redeemable codes — a launch giveaway, an apology gift, a code
  * printed on a physical item. The codes themselves are issued at runtime and
@@ -15,6 +17,15 @@ const SerialCodeCampaign = defineDomainType("SerialCodeCampaign", dt =>
         .masterData()
         .description("Accept one shared code for the whole campaign instead of per-player codes")
     )
+    .localizedProperties({
+      id: jaEnId("コードキャンペーン", "serial-code campaign"),
+      enableCampaignCode: jaEnField(
+        "共通キャンペーンコード",
+        "Shared campaign code",
+        "キャンペーン全体で共通のコードを利用できるかを設定します。",
+        "Whether one shared code may be used for the entire campaign."
+      ),
+    })
 );
 
 const CampaignModel = defineMasterDataResource(resource =>

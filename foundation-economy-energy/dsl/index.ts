@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const Energy = defineDomainType("Energy", dt =>
   dt
     .idDescription("Unique identifier")
@@ -12,6 +14,63 @@ const Energy = defineDomainType("Energy", dt =>
     .property(PT.int32("currentValue").userData().required())
     .property(PT.int32("currentMaximumValue").userData().required())
     .property(PT.timestamp("nextRecoverdAt").userData().required())
+    .localizedProperties({
+      id: jaEnId("スタミナ", "stamina model"),
+      defaultMaximum: jaEnField(
+        "初期上限",
+        "Initial maximum",
+        "プレイヤーが最初に持つスタミナ上限です。",
+        "Initial stamina capacity available to a player.",
+        { ja: "ポイント", en: "points" }
+      ),
+      useOverflow: jaEnField(
+        "上限超過を許可",
+        "Allow overflow",
+        "回復時にスタミナ上限を超えて保持できるかを設定します。",
+        "Whether recovered stamina may exceed the normal capacity."
+      ),
+      overflowedMaximum: jaEnField(
+        "超過時上限",
+        "Overflow maximum",
+        "上限超過を許可した場合に保持できる最大値です。",
+        "Maximum stamina retained when overflow is allowed.",
+        { ja: "ポイント", en: "points" }
+      ),
+      recoveryIntervalMinutes: jaEnField(
+        "回復間隔",
+        "Recovery interval",
+        "スタミナを自動回復する間隔です。",
+        "Interval between automatic stamina recoveries.",
+        { ja: "分", en: "minutes" }
+      ),
+      recoveryValue: jaEnField(
+        "1回の回復量",
+        "Recovery amount",
+        "回復間隔ごとに加算するスタミナ量です。",
+        "Amount of stamina restored at each recovery interval.",
+        { ja: "ポイント", en: "points" }
+      ),
+      currentValue: jaEnField(
+        "現在値",
+        "Current value",
+        "プレイヤーが現在持っているスタミナです。",
+        "Current stamina held by the player.",
+        { ja: "ポイント", en: "points" }
+      ),
+      currentMaximumValue: jaEnField(
+        "現在の上限",
+        "Current maximum",
+        "プレイヤーに適用されている現在のスタミナ上限です。",
+        "Current stamina capacity applied to the player.",
+        { ja: "ポイント", en: "points" }
+      ),
+      nextRecoverdAt: jaEnField(
+        "次回回復日時",
+        "Next recovery time",
+        "次にスタミナが自動回復する日時です。",
+        "Time of the next automatic stamina recovery."
+      ),
+    })
 );
 
 const StaminaModel = defineMasterDataResource(resource =>

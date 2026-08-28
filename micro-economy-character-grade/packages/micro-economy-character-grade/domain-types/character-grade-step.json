@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the grade step.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "グレード段階を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,18 @@
         "description": "Level cap this grade raises the character to",
         "id": "prop_01M0C826WJ4ZPNGK1JNNQD7GCM",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Level cap unlocked by this grade.",
+            "label": "Level cap",
+            "unit": "levels"
+          },
+          "ja": {
+            "description": "このグレードで到達可能になるレベル上限です。",
+            "label": "レベル上限",
+            "unit": "レベル"
+          }
+        },
         "name": "rankCapValue",
         "requirement": {
           "kind": "always",
@@ -43,6 +65,16 @@
         "description": "Which characters this step applies to",
         "id": "prop_01M0C826WJ6E8SVGPGFX2Z52T3",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Regular expression matching character instance IDs eligible for this grade.",
+            "label": "Target character pattern"
+          },
+          "ja": {
+            "description": "このグレード段階を適用できるキャラクター個体IDの正規表現です。",
+            "label": "対象キャラクター条件"
+          }
+        },
         "name": "propertyIdRegex",
         "requirement": {
           "kind": "always",
@@ -58,6 +90,16 @@
         "description": "Which characters may be spent to reach it",
         "id": "prop_01M0C826WJN2XGK5PMWPSYNZ5W",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Regular expression matching character instance IDs that may be consumed for grade-up.",
+            "label": "Material character pattern"
+          },
+          "ja": {
+            "description": "グレードアップ素材として消費できるキャラクター個体IDの正規表現です。",
+            "label": "素材キャラクター条件"
+          }
+        },
         "name": "gradeUpPropertyIdRegex",
         "requirement": {
           "kind": "always",

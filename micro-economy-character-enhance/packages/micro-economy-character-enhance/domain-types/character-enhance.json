@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the enhancement recipe.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "強化レシピを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "Item metadata suffix the granted experience is read from",
         "id": "prop_01M0C7T1166P354AK6Q48J86RN",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Metadata suffix used to read experience granted by a material character.",
+            "label": "Experience metadata suffix"
+          },
+          "ja": {
+            "description": "素材キャラクターから獲得経験値を読み取るメタデータの接尾辞です。",
+            "label": "経験値メタデータ接尾辞"
+          }
+        },
         "name": "acquireExperienceSuffix",
         "requirement": {
           "kind": "always",

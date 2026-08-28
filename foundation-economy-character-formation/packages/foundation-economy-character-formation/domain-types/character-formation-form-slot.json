@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the formation form slot.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "フォームスロットを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "",
         "id": "prop_QSKD3PPXJK7HDC2E9T7B9PKBAX",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier of the character instance assigned to this slot.",
+            "label": "Character instance ID"
+          },
+          "ja": {
+            "description": "このスロットに配置されたキャラクター個体の識別子です。",
+            "label": "キャラクター個体ID"
+          }
+        },
         "name": "propertyId",
         "requirement": {
           "kind": "always",

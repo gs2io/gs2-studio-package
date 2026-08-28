@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the incoming friend request.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "受信フレンド申請を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "",
         "id": "prop_8385BCWPDH6PVR79CSMQ19ZNZP",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Public profile information of the request sender.",
+            "label": "Sender profile"
+          },
+          "ja": {
+            "description": "申請元プレイヤーの公開プロフィール情報です。",
+            "label": "申請元プロフィール"
+          }
+        },
         "name": "fromPublicProfile",
         "requirement": {
           "kind": "never",

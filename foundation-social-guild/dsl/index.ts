@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /**
  * What a member of a guild is allowed to do. Roles are defined per guild type;
  * the policy document is the GS2 permission grammar, so it is authored as text
@@ -12,6 +14,15 @@ const GuildRole = defineDomainType("GuildRole", dt =>
     .property(
       PT.string("policyDocument").masterData().required().description("GS2 guild policy document")
     )
+    .localizedProperties({
+      id: jaEnId("ギルド権限", "guild role"),
+      policyDocument: jaEnField(
+        "権限ポリシー",
+        "Permission policy",
+        "このロールに許可する操作を記述したGS2ポリシーです。",
+        "GS2 policy document describing operations allowed for this role."
+      ),
+    })
 );
 
 /**
@@ -51,6 +62,69 @@ const Guild = defineDomainType("Guild", dt =>
     .property(
       PT.string("joinedGuildName").userData().description("The guild this player belongs to")
     )
+    .localizedProperties({
+      id: jaEnId("ギルド種別", "guild kind"),
+      defaultMaximumMemberCount: jaEnField(
+        "初期定員",
+        "Initial member capacity",
+        "新規作成したギルドに適用する初期定員です。",
+        "Initial member capacity of a newly created guild.",
+        { ja: "人", en: "members" }
+      ),
+      maximumMemberCount: jaEnField(
+        "最大定員",
+        "Maximum member capacity",
+        "ギルドが拡張できる定員の最大値です。",
+        "Highest member capacity a guild can reach.",
+        { ja: "人", en: "members" }
+      ),
+      inactivityPeriodDays: jaEnField(
+        "マスター不在判定期間",
+        "Master inactivity period",
+        "ギルドマスター交代を可能にする無活動期間です。",
+        "Inactivity period after which the guild master position can be reassigned.",
+        { ja: "日", en: "days" }
+      ),
+      rejoinCoolTimeMinutes: jaEnField(
+        "再参加待機時間",
+        "Rejoin cooldown",
+        "脱退後に同じギルドへ再参加できるまでの待機時間です。",
+        "Wait time before a player may rejoin a guild they left.",
+        { ja: "分", en: "minutes" }
+      ),
+      maxConcurrentJoinGuilds: jaEnField(
+        "同時所属上限",
+        "Concurrent guild limit",
+        "プレイヤーが同時に所属できるギルド数です。",
+        "Maximum number of guilds a player may join at once.",
+        { ja: "件", en: "guilds" }
+      ),
+      maxConcurrentGuildMasterCount: jaEnField(
+        "同時マスター上限",
+        "Concurrent master limit",
+        "プレイヤーが同時にマスターを務められるギルド数です。",
+        "Maximum number of guilds a player may lead at once.",
+        { ja: "件", en: "guilds" }
+      ),
+      guildMasterRole: jaEnField(
+        "マスターロール",
+        "Guild master role",
+        "ギルドマスターに割り当てる権限ロールです。",
+        "Permission role assigned to the guild master."
+      ),
+      guildMemberDefaultRole: jaEnField(
+        "一般メンバーロール",
+        "Default member role",
+        "一般メンバーに初期割り当てする権限ロールです。",
+        "Permission role initially assigned to regular members."
+      ),
+      joinedGuildName: jaEnField(
+        "所属ギルド名",
+        "Joined guild name",
+        "プレイヤーが現在所属しているギルド名です。",
+        "Name of the guild the player currently belongs to."
+      ),
+    })
 );
 
 const GuildModel = defineMasterDataResource(resource =>

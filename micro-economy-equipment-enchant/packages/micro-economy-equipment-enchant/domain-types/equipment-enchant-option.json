@@ -14,6 +14,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the enchantment option.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "エンチャント候補を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -29,6 +39,16 @@
         "description": "",
         "id": "prop_01M0C84Y322HQ5SXAZ4NRD8HCB",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Enchantment configuration this option belongs to.",
+            "label": "Enchantment configuration"
+          },
+          "ja": {
+            "description": "この候補が属するエンチャント設定です。",
+            "label": "エンチャント設定"
+          }
+        },
         "name": "enchant",
         "requirement": {
           "kind": "always",
@@ -44,6 +64,16 @@
         "description": "Stat this bonus applies to",
         "id": "prop_01M0C84Y322KQSQH802HVDHC06",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Name of the stat or resource modified by this effect.",
+            "label": "Effect target"
+          },
+          "ja": {
+            "description": "追加効果を適用する能力値やリソースの名前です。",
+            "label": "効果対象"
+          }
+        },
         "name": "resourceName",
         "requirement": {
           "kind": "always",
@@ -59,6 +89,16 @@
         "description": "How much it applies",
         "id": "prop_01M0C84Y32ZBF6RHYW41VPWFA2",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Value applied to the target by this bonus.",
+            "label": "Effect value"
+          },
+          "ja": {
+            "description": "対象へ加算する追加効果の値です。",
+            "label": "効果値"
+          }
+        },
         "name": "resourceValue",
         "requirement": {
           "kind": "always",
@@ -74,6 +114,16 @@
         "description": "Relative draw weight",
         "id": "prop_01M0C84Y32EXX5ACY856FE9P29",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Relative weight used to draw this effect.",
+            "label": "Draw weight"
+          },
+          "ja": {
+            "description": "この追加効果が選ばれる相対的な重みです。",
+            "label": "抽選重み"
+          }
+        },
         "name": "weight",
         "requirement": {
           "kind": "always",

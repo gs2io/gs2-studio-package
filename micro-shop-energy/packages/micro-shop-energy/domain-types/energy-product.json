@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the stamina product.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "スタミナ商品を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,18 @@
         "description": "",
         "id": "prop_45XJAVDEC9AXXNMSQP6FK7D08X",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Amount of stamina restored by purchasing this product.",
+            "label": "Recovery amount",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "購入時に回復するスタミナ量です。",
+            "label": "回復量",
+            "unit": "ポイント"
+          }
+        },
         "name": "recoveryValue",
         "requirement": {
           "kind": "always",
@@ -42,6 +64,16 @@
         "description": "",
         "id": "prop_7BEWXW2JF170AYXKNFG0ZMX3MT",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Consume actions executed to purchase the product.",
+            "label": "Purchase costs"
+          },
+          "ja": {
+            "description": "商品購入時に実行する消費アクションです。",
+            "label": "購入コスト"
+          }
+        },
         "name": "consumeActions",
         "requirement": {
           "kind": "always",

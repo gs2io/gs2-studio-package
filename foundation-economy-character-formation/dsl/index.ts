@@ -1,9 +1,22 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** One occupied slot of a saved formation; the row carries the held character. */
 const CharacterFormationFormSlot = defineDomainType("CharacterFormationFormSlot", dt =>
-  dt.idDescription("Unique identifier").property(PT.string("propertyId").userData().required())
+  dt
+    .idDescription("Unique identifier")
+    .property(PT.string("propertyId").userData().required())
+    .localizedProperties({
+      id: jaEnId("フォームスロット", "formation form slot"),
+      propertyId: jaEnField(
+        "キャラクター個体ID",
+        "Character instance ID",
+        "このスロットに配置されたキャラクター個体の識別子です。",
+        "Identifier of the character instance assigned to this slot."
+      ),
+    })
 );
 
 /** One saved formation (a "form"), holding its slots inline. */
@@ -11,11 +24,31 @@ const CharacterFormationForm = defineDomainType("CharacterFormationForm", dt =>
   dt
     .idDescription("Unique identifier")
     .property(PT.prop("slots", PT.listOf(PT.inline("CharacterFormationFormSlot"))).userData())
+    .localizedProperties({
+      id: jaEnId("編成フォーム", "formation form"),
+      slots: jaEnField(
+        "配置スロット",
+        "Assigned slots",
+        "保存した編成に含まれるキャラクター配置です。",
+        "Character assignments contained in the saved formation."
+      ),
+    })
 );
 
 /** Slot definition: which characters a slot accepts. */
 const CharacterFormationSlot = defineDomainType("CharacterFormationSlot", dt =>
-  dt.idDescription("Unique identifier").property(PT.string("propertyRegex").masterData())
+  dt
+    .idDescription("Unique identifier")
+    .property(PT.string("propertyRegex").masterData())
+    .localizedProperties({
+      id: jaEnId("編成スロット", "formation slot"),
+      propertyRegex: jaEnField(
+        "配置条件",
+        "Eligibility pattern",
+        "このスロットへ配置できるキャラクター個体IDの正規表現です。",
+        "Regular expression matching character instance IDs eligible for this slot."
+      ),
+    })
 );
 
 /** The formation feature itself: how many save areas a player has. */
@@ -26,6 +59,30 @@ const CharacterFormation = defineDomainType("CharacterFormation", dt =>
     .property(PT.int32("initialSaveArea").masterData().required())
     .property(PT.int32("maximumSaveArea").masterData().required())
     .property(PT.int32("currentSaveArea").userData().required())
+    .localizedProperties({
+      id: jaEnId("編成", "formation configuration"),
+      initialSaveArea: jaEnField(
+        "初期保存枠",
+        "Initial save slots",
+        "新規プレイヤーに付与する編成保存枠です。",
+        "Formation save slots granted to a new player.",
+        { ja: "枠", en: "slots" }
+      ),
+      maximumSaveArea: jaEnField(
+        "最大保存枠",
+        "Maximum save slots",
+        "拡張できる編成保存枠の最大値です。",
+        "Maximum number of formation save slots.",
+        { ja: "枠", en: "slots" }
+      ),
+      currentSaveArea: jaEnField(
+        "現在の保存枠",
+        "Current save slots",
+        "プレイヤーが現在利用できる編成保存枠です。",
+        "Formation save slots currently available to the player.",
+        { ja: "枠", en: "slots" }
+      ),
+    })
 );
 
 const FormModel = defineMasterDataResource(resource =>

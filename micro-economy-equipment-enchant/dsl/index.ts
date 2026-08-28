@@ -9,6 +9,8 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** Types and properties this package points at inside `foundation-economy-equipment`. */
 const EQUIPMENT_TYPE_ID = "dt_R7W960WC22J1FD8E239HDFMD8D";
 const EQUIPMENT_PROPERTY_ID = "prop_S5796CZNBGWDHWSSHHT1EC00T6";
@@ -27,6 +29,16 @@ const EquipmentEnchant = defineDomainType("EquipmentEnchant", dt =>
         .required()
         .description("Most bonuses a single piece can hold")
     )
+    .localizedProperties({
+      id: jaEnId("エンチャント設定", "enchantment configuration"),
+      maximumParameterCount: jaEnField(
+        "最大効果数",
+        "Maximum effect count",
+        "1つの装備に付与できる追加効果の最大数です。",
+        "Maximum number of bonus effects one equipment item can hold.",
+        { ja: "個", en: "effects" }
+      ),
+    })
 );
 
 /** How likely it is to roll exactly this many bonuses. */
@@ -36,6 +48,28 @@ const EquipmentEnchantSlotChance = defineDomainType("EquipmentEnchantSlotChance"
     .property(PT.prop("enchant", PT.ref("EquipmentEnchant")).assetDelivery().required())
     .property(PT.int32("count").masterData().required().description("Number of bonuses rolled"))
     .property(PT.int32("weight").masterData().required().description("Relative draw weight"))
+    .localizedProperties({
+      id: jaEnId("効果数抽選", "enchantment slot chance"),
+      enchant: jaEnField(
+        "エンチャント設定",
+        "Enchantment configuration",
+        "この効果数抽選が属するエンチャント設定です。",
+        "Enchantment configuration this slot-count chance belongs to."
+      ),
+      count: jaEnField(
+        "付与効果数",
+        "Effect count",
+        "抽選された場合に装備へ付与する効果数です。",
+        "Number of effects added when this result is drawn.",
+        { ja: "個", en: "effects" }
+      ),
+      weight: jaEnField(
+        "抽選重み",
+        "Draw weight",
+        "この効果数が選ばれる相対的な重みです。",
+        "Relative weight used to draw this effect count."
+      ),
+    })
 );
 
 /** One bonus the pool can produce. */
@@ -48,6 +82,33 @@ const EquipmentEnchantOption = defineDomainType("EquipmentEnchantOption", dt =>
     )
     .property(PT.int64("resourceValue").masterData().required().description("How much it applies"))
     .property(PT.int32("weight").masterData().required().description("Relative draw weight"))
+    .localizedProperties({
+      id: jaEnId("エンチャント候補", "enchantment option"),
+      enchant: jaEnField(
+        "エンチャント設定",
+        "Enchantment configuration",
+        "この候補が属するエンチャント設定です。",
+        "Enchantment configuration this option belongs to."
+      ),
+      resourceName: jaEnField(
+        "効果対象",
+        "Effect target",
+        "追加効果を適用する能力値やリソースの名前です。",
+        "Name of the stat or resource modified by this effect."
+      ),
+      resourceValue: jaEnField(
+        "効果値",
+        "Effect value",
+        "対象へ加算する追加効果の値です。",
+        "Value applied to the target by this bonus."
+      ),
+      weight: jaEnField(
+        "抽選重み",
+        "Draw weight",
+        "この追加効果が選ばれる相対的な重みです。",
+        "Relative weight used to draw this effect."
+      ),
+    })
 );
 
 /** One bonus actually rolled onto one player's piece of equipment. */
@@ -56,6 +117,21 @@ const EquipmentEnchantment = defineDomainType("EquipmentEnchantment", dt =>
     .idDescription("Unique identifier")
     .property(PT.string("resourceName").userData().required())
     .property(PT.int64("resourceValue").userData().required())
+    .localizedProperties({
+      id: jaEnId("付与済み効果", "rolled enchantment"),
+      resourceName: jaEnField(
+        "効果対象",
+        "Effect target",
+        "装備に付与された効果の対象名です。",
+        "Name of the target modified by the rolled effect."
+      ),
+      resourceValue: jaEnField(
+        "効果値",
+        "Effect value",
+        "装備に付与された追加効果の値です。",
+        "Value of the rolled effect applied to the equipment."
+      ),
+    })
 );
 
 /** The rolled bonuses, added to the equipment package's own type. */
@@ -71,9 +147,16 @@ const Equipment = defineOverlayDomainType(
     },
   },
   domainType =>
-    domainType.property(
-      PT.prop("enchantments", PT.listOf(PT.inline("EquipmentEnchantment"))).userData()
-    )
+    domainType
+      .property(PT.prop("enchantments", PT.listOf(PT.inline("EquipmentEnchantment"))).userData())
+      .localizedProperties({
+        enchantments: jaEnField(
+          "付与済み効果",
+          "Enchantments",
+          "この装備個体に付与された追加効果の一覧です。",
+          "Bonus effects rolled onto this equipment instance."
+        ),
+      })
 );
 
 const RarityParameterModel = defineMasterDataResource(resource =>

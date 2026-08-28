@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the equipment slot assignment.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "装着スロットを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "Property id of the equipment worn here, empty when the slot is free",
         "id": "prop_01M0CDYNB51PQJVBAQC87617NY",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Equipment instance ID assigned to this slot; empty when the slot is free.",
+            "label": "Equipped item"
+          },
+          "ja": {
+            "description": "このスロットに装着されている装備個体IDです。空の場合は未装着です。",
+            "label": "装着中の装備"
+          }
+        },
         "name": "equipment",
         "requirement": {
           "kind": "never",

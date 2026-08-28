@@ -14,6 +14,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the mission counter.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ミッションカウンターを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -29,6 +39,16 @@
         "description": "",
         "id": "prop_DH1MQSPSZ68EZDG80Q3KWZNQW8",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Progress accumulated in the current daily reset period.",
+            "label": "Daily value"
+          },
+          "ja": {
+            "description": "当日のリセット期間で蓄積した進捗値です。",
+            "label": "本日の値"
+          }
+        },
         "name": "todayValue",
         "requirement": {
           "kind": "always",
@@ -44,6 +64,16 @@
         "description": "",
         "id": "prop_N44ZVTGEN3XNPFT4YSNP5R8222",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Progress accumulated in the current weekly reset period.",
+            "label": "Weekly value"
+          },
+          "ja": {
+            "description": "当週のリセット期間で蓄積した進捗値です。",
+            "label": "今週の値"
+          }
+        },
         "name": "weeklyValue",
         "requirement": {
           "kind": "always",
@@ -59,6 +89,16 @@
         "description": "",
         "id": "prop_RP2T1J9MWSNMXEXJQF15E76R42",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Progress accumulated in the current monthly reset period.",
+            "label": "Monthly value"
+          },
+          "ja": {
+            "description": "当月のリセット期間で蓄積した進捗値です。",
+            "label": "今月の値"
+          }
+        },
         "name": "monthlyValue",
         "requirement": {
           "kind": "always",
@@ -74,6 +114,16 @@
         "description": "",
         "id": "prop_E7ANH0AETFGP8XNYN524JTT1KG",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "All-time progress value that is not reset.",
+            "label": "Total value"
+          },
+          "ja": {
+            "description": "リセットされない累計の進捗値です。",
+            "label": "累計値"
+          }
+        },
         "name": "totalValue",
         "requirement": {
           "kind": "always",

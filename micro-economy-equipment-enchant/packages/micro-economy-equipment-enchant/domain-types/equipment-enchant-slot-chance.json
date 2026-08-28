@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the enchantment slot chance.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "効果数抽選を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,16 @@
         "description": "",
         "id": "prop_01M0C84Y3236PN0MXQNS8GXGKR",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Enchantment configuration this slot-count chance belongs to.",
+            "label": "Enchantment configuration"
+          },
+          "ja": {
+            "description": "この効果数抽選が属するエンチャント設定です。",
+            "label": "エンチャント設定"
+          }
+        },
         "name": "enchant",
         "requirement": {
           "kind": "always",
@@ -43,6 +63,18 @@
         "description": "Number of bonuses rolled",
         "id": "prop_01M0C84Y32TQRT07W6CT9MCVZM",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Number of effects added when this result is drawn.",
+            "label": "Effect count",
+            "unit": "effects"
+          },
+          "ja": {
+            "description": "抽選された場合に装備へ付与する効果数です。",
+            "label": "付与効果数",
+            "unit": "個"
+          }
+        },
         "name": "count",
         "requirement": {
           "kind": "always",
@@ -58,6 +90,16 @@
         "description": "Relative draw weight",
         "id": "prop_01M0C84Y32K8455NCTCVPXBKC0",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Relative weight used to draw this effect count.",
+            "label": "Draw weight"
+          },
+          "ja": {
+            "description": "この効果数が選ばれる相対的な重みです。",
+            "label": "抽選重み"
+          }
+        },
         "name": "weight",
         "requirement": {
           "kind": "always",

@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the reset schedule.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "リセット設定を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "When the counts return to zero",
         "id": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Cadence used to reset usage counts.",
+            "label": "Reset type"
+          },
+          "ja": {
+            "description": "利用回数をリセットする周期の種類です。",
+            "label": "リセット方式"
+          }
+        },
         "name": "resetType",
         "requirement": {
           "kind": "always",
@@ -52,6 +72,16 @@
         "description": "Reset weekday (weekly only)",
         "id": "prop_01M0C5HJ9H8A68TH51QQXSQAFS",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Weekday on which a weekly reset occurs.",
+            "label": "Reset weekday"
+          },
+          "ja": {
+            "description": "週次リセットを実行する曜日です。",
+            "label": "リセット曜日"
+          }
+        },
         "name": "resetDayOfWeek",
         "requirement": {
           "kind": "never",
@@ -75,6 +105,18 @@
         "description": "Reset day (monthly only)",
         "id": "prop_01M0C5HJ9HCVBQ4JVCH9JKNY9H",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Day of the month on which a monthly reset occurs.",
+            "label": "Reset day of month",
+            "unit": "day"
+          },
+          "ja": {
+            "description": "月次リセットを実行する日です。",
+            "label": "リセット日",
+            "unit": "日"
+          }
+        },
         "name": "resetDayOfMonth",
         "requirement": {
           "kind": "never",
@@ -90,6 +132,18 @@
         "description": "Reset hour, UTC",
         "id": "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "UTC hour at which the reset occurs.",
+            "label": "Reset hour",
+            "unit": "hour"
+          },
+          "ja": {
+            "description": "リセットを実行するUTC時刻です。",
+            "label": "リセット時刻",
+            "unit": "時"
+          }
+        },
         "name": "resetHour",
         "requirement": {
           "kind": "never",
@@ -105,6 +159,18 @@
         "description": "Reset interval in days (days only)",
         "id": "prop_01M0C5HJ9HN7J7K686N7G6PM4E",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Number of days between resets for the days-based cadence.",
+            "label": "Reset interval",
+            "unit": "days"
+          },
+          "ja": {
+            "description": "日数指定方式でリセットする間隔です。",
+            "label": "リセット間隔",
+            "unit": "日"
+          }
+        },
         "name": "days",
         "requirement": {
           "kind": "never",
@@ -120,6 +186,16 @@
         "description": "Interval origin (days only)",
         "id": "prop_01M0C5HJ9H18WFD7HQJ6BVRQ54",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Reference time used to calculate a days-based reset cadence.",
+            "label": "Anchor time"
+          },
+          "ja": {
+            "description": "日数指定方式のリセット周期を数える基準日時です。",
+            "label": "基準日時"
+          }
+        },
         "name": "anchorTimestamp",
         "requirement": {
           "kind": "never",

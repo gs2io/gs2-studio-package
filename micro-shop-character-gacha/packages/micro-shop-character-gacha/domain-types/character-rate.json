@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the character draw rate.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "キャラクター排出率を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "",
         "id": "prop_6MY41PGG6DAVSR3YSY4YDTYSPX",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Gacha rarity this character belongs to.",
+            "label": "Rarity"
+          },
+          "ja": {
+            "description": "このキャラクターが属するガチャレアリティです。",
+            "label": "レアリティ"
+          }
+        },
         "name": "rarity",
         "requirement": {
           "kind": "always",
@@ -46,6 +66,16 @@
         "description": "",
         "id": "prop_AATTCTRXX4J382EEVEGE9ZYV6W",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Character included in the draw pool.",
+            "label": "Character"
+          },
+          "ja": {
+            "description": "排出対象にするキャラクターです。",
+            "label": "キャラクター"
+          }
+        },
         "name": "character",
         "requirement": {
           "kind": "always",
@@ -61,6 +91,16 @@
         "description": "",
         "id": "prop_2YWD79NQ991RBGDCA3HEZHGDT8",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Relative weight used to draw this character within its rarity.",
+            "label": "Draw weight"
+          },
+          "ja": {
+            "description": "同じレアリティ内でこのキャラクターが選ばれる相対的な重みです。",
+            "label": "抽選重み"
+          }
+        },
         "name": "weight",
         "requirement": {
           "kind": "always",

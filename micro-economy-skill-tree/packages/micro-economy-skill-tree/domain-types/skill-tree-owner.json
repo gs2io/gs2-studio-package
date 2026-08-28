@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the skill-tree owner.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "スキルツリー所有者を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "Whose tree this progress is",
         "id": "prop_01M0C87BJCBECHNW29S9WWPEYD",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier of the character or other entity that owns this skill-tree progress.",
+            "label": "Owner instance ID"
+          },
+          "ja": {
+            "description": "このスキルツリー進行を所有するキャラクターなどの識別子です。",
+            "label": "所有対象ID"
+          }
+        },
         "name": "propertyId",
         "requirement": {
           "kind": "always",

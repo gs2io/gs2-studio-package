@@ -13,6 +13,16 @@
         "description": "",
         "id": "prop_01M0C84Y32CKRCM57ZVFNSN5KJ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Bonus effects rolled onto this equipment instance.",
+            "label": "Enchantments"
+          },
+          "ja": {
+            "description": "この装備個体に付与された追加効果の一覧です。",
+            "label": "付与済み効果"
+          }
+        },
         "name": "enchantments",
         "requirement": {
           "kind": "never",

@@ -14,6 +14,16 @@
         "description": "",
         "id": "prop_TC9NBD65ZXWPT09PFSRX1REHPF",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether this character is registered in the encyclopedia.",
+            "label": "Registered"
+          },
+          "ja": {
+            "description": "このキャラクターが図鑑に登録済みかを示します。",
+            "label": "図鑑登録済み"
+          }
+        },
         "name": "acquired",
         "requirement": {
           "kind": "always",
@@ -29,6 +39,16 @@
         "description": "",
         "id": "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when this character was first acquired.",
+            "label": "First acquired at"
+          },
+          "ja": {
+            "description": "このキャラクターを初めて獲得した日時です。",
+            "label": "初回獲得日時"
+          }
+        },
         "name": "acquiredAt",
         "requirement": {
           "kind": "always",

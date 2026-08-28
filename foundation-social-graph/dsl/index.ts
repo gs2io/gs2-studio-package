@@ -1,12 +1,35 @@
 import { Bind, definePackage, defineDomainType, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const Profile = defineDomainType("Profile", dt =>
   dt
     .idDescription("Unique identifier")
     .property(PT.string("publicProfile").userData())
     .property(PT.string("followerProfile").userData())
     .property(PT.string("friendProfile").userData())
+    .localizedProperties({
+      id: jaEnId("プロフィール", "profile"),
+      publicProfile: jaEnField(
+        "公開プロフィール",
+        "Public profile",
+        "すべてのプレイヤーへ公開するプロフィール情報です。",
+        "Profile information visible to every player."
+      ),
+      followerProfile: jaEnField(
+        "フォロワー向けプロフィール",
+        "Follower profile",
+        "フォロワーへ公開するプロフィール情報です。",
+        "Profile information visible to followers."
+      ),
+      friendProfile: jaEnField(
+        "フレンド向けプロフィール",
+        "Friend profile",
+        "フレンドへ公開するプロフィール情報です。",
+        "Profile information visible to friends."
+      ),
+    })
 );
 
 const Follow = defineDomainType("Follow", dt =>
@@ -14,6 +37,21 @@ const Follow = defineDomainType("Follow", dt =>
     .idDescription("Unique identifier")
     .property(PT.string("publicProfile").userData())
     .property(PT.string("followerProfile").userData())
+    .localizedProperties({
+      id: jaEnId("フォロー関係", "follow relationship"),
+      publicProfile: jaEnField(
+        "公開プロフィール",
+        "Public profile",
+        "フォロー相手の公開プロフィール情報です。",
+        "Public profile information of the followed player."
+      ),
+      followerProfile: jaEnField(
+        "フォロワー向けプロフィール",
+        "Follower profile",
+        "フォロワーとして閲覧できるプロフィール情報です。",
+        "Profile information visible because the player is a follower."
+      ),
+    })
 );
 
 const Friend = defineDomainType("Friend", dt =>
@@ -21,14 +59,51 @@ const Friend = defineDomainType("Friend", dt =>
     .idDescription("Unique identifier")
     .property(PT.string("publicProfile").userData())
     .property(PT.string("friendProfile").userData())
+    .localizedProperties({
+      id: jaEnId("フレンド関係", "friend relationship"),
+      publicProfile: jaEnField(
+        "公開プロフィール",
+        "Public profile",
+        "フレンドの公開プロフィール情報です。",
+        "Public profile information of the friend."
+      ),
+      friendProfile: jaEnField(
+        "フレンド向けプロフィール",
+        "Friend profile",
+        "フレンドとして閲覧できるプロフィール情報です。",
+        "Profile information visible because the players are friends."
+      ),
+    })
 );
 
 const SendFriendRequest = defineDomainType("SendFriendRequest", dt =>
-  dt.idDescription("Unique identifier").property(PT.string("targetPublicProfile").userData())
+  dt
+    .idDescription("Unique identifier")
+    .property(PT.string("targetPublicProfile").userData())
+    .localizedProperties({
+      id: jaEnId("送信フレンド申請", "outgoing friend request"),
+      targetPublicProfile: jaEnField(
+        "申請先プロフィール",
+        "Target profile",
+        "申請先プレイヤーの公開プロフィール情報です。",
+        "Public profile information of the request recipient."
+      ),
+    })
 );
 
 const ReceiveFriendRequest = defineDomainType("ReceiveFriendRequest", dt =>
-  dt.idDescription("Unique identifier").property(PT.string("fromPublicProfile").userData())
+  dt
+    .idDescription("Unique identifier")
+    .property(PT.string("fromPublicProfile").userData())
+    .localizedProperties({
+      id: jaEnId("受信フレンド申請", "incoming friend request"),
+      fromPublicProfile: jaEnField(
+        "申請元プロフィール",
+        "Sender profile",
+        "申請元プレイヤーの公開プロフィール情報です。",
+        "Public profile information of the request sender."
+      ),
+    })
 );
 
 const notificationConfig = {

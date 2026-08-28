@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the mission settings.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ミッション設定を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,16 @@
         "description": "",
         "id": "prop_3K3QTNRR66PZ8K2AQ3WCNYPT2R",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Weekday when weekly missions reset.",
+            "label": "Weekly reset day"
+          },
+          "ja": {
+            "description": "週次ミッションをリセットする曜日です。",
+            "label": "週次リセット曜日"
+          }
+        },
         "name": "resetDayOfWeek",
         "requirement": {
           "kind": "always",
@@ -51,6 +71,18 @@
         "description": "",
         "id": "prop_01M0R2YRXVDV9PNGK6TPKY0V1E",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Day of the month when monthly missions reset.",
+            "label": "Monthly reset day",
+            "unit": "day"
+          },
+          "ja": {
+            "description": "月次ミッションをリセットする日です。",
+            "label": "月次リセット日",
+            "unit": "日"
+          }
+        },
         "name": "resetDayOfMonth",
         "requirement": {
           "kind": "always",
@@ -66,6 +98,18 @@
         "description": "",
         "id": "prop_0PJDRHCVVR80R8R1SEY2KMGEQH",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "UTC hour when missions reset.",
+            "label": "Reset hour",
+            "unit": "hour"
+          },
+          "ja": {
+            "description": "ミッションをリセットするUTC時刻です。",
+            "label": "リセット時刻",
+            "unit": "時"
+          }
+        },
         "name": "resetHour",
         "requirement": {
           "kind": "always",

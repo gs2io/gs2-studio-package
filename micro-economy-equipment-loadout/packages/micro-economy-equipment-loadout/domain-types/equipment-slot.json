@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the equipment slot.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "装備スロットを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "Which equipment this slot accepts, matched on its property id",
         "id": "prop_01M0CDYNB5E7VX7G7ED1SRD7JR",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Regular expression matching equipment instance IDs accepted by this slot.",
+            "label": "Equipment pattern"
+          },
+          "ja": {
+            "description": "このスロットへ装着できる装備個体IDの正規表現です。",
+            "label": "装着条件"
+          }
+        },
         "name": "propertyRegex",
         "requirement": {
           "kind": "always",

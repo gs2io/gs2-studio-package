@@ -14,6 +14,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the skill node.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "スキルノードを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -29,6 +39,16 @@
         "description": "What unlocking this node costs",
         "id": "prop_01M0Q02DXK9YCRGGAJHADRMVS6",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Consume actions executed to unlock this node.",
+            "label": "Unlock costs"
+          },
+          "ja": {
+            "description": "このノードを解放するときに実行する消費アクションです。",
+            "label": "解放コスト"
+          }
+        },
         "name": "releaseConsumeActions",
         "requirement": {
           "kind": "always",
@@ -46,6 +66,16 @@
         "description": "Nodes that must be released first",
         "id": "prop_01M0C87BJC76SJF2PA9P05K5QH",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Nodes that must be unlocked before this node.",
+            "label": "Prerequisite nodes"
+          },
+          "ja": {
+            "description": "先に解放しておく必要があるノードの一覧です。",
+            "label": "前提ノード"
+          }
+        },
         "name": "premiseNodes",
         "requirement": {
           "kind": "never",
@@ -64,6 +94,18 @@
         "description": "Share of the cost refunded when the node is reset",
         "id": "prop_01M0C87BJCQ0PCKG2FJQ0H767B",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Share of the unlock cost refunded when the node is reset.",
+            "label": "Reset refund rate",
+            "unit": "ratio"
+          },
+          "ja": {
+            "description": "ノードをリセットしたときに解放コストを返却する割合です。",
+            "label": "リセット返却率",
+            "unit": "倍"
+          }
+        },
         "name": "restrainReturnRate",
         "requirement": {
           "kind": "never",
@@ -79,6 +121,16 @@
         "description": "Unlocked by this player",
         "id": "prop_01M0C87BJCSHPHEB1N0DRT0ACA",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has unlocked this node.",
+            "label": "Unlocked"
+          },
+          "ja": {
+            "description": "プレイヤーがこのノードを解放済みかを示します。",
+            "label": "解放済み"
+          }
+        },
         "name": "released",
         "requirement": {
           "kind": "always",

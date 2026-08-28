@@ -9,6 +9,8 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** The character type and property this loadout hangs off. */
 const CHARACTER_TYPE_ID = "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5";
 const CHARACTER_PROPERTY_ID = "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD";
@@ -27,6 +29,15 @@ const EquipmentSlot = defineDomainType("EquipmentSlot", dt =>
         .required()
         .description("Which equipment this slot accepts, matched on its property id")
     )
+    .localizedProperties({
+      id: jaEnId("装備スロット", "equipment slot"),
+      propertyRegex: jaEnField(
+        "装着条件",
+        "Equipment pattern",
+        "このスロットへ装着できる装備個体IDの正規表現です。",
+        "Regular expression matching equipment instance IDs accepted by this slot."
+      ),
+    })
 );
 
 /** What one character currently has in one slot. */
@@ -38,6 +49,15 @@ const EquipmentSlotAssignment = defineDomainType("EquipmentSlotAssignment", dt =
         .userData()
         .description("Property id of the equipment worn here, empty when the slot is free")
     )
+    .localizedProperties({
+      id: jaEnId("装着スロット", "equipment slot assignment"),
+      equipment: jaEnField(
+        "装着中の装備",
+        "Equipped item",
+        "このスロットに装着されている装備個体IDです。空の場合は未装着です。",
+        "Equipment instance ID assigned to this slot; empty when the slot is free."
+      ),
+    })
 );
 
 /**
@@ -57,9 +77,18 @@ const Character = defineOverlayDomainType(
     },
   },
   domainType =>
-    domainType.property(
-      PT.prop("equipmentSlots", PT.listOf(PT.inline("EquipmentSlotAssignment"))).userData()
-    )
+    domainType
+      .property(
+        PT.prop("equipmentSlots", PT.listOf(PT.inline("EquipmentSlotAssignment"))).userData()
+      )
+      .localizedProperties({
+        equipmentSlots: jaEnField(
+          "装備スロット",
+          "Equipment slots",
+          "キャラクターの各スロットに装着されている装備です。",
+          "Equipment assigned to each slot on the character."
+        ),
+      })
 );
 
 const PropertyFormModel = defineMasterDataResource(resource =>

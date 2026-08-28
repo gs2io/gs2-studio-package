@@ -13,6 +13,18 @@
         "description": "",
         "id": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Amount of currency granted when this store product is purchased.",
+            "label": "Currency amount",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "このストア商品を購入したときに付与する通貨量です。",
+            "label": "付与通貨量",
+            "unit": "通貨"
+          }
+        },
         "name": "count",
         "requirement": {
           "kind": "always",

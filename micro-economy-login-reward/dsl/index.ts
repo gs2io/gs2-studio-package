@@ -10,11 +10,29 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
   dt
     .idDescription("Unique identifier")
     .property(PT.prop("schedule", PT.ref("Schedule")).assetDelivery().required())
     .property(PT.int32("resetHour").masterData().required())
+    .localizedProperties({
+      id: jaEnId("ログインボーナスグループ", "login reward group"),
+      schedule: jaEnField(
+        "開催スケジュール",
+        "Availability schedule",
+        "このログインボーナスを開催するスケジュールです。",
+        "Schedule during which this login reward is available."
+      ),
+      resetHour: jaEnField(
+        "日付更新時刻",
+        "Daily reset hour",
+        "ログイン日数を次の日へ進めるUTC時刻です。",
+        "UTC hour when the login reward advances to the next day.",
+        { ja: "時", en: "hour" }
+      ),
+    })
 );
 
 const LoginReward = defineDomainType("LoginReward", dt =>
@@ -25,6 +43,27 @@ const LoginReward = defineDomainType("LoginReward", dt =>
     )
     .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
     .property(PT.prop("receivedSteps", PT.listOf(PT.bool())).userData().required())
+    .localizedProperties({
+      id: jaEnId("ログインボーナス", "login reward"),
+      loginRewardCollection: jaEnField(
+        "ボーナスグループ",
+        "Reward group",
+        "この報酬が属するログインボーナスグループです。",
+        "Login reward group this reward belongs to."
+      ),
+      acquireActions: jaEnField(
+        "獲得アクション",
+        "Acquire actions",
+        "このログイン段階で実行する報酬アクションです。",
+        "Reward actions executed for this login step."
+      ),
+      receivedSteps: jaEnField(
+        "受取済み段階",
+        "Received steps",
+        "プレイヤーが受け取り済みのログイン段階を示します。",
+        "Login steps already claimed by the player."
+      ),
+    })
 );
 
 const Schedule = defineOverlayDomainType("Schedule", {

@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the quest progress.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "クエスト進行を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,16 @@
         "description": "",
         "id": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Quest currently in progress for the player.",
+            "label": "Active quest"
+          },
+          "ja": {
+            "description": "プレイヤーが現在進行しているクエストです。",
+            "label": "進行中のクエスト"
+          }
+        },
         "name": "quest",
         "requirement": {
           "kind": "always",
@@ -42,6 +62,16 @@
         "description": "",
         "id": "prop_NJ83FK0CB975M336Z7THVNWE7P",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Rewards earned during the active quest.",
+            "label": "Earned rewards"
+          },
+          "ja": {
+            "description": "クエスト進行中に獲得した報酬の一覧です。",
+            "label": "獲得済み報酬"
+          }
+        },
         "name": "rewards",
         "requirement": {
           "kind": "never",

@@ -1,11 +1,17 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** Types this package points at but does not overlay. */
 const CHARACTER_TYPE_ID = "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5";
 const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
 
-const GachaRarity = defineDomainType("GachaRarity", dt => dt.idDescription("Unique identifier"));
+const GachaRarity = defineDomainType("GachaRarity", dt =>
+  dt.idDescription("Unique identifier").localizedProperties({
+    id: jaEnId("ガチャレアリティ", "gacha rarity"),
+  })
+);
 
 /** How likely one character is, within its rarity. */
 const CharacterRate = defineDomainType("CharacterRate", dt =>
@@ -15,6 +21,27 @@ const CharacterRate = defineDomainType("CharacterRate", dt =>
     .property(PT.prop("character", PT.ref(CHARACTER_TYPE_ID)).assetDelivery().required())
     .property(PT.int32("weight").masterData().required())
     .compositeKey("rarity", "character")
+    .localizedProperties({
+      id: jaEnId("キャラクター排出率", "character draw rate"),
+      rarity: jaEnField(
+        "レアリティ",
+        "Rarity",
+        "このキャラクターが属するガチャレアリティです。",
+        "Gacha rarity this character belongs to."
+      ),
+      character: jaEnField(
+        "キャラクター",
+        "Character",
+        "排出対象にするキャラクターです。",
+        "Character included in the draw pool."
+      ),
+      weight: jaEnField(
+        "抽選重み",
+        "Draw weight",
+        "同じレアリティ内でこのキャラクターが選ばれる相対的な重みです。",
+        "Relative weight used to draw this character within its rarity."
+      ),
+    })
 );
 
 /** How likely one rarity is, within one gacha. */
@@ -25,6 +52,27 @@ const GachaRarityRate = defineDomainType("GachaRarityRate", dt =>
     .property(PT.prop("rarity", PT.ref("GachaRarity")).assetDelivery().required())
     .property(PT.int32("weight").masterData().required())
     .compositeKey("gacha", "rarity")
+    .localizedProperties({
+      id: jaEnId("レアリティ排出率", "rarity draw rate"),
+      gacha: jaEnField(
+        "対象ガチャ",
+        "Gacha",
+        "この排出率を適用するガチャです。",
+        "Gacha to which this rarity rate applies."
+      ),
+      rarity: jaEnField(
+        "レアリティ",
+        "Rarity",
+        "排出率を設定するガチャレアリティです。",
+        "Gacha rarity whose rate is configured."
+      ),
+      weight: jaEnField(
+        "抽選重み",
+        "Draw weight",
+        "このレアリティが選ばれる相対的な重みです。",
+        "Relative weight used to draw this rarity."
+      ),
+    })
 );
 
 const Gacha = defineDomainType("Gacha", dt =>
@@ -32,6 +80,21 @@ const Gacha = defineDomainType("Gacha", dt =>
     .idDescription("Unique identifier")
     .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).assetDelivery())
     .property(PT.prop("consumeActions", PT.listOf(PT.consumeAction())).masterData().required())
+    .localizedProperties({
+      id: jaEnId("ガチャ", "gacha"),
+      schedule: jaEnField(
+        "開催スケジュール",
+        "Availability schedule",
+        "このガチャを開催するスケジュールです。",
+        "Schedule during which this gacha is available."
+      ),
+      consumeActions: jaEnField(
+        "1回の抽選コスト",
+        "Draw costs",
+        "ガチャを1回実行するときの消費アクションです。",
+        "Consume actions executed for one gacha draw."
+      ),
+    })
 );
 
 const LotteryModel = defineMasterDataResource(resource =>

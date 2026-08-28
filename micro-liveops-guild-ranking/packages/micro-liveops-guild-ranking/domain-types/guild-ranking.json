@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the guild ranking.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ギルドランキングを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "",
         "id": "prop_01M0CE422VC02GDNEZDYXGVD89",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which guild-ranking scores may be submitted.",
+            "label": "Entry schedule"
+          },
+          "ja": {
+            "description": "ギルドランキングへスコアを登録できる開催スケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
         "name": "schedule",
         "requirement": {
           "kind": "always",
@@ -46,6 +66,16 @@
         "description": "Whether a higher or a lower score ranks first",
         "id": "prop_01M0CE422VHSW4QC9AHYXV815S",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether higher or lower scores rank first.",
+            "label": "Ranking order"
+          },
+          "ja": {
+            "description": "高いスコアと低いスコアのどちらを上位にするかを設定します。",
+            "label": "順位方向"
+          }
+        },
         "name": "orderDirection",
         "requirement": {
           "kind": "always",
@@ -64,6 +94,16 @@
         "description": "Accumulate submitted scores instead of keeping the best",
         "id": "prop_01M0CE422VX2GRKKR10S2S34BA",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether scores submitted by guild members are accumulated.",
+            "label": "Sum scores"
+          },
+          "ja": {
+            "description": "ギルドメンバーが送信したスコアを合算するかを設定します。",
+            "label": "スコアを合算"
+          }
+        },
         "name": "sum",
         "requirement": {
           "kind": "never",
@@ -79,6 +119,16 @@
         "description": "Lowest score accepted",
         "id": "prop_01M0CE422VR4DWYG9WPJ57GAVK",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Lowest score accepted by the ranking.",
+            "label": "Minimum score"
+          },
+          "ja": {
+            "description": "受け付けるスコアの最小値です。",
+            "label": "最小スコア"
+          }
+        },
         "name": "minimumValue",
         "requirement": {
           "kind": "never",
@@ -94,6 +144,16 @@
         "description": "Highest score accepted",
         "id": "prop_01M0CE422VYRN7SXXKDDE3ET2G",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Highest score accepted by the ranking.",
+            "label": "Maximum score"
+          },
+          "ja": {
+            "description": "受け付けるスコアの最大値です。",
+            "label": "最大スコア"
+          }
+        },
         "name": "maximumValue",
         "requirement": {
           "kind": "never",
@@ -109,6 +169,18 @@
         "description": "The player's own score",
         "id": "prop_01M0CE422VSC746FPJK5JNQ11R",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Player's current contribution to the guild ranking.",
+            "label": "Player score",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "ギルドランキングに対するプレイヤーの現在スコアです。",
+            "label": "プレイヤースコア",
+            "unit": "点"
+          }
+        },
         "name": "score",
         "requirement": {
           "kind": "always",

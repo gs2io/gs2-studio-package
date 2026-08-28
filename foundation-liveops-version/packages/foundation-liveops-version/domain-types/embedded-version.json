@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the application version configuration.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "アプリバージョンを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "",
         "id": "prop_JV8X380AFH866SVX2HJR3FMP4V",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Major component of the minimum app version that triggers an update warning.",
+            "label": "Warning major version"
+          },
+          "ja": {
+            "description": "更新警告を表示する最小アプリバージョンのメジャー値です。",
+            "label": "警告メジャーバージョン"
+          }
+        },
         "name": "warningMajor",
         "requirement": {
           "kind": "always",
@@ -46,6 +66,16 @@
         "description": "",
         "id": "prop_Q1QVGEVNDQ31WXBSQ3CTK8PEYS",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Minor component of the minimum app version that triggers an update warning.",
+            "label": "Warning minor version"
+          },
+          "ja": {
+            "description": "更新警告を表示する最小アプリバージョンのマイナー値です。",
+            "label": "警告マイナーバージョン"
+          }
+        },
         "name": "warningMinor",
         "requirement": {
           "kind": "always",
@@ -61,6 +91,16 @@
         "description": "",
         "id": "prop_JNSG2T4XZEK7T0RFFT4FHYS77N",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Micro component of the minimum app version that triggers an update warning.",
+            "label": "Warning micro version"
+          },
+          "ja": {
+            "description": "更新警告を表示する最小アプリバージョンのマイクロ値です。",
+            "label": "警告マイクロバージョン"
+          }
+        },
         "name": "warningMicro",
         "requirement": {
           "kind": "always",
@@ -76,6 +116,16 @@
         "description": "",
         "id": "prop_3YR1D04DTCR3QXF2102W5Z73PM",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Major component of the minimum app version allowed to run.",
+            "label": "Required major version"
+          },
+          "ja": {
+            "description": "利用を拒否する最小アプリバージョンのメジャー値です。",
+            "label": "必須更新メジャーバージョン"
+          }
+        },
         "name": "errorMajor",
         "requirement": {
           "kind": "always",
@@ -91,6 +141,16 @@
         "description": "",
         "id": "prop_BMCEB6H2XZYTXR2M1MCXV4M605",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Minor component of the minimum app version allowed to run.",
+            "label": "Required minor version"
+          },
+          "ja": {
+            "description": "利用を拒否する最小アプリバージョンのマイナー値です。",
+            "label": "必須更新マイナーバージョン"
+          }
+        },
         "name": "errorMinor",
         "requirement": {
           "kind": "always",
@@ -106,6 +166,16 @@
         "description": "",
         "id": "prop_E9DY9TY2D9Y1CY09MT7Z6DEYYF",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Micro component of the minimum app version allowed to run.",
+            "label": "Required micro version"
+          },
+          "ja": {
+            "description": "利用を拒否する最小アプリバージョンのマイクロ値です。",
+            "label": "必須更新マイクロバージョン"
+          }
+        },
         "name": "errorMicro",
         "requirement": {
           "kind": "always",

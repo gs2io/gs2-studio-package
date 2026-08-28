@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the profile.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "プロフィールを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,16 @@
         "description": "",
         "id": "prop_6KVAE2J57GWW44BA6BWE76HNX4",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Profile information visible to every player.",
+            "label": "Public profile"
+          },
+          "ja": {
+            "description": "すべてのプレイヤーへ公開するプロフィール情報です。",
+            "label": "公開プロフィール"
+          }
+        },
         "name": "publicProfile",
         "requirement": {
           "kind": "never",
@@ -43,6 +63,16 @@
         "description": "",
         "id": "prop_WN6CSPS3DDQ40TR3VG8PYNTMPM",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Profile information visible to followers.",
+            "label": "Follower profile"
+          },
+          "ja": {
+            "description": "フォロワーへ公開するプロフィール情報です。",
+            "label": "フォロワー向けプロフィール"
+          }
+        },
         "name": "followerProfile",
         "requirement": {
           "kind": "never",
@@ -58,6 +88,16 @@
         "description": "",
         "id": "prop_5N09J4Q6RV5N2EGDPKMW77WWD0",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Profile information visible to friends.",
+            "label": "Friend profile"
+          },
+          "ja": {
+            "description": "フレンドへ公開するプロフィール情報です。",
+            "label": "フレンド向けプロフィール"
+          }
+        },
         "name": "friendProfile",
         "requirement": {
           "kind": "never",

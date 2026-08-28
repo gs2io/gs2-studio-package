@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the serial-code campaign.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "コードキャンペーンを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "Accept one shared code for the whole campaign instead of per-player codes",
         "id": "prop_01M0C5VXZYGKT11KXY634Y6J5N",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether one shared code may be used for the entire campaign.",
+            "label": "Shared campaign code"
+          },
+          "ja": {
+            "description": "キャンペーン全体で共通のコードを利用できるかを設定します。",
+            "label": "共通キャンペーンコード"
+          }
+        },
         "name": "enableCampaignCode",
         "requirement": {
           "kind": "never",

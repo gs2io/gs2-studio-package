@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the quest group.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "クエストグループを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "",
         "id": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which this quest group is available.",
+            "label": "Availability schedule"
+          },
+          "ja": {
+            "description": "このクエストグループを開催するスケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
         "name": "schedule",
         "requirement": {
           "kind": "never",

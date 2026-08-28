@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the idle status.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "放置状況を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,18 @@
         "description": "",
         "id": "prop_CGEEBE9H9P5MW0MD82N6AW2GZJ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Interval at which idle rewards accumulate.",
+            "label": "Reward interval",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "放置報酬を積み上げる間隔です。",
+            "label": "報酬間隔",
+            "unit": "分"
+          }
+        },
         "name": "rewardIntervalMinutes",
         "requirement": {
           "kind": "always",
@@ -46,6 +68,18 @@
         "description": "",
         "id": "prop_Y84GE13M8Y5K1KVMS5X9E2TEF8",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Initial maximum idle duration for a new player.",
+            "label": "Initial idle limit",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "新規プレイヤーに適用する放置時間の上限です。",
+            "label": "初期放置上限",
+            "unit": "分"
+          }
+        },
         "name": "defaultMaximumIdleMinutes",
         "requirement": {
           "kind": "always",
@@ -61,6 +95,18 @@
         "description": "",
         "id": "prop_6H5QKHHDFSEX65W9HT71FFAY0P",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Idle duration accumulated so far.",
+            "label": "Current idle duration",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "現在までに蓄積した放置時間です。",
+            "label": "現在の放置時間",
+            "unit": "分"
+          }
+        },
         "name": "currentIdleMinutes",
         "requirement": {
           "kind": "always",
@@ -76,6 +122,16 @@
         "description": "",
         "id": "prop_MRM77NEZWMCQ5ACA4EBXFBWQQ4",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the next idle reward becomes available.",
+            "label": "Next reward time"
+          },
+          "ja": {
+            "description": "次の放置報酬が確定する日時です。",
+            "label": "次回報酬日時"
+          }
+        },
         "name": "nextRewardsAt",
         "requirement": {
           "kind": "always",
@@ -91,6 +147,18 @@
         "description": "",
         "id": "prop_K3CBE560Z2HRY7DXXW6F5JCR2R",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Current maximum idle duration applied to the player.",
+            "label": "Current idle limit",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "プレイヤーに適用されている放置時間の上限です。",
+            "label": "現在の放置上限",
+            "unit": "分"
+          }
+        },
         "name": "maximumIdleMinutes",
         "requirement": {
           "kind": "always",
@@ -106,6 +174,16 @@
         "description": "",
         "id": "prop_SHSB8VCSJJT91AWA17EV2DWNJ9",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Idle reward actions currently available to claim.",
+            "label": "Pending acquire actions"
+          },
+          "ja": {
+            "description": "現在受け取り可能な放置報酬アクションです。",
+            "label": "受取予定アクション"
+          }
+        },
         "name": "acquireActions",
         "requirement": {
           "kind": "always",

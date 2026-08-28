@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the ad platform.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "広告プラットフォームを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,16 @@
         "description": "",
         "id": "prop_9R4GKC9MHQ0RWWG542MD6RRBQ9",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "AdMob ad unit identifiers allowed by this configuration.",
+            "label": "AdMob ad unit IDs"
+          },
+          "ja": {
+            "description": "許可するAdMob広告ユニットIDの一覧です。",
+            "label": "AdMob広告ユニットID"
+          }
+        },
         "name": "adMobAdUnitIds",
         "requirement": {
           "kind": "never",
@@ -45,6 +65,16 @@
         "description": "",
         "id": "prop_8GAGKPX7FHKJSQQCWN9J6ZE9M5",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Game keys used by Unity Ads.",
+            "label": "Unity Ads keys"
+          },
+          "ja": {
+            "description": "Unity Adsで使用するゲームキーの一覧です。",
+            "label": "Unity Adsキー"
+          }
+        },
         "name": "unityAdKeys",
         "requirement": {
           "kind": "always",

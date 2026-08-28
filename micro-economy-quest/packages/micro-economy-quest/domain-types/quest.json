@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the quest.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "クエストを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "",
         "id": "prop_PFYYCZ2ZB3XBM0A06C1VSTJWCP",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Quest group this quest belongs to.",
+            "label": "Quest group"
+          },
+          "ja": {
+            "description": "このクエストが属するグループです。",
+            "label": "クエストグループ"
+          }
+        },
         "name": "collection",
         "requirement": {
           "kind": "always",
@@ -46,6 +66,16 @@
         "description": "",
         "id": "prop_TF2ETMFVHGYGRWYBZ8YJZXZG4S",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Consume actions executed when the quest starts.",
+            "label": "Start costs"
+          },
+          "ja": {
+            "description": "クエスト開始時に実行する消費アクションです。",
+            "label": "開始時消費"
+          }
+        },
         "name": "consumeActions",
         "requirement": {
           "kind": "always",
@@ -63,6 +93,16 @@
         "description": "",
         "id": "prop_H5KJSRGM60K4AQHSJMM28D7JQV",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions executed on the first completion.",
+            "label": "First-clear rewards"
+          },
+          "ja": {
+            "description": "初回クリア時に実行する獲得アクションです。",
+            "label": "初回クリア報酬"
+          }
+        },
         "name": "firstCompleteAcquireActions",
         "requirement": {
           "kind": "always",
@@ -80,6 +120,16 @@
         "description": "",
         "id": "prop_WAYKZ6HMTNGKPMNBTAZHR37SH3",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions executed on each completion.",
+            "label": "Completion rewards"
+          },
+          "ja": {
+            "description": "クリア時に毎回実行する獲得アクションです。",
+            "label": "通常クリア報酬"
+          }
+        },
         "name": "completeAcquireActions",
         "requirement": {
           "kind": "always",
@@ -97,6 +147,16 @@
         "description": "",
         "id": "prop_NYZ7PF2EANTJ3R35DJQX6XWXHG",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions executed when the quest fails.",
+            "label": "Failure actions"
+          },
+          "ja": {
+            "description": "クエスト失敗時に実行する獲得アクションです。",
+            "label": "失敗時アクション"
+          }
+        },
         "name": "failedAcquireActions",
         "requirement": {
           "kind": "always",
@@ -114,6 +174,16 @@
         "description": "",
         "id": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has completed this quest.",
+            "label": "Completed"
+          },
+          "ja": {
+            "description": "プレイヤーがこのクエストをクリア済みかを示します。",
+            "label": "クリア済み"
+          }
+        },
         "name": "completed",
         "requirement": {
           "kind": "always",

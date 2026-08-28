@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the mission group.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ミッショングループを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,16 @@
         "description": "",
         "id": "prop_K7KPHSFXNH3RA12P7NEZ6JNVPB",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which this mission group is available.",
+            "label": "Availability schedule"
+          },
+          "ja": {
+            "description": "このミッショングループを開催するスケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
         "name": "schedule",
         "requirement": {
           "kind": "never",
@@ -42,6 +62,16 @@
         "description": "",
         "id": "prop_MTPT2W75JMKRGK9CXSREB6ZW49",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Reset cadence used by missions in this group.",
+            "label": "Reset scope"
+          },
+          "ja": {
+            "description": "グループ内ミッションの進捗をリセットする単位です。",
+            "label": "リセット単位"
+          }
+        },
         "name": "scope",
         "requirement": {
           "kind": "always",

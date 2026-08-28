@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the enchantment configuration.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "エンチャント設定を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,18 @@
         "description": "Most bonuses a single piece can hold",
         "id": "prop_01M0C84Y32NTFEV004CWFSAF5R",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum number of bonus effects one equipment item can hold.",
+            "label": "Maximum effect count",
+            "unit": "effects"
+          },
+          "ja": {
+            "description": "1つの装備に付与できる追加効果の最大数です。",
+            "label": "最大効果数",
+            "unit": "個"
+          }
+        },
         "name": "maximumParameterCount",
         "requirement": {
           "kind": "always",

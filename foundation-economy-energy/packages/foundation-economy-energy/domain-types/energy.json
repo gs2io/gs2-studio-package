@@ -18,6 +18,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the stamina model.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "スタミナを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -33,6 +43,18 @@
         "description": "",
         "id": "prop_3ED1FAC3V82FG3Z4QEMXRF1BJE",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Initial stamina capacity available to a player.",
+            "label": "Initial maximum",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "プレイヤーが最初に持つスタミナ上限です。",
+            "label": "初期上限",
+            "unit": "ポイント"
+          }
+        },
         "name": "defaultMaximum",
         "requirement": {
           "kind": "always",
@@ -48,6 +70,16 @@
         "description": "",
         "id": "prop_1QXN33T7DVRHC1P1C2D0ECXPQP",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether recovered stamina may exceed the normal capacity.",
+            "label": "Allow overflow"
+          },
+          "ja": {
+            "description": "回復時にスタミナ上限を超えて保持できるかを設定します。",
+            "label": "上限超過を許可"
+          }
+        },
         "name": "useOverflow",
         "requirement": {
           "kind": "always",
@@ -63,6 +95,18 @@
         "description": "",
         "id": "prop_64XY03QAD08E4FQMCQQG039HZ9",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum stamina retained when overflow is allowed.",
+            "label": "Overflow maximum",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "上限超過を許可した場合に保持できる最大値です。",
+            "label": "超過時上限",
+            "unit": "ポイント"
+          }
+        },
         "name": "overflowedMaximum",
         "requirement": {
           "kind": "always",
@@ -78,6 +122,18 @@
         "description": "",
         "id": "prop_XCA5D46XQKYD37PNGVYA1HH9S9",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Interval between automatic stamina recoveries.",
+            "label": "Recovery interval",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "スタミナを自動回復する間隔です。",
+            "label": "回復間隔",
+            "unit": "分"
+          }
+        },
         "name": "recoveryIntervalMinutes",
         "requirement": {
           "kind": "always",
@@ -93,6 +149,18 @@
         "description": "",
         "id": "prop_NQG4GN9X1R4HTWE275H4JXJHFK",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Amount of stamina restored at each recovery interval.",
+            "label": "Recovery amount",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "回復間隔ごとに加算するスタミナ量です。",
+            "label": "1回の回復量",
+            "unit": "ポイント"
+          }
+        },
         "name": "recoveryValue",
         "requirement": {
           "kind": "always",
@@ -108,6 +176,18 @@
         "description": "",
         "id": "prop_XFMYM93GTF2261GG2KNVHC9V5K",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Current stamina held by the player.",
+            "label": "Current value",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "プレイヤーが現在持っているスタミナです。",
+            "label": "現在値",
+            "unit": "ポイント"
+          }
+        },
         "name": "currentValue",
         "requirement": {
           "kind": "always",
@@ -123,6 +203,18 @@
         "description": "",
         "id": "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Current stamina capacity applied to the player.",
+            "label": "Current maximum",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "プレイヤーに適用されている現在のスタミナ上限です。",
+            "label": "現在の上限",
+            "unit": "ポイント"
+          }
+        },
         "name": "currentMaximumValue",
         "requirement": {
           "kind": "always",
@@ -138,6 +230,16 @@
         "description": "",
         "id": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time of the next automatic stamina recovery.",
+            "label": "Next recovery time"
+          },
+          "ja": {
+            "description": "次にスタミナが自動回復する日時です。",
+            "label": "次回回復日時"
+          }
+        },
         "name": "nextRecoverdAt",
         "requirement": {
           "kind": "always",

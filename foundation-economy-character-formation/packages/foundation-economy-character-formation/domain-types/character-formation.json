@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the formation configuration.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "編成を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,18 @@
         "description": "",
         "id": "prop_1X7P75QB2PQR3A35AG6CAWPXZ6",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Formation save slots granted to a new player.",
+            "label": "Initial save slots",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "新規プレイヤーに付与する編成保存枠です。",
+            "label": "初期保存枠",
+            "unit": "枠"
+          }
+        },
         "name": "initialSaveArea",
         "requirement": {
           "kind": "always",
@@ -43,6 +65,18 @@
         "description": "",
         "id": "prop_ASEE9H5F0YR01T0HPZTY19XY2V",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum number of formation save slots.",
+            "label": "Maximum save slots",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "拡張できる編成保存枠の最大値です。",
+            "label": "最大保存枠",
+            "unit": "枠"
+          }
+        },
         "name": "maximumSaveArea",
         "requirement": {
           "kind": "always",
@@ -58,6 +92,18 @@
         "description": "",
         "id": "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Formation save slots currently available to the player.",
+            "label": "Current save slots",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "プレイヤーが現在利用できる編成保存枠です。",
+            "label": "現在の保存枠",
+            "unit": "枠"
+          }
+        },
         "name": "currentSaveArea",
         "requirement": {
           "kind": "always",

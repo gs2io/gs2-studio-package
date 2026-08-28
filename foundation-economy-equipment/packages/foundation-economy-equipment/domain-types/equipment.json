@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the equipment item.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "装備を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,16 @@
         "description": "",
         "id": "prop_2C21XE4SCXQ1JDG7ES2MNFNA2R",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Category this equipment belongs to.",
+            "label": "Equipment category"
+          },
+          "ja": {
+            "description": "この装備が属するカテゴリです。",
+            "label": "装備カテゴリ"
+          }
+        },
         "name": "category",
         "requirement": {
           "kind": "always",
@@ -43,6 +63,16 @@
         "description": "",
         "id": "prop_H4JW4XTKFKNW6TYBGJ7W6C175M",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Value used to order equipment in lists.",
+            "label": "Sort order"
+          },
+          "ja": {
+            "description": "装備一覧で使用する並び順の値です。",
+            "label": "表示順"
+          }
+        },
         "name": "sortValue",
         "requirement": {
           "kind": "always",
@@ -58,6 +88,16 @@
         "description": "",
         "id": "prop_S5796CZNBGWDHWSSHHT1EC00T6",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier of the equipment instance owned by the player.",
+            "label": "Equipment instance ID"
+          },
+          "ja": {
+            "description": "プレイヤーが所持する装備個体の識別子です。",
+            "label": "装備個体ID"
+          }
+        },
         "name": "propertyId",
         "requirement": {
           "kind": "always",

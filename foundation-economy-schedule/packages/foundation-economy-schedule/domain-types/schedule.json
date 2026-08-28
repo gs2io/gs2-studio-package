@@ -24,6 +24,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the schedule.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "スケジュールを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -39,6 +49,16 @@
         "description": "",
         "id": "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the schedule uses absolute times or times relative to a trigger.",
+            "label": "Schedule type"
+          },
+          "ja": {
+            "description": "絶対日時またはトリガー基準の相対日時を選択します。",
+            "label": "スケジュール方式"
+          }
+        },
         "name": "scheduleType",
         "requirement": {
           "kind": "always",
@@ -57,6 +77,16 @@
         "description": "",
         "id": "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Start time for an absolute schedule.",
+            "label": "Start time"
+          },
+          "ja": {
+            "description": "絶対日時方式で機能を開始する日時です。",
+            "label": "開始日時"
+          }
+        },
         "name": "startAt",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"absolute\"}",
@@ -73,6 +103,16 @@
         "description": "",
         "id": "prop_763BX5C31PKQPVJ692CKG0C998",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "End time for an absolute schedule.",
+            "label": "End time"
+          },
+          "ja": {
+            "description": "絶対日時方式で機能を終了する日時です。",
+            "label": "終了日時"
+          }
+        },
         "name": "endAt",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"absolute\"}",
@@ -89,6 +129,16 @@
         "description": "",
         "id": "prop_K8ZPEG5KAWZN5N4HNCS0S3ZQ0E",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Trigger used as the reference for a relative schedule.",
+            "label": "Reference trigger"
+          },
+          "ja": {
+            "description": "相対日時方式の基準にするトリガーです。",
+            "label": "基準トリガー"
+          }
+        },
         "name": "trigger",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"relative\"}",
@@ -105,6 +155,16 @@
         "description": "",
         "id": "prop_XSTG0QAVN2ADJHS1Q50PXHNY89",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Cadence used to repeat the schedule.",
+            "label": "Repeat type"
+          },
+          "ja": {
+            "description": "スケジュールを繰り返す周期の種類です。",
+            "label": "繰り返し方式"
+          }
+        },
         "name": "repeatType",
         "requirement": {
           "kind": "always",
@@ -126,6 +186,18 @@
         "description": "",
         "id": "prop_QT1RYWCPGQF7TX098APWRW2ACV",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Hour when the active period begins for daily, weekly, or monthly repetition.",
+            "label": "Start hour",
+            "unit": "hour"
+          },
+          "ja": {
+            "description": "日次・週次・月次の有効時間帯が始まる時刻です。",
+            "label": "開始時刻",
+            "unit": "時"
+          }
+        },
         "name": "beginHour",
         "requirement": {
           "condition": "{\"kind\":\"or\",\"conditions\":[{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"daily\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}]}",
@@ -142,6 +214,18 @@
         "description": "",
         "id": "prop_D2RWEZDYGM3RT887E0EA182FC3",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Hour when the active period ends for daily, weekly, or monthly repetition.",
+            "label": "End hour",
+            "unit": "hour"
+          },
+          "ja": {
+            "description": "日次・週次・月次の有効時間帯が終わる時刻です。",
+            "label": "終了時刻",
+            "unit": "時"
+          }
+        },
         "name": "endHour",
         "requirement": {
           "condition": "{\"kind\":\"or\",\"conditions\":[{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"daily\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}]}",
@@ -158,6 +242,16 @@
         "description": "",
         "id": "prop_KP4RNR37Z8RE0D5WTAA5HC2ZYJ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Weekday when a weekly active period begins.",
+            "label": "Start weekday"
+          },
+          "ja": {
+            "description": "週次スケジュールの有効期間が始まる曜日です。",
+            "label": "開始曜日"
+          }
+        },
         "name": "beginDayOfWeek",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"}",
@@ -182,6 +276,16 @@
         "description": "",
         "id": "prop_WZC2GBZJT3CEWP77QMK8PM169J",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Weekday when a weekly active period ends.",
+            "label": "End weekday"
+          },
+          "ja": {
+            "description": "週次スケジュールの有効期間が終わる曜日です。",
+            "label": "終了曜日"
+          }
+        },
         "name": "endDayOfWeek",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"}",
@@ -206,6 +310,18 @@
         "description": "",
         "id": "prop_TXGKQD0ZE9EKJT77Q25HHWP6SQ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Day of the month when a monthly active period begins.",
+            "label": "Start day of month",
+            "unit": "day"
+          },
+          "ja": {
+            "description": "月次スケジュールの有効期間が始まる日です。",
+            "label": "開始日",
+            "unit": "日"
+          }
+        },
         "name": "beginDayOfMonth",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}",
@@ -222,6 +338,18 @@
         "description": "",
         "id": "prop_2R6ZHPN0RG508XWNJXACHEQPJZ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Day of the month when a monthly active period ends.",
+            "label": "End day of month",
+            "unit": "day"
+          },
+          "ja": {
+            "description": "月次スケジュールの有効期間が終わる日です。",
+            "label": "終了日",
+            "unit": "日"
+          }
+        },
         "name": "endDayOfMonth",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}",
@@ -238,6 +366,16 @@
         "description": "",
         "id": "prop_3HHJJZ4553TC0VTT84VAF8KF74",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Reference time used to calculate a custom cycle.",
+            "label": "Anchor time"
+          },
+          "ja": {
+            "description": "カスタム周期を数える基準日時です。",
+            "label": "基準日時"
+          }
+        },
         "name": "anchorTimestamp",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
@@ -254,6 +392,18 @@
         "description": "",
         "id": "prop_S23T3MDNBFNQTJ9PA126DR19V9",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Number of active days in a custom cycle.",
+            "label": "Active days",
+            "unit": "days"
+          },
+          "ja": {
+            "description": "カスタム周期で機能を有効にする日数です。",
+            "label": "有効日数",
+            "unit": "日"
+          }
+        },
         "name": "activeDays",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
@@ -270,6 +420,18 @@
         "description": "",
         "id": "prop_7QB1J2FB3XJJGD80SC5DBX508J",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Number of inactive days in a custom cycle.",
+            "label": "Inactive days",
+            "unit": "days"
+          },
+          "ja": {
+            "description": "カスタム周期で機能を無効にする日数です。",
+            "label": "無効日数",
+            "unit": "日"
+          }
+        },
         "name": "inactiveDays",
         "requirement": {
           "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",

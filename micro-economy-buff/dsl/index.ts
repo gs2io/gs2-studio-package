@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** The schedule namespace a buff's active period is read from. */
 const SCHEDULE_NAMESPACE_RESOURCE_ID = "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d";
 const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
@@ -46,6 +48,45 @@ const Buff = defineDomainType("Buff", dt =>
         .assetDelivery()
         .description("Period the buff is active for")
     )
+    .localizedProperties({
+      id: jaEnId("バフ", "buff"),
+      expression: jaEnField(
+        "計算方式",
+        "Expression",
+        "補正値を元の値へ加算または乗算する方式です。",
+        "How the modifier is combined with the original value."
+      ),
+      targetActionName: jaEnField(
+        "対象アクション",
+        "Target action",
+        "補正対象にするGS2アクション名です。",
+        "GS2 action whose value is modified."
+      ),
+      targetFieldName: jaEnField(
+        "対象フィールド",
+        "Target field",
+        "対象アクション内で補正するフィールド名です。",
+        "Field within the target action that is modified."
+      ),
+      rate: jaEnField(
+        "補正値",
+        "Modifier value",
+        "対象フィールドへ適用する倍率または加算値です。",
+        "Multiplier or additive value applied to the target field."
+      ),
+      priority: jaEnField(
+        "優先度",
+        "Priority",
+        "同じフィールドへ複数のバフを適用する順序です。",
+        "Order used when multiple buffs affect the same field."
+      ),
+      schedule: jaEnField(
+        "有効期間",
+        "Active schedule",
+        "このバフを有効にするスケジュールです。",
+        "Schedule during which this buff is active."
+      ),
+    })
 );
 
 const BuffEntryModel = defineMasterDataResource(resource =>

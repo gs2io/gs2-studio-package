@@ -1,8 +1,12 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const EquipmentCategory = defineDomainType("EquipmentCategory", dt =>
-  dt.idDescription("Unique identifier")
+  dt.idDescription("Unique identifier").localizedProperties({
+    id: jaEnId("装備カテゴリ", "equipment category"),
+  })
 );
 
 const Equipment = defineDomainType("Equipment", dt =>
@@ -11,6 +15,27 @@ const Equipment = defineDomainType("Equipment", dt =>
     .property(PT.prop("category", PT.ref("EquipmentCategory")).assetDelivery().required())
     .property(PT.int32("sortValue").masterData().required())
     .property(PT.string("propertyId").userData().required())
+    .localizedProperties({
+      id: jaEnId("装備", "equipment item"),
+      category: jaEnField(
+        "装備カテゴリ",
+        "Equipment category",
+        "この装備が属するカテゴリです。",
+        "Category this equipment belongs to."
+      ),
+      sortValue: jaEnField(
+        "表示順",
+        "Sort order",
+        "装備一覧で使用する並び順の値です。",
+        "Value used to order equipment in lists."
+      ),
+      propertyId: jaEnField(
+        "装備個体ID",
+        "Equipment instance ID",
+        "プレイヤーが所持する装備個体の識別子です。",
+        "Identifier of the equipment instance owned by the player."
+      ),
+    })
 );
 
 const EquipmentCollection = defineDomainType("EquipmentCollection", dt =>
@@ -20,6 +45,37 @@ const EquipmentCollection = defineDomainType("EquipmentCollection", dt =>
     .property(PT.int32("maximumCapacity").masterData().required())
     .property(PT.int32("currentCapacityUsage").userData().required())
     .property(PT.int32("currentMaximumCapacity").userData().required())
+    .localizedProperties({
+      id: jaEnId("装備所持枠", "equipment inventory"),
+      defaultCapacity: jaEnField(
+        "初期所持枠",
+        "Initial capacity",
+        "新規プレイヤーに付与する装備所持枠です。",
+        "Equipment capacity granted to a new player.",
+        { ja: "枠", en: "slots" }
+      ),
+      maximumCapacity: jaEnField(
+        "最大所持枠",
+        "Maximum capacity",
+        "拡張できる装備所持枠の最大値です。",
+        "Maximum equipment capacity a player can reach.",
+        { ja: "枠", en: "slots" }
+      ),
+      currentCapacityUsage: jaEnField(
+        "使用中の所持枠",
+        "Used capacity",
+        "現在装備が使用している所持枠数です。",
+        "Equipment capacity currently in use.",
+        { ja: "枠", en: "slots" }
+      ),
+      currentMaximumCapacity: jaEnField(
+        "現在の所持枠",
+        "Current capacity",
+        "プレイヤーが現在利用できる装備所持枠です。",
+        "Equipment capacity currently available to the player.",
+        { ja: "枠", en: "slots" }
+      ),
+    })
 );
 
 const ItemModel = defineMasterDataResource(resource =>

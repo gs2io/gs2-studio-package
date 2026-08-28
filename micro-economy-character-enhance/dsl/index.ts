@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** Resources this package points at inside `foundation-economy-character`. */
 const CHARACTER_INVENTORY_MODEL_RESOURCE_ID = "62805db8-2e40-4a2c-a1c4-38e0c07d49f8";
 const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = "8d1e96cf-5e79-4920-ada7-997eeb2776fe";
@@ -25,6 +27,15 @@ const CharacterEnhance = defineDomainType("CharacterEnhance", dt =>
         .required()
         .description("Item metadata suffix the granted experience is read from")
     )
+    .localizedProperties({
+      id: jaEnId("強化レシピ", "enhancement recipe"),
+      acquireExperienceSuffix: jaEnField(
+        "経験値メタデータ接尾辞",
+        "Experience metadata suffix",
+        "素材キャラクターから獲得経験値を読み取るメタデータの接尾辞です。",
+        "Metadata suffix used to read experience granted by a material character."
+      ),
+    })
 );
 
 /**
@@ -39,6 +50,28 @@ const CharacterEnhanceBonus = defineDomainType("CharacterEnhanceBonus", dt =>
       PT.float32("rate").masterData().required().description("Experience multiplier when drawn")
     )
     .property(PT.int32("weight").masterData().required().description("Relative draw weight"))
+    .localizedProperties({
+      id: jaEnId("強化ボーナス", "enhancement bonus"),
+      enhance: jaEnField(
+        "強化レシピ",
+        "Enhancement recipe",
+        "このボーナスを適用する強化レシピです。",
+        "Enhancement recipe to which this bonus applies."
+      ),
+      rate: jaEnField(
+        "経験値倍率",
+        "Experience multiplier",
+        "抽選されたときに獲得経験値へ適用する倍率です。",
+        "Multiplier applied to experience when this bonus is drawn.",
+        { ja: "倍", en: "x" }
+      ),
+      weight: jaEnField(
+        "抽選重み",
+        "Draw weight",
+        "このボーナスが選ばれる相対的な重みです。",
+        "Relative weight used when drawing this bonus."
+      ),
+    })
 );
 
 const RateModel = defineMasterDataResource(resource =>

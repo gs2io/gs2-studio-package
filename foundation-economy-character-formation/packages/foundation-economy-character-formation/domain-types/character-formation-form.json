@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the formation form.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "編成フォームを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "",
         "id": "prop_1CD4Q461VBGWZXEWXYD3WZAT37",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Character assignments contained in the saved formation.",
+            "label": "Assigned slots"
+          },
+          "ja": {
+            "description": "保存した編成に含まれるキャラクター配置です。",
+            "label": "配置スロット"
+          }
+        },
         "name": "slots",
         "requirement": {
           "kind": "never",

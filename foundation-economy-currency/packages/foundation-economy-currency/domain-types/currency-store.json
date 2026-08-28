@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the currency store.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "通貨ストアを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "",
         "id": "prop_F0JZV41MJ57SFQPQ6BMB80HDAZ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether fake receipts used for test purchases are accepted.",
+            "label": "Test receipts"
+          },
+          "ja": {
+            "description": "テスト購入用の偽レシートを受け付けるかを設定します。",
+            "label": "テストレシート"
+          }
+        },
         "name": "enableFakeReceipt",
         "requirement": {
           "kind": "always",

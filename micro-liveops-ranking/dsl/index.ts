@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /**
  * A global leaderboard: every player is ranked against every other. The entry
  * period comes from a schedule event, so a season is opened and closed by
@@ -24,6 +26,46 @@ const Ranking = defineDomainType("Ranking", dt =>
     .property(PT.int64("minimumValue").masterData().description("Lowest score accepted"))
     .property(PT.int64("maximumValue").masterData().description("Highest score accepted"))
     .property(PT.int64("score").userData().required().description("The player's own score"))
+    .localizedProperties({
+      id: jaEnId("ランキング", "ranking"),
+      schedule: jaEnField(
+        "開催スケジュール",
+        "Entry schedule",
+        "ランキングへスコアを登録できる開催スケジュールです。",
+        "Schedule during which scores may be submitted."
+      ),
+      orderDirection: jaEnField(
+        "順位方向",
+        "Ranking order",
+        "高いスコアと低いスコアのどちらを上位にするかを設定します。",
+        "Whether higher or lower scores rank first."
+      ),
+      sum: jaEnField(
+        "スコアを合算",
+        "Sum scores",
+        "複数回送信したスコアを合算するかを設定します。",
+        "Whether submitted scores are accumulated instead of keeping one result."
+      ),
+      minimumValue: jaEnField(
+        "最小スコア",
+        "Minimum score",
+        "受け付けるスコアの最小値です。",
+        "Lowest score accepted by the ranking."
+      ),
+      maximumValue: jaEnField(
+        "最大スコア",
+        "Maximum score",
+        "受け付けるスコアの最大値です。",
+        "Highest score accepted by the ranking."
+      ),
+      score: jaEnField(
+        "プレイヤースコア",
+        "Player score",
+        "このランキングにおけるプレイヤーの現在スコアです。",
+        "Player's current score in this ranking.",
+        { ja: "点", en: "points" }
+      ),
+    })
 );
 
 /** What the players down to `thresholdRank` receive when the season ends. */
@@ -39,6 +81,28 @@ const RankingReward = defineDomainType("RankingReward", dt =>
     )
     .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
     .compositeKey("ranking", "thresholdRank")
+    .localizedProperties({
+      id: jaEnId("ランキング報酬", "ranking reward"),
+      ranking: jaEnField(
+        "対象ランキング",
+        "Ranking",
+        "この報酬を配布するランキングです。",
+        "Ranking that distributes this reward."
+      ),
+      thresholdRank: jaEnField(
+        "順位しきい値",
+        "Rank threshold",
+        "この報酬を受け取れる最下位の順位です。",
+        "Lowest placement eligible for this reward.",
+        { ja: "位", en: "place" }
+      ),
+      acquireActions: jaEnField(
+        "獲得アクション",
+        "Acquire actions",
+        "順位条件を満たしたプレイヤーへ実行する報酬アクションです。",
+        "Reward actions executed for players who meet the placement threshold."
+      ),
+    })
 );
 
 const GlobalRankingModel = defineMasterDataResource(resource =>

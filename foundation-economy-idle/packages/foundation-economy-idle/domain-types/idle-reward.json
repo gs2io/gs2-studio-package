@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the idle reward.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "放置報酬を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "",
         "id": "prop_01M0PRB5RFJJP0NG8XT0WHEGD2",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions executed as idle rewards.",
+            "label": "Acquire actions"
+          },
+          "ja": {
+            "description": "放置報酬として実行する獲得アクションです。",
+            "label": "獲得アクション"
+          }
+        },
         "name": "acquireActions",
         "requirement": {
           "kind": "always",

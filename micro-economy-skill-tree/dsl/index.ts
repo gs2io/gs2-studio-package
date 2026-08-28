@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /**
  * One node of a skill tree: what it costs to unlock, what must already be
  * unlocked before it, and how much of the cost comes back if it is reset.
@@ -26,6 +28,34 @@ const SkillNode = defineDomainType("SkillNode", dt =>
         .description("Share of the cost refunded when the node is reset")
     )
     .property(PT.bool("released").userData().required().description("Unlocked by this player"))
+    .localizedProperties({
+      id: jaEnId("スキルノード", "skill node"),
+      releaseConsumeActions: jaEnField(
+        "解放コスト",
+        "Unlock costs",
+        "このノードを解放するときに実行する消費アクションです。",
+        "Consume actions executed to unlock this node."
+      ),
+      premiseNodes: jaEnField(
+        "前提ノード",
+        "Prerequisite nodes",
+        "先に解放しておく必要があるノードの一覧です。",
+        "Nodes that must be unlocked before this node."
+      ),
+      restrainReturnRate: jaEnField(
+        "リセット返却率",
+        "Reset refund rate",
+        "ノードをリセットしたときに解放コストを返却する割合です。",
+        "Share of the unlock cost refunded when the node is reset.",
+        { ja: "倍", en: "ratio" }
+      ),
+      released: jaEnField(
+        "解放済み",
+        "Unlocked",
+        "プレイヤーがこのノードを解放済みかを示します。",
+        "Whether the player has unlocked this node."
+      ),
+    })
 );
 
 /**
@@ -39,6 +69,15 @@ const SkillTreeOwner = defineDomainType("SkillTreeOwner", dt =>
     .property(
       PT.string("propertyId").userData().required().description("Whose tree this progress is")
     )
+    .localizedProperties({
+      id: jaEnId("スキルツリー所有者", "skill-tree owner"),
+      propertyId: jaEnField(
+        "所有対象ID",
+        "Owner instance ID",
+        "このスキルツリー進行を所有するキャラクターなどの識別子です。",
+        "Identifier of the character or other entity that owns this skill-tree progress."
+      ),
+    })
 );
 
 const NodeModel = defineMasterDataResource(resource =>

@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the store price.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "販売価格を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "",
         "id": "prop_4QH1Q546W880NVDGJRGNVCWV07",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Store product whose price is configured.",
+            "label": "Store product"
+          },
+          "ja": {
+            "description": "価格を設定するストア商品です。",
+            "label": "ストア商品"
+          }
+        },
         "name": "product",
         "requirement": {
           "kind": "always",
@@ -46,6 +66,16 @@
         "description": "",
         "id": "prop_HWY29H9JCBTCX27T4BQDSTJMV0",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Currency type used to price the product.",
+            "label": "Price currency"
+          },
+          "ja": {
+            "description": "商品の価格を表す通貨種別です。",
+            "label": "販売通貨"
+          }
+        },
         "name": "currencyType",
         "requirement": {
           "kind": "always",
@@ -61,6 +91,16 @@
         "description": "",
         "id": "prop_NW3JXP6ZEQE4DP99TJHZEB68AD",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Product price in the selected currency.",
+            "label": "Price"
+          },
+          "ja": {
+            "description": "指定した通貨での商品価格です。",
+            "label": "価格"
+          }
+        },
         "name": "price",
         "requirement": {
           "kind": "always",

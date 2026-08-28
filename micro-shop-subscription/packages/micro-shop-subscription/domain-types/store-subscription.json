@@ -18,6 +18,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the subscription product.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "サブスクリプション商品を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -33,6 +43,16 @@
         "description": "App Store subscription group",
         "id": "prop_01M0CE237D5ER8RDFM5F4F4QCQ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Subscription group identifier registered in App Store Connect.",
+            "label": "App Store subscription group ID"
+          },
+          "ja": {
+            "description": "App Store Connectで登録したサブスクリプショングループの識別子です。",
+            "label": "App StoreサブスクリプショングループID"
+          }
+        },
         "name": "appleSubscriptionGroupIdentifier",
         "requirement": {
           "kind": "never",
@@ -48,6 +68,16 @@
         "description": "Google Play subscription product",
         "id": "prop_01M0CE237DEBCTSTSKYSEH3BPN",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Subscription product identifier registered in Google Play Console.",
+            "label": "Google Play product ID"
+          },
+          "ja": {
+            "description": "Google Play Consoleで登録した定期購入商品の識別子です。",
+            "label": "Google Play商品ID"
+          }
+        },
         "name": "googlePlayProductId",
         "requirement": {
           "kind": "never",
@@ -63,6 +93,16 @@
         "description": "Trigger pulled each time the subscription renews",
         "id": "prop_01M0CE237D2Q5QJSYBCJE3DYDF",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule trigger fired whenever the subscription renews.",
+            "label": "Renewal trigger"
+          },
+          "ja": {
+            "description": "サブスクリプション更新時に発火するスケジュールトリガーです。",
+            "label": "更新トリガー"
+          }
+        },
         "name": "renewalTrigger",
         "requirement": {
           "kind": "always",
@@ -78,6 +118,16 @@
         "description": "Whether a renewal extends exactly or rounds to an hour",
         "id": "prop_01M0CE237DZ14S65879MV4WY1P",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether renewal extends exactly or is rounded to a configured hour.",
+            "label": "Trigger extension mode"
+          },
+          "ja": {
+            "description": "更新日時をそのまま使うか指定時刻へ丸めるかを設定します。",
+            "label": "トリガー延長方式"
+          }
+        },
         "name": "triggerExtendMode",
         "requirement": {
           "kind": "never",
@@ -96,6 +146,18 @@
         "description": "Hour renewals round to",
         "id": "prop_01M0CE237DDMQT88WD8W9RPTW6",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Hour used when renewal triggers are rounded.",
+            "label": "Rollup hour",
+            "unit": "hour"
+          },
+          "ja": {
+            "description": "更新トリガーを丸める場合の時刻です。",
+            "label": "丸め時刻",
+            "unit": "時"
+          }
+        },
         "name": "rollupHour",
         "requirement": {
           "kind": "never",
@@ -111,6 +173,18 @@
         "description": "Days before expiry that the store may re-bill",
         "id": "prop_01M0CE237D39D2M4M4KB0M0KCV",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Period before expiration during which the store may re-bill.",
+            "label": "Reallocation period",
+            "unit": "days"
+          },
+          "ja": {
+            "description": "期限前にストアが再請求を行える期間です。",
+            "label": "再請求猶予期間",
+            "unit": "日"
+          }
+        },
         "name": "reallocateSpanDays",
         "requirement": {
           "kind": "never",
@@ -126,6 +200,16 @@
         "description": "Whether the player currently holds it",
         "id": "prop_01M0CE237DDQTHVY262VCGK4M1",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Player's current subscription status.",
+            "label": "Subscription status"
+          },
+          "ja": {
+            "description": "プレイヤーの現在のサブスクリプション加入状態です。",
+            "label": "加入状態"
+          }
+        },
         "name": "status",
         "requirement": {
           "kind": "always",
@@ -144,6 +228,16 @@
         "description": "When it lapses",
         "id": "prop_01M0CE237D2M31JVETVEWNWH0G",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the player's subscription expires.",
+            "label": "Expiration time"
+          },
+          "ja": {
+            "description": "プレイヤーのサブスクリプションが失効する日時です。",
+            "label": "有効期限"
+          }
+        },
         "name": "expiresAt",
         "requirement": {
           "kind": "always",

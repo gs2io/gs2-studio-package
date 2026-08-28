@@ -1,12 +1,35 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const GlobalMessage = defineDomainType("GlobalMessage", dt =>
   dt
     .idDescription("Unique identifier")
     .property(PT.string("payload").masterData().required())
     .property(PT.timestamp("begin").masterData().required())
     .property(PT.timestamp("end").masterData().required())
+    .localizedProperties({
+      id: jaEnId("全体メッセージ", "global message"),
+      payload: jaEnField(
+        "メッセージ内容",
+        "Message payload",
+        "全プレイヤーへ配信するメッセージの内容です。",
+        "Content delivered to all players."
+      ),
+      begin: jaEnField(
+        "配信開始日時",
+        "Delivery start",
+        "メッセージの受け取りを開始する日時です。",
+        "Time when the message becomes available."
+      ),
+      end: jaEnField(
+        "配信終了日時",
+        "Delivery end",
+        "メッセージの受け取りを終了する日時です。",
+        "Time when the message stops being available."
+      ),
+    })
 );
 
 const Message = defineDomainType("Message", dt =>
@@ -16,6 +39,33 @@ const Message = defineDomainType("Message", dt =>
     .property(PT.bool("isRead").userData().required())
     .property(PT.timestamp("receivedAt").userData().required())
     .property(PT.timestamp("expiresAt").userData())
+    .localizedProperties({
+      id: jaEnId("メッセージ", "message"),
+      payload: jaEnField(
+        "メッセージ内容",
+        "Message payload",
+        "プレイヤーの受信箱へ届いたメッセージの内容です。",
+        "Content of the message delivered to the player's inbox."
+      ),
+      isRead: jaEnField(
+        "既読",
+        "Read",
+        "プレイヤーがこのメッセージを開いたかを示します。",
+        "Whether the player has opened this message."
+      ),
+      receivedAt: jaEnField(
+        "受信日時",
+        "Received at",
+        "メッセージを受信した日時です。",
+        "Time when the message was received."
+      ),
+      expiresAt: jaEnField(
+        "有効期限",
+        "Expiration time",
+        "メッセージを保持する期限です。",
+        "Time until which the message remains available."
+      ),
+    })
 );
 
 const InboxNamespace = defineMasterDataResource(resource => {

@@ -1,12 +1,29 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const AdPlatform = defineDomainType("AdPlatform", dt =>
   dt
     .idDescription("Unique identifier")
     .singleEntry()
     .property(PT.prop("adMobAdUnitIds", PT.listOf(PT.string())).masterData())
     .property(PT.prop("unityAdKeys", PT.listOf(PT.string())).masterData().required())
+    .localizedProperties({
+      id: jaEnId("広告プラットフォーム", "ad platform"),
+      adMobAdUnitIds: jaEnField(
+        "AdMob広告ユニットID",
+        "AdMob ad unit IDs",
+        "許可するAdMob広告ユニットIDの一覧です。",
+        "AdMob ad unit identifiers allowed by this configuration."
+      ),
+      unityAdKeys: jaEnField(
+        "Unity Adsキー",
+        "Unity Ads keys",
+        "Unity Adsで使用するゲームキーの一覧です。",
+        "Game keys used by Unity Ads."
+      ),
+    })
 );
 
 const AdViewPoint = defineDomainType("AdViewPoint", dt =>
@@ -14,6 +31,16 @@ const AdViewPoint = defineDomainType("AdViewPoint", dt =>
     .idDescription("Unique identifier")
     .singleEntry()
     .property(PT.int64("value").userData().required())
+    .localizedProperties({
+      id: jaEnId("広告視聴枠", "ad view point"),
+      value: jaEnField(
+        "視聴可能回数",
+        "Available views",
+        "プレイヤーが利用できる広告視聴ポイントの現在値です。",
+        "Current number of ad-view points available to the player.",
+        { ja: "回", en: "views" }
+      ),
+    })
 );
 
 const Namespace = defineMasterDataResource(resource =>

@@ -19,6 +19,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the guild kind.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ギルド種別を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -34,6 +44,18 @@
         "description": "Member capacity a newly created guild starts with",
         "id": "prop_01M0C5T6AF4Q3NKD9YJQ8F6119",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Initial member capacity of a newly created guild.",
+            "label": "Initial member capacity",
+            "unit": "members"
+          },
+          "ja": {
+            "description": "新規作成したギルドに適用する初期定員です。",
+            "label": "初期定員",
+            "unit": "人"
+          }
+        },
         "name": "defaultMaximumMemberCount",
         "requirement": {
           "kind": "always",
@@ -49,6 +71,18 @@
         "description": "Highest capacity a guild can be raised to",
         "id": "prop_01M0C5T6AFQRJ8K9V4AY6N1X1S",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Highest member capacity a guild can reach.",
+            "label": "Maximum member capacity",
+            "unit": "members"
+          },
+          "ja": {
+            "description": "ギルドが拡張できる定員の最大値です。",
+            "label": "最大定員",
+            "unit": "人"
+          }
+        },
         "name": "maximumMemberCount",
         "requirement": {
           "kind": "always",
@@ -64,6 +98,18 @@
         "description": "Days of guild-master inactivity before the seat opens up",
         "id": "prop_01M0C5T6AFE1EJ9CXYGJSJMT8Y",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Inactivity period after which the guild master position can be reassigned.",
+            "label": "Master inactivity period",
+            "unit": "days"
+          },
+          "ja": {
+            "description": "ギルドマスター交代を可能にする無活動期間です。",
+            "label": "マスター不在判定期間",
+            "unit": "日"
+          }
+        },
         "name": "inactivityPeriodDays",
         "requirement": {
           "kind": "never",
@@ -79,6 +125,18 @@
         "description": "Wait before a player may rejoin a guild they left",
         "id": "prop_01M0C5T6AF1GMQB80XDAVM0NJ2",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Wait time before a player may rejoin a guild they left.",
+            "label": "Rejoin cooldown",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "脱退後に同じギルドへ再参加できるまでの待機時間です。",
+            "label": "再参加待機時間",
+            "unit": "分"
+          }
+        },
         "name": "rejoinCoolTimeMinutes",
         "requirement": {
           "kind": "never",
@@ -94,6 +152,18 @@
         "description": "",
         "id": "prop_01M0C5T6AFC4H9ESF7ZV7XRVXK",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum number of guilds a player may join at once.",
+            "label": "Concurrent guild limit",
+            "unit": "guilds"
+          },
+          "ja": {
+            "description": "プレイヤーが同時に所属できるギルド数です。",
+            "label": "同時所属上限",
+            "unit": "件"
+          }
+        },
         "name": "maxConcurrentJoinGuilds",
         "requirement": {
           "kind": "never",
@@ -109,6 +179,18 @@
         "description": "",
         "id": "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum number of guilds a player may lead at once.",
+            "label": "Concurrent master limit",
+            "unit": "guilds"
+          },
+          "ja": {
+            "description": "プレイヤーが同時にマスターを務められるギルド数です。",
+            "label": "同時マスター上限",
+            "unit": "件"
+          }
+        },
         "name": "maxConcurrentGuildMasterCount",
         "requirement": {
           "kind": "never",
@@ -124,6 +206,16 @@
         "description": "",
         "id": "prop_01M0C5T6AFTPHZP6VRDZBYPK8F",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Permission role assigned to the guild master.",
+            "label": "Guild master role"
+          },
+          "ja": {
+            "description": "ギルドマスターに割り当てる権限ロールです。",
+            "label": "マスターロール"
+          }
+        },
         "name": "guildMasterRole",
         "requirement": {
           "kind": "always",
@@ -139,6 +231,16 @@
         "description": "",
         "id": "prop_01M0C5T6AFMZ7YHRK3TF8G9T6F",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Permission role initially assigned to regular members.",
+            "label": "Default member role"
+          },
+          "ja": {
+            "description": "一般メンバーに初期割り当てする権限ロールです。",
+            "label": "一般メンバーロール"
+          }
+        },
         "name": "guildMemberDefaultRole",
         "requirement": {
           "kind": "always",
@@ -154,6 +256,16 @@
         "description": "The guild this player belongs to",
         "id": "prop_01M0C5T6AFPW7S477FQF46NT07",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Name of the guild the player currently belongs to.",
+            "label": "Joined guild name"
+          },
+          "ja": {
+            "description": "プレイヤーが現在所属しているギルド名です。",
+            "label": "所属ギルド名"
+          }
+        },
         "name": "joinedGuildName",
         "requirement": {
           "kind": "never",

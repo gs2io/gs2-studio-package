@@ -9,7 +9,13 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
-const CurrencyType = defineDomainType("CurrencyType", dt => dt.idDescription("Unique identifier"));
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
+const CurrencyType = defineDomainType("CurrencyType", dt =>
+  dt.idDescription("Unique identifier").localizedProperties({
+    id: jaEnId("通貨種別", "currency type"),
+  })
+);
 
 /**
  * The currency package's StoreProduct, extended here with the amount of
@@ -27,7 +33,16 @@ const StoreProduct = defineOverlayDomainType(
     },
     compositeKeyMode: { kind: "inherit" },
   },
-  domainType => domainType.property(PT.int32("count").masterData().required())
+  domainType =>
+    domainType.property(PT.int32("count").masterData().required()).localizedProperties({
+      count: jaEnField(
+        "付与通貨量",
+        "Currency amount",
+        "このストア商品を購入したときに付与する通貨量です。",
+        "Amount of currency granted when this store product is purchased.",
+        { ja: "通貨", en: "currency" }
+      ),
+    })
 );
 
 /** One product priced in one currency; the pair is the row identity. */
@@ -38,6 +53,27 @@ const StorePrice = defineDomainType("StorePrice", dt =>
     .property(PT.prop("currencyType", PT.ref("CurrencyType")).assetDelivery().required())
     .property(PT.float64("price").masterData().required())
     .compositeKey("product", "currencyType")
+    .localizedProperties({
+      id: jaEnId("販売価格", "store price"),
+      product: jaEnField(
+        "ストア商品",
+        "Store product",
+        "価格を設定するストア商品です。",
+        "Store product whose price is configured."
+      ),
+      currencyType: jaEnField(
+        "販売通貨",
+        "Price currency",
+        "商品の価格を表す通貨種別です。",
+        "Currency type used to price the product."
+      ),
+      price: jaEnField(
+        "価格",
+        "Price",
+        "指定した通貨での商品価格です。",
+        "Product price in the selected currency."
+      ),
+    })
 );
 
 const DisplayItem = defineMasterDataResource(resource =>

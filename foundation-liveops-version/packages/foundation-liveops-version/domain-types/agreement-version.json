@@ -25,6 +25,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the agreement version.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "規約バージョンを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -40,6 +50,16 @@
         "description": "",
         "id": "prop_GMMBV2TGK8XPGGR6QZA7CB0F1Y",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether approval of this agreement is required.",
+            "label": "Approval requirement"
+          },
+          "ja": {
+            "description": "この規約への同意を必須にするかを設定します。",
+            "label": "同意要否"
+          }
+        },
         "name": "required",
         "requirement": {
           "kind": "always",
@@ -58,6 +78,16 @@
         "description": "",
         "id": "prop_D6BXRZGRA97SHWEH9KKJNK8F18",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Major component of the currently published agreement version.",
+            "label": "Current major version"
+          },
+          "ja": {
+            "description": "現在公開している規約のメジャーバージョンです。",
+            "label": "公開メジャーバージョン"
+          }
+        },
         "name": "currentMajor",
         "requirement": {
           "kind": "always",
@@ -73,6 +103,16 @@
         "description": "",
         "id": "prop_0Q39Q60DC894H8BTR4B3C7WDHE",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Minor component of the currently published agreement version.",
+            "label": "Current minor version"
+          },
+          "ja": {
+            "description": "現在公開している規約のマイナーバージョンです。",
+            "label": "公開マイナーバージョン"
+          }
+        },
         "name": "currentMinor",
         "requirement": {
           "kind": "always",
@@ -88,6 +128,16 @@
         "description": "",
         "id": "prop_2K3FPSX7JS2XSAEGTR89RCDBNX",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Micro component of the currently published agreement version.",
+            "label": "Current micro version"
+          },
+          "ja": {
+            "description": "現在公開している規約のマイクロバージョンです。",
+            "label": "公開マイクロバージョン"
+          }
+        },
         "name": "currentMicro",
         "requirement": {
           "kind": "always",
@@ -103,6 +153,16 @@
         "description": "",
         "id": "prop_AWG1AAHD6ZCQ1Z2DR8Q2E4F4DT",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player accepted or rejected the agreement.",
+            "label": "Approval status"
+          },
+          "ja": {
+            "description": "プレイヤーが規約へ同意または拒否した状態です。",
+            "label": "同意状態"
+          }
+        },
         "name": "status",
         "requirement": {
           "kind": "never",
@@ -121,6 +181,16 @@
         "description": "",
         "id": "prop_GWSJYQBMKYCRXTBZ9WJB3JQE04",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether an agreement approval record exists for the player.",
+            "label": "Has approval record"
+          },
+          "ja": {
+            "description": "プレイヤーの規約同意記録が存在するかを示します。",
+            "label": "同意記録あり"
+          }
+        },
         "name": "exists",
         "requirement": {
           "kind": "always",
@@ -136,6 +206,16 @@
         "description": "",
         "id": "prop_01M0PWK4QGM5B5CWGZE3GAZ3PC",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Major component of the minimum version that triggers a warning.",
+            "label": "Warning major version"
+          },
+          "ja": {
+            "description": "警告を表示する最小バージョンのメジャー値です。",
+            "label": "警告メジャーバージョン"
+          }
+        },
         "name": "warningMajor",
         "requirement": {
           "kind": "always",
@@ -151,6 +231,16 @@
         "description": "",
         "id": "prop_01M0PWK4QG52B50F2Q3HMPJDQS",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Minor component of the minimum version that triggers a warning.",
+            "label": "Warning minor version"
+          },
+          "ja": {
+            "description": "警告を表示する最小バージョンのマイナー値です。",
+            "label": "警告マイナーバージョン"
+          }
+        },
         "name": "warningMinor",
         "requirement": {
           "kind": "always",
@@ -166,6 +256,16 @@
         "description": "",
         "id": "prop_01M0PWK4QGB6FARGAKYTJCE3GD",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Micro component of the minimum version that triggers a warning.",
+            "label": "Warning micro version"
+          },
+          "ja": {
+            "description": "警告を表示する最小バージョンのマイクロ値です。",
+            "label": "警告マイクロバージョン"
+          }
+        },
         "name": "warningMicro",
         "requirement": {
           "kind": "always",
@@ -181,6 +281,16 @@
         "description": "",
         "id": "prop_01M0PWK4QG0W3BR71K2BSE1A8S",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Major component of the minimum version that blocks use.",
+            "label": "Error major version"
+          },
+          "ja": {
+            "description": "利用を拒否する最小バージョンのメジャー値です。",
+            "label": "拒否メジャーバージョン"
+          }
+        },
         "name": "errorMajor",
         "requirement": {
           "kind": "always",
@@ -196,6 +306,16 @@
         "description": "",
         "id": "prop_01M0PWK4QGQ6V970FH4XQPDM3D",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Minor component of the minimum version that blocks use.",
+            "label": "Error minor version"
+          },
+          "ja": {
+            "description": "利用を拒否する最小バージョンのマイナー値です。",
+            "label": "拒否マイナーバージョン"
+          }
+        },
         "name": "errorMinor",
         "requirement": {
           "kind": "always",
@@ -211,6 +331,16 @@
         "description": "",
         "id": "prop_01M0PWK4QGZBDE3TA5C6D6G07J",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Micro component of the minimum version that blocks use.",
+            "label": "Error micro version"
+          },
+          "ja": {
+            "description": "利用を拒否する最小バージョンのマイクロ値です。",
+            "label": "拒否マイクロバージョン"
+          }
+        },
         "name": "errorMicro",
         "requirement": {
           "kind": "always",
@@ -226,6 +356,16 @@
         "description": "",
         "id": "prop_01M0PX2G6Q6Q7SQGM4Z51XENCC",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Major component of the agreement version accepted by the player.",
+            "label": "Accepted major version"
+          },
+          "ja": {
+            "description": "プレイヤーが同意した規約バージョンのメジャー値です。",
+            "label": "同意済みメジャーバージョン"
+          }
+        },
         "name": "acceptedMajor",
         "requirement": {
           "kind": "always",
@@ -241,6 +381,16 @@
         "description": "",
         "id": "prop_01M0PX2G6QJXF59DXKXFRSEJRT",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Minor component of the agreement version accepted by the player.",
+            "label": "Accepted minor version"
+          },
+          "ja": {
+            "description": "プレイヤーが同意した規約バージョンのマイナー値です。",
+            "label": "同意済みマイナーバージョン"
+          }
+        },
         "name": "acceptedMinor",
         "requirement": {
           "kind": "always",
@@ -256,6 +406,16 @@
         "description": "",
         "id": "prop_01M0PX2G6QK5P9VPEKCCMAQ20R",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Micro component of the agreement version accepted by the player.",
+            "label": "Accepted micro version"
+          },
+          "ja": {
+            "description": "プレイヤーが同意した規約バージョンのマイクロ値です。",
+            "label": "同意済みマイクロバージョン"
+          }
+        },
         "name": "acceptedMicro",
         "requirement": {
           "kind": "always",

@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the rarity draw rate.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "レアリティ排出率を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "",
         "id": "prop_1XD6YGM96H26BHSKDY26CNVB6R",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Gacha to which this rarity rate applies.",
+            "label": "Gacha"
+          },
+          "ja": {
+            "description": "この排出率を適用するガチャです。",
+            "label": "対象ガチャ"
+          }
+        },
         "name": "gacha",
         "requirement": {
           "kind": "always",
@@ -46,6 +66,16 @@
         "description": "",
         "id": "prop_R7CAWT1QMX0A9A0NWFYAYQ1Y7S",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Gacha rarity whose rate is configured.",
+            "label": "Rarity"
+          },
+          "ja": {
+            "description": "排出率を設定するガチャレアリティです。",
+            "label": "レアリティ"
+          }
+        },
         "name": "rarity",
         "requirement": {
           "kind": "always",
@@ -61,6 +91,16 @@
         "description": "",
         "id": "prop_HZZ3R7AT0DB8DS34X1K0QQR3Q8",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Relative weight used to draw this rarity.",
+            "label": "Draw weight"
+          },
+          "ja": {
+            "description": "このレアリティが選ばれる相対的な重みです。",
+            "label": "抽選重み"
+          }
+        },
         "name": "weight",
         "requirement": {
           "kind": "always",

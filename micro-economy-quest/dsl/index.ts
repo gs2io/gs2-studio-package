@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** The schedule type this package points its quest groups at. */
 const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
 
@@ -10,6 +12,22 @@ const ProgressReward = defineDomainType("ProgressReward", dt =>
     .idDescription("Unique identifier")
     .property(PT.string("itemId").userData().required())
     .property(PT.int32("value").userData().required())
+    .localizedProperties({
+      id: jaEnId("クエスト報酬", "quest reward"),
+      itemId: jaEnField(
+        "報酬アイテムID",
+        "Reward item ID",
+        "進行中のクエストで獲得した報酬アイテムの識別子です。",
+        "Identifier of a reward item earned during the quest."
+      ),
+      value: jaEnField(
+        "報酬数",
+        "Reward quantity",
+        "獲得した報酬アイテムの数量です。",
+        "Quantity of the reward item earned.",
+        { ja: "個", en: "items" }
+      ),
+    })
 );
 
 /** The quest run a player currently has open. */
@@ -18,6 +36,21 @@ const Progress = defineDomainType("Progress", dt =>
     .idDescription("Unique identifier")
     .property(PT.prop("quest", PT.ref("Quest")).userData().required())
     .property(PT.prop("rewards", PT.listOf(PT.inline("ProgressReward"))).userData())
+    .localizedProperties({
+      id: jaEnId("クエスト進行", "quest progress"),
+      quest: jaEnField(
+        "進行中のクエスト",
+        "Active quest",
+        "プレイヤーが現在進行しているクエストです。",
+        "Quest currently in progress for the player."
+      ),
+      rewards: jaEnField(
+        "獲得済み報酬",
+        "Earned rewards",
+        "クエスト進行中に獲得した報酬の一覧です。",
+        "Rewards earned during the active quest."
+      ),
+    })
 );
 
 /** A group of quests, optionally limited to a schedule event. */
@@ -25,6 +58,15 @@ const QuestCollection = defineDomainType("QuestCollection", dt =>
   dt
     .idDescription("Unique identifier")
     .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).masterData())
+    .localizedProperties({
+      id: jaEnId("クエストグループ", "quest group"),
+      schedule: jaEnField(
+        "開催スケジュール",
+        "Availability schedule",
+        "このクエストグループを開催するスケジュールです。",
+        "Schedule during which this quest group is available."
+      ),
+    })
 );
 
 const Quest = defineDomainType("Quest", dt =>
@@ -42,6 +84,45 @@ const Quest = defineDomainType("Quest", dt =>
       PT.prop("failedAcquireActions", PT.listOf(PT.acquireAction())).masterData().required()
     )
     .property(PT.bool("completed").userData().required())
+    .localizedProperties({
+      id: jaEnId("クエスト", "quest"),
+      collection: jaEnField(
+        "クエストグループ",
+        "Quest group",
+        "このクエストが属するグループです。",
+        "Quest group this quest belongs to."
+      ),
+      consumeActions: jaEnField(
+        "開始時消費",
+        "Start costs",
+        "クエスト開始時に実行する消費アクションです。",
+        "Consume actions executed when the quest starts."
+      ),
+      firstCompleteAcquireActions: jaEnField(
+        "初回クリア報酬",
+        "First-clear rewards",
+        "初回クリア時に実行する獲得アクションです。",
+        "Acquire actions executed on the first completion."
+      ),
+      completeAcquireActions: jaEnField(
+        "通常クリア報酬",
+        "Completion rewards",
+        "クリア時に毎回実行する獲得アクションです。",
+        "Acquire actions executed on each completion."
+      ),
+      failedAcquireActions: jaEnField(
+        "失敗時アクション",
+        "Failure actions",
+        "クエスト失敗時に実行する獲得アクションです。",
+        "Acquire actions executed when the quest fails."
+      ),
+      completed: jaEnField(
+        "クリア済み",
+        "Completed",
+        "プレイヤーがこのクエストをクリア済みかを示します。",
+        "Whether the player has completed this quest."
+      ),
+    })
 );
 
 const QuestModel = defineMasterDataResource(resource =>

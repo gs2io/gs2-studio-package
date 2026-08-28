@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const SCHEDULE_NAMESPACE_RESOURCE_ID = "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d";
 
 /**
@@ -27,6 +29,46 @@ const GuildRanking = defineDomainType("GuildRanking", dt =>
     .property(PT.int64("minimumValue").masterData().description("Lowest score accepted"))
     .property(PT.int64("maximumValue").masterData().description("Highest score accepted"))
     .property(PT.int64("score").userData().required().description("The player's own score"))
+    .localizedProperties({
+      id: jaEnId("ギルドランキング", "guild ranking"),
+      schedule: jaEnField(
+        "開催スケジュール",
+        "Entry schedule",
+        "ギルドランキングへスコアを登録できる開催スケジュールです。",
+        "Schedule during which guild-ranking scores may be submitted."
+      ),
+      orderDirection: jaEnField(
+        "順位方向",
+        "Ranking order",
+        "高いスコアと低いスコアのどちらを上位にするかを設定します。",
+        "Whether higher or lower scores rank first."
+      ),
+      sum: jaEnField(
+        "スコアを合算",
+        "Sum scores",
+        "ギルドメンバーが送信したスコアを合算するかを設定します。",
+        "Whether scores submitted by guild members are accumulated."
+      ),
+      minimumValue: jaEnField(
+        "最小スコア",
+        "Minimum score",
+        "受け付けるスコアの最小値です。",
+        "Lowest score accepted by the ranking."
+      ),
+      maximumValue: jaEnField(
+        "最大スコア",
+        "Maximum score",
+        "受け付けるスコアの最大値です。",
+        "Highest score accepted by the ranking."
+      ),
+      score: jaEnField(
+        "プレイヤースコア",
+        "Player score",
+        "ギルドランキングに対するプレイヤーの現在スコアです。",
+        "Player's current contribution to the guild ranking.",
+        { ja: "点", en: "points" }
+      ),
+    })
 );
 
 /** What the members down to `thresholdRank` receive when the season ends. */
@@ -42,6 +84,28 @@ const GuildRankingReward = defineDomainType("GuildRankingReward", dt =>
     )
     .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
     .compositeKey("ranking", "thresholdRank")
+    .localizedProperties({
+      id: jaEnId("ギルドランキング報酬", "guild ranking reward"),
+      ranking: jaEnField(
+        "対象ランキング",
+        "Guild ranking",
+        "この報酬を配布するギルドランキングです。",
+        "Guild ranking that distributes this reward."
+      ),
+      thresholdRank: jaEnField(
+        "順位しきい値",
+        "Rank threshold",
+        "この報酬を受け取れる最下位の順位です。",
+        "Lowest placement eligible for this reward.",
+        { ja: "位", en: "place" }
+      ),
+      acquireActions: jaEnField(
+        "獲得アクション",
+        "Acquire actions",
+        "順位条件を満たしたメンバーへ実行する報酬アクションです。",
+        "Reward actions executed for members who meet the placement threshold."
+      ),
+    })
 );
 
 const ClusterRankingModel = defineMasterDataResource(resource =>

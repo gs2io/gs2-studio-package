@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /**
  * A reset cadence — "daily", "every Monday", "every 7 days". The counters that
  * follow it are separate rows, so one cadence can govern many independent
@@ -34,6 +36,48 @@ const UsageLimit = defineDomainType("UsageLimit", dt =>
     .property(
       PT.timestamp("anchorTimestamp").masterData().description("Interval origin (days only)")
     )
+    .localizedProperties({
+      id: jaEnId("リセット設定", "reset schedule"),
+      resetType: jaEnField(
+        "リセット方式",
+        "Reset type",
+        "利用回数をリセットする周期の種類です。",
+        "Cadence used to reset usage counts."
+      ),
+      resetDayOfWeek: jaEnField(
+        "リセット曜日",
+        "Reset weekday",
+        "週次リセットを実行する曜日です。",
+        "Weekday on which a weekly reset occurs."
+      ),
+      resetDayOfMonth: jaEnField(
+        "リセット日",
+        "Reset day of month",
+        "月次リセットを実行する日です。",
+        "Day of the month on which a monthly reset occurs.",
+        { ja: "日", en: "day" }
+      ),
+      resetHour: jaEnField(
+        "リセット時刻",
+        "Reset hour",
+        "リセットを実行するUTC時刻です。",
+        "UTC hour at which the reset occurs.",
+        { ja: "時", en: "hour" }
+      ),
+      days: jaEnField(
+        "リセット間隔",
+        "Reset interval",
+        "日数指定方式でリセットする間隔です。",
+        "Number of days between resets for the days-based cadence.",
+        { ja: "日", en: "days" }
+      ),
+      anchorTimestamp: jaEnField(
+        "基準日時",
+        "Anchor time",
+        "日数指定方式のリセット周期を数える基準日時です。",
+        "Reference time used to calculate a days-based reset cadence."
+      ),
+    })
 );
 
 /**
@@ -55,6 +99,28 @@ const UsageLimitCounter = defineDomainType("UsageLimitCounter", dt =>
       PT.int64("count").userData().required().description("Times used since the last reset")
     )
     .property(PT.timestamp("nextResetAt").userData().required().description("Next reset time"))
+    .localizedProperties({
+      id: jaEnId("回数カウンター", "usage counter"),
+      limit: jaEnField(
+        "リセット設定",
+        "Reset schedule",
+        "このカウンターが従うリセット設定です。",
+        "Reset schedule followed by this counter."
+      ),
+      count: jaEnField(
+        "利用回数",
+        "Usage count",
+        "前回のリセット以降に利用した回数です。",
+        "Number of uses since the previous reset.",
+        { ja: "回", en: "uses" }
+      ),
+      nextResetAt: jaEnField(
+        "次回リセット日時",
+        "Next reset time",
+        "このカウンターを次にリセットする日時です。",
+        "Time when this counter will next be reset."
+      ),
+    })
 );
 
 const LimitModel = defineMasterDataResource(resource =>

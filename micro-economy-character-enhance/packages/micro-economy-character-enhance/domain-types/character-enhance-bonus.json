@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the enhancement bonus.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "強化ボーナスを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,16 @@
         "description": "",
         "id": "prop_01M0C7T116EE8PEHMGMD3AWB3N",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Enhancement recipe to which this bonus applies.",
+            "label": "Enhancement recipe"
+          },
+          "ja": {
+            "description": "このボーナスを適用する強化レシピです。",
+            "label": "強化レシピ"
+          }
+        },
         "name": "enhance",
         "requirement": {
           "kind": "always",
@@ -43,6 +63,18 @@
         "description": "Experience multiplier when drawn",
         "id": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Multiplier applied to experience when this bonus is drawn.",
+            "label": "Experience multiplier",
+            "unit": "x"
+          },
+          "ja": {
+            "description": "抽選されたときに獲得経験値へ適用する倍率です。",
+            "label": "経験値倍率",
+            "unit": "倍"
+          }
+        },
         "name": "rate",
         "requirement": {
           "kind": "always",
@@ -58,6 +90,16 @@
         "description": "Relative draw weight",
         "id": "prop_01M0C7T11668CNMKJ4725QV6M0",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Relative weight used when drawing this bonus.",
+            "label": "Draw weight"
+          },
+          "ja": {
+            "description": "このボーナスが選ばれる相対的な重みです。",
+            "label": "抽選重み"
+          }
+        },
         "name": "weight",
         "requirement": {
           "kind": "always",

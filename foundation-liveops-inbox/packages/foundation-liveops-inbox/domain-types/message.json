@@ -14,6 +14,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the message.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "メッセージを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -29,6 +39,16 @@
         "description": "",
         "id": "prop_ZKT412G1WTM0BJ5XF28KBQMQDP",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Content of the message delivered to the player's inbox.",
+            "label": "Message payload"
+          },
+          "ja": {
+            "description": "プレイヤーの受信箱へ届いたメッセージの内容です。",
+            "label": "メッセージ内容"
+          }
+        },
         "name": "payload",
         "requirement": {
           "kind": "always",
@@ -44,6 +64,16 @@
         "description": "",
         "id": "prop_EBMPTGK9PGCVVK6XYH81KPEDFK",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has opened this message.",
+            "label": "Read"
+          },
+          "ja": {
+            "description": "プレイヤーがこのメッセージを開いたかを示します。",
+            "label": "既読"
+          }
+        },
         "name": "isRead",
         "requirement": {
           "kind": "always",
@@ -59,6 +89,16 @@
         "description": "",
         "id": "prop_1BC9A22CA5YCR027Q5HP2R1JNG",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the message was received.",
+            "label": "Received at"
+          },
+          "ja": {
+            "description": "メッセージを受信した日時です。",
+            "label": "受信日時"
+          }
+        },
         "name": "receivedAt",
         "requirement": {
           "kind": "always",
@@ -74,6 +114,16 @@
         "description": "",
         "id": "prop_WF69EWKXA0B3G4XTZ5KG7CBB62",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time until which the message remains available.",
+            "label": "Expiration time"
+          },
+          "ja": {
+            "description": "メッセージを保持する期限です。",
+            "label": "有効期限"
+          }
+        },
         "name": "expiresAt",
         "requirement": {
           "kind": "never",

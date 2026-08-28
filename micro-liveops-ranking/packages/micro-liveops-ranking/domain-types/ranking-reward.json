@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the ranking reward.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ランキング報酬を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "",
         "id": "prop_01M0C5QTC1PT2SC2DM4MFFH880",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Ranking that distributes this reward.",
+            "label": "Ranking"
+          },
+          "ja": {
+            "description": "この報酬を配布するランキングです。",
+            "label": "対象ランキング"
+          }
+        },
         "name": "ranking",
         "requirement": {
           "kind": "always",
@@ -46,6 +66,18 @@
         "description": "Best rank that misses this reward tier",
         "id": "prop_01M0C5QTC1DSVX6VMXA31P7T1R",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Lowest placement eligible for this reward.",
+            "label": "Rank threshold",
+            "unit": "place"
+          },
+          "ja": {
+            "description": "この報酬を受け取れる最下位の順位です。",
+            "label": "順位しきい値",
+            "unit": "位"
+          }
+        },
         "name": "thresholdRank",
         "requirement": {
           "kind": "always",
@@ -61,6 +93,16 @@
         "description": "",
         "id": "prop_01M0C5QTC1XDPQC02MC3PAHSFT",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Reward actions executed for players who meet the placement threshold.",
+            "label": "Acquire actions"
+          },
+          "ja": {
+            "description": "順位条件を満たしたプレイヤーへ実行する報酬アクションです。",
+            "label": "獲得アクション"
+          }
+        },
         "name": "acquireActions",
         "requirement": {
           "kind": "always",

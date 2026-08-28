@@ -10,6 +10,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the gacha rarity.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ガチャレアリティを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",

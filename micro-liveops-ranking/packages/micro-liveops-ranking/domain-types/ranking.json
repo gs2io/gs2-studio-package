@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the ranking.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ランキングを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "",
         "id": "prop_01M0C5QTC10P4EEMTAW0JRTV79",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which scores may be submitted.",
+            "label": "Entry schedule"
+          },
+          "ja": {
+            "description": "ランキングへスコアを登録できる開催スケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
         "name": "schedule",
         "requirement": {
           "kind": "never",
@@ -46,6 +66,16 @@
         "description": "Whether a higher or a lower score ranks first",
         "id": "prop_01M0C5QTC1FCKEKTX4QTP0VB5X",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether higher or lower scores rank first.",
+            "label": "Ranking order"
+          },
+          "ja": {
+            "description": "高いスコアと低いスコアのどちらを上位にするかを設定します。",
+            "label": "順位方向"
+          }
+        },
         "name": "orderDirection",
         "requirement": {
           "kind": "always",
@@ -64,6 +94,16 @@
         "description": "Accumulate submitted scores instead of keeping the best",
         "id": "prop_01M0C5QTC17VN2W6CEXEDHZCEW",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether submitted scores are accumulated instead of keeping one result.",
+            "label": "Sum scores"
+          },
+          "ja": {
+            "description": "複数回送信したスコアを合算するかを設定します。",
+            "label": "スコアを合算"
+          }
+        },
         "name": "sum",
         "requirement": {
           "kind": "never",
@@ -79,6 +119,16 @@
         "description": "Lowest score accepted",
         "id": "prop_01M0C5QTC13XN1YQ5KKA3Z9PND",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Lowest score accepted by the ranking.",
+            "label": "Minimum score"
+          },
+          "ja": {
+            "description": "受け付けるスコアの最小値です。",
+            "label": "最小スコア"
+          }
+        },
         "name": "minimumValue",
         "requirement": {
           "kind": "never",
@@ -94,6 +144,16 @@
         "description": "Highest score accepted",
         "id": "prop_01M0C5QTC1ZEN57H87RTHW0QTH",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Highest score accepted by the ranking.",
+            "label": "Maximum score"
+          },
+          "ja": {
+            "description": "受け付けるスコアの最大値です。",
+            "label": "最大スコア"
+          }
+        },
         "name": "maximumValue",
         "requirement": {
           "kind": "never",
@@ -109,6 +169,18 @@
         "description": "The player's own score",
         "id": "prop_01M0C5QTC1549A0YHZY5YSS2EZ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Player's current score in this ranking.",
+            "label": "Player score",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "このランキングにおけるプレイヤーの現在スコアです。",
+            "label": "プレイヤースコア",
+            "unit": "点"
+          }
+        },
         "name": "score",
         "requirement": {
           "kind": "always",

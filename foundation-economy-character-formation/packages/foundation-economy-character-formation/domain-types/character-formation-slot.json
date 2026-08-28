@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the formation slot.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "編成スロットを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "",
         "id": "prop_6F9A9WPY3YAQ0SS8E7F5H2YXFA",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Regular expression matching character instance IDs eligible for this slot.",
+            "label": "Eligibility pattern"
+          },
+          "ja": {
+            "description": "このスロットへ配置できるキャラクター個体IDの正規表現です。",
+            "label": "配置条件"
+          }
+        },
         "name": "propertyRegex",
         "requirement": {
           "kind": "never",

@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const AgreementVersion = defineDomainType("AgreementVersion", dt =>
   dt
     .idDescription("Unique identifier")
@@ -19,6 +21,99 @@ const AgreementVersion = defineDomainType("AgreementVersion", dt =>
     .property(PT.int32("acceptedMajor").userData().required())
     .property(PT.int32("acceptedMinor").userData().required())
     .property(PT.int32("acceptedMicro").userData().required())
+    .localizedProperties({
+      id: jaEnId("規約バージョン", "agreement version"),
+      required: jaEnField(
+        "同意要否",
+        "Approval requirement",
+        "この規約への同意を必須にするかを設定します。",
+        "Whether approval of this agreement is required."
+      ),
+      currentMajor: jaEnField(
+        "公開メジャーバージョン",
+        "Current major version",
+        "現在公開している規約のメジャーバージョンです。",
+        "Major component of the currently published agreement version."
+      ),
+      currentMinor: jaEnField(
+        "公開マイナーバージョン",
+        "Current minor version",
+        "現在公開している規約のマイナーバージョンです。",
+        "Minor component of the currently published agreement version."
+      ),
+      currentMicro: jaEnField(
+        "公開マイクロバージョン",
+        "Current micro version",
+        "現在公開している規約のマイクロバージョンです。",
+        "Micro component of the currently published agreement version."
+      ),
+      status: jaEnField(
+        "同意状態",
+        "Approval status",
+        "プレイヤーが規約へ同意または拒否した状態です。",
+        "Whether the player accepted or rejected the agreement."
+      ),
+      exists: jaEnField(
+        "同意記録あり",
+        "Has approval record",
+        "プレイヤーの規約同意記録が存在するかを示します。",
+        "Whether an agreement approval record exists for the player."
+      ),
+      warningMajor: jaEnField(
+        "警告メジャーバージョン",
+        "Warning major version",
+        "警告を表示する最小バージョンのメジャー値です。",
+        "Major component of the minimum version that triggers a warning."
+      ),
+      warningMinor: jaEnField(
+        "警告マイナーバージョン",
+        "Warning minor version",
+        "警告を表示する最小バージョンのマイナー値です。",
+        "Minor component of the minimum version that triggers a warning."
+      ),
+      warningMicro: jaEnField(
+        "警告マイクロバージョン",
+        "Warning micro version",
+        "警告を表示する最小バージョンのマイクロ値です。",
+        "Micro component of the minimum version that triggers a warning."
+      ),
+      errorMajor: jaEnField(
+        "拒否メジャーバージョン",
+        "Error major version",
+        "利用を拒否する最小バージョンのメジャー値です。",
+        "Major component of the minimum version that blocks use."
+      ),
+      errorMinor: jaEnField(
+        "拒否マイナーバージョン",
+        "Error minor version",
+        "利用を拒否する最小バージョンのマイナー値です。",
+        "Minor component of the minimum version that blocks use."
+      ),
+      errorMicro: jaEnField(
+        "拒否マイクロバージョン",
+        "Error micro version",
+        "利用を拒否する最小バージョンのマイクロ値です。",
+        "Micro component of the minimum version that blocks use."
+      ),
+      acceptedMajor: jaEnField(
+        "同意済みメジャーバージョン",
+        "Accepted major version",
+        "プレイヤーが同意した規約バージョンのメジャー値です。",
+        "Major component of the agreement version accepted by the player."
+      ),
+      acceptedMinor: jaEnField(
+        "同意済みマイナーバージョン",
+        "Accepted minor version",
+        "プレイヤーが同意した規約バージョンのマイナー値です。",
+        "Minor component of the agreement version accepted by the player."
+      ),
+      acceptedMicro: jaEnField(
+        "同意済みマイクロバージョン",
+        "Accepted micro version",
+        "プレイヤーが同意した規約バージョンのマイクロ値です。",
+        "Micro component of the agreement version accepted by the player."
+      ),
+    })
 );
 
 const EmbeddedVersion = defineDomainType("EmbeddedVersion", dt =>
@@ -30,6 +125,45 @@ const EmbeddedVersion = defineDomainType("EmbeddedVersion", dt =>
     .property(PT.int32("errorMajor").masterData().required())
     .property(PT.int32("errorMinor").masterData().required())
     .property(PT.int32("errorMicro").masterData().required())
+    .localizedProperties({
+      id: jaEnId("アプリバージョン", "application version configuration"),
+      warningMajor: jaEnField(
+        "警告メジャーバージョン",
+        "Warning major version",
+        "更新警告を表示する最小アプリバージョンのメジャー値です。",
+        "Major component of the minimum app version that triggers an update warning."
+      ),
+      warningMinor: jaEnField(
+        "警告マイナーバージョン",
+        "Warning minor version",
+        "更新警告を表示する最小アプリバージョンのマイナー値です。",
+        "Minor component of the minimum app version that triggers an update warning."
+      ),
+      warningMicro: jaEnField(
+        "警告マイクロバージョン",
+        "Warning micro version",
+        "更新警告を表示する最小アプリバージョンのマイクロ値です。",
+        "Micro component of the minimum app version that triggers an update warning."
+      ),
+      errorMajor: jaEnField(
+        "必須更新メジャーバージョン",
+        "Required major version",
+        "利用を拒否する最小アプリバージョンのメジャー値です。",
+        "Major component of the minimum app version allowed to run."
+      ),
+      errorMinor: jaEnField(
+        "必須更新マイナーバージョン",
+        "Required minor version",
+        "利用を拒否する最小アプリバージョンのマイナー値です。",
+        "Minor component of the minimum app version allowed to run."
+      ),
+      errorMicro: jaEnField(
+        "必須更新マイクロバージョン",
+        "Required micro version",
+        "利用を拒否する最小アプリバージョンのマイクロ値です。",
+        "Micro component of the minimum app version allowed to run."
+      ),
+    })
 );
 
 const AgreementVersionModel = defineMasterDataResource(resource =>

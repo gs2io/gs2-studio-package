@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the trigger.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "トリガーを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,16 @@
         "description": "",
         "id": "prop_6MCAB8KE6ZN15EJK6Q592XR7GA",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether this trigger has fired for the player.",
+            "label": "Triggered"
+          },
+          "ja": {
+            "description": "このトリガーがプレイヤーに対して発火済みかを示します。",
+            "label": "発火済み"
+          }
+        },
         "name": "triggered",
         "requirement": {
           "kind": "always",
@@ -43,6 +63,16 @@
         "description": "",
         "id": "prop_F9RRQHZFBAHE291G11WATKA2YB",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the trigger fired.",
+            "label": "Triggered at"
+          },
+          "ja": {
+            "description": "トリガーが発火した日時です。",
+            "label": "発火日時"
+          }
+        },
         "name": "triggeredAt",
         "requirement": {
           "kind": "always",
@@ -58,6 +88,16 @@
         "description": "",
         "id": "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time until which the trigger state remains valid.",
+            "label": "Expiration time"
+          },
+          "ja": {
+            "description": "トリガー状態が有効な期限です。",
+            "label": "有効期限"
+          }
+        },
         "name": "expiresAt",
         "requirement": {
           "kind": "always",

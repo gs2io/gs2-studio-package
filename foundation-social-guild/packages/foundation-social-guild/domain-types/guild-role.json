@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the guild role.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ギルド権限を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,16 @@
         "description": "GS2 guild policy document",
         "id": "prop_01M0C5T6AF0SDEH7DPDWXDST0T",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "GS2 policy document describing operations allowed for this role.",
+            "label": "Permission policy"
+          },
+          "ja": {
+            "description": "このロールに許可する操作を記述したGS2ポリシーです。",
+            "label": "権限ポリシー"
+          }
+        },
         "name": "policyDocument",
         "requirement": {
           "kind": "always",

@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the login reward group.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ログインボーナスグループを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,16 @@
         "description": "",
         "id": "prop_A2TYYY7WW1Z4306M5CGDJRBEKJ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which this login reward is available.",
+            "label": "Availability schedule"
+          },
+          "ja": {
+            "description": "このログインボーナスを開催するスケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
         "name": "schedule",
         "requirement": {
           "kind": "always",
@@ -42,6 +62,18 @@
         "description": "",
         "id": "prop_NFHPA3CG7FM9RX44J7NAWPT1ET",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "UTC hour when the login reward advances to the next day.",
+            "label": "Daily reset hour",
+            "unit": "hour"
+          },
+          "ja": {
+            "description": "ログイン日数を次の日へ進めるUTC時刻です。",
+            "label": "日付更新時刻",
+            "unit": "時"
+          }
+        },
         "name": "resetHour",
         "requirement": {
           "kind": "always",

@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the follow relationship.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "フォロー関係を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,16 @@
         "description": "",
         "id": "prop_00CYS22DM7RCY5V2S2MSP7YH5Y",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Public profile information of the followed player.",
+            "label": "Public profile"
+          },
+          "ja": {
+            "description": "フォロー相手の公開プロフィール情報です。",
+            "label": "公開プロフィール"
+          }
+        },
         "name": "publicProfile",
         "requirement": {
           "kind": "never",
@@ -42,6 +62,16 @@
         "description": "",
         "id": "prop_WEZ74QQWTQ37ZYH7GKQCJ9C1W8",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Profile information visible because the player is a follower.",
+            "label": "Follower profile"
+          },
+          "ja": {
+            "description": "フォロワーとして閲覧できるプロフィール情報です。",
+            "label": "フォロワー向けプロフィール"
+          }
+        },
         "name": "followerProfile",
         "requirement": {
           "kind": "never",

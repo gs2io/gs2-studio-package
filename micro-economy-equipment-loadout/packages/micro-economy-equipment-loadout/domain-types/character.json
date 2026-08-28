@@ -13,6 +13,16 @@
         "description": "",
         "id": "prop_01M0CDYNB5CJAAH5YPRR6FNRXF",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Equipment assigned to each slot on the character.",
+            "label": "Equipment slots"
+          },
+          "ja": {
+            "description": "キャラクターの各スロットに装着されている装備です。",
+            "label": "装備スロット"
+          }
+        },
         "name": "equipmentSlots",
         "requirement": {
           "kind": "never",

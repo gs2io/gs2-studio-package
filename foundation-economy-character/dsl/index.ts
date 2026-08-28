@@ -9,6 +9,8 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const CharacterExperience = defineDomainType("CharacterExperience", dt =>
   dt
     .idDescription("Unique identifier")
@@ -16,6 +18,30 @@ const CharacterExperience = defineDomainType("CharacterExperience", dt =>
     .property(PT.prop("threshold", PT.listOf(PT.int64())).masterData().required())
     .property(PT.int32("defaultLevelCap").masterData().required())
     .property(PT.int32("maxLevelCap").masterData().required())
+    .localizedProperties({
+      id: jaEnId("キャラクター経験値設定", "character experience configuration"),
+      threshold: jaEnField(
+        "必要経験値テーブル",
+        "Experience thresholds",
+        "各レベルへ到達するために必要な累積経験値です。",
+        "Cumulative experience required to reach each level.",
+        { ja: "経験値", en: "experience" }
+      ),
+      defaultLevelCap: jaEnField(
+        "初期レベル上限",
+        "Initial level cap",
+        "キャラクターに最初に適用するレベル上限です。",
+        "Initial level cap applied to a character.",
+        { ja: "レベル", en: "levels" }
+      ),
+      maxLevelCap: jaEnField(
+        "最大レベル上限",
+        "Maximum level cap",
+        "キャラクターが到達できるレベル上限の最大値です。",
+        "Highest level cap a character can reach.",
+        { ja: "レベル", en: "levels" }
+      ),
+    })
 );
 
 const Character = defineDomainType("Character", dt =>
@@ -26,6 +52,42 @@ const Character = defineDomainType("Character", dt =>
     .property(PT.int64("level").userData().required())
     .property(PT.int64("levelCap").userData().required())
     .property(PT.int64("experience").userData().required())
+    .localizedProperties({
+      id: jaEnId("キャラクター", "character"),
+      sort: jaEnField(
+        "表示順",
+        "Sort order",
+        "キャラクター一覧で使用する並び順の値です。",
+        "Value used to order characters in lists."
+      ),
+      propertyId: jaEnField(
+        "キャラクター個体ID",
+        "Character instance ID",
+        "プレイヤーが所持するキャラクター個体の識別子です。",
+        "Identifier of the character instance owned by the player."
+      ),
+      level: jaEnField(
+        "現在レベル",
+        "Current level",
+        "キャラクターの現在レベルです。",
+        "Current level of the character.",
+        { ja: "レベル", en: "levels" }
+      ),
+      levelCap: jaEnField(
+        "現在のレベル上限",
+        "Current level cap",
+        "キャラクターに現在適用されているレベル上限です。",
+        "Level cap currently applied to the character.",
+        { ja: "レベル", en: "levels" }
+      ),
+      experience: jaEnField(
+        "現在経験値",
+        "Current experience",
+        "キャラクターが現在獲得している累積経験値です。",
+        "Cumulative experience currently earned by the character.",
+        { ja: "経験値", en: "experience" }
+      ),
+    })
 );
 
 const CharacterCollection = defineDomainType("CharacterCollection", dt =>
@@ -36,6 +98,37 @@ const CharacterCollection = defineDomainType("CharacterCollection", dt =>
     .property(PT.int32("defaultCapacity").masterData().required())
     .property(PT.int32("currentCpacityUsage").userData().required())
     .property(PT.int32("currentCpacity").userData().required())
+    .localizedProperties({
+      id: jaEnId("キャラクター所持枠", "character inventory"),
+      maximumCapacity: jaEnField(
+        "最大所持枠",
+        "Maximum capacity",
+        "拡張できるキャラクター所持枠の最大値です。",
+        "Maximum character capacity a player can reach.",
+        { ja: "枠", en: "slots" }
+      ),
+      defaultCapacity: jaEnField(
+        "初期所持枠",
+        "Initial capacity",
+        "新規プレイヤーに付与するキャラクター所持枠です。",
+        "Character capacity granted to a new player.",
+        { ja: "枠", en: "slots" }
+      ),
+      currentCpacityUsage: jaEnField(
+        "使用中の所持枠",
+        "Used capacity",
+        "現在キャラクターが使用している所持枠数です。",
+        "Character capacity currently in use.",
+        { ja: "枠", en: "slots" }
+      ),
+      currentCpacity: jaEnField(
+        "現在の所持枠",
+        "Current capacity",
+        "プレイヤーが現在利用できるキャラクター所持枠です。",
+        "Character capacity currently available to the player.",
+        { ja: "枠", en: "slots" }
+      ),
+    })
 );
 
 const ExperienceModel = defineMasterDataResource(resource =>

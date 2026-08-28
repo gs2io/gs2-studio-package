@@ -14,6 +14,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the equipment inventory.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "装備所持枠を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -29,6 +39,18 @@
         "description": "",
         "id": "prop_0W6ZJVBD4FKRF1KAVPN5HE001Y",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Equipment capacity granted to a new player.",
+            "label": "Initial capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "新規プレイヤーに付与する装備所持枠です。",
+            "label": "初期所持枠",
+            "unit": "枠"
+          }
+        },
         "name": "defaultCapacity",
         "requirement": {
           "kind": "always",
@@ -44,6 +66,18 @@
         "description": "",
         "id": "prop_J93B9BA3YNMZ1C1K5TDZRDA17W",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum equipment capacity a player can reach.",
+            "label": "Maximum capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "拡張できる装備所持枠の最大値です。",
+            "label": "最大所持枠",
+            "unit": "枠"
+          }
+        },
         "name": "maximumCapacity",
         "requirement": {
           "kind": "always",
@@ -59,6 +93,18 @@
         "description": "",
         "id": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Equipment capacity currently in use.",
+            "label": "Used capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "現在装備が使用している所持枠数です。",
+            "label": "使用中の所持枠",
+            "unit": "枠"
+          }
+        },
         "name": "currentCapacityUsage",
         "requirement": {
           "kind": "always",
@@ -74,6 +120,18 @@
         "description": "",
         "id": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Equipment capacity currently available to the player.",
+            "label": "Current capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "プレイヤーが現在利用できる装備所持枠です。",
+            "label": "現在の所持枠",
+            "unit": "枠"
+          }
+        },
         "name": "currentMaximumCapacity",
         "requirement": {
           "kind": "always",

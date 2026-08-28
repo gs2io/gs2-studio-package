@@ -8,6 +8,8 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField } from "../../dsl/jaEnField";
+
 const Character = defineOverlayDomainType(
   "Character",
   {
@@ -23,6 +25,20 @@ const Character = defineOverlayDomainType(
     domainType
       .property(PT.bool("acquired").userData().required())
       .property(PT.timestamp("acquiredAt").userData().required())
+      .localizedProperties({
+        acquired: jaEnField(
+          "図鑑登録済み",
+          "Registered",
+          "このキャラクターが図鑑に登録済みかを示します。",
+          "Whether this character is registered in the encyclopedia."
+        ),
+        acquiredAt: jaEnField(
+          "初回獲得日時",
+          "First acquired at",
+          "このキャラクターを初めて獲得した日時です。",
+          "Time when this character was first acquired."
+        ),
+      })
 );
 
 const EntryModel = defineMasterDataResource(resource =>

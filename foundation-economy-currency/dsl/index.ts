@@ -1,12 +1,38 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const Wallet = defineDomainType("Wallet", dt =>
   dt
     .idDescription("Unique identifier")
     .property(PT.int32("free").userData().required())
     .property(PT.int32("paid").userData().required())
     .property(PT.int32("total").userData().required())
+    .localizedProperties({
+      id: jaEnId("ウォレット", "wallet"),
+      free: jaEnField(
+        "無償残高",
+        "Free balance",
+        "無償通貨の現在残高です。",
+        "Current free-currency balance.",
+        { ja: "通貨", en: "currency" }
+      ),
+      paid: jaEnField(
+        "有償残高",
+        "Paid balance",
+        "有償通貨の現在残高です。",
+        "Current paid-currency balance.",
+        { ja: "通貨", en: "currency" }
+      ),
+      total: jaEnField(
+        "合計残高",
+        "Total balance",
+        "有償・無償通貨を合わせた現在残高です。",
+        "Current combined paid and free currency balance.",
+        { ja: "通貨", en: "currency" }
+      ),
+    })
 );
 
 const StoreProduct = defineDomainType("StoreProduct", dt =>
@@ -14,6 +40,21 @@ const StoreProduct = defineDomainType("StoreProduct", dt =>
     .idDescription("Unique identifier")
     .property(PT.string("appleAppStoreProductId").masterData())
     .property(PT.string("googlePlayProductId").masterData())
+    .localizedProperties({
+      id: jaEnId("ストア商品", "store product"),
+      appleAppStoreProductId: jaEnField(
+        "App Store商品ID",
+        "App Store product ID",
+        "App Store Connectで登録した商品の識別子です。",
+        "Product identifier registered in App Store Connect."
+      ),
+      googlePlayProductId: jaEnField(
+        "Google Play商品ID",
+        "Google Play product ID",
+        "Google Play Consoleで登録した商品の識別子です。",
+        "Product identifier registered in Google Play Console."
+      ),
+    })
 );
 
 const CurrencyStore = defineDomainType("CurrencyStore", dt =>
@@ -21,6 +62,15 @@ const CurrencyStore = defineDomainType("CurrencyStore", dt =>
     .idDescription("Unique identifier")
     .singleEntry()
     .property(PT.prop("enableFakeReceipt", PT.enum("Accept", "Reject")).masterData().required())
+    .localizedProperties({
+      id: jaEnId("通貨ストア", "currency store"),
+      enableFakeReceipt: jaEnField(
+        "テストレシート",
+        "Test receipts",
+        "テスト購入用の偽レシートを受け付けるかを設定します。",
+        "Whether fake receipts used for test purchases are accepted."
+      ),
+    })
 );
 
 const Namespace = defineMasterDataResource(resource => {

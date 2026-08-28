@@ -14,6 +14,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the character inventory.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "キャラクター所持枠を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -29,6 +39,18 @@
         "description": "",
         "id": "prop_3THQSBRP9PCYM426V54R4CZ8BF",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum character capacity a player can reach.",
+            "label": "Maximum capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "拡張できるキャラクター所持枠の最大値です。",
+            "label": "最大所持枠",
+            "unit": "枠"
+          }
+        },
         "name": "maximumCapacity",
         "requirement": {
           "kind": "always",
@@ -44,6 +66,18 @@
         "description": "",
         "id": "prop_A3GQRDCNGWBQCT773D3173ZMN1",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Character capacity granted to a new player.",
+            "label": "Initial capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "新規プレイヤーに付与するキャラクター所持枠です。",
+            "label": "初期所持枠",
+            "unit": "枠"
+          }
+        },
         "name": "defaultCapacity",
         "requirement": {
           "kind": "always",
@@ -59,6 +93,18 @@
         "description": "",
         "id": "prop_3MYYM6EEDJBYJCPMK4SRJFM58Q",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Character capacity currently in use.",
+            "label": "Used capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "現在キャラクターが使用している所持枠数です。",
+            "label": "使用中の所持枠",
+            "unit": "枠"
+          }
+        },
         "name": "currentCpacityUsage",
         "requirement": {
           "kind": "always",
@@ -74,6 +120,18 @@
         "description": "",
         "id": "prop_WJ08C0DHN3KEMP4GW454S2KM0Q",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Character capacity currently available to the player.",
+            "label": "Current capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "プレイヤーが現在利用できるキャラクター所持枠です。",
+            "label": "現在の所持枠",
+            "unit": "枠"
+          }
+        },
         "name": "currentCpacity",
         "requirement": {
           "kind": "always",

@@ -13,6 +13,18 @@
         "description": "Grades promoted so far",
         "id": "prop_01M0C826WJ0M7QGYB50KVWBD98",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Current grade reached by the character.",
+            "label": "Current grade",
+            "unit": "grades"
+          },
+          "ja": {
+            "description": "キャラクターが現在到達しているグレードです。",
+            "label": "現在グレード",
+            "unit": "段階"
+          }
+        },
         "name": "grade",
         "requirement": {
           "kind": "always",

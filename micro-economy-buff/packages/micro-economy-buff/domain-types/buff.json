@@ -16,6 +16,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the buff.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "バフを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -31,6 +41,16 @@
         "description": "How the rate combines with the original value",
         "id": "prop_01M0C89EMY0MGFC92HZCRAXG3M",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "How the modifier is combined with the original value.",
+            "label": "Expression"
+          },
+          "ja": {
+            "description": "補正値を元の値へ加算または乗算する方式です。",
+            "label": "計算方式"
+          }
+        },
         "name": "expression",
         "requirement": {
           "kind": "always",
@@ -50,6 +70,16 @@
         "description": "Action whose result is scaled, e.g. Gs2Inventory:AcquireItemSetByUserId",
         "id": "prop_01M0C89EMZPTFXVVWJ02HQV42R",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "GS2 action whose value is modified.",
+            "label": "Target action"
+          },
+          "ja": {
+            "description": "補正対象にするGS2アクション名です。",
+            "label": "対象アクション"
+          }
+        },
         "name": "targetActionName",
         "requirement": {
           "kind": "always",
@@ -65,6 +95,16 @@
         "description": "Field of that action's request to scale, e.g. acquireCount",
         "id": "prop_01M0C89EMZW9H9204T4H2A3A8M",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Field within the target action that is modified.",
+            "label": "Target field"
+          },
+          "ja": {
+            "description": "対象アクション内で補正するフィールド名です。",
+            "label": "対象フィールド"
+          }
+        },
         "name": "targetFieldName",
         "requirement": {
           "kind": "always",
@@ -80,6 +120,16 @@
         "description": "Multiplier applied",
         "id": "prop_01M0C89EMZN9KJE2M0EAK71926",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Multiplier or additive value applied to the target field.",
+            "label": "Modifier value"
+          },
+          "ja": {
+            "description": "対象フィールドへ適用する倍率または加算値です。",
+            "label": "補正値"
+          }
+        },
         "name": "rate",
         "requirement": {
           "kind": "always",
@@ -95,6 +145,16 @@
         "description": "Order among buffs touching the same field",
         "id": "prop_01M0C89EMZHA1Y39YTQZ9227ET",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Order used when multiple buffs affect the same field.",
+            "label": "Priority"
+          },
+          "ja": {
+            "description": "同じフィールドへ複数のバフを適用する順序です。",
+            "label": "優先度"
+          }
+        },
         "name": "priority",
         "requirement": {
           "kind": "always",
@@ -110,6 +170,16 @@
         "description": "Period the buff is active for",
         "id": "prop_01M0C89EMZR18VJ7SD7SHZYYWH",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which this buff is active.",
+            "label": "Active schedule"
+          },
+          "ja": {
+            "description": "このバフを有効にするスケジュールです。",
+            "label": "有効期間"
+          }
+        },
         "name": "schedule",
         "requirement": {
           "kind": "never",

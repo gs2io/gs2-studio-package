@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the rolled enchantment.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "付与済み効果を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,16 @@
         "description": "",
         "id": "prop_01M0C84Y32ECEHBF3RZEE5D62D",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Name of the target modified by the rolled effect.",
+            "label": "Effect target"
+          },
+          "ja": {
+            "description": "装備に付与された効果の対象名です。",
+            "label": "効果対象"
+          }
+        },
         "name": "resourceName",
         "requirement": {
           "kind": "always",
@@ -42,6 +62,16 @@
         "description": "",
         "id": "prop_01M0C84Y32JTY6HCNCJZ7922GH",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Value of the rolled effect applied to the equipment.",
+            "label": "Effect value"
+          },
+          "ja": {
+            "description": "装備に付与された追加効果の値です。",
+            "label": "効果値"
+          }
+        },
         "name": "resourceValue",
         "requirement": {
           "kind": "always",

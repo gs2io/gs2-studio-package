@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the gacha.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ガチャを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,16 @@
         "description": "",
         "id": "prop_G9FT5R5K079VNPHKK15D46TRPC",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which this gacha is available.",
+            "label": "Availability schedule"
+          },
+          "ja": {
+            "description": "このガチャを開催するスケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
         "name": "schedule",
         "requirement": {
           "kind": "never",
@@ -42,6 +62,16 @@
         "description": "",
         "id": "prop_RG77EYB1G23KWGEYNTSCG96JNN",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Consume actions executed for one gacha draw.",
+            "label": "Draw costs"
+          },
+          "ja": {
+            "description": "ガチャを1回実行するときの消費アクションです。",
+            "label": "1回の抽選コスト"
+          }
+        },
         "name": "consumeActions",
         "requirement": {
           "kind": "always",

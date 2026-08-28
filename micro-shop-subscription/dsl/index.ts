@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** The schedule namespace whose triggers drive a subscription's renewal. */
 const SCHEDULE_NAMESPACE_RESOURCE_ID = "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d";
 
@@ -49,6 +51,59 @@ const StoreSubscription = defineDomainType("StoreSubscription", dt =>
         .description("Whether the player currently holds it")
     )
     .property(PT.timestamp("expiresAt").userData().required().description("When it lapses"))
+    .localizedProperties({
+      id: jaEnId("サブスクリプション商品", "subscription product"),
+      appleSubscriptionGroupIdentifier: jaEnField(
+        "App StoreサブスクリプショングループID",
+        "App Store subscription group ID",
+        "App Store Connectで登録したサブスクリプショングループの識別子です。",
+        "Subscription group identifier registered in App Store Connect."
+      ),
+      googlePlayProductId: jaEnField(
+        "Google Play商品ID",
+        "Google Play product ID",
+        "Google Play Consoleで登録した定期購入商品の識別子です。",
+        "Subscription product identifier registered in Google Play Console."
+      ),
+      renewalTrigger: jaEnField(
+        "更新トリガー",
+        "Renewal trigger",
+        "サブスクリプション更新時に発火するスケジュールトリガーです。",
+        "Schedule trigger fired whenever the subscription renews."
+      ),
+      triggerExtendMode: jaEnField(
+        "トリガー延長方式",
+        "Trigger extension mode",
+        "更新日時をそのまま使うか指定時刻へ丸めるかを設定します。",
+        "Whether renewal extends exactly or is rounded to a configured hour."
+      ),
+      rollupHour: jaEnField(
+        "丸め時刻",
+        "Rollup hour",
+        "更新トリガーを丸める場合の時刻です。",
+        "Hour used when renewal triggers are rounded.",
+        { ja: "時", en: "hour" }
+      ),
+      reallocateSpanDays: jaEnField(
+        "再請求猶予期間",
+        "Reallocation period",
+        "期限前にストアが再請求を行える期間です。",
+        "Period before expiration during which the store may re-bill.",
+        { ja: "日", en: "days" }
+      ),
+      status: jaEnField(
+        "加入状態",
+        "Subscription status",
+        "プレイヤーの現在のサブスクリプション加入状態です。",
+        "Player's current subscription status."
+      ),
+      expiresAt: jaEnField(
+        "有効期限",
+        "Expiration time",
+        "プレイヤーのサブスクリプションが失効する日時です。",
+        "Time when the player's subscription expires."
+      ),
+    })
 );
 
 const StoreSubscriptionContentModel = defineMasterDataResource(resource =>

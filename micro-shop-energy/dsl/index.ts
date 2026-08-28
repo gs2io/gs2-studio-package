@@ -1,11 +1,29 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const EnergyProduct = defineDomainType("EnergyProduct", dt =>
   dt
     .idDescription("Unique identifier")
     .property(PT.int32("recoveryValue").masterData().required())
     .property(PT.prop("consumeActions", PT.listOf(PT.consumeAction())).masterData().required())
+    .localizedProperties({
+      id: jaEnId("スタミナ商品", "stamina product"),
+      recoveryValue: jaEnField(
+        "回復量",
+        "Recovery amount",
+        "購入時に回復するスタミナ量です。",
+        "Amount of stamina restored by purchasing this product.",
+        { ja: "ポイント", en: "points" }
+      ),
+      consumeActions: jaEnField(
+        "購入コスト",
+        "Purchase costs",
+        "商品購入時に実行する消費アクションです。",
+        "Consume actions executed to purchase the product."
+      ),
+    })
 );
 
 const RateModel = defineMasterDataResource(resource =>

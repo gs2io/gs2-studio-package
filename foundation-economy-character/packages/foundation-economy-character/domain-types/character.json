@@ -15,6 +15,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the character.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "キャラクターを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -30,6 +40,16 @@
         "description": "",
         "id": "prop_A5DDXX9AZGPBWRFX70X1ZKNR0E",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Value used to order characters in lists.",
+            "label": "Sort order"
+          },
+          "ja": {
+            "description": "キャラクター一覧で使用する並び順の値です。",
+            "label": "表示順"
+          }
+        },
         "name": "sort",
         "requirement": {
           "kind": "always",
@@ -45,6 +65,16 @@
         "description": "",
         "id": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier of the character instance owned by the player.",
+            "label": "Character instance ID"
+          },
+          "ja": {
+            "description": "プレイヤーが所持するキャラクター個体の識別子です。",
+            "label": "キャラクター個体ID"
+          }
+        },
         "name": "propertyId",
         "requirement": {
           "kind": "always",
@@ -60,6 +90,18 @@
         "description": "",
         "id": "prop_0J6H8XWJG1W95S2S7HRDRQSWF2",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Current level of the character.",
+            "label": "Current level",
+            "unit": "levels"
+          },
+          "ja": {
+            "description": "キャラクターの現在レベルです。",
+            "label": "現在レベル",
+            "unit": "レベル"
+          }
+        },
         "name": "level",
         "requirement": {
           "kind": "always",
@@ -75,6 +117,18 @@
         "description": "",
         "id": "prop_T2TXPQVC3TS41W3CY3RB4X4G8C",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Level cap currently applied to the character.",
+            "label": "Current level cap",
+            "unit": "levels"
+          },
+          "ja": {
+            "description": "キャラクターに現在適用されているレベル上限です。",
+            "label": "現在のレベル上限",
+            "unit": "レベル"
+          }
+        },
         "name": "levelCap",
         "requirement": {
           "kind": "always",
@@ -90,6 +144,18 @@
         "description": "",
         "id": "prop_WP10EQVMMV82DJXCEN4AJYVEKB",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Cumulative experience currently earned by the character.",
+            "label": "Current experience",
+            "unit": "experience"
+          },
+          "ja": {
+            "description": "キャラクターが現在獲得している累積経験値です。",
+            "label": "現在経験値",
+            "unit": "経験値"
+          }
+        },
         "name": "experience",
         "requirement": {
           "kind": "always",

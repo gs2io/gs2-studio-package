@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the global message.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "全体メッセージを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,16 @@
         "description": "",
         "id": "prop_57TKVNCPPA7DHSTZRX4QJ4W45K",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Content delivered to all players.",
+            "label": "Message payload"
+          },
+          "ja": {
+            "description": "全プレイヤーへ配信するメッセージの内容です。",
+            "label": "メッセージ内容"
+          }
+        },
         "name": "payload",
         "requirement": {
           "kind": "always",
@@ -43,6 +63,16 @@
         "description": "",
         "id": "prop_HPG95V898A9A7JCSM2KEV88PVG",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the message becomes available.",
+            "label": "Delivery start"
+          },
+          "ja": {
+            "description": "メッセージの受け取りを開始する日時です。",
+            "label": "配信開始日時"
+          }
+        },
         "name": "begin",
         "requirement": {
           "kind": "always",
@@ -58,6 +88,16 @@
         "description": "",
         "id": "prop_925R3E1XPBXGDG9D4H5MZBXMBK",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the message stops being available.",
+            "label": "Delivery end"
+          },
+          "ja": {
+            "description": "メッセージの受け取りを終了する日時です。",
+            "label": "配信終了日時"
+          }
+        },
         "name": "end",
         "requirement": {
           "kind": "always",

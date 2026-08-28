@@ -9,6 +9,8 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** The schedule type this package points its mission groups at. */
 const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
 
@@ -27,6 +29,29 @@ const MissionSetting = defineDomainType("MissionSetting", dt =>
     )
     .property(PT.int32("resetDayOfMonth").masterData().required())
     .property(PT.int32("resetHour").masterData().required())
+    .localizedProperties({
+      id: jaEnId("ミッション設定", "mission settings"),
+      resetDayOfWeek: jaEnField(
+        "週次リセット曜日",
+        "Weekly reset day",
+        "週次ミッションをリセットする曜日です。",
+        "Weekday when weekly missions reset."
+      ),
+      resetDayOfMonth: jaEnField(
+        "月次リセット日",
+        "Monthly reset day",
+        "月次ミッションをリセットする日です。",
+        "Day of the month when monthly missions reset.",
+        { ja: "日", en: "day" }
+      ),
+      resetHour: jaEnField(
+        "リセット時刻",
+        "Reset hour",
+        "ミッションをリセットするUTC時刻です。",
+        "UTC hour when missions reset.",
+        { ja: "時", en: "hour" }
+      ),
+    })
 );
 
 /** A counter a mission can watch, tracked per reset window. */
@@ -37,6 +62,33 @@ const MissionCounter = defineDomainType("MissionCounter", dt =>
     .property(PT.int64("weeklyValue").userData().required())
     .property(PT.int64("monthlyValue").userData().required())
     .property(PT.int64("totalValue").userData().required())
+    .localizedProperties({
+      id: jaEnId("ミッションカウンター", "mission counter"),
+      todayValue: jaEnField(
+        "本日の値",
+        "Daily value",
+        "当日のリセット期間で蓄積した進捗値です。",
+        "Progress accumulated in the current daily reset period."
+      ),
+      weeklyValue: jaEnField(
+        "今週の値",
+        "Weekly value",
+        "当週のリセット期間で蓄積した進捗値です。",
+        "Progress accumulated in the current weekly reset period."
+      ),
+      monthlyValue: jaEnField(
+        "今月の値",
+        "Monthly value",
+        "当月のリセット期間で蓄積した進捗値です。",
+        "Progress accumulated in the current monthly reset period."
+      ),
+      totalValue: jaEnField(
+        "累計値",
+        "Total value",
+        "リセットされない累計の進捗値です。",
+        "All-time progress value that is not reset."
+      ),
+    })
 );
 
 /** A group of missions sharing one reset cadence. */
@@ -49,6 +101,21 @@ const MissionCollection = defineDomainType("MissionCollection", dt =>
         .masterData()
         .required()
     )
+    .localizedProperties({
+      id: jaEnId("ミッショングループ", "mission group"),
+      schedule: jaEnField(
+        "開催スケジュール",
+        "Availability schedule",
+        "このミッショングループを開催するスケジュールです。",
+        "Schedule during which this mission group is available."
+      ),
+      scope: jaEnField(
+        "リセット単位",
+        "Reset scope",
+        "グループ内ミッションの進捗をリセットする単位です。",
+        "Reset cadence used by missions in this group."
+      ),
+    })
 );
 
 const Mission = defineDomainType("Mission", dt =>
@@ -62,6 +129,45 @@ const Mission = defineDomainType("Mission", dt =>
     .property(PT.int64("targetValue").masterData().required())
     .property(PT.bool("completed").userData().required())
     .property(PT.bool("received").userData().required())
+    .localizedProperties({
+      id: jaEnId("ミッション", "mission"),
+      missionCollection: jaEnField(
+        "ミッショングループ",
+        "Mission group",
+        "このミッションが属するグループです。",
+        "Mission group this mission belongs to."
+      ),
+      completeAcquireActions: jaEnField(
+        "完了報酬",
+        "Completion rewards",
+        "ミッション完了時に実行する獲得アクションです。",
+        "Acquire actions executed when the mission is completed."
+      ),
+      counter: jaEnField(
+        "進捗カウンター",
+        "Progress counter",
+        "達成判定に使用するミッションカウンターです。",
+        "Mission counter used to determine completion."
+      ),
+      targetValue: jaEnField(
+        "目標値",
+        "Target value",
+        "ミッションを完了するために必要なカウンター値です。",
+        "Counter value required to complete the mission."
+      ),
+      completed: jaEnField(
+        "完了済み",
+        "Completed",
+        "プレイヤーがこのミッションを完了したかを示します。",
+        "Whether the player has completed this mission."
+      ),
+      received: jaEnField(
+        "報酬受取済み",
+        "Reward claimed",
+        "プレイヤーが完了報酬を受け取ったかを示します。",
+        "Whether the player has claimed the completion reward."
+      ),
+    })
 );
 
 const CounterModel = defineMasterDataResource(resource => {

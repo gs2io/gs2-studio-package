@@ -9,6 +9,8 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 /** Resources and properties this package points at inside `foundation-economy-character`. */
 const CHARACTER_TYPE_ID = "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5";
 const CHARACTER_PROPERTY_ID = "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD";
@@ -40,6 +42,28 @@ const CharacterGradeStep = defineDomainType("CharacterGradeStep", dt =>
         .required()
         .description("Which characters may be spent to reach it")
     )
+    .localizedProperties({
+      id: jaEnId("グレード段階", "grade step"),
+      rankCapValue: jaEnField(
+        "レベル上限",
+        "Level cap",
+        "このグレードで到達可能になるレベル上限です。",
+        "Level cap unlocked by this grade.",
+        { ja: "レベル", en: "levels" }
+      ),
+      propertyIdRegex: jaEnField(
+        "対象キャラクター条件",
+        "Target character pattern",
+        "このグレード段階を適用できるキャラクター個体IDの正規表現です。",
+        "Regular expression matching character instance IDs eligible for this grade."
+      ),
+      gradeUpPropertyIdRegex: jaEnField(
+        "素材キャラクター条件",
+        "Material character pattern",
+        "グレードアップ素材として消費できるキャラクター個体IDの正規表現です。",
+        "Regular expression matching character instance IDs that may be consumed for grade-up."
+      ),
+    })
 );
 
 /** The character's current grade, added to the character package's own type. */
@@ -55,9 +79,17 @@ const Character = defineOverlayDomainType(
     },
   },
   domainType =>
-    domainType.property(
-      PT.int64("grade").userData().required().description("Grades promoted so far")
-    )
+    domainType
+      .property(PT.int64("grade").userData().required().description("Grades promoted so far"))
+      .localizedProperties({
+        grade: jaEnField(
+          "現在グレード",
+          "Current grade",
+          "キャラクターが現在到達しているグレードです。",
+          "Current grade reached by the character.",
+          { ja: "段階", en: "grades" }
+        ),
+      })
 );
 
 const GradeModel = defineMasterDataResource(resource =>

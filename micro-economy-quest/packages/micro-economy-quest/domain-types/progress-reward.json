@@ -12,6 +12,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the quest reward.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "クエスト報酬を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -27,6 +37,16 @@
         "description": "",
         "id": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier of a reward item earned during the quest.",
+            "label": "Reward item ID"
+          },
+          "ja": {
+            "description": "進行中のクエストで獲得した報酬アイテムの識別子です。",
+            "label": "報酬アイテムID"
+          }
+        },
         "name": "itemId",
         "requirement": {
           "kind": "always",
@@ -42,6 +62,18 @@
         "description": "",
         "id": "prop_RYDWJ2B6D96NAN85AF8SDXD12F",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Quantity of the reward item earned.",
+            "label": "Reward quantity",
+            "unit": "items"
+          },
+          "ja": {
+            "description": "獲得した報酬アイテムの数量です。",
+            "label": "報酬数",
+            "unit": "個"
+          }
+        },
         "name": "value",
         "requirement": {
           "kind": "always",

@@ -11,6 +11,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the item.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "アイテムを一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,6 +36,18 @@
         "description": "",
         "id": "prop_K2G6TEKHV8KKTXDBG04DK9X3SM",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Quantity of the item owned by the player.",
+            "label": "Owned quantity",
+            "unit": "items"
+          },
+          "ja": {
+            "description": "プレイヤーが所持しているアイテムの数量です。",
+            "label": "所持数",
+            "unit": "個"
+          }
+        },
         "name": "count",
         "requirement": {
           "kind": "always",

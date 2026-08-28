@@ -13,6 +13,16 @@
         "description": "Unique identifier",
         "id": "prop_reserved_id",
         "isId": true,
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the character experience configuration.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "キャラクター経験値設定を一意に識別します。",
+            "label": "ID"
+          }
+        },
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -28,6 +38,18 @@
         "description": "",
         "id": "prop_CP6T6EBWNEYWASFRXVMH0A8RPF",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Cumulative experience required to reach each level.",
+            "label": "Experience thresholds",
+            "unit": "experience"
+          },
+          "ja": {
+            "description": "各レベルへ到達するために必要な累積経験値です。",
+            "label": "必要経験値テーブル",
+            "unit": "経験値"
+          }
+        },
         "name": "threshold",
         "requirement": {
           "kind": "always",
@@ -46,6 +68,18 @@
         "description": "",
         "id": "prop_B2ZMJ5P9J9QVBZTGHD6816BX7Z",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Initial level cap applied to a character.",
+            "label": "Initial level cap",
+            "unit": "levels"
+          },
+          "ja": {
+            "description": "キャラクターに最初に適用するレベル上限です。",
+            "label": "初期レベル上限",
+            "unit": "レベル"
+          }
+        },
         "name": "defaultLevelCap",
         "requirement": {
           "kind": "always",
@@ -61,6 +95,18 @@
         "description": "",
         "id": "prop_88HQTS8WPSVYE7PAJ2BYRE0D4C",
         "isId": false,
+        "localizedDisplay": {
+          "en": {
+            "description": "Highest level cap a character can reach.",
+            "label": "Maximum level cap",
+            "unit": "levels"
+          },
+          "ja": {
+            "description": "キャラクターが到達できるレベル上限の最大値です。",
+            "label": "最大レベル上限",
+            "unit": "レベル"
+          }
+        },
         "name": "maxLevelCap",
         "requirement": {
           "kind": "always",

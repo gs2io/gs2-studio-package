@@ -1,6 +1,8 @@
 import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
 const TakeOverSetting = defineDomainType("TakeOverSetting", dt =>
   dt
     .idDescription("Unique identifier")
@@ -28,6 +30,63 @@ const TakeOverSetting = defineDomainType("TakeOverSetting", dt =>
         .description("Apple Private Key PEM(if Sign-in Apple Account)")
     )
     .property(PT.bool("hasTakeOver").userData().description("Whether the user has TakeOver data"))
+    .localizedProperties({
+      id: jaEnId("引き継ぎ設定", "take-over setting"),
+      type: jaEnField(
+        "認証種別",
+        "Authentication type",
+        "引き継ぎに使用する認証方式の種別番号です。",
+        "Numeric type of authentication used for account transfer."
+      ),
+      configurationPath: jaEnField(
+        "OIDC設定URL",
+        "OIDC configuration URL",
+        "OpenID Connect設定ドキュメントのURLです。",
+        "URL of the OpenID Connect configuration document."
+      ),
+      clientId: jaEnField(
+        "クライアントID",
+        "Client ID",
+        "OIDCクライアントIDです。",
+        "OIDC client identifier."
+      ),
+      clientSecret: jaEnField(
+        "クライアントシークレット",
+        "Client secret",
+        "OIDC認証に使用するクライアントシークレットです。",
+        "Client secret used for OIDC authentication."
+      ),
+      doneEndpointUrl: jaEnField(
+        "完了後URL",
+        "Completion URL",
+        "ログイン完了後に遷移するURLです。",
+        "URL opened after login completes."
+      ),
+      appleTeamId: jaEnField(
+        "Apple Team ID",
+        "Apple Team ID",
+        "Sign in with Appleで使用するTeam IDです。",
+        "Apple Team ID used for Sign in with Apple."
+      ),
+      appleKeyId: jaEnField(
+        "Apple Key ID",
+        "Apple Key ID",
+        "Sign in with Appleで使用するKey IDです。",
+        "Apple Key ID used for Sign in with Apple."
+      ),
+      applePrivateKeyPem: jaEnField(
+        "Apple秘密鍵",
+        "Apple private key",
+        "Sign in with Appleで使用するPEM形式の秘密鍵です。",
+        "PEM private key used for Sign in with Apple."
+      ),
+      hasTakeOver: jaEnField(
+        "引き継ぎデータあり",
+        "Has take-over data",
+        "プレイヤーに引き継ぎデータが登録されているかを示します。",
+        "Whether take-over data is registered for the player."
+      ),
+    })
 );
 
 const TakeOverTypeModel = defineMasterDataResource(resource =>
