@@ -10,18 +10,30 @@
     },
     "domainTypes": {
       "dt_HAZCRJ576BHDWFVB28NQW77Y01": {
+        "description": {
+          "en": "Sets level-up experience thresholds and the initial and maximum level caps.",
+          "ja": "レベルアップに必要な経験値と、初期・最大レベル上限を設定します。"
+        },
         "label": {
           "en": "Character experience",
           "ja": "キャラクター経験値"
         }
       },
       "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5": {
+        "description": {
+          "en": "Registers the characters available in the game and their display order.",
+          "ja": "ゲームに登場するキャラクターと表示順を登録します。"
+        },
         "label": {
           "en": "Character",
           "ja": "キャラクター"
         }
       },
       "dt_ZR7PA0W682HX7ZFXGBE4BRF37K": {
+        "description": {
+          "en": "Sets the maximum and initial number of characters a player can own.",
+          "ja": "プレイヤーが所持できるキャラクター数の上限と初期値を設定します。"
+        },
         "label": {
           "en": "Character slots",
           "ja": "キャラクター所持枠"

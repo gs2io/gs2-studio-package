@@ -91,11 +91,27 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
       en: "Handles character ownership, level, and experience.",
     },
   })
-  .displayType(CharacterCollection, { label: { ja: "キャラクター所持枠", en: "Character slots" } })
+  .displayType(CharacterCollection, {
+    label: { ja: "キャラクター所持枠", en: "Character slots" },
+    description: {
+      ja: "プレイヤーが所持できるキャラクター数の上限と初期値を設定します。",
+      en: "Sets the maximum and initial number of characters a player can own.",
+    },
+  })
   .displayType(CharacterExperience, {
     label: { ja: "キャラクター経験値", en: "Character experience" },
+    description: {
+      ja: "レベルアップに必要な経験値と、初期・最大レベル上限を設定します。",
+      en: "Sets level-up experience thresholds and the initial and maximum level caps.",
+    },
   })
-  .displayType(Character, { label: { ja: "キャラクター", en: "Character" } })
+  .displayType(Character, {
+    label: { ja: "キャラクター", en: "Character" },
+    description: {
+      ja: "ゲームに登場するキャラクターと表示順を登録します。",
+      en: "Registers the characters available in the game and their display order.",
+    },
+  })
   .domainType(CharacterExperience)
   .domainType(Character)
   .domainType(CharacterCollection)
