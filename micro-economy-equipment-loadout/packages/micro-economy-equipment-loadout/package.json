@@ -13,18 +13,30 @@
     },
     "domainTypes": {
       "dt_01M0CDYNB5V74MMX3SWDK4ZRCH": {
+        "description": {
+          "en": "Manages each character's equipment slot layout and current loadout.",
+          "ja": "キャラクターごとの装備スロット構成と装着状態を管理します。"
+        },
         "label": {
           "en": "Character",
           "ja": "キャラクター"
         }
       },
       "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ": {
+        "description": {
+          "en": "Defines a character equipment slot and the equipment categories it accepts.",
+          "ja": "キャラクターの装備部位と装着できる装備カテゴリを設定します。"
+        },
         "label": {
           "en": "Equipment slot",
           "ja": "装備スロット"
         }
       },
       "dt_01M0CDYNB5ZBC95MZSW2NTSPXM": {
+        "description": {
+          "en": "Tracks the equipment currently assigned to each loadout slot.",
+          "ja": "各装備スロットに現在装着されている装備を管理します。"
+        },
         "label": {
           "en": "Worn equipment",
           "ja": "装着中の装備"

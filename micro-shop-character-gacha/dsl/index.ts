@@ -189,26 +189,38 @@ export const microShopCharacterGacha = definePackage("micro-shop-character-gacha
       en: "A currency-funded gacha that draws characters, with per-rarity drop rates.",
     },
   })
-  .displayType(CharacterRate, { label: { ja: "キャラクター排出率", en: "Character rate" } })
-  .displayType(GachaRarityRate, { label: { ja: "レアリティ排出率", en: "Rarity rate" } })
-  .displayType(GachaRarity, { label: { ja: "レアリティ", en: "Rarity" } })
-  .displayType(Gacha, { label: { ja: "ガチャ", en: "Gacha" } })
-  .dependency(
-    "foundation-economy-character",
-    "github:gs2io/gs2-studio-package"
-  )
-  .dependency(
-    "foundation-economy-character-dictionary",
-    "github:gs2io/gs2-studio-package"
-  )
-  .dependency(
-    "foundation-economy-schedule",
-    "github:gs2io/gs2-studio-package"
-  )
-  .dependency(
-    "micro-shop-currency",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(CharacterRate, {
+    label: { ja: "キャラクター排出率", en: "Character rate" },
+    description: {
+      ja: "レアリティ内で各キャラクターが排出される比率を設定します。",
+      en: "Configures each character's draw weight within a rarity tier.",
+    },
+  })
+  .displayType(GachaRarityRate, {
+    label: { ja: "レアリティ排出率", en: "Rarity rate" },
+    description: {
+      ja: "ガチャで各レアリティが選ばれる排出率を設定します。",
+      en: "Configures the draw rate for each rarity tier in a gacha.",
+    },
+  })
+  .displayType(GachaRarity, {
+    label: { ja: "レアリティ", en: "Rarity" },
+    description: {
+      ja: "ガチャのレアリティ区分と対象キャラクターを設定します。",
+      en: "Defines a gacha rarity tier and the characters assigned to it.",
+    },
+  })
+  .displayType(Gacha, {
+    label: { ja: "ガチャ", en: "Gacha" },
+    description: {
+      ja: "ガチャの開催内容、抽選回数、消費通貨、排出テーブルを設定します。",
+      en: "Defines a gacha's availability, draw count, currency cost, and prize table.",
+    },
+  })
+  .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
+  .dependency("foundation-economy-character-dictionary", "github:gs2io/gs2-studio-package")
+  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
+  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
   .domainType(CharacterRate)
   .domainType(GachaRarityRate)
   .domainType(GachaRarity)

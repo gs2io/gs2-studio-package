@@ -67,8 +67,20 @@ export const foundationLiveopsVersion = definePackage("foundation-liveops-versio
       en: "Tracks agreement (terms of service) versions and the app's embedded version.",
     },
   })
-  .displayType(AgreementVersion, { label: { ja: "規約バージョン", en: "Agreement version" } })
-  .displayType(EmbeddedVersion, { label: { ja: "アプリバージョン", en: "App version" } })
+  .displayType(AgreementVersion, {
+    label: { ja: "規約バージョン", en: "Agreement version" },
+    description: {
+      ja: "利用規約やプライバシーポリシーの公開バージョンを管理します。",
+      en: "Manages published versions of agreements such as terms of service and privacy policies.",
+    },
+  })
+  .displayType(EmbeddedVersion, {
+    label: { ja: "アプリバージョン", en: "App version" },
+    description: {
+      ja: "利用可能なアプリバージョンと更新時の扱いを設定します。",
+      en: "Defines supported application versions and the required update behavior.",
+    },
+  })
   .domainType(AgreementVersion)
   .domainType(EmbeddedVersion)
   .masterDataResource(r =>

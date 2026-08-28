@@ -13,12 +13,20 @@
     },
     "domainTypes": {
       "dt_01M0C826WJ0HDTQG636AHV341M": {
+        "description": {
+          "en": "Tracks the current grade of each character owned by a player.",
+          "ja": "プレイヤーが所持するキャラクターごとの現在グレードを管理します。"
+        },
         "label": {
           "en": "Character",
           "ja": "キャラクター"
         }
       },
       "dt_01M0C826WJAVB4NEKDQ1MYZY4X": {
+        "description": {
+          "en": "Defines eligible characters, the grade-up target, and rank cap for a grade step.",
+          "ja": "対象キャラクターの条件、グレードアップ先、ランク上限を設定します。"
+        },
         "label": {
           "en": "Grade step",
           "ja": "グレード段階"

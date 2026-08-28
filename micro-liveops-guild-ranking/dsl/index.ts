@@ -96,16 +96,22 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
       en: "A leaderboard partitioned by guild, so members compete inside their own guild, with rewards by rank.",
     },
   })
-  .displayType(GuildRanking, { label: { ja: "ギルドランキング", en: "Guild ranking" } })
-  .displayType(GuildRankingReward, { label: { ja: "ランキング報酬", en: "Ranking reward" } })
-  .dependency(
-    "foundation-economy-schedule",
-    "github:gs2io/gs2-studio-package"
-  )
-  .dependency(
-    "foundation-social-guild",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(GuildRanking, {
+    label: { ja: "ギルドランキング", en: "Guild ranking" },
+    description: {
+      ja: "ギルド単位で競うランキングの集計方法、開催期間、参加条件を設定します。",
+      en: "Configures scoring, availability, and participation rules for a guild ranking.",
+    },
+  })
+  .displayType(GuildRankingReward, {
+    label: { ja: "ランキング報酬", en: "Ranking reward" },
+    description: {
+      ja: "ギルドランキングの順位範囲ごとに配布する報酬を設定します。",
+      en: "Defines rewards distributed for each guild-ranking placement range.",
+    },
+  })
+  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
+  .dependency("foundation-social-guild", "github:gs2io/gs2-studio-package")
   .domainType(GuildRanking)
   .domainType(GuildRankingReward)
 

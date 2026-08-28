@@ -92,13 +92,28 @@ export const microEconomyEquipmentLoadout = definePackage(
       en: "Gives each character its own equipment slots, with per-slot restrictions on what fits.",
     },
   })
-  .displayType(EquipmentSlot, { label: { ja: "装備スロット", en: "Equipment slot" } })
-  .displayType(EquipmentSlotAssignment, { label: { ja: "装着中の装備", en: "Worn equipment" } })
-  .displayType(Character, { label: { ja: "キャラクター", en: "Character" } })
-  .dependency(
-    "foundation-economy-character",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(EquipmentSlot, {
+    label: { ja: "装備スロット", en: "Equipment slot" },
+    description: {
+      ja: "キャラクターの装備部位と装着できる装備カテゴリを設定します。",
+      en: "Defines a character equipment slot and the equipment categories it accepts.",
+    },
+  })
+  .displayType(EquipmentSlotAssignment, {
+    label: { ja: "装着中の装備", en: "Worn equipment" },
+    description: {
+      ja: "各装備スロットに現在装着されている装備を管理します。",
+      en: "Tracks the equipment currently assigned to each loadout slot.",
+    },
+  })
+  .displayType(Character, {
+    label: { ja: "キャラクター", en: "Character" },
+    description: {
+      ja: "キャラクターごとの装備スロット構成と装着状態を管理します。",
+      en: "Manages each character's equipment slot layout and current loadout.",
+    },
+  })
+  .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
   .domainType(EquipmentSlot)
   .domainType(EquipmentSlotAssignment)
   .domainType(Character)

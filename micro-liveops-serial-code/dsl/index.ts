@@ -38,7 +38,13 @@ export const microLiveopsSerialCode = definePackage("micro-liveops-serial-code",
       en: "Redeems serial codes you hand out, organised into campaigns.",
     },
   })
-  .displayType(SerialCodeCampaign, { label: { ja: "コードキャンペーン", en: "Code campaign" } })
+  .displayType(SerialCodeCampaign, {
+    label: { ja: "コードキャンペーン", en: "Code campaign" },
+    description: {
+      ja: "キャンペーンコード方式を利用するかどうかを設定します。",
+      en: "Configures whether campaign-code redemption is enabled.",
+    },
+  })
   .domainType(SerialCodeCampaign)
 
   .masterDataResource(r =>

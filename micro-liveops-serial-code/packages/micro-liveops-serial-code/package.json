@@ -10,6 +10,10 @@
     },
     "domainTypes": {
       "dt_01M0C5VXZY2ZJKK4DERTCAZHXD": {
+        "description": {
+          "en": "Configures whether campaign-code redemption is enabled.",
+          "ja": "キャンペーンコード方式を利用するかどうかを設定します。"
+        },
         "label": {
           "en": "Code campaign",
           "ja": "コードキャンペーン"

@@ -10,18 +10,30 @@
     },
     "domainTypes": {
       "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5": {
+        "description": {
+          "en": "Tracks a player's paid and free currency balances.",
+          "ja": "プレイヤーが保有する有償・無償通貨の残高を管理します。"
+        },
         "label": {
           "en": "Wallet",
           "ja": "ウォレット"
         }
       },
       "dt_BMT0H7ME2SSDZRHGNZF012YZVR": {
+        "description": {
+          "en": "Configures receipt validation and test-purchase behavior for the currency store.",
+          "ja": "レシート検証とテスト購入に関する通貨ストア設定を管理します。"
+        },
         "label": {
           "en": "Currency store",
           "ja": "通貨ストア"
         }
       },
       "dt_JQQFPC83PRYTWMZ43RV3T4SKSB": {
+        "description": {
+          "en": "Maps a store product to its App Store and Google Play product identifiers.",
+          "ja": "ストア商品とApp Store・Google Playの商品IDの対応を設定します。"
+        },
         "label": {
           "en": "Store product",
           "ja": "ストア商品"

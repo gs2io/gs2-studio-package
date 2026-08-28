@@ -13,24 +13,40 @@
     },
     "domainTypes": {
       "dt_8PNR995T1Y2063NYZJMVKSHZNE": {
+        "description": {
+          "en": "Tracks per-player progress values used by mission completion conditions.",
+          "ja": "ミッション達成条件に使用するプレイヤーごとの進捗値を管理します。"
+        },
         "label": {
           "en": "Mission counter",
           "ja": "ミッションカウンター"
         }
       },
       "dt_DW6Y7CDDGF0QNJ01W11BZ928XV": {
+        "description": {
+          "en": "Configures counter reset rules and shared mission behavior.",
+          "ja": "ミッションカウンターのリセット方法や共通動作を設定します。"
+        },
         "label": {
           "en": "Mission setting",
           "ja": "ミッション設定"
         }
       },
       "dt_P8YA8929576H08C2Q4YBE5KJXT": {
+        "description": {
+          "en": "Defines a mission's counter, target value, completion rewards, and claim state.",
+          "ja": "達成カウンター、目標値、完了報酬と受取状態を設定・管理します。"
+        },
         "label": {
           "en": "Mission",
           "ja": "ミッション"
         }
       },
       "dt_ZXWN4GKT975S371YFYF3E1DRZ0": {
+        "description": {
+          "en": "Groups missions by scope and availability schedule.",
+          "ja": "ミッションの公開範囲と開催スケジュールをまとめて設定します。"
+        },
         "label": {
           "en": "Mission group",
           "ja": "ミッショングループ"

@@ -13,12 +13,20 @@
     },
     "domainTypes": {
       "dt_01M0C7T116ST3H2Z9X2ANQRRD2": {
+        "description": {
+          "en": "Configures the probability and experience multiplier for each enhancement result.",
+          "ja": "キャラクター強化の成功種別ごとの発生率と経験値倍率を設定します。"
+        },
         "label": {
           "en": "Bonus rate",
           "ja": "大成功倍率"
         }
       },
       "dt_01M0C7T116VP42973VYFS2PRV0": {
+        "description": {
+          "en": "Configures the metadata suffix used to read experience when a character is acquired.",
+          "ja": "キャラクター獲得時に経験値を読み取るメタデータのサフィックスを設定します。"
+        },
         "label": {
           "en": "Enhancement recipe",
           "ja": "強化レシピ"

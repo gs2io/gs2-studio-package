@@ -121,14 +121,35 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
       en: "Manages quests players progress through, along with their progress and completion rewards.",
     },
   })
-  .displayType(ProgressReward, { label: { ja: "クエスト報酬", en: "Quest reward" } })
-  .displayType(Progress, { label: { ja: "クエスト進行", en: "Quest progress" } })
-  .displayType(QuestCollection, { label: { ja: "クエストグループ", en: "Quest group" } })
-  .displayType(Quest, { label: { ja: "クエスト", en: "Quest" } })
-  .dependency(
-    "foundation-economy-schedule",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(ProgressReward, {
+    label: { ja: "クエスト報酬", en: "Quest reward" },
+    description: {
+      ja: "クエスト進行中の達成段階ごとに付与する報酬を設定します。",
+      en: "Defines rewards granted at milestones during quest progress.",
+    },
+  })
+  .displayType(Progress, {
+    label: { ja: "クエスト進行", en: "Quest progress" },
+    description: {
+      ja: "プレイヤーのクエスト進行状況、達成値、報酬受取状態を管理します。",
+      en: "Tracks a player's quest progress, completion value, and reward claims.",
+    },
+  })
+  .displayType(QuestCollection, {
+    label: { ja: "クエストグループ", en: "Quest group" },
+    description: {
+      ja: "関連するクエストをまとめ、公開順序と進行単位を設定します。",
+      en: "Groups related quests and defines their order and progression unit.",
+    },
+  })
+  .displayType(Quest, {
+    label: { ja: "クエスト", en: "Quest" },
+    description: {
+      ja: "開始時の消費、初回・通常クリア報酬、失敗時アクションを設定します。",
+      en: "Defines start costs, first-clear and repeat-clear rewards, and failure actions.",
+    },
+  })
+  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
   .domainType(ProgressReward)
   .domainType(Progress)
   .domainType(QuestCollection)

@@ -13,6 +13,10 @@
     },
     "domainTypes": {
       "dt_B6ACHCG26EEPJHVNQ7SA1WX2XS": {
+        "description": {
+          "en": "Defines a stamina product's recovery amount, price, and purchase limits.",
+          "ja": "購入時に回復するスタミナ量、価格、購入制限を設定します。"
+        },
         "label": {
           "en": "Stamina product",
           "ja": "スタミナ商品"

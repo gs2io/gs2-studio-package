@@ -81,8 +81,20 @@ export const foundationEconomyLimit = definePackage("foundation-economy-limit", 
       en: "Handles allowances such as 'three times a day': one reset schedule, a separate counter per thing being counted, and a maximum supplied by the caller.",
     },
   })
-  .displayType(UsageLimit, { label: { ja: "リセット設定", en: "Reset schedule" } })
-  .displayType(UsageLimitCounter, { label: { ja: "回数カウンター", en: "Usage counter" } })
+  .displayType(UsageLimit, {
+    label: { ja: "リセット設定", en: "Reset schedule" },
+    description: {
+      ja: "利用回数カウンターのリセット方法と周期を設定します。",
+      en: "Configures how and when a usage counter is reset.",
+    },
+  })
+  .displayType(UsageLimitCounter, {
+    label: { ja: "回数カウンター", en: "Usage counter" },
+    description: {
+      ja: "プレイヤーごとの利用回数と上限を管理します。",
+      en: "Tracks each player's usage count and its limit.",
+    },
+  })
   .domainType(UsageLimit)
   .domainType(UsageLimitCounter)
 

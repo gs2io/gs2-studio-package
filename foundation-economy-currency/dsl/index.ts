@@ -87,9 +87,27 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
       en: "Manages an in-game currency balance (wallet) and the products it can buy.",
     },
   })
-  .displayType(CurrencyStore, { label: { ja: "通貨ストア", en: "Currency store" } })
-  .displayType(StoreProduct, { label: { ja: "ストア商品", en: "Store product" } })
-  .displayType(Wallet, { label: { ja: "ウォレット", en: "Wallet" } })
+  .displayType(CurrencyStore, {
+    label: { ja: "通貨ストア", en: "Currency store" },
+    description: {
+      ja: "レシート検証とテスト購入に関する通貨ストア設定を管理します。",
+      en: "Configures receipt validation and test-purchase behavior for the currency store.",
+    },
+  })
+  .displayType(StoreProduct, {
+    label: { ja: "ストア商品", en: "Store product" },
+    description: {
+      ja: "ストア商品とApp Store・Google Playの商品IDの対応を設定します。",
+      en: "Maps a store product to its App Store and Google Play product identifiers.",
+    },
+  })
+  .displayType(Wallet, {
+    label: { ja: "ウォレット", en: "Wallet" },
+    description: {
+      ja: "プレイヤーが保有する有償・無償通貨の残高を管理します。",
+      en: "Tracks a player's paid and free currency balances.",
+    },
+  })
   .domainType(Wallet)
   .domainType(StoreProduct)
   .domainType(CurrencyStore)

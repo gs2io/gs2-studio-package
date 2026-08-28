@@ -16,24 +16,40 @@
     },
     "domainTypes": {
       "dt_32H335ZJ31J4690TMPCRQFC04B": {
+        "description": {
+          "en": "Configures the draw rate for each rarity tier in a gacha.",
+          "ja": "ガチャで各レアリティが選ばれる排出率を設定します。"
+        },
         "label": {
           "en": "Rarity rate",
           "ja": "レアリティ排出率"
         }
       },
       "dt_6147KBXHZ0MCSHVK66SAC0Y4K3": {
+        "description": {
+          "en": "Defines a gacha's availability, draw count, currency cost, and prize table.",
+          "ja": "ガチャの開催内容、抽選回数、消費通貨、排出テーブルを設定します。"
+        },
         "label": {
           "en": "Gacha",
           "ja": "ガチャ"
         }
       },
       "dt_GX6NYQD4P54A7TXS08MA9F3X7Z": {
+        "description": {
+          "en": "Defines a gacha rarity tier and the characters assigned to it.",
+          "ja": "ガチャのレアリティ区分と対象キャラクターを設定します。"
+        },
         "label": {
           "en": "Rarity",
           "ja": "レアリティ"
         }
       },
       "dt_YVN07CDH8HXS4JYP4H6NQX3054": {
+        "description": {
+          "en": "Configures each character's draw weight within a rarity tier.",
+          "ja": "レアリティ内で各キャラクターが排出される比率を設定します。"
+        },
         "label": {
           "en": "Character rate",
           "ja": "キャラクター排出率"

@@ -71,8 +71,20 @@ export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "
       en: "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per player.",
     },
   })
-  .displayType(SkillNode, { label: { ja: "スキルノード", en: "Skill node" } })
-  .displayType(SkillTreeOwner, { label: { ja: "スキルツリー所有者", en: "Tree owner" } })
+  .displayType(SkillNode, {
+    label: { ja: "スキルノード", en: "Skill node" },
+    description: {
+      ja: "スキルツリー上の能力、解放条件、前提ノードを設定します。",
+      en: "Defines an ability node, its unlock cost, and prerequisite nodes in a skill tree.",
+    },
+  })
+  .displayType(SkillTreeOwner, {
+    label: { ja: "スキルツリー所有者", en: "Tree owner" },
+    description: {
+      ja: "キャラクターなどの対象ごとに解放済みスキルノードを管理します。",
+      en: "Tracks unlocked skill nodes for an owner such as a character.",
+    },
+  })
   .domainType(SkillNode)
   .domainType(SkillTreeOwner)
 

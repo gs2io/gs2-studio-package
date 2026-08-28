@@ -22,7 +22,13 @@ export const foundationEconomyInventory = definePackage("foundation-economy-inve
       en: "Basic inventory management for items the player owns.",
     },
   })
-  .displayType(Item, { label: { ja: "アイテム", en: "Item" } })
+  .displayType(Item, {
+    label: { ja: "アイテム", en: "Item" },
+    description: {
+      ja: "プレイヤーが所持する各アイテムの数量を管理します。",
+      en: "Tracks the quantity of each item owned by a player.",
+    },
+  })
   .domainType(Item)
 
   .masterDataResource(r =>

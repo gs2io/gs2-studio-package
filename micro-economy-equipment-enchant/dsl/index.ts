@@ -123,15 +123,42 @@ export const microEconomyEquipmentEnchant = definePackage(
       en: "Rolls random bonuses onto equipment, with configurable slot counts, options and weights.",
     },
   })
-  .displayType(EquipmentEnchant, { label: { ja: "エンチャント設定", en: "Enchantment pool" } })
-  .displayType(EquipmentEnchantSlotChance, { label: { ja: "スロット数抽選", en: "Slot chance" } })
-  .displayType(EquipmentEnchantOption, { label: { ja: "エンチャント効果", en: "Enchant option" } })
-  .displayType(EquipmentEnchantment, { label: { ja: "付与済み効果", en: "Rolled bonus" } })
-  .displayType(Equipment, { label: { ja: "装備", en: "Equipment" } })
-  .dependency(
-    "foundation-economy-equipment",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(EquipmentEnchant, {
+    label: { ja: "エンチャント設定", en: "Enchantment pool" },
+    description: {
+      ja: "装備に付与できる効果候補と抽選ルールをまとめて設定します。",
+      en: "Defines the pool of effects and roll rules available when enchanting equipment.",
+    },
+  })
+  .displayType(EquipmentEnchantSlotChance, {
+    label: { ja: "スロット数抽選", en: "Slot chance" },
+    description: {
+      ja: "エンチャント時に付与される効果スロット数と確率を設定します。",
+      en: "Configures the probability of each effect-slot count during enchantment.",
+    },
+  })
+  .displayType(EquipmentEnchantOption, {
+    label: { ja: "エンチャント効果", en: "Enchant option" },
+    description: {
+      ja: "抽選対象となるエンチャント効果と値の範囲を設定します。",
+      en: "Defines an enchantment effect that can be rolled and its value range.",
+    },
+  })
+  .displayType(EquipmentEnchantment, {
+    label: { ja: "付与済み効果", en: "Rolled bonus" },
+    description: {
+      ja: "プレイヤーの装備に実際に付与されたエンチャント効果を管理します。",
+      en: "Tracks the enchantment effects rolled onto a player's equipment.",
+    },
+  })
+  .displayType(Equipment, {
+    label: { ja: "装備", en: "Equipment" },
+    description: {
+      ja: "装備ごとのエンチャント設定と付与済み効果を管理します。",
+      en: "Associates equipment with its enchantment configuration and rolled effects.",
+    },
+  })
+  .dependency("foundation-economy-equipment", "github:gs2io/gs2-studio-package")
   .domainType(EquipmentEnchant)
   .domainType(EquipmentEnchantSlotChance)
   .domainType(EquipmentEnchantOption)

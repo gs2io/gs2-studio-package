@@ -46,14 +46,40 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
       en: "Handles friend requests, follows, and profiles — the connections between players.",
     },
   })
-  .displayType(Follow, { label: { ja: "フォロー", en: "Follow" } })
-  .displayType(Friend, { label: { ja: "フレンド", en: "Friend" } })
-  .displayType(Profile, { label: { ja: "プロフィール", en: "Profile" } })
+  .displayType(Follow, {
+    label: { ja: "フォロー", en: "Follow" },
+    description: {
+      ja: "プレイヤーがフォローしている相手との関係を管理します。",
+      en: "Tracks the players followed by a player.",
+    },
+  })
+  .displayType(Friend, {
+    label: { ja: "フレンド", en: "Friend" },
+    description: {
+      ja: "承認済みのフレンド関係を管理します。",
+      en: "Tracks confirmed friendship relationships between players.",
+    },
+  })
+  .displayType(Profile, {
+    label: { ja: "プロフィール", en: "Profile" },
+    description: {
+      ja: "プレイヤーが公開するプロフィール情報を管理します。",
+      en: "Manages the profile information a player shares with others.",
+    },
+  })
   .displayType(ReceiveFriendRequest, {
     label: { ja: "フレンド申請（受信）", en: "Incoming friend request" },
+    description: {
+      ja: "他のプレイヤーから受け取ったフレンド申請を管理します。",
+      en: "Tracks friend requests received from other players.",
+    },
   })
   .displayType(SendFriendRequest, {
     label: { ja: "フレンド申請（送信）", en: "Outgoing friend request" },
+    description: {
+      ja: "他のプレイヤーへ送信したフレンド申請を管理します。",
+      en: "Tracks friend requests sent to other players.",
+    },
   })
   .domainType(Profile)
   .domainType(Follow)

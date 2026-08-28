@@ -10,6 +10,10 @@
     },
     "domainTypes": {
       "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6": {
+        "description": {
+          "en": "Tracks the quantity of each item owned by a player.",
+          "ja": "プレイヤーが所持する各アイテムの数量を管理します。"
+        },
         "label": {
           "en": "Item",
           "ja": "アイテム"

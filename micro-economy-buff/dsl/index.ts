@@ -84,11 +84,14 @@ export const microEconomyBuff = definePackage("micro-economy-buff", "0.0.0")
       en: "Temporarily scales what an action hands out, targeted by action and limited to a period.",
     },
   })
-  .displayType(Buff, { label: { ja: "バフ", en: "Buff" } })
-  .dependency(
-    "foundation-economy-schedule",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(Buff, {
+    label: { ja: "バフ", en: "Buff" },
+    description: {
+      ja: "一時的な能力補正の効果量、有効期間、重複ルールを設定します。",
+      en: "Defines a temporary stat modifier's effect, duration, and stacking rules.",
+    },
+  })
+  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
   .domainType(Buff)
 
   .masterDataResource(r =>

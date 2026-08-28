@@ -54,9 +54,27 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
       en: "Manages the weapons and gear characters own and equip, grouped by category.",
     },
   })
-  .displayType(EquipmentCategory, { label: { ja: "装備カテゴリ", en: "Equipment category" } })
-  .displayType(EquipmentCollection, { label: { ja: "装備所持枠", en: "Equipment slots" } })
-  .displayType(Equipment, { label: { ja: "装備", en: "Equipment" } })
+  .displayType(EquipmentCategory, {
+    label: { ja: "装備カテゴリ", en: "Equipment category" },
+    description: {
+      ja: "装備を分類するカテゴリを登録します。",
+      en: "Registers categories used to classify equipment.",
+    },
+  })
+  .displayType(EquipmentCollection, {
+    label: { ja: "装備所持枠", en: "Equipment slots" },
+    description: {
+      ja: "プレイヤーが所持できる装備数の初期値・上限・現在値を管理します。",
+      en: "Manages the initial, maximum, and current number of equipment slots a player owns.",
+    },
+  })
+  .displayType(Equipment, {
+    label: { ja: "装備", en: "Equipment" },
+    description: {
+      ja: "ゲームに登場する装備、カテゴリ、表示順を登録します。",
+      en: "Registers equipment available in the game, its category, and display order.",
+    },
+  })
   .domainType(EquipmentCategory)
   .domainType(Equipment)
   .domainType(EquipmentCollection)

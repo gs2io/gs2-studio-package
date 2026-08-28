@@ -68,8 +68,20 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
       en: "Delivers announcements and item-attached messages from the operator to players.",
     },
   })
-  .displayType(GlobalMessage, { label: { ja: "全体メッセージ", en: "Global message" } })
-  .displayType(Message, { label: { ja: "メッセージ", en: "Message" } })
+  .displayType(GlobalMessage, {
+    label: { ja: "全体メッセージ", en: "Global message" },
+    description: {
+      ja: "全プレイヤーへ配信するメッセージ、受取期間、添付報酬を設定します。",
+      en: "Defines a message sent to all players, its claim period, and attached rewards.",
+    },
+  })
+  .displayType(Message, {
+    label: { ja: "メッセージ", en: "Message" },
+    description: {
+      ja: "プレイヤーの受信箱に届く個別メッセージと受取状態を管理します。",
+      en: "Tracks individual inbox messages delivered to a player and their claim state.",
+    },
+  })
   .domainType(GlobalMessage)
   .domainType(Message)
 

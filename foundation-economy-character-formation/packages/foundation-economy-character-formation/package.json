@@ -13,24 +13,40 @@
     },
     "domainTypes": {
       "dt_1YKD2ZM08CX2D22TCPED995K2N": {
+        "description": {
+          "en": "Manages the initial, maximum, and current number of saved formation slots.",
+          "ja": "編成の初期保存枠数、最大枠数、現在の枠数を管理します。"
+        },
         "label": {
           "en": "Formation",
           "ja": "編成"
         }
       },
       "dt_JY9NED2YYCSG1HXPQ1J0X9WQXW": {
+        "description": {
+          "en": "Stores one player formation together with its slot assignments.",
+          "ja": "プレイヤーが保存した1つの編成と、そのスロット構成を管理します。"
+        },
         "label": {
           "en": "Formation form",
           "ja": "編成フォーム"
         }
       },
       "dt_MZT04J9C7W1562STKR3XCTC257": {
+        "description": {
+          "en": "Tracks the character assigned to each slot in a saved formation.",
+          "ja": "保存した編成の各スロットに配置されているキャラクターを管理します。"
+        },
         "label": {
           "en": "Form slot",
           "ja": "フォームスロット"
         }
       },
       "dt_Z73MGN3WHWKHC8PF714HS91E62": {
+        "description": {
+          "en": "Defines which characters are eligible for each formation slot.",
+          "ja": "編成スロットごとに配置できるキャラクターの条件を設定します。"
+        },
         "label": {
           "en": "Formation slot",
           "ja": "編成スロット"

@@ -57,8 +57,20 @@ export const foundationEconomyAd = definePackage("foundation-economy-ad", "0.0.0
       en: "Tracks ad views and manages the points you can use to reward players for watching them.",
     },
   })
-  .displayType(AdPlatform, { label: { ja: "広告プラットフォーム", en: "Ad platform" } })
-  .displayType(AdViewPoint, { label: { ja: "広告視聴枠", en: "Ad view point" } })
+  .displayType(AdPlatform, {
+    label: { ja: "広告プラットフォーム", en: "Ad platform" },
+    description: {
+      ja: "AdMobとUnity Adsで利用する広告ユニットやゲームキーを設定します。",
+      en: "Configures the ad units and game keys used by AdMob and Unity Ads.",
+    },
+  })
+  .displayType(AdViewPoint, {
+    label: { ja: "広告視聴枠", en: "Ad view point" },
+    description: {
+      ja: "プレイヤーが利用できる広告視聴ポイントの現在値を管理します。",
+      en: "Tracks the current number of ad-view points available to a player.",
+    },
+  })
   .domainType(AdPlatform)
   .domainType(AdViewPoint)
 

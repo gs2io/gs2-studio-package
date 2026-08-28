@@ -10,12 +10,20 @@
     },
     "domainTypes": {
       "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD": {
+        "description": {
+          "en": "Defines a message sent to all players, its claim period, and attached rewards.",
+          "ja": "全プレイヤーへ配信するメッセージ、受取期間、添付報酬を設定します。"
+        },
         "label": {
           "en": "Global message",
           "ja": "全体メッセージ"
         }
       },
       "dt_GVTDXY1KW1X831ABJENERKSHZA": {
+        "description": {
+          "en": "Tracks individual inbox messages delivered to a player and their claim state.",
+          "ja": "プレイヤーの受信箱に届く個別メッセージと受取状態を管理します。"
+        },
         "label": {
           "en": "Message",
           "ja": "メッセージ"

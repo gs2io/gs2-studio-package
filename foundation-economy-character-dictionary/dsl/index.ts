@@ -45,11 +45,14 @@ export const foundationEconomyCharacterDictionary = definePackage(
       en: "Keeps a dex of every character species the player has ever obtained.",
     },
   })
-  .displayType(Character, { label: { ja: "キャラクター", en: "Character" } })
-  .dependency(
-    "foundation-economy-character",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(Character, {
+    label: { ja: "キャラクター", en: "Character" },
+    description: {
+      ja: "キャラクター図鑑に表示するキャラクターと閲覧状態を管理します。",
+      en: "Manages the characters shown in the character encyclopedia and their view state.",
+    },
+  })
+  .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
   .domainType(Character)
 
   .masterDataResource(r => {

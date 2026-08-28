@@ -187,14 +187,35 @@ export const microEconomyMission = definePackage("micro-economy-mission", "0.0.0
       en: "Manages daily and weekly missions along with their conditions and rewards.",
     },
   })
-  .displayType(MissionCollection, { label: { ja: "ミッショングループ", en: "Mission group" } })
-  .displayType(MissionCounter, { label: { ja: "ミッションカウンター", en: "Mission counter" } })
-  .displayType(MissionSetting, { label: { ja: "ミッション設定", en: "Mission setting" } })
-  .displayType(Mission, { label: { ja: "ミッション", en: "Mission" } })
-  .dependency(
-    "foundation-economy-schedule",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(MissionCollection, {
+    label: { ja: "ミッショングループ", en: "Mission group" },
+    description: {
+      ja: "ミッションの公開範囲と開催スケジュールをまとめて設定します。",
+      en: "Groups missions by scope and availability schedule.",
+    },
+  })
+  .displayType(MissionCounter, {
+    label: { ja: "ミッションカウンター", en: "Mission counter" },
+    description: {
+      ja: "ミッション達成条件に使用するプレイヤーごとの進捗値を管理します。",
+      en: "Tracks per-player progress values used by mission completion conditions.",
+    },
+  })
+  .displayType(MissionSetting, {
+    label: { ja: "ミッション設定", en: "Mission setting" },
+    description: {
+      ja: "ミッションカウンターのリセット方法や共通動作を設定します。",
+      en: "Configures counter reset rules and shared mission behavior.",
+    },
+  })
+  .displayType(Mission, {
+    label: { ja: "ミッション", en: "Mission" },
+    description: {
+      ja: "達成カウンター、目標値、完了報酬と受取状態を設定・管理します。",
+      en: "Defines a mission's counter, target value, completion rewards, and claim state.",
+    },
+  })
+  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
   .domainType(MissionCollection)
   .domainType(MissionCounter)
   .domainType(MissionSetting)

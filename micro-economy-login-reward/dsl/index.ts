@@ -93,13 +93,26 @@ export const microEconomyLoginReward = definePackage("micro-economy-login-reward
   })
   .displayType(LoginRewardCollection, {
     label: { ja: "ログインボーナスグループ", en: "Login reward group" },
+    description: {
+      ja: "ログインボーナスをまとめるグループと開催スケジュールを設定します。",
+      en: "Groups login rewards and associates them with an availability schedule.",
+    },
   })
-  .displayType(LoginReward, { label: { ja: "ログインボーナス", en: "Login reward" } })
-  .displayType(Schedule, { label: { ja: "スケジュール", en: "Schedule" } })
-  .dependency(
-    "foundation-economy-schedule",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(LoginReward, {
+    label: { ja: "ログインボーナス", en: "Login reward" },
+    description: {
+      ja: "ログイン日数ごとに付与する報酬内容を設定します。",
+      en: "Defines the rewards granted for each login day.",
+    },
+  })
+  .displayType(Schedule, {
+    label: { ja: "スケジュール", en: "Schedule" },
+    description: {
+      ja: "ログインボーナスを利用できる開催期間を参照します。",
+      en: "References the period during which a login reward campaign is available.",
+    },
+  })
+  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
   .domainType(LoginRewardCollection)
   .domainType(LoginReward)
   .domainType(Schedule)

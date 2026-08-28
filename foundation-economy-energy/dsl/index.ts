@@ -39,7 +39,13 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
       en: "Manages a stamina/energy meter that recovers over time.",
     },
   })
-  .displayType(Energy, { label: { ja: "スタミナ", en: "Stamina" } })
+  .displayType(Energy, {
+    label: { ja: "スタミナ", en: "Stamina" },
+    description: {
+      ja: "スタミナの初期値・上限・回復間隔とプレイヤーの現在値を管理します。",
+      en: "Manages stamina defaults, capacity, recovery interval, and each player's current value.",
+    },
+  })
   .domainType(Energy)
 
   .masterDataResource(r =>

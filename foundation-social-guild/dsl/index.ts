@@ -93,8 +93,20 @@ export const foundationSocialGuild = definePackage("foundation-social-guild", "0
       en: "Handles player guilds — capacity, permission roles, and which guild a player belongs to.",
     },
   })
-  .displayType(Guild, { label: { ja: "ギルド種別", en: "Guild kind" } })
-  .displayType(GuildRole, { label: { ja: "ギルド権限", en: "Guild role" } })
+  .displayType(Guild, {
+    label: { ja: "ギルド種別", en: "Guild kind" },
+    description: {
+      ja: "ギルドの参加方式、定員、カスタム項目などの基本設定を定義します。",
+      en: "Defines a guild kind's join policy, capacity, and custom properties.",
+    },
+  })
+  .displayType(GuildRole, {
+    label: { ja: "ギルド権限", en: "Guild role" },
+    description: {
+      ja: "ギルドメンバーに割り当てる役職と操作権限を設定します。",
+      en: "Configures guild member roles and their permissions.",
+    },
+  })
   .domainType(Guild)
   .domainType(GuildRole)
 

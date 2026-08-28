@@ -13,6 +13,10 @@
     },
     "domainTypes": {
       "dt_01M0C89EMY1KAND5SNBFR7N0GQ": {
+        "description": {
+          "en": "Defines a temporary stat modifier's effect, duration, and stacking rules.",
+          "ja": "一時的な能力補正の効果量、有効期間、重複ルールを設定します。"
+        },
         "label": {
           "en": "Buff",
           "ja": "バフ"

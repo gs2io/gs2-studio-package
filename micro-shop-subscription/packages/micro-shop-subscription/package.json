@@ -13,6 +13,10 @@
     },
     "domainTypes": {
       "dt_01M0CE237DZF21KW81CJ2BP1WN": {
+        "description": {
+          "en": "Configures store product identifiers and renewal triggers, and tracks subscription status and expiration.",
+          "ja": "App Store・Google Playの商品識別子、更新トリガー、有効期限を設定・管理します。"
+        },
         "label": {
           "en": "Subscription",
           "ja": "サブスク商品"

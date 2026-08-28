@@ -10,12 +10,20 @@
     },
     "domainTypes": {
       "dt_01M0C87BJCHGRBT6T7MVKFRRYF": {
+        "description": {
+          "en": "Tracks unlocked skill nodes for an owner such as a character.",
+          "ja": "キャラクターなどの対象ごとに解放済みスキルノードを管理します。"
+        },
         "label": {
           "en": "Tree owner",
           "ja": "スキルツリー所有者"
         }
       },
       "dt_01M0C87BJCRTK0Y3JKH8EHKAR6": {
+        "description": {
+          "en": "Defines an ability node, its unlock cost, and prerequisite nodes in a skill tree.",
+          "ja": "スキルツリー上の能力、解放条件、前提ノードを設定します。"
+        },
         "label": {
           "en": "Skill node",
           "ja": "スキルノード"

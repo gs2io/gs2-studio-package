@@ -10,12 +10,20 @@
     },
     "domainTypes": {
       "dt_AFCBM1Z879DZAF9085SFW63Z5S": {
+        "description": {
+          "en": "Configures the ad units and game keys used by AdMob and Unity Ads.",
+          "ja": "AdMobとUnity Adsで利用する広告ユニットやゲームキーを設定します。"
+        },
         "label": {
           "en": "Ad platform",
           "ja": "広告プラットフォーム"
         }
       },
       "dt_RTQJBJN6VK3VTEX3WKNGGK17JW": {
+        "description": {
+          "en": "Tracks the current number of ad-view points available to a player.",
+          "ja": "プレイヤーが利用できる広告視聴ポイントの現在値を管理します。"
+        },
         "label": {
           "en": "Ad view point",
           "ja": "広告視聴枠"

@@ -10,6 +10,10 @@
     },
     "domainTypes": {
       "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ": {
+        "description": {
+          "en": "Configures the OIDC connection and authentication settings used for account transfer.",
+          "ja": "アカウント引き継ぎに使用するOIDC接続情報と認証設定を登録します。"
+        },
         "label": {
           "en": "Take-over setting",
           "ja": "引き継ぎ設定"

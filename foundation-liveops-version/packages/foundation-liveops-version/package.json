@@ -10,12 +10,20 @@
     },
     "domainTypes": {
       "dt_39GHCE719ZNVPNJCZ2M921Q32H": {
+        "description": {
+          "en": "Defines supported application versions and the required update behavior.",
+          "ja": "利用可能なアプリバージョンと更新時の扱いを設定します。"
+        },
         "label": {
           "en": "App version",
           "ja": "アプリバージョン"
         }
       },
       "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4": {
+        "description": {
+          "en": "Manages published versions of agreements such as terms of service and privacy policies.",
+          "ja": "利用規約やプライバシーポリシーの公開バージョンを管理します。"
+        },
         "label": {
           "en": "Agreement version",
           "ja": "規約バージョン"

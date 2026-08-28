@@ -96,12 +96,21 @@ export const microEconomyCharacterGrade = definePackage("micro-economy-character
       en: "Promotes a character through grades, each raising its level cap, with per-step caps and eligibility.",
     },
   })
-  .displayType(CharacterGradeStep, { label: { ja: "グレード段階", en: "Grade step" } })
-  .displayType(Character, { label: { ja: "キャラクター", en: "Character" } })
-  .dependency(
-    "foundation-economy-character",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(CharacterGradeStep, {
+    label: { ja: "グレード段階", en: "Grade step" },
+    description: {
+      ja: "対象キャラクターの条件、グレードアップ先、ランク上限を設定します。",
+      en: "Defines eligible characters, the grade-up target, and rank cap for a grade step.",
+    },
+  })
+  .displayType(Character, {
+    label: { ja: "キャラクター", en: "Character" },
+    description: {
+      ja: "プレイヤーが所持するキャラクターごとの現在グレードを管理します。",
+      en: "Tracks the current grade of each character owned by a player.",
+    },
+  })
+  .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
   .domainType(CharacterGradeStep)
   .domainType(Character)
 

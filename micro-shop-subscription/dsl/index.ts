@@ -86,11 +86,14 @@ export const microShopSubscription = definePackage("micro-shop-subscription", "0
       en: "Handles recurring store purchases such as a monthly pass, pulling a schedule trigger on each renewal and tracking who currently holds it.",
     },
   })
-  .displayType(StoreSubscription, { label: { ja: "サブスク商品", en: "Subscription" } })
-  .dependency(
-    "foundation-economy-schedule",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(StoreSubscription, {
+    label: { ja: "サブスク商品", en: "Subscription" },
+    description: {
+      ja: "App Store・Google Playの商品識別子、更新トリガー、有効期限を設定・管理します。",
+      en: "Configures store product identifiers and renewal triggers, and tracks subscription status and expiration.",
+    },
+  })
+  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
   .domainType(StoreSubscription)
 
   .masterDataResource(r =>

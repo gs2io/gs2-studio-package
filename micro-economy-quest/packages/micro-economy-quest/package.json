@@ -13,24 +13,40 @@
     },
     "domainTypes": {
       "dt_1P091J81MXDA5VBTFMMT4PP0RQ": {
+        "description": {
+          "en": "Defines rewards granted at milestones during quest progress.",
+          "ja": "クエスト進行中の達成段階ごとに付与する報酬を設定します。"
+        },
         "label": {
           "en": "Quest reward",
           "ja": "クエスト報酬"
         }
       },
       "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4": {
+        "description": {
+          "en": "Tracks a player's quest progress, completion value, and reward claims.",
+          "ja": "プレイヤーのクエスト進行状況、達成値、報酬受取状態を管理します。"
+        },
         "label": {
           "en": "Quest progress",
           "ja": "クエスト進行"
         }
       },
       "dt_8KGQ5PW8KF4540B06JKKQ6QF96": {
+        "description": {
+          "en": "Groups related quests and defines their order and progression unit.",
+          "ja": "関連するクエストをまとめ、公開順序と進行単位を設定します。"
+        },
         "label": {
           "en": "Quest group",
           "ja": "クエストグループ"
         }
       },
       "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC": {
+        "description": {
+          "en": "Defines start costs, first-clear and repeat-clear rewards, and failure actions.",
+          "ja": "開始時の消費、初回・通常クリア報酬、失敗時アクションを設定します。"
+        },
         "label": {
           "en": "Quest",
           "ja": "クエスト"

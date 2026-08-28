@@ -59,8 +59,20 @@ export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0
       en: "Accrues and grants rewards that build up while the player is away.",
     },
   })
-  .displayType(IdleReward, { label: { ja: "放置報酬", en: "Idle reward" } })
-  .displayType(IdleStatus, { label: { ja: "放置状況", en: "Idle status" } })
+  .displayType(IdleReward, {
+    label: { ja: "放置報酬", en: "Idle reward" },
+    description: {
+      ja: "放置時間に応じて付与する報酬アクションを設定します。",
+      en: "Defines reward actions granted for accumulated idle time.",
+    },
+  })
+  .displayType(IdleStatus, {
+    label: { ja: "放置状況", en: "Idle status" },
+    description: {
+      ja: "プレイヤーの放置開始時刻と受け取り状況を管理します。",
+      en: "Tracks when a player's idle period began and the associated claim state.",
+    },
+  })
   .domainType(IdleReward)
   .domainType(IdleStatus)
 

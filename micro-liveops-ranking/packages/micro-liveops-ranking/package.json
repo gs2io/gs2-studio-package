@@ -13,12 +13,20 @@
     },
     "domainTypes": {
       "dt_01M0C5QTC12JW853EKK38QN42Z": {
+        "description": {
+          "en": "Defines rewards distributed for each ranking placement range.",
+          "ja": "ランキングの順位範囲ごとに配布する報酬を設定します。"
+        },
         "label": {
           "en": "Ranking reward",
           "ja": "ランキング報酬"
         }
       },
       "dt_01M0C5QTC1BDRSX4T1WSDJXDQV": {
+        "description": {
+          "en": "Configures scoring, availability, and participation rules for a player ranking.",
+          "ja": "プレイヤーランキングの集計方法、開催期間、参加条件を設定します。"
+        },
         "label": {
           "en": "Ranking",
           "ja": "ランキング"

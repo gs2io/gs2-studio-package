@@ -60,7 +60,13 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
       en: "Issues and manages transfer codes so players can move their account to a new device.",
     },
   })
-  .displayType(TakeOverSetting, { label: { ja: "引き継ぎ設定", en: "Take-over setting" } })
+  .displayType(TakeOverSetting, {
+    label: { ja: "引き継ぎ設定", en: "Take-over setting" },
+    description: {
+      ja: "アカウント引き継ぎに使用するOIDC接続情報と認証設定を登録します。",
+      en: "Configures the OIDC connection and authentication settings used for account transfer.",
+    },
+  })
   .domainType(TakeOverSetting)
   .instance(TakeOverSetting, "apple", {
     type: 0,

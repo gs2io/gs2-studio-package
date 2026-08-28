@@ -128,13 +128,28 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
       en: "A shop for purchasing currency, with configurable products and prices.",
     },
   })
-  .displayType(CurrencyType, { label: { ja: "通貨種別", en: "Currency type" } })
-  .displayType(StorePrice, { label: { ja: "販売価格", en: "Store price" } })
-  .displayType(StoreProduct, { label: { ja: "ストア商品", en: "Store product" } })
-  .dependency(
-    "foundation-economy-currency",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(CurrencyType, {
+    label: { ja: "通貨種別", en: "Currency type" },
+    description: {
+      ja: "商品の購入に利用できるゲーム内通貨の種類を設定します。",
+      en: "Defines a type of in-game currency that can be used to purchase products.",
+    },
+  })
+  .displayType(StorePrice, {
+    label: { ja: "販売価格", en: "Store price" },
+    description: {
+      ja: "商品ごとに販売通貨、価格、購入回数制限を設定します。",
+      en: "Configures a product's currency, price, and purchase limits.",
+    },
+  })
+  .displayType(StoreProduct, {
+    label: { ja: "ストア商品", en: "Store product" },
+    description: {
+      ja: "ストアで販売する商品内容と表示情報を設定します。",
+      en: "Defines the contents and presentation of a product sold in the store.",
+    },
+  })
+  .dependency("foundation-economy-currency", "github:gs2io/gs2-studio-package")
   .domainType(CurrencyType)
   .domainType(StorePrice)
   .domainType(StoreProduct)

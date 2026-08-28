@@ -53,11 +53,14 @@ export const microShopEnergy = definePackage("micro-shop-energy", "0.0.0")
       en: "A shop that sells products to refill stamina.",
     },
   })
-  .displayType(EnergyProduct, { label: { ja: "スタミナ商品", en: "Stamina product" } })
-  .dependency(
-    "foundation-economy-energy",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(EnergyProduct, {
+    label: { ja: "スタミナ商品", en: "Stamina product" },
+    description: {
+      ja: "購入時に回復するスタミナ量、価格、購入制限を設定します。",
+      en: "Defines a stamina product's recovery amount, price, and purchase limits.",
+    },
+  })
+  .dependency("foundation-economy-energy", "github:gs2io/gs2-studio-package")
   .domainType(EnergyProduct)
   .masterDataResource(r =>
     r

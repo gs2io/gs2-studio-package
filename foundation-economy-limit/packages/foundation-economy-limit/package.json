@@ -10,12 +10,20 @@
     },
     "domainTypes": {
       "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R": {
+        "description": {
+          "en": "Configures how and when a usage counter is reset.",
+          "ja": "利用回数カウンターのリセット方法と周期を設定します。"
+        },
         "label": {
           "en": "Reset schedule",
           "ja": "リセット設定"
         }
       },
       "dt_01M0C6M2N38KVHBHTC1JBRT5YA": {
+        "description": {
+          "en": "Tracks each player's usage count and its limit.",
+          "ja": "プレイヤーごとの利用回数と上限を管理します。"
+        },
         "label": {
           "en": "Usage counter",
           "ja": "回数カウンター"

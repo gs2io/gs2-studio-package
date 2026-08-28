@@ -10,6 +10,10 @@
     },
     "domainTypes": {
       "dt_TX5D50PD77NCTNGR3SKBGETDFY": {
+        "description": {
+          "en": "Manages stamina defaults, capacity, recovery interval, and each player's current value.",
+          "ja": "スタミナの初期値・上限・回復間隔とプレイヤーの現在値を管理します。"
+        },
         "label": {
           "en": "Stamina",
           "ja": "スタミナ"

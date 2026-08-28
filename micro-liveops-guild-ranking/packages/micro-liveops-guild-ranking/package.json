@@ -14,12 +14,20 @@
     },
     "domainTypes": {
       "dt_01M0CE422VDT5R1HBS4KHAF8RE": {
+        "description": {
+          "en": "Defines rewards distributed for each guild-ranking placement range.",
+          "ja": "ギルドランキングの順位範囲ごとに配布する報酬を設定します。"
+        },
         "label": {
           "en": "Ranking reward",
           "ja": "ランキング報酬"
         }
       },
       "dt_01M0CE422VWKB1V6XFZWXFJQZ9": {
+        "description": {
+          "en": "Configures scoring, availability, and participation rules for a guild ranking.",
+          "ja": "ギルド単位で競うランキングの集計方法、開催期間、参加条件を設定します。"
+        },
         "label": {
           "en": "Guild ranking",
           "ja": "ギルドランキング"

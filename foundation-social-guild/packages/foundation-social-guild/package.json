@@ -10,12 +10,20 @@
     },
     "domainTypes": {
       "dt_01M0C5T6AF24NKHPZ1Z4R946FT": {
+        "description": {
+          "en": "Defines a guild kind's join policy, capacity, and custom properties.",
+          "ja": "ギルドの参加方式、定員、カスタム項目などの基本設定を定義します。"
+        },
         "label": {
           "en": "Guild kind",
           "ja": "ギルド種別"
         }
       },
       "dt_01M0C5T6AFT4RWZEQQFJ1D89M0": {
+        "description": {
+          "en": "Configures guild member roles and their permissions.",
+          "ja": "ギルドメンバーに割り当てる役職と操作権限を設定します。"
+        },
         "label": {
           "en": "Guild role",
           "ja": "ギルド権限"

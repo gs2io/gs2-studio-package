@@ -10,18 +10,30 @@
     },
     "domainTypes": {
       "dt_FANPG561806ENHYPWV5YRDSHC7": {
+        "description": {
+          "en": "Manages the initial, maximum, and current number of equipment slots a player owns.",
+          "ja": "プレイヤーが所持できる装備数の初期値・上限・現在値を管理します。"
+        },
         "label": {
           "en": "Equipment slots",
           "ja": "装備所持枠"
         }
       },
       "dt_QQR152BQFJSTM2W1WYZR4RPA98": {
+        "description": {
+          "en": "Registers categories used to classify equipment.",
+          "ja": "装備を分類するカテゴリを登録します。"
+        },
         "label": {
           "en": "Equipment category",
           "ja": "装備カテゴリ"
         }
       },
       "dt_R7W960WC22J1FD8E239HDFMD8D": {
+        "description": {
+          "en": "Registers equipment available in the game, its category, and display order.",
+          "ja": "ゲームに登場する装備、カテゴリ、表示順を登録します。"
+        },
         "label": {
           "en": "Equipment",
           "ja": "装備"

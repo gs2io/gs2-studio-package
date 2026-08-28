@@ -92,12 +92,21 @@ export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.0
       en: "A global leaderboard with a scheduled entry period and rewards handed out by rank.",
     },
   })
-  .displayType(Ranking, { label: { ja: "ランキング", en: "Ranking" } })
-  .displayType(RankingReward, { label: { ja: "ランキング報酬", en: "Ranking reward" } })
-  .dependency(
-    "foundation-economy-schedule",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(Ranking, {
+    label: { ja: "ランキング", en: "Ranking" },
+    description: {
+      ja: "プレイヤーランキングの集計方法、開催期間、参加条件を設定します。",
+      en: "Configures scoring, availability, and participation rules for a player ranking.",
+    },
+  })
+  .displayType(RankingReward, {
+    label: { ja: "ランキング報酬", en: "Ranking reward" },
+    description: {
+      ja: "ランキングの順位範囲ごとに配布する報酬を設定します。",
+      en: "Defines rewards distributed for each ranking placement range.",
+    },
+  })
+  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
   .domainType(Ranking)
   .domainType(RankingReward)
 

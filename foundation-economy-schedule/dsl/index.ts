@@ -120,8 +120,20 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
       en: "Shared date-range and trigger infrastructure other features build on.",
     },
   })
-  .displayType(Schedule, { label: { ja: "スケジュール", en: "Schedule" } })
-  .displayType(Trigger, { label: { ja: "トリガー", en: "Trigger" } })
+  .displayType(Schedule, {
+    label: { ja: "スケジュール", en: "Schedule" },
+    description: {
+      ja: "イベントや機能を有効にする開始・終了日時と繰り返し条件を設定します。",
+      en: "Defines start and end times and recurrence rules for events or features.",
+    },
+  })
+  .displayType(Trigger, {
+    label: { ja: "トリガー", en: "Trigger" },
+    description: {
+      ja: "プレイヤーごとのトリガー発火状態と有効期限を管理します。",
+      en: "Tracks each player's trigger state, trigger time, and expiration.",
+    },
+  })
   .domainType(Schedule)
   .domainType(Trigger)
 

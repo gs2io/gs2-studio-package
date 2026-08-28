@@ -13,18 +13,30 @@
     },
     "domainTypes": {
       "dt_4C1ZT24FH0ST09YC0VE1TB7SK8": {
+        "description": {
+          "en": "Defines the contents and presentation of a product sold in the store.",
+          "ja": "ストアで販売する商品内容と表示情報を設定します。"
+        },
         "label": {
           "en": "Store product",
           "ja": "ストア商品"
         }
       },
       "dt_NRHGV2T8Z964H3HMPZ454WEZ9M": {
+        "description": {
+          "en": "Configures a product's currency, price, and purchase limits.",
+          "ja": "商品ごとに販売通貨、価格、購入回数制限を設定します。"
+        },
         "label": {
           "en": "Store price",
           "ja": "販売価格"
         }
       },
       "dt_QM3KC8SJTDM4W54DTSPXM8HTRD": {
+        "description": {
+          "en": "Defines a type of in-game currency that can be used to purchase products.",
+          "ja": "商品の購入に利用できるゲーム内通貨の種類を設定します。"
+        },
         "label": {
           "en": "Currency type",
           "ja": "通貨種別"

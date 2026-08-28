@@ -13,30 +13,50 @@
     },
     "domainTypes": {
       "dt_01M0C84Y321K5KHKYHWHMAVTH5": {
+        "description": {
+          "en": "Associates equipment with its enchantment configuration and rolled effects.",
+          "ja": "装備ごとのエンチャント設定と付与済み効果を管理します。"
+        },
         "label": {
           "en": "Equipment",
           "ja": "装備"
         }
       },
       "dt_01M0C84Y323XGX5N856QJ5Z61Q": {
+        "description": {
+          "en": "Tracks the enchantment effects rolled onto a player's equipment.",
+          "ja": "プレイヤーの装備に実際に付与されたエンチャント効果を管理します。"
+        },
         "label": {
           "en": "Rolled bonus",
           "ja": "付与済み効果"
         }
       },
       "dt_01M0C84Y32FM1BC8Y88H1VN16Q": {
+        "description": {
+          "en": "Defines the pool of effects and roll rules available when enchanting equipment.",
+          "ja": "装備に付与できる効果候補と抽選ルールをまとめて設定します。"
+        },
         "label": {
           "en": "Enchantment pool",
           "ja": "エンチャント設定"
         }
       },
       "dt_01M0C84Y32MFW05C5TXC61W1SR": {
+        "description": {
+          "en": "Configures the probability of each effect-slot count during enchantment.",
+          "ja": "エンチャント時に付与される効果スロット数と確率を設定します。"
+        },
         "label": {
           "en": "Slot chance",
           "ja": "スロット数抽選"
         }
       },
       "dt_01M0C84Y32ZDSA8TEZHPNG3MNK": {
+        "description": {
+          "en": "Defines an enchantment effect that can be rolled and its value range.",
+          "ja": "抽選対象となるエンチャント効果と値の範囲を設定します。"
+        },
         "label": {
           "en": "Enchant option",
           "ja": "エンチャント効果"

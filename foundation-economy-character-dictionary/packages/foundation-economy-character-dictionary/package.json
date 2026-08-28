@@ -13,6 +13,10 @@
     },
     "domainTypes": {
       "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV": {
+        "description": {
+          "en": "Manages the characters shown in the character encyclopedia and their view state.",
+          "ja": "キャラクター図鑑に表示するキャラクターと閲覧状態を管理します。"
+        },
         "label": {
           "en": "Character",
           "ja": "キャラクター"

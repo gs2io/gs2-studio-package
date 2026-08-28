@@ -10,12 +10,20 @@
     },
     "domainTypes": {
       "dt_4201EMDQW9HN9AMKXT0WQHMKJY": {
+        "description": {
+          "en": "Defines reward actions granted for accumulated idle time.",
+          "ja": "放置時間に応じて付与する報酬アクションを設定します。"
+        },
         "label": {
           "en": "Idle reward",
           "ja": "放置報酬"
         }
       },
       "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY": {
+        "description": {
+          "en": "Tracks when a player's idle period began and the associated claim state.",
+          "ja": "プレイヤーの放置開始時刻と受け取り状況を管理します。"
+        },
         "label": {
           "en": "Idle status",
           "ja": "放置状況"

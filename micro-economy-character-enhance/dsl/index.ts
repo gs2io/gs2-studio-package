@@ -96,12 +96,21 @@ export const microEconomyCharacterEnhance = definePackage(
       en: "Feeds characters to another character as material, turning them into experience, with configurable bonus multipliers.",
     },
   })
-  .displayType(CharacterEnhance, { label: { ja: "強化レシピ", en: "Enhancement recipe" } })
-  .displayType(CharacterEnhanceBonus, { label: { ja: "大成功倍率", en: "Bonus rate" } })
-  .dependency(
-    "foundation-economy-character",
-    "github:gs2io/gs2-studio-package"
-  )
+  .displayType(CharacterEnhance, {
+    label: { ja: "強化レシピ", en: "Enhancement recipe" },
+    description: {
+      ja: "キャラクター獲得時に経験値を読み取るメタデータのサフィックスを設定します。",
+      en: "Configures the metadata suffix used to read experience when a character is acquired.",
+    },
+  })
+  .displayType(CharacterEnhanceBonus, {
+    label: { ja: "大成功倍率", en: "Bonus rate" },
+    description: {
+      ja: "キャラクター強化の成功種別ごとの発生率と経験値倍率を設定します。",
+      en: "Configures the probability and experience multiplier for each enhancement result.",
+    },
+  })
+  .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
   .domainType(CharacterEnhance)
   .domainType(CharacterEnhanceBonus)
 
