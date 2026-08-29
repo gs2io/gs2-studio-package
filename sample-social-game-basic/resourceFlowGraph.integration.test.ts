@@ -258,7 +258,8 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
     const graph = buildInstanceLevelFlowGraph({ project, catalog });
     const summary = summarize(graph);
 
-    // 主要な切り分けカテゴリ。ここで >0 のものが UI 上の "Diagnostics" 一覧に出る。
+    // These diagnostic categories distinguish the main failure sources; values
+    // greater than zero appear in the UI's Diagnostics list.
     const nodeKinds = summary.nodeDiagnosticCountsByKind;
     const edgeKinds = summary.edgeDiagnosticCountsByKind;
 
@@ -266,13 +267,13 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
 
     console.log("[edge diagnostics]", edgeKinds);
 
-    // UI で「ActionTransform 未解決」が flow を消している仮説を検証:
-    //   - edgeKinds.unresolvedTransform > 0 なら transform が依存パッケージから取れていない
-    //   - edgeKinds.unresolvedBindingSource > 0 なら ValueBinding の参照先が解決できていない
-    //   - edges === 0 で上記がゼロなら、そもそも action property の materialize 自体が
-    //     呼ばれていない (gate 段階で skip)
-    // 数値そのものに固定 expect は付けない (サンプル更新で容易に変動するため) が、
-    // CI ログには残るので回帰追跡できる。
+    // Check the hypothesis that an unresolved ActionTransform removes the flow:
+    //   - unresolvedTransform > 0 means a transform was not found in a dependency package.
+    //   - unresolvedBindingSource > 0 means a ValueBinding target was not resolved.
+    //   - If edges === 0 and both counts are zero, action-property materialization
+    //     was not invoked and the gate skipped the case.
+    // Do not pin the exact counts because sample updates can change them; the
+    // values remain in CI logs for regression tracing.
     expect(typeof nodeKinds).toBe("object");
     expect(typeof edgeKinds).toBe("object");
   });

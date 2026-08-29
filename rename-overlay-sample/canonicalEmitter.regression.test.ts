@@ -1,10 +1,10 @@
 /**
  * Canonical emitter regression test for the rename-overlay-sample fixture.
  *
- * Phase B-2 wires `buildCanonicalTypeRegistry` into the batch C# generator
- * and gates each per-pkg emit through `shouldEmitForCanonicalGate`. This
- * test verifies the end-to-end behaviour for the Solitaire-shape rename
- * chain (Character -> Charm):
+ * `buildCanonicalTypeRegistry` selects the canonical package for batch C#
+ * generation, and each per-package emit is gated by
+ * `shouldEmitForCanonicalGate`. This test verifies the end-to-end behaviour
+ * for the Solitaire-shape rename chain (Character -> Charm):
  *
  *   - For the three unambiguous identity chains (CharacterCollection,
  *     CharacterExperience, CharacterRate) the consumer pkg
@@ -13,7 +13,7 @@
  *     upstream foundation/gacha pkgs' `Character*.cs` artifacts are
  *     suppressed.
  *   - `ref` targets inside the canonical artifacts resolve through
- *     `resolveCanonicalTypeName` (Phase B-3) so that, e.g., a property
+ *     `resolveCanonicalTypeName` so that, e.g., a property
  *     pointing at the CharacterCollection identity is rewritten to
  *     `CharmCollectionId`.
  *   - The Character identity itself is ambiguous in this fixture (two
@@ -21,7 +21,7 @@
  *     `codegen.canonicalAmbiguity` warning and disables canonical
  *     selection for that identity — both upstream and overlay pkgs fall
  *     back to legacy per-pkg gating + the existing cross-pkg overlay
- *     dedup. The ambiguity warning is the observable Phase B-2 signal.
+ *     dedup. The ambiguity warning is the observable registry signal.
  */
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";

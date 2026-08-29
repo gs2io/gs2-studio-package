@@ -53,8 +53,8 @@ describe("StoreProduct overlay edit regression (sample-social-game-basic)", () =
     expect(depsBefore.has("foundation-economy-currency")).toBe(false);
 
     // Use a synthetic sourceInstanceId that does not collide with any overlay
-    // authored on disk; this keeps the regression idempotent regardless of
-    // future fixture changes to overlay/store-product/*.json.
+    // authored on disk; this keeps the regression idempotent if the fixture
+    // gains another overlay in overlay/store-product/*.json.
     const existingOverlayIds = new Set(overlaysBefore.map(o => o.sourceInstanceId as string));
     let targetId = "regression-target";
     let suffix = 0;
