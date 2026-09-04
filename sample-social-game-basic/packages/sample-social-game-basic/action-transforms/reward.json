@@ -66,11 +66,11 @@
       "description": "",
       "id": "param_01KM2NMRK3CVHP5KR6AZG0DM6H",
       "name": "rewardType",
+      "required": true,
       "type": {
         "kind": "ref",
         "targetTypeId": "dt_FEXHRRAKNBN76PEX2C2VZGWSDV"
-      },
-      "required": true
+      }
     },
     {
       "description": "",
@@ -86,11 +86,11 @@
       "description": "",
       "id": "param_01KM2NMSDNAF6QH90S850MK4Y4",
       "name": "count",
+      "required": true,
       "type": {
         "kind": "primitive",
         "primitiveType": "int32"
-      },
-      "required": true
+      }
     }
   ]
 }
