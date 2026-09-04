@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Item.count": "prop_K2G6TEKHV8KKTXDBG04DK9X3SM",
+    "transform:AcquireItem:output:direct:Gs2Inventory:AcquireSimpleItemsByUserId#0": "out_01KJSWMP1BBRH5H3BGK1KDPRZ4",
+    "transform:AcquireItem:parameter:count": "param_01KJSWNBRK2AXBJ7FYQSRRX8MV",
+    "transform:AcquireItem:parameter:itemName": "param_01KJSWNB463T8C7HDTH7HDE9P2",
+    "transform:ConsumeItem:output:direct:Gs2Inventory:ConsumeSimpleItemsByUserId#0": "out_01KJSWPR9SXB1WTTF408QJTVY1",
+    "transform:ConsumeItem:parameter:count": "param_01KJSWPE639MXSD66G3J0SZWB0",
+    "transform:ConsumeItem:parameter:itemName": "param_01KJSWPCXZ4VAWJEDA4HWHYD9H",
+    "type:Item": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6"
+  },
+  "deterministicOverrides": {
+    "master/inventory:Namespace:unmounted:Inventory#0": "09e163b0-1495-4088-90c6-268a8ccc8a57",
+    "master/inventory:Namespace:unmounted:Inventory#0/inventory:SimpleInventoryModel:unmounted:Inventory#0": "afdb24fa-c015-4d1f-acd4-44b973213010",
+    "master/inventory:Namespace:unmounted:Inventory#0/inventory:SimpleInventoryModel:unmounted:Inventory#0/inventory:SimpleItemModel:Item:@0#0": "54fbf22f-18c1-458c-8bde-2d2f651dbf65",
+    "user/inventory:SimpleItem:unmounted:#0": "f1ce754d-7e20-4b30-a405-429c70bd9f12"
+  }
+}

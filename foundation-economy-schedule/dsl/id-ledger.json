@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Schedule.activeDays": "prop_S23T3MDNBFNQTJ9PA126DR19V9",
+    "property:Schedule.anchorTimestamp": "prop_3HHJJZ4553TC0VTT84VAF8KF74",
+    "property:Schedule.beginDayOfMonth": "prop_TXGKQD0ZE9EKJT77Q25HHWP6SQ",
+    "property:Schedule.beginDayOfWeek": "prop_KP4RNR37Z8RE0D5WTAA5HC2ZYJ",
+    "property:Schedule.beginHour": "prop_QT1RYWCPGQF7TX098APWRW2ACV",
+    "property:Schedule.endAt": "prop_763BX5C31PKQPVJ692CKG0C998",
+    "property:Schedule.endDayOfMonth": "prop_2R6ZHPN0RG508XWNJXACHEQPJZ",
+    "property:Schedule.endDayOfWeek": "prop_WZC2GBZJT3CEWP77QMK8PM169J",
+    "property:Schedule.endHour": "prop_D2RWEZDYGM3RT887E0EA182FC3",
+    "property:Schedule.inactiveDays": "prop_7QB1J2FB3XJJGD80SC5DBX508J",
+    "property:Schedule.repeatType": "prop_XSTG0QAVN2ADJHS1Q50PXHNY89",
+    "property:Schedule.scheduleType": "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6",
+    "property:Schedule.startAt": "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T",
+    "property:Schedule.trigger": "prop_K8ZPEG5KAWZN5N4HNCS0S3ZQ0E",
+    "property:Trigger.expiresAt": "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF",
+    "property:Trigger.triggered": "prop_6MCAB8KE6ZN15EJK6Q592XR7GA",
+    "property:Trigger.triggeredAt": "prop_F9RRQHZFBAHE291G11WATKA2YB",
+    "transform:TriggerSchedule:output:direct:Gs2Schedule:ExtendTriggerByUserId#0": "out_01KKR3P8NQB54BE66VPKND2ZHS",
+    "transform:TriggerSchedule:parameter:extendSeconds": "param_01KKR3P8NQM08ZGAD9RMXRT5MT",
+    "transform:TriggerSchedule:parameter:trigger": "param_01KKR3P8NPJDAJKYTAF2R1S1G0",
+    "type:Schedule": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+    "type:Trigger": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST"
+  },
+  "deterministicOverrides": {
+    "master/schedule:Namespace:unmounted:Schedule#0": "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d",
+    "master/schedule:Namespace:unmounted:Schedule#0/schedule:Event:Schedule:#0": "84b2cf20-d26e-50e2-b494-3b4a40477afc",
+    "user/schedule:Trigger:Trigger:#0": "0bc348da-03cf-52e1-9403-7d871671cef6"
+  }
+}

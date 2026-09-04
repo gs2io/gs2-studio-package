@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:AdPlatform.adMobAdUnitIds": "prop_9R4GKC9MHQ0RWWG542MD6RRBQ9",
+    "property:AdPlatform.unityAdKeys": "prop_8GAGKPX7FHKJSQQCWN9J6ZE9M5",
+    "property:AdViewPoint.value": "prop_A5PTNHJYSCXW55G2TW376GP36E",
+    "transform:ConsumeAdViewPoint:output:direct:Gs2AdReward:ConsumePointByUserId#0": "out_01KSZ1ND6EV6QATG5YKER8AMQY",
+    "type:AdPlatform": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
+    "type:AdViewPoint": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW"
+  },
+  "deterministicOverrides": {
+    "master/adReward:Namespace:AdPlatform:Ad#0": "e51dce21-c96b-4ab8-b30e-78b7bea37fb5",
+    "user/adReward:Point:AdViewPoint:#0": "b4e99b56-bc01-4b12-8897-6f35670006af"
+  }
+}

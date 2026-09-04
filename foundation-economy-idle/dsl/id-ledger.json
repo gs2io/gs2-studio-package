@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:IdleReward.acquireActions": "prop_01M0PRB5RFJJP0NG8XT0WHEGD2",
+    "property:IdleStatus.currentIdleMinutes": "prop_6H5QKHHDFSEX65W9HT71FFAY0P",
+    "property:IdleStatus.defaultMaximumIdleMinutes": "prop_Y84GE13M8Y5K1KVMS5X9E2TEF8",
+    "property:IdleStatus.maximumIdleMinutes": "prop_K3CBE560Z2HRY7DXXW6F5JCR2R",
+    "property:IdleStatus.nextRewardsAt": "prop_MRM77NEZWMCQ5ACA4EBXFBWQQ4",
+    "property:IdleStatus.rewardIntervalMinutes": "prop_CGEEBE9H9P5MW0MD82N6AW2GZJ",
+    "type:IdleReward": "dt_4201EMDQW9HN9AMKXT0WQHMKJY",
+    "type:IdleStatus": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY"
+  },
+  "deterministicOverrides": {
+    "master/idle:Namespace:unmounted:Idle#0": "067721e1-3b2b-48ea-874d-35883a3c6da3",
+    "master/idle:Namespace:unmounted:Idle#0/idle:CategoryModel:IdleStatus:Idle#0": "e2079f30-5204-49e7-8898-254c4f59f23e",
+    "master/idle:Namespace:unmounted:Idle#0/idle:CategoryModel:IdleStatus:Idle#0/idle:AcquireActionList:IdleReward:@0#0": "e56630c3-30fb-40f2-8c0e-f6e974505d3f",
+    "master/idle:Namespace:unmounted:Idle#0/idle:CategoryModel:IdleStatus:Idle#0/idle:AcquireActionList:IdleReward:@0#0/transaction:AcquireAction:IdleReward:@0#0": "166d60b6-ca24-4683-a01c-f1bc27261bca",
+    "user/idle:Status:unmounted:#0": "7e5eb61f-6f79-40ea-a404-0707b59ceee8"
+  }
+}

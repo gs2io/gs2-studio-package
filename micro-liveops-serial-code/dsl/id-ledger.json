@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:SerialCodeCampaign.enableCampaignCode": "prop_01M0C5VXZYGKT11KXY634Y6J5N",
+    "transform:RevertSerialCodeUse:output:direct:Gs2SerialKey:RevertUseByUserId#0": "out_01M0C5VXZYNQ8HDGY7XTSR7VK9",
+    "transform:RevertSerialCodeUse:parameter:code": "param_01M0C5VXZYG5SYSJABGF8Z0B9R",
+    "transform:UseSerialCode:output:direct:Gs2SerialKey:UseByUserId#0": "out_01M0C5VXZY45Z1DVZVBWDB9KNC",
+    "transform:UseSerialCode:parameter:code": "param_01M0C5VXZYJ49VP2WBQJ9T3ED0",
+    "transform:VerifySerialCodeActive:output:direct:Gs2SerialKey:VerifyCodeByUserId#0": "out_01M0C5VXZYJ165Z6DRZ9XE4MWY",
+    "transform:VerifySerialCodeActive:parameter:campaign": "param_01M0C5VXZY8JY1SVFB5HEKF6SH",
+    "transform:VerifySerialCodeActive:parameter:code": "param_01M0C5VXZYJ07JP1PW9W2E08CG",
+    "type:SerialCodeCampaign": "dt_01M0C5VXZY2ZJKK4DERTCAZHXD"
+  },
+  "deterministicOverrides": {}
+}

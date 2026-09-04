@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Buff.expression": "prop_01M0C89EMY0MGFC92HZCRAXG3M",
+    "property:Buff.priority": "prop_01M0C89EMZHA1Y39YTQZ9227ET",
+    "property:Buff.rate": "prop_01M0C89EMZN9KJE2M0EAK71926",
+    "property:Buff.schedule": "prop_01M0C89EMZR18VJ7SD7SHZYYWH",
+    "property:Buff.targetActionName": "prop_01M0C89EMZPTFXVVWJ02HQV42R",
+    "property:Buff.targetFieldName": "prop_01M0C89EMZW9H9204T4H2A3A8M",
+    "type:Buff": "dt_01M0C89EMY1KAND5SNBFR7N0GQ"
+  },
+  "deterministicOverrides": {}
+}

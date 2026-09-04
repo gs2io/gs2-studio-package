@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Equipment.category": "prop_2C21XE4SCXQ1JDG7ES2MNFNA2R",
+    "property:Equipment.propertyId": "prop_S5796CZNBGWDHWSSHHT1EC00T6",
+    "property:Equipment.sortValue": "prop_H4JW4XTKFKNW6TYBGJ7W6C175M",
+    "property:EquipmentCollection.currentCapacityUsage": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4",
+    "property:EquipmentCollection.currentMaximumCapacity": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ",
+    "property:EquipmentCollection.defaultCapacity": "prop_0W6ZJVBD4FKRF1KAVPN5HE001Y",
+    "property:EquipmentCollection.maximumCapacity": "prop_J93B9BA3YNMZ1C1K5TDZRDA17W",
+    "transform:AcquireEquipment:output:direct:Gs2Inventory:AcquireItemSetByUserId#0": "out_01KJSZ9MEHE2E60MS4JZ0DJM86",
+    "transform:AcquireEquipment:parameter:equipment": "param_01KJSZ97WF877V5M2X1T86ZYN3",
+    "transform:AddEquipmentCapacity:output:direct:Gs2Inventory:AddCapacityByUserId#0": "out_01KJSZFRFR8WP2S011GE4XENW7",
+    "transform:AddEquipmentCapacity:parameter:value": "param_01KJSZFHJ4CFGNT217PBF95XK6",
+    "transform:DeleteEquipment:output:direct:Gs2Inventory:ConsumeItemSetByUserId#0": "out_01KJSZCR4RJ05MYX523F1NRBFZ",
+    "transform:DeleteEquipment:parameter:equipment": "param_01KJSZDBSX9FKEMJW6AZEN8VWJ",
+    "transform:DeleteEquipment:parameter:equipmentPropertyId": "param_01KJSZCDH2E1VKT8CVBJRJJAH4",
+    "type:Equipment": "dt_R7W960WC22J1FD8E239HDFMD8D",
+    "type:EquipmentCategory": "dt_QQR152BQFJSTM2W1WYZR4RPA98",
+    "type:EquipmentCollection": "dt_FANPG561806ENHYPWV5YRDSHC7"
+  },
+  "deterministicOverrides": {
+    "master/inventory:Namespace:unmounted:Equipment#0": "11564513-7c8f-4ffa-a490-0f717239e599",
+    "master/inventory:Namespace:unmounted:Equipment#0/inventory:InventoryModel:EquipmentCollection:Equipment#0": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
+    "master/inventory:Namespace:unmounted:Equipment#0/inventory:InventoryModel:EquipmentCollection:Equipment#0/inventory:ItemModel:Equipment:@0#0": "e4638944-74f6-4475-baa9-e9a6c0b8e607",
+    "user/inventory:Inventory:unmounted:#0": "a76aa80e-725e-4939-9fd6-1957946b2404"
+  }
+}

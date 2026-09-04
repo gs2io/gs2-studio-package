@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Ranking.maximumValue": "prop_01M0C5QTC1ZEN57H87RTHW0QTH",
+    "property:Ranking.minimumValue": "prop_01M0C5QTC13XN1YQ5KKA3Z9PND",
+    "property:Ranking.orderDirection": "prop_01M0C5QTC1FCKEKTX4QTP0VB5X",
+    "property:Ranking.schedule": "prop_01M0C5QTC10P4EEMTAW0JRTV79",
+    "property:Ranking.score": "prop_01M0C5QTC1549A0YHZY5YSS2EZ",
+    "property:Ranking.sum": "prop_01M0C5QTC17VN2W6CEXEDHZCEW",
+    "property:RankingReward.acquireActions": "prop_01M0C5QTC1XDPQC02MC3PAHSFT",
+    "property:RankingReward.ranking": "prop_01M0C5QTC1PT2SC2DM4MFFH880",
+    "property:RankingReward.thresholdRank": "prop_01M0C5QTC1DSVX6VMXA31P7T1R",
+    "transform:ReceiveRankingReward:output:direct:Gs2Ranking2:CreateGlobalRankingReceivedRewardByUserId#0": "out_01M0C5QTC15JHVCRXMYWHE2W8C",
+    "transform:ReceiveRankingReward:parameter:ranking": "param_01M0C5QTC16ZPQ4V2FAZRQPQ0V",
+    "transform:ReceiveRankingReward:parameter:season": "param_01M0C5QTC1ASM3KAQKX2Y0R4KA",
+    "transform:VerifyRankingScoreReached:output:direct:Gs2Ranking2:VerifyGlobalRankingScoreByUserId#0": "out_01M0C5QTC1KK98KDVV8XSGZZH5",
+    "transform:VerifyRankingScoreReached:parameter:ranking": "param_01M0C5QTC1EM8RWNPAVJT2T9BV",
+    "transform:VerifyRankingScoreReached:parameter:score": "param_01M0C5QTC1BS2R2J6CGS7M64AZ",
+    "transform:VerifyRankingScoreReached:parameter:season": "param_01M0C5QTC1903Z6A3Y1KRK4F79",
+    "type:Ranking": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV",
+    "type:RankingReward": "dt_01M0C5QTC12JW853EKK38QN42Z"
+  },
+  "deterministicOverrides": {}
+}

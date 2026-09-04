@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:CharacterFormation.currentSaveArea": "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6",
+    "property:CharacterFormation.initialSaveArea": "prop_1X7P75QB2PQR3A35AG6CAWPXZ6",
+    "property:CharacterFormation.maximumSaveArea": "prop_ASEE9H5F0YR01T0HPZTY19XY2V",
+    "property:CharacterFormationForm.slots": "prop_1CD4Q461VBGWZXEWXYD3WZAT37",
+    "property:CharacterFormationFormSlot.propertyId": "prop_QSKD3PPXJK7HDC2E9T7B9PKBAX",
+    "property:CharacterFormationSlot.propertyRegex": "prop_6F9A9WPY3YAQ0SS8E7F5H2YXFA",
+    "transform:AcquireToCharacterFormation:output:direct:Gs2Formation:AcquireActionsToFormProperties#0": "out_01KST7J5EYJ440HZDD2Y8G4200",
+    "transform:AcquireToCharacterFormation:parameter:index": "param_01KST7JJYTQWHF7XYJES9DW54E",
+    "transform:IncreaseSaveArea:output:direct:Gs2Formation:AddMoldCapacityByUserId#0": "out_01KST7F6MY2J8JT67VDSVT2KBN",
+    "transform:IncreaseSaveArea:parameter:value": "param_01KST7FSTSKHJFVK4M5RW3NZMK",
+    "type:CharacterFormation": "dt_1YKD2ZM08CX2D22TCPED995K2N",
+    "type:CharacterFormationForm": "dt_JY9NED2YYCSG1HXPQ1J0X9WQXW",
+    "type:CharacterFormationFormSlot": "dt_MZT04J9C7W1562STKR3XCTC257",
+    "type:CharacterFormationSlot": "dt_Z73MGN3WHWKHC8PF714HS91E62"
+  },
+  "deterministicOverrides": {
+    "master/formation:Namespace:unmounted:CharacterFormation#0": "53038065-fcd8-4f03-ad13-8dc4d88af341",
+    "master/formation:Namespace:unmounted:CharacterFormation#0/formation:MoldModel:CharacterFormation:CharacterFormation#0": "37387f56-db71-4fd6-a740-7b076aef652e",
+    "master/formation:Namespace:unmounted:CharacterFormation#0/formation:MoldModel:CharacterFormation:CharacterFormation#0/formation:FormModel:unmounted:CharacterFormation@0#0": "01c53022-dec4-4a7a-8bf2-3fea442cdb05",
+    "master/formation:Namespace:unmounted:CharacterFormation#0/formation:MoldModel:CharacterFormation:CharacterFormation#0/formation:FormModel:unmounted:CharacterFormation@0#0/formation:SlotModel:CharacterFormationSlot:@0#0": "14e1a092-afed-4ed0-b824-08994b3685bb",
+    "user/formation:Form:CharacterFormationForm:CharacterFormation#0": "59b9a73e-a647-4d4d-a000-faacbe13ff54",
+    "user/formation:Mold:unmounted:#0": "ba337043-3785-4369-ba48-99ac41a470a9"
+  }
+}

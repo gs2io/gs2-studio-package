@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Character.acquired": "prop_TC9NBD65ZXWPT09PFSRX1REHPF",
+    "property:Character.acquiredAt": "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6",
+    "transform:MarkCharacterDictionary:output:direct:Gs2Dictionary:AddEntriesByUserId#0": "out_01KJSXGHQ3BS3ZQE4PN91NDXRN",
+    "transform:MarkCharacterDictionary:parameter:character": "param_01KJSXGRRE22TW05FN18FWA8Q4",
+    "type:Character": "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV"
+  },
+  "deterministicOverrides": {
+    "master/dictionary:Namespace:unmounted:CharacterDictionary#0": "ab0e71bd-4fdf-43ce-9bd1-ddadad459872",
+    "master/dictionary:Namespace:unmounted:CharacterDictionary#0/dictionary:EntryModel:Character:#0": "a0dadc95-666a-48c1-89f9-86f35904b889",
+    "user/dictionary:Entry:unmounted:#0": "da765d24-5015-453e-b933-a2916e071498"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:CharacterRate.character": "prop_AATTCTRXX4J382EEVEGE9ZYV6W",
+    "property:CharacterRate.rarity": "prop_6MY41PGG6DAVSR3YSY4YDTYSPX",
+    "property:CharacterRate.weight": "prop_2YWD79NQ991RBGDCA3HEZHGDT8",
+    "property:Gacha.consumeActions": "prop_RG77EYB1G23KWGEYNTSCG96JNN",
+    "property:Gacha.schedule": "prop_G9FT5R5K079VNPHKK15D46TRPC",
+    "property:GachaRarityRate.gacha": "prop_1XD6YGM96H26BHSKDY26CNVB6R",
+    "property:GachaRarityRate.rarity": "prop_R7CAWT1QMX0A9A0NWFYAYQ1Y7S",
+    "property:GachaRarityRate.weight": "prop_HZZ3R7AT0DB8DS34X1K0QQR3Q8",
+    "type:CharacterRate": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+    "type:Gacha": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+    "type:GachaRarity": "dt_GX6NYQD4P54A7TXS08MA9F3X7Z",
+    "type:GachaRarityRate": "dt_32H335ZJ31J4690TMPCRQFC04B"
+  },
+  "deterministicOverrides": {
+    "master/lottery:Namespace:unmounted:CharacterGacha#0": "ba9b8acc-859a-4acd-bade-b95f2dcdb6b2",
+    "master/lottery:Namespace:unmounted:CharacterGacha#0/lottery:LotteryModel:Gacha:#0": "188c85a8-f0d5-4534-964a-e9e00604c2d6",
+    "master/lottery:Namespace:unmounted:CharacterGacha#0/lottery:PrizeTable:Gacha:#0": "53d26b27-c20f-4d48-8b1d-fe3f6d23469c",
+    "master/lottery:Namespace:unmounted:CharacterGacha#0/lottery:PrizeTable:Gacha:#0/lottery:Prize:CharacterRate:@1#0": "fa1b8de9-9205-4c96-8778-95f580cc2413",
+    "master/lottery:Namespace:unmounted:CharacterGacha#0/lottery:PrizeTable:Gacha:#0/lottery:Prize:CharacterRate:@1#0/transaction:AcquireAction:CharacterRate:@0#0": "18287e74-f143-4f01-9f36-2b0ddb705858",
+    "master/lottery:Namespace:unmounted:CharacterGacha#0/lottery:PrizeTable:Gacha:#0/lottery:Prize:CharacterRate:@1#0/transaction:AcquireAction:CharacterRate:@1#0": "4db371b2-a50c-456f-bda4-589008ace413",
+    "master/lottery:Namespace:unmounted:CharacterGacha#0/lottery:PrizeTable:Gacha:#0/lottery:Prize:GachaRarityRate:@0#0": "3824193c-0745-4c3e-af60-8f50d80f26c8",
+    "master/showcase:Namespace:unmounted:CharacterGacha#0": "de811537-ebb8-4f28-9c50-d64484af063e",
+    "master/showcase:Namespace:unmounted:CharacterGacha#0/showcase:Showcase:unmounted:Showcase#0": "6f1847c6-698c-4a93-af7b-f0ece2c3cd68",
+    "master/showcase:Namespace:unmounted:CharacterGacha#0/showcase:Showcase:unmounted:Showcase#0/showcase:DisplayItem:Gacha:@0#0": "b6c5895e-3066-423a-9090-04d803ad89e9"
+  }
+}

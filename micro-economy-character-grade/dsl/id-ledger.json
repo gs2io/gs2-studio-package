@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Character.grade": "prop_01M0C826WJ0M7QGYB50KVWBD98",
+    "property:CharacterGradeStep.gradeUpPropertyIdRegex": "prop_01M0C826WJN2XGK5PMWPSYNZ5W",
+    "property:CharacterGradeStep.propertyIdRegex": "prop_01M0C826WJ6E8SVGPGFX2Z52T3",
+    "property:CharacterGradeStep.rankCapValue": "prop_01M0C826WJ4ZPNGK1JNNQD7GCM",
+    "transform:ApplyCharacterGradeRankCap:output:direct:Gs2Grade:ApplyRankCapByUserId#0": "out_01M0C826WKTFVP49QPBQZYX1R8",
+    "transform:ApplyCharacterGradeRankCap:parameter:propertyId": "param_01M0C826WK092B8J1DFWS8NM7G",
+    "transform:PromoteCharacterGrade:output:direct:Gs2Grade:AddGradeByUserId#0": "out_01M0C826WKSESSEVV0C453ZPZS",
+    "transform:PromoteCharacterGrade:parameter:gradeValue": "param_01M0C826WKGWK7N81T7ETYQP4C",
+    "transform:PromoteCharacterGrade:parameter:propertyId": "param_01M0C826WJA2S7B46606GV62Y1",
+    "transform:VerifyCharacterGradeReached:output:direct:Gs2Grade:VerifyGradeByUserId#0": "out_01M0C826WKCH2951TEBMPYTK1Y",
+    "transform:VerifyCharacterGradeReached:parameter:gradeValue": "param_01M0C826WKH5WK6F2PP20J2FYY",
+    "transform:VerifyCharacterGradeReached:parameter:propertyId": "param_01M0C826WK3VT4BNP3TCW5427D",
+    "type:Character": "dt_01M0C826WJ0HDTQG636AHV341M",
+    "type:CharacterGradeStep": "dt_01M0C826WJAVB4NEKDQ1MYZY4X"
+  },
+  "deterministicOverrides": {}
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:CurrencyStore.enableFakeReceipt": "prop_F0JZV41MJ57SFQPQ6BMB80HDAZ",
+    "property:StoreProduct.appleAppStoreProductId": "prop_A26C5NBX039V9DNV0ERPSWVPD8",
+    "property:StoreProduct.googlePlayProductId": "prop_Z99QWHNS8G1DEFWGT2MB00NRJA",
+    "property:Wallet.free": "prop_6KNY5JMXVS2AX21X1HAHP3A4X0",
+    "property:Wallet.paid": "prop_V0BFHW3E05XZXMY0DWANC3G4C9",
+    "property:Wallet.total": "prop_FEXJWZ3Q38NQ44J3C070EK1CJ8",
+    "row:type:CurrencyStore.currencystore": "row_08CCD0SG79SRTF2WW5GC77F72M",
+    "transform:DepositCurrency:output:direct:Gs2Money2:DepositByUserId#0": "out_01KMYVXWW0KFTFAA58G00GJABH",
+    "transform:DepositCurrency:parameter:count": "param_01KMYVXWW09S418P0ZRRBQT0RE",
+    "transform:DepositCurrency:parameter:currencyType": "param_01KMYVXWW0K3RYB953PFHCTQTV",
+    "transform:DepositCurrency:parameter:price": "param_01KMYVXWW0A879WGKRYW1Q5E6N",
+    "transform:DepositFreeCurrency:output:direct:Gs2Money2:DepositByUserId#0": "out_01KMYVXWW0VPQBFM6RHHBYJ8R2",
+    "transform:DepositFreeCurrency:parameter:count": "param_01KMYVXWVZT5FGVJAPKRDBVAPP",
+    "transform:VerifyReceipt:output:direct:Gs2Money2:VerifyReceiptByUserId#0": "out_01KMYVXWW036DD3X8Y92MEYD2P",
+    "transform:VerifyReceipt:parameter:contentName": "param_01KMYVXWW09ZCYN1MPE4TNV9GF",
+    "transform:WithdrawCurrency:output:direct:Gs2Money2:WithdrawByUserId#0": "out_01KNH9V1VN9CBEKY8XXTXX7SFD",
+    "transform:WithdrawCurrency:parameter:count": "param_01KNH9V1VN1MA5PF1QWFZEST5P",
+    "transform:WithdrawCurrency:parameter:paidOnly": "param_01KQ90M60EBS2MFJW7D5P9AG47",
+    "transform:WithdrawPaidCurrency:output:direct:Gs2Money2:WithdrawByUserId#0": "out_01KMYVXWW0ZHVTAA5XZW1X3W52",
+    "transform:WithdrawPaidCurrency:parameter:count": "param_01KMYVXWW02P46N2MGJ1ENZSA9",
+    "type:CurrencyStore": "dt_BMT0H7ME2SSDZRHGNZF012YZVR",
+    "type:StoreProduct": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+    "type:Wallet": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5"
+  },
+  "deterministicOverrides": {
+    "master/money2:Namespace:CurrencyStore:Currency#0": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+    "master/money2:Namespace:CurrencyStore:Currency#0/money2:StoreContentModel:StoreProduct:#0": "47f7c9c1-5a84-5ecf-b541-ed6a3e451d5d",
+    "ui:Wallet:Wallet:definition": "191c1986-ae02-4c30-a404-1eaf0af47fef",
+    "ui:Wallet:Wallet:item:FreeBalanceLabel": "c1f9be20-09b9-4a19-86b1-9861b969c472",
+    "ui:Wallet:Wallet:item:PaidBalanceLabel": "b4df326b-0cbc-4905-89de-eb34e5840d90",
+    "ui:Wallet:Wallet:item:TotalBalanceLabel": "122ef629-71c9-4d2f-bbe5-53bbcda8901c",
+    "user/money2:Wallet:Wallet:#0": "e1bcadf8-3115-5329-aa6e-ae5a28565900"
+  }
+}

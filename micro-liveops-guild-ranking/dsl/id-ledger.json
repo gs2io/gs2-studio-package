@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:GuildRanking.maximumValue": "prop_01M0CE422VYRN7SXXKDDE3ET2G",
+    "property:GuildRanking.minimumValue": "prop_01M0CE422VR4DWYG9WPJ57GAVK",
+    "property:GuildRanking.orderDirection": "prop_01M0CE422VHSW4QC9AHYXV815S",
+    "property:GuildRanking.schedule": "prop_01M0CE422VC02GDNEZDYXGVD89",
+    "property:GuildRanking.score": "prop_01M0CE422VSC746FPJK5JNQ11R",
+    "property:GuildRanking.sum": "prop_01M0CE422VX2GRKKR10S2S34BA",
+    "property:GuildRankingReward.acquireActions": "prop_01M0CE422V7MQAXCS77903V6Y2",
+    "property:GuildRankingReward.ranking": "prop_01M0CE422VGSQB9SXT2CHKNFFP",
+    "property:GuildRankingReward.thresholdRank": "prop_01M0CE422VB0QC0K8VTSFSJ02Z",
+    "transform:ReceiveGuildRankingReward:output:direct:Gs2Ranking2:CreateClusterRankingReceivedRewardByUserId#0": "out_01M0CE422WXYQJ4D1CMW6JRQY8",
+    "transform:ReceiveGuildRankingReward:parameter:guildName": "param_01M0CE422WAGJJR5V40NM0X7YB",
+    "transform:ReceiveGuildRankingReward:parameter:ranking": "param_01M0CE422W1R1N3ABSV7GRKZ8A",
+    "transform:ReceiveGuildRankingReward:parameter:season": "param_01M0CE422WZNKRT6XGSRRZWRWK",
+    "transform:VerifyGuildRankingScoreReached:output:direct:Gs2Ranking2:VerifyClusterRankingScoreByUserId#0": "out_01M0CE422W9AKR175NDAZ6KER1",
+    "transform:VerifyGuildRankingScoreReached:parameter:guildName": "param_01M0CE422W0G7W7F4YTBJM9TNZ",
+    "transform:VerifyGuildRankingScoreReached:parameter:ranking": "param_01M0CE422WM05J955JF4Z6GSDJ",
+    "transform:VerifyGuildRankingScoreReached:parameter:score": "param_01M0CE422WZKT7TF9QJMPMGN0B",
+    "transform:VerifyGuildRankingScoreReached:parameter:season": "param_01M0CE422WS766NQRQRGCS82P0",
+    "type:GuildRanking": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+    "type:GuildRankingReward": "dt_01M0CE422VDT5R1HBS4KHAF8RE"
+  },
+  "deterministicOverrides": {}
+}

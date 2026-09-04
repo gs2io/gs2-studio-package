@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Energy.currentMaximumValue": "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR",
+    "property:Energy.currentValue": "prop_XFMYM93GTF2261GG2KNVHC9V5K",
+    "property:Energy.defaultMaximum": "prop_3ED1FAC3V82FG3Z4QEMXRF1BJE",
+    "property:Energy.nextRecoverdAt": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ",
+    "property:Energy.overflowedMaximum": "prop_64XY03QAD08E4FQMCQQG039HZ9",
+    "property:Energy.recoveryIntervalMinutes": "prop_XCA5D46XQKYD37PNGVYA1HH9S9",
+    "property:Energy.recoveryValue": "prop_NQG4GN9X1R4HTWE275H4JXJHFK",
+    "property:Energy.useOverflow": "prop_1QXN33T7DVRHC1P1C2D0ECXPQP",
+    "transform:ConsumeEnergy:output:direct:Gs2Stamina:ConsumeStaminaByUserId#0": "out_01KJSWEC171NCTKBC9FFAKXXZH",
+    "transform:ConsumeEnergy:parameter:value": "param_01KJSWEQFV1RRMDAGH2SZ0V69H",
+    "transform:RecoveryEnergy:output:direct:Gs2Stamina:RecoverStaminaByUserId#0": "out_01KJSWBYG7P39AB2Y66NDR9ZGD",
+    "transform:RecoveryEnergy:parameter:value": "param_01KJSWD3KRSF44EMTA95EKTT0F",
+    "type:Energy": "dt_TX5D50PD77NCTNGR3SKBGETDFY"
+  },
+  "deterministicOverrides": {
+    "master/stamina:Namespace:unmounted:Energy#0": "e7a19940-04e0-40de-adb0-95d1b3a9b7ed",
+    "master/stamina:Namespace:unmounted:Energy#0/stamina:StaminaModel:Energy:#0": "a0e059f6-3e69-4083-8dd4-dbfc9161cbe5",
+    "user/stamina:Stamina:Energy:#0": "3c57915d-57c5-4b6d-a151-678037069f5a"
+  }
+}

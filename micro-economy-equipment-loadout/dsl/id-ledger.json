@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Character.equipmentSlots": "prop_01M0CDYNB5CJAAH5YPRR6FNRXF",
+    "property:EquipmentSlot.propertyRegex": "prop_01M0CDYNB5E7VX7G7ED1SRD7JR",
+    "property:EquipmentSlotAssignment.equipment": "prop_01M0CDYNB51PQJVBAQC87617NY",
+    "type:Character": "dt_01M0CDYNB5V74MMX3SWDK4ZRCH",
+    "type:EquipmentSlot": "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ",
+    "type:EquipmentSlotAssignment": "dt_01M0CDYNB5ZBC95MZSW2NTSPXM"
+  },
+  "deterministicOverrides": {}
+}

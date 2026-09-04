@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Progress.quest": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
+    "property:Progress.rewards": "prop_NJ83FK0CB975M336Z7THVNWE7P",
+    "property:ProgressReward.itemId": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B",
+    "property:ProgressReward.value": "prop_RYDWJ2B6D96NAN85AF8SDXD12F",
+    "property:Quest.collection": "prop_PFYYCZ2ZB3XBM0A06C1VSTJWCP",
+    "property:Quest.completeAcquireActions": "prop_WAYKZ6HMTNGKPMNBTAZHR37SH3",
+    "property:Quest.completed": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
+    "property:Quest.consumeActions": "prop_TF2ETMFVHGYGRWYBZ8YJZXZG4S",
+    "property:Quest.failedAcquireActions": "prop_NYZ7PF2EANTJ3R35DJQX6XWXHG",
+    "property:Quest.firstCompleteAcquireActions": "prop_H5KJSRGM60K4AQHSJMM28D7JQV",
+    "property:QuestCollection.schedule": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP",
+    "type:Progress": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+    "type:ProgressReward": "dt_1P091J81MXDA5VBTFMMT4PP0RQ",
+    "type:Quest": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+    "type:QuestCollection": "dt_8KGQ5PW8KF4540B06JKKQ6QF96"
+  },
+  "deterministicOverrides": {
+    "master/quest:Namespace:unmounted:Quest#0": "2f01b901-edbf-4a96-9517-f19c0fce5925",
+    "master/quest:Namespace:unmounted:Quest#0/quest:QuestGroupModel:QuestCollection:#0": "a152d59a-e8f6-44e9-8141-8a1c2a5320af",
+    "master/quest:Namespace:unmounted:Quest#0/quest:QuestGroupModel:QuestCollection:#0/quest:QuestModel:Quest:@0#0": "2e3a67b1-c335-4cc2-9c86-09b26d8f45ce",
+    "master/quest:Namespace:unmounted:Quest#0/quest:QuestGroupModel:QuestCollection:#0/quest:QuestModel:Quest:@0#0/quest:Contents:unmounted:@0#0": "a32939e4-0821-4696-9c09-0d379173bbf7",
+    "master/quest:Namespace:unmounted:Quest#0/quest:QuestGroupModel:QuestCollection:#0/quest:QuestModel:Quest:@0#0/quest:Contents:unmounted:@0#0/transaction:AcquireAction:Quest:@0#0": "40d84747-0d46-4815-ba31-ed32d4d4b16c",
+    "master/quest:Namespace:unmounted:Quest#0/quest:QuestGroupModel:QuestCollection:#0/quest:QuestModel:Quest:@0#0/transaction:AcquireAction:Quest:@0#0": "99e25396-b95a-4e62-818c-6b54521247cd",
+    "master/quest:Namespace:unmounted:Quest#0/quest:QuestGroupModel:QuestCollection:#0/quest:QuestModel:Quest:@0#0/transaction:AcquireAction:Quest:@0#1": "d1fb3ef5-e008-42b4-859d-90ffae442922",
+    "master/quest:Namespace:unmounted:Quest#0/quest:QuestGroupModel:QuestCollection:#0/quest:QuestModel:Quest:@0#0/transaction:ConsumeAction:Quest:@0#0": "553b9ff9-dd9f-496a-8415-30e81d018b54",
+    "user/quest:CompletedQuestList:unmounted:#0": "9c522c7b-08c7-4a88-abed-56e5e33a9b75",
+    "user/quest:Progress:Progress:#0": "9ac18116-1a82-4675-a9d9-99d273856fea"
+  }
+}

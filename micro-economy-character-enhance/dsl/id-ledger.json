@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:CharacterEnhance.acquireExperienceSuffix": "prop_01M0C7T1166P354AK6Q48J86RN",
+    "property:CharacterEnhanceBonus.enhance": "prop_01M0C7T116EE8PEHMGMD3AWB3N",
+    "property:CharacterEnhanceBonus.rate": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
+    "property:CharacterEnhanceBonus.weight": "prop_01M0C7T11668CNMKJ4725QV6M0",
+    "type:CharacterEnhance": "dt_01M0C7T116VP42973VYFS2PRV0",
+    "type:CharacterEnhanceBonus": "dt_01M0C7T116ST3H2Z9X2ANQRRD2"
+  },
+  "deterministicOverrides": {}
+}

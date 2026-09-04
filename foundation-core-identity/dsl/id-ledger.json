@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:TakeOverSetting.appleKeyId": "prop_V75V0JS2DKK9J1HT58G6EHB6VF",
+    "property:TakeOverSetting.applePrivateKeyPem": "prop_6HQHD05HT2SH78G79FXNV4WJVT",
+    "property:TakeOverSetting.appleTeamId": "prop_2EJBCGDAH1TVRBGY75S05SJ801",
+    "property:TakeOverSetting.clientId": "prop_01B0AANDTTY7MQTFTBP6WQK6CD",
+    "property:TakeOverSetting.clientSecret": "prop_CAMZZS3CCJ4K9MSA217ARZ7K6Z",
+    "property:TakeOverSetting.configurationPath": "prop_A2D1ZJ9DZ5AMTXXE3XHZGGR0AJ",
+    "property:TakeOverSetting.doneEndpointUrl": "prop_XDRZ798BRBRW9W35MRHXEXCAAX",
+    "property:TakeOverSetting.hasTakeOver": "prop_5Z93QPG4VQED3EX517PW0H7BWA",
+    "property:TakeOverSetting.type": "prop_JXHFG6A90WH8TQJAD96FQC1S5M",
+    "row:type:TakeOverSetting.apple": "row_00S01SNZHH4M1H63XE12H2G0SP",
+    "row:type:TakeOverSetting.google": "row_0E1BZ05RKKKQT8YBG6NXYEFSXF",
+    "type:TakeOverSetting": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ"
+  },
+  "deterministicOverrides": {
+    "master/account:Namespace:unmounted:Account#0": "678d5a28-b9c6-4225-baee-d4a6d0d95b4b",
+    "master/account:Namespace:unmounted:Account#0/account:TakeOverTypeModel:TakeOverSetting:#0": "912e8c6f-d936-4253-a13e-69a3b57fc821",
+    "user/account:TakeOver:unmounted:#0": "8991ceb7-819e-54c0-a248-4ec1c4751d01"
+  }
+}

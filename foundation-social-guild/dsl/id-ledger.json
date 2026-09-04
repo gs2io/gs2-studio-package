@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Guild.defaultMaximumMemberCount": "prop_01M0C5T6AF4Q3NKD9YJQ8F6119",
+    "property:Guild.guildMasterRole": "prop_01M0C5T6AFTPHZP6VRDZBYPK8F",
+    "property:Guild.guildMemberDefaultRole": "prop_01M0C5T6AFMZ7YHRK3TF8G9T6F",
+    "property:Guild.inactivityPeriodDays": "prop_01M0C5T6AFE1EJ9CXYGJSJMT8Y",
+    "property:Guild.joinedGuildName": "prop_01M0C5T6AFPW7S477FQF46NT07",
+    "property:Guild.maxConcurrentGuildMasterCount": "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
+    "property:Guild.maxConcurrentJoinGuilds": "prop_01M0C5T6AFC4H9ESF7ZV7XRVXK",
+    "property:Guild.maximumMemberCount": "prop_01M0C5T6AFQRJ8K9V4AY6N1X1S",
+    "property:Guild.rejoinCoolTimeMinutes": "prop_01M0C5T6AF1GMQB80XDAVM0NJ2",
+    "property:GuildRole.policyDocument": "prop_01M0C5T6AF0SDEH7DPDWXDST0T",
+    "transform:IncreaseGuildCapacity:output:direct:Gs2Guild:IncreaseMaximumCurrentMaximumMemberCountByGuildName#0": "out_01M0C5T6AFNVEXRKYKWK10RY99",
+    "transform:IncreaseGuildCapacity:parameter:guild": "param_01M0C5T6AF54RS0MNKJ4Q5787T",
+    "transform:IncreaseGuildCapacity:parameter:guildName": "param_01M0C5T6AF94DSN4Y3VHEKZB8Q",
+    "transform:IncreaseGuildCapacity:parameter:value": "param_01M0C5T6AFB0ZAMBAJ53YWMBY2",
+    "transform:VerifyGuildMembership:output:direct:Gs2Guild:VerifyIncludeMemberByUserId#0": "out_01M0C5T6AF1KMP4KM24KXMB22X",
+    "transform:VerifyGuildMembership:parameter:guild": "param_01M0C5T6AFCYS4FBFX9XAT61Z7",
+    "transform:VerifyGuildMembership:parameter:guildName": "param_01M0C5T6AF2RFWEBWB4XC0B5J9",
+    "type:Guild": "dt_01M0C5T6AF24NKHPZ1Z4R946FT",
+    "type:GuildRole": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0"
+  },
+  "deterministicOverrides": {}
+}

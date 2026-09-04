@@ -6,6 +6,7 @@ GS2 Studio で利用する公式パッケージ定義とサンプルプロジェ
 
 - `index.json` - GS2 Studio の Simple Mode が表示・導入する機能の公開インデックス
 - `<package-id>/dsl/index.ts` - パッケージ定義の source of truth
+- `<package-id>/dsl/id-ledger.json` - 構造 token ごとの生成 ID を固定する独立 ledger
 - `<package-id>/project.json` - GS2 Studio で読み込める生成済みプロジェクト
 - `<package-id>/packages/<package-id>/` - 生成済みパッケージデータ
 - `sample-*`, `rename-overlay-sample` - GS2 Studio の回帰検証用プロジェクト
@@ -29,6 +30,25 @@ DSL の materialize と整合性検査は、互換な GS2 Studio checkout から
 git submodule update --init
 npm run materialize:packages
 npm run check:package-materialization
+```
+
+`id-ledger.json` の `random` は DomainType / property / row / ActionTransform の
+非決定的 ID を固定します。resource / UI は DSL の決定的 ID を再計算し、旧採番を維持する
+必要があるものだけ `deterministicOverrides` に記録します。生成済み JSON は ID の継承元では
+ありません。新しい非決定的要素を追加した場合は gate が示す token と候補 ID を確認して
+ledger へ追加します。rename では既存 ID を新 token へ移します。削除時は active section の
+token と ID を `retired` へ移し、現行 identity に再適用されない tombstone として予約します。
+override のない決定的 ID は削除前に token と計算済み ID を `retired` へ追加してください。
+
+新規パッケージの ledger は次の canonical JSON から開始します。
+
+```json
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {},
+  "deterministicOverrides": {}
+}
 ```
 
 パッケージ側の変更を先にこのリポジトリへコミットし、その後 GS2 Studio 側で

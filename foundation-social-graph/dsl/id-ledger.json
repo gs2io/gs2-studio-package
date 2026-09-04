@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Follow.followerProfile": "prop_WEZ74QQWTQ37ZYH7GKQCJ9C1W8",
+    "property:Follow.publicProfile": "prop_00CYS22DM7RCY5V2S2MSP7YH5Y",
+    "property:Friend.friendProfile": "prop_8JHGTPH2PWBM7H3AV8B87CS72E",
+    "property:Friend.publicProfile": "prop_BGKVKEXBMCJX62Q18PSFR909HW",
+    "property:Profile.followerProfile": "prop_WN6CSPS3DDQ40TR3VG8PYNTMPM",
+    "property:Profile.friendProfile": "prop_5N09J4Q6RV5N2EGDPKMW77WWD0",
+    "property:Profile.publicProfile": "prop_6KVAE2J57GWW44BA6BWE76HNX4",
+    "property:ReceiveFriendRequest.fromPublicProfile": "prop_8385BCWPDH6PVR79CSMQ19ZNZP",
+    "property:SendFriendRequest.targetPublicProfile": "prop_2C18P9AZQNC61BC93J6R7XH83Q",
+    "type:Follow": "dt_12CDXGXXRQVPJVMA9VGATG195G",
+    "type:Friend": "dt_2NM467EMK37WAPSYGR7JJGVY8W",
+    "type:Profile": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
+    "type:ReceiveFriendRequest": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C",
+    "type:SendFriendRequest": "dt_TBCFR2E0A8DGCGR2RVHN4EQGR8"
+  },
+  "deterministicOverrides": {
+    "master/friend:Namespace:unmounted:Friend#0": "7cb29760-69e8-4136-9bca-40d922a97a63",
+    "user/friend:FollowUser:Follow:#0": "8dedf7da-228a-445f-a6e3-409cb480b4dd",
+    "user/friend:FriendUser:Friend:#0": "f9d95420-4559-4667-87f7-f04686fef424",
+    "user/friend:Profile:Profile:#0": "ce4c1125-ca97-41ac-94f8-61e527af01a9",
+    "user/friend:ReceiveFriendRequest:ReceiveFriendRequest:#0": "397e6cfe-7dee-4d8d-84c5-9bcc77b73c74",
+    "user/friend:SendFriendRequest:SendFriendRequest:#0": "fbfc51e9-1631-4ca3-8fb6-60f3a4a5292b"
+  }
+}
