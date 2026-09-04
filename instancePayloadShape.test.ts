@@ -1,9 +1,16 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
+import { getDomainTypeViewReader } from "~/application/domainType";
+import { detectDuplicateInstanceIds } from "~/application/project";
+import { toSafeFileName } from "~/application/shared";
 import { fileInstanceDtoSchema } from "~/adapters/project/gateway";
+import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
+import { Catalog } from "~/domain/catalog";
+import { PackageCollection } from "~/domain/package";
+import { Project } from "~/domain/project";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)));
 
@@ -42,6 +49,11 @@ describe("materialized instance payload shape", () => {
           if (actualKind !== expectedKind) {
             failures.push(`${filePath}: ${actualKind} payload in ${expectedKind} directory`);
           }
+          const identity = actualKind === "overlay" ? result.data.sourceInstanceId : result.data.id;
+          const expectedFileName = `${toSafeFileName(identity)}.json`;
+          if (basename(filePath) !== expectedFileName) {
+            failures.push(`${filePath}: expected canonical filename ${expectedFileName}`);
+          }
         }
       }
     }
@@ -49,4 +61,27 @@ describe("materialized instance payload shape", () => {
     expect(instanceCount).toBe(65);
     expect(failures).toEqual([]);
   });
+
+  it.each(["rename-overlay-sample", "sample-child-restoration", "sample-social-game-basic"])(
+    "has saveable instance identities in non-DSL sample %s",
+    async sampleName => {
+      const loadResult = await loadPackages(
+        resolve(packageRoot, sampleName, "packages"),
+        Catalog.empty()
+      );
+      const payload = unwrapLoaderResult(loadResult);
+      expect(payload.errors).toEqual([]);
+      expect(payload.packages).not.toBeNull();
+      if (payload.packages === null) return;
+
+      const project = new Project(PackageCollection.fromTrusted(payload.packages));
+      const identityResult = detectDuplicateInstanceIds({
+        project,
+        viewReader: getDomainTypeViewReader({ project }),
+      });
+
+      expect(identityResult.diagnostics).toEqual([]);
+      expect(identityResult.hasBlocking).toBe(false);
+    }
+  );
 });

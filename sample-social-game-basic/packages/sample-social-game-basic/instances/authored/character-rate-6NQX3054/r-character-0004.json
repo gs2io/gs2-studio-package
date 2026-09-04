@@ -1,10 +1,10 @@
 {
-  "id": "characterrate_5",
-  "rowKey": "row_0AQMDM92S4VHKSRJZ67HKP3JQB",
+  "id": "r.character-0004",
+  "rowKey": "row_0YZ37RMWSMSH781HWFPR1CCXQP",
   "typeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
   "values": {
     "prop_2YWD79NQ991RBGDCA3HEZHGDT8": 1,
     "prop_6MY41PGG6DAVSR3YSY4YDTYSPX": "r",
-    "prop_AATTCTRXX4J382EEVEGE9ZYV6W": "character_0005"
+    "prop_AATTCTRXX4J382EEVEGE9ZYV6W": "character-0004"
   }
 }
