@@ -425,8 +425,8 @@
         "en": "Missions"
       },
       "description": {
-        "ja": "条件を満たすと達成になるミッションと、その進捗カウンターを管理します。",
-        "en": "Manages missions that complete when their conditions are met, along with progress counters."
+        "ja": "日次・週次などのミッションと、その達成条件・報酬を管理します。",
+        "en": "Manages daily and weekly missions along with their conditions and rewards."
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {
