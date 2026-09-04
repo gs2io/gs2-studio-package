@@ -1,5 +1,4 @@
 {
-  "kind": "overlay",
   "overrides": {
     "prop_A26C5NBX039V9DNV0ERPSWVPD8": "io.gs2.sample",
     "prop_Z99QWHNS8G1DEFWGT2MB00NRJA": "io.gs2.sample"
