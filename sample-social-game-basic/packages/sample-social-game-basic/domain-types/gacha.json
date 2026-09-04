@@ -110,7 +110,6 @@
   "source": {
     "directSourcePackageId": "micro-shop-character-gacha",
     "directSourceTypeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
-    "kind": "dependency",
     "sourcePackageId": "micro-shop-character-gacha",
     "sourceTypeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3"
   }

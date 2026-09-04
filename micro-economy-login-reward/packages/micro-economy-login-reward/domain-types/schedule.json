@@ -20,7 +20,6 @@
   "source": {
     "directSourcePackageId": "foundation-economy-schedule",
     "directSourceTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
-    "kind": "dependency",
     "sourcePackageId": "foundation-economy-schedule",
     "sourceTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
   }

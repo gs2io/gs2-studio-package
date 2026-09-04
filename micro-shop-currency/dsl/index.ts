@@ -25,7 +25,6 @@ const StoreProduct = defineOverlayDomainType(
   "StoreProduct",
   {
     source: {
-      kind: "dependency",
       directSourcePackageId: "foundation-economy-currency",
       directSourceTypeId: "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
       sourcePackageId: "foundation-economy-currency",

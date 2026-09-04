@@ -47,7 +47,6 @@
   "source": {
     "directSourcePackageId": "foundation-economy-equipment",
     "directSourceTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D",
-    "kind": "dependency",
     "sourcePackageId": "foundation-economy-equipment",
     "sourceTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D"
   }

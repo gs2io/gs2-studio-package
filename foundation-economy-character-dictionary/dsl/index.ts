@@ -14,7 +14,6 @@ const Character = defineOverlayDomainType(
   "Character",
   {
     source: {
-      kind: "dependency",
       directSourcePackageId: "foundation-economy-character",
       directSourceTypeId: "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
       sourcePackageId: "foundation-economy-character",

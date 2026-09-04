@@ -94,7 +94,6 @@
   "source": {
     "directSourcePackageId": "micro-economy-login-reward",
     "directSourceTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
-    "kind": "dependency",
     "sourcePackageId": "micro-economy-login-reward",
     "sourceTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV"
   }

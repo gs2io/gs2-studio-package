@@ -46,7 +46,6 @@
   "source": {
     "directSourcePackageId": "foundation-economy-currency",
     "directSourceTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
-    "kind": "dependency",
     "sourcePackageId": "foundation-economy-currency",
     "sourceTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB"
   }

@@ -66,7 +66,6 @@ const LoginReward = defineDomainType("LoginReward", dt =>
 
 const Schedule = defineOverlayDomainType("Schedule", {
   source: {
-    kind: "dependency",
     directSourcePackageId: "foundation-economy-schedule",
     directSourceTypeId: "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
     sourcePackageId: "foundation-economy-schedule",

@@ -20,7 +20,6 @@
   "source": {
     "directSourcePackageId": "foundation-economy-character",
     "directSourceTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
-    "kind": "dependency",
     "sourcePackageId": "foundation-economy-character",
     "sourceTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01"
   }

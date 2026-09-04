@@ -135,7 +135,6 @@ const Equipment = defineOverlayDomainType(
   "Equipment",
   {
     source: {
-      kind: "dependency",
       directSourcePackageId: "foundation-economy-equipment",
       directSourceTypeId: EQUIPMENT_TYPE_ID,
       sourcePackageId: "foundation-economy-equipment",
