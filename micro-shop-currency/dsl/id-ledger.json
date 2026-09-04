@@ -36,7 +36,7 @@
   "deterministicOverrides": {
     "master/showcase:Namespace:unmounted:ShopCurrency#0": "833ae3fd-0c5d-4054-8283-9140055aa176",
     "master/showcase:Namespace:unmounted:ShopCurrency#0/showcase:Showcase:CurrencyType:#0": "a273b663-be19-4ac3-b03c-8f6e9580fbc2",
-    "master/showcase:Namespace:unmounted:ShopCurrency#0/showcase:Showcase:CurrencyType:#0/showcase:DisplayItem:StorePrice:@0#0": "b01aba03-98e5-4073-859a-f6e0df8eb578",
+    "master/showcase:Namespace:unmounted:ShopCurrency#0/showcase:Showcase:CurrencyType:#0/showcase:DisplayItem:StorePrice:@displayItems[0]#0": "b01aba03-98e5-4073-859a-f6e0df8eb578",
     "ui:StorePrice:StorePrice:definition": "c1ba1ae8-a642-47cd-928d-fa477649d268",
     "ui:StorePrice:StorePrice:item:PriceLabel": "bb869c48-ea89-4e61-91e3-161e1208a2e2",
     "ui:StorePrice:StorePrice:item:PriceValue": "65de7fc5-b2c3-4d77-95d8-6ec5ed49331c",

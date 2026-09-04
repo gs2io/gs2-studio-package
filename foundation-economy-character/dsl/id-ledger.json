@@ -35,10 +35,10 @@
   "deterministicOverrides": {
     "master/experience:Namespace:unmounted:CharacterExperience#0": "227e4fe7-b721-45f2-a065-bb8cfa160813",
     "master/experience:Namespace:unmounted:CharacterExperience#0/experience:ExperienceModel:CharacterExperience:Experience#0": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
-    "master/experience:Namespace:unmounted:CharacterExperience#0/experience:ExperienceModel:CharacterExperience:Experience#0/experience:Threshold:CharacterExperience:@0#0": "f76eb342-15e9-4910-bd1b-fdf5f91e6b61",
+    "master/experience:Namespace:unmounted:CharacterExperience#0/experience:ExperienceModel:CharacterExperience:Experience#0/experience:Threshold:CharacterExperience:@rankThreshold[0]#0": "f76eb342-15e9-4910-bd1b-fdf5f91e6b61",
     "master/inventory:Namespace:unmounted:Character#0": "33332897-b763-4809-abac-037bf62b6427",
     "master/inventory:Namespace:unmounted:Character#0/inventory:InventoryModel:CharacterCollection:Character#0": "62805db8-2e40-4a2c-a1c4-38e0c07d49f8",
-    "master/inventory:Namespace:unmounted:Character#0/inventory:InventoryModel:CharacterCollection:Character#0/inventory:ItemModel:Character:@0#0": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75",
+    "master/inventory:Namespace:unmounted:Character#0/inventory:InventoryModel:CharacterCollection:Character#0/inventory:ItemModel:Character:@itemModels[0]#0": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75",
     "ui:Character:Character:definition": "b38e6f00-ad0d-46d0-a7fd-b8b8060920fc",
     "ui:Character:Character:item:ExperienceLabel": "e7248a23-a04a-46f9-8671-9744866ba9bd",
     "ui:Character:Character:item:IdValue": "6a5c9fcb-a700-4311-be4b-952d0b764def",

@@ -14,7 +14,7 @@
   "deterministicOverrides": {
     "master/inventory:Namespace:unmounted:Inventory#0": "09e163b0-1495-4088-90c6-268a8ccc8a57",
     "master/inventory:Namespace:unmounted:Inventory#0/inventory:SimpleInventoryModel:unmounted:Inventory#0": "afdb24fa-c015-4d1f-acd4-44b973213010",
-    "master/inventory:Namespace:unmounted:Inventory#0/inventory:SimpleInventoryModel:unmounted:Inventory#0/inventory:SimpleItemModel:Item:@0#0": "54fbf22f-18c1-458c-8bde-2d2f651dbf65",
+    "master/inventory:Namespace:unmounted:Inventory#0/inventory:SimpleInventoryModel:unmounted:Inventory#0/inventory:SimpleItemModel:Item:@simpleItemModels[0]#0": "54fbf22f-18c1-458c-8bde-2d2f651dbf65",
     "user/inventory:SimpleItem:unmounted:#0": "f1ce754d-7e20-4b30-a405-429c70bd9f12"
   }
 }

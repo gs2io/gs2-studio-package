@@ -23,7 +23,7 @@
   "deterministicOverrides": {
     "master/inventory:Namespace:unmounted:Equipment#0": "11564513-7c8f-4ffa-a490-0f717239e599",
     "master/inventory:Namespace:unmounted:Equipment#0/inventory:InventoryModel:EquipmentCollection:Equipment#0": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
-    "master/inventory:Namespace:unmounted:Equipment#0/inventory:InventoryModel:EquipmentCollection:Equipment#0/inventory:ItemModel:Equipment:@0#0": "e4638944-74f6-4475-baa9-e9a6c0b8e607",
+    "master/inventory:Namespace:unmounted:Equipment#0/inventory:InventoryModel:EquipmentCollection:Equipment#0/inventory:ItemModel:Equipment:@itemModels[0]#0": "e4638944-74f6-4475-baa9-e9a6c0b8e607",
     "user/inventory:Inventory:unmounted:#0": "a76aa80e-725e-4939-9fd6-1957946b2404"
   }
 }

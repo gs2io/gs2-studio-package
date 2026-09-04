@@ -9,7 +9,7 @@
   "deterministicOverrides": {
     "master/exchange:Namespace:unmounted:EnergyProduct#0": "bab497d3-7338-4c1c-8a02-3072eba9e71c",
     "master/exchange:Namespace:unmounted:EnergyProduct#0/exchange:RateModel:EnergyProduct:#0": "4565e6da-458c-446a-a0e2-5e90edb8310b",
-    "master/exchange:Namespace:unmounted:EnergyProduct#0/exchange:RateModel:EnergyProduct:#0/transaction:AcquireAction:EnergyProduct:@0#0": "0614af4a-44f8-471a-9933-4bd3d5591ebb",
-    "master/exchange:Namespace:unmounted:EnergyProduct#0/exchange:RateModel:EnergyProduct:#0/transaction:ConsumeAction:EnergyProduct:@0#0": "7f076fd3-24e6-44e2-aa3d-0688e725929b"
+    "master/exchange:Namespace:unmounted:EnergyProduct#0/exchange:RateModel:EnergyProduct:#0/transaction:AcquireAction:EnergyProduct:@acquireActions[0]#0": "0614af4a-44f8-471a-9933-4bd3d5591ebb",
+    "master/exchange:Namespace:unmounted:EnergyProduct#0/exchange:RateModel:EnergyProduct:#0/transaction:ConsumeAction:EnergyProduct:@consumeActions[0]#0": "7f076fd3-24e6-44e2-aa3d-0688e725929b"
   }
 }

@@ -14,8 +14,8 @@
   "deterministicOverrides": {
     "master/loginReward:Namespace:unmounted:LoginReward#0": "005a38f8-e72e-5acb-a7cb-2f713b3671c8",
     "master/loginReward:Namespace:unmounted:LoginReward#0/loginReward:BonusModel:LoginRewardCollection:#0": "3bdf98b6-23a1-57f3-9e76-518e6a1eb187",
-    "master/loginReward:Namespace:unmounted:LoginReward#0/loginReward:BonusModel:LoginRewardCollection:#0/loginReward:Reward:LoginReward:@0#0": "de30e83f-37c0-579a-a4dc-b3918862a28d",
-    "master/loginReward:Namespace:unmounted:LoginReward#0/loginReward:BonusModel:LoginRewardCollection:#0/loginReward:Reward:LoginReward:@0#0/transaction:AcquireAction:LoginReward:@0#0": "3ca17687-f805-5398-b07f-e277edc45611",
+    "master/loginReward:Namespace:unmounted:LoginReward#0/loginReward:BonusModel:LoginRewardCollection:#0/loginReward:Reward:LoginReward:@rewards[0]#0": "de30e83f-37c0-579a-a4dc-b3918862a28d",
+    "master/loginReward:Namespace:unmounted:LoginReward#0/loginReward:BonusModel:LoginRewardCollection:#0/loginReward:Reward:LoginReward:@rewards[0]#0/transaction:AcquireAction:LoginReward:@acquireActions[0]#0": "3ca17687-f805-5398-b07f-e277edc45611",
     "user/loginReward:ReceiveStatus:LoginReward:#0": "36085262-1664-4dfe-a472-c1f8a886ec52"
   }
 }
