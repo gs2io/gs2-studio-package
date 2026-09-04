@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_A5PTNHJYSCXW55G2TW376GP36E",
         "localizedDisplay": {
           "en": {
@@ -53,7 +52,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
   "kind": "local",
   "name": "AdViewPoint",

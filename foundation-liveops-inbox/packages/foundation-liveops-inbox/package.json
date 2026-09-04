@@ -2,7 +2,6 @@
   "id": "foundation-liveops-inbox",
   "name": "foundation-liveops-inbox",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Delivers announcements and item-attached messages from the operator to players.",

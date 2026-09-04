@@ -2,7 +2,6 @@
   "id": "micro-economy-quest",
   "name": "micro-economy-quest",
   "version": "0.0.0",
-  "description": "",
   "dependencies": {
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },

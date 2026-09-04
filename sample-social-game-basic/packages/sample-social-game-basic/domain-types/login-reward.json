@@ -41,7 +41,6 @@
     "properties": [
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_7BNP79J6Y7F8GEG0T6KHC790V0",
         "name": "rewardType",
         "requirement": {
@@ -54,7 +53,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_RCQNX4MEVGDF7TJ7V7FSADT82S",
         "name": "contentsId",
         "requirement": {
@@ -67,7 +65,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_G6DZB9WB3V5Q15XXP8MWQ6Z3ZD",
         "name": "count",
         "requirement": {
@@ -81,7 +78,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_P5MSKRE68S4BZ3BQ40RKQ4HF4V",
   "kind": "overlay",
   "name": "LoginReward",

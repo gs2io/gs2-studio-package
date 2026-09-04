@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_DH1MQSPSZ68EZDG80Q3KWZNQW8",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_N44ZVTGEN3XNPFT4YSNP5R8222",
         "localizedDisplay": {
           "en": {
@@ -73,7 +71,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_RP2T1J9MWSNMXEXJQF15E76R42",
         "localizedDisplay": {
           "en": {
@@ -96,7 +93,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_E7ANH0AETFGP8XNYN524JTT1KG",
         "localizedDisplay": {
           "en": {
@@ -120,7 +116,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_8PNR995T1Y2063NYZJMVKSHZNE",
   "kind": "local",
   "name": "MissionCounter",

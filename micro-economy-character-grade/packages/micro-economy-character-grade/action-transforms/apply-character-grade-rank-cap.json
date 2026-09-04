@@ -43,7 +43,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0C826WK092B8J1DFWS8NM7G",
       "name": "propertyId",
       "required": true,

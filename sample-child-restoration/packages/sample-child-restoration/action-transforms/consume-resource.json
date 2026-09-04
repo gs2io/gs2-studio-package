@@ -57,7 +57,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KTXANDTHX6V449N7SKMKQWEV",
       "name": "resourceType",
       "required": true,
@@ -70,7 +69,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KTXANDTHEH61AJDZY74K36VM",
       "name": "resourceId",
       "required": true,
@@ -80,7 +78,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KTXANDTHMBNZ44Q9Q1M8YM1J",
       "name": "count",
       "required": true,

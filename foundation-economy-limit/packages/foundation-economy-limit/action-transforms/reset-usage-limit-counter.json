@@ -44,7 +44,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0C6M2N3ACQ3G59DJ0PBP5EQ",
       "name": "limit",
       "required": true,
@@ -54,7 +53,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C6M2N31NRSE06ZWCD0KHWB",
       "name": "counter",
       "required": true,

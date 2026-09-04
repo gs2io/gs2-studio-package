@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_01M0C84Y3236PN0MXQNS8GXGKR",
         "localizedDisplay": {
           "en": {
@@ -99,7 +98,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_01M0C84Y32MFW05C5TXC61W1SR",
   "kind": "local",
   "name": "EquipmentEnchantSlotChance",

@@ -43,7 +43,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KJSWEQFV1RRMDAGH2SZ0V69H",
       "name": "value",
       "required": true,

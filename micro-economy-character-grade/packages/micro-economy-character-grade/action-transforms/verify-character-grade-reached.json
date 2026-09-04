@@ -58,7 +58,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0C826WK3VT4BNP3TCW5427D",
       "name": "propertyId",
       "required": true,
@@ -68,7 +67,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C826WKH5WK6F2PP20J2FYY",
       "name": "gradeValue",
       "required": true,

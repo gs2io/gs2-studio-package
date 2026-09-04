@@ -2,7 +2,6 @@
   "id": "foundation-social-graph",
   "name": "foundation-social-graph",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Handles friend requests, follows, and profiles — the connections between players.",

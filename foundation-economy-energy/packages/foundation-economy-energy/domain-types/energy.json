@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_3ED1FAC3V82FG3Z4QEMXRF1BJE",
         "localizedDisplay": {
           "en": {
@@ -52,7 +51,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_1QXN33T7DVRHC1P1C2D0ECXPQP",
         "localizedDisplay": {
           "en": {
@@ -75,7 +73,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_64XY03QAD08E4FQMCQQG039HZ9",
         "localizedDisplay": {
           "en": {
@@ -100,7 +97,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_XCA5D46XQKYD37PNGVYA1HH9S9",
         "localizedDisplay": {
           "en": {
@@ -125,7 +121,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_NQG4GN9X1R4HTWE275H4JXJHFK",
         "localizedDisplay": {
           "en": {
@@ -150,7 +145,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_XFMYM93GTF2261GG2KNVHC9V5K",
         "localizedDisplay": {
           "en": {
@@ -175,7 +169,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR",
         "localizedDisplay": {
           "en": {
@@ -200,7 +193,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ",
         "localizedDisplay": {
           "en": {
@@ -224,7 +216,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
   "kind": "local",
   "name": "Energy",

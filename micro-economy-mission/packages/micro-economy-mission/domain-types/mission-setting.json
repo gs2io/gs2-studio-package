@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_3K3QTNRR66PZ8K2AQ3WCNYPT2R",
         "localizedDisplay": {
           "en": {
@@ -58,7 +57,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0R2YRXVDV9PNGK6TPKY0V1E",
         "localizedDisplay": {
           "en": {
@@ -83,7 +81,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_0PJDRHCVVR80R8R1SEY2KMGEQH",
         "localizedDisplay": {
           "en": {
@@ -109,7 +106,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
   "kind": "local",
   "name": "MissionSetting",

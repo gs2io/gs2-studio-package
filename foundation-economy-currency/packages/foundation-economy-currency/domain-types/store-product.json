@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_A26C5NBX039V9DNV0ERPSWVPD8",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_Z99QWHNS8G1DEFWGT2MB00NRJA",
         "localizedDisplay": {
           "en": {
@@ -74,7 +72,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
   "kind": "local",
   "name": "StoreProduct",

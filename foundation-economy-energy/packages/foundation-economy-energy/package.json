@@ -2,7 +2,6 @@
   "id": "foundation-economy-energy",
   "name": "foundation-economy-energy",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Manages a stamina/energy meter that recovers over time.",

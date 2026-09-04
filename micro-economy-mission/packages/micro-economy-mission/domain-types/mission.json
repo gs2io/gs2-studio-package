@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_8ADCCWBXRK8X69EAFY30PGN4SD",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0R2YRXVYSPEEDYSRE7SR9GQ",
         "localizedDisplay": {
           "en": {
@@ -75,7 +73,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_2KV74FVT69TN7Z0QZ804K1CA6F",
         "localizedDisplay": {
           "en": {
@@ -98,7 +95,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_JW1ZWH5B4R6FXJM3X2K41NRZ6P",
         "localizedDisplay": {
           "en": {
@@ -121,7 +117,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_13Z46E8S0DVQMD9QXBE6CDS0CF",
         "localizedDisplay": {
           "en": {
@@ -144,7 +139,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_EV356KV2B8PS2XDNDGM7JRFDSC",
         "localizedDisplay": {
           "en": {
@@ -179,7 +173,6 @@
       }
     }
   ],
-  "description": "",
   "id": "dt_P8YA8929576H08C2Q4YBE5KJXT",
   "kind": "local",
   "name": "Mission",

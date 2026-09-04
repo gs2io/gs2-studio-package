@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_G9FT5R5K079VNPHKK15D46TRPC",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_RG77EYB1G23KWGEYNTSCG96JNN",
         "localizedDisplay": {
           "en": {
@@ -87,7 +85,6 @@
       }
     }
   ],
-  "description": "",
   "id": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
   "kind": "local",
   "name": "Gacha",

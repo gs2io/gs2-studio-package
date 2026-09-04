@@ -59,7 +59,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KJSDEXBM0H8RCVCZQXAG20NZ",
       "name": "metadata",
       "required": true,
@@ -69,7 +68,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KJSDG74M7N30Q956691AV1D0",
       "name": "expireDays",
       "required": true,

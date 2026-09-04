@@ -53,7 +53,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KSZ27ZVMTPX91YA56A68NFH2",
       "name": "character",
       "required": true,
@@ -63,7 +62,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KSZ28A1ZSKDKP7DQZJ1J7R16",
       "name": "propertyId",
       "required": true,

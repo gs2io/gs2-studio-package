@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_A2TYYY7WW1Z4306M5CGDJRBEKJ",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_NFHPA3CG7FM9RX44J7NAWPT1ET",
         "localizedDisplay": {
           "en": {
@@ -76,7 +74,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
   "kind": "local",
   "name": "LoginRewardCollection",

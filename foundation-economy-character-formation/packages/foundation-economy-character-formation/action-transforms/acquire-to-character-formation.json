@@ -53,7 +53,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KST7JJYTQWHF7XYJES9DW54E",
       "name": "index",
       "required": true,

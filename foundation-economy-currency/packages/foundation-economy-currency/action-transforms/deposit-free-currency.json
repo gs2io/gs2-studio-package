@@ -54,7 +54,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KMYVXWVZT5FGVJAPKRDBVAPP",
       "name": "count",
       "required": true,

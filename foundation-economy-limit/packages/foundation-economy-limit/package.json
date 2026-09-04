@@ -2,7 +2,6 @@
   "id": "foundation-economy-limit",
   "name": "foundation-economy-limit",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Handles allowances such as 'three times a day': one reset schedule, a separate counter per thing being counted, and a maximum supplied by the caller.",

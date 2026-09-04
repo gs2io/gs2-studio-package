@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP",
         "localizedDisplay": {
           "en": {
@@ -51,7 +50,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_8KGQ5PW8KF4540B06JKKQ6QF96",
   "kind": "local",
   "name": "QuestCollection",

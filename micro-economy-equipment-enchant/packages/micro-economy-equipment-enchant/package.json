@@ -2,7 +2,6 @@
   "id": "micro-economy-equipment-enchant",
   "name": "micro-economy-equipment-enchant",
   "version": "0.0.0",
-  "description": "",
   "dependencies": {
     "foundation-economy-equipment": "github:gs2io/gs2-studio-package"
   },

@@ -49,7 +49,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0C5HJ9HWEYZ4H371ZBV46PZ",
       "name": "limit",
       "required": true,
@@ -59,7 +58,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C6M2N3F5P8VN7BW32S9QEV",
       "name": "counter",
       "required": true,
@@ -69,7 +67,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C6M2N3ABZKZYQ192V6GV64",
       "name": "countDownValue",
       "required": true,

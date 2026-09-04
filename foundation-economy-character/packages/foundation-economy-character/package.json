@@ -2,7 +2,6 @@
   "id": "foundation-economy-character",
   "name": "foundation-economy-character",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Handles character ownership, level, and experience.",

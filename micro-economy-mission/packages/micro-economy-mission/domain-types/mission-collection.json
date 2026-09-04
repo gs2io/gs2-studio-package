@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_K7KPHSFXNH3RA12P7NEZ6JNVPB",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_MTPT2W75JMKRGK9CXSREB6ZW49",
         "localizedDisplay": {
           "en": {
@@ -90,7 +88,6 @@
       }
     }
   ],
-  "description": "",
   "id": "dt_ZXWN4GKT975S371YFYF3E1DRZ0",
   "kind": "local",
   "name": "MissionCollection",

@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_57TKVNCPPA7DHSTZRX4QJ4W45K",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_HPG95V898A9A7JCSM2KEV88PVG",
         "localizedDisplay": {
           "en": {
@@ -73,7 +71,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_925R3E1XPBXGDG9D4H5MZBXMBK",
         "localizedDisplay": {
           "en": {
@@ -97,7 +94,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
   "kind": "local",
   "name": "GlobalMessage",

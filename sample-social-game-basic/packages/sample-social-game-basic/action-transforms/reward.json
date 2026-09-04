@@ -62,7 +62,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KM2NMRK3CVHP5KR6AZG0DM6H",
       "name": "rewardType",
       "required": true,
@@ -72,7 +71,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KM4M2XSRCBF2K6JNZJMRX2G0",
       "name": "contentsId",
       "required": false,
@@ -82,7 +80,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KM2NMSDNAF6QH90S850MK4Y4",
       "name": "count",
       "required": true,

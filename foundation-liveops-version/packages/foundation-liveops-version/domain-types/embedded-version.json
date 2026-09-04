@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_JV8X380AFH866SVX2HJR3FMP4V",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_Q1QVGEVNDQ31WXBSQ3CTK8PEYS",
         "localizedDisplay": {
           "en": {
@@ -73,7 +71,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_JNSG2T4XZEK7T0RFFT4FHYS77N",
         "localizedDisplay": {
           "en": {
@@ -96,7 +93,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_3YR1D04DTCR3QXF2102W5Z73PM",
         "localizedDisplay": {
           "en": {
@@ -119,7 +115,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_BMCEB6H2XZYTXR2M1MCXV4M605",
         "localizedDisplay": {
           "en": {
@@ -142,7 +137,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_E9DY9TY2D9Y1CY09MT7Z6DEYYF",
         "localizedDisplay": {
           "en": {
@@ -166,7 +160,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
   "kind": "local",
   "name": "EmbeddedVersion",

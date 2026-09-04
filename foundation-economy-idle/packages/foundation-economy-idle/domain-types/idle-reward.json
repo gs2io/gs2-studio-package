@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0PRB5RFJJP0NG8XT0WHEGD2",
         "localizedDisplay": {
           "en": {
@@ -53,7 +52,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_4201EMDQW9HN9AMKXT0WQHMKJY",
   "kind": "local",
   "name": "IdleReward",

@@ -2,7 +2,6 @@
   "id": "micro-economy-buff",
   "name": "micro-economy-buff",
   "version": "0.0.0",
-  "description": "",
   "dependencies": {
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },

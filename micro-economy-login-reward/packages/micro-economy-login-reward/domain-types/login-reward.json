@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_0N4V6CN66SVVQH7S0S3Z909D1A",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_JPGJM6CM0TRQGXTAVJBYATVNCG",
         "localizedDisplay": {
           "en": {
@@ -75,7 +73,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_ZXRNPBQQCJM49N2Z27FQETSRWY",
         "localizedDisplay": {
           "en": {
@@ -113,7 +110,6 @@
       }
     }
   ],
-  "description": "",
   "id": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
   "kind": "local",
   "name": "LoginReward",

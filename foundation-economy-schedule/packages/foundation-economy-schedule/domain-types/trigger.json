@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_6MCAB8KE6ZN15EJK6Q592XR7GA",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_F9RRQHZFBAHE291G11WATKA2YB",
         "localizedDisplay": {
           "en": {
@@ -73,7 +71,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF",
         "localizedDisplay": {
           "en": {
@@ -97,7 +94,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST",
   "kind": "local",
   "name": "Trigger",

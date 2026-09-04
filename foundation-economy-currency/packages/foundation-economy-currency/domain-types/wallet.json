@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_6KNY5JMXVS2AX21X1HAHP3A4X0",
         "localizedDisplay": {
           "en": {
@@ -52,7 +51,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_V0BFHW3E05XZXMY0DWANC3G4C9",
         "localizedDisplay": {
           "en": {
@@ -77,7 +75,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_FEXJWZ3Q38NQ44J3C070EK1CJ8",
         "localizedDisplay": {
           "en": {
@@ -103,7 +100,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
   "kind": "local",
   "name": "Wallet",

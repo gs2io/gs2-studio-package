@@ -30,7 +30,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_6MY41PGG6DAVSR3YSY4YDTYSPX",
         "localizedDisplay": {
           "en": {
@@ -53,7 +52,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_AATTCTRXX4J382EEVEGE9ZYV6W",
         "localizedDisplay": {
           "en": {
@@ -76,7 +74,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_2YWD79NQ991RBGDCA3HEZHGDT8",
         "localizedDisplay": {
           "en": {
@@ -100,7 +97,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
   "kind": "local",
   "name": "CharacterRate",

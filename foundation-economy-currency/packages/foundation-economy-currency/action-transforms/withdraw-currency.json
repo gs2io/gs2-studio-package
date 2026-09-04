@@ -49,7 +49,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KQ90M60EBS2MFJW7D5P9AG47",
       "name": "paidOnly",
       "required": false,
@@ -59,7 +58,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KNH9V1VN1MA5PF1QWFZEST5P",
       "name": "count",
       "required": true,

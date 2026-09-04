@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_6F9A9WPY3YAQ0SS8E7F5H2YXFA",
         "localizedDisplay": {
           "en": {
@@ -51,7 +50,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_Z73MGN3WHWKHC8PF714HS91E62",
   "kind": "local",
   "name": "CharacterFormationSlot",

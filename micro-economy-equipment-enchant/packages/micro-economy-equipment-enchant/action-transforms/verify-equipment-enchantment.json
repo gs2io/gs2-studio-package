@@ -64,7 +64,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0C84Y333S5PZQXN5JE5HMZH",
       "name": "enchant",
       "required": true,
@@ -74,7 +73,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C84Y33M0X2SZE99QB3PGKG",
       "name": "propertyId",
       "required": true,
@@ -84,7 +82,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C84Y33MABXN8CQ0CYS9NP1",
       "name": "option",
       "required": true,

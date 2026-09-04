@@ -17,7 +17,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
         "name": "quest",
         "requirement": {
@@ -30,7 +29,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_4ERYTK018DNDJ04E9HCMJEG26S",
         "name": "rewards",
         "requirement": {
@@ -47,7 +45,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_B1FD36T1515W68CPMCQP54TVAR",
   "kind": "local",
   "name": "Progress",

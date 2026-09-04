@@ -2,7 +2,6 @@
   "id": "foundation-social-guild",
   "name": "foundation-social-guild",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Handles player guilds — capacity, permission roles, and which guild a player belongs to.",

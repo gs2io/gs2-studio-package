@@ -127,7 +127,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0C5T6AFC4H9ESF7ZV7XRVXK",
         "localizedDisplay": {
           "en": {
@@ -152,7 +151,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
         "localizedDisplay": {
           "en": {
@@ -177,7 +175,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_01M0C5T6AFTPHZP6VRDZBYPK8F",
         "localizedDisplay": {
           "en": {
@@ -200,7 +197,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_01M0C5T6AFMZ7YHRK3TF8G9T6F",
         "localizedDisplay": {
           "en": {
@@ -247,7 +243,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_01M0C5T6AF24NKHPZ1Z4R946FT",
   "kind": "local",
   "name": "Guild",

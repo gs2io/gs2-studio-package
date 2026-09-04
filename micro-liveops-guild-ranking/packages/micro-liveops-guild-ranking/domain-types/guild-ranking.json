@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_01M0CE422VC02GDNEZDYXGVD89",
         "localizedDisplay": {
           "en": {
@@ -171,7 +170,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
   "kind": "local",
   "name": "GuildRanking",

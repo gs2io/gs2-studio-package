@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_K2G6TEKHV8KKTXDBG04DK9X3SM",
         "localizedDisplay": {
           "en": {
@@ -53,7 +52,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6",
   "kind": "local",
   "name": "Item",

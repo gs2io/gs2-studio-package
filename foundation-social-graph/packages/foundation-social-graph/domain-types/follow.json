@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_00CYS22DM7RCY5V2S2MSP7YH5Y",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_WEZ74QQWTQ37ZYH7GKQCJ9C1W8",
         "localizedDisplay": {
           "en": {
@@ -74,7 +72,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_12CDXGXXRQVPJVMA9VGATG195G",
   "kind": "local",
   "name": "Follow",

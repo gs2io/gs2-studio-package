@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_2C21XE4SCXQ1JDG7ES2MNFNA2R",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_H4JW4XTKFKNW6TYBGJ7W6C175M",
         "localizedDisplay": {
           "en": {
@@ -73,7 +71,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_S5796CZNBGWDHWSSHHT1EC00T6",
         "localizedDisplay": {
           "en": {
@@ -97,7 +94,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_R7W960WC22J1FD8E239HDFMD8D",
   "kind": "local",
   "name": "Equipment",

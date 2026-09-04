@@ -30,7 +30,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_01M0C5QTC1PT2SC2DM4MFFH880",
         "localizedDisplay": {
           "en": {
@@ -78,7 +77,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0C5QTC1XDPQC02MC3PAHSFT",
         "localizedDisplay": {
           "en": {
@@ -104,7 +102,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_01M0C5QTC12JW853EKK38QN42Z",
   "kind": "local",
   "name": "RankingReward",

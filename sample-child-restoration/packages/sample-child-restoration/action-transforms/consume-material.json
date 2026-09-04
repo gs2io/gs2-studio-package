@@ -48,7 +48,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KTXAQYHJ3TK4ASGFFX8DMP79",
       "name": "itemName",
       "required": true,
@@ -58,7 +57,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KTXAQYHJMCJR6SD4KHZ853RW",
       "name": "count",
       "required": true,

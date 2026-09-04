@@ -30,7 +30,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_01M0CE422VGSQB9SXT2CHKNFFP",
         "localizedDisplay": {
           "en": {
@@ -78,7 +77,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0CE422V7MQAXCS77903V6Y2",
         "localizedDisplay": {
           "en": {
@@ -104,7 +102,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_01M0CE422VDT5R1HBS4KHAF8RE",
   "kind": "local",
   "name": "GuildRankingReward",

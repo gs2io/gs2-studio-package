@@ -21,7 +21,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_01KTXANDTH445WKYNYCWB4WMK1",
         "name": "quest",
         "requirement": {
@@ -34,7 +33,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01KTXANDTHM6FZWEEQGG6WNR6Q",
         "name": "resourceType",
         "requirement": {
@@ -50,7 +48,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01KTXANDTHR27K8R3FBY2PJ3YA",
         "name": "resourceId",
         "requirement": {
@@ -63,7 +60,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01KTXANDTHR8FA3AYET9MWGNV8",
         "name": "count",
         "requirement": {
@@ -77,7 +73,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_XS2NWXE5Q03HPYJ8E48BAQT9J1",
   "kind": "local",
   "name": "QuestMaterial",

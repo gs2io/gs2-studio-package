@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_8385BCWPDH6PVR79CSMQ19ZNZP",
         "localizedDisplay": {
           "en": {
@@ -51,7 +50,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C",
   "kind": "local",
   "name": "ReceiveFriendRequest",

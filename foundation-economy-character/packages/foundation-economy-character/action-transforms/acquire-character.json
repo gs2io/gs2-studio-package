@@ -63,7 +63,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KJJKZ30ABCDEFGHJKMNPQRST",
       "name": "character",
       "required": true,
@@ -73,7 +72,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KJJKZ31TVWXYZ0123456789A",
       "name": "count",
       "required": true,

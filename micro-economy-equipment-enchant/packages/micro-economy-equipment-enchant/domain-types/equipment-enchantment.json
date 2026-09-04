@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_01M0C84Y32ECEHBF3RZEE5D62D",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_01M0C84Y32JTY6HCNCJZ7922GH",
         "localizedDisplay": {
           "en": {
@@ -74,7 +72,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_01M0C84Y323XGX5N856QJ5Z61Q",
   "kind": "local",
   "name": "EquipmentEnchantment",

@@ -2,7 +2,6 @@
   "id": "foundation-economy-character-dictionary",
   "name": "foundation-economy-character-dictionary",
   "version": "0.0.0",
-  "description": "",
   "dependencies": {
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },

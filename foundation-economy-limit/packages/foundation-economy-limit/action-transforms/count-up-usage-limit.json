@@ -54,7 +54,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0C5HJ9H70DM2B9W36S554T5",
       "name": "limit",
       "required": true,
@@ -64,7 +63,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C6M2N30KMRMWRQJ3ZBFQRX",
       "name": "counter",
       "required": true,
@@ -74,7 +72,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C6M2N3WHQ7CT4WW8FWGQ27",
       "name": "countUpValue",
       "required": true,
@@ -84,7 +81,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C6M2N3K5A6TE7PXPNJT97F",
       "name": "maxValue",
       "required": true,

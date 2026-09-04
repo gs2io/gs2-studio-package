@@ -17,7 +17,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP",
         "name": "schedule",
         "requirement": {
@@ -31,7 +30,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_Z3CVR4QA5RPMKQ5XM49EKGEJGK",
   "kind": "local",
   "name": "QuestCollection",

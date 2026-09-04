@@ -64,7 +64,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0CE422WM05J955JF4Z6GSDJ",
       "name": "ranking",
       "required": true,
@@ -74,7 +73,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0CE422W0G7W7F4YTBJM9TNZ",
       "name": "guildName",
       "required": true,
@@ -84,7 +82,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0CE422WS766NQRQRGCS82P0",
       "name": "season",
       "required": true,
@@ -94,7 +91,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0CE422WZKT7TF9QJMPMGN0B",
       "name": "score",
       "required": true,

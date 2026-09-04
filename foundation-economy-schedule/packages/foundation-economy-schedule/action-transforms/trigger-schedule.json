@@ -44,7 +44,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KKR3P8NPJDAJKYTAF2R1S1G0",
       "name": "trigger",
       "required": true,
@@ -54,7 +53,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KKR3P8NQM08ZGAD9RMXRT5MT",
       "name": "extendSeconds",
       "required": true,

@@ -2,7 +2,6 @@
   "id": "foundation-economy-equipment",
   "name": "foundation-economy-equipment",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Manages the weapons and gear characters own and equip, grouped by category.",

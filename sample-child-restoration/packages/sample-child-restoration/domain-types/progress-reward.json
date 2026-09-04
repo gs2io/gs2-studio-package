@@ -17,7 +17,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B",
         "name": "itemId",
         "requirement": {
@@ -30,7 +29,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_RYDWJ2B6D96NAN85AF8SDXD12F",
         "name": "value",
         "requirement": {
@@ -44,7 +42,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_3V7D4XQ96QZ9TFSSBB54R73QRK",
   "kind": "local",
   "name": "ProgressReward",

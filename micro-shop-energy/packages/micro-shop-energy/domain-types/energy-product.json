@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_45XJAVDEC9AXXNMSQP6FK7D08X",
         "localizedDisplay": {
           "en": {
@@ -52,7 +51,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_7BEWXW2JF170AYXKNFG0ZMX3MT",
         "localizedDisplay": {
           "en": {
@@ -78,7 +76,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_B6ACHCG26EEPJHVNQ7SA1WX2XS",
   "kind": "local",
   "name": "EnergyProduct",

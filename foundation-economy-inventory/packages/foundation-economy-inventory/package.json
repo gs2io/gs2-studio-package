@@ -2,7 +2,6 @@
   "id": "foundation-economy-inventory",
   "name": "foundation-economy-inventory",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Basic inventory management for items the player owns.",

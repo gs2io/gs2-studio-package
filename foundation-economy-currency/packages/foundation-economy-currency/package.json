@@ -2,7 +2,6 @@
   "id": "foundation-economy-currency",
   "name": "foundation-economy-currency",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Manages an in-game currency balance (wallet) and the products it can buy.",

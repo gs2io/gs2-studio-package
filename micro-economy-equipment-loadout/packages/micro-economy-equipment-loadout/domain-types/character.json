@@ -7,7 +7,6 @@
     "properties": [
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_01M0CDYNB5CJAAH5YPRR6FNRXF",
         "localizedDisplay": {
           "en": {
@@ -34,7 +33,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_01M0CDYNB5V74MMX3SWDK4ZRCH",
   "kind": "overlay",
   "name": "Character",

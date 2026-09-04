@@ -54,7 +54,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KMYVXWW09S418P0ZRRBQT0RE",
       "name": "count",
       "required": true,
@@ -64,7 +63,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KMYVXWW0K3RYB953PFHCTQTV",
       "name": "currencyType",
       "required": true,
@@ -74,7 +72,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01KMYVXWW0A879WGKRYW1Q5E6N",
       "name": "price",
       "required": true,

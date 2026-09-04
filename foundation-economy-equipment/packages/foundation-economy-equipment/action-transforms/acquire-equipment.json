@@ -63,7 +63,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01KJSZ97WF877V5M2X1T86ZYN3",
       "name": "equipment",
       "required": true,

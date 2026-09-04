@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_6KVAE2J57GWW44BA6BWE76HNX4",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_WN6CSPS3DDQ40TR3VG8PYNTMPM",
         "localizedDisplay": {
           "en": {
@@ -73,7 +71,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_5N09J4Q6RV5N2EGDPKMW77WWD0",
         "localizedDisplay": {
           "en": {
@@ -97,7 +94,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
   "kind": "local",
   "name": "Profile",

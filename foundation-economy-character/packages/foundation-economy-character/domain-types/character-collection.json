@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_3THQSBRP9PCYM426V54R4CZ8BF",
         "localizedDisplay": {
           "en": {
@@ -52,7 +51,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_A3GQRDCNGWBQCT773D3173ZMN1",
         "localizedDisplay": {
           "en": {
@@ -77,7 +75,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_3MYYM6EEDJBYJCPMK4SRJFM58Q",
         "localizedDisplay": {
           "en": {
@@ -102,7 +99,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_WJ08C0DHN3KEMP4GW454S2KM0Q",
         "localizedDisplay": {
           "en": {
@@ -128,7 +124,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
   "kind": "local",
   "name": "CharacterCollection",

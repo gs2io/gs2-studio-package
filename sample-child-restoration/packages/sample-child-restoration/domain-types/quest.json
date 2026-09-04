@@ -17,7 +17,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_PFYYCZ2ZB3XBM0A06C1VSTJWCP",
         "name": "collection",
         "requirement": {
@@ -30,7 +29,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_TF2ETMFVHGYGRWYBZ8YJZXZG4S",
         "name": "consumeActions",
         "requirement": {
@@ -45,7 +43,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_H5KJSRGM60K4AQHSJMM28D7JQV",
         "name": "firstCompleteAcquireActions",
         "requirement": {
@@ -60,7 +57,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_WAYKZ6HMTNGKPMNBTAZHR37SH3",
         "name": "completeAcquireActions",
         "requirement": {
@@ -75,7 +71,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_NYZ7PF2EANTJ3R35DJQX6XWXHG",
         "name": "failedAcquireActions",
         "requirement": {
@@ -90,7 +85,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
         "name": "completed",
         "requirement": {
@@ -104,7 +98,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_XFRY8WZYW69AATA1GJV7SA5GTN",
   "kind": "local",
   "name": "Quest",

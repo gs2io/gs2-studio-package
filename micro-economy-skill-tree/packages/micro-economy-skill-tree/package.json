@@ -2,7 +2,6 @@
   "id": "micro-economy-skill-tree",
   "name": "micro-economy-skill-tree",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per player.",

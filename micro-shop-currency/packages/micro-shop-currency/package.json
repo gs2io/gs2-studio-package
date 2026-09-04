@@ -2,7 +2,6 @@
   "id": "micro-shop-currency",
   "name": "micro-shop-currency",
   "version": "0.0.0",
-  "description": "",
   "dependencies": {
     "foundation-economy-currency": "github:gs2io/gs2-studio-package"
   },

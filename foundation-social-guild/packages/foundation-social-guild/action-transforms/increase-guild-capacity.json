@@ -44,7 +44,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0C5T6AF54RS0MNKJ4Q5787T",
       "name": "guild",
       "required": true,
@@ -54,7 +53,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C5T6AF94DSN4Y3VHEKZB8Q",
       "name": "guildName",
       "required": true,
@@ -64,7 +62,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C5T6AFB0ZAMBAJ53YWMBY2",
       "name": "value",
       "required": true,

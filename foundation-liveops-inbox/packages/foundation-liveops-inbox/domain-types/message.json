@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_ZKT412G1WTM0BJ5XF28KBQMQDP",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_EBMPTGK9PGCVVK6XYH81KPEDFK",
         "localizedDisplay": {
           "en": {
@@ -73,7 +71,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_1BC9A22CA5YCR027Q5HP2R1JNG",
         "localizedDisplay": {
           "en": {
@@ -96,7 +93,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_WF69EWKXA0B3G4XTZ5KG7CBB62",
         "localizedDisplay": {
           "en": {
@@ -120,7 +116,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_GVTDXY1KW1X831ABJENERKSHZA",
   "kind": "local",
   "name": "Message",

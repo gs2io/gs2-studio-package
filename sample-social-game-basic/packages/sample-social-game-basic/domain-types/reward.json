@@ -17,7 +17,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_2CA1PNCBX70AHBRH33NSR3YAYP",
         "name": "iconAddress",
         "requirement": {
@@ -30,7 +29,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_G10WWJ3CENA14CX8DKP2CBV1E9",
         "name": "labelKey",
         "requirement": {
@@ -44,7 +42,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_FEXHRRAKNBN76PEX2C2VZGWSDV",
   "kind": "local",
   "name": "Reward",

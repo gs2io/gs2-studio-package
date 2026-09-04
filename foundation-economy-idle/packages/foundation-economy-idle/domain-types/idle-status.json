@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_CGEEBE9H9P5MW0MD82N6AW2GZJ",
         "localizedDisplay": {
           "en": {
@@ -52,7 +51,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_Y84GE13M8Y5K1KVMS5X9E2TEF8",
         "localizedDisplay": {
           "en": {
@@ -77,7 +75,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_6H5QKHHDFSEX65W9HT71FFAY0P",
         "localizedDisplay": {
           "en": {
@@ -102,7 +99,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_MRM77NEZWMCQ5ACA4EBXFBWQQ4",
         "localizedDisplay": {
           "en": {
@@ -125,7 +121,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_K3CBE560Z2HRY7DXXW6F5JCR2R",
         "localizedDisplay": {
           "en": {
@@ -151,7 +146,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
   "kind": "local",
   "name": "IdleStatus",

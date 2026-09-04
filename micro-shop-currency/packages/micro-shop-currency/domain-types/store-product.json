@@ -7,7 +7,6 @@
     "properties": [
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7",
         "localizedDisplay": {
           "en": {
@@ -33,7 +32,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
   "kind": "overlay",
   "name": "StoreProduct",

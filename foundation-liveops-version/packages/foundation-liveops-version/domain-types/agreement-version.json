@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_GMMBV2TGK8XPGGR6QZA7CB0F1Y",
         "localizedDisplay": {
           "en": {
@@ -53,7 +52,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_D6BXRZGRA97SHWEH9KKJNK8F18",
         "localizedDisplay": {
           "en": {
@@ -76,7 +74,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_0Q39Q60DC894H8BTR4B3C7WDHE",
         "localizedDisplay": {
           "en": {
@@ -99,7 +96,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_2K3FPSX7JS2XSAEGTR89RCDBNX",
         "localizedDisplay": {
           "en": {
@@ -122,7 +118,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_AWG1AAHD6ZCQ1Z2DR8Q2E4F4DT",
         "localizedDisplay": {
           "en": {
@@ -148,7 +143,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_GWSJYQBMKYCRXTBZ9WJB3JQE04",
         "localizedDisplay": {
           "en": {
@@ -171,7 +165,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0PWK4QGM5B5CWGZE3GAZ3PC",
         "localizedDisplay": {
           "en": {
@@ -194,7 +187,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0PWK4QG52B50F2Q3HMPJDQS",
         "localizedDisplay": {
           "en": {
@@ -217,7 +209,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0PWK4QGB6FARGAKYTJCE3GD",
         "localizedDisplay": {
           "en": {
@@ -240,7 +231,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0PWK4QG0W3BR71K2BSE1A8S",
         "localizedDisplay": {
           "en": {
@@ -263,7 +253,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0PWK4QGQ6V970FH4XQPDM3D",
         "localizedDisplay": {
           "en": {
@@ -286,7 +275,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_01M0PWK4QGZBDE3TA5C6D6G07J",
         "localizedDisplay": {
           "en": {
@@ -309,7 +297,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_01M0PX2G6Q6Q7SQGM4Z51XENCC",
         "localizedDisplay": {
           "en": {
@@ -332,7 +319,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_01M0PX2G6QJXF59DXKXFRSEJRT",
         "localizedDisplay": {
           "en": {
@@ -355,7 +341,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_01M0PX2G6QK5P9VPEKCCMAQ20R",
         "localizedDisplay": {
           "en": {
@@ -379,7 +364,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
   "kind": "local",
   "name": "AgreementVersion",

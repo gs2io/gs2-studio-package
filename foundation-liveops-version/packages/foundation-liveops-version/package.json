@@ -2,7 +2,6 @@
   "id": "foundation-liveops-version",
   "name": "foundation-liveops-version",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Tracks agreement (terms of service) versions and the app's embedded version.",

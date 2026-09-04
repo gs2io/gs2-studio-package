@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_1X7P75QB2PQR3A35AG6CAWPXZ6",
         "localizedDisplay": {
           "en": {
@@ -52,7 +51,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_ASEE9H5F0YR01T0HPZTY19XY2V",
         "localizedDisplay": {
           "en": {
@@ -77,7 +75,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6",
         "localizedDisplay": {
           "en": {
@@ -103,7 +100,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_1YKD2ZM08CX2D22TCPED995K2N",
   "kind": "local",
   "name": "CharacterFormation",

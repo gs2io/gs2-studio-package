@@ -44,7 +44,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0C5QTC16ZPQ4V2FAZRQPQ0V",
       "name": "ranking",
       "required": true,
@@ -54,7 +53,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C5QTC1ASM3KAQKX2Y0R4KA",
       "name": "season",
       "required": true,

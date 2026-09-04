@@ -38,7 +38,6 @@
     "properties": [
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_E85JMDT798W05V3W76NNC3P80H",
         "name": "paidOnly",
         "requirement": {
@@ -51,7 +50,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_9BK4SQ45VP88YNWVEYFKT2XZZZ",
         "name": "price",
         "requirement": {
@@ -64,7 +62,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_EWQHRAFTRTBAY7KYYMXS1QG4BV",
         "name": "series",
         "requirement": {
@@ -77,7 +74,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_GJ34KB0271RK6XJ9VCA0ZDP05J",
         "name": "drawCount",
         "requirement": {
@@ -91,7 +87,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_3WJH9S08T4JVPSM20A2YTJW87K",
   "kind": "overlay",
   "name": "Gacha",

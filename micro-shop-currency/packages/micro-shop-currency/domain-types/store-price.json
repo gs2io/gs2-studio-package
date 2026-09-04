@@ -30,7 +30,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_4QH1Q546W880NVDGJRGNVCWV07",
         "localizedDisplay": {
           "en": {
@@ -53,7 +52,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_HWY29H9JCBTCX27T4BQDSTJMV0",
         "localizedDisplay": {
           "en": {
@@ -76,7 +74,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_NW3JXP6ZEQE4DP99TJHZEB68AD",
         "localizedDisplay": {
           "en": {
@@ -117,7 +114,6 @@
       }
     }
   ],
-  "description": "",
   "id": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
   "kind": "local",
   "name": "StorePrice",

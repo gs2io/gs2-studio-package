@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_BGKVKEXBMCJX62Q18PSFR909HW",
         "localizedDisplay": {
           "en": {
@@ -50,7 +49,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_8JHGTPH2PWBM7H3AV8B87CS72E",
         "localizedDisplay": {
           "en": {
@@ -74,7 +72,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_2NM467EMK37WAPSYGR7JJGVY8W",
   "kind": "local",
   "name": "Friend",

@@ -2,7 +2,6 @@
   "id": "micro-liveops-serial-code",
   "name": "micro-liveops-serial-code",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Redeems serial codes you hand out, organised into campaigns.",

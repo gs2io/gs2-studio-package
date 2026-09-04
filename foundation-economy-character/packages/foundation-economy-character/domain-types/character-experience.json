@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_CP6T6EBWNEYWASFRXVMH0A8RPF",
         "localizedDisplay": {
           "en": {
@@ -55,7 +54,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_B2ZMJ5P9J9QVBZTGHD6816BX7Z",
         "localizedDisplay": {
           "en": {
@@ -80,7 +78,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_88HQTS8WPSVYE7PAJ2BYRE0D4C",
         "localizedDisplay": {
           "en": {
@@ -106,7 +103,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
   "kind": "local",
   "name": "CharacterExperience",

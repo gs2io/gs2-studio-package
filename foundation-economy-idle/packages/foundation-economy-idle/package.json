@@ -2,7 +2,6 @@
   "id": "foundation-economy-idle",
   "name": "foundation-economy-idle",
   "version": "0.0.0",
-  "description": "",
   "display": {
     "description": {
       "en": "Accrues and grants rewards that build up while the player is away.",

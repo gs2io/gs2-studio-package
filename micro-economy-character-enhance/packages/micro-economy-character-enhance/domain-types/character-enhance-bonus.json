@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "assetDelivery",
-        "description": "",
         "id": "prop_01M0C7T116EE8PEHMGMD3AWB3N",
         "localizedDisplay": {
           "en": {
@@ -99,7 +98,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
   "kind": "local",
   "name": "CharacterEnhanceBonus",

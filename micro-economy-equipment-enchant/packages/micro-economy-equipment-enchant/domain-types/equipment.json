@@ -7,7 +7,6 @@
     "properties": [
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_01M0C84Y32CKRCM57ZVFNSN5KJ",
         "localizedDisplay": {
           "en": {
@@ -34,7 +33,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_01M0C84Y321K5KHKYHWHMAVTH5",
   "kind": "overlay",
   "name": "Equipment",

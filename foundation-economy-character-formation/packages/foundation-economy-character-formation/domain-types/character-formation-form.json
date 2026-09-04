@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "userData",
-        "description": "",
         "id": "prop_1CD4Q461VBGWZXEWXYD3WZAT37",
         "localizedDisplay": {
           "en": {
@@ -54,7 +53,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_JY9NED2YYCSG1HXPQ1J0X9WQXW",
   "kind": "local",
   "name": "CharacterFormationForm",

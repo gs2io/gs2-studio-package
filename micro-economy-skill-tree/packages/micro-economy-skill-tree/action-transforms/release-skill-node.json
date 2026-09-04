@@ -44,7 +44,6 @@
   ],
   "parameters": [
     {
-      "description": "",
       "id": "param_01M0C87BJCT5SCBFGZ8F7EEHCP",
       "name": "propertyId",
       "required": true,
@@ -54,7 +53,6 @@
       }
     },
     {
-      "description": "",
       "id": "param_01M0C87BJC99C9Z8BB3MCEVSKT",
       "name": "node",
       "required": true,

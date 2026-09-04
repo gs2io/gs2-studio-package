@@ -27,7 +27,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_9R4GKC9MHQ0RWWG542MD6RRBQ9",
         "localizedDisplay": {
           "en": {
@@ -53,7 +52,6 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "",
         "id": "prop_8GAGKPX7FHKJSQQCWN9J6ZE9M5",
         "localizedDisplay": {
           "en": {
@@ -80,7 +78,6 @@
     ]
   },
   "delegatedActions": [],
-  "description": "",
   "id": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
   "kind": "local",
   "name": "AdPlatform",
