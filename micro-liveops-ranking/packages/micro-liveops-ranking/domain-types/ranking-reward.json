@@ -4,12 +4,6 @@
     "prop_01M0C5QTC1DSVX6VMXA31P7T1R"
   ],
   "declared": {
-    "order": [
-      "prop_reserved_id",
-      "prop_01M0C5QTC1PT2SC2DM4MFFH880",
-      "prop_01M0C5QTC1DSVX6VMXA31P7T1R",
-      "prop_01M0C5QTC1XDPQC02MC3PAHSFT"
-    ],
     "properties": [
       {
         "bindingHint": "none",

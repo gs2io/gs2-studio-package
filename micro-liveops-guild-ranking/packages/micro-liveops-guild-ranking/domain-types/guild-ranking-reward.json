@@ -4,12 +4,6 @@
     "prop_01M0CE422VB0QC0K8VTSFSJ02Z"
   ],
   "declared": {
-    "order": [
-      "prop_reserved_id",
-      "prop_01M0CE422VGSQB9SXT2CHKNFFP",
-      "prop_01M0CE422VB0QC0K8VTSFSJ02Z",
-      "prop_01M0CE422V7MQAXCS77903V6Y2"
-    ],
     "properties": [
       {
         "bindingHint": "none",

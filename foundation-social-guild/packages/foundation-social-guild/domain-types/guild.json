@@ -1,18 +1,6 @@
 {
   "compositeKey": null,
   "declared": {
-    "order": [
-      "prop_reserved_id",
-      "prop_01M0C5T6AF4Q3NKD9YJQ8F6119",
-      "prop_01M0C5T6AFQRJ8K9V4AY6N1X1S",
-      "prop_01M0C5T6AFE1EJ9CXYGJSJMT8Y",
-      "prop_01M0C5T6AF1GMQB80XDAVM0NJ2",
-      "prop_01M0C5T6AFC4H9ESF7ZV7XRVXK",
-      "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
-      "prop_01M0C5T6AFTPHZP6VRDZBYPK8F",
-      "prop_01M0C5T6AFMZ7YHRK3TF8G9T6F",
-      "prop_01M0C5T6AFPW7S477FQF46NT07"
-    ],
     "properties": [
       {
         "bindingHint": "none",

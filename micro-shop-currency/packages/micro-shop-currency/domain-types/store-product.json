@@ -4,9 +4,6 @@
     "kind": "inherit"
   },
   "declared": {
-    "order": [
-      "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7"
-    ],
     "properties": [
       {
         "bindingHint": "masterData",

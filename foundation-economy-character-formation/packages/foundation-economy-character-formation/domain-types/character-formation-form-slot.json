@@ -1,10 +1,6 @@
 {
   "compositeKey": null,
   "declared": {
-    "order": [
-      "prop_reserved_id",
-      "prop_QSKD3PPXJK7HDC2E9T7B9PKBAX"
-    ],
     "properties": [
       {
         "bindingHint": "none",

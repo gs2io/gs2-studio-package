@@ -4,9 +4,6 @@
     "kind": "inherit"
   },
   "declared": {
-    "order": [
-      "prop_01M0CDYNB5CJAAH5YPRR6FNRXF"
-    ],
     "properties": [
       {
         "bindingHint": "userData",

@@ -5,13 +5,6 @@
     "prop_01KTXANDTHR27K8R3FBY2PJ3YA"
   ],
   "declared": {
-    "order": [
-      "prop_reserved_id",
-      "prop_01KTXANDTH445WKYNYCWB4WMK1",
-      "prop_01KTXANDTHM6FZWEEQGG6WNR6Q",
-      "prop_01KTXANDTHR27K8R3FBY2PJ3YA",
-      "prop_01KTXANDTHR8FA3AYET9MWGNV8"
-    ],
     "properties": [
       {
         "bindingHint": "none",
