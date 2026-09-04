@@ -51,21 +51,21 @@
       "description": "",
       "id": "param_01KTXAQYHJ6HGFSQTMR34Y15MJ",
       "name": "itemName",
+      "required": true,
       "type": {
         "kind": "primitive",
         "primitiveType": "string"
-      },
-      "required": true
+      }
     },
     {
       "description": "",
       "id": "param_01KTXAQYHJJGQ73QMH05TR5X11",
       "name": "count",
+      "required": true,
       "type": {
         "kind": "primitive",
         "primitiveType": "int32"
-      },
-      "required": true
+      }
     }
   ]
 }

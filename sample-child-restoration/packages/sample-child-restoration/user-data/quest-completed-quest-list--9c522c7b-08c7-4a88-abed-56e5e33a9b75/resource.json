@@ -2,6 +2,17 @@
   "authored": {
     "declaredBindings": [
       {
+        "childKeyPropertyId": "prop_reserved_id",
+        "childMountPath": {
+          "kind": "local",
+          "typeId": "dt_XFRY8WZYW69AATA1GJV7SA5GTN",
+          "typeName": "Quest"
+        },
+        "childTargetPropertyId": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
+        "kind": "arrayMembership",
+        "parameterName": "completeQuestNames"
+      },
+      {
         "kind": "skip",
         "parameterName": "completedQuestListId"
       },
@@ -12,17 +23,6 @@
       {
         "kind": "skip",
         "parameterName": "userId"
-      },
-      {
-        "childKeyPropertyId": "prop_reserved_id",
-        "childMountPath": {
-          "kind": "local",
-          "typeId": "dt_XFRY8WZYW69AATA1GJV7SA5GTN",
-          "typeName": "Quest"
-        },
-        "childTargetPropertyId": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
-        "kind": "arrayMembership",
-        "parameterName": "completeQuestNames"
       }
     ],
     "declaredMasterLinkId": "a152d59a-e8f6-44e9-8141-8a1c2a5320af"
