@@ -55,9 +55,5 @@
   "id": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C",
   "kind": "local",
   "name": "ReceiveFriendRequest",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

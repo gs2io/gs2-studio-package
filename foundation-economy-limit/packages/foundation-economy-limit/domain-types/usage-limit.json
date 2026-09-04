@@ -190,9 +190,5 @@
   "id": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
   "kind": "local",
   "name": "UsageLimit",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

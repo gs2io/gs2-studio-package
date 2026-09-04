@@ -103,9 +103,5 @@
   "id": "dt_01M0C84Y32MFW05C5TXC61W1SR",
   "kind": "local",
   "name": "EquipmentEnchantSlotChance",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

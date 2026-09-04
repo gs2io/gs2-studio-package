@@ -78,9 +78,5 @@
   "id": "dt_01M0C84Y323XGX5N856QJ5Z61Q",
   "kind": "local",
   "name": "EquipmentEnchantment",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

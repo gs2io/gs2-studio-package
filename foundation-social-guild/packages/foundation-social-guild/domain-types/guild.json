@@ -251,9 +251,5 @@
   "id": "dt_01M0C5T6AF24NKHPZ1Z4R946FT",
   "kind": "local",
   "name": "Guild",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

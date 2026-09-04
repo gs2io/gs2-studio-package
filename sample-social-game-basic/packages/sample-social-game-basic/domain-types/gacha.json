@@ -97,10 +97,6 @@
   "name": "Gacha",
   "renamedInheritedProperties": {},
   "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  },
   "source": {
     "directSourcePackageId": "micro-shop-character-gacha",
     "directSourceTypeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",

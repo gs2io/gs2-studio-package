@@ -80,9 +80,5 @@
   "id": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
   "kind": "local",
   "name": "LoginRewardCollection",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

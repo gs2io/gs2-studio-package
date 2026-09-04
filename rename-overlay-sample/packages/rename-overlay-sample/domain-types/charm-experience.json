@@ -13,10 +13,6 @@
   "name": "CharmExperience",
   "renamedInheritedProperties": {},
   "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  },
   "source": {
     "directSourcePackageId": "foundation-economy-character",
     "directSourceTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",

@@ -155,9 +155,5 @@
   "id": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
   "kind": "local",
   "name": "IdleStatus",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

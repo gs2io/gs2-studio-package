@@ -82,9 +82,5 @@
   "id": "dt_B6ACHCG26EEPJHVNQ7SA1WX2XS",
   "kind": "local",
   "name": "EnergyProduct",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

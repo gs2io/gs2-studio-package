@@ -124,9 +124,5 @@
   "id": "dt_8PNR995T1Y2063NYZJMVKSHZNE",
   "kind": "local",
   "name": "MissionCounter",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

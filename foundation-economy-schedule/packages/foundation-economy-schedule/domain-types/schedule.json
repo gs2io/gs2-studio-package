@@ -415,9 +415,5 @@
   "id": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
   "kind": "local",
   "name": "Schedule",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

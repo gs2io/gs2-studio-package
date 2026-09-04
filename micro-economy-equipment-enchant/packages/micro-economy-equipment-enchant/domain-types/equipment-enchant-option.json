@@ -124,9 +124,5 @@
   "id": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
   "kind": "local",
   "name": "EquipmentEnchantOption",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

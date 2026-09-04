@@ -101,9 +101,5 @@
   "id": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
   "kind": "local",
   "name": "GlobalMessage",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

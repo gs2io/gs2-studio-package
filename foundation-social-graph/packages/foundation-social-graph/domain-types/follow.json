@@ -78,9 +78,5 @@
   "id": "dt_12CDXGXXRQVPJVMA9VGATG195G",
   "kind": "local",
   "name": "Follow",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

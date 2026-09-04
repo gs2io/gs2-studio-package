@@ -103,9 +103,5 @@
   "id": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
   "kind": "local",
   "name": "CharacterGradeStep",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

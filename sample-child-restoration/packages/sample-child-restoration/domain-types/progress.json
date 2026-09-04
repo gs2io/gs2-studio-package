@@ -51,9 +51,5 @@
   "id": "dt_B1FD36T1515W68CPMCQP54TVAR",
   "kind": "local",
   "name": "Progress",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

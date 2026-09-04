@@ -57,9 +57,5 @@
   "id": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
   "kind": "local",
   "name": "EquipmentEnchant",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

@@ -175,9 +175,5 @@
   "id": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
   "kind": "local",
   "name": "GuildRanking",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

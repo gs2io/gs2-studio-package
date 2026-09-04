@@ -170,9 +170,5 @@
   "id": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
   "kind": "local",
   "name": "EmbeddedVersion",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

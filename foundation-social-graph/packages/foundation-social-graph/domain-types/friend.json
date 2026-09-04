@@ -78,9 +78,5 @@
   "id": "dt_2NM467EMK37WAPSYGR7JJGVY8W",
   "kind": "local",
   "name": "Friend",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

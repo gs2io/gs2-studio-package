@@ -153,9 +153,5 @@
   "id": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
   "kind": "local",
   "name": "Character",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

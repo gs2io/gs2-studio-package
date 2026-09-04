@@ -175,9 +175,5 @@
   "id": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV",
   "kind": "local",
   "name": "Ranking",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

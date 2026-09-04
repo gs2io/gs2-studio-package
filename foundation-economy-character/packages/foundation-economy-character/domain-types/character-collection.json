@@ -132,9 +132,5 @@
   "id": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
   "kind": "local",
   "name": "CharacterCollection",
-  "singleEntry": true,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": true
 }

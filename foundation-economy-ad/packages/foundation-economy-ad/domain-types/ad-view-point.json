@@ -57,9 +57,5 @@
   "id": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
   "kind": "local",
   "name": "AdViewPoint",
-  "singleEntry": true,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": true
 }

@@ -108,9 +108,5 @@
   "id": "dt_01M0C5QTC12JW853EKK38QN42Z",
   "kind": "local",
   "name": "RankingReward",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

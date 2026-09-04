@@ -113,9 +113,5 @@
   "id": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
   "kind": "local",
   "name": "MissionSetting",
-  "singleEntry": true,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": true
 }

@@ -40,10 +40,6 @@
   "name": "Equipment",
   "renamedInheritedProperties": {},
   "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  },
   "source": {
     "directSourcePackageId": "foundation-economy-equipment",
     "directSourceTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D",

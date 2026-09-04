@@ -101,9 +101,5 @@
   "id": "dt_R7W960WC22J1FD8E239HDFMD8D",
   "kind": "local",
   "name": "Equipment",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

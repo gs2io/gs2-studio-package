@@ -57,9 +57,5 @@
   "id": "dt_4201EMDQW9HN9AMKXT0WQHMKJY",
   "kind": "local",
   "name": "IdleReward",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

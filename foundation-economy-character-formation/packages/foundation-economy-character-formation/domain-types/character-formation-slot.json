@@ -55,9 +55,5 @@
   "id": "dt_Z73MGN3WHWKHC8PF714HS91E62",
   "kind": "local",
   "name": "CharacterFormationSlot",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

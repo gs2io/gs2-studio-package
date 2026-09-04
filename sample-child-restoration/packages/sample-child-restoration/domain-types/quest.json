@@ -108,9 +108,5 @@
   "id": "dt_XFRY8WZYW69AATA1GJV7SA5GTN",
   "kind": "local",
   "name": "Quest",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

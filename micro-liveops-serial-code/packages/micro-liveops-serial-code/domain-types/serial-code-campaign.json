@@ -55,9 +55,5 @@
   "id": "dt_01M0C5VXZY2ZJKK4DERTCAZHXD",
   "kind": "local",
   "name": "SerialCodeCampaign",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

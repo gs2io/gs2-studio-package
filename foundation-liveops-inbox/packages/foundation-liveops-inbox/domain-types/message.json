@@ -124,9 +124,5 @@
   "id": "dt_GVTDXY1KW1X831ABJENERKSHZA",
   "kind": "local",
   "name": "Message",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

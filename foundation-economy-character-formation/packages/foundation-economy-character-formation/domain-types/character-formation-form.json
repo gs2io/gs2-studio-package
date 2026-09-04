@@ -58,9 +58,5 @@
   "id": "dt_JY9NED2YYCSG1HXPQ1J0X9WQXW",
   "kind": "local",
   "name": "CharacterFormationForm",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

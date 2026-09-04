@@ -101,9 +101,5 @@
   "id": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
   "kind": "local",
   "name": "Profile",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

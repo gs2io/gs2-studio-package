@@ -131,9 +131,5 @@
   "id": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
   "kind": "local",
   "name": "SkillNode",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

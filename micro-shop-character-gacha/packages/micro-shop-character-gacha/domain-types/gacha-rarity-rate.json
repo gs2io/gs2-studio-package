@@ -104,9 +104,5 @@
   "id": "dt_32H335ZJ31J4690TMPCRQFC04B",
   "kind": "local",
   "name": "GachaRarityRate",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

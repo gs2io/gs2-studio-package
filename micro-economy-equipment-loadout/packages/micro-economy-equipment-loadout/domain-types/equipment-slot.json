@@ -55,9 +55,5 @@
   "id": "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ",
   "kind": "local",
   "name": "EquipmentSlot",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

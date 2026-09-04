@@ -81,9 +81,5 @@
   "id": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
   "kind": "local",
   "name": "Progress",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

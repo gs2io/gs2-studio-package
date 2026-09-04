@@ -103,9 +103,5 @@
   "id": "dt_01M0C6M2N38KVHBHTC1JBRT5YA",
   "kind": "local",
   "name": "UsageLimitCounter",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

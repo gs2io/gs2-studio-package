@@ -81,9 +81,5 @@
   "id": "dt_XS2NWXE5Q03HPYJ8E48BAQT9J1",
   "kind": "local",
   "name": "QuestMaterial",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

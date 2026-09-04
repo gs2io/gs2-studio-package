@@ -48,9 +48,5 @@
   "id": "dt_3V7D4XQ96QZ9TFSSBB54R73QRK",
   "kind": "local",
   "name": "ProgressReward",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

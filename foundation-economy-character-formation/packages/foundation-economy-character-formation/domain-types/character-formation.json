@@ -107,9 +107,5 @@
   "id": "dt_1YKD2ZM08CX2D22TCPED995K2N",
   "kind": "local",
   "name": "CharacterFormation",
-  "singleEntry": true,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": true
 }

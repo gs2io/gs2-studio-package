@@ -87,10 +87,6 @@
   "name": "LoginReward",
   "renamedInheritedProperties": {},
   "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  },
   "source": {
     "directSourcePackageId": "micro-economy-login-reward",
     "directSourceTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",

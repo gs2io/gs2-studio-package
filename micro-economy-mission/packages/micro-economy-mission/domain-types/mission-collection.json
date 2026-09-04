@@ -94,9 +94,5 @@
   "id": "dt_ZXWN4GKT975S371YFYF3E1DRZ0",
   "kind": "local",
   "name": "MissionCollection",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

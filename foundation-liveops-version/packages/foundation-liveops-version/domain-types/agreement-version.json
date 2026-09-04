@@ -383,9 +383,5 @@
   "id": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
   "kind": "local",
   "name": "AgreementVersion",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

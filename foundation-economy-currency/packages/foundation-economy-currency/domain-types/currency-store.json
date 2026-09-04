@@ -58,9 +58,5 @@
   "id": "dt_BMT0H7ME2SSDZRHGNZF012YZVR",
   "kind": "local",
   "name": "CurrencyStore",
-  "singleEntry": true,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": true
 }

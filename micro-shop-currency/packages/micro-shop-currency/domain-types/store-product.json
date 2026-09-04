@@ -39,10 +39,6 @@
   "name": "StoreProduct",
   "renamedInheritedProperties": {},
   "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  },
   "source": {
     "directSourcePackageId": "foundation-economy-currency",
     "directSourceTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",

@@ -78,9 +78,5 @@
   "id": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
   "kind": "local",
   "name": "StoreProduct",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

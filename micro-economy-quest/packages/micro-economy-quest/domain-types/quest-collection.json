@@ -55,9 +55,5 @@
   "id": "dt_8KGQ5PW8KF4540B06JKKQ6QF96",
   "kind": "local",
   "name": "QuestCollection",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

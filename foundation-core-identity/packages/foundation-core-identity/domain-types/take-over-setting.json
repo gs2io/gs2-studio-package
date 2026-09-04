@@ -239,9 +239,5 @@
   "id": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
   "kind": "local",
   "name": "TakeOverSetting",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

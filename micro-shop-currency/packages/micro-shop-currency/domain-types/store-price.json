@@ -121,9 +121,5 @@
   "id": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
   "kind": "local",
   "name": "StorePrice",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

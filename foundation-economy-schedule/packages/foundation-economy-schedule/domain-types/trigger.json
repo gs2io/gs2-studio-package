@@ -101,9 +101,5 @@
   "id": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST",
   "kind": "local",
   "name": "Trigger",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

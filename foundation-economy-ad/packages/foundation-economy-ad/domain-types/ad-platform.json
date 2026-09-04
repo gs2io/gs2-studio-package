@@ -84,9 +84,5 @@
   "id": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
   "kind": "local",
   "name": "AdPlatform",
-  "singleEntry": true,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": true
 }

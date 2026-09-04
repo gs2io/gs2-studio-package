@@ -91,9 +91,5 @@
   "id": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
   "kind": "local",
   "name": "Gacha",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

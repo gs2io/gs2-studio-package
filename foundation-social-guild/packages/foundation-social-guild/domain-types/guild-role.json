@@ -55,9 +55,5 @@
   "id": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0",
   "kind": "local",
   "name": "GuildRole",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

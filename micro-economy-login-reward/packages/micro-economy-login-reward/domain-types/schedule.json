@@ -13,10 +13,6 @@
   "name": "Schedule",
   "renamedInheritedProperties": {},
   "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  },
   "source": {
     "directSourcePackageId": "foundation-economy-schedule",
     "directSourceTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",

@@ -228,9 +228,5 @@
   "id": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
   "kind": "local",
   "name": "Energy",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

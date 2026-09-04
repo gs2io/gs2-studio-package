@@ -108,9 +108,5 @@
   "id": "dt_01M0CE422VDT5R1HBS4KHAF8RE",
   "kind": "local",
   "name": "GuildRankingReward",
-  "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": false
 }

@@ -110,9 +110,5 @@
   "id": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
   "kind": "local",
   "name": "CharacterExperience",
-  "singleEntry": true,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  }
+  "singleEntry": true
 }

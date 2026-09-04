@@ -60,10 +60,6 @@
   "name": "Character",
   "renamedInheritedProperties": {},
   "singleEntry": false,
-  "sort": {
-    "direction": "asc",
-    "key": null
-  },
   "source": {
     "directSourcePackageId": "foundation-economy-character",
     "directSourceTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
