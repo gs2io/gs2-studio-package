@@ -24,8 +24,7 @@
         },
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -48,8 +47,7 @@
         },
         "name": "loginRewardCollection",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "ref",
@@ -72,8 +70,7 @@
         },
         "name": "acquireActions",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "elementType": {
@@ -98,8 +95,7 @@
         },
         "name": "receivedSteps",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "elementType": {

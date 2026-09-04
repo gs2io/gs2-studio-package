@@ -27,8 +27,7 @@
         },
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -51,8 +50,7 @@
         },
         "name": "product",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "ref",
@@ -75,8 +73,7 @@
         },
         "name": "currencyType",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "ref",
@@ -99,8 +96,7 @@
         },
         "name": "price",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",

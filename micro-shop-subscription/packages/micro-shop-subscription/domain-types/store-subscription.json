@@ -29,8 +29,7 @@
         },
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -53,8 +52,7 @@
         },
         "name": "appleSubscriptionGroupIdentifier",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -77,8 +75,7 @@
         },
         "name": "googlePlayProductId",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -101,8 +98,7 @@
         },
         "name": "renewalTrigger",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -125,8 +121,7 @@
         },
         "name": "triggerExtendMode",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "enum",
@@ -154,8 +149,7 @@
         },
         "name": "rollupHour",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -180,8 +174,7 @@
         },
         "name": "reallocateSpanDays",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -204,8 +197,7 @@
         },
         "name": "status",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "enum",
@@ -231,8 +223,7 @@
         },
         "name": "expiresAt",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",

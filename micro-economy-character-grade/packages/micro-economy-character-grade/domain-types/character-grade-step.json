@@ -24,8 +24,7 @@
         },
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -50,8 +49,7 @@
         },
         "name": "rankCapValue",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -74,8 +72,7 @@
         },
         "name": "propertyIdRegex",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -98,8 +95,7 @@
         },
         "name": "gradeUpPropertyIdRegex",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",

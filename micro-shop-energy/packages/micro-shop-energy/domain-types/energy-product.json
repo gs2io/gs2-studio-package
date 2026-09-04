@@ -23,8 +23,7 @@
         },
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -49,8 +48,7 @@
         },
         "name": "recoveryValue",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -73,8 +71,7 @@
         },
         "name": "consumeActions",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "elementType": {

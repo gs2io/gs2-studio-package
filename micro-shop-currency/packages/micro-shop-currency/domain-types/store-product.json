@@ -26,8 +26,7 @@
         },
         "name": "count",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",

@@ -12,8 +12,7 @@
         "id": "prop_reserved_id",
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -26,8 +25,7 @@
         "id": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP",
         "name": "schedule",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "ref",

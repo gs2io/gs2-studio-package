@@ -24,8 +24,7 @@
         },
         "name": "equipmentSlots",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "elementType": {

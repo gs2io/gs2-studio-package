@@ -30,8 +30,7 @@
         },
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -56,8 +55,7 @@
         },
         "name": "defaultMaximumMemberCount",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -82,8 +80,7 @@
         },
         "name": "maximumMemberCount",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -108,8 +105,7 @@
         },
         "name": "inactivityPeriodDays",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -134,8 +130,7 @@
         },
         "name": "rejoinCoolTimeMinutes",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -160,8 +155,7 @@
         },
         "name": "maxConcurrentJoinGuilds",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -186,8 +180,7 @@
         },
         "name": "maxConcurrentGuildMasterCount",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -210,8 +203,7 @@
         },
         "name": "guildMasterRole",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "ref",
@@ -234,8 +226,7 @@
         },
         "name": "guildMemberDefaultRole",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "ref",
@@ -258,8 +249,7 @@
         },
         "name": "joinedGuildName",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",

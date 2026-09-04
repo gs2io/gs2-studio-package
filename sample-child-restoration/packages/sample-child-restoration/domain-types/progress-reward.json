@@ -13,8 +13,7 @@
         "id": "prop_reserved_id",
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -27,8 +26,7 @@
         "id": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B",
         "name": "itemId",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -41,8 +39,7 @@
         "id": "prop_RYDWJ2B6D96NAN85AF8SDXD12F",
         "name": "value",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",

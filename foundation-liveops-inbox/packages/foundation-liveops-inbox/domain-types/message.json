@@ -25,8 +25,7 @@
         },
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -49,8 +48,7 @@
         },
         "name": "payload",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -73,8 +71,7 @@
         },
         "name": "isRead",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -97,8 +94,7 @@
         },
         "name": "receivedAt",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -121,8 +117,7 @@
         },
         "name": "expiresAt",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",

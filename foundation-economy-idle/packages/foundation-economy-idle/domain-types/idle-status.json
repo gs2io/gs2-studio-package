@@ -27,8 +27,7 @@
         },
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -53,8 +52,7 @@
         },
         "name": "rewardIntervalMinutes",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -79,8 +77,7 @@
         },
         "name": "defaultMaximumIdleMinutes",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -105,8 +102,7 @@
         },
         "name": "currentIdleMinutes",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -129,8 +125,7 @@
         },
         "name": "nextRewardsAt",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -155,8 +150,7 @@
         },
         "name": "maximumIdleMinutes",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -179,8 +173,7 @@
         },
         "name": "acquireActions",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "elementType": {

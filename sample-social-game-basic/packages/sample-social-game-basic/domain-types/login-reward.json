@@ -50,8 +50,7 @@
         "id": "prop_7BNP79J6Y7F8GEG0T6KHC790V0",
         "name": "rewardType",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "ref",
@@ -64,8 +63,7 @@
         "id": "prop_RCQNX4MEVGDF7TJ7V7FSADT82S",
         "name": "contentsId",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -78,8 +76,7 @@
         "id": "prop_G6DZB9WB3V5Q15XXP8MWQ6Z3ZD",
         "name": "count",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",

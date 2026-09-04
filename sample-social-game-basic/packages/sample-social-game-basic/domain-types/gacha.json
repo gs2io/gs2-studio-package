@@ -48,8 +48,7 @@
         "id": "prop_GJ34KB0271RK6XJ9VCA0ZDP05J",
         "name": "drawCount",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -62,8 +61,7 @@
         "id": "prop_E85JMDT798W05V3W76NNC3P80H",
         "name": "paidOnly",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -76,8 +74,7 @@
         "id": "prop_9BK4SQ45VP88YNWVEYFKT2XZZZ",
         "name": "price",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -90,8 +87,7 @@
         "id": "prop_EWQHRAFTRTBAY7KYYMXS1QG4BV",
         "name": "series",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",

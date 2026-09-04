@@ -30,8 +30,7 @@
         },
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -54,8 +53,7 @@
         },
         "name": "type",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -78,8 +76,7 @@
         },
         "name": "configurationPath",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -102,8 +99,7 @@
         },
         "name": "clientId",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -126,8 +122,7 @@
         },
         "name": "clientSecret",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -150,8 +145,7 @@
         },
         "name": "doneEndpointUrl",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -174,8 +168,7 @@
         },
         "name": "appleTeamId",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -198,8 +191,7 @@
         },
         "name": "appleKeyId",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -222,8 +214,7 @@
         },
         "name": "applePrivateKeyPem",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",
@@ -246,8 +237,7 @@
         },
         "name": "hasTakeOver",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "kind": "primitive",

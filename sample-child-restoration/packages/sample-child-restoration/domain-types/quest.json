@@ -17,8 +17,7 @@
         "id": "prop_reserved_id",
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -31,8 +30,7 @@
         "id": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
         "name": "completed",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -45,8 +43,7 @@
         "id": "prop_H5KJSRGM60K4AQHSJMM28D7JQV",
         "name": "firstCompleteAcquireActions",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "elementType": {
@@ -61,8 +58,7 @@
         "id": "prop_WAYKZ6HMTNGKPMNBTAZHR37SH3",
         "name": "completeAcquireActions",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "elementType": {
@@ -77,8 +73,7 @@
         "id": "prop_TF2ETMFVHGYGRWYBZ8YJZXZG4S",
         "name": "consumeActions",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "elementType": {
@@ -93,8 +88,7 @@
         "id": "prop_NYZ7PF2EANTJ3R35DJQX6XWXHG",
         "name": "failedAcquireActions",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "elementType": {
@@ -109,8 +103,7 @@
         "id": "prop_PFYYCZ2ZB3XBM0A06C1VSTJWCP",
         "name": "collection",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "ref",

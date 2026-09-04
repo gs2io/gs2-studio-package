@@ -13,8 +13,7 @@
         "id": "prop_reserved_id",
         "name": "id",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "primitive",
@@ -27,8 +26,7 @@
         "id": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
         "name": "quest",
         "requirement": {
-          "kind": "always",
-          "required": true
+          "kind": "always"
         },
         "type": {
           "kind": "ref",
@@ -41,8 +39,7 @@
         "id": "prop_4ERYTK018DNDJ04E9HCMJEG26S",
         "name": "rewards",
         "requirement": {
-          "kind": "never",
-          "required": false
+          "kind": "never"
         },
         "type": {
           "elementType": {
