@@ -48,7 +48,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_7BNP79J6Y7F8GEG0T6KHC790V0",
-        "isId": false,
         "name": "rewardType",
         "requirement": {
           "kind": "always",
@@ -63,7 +62,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_RCQNX4MEVGDF7TJ7V7FSADT82S",
-        "isId": false,
         "name": "contentsId",
         "requirement": {
           "kind": "never",
@@ -78,7 +76,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_G6DZB9WB3V5Q15XXP8MWQ6Z3ZD",
-        "isId": false,
         "name": "count",
         "requirement": {
           "kind": "always",

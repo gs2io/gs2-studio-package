@@ -12,7 +12,6 @@
         "bindingHint": "userData",
         "description": "Grades promoted so far",
         "id": "prop_01M0C826WJ0M7QGYB50KVWBD98",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Current grade reached by the character.",

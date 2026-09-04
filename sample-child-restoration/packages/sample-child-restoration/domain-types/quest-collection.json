@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -25,7 +24,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP",
-        "isId": false,
         "name": "schedule",
         "requirement": {
           "kind": "never",

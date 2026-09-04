@@ -13,7 +13,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_TC9NBD65ZXWPT09PFSRX1REHPF",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Whether this character is registered in the encyclopedia.",
@@ -38,7 +37,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Time when this character was first acquired.",

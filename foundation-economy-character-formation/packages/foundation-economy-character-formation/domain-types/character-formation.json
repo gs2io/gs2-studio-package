@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the formation configuration.",
@@ -37,7 +36,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_1X7P75QB2PQR3A35AG6CAWPXZ6",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Formation save slots granted to a new player.",
@@ -64,7 +62,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_ASEE9H5F0YR01T0HPZTY19XY2V",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Maximum number of formation save slots.",
@@ -91,7 +88,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Formation save slots currently available to the player.",

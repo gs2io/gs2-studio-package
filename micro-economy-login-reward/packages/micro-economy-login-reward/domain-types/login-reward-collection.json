@@ -11,7 +11,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the login reward group.",
@@ -36,7 +35,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_A2TYYY7WW1Z4306M5CGDJRBEKJ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Schedule during which this login reward is available.",
@@ -61,7 +59,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_NFHPA3CG7FM9RX44J7NAWPT1ET",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "UTC hour when the login reward advances to the next day.",

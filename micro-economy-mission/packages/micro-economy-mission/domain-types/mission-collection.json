@@ -11,7 +11,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the mission group.",
@@ -36,7 +35,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_K7KPHSFXNH3RA12P7NEZ6JNVPB",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Schedule during which this mission group is available.",
@@ -61,7 +59,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_MTPT2W75JMKRGK9CXSREB6ZW49",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Reset cadence used by missions in this group.",

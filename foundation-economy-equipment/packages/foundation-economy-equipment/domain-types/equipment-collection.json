@@ -13,7 +13,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the equipment inventory.",
@@ -38,7 +37,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_0W6ZJVBD4FKRF1KAVPN5HE001Y",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Equipment capacity granted to a new player.",
@@ -65,7 +63,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_J93B9BA3YNMZ1C1K5TDZRDA17W",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Maximum equipment capacity a player can reach.",
@@ -92,7 +89,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Equipment capacity currently in use.",
@@ -119,7 +115,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Equipment capacity currently available to the player.",

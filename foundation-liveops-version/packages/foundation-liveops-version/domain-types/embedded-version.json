@@ -15,7 +15,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the application version configuration.",
@@ -40,7 +39,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_JV8X380AFH866SVX2HJR3FMP4V",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Major component of the minimum app version that triggers an update warning.",
@@ -65,7 +63,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_Q1QVGEVNDQ31WXBSQ3CTK8PEYS",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Minor component of the minimum app version that triggers an update warning.",
@@ -90,7 +87,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_JNSG2T4XZEK7T0RFFT4FHYS77N",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Micro component of the minimum app version that triggers an update warning.",
@@ -115,7 +111,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_3YR1D04DTCR3QXF2102W5Z73PM",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Major component of the minimum app version allowed to run.",
@@ -140,7 +135,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_BMCEB6H2XZYTXR2M1MCXV4M605",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Minor component of the minimum app version allowed to run.",
@@ -165,7 +159,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_E9DY9TY2D9Y1CY09MT7Z6DEYYF",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Micro component of the minimum app version allowed to run.",

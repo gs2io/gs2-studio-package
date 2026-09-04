@@ -15,7 +15,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the idle status.",
@@ -40,7 +39,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_CGEEBE9H9P5MW0MD82N6AW2GZJ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Interval at which idle rewards accumulate.",
@@ -67,7 +65,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_Y84GE13M8Y5K1KVMS5X9E2TEF8",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Initial maximum idle duration for a new player.",
@@ -94,7 +91,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_6H5QKHHDFSEX65W9HT71FFAY0P",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Idle duration accumulated so far.",
@@ -121,7 +117,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_MRM77NEZWMCQ5ACA4EBXFBWQQ4",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Time when the next idle reward becomes available.",
@@ -146,7 +141,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_K3CBE560Z2HRY7DXXW6F5JCR2R",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Current maximum idle duration applied to the player.",
@@ -173,7 +167,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_SHSB8VCSJJT91AWA17EV2DWNJ9",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Idle reward actions currently available to claim.",

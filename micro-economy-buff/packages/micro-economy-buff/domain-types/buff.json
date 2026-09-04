@@ -15,7 +15,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the buff.",
@@ -40,7 +39,6 @@
         "bindingHint": "masterData",
         "description": "How the rate combines with the original value",
         "id": "prop_01M0C89EMY0MGFC92HZCRAXG3M",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "How the modifier is combined with the original value.",
@@ -69,7 +67,6 @@
         "bindingHint": "masterData",
         "description": "Action whose result is scaled, e.g. Gs2Inventory:AcquireItemSetByUserId",
         "id": "prop_01M0C89EMZPTFXVVWJ02HQV42R",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "GS2 action whose value is modified.",
@@ -94,7 +91,6 @@
         "bindingHint": "masterData",
         "description": "Field of that action's request to scale, e.g. acquireCount",
         "id": "prop_01M0C89EMZW9H9204T4H2A3A8M",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Field within the target action that is modified.",
@@ -119,7 +115,6 @@
         "bindingHint": "masterData",
         "description": "Multiplier applied",
         "id": "prop_01M0C89EMZN9KJE2M0EAK71926",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Multiplier or additive value applied to the target field.",
@@ -144,7 +139,6 @@
         "bindingHint": "masterData",
         "description": "Order among buffs touching the same field",
         "id": "prop_01M0C89EMZHA1Y39YTQZ9227ET",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Order used when multiple buffs affect the same field.",
@@ -169,7 +163,6 @@
         "bindingHint": "assetDelivery",
         "description": "Period the buff is active for",
         "id": "prop_01M0C89EMZR18VJ7SD7SHZYYWH",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Schedule during which this buff is active.",

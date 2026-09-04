@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the mission settings.",
@@ -37,7 +36,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_3K3QTNRR66PZ8K2AQ3WCNYPT2R",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Weekday when weekly missions reset.",
@@ -70,7 +68,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_01M0R2YRXVDV9PNGK6TPKY0V1E",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Day of the month when monthly missions reset.",
@@ -97,7 +94,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_0PJDRHCVVR80R8R1SEY2KMGEQH",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "UTC hour when missions reset.",

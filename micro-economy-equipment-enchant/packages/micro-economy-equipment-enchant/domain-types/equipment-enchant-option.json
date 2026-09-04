@@ -13,7 +13,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the enchantment option.",
@@ -38,7 +37,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_01M0C84Y322HQ5SXAZ4NRD8HCB",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Enchantment configuration this option belongs to.",
@@ -63,7 +61,6 @@
         "bindingHint": "masterData",
         "description": "Stat this bonus applies to",
         "id": "prop_01M0C84Y322KQSQH802HVDHC06",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Name of the stat or resource modified by this effect.",
@@ -88,7 +85,6 @@
         "bindingHint": "masterData",
         "description": "How much it applies",
         "id": "prop_01M0C84Y32ZBF6RHYW41VPWFA2",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Value applied to the target by this bonus.",
@@ -113,7 +109,6 @@
         "bindingHint": "masterData",
         "description": "Relative draw weight",
         "id": "prop_01M0C84Y32EXX5ACY856FE9P29",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Relative weight used to draw this effect.",

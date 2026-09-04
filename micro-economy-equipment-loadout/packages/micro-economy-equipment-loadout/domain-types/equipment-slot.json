@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the equipment slot.",
@@ -35,7 +34,6 @@
         "bindingHint": "masterData",
         "description": "Which equipment this slot accepts, matched on its property id",
         "id": "prop_01M0CDYNB5E7VX7G7ED1SRD7JR",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Regular expression matching equipment instance IDs accepted by this slot.",

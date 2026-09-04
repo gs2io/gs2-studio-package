@@ -13,7 +13,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the skill node.",
@@ -38,7 +37,6 @@
         "bindingHint": "masterData",
         "description": "What unlocking this node costs",
         "id": "prop_01M0Q02DXK9YCRGGAJHADRMVS6",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Consume actions executed to unlock this node.",
@@ -65,7 +63,6 @@
         "bindingHint": "masterData",
         "description": "Nodes that must be released first",
         "id": "prop_01M0C87BJC76SJF2PA9P05K5QH",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Nodes that must be unlocked before this node.",
@@ -93,7 +90,6 @@
         "bindingHint": "masterData",
         "description": "Share of the cost refunded when the node is reset",
         "id": "prop_01M0C87BJCQ0PCKG2FJQ0H767B",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Share of the unlock cost refunded when the node is reset.",
@@ -120,7 +116,6 @@
         "bindingHint": "userData",
         "description": "Unlocked by this player",
         "id": "prop_01M0C87BJCSHPHEB1N0DRT0ACA",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Whether the player has unlocked this node.",

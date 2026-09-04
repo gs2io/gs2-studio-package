@@ -11,7 +11,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the follow relationship.",
@@ -36,7 +35,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_00CYS22DM7RCY5V2S2MSP7YH5Y",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Public profile information of the followed player.",
@@ -61,7 +59,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_WEZ74QQWTQ37ZYH7GKQCJ9C1W8",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Profile information visible because the player is a follower.",

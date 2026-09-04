@@ -46,7 +46,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_GJ34KB0271RK6XJ9VCA0ZDP05J",
-        "isId": false,
         "name": "drawCount",
         "requirement": {
           "kind": "always",
@@ -61,7 +60,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_E85JMDT798W05V3W76NNC3P80H",
-        "isId": false,
         "name": "paidOnly",
         "requirement": {
           "kind": "always",
@@ -76,7 +74,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_9BK4SQ45VP88YNWVEYFKT2XZZZ",
-        "isId": false,
         "name": "price",
         "requirement": {
           "kind": "always",
@@ -91,7 +88,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_EWQHRAFTRTBAY7KYYMXS1QG4BV",
-        "isId": false,
         "name": "series",
         "requirement": {
           "kind": "always",

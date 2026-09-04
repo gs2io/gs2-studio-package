@@ -11,7 +11,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the quest reward.",
@@ -36,7 +35,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Identifier of a reward item earned during the quest.",
@@ -61,7 +59,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_RYDWJ2B6D96NAN85AF8SDXD12F",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Quantity of the reward item earned.",

@@ -11,7 +11,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the ad platform.",
@@ -36,7 +35,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_9R4GKC9MHQ0RWWG542MD6RRBQ9",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "AdMob ad unit identifiers allowed by this configuration.",
@@ -64,7 +62,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_8GAGKPX7FHKJSQQCWN9J6ZE9M5",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Game keys used by Unity Ads.",

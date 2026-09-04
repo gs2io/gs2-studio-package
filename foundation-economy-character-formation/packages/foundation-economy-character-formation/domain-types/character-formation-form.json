@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the formation form.",
@@ -35,7 +34,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_1CD4Q461VBGWZXEWXYD3WZAT37",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Character assignments contained in the saved formation.",

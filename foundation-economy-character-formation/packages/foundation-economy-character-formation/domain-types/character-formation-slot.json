@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the formation slot.",
@@ -35,7 +34,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_6F9A9WPY3YAQ0SS8E7F5H2YXFA",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Regular expression matching character instance IDs eligible for this slot.",

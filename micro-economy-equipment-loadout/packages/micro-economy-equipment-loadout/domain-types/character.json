@@ -12,7 +12,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_01M0CDYNB5CJAAH5YPRR6FNRXF",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Equipment assigned to each slot on the character.",

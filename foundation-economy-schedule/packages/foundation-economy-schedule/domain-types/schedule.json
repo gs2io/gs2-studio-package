@@ -23,7 +23,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the schedule.",
@@ -48,7 +47,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Whether the schedule uses absolute times or times relative to a trigger.",
@@ -76,7 +74,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Start time for an absolute schedule.",
@@ -102,7 +99,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_763BX5C31PKQPVJ692CKG0C998",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "End time for an absolute schedule.",
@@ -128,7 +124,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_K8ZPEG5KAWZN5N4HNCS0S3ZQ0E",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Trigger used as the reference for a relative schedule.",
@@ -154,7 +149,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_XSTG0QAVN2ADJHS1Q50PXHNY89",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Cadence used to repeat the schedule.",
@@ -185,7 +179,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_QT1RYWCPGQF7TX098APWRW2ACV",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Hour when the active period begins for daily, weekly, or monthly repetition.",
@@ -213,7 +206,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_D2RWEZDYGM3RT887E0EA182FC3",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Hour when the active period ends for daily, weekly, or monthly repetition.",
@@ -241,7 +233,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_KP4RNR37Z8RE0D5WTAA5HC2ZYJ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Weekday when a weekly active period begins.",
@@ -275,7 +266,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_WZC2GBZJT3CEWP77QMK8PM169J",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Weekday when a weekly active period ends.",
@@ -309,7 +299,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_TXGKQD0ZE9EKJT77Q25HHWP6SQ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Day of the month when a monthly active period begins.",
@@ -337,7 +326,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_2R6ZHPN0RG508XWNJXACHEQPJZ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Day of the month when a monthly active period ends.",
@@ -365,7 +353,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_3HHJJZ4553TC0VTT84VAF8KF74",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Reference time used to calculate a custom cycle.",
@@ -391,7 +378,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_S23T3MDNBFNQTJ9PA126DR19V9",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Number of active days in a custom cycle.",
@@ -419,7 +405,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_7QB1J2FB3XJJGD80SC5DBX508J",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Number of inactive days in a custom cycle.",

@@ -11,7 +11,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the stamina product.",
@@ -36,7 +35,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_45XJAVDEC9AXXNMSQP6FK7D08X",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Amount of stamina restored by purchasing this product.",
@@ -63,7 +61,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_7BEWXW2JF170AYXKNFG0ZMX3MT",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Consume actions executed to purchase the product.",

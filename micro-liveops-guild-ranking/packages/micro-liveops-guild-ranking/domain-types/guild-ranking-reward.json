@@ -15,7 +15,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the guild ranking reward.",
@@ -40,7 +39,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_01M0CE422VGSQB9SXT2CHKNFFP",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Guild ranking that distributes this reward.",
@@ -65,7 +63,6 @@
         "bindingHint": "masterData",
         "description": "Best rank that misses this reward tier",
         "id": "prop_01M0CE422VB0QC0K8VTSFSJ02Z",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Lowest placement eligible for this reward.",
@@ -92,7 +89,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_01M0CE422V7MQAXCS77903V6Y2",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Reward actions executed for members who meet the placement threshold.",

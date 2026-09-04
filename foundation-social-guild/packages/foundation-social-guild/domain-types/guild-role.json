@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the guild role.",
@@ -35,7 +34,6 @@
         "bindingHint": "masterData",
         "description": "GS2 guild policy document",
         "id": "prop_01M0C5T6AF0SDEH7DPDWXDST0T",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "GS2 policy document describing operations allowed for this role.",

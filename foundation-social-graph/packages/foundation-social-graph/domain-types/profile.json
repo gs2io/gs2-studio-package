@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the profile.",
@@ -37,7 +36,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_6KVAE2J57GWW44BA6BWE76HNX4",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Profile information visible to every player.",
@@ -62,7 +60,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_WN6CSPS3DDQ40TR3VG8PYNTMPM",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Profile information visible to followers.",
@@ -87,7 +84,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_5N09J4Q6RV5N2EGDPKMW77WWD0",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Profile information visible to friends.",

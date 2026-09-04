@@ -18,7 +18,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the take-over setting.",
@@ -43,7 +42,6 @@
         "bindingHint": "masterData",
         "description": "Setting Type Number",
         "id": "prop_JXHFG6A90WH8TQJAD96FQC1S5M",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Numeric type of authentication used for account transfer.",
@@ -68,7 +66,6 @@
         "bindingHint": "masterData",
         "description": "OIDC Configuration URL",
         "id": "prop_A2D1ZJ9DZ5AMTXXE3XHZGGR0AJ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "URL of the OpenID Connect configuration document.",
@@ -93,7 +90,6 @@
         "bindingHint": "masterData",
         "description": "OIDC Client ID",
         "id": "prop_01B0AANDTTY7MQTFTBP6WQK6CD",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "OIDC client identifier.",
@@ -118,7 +114,6 @@
         "bindingHint": "masterData",
         "description": "OIDC Secret",
         "id": "prop_CAMZZS3CCJ4K9MSA217ARZ7K6Z",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Client secret used for OIDC authentication.",
@@ -143,7 +138,6 @@
         "bindingHint": "masterData",
         "description": "Redirect URL when login completed",
         "id": "prop_XDRZ798BRBRW9W35MRHXEXCAAX",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "URL opened after login completes.",
@@ -168,7 +162,6 @@
         "bindingHint": "masterData",
         "description": "Apple Team ID(if Sign-in Apple Account)",
         "id": "prop_2EJBCGDAH1TVRBGY75S05SJ801",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Apple Team ID used for Sign in with Apple.",
@@ -193,7 +186,6 @@
         "bindingHint": "masterData",
         "description": "Apple Key ID(if Sign-in Apple Account)",
         "id": "prop_V75V0JS2DKK9J1HT58G6EHB6VF",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Apple Key ID used for Sign in with Apple.",
@@ -218,7 +210,6 @@
         "bindingHint": "masterData",
         "description": "Apple Private Key PEM(if Sign-in Apple Account)",
         "id": "prop_6HQHD05HT2SH78G79FXNV4WJVT",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "PEM private key used for Sign in with Apple.",
@@ -243,7 +234,6 @@
         "bindingHint": "userData",
         "description": "Whether the user has TakeOver data",
         "id": "prop_5Z93QPG4VQED3EX517PW0H7BWA",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Whether take-over data is registered for the player.",

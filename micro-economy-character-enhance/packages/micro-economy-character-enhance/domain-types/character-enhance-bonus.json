@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the enhancement bonus.",
@@ -37,7 +36,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_01M0C7T116EE8PEHMGMD3AWB3N",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Enhancement recipe to which this bonus applies.",
@@ -62,7 +60,6 @@
         "bindingHint": "masterData",
         "description": "Experience multiplier when drawn",
         "id": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Multiplier applied to experience when this bonus is drawn.",
@@ -89,7 +86,6 @@
         "bindingHint": "masterData",
         "description": "Relative draw weight",
         "id": "prop_01M0C7T11668CNMKJ4725QV6M0",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Relative weight used when drawing this bonus.",

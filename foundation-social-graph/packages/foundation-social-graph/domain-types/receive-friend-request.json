@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the incoming friend request.",
@@ -35,7 +34,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_8385BCWPDH6PVR79CSMQ19ZNZP",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Public profile information of the request sender.",

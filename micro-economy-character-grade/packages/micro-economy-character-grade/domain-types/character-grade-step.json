@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the grade step.",
@@ -37,7 +36,6 @@
         "bindingHint": "masterData",
         "description": "Level cap this grade raises the character to",
         "id": "prop_01M0C826WJ4ZPNGK1JNNQD7GCM",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Level cap unlocked by this grade.",
@@ -64,7 +62,6 @@
         "bindingHint": "masterData",
         "description": "Which characters this step applies to",
         "id": "prop_01M0C826WJ6E8SVGPGFX2Z52T3",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Regular expression matching character instance IDs eligible for this grade.",
@@ -89,7 +86,6 @@
         "bindingHint": "masterData",
         "description": "Which characters may be spent to reach it",
         "id": "prop_01M0C826WJN2XGK5PMWPSYNZ5W",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Regular expression matching character instance IDs that may be consumed for grade-up.",

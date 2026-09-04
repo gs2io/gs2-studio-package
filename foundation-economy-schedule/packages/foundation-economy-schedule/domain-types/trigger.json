@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the trigger.",
@@ -37,7 +36,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_6MCAB8KE6ZN15EJK6Q592XR7GA",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Whether this trigger has fired for the player.",
@@ -62,7 +60,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_F9RRQHZFBAHE291G11WATKA2YB",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Time when the trigger fired.",
@@ -87,7 +84,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Time until which the trigger state remains valid.",

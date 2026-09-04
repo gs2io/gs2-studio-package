@@ -12,7 +12,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Amount of currency granted when this store product is purchased.",

@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the formation form slot.",
@@ -35,7 +34,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_QSKD3PPXJK7HDC2E9T7B9PKBAX",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Identifier of the character instance assigned to this slot.",

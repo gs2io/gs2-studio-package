@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the item.",
@@ -35,7 +34,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_K2G6TEKHV8KKTXDBG04DK9X3SM",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Quantity of the item owned by the player.",

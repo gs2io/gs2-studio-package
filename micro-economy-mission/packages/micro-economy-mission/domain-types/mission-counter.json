@@ -13,7 +13,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the mission counter.",
@@ -38,7 +37,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_DH1MQSPSZ68EZDG80Q3KWZNQW8",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Progress accumulated in the current daily reset period.",
@@ -63,7 +61,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_N44ZVTGEN3XNPFT4YSNP5R8222",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Progress accumulated in the current weekly reset period.",
@@ -88,7 +85,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_RP2T1J9MWSNMXEXJQF15E76R42",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Progress accumulated in the current monthly reset period.",
@@ -113,7 +109,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_E7ANH0AETFGP8XNYN524JTT1KG",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "All-time progress value that is not reset.",

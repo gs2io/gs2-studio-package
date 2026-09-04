@@ -18,7 +18,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the guild kind.",
@@ -43,7 +42,6 @@
         "bindingHint": "masterData",
         "description": "Member capacity a newly created guild starts with",
         "id": "prop_01M0C5T6AF4Q3NKD9YJQ8F6119",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Initial member capacity of a newly created guild.",
@@ -70,7 +68,6 @@
         "bindingHint": "masterData",
         "description": "Highest capacity a guild can be raised to",
         "id": "prop_01M0C5T6AFQRJ8K9V4AY6N1X1S",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Highest member capacity a guild can reach.",
@@ -97,7 +94,6 @@
         "bindingHint": "masterData",
         "description": "Days of guild-master inactivity before the seat opens up",
         "id": "prop_01M0C5T6AFE1EJ9CXYGJSJMT8Y",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Inactivity period after which the guild master position can be reassigned.",
@@ -124,7 +120,6 @@
         "bindingHint": "masterData",
         "description": "Wait before a player may rejoin a guild they left",
         "id": "prop_01M0C5T6AF1GMQB80XDAVM0NJ2",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Wait time before a player may rejoin a guild they left.",
@@ -151,7 +146,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_01M0C5T6AFC4H9ESF7ZV7XRVXK",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Maximum number of guilds a player may join at once.",
@@ -178,7 +172,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Maximum number of guilds a player may lead at once.",
@@ -205,7 +198,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_01M0C5T6AFTPHZP6VRDZBYPK8F",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Permission role assigned to the guild master.",
@@ -230,7 +222,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_01M0C5T6AFMZ7YHRK3TF8G9T6F",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Permission role initially assigned to regular members.",
@@ -255,7 +246,6 @@
         "bindingHint": "userData",
         "description": "The guild this player belongs to",
         "id": "prop_01M0C5T6AFPW7S477FQF46NT07",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Name of the guild the player currently belongs to.",

@@ -15,7 +15,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the mission.",
@@ -40,7 +39,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_8ADCCWBXRK8X69EAFY30PGN4SD",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Mission group this mission belongs to.",
@@ -65,7 +63,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_01M0R2YRXVYSPEEDYSRE7SR9GQ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Acquire actions executed when the mission is completed.",
@@ -92,7 +89,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_2KV74FVT69TN7Z0QZ804K1CA6F",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Mission counter used to determine completion.",
@@ -117,7 +113,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_JW1ZWH5B4R6FXJM3X2K41NRZ6P",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Counter value required to complete the mission.",
@@ -142,7 +137,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_13Z46E8S0DVQMD9QXBE6CDS0CF",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Whether the player has completed this mission.",
@@ -167,7 +161,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_EV356KV2B8PS2XDNDGM7JRFDSC",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Whether the player has claimed the completion reward.",

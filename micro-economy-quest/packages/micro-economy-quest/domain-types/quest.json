@@ -15,7 +15,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the quest.",
@@ -40,7 +39,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_PFYYCZ2ZB3XBM0A06C1VSTJWCP",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Quest group this quest belongs to.",
@@ -65,7 +63,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_TF2ETMFVHGYGRWYBZ8YJZXZG4S",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Consume actions executed when the quest starts.",
@@ -92,7 +89,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_H5KJSRGM60K4AQHSJMM28D7JQV",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Acquire actions executed on the first completion.",
@@ -119,7 +115,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_WAYKZ6HMTNGKPMNBTAZHR37SH3",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Acquire actions executed on each completion.",
@@ -146,7 +141,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_NYZ7PF2EANTJ3R35DJQX6XWXHG",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Acquire actions executed when the quest fails.",
@@ -173,7 +167,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Whether the player has completed this quest.",

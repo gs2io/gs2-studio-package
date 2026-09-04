@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the quest group.",
@@ -35,7 +34,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Schedule during which this quest group is available.",

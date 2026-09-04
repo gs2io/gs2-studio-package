@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the ad view point.",
@@ -35,7 +34,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_A5PTNHJYSCXW55G2TW376GP36E",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Current number of ad-view points available to the player.",

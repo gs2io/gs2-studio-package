@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the login reward.",
@@ -37,7 +36,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_0N4V6CN66SVVQH7S0S3Z909D1A",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Login reward group this reward belongs to.",
@@ -62,7 +60,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_JPGJM6CM0TRQGXTAVJBYATVNCG",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Reward actions executed for this login step.",
@@ -89,7 +86,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_ZXRNPBQQCJM49N2Z27FQETSRWY",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Login steps already claimed by the player.",

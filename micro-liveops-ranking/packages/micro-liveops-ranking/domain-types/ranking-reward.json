@@ -15,7 +15,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the ranking reward.",
@@ -40,7 +39,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_01M0C5QTC1PT2SC2DM4MFFH880",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Ranking that distributes this reward.",
@@ -65,7 +63,6 @@
         "bindingHint": "masterData",
         "description": "Best rank that misses this reward tier",
         "id": "prop_01M0C5QTC1DSVX6VMXA31P7T1R",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Lowest placement eligible for this reward.",
@@ -92,7 +89,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_01M0C5QTC1XDPQC02MC3PAHSFT",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Reward actions executed for players who meet the placement threshold.",

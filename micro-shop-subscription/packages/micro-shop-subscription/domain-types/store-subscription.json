@@ -17,7 +17,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the subscription product.",
@@ -42,7 +41,6 @@
         "bindingHint": "masterData",
         "description": "App Store subscription group",
         "id": "prop_01M0CE237D5ER8RDFM5F4F4QCQ",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Subscription group identifier registered in App Store Connect.",
@@ -67,7 +65,6 @@
         "bindingHint": "masterData",
         "description": "Google Play subscription product",
         "id": "prop_01M0CE237DEBCTSTSKYSEH3BPN",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Subscription product identifier registered in Google Play Console.",
@@ -92,7 +89,6 @@
         "bindingHint": "assetDelivery",
         "description": "Trigger pulled each time the subscription renews",
         "id": "prop_01M0CE237D2Q5QJSYBCJE3DYDF",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Schedule trigger fired whenever the subscription renews.",
@@ -117,7 +113,6 @@
         "bindingHint": "masterData",
         "description": "Whether a renewal extends exactly or rounds to an hour",
         "id": "prop_01M0CE237DZ14S65879MV4WY1P",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Whether renewal extends exactly or is rounded to a configured hour.",
@@ -145,7 +140,6 @@
         "bindingHint": "masterData",
         "description": "Hour renewals round to",
         "id": "prop_01M0CE237DDMQT88WD8W9RPTW6",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Hour used when renewal triggers are rounded.",
@@ -172,7 +166,6 @@
         "bindingHint": "masterData",
         "description": "Days before expiry that the store may re-bill",
         "id": "prop_01M0CE237D39D2M4M4KB0M0KCV",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Period before expiration during which the store may re-bill.",
@@ -199,7 +192,6 @@
         "bindingHint": "userData",
         "description": "Whether the player currently holds it",
         "id": "prop_01M0CE237DDQTHVY262VCGK4M1",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Player's current subscription status.",
@@ -227,7 +219,6 @@
         "bindingHint": "userData",
         "description": "When it lapses",
         "id": "prop_01M0CE237D2M31JVETVEWNWH0G",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Time when the player's subscription expires.",

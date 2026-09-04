@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the enhancement recipe.",
@@ -35,7 +34,6 @@
         "bindingHint": "masterData",
         "description": "Item metadata suffix the granted experience is read from",
         "id": "prop_01M0C7T1166P354AK6Q48J86RN",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Metadata suffix used to read experience granted by a material character.",

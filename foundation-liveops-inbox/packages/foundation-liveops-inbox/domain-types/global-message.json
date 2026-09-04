@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the global message.",
@@ -37,7 +36,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_57TKVNCPPA7DHSTZRX4QJ4W45K",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Content delivered to all players.",
@@ -62,7 +60,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_HPG95V898A9A7JCSM2KEV88PVG",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Time when the message becomes available.",
@@ -87,7 +84,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_925R3E1XPBXGDG9D4H5MZBXMBK",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Time when the message stops being available.",

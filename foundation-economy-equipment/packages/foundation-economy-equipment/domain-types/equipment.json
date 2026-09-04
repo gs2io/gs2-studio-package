@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the equipment item.",
@@ -37,7 +36,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_2C21XE4SCXQ1JDG7ES2MNFNA2R",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Category this equipment belongs to.",
@@ -62,7 +60,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_H4JW4XTKFKNW6TYBGJ7W6C175M",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Value used to order equipment in lists.",
@@ -87,7 +84,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_S5796CZNBGWDHWSSHHT1EC00T6",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Identifier of the equipment instance owned by the player.",

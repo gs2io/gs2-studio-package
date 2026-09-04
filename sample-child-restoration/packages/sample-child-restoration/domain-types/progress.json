@@ -11,7 +11,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -26,7 +25,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
-        "isId": false,
         "name": "quest",
         "requirement": {
           "kind": "always",
@@ -41,7 +39,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_4ERYTK018DNDJ04E9HCMJEG26S",
-        "isId": false,
         "name": "rewards",
         "requirement": {
           "kind": "never",

@@ -15,7 +15,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the character draw rate.",
@@ -40,7 +39,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_6MY41PGG6DAVSR3YSY4YDTYSPX",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Gacha rarity this character belongs to.",
@@ -65,7 +63,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_AATTCTRXX4J382EEVEGE9ZYV6W",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Character included in the draw pool.",
@@ -90,7 +87,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_2YWD79NQ991RBGDCA3HEZHGDT8",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Relative weight used to draw this character within its rarity.",

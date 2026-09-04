@@ -17,7 +17,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "name": "id",
         "requirement": {
           "kind": "always",
@@ -32,7 +31,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_01KTXANDTH445WKYNYCWB4WMK1",
-        "isId": false,
         "name": "quest",
         "requirement": {
           "kind": "always",
@@ -47,7 +45,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_01KTXANDTHM6FZWEEQGG6WNR6Q",
-        "isId": false,
         "name": "resourceType",
         "requirement": {
           "kind": "always",
@@ -65,7 +62,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_01KTXANDTHR27K8R3FBY2PJ3YA",
-        "isId": false,
         "name": "resourceId",
         "requirement": {
           "kind": "always",
@@ -80,7 +76,6 @@
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_01KTXANDTHR8FA3AYET9MWGNV8",
-        "isId": false,
         "name": "count",
         "requirement": {
           "kind": "always",

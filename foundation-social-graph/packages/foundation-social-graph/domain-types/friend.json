@@ -11,7 +11,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the friend relationship.",
@@ -36,7 +35,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_BGKVKEXBMCJX62Q18PSFR909HW",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Public profile information of the friend.",
@@ -61,7 +59,6 @@
         "bindingHint": "userData",
         "description": "",
         "id": "prop_8JHGTPH2PWBM7H3AV8B87CS72E",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Profile information visible because the players are friends.",

@@ -12,7 +12,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the enchantment slot chance.",
@@ -37,7 +36,6 @@
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_01M0C84Y3236PN0MXQNS8GXGKR",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Enchantment configuration this slot-count chance belongs to.",
@@ -62,7 +60,6 @@
         "bindingHint": "masterData",
         "description": "Number of bonuses rolled",
         "id": "prop_01M0C84Y32TQRT07W6CT9MCVZM",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Number of effects added when this result is drawn.",
@@ -89,7 +86,6 @@
         "bindingHint": "masterData",
         "description": "Relative draw weight",
         "id": "prop_01M0C84Y32K8455NCTCVPXBKC0",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Relative weight used to draw this effect count.",

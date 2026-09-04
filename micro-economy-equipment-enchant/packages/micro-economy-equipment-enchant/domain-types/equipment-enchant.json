@@ -10,7 +10,6 @@
         "bindingHint": "none",
         "description": "Unique identifier",
         "id": "prop_reserved_id",
-        "isId": true,
         "localizedDisplay": {
           "en": {
             "description": "Uniquely identifies the enchantment configuration.",
@@ -35,7 +34,6 @@
         "bindingHint": "masterData",
         "description": "Most bonuses a single piece can hold",
         "id": "prop_01M0C84Y32NTFEV004CWFSAF5R",
-        "isId": false,
         "localizedDisplay": {
           "en": {
             "description": "Maximum number of bonus effects one equipment item can hold.",
