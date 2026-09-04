@@ -147,31 +147,6 @@
           "kind": "primitive",
           "primitiveType": "int32"
         }
-      },
-      {
-        "bindingHint": "userData",
-        "description": "",
-        "id": "prop_SHSB8VCSJJT91AWA17EV2DWNJ9",
-        "localizedDisplay": {
-          "en": {
-            "description": "Idle reward actions currently available to claim.",
-            "label": "Pending acquire actions"
-          },
-          "ja": {
-            "description": "現在受け取り可能な放置報酬アクションです。",
-            "label": "受取予定アクション"
-          }
-        },
-        "name": "acquireActions",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "elementType": {
-            "kind": "acquireAction"
-          },
-          "kind": "list"
-        }
       }
     ]
   },

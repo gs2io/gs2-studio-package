@@ -26,7 +26,6 @@ const IdleStatus = defineDomainType("IdleStatus", dt =>
     .property(PT.int32("currentIdleMinutes").userData().required())
     .property(PT.timestamp("nextRewardsAt").userData().required())
     .property(PT.int32("maximumIdleMinutes").userData().required())
-    .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).userData().required())
     .localizedProperties({
       id: jaEnId("放置状況", "idle status"),
       rewardIntervalMinutes: jaEnField(
@@ -62,12 +61,6 @@ const IdleStatus = defineDomainType("IdleStatus", dt =>
         "プレイヤーに適用されている放置時間の上限です。",
         "Current maximum idle duration applied to the player.",
         { ja: "分", en: "minutes" }
-      ),
-      acquireActions: jaEnField(
-        "受取予定アクション",
-        "Pending acquire actions",
-        "現在受け取り可能な放置報酬アクションです。",
-        "Idle reward actions currently available to claim."
       ),
     })
 );
