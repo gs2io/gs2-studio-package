@@ -10,7 +10,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
  */
 const GuildRole = defineDomainType("GuildRole", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.string("policyDocument").masterData().required().description("GS2 guild policy document")
     )
@@ -32,7 +31,6 @@ const GuildRole = defineDomainType("GuildRole", dt =>
  */
 const Guild = defineDomainType("Guild", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.int32("defaultMaximumMemberCount")
         .masterData()

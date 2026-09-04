@@ -5,7 +5,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const Profile = defineDomainType("Profile", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("publicProfile").userData())
     .property(PT.string("followerProfile").userData())
     .property(PT.string("friendProfile").userData())
@@ -34,7 +33,6 @@ const Profile = defineDomainType("Profile", dt =>
 
 const Follow = defineDomainType("Follow", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("publicProfile").userData())
     .property(PT.string("followerProfile").userData())
     .localizedProperties({
@@ -56,7 +54,6 @@ const Follow = defineDomainType("Follow", dt =>
 
 const Friend = defineDomainType("Friend", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("publicProfile").userData())
     .property(PT.string("friendProfile").userData())
     .localizedProperties({
@@ -77,33 +74,27 @@ const Friend = defineDomainType("Friend", dt =>
 );
 
 const SendFriendRequest = defineDomainType("SendFriendRequest", dt =>
-  dt
-    .idDescription("Unique identifier")
-    .property(PT.string("targetPublicProfile").userData())
-    .localizedProperties({
-      id: jaEnId("送信フレンド申請", "outgoing friend request"),
-      targetPublicProfile: jaEnField(
-        "申請先プロフィール",
-        "Target profile",
-        "申請先プレイヤーの公開プロフィール情報です。",
-        "Public profile information of the request recipient."
-      ),
-    })
+  dt.property(PT.string("targetPublicProfile").userData()).localizedProperties({
+    id: jaEnId("送信フレンド申請", "outgoing friend request"),
+    targetPublicProfile: jaEnField(
+      "申請先プロフィール",
+      "Target profile",
+      "申請先プレイヤーの公開プロフィール情報です。",
+      "Public profile information of the request recipient."
+    ),
+  })
 );
 
 const ReceiveFriendRequest = defineDomainType("ReceiveFriendRequest", dt =>
-  dt
-    .idDescription("Unique identifier")
-    .property(PT.string("fromPublicProfile").userData())
-    .localizedProperties({
-      id: jaEnId("受信フレンド申請", "incoming friend request"),
-      fromPublicProfile: jaEnField(
-        "申請元プロフィール",
-        "Sender profile",
-        "申請元プレイヤーの公開プロフィール情報です。",
-        "Public profile information of the request sender."
-      ),
-    })
+  dt.property(PT.string("fromPublicProfile").userData()).localizedProperties({
+    id: jaEnId("受信フレンド申請", "incoming friend request"),
+    fromPublicProfile: jaEnField(
+      "申請元プロフィール",
+      "Sender profile",
+      "申請元プレイヤーの公開プロフィール情報です。",
+      "Public profile information of the request sender."
+    ),
+  })
 );
 
 const notificationConfig = {

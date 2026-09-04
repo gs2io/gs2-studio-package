@@ -11,7 +11,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
  */
 const SerialCodeCampaign = defineDomainType("SerialCodeCampaign", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.bool("enableCampaignCode")
         .masterData()

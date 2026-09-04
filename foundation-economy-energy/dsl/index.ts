@@ -5,7 +5,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const Energy = defineDomainType("Energy", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.int32("defaultMaximum").masterData().required())
     .property(PT.bool("useOverflow").masterData().required())
     .property(PT.int32("overflowedMaximum").masterData().required())

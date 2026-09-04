@@ -5,7 +5,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const AgreementVersion = defineDomainType("AgreementVersion", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("required", PT.enum("required", "optional")).masterData().required())
     .property(PT.int32("currentMajor").masterData().required())
     .property(PT.int32("currentMinor").masterData().required())
@@ -118,7 +117,6 @@ const AgreementVersion = defineDomainType("AgreementVersion", dt =>
 
 const EmbeddedVersion = defineDomainType("EmbeddedVersion", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.int32("warningMajor").masterData().required())
     .property(PT.int32("warningMinor").masterData().required())
     .property(PT.int32("warningMicro").masterData().required())

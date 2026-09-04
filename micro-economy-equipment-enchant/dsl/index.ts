@@ -22,7 +22,6 @@ const EQUIPMENT_PROPERTY_ID = "prop_S5796CZNBGWDHWSSHHT1EC00T6";
  */
 const EquipmentEnchant = defineDomainType("EquipmentEnchant", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.int32("maximumParameterCount")
         .masterData()
@@ -44,7 +43,6 @@ const EquipmentEnchant = defineDomainType("EquipmentEnchant", dt =>
 /** How likely it is to roll exactly this many bonuses. */
 const EquipmentEnchantSlotChance = defineDomainType("EquipmentEnchantSlotChance", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("enchant", PT.ref("EquipmentEnchant")).assetDelivery().required())
     .property(PT.int32("count").masterData().required().description("Number of bonuses rolled"))
     .property(PT.int32("weight").masterData().required().description("Relative draw weight"))
@@ -75,7 +73,6 @@ const EquipmentEnchantSlotChance = defineDomainType("EquipmentEnchantSlotChance"
 /** One bonus the pool can produce. */
 const EquipmentEnchantOption = defineDomainType("EquipmentEnchantOption", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("enchant", PT.ref("EquipmentEnchant")).assetDelivery().required())
     .property(
       PT.string("resourceName").masterData().required().description("Stat this bonus applies to")
@@ -114,7 +111,6 @@ const EquipmentEnchantOption = defineDomainType("EquipmentEnchantOption", dt =>
 /** One bonus actually rolled onto one player's piece of equipment. */
 const EquipmentEnchantment = defineDomainType("EquipmentEnchantment", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("resourceName").userData().required())
     .property(PT.int64("resourceValue").userData().required())
     .localizedProperties({

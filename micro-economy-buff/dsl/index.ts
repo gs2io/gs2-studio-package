@@ -17,7 +17,6 @@ const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
  */
 const Buff = defineDomainType("Buff", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.prop("expression", PT.enum("rate_add", "mul", "value_add"))
         .masterData()

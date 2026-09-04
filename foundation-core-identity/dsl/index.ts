@@ -5,7 +5,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const TakeOverSetting = defineDomainType("TakeOverSetting", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.int32("type").masterData().description("Setting Type Number").required())
     .property(
       PT.string("configurationPath").masterData().description("OIDC Configuration URL").required()

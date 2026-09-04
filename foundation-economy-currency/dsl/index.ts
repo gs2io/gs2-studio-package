@@ -5,7 +5,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const Wallet = defineDomainType("Wallet", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.int32("free").userData().required())
     .property(PT.int32("paid").userData().required())
     .property(PT.int32("total").userData().required())
@@ -37,7 +36,6 @@ const Wallet = defineDomainType("Wallet", dt =>
 
 const StoreProduct = defineDomainType("StoreProduct", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("appleAppStoreProductId").masterData())
     .property(PT.string("googlePlayProductId").masterData())
     .localizedProperties({
@@ -59,7 +57,6 @@ const StoreProduct = defineDomainType("StoreProduct", dt =>
 
 const CurrencyStore = defineDomainType("CurrencyStore", dt =>
   dt
-    .idDescription("Unique identifier")
     .singleEntry()
     .property(PT.prop("enableFakeReceipt", PT.enum("Accept", "Reject")).masterData().required())
     .localizedProperties({

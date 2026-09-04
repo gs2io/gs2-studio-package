@@ -12,7 +12,7 @@ import { GS2 } from "~/dsl/gs2";
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const CurrencyType = defineDomainType("CurrencyType", dt =>
-  dt.idDescription("Unique identifier").localizedProperties({
+  dt.localizedProperties({
     id: jaEnId("通貨種別", "currency type"),
   })
 );
@@ -48,7 +48,6 @@ const StoreProduct = defineOverlayDomainType(
 /** One product priced in one currency; the pair is the row identity. */
 const StorePrice = defineDomainType("StorePrice", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("product", PT.ref("StoreProduct")).assetDelivery().required())
     .property(PT.prop("currencyType", PT.ref("CurrencyType")).assetDelivery().required())
     .property(PT.float64("price").masterData().required())

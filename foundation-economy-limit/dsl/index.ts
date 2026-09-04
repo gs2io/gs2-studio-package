@@ -15,7 +15,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
  */
 const UsageLimit = defineDomainType("UsageLimit", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.prop("resetType", PT.enum("notReset", "daily", "weekly", "monthly", "days"))
         .masterData()
@@ -88,7 +87,6 @@ const UsageLimit = defineDomainType("UsageLimit", dt =>
  */
 const UsageLimitCounter = defineDomainType("UsageLimitCounter", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.prop("limit", PT.ref("UsageLimit"))
         .assetDelivery()

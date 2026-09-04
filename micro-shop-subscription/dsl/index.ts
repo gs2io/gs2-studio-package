@@ -18,7 +18,6 @@ const SCHEDULE_NAMESPACE_RESOURCE_ID = "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d";
  */
 const StoreSubscription = defineDomainType("StoreSubscription", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.string("appleSubscriptionGroupIdentifier")
         .masterData()

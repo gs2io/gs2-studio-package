@@ -14,7 +14,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("schedule", PT.ref("Schedule")).assetDelivery().required())
     .property(PT.int32("resetHour").masterData().required())
     .localizedProperties({
@@ -37,7 +36,6 @@ const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
 
 const LoginReward = defineDomainType("LoginReward", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.prop("loginRewardCollection", PT.ref("LoginRewardCollection")).assetDelivery().required()
     )

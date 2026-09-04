@@ -5,7 +5,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const IdleReward = defineDomainType("IdleReward", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
     .localizedProperties({
       id: jaEnId("放置報酬", "idle reward"),
@@ -20,7 +19,6 @@ const IdleReward = defineDomainType("IdleReward", dt =>
 
 const IdleStatus = defineDomainType("IdleStatus", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.int32("rewardIntervalMinutes").masterData().required())
     .property(PT.int32("defaultMaximumIdleMinutes").masterData().required())
     .property(PT.int32("currentIdleMinutes").userData().required())

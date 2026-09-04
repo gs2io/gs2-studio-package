@@ -5,7 +5,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const GlobalMessage = defineDomainType("GlobalMessage", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("payload").masterData().required())
     .property(PT.timestamp("begin").masterData().required())
     .property(PT.timestamp("end").masterData().required())
@@ -34,7 +33,6 @@ const GlobalMessage = defineDomainType("GlobalMessage", dt =>
 
 const Message = defineDomainType("Message", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("payload").userData().required())
     .property(PT.bool("isRead").userData().required())
     .property(PT.timestamp("receivedAt").userData().required())

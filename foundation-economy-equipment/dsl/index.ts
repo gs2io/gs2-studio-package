@@ -4,14 +4,13 @@ import { GS2 } from "~/dsl/gs2";
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const EquipmentCategory = defineDomainType("EquipmentCategory", dt =>
-  dt.idDescription("Unique identifier").localizedProperties({
+  dt.localizedProperties({
     id: jaEnId("装備カテゴリ", "equipment category"),
   })
 );
 
 const Equipment = defineDomainType("Equipment", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("category", PT.ref("EquipmentCategory")).assetDelivery().required())
     .property(PT.int32("sortValue").masterData().required())
     .property(PT.string("propertyId").userData().required())
@@ -40,7 +39,6 @@ const Equipment = defineDomainType("Equipment", dt =>
 
 const EquipmentCollection = defineDomainType("EquipmentCollection", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.int32("defaultCapacity").masterData().required())
     .property(PT.int32("maximumCapacity").masterData().required())
     .property(PT.int32("currentCapacityUsage").userData().required())

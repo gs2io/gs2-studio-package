@@ -5,7 +5,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const EnergyProduct = defineDomainType("EnergyProduct", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.int32("recoveryValue").masterData().required())
     .property(PT.prop("consumeActions", PT.listOf(PT.consumeAction())).masterData().required())
     .localizedProperties({

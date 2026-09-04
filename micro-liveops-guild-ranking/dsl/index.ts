@@ -13,7 +13,6 @@ const SCHEDULE_NAMESPACE_RESOURCE_ID = "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d";
  */
 const GuildRanking = defineDomainType("GuildRanking", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("schedule").assetDelivery().required())
     .property(
       PT.prop("orderDirection", PT.enum("asc", "desc"))
@@ -74,7 +73,6 @@ const GuildRanking = defineDomainType("GuildRanking", dt =>
 /** What the members down to `thresholdRank` receive when the season ends. */
 const GuildRankingReward = defineDomainType("GuildRankingReward", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("ranking", PT.ref("GuildRanking")).assetDelivery().required())
     .property(
       PT.int32("thresholdRank")

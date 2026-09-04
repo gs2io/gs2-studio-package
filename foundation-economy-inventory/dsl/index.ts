@@ -4,19 +4,16 @@ import { GS2 } from "~/dsl/gs2";
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const Item = defineDomainType("Item", dt =>
-  dt
-    .idDescription("Unique identifier")
-    .property(PT.int64("count").userData().required())
-    .localizedProperties({
-      id: jaEnId("アイテム", "item"),
-      count: jaEnField(
-        "所持数",
-        "Owned quantity",
-        "プレイヤーが所持しているアイテムの数量です。",
-        "Quantity of the item owned by the player.",
-        { ja: "個", en: "items" }
-      ),
-    })
+  dt.property(PT.int64("count").userData().required()).localizedProperties({
+    id: jaEnId("アイテム", "item"),
+    count: jaEnField(
+      "所持数",
+      "Owned quantity",
+      "プレイヤーが所持しているアイテムの数量です。",
+      "Quantity of the item owned by the player.",
+      { ja: "個", en: "items" }
+    ),
+  })
 );
 
 const SimpleItemModel = defineMasterDataResource(resource =>

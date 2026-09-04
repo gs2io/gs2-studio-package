@@ -23,7 +23,6 @@ const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = "8d1e96cf-5e79-4920-ada7-997eeb27
  */
 const CharacterGradeStep = defineDomainType("CharacterGradeStep", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.int64("rankCapValue")
         .masterData()

@@ -17,7 +17,6 @@ const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
 /** Package-wide reset timing; one row per project. */
 const MissionSetting = defineDomainType("MissionSetting", dt =>
   dt
-    .idDescription("Unique identifier")
     .singleEntry()
     .property(
       PT.prop(
@@ -57,7 +56,6 @@ const MissionSetting = defineDomainType("MissionSetting", dt =>
 /** A counter a mission can watch, tracked per reset window. */
 const MissionCounter = defineDomainType("MissionCounter", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.int64("todayValue").userData().required())
     .property(PT.int64("weeklyValue").userData().required())
     .property(PT.int64("monthlyValue").userData().required())
@@ -94,7 +92,6 @@ const MissionCounter = defineDomainType("MissionCounter", dt =>
 /** A group of missions sharing one reset cadence. */
 const MissionCollection = defineDomainType("MissionCollection", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).assetDelivery())
     .property(
       PT.prop("scope", PT.enum("daily", "weekly", "monthly", "notReset"))
@@ -120,7 +117,6 @@ const MissionCollection = defineDomainType("MissionCollection", dt =>
 
 const Mission = defineDomainType("Mission", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("missionCollection", PT.ref("MissionCollection")).masterData().required())
     .property(
       PT.prop("completeAcquireActions", PT.listOf(PT.acquireAction())).masterData().required()

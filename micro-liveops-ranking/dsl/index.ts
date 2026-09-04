@@ -10,7 +10,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
  */
 const Ranking = defineDomainType("Ranking", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("schedule").assetDelivery())
     .property(
       PT.prop("orderDirection", PT.enum("asc", "desc"))
@@ -71,7 +70,6 @@ const Ranking = defineDomainType("Ranking", dt =>
 /** What the players down to `thresholdRank` receive when the season ends. */
 const RankingReward = defineDomainType("RankingReward", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("ranking", PT.ref("Ranking")).assetDelivery().required())
     .property(
       PT.int32("thresholdRank")

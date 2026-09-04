@@ -13,7 +13,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const CharacterExperience = defineDomainType("CharacterExperience", dt =>
   dt
-    .idDescription("Unique identifier")
     .singleEntry()
     .property(PT.prop("threshold", PT.listOf(PT.int64())).masterData().required())
     .property(PT.int32("defaultLevelCap").masterData().required())
@@ -46,7 +45,6 @@ const CharacterExperience = defineDomainType("CharacterExperience", dt =>
 
 const Character = defineDomainType("Character", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.int32("sort").masterData().required())
     .property(PT.string("propertyId").userData().required())
     .property(PT.int64("level").userData().required())
@@ -92,7 +90,6 @@ const Character = defineDomainType("Character", dt =>
 
 const CharacterCollection = defineDomainType("CharacterCollection", dt =>
   dt
-    .idDescription("Unique identifier")
     .singleEntry()
     .property(PT.int32("maximumCapacity").masterData().required())
     .property(PT.int32("defaultCapacity").masterData().required())

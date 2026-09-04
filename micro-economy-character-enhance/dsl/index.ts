@@ -20,7 +20,6 @@ const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = "8d1e96cf-5e79-4920-ada7-997eeb27
  */
 const CharacterEnhance = defineDomainType("CharacterEnhance", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.string("acquireExperienceSuffix")
         .masterData()
@@ -44,7 +43,6 @@ const CharacterEnhance = defineDomainType("CharacterEnhance", dt =>
  */
 const CharacterEnhanceBonus = defineDomainType("CharacterEnhanceBonus", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("enhance", PT.ref("CharacterEnhance")).assetDelivery().required())
     .property(
       PT.float32("rate").masterData().required().description("Experience multiplier when drawn")

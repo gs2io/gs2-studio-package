@@ -30,7 +30,6 @@ const isDailyWeeklyOrMonthly = Cond.or(isDaily, isWeekly, isMonthly);
 
 const Schedule = defineDomainType("Schedule", dt =>
   dt
-    .idDescription("Unique identifier")
     // --- Schedule type discriminator ---
     .property(PT.prop("scheduleType", PT.enum("absolute", "relative")).masterData().required())
     // --- Absolute schedule properties ---
@@ -158,7 +157,6 @@ const Schedule = defineDomainType("Schedule", dt =>
 
 const Trigger = defineDomainType("Trigger", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.bool("triggered").userData().required())
     .property(PT.timestamp("triggeredAt").userData().required())
     .property(PT.timestamp("expiresAt").userData().required())

@@ -10,7 +10,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
  */
 const SkillNode = defineDomainType("SkillNode", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.prop("releaseConsumeActions", PT.listOf(PT.consumeAction()))
         .masterData()
@@ -65,7 +64,6 @@ const SkillNode = defineDomainType("SkillNode", dt =>
  */
 const SkillTreeOwner = defineDomainType("SkillTreeOwner", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.string("propertyId").userData().required().description("Whose tree this progress is")
     )

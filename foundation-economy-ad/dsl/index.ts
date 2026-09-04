@@ -5,7 +5,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const AdPlatform = defineDomainType("AdPlatform", dt =>
   dt
-    .idDescription("Unique identifier")
     .singleEntry()
     .property(PT.prop("adMobAdUnitIds", PT.listOf(PT.string())).masterData())
     .property(PT.prop("unityAdKeys", PT.listOf(PT.string())).masterData().required())
@@ -28,7 +27,6 @@ const AdPlatform = defineDomainType("AdPlatform", dt =>
 
 const AdViewPoint = defineDomainType("AdViewPoint", dt =>
   dt
-    .idDescription("Unique identifier")
     .singleEntry()
     .property(PT.int64("value").userData().required())
     .localizedProperties({

@@ -22,7 +22,6 @@ const CHARACTER_PROPERTY_ID = "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD";
  */
 const EquipmentSlot = defineDomainType("EquipmentSlot", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.string("propertyRegex")
         .masterData()
@@ -43,7 +42,6 @@ const EquipmentSlot = defineDomainType("EquipmentSlot", dt =>
 /** What one character currently has in one slot. */
 const EquipmentSlotAssignment = defineDomainType("EquipmentSlotAssignment", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(
       PT.string("equipment")
         .userData()

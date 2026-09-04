@@ -9,7 +9,6 @@ const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
 /** One reward line of an in-flight quest run. */
 const ProgressReward = defineDomainType("ProgressReward", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.string("itemId").userData().required())
     .property(PT.int32("value").userData().required())
     .localizedProperties({
@@ -33,7 +32,6 @@ const ProgressReward = defineDomainType("ProgressReward", dt =>
 /** The quest run a player currently has open. */
 const Progress = defineDomainType("Progress", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("quest", PT.ref("Quest")).userData().required())
     .property(PT.prop("rewards", PT.listOf(PT.inline("ProgressReward"))).userData())
     .localizedProperties({
@@ -56,7 +54,6 @@ const Progress = defineDomainType("Progress", dt =>
 /** A group of quests, optionally limited to a schedule event. */
 const QuestCollection = defineDomainType("QuestCollection", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).masterData())
     .localizedProperties({
       id: jaEnId("クエストグループ", "quest group"),
@@ -71,7 +68,6 @@ const QuestCollection = defineDomainType("QuestCollection", dt =>
 
 const Quest = defineDomainType("Quest", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("collection", PT.ref("QuestCollection")).assetDelivery().required())
     .property(PT.prop("consumeActions", PT.listOf(PT.consumeAction())).masterData().required())
     .property(

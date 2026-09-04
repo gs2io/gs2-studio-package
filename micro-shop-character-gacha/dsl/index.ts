@@ -8,7 +8,7 @@ const CHARACTER_TYPE_ID = "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5";
 const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
 
 const GachaRarity = defineDomainType("GachaRarity", dt =>
-  dt.idDescription("Unique identifier").localizedProperties({
+  dt.localizedProperties({
     id: jaEnId("ガチャレアリティ", "gacha rarity"),
   })
 );
@@ -16,7 +16,6 @@ const GachaRarity = defineDomainType("GachaRarity", dt =>
 /** How likely one character is, within its rarity. */
 const CharacterRate = defineDomainType("CharacterRate", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("rarity", PT.ref("GachaRarity")).assetDelivery().required())
     .property(PT.prop("character", PT.ref(CHARACTER_TYPE_ID)).assetDelivery().required())
     .property(PT.int32("weight").masterData().required())
@@ -47,7 +46,6 @@ const CharacterRate = defineDomainType("CharacterRate", dt =>
 /** How likely one rarity is, within one gacha. */
 const GachaRarityRate = defineDomainType("GachaRarityRate", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("gacha", PT.ref("Gacha")).assetDelivery().required())
     .property(PT.prop("rarity", PT.ref("GachaRarity")).assetDelivery().required())
     .property(PT.int32("weight").masterData().required())
@@ -77,7 +75,6 @@ const GachaRarityRate = defineDomainType("GachaRarityRate", dt =>
 
 const Gacha = defineDomainType("Gacha", dt =>
   dt
-    .idDescription("Unique identifier")
     .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).assetDelivery())
     .property(PT.prop("consumeActions", PT.listOf(PT.consumeAction())).masterData().required())
     .localizedProperties({
