@@ -1,6 +1,5 @@
 {
   "category": "consume",
-  "importedResourceRefs": [],
   "name": "ConsumeResource",
   "outputs": [
     {
