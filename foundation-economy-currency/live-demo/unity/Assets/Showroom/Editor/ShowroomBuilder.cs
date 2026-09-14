@@ -74,7 +74,12 @@ namespace GS2Studio.Showroom.EditorTools
                 Path.GetDirectoryName(Application.dataPath) ?? "Showroom"
             ).Parent?.Name ?? "Showroom";
             PlayerSettings.WebGL.compressionFormat = ParseCompression(compression);
-            PlayerSettings.WebGL.decompressionFallback = true;
+            // Off on purpose: with the fallback on, Unity names the payloads
+            // `.unityweb` and expects the browser to decompress them in
+            // JavaScript. Off, they are named `.br` / `.gz`, which is what
+            // `publish.mjs` matches when it sets `Content-Encoding` on the
+            // bucket — the browser then decompresses natively.
+            PlayerSettings.WebGL.decompressionFallback = false;
             PlayerSettings.WebGL.dataCaching = true;
             // A diagnostic build keeps managed symbols so a stack trace names the
             // method that threw; the shipping build stays lean.
