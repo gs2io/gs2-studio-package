@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-character-enhance",
+  "types": {
+    "CharacterEnhance": {
+      "id": "dt_01M0C7T116VP42973VYFS2PRV0",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-character-enhance",
+      "canonicalTypeId": "dt_01M0C7T116VP42973VYFS2PRV0",
+      "properties": {
+        "acquireExperienceSuffix": "prop_01M0C7T1166P354AK6Q48J86RN",
+        "id": "prop_reserved_id"
+      }
+    },
+    "CharacterEnhanceBonus": {
+      "id": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-character-enhance",
+      "canonicalTypeId": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+      "properties": {
+        "enhance": "prop_01M0C7T116EE8PEHMGMD3AWB3N",
+        "id": "prop_reserved_id",
+        "rate": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
+        "weight": "prop_01M0C7T11668CNMKJ4725QV6M0"
+      }
+    }
+  },
+  "masterDataResources": {
+    "enhance.BonusRate": "bf692436-39c5-5a66-94a0-2bd70058df41",
+    "enhance.Namespace": "d1ee4673-0bbc-50e8-a408-1529bb46dbc7",
+    "enhance.RateModel": "67f01129-1964-5f51-812f-3f1380fcd228"
+  },
+  "transforms": {}
+}

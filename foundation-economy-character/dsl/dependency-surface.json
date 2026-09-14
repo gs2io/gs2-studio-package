@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-character",
+  "types": {
+    "Character": {
+      "id": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+      "properties": {
+        "experience": "prop_WP10EQVMMV82DJXCEN4AJYVEKB",
+        "id": "prop_reserved_id",
+        "level": "prop_0J6H8XWJG1W95S2S7HRDRQSWF2",
+        "levelCap": "prop_T2TXPQVC3TS41W3CY3RB4X4G8C",
+        "propertyId": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD",
+        "sort": "prop_A5DDXX9AZGPBWRFX70X1ZKNR0E"
+      }
+    },
+    "CharacterCollection": {
+      "id": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K",
+      "properties": {
+        "currentCpacity": "prop_WJ08C0DHN3KEMP4GW454S2KM0Q",
+        "currentCpacityUsage": "prop_3MYYM6EEDJBYJCPMK4SRJFM58Q",
+        "defaultCapacity": "prop_A3GQRDCNGWBQCT773D3173ZMN1",
+        "id": "prop_reserved_id",
+        "maximumCapacity": "prop_3THQSBRP9PCYM426V54R4CZ8BF"
+      }
+    },
+    "CharacterExperience": {
+      "id": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+      "properties": {
+        "defaultLevelCap": "prop_B2ZMJ5P9J9QVBZTGHD6816BX7Z",
+        "id": "prop_reserved_id",
+        "maxLevelCap": "prop_88HQTS8WPSVYE7PAJ2BYRE0D4C",
+        "threshold": "prop_CP6T6EBWNEYWASFRXVMH0A8RPF"
+      }
+    }
+  },
+  "masterDataResources": {
+    "experience.ExperienceModel": "8d1e96cf-5e79-4920-ada7-997eeb2776fe",
+    "experience.Namespace": "227e4fe7-b721-45f2-a065-bb8cfa160813",
+    "experience.Threshold": "f76eb342-15e9-4910-bd1b-fdf5f91e6b61",
+    "inventory.InventoryModel": "62805db8-2e40-4a2c-a1c4-38e0c07d49f8",
+    "inventory.ItemModel": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75",
+    "inventory.Namespace": "33332897-b763-4809-abac-037bf62b6427"
+  },
+  "transforms": {
+    "AcquireCharacter": [
+      "character",
+      "count"
+    ],
+    "AcquireCharacterExperience": [
+      "propertyId",
+      "value"
+    ],
+    "AddCharacterCapacity": [
+      "value"
+    ],
+    "ByeCharacter": [
+      "character",
+      "propertyId"
+    ],
+    "IncreaseCharacterLevelCap": [
+      "propertyId",
+      "value"
+    ]
+  }
+}

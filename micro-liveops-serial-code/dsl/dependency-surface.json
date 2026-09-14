@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-liveops-serial-code",
+  "types": {
+    "SerialCodeCampaign": {
+      "id": "dt_01M0C5VXZY2ZJKK4DERTCAZHXD",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-liveops-serial-code",
+      "canonicalTypeId": "dt_01M0C5VXZY2ZJKK4DERTCAZHXD",
+      "properties": {
+        "enableCampaignCode": "prop_01M0C5VXZYGKT11KXY634Y6J5N",
+        "id": "prop_reserved_id"
+      }
+    }
+  },
+  "masterDataResources": {
+    "serialKey.CampaignModel": "a87d46cf-c8fd-58d7-8a96-8cb2419a3f32",
+    "serialKey.Namespace": "6350256a-7b90-5a4d-a046-ffb4d6501764"
+  },
+  "transforms": {
+    "RevertSerialCodeUse": [
+      "code"
+    ],
+    "UseSerialCode": [
+      "code"
+    ],
+    "VerifySerialCodeActive": [
+      "campaign",
+      "code"
+    ]
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-quest",
+  "types": {
+    "Progress": {
+      "id": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-quest",
+      "canonicalTypeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+      "properties": {
+        "id": "prop_reserved_id",
+        "quest": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
+        "rewards": "prop_NJ83FK0CB975M336Z7THVNWE7P"
+      }
+    },
+    "ProgressReward": {
+      "id": "dt_1P091J81MXDA5VBTFMMT4PP0RQ",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-quest",
+      "canonicalTypeId": "dt_1P091J81MXDA5VBTFMMT4PP0RQ",
+      "properties": {
+        "id": "prop_reserved_id",
+        "itemId": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B",
+        "value": "prop_RYDWJ2B6D96NAN85AF8SDXD12F"
+      }
+    },
+    "Quest": {
+      "id": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-quest",
+      "canonicalTypeId": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+      "properties": {
+        "collection": "prop_PFYYCZ2ZB3XBM0A06C1VSTJWCP",
+        "completeAcquireActions": "prop_WAYKZ6HMTNGKPMNBTAZHR37SH3",
+        "completed": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
+        "consumeActions": "prop_TF2ETMFVHGYGRWYBZ8YJZXZG4S",
+        "failedAcquireActions": "prop_NYZ7PF2EANTJ3R35DJQX6XWXHG",
+        "firstCompleteAcquireActions": "prop_H5KJSRGM60K4AQHSJMM28D7JQV",
+        "id": "prop_reserved_id"
+      }
+    },
+    "QuestCollection": {
+      "id": "dt_8KGQ5PW8KF4540B06JKKQ6QF96",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-quest",
+      "canonicalTypeId": "dt_8KGQ5PW8KF4540B06JKKQ6QF96",
+      "properties": {
+        "id": "prop_reserved_id",
+        "schedule": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP"
+      }
+    }
+  },
+  "masterDataResources": {
+    "quest.Contents": "a32939e4-0821-4696-9c09-0d379173bbf7",
+    "quest.Namespace": "2f01b901-edbf-4a96-9517-f19c0fce5925",
+    "quest.QuestGroupModel": "a152d59a-e8f6-44e9-8141-8a1c2a5320af",
+    "quest.QuestModel": "2e3a67b1-c335-4cc2-9c86-09b26d8f45ce",
+    "transaction.ConsumeAction": "553b9ff9-dd9f-496a-8415-30e81d018b54"
+  },
+  "transforms": {}
+}

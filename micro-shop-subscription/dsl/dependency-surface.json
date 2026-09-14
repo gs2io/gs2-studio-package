@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-shop-subscription",
+  "types": {
+    "StoreSubscription": {
+      "id": "dt_01M0CE237DZF21KW81CJ2BP1WN",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-subscription",
+      "canonicalTypeId": "dt_01M0CE237DZF21KW81CJ2BP1WN",
+      "properties": {
+        "appleSubscriptionGroupIdentifier": "prop_01M0CE237D5ER8RDFM5F4F4QCQ",
+        "expiresAt": "prop_01M0CE237D2M31JVETVEWNWH0G",
+        "googlePlayProductId": "prop_01M0CE237DEBCTSTSKYSEH3BPN",
+        "id": "prop_reserved_id",
+        "reallocateSpanDays": "prop_01M0CE237D39D2M4M4KB0M0KCV",
+        "renewalTrigger": "prop_01M0CE237D2Q5QJSYBCJE3DYDF",
+        "rollupHour": "prop_01M0CE237DDMQT88WD8W9RPTW6",
+        "status": "prop_01M0CE237DDQTHVY262VCGK4M1",
+        "triggerExtendMode": "prop_01M0CE237DZ14S65879MV4WY1P"
+      }
+    }
+  },
+  "masterDataResources": {
+    "money2.Namespace": "2ee5ef48-b53d-5b9f-ac4f-fb2ea104048d",
+    "money2.StoreSubscriptionContentModel": "222d22e7-197f-5e16-9042-0bb3432ba5bf"
+  },
+  "transforms": {}
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-login-reward",
+  "types": {
+    "LoginReward": {
+      "id": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-login-reward",
+      "canonicalTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+      "properties": {
+        "acquireActions": "prop_JPGJM6CM0TRQGXTAVJBYATVNCG",
+        "id": "prop_reserved_id",
+        "loginRewardCollection": "prop_0N4V6CN66SVVQH7S0S3Z909D1A",
+        "receivedSteps": "prop_ZXRNPBQQCJM49N2Z27FQETSRWY"
+      }
+    },
+    "LoginRewardCollection": {
+      "id": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-login-reward",
+      "canonicalTypeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+      "properties": {
+        "id": "prop_reserved_id",
+        "resetHour": "prop_NFHPA3CG7FM9RX44J7NAWPT1ET",
+        "schedule": "prop_A2TYYY7WW1Z4306M5CGDJRBEKJ"
+      }
+    },
+    "Schedule": {
+      "id": "dt_M6M6F3GTMTWDDTR7DJ0N84PGWJ",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-schedule",
+      "canonicalTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+    }
+  },
+  "masterDataResources": {
+    "loginReward.BonusModel": "3bdf98b6-23a1-57f3-9e76-518e6a1eb187",
+    "loginReward.Namespace": "005a38f8-e72e-5acb-a7cb-2f713b3671c8",
+    "loginReward.Reward": "de30e83f-37c0-579a-a4dc-b3918862a28d",
+    "transaction.AcquireAction": "3ca17687-f805-5398-b07f-e277edc45611"
+  },
+  "transforms": {}
+}

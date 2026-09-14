@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-energy",
+  "types": {
+    "Energy": {
+      "id": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-energy",
+      "canonicalTypeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
+      "properties": {
+        "currentMaximumValue": "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR",
+        "currentValue": "prop_XFMYM93GTF2261GG2KNVHC9V5K",
+        "defaultMaximum": "prop_3ED1FAC3V82FG3Z4QEMXRF1BJE",
+        "id": "prop_reserved_id",
+        "nextRecoverdAt": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ",
+        "overflowedMaximum": "prop_64XY03QAD08E4FQMCQQG039HZ9",
+        "recoveryIntervalMinutes": "prop_XCA5D46XQKYD37PNGVYA1HH9S9",
+        "recoveryValue": "prop_NQG4GN9X1R4HTWE275H4JXJHFK",
+        "useOverflow": "prop_1QXN33T7DVRHC1P1C2D0ECXPQP"
+      }
+    }
+  },
+  "masterDataResources": {
+    "stamina.Namespace": "e7a19940-04e0-40de-adb0-95d1b3a9b7ed",
+    "stamina.StaminaModel": "a0e059f6-3e69-4083-8dd4-dbfc9161cbe5"
+  },
+  "transforms": {
+    "ConsumeEnergy": [
+      "value"
+    ],
+    "RecoveryEnergy": [
+      "value"
+    ]
+  }
+}

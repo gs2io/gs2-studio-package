@@ -14,25 +14,23 @@ import {
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
-const CURRENCY_PACKAGE_ID = "foundation-economy-currency";
+import currencySurface from "../../dsl/dependency-surface.json";
+
+// Materialization publishes the feature package's identities, so everything
+// inherited from it is addressed by name; a typo is a compile error rather
+// than an id that resolves to nothing.
+const currency = dependencyPackage(currencySurface);
+const CURRENCY_PACKAGE_ID = currency.packageId;
 
 /** The demo shows one player with one wallet, slot 0. */
 const WALLET_SLOT = 0;
-
-const CURRENCY_STORE_TYPE_ID = "dt_BMT0H7ME2SSDZRHGNZF012YZVR";
-const STORE_PRODUCT_TYPE_ID = "dt_JQQFPC83PRYTWMZ43RV3T4SKSB";
-
-// A DSL build does not read its dependency closure, so properties inherited
-// from the source types are addressed by id rather than by name.
-const ENABLE_FAKE_RECEIPT_PROPERTY_ID = "prop_F0JZV41MJ57SFQPQ6BMB80HDAZ";
-const APPLE_PRODUCT_ID_PROPERTY_ID = "prop_A26C5NBX039V9DNV0ERPSWVPD8";
-const GOOGLE_PRODUCT_ID_PROPERTY_ID = "prop_Z99QWHNS8G1DEFWGT2MB00NRJA";
 
 /**
  * The store's `enableFakeReceipt` drives the Money2 namespace's
@@ -42,17 +40,7 @@ const GOOGLE_PRODUCT_ID_PROPERTY_ID = "prop_Z99QWHNS8G1DEFWGT2MB00NRJA";
  */
 const CurrencyStore = defineOverlayDomainType(
   "CurrencyStore",
-  {
-    source: {
-      directSourcePackageId: CURRENCY_PACKAGE_ID,
-      directSourceTypeId: CURRENCY_STORE_TYPE_ID,
-      sourcePackageId: CURRENCY_PACKAGE_ID,
-      sourceTypeId: CURRENCY_STORE_TYPE_ID,
-    },
-    // The source type is single-entry; the overlay has to say so too.
-    singleEntry: true,
-    compositeKeyMode: { kind: "inherit" },
-  },
+  currency.overlay("CurrencyStore"),
   domainType => domainType
 );
 
@@ -62,15 +50,7 @@ const CurrencyStore = defineOverlayDomainType(
  */
 const StoreProduct = defineOverlayDomainType(
   "StoreProduct",
-  {
-    source: {
-      directSourcePackageId: CURRENCY_PACKAGE_ID,
-      directSourceTypeId: STORE_PRODUCT_TYPE_ID,
-      sourcePackageId: CURRENCY_PACKAGE_ID,
-      sourceTypeId: STORE_PRODUCT_TYPE_ID,
-    },
-    compositeKeyMode: { kind: "inherit" },
-  },
+  currency.overlay("StoreProduct"),
   domainType => domainType
 );
 
@@ -154,8 +134,8 @@ const PaidDepositRateModel = defineMasterDataResource(resource =>
 /** Store-side identifiers are never consumed by the fake-receipt demo path. */
 function demoProduct(productId: string): Record<string, string> {
   return {
-    [APPLE_PRODUCT_ID_PROPERTY_ID]: productId,
-    [GOOGLE_PRODUCT_ID_PROPERTY_ID]: productId,
+    [currency.propertyId("StoreProduct", "appleAppStoreProductId")]: productId,
+    [currency.propertyId("StoreProduct", "googlePlayProductId")]: productId,
   };
 }
 
@@ -191,7 +171,7 @@ export const foundationEconomyCurrencyDemo = definePackage(
   .domainType(PaidDeposit)
 
   .instance("CurrencyStore", "currencystore", {
-    [ENABLE_FAKE_RECEIPT_PROPERTY_ID]: "Accept",
+    [currency.propertyId("CurrencyStore", "enableFakeReceipt")]: "Accept",
   })
 
   .instance("StoreProduct", "coin_small", demoProduct("io.gs2.demo.coin.small"))

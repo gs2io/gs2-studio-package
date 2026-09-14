@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-limit",
+  "types": {
+    "UsageLimit": {
+      "id": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-limit",
+      "canonicalTypeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+      "properties": {
+        "anchorTimestamp": "prop_01M0C5HJ9H18WFD7HQJ6BVRQ54",
+        "days": "prop_01M0C5HJ9HN7J7K686N7G6PM4E",
+        "id": "prop_reserved_id",
+        "resetDayOfMonth": "prop_01M0C5HJ9HCVBQ4JVCH9JKNY9H",
+        "resetDayOfWeek": "prop_01M0C5HJ9H8A68TH51QQXSQAFS",
+        "resetHour": "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3",
+        "resetType": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1"
+      }
+    },
+    "UsageLimitCounter": {
+      "id": "dt_01M0C6M2N38KVHBHTC1JBRT5YA",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-limit",
+      "canonicalTypeId": "dt_01M0C6M2N38KVHBHTC1JBRT5YA",
+      "properties": {
+        "count": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3",
+        "id": "prop_reserved_id",
+        "limit": "prop_01M0C6M2N3NJ15T88Q5QET2KVA",
+        "nextResetAt": "prop_01M0C6M2N34YDGP2NCGNER2T39"
+      }
+    }
+  },
+  "masterDataResources": {
+    "limit.LimitModel": "7f43c37d-e124-5bd2-84ff-dd9866eeca50",
+    "limit.Namespace": "890b5ae2-8e40-5ace-a2b3-155463e3e8fa"
+  },
+  "transforms": {
+    "CountDownUsageLimit": [
+      "limit",
+      "counter",
+      "countDownValue"
+    ],
+    "CountUpUsageLimit": [
+      "limit",
+      "counter",
+      "countUpValue",
+      "maxValue"
+    ],
+    "ResetUsageLimitCounter": [
+      "limit",
+      "counter"
+    ],
+    "VerifyUsageLimitNotReached": [
+      "limit",
+      "counter",
+      "maxValue"
+    ]
+  }
+}

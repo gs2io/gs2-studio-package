@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-equipment-loadout",
+  "types": {
+    "Character": {
+      "id": "dt_01M0CDYNB5V74MMX3SWDK4ZRCH",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+    },
+    "EquipmentSlot": {
+      "id": "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-equipment-loadout",
+      "canonicalTypeId": "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ",
+      "properties": {
+        "id": "prop_reserved_id",
+        "propertyRegex": "prop_01M0CDYNB5E7VX7G7ED1SRD7JR"
+      }
+    },
+    "EquipmentSlotAssignment": {
+      "id": "dt_01M0CDYNB5ZBC95MZSW2NTSPXM",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-equipment-loadout",
+      "canonicalTypeId": "dt_01M0CDYNB5ZBC95MZSW2NTSPXM",
+      "properties": {
+        "equipment": "prop_01M0CDYNB51PQJVBAQC87617NY",
+        "id": "prop_reserved_id"
+      }
+    }
+  },
+  "masterDataResources": {
+    "formation.Namespace": "6a3916fa-763d-5473-9cce-e43dfe130772",
+    "formation.PropertyFormModel": "ecd79306-b165-53b0-8b2c-5baf0db143a8",
+    "formation.SlotModel": "8116533b-568e-598e-86a8-0d5dec3e7baf"
+  },
+  "transforms": {}
+}

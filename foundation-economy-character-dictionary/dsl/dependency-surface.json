@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-character-dictionary",
+  "types": {
+    "Character": {
+      "id": "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+    }
+  },
+  "masterDataResources": {
+    "dictionary.EntryModel": "a0dadc95-666a-48c1-89f9-86f35904b889",
+    "dictionary.Namespace": "ab0e71bd-4fdf-43ce-9bd1-ddadad459872"
+  },
+  "transforms": {
+    "MarkCharacterDictionary": [
+      "character"
+    ]
+  }
+}

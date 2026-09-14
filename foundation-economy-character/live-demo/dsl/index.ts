@@ -6,50 +6,29 @@
  * provides a small roster so the demo has something to show.
  */
 
-import { defineOverlayDomainType, definePackage } from "~/dsl";
+import { defineOverlayDomainType, definePackage, dependencyPackage } from "~/dsl";
 
-const CHARACTER_PACKAGE_ID = "foundation-economy-character";
+import characterSurface from "../../dsl/dependency-surface.json";
 
-const CHARACTER_TYPE_ID = "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5";
-const CHARACTER_COLLECTION_TYPE_ID = "dt_ZR7PA0W682HX7ZFXGBE4BRF37K";
-const CHARACTER_EXPERIENCE_TYPE_ID = "dt_HAZCRJ576BHDWFVB28NQW77Y01";
+// Materialization publishes the feature package's identities, so everything
+// below is addressed by name; a typo is a compile error rather than an id that
+// resolves to nothing.
+const character = dependencyPackage(characterSurface);
 
-// A DSL build does not read its dependency closure, so properties inherited
-// from the source types are addressed by id.
-const CHARACTER_SORT = "prop_A5DDXX9AZGPBWRFX70X1ZKNR0E";
-const COLLECTION_DEFAULT_CAPACITY = "prop_A3GQRDCNGWBQCT773D3173ZMN1";
-const COLLECTION_MAXIMUM_CAPACITY = "prop_3THQSBRP9PCYM426V54R4CZ8BF";
-const EXPERIENCE_THRESHOLD = "prop_CP6T6EBWNEYWASFRXVMH0A8RPF";
-const EXPERIENCE_DEFAULT_LEVEL_CAP = "prop_B2ZMJ5P9J9QVBZTGHD6816BX7Z";
-const EXPERIENCE_MAX_LEVEL_CAP = "prop_88HQTS8WPSVYE7PAJ2BYRE0D4C";
-
-function overlayOf(name: string, sourceTypeId: string, singleEntry: boolean) {
-  return defineOverlayDomainType(
-    name,
-    {
-      source: {
-        directSourcePackageId: CHARACTER_PACKAGE_ID,
-        directSourceTypeId: sourceTypeId,
-        sourcePackageId: CHARACTER_PACKAGE_ID,
-        sourceTypeId,
-      },
-      singleEntry,
-      compositeKeyMode: { kind: "inherit" },
-    },
-    domainType => domainType
-  );
-}
-
-const Character = overlayOf("Character", CHARACTER_TYPE_ID, false);
-const CharacterCollection = overlayOf(
-  "CharacterCollection",
-  CHARACTER_COLLECTION_TYPE_ID,
-  true
+const Character = defineOverlayDomainType(
+  "Character",
+  character.overlay("Character"),
+  domainType => domainType
 );
-const CharacterExperience = overlayOf(
+const CharacterCollection = defineOverlayDomainType(
+  "CharacterCollection",
+  character.overlay("CharacterCollection"),
+  domainType => domainType
+);
+const CharacterExperience = defineOverlayDomainType(
   "CharacterExperience",
-  CHARACTER_EXPERIENCE_TYPE_ID,
-  true
+  character.overlay("CharacterExperience"),
+  domainType => domainType
 );
 
 /**
@@ -70,23 +49,23 @@ export const foundationEconomyCharacterDemo = definePackage(
       en: "Supplies the roster, level curve and capacity used by the live demo.",
     },
   })
-  .dependency(CHARACTER_PACKAGE_ID, "github:gs2io/gs2-studio-package")
+  .dependency(character.packageId, "github:gs2io/gs2-studio-package")
   .domainType(Character)
   .domainType(CharacterCollection)
   .domainType(CharacterExperience)
 
   .instance("CharacterExperience", "characterexperience", {
-    [EXPERIENCE_THRESHOLD]: EXPERIENCE_CURVE,
-    [EXPERIENCE_DEFAULT_LEVEL_CAP]: 10,
-    [EXPERIENCE_MAX_LEVEL_CAP]: 50,
+    [character.propertyId("CharacterExperience", "threshold")]: EXPERIENCE_CURVE,
+    [character.propertyId("CharacterExperience", "defaultLevelCap")]: 10,
+    [character.propertyId("CharacterExperience", "maxLevelCap")]: 50,
   })
   .instance("CharacterCollection", "charactercollection", {
-    [COLLECTION_DEFAULT_CAPACITY]: 20,
-    [COLLECTION_MAXIMUM_CAPACITY]: 100,
+    [character.propertyId("CharacterCollection", "defaultCapacity")]: 20,
+    [character.propertyId("CharacterCollection", "maximumCapacity")]: 100,
   })
 
-  .instance("Character", "knight", { [CHARACTER_SORT]: 100 })
-  .instance("Character", "mage", { [CHARACTER_SORT]: 200 })
-  .instance("Character", "archer", { [CHARACTER_SORT]: 300 })
-  .instance("Character", "healer", { [CHARACTER_SORT]: 400 })
+  .instance("Character", "knight", { [character.propertyId("Character", "sort")]: 100 })
+  .instance("Character", "mage", { [character.propertyId("Character", "sort")]: 200 })
+  .instance("Character", "archer", { [character.propertyId("Character", "sort")]: 300 })
+  .instance("Character", "healer", { [character.propertyId("Character", "sort")]: 400 })
   .build();

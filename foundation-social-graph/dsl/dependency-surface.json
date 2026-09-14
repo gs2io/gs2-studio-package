@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-social-graph",
+  "types": {
+    "Follow": {
+      "id": "dt_12CDXGXXRQVPJVMA9VGATG195G",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_12CDXGXXRQVPJVMA9VGATG195G",
+      "properties": {
+        "followerProfile": "prop_WEZ74QQWTQ37ZYH7GKQCJ9C1W8",
+        "id": "prop_reserved_id",
+        "publicProfile": "prop_00CYS22DM7RCY5V2S2MSP7YH5Y"
+      }
+    },
+    "Friend": {
+      "id": "dt_2NM467EMK37WAPSYGR7JJGVY8W",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_2NM467EMK37WAPSYGR7JJGVY8W",
+      "properties": {
+        "friendProfile": "prop_8JHGTPH2PWBM7H3AV8B87CS72E",
+        "id": "prop_reserved_id",
+        "publicProfile": "prop_BGKVKEXBMCJX62Q18PSFR909HW"
+      }
+    },
+    "Profile": {
+      "id": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_YHKCS7SG3P32HV1NWCAAT47AFB",
+      "properties": {
+        "followerProfile": "prop_WN6CSPS3DDQ40TR3VG8PYNTMPM",
+        "friendProfile": "prop_5N09J4Q6RV5N2EGDPKMW77WWD0",
+        "id": "prop_reserved_id",
+        "publicProfile": "prop_6KVAE2J57GWW44BA6BWE76HNX4"
+      }
+    },
+    "ReceiveFriendRequest": {
+      "id": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C",
+      "properties": {
+        "fromPublicProfile": "prop_8385BCWPDH6PVR79CSMQ19ZNZP",
+        "id": "prop_reserved_id"
+      }
+    },
+    "SendFriendRequest": {
+      "id": "dt_TBCFR2E0A8DGCGR2RVHN4EQGR8",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_TBCFR2E0A8DGCGR2RVHN4EQGR8",
+      "properties": {
+        "id": "prop_reserved_id",
+        "targetPublicProfile": "prop_2C18P9AZQNC61BC93J6R7XH83Q"
+      }
+    }
+  },
+  "masterDataResources": {
+    "friend.Namespace": "7cb29760-69e8-4136-9bca-40d922a97a63"
+  },
+  "transforms": {}
+}

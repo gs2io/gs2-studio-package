@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-character-formation",
+  "types": {
+    "CharacterFormation": {
+      "id": "dt_1YKD2ZM08CX2D22TCPED995K2N",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-character-formation",
+      "canonicalTypeId": "dt_1YKD2ZM08CX2D22TCPED995K2N",
+      "properties": {
+        "currentSaveArea": "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6",
+        "id": "prop_reserved_id",
+        "initialSaveArea": "prop_1X7P75QB2PQR3A35AG6CAWPXZ6",
+        "maximumSaveArea": "prop_ASEE9H5F0YR01T0HPZTY19XY2V"
+      }
+    },
+    "CharacterFormationForm": {
+      "id": "dt_JY9NED2YYCSG1HXPQ1J0X9WQXW",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character-formation",
+      "canonicalTypeId": "dt_JY9NED2YYCSG1HXPQ1J0X9WQXW",
+      "properties": {
+        "id": "prop_reserved_id",
+        "slots": "prop_1CD4Q461VBGWZXEWXYD3WZAT37"
+      }
+    },
+    "CharacterFormationFormSlot": {
+      "id": "dt_MZT04J9C7W1562STKR3XCTC257",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character-formation",
+      "canonicalTypeId": "dt_MZT04J9C7W1562STKR3XCTC257",
+      "properties": {
+        "id": "prop_reserved_id",
+        "propertyId": "prop_QSKD3PPXJK7HDC2E9T7B9PKBAX"
+      }
+    },
+    "CharacterFormationSlot": {
+      "id": "dt_Z73MGN3WHWKHC8PF714HS91E62",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character-formation",
+      "canonicalTypeId": "dt_Z73MGN3WHWKHC8PF714HS91E62",
+      "properties": {
+        "id": "prop_reserved_id",
+        "propertyRegex": "prop_6F9A9WPY3YAQ0SS8E7F5H2YXFA"
+      }
+    }
+  },
+  "masterDataResources": {
+    "formation.FormModel": "01c53022-dec4-4a7a-8bf2-3fea442cdb05",
+    "formation.MoldModel": "37387f56-db71-4fd6-a740-7b076aef652e",
+    "formation.Namespace": "53038065-fcd8-4f03-ad13-8dc4d88af341",
+    "formation.SlotModel": "14e1a092-afed-4ed0-b824-08994b3685bb"
+  },
+  "transforms": {
+    "AcquireToCharacterFormation": [
+      "index"
+    ],
+    "IncreaseSaveArea": [
+      "value"
+    ]
+  }
+}

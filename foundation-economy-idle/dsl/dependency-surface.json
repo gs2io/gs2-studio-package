@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-idle",
+  "types": {
+    "IdleReward": {
+      "id": "dt_4201EMDQW9HN9AMKXT0WQHMKJY",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-idle",
+      "canonicalTypeId": "dt_4201EMDQW9HN9AMKXT0WQHMKJY",
+      "properties": {
+        "acquireActions": "prop_01M0PRB5RFJJP0NG8XT0WHEGD2",
+        "id": "prop_reserved_id"
+      }
+    },
+    "IdleStatus": {
+      "id": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-idle",
+      "canonicalTypeId": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
+      "properties": {
+        "currentIdleMinutes": "prop_6H5QKHHDFSEX65W9HT71FFAY0P",
+        "defaultMaximumIdleMinutes": "prop_Y84GE13M8Y5K1KVMS5X9E2TEF8",
+        "id": "prop_reserved_id",
+        "maximumIdleMinutes": "prop_K3CBE560Z2HRY7DXXW6F5JCR2R",
+        "nextRewardsAt": "prop_MRM77NEZWMCQ5ACA4EBXFBWQQ4",
+        "rewardIntervalMinutes": "prop_CGEEBE9H9P5MW0MD82N6AW2GZJ"
+      }
+    }
+  },
+  "masterDataResources": {
+    "idle.AcquireActionList": "e56630c3-30fb-40f2-8c0e-f6e974505d3f",
+    "idle.CategoryModel": "e2079f30-5204-49e7-8898-254c4f59f23e",
+    "idle.Namespace": "067721e1-3b2b-48ea-874d-35883a3c6da3",
+    "transaction.AcquireAction": "166d60b6-ca24-4683-a01c-f1bc27261bca"
+  },
+  "transforms": {}
+}

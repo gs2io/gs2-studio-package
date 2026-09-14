@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-schedule",
+  "types": {
+    "Schedule": {
+      "id": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-schedule",
+      "canonicalTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+      "properties": {
+        "activeDays": "prop_S23T3MDNBFNQTJ9PA126DR19V9",
+        "anchorTimestamp": "prop_3HHJJZ4553TC0VTT84VAF8KF74",
+        "beginDayOfMonth": "prop_TXGKQD0ZE9EKJT77Q25HHWP6SQ",
+        "beginDayOfWeek": "prop_KP4RNR37Z8RE0D5WTAA5HC2ZYJ",
+        "beginHour": "prop_QT1RYWCPGQF7TX098APWRW2ACV",
+        "endAt": "prop_763BX5C31PKQPVJ692CKG0C998",
+        "endDayOfMonth": "prop_2R6ZHPN0RG508XWNJXACHEQPJZ",
+        "endDayOfWeek": "prop_WZC2GBZJT3CEWP77QMK8PM169J",
+        "endHour": "prop_D2RWEZDYGM3RT887E0EA182FC3",
+        "id": "prop_reserved_id",
+        "inactiveDays": "prop_7QB1J2FB3XJJGD80SC5DBX508J",
+        "repeatType": "prop_XSTG0QAVN2ADJHS1Q50PXHNY89",
+        "scheduleType": "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6",
+        "startAt": "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T",
+        "trigger": "prop_K8ZPEG5KAWZN5N4HNCS0S3ZQ0E"
+      }
+    },
+    "Trigger": {
+      "id": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-schedule",
+      "canonicalTypeId": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST",
+      "properties": {
+        "expiresAt": "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF",
+        "id": "prop_reserved_id",
+        "triggered": "prop_6MCAB8KE6ZN15EJK6Q592XR7GA",
+        "triggeredAt": "prop_F9RRQHZFBAHE291G11WATKA2YB"
+      }
+    }
+  },
+  "masterDataResources": {
+    "schedule.Event": "84b2cf20-d26e-50e2-b494-3b4a40477afc",
+    "schedule.Namespace": "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d"
+  },
+  "transforms": {
+    "TriggerSchedule": [
+      "trigger",
+      "extendSeconds"
+    ]
+  }
+}

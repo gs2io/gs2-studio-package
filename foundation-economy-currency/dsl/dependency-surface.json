@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-currency",
+  "types": {
+    "CurrencyStore": {
+      "id": "dt_BMT0H7ME2SSDZRHGNZF012YZVR",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-currency",
+      "canonicalTypeId": "dt_BMT0H7ME2SSDZRHGNZF012YZVR",
+      "properties": {
+        "enableFakeReceipt": "prop_F0JZV41MJ57SFQPQ6BMB80HDAZ",
+        "id": "prop_reserved_id"
+      }
+    },
+    "StoreProduct": {
+      "id": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-currency",
+      "canonicalTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+      "properties": {
+        "appleAppStoreProductId": "prop_A26C5NBX039V9DNV0ERPSWVPD8",
+        "googlePlayProductId": "prop_Z99QWHNS8G1DEFWGT2MB00NRJA",
+        "id": "prop_reserved_id"
+      }
+    },
+    "Wallet": {
+      "id": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-currency",
+      "canonicalTypeId": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
+      "properties": {
+        "free": "prop_6KNY5JMXVS2AX21X1HAHP3A4X0",
+        "id": "prop_reserved_id",
+        "paid": "prop_V0BFHW3E05XZXMY0DWANC3G4C9",
+        "total": "prop_FEXJWZ3Q38NQ44J3C070EK1CJ8"
+      }
+    }
+  },
+  "masterDataResources": {
+    "money2.Namespace": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
+    "money2.StoreContentModel": "47f7c9c1-5a84-5ecf-b541-ed6a3e451d5d"
+  },
+  "transforms": {
+    "DepositCurrency": [
+      "slot",
+      "count",
+      "currencyType",
+      "price"
+    ],
+    "DepositFreeCurrency": [
+      "slot",
+      "count"
+    ],
+    "VerifyReceipt": [
+      "contentName"
+    ],
+    "WithdrawCurrency": [
+      "slot",
+      "paidOnly",
+      "count"
+    ],
+    "WithdrawPaidCurrency": [
+      "slot",
+      "count"
+    ]
+  }
+}

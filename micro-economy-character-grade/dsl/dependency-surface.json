@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-character-grade",
+  "types": {
+    "Character": {
+      "id": "dt_01M0C826WJ0HDTQG636AHV341M",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+    },
+    "CharacterGradeStep": {
+      "id": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-character-grade",
+      "canonicalTypeId": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+      "properties": {
+        "gradeUpPropertyIdRegex": "prop_01M0C826WJN2XGK5PMWPSYNZ5W",
+        "id": "prop_reserved_id",
+        "propertyIdRegex": "prop_01M0C826WJ6E8SVGPGFX2Z52T3",
+        "rankCapValue": "prop_01M0C826WJ4ZPNGK1JNNQD7GCM"
+      }
+    }
+  },
+  "masterDataResources": {
+    "grade.GradeEntryModel": "cfa7aebb-248f-55f1-8bd5-8b8b7986a2b4",
+    "grade.GradeModel": "9be0bc04-01ba-5d55-a498-86ae69320c97",
+    "grade.Namespace": "d172b3ce-1c9d-5af8-bcb0-9d3e50cc2e46"
+  },
+  "transforms": {
+    "ApplyCharacterGradeRankCap": [
+      "propertyId"
+    ],
+    "PromoteCharacterGrade": [
+      "propertyId",
+      "gradeValue"
+    ],
+    "VerifyCharacterGradeReached": [
+      "propertyId",
+      "gradeValue"
+    ]
+  }
+}

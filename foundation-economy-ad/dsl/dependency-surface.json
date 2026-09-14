@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-ad",
+  "types": {
+    "AdPlatform": {
+      "id": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-ad",
+      "canonicalTypeId": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
+      "properties": {
+        "adMobAdUnitIds": "prop_9R4GKC9MHQ0RWWG542MD6RRBQ9",
+        "id": "prop_reserved_id",
+        "unityAdKeys": "prop_8GAGKPX7FHKJSQQCWN9J6ZE9M5"
+      }
+    },
+    "AdViewPoint": {
+      "id": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-ad",
+      "canonicalTypeId": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
+      "properties": {
+        "id": "prop_reserved_id",
+        "value": "prop_A5PTNHJYSCXW55G2TW376GP36E"
+      }
+    }
+  },
+  "masterDataResources": {
+    "adReward.Namespace": "e51dce21-c96b-4ab8-b30e-78b7bea37fb5"
+  },
+  "transforms": {
+    "ConsumeAdViewPoint": []
+  }
+}

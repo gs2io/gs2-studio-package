@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-equipment",
+  "types": {
+    "Equipment": {
+      "id": "dt_R7W960WC22J1FD8E239HDFMD8D",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-equipment",
+      "canonicalTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D",
+      "properties": {
+        "category": "prop_2C21XE4SCXQ1JDG7ES2MNFNA2R",
+        "id": "prop_reserved_id",
+        "propertyId": "prop_S5796CZNBGWDHWSSHHT1EC00T6",
+        "sortValue": "prop_H4JW4XTKFKNW6TYBGJ7W6C175M"
+      }
+    },
+    "EquipmentCategory": {
+      "id": "dt_QQR152BQFJSTM2W1WYZR4RPA98",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-equipment",
+      "canonicalTypeId": "dt_QQR152BQFJSTM2W1WYZR4RPA98",
+      "properties": {
+        "id": "prop_reserved_id"
+      }
+    },
+    "EquipmentCollection": {
+      "id": "dt_FANPG561806ENHYPWV5YRDSHC7",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-equipment",
+      "canonicalTypeId": "dt_FANPG561806ENHYPWV5YRDSHC7",
+      "properties": {
+        "currentCapacityUsage": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4",
+        "currentMaximumCapacity": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ",
+        "defaultCapacity": "prop_0W6ZJVBD4FKRF1KAVPN5HE001Y",
+        "id": "prop_reserved_id",
+        "maximumCapacity": "prop_J93B9BA3YNMZ1C1K5TDZRDA17W"
+      }
+    }
+  },
+  "masterDataResources": {
+    "inventory.InventoryModel": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
+    "inventory.ItemModel": "e4638944-74f6-4475-baa9-e9a6c0b8e607",
+    "inventory.Namespace": "11564513-7c8f-4ffa-a490-0f717239e599"
+  },
+  "transforms": {
+    "AcquireEquipment": [
+      "equipment"
+    ],
+    "AddEquipmentCapacity": [
+      "value"
+    ],
+    "DeleteEquipment": [
+      "equipment",
+      "equipmentPropertyId"
+    ]
+  }
+}

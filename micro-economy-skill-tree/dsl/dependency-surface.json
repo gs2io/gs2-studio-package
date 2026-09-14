@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-skill-tree",
+  "types": {
+    "SkillNode": {
+      "id": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-skill-tree",
+      "canonicalTypeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+      "properties": {
+        "id": "prop_reserved_id",
+        "premiseNodes": "prop_01M0C87BJC76SJF2PA9P05K5QH",
+        "releaseConsumeActions": "prop_01M0Q02DXK9YCRGGAJHADRMVS6",
+        "released": "prop_01M0C87BJCSHPHEB1N0DRT0ACA",
+        "restrainReturnRate": "prop_01M0C87BJCQ0PCKG2FJQ0H767B"
+      }
+    },
+    "SkillTreeOwner": {
+      "id": "dt_01M0C87BJCHGRBT6T7MVKFRRYF",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-skill-tree",
+      "canonicalTypeId": "dt_01M0C87BJCHGRBT6T7MVKFRRYF",
+      "properties": {
+        "id": "prop_reserved_id",
+        "propertyId": "prop_01M0C87BJCBECHNW29S9WWPEYD"
+      }
+    }
+  },
+  "masterDataResources": {
+    "skillTree.Namespace": "b0a99287-a06a-5fa6-817e-12467b1cc3cf",
+    "skillTree.NodeModel": "6cdca220-144a-5f9f-b6b7-143f1c35222d",
+    "transaction.ConsumeAction": "4cde971c-c1d9-5fa4-ac27-8b3646c3c38e"
+  },
+  "transforms": {
+    "ReleaseSkillNode": [
+      "propertyId",
+      "node"
+    ],
+    "RestrainSkillNode": [
+      "propertyId",
+      "node"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-liveops-ranking",
+  "types": {
+    "Ranking": {
+      "id": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-liveops-ranking",
+      "canonicalTypeId": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV",
+      "properties": {
+        "id": "prop_reserved_id",
+        "maximumValue": "prop_01M0C5QTC1ZEN57H87RTHW0QTH",
+        "minimumValue": "prop_01M0C5QTC13XN1YQ5KKA3Z9PND",
+        "orderDirection": "prop_01M0C5QTC1FCKEKTX4QTP0VB5X",
+        "schedule": "prop_01M0C5QTC10P4EEMTAW0JRTV79",
+        "score": "prop_01M0C5QTC1549A0YHZY5YSS2EZ",
+        "sum": "prop_01M0C5QTC17VN2W6CEXEDHZCEW"
+      }
+    },
+    "RankingReward": {
+      "id": "dt_01M0C5QTC12JW853EKK38QN42Z",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-liveops-ranking",
+      "canonicalTypeId": "dt_01M0C5QTC12JW853EKK38QN42Z",
+      "properties": {
+        "acquireActions": "prop_01M0C5QTC1XDPQC02MC3PAHSFT",
+        "id": "prop_reserved_id",
+        "ranking": "prop_01M0C5QTC1PT2SC2DM4MFFH880",
+        "thresholdRank": "prop_01M0C5QTC1DSVX6VMXA31P7T1R"
+      }
+    }
+  },
+  "masterDataResources": {
+    "ranking2.GlobalRankingModel": "009c7ff2-77d5-5cd1-9241-e153a51d9718",
+    "ranking2.Namespace": "4cd8c885-926f-5e69-bd85-8bdc65d5a652",
+    "ranking2.RankingReward": "1d822046-5e84-5c66-ae51-15eab81b933a",
+    "transaction.AcquireAction": "39230804-a66f-5f50-a0c2-3bf22cda877c"
+  },
+  "transforms": {
+    "ReceiveRankingReward": [
+      "ranking",
+      "season"
+    ],
+    "VerifyRankingScoreReached": [
+      "ranking",
+      "season",
+      "score"
+    ]
+  }
+}

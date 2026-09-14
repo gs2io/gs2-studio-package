@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-shop-character-gacha",
+  "types": {
+    "CharacterRate": {
+      "id": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-character-gacha",
+      "canonicalTypeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+      "properties": {
+        "character": "prop_AATTCTRXX4J382EEVEGE9ZYV6W",
+        "id": "prop_reserved_id",
+        "rarity": "prop_6MY41PGG6DAVSR3YSY4YDTYSPX",
+        "weight": "prop_2YWD79NQ991RBGDCA3HEZHGDT8"
+      }
+    },
+    "Gacha": {
+      "id": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-character-gacha",
+      "canonicalTypeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+      "properties": {
+        "consumeActions": "prop_RG77EYB1G23KWGEYNTSCG96JNN",
+        "id": "prop_reserved_id",
+        "schedule": "prop_G9FT5R5K079VNPHKK15D46TRPC"
+      }
+    },
+    "GachaRarity": {
+      "id": "dt_GX6NYQD4P54A7TXS08MA9F3X7Z",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-character-gacha",
+      "canonicalTypeId": "dt_GX6NYQD4P54A7TXS08MA9F3X7Z",
+      "properties": {
+        "id": "prop_reserved_id"
+      }
+    },
+    "GachaRarityRate": {
+      "id": "dt_32H335ZJ31J4690TMPCRQFC04B",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-character-gacha",
+      "canonicalTypeId": "dt_32H335ZJ31J4690TMPCRQFC04B",
+      "properties": {
+        "gacha": "prop_1XD6YGM96H26BHSKDY26CNVB6R",
+        "id": "prop_reserved_id",
+        "rarity": "prop_R7CAWT1QMX0A9A0NWFYAYQ1Y7S",
+        "weight": "prop_HZZ3R7AT0DB8DS34X1K0QQR3Q8"
+      }
+    }
+  },
+  "masterDataResources": {
+    "lottery.LotteryModel": "188c85a8-f0d5-4534-964a-e9e00604c2d6",
+    "lottery.Namespace": "ba9b8acc-859a-4acd-bade-b95f2dcdb6b2",
+    "lottery.PrizeTable": "53d26b27-c20f-4d48-8b1d-fe3f6d23469c",
+    "showcase.DisplayItem": "b6c5895e-3066-423a-9090-04d803ad89e9",
+    "showcase.Namespace": "de811537-ebb8-4f28-9c50-d64484af063e",
+    "showcase.SalesItem": "0247d4b6-2edd-5cbd-b4f7-673903721915",
+    "showcase.Showcase": "6f1847c6-698c-4a93-af7b-f0ece2c3cd68",
+    "transaction.ConsumeAction": "a0e5b492-134a-5c5c-886e-773664d0f084"
+  },
+  "transforms": {}
+}

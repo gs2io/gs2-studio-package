@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-equipment-enchant",
+  "types": {
+    "Equipment": {
+      "id": "dt_01M0C84Y321K5KHKYHWHMAVTH5",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-equipment",
+      "canonicalTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D"
+    },
+    "EquipmentEnchant": {
+      "id": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-equipment-enchant",
+      "canonicalTypeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
+      "properties": {
+        "id": "prop_reserved_id",
+        "maximumParameterCount": "prop_01M0C84Y32NTFEV004CWFSAF5R"
+      }
+    },
+    "EquipmentEnchantOption": {
+      "id": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-equipment-enchant",
+      "canonicalTypeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+      "properties": {
+        "enchant": "prop_01M0C84Y322HQ5SXAZ4NRD8HCB",
+        "id": "prop_reserved_id",
+        "resourceName": "prop_01M0C84Y322KQSQH802HVDHC06",
+        "resourceValue": "prop_01M0C84Y32ZBF6RHYW41VPWFA2",
+        "weight": "prop_01M0C84Y32EXX5ACY856FE9P29"
+      }
+    },
+    "EquipmentEnchantSlotChance": {
+      "id": "dt_01M0C84Y32MFW05C5TXC61W1SR",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-equipment-enchant",
+      "canonicalTypeId": "dt_01M0C84Y32MFW05C5TXC61W1SR",
+      "properties": {
+        "count": "prop_01M0C84Y32TQRT07W6CT9MCVZM",
+        "enchant": "prop_01M0C84Y3236PN0MXQNS8GXGKR",
+        "id": "prop_reserved_id",
+        "weight": "prop_01M0C84Y32K8455NCTCVPXBKC0"
+      }
+    },
+    "EquipmentEnchantment": {
+      "id": "dt_01M0C84Y323XGX5N856QJ5Z61Q",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-equipment-enchant",
+      "canonicalTypeId": "dt_01M0C84Y323XGX5N856QJ5Z61Q",
+      "properties": {
+        "id": "prop_reserved_id",
+        "resourceName": "prop_01M0C84Y32ECEHBF3RZEE5D62D",
+        "resourceValue": "prop_01M0C84Y32JTY6HCNCJZ7922GH"
+      }
+    }
+  },
+  "masterDataResources": {
+    "enchant.Namespace": "e60a0969-0300-5c40-8568-9d4b38a8141c",
+    "enchant.RarityParameterCountModel": "76098694-c7cb-579c-bbec-3cf89285ba4f",
+    "enchant.RarityParameterModel": "996567a7-c9e0-5629-89e1-2979a6dd9bc2",
+    "enchant.RarityParameterValueModel": "edd100a0-19f7-5c09-87f3-4c2582410c07"
+  },
+  "transforms": {
+    "AddEquipmentEnchantmentSlot": [
+      "enchant",
+      "propertyId",
+      "count"
+    ],
+    "RerollEquipmentEnchantment": [
+      "enchant",
+      "propertyId"
+    ],
+    "VerifyEquipmentEnchantment": [
+      "enchant",
+      "propertyId",
+      "option"
+    ]
+  }
+}
