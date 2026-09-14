@@ -99,6 +99,10 @@ const DisplayItem = defineMasterDataResource(resource =>
             .mountLocal(StoreProduct)
             .bindings({
               action: Bind.transform("foundation-economy-currency", "DepositCurrency", [
+                // A store sells to whichever wallet the buyer names, so the
+                // slot stays a stamp-sheet placeholder the client fills in
+                // through the purchase's config.
+                Arg.placeholder("slot", "#{slot}"),
                 Arg.domainProperty("count", Source.direct(StoreProduct, "count")),
                 Arg.domainProperty(
                   "currencyType",

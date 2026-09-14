@@ -17,6 +17,13 @@
                 "kind": "domainProperty",
                 "propertyId": "prop_E85JMDT798W05V3W76NNC3P80H"
               }
+            },
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "placeholder",
+                "value": "#{slot}"
+              }
             }
           ],
           "transformName": "WithdrawCurrency",

@@ -24,6 +24,13 @@
                 "kind": "domainProperty",
                 "propertyId": "prop_G6DZB9WB3V5Q15XXP8MWQ6Z3ZD"
               }
+            },
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "placeholder",
+                "value": "#{slot}"
+              }
             }
           ],
           "transformName": "Reward",

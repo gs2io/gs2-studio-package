@@ -28,6 +28,11 @@
           "kind": "static",
           "targetParameter": "price",
           "value": 0
+        },
+        {
+          "kind": "parameter",
+          "sourceParameter": "slot",
+          "targetParameter": "slot"
         }
       ],
       "targetName": "DepositCurrency",
@@ -83,6 +88,15 @@
       "id": "param_01KM2NMSDNAF6QH90S850MK4Y4",
       "name": "count",
       "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    },
+    {
+      "id": "param_01M2G63CRKWHNYRC8YH75W3GHG",
+      "name": "slot",
+      "required": false,
       "type": {
         "kind": "primitive",
         "primitiveType": "int32"

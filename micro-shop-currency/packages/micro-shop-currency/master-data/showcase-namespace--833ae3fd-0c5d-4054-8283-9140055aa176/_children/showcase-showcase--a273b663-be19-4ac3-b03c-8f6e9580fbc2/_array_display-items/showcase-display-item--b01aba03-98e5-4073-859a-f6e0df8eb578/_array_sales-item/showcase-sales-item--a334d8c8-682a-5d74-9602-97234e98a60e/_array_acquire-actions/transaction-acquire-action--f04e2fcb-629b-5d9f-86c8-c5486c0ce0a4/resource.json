@@ -4,6 +4,13 @@
       {
         "arguments": [
           {
+            "parameterName": "slot",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{slot}"
+            }
+          },
+          {
             "parameterName": "count",
             "source": {
               "kind": "domainProperty",
