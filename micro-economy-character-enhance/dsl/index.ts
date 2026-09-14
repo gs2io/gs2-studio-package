@@ -3,6 +3,7 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -11,9 +12,15 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
+import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const character = dependencyPackage(characterSurface);
+
 /** Resources this package points at inside `foundation-economy-character`. */
-const CHARACTER_INVENTORY_MODEL_RESOURCE_ID = "62805db8-2e40-4a2c-a1c4-38e0c07d49f8";
-const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = "8d1e96cf-5e79-4920-ada7-997eeb2776fe";
+const CHARACTER_INVENTORY_MODEL_RESOURCE_ID = character.resourceId("inventory.InventoryModel");
+const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = character.resourceId("experience.ExperienceModel");
 
 /**
  * A recipe for feeding characters to a character: the materials are consumed

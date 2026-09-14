@@ -5,6 +5,7 @@ import {
   defineOverlayDomainType,
   definePackage,
   defineUserDataResource,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -12,6 +13,12 @@ import {
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
+import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const schedule = dependencyPackage(scheduleSurface);
 
 const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
   dt
@@ -65,14 +72,7 @@ const LoginReward = defineDomainType("LoginReward", dt =>
     })
 );
 
-const Schedule = defineOverlayDomainType("Schedule", {
-  source: {
-    directSourcePackageId: "foundation-economy-schedule",
-    directSourceTypeId: "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
-    sourcePackageId: "foundation-economy-schedule",
-    sourceTypeId: "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
-  },
-});
+const Schedule = defineOverlayDomainType("Schedule", schedule.overlay("Schedule"));
 
 const BonusModel = defineMasterDataResource(resource =>
   resource

@@ -4,6 +4,7 @@ import {
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -12,9 +13,14 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
+import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const character = dependencyPackage(characterSurface);
+
 /** The character type and property this loadout hangs off. */
-const CHARACTER_TYPE_ID = "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5";
-const CHARACTER_PROPERTY_ID = "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD";
+const CHARACTER_PROPERTY_ID = character.propertyId("Character", "propertyId");
 
 /**
  * A slot on a character — weapon, armour, accessory. `propertyRegex` decides
@@ -64,29 +70,17 @@ const EquipmentSlotAssignment = defineDomainType("EquipmentSlotAssignment", dt =
  * the edge that was missing between characters and equipment: the equipment
  * package says what a player owns, and this says what a character wears.
  */
-const Character = defineOverlayDomainType(
-  "Character",
-  {
-    source: {
-      directSourcePackageId: "foundation-economy-character",
-      directSourceTypeId: CHARACTER_TYPE_ID,
-      sourcePackageId: "foundation-economy-character",
-      sourceTypeId: CHARACTER_TYPE_ID,
-    },
-  },
-  domainType =>
-    domainType
-      .property(
-        PT.prop("equipmentSlots", PT.listOf(PT.inline("EquipmentSlotAssignment"))).userData()
-      )
-      .localizedProperties({
-        equipmentSlots: jaEnField(
-          "装備スロット",
-          "Equipment slots",
-          "キャラクターの各スロットに装着されている装備です。",
-          "Equipment assigned to each slot on the character."
-        ),
-      })
+const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>
+  domainType
+    .property(PT.prop("equipmentSlots", PT.listOf(PT.inline("EquipmentSlotAssignment"))).userData())
+    .localizedProperties({
+      equipmentSlots: jaEnField(
+        "装備スロット",
+        "Equipment slots",
+        "キャラクターの各スロットに装着されている装備です。",
+        "Equipment assigned to each slot on the character."
+      ),
+    })
 );
 
 const PropertyFormModel = defineMasterDataResource(resource =>

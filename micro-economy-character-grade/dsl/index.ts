@@ -4,6 +4,7 @@ import {
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -12,10 +13,15 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
+import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const character = dependencyPackage(characterSurface);
+
 /** Resources and properties this package points at inside `foundation-economy-character`. */
-const CHARACTER_TYPE_ID = "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5";
-const CHARACTER_PROPERTY_ID = "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD";
-const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = "8d1e96cf-5e79-4920-ada7-997eeb2776fe";
+const CHARACTER_PROPERTY_ID = character.propertyId("Character", "propertyId");
+const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = character.resourceId("experience.ExperienceModel");
 
 /**
  * A grade a character can be promoted to, and the level cap that promotion
@@ -67,28 +73,18 @@ const CharacterGradeStep = defineDomainType("CharacterGradeStep", dt =>
 );
 
 /** The character's current grade, added to the character package's own type. */
-const Character = defineOverlayDomainType(
-  "Character",
-  {
-    source: {
-      directSourcePackageId: "foundation-economy-character",
-      directSourceTypeId: CHARACTER_TYPE_ID,
-      sourcePackageId: "foundation-economy-character",
-      sourceTypeId: CHARACTER_TYPE_ID,
-    },
-  },
-  domainType =>
-    domainType
-      .property(PT.int64("grade").userData().required().description("Grades promoted so far"))
-      .localizedProperties({
-        grade: jaEnField(
-          "現在グレード",
-          "Current grade",
-          "キャラクターが現在到達しているグレードです。",
-          "Current grade reached by the character.",
-          { ja: "段階", en: "grades" }
-        ),
-      })
+const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>
+  domainType
+    .property(PT.int64("grade").userData().required().description("Grades promoted so far"))
+    .localizedProperties({
+      grade: jaEnField(
+        "現在グレード",
+        "Current grade",
+        "キャラクターが現在到達しているグレードです。",
+        "Current grade reached by the character.",
+        { ja: "段階", en: "grades" }
+      ),
+    })
 );
 
 const GradeModel = defineMasterDataResource(resource =>

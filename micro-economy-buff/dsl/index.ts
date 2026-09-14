@@ -3,6 +3,7 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -11,9 +12,15 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
+import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const schedule = dependencyPackage(scheduleSurface);
+
 /** The schedule namespace a buff's active period is read from. */
-const SCHEDULE_NAMESPACE_RESOURCE_ID = "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d";
-const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
+const SCHEDULE_NAMESPACE_RESOURCE_ID = schedule.resourceId("schedule.Namespace");
+const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
 
 /**
  * A multiplier applied to what an action hands out — a double-drop campaign, a

@@ -5,6 +5,7 @@ import {
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -12,6 +13,12 @@ import {
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
+import currencySurface from "../../foundation-economy-currency/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const currency = dependencyPackage(currencySurface);
 
 const CurrencyType = defineDomainType("CurrencyType", dt =>
   dt.localizedProperties({
@@ -25,15 +32,7 @@ const CurrencyType = defineDomainType("CurrencyType", dt =>
  */
 const StoreProduct = defineOverlayDomainType(
   "StoreProduct",
-  {
-    source: {
-      directSourcePackageId: "foundation-economy-currency",
-      directSourceTypeId: "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
-      sourcePackageId: "foundation-economy-currency",
-      sourceTypeId: "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
-    },
-    compositeKeyMode: { kind: "inherit" },
-  },
+  currency.overlay("StoreProduct"),
   domainType =>
     domainType.property(PT.int32("count").masterData().required()).localizedProperties({
       count: jaEnField(
@@ -204,12 +203,20 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
       .label("CountLabel", ui.prop("count"), { name: "StoreProduct" })
       .value("CountValue", ui.prop("count"), { name: "StoreProduct" })
       .value("IdValue", ui.prop("id"), { name: "StoreProduct" })
-      .value("AppleAppStoreProductIdValue", ui.inheritedProp("prop_A26C5NBX039V9DNV0ERPSWVPD8"), {
-        name: "StoreProduct",
-      })
-      .value("GooglePlayProductIdValue", ui.inheritedProp("prop_Z99QWHNS8G1DEFWGT2MB00NRJA"), {
-        name: "StoreProduct",
-      })
+      .value(
+        "AppleAppStoreProductIdValue",
+        ui.inheritedProp(currency.propertyId("StoreProduct", "appleAppStoreProductId")),
+        {
+          name: "StoreProduct",
+        }
+      )
+      .value(
+        "GooglePlayProductIdValue",
+        ui.inheritedProp(currency.propertyId("StoreProduct", "googlePlayProductId")),
+        {
+          name: "StoreProduct",
+        }
+      )
   )
   .uiComponent(StorePrice, ui =>
     ui

@@ -4,6 +4,7 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -12,9 +13,17 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
+import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
+import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const character = dependencyPackage(characterSurface);
+const schedule = dependencyPackage(scheduleSurface);
+
 /** Types this package points at but does not overlay. */
-const CHARACTER_TYPE_ID = "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5";
-const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
+const CHARACTER_TYPE_ID = character.typeId("Character");
+const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
 
 const GachaRarity = defineDomainType("GachaRarity", dt =>
   dt.localizedProperties({
@@ -188,7 +197,7 @@ const DisplayItem = defineMasterDataResource(resource =>
       displayItemId: Bind.domainProperty(Source.direct(Gacha, "id")),
       type: Bind.static("salesItem"),
     })
-    .grnFieldMount("salesPeriodEventId", "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d", [
+    .grnFieldMount("salesPeriodEventId", schedule.resourceId("schedule.Namespace"), [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
     ])
     .grnKeyBinding(

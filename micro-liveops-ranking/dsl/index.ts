@@ -3,6 +3,7 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -10,6 +11,12 @@ import {
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
+import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const schedule = dependencyPackage(scheduleSurface);
 
 /**
  * A global leaderboard: every player is ranked against every other. The entry
@@ -124,7 +131,7 @@ const GlobalRankingModel = defineMasterDataResource(resource =>
       maximumValue: Bind.domainProperty(Source.direct(Ranking, "maximumValue")),
       ...Bind.nulls("accessPeriodEventId", "rewardCalculationIndex"),
     })
-    .grnFieldMount("entryPeriodEventId", "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d", [
+    .grnFieldMount("entryPeriodEventId", schedule.resourceId("schedule.Namespace"), [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
     ])
     .grnKeyBinding(

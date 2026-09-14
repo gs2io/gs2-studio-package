@@ -3,6 +3,7 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -11,8 +12,14 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
+import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const schedule = dependencyPackage(scheduleSurface);
+
 /** The schedule type this package points its quest groups at. */
-const SCHEDULE_EVENT_TYPE_ID = "dt_55N8HND2SNZV1ZMCJS4NA2BTFD";
+const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
 
 /** One reward line of an in-flight quest run. */
 const ProgressReward = defineDomainType("ProgressReward", dt =>
@@ -187,7 +194,7 @@ const QuestGroupModel = defineMasterDataResource(resource =>
     .bindings({
       name: Bind.domainProperty(Source.direct(QuestCollection, "id")),
     })
-    .grnFieldMount("challengePeriodEventId", "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d", [
+    .grnFieldMount("challengePeriodEventId", schedule.resourceId("schedule.Namespace"), [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
     ])
     .grnKeyBinding(

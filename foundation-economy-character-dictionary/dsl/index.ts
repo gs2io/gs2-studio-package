@@ -3,42 +3,39 @@ import {
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
+
 import { jaEnField } from "../../dsl/jaEnField";
 
-const Character = defineOverlayDomainType(
-  "Character",
-  {
-    source: {
-      directSourcePackageId: "foundation-economy-character",
-      directSourceTypeId: "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
-      sourcePackageId: "foundation-economy-character",
-      sourceTypeId: "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
-    },
-  },
-  domainType =>
-    domainType
-      .property(PT.bool("acquired").userData().required())
-      .property(PT.timestamp("acquiredAt").userData().required())
-      .localizedProperties({
-        acquired: jaEnField(
-          "図鑑登録済み",
-          "Registered",
-          "このキャラクターが図鑑に登録済みかを示します。",
-          "Whether this character is registered in the encyclopedia."
-        ),
-        acquiredAt: jaEnField(
-          "初回獲得日時",
-          "First acquired at",
-          "このキャラクターを初めて獲得した日時です。",
-          "Time when this character was first acquired."
-        ),
-      })
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const character = dependencyPackage(characterSurface);
+
+const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>
+  domainType
+    .property(PT.bool("acquired").userData().required())
+    .property(PT.timestamp("acquiredAt").userData().required())
+    .localizedProperties({
+      acquired: jaEnField(
+        "図鑑登録済み",
+        "Registered",
+        "このキャラクターが図鑑に登録済みかを示します。",
+        "Whether this character is registered in the encyclopedia."
+      ),
+      acquiredAt: jaEnField(
+        "初回獲得日時",
+        "First acquired at",
+        "このキャラクターを初めて獲得した日時です。",
+        "Time when this character was first acquired."
+      ),
+    })
 );
 
 const EntryModel = defineMasterDataResource(resource =>

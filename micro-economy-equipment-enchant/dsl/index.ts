@@ -4,6 +4,7 @@ import {
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -12,9 +13,14 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
+import equipmentSurface from "../../foundation-economy-equipment/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const equipment = dependencyPackage(equipmentSurface);
+
 /** Types and properties this package points at inside `foundation-economy-equipment`. */
-const EQUIPMENT_TYPE_ID = "dt_R7W960WC22J1FD8E239HDFMD8D";
-const EQUIPMENT_PROPERTY_ID = "prop_S5796CZNBGWDHWSSHHT1EC00T6";
+const EQUIPMENT_PROPERTY_ID = equipment.propertyId("Equipment", "propertyId");
 
 /**
  * A pool of random bonuses a piece of equipment can roll, and how many it
@@ -132,27 +138,17 @@ const EquipmentEnchantment = defineDomainType("EquipmentEnchantment", dt =>
 );
 
 /** The rolled bonuses, added to the equipment package's own type. */
-const Equipment = defineOverlayDomainType(
-  "Equipment",
-  {
-    source: {
-      directSourcePackageId: "foundation-economy-equipment",
-      directSourceTypeId: EQUIPMENT_TYPE_ID,
-      sourcePackageId: "foundation-economy-equipment",
-      sourceTypeId: EQUIPMENT_TYPE_ID,
-    },
-  },
-  domainType =>
-    domainType
-      .property(PT.prop("enchantments", PT.listOf(PT.inline("EquipmentEnchantment"))).userData())
-      .localizedProperties({
-        enchantments: jaEnField(
-          "付与済み効果",
-          "Enchantments",
-          "この装備個体に付与された追加効果の一覧です。",
-          "Bonus effects rolled onto this equipment instance."
-        ),
-      })
+const Equipment = defineOverlayDomainType("Equipment", equipment.overlay("Equipment"), domainType =>
+  domainType
+    .property(PT.prop("enchantments", PT.listOf(PT.inline("EquipmentEnchantment"))).userData())
+    .localizedProperties({
+      enchantments: jaEnField(
+        "付与済み効果",
+        "Enchantments",
+        "この装備個体に付与された追加効果の一覧です。",
+        "Bonus effects rolled onto this equipment instance."
+      ),
+    })
 );
 
 const RarityParameterModel = defineMasterDataResource(resource =>
