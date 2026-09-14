@@ -12,13 +12,13 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Money2:DepositByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}"
           - name: "paiddeposit"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Money2:DepositByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":120,\"currency\":\"JPY\",\"count\":50}]}"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":120,\"currency\":\"JPY\",\"count\":50}]}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

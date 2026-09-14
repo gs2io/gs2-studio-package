@@ -4,12 +4,26 @@
     {
       "componentClassName": "CountLabel",
       "id": "da9fd709-49e3-5f0c-8992-8a7a4125304b",
-      "kind": "label",
+      "kind": "templateLabel",
       "name": "PaidDeposit",
-      "source": {
-        "kind": "property",
-        "propertyId": "prop_01M2FXJD9D2AKZJTNS0AQ3NR3K"
-      }
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M2FXJD9D2AKZJTNS0AQ3NR3K"
+          }
+        }
+      ],
+      "template": "Deposit {count} paid"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "DepositButton",
+      "delegatedActionKey": "resource:foundation-economy-currency-demo:masterData:d2dc210a-a549-52d3-ae66-7fc930d53357::Gs2Exchange:RateModel.Exchange",
+      "id": "47daa05d-2cfe-5469-8bec-4f39b642ff8a",
+      "kind": "buttonAction",
+      "name": "PaidDeposit"
     }
   ],
   "name": "PaidDeposit",

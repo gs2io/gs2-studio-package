@@ -225,8 +225,30 @@ export const foundationEconomyCurrencyDemo = definePackage(
       .addChild(PaidDepositRateModel)
   )
 
-  .uiComponent(FreeDeposit, ui => ui.label("CountLabel", ui.prop("count"), { name: "FreeDeposit" }))
-  .uiComponent(PaidDeposit, ui => ui.label("CountLabel", ui.prop("count"), { name: "PaidDeposit" }))
+  // The caption writes the amount the deployed master data actually holds, and
+  // the button performs the deposit. Both are generated components a scene
+  // wires in the Inspector, which is the whole point of the demo: nothing here
+  // needs a script of its own.
+  .uiComponent(FreeDeposit, ui =>
+    ui
+      .templateLabel(
+        "CountLabel",
+        "Deposit {count} free",
+        { count: ui.prop("count") },
+        { name: "FreeDeposit" }
+      )
+      .buttonAction("DepositButton", "Deposit", undefined, { name: "FreeDeposit" })
+  )
+  .uiComponent(PaidDeposit, ui =>
+    ui
+      .templateLabel(
+        "CountLabel",
+        "Deposit {count} paid",
+        { count: ui.prop("count") },
+        { name: "PaidDeposit" }
+      )
+      .buttonAction("DepositButton", "Deposit", undefined, { name: "PaidDeposit" })
+  )
 
   .delegatedAction(FreeDeposit, "Deposit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",

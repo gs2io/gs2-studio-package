@@ -12,9 +12,9 @@
 Assets/Showroom/Runtime/ShowroomConfig.cs
 Assets/Showroom/Runtime/ShowroomConfig.cs.meta
 
-# Unity rewrites this from manifest.json on open, and it records whatever the
-# last resolve saw — including an absolute path when SHOWROOM_GS2_BIND_PATH
-# pointed at a local working copy. Publishing it would leak that path.
+# Unity rewrites this from manifest.json on open, recording whatever the last
+# resolve saw. It adds nothing the manifest does not already pin, and it is
+# regenerated on the next open.
 Packages/packages-lock.json
 
 # Written by Unity Purchasing the first time the editor opens the project, and

@@ -4,12 +4,26 @@
     {
       "componentClassName": "CountLabel",
       "id": "8caf5b39-66e2-51cb-a6df-654e26094219",
-      "kind": "label",
+      "kind": "templateLabel",
       "name": "FreeDeposit",
-      "source": {
-        "kind": "property",
-        "propertyId": "prop_01M2FXJD9DS7FE5V83X30EXMAK"
-      }
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M2FXJD9DS7FE5V83X30EXMAK"
+          }
+        }
+      ],
+      "template": "Deposit {count} free"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "DepositButton",
+      "delegatedActionKey": "resource:foundation-economy-currency-demo:masterData:1cbfa8cc-52b1-508f-81c1-808d91a6aa81::Gs2Exchange:RateModel.Exchange",
+      "id": "29743cb9-d941-5b65-b655-532bea55df44",
+      "kind": "buttonAction",
+      "name": "FreeDeposit"
     }
   ],
   "name": "FreeDeposit",

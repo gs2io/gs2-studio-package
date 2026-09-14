@@ -16,19 +16,16 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.FreeDeposit.UI
 {
     /// <summary>
-    /// UI label bound to <c>FreeDeposit.count</c>.
-    /// Subscribes to the sibling <c>FreeDepositHandler.Updated</c> event
-    /// and publishes the resolved string through <c>OnUpdate</c> on every
-    /// model update. Wire <c>OnUpdate</c> in the Inspector to any text
-    /// consumer — <c>UnityEngine.UI.Text</c>, TextMeshPro, or custom logic —
-    /// so this component stays agnostic to the rendering target. Add this
-    /// component alongside (or under) a <c>FreeDepositHandler</c> or
-    /// <c>FreeDepositListItemHandler</c>; the
-    /// handler is resolved automatically via
-    /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is
-    /// supplied.
+    /// UI label bound to the template
+    /// <c>Deposit {count} free</c>. Each <c>{key}</c> placeholder is
+    /// substituted with the resolved value from <c>FreeDeposit</c>
+    /// on every Handler <c>Updated</c> event and the rendered string is
+    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
+    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
+    /// TextMeshPro, or custom logic — so this component stays agnostic to
+    /// the rendering target.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/FreeDeposit/Label/CountLabel")]
+    [AddComponentMenu("GS2 Studio/DomainType/FreeDeposit/TemplateLabel/CountLabel")]
     public sealed class FreeDepositCountLabel : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
@@ -77,7 +74,7 @@ namespace GS2Studio.Generated.FreeDeposit.UI
 
         private void OnUpdated(FreeDeposit model)
         {
-            _onUpdate.Invoke(System.Convert.ToString(model.Count) ?? "");
+            _onUpdate.Invoke($"Deposit {model.Count} free");
         }
     }
 }
