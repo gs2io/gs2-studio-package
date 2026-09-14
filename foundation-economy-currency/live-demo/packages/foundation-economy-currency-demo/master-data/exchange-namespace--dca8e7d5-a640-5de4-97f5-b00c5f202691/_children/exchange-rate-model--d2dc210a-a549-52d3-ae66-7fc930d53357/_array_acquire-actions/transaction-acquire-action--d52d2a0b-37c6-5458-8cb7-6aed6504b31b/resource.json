@@ -1,0 +1,58 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F",
+                    "typeName": "PaidDeposit"
+                  },
+                  "propertyId": "prop_01M2FXJD9D2AKZJTNS0AQ3NR3K"
+                },
+                "kind": "parent",
+                "parentResourceId": "d2dc210a-a549-52d3-ae66-7fc930d53357"
+              }
+            }
+          },
+          {
+            "parameterName": "currencyType",
+            "source": {
+              "kind": "static",
+              "value": "JPY"
+            }
+          },
+          {
+            "parameterName": "price",
+            "source": {
+              "kind": "static",
+              "value": 120
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "DepositCurrency",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    ]
+  },
+  "id": "d52d2a0b-37c6-5458-8cb7-6aed6504b31b",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F",
+    "typeName": "PaidDeposit"
+  }
+}

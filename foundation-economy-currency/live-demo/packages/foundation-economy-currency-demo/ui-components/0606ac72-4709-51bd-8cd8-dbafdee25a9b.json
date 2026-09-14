@@ -1,0 +1,18 @@
+{
+  "id": "0606ac72-4709-51bd-8cd8-dbafdee25a9b",
+  "items": [
+    {
+      "componentClassName": "CountLabel",
+      "id": "da9fd709-49e3-5f0c-8992-8a7a4125304b",
+      "kind": "label",
+      "name": "PaidDeposit",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_01M2FXJD9D2AKZJTNS0AQ3NR3K"
+      }
+    }
+  ],
+  "name": "PaidDeposit",
+  "targetDomainType": "PaidDeposit",
+  "targetDomainTypeId": "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F"
+}

@@ -1,0 +1,44 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB",
+                    "typeName": "FreeDeposit"
+                  },
+                  "propertyId": "prop_01M2FXJD9DS7FE5V83X30EXMAK"
+                },
+                "kind": "parent",
+                "parentResourceId": "1cbfa8cc-52b1-508f-81c1-808d91a6aa81"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "DepositFreeCurrency",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    ]
+  },
+  "id": "ed0ace1b-4f5f-5fe4-9f27-d95197859f84",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB",
+    "typeName": "FreeDeposit"
+  }
+}

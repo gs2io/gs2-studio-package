@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB",
+            "typeName": "FreeDeposit"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "1cbfa8cc-52b1-508f-81c1-808d91a6aa81",
+  "location": {
+    "modelName": "RateModel",
+    "service": "exchange"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB",
+    "typeName": "FreeDeposit"
+  }
+}

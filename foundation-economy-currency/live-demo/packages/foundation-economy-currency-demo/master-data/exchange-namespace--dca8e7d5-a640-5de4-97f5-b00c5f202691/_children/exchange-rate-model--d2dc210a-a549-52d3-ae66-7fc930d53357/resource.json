@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F",
+            "typeName": "PaidDeposit"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "d2dc210a-a549-52d3-ae66-7fc930d53357",
+  "location": {
+    "modelName": "RateModel",
+    "service": "exchange"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F",
+    "typeName": "PaidDeposit"
+  }
+}

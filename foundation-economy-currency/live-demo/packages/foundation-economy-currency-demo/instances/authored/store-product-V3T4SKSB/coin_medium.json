@@ -1,0 +1,9 @@
+{
+  "id": "coin_medium",
+  "rowKey": "row_01M2FXJD9EGE1V5V5EV9DDVATJ",
+  "typeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+  "values": {
+    "prop_A26C5NBX039V9DNV0ERPSWVPD8": "io.gs2.demo.coin.medium",
+    "prop_Z99QWHNS8G1DEFWGT2MB00NRJA": "io.gs2.demo.coin.medium"
+  }
+}

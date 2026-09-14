@@ -1,0 +1,18 @@
+{
+  "id": "ee710acf-1e5c-5383-8c87-3580c401c2bf",
+  "items": [
+    {
+      "componentClassName": "CountLabel",
+      "id": "8caf5b39-66e2-51cb-a6df-654e26094219",
+      "kind": "label",
+      "name": "FreeDeposit",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_01M2FXJD9DS7FE5V83X30EXMAK"
+      }
+    }
+  ],
+  "name": "FreeDeposit",
+  "targetDomainType": "FreeDeposit",
+  "targetDomainTypeId": "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB"
+}

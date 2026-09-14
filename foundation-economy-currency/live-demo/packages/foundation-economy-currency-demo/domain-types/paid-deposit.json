@@ -1,0 +1,66 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "localizedDisplay": {
+          "en": {
+            "description": "Adds currency to the paid balance, the way a purchase would.",
+            "label": "Paid deposit"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M2FXJD9D2AKZJTNS0AQ3NR3K",
+        "localizedDisplay": {
+          "en": {
+            "description": "How much this deposit adds.",
+            "label": "Amount"
+          }
+        },
+        "name": "count",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Deposit",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "d2dc210a-a549-52d3-ae66-7fc930d53357",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-currency-demo"
+      }
+    }
+  ],
+  "id": "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F",
+  "kind": "local",
+  "name": "PaidDeposit",
+  "singleEntry": true
+}

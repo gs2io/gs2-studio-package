@@ -1,0 +1,40 @@
+{
+  "id": "foundation-economy-currency-demo",
+  "name": "foundation-economy-currency-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the live demo's setting overrides and its free currency grants.",
+      "ja": "ライブデモ用の設定上書きと無償付与を提供します。"
+    },
+    "domainTypes": {
+      "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB": {
+        "description": {
+          "en": "A demo deposit that lands in the free balance.",
+          "ja": "無償残高に加算されるデモ用の入金です。"
+        },
+        "label": {
+          "en": "Free deposit",
+          "ja": "無償付与"
+        }
+      },
+      "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F": {
+        "description": {
+          "en": "A demo deposit that lands in the paid balance.",
+          "ja": "有償残高に加算されるデモ用の入金です。"
+        },
+        "label": {
+          "en": "Paid deposit",
+          "ja": "有償付与"
+        }
+      }
+    },
+    "label": {
+      "en": "Currency (demo)",
+      "ja": "通貨（デモ）"
+    }
+  }
+}

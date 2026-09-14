@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "commitSha": "d0eef5d7fab140c1aa6667e147973a508032df4b",
+      "integrity": "sha256-v4LFlUf6ZQmNMsmMnH1TGK4tyVN5k+x24KatkQPdXVs=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

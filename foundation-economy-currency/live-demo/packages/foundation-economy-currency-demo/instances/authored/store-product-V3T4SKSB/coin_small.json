@@ -1,0 +1,9 @@
+{
+  "id": "coin_small",
+  "rowKey": "row_01M2FXJD9ER9BTZ7FPY37EFS9B",
+  "typeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+  "values": {
+    "prop_A26C5NBX039V9DNV0ERPSWVPD8": "io.gs2.demo.coin.small",
+    "prop_Z99QWHNS8G1DEFWGT2MB00NRJA": "io.gs2.demo.coin.small"
+  }
+}
