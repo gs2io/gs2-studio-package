@@ -25,9 +25,9 @@
           "value": "#{userId}"
         },
         {
-          "kind": "placeholder",
+          "kind": "parameter",
           "parameterName": "slot",
-          "value": "#{slot}"
+          "sourceParameter": "slot"
         },
         {
           "kind": "parameter",
@@ -48,6 +48,15 @@
     }
   ],
   "parameters": [
+    {
+      "id": "param_01M2G43PKB59TYZ8H19YCQ9HQ4",
+      "name": "slot",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    },
     {
       "id": "param_01KQ90M60EBS2MFJW7D5P9AG47",
       "name": "paidOnly",

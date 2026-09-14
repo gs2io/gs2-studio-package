@@ -35,6 +35,13 @@
               "kind": "static",
               "value": 120
             }
+          },
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
           }
         ],
         "kind": "transform",

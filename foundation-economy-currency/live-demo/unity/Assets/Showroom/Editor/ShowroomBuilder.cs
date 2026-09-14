@@ -67,7 +67,12 @@ namespace GS2Studio.Showroom.EditorTools
         private static void ConfigurePlayer(string compression, bool diagnostics)
         {
             PlayerSettings.companyName = "Game Server Services";
-            PlayerSettings.productName = ShowroomConfig.Title;
+            // The demo's own name, taken from the project rather than a
+            // generated constant: the title a visitor reads is a Text in the
+            // scene, and the player name follows the project directory.
+            PlayerSettings.productName = new DirectoryInfo(
+                Path.GetDirectoryName(Application.dataPath) ?? "Showroom"
+            ).Parent?.Name ?? "Showroom";
             PlayerSettings.WebGL.compressionFormat = ParseCompression(compression);
             PlayerSettings.WebGL.decompressionFallback = true;
             PlayerSettings.WebGL.dataCaching = true;

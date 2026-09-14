@@ -187,13 +187,14 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .actionTransform("DepositFreeCurrency", at =>
     at
       .category("acquire")
+      .parameter("slot", { type: PT.int32() })
       .parameter("count", { type: PT.int32() })
       .output("Gs2Money2:DepositByUserId", o =>
         o
           .resourceRef(() => Namespace)
           .mapResourceKey("namespaceName")
           .mapPlaceholder("userId", "#{userId}")
-          .mapPlaceholder("slot", "#{slot}")
+          .mapParameter("slot", "slot")
           .mapStatic("depositTransactions[0].price", 0)
           .mapStatic("depositTransactions[0].currency", "")
           .mapParameter("depositTransactions[0].count", "count")
@@ -202,6 +203,7 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .actionTransform("DepositCurrency", at =>
     at
       .category("acquire")
+      .parameter("slot", { type: PT.int32() })
       .parameter("count", { type: PT.int32() })
       .parameter("currencyType", { type: PT.string() })
       .parameter("price", { type: PT.float64() })
@@ -210,7 +212,7 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
           .resourceRef(() => Namespace)
           .mapResourceKey("namespaceName")
           .mapPlaceholder("userId", "#{userId}")
-          .mapPlaceholder("slot", "#{slot}")
+          .mapParameter("slot", "slot")
           .mapParameter("depositTransactions[0].price", "price")
           .mapParameter("depositTransactions[0].currency", "currencyType")
           .mapParameter("depositTransactions[0].count", "count")
@@ -219,6 +221,7 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .actionTransform("WithdrawCurrency", at =>
     at
       .category("consume")
+      .parameter("slot", { type: PT.int32() })
       .parameter("paidOnly", { type: PT.bool(), required: false })
       .parameter("count", { type: PT.int32() })
       .output("Gs2Money2:WithdrawByUserId", o =>
@@ -226,7 +229,7 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
           .resourceRef(() => Namespace)
           .mapResourceKey("namespaceName")
           .mapPlaceholder("userId", "#{userId}")
-          .mapPlaceholder("slot", "#{slot}")
+          .mapParameter("slot", "slot")
           .mapParameter("withdrawCount", "count")
           .mapParameter("paidOnly", "paidOnly")
       )
@@ -234,13 +237,14 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .actionTransform("WithdrawPaidCurrency", at =>
     at
       .category("consume")
+      .parameter("slot", { type: PT.int32() })
       .parameter("count", { type: PT.int32() })
       .output("Gs2Money2:WithdrawByUserId", o =>
         o
           .resourceRef(() => Namespace)
           .mapResourceKey("namespaceName")
           .mapPlaceholder("userId", "#{userId}")
-          .mapPlaceholder("slot", "#{slot}")
+          .mapParameter("slot", "slot")
           .mapParameter("withdrawCount", "count")
           .mapStatic("paidOnly", true)
       )

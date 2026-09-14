@@ -21,6 +21,13 @@
                 "parentResourceId": "1cbfa8cc-52b1-508f-81c1-808d91a6aa81"
               }
             }
+          },
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
           }
         ],
         "kind": "transform",

@@ -22,6 +22,9 @@ import { GS2 } from "~/dsl/gs2";
 
 const CURRENCY_PACKAGE_ID = "foundation-economy-currency";
 
+/** The demo shows one player with one wallet, slot 0. */
+const WALLET_SLOT = 0;
+
 const CURRENCY_STORE_TYPE_ID = "dt_BMT0H7ME2SSDZRHGNZF012YZVR";
 const STORE_PRODUCT_TYPE_ID = "dt_JQQFPC83PRYTWMZ43RV3T4SKSB";
 
@@ -115,6 +118,8 @@ const FreeDepositRateModel = defineMasterDataResource(resource =>
         .bindings({
           action: Bind.transform(CURRENCY_PACKAGE_ID, "DepositFreeCurrency", [
             Arg.domainProperty("count", Source.parent(Source.direct(FreeDeposit, "count"))),
+            // The demo shows one player with one wallet.
+            Arg.static("slot", WALLET_SLOT),
           ]),
         });
     })
@@ -140,6 +145,7 @@ const PaidDepositRateModel = defineMasterDataResource(resource =>
             Arg.domainProperty("count", Source.parent(Source.direct(PaidDeposit, "count"))),
             Arg.static("currencyType", "JPY"),
             Arg.static("price", 120),
+            Arg.static("slot", WALLET_SLOT),
           ]),
         });
     })

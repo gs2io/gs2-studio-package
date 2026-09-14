@@ -25,9 +25,9 @@
           "value": "#{userId}"
         },
         {
-          "kind": "placeholder",
+          "kind": "parameter",
           "parameterName": "slot",
-          "value": "#{slot}"
+          "sourceParameter": "slot"
         },
         {
           "kind": "parameter",
@@ -48,6 +48,15 @@
     }
   ],
   "parameters": [
+    {
+      "id": "param_01M2G43PKBQJ60Q2H330MTFY0E",
+      "name": "slot",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    },
     {
       "id": "param_01KMYVXWW02P46N2MGJ1ENZSA9",
       "name": "count",
