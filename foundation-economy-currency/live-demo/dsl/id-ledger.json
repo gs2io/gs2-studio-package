@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:FreeDeposit.count": "prop_01M2FXJD9DS7FE5V83X30EXMAK",
+    "property:PaidDeposit.count": "prop_01M2FXJD9D2AKZJTNS0AQ3NR3K",
+    "row:dt_BMT0H7ME2SSDZRHGNZF012YZVR.currencystore": "row_01M2FXJD9ET9260GXCN4G9F628",
+    "row:dt_JQQFPC83PRYTWMZ43RV3T4SKSB.coin_large": "row_01M2FXJD9EEB4XCJK7PMFGYS5E",
+    "row:dt_JQQFPC83PRYTWMZ43RV3T4SKSB.coin_medium": "row_01M2FXJD9EGE1V5V5EV9DDVATJ",
+    "row:dt_JQQFPC83PRYTWMZ43RV3T4SKSB.coin_small": "row_01M2FXJD9ER9BTZ7FPY37EFS9B",
+    "row:type:FreeDeposit.freedeposit": "row_01M2FXJD9ECG5NMD2NFYFAH931",
+    "row:type:PaidDeposit.paiddeposit": "row_01M2FXJD9EMN834NJGBHH9A534",
+    "type:CurrencyStore": "dt_01M2FXJD9C6ZJTAG4HSH51JFFR",
+    "type:FreeDeposit": "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB",
+    "type:PaidDeposit": "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F",
+    "type:StoreProduct": "dt_01M2FXJD9CBSXYYJFKJ4T6Z3YT"
+  },
+  "deterministicOverrides": {}
+}
