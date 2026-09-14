@@ -1,0 +1,18 @@
+{
+  "id": "foundation-economy-character-demo",
+  "name": "foundation-economy-character-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-character": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the roster, level curve and capacity used by the live demo.",
+      "ja": "ライブデモ用のキャラクター編成・レベル曲線・所持枠を提供します。"
+    },
+    "label": {
+      "en": "Characters (demo data)",
+      "ja": "キャラクター（デモデータ）"
+    }
+  }
+}

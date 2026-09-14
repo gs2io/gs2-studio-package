@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M2FZNNF26XCS5BNGCW5YSBA2",
+  "kind": "overlay",
+  "name": "CharacterExperience",
+  "renamedInheritedProperties": {},
+  "singleEntry": true,
+  "source": {
+    "directSourcePackageId": "foundation-economy-character",
+    "directSourceTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01"
+  }
+}

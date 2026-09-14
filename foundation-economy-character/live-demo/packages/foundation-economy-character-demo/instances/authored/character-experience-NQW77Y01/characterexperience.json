@@ -1,0 +1,21 @@
+{
+  "id": "characterexperience",
+  "rowKey": "row_01M2FZNNF21Y85M0JDZM88818A",
+  "typeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01",
+  "values": {
+    "prop_88HQTS8WPSVYE7PAJ2BYRE0D4C": 50,
+    "prop_B2ZMJ5P9J9QVBZTGHD6816BX7Z": 10,
+    "prop_CP6T6EBWNEYWASFRXVMH0A8RPF": [
+      1,
+      100,
+      250,
+      450,
+      700,
+      1000,
+      1400,
+      1900,
+      2500,
+      3200
+    ]
+  }
+}
