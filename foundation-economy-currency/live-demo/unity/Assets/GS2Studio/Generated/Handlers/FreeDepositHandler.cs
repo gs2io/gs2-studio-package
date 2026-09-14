@@ -104,6 +104,23 @@ namespace GS2Studio.Generated.FreeDeposit
         }
 
         /// <summary>
+        /// Re-reads the bound model from the server, keeping the identity keys
+        /// it already has. Parameterless and returning void so it can be wired
+        /// in the Inspector: a component that changes this model through a
+        /// server action raises an event, and this is what answers it — the
+        /// handler has no other way to learn that the value moved.
+        ///
+        /// Fire-and-forget, like <see cref="SetKeys"/>: failures surface via
+        /// the <see cref="Failed"/> event + <c>Debug.LogException</c>; await
+        /// <see cref="ReloadAsync"/> when completion must be observed.
+        /// </summary>
+        public void Reload()
+        {
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>
         /// Creates a FreeDepositBinder from the current identity keys, mounts it,
         /// and starts forwarding its changes via <see cref="Updated"/>.
         /// Disposes any previously-owned binder before attaching the new one.

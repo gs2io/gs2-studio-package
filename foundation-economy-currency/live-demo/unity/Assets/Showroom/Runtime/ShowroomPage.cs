@@ -8,7 +8,10 @@
 // The sign-in itself belongs to `Gs2AutoLoginAction`, whose events this
 // listens to — which is also how a game would do it.
 #nullable disable
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Gs2.Core.Exception;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,11 +41,29 @@ namespace GS2Studio.Showroom
             Log("signed in");
         }
 
-        /// <summary>Wire to `Gs2AutoLoginAction.OnError`.</summary>
-        public void OnSignInFailed(Gs2Exception error)
+        /// <summary>
+        /// Wire to `Gs2AutoLoginAction.onError`. Separate from
+        /// <see cref="LogError"/> because this failure means the page itself is
+        /// unusable, not that one action did not go through — without it the
+        /// status line sits on "Connecting…" forever.
+        /// </summary>
+        public void OnSignInFailed(Gs2Exception error, Func<IEnumerator> retry)
         {
             SetStatus("Sign-in failed");
-            Log($"sign-in failed: {error.Message}");
+            LogError(error, retry);
+        }
+
+        /// <summary>
+        /// Wire to a generated button action's `OnFailed`. The browser hides
+        /// the console, so a failure a visitor cannot see is a failure that
+        /// looks like nothing happening.
+        ///
+        /// `retry` comes with the SDK's error-event shape; the demo offers no
+        /// way to ask for one, so it only reports what went wrong.
+        /// </summary>
+        public void LogError(Gs2Exception error, Func<IEnumerator> retry)
+        {
+            Log(string.Join(", ", error.Errors.Select(entry => entry.Message)));
         }
 
         /// <summary>Writes one line to the on-screen log. WebGL hides the console.</summary>

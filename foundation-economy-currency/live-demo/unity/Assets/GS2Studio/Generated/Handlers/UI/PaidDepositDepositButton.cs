@@ -8,7 +8,11 @@
 using System;
 
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+
+using Gs2.Core.Exception;
+using Gs2.Unity.Util;
 
 using GS2Studio.Generated.PaidDeposit;
 using GS2Studio.Generated.Runtime;
@@ -29,6 +33,24 @@ namespace GS2Studio.Generated.PaidDeposit.UI
         [Gs2AutoResolvedHandler]
         [SerializeField] private PaidDepositHandlerBase? _handler;
         [SerializeField] private Button? _button;
+
+        /// <summary>
+        /// Raised once the action has completed on the server. A screen that
+        /// shows what the action changed reloads from here — the handler that
+        /// reads it has no way to know an unrelated component wrote to it.
+        /// </summary>
+        [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
+
+        /// <summary>
+        /// Raised when the action fails. Carries the SDK's own error-event
+        /// shape, so the failure can be handed straight to
+        /// <c>Gs2ClientHolder.DebugErrorHandler</c> or to any other handler that
+        /// already accepts one.
+        /// </summary>
+        [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
+
+        public UnityEvent OnCompleted => _onCompleted;
+        public ErrorEvent OnFailed => _onFailed;
 
         private bool _wired;
         private bool _warnedMissingHandler;
@@ -79,10 +101,19 @@ namespace GS2Studio.Generated.PaidDeposit.UI
             {
                 await model.Deposit();
             }
+            catch (Gs2Exception gs2Error)
+            {
+                UnityEngine.Debug.LogError($"PaidDepositDepositButton: Deposit failed: {gs2Error}");
+                // A click has nothing to resume from, so no retry is offered.
+                _onFailed.Invoke(gs2Error, null);
+                return;
+            }
             catch (Exception ex)
             {
                 UnityEngine.Debug.LogError($"PaidDepositDepositButton: Deposit failed: {ex}");
+                return;
             }
+            _onCompleted.Invoke();
         }
     }
 }
