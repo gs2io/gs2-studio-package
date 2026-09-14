@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -83,9 +91,7 @@ const StaminaModel = defineMasterDataResource(resource =>
       maxCapacity: Bind.domainProperty(Source.direct(Energy, "overflowedMaximum")),
       recoverIntervalMinutes: Bind.domainProperty(Source.direct(Energy, "recoveryIntervalMinutes")),
       recoverValue: Bind.domainProperty(Source.direct(Energy, "recoveryValue")),
-      maxStaminaTable: Bind.null(),
-      recoverIntervalTable: Bind.null(),
-      recoverValueTable: Bind.null(),
+      ...Bind.nulls("maxStaminaTable", "recoverIntervalTable", "recoverValueTable"),
     })
 );
 
@@ -111,17 +117,8 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
       .model(GS2.stamina.Namespace)
       .bindings({
         name: Bind.static("Energy"),
-        overflowTriggerScript: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls("overflowTriggerScript", "logSetting"),
+        transactionSetting: transactionSetting(),
       })
       .addChild(StaminaModel)
   )

@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -47,9 +55,7 @@ const Namespace = defineMasterDataResource(resource =>
     .mountLocal(AdPlatform)
     .bindings({
       name: Bind.static("Ad"),
-      acquirePointScript: Bind.null(),
-      consumePointScript: Bind.null(),
-      logSetting: Bind.null(),
+      ...Bind.nulls("acquirePointScript", "consumePointScript", "logSetting"),
       admob: {
         allowAdUnitIds: Bind.domainProperty(Source.direct(AdPlatform, "adMobAdUnitIds")),
       },
@@ -62,15 +68,7 @@ const Namespace = defineMasterDataResource(resource =>
         gatewayNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:gateway:default"),
         sound: Bind.static(""),
       },
-      transactionSetting: {
-        acquireActionUseJobQueue: Bind.static(false),
-        commitScriptResultInUseDistributor: Bind.static(false),
-        distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-        enableAtomicCommit: Bind.static(false),
-        enableAutoRun: Bind.static(false),
-        queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-        transactionUseDistributor: Bind.static(false),
-      },
+      transactionSetting: transactionSetting(),
     })
 );
 

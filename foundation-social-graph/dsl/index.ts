@@ -1,4 +1,4 @@
-import { Bind, definePackage, defineDomainType, PT, Source } from "~/dsl";
+import { Bind, defineDomainType, definePackage, PT, Source, transactionSetting } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -156,30 +156,24 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
   .masterDataResource(r =>
     r.model(GS2.friend.Namespace).bindings({
       name: Bind.static("Friend"),
-      logSetting: Bind.null(),
-      followScript: Bind.null(),
-      unfollowScript: Bind.null(),
-      sendRequestScript: Bind.null(),
-      cancelRequestScript: Bind.null(),
-      acceptRequestScript: Bind.null(),
-      rejectRequestScript: Bind.null(),
-      deleteFriendScript: Bind.null(),
-      updateProfileScript: Bind.null(),
-      followNotification: Bind.null(),
+      ...Bind.nulls(
+        "logSetting",
+        "followScript",
+        "unfollowScript",
+        "sendRequestScript",
+        "cancelRequestScript",
+        "acceptRequestScript",
+        "rejectRequestScript",
+        "deleteFriendScript",
+        "updateProfileScript",
+        "followNotification"
+      ),
       receiveRequestNotification: { ...notificationConfig },
       cancelRequestNotification: { ...notificationConfig },
       acceptRequestNotification: { ...notificationConfig },
       rejectRequestNotification: { ...notificationConfig },
       deleteFriendNotification: { ...notificationConfig },
-      transactionSetting: {
-        acquireActionUseJobQueue: Bind.static(false),
-        commitScriptResultInUseDistributor: Bind.static(false),
-        distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-        enableAtomicCommit: Bind.static(false),
-        enableAutoRun: Bind.static(false),
-        queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-        transactionUseDistributor: Bind.static(false),
-      },
+      transactionSetting: transactionSetting(),
     })
   )
 

@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -148,22 +156,16 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
       .model(GS2.account.Namespace)
       .bindings({
         name: Bind.static("Account"),
-        authenticationScript: Bind.null(),
-        banScript: Bind.null(),
-        createAccountScript: Bind.null(),
-        createTakeOverScript: Bind.null(),
-        doTakeOverScript: Bind.null(),
-        unBanScript: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls(
+          "authenticationScript",
+          "banScript",
+          "createAccountScript",
+          "createTakeOverScript",
+          "doTakeOverScript",
+          "unBanScript",
+          "logSetting"
+        ),
+        transactionSetting: transactionSetting(),
       })
       .addChild(TakeOverTypeModel)
   )

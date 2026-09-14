@@ -1,4 +1,5 @@
 import {
+  Arg,
   Bind,
   defineDomainType,
   defineMasterDataResource,
@@ -6,6 +7,7 @@ import {
   definePackage,
   PT,
   Source,
+  transactionSetting,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -80,8 +82,7 @@ const DisplayItem = defineMasterDataResource(resource =>
     .mountLocal(StorePrice)
     .bindings({
       displayItemId: Bind.domainProperty(Source.direct(StorePrice, "id")),
-      salesItemGroup: Bind.null(),
-      salesPeriodEventId: Bind.null(),
+      ...Bind.nulls("salesItemGroup", "salesPeriodEventId"),
       type: Bind.static("salesItem"),
     })
     .addArrayChild("salesItem", salesItem => {
@@ -98,29 +99,15 @@ const DisplayItem = defineMasterDataResource(resource =>
             .mountLocal(StoreProduct)
             .bindings({
               action: Bind.transform("foundation-economy-currency", "DepositCurrency", [
-                {
-                  parameterName: "count",
-                  source: {
-                    kind: "domainProperty",
-                    source: Source.direct(StoreProduct, "count"),
-                  },
-                },
-                {
-                  parameterName: "currencyType",
-                  source: {
-                    kind: "domainProperty",
-                    source: Source.parent(
-                      Source.parent(Source.parent(Source.direct(CurrencyType, "id")))
-                    ),
-                  },
-                },
-                {
-                  parameterName: "price",
-                  source: {
-                    kind: "domainProperty",
-                    source: Source.parent(Source.parent(Source.direct(StorePrice, "price"))),
-                  },
-                },
+                Arg.domainProperty("count", Source.direct(StoreProduct, "count")),
+                Arg.domainProperty(
+                  "currencyType",
+                  Source.parent(Source.parent(Source.parent(Source.direct(CurrencyType, "id"))))
+                ),
+                Arg.domainProperty(
+                  "price",
+                  Source.parent(Source.parent(Source.direct(StorePrice, "price")))
+                ),
               ]),
             });
         })
@@ -130,13 +117,7 @@ const DisplayItem = defineMasterDataResource(resource =>
             .mountLocal(StoreProduct)
             .bindings({
               action: Bind.transform("foundation-economy-currency", "VerifyReceipt", [
-                {
-                  parameterName: "contentName",
-                  source: {
-                    kind: "domainProperty",
-                    source: Source.direct(StoreProduct, "id"),
-                  },
-                },
+                Arg.domainProperty("contentName", Source.direct(StoreProduct, "id")),
               ]),
             });
         });
@@ -237,17 +218,8 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
       .model(GS2.showcase.Namespace)
       .bindings({
         name: Bind.static("ShopCurrency"),
-        buyScript: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls("buyScript", "logSetting"),
+        transactionSetting: transactionSetting(),
       })
       .addChild(Showcase)
   )

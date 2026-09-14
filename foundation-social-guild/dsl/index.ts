@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -187,30 +195,26 @@ export const foundationSocialGuild = definePackage("foundation-social-guild", "0
       .model(GS2.guild.Namespace)
       .bindings({
         name: Bind.static("Guild"),
-        changeNotification: Bind.null(),
-        joinNotification: Bind.null(),
-        leaveNotification: Bind.null(),
-        changeMemberNotification: Bind.null(),
+        ...Bind.nulls(
+          "changeNotification",
+          "joinNotification",
+          "leaveNotification",
+          "changeMemberNotification"
+        ),
         changeMemberNotificationIgnoreChangeMetadata: Bind.static(false),
-        receiveRequestNotification: Bind.null(),
-        removeRequestNotification: Bind.null(),
-        createGuildScript: Bind.null(),
-        updateGuildScript: Bind.null(),
-        joinGuildScript: Bind.null(),
-        receiveJoinRequestScript: Bind.null(),
-        leaveGuildScript: Bind.null(),
-        changeRoleScript: Bind.null(),
-        deleteGuildScript: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls(
+          "receiveRequestNotification",
+          "removeRequestNotification",
+          "createGuildScript",
+          "updateGuildScript",
+          "joinGuildScript",
+          "receiveJoinRequestScript",
+          "leaveGuildScript",
+          "changeRoleScript",
+          "deleteGuildScript",
+          "logSetting"
+        ),
+        transactionSetting: transactionSetting(),
       })
       .addChild(GuildModel)
   )

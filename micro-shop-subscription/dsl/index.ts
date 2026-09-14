@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -168,24 +176,18 @@ export const microShopSubscription = definePackage("micro-shop-subscription", "0
           googlePlay: Bind.static({ packageName: null, publicKey: null }),
           fake: { acceptFakeReceipt: Bind.static("Reject") },
         },
-        changeSubscriptionStatusNotification: Bind.null(),
-        depositBalanceScript: Bind.null(),
-        withdrawBalanceScript: Bind.null(),
-        verifyReceiptScript: Bind.null(),
-        subscribeScript: Bind.null(),
-        renewScript: Bind.null(),
-        unsubscribeScript: Bind.null(),
-        takeOverScript: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls(
+          "changeSubscriptionStatusNotification",
+          "depositBalanceScript",
+          "withdrawBalanceScript",
+          "verifyReceiptScript",
+          "subscribeScript",
+          "renewScript",
+          "unsubscribeScript",
+          "takeOverScript",
+          "logSetting"
+        ),
+        transactionSetting: transactionSetting(),
       })
       .addChild(StoreSubscriptionContentModel)
   )

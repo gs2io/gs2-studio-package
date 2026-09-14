@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -138,23 +146,17 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
       .model(GS2.inventory.Namespace)
       .bindings({
         name: Bind.static("Equipment"),
-        acquireScript: Bind.null(),
-        consumeScript: Bind.null(),
-        overflowScript: Bind.null(),
-        simpleItemAcquireScript: Bind.null(),
-        simpleItemConsumeScript: Bind.null(),
-        bigItemAcquireScript: Bind.null(),
-        bigItemConsumeScript: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls(
+          "acquireScript",
+          "consumeScript",
+          "overflowScript",
+          "simpleItemAcquireScript",
+          "simpleItemConsumeScript",
+          "bigItemAcquireScript",
+          "bigItemConsumeScript",
+          "logSetting"
+        ),
+        transactionSetting: transactionSetting(),
       })
       .addChild(InventoryModel)
   )

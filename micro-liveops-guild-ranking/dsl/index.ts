@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -118,8 +126,7 @@ const ClusterRankingModel = defineMasterDataResource(resource =>
       sum: Bind.domainProperty(Source.direct(GuildRanking, "sum")),
       minimumValue: Bind.domainProperty(Source.direct(GuildRanking, "minimumValue")),
       maximumValue: Bind.domainProperty(Source.direct(GuildRanking, "maximumValue")),
-      accessPeriodEventId: Bind.null(),
-      rewardCalculationIndex: Bind.null(),
+      ...Bind.nulls("accessPeriodEventId", "rewardCalculationIndex"),
     })
     .grnFieldMount("entryPeriodEventId", SCHEDULE_NAMESPACE_RESOURCE_ID, [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
@@ -183,15 +190,7 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
       .bindings({
         name: Bind.static("GuildRanking"),
         logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        transactionSetting: transactionSetting(),
       })
       .addChild(ClusterRankingModel)
   )

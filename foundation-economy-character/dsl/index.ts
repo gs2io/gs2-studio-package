@@ -5,6 +5,7 @@ import {
   definePackage,
   PT,
   Source,
+  transactionSetting,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -211,21 +212,15 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
       .model(GS2.experience.Namespace)
       .bindings({
         name: Bind.static("CharacterExperience"),
-        changeExperienceScript: Bind.null(),
-        changeRankScript: Bind.null(),
-        changeRankCapScript: Bind.null(),
-        overflowExperienceScript: Bind.null(),
-        rankCapScriptId: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls(
+          "changeExperienceScript",
+          "changeRankScript",
+          "changeRankCapScript",
+          "overflowExperienceScript",
+          "rankCapScriptId",
+          "logSetting"
+        ),
+        transactionSetting: transactionSetting(),
       })
       .addChild(ExperienceModel)
   )
@@ -235,23 +230,17 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
       .model(GS2.inventory.Namespace)
       .bindings({
         name: Bind.static("Character"),
-        acquireScript: Bind.null(),
-        consumeScript: Bind.null(),
-        overflowScript: Bind.null(),
-        simpleItemAcquireScript: Bind.null(),
-        simpleItemConsumeScript: Bind.null(),
-        bigItemAcquireScript: Bind.null(),
-        bigItemConsumeScript: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls(
+          "acquireScript",
+          "consumeScript",
+          "overflowScript",
+          "simpleItemAcquireScript",
+          "simpleItemConsumeScript",
+          "bigItemAcquireScript",
+          "bigItemConsumeScript",
+          "logSetting"
+        ),
+        transactionSetting: transactionSetting(),
       })
       .addChild(InventoryModel)
   )

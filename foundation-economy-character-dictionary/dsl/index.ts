@@ -5,6 +5,7 @@ import {
   definePackage,
   PT,
   Source,
+  transactionSetting,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -74,18 +75,8 @@ export const foundationEconomyCharacterDictionary = definePackage(
     r.model(GS2.dictionary.Namespace)
       .bindings({
         name: Bind.static("CharacterDictionary"),
-        transactionSetting: {
-          enableAutoRun: Bind.static(false),
-          enableAtomicCommit: Bind.static(false),
-          transactionUseDistributor: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          acquireActionUseJobQueue: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-        },
-        logSetting: Bind.null(),
-        entryScript: Bind.null(),
-        duplicateEntryScript: Bind.null(),
+        transactionSetting: transactionSetting(),
+        ...Bind.nulls("logSetting", "entryScript", "duplicateEntryScript"),
       })
       .addChild(EntryModel);
   })

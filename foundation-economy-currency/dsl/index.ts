@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -78,8 +86,7 @@ const Namespace = defineMasterDataResource(resource => {
       name: Bind.static("Currency"),
       changeSubscriptionStatusNotification: Bind.null(),
       currencyUsagePriority: Bind.static("PrioritizeFree"),
-      depositBalanceScript: Bind.null(),
-      logSetting: Bind.null(),
+      ...Bind.nulls("depositBalanceScript", "logSetting"),
       platformSetting: {
         appleAppStore: Bind.static({
           bundleId: null,
@@ -95,20 +102,9 @@ const Namespace = defineMasterDataResource(resource => {
       },
       renewScript: Bind.null(),
       sharedFreeCurrency: Bind.static(false),
-      subscribeScript: Bind.null(),
-      takeOverScript: Bind.null(),
-      transactionSetting: {
-        acquireActionUseJobQueue: Bind.static(false),
-        commitScriptResultInUseDistributor: Bind.static(false),
-        distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-        enableAtomicCommit: Bind.static(false),
-        enableAutoRun: Bind.static(false),
-        queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-        transactionUseDistributor: Bind.static(false),
-      },
-      unsubscribeScript: Bind.null(),
-      verifyReceiptScript: Bind.null(),
-      withdrawBalanceScript: Bind.null(),
+      ...Bind.nulls("subscribeScript", "takeOverScript"),
+      transactionSetting: transactionSetting(),
+      ...Bind.nulls("unsubscribeScript", "verifyReceiptScript", "withdrawBalanceScript"),
     })
     .addChild(child => {
       child

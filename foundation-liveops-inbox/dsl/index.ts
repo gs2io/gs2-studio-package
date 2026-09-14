@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -71,20 +79,14 @@ const InboxNamespace = defineMasterDataResource(resource => {
     .model(GS2.inbox.Namespace)
     .bindings({
       name: Bind.static("Inbox"),
-      deleteMessageScript: Bind.null(),
-      logSetting: Bind.null(),
-      readMessageScript: Bind.null(),
-      receiveMessageScript: Bind.null(),
-      receiveNotification: Bind.null(),
-      transactionSetting: {
-        acquireActionUseJobQueue: Bind.static(false),
-        commitScriptResultInUseDistributor: Bind.static(false),
-        distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-        enableAtomicCommit: Bind.static(false),
-        enableAutoRun: Bind.static(false),
-        queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-        transactionUseDistributor: Bind.static(false),
-      },
+      ...Bind.nulls(
+        "deleteMessageScript",
+        "logSetting",
+        "readMessageScript",
+        "receiveMessageScript",
+        "receiveNotification"
+      ),
+      transactionSetting: transactionSetting(),
     })
     .addChild(child => {
       child
@@ -141,15 +143,7 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
       .bindings({
         name: Bind.static("InboxSchedule"),
         logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        transactionSetting: transactionSetting(),
       })
       .addChild(child => {
         child

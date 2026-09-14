@@ -6,6 +6,7 @@ import {
   definePackage,
   PT,
   Source,
+  transactionSetting,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -189,15 +190,7 @@ const Namespace = defineMasterDataResource(resource =>
     .bindings({
       name: Bind.static("Schedule"),
       logSetting: Bind.null(),
-      transactionSetting: {
-        acquireActionUseJobQueue: Bind.static(false),
-        commitScriptResultInUseDistributor: Bind.static(false),
-        distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-        enableAtomicCommit: Bind.static(false),
-        enableAutoRun: Bind.static(false),
-        queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-        transactionUseDistributor: Bind.static(false),
-      },
+      transactionSetting: transactionSetting(),
     })
     .addChild(child => {
       child

@@ -1,4 +1,13 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Arg,
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -143,14 +152,11 @@ const PrizeTable = defineMasterDataResource(resource =>
             .mountLocal(CharacterRate)
             .bindings({
               action: Bind.transform("foundation-economy-character", "AcquireCharacter", [
-                {
-                  parameterName: "character",
-                  source: {
-                    kind: "domainProperty",
-                    source: Source.parent(Source.direct(CharacterRate, "character")),
-                  },
-                },
-                { parameterName: "count", source: { kind: "static", value: 1 } },
+                Arg.domainProperty(
+                  "character",
+                  Source.parent(Source.direct(CharacterRate, "character"))
+                ),
+                Arg.static("count", 1),
               ]),
             });
         })
@@ -163,13 +169,10 @@ const PrizeTable = defineMasterDataResource(resource =>
                 "foundation-economy-character-dictionary",
                 "MarkCharacterDictionary",
                 [
-                  {
-                    parameterName: "character",
-                    source: {
-                      kind: "domainProperty",
-                      source: Source.parent(Source.direct(CharacterRate, "character")),
-                    },
-                  },
+                  Arg.domainProperty(
+                    "character",
+                    Source.parent(Source.direct(CharacterRate, "character"))
+                  ),
                 ]
               ),
             });
@@ -291,17 +294,8 @@ export const microShopCharacterGacha = definePackage("micro-shop-character-gacha
       .model(GS2.lottery.Namespace)
       .bindings({
         name: Bind.static("CharacterGacha"),
-        lotteryTriggerScriptId: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls("lotteryTriggerScriptId", "logSetting"),
+        transactionSetting: transactionSetting(),
       })
       .addChild(LotteryModel)
       .addChild(PrizeTable)
@@ -312,17 +306,8 @@ export const microShopCharacterGacha = definePackage("micro-shop-character-gacha
       .model(GS2.showcase.Namespace)
       .bindings({
         name: Bind.static("CharacterGacha"),
-        buyScript: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls("buyScript", "logSetting"),
+        transactionSetting: transactionSetting(),
       })
       .addChild(Showcase)
   )

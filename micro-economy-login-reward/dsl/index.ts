@@ -1,12 +1,13 @@
 import {
   Bind,
+  defineDomainType,
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
-  defineDomainType,
   defineUserDataResource,
   PT,
   Source,
+  transactionSetting,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -159,15 +160,7 @@ export const microEconomyLoginReward = definePackage("micro-economy-login-reward
         logSetting: Bind.null(),
         name: Bind.static("LoginReward"),
         receiveScript: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        transactionSetting: transactionSetting(),
       })
       .addChild(BonusModel)
   )

@@ -1,4 +1,13 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Arg,
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -40,13 +49,10 @@ const RateModel = defineMasterDataResource(resource =>
           // The recovery amount is authored on the product and handed to the
           // energy package's own RecoveryEnergy transform.
           action: Bind.transform("foundation-economy-energy", "RecoveryEnergy", [
-            {
-              parameterName: "value",
-              source: {
-                kind: "domainProperty",
-                source: Source.parent(Source.direct(EnergyProduct, "recoveryValue")),
-              },
-            },
+            Arg.domainProperty(
+              "value",
+              Source.parent(Source.direct(EnergyProduct, "recoveryValue"))
+            ),
           ]),
         });
     })
@@ -84,19 +90,13 @@ export const microShopEnergy = definePackage("micro-shop-energy", "0.0.0")
       .model(GS2.exchange.Namespace)
       .bindings({
         name: Bind.static("EnergyProduct"),
-        acquireAwaitScript: Bind.null(),
-        exchangeScript: Bind.null(),
-        incrementalExchangeScript: Bind.null(),
-        logSetting: Bind.null(),
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        ...Bind.nulls(
+          "acquireAwaitScript",
+          "exchangeScript",
+          "incrementalExchangeScript",
+          "logSetting"
+        ),
+        transactionSetting: transactionSetting(),
       })
       .addChild(RateModel)
   )

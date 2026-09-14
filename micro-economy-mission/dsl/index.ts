@@ -5,6 +5,7 @@ import {
   definePackage,
   PT,
   Source,
+  transactionSetting,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -344,25 +345,19 @@ export const microEconomyMission = definePackage("micro-economy-mission", "0.0.0
       .mountLocal(MissionSetting)
       .bindings({
         name: Bind.static("Mission"),
-        counterIncrementScript: Bind.null(),
-        missionCompleteScript: Bind.null(),
-        receiveRewardsScript: Bind.null(),
-        logSetting: Bind.null(),
+        ...Bind.nulls(
+          "counterIncrementScript",
+          "missionCompleteScript",
+          "receiveRewardsScript",
+          "logSetting"
+        ),
         completeNotification: {
           enable: Bind.static("Enabled"),
           enableTransferMobileNotification: Bind.static(false),
           gatewayNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:gateway:default"),
           sound: Bind.static(""),
         },
-        transactionSetting: {
-          acquireActionUseJobQueue: Bind.static(false),
-          commitScriptResultInUseDistributor: Bind.static(false),
-          distributorNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:distributor:default"),
-          enableAtomicCommit: Bind.static(false),
-          enableAutoRun: Bind.static(false),
-          queueNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:queue:default"),
-          transactionUseDistributor: Bind.static(false),
-        },
+        transactionSetting: transactionSetting(),
       })
       .addChild(CounterModel)
       .addChild(MissionGroupModel)
