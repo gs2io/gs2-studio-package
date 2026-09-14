@@ -53,6 +53,7 @@ namespace GS2Studio.Generated.Character
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
+        Task<GS2Studio.Generated.CharacterRecruit.IReadOnlyCharacterRecruitBinderCollection> GetCharacterRecruits(CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -128,6 +129,8 @@ namespace GS2Studio.Generated.Character
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
+        private GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection? _characterRecruitsRoot;
+        private Task<GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection>? _characterRecruitsRootTask;
 
         private readonly ItemModelLoader __inventoryCharacterNamespaceInventoryModelItemModelLoader;
         private readonly ItemSetLoader __userdataInventoryCharacterItemModelLoader;
@@ -305,9 +308,52 @@ namespace GS2Studio.Generated.Character
             }
 
             _unsubscribers.Clear();
+            _characterRecruitsRoot?.Dispose();
 
             GC.SuppressFinalize(this);
         }
+
+        #region Reference navigation
+        public async Task<GS2Studio.Generated.CharacterRecruit.IReadOnlyCharacterRecruitBinderCollection> GetCharacterRecruits(CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+            var root = await EnsureCharacterRecruitsRootAsync(cancellationToken);
+            return root.WhereCharacter(_model.Id);
+        }
+        #endregion
+
+        #region Reference navigation roots
+        private async Task<GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection> EnsureCharacterRecruitsRootAsync(CancellationToken cancellationToken)
+        {
+            if (_characterRecruitsRootTask == null)
+            {
+                _characterRecruitsRootTask = BuildCharacterRecruitsRootAsync(cancellationToken);
+            }
+            var task = _characterRecruitsRootTask;
+            GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection root;
+            try
+            {
+                root = await task;
+            }
+            catch
+            {
+                if (ReferenceEquals(_characterRecruitsRootTask, task)) _characterRecruitsRootTask = null;
+                throw;
+            }
+
+            if (_disposed) { root.Dispose(); ThrowIfDisposed(); }
+            _characterRecruitsRoot = root;
+            return _characterRecruitsRoot;
+        }
+
+        private async Task<GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection> BuildCharacterRecruitsRootAsync(CancellationToken cancellationToken)
+        {
+            var root = await GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection.CreateFromExchangeCharacterRecruitMasterDataAsync(_gs2, _session, cancellationToken);
+            try { root.SubscribeFromExchangeCharacterRecruitMasterData(); }
+            catch { root.Dispose(); throw; }
+            return root;
+        }
+        #endregion
 
         #region Model composition
         /// <summary>

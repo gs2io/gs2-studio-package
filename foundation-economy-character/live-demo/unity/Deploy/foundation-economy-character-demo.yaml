@@ -1,0 +1,48 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_CharacterRecruit:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CharacterRecruit"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "archer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireItemSetByUserId"
+                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"archer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+          - name: "healer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireItemSetByUserId"
+                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"healer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+          - name: "knight"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireItemSetByUserId"
+                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+          - name: "mage"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireItemSetByUserId"
+                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"mage\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_CharacterRecruit"
+  ExchangeNamespace_CharacterRecruit:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "CharacterRecruit"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

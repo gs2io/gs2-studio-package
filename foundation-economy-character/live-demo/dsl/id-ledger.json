@@ -2,15 +2,21 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
+    "property:CharacterRecruit.character": "prop_01M2GJ5HFJCH04MAQB4D9DQYKY",
     "row:dt_HAZCRJ576BHDWFVB28NQW77Y01.characterexperience": "row_01M2FZNNF21Y85M0JDZM88818A",
     "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.archer": "row_01M2FZNNF2DY4PYP7V7P7FQEJA",
     "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.healer": "row_01M2FZNNF2E89PS7BNWJS7P8JP",
     "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.knight": "row_01M2FZNNF24XNAS9SNKKPW1HHZ",
     "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.mage": "row_01M2FZNNF2C3R4J88CVERVYS7A",
     "row:dt_ZR7PA0W682HX7ZFXGBE4BRF37K.charactercollection": "row_01M2FZNNF2EVGNAT20G9B61C7H",
+    "row:type:CharacterRecruit.archer": "row_01M2GJ5HFJQQSBSGSJ01REDKB8",
+    "row:type:CharacterRecruit.healer": "row_01M2GJ5HFJPVTPBS1Y3XZG1KME",
+    "row:type:CharacterRecruit.knight": "row_01M2GJ5HFJQHA04PSTBGJ1DW54",
+    "row:type:CharacterRecruit.mage": "row_01M2GJ5HFJZVX0NCSKRC7JJSKZ",
     "type:Character": "dt_01M2FZNNF20R4VKFQ0JMNXKT4B",
     "type:CharacterCollection": "dt_01M2FZNNF238EP6W1N0VCR6GCP",
-    "type:CharacterExperience": "dt_01M2FZNNF26XCS5BNGCW5YSBA2"
+    "type:CharacterExperience": "dt_01M2FZNNF26XCS5BNGCW5YSBA2",
+    "type:CharacterRecruit": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J"
   },
   "deterministicOverrides": {}
 }

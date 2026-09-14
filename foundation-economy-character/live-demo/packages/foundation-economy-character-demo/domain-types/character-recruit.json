@@ -1,0 +1,74 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "localizedDisplay": {
+          "en": {
+            "description": "Grants one character in the demo.",
+            "label": "Recruit"
+          },
+          "ja": {
+            "description": "デモでキャラクターを1体入手します。",
+            "label": "勧誘"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M2GJ5HFJCH04MAQB4D9DQYKY",
+        "localizedDisplay": {
+          "en": {
+            "description": "The character this recruit grants.",
+            "label": "Character"
+          },
+          "ja": {
+            "description": "この勧誘が付与するキャラクターです。",
+            "label": "キャラクター"
+          }
+        },
+        "name": "character",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Recruit",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "cc2afb32-33a6-5439-a1ec-40d450e67bd6",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-character-demo"
+      }
+    }
+  ],
+  "id": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J",
+  "kind": "local",
+  "name": "CharacterRecruit",
+  "singleEntry": false
+}

@@ -1,0 +1,51 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "character",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J",
+                    "typeName": "CharacterRecruit"
+                  },
+                  "propertyId": "prop_01M2GJ5HFJCH04MAQB4D9DQYKY"
+                },
+                "kind": "parent",
+                "parentResourceId": "cc2afb32-33a6-5439-a1ec-40d450e67bd6"
+              }
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AcquireCharacter",
+        "transformPackageId": "foundation-economy-character"
+      }
+    ]
+  },
+  "id": "c46e3347-2ea0-5dcf-8219-4baee34eee37",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J",
+    "typeName": "CharacterRecruit"
+  }
+}

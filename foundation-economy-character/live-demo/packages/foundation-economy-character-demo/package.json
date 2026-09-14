@@ -7,8 +7,20 @@
   },
   "display": {
     "description": {
-      "en": "Supplies the roster, level curve and capacity used by the live demo.",
-      "ja": "ライブデモ用のキャラクター編成・レベル曲線・所持枠を提供します。"
+      "en": "Supplies the roster, level curve, capacity and recruits used by the live demo.",
+      "ja": "ライブデモ用のキャラクター編成・レベル曲線・所持枠・勧誘を提供します。"
+    },
+    "domainTypes": {
+      "dt_01M2GJ5HFJSXWK43SFCMXFZA3J": {
+        "description": {
+          "en": "A demo exchange that grants one character for nothing.",
+          "ja": "無償でキャラクターを1体入手できるデモ用の交換です。"
+        },
+        "label": {
+          "en": "Recruit",
+          "ja": "勧誘"
+        }
+      }
     },
     "label": {
       "en": "Characters (demo data)",

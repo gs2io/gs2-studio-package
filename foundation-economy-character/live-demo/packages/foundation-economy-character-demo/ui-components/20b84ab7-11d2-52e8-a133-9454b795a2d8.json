@@ -1,0 +1,32 @@
+{
+  "id": "20b84ab7-11d2-52e8-a133-9454b795a2d8",
+  "items": [
+    {
+      "componentClassName": "CharacterLabel",
+      "id": "240c4f2a-e13c-5ffe-b90c-f88464e3294e",
+      "kind": "templateLabel",
+      "name": "CharacterRecruit",
+      "sources": [
+        {
+          "key": "character",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M2GJ5HFJCH04MAQB4D9DQYKY"
+          }
+        }
+      ],
+      "template": "Recruit {character}"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "RecruitButton",
+      "delegatedActionKey": "resource:foundation-economy-character-demo:masterData:cc2afb32-33a6-5439-a1ec-40d450e67bd6::Gs2Exchange:RateModel.Exchange",
+      "id": "b2595d17-3c11-51d9-b5a0-d9e0fea74bf6",
+      "kind": "buttonAction",
+      "name": "CharacterRecruit"
+    }
+  ],
+  "name": "CharacterRecruit",
+  "targetDomainType": "CharacterRecruit",
+  "targetDomainTypeId": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J"
+}
