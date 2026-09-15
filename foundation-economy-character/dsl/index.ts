@@ -395,9 +395,13 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
         { level: ui.prop("level"), levelCap: ui.prop("levelCap") },
         { name: "Character" }
       )
+      // Experience is cumulative, so the bar has to start where the current
+      // level did rather than at zero — otherwise every level-up shifts the
+      // origin further right and the bar stops reading as progress.
       .gauge("ExperienceGauge", ui.prop("experience"), ui.prop("nextLevelExperience"), {
         name: "Character",
         clamp: true,
+        min: ui.rankFloor(CharacterExperience, "threshold", ui.prop("level")),
       })
       .activeToggle("LevelActiveToggle", UiCond.eq(ui.prop("level"), ui.prop("levelCap")), {
         name: "CharacterReachLevelCap",

@@ -149,6 +149,24 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
+        /// Strips the generated components a previous build left on the mount
+        /// itself. <see cref="ClearChildren"/> destroys children and nothing
+        /// else, so page-root handlers would otherwise stack up one copy per
+        /// rebuild — each one binding and reloading alongside the others.
+        /// Only the generated namespace is touched; anything a demo author
+        /// added to the mount by hand is theirs to keep.
+        /// </summary>
+        private static void ClearGeneratedComponents(Transform mount)
+        {
+            var doomed = mount.GetComponents<MonoBehaviour>()
+                .Where(component =>
+                    component != null &&
+                    (component.GetType().Namespace ?? "").StartsWith(GeneratedNamespacePrefix))
+                .ToList();
+            foreach (var component in doomed) UnityEngine.Object.DestroyImmediate(component);
+        }
+
+        /// <summary>
         /// The generated handlers that own a binder of their own, in a stable
         /// order. List and list-item handlers are excluded: they are driven by
         /// a parent rather than standing on their own in a page.
@@ -208,6 +226,7 @@ namespace GS2Studio.Showroom.EditorTools
         {
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var handlers = GeneratedHandlers();
+            ClearGeneratedComponents(content);
             // Every handler answers a completed action, because an action can
             // change anything the page is showing and a handler has no other
             // way to hear about it.
@@ -219,7 +238,19 @@ namespace GS2Studio.Showroom.EditorTools
                 var labels = UiComponentsFor(handler, "OnUpdate");
                 var buttons = UiComponentsFor(handler, "OnCompleted");
                 var gauges = GaugesFor(handler);
-                if (labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0) continue;
+                if (labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0)
+                {
+                    // Nothing to draw, but something to read: a configuration
+                    // model a package never gave a component of its own is
+                    // still what another section's reading is composed from.
+                    // So it is mounted without a section — an empty heading
+                    // over an empty body says nothing a visitor wants — and
+                    // stays out of `placed`, because a handler that draws
+                    // nothing has nothing to redraw, and reloading it after
+                    // every action would throw away a cache for no one.
+                    if (!NeedsIdentityKeys(handler)) content.gameObject.AddComponent(handler);
+                    continue;
+                }
 
                 var section = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab, content);
                 section.name = ModelNameOf(handler);
@@ -242,7 +273,14 @@ namespace GS2Studio.Showroom.EditorTools
                     continue;
                 }
 
-                placed.Add(section.AddComponent(handler));
+                // A single-entry handler serves the whole page rather than one
+                // section: a component resolves its handler by walking up the
+                // parent chain, so mounting it on the page root puts it above
+                // every section at once. Its own rows still reach it — they
+                // climb `label -> Items -> Section -> content` — and a gauge in
+                // another section's list row can now read it too, which is what
+                // a reading composed from two models needs.
+                placed.Add(content.gameObject.AddComponent(handler));
                 AddRows(ItemsOf(section.transform), labels, buttons, gauges, page);
             }
 
