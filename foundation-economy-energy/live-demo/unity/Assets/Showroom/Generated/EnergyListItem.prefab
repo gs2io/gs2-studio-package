@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 3339203230464372987}
   - component: {fileID: 2508856534045285771}
   - component: {fileID: 4589820273833591709}
+  - component: {fileID: 3154085795529856334}
   m_Layer: 0
   m_Name: EnergyListItem
   m_TagString: Untagged
@@ -214,6 +215,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Energy.EnergyListItemHandler
   _index: 0
   _content: {fileID: 0}
+--- !u!114 &3154085795529856334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465558617360299405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d1543198ff74d0a93cfddb975598f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Energy.UI.EnergyRecoveryPendingToggle
+  _handler: {fileID: 0}
+  _activeWhenTrue: []
+  _activeWhenFalse:
+  - {fileID: 1388284281930926869}
 --- !u!1 &3979787086175554477
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,7 +1003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Name
-      value: EnergyNextRecoveryLabel
+      value: EnergyNextRecoveryValue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -994,7 +1011,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8028833706105586564}
+      addedObject: {fileID: 8653960560585288408}
+    - targetCorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2350809160541644644}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
 --- !u!114 &562892397802972573 stripped
 MonoBehaviour:
@@ -1012,7 +1032,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 7277601880415624108}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8028833706105586564
+--- !u!114 &8653960560585288408
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1021,16 +1041,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1388284281930926869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44882c5fccff109c9f1d673c370d1873, type: 3}
+  m_Script: {fileID: 11500000, guid: f0920582bf7c366225d699c719400eff, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Energy.UI.EnergyNextRecoveryLabel
+  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Energy.UI.EnergyNextRecoveryValue
   _handler: {fileID: 0}
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 562892397802972573}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
-        m_MethodName: set_text
+      - m_Target: {fileID: 2350809160541644644}
+        m_TargetAssemblyTypeName: StaminaCountdown, Assembly-CSharp
+        m_MethodName: SetDeadline
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1040,6 +1060,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onSelect:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2350809160541644644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388284281930926869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1565661fe3dae438aae24f0671ea2a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaCountdown
+  _label: {fileID: 562892397802972573}
 --- !u!224 &8132773711418537373 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}

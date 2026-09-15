@@ -2,60 +2,6 @@
   "id": "644a6944-7e64-5f39-93fc-87edc65c6e80",
   "items": [
     {
-      "clamp": true,
-      "componentClassName": "StaminaGauge",
-      "current": {
-        "kind": "property",
-        "propertyId": "prop_XFMYM93GTF2261GG2KNVHC9V5K"
-      },
-      "id": "3159e4ce-036f-5b07-9126-32fbb8b315f9",
-      "kind": "gauge",
-      "max": {
-        "kind": "property",
-        "propertyId": "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR"
-      },
-      "name": "Energy"
-    },
-    {
-      "componentClassName": "StaminaLabel",
-      "id": "20d53c63-3ce8-5672-a1ae-b1ae70365e23",
-      "kind": "templateLabel",
-      "name": "Energy",
-      "sources": [
-        {
-          "key": "currentValue",
-          "source": {
-            "kind": "property",
-            "propertyId": "prop_XFMYM93GTF2261GG2KNVHC9V5K"
-          }
-        },
-        {
-          "key": "currentMaximumValue",
-          "source": {
-            "kind": "property",
-            "propertyId": "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR"
-          }
-        }
-      ],
-      "template": "{currentValue}/{currentMaximumValue}"
-    },
-    {
-      "componentClassName": "NextRecoveryLabel",
-      "id": "8d3e3049-613d-59a5-b954-9b4f6ff4cecc",
-      "kind": "templateLabel",
-      "name": "Energy",
-      "sources": [
-        {
-          "key": "nextRecoverdAt",
-          "source": {
-            "kind": "property",
-            "propertyId": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ"
-          }
-        }
-      ],
-      "template": "{nextRecoverdAt}"
-    },
-    {
       "arguments": [],
       "componentClassName": "ConsumeButton",
       "delegatedActionKey": "resource:foundation-economy-energy-demo:masterData:a79d51c8-3652-5fa2-afe0-6076cd004538::Gs2Exchange:RateModel.Exchange",

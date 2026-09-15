@@ -6,6 +6,7 @@ import {
   PT,
   Source,
   transactionSetting,
+  UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -159,6 +160,42 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
           .mapParameter("consumeValue", "value")
       )
   )
+  // A meter is read against its own ceiling and its own clock, so the parts
+  // any stamina screen needs are supplied here rather than rebuilt per title.
+  // What a title adds on top is what spends and restores it, which is a
+  // different question for every game.
+  .uiComponent(Energy, ui =>
+    ui
+      // The ceiling is the player's own `currentMaximumValue`, not the
+      // authored default: GS2 can raise a player's capacity, and a bar
+      // measured against the default would then stop short of full.
+      .gauge("StaminaGauge", ui.prop("currentValue"), ui.prop("currentMaximumValue"), {
+        name: "Energy",
+        clamp: true,
+      })
+      .templateLabel(
+        "StaminaLabel",
+        "{currentValue}/{currentMaximumValue}",
+        {
+          currentValue: ui.prop("currentValue"),
+          currentMaximumValue: ui.prop("currentMaximumValue"),
+        },
+        { name: "Energy" }
+      )
+      // The recovery clock as a typed `DateTime`, so a screen can count down
+      // to it rather than print it.
+      .value("NextRecoveryValue", ui.prop("nextRecoverdAt"), { name: "Energy" })
+      // A full meter has nothing to wait for, and GS2 says so by leaving the
+      // recovery clock unset — which reads as the epoch rather than as
+      // "nothing pending". Being full is the same fact stated directly, so
+      // anything that hides while there is nothing to wait for hangs off this.
+      .activeToggle(
+        "FullActiveToggle",
+        UiCond.gte(ui.prop("currentValue"), ui.prop("currentMaximumValue")),
+        { name: "Energy" }
+      )
+  )
+
   .actionTransform("RecoveryEnergy", at =>
     at
       .category("acquire")

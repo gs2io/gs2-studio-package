@@ -174,44 +174,12 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
       .addChild(RecoverRateModel)
   )
 
-  // Everything the visitor sees hangs off the one stamina model: the bar, the
-  // numbers beside it and both buttons. They are generated components a scene
-  // wires in the Inspector, which is the point of the demo — nothing here
-  // needs a script of its own.
-  //
-  // Every property is inherited from the feature package, so each is addressed
-  // by the id the dependency published: a single-package build cannot see an
-  // overlay's inherited names.
+  // The bar, the numbers beside it and the recovery clock all come from the
+  // feature package: reading a meter is the same job in every title. What the
+  // demo adds is the pair of presses that move it, which is the part a title
+  // designs for itself.
   .uiComponent(Energy, ui =>
     ui
-      // The ceiling is the player's own `currentMaximumValue`, not a number
-      // read out of a table: GS2 can raise a player's capacity, and a gauge
-      // measured against the authored default would then stop short of full.
-      .gauge(
-        "StaminaGauge",
-        ui.inheritedProp(energy.propertyId("Energy", "currentValue")),
-        ui.inheritedProp(energy.propertyId("Energy", "currentMaximumValue")),
-        { name: "Energy", clamp: true }
-      )
-      .templateLabel(
-        "StaminaLabel",
-        "{currentValue}/{currentMaximumValue}",
-        {
-          currentValue: ui.inheritedProp(energy.propertyId("Energy", "currentValue")),
-          currentMaximumValue: ui.inheritedProp(energy.propertyId("Energy", "currentMaximumValue")),
-        },
-        { name: "Energy" }
-      )
-      // The recovery clock. A `value` component would hand the scene a typed
-      // `DateTime` and leave the formatting to a countdown script, but the
-      // showroom page is generated and has no such script — so the reading is
-      // a label, and the page shows when the next tick lands.
-      .templateLabel(
-        "NextRecoveryLabel",
-        "{nextRecoverdAt}",
-        { nextRecoverdAt: ui.inheritedProp(energy.propertyId("Energy", "nextRecoverdAt")) },
-        { name: "Energy" }
-      )
       .buttonAction("ConsumeButton", "Consume", undefined, { name: "Energy" })
       .buttonAction("RecoverButton", "Recover", undefined, { name: "Energy" })
   )

@@ -4,5 +4,11 @@
   },
   "listSources": {
     "Energy": "MasterData"
+  },
+  "countdowns": {
+    "EnergyNextRecoveryValue": "StaminaCountdown"
+  },
+  "activeToggles": {
+    "EnergyFullActiveToggle": ["EnergyNextRecoveryValue"]
   }
 }
