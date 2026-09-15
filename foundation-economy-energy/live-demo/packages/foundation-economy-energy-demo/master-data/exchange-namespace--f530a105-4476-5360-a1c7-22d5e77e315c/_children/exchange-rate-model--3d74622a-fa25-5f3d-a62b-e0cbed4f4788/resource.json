@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M2JG8Q6GMNFPA3732XVHMCN5",
+            "typeName": "Energy"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "3d74622a-fa25-5f3d-a62b-e0cbed4f4788",
+  "location": {
+    "modelName": "RateModel",
+    "service": "exchange"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2JG8Q6GMNFPA3732XVHMCN5",
+    "typeName": "Energy"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "commitSha": "997ef5da35b70e85ce475e4ab615546e0e6dd492",
+      "integrity": "sha256-A39pT32rmNCcbpHbjfoUOjyFcN9bdlhyxcXRI9RVw4A=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-energy",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-energy/packages/foundation-economy-energy",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

@@ -1,0 +1,32 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "value",
+            "source": {
+              "kind": "static",
+              "value": 5
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "RecoveryEnergy",
+        "transformPackageId": "foundation-economy-energy"
+      }
+    ]
+  },
+  "id": "91d2481b-a3cc-557f-bff7-ba4838fea35b",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2JG8Q6GMNFPA3732XVHMCN5",
+    "typeName": "Energy"
+  }
+}

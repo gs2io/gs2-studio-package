@@ -1,0 +1,32 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "value",
+            "source": {
+              "kind": "static",
+              "value": 10
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ConsumeEnergy",
+        "transformPackageId": "foundation-economy-energy"
+      }
+    ]
+  },
+  "id": "e24a590c-f83a-5560-981f-b9b7199f0402",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2JG8Q6GMNFPA3732XVHMCN5",
+    "typeName": "Energy"
+  }
+}

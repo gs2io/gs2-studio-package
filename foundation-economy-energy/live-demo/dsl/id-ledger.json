@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_TX5D50PD77NCTNGR3SKBGETDFY.stamina": "row_01M2JG8Q6G20BTSYK8ZW3VTA46",
+    "type:Energy": "dt_01M2JG8Q6GMNFPA3732XVHMCN5"
+  },
+  "deterministicOverrides": {}
+}
