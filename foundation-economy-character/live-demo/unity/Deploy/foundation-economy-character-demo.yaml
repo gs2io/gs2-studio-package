@@ -35,10 +35,56 @@ Resources:
       Mode: "direct"
     DependsOn:
       - "ExchangeNamespace_CharacterRecruit"
+  ExchangeCurrentRateMaster_CharacterTrain:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CharacterTrain"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "archer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Experience:AddExperienceByUserId"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":40}"
+          - name: "healer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Experience:AddExperienceByUserId"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":40}"
+          - name: "knight"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Experience:AddExperienceByUserId"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":40}"
+          - name: "mage"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Experience:AddExperienceByUserId"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":40}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_CharacterTrain"
   ExchangeNamespace_CharacterRecruit:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "CharacterRecruit"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_CharacterTrain:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "CharacterTrain"
       TransactionSetting:
         AcquireActionUseJobQueue: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"

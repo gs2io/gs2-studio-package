@@ -14,8 +14,11 @@ using System.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+using Gs2.Unity.Core.Model;
+using Gs2.Unity.Gs2Exchange.Model;
 using Gs2.Unity.Gs2Experience.Model;
 using Gs2.Unity.Gs2Inventory.Model;
+using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Experience;
 using Gs2Bind.Gs2Inventory;
 
@@ -47,6 +50,8 @@ namespace GS2Studio.Generated.Character
         void Invalidate();
         Task MountFromInventoryCharacterMasterDataAsync(CancellationToken cancellationToken = default);
         void SubscribeFromInventoryCharacterMasterData(Action? onChange = null, Action<Exception>? onError = null);
+        Task MountFromExchangeCharacterTrainMasterDataAsync(CancellationToken cancellationToken = default);
+        void SubscribeFromExchangeCharacterTrainMasterData(Action? onChange = null, Action<Exception>? onError = null);
         Task MountFromInventoryCharacterUserDataAsync(CancellationToken cancellationToken = default);
         void SubscribeFromInventoryCharacterUserData(Action? onChange = null, Action<Exception>? onError = null);
     }
@@ -191,9 +196,9 @@ namespace GS2Studio.Generated.Character
         private Action? _onChange;
 
         // Sort comparers — `_configuredComparer` is what consumers observe via
-        // the `Comparer` getter; `_effectiveComparer` always wraps that with
-        // an Id tie-break so SortBinders is stable for non-unique keys and
-        // user-supplied non-stable comparers.
+        // the `Comparer` getter; `_effectiveComparer` wraps it with an Id
+        // tie-break for distinct IDs. Same-ID rows can still compare equal;
+        // SortBinders uses stable OrderBy to preserve their input order.
         private IComparer<IReadOnlyCharacterBinder> _configuredComparer = CharacterBinderComparer.Default;
         private IComparer<IReadOnlyCharacterBinder> _effectiveComparer =
             new CharacterBinderIdTieBreakComparer(CharacterBinderComparer.Default);
@@ -201,9 +206,11 @@ namespace GS2Studio.Generated.Character
         /// <summary>
         /// User-facing comparer driving the binder sort order. Reading returns
         /// the value last assigned (no wrapper leakage). Setting installs an
-        /// Id-tie-break wrapper internally so the sort remains stable even when
-        /// the supplied comparer treats two binders as equal. Typed over the
-        /// non-owning IReadOnlyCharacterBinder so it never exposes the owning binder.
+        /// Id-tie-break wrapper internally so distinct Model.Id values have a
+        /// deterministic fallback when the supplied comparer returns 0. Rows
+        /// with the same Id remain equal and rely on SortBinders' stable
+        /// OrderBy. Typed over the non-owning IReadOnlyCharacterBinder so
+        /// it never exposes the owning binder.
         /// </summary>
         public IComparer<IReadOnlyCharacterBinder> Comparer
         {
@@ -271,15 +278,17 @@ namespace GS2Studio.Generated.Character
         {
             ThrowIfDisposed();
             new ItemModelArrayLoader("Character", "Character").Invalidate(_gs2, _session);
+            new RateModelArrayLoader("CharacterTrain").Invalidate(_gs2, _session);
             new ItemSetArrayLoader("Character", "Character").Invalidate(_gs2, _session);
         }
 
         /// <summary>
-        /// Sorts <see cref="Binders"/> into a deterministic order. Called at
-        /// the tail of every reconcile so consumers see a stable ordering
-        /// across mounts and subscription callbacks. Default is ascending by
-        /// <c>Model.Id</c>; regeneration with an authoring-declared sort key
-        /// will replace this body without touching reconcile call sites.
+        /// Sorts the private <c>_binders</c> list into the configured order.
+        /// Called at the tail of every reconcile so consumers see stable
+        /// ordering across mounts and subscription callbacks. The comparer
+        /// supplies the primary key and Id tie-break; LINQ <c>OrderBy</c>
+        /// preserves input order when both return 0. An authoring-declared
+        /// sort key changes the comparer slot, not this shared sort body.
         /// </summary>
         private void SortBinders()
         {
@@ -446,7 +455,7 @@ namespace GS2Studio.Generated.Character
         {
             var model = CharacterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name)), string.Empty);
             ApplyInventoryCharacterMasterItemTo(model, item);
-            var binder = new CharacterBinder(model, _gs2, _session, itemSetName: item.Name);
+            var binder = new CharacterBinder(model, _gs2, _session);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
@@ -468,6 +477,134 @@ namespace GS2Studio.Generated.Character
         private string? ExtractInventoryCharacterMasterRowKey(EzItemModel item)
         {
             var id = ExtractInventoryCharacterMasterIdentity(item);
+            if (EqualityComparer<CharacterId>.Default.Equals(id, default)) return null;
+            if (string.IsNullOrEmpty(item.Name)) return null;
+            return $"{item.Name}";
+        }
+        /// <summary>One-shot Create + MountFromExchangeCharacterTrainMasterDataAsync (no subscription).</summary>
+        public static async Task<CharacterBinderCollection> CreateFromExchangeCharacterTrainMasterDataAsync(
+            Gs2Domain gs2,
+            IGameSession session,
+            CancellationToken cancellationToken = default)
+        {
+            var coll = new CharacterBinderCollection(gs2, session);
+            await coll.MountFromExchangeCharacterTrainMasterDataAsync(cancellationToken);
+            return coll;
+        }
+
+        public async Task MountFromExchangeCharacterTrainMasterDataAsync(CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+            cancellationToken.ThrowIfCancellationRequested();
+            var arrayLoader = new RateModelArrayLoader("CharacterTrain");
+            var items = await arrayLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            await ReconcileFromExchangeCharacterTrainMasterItems(items, attachChildSubscribe: false, cancellationToken);
+            _mounted = true;
+        }
+
+        public void SubscribeFromExchangeCharacterTrainMasterData(Action? onChange = null, Action<Exception>? onError = null)
+        {
+            ThrowIfDisposed();
+            if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            _subscriptionActive = true;
+            // Consumer-facing notification, wrapped once so a throwing consumer
+            // callback routes to onError (or Debug) instead of escaping the
+            // loader's async-void chain.
+            Action notify = () =>
+            {
+                try { onChange?.Invoke(); }
+                catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
+            };
+            _onChange = notify;
+            foreach (var b in _binders) b.Subscribe(notify);
+            var arrayLoader = new RateModelArrayLoader("CharacterTrain");
+            _unsubscribers.Add(arrayLoader.Subscribe(
+                _gs2,
+                _session,
+                async (_, _, items) =>
+                {
+                    if (_disposed) return;
+                    try
+                    {
+                        await ReconcileFromExchangeCharacterTrainMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex);
+                    }
+                },
+                notify
+            ));
+        }
+
+        private async Task ReconcileFromExchangeCharacterTrainMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        {
+            var seen = new HashSet<string>();
+            foreach (var item in items)
+            {
+                if (_disposed) return;
+                var rowKey = ExtractExchangeCharacterTrainMasterRowKey(item);
+                if (rowKey == null) continue;
+                seen.Add(rowKey);
+                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                {
+                    ApplyExchangeCharacterTrainMasterItemTo(existing.MutableModel, item);
+                }
+                else
+                {
+                    var binder = await BuildBinderFromExchangeCharacterTrainMasterItem(item, cancellationToken);
+                    if (attachChildSubscribe) binder.Subscribe(_onChange);
+                    _bindersByRowKey[rowKey] = binder;
+                    _binders.Add(binder);
+                    ItemAdded?.Invoke(binder);
+                }
+            }
+            if (_bindersByRowKey.Count > seen.Count)
+            {
+                var toRemove = new List<string>();
+                foreach (var kv in _bindersByRowKey)
+                {
+                    if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
+                }
+                foreach (var rowKey in toRemove)
+                {
+                    var binder = _bindersByRowKey[rowKey];
+                    _bindersByRowKey.Remove(rowKey);
+                    _binders.Remove(binder);
+                    ItemRemoved?.Invoke(binder);
+                    binder.Dispose();
+                }
+            }
+            SortBinders();
+        }
+
+        private async Task<CharacterBinder> BuildBinderFromExchangeCharacterTrainMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        {
+            var model = CharacterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name)), string.Empty);
+            ApplyExchangeCharacterTrainMasterItemTo(model, item);
+            var binder = new CharacterBinder(model, _gs2, _session);
+            await binder.MountAsync(cancellationToken);
+            return binder;
+        }
+
+        private static void ApplyExchangeCharacterTrainMasterItemTo(MutableCharacter model, EzRateModel item)
+        {
+            // This loader carries no master-item field assignments; reconcile manages
+            // membership only (per-element field changes are tracked by each element
+            // binder's own Subscribe).
+            _ = item;
+            _ = model;
+        }
+
+        private CharacterId ExtractExchangeCharacterTrainMasterIdentity(EzRateModel item)
+        {
+            return (string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name));
+        }
+
+        private string? ExtractExchangeCharacterTrainMasterRowKey(EzRateModel item)
+        {
+            var id = ExtractExchangeCharacterTrainMasterIdentity(item);
             if (EqualityComparer<CharacterId>.Default.Equals(id, default)) return null;
             if (string.IsNullOrEmpty(item.Name)) return null;
             return $"{item.Name}";

@@ -8,8 +8,11 @@
 using System;
 
 using UnityEngine;
+using Gs2.Unity.Core.Model;
+using Gs2.Unity.Gs2Exchange.Model;
 using Gs2.Unity.Gs2Experience.Model;
 using Gs2.Unity.Gs2Inventory.Model;
+using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Experience;
 using Gs2Bind.Gs2Inventory;
 using GS2Studio.Generated.Runtime;

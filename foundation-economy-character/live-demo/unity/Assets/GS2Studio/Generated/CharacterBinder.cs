@@ -14,8 +14,11 @@ using Cysharp.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+using Gs2.Unity.Core.Model;
+using Gs2.Unity.Gs2Exchange.Model;
 using Gs2.Unity.Gs2Experience.Model;
 using Gs2.Unity.Gs2Inventory.Model;
+using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Experience;
 using Gs2Bind.Gs2Inventory;
 
@@ -41,6 +44,7 @@ namespace GS2Studio.Generated.Character
     /// </summary>
     public interface IActionableCharacterBinder : IReadOnlyCharacterBinder
     {
+        Task Train();
     }
 
     /// <summary>
@@ -134,6 +138,8 @@ namespace GS2Studio.Generated.Character
         private GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection? _characterRecruitsRoot;
         private Task<GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection>? _characterRecruitsRootTask;
 
+        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly RateModelLoader __exchangeCharacterTrainNamespaceRateModelLoader;
         private readonly ItemModelLoader __inventoryCharacterNamespaceInventoryModelItemModelLoader;
         private readonly ItemSetLoader __userdataInventoryCharacterItemModelLoader;
         private readonly StatusLoader __userdataExperienceCharacterExperienceExperienceModelLoader;
@@ -149,6 +155,8 @@ namespace GS2Studio.Generated.Character
             string? itemSetName = null
         ) : base(model, gs2, session)
         {
+            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("CharacterTrain", _model.Id, 0);
+            __exchangeCharacterTrainNamespaceRateModelLoader = new RateModelLoader("CharacterTrain", _model.Id);
             __inventoryCharacterNamespaceInventoryModelItemModelLoader = new ItemModelLoader("Character", "Character", _model.Id);
             __userdataInventoryCharacterItemModelLoader = new ItemSetLoader("Character", "Character", _model.Id, itemSetName!);
             __userdataExperienceCharacterExperienceExperienceModelLoader = new StatusLoader("CharacterExperience", "Experience", _model.PropertyId);
@@ -191,6 +199,16 @@ namespace GS2Studio.Generated.Character
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
+            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_transactionAcquireAction != null)
+            {
+            }
+            var _exchangeCharacterTrainNamespaceRateModel = await __exchangeCharacterTrainNamespaceRateModelLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_exchangeCharacterTrainNamespaceRateModel != null)
+            {
+            }
             var _inventoryCharacterNamespaceInventoryModelItemModel = await __inventoryCharacterNamespaceInventoryModelItemModelLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyInventoryCharacterNamespaceInventoryModelItemModel(_model, _inventoryCharacterNamespaceInventoryModelItemModel);
@@ -210,6 +228,32 @@ namespace GS2Studio.Generated.Character
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
+            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__exchangeCharacterTrainNamespaceRateModelLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
             _unsubscribers.Add(__inventoryCharacterNamespaceInventoryModelItemModelLoader.Subscribe(
                 _gs2,
                 _session,
@@ -251,6 +295,8 @@ namespace GS2Studio.Generated.Character
         public void Invalidate()
         {
             ThrowIfDisposed();
+            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            __exchangeCharacterTrainNamespaceRateModelLoader.Invalidate(_gs2, _session);
             __inventoryCharacterNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
             __userdataInventoryCharacterItemModelLoader.Invalidate(_gs2, _session);
             __userdataExperienceCharacterExperienceExperienceModelLoader.Invalidate(_gs2, _session);
@@ -314,6 +360,14 @@ namespace GS2Studio.Generated.Character
 
             GC.SuppressFinalize(this);
         }
+
+        #region Delegated actions
+        public async Task Train()
+        {
+            EnsureActionContext();
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterTrain", _model.Id).Exchange(_gs2, _session, 1, new Gs2.Unity.Gs2Exchange.Model.EzConfig[] { new Gs2.Unity.Gs2Exchange.Model.EzConfig { Key = "propertyId", Value = _model.PropertyId } });
+        }
+        #endregion
 
         #region Reference navigation
         public async Task<GS2Studio.Generated.CharacterRecruit.IReadOnlyCharacterRecruitBinderCollection> GetCharacterRecruits(CancellationToken cancellationToken = default)

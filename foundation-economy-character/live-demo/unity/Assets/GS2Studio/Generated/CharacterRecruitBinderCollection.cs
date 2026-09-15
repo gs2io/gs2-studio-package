@@ -208,9 +208,9 @@ namespace GS2Studio.Generated.CharacterRecruit
         private Action? _onChange;
 
         // Sort comparers — `_configuredComparer` is what consumers observe via
-        // the `Comparer` getter; `_effectiveComparer` always wraps that with
-        // an Id tie-break so SortBinders is stable for non-unique keys and
-        // user-supplied non-stable comparers.
+        // the `Comparer` getter; `_effectiveComparer` wraps it with an Id
+        // tie-break for distinct IDs. Same-ID rows can still compare equal;
+        // SortBinders uses stable OrderBy to preserve their input order.
         private IComparer<IReadOnlyCharacterRecruitBinder> _configuredComparer = CharacterRecruitBinderComparer.Default;
         private IComparer<IReadOnlyCharacterRecruitBinder> _effectiveComparer =
             new CharacterRecruitBinderIdTieBreakComparer(CharacterRecruitBinderComparer.Default);
@@ -218,9 +218,11 @@ namespace GS2Studio.Generated.CharacterRecruit
         /// <summary>
         /// User-facing comparer driving the binder sort order. Reading returns
         /// the value last assigned (no wrapper leakage). Setting installs an
-        /// Id-tie-break wrapper internally so the sort remains stable even when
-        /// the supplied comparer treats two binders as equal. Typed over the
-        /// non-owning IReadOnlyCharacterRecruitBinder so it never exposes the owning binder.
+        /// Id-tie-break wrapper internally so distinct Model.Id values have a
+        /// deterministic fallback when the supplied comparer returns 0. Rows
+        /// with the same Id remain equal and rely on SortBinders' stable
+        /// OrderBy. Typed over the non-owning IReadOnlyCharacterRecruitBinder so
+        /// it never exposes the owning binder.
         /// </summary>
         public IComparer<IReadOnlyCharacterRecruitBinder> Comparer
         {
@@ -291,11 +293,12 @@ namespace GS2Studio.Generated.CharacterRecruit
         }
 
         /// <summary>
-        /// Sorts <see cref="Binders"/> into a deterministic order. Called at
-        /// the tail of every reconcile so consumers see a stable ordering
-        /// across mounts and subscription callbacks. Default is ascending by
-        /// <c>Model.Id</c>; regeneration with an authoring-declared sort key
-        /// will replace this body without touching reconcile call sites.
+        /// Sorts the private <c>_binders</c> list into the configured order.
+        /// Called at the tail of every reconcile so consumers see stable
+        /// ordering across mounts and subscription callbacks. The comparer
+        /// supplies the primary key and Id tie-break; LINQ <c>OrderBy</c>
+        /// preserves input order when both return 0. An authoring-declared
+        /// sort key changes the comparer slot, not this shared sort body.
         /// </summary>
         private void SortBinders()
         {

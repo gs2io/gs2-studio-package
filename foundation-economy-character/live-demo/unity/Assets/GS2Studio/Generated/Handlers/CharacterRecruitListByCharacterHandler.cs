@@ -60,6 +60,13 @@ namespace GS2Studio.Generated.CharacterRecruit
         private ICharacterRecruitBinderFactory? _binderFactory;
 
         private ICharacterRecruitBinderCollection? _collection;
+        // ReloadAsync binds every collection callback to the operation and
+        // collection that created it. This prevents a stale mount / callback
+        // from mutating the collection installed by a newer reload.
+        private long _reloadGeneration;
+        private Action<ICharacterRecruitBinder>? _collectionItemAddedCallback;
+        private Action<ICharacterRecruitBinder>? _collectionItemRemovedCallback;
+        private bool _isDestroyed;
         // The parent handler whose Bound event is currently subscribed. The
         // subscription lifecycle is deliberately decoupled from Cleanup():
         // ReloadAsync calls Cleanup() on entry, and dropping the subscription
@@ -98,9 +105,10 @@ namespace GS2Studio.Generated.CharacterRecruit
         // OnCollectionChanged. Without this guard, Resort would recurse.
         private bool _suppressOnChange;
 
-        /// <summary>Stable, identity-keyed non-owning view of the visible
-        /// (parent-matching) binder set, in collection order. The underlying
-        /// collection also holds non-matching binders; they are not exposed.</summary>
+        /// <summary>Stable index/enumeration view of the visible
+        /// (parent-matching) non-owning binder set, in collection order.
+        /// Model.Id is not unique across rows. The underlying collection also
+        /// holds non-matching binders; they are not exposed.</summary>
         public IReadOnlyList<IActionableCharacterRecruitBinder> Binders => _visibleBinders;
 
         /// <summary>Fires after Reload completes and on each subsequent visible-membership change.</summary>
@@ -141,7 +149,9 @@ namespace GS2Studio.Generated.CharacterRecruit
             set
             {
                 _comparer = value;
-                if (_collection == null) return;
+                var operationGeneration = _reloadGeneration;
+                var collection = _collection;
+                if (collection == null) return;
                 // Collection.Comparer rejects null with ArgumentNullException;
                 // substitute the generated default comparer so external callers
                 // can clear via `Comparer = null`. The comparer is a nested
@@ -151,13 +161,15 @@ namespace GS2Studio.Generated.CharacterRecruit
                 _suppressOnChange = true;
                 try
                 {
-                    _collection.Comparer = applied;
+                    collection.Comparer = applied;
                 }
                 finally
                 {
                     _suppressOnChange = false;
                 }
-                SyncSiblingOrder();
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+                SyncSiblingOrder(operationGeneration, collection);
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
                 ListChanged?.Invoke();
             }
         }
@@ -194,7 +206,9 @@ namespace GS2Studio.Generated.CharacterRecruit
         /// </summary>
         public void Resort()
         {
-            if (_collection == null) return;
+            var operationGeneration = _reloadGeneration;
+            var collection = _collection;
+            if (collection == null) return;
             // Re-assigning the same Comparer is the only public re-sort hook
             // on the BinderCollection surface. The setter calls SortBinders
             // and fires _onChange — guard re-entry via _suppressOnChange so
@@ -202,13 +216,15 @@ namespace GS2Studio.Generated.CharacterRecruit
             _suppressOnChange = true;
             try
             {
-                _collection.Comparer = _collection.Comparer;
+                collection.Comparer = collection.Comparer;
             }
             finally
             {
                 _suppressOnChange = false;
             }
-            SyncSiblingOrder();
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
         }
 
@@ -220,12 +236,17 @@ namespace GS2Studio.Generated.CharacterRecruit
         /// </summary>
         public async Task ReloadAsync(CancellationToken cancellationToken = default)
         {
+            if (_isDestroyed) return;
+            var operationGeneration = ++_reloadGeneration;
+            ICharacterRecruitBinderCollection? operationCollection = null;
             try
             {
                 Cleanup();
+                if (!IsCurrentOperation(operationGeneration, null)) return;
                 // Cleanup torn down any prior collection; notify so out-of-range
                 // list-item handlers clear before the fresh collection rebuilds.
                 ListChanged?.Invoke();
+                if (operationGeneration != _reloadGeneration) return;
                 var provider = ResolveRuntimeProvider();
                 if (provider == null)
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
@@ -240,31 +261,42 @@ namespace GS2Studio.Generated.CharacterRecruit
                     throw new InvalidOperationException("Parent CharacterHandlerBase has no bound binder yet.");
                 _parentId = parentBinder.Id;
 
-                _collection = ResolveBinderFactory().CreateCollection(gs2, session);
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session);
+                operationCollection = collection;
+                if (!IsCurrentOperation(operationGeneration, null))
+                {
+                    collection.Dispose();
+                    return;
+                }
+                _collection = collection;
 
                 // Re-apply a comparer that was set before / between Reloads so
                 // the freshly-built collection adopts it. Done before Mount so
                 // the initial reconcile already produces the sorted order.
                 if (_comparer != null)
                 {
-                    _collection.Comparer = _comparer;
+                    collection.Comparer = _comparer;
                 }
 
                 // Subscribe BEFORE Mount: the collection's reconcile invokes
                 // ItemAdded for every initial binder, so child handler creation
                 // happens through OnItemAdded rather than a post-mount foreach.
-                _collection.ItemAdded += OnItemAdded;
-                _collection.ItemRemoved += OnItemRemoved;
+                AttachCollectionCallbacks(operationGeneration, collection);
 
-                await _collection.MountFromExchangeCharacterRecruitMasterDataAsync(cancellationToken);
+                await collection.MountFromExchangeCharacterRecruitMasterDataAsync(cancellationToken);
 
-                SyncSiblingOrder();
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+                SyncSiblingOrder(operationGeneration, collection);
 
                 if (_autoSubscribe)
                 {
-                    _collection.SubscribeFromExchangeCharacterRecruitMasterData(OnCollectionChanged, OnCollectionFailed);
+                    if (!IsCurrentOperation(operationGeneration, collection)) return;
+                    Action collectionChanged = () => OnCollectionChanged(operationGeneration, collection);
+                    Action<Exception> collectionFailed = ex => OnCollectionFailed(operationGeneration, collection, ex);
+                    collection.SubscribeFromExchangeCharacterRecruitMasterData(collectionChanged, collectionFailed);
                 }
 
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
                 ListChanged?.Invoke();
             }
             catch (OperationCanceledException)
@@ -272,20 +304,28 @@ namespace GS2Studio.Generated.CharacterRecruit
                 // Cancellation (e.g. GameObject destroyed mid-reload): discard the
                 // partially-built collection and notify so list-item handlers fall
                 // back to empty state, then propagate without raising Failed.
-                Cleanup();
-                ListChanged?.Invoke();
+                if (IsCurrentOperation(operationGeneration, operationCollection))
+                {
+                    Cleanup();
+                    if (IsCurrentOperation(operationGeneration, null)) ListChanged?.Invoke();
+                }
                 throw;
             }
             catch (Exception ex)
             {
-                // Raise Failed for event subscribers, discard the partially-built
-                // collection and notify so list-item handlers fall back to empty
-                // state, then rethrow so an awaiting caller also observes the
-                // failure. The fire-and-forget Start path uses TryReloadAsync,
-                // which logs and swallows.
-                Failed?.Invoke(ex);
-                Cleanup();
-                ListChanged?.Invoke();
+                // Discard the partially-built collection, raise Failed for event
+                // subscribers, and notify so list-item handlers fall back to empty
+                // state. Re-check after each callback-bearing step because either
+                // may synchronously start a newer reload.
+                if (IsCurrentOperation(operationGeneration, operationCollection))
+                {
+                    Cleanup();
+                    if (IsCurrentOperation(operationGeneration, null))
+                    {
+                        Failed?.Invoke(ex);
+                        if (IsCurrentOperation(operationGeneration, null)) ListChanged?.Invoke();
+                    }
+                }
                 throw;
             }
         }
@@ -365,9 +405,13 @@ namespace GS2Studio.Generated.CharacterRecruit
         private void OnParentBound(IActionableCharacterBinder binder)
         {
             _parentId = binder.Id;
-            if (_collection == null) return;
-            RefreshMembership();
-            SyncSiblingOrder();
+            var collection = _collection;
+            if (collection == null) return;
+            var operationGeneration = _reloadGeneration;
+            RefreshMembership(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
         }
 
@@ -397,6 +441,7 @@ namespace GS2Studio.Generated.CharacterRecruit
 
         private bool IsReadyForReload()
         {
+            if (_isDestroyed) return false;
             ResolveParentHandler();
             if (_parentHandler == null) return false;
             if (!_parentHandler.HasValue) return false;
@@ -414,22 +459,54 @@ namespace GS2Studio.Generated.CharacterRecruit
         private bool MatchesParent(IReadOnlyCharacterRecruitBinder binder)
             => EqualityComparer<CharacterId>.Default.Equals(binder.Character, _parentId);
 
-        private void OnItemAdded(ICharacterRecruitBinder binder)
+        private bool IsCurrentOperation(long operationGeneration, ICharacterRecruitBinderCollection? operationCollection)
+            => !_isDestroyed
+                && operationGeneration == _reloadGeneration
+                && (operationCollection == null
+                    ? _collection == null
+                    : ReferenceEquals(_collection, operationCollection));
+
+        private void AttachCollectionCallbacks(
+            long operationGeneration,
+            ICharacterRecruitBinderCollection collection)
         {
+            Action<ICharacterRecruitBinder> itemAdded = binder =>
+                OnItemAdded(operationGeneration, collection, binder);
+            Action<ICharacterRecruitBinder> itemRemoved = binder =>
+                OnItemRemoved(operationGeneration, collection, binder);
+            _collectionItemAddedCallback = itemAdded;
+            _collectionItemRemovedCallback = itemRemoved;
+            collection.ItemAdded += itemAdded;
+            collection.ItemRemoved += itemRemoved;
+        }
+
+        private void OnItemAdded(
+            long operationGeneration,
+            ICharacterRecruitBinderCollection collection,
+            ICharacterRecruitBinder binder)
+        {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             // Retain every binder — matching or not — so a later ref-value or
             // parent change can promote it to visible with its owning binder.
             _binderByView[binder] = binder;
             if (!MatchesParent(binder)) return;
             if (_visibleBinders.Contains(binder)) return;
             _visibleBinders.Add(binder);
-            CreateItem(binder);
-            SyncSiblingOrder();
+            CreateItem(operationGeneration, collection, binder);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ItemAdded?.Invoke(binder);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
         }
 
-        private void OnItemRemoved(ICharacterRecruitBinder binder)
+        private void OnItemRemoved(
+            long operationGeneration,
+            ICharacterRecruitBinderCollection collection,
+            ICharacterRecruitBinder binder)
         {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             // Always drop the owning-binder retention — even for binders that
             // were never visible — so no disposed binder reference lingers.
             _binderByView.Remove(binder);
@@ -437,18 +514,24 @@ namespace GS2Studio.Generated.CharacterRecruit
             DestroyItem(binder);
             // Compact the surviving items' slot indices (and sibling order)
             // before notifying, so ListChanged observers see a consistent list.
-            SyncSiblingOrder();
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ItemRemoved?.Invoke(binder);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
         }
 
-        private void OnCollectionChanged()
+        private void OnCollectionChanged(long operationGeneration, ICharacterRecruitBinderCollection collection)
         {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             if (_suppressOnChange) return;
             // A reconcile may have changed per-binder ref values (user data):
             // re-evaluate visible membership before re-syncing order.
-            RefreshMembership();
-            SyncSiblingOrder();
+            RefreshMembership(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
         }
 
@@ -461,9 +544,11 @@ namespace GS2Studio.Generated.CharacterRecruit
         /// Ordering is realigned by the SyncSiblingOrder call that always
         /// follows this method.
         /// </summary>
-        private void RefreshMembership()
+        private void RefreshMembership(
+            long operationGeneration,
+            ICharacterRecruitBinderCollection collection)
         {
-            if (_collection == null) return;
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             // match -> non-match: walk backwards so RemoveAt stays stable.
             for (var i = _visibleBinders.Count - 1; i >= 0; i--)
             {
@@ -471,21 +556,26 @@ namespace GS2Studio.Generated.CharacterRecruit
                 if (MatchesParent(binder)) continue;
                 _visibleBinders.RemoveAt(i);
                 DestroyItem(binder);
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
                 ItemRemoved?.Invoke(binder);
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
             }
             // non-match -> match: walk the collection so additions follow its
             // (comparer-applied) order.
-            for (var i = 0; i < _collection.Count; i++)
+            for (var i = 0; i < collection.Count; i++)
             {
-                var view = _collection[i];
+                var view = collection[i];
                 if (!MatchesParent(view)) continue;
                 if (_visibleBinders.Contains(view)) continue;
                 _visibleBinders.Add(view);
                 if (_binderByView.TryGetValue(view, out var owning))
                 {
-                    CreateItem(owning);
+                    CreateItem(operationGeneration, collection, owning);
+                    if (!IsCurrentOperation(operationGeneration, collection)) return;
                 }
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
                 ItemAdded?.Invoke(view);
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
             }
         }
 
@@ -495,13 +585,20 @@ namespace GS2Studio.Generated.CharacterRecruit
         /// observing the handler sees background reconcile failures instead of
         /// them being silently swallowed inside the collection's async callback.
         /// </summary>
-        private void OnCollectionFailed(Exception ex)
+        private void OnCollectionFailed(
+            long operationGeneration,
+            ICharacterRecruitBinderCollection collection,
+            Exception ex)
         {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             Failed?.Invoke(ex);
             Debug.LogException(ex, this);
         }
 
-        private void CreateItem(ICharacterRecruitBinder binder)
+        private void CreateItem(
+            long operationGeneration,
+            ICharacterRecruitBinderCollection collection,
+            ICharacterRecruitBinder binder)
         {
             if (_handlers.ContainsKey(binder)) return;
             if (_itemPrefab == null || _contentParent == null)
@@ -515,7 +612,23 @@ namespace GS2Studio.Generated.CharacterRecruit
             // through the collection subscription → OnCollectionChanged →
             // ListChanged → item re-evaluation. Note this means every item
             // re-raises Updated on each membership change as well.
+            if (!IsCurrentOperation(operationGeneration, collection))
+            {
+                handler.gameObject.SetActive(false);
+                Destroy(handler.gameObject);
+                return;
+            }
             handler.AttachTo(this, IndexOf(binder));
+            if (!IsCurrentOperation(operationGeneration, collection))
+            {
+                // AttachTo can synchronously invoke generated-handler events.
+                // If one starts a newer reload, this unregistered instance is
+                // still owned by the stale operation and must be discarded here.
+                handler.Detach();
+                handler.gameObject.SetActive(false);
+                Destroy(handler.gameObject);
+                return;
+            }
             _handlers[binder] = handler;
         }
 
@@ -550,7 +663,17 @@ namespace GS2Studio.Generated.CharacterRecruit
 
         private void SyncSiblingOrder()
         {
-            if (_collection == null) return;
+            var operationGeneration = _reloadGeneration;
+            var collection = _collection;
+            if (collection == null) return;
+            SyncSiblingOrder(operationGeneration, collection);
+        }
+
+        private void SyncSiblingOrder(
+            long operationGeneration,
+            ICharacterRecruitBinderCollection collection)
+        {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             // Realign the visible list to the collection's (comparer-applied)
             // order — membership is unchanged, only the order is rebuilt — and
             // assign contiguous sibling indices to the visible handlers. The
@@ -559,9 +682,10 @@ namespace GS2Studio.Generated.CharacterRecruit
             var visibleSet = new HashSet<IActionableCharacterRecruitBinder>(_visibleBinders);
             _visibleBinders.Clear();
             var slot = 0;
-            for (var i = 0; i < _collection.Count; i++)
+            for (var i = 0; i < collection.Count; i++)
             {
-                var binder = _collection[i];
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+                var binder = collection[i];
                 if (!visibleSet.Contains(binder)) continue;
                 _visibleBinders.Add(binder);
                 // The item's slot index is its position in the visible list
@@ -571,25 +695,42 @@ namespace GS2Studio.Generated.CharacterRecruit
                 if (_handlers.TryGetValue(binder, out var handler) && handler != null)
                 {
                     handler.transform.SetSiblingIndex(slot);
+                    if (!IsCurrentOperation(operationGeneration, collection)) return;
                     slot++;
                     // The Index setter re-evaluates immediately; assign only on
                     // change to avoid redundant re-binds. Safe mid-rebuild:
                     // _visibleBinders[visibleIndex] is already this binder.
                     if (handler.Index != visibleIndex) handler.Index = visibleIndex;
+                    if (!IsCurrentOperation(operationGeneration, collection)) return;
                 }
             }
         }
 
         private void Cleanup()
         {
-            if (_collection != null)
+            // Detach shared state before any Dispose / Detach call can invoke
+            // user code and synchronously start another reload. The remainder
+            // of this method owns only its local snapshot.
+            var collection = _collection;
+            var itemAddedCallback = _collectionItemAddedCallback;
+            var itemRemovedCallback = _collectionItemRemovedCallback;
+            var handlers = new List<CharacterRecruitListItemHandler>(_handlers.Values);
+            _collection = null;
+            _collectionItemAddedCallback = null;
+            _collectionItemRemovedCallback = null;
+            _handlers.Clear();
+            _binderByView.Clear();
+            _visibleBinders.Clear();
+
+            if (collection != null)
             {
-                _collection.ItemAdded -= OnItemAdded;
-                _collection.ItemRemoved -= OnItemRemoved;
-                _collection.Dispose();
-                _collection = null;
+                if (itemAddedCallback != null)
+                    collection.ItemAdded -= itemAddedCallback;
+                if (itemRemovedCallback != null)
+                    collection.ItemRemoved -= itemRemovedCallback;
+                collection.Dispose();
             }
-            foreach (var handler in _handlers.Values)
+            foreach (var handler in handlers)
             {
                 if (handler != null)
                 {
@@ -599,9 +740,6 @@ namespace GS2Studio.Generated.CharacterRecruit
                     Destroy(handler.gameObject);
                 }
             }
-            _handlers.Clear();
-            _binderByView.Clear();
-            _visibleBinders.Clear();
             // The parent Bound subscription is intentionally NOT released here:
             // ReloadAsync calls Cleanup() on entry, and dropping it would stop
             // tracking parent rebinds after the first reload. See OnDestroy.
@@ -609,6 +747,8 @@ namespace GS2Studio.Generated.CharacterRecruit
 
         private void OnDestroy()
         {
+            _isDestroyed = true;
+            _reloadGeneration++;
             Cleanup();
             UnsubscribeParent();
         }

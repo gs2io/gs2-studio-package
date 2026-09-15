@@ -50,11 +50,12 @@ namespace GS2Studio.Generated.CharacterRecruit
         private ICharacterRecruitBinder? _binder;
         private bool _ownsBinder;
         private bool _hasOwnSubscription;
-        // Monotonic reload counter. Each ReloadAsync captures its value up front;
-        // a slower in-flight reload whose captured value no longer matches the
-        // latest discards its result instead of attaching a stale binder. Guards
-        // the Start()-vs-SetKeys race and rapid SetKeys re-targeting.
-        private int _reloadGeneration;
+        private bool _isDestroyed;
+        // Monotonic binding-intent generation. Every operation that can change
+        // the desired binder advances it; a slower in-flight reload whose
+        // captured value no longer matches discards its result instead of
+        // attaching a stale binder.
+        private int _bindingIntentGeneration;
 
         /// <summary>The bound binder (non-owning actionable view), or null before <c>ReloadAsync</c>/<c>Bind</c>.
         /// The owning binder stays in <c>_binder</c> (needed for Subscribe/Dispose).</summary>
@@ -101,6 +102,7 @@ namespace GS2Studio.Generated.CharacterRecruit
         /// </summary>
         public void SetKeys(string id)
         {
+            InvalidateBindingIntent();
             _id = id;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
@@ -130,13 +132,16 @@ namespace GS2Studio.Generated.CharacterRecruit
         /// </summary>
         public async Task ReloadAsync(CancellationToken cancellationToken = default)
         {
-            // Captured up front (before validation) so the latest call always
-            // wins: a concurrent SetKeys / Start reload bumps this, and any
-            // slower in-flight reload detects the mismatch below and bails.
-            var generation = ++_reloadGeneration;
+            if (_isDestroyed) return;
+            // Captured up front (before validation) so the latest binding
+            // intent always wins: SetKeys, Bind, OnDestroy, or another reload
+            // bumps this, and any slower in-flight reload detects the mismatch
+            // below and bails.
+            var generation = InvalidateBindingIntent();
             try
             {
                 DisposeOwnedBinder();
+                if (generation != _bindingIntentGeneration) return;
                 var provider = ResolveRuntimeProvider();
                 if (provider == null)
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
@@ -145,17 +150,16 @@ namespace GS2Studio.Generated.CharacterRecruit
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
                 var binder = await ResolveBinderFactory().CreateAsync(new CharacterRecruitId(_id ?? string.Empty), gs2, session, cancellationToken);
-                // A newer ReloadAsync/SetKeys superseded this one while
-                // CreateAsync was in flight (Start() racing SetKeys, or rapid
-                // SetKeys). Discard the now-stale binder so the latest call wins
-                // and we never attach an out-of-date binder.
-                if (generation != _reloadGeneration)
+                // Another binding intent took over while CreateAsync was in
+                // flight. Discard the now-stale binder so we never attach an
+                // out-of-date binder.
+                if (generation != _bindingIntentGeneration)
                 {
                     binder.Dispose();
                     return;
                 }
                 _ownsBinder = true;
-                Attach(binder, subscribe: true);
+                Attach(binder, subscribe: true, generation);
             }
             catch (OperationCanceledException)
             {
@@ -165,10 +169,12 @@ namespace GS2Studio.Generated.CharacterRecruit
             }
             catch (Exception ex)
             {
-                // Raise Failed for event subscribers, then rethrow so an awaiting
-                // caller also observes the failure. The fire-and-forget Start path
-                // uses TryReloadAsync, which logs and swallows.
-                RaiseFailed(ex);
+                // Raise Failed only for the current binding intent, then rethrow
+                // so an awaiting caller also observes the failure. A superseded
+                // reload must not report a failure for an intent that is no
+                // longer active. The fire-and-forget Start path uses
+                // TryReloadAsync, which logs and swallows.
+                if (generation == _bindingIntentGeneration) RaiseFailed(ex);
                 throw;
             }
         }
@@ -215,14 +221,17 @@ namespace GS2Studio.Generated.CharacterRecruit
         /// </summary>
         public void Bind(ICharacterRecruitBinder binder, bool subscribe = true)
         {
+            if (_isDestroyed) return;
+            var generation = InvalidateBindingIntent();
             if (_binder == binder)
             {
                 if (subscribe && !_hasOwnSubscription) SubscribeToBinder(binder);
                 return;
             }
             DisposeOwnedBinder();
+            if (generation != _bindingIntentGeneration) return;
             _ownsBinder = false;
-            Attach(binder, subscribe);
+            Attach(binder, subscribe, generation);
         }
 
         /// <summary>Forwards an Invalidate request to the bound binder, if any.</summary>
@@ -257,6 +266,7 @@ namespace GS2Studio.Generated.CharacterRecruit
 
         private bool IsReadyForReload()
         {
+            if (_isDestroyed) return false;
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
@@ -275,14 +285,22 @@ namespace GS2Studio.Generated.CharacterRecruit
             return _runtime;
         }
 
-        private void Attach(ICharacterRecruitBinder binder, bool subscribe)
+        private void Attach(ICharacterRecruitBinder binder, bool subscribe, int generation)
         {
+            if (generation != _bindingIntentGeneration) return;
             _binder = binder;
             _hasOwnSubscription = false;
             RaiseBound(binder);
+            if (!IsCurrentBinding(generation, binder)) return;
             RaiseUpdated(binder);
+            if (!IsCurrentBinding(generation, binder)) return;
             if (subscribe) SubscribeToBinder(binder);
         }
+
+        private bool IsCurrentBinding(int generation, ICharacterRecruitBinder binder)
+            => !_isDestroyed
+                && generation == _bindingIntentGeneration
+                && ReferenceEquals(_binder, binder);
 
         private void SubscribeToBinder(ICharacterRecruitBinder binder)
         {
@@ -298,18 +316,26 @@ namespace GS2Studio.Generated.CharacterRecruit
 
         private void DisposeOwnedBinder()
         {
-            if (_ownsBinder)
-            {
-                _binder?.Dispose();
-            }
+            // Detach shared state before Dispose can invoke external code and
+            // synchronously establish a newer binding intent.
+            var binder = _binder;
+            var ownsBinder = _ownsBinder;
             _binder = null;
             _ownsBinder = false;
             _hasOwnSubscription = false;
+            if (ownsBinder) binder?.Dispose();
         }
 
         private void OnDestroy()
         {
+            _isDestroyed = true;
+            InvalidateBindingIntent();
             DisposeOwnedBinder();
+        }
+
+        private int InvalidateBindingIntent()
+        {
+            return ++_bindingIntentGeneration;
         }
     }
 }
