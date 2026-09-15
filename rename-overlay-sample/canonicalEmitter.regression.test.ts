@@ -210,19 +210,21 @@ describe("rename-overlay-sample canonical emitter selection", () => {
     // so the generated MonoBehaviours reference the actual Handler/Model.
     for (const name of [
       "Handlers/UI/CharmLevelLabel.cs",
-      "Handlers/UI/CharmLevelCapLabel.cs",
-      "Handlers/UI/CharmExperienceLabel.cs",
+      "Handlers/UI/CharmExperienceGauge.cs",
       "Handlers/UI/CharmLevelActiveToggle.cs",
       "Handlers/UI/CharmLevelInteractable.cs",
+      "Handlers/UI/CharmIdValue.cs",
+      "Handlers/UI/CharmPropertyIdValue.cs",
     ]) {
       expect(foundationFiles.has(name), `foundation emits ${name}`).toBe(true);
     }
     for (const name of [
       "Handlers/UI/CharacterLevelLabel.cs",
-      "Handlers/UI/CharacterLevelCapLabel.cs",
-      "Handlers/UI/CharacterExperienceLabel.cs",
+      "Handlers/UI/CharacterExperienceGauge.cs",
       "Handlers/UI/CharacterLevelActiveToggle.cs",
       "Handlers/UI/CharacterLevelInteractable.cs",
+      "Handlers/UI/CharacterIdValue.cs",
+      "Handlers/UI/CharacterPropertyIdValue.cs",
     ]) {
       expect(foundationFiles.has(name), `foundation does not emit legacy ${name}`).toBe(false);
     }
@@ -238,7 +240,7 @@ describe("rename-overlay-sample canonical emitter selection", () => {
       expect(content).toContain("CharmHandler");
       expect(content).toContain("OnUpdated(Charm model)");
       expect(content).toContain(
-        '[AddComponentMenu("GS2 Studio/DomainType/Charm/Label/LevelLabel")]'
+        '[AddComponentMenu("GS2 Studio/DomainType/Charm/TemplateLabel/LevelLabel")]'
       );
       expect(content).not.toContain("using GS2Studio.Generated.Character;");
       expect(content).not.toContain("CharacterHandler");
