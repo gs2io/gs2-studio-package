@@ -51,6 +51,7 @@ const Character = defineDomainType("Character", dt =>
     .property(PT.int64("level").userData().required())
     .property(PT.int64("levelCap").userData().required())
     .property(PT.int64("experience").userData().required())
+    .property(PT.int64("nextLevelExperience").userData().required())
     .localizedProperties({
       id: jaEnId("キャラクター", "character"),
       sort: jaEnField(
@@ -84,6 +85,13 @@ const Character = defineDomainType("Character", dt =>
         "Current experience",
         "キャラクターが現在獲得している累積経験値です。",
         "Cumulative experience currently earned by the character.",
+        { ja: "経験値", en: "experience" }
+      ),
+      nextLevelExperience: jaEnField(
+        "次レベルまでの必要経験値",
+        "Experience for the next level",
+        "次のレベルに到達するために必要な累積経験値です。レベル上限に達している場合は 0 です。",
+        "Cumulative experience needed to reach the next level; 0 once the level cap is reached.",
         { ja: "経験値", en: "experience" }
       ),
     })
@@ -255,6 +263,11 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
         rankValue: Bind.domainProperties([Source.direct(Character, "level")]),
         rankCapValue: Bind.domainProperties([Source.direct(Character, "levelCap")]),
         experienceValue: Bind.domainProperties([Source.direct(Character, "experience")]),
+        // The server computes it, and a level bar has no denominator without
+        // it: the catalog names displaying progress as what it is for.
+        nextRankUpExperienceValue: Bind.domainProperties([
+          Source.direct(Character, "nextLevelExperience"),
+        ]),
         experienceName: Bind.skip(),
         statusId: Bind.skip(),
         userId: Bind.skip(),
@@ -373,9 +386,19 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
   )
   .uiComponent(Character, ui =>
     ui
-      .label("LevelLabel", ui.prop("level"), { name: "Character" })
-      .label("LevelCapLabel", ui.prop("levelCap"), { name: "Character" })
-      .label("ExperienceLabel", ui.prop("experience"), { name: "Character" })
+      // A level and its cap are read together, and experience only means
+      // something against the next level, so each is one component rather
+      // than a number a screen has to pair up for itself.
+      .templateLabel(
+        "LevelLabel",
+        "{level}/{levelCap}",
+        { level: ui.prop("level"), levelCap: ui.prop("levelCap") },
+        { name: "Character" }
+      )
+      .gauge("ExperienceGauge", ui.prop("experience"), ui.prop("nextLevelExperience"), {
+        name: "Character",
+        clamp: true,
+      })
       .activeToggle("LevelActiveToggle", UiCond.eq(ui.prop("level"), ui.prop("levelCap")), {
         name: "CharacterReachLevelCap",
       })

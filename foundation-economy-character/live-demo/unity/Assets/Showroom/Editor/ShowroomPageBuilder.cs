@@ -34,6 +34,7 @@ namespace GS2Studio.Showroom.EditorTools
         private const string SectionPrefabPath = "Assets/Showroom/ShowroomSection.prefab";
         private const string ValueRowPrefabPath = "Assets/Showroom/ShowroomValueRow.prefab";
         private const string ActionRowPrefabPath = "Assets/Showroom/ShowroomActionRow.prefab";
+        private const string GaugeRowPrefabPath = "Assets/Showroom/ShowroomGaugeRow.prefab";
         private const string GeneratedPrefabDirectory = "Assets/Showroom/Generated";
         private const string GeneratedNamespacePrefix = "GS2Studio.Generated.";
 
@@ -158,6 +159,23 @@ namespace GS2Studio.Showroom.EditorTools
             catch (ReflectionTypeLoadException error) { return error.Types.Where(t => t != null); }
         }
 
+        /// <summary>
+        /// The gauges a package generated for this handler. A gauge has no
+        /// event to find it by — it writes an Image's fill directly — so it is
+        /// recognised by the target it is given.
+        /// </summary>
+        private static IReadOnlyList<Type> GaugesFor(Type handler)
+        {
+            var uiNamespace = handler.Namespace + ".UI";
+            return SafeTypes(handler.Assembly)
+                .Where(type =>
+                    type.IsClass && !type.IsAbstract && type.Namespace == uiNamespace &&
+                    type.GetField("_target", BindingFlags.Instance | BindingFlags.NonPublic)
+                        ?.FieldType == typeof(Image))
+                .OrderBy(type => type.Name, StringComparer.Ordinal)
+                .ToList();
+        }
+
         /// <summary>UI components the same package generated for this handler.</summary>
         private static IReadOnlyList<Type> UiComponentsFor(Type handler, string eventPropertyName)
         {
@@ -184,7 +202,8 @@ namespace GS2Studio.Showroom.EditorTools
             {
                 var labels = UiComponentsFor(handler, "OnUpdate");
                 var buttons = UiComponentsFor(handler, "OnCompleted");
-                if (labels.Count == 0 && buttons.Count == 0) continue;
+                var gauges = GaugesFor(handler);
+                if (labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0) continue;
 
                 var section = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab, content);
                 section.name = ModelNameOf(handler);
@@ -203,12 +222,12 @@ namespace GS2Studio.Showroom.EditorTools
                 // copy of the components.
                 if (NeedsIdentityKeys(handler))
                 {
-                    AddList(section, handler, labels, buttons, page);
+                    AddList(section, handler, labels, buttons, gauges, page);
                     continue;
                 }
 
                 placed.Add(section.AddComponent(handler));
-                AddRows(ItemsOf(section.transform), labels, buttons, page);
+                AddRows(ItemsOf(section.transform), labels, buttons, gauges, page);
             }
 
             foreach (var (_, body) in sections)
@@ -257,7 +276,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static void AddList(
             GameObject section, Type handler, IReadOnlyList<Type> labels,
-            IReadOnlyList<Type> buttons, ShowroomPage page)
+            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges, ShowroomPage page)
         {
             var model = ModelNameOf(handler);
             var listHandler = SiblingType(handler, model + "ListHandler");
@@ -270,7 +289,7 @@ namespace GS2Studio.Showroom.EditorTools
                 return;
             }
 
-            var itemPrefab = BuildListItemPrefab(model, itemHandler, labels, buttons, page);
+            var itemPrefab = BuildListItemPrefab(model, itemHandler, labels, buttons, gauges, page);
             var list = section.AddComponent(listHandler);
             var serialized = new SerializedObject(list);
             serialized.FindProperty("_itemPrefab").objectReferenceValue =
@@ -304,7 +323,7 @@ namespace GS2Studio.Showroom.EditorTools
 
         private static GameObject BuildListItemPrefab(
             string model, Type itemHandler, IReadOnlyList<Type> labels,
-            IReadOnlyList<Type> buttons, ShowroomPage page)
+            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges, ShowroomPage page)
         {
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var item = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab);
@@ -318,7 +337,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (child != null) child.gameObject.SetActive(false);
             }
             item.AddComponent(itemHandler);
-            AddRows(ItemsOf(item.transform), labels, buttons, page);
+            AddRows(ItemsOf(item.transform), labels, buttons, gauges, page);
 
             Directory.CreateDirectory(GeneratedPrefabDirectory);
             var path = $"{GeneratedPrefabDirectory}/{model}ListItem.prefab";
@@ -353,15 +372,46 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static void AddRows(
             Transform body, IReadOnlyList<Type> labels, IReadOnlyList<Type> buttons,
-            ShowroomPage page)
+            IReadOnlyList<Type> gauges, ShowroomPage page)
         {
-            if (labels.Count == 1 && buttons.Count == 1)
+            if (gauges.Count == 0 && labels.Count == 1 && buttons.Count == 1)
             {
+                // One value and one action is one thing a visitor does, so it
+                // reads as one line.
                 AddActionRow(body, buttons[0], page, labels[0]);
                 return;
             }
-            foreach (var label in labels) AddValueRow(body, label);
+
+            // The first label is drawn on the first gauge: a bar with no
+            // reading on it says how full something is without saying of what,
+            // and the order is the package author's to choose.
+            var overlaid = gauges.Count > 0 && labels.Count > 0 ? labels[0] : null;
+            for (var i = 0; i < gauges.Count; i++)
+            {
+                AddGaugeRow(body, gauges[i], i == 0 ? overlaid : null);
+            }
+            foreach (var label in labels)
+            {
+                if (label != overlaid) AddValueRow(body, label);
+            }
             foreach (var button in buttons) AddActionRow(body, button, page, null);
+        }
+
+        private static void AddGaugeRow(Transform section, Type gaugeType, Type captionLabelType)
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(GaugeRowPrefabPath);
+            var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
+            row.name = gaugeType.Name;
+
+            var gauge = row.AddComponent(gaugeType);
+            var serialized = new SerializedObject(gauge);
+            serialized.FindProperty("_target").objectReferenceValue =
+                row.transform.Find("Fill").GetComponent<Image>();
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+
+            var caption = row.transform.Find("Caption");
+            if (captionLabelType == null) caption.gameObject.SetActive(false);
+            else BindLabel(row, captionLabelType, caption.GetComponent<Text>());
         }
 
         private static void AddValueRow(Transform section, Type labelType)

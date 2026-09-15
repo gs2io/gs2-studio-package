@@ -1,10 +1,14 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "ui:Character:Character:item:ExperienceLabel": "e7248a23-a04a-46f9-8671-9744866ba9bd",
+    "ui:Character:Character:item:LevelCapLabel": "9b45050f-eb2f-4bb5-a0b7-2ac571777a54"
+  },
   "random": {
     "property:Character.experience": "prop_WP10EQVMMV82DJXCEN4AJYVEKB",
     "property:Character.level": "prop_0J6H8XWJG1W95S2S7HRDRQSWF2",
     "property:Character.levelCap": "prop_T2TXPQVC3TS41W3CY3RB4X4G8C",
+    "property:Character.nextLevelExperience": "prop_01M2HBC5JF1QQMJFNPARFYEWWX",
     "property:Character.propertyId": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD",
     "property:Character.sort": "prop_A5DDXX9AZGPBWRFX70X1ZKNR0E",
     "property:CharacterCollection.currentCpacity": "prop_WJ08C0DHN3KEMP4GW454S2KM0Q",
@@ -40,10 +44,8 @@
     "master/inventory:Namespace:unmounted:Character#0/inventory:InventoryModel:CharacterCollection:Character#0": "62805db8-2e40-4a2c-a1c4-38e0c07d49f8",
     "master/inventory:Namespace:unmounted:Character#0/inventory:InventoryModel:CharacterCollection:Character#0/inventory:ItemModel:Character:@itemModels[0]#0": "6e91c24d-fbd9-46c5-9e76-8cbebcd18b75",
     "ui:Character:Character:definition": "b38e6f00-ad0d-46d0-a7fd-b8b8060920fc",
-    "ui:Character:Character:item:ExperienceLabel": "e7248a23-a04a-46f9-8671-9744866ba9bd",
     "ui:Character:Character:item:IdValue": "6a5c9fcb-a700-4311-be4b-952d0b764def",
     "ui:Character:Character:item:LevelActiveToggle": "b9b73163-57e0-4cc4-8240-1da2100860d3",
-    "ui:Character:Character:item:LevelCapLabel": "9b45050f-eb2f-4bb5-a0b7-2ac571777a54",
     "ui:Character:Character:item:LevelInteractable": "7b6a5e18-2490-43dc-a0f1-c1ab45c16434",
     "ui:Character:Character:item:LevelLabel": "11d858c3-68b1-4f6d-a00e-9cb34e5e5e72",
     "ui:Character:Character:item:PropertyIdValue": "1a3576ee-e4a4-4921-8e85-13408ffee40c",

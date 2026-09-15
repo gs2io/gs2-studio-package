@@ -21,6 +21,21 @@
         ]
       },
       {
+        "kind": "domainProperties",
+        "parameterName": "nextRankUpExperienceValue",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+              "typeName": "Character"
+            },
+            "propertyId": "prop_01M2HBC5JF1QQMJFNPARFYEWWX"
+          }
+        ]
+      },
+      {
         "kind": "domainProperty",
         "parameterName": "propertyId",
         "source": {

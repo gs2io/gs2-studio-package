@@ -140,6 +140,30 @@
           "kind": "primitive",
           "primitiveType": "int64"
         }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_01M2HBC5JF1QQMJFNPARFYEWWX",
+        "localizedDisplay": {
+          "en": {
+            "description": "Cumulative experience needed to reach the next level; 0 once the level cap is reached.",
+            "label": "Experience for the next level",
+            "unit": "experience"
+          },
+          "ja": {
+            "description": "次のレベルに到達するために必要な累積経験値です。レベル上限に達している場合は 0 です。",
+            "label": "次レベルまでの必要経験値",
+            "unit": "経験値"
+          }
+        },
+        "name": "nextLevelExperience",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
       }
     ]
   },
