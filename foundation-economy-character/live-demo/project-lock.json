@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "af9ccc364cea41fcf0930a210320e039f8912cec",
-      "integrity": "sha256-xfhd0V5RfJpKeHes199hh24JjrqjiptS4HYY1AqWoC8=",
+      "commitSha": "7fb2acdcb3cab39901073cde8cff1faf10f9c332",
+      "integrity": "sha256-+Ze9y12TRIau1pcjWzCVNtELSMWo11SOMNHZ+4roSww=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character",
       "repo": "gs2-studio-package",

@@ -382,10 +382,14 @@ namespace GS2Studio.Showroom.EditorTools
                 return;
             }
 
-            // The first label is drawn on the first gauge: a bar with no
-            // reading on it says how full something is without saying of what,
-            // and the order is the package author's to choose.
-            var overlaid = gauges.Count > 0 && labels.Count > 0 ? labels[0] : null;
+            // A bar reads better with its value written on it, but which
+            // label belongs there cannot be worked out from here: a template
+            // label and a plain value generate the same shape, so picking one
+            // would be picking arbitrarily. Only an unambiguous pairing — one
+            // bar, one label — is drawn that way; anything else keeps its
+            // labels as their own rows, and a demo author who wants a
+            // particular reading on the bar moves it in the scene.
+            var overlaid = gauges.Count == 1 && labels.Count == 1 ? labels[0] : null;
             for (var i = 0; i < gauges.Count; i++)
             {
                 AddGaugeRow(body, gauges[i], i == 0 ? overlaid : null);

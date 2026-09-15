@@ -16,19 +16,16 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Character.UI
 {
     /// <summary>
-    /// UI label bound to <c>Character.level</c>.
-    /// Subscribes to the sibling <c>CharacterHandler.Updated</c> event
-    /// and publishes the resolved string through <c>OnUpdate</c> on every
-    /// model update. Wire <c>OnUpdate</c> in the Inspector to any text
-    /// consumer — <c>UnityEngine.UI.Text</c>, TextMeshPro, or custom logic —
-    /// so this component stays agnostic to the rendering target. Add this
-    /// component alongside (or under) a <c>CharacterHandler</c> or
-    /// <c>CharacterListItemHandler</c>; the
-    /// handler is resolved automatically via
-    /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is
-    /// supplied.
+    /// UI label bound to the template
+    /// <c>{level}/{levelCap}</c>. Each <c>{key}</c> placeholder is
+    /// substituted with the resolved value from <c>Character</c>
+    /// on every Handler <c>Updated</c> event and the rendered string is
+    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
+    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
+    /// TextMeshPro, or custom logic — so this component stays agnostic to
+    /// the rendering target.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/Character/Label/LevelLabel")]
+    [AddComponentMenu("GS2 Studio/DomainType/Character/TemplateLabel/LevelLabel")]
     public sealed class CharacterLevelLabel : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
@@ -77,7 +74,7 @@ namespace GS2Studio.Generated.Character.UI
 
         private void OnUpdated(Character model)
         {
-            _onUpdate.Invoke(System.Convert.ToString(model.Level) ?? "");
+            _onUpdate.Invoke($"{model.Level}/{model.LevelCap}");
         }
     }
 }

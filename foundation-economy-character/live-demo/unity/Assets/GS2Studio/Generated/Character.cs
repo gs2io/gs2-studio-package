@@ -32,6 +32,8 @@ namespace GS2Studio.Generated.Character
         long LevelCap { get; }
 
         long Experience { get; }
+
+        long NextLevelExperience { get; }
     }
 
     /// <summary>
@@ -51,6 +53,7 @@ namespace GS2Studio.Generated.Character
         new long Level { get; set; }
         new long LevelCap { get; set; }
         new long Experience { get; set; }
+        new long NextLevelExperience { get; set; }
     }
 
     /// <summary>
@@ -71,5 +74,7 @@ namespace GS2Studio.Generated.Character
         public long LevelCap { get; set; }
 
         public long Experience { get; set; }
+
+        public long NextLevelExperience { get; set; }
     }
 }

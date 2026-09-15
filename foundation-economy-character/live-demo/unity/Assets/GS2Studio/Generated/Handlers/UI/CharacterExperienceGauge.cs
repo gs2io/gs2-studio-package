@@ -8,7 +8,7 @@
 using System;
 
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 using GS2Studio.Generated.Character;
 using GS2Studio.Generated.Runtime;
@@ -16,26 +16,18 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Character.UI
 {
     /// <summary>
-    /// UI label bound to <c>Character.levelCap</c>.
-    /// Subscribes to the sibling <c>CharacterHandler.Updated</c> event
-    /// and publishes the resolved string through <c>OnUpdate</c> on every
-    /// model update. Wire <c>OnUpdate</c> in the Inspector to any text
-    /// consumer — <c>UnityEngine.UI.Text</c>, TextMeshPro, or custom logic —
-    /// so this component stays agnostic to the rendering target. Add this
-    /// component alongside (or under) a <c>CharacterHandler</c> or
-    /// <c>CharacterListItemHandler</c>; the
-    /// handler is resolved automatically via
-    /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is
-    /// supplied.
+    /// UI gauge displaying <c>experience / nextLevelExperience</c>
+    /// on a UnityEngine.UI.Image (filled). Subscribes to the sibling
+    /// <c>CharacterHandler.Updated</c> event so the fill amount stays
+    /// in sync with the model. The gauge clamps the fraction to
+    /// <c>[0, 1]</c> before assigning.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/Character/Label/LevelCapLabel")]
-    public sealed class CharacterLevelCapLabel : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/Character/Gauge/ExperienceGauge")]
+    public sealed class CharacterExperienceGauge : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private CharacterHandlerBase? _handler;
-        [SerializeField] private UnityEvent<string> _onUpdate = new UnityEvent<string>();
-
-        public UnityEvent<string> OnUpdate => _onUpdate;
+        [SerializeField] private Image? _target;
 
         private bool _subscribed;
         private bool _warnedMissingHandler;
@@ -51,7 +43,7 @@ namespace GS2Studio.Generated.Character.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(CharacterLevelCapLabel)} on '{name}': no CharacterHandlerBase found in the parent chain; component inactive.", this);
+                        $"{nameof(CharacterExperienceGauge)} on '{name}': no CharacterHandlerBase found in the parent chain; component inactive.", this);
                 }
                 return;
             }
@@ -77,7 +69,11 @@ namespace GS2Studio.Generated.Character.UI
 
         private void OnUpdated(Character model)
         {
-            _onUpdate.Invoke(System.Convert.ToString(model.LevelCap) ?? "");
+            if (_target == null) return;
+            var current = System.Convert.ToDouble(model.Experience, System.Globalization.CultureInfo.InvariantCulture);
+            var max = System.Convert.ToDouble(model.NextLevelExperience, System.Globalization.CultureInfo.InvariantCulture);
+            var fraction = max > 0d ? current / max : 0d;            if (fraction < 0d) fraction = 0d;
+            else if (fraction > 1d) fraction = 1d;            _target.fillAmount = (float)fraction;
         }
     }
 }

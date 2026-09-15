@@ -94,6 +94,8 @@ namespace GS2Studio.Generated.Character
         public long LevelCap => _model.LevelCap;
         /// <inheritdoc cref="Character.Experience" />
         public long Experience => _model.Experience;
+        /// <inheritdoc cref="Character.NextLevelExperience" />
+        public long NextLevelExperience => _model.NextLevelExperience;
         /// <summary>
         /// Base constructor. Stores the bound model + service handles on the
         /// protected fields shared with the owning derived class. `private
@@ -403,6 +405,7 @@ namespace GS2Studio.Generated.Character
             if (source != null)
             {
                 model.Experience = source.ExperienceValue;
+                model.NextLevelExperience = source.NextRankUpExperienceValue;
                 model.PropertyId = source.PropertyId;
                 model.LevelCap = source.RankCapValue;
                 model.Level = source.RankValue;
@@ -410,6 +413,7 @@ namespace GS2Studio.Generated.Character
             else
             {
                 model.Experience = default;
+                model.NextLevelExperience = default;
                 model.PropertyId = string.Empty;
                 model.LevelCap = default;
                 model.Level = default;
