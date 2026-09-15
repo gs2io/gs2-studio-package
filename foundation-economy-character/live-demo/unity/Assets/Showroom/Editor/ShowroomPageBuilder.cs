@@ -39,9 +39,11 @@ namespace GS2Studio.Showroom.EditorTools
         private const string GeneratedNamespacePrefix = "GS2Studio.Generated.";
 
         /// <summary>
-        /// Gauge component name to the label component drawn on it, as the
-        /// demo declared it. Which reading belongs on a bar is the demo's
-        /// call — from here every label looks alike.
+        /// Gauge component name to the label component whose reading is drawn
+        /// on it, as the demo declared it in `page.json`. Which reading belongs
+        /// on a bar is the demo's call — from here every label looks alike. The
+        /// bar's own caption is not declared: it is derived from whichever
+        /// component names the row.
         /// </summary>
         private static Dictionary<string, string> _gaugeCaptions = new Dictionary<string, string>();
 
@@ -441,30 +443,42 @@ namespace GS2Studio.Showroom.EditorTools
             // and a plain value generate the same shape, so picking one would
             // be picking arbitrarily. The demo says which, and an unambiguous
             // pairing — one bar, one label — is taken without being told.
-            var overlaid = new Dictionary<Type, Type>();
+            var readings = new Dictionary<Type, Type>();
             foreach (var gauge in gauges)
             {
-                var captionName = _gaugeCaptions.TryGetValue(gauge.Name, out var declared)
+                var readingName = _gaugeCaptions.TryGetValue(gauge.Name, out var declared)
                     ? declared
                     : gauges.Count == 1 && labels.Count == 1 ? labels[0].Name : null;
-                var caption = labels.FirstOrDefault(label => label.Name == captionName);
-                if (caption != null) overlaid[gauge] = caption;
+                var reading = labels.FirstOrDefault(label => label.Name == readingName);
+                if (reading != null) readings[gauge] = reading;
             }
 
             // Values first, then the bars they summarise, then what a visitor
             // can press: read the state, then act on it.
             foreach (var label in labels)
             {
-                if (!overlaid.ContainsValue(label)) AddValueRow(body, label);
+                if (!readings.ContainsValue(label)) AddValueRow(body, label);
             }
             foreach (var gauge in gauges)
             {
-                AddGaugeRow(body, gauge, overlaid.TryGetValue(gauge, out var c) ? c : null);
+                AddGaugeRow(
+                    body, gauge, readings.TryGetValue(gauge, out var reading) ? reading : null);
             }
             foreach (var button in buttons) AddActionRow(body, button, page, null);
         }
 
-        private static void AddGaugeRow(Transform section, Type gaugeType, Type captionLabelType)
+        /// <summary>
+        /// Draws one bar: what it measures on the left, the reading on it.
+        ///
+        /// A fill on its own is a shape a visitor has to guess at, so the row
+        /// is named the same way every other row is — from the component, not
+        /// from prose written here. The reading names it when there is one,
+        /// because the reading is what the number says: a character's bar
+        /// fills with experience and is captioned `Level`, which is what its
+        /// `2/10` counts. With no reading the fill is all there is, so the
+        /// gauge names it.
+        /// </summary>
+        private static void AddGaugeRow(Transform section, Type gaugeType, Type readingLabelType)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(GaugeRowPrefabPath);
             var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
@@ -476,9 +490,13 @@ namespace GS2Studio.Showroom.EditorTools
                 row.transform.Find("Fill").GetComponent<Image>();
             serialized.ApplyModifiedPropertiesWithoutUndo();
 
-            var caption = row.transform.Find("Caption");
-            if (captionLabelType == null) caption.gameObject.SetActive(false);
-            else BindLabel(row, captionLabelType, caption.GetComponent<Text>());
+            SetText(
+                row.transform.Find("Caption"),
+                Humanize(TrimModelPrefix(readingLabelType ?? gaugeType)));
+
+            var value = row.transform.Find("Value");
+            if (readingLabelType == null) value.gameObject.SetActive(false);
+            else BindLabel(row, readingLabelType, value.GetComponent<Text>());
         }
 
         private static void AddValueRow(Transform section, Type labelType)
@@ -545,16 +563,24 @@ namespace GS2Studio.Showroom.EditorTools
             return ns.Substring(GeneratedNamespacePrefix.Length);
         }
 
-        /// <summary>`WalletFreeBalanceLabel` -> `FreeBalance`.</summary>
+        /// <summary>
+        /// `WalletFreeBalanceLabel` -> `FreeBalance`, `CharacterExperienceGauge`
+        /// -> `Experience`. What kind of component it is is already said by the
+        /// row it is drawn in, so only what it reads is left. One suffix goes:
+        /// the rest of the name is the reading, whatever it happens to end in.
+        /// </summary>
         private static string TrimModelPrefix(Type uiComponent)
         {
             var model = (uiComponent.Namespace ?? "")
                 .Replace(GeneratedNamespacePrefix, "").Replace(".UI", "");
             var name = uiComponent.Name;
             if (name.StartsWith(model)) name = name.Substring(model.Length);
-            foreach (var suffix in new[] { "Label", "Button" })
-                if (name.EndsWith(suffix) && name.Length > suffix.Length)
-                    name = name.Substring(0, name.Length - suffix.Length);
+            foreach (var suffix in new[] { "Label", "Button", "Gauge" })
+            {
+                if (!name.EndsWith(suffix) || name.Length <= suffix.Length) continue;
+                name = name.Substring(0, name.Length - suffix.Length);
+                break;
+            }
             return name;
         }
 
