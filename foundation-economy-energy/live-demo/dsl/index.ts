@@ -86,6 +86,7 @@ const ConsumeRateModel = defineMasterDataResource(resource =>
         .mountLocal(Energy)
         .bindings({
           action: Bind.transform(energy.packageId, "ConsumeEnergy", [
+            Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", CONSUME_VALUE),
           ]),
         });
@@ -104,6 +105,7 @@ const RecoverRateModel = defineMasterDataResource(resource =>
         .mountLocal(Energy)
         .bindings({
           action: Bind.transform(energy.packageId, "RecoveryEnergy", [
+            Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", RECOVERY_VALUE),
           ]),
         });

@@ -4,6 +4,21 @@
       {
         "arguments": [
           {
+            "parameterName": "energy",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M2JG8Q6GMNFPA3732XVHMCN5",
+                  "typeName": "Energy"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          },
+          {
             "parameterName": "value",
             "source": {
               "kind": "static",

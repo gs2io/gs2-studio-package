@@ -138,15 +138,23 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
       })
   )
 
+  // `staminaName` names one row of `StaminaModel`, and `StaminaModel.name`
+  // reads that row's own id — so it is a per-row value, not a constant of the
+  // package. A resource key can only be lifted out of a resource the caller is
+  // not itself building when the key is bound statically, which is why
+  // `namespaceName` comes across as a resource key and the stamina does not.
+  // The caller names the meter instead, the same way `AcquireCharacter` takes
+  // the character it grants.
   .actionTransform("ConsumeEnergy", at =>
     at
       .category("consume")
+      .parameter("energy", { type: PT.ref("Energy") })
       .parameter("value", { type: PT.int32() })
       .output("Gs2Stamina:ConsumeStaminaByUserId", o =>
         o
           .resourceRef(() => StaminaModel)
           .mapResourceKey("namespaceName")
-          .mapResourceKey("staminaName")
+          .mapParameter("staminaName", "energy")
           .mapPlaceholder("userId", "#{userId}")
           .mapParameter("consumeValue", "value")
       )
@@ -154,12 +162,13 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
   .actionTransform("RecoveryEnergy", at =>
     at
       .category("acquire")
+      .parameter("energy", { type: PT.ref("Energy") })
       .parameter("value", { type: PT.int32() })
       .output("Gs2Stamina:RecoverStaminaByUserId", o =>
         o
           .resourceRef(() => StaminaModel)
           .mapResourceKey("namespaceName")
-          .mapResourceKey("staminaName")
+          .mapParameter("staminaName", "energy")
           .mapPlaceholder("userId", "#{userId}")
           .mapParameter("recoverValue", "value")
       )

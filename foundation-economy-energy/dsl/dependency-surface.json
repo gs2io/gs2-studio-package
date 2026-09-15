@@ -26,9 +26,11 @@
   },
   "transforms": {
     "ConsumeEnergy": [
+      "energy",
       "value"
     ],
     "RecoveryEnergy": [
+      "energy",
       "value"
     ]
   }

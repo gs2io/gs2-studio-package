@@ -20,8 +20,9 @@
           "parameterName": "namespaceName"
         },
         {
-          "kind": "resourceKey",
-          "parameterName": "staminaName"
+          "kind": "parameter",
+          "parameterName": "staminaName",
+          "sourceParameter": "energy"
         },
         {
           "kind": "placeholder",
@@ -42,6 +43,15 @@
     }
   ],
   "parameters": [
+    {
+      "id": "param_01M2JGT1CDYTCHZZRQG3EEZXMJ",
+      "name": "energy",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY"
+      }
+    },
     {
       "id": "param_01KJSWEQFV1RRMDAGH2SZ0V69H",
       "name": "value",
