@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "60ecd1fdf2534b45c3ef74ea60d00325dcd2fc8d",
-      "integrity": "sha256-1/FDETy/bl60hz4m483yaC4V1sXbhuP/2CDYqRYBRco=",
+      "commitSha": "e5e9fcb5107be7241efa8d5a6f9b601a07793fde",
+      "integrity": "sha256-65t5odTTm5/KWMeAdnv3CMCzd6Iq+SnWvozg2S79S+w=",
       "owner": "gs2io",
       "packageId": "foundation-economy-schedule",
       "repo": "gs2-studio-package",

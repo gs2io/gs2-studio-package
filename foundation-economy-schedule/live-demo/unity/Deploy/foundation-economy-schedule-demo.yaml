@@ -46,7 +46,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Schedule:TriggerByUserId"
-                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\",\"triggerStrategy\":\"renew\",\"ttl\":5}"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\",\"triggerStrategy\":\"renew\",\"ttl\":300}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

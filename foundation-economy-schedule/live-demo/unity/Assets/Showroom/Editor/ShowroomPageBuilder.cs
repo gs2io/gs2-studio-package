@@ -323,10 +323,11 @@ namespace GS2Studio.Showroom.EditorTools
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var handlers = GeneratedHandlers();
             ClearGeneratedComponents(content);
-            // Every handler answers a completed action, because an action can
-            // change anything the page is showing and a handler has no other
-            // way to hear about it.
-            var placed = new List<Component>();
+            // Nothing here reloads a handler after an action. A binder keeps
+            // itself current — it subscribes to what it is bound to and the
+            // value arrives on its own. Calling `Reload` throws that cache away
+            // and fetches again for an answer the page was already going to
+            // get, and overlapping reloads leave duplicate rows behind.
             var sections = new List<(Type Handler, Transform Body)>();
 
             foreach (var handler in handlers)
@@ -343,10 +344,7 @@ namespace GS2Studio.Showroom.EditorTools
                     // model a package never gave a component of its own is
                     // still what another section's reading is composed from.
                     // So it is mounted without a section — an empty heading
-                    // over an empty body says nothing a visitor wants — and
-                    // stays out of `placed`, because a handler that draws
-                    // nothing has nothing to redraw, and reloading it after
-                    // every action would throw away a cache for no one.
+                    // over an empty body says nothing a visitor wants.
                     if (!NeedsIdentityKeys(handler)) content.gameObject.AddComponent(handler);
                     continue;
                 }
@@ -379,27 +377,12 @@ namespace GS2Studio.Showroom.EditorTools
                 // climb `label -> Items -> Section -> content` — and a gauge in
                 // another section's list row can now read it too, which is what
                 // a reading composed from two models needs.
-                placed.Add(content.gameObject.AddComponent(handler));
+                content.gameObject.AddComponent(handler);
                 var body = ItemsOf(section.transform);
                 AddRows(ModelNameOf(handler), body, labels, buttons, gauges, clocks, page);
                 WireToggles(section, toggles, body);
             }
 
-            foreach (var (_, body) in sections)
-            {
-                foreach (var button in body.GetComponentsInChildren<MonoBehaviour>(true))
-                {
-                    var completed = button.GetType().GetProperty("OnCompleted");
-                    if (completed?.PropertyType != typeof(UnityEvent)) continue;
-                    var unityEvent = (UnityEvent)completed.GetValue(button);
-                    foreach (var handlerComponent in placed)
-                        UnityEventTools.AddVoidPersistentListener(
-                            unityEvent,
-                            (UnityAction)Delegate.CreateDelegate(
-                                typeof(UnityAction), handlerComponent, "Reload"));
-                    EditorUtility.SetDirty(button);
-                }
-            }
             return sections.Count;
         }
 
