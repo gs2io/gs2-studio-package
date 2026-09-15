@@ -208,9 +208,7 @@ namespace GS2Studio.Showroom.EditorTools
                 }
 
                 placed.Add(section.AddComponent(handler));
-                var body = ItemsOf(section.transform);
-                foreach (var label in labels) AddValueRow(body, label);
-                foreach (var button in buttons) AddActionRow(body, button, page);
+                AddRows(ItemsOf(section.transform), labels, buttons, page);
             }
 
             foreach (var (_, body) in sections)
@@ -320,9 +318,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (child != null) child.gameObject.SetActive(false);
             }
             item.AddComponent(itemHandler);
-            var body = ItemsOf(item.transform);
-            foreach (var labelType in labels) AddValueRow(body, labelType);
-            foreach (var buttonType in buttons) AddActionRow(body, buttonType, page);
+            AddRows(ItemsOf(item.transform), labels, buttons, page);
 
             Directory.CreateDirectory(GeneratedPrefabDirectory);
             var path = $"{GeneratedPrefabDirectory}/{model}ListItem.prefab";
@@ -348,33 +344,59 @@ namespace GS2Studio.Showroom.EditorTools
             return items;
         }
 
+        /// <summary>
+        /// Lays out one model's rows.
+        ///
+        /// A single value with a single action is one thing a visitor does, so
+        /// it reads as one line — what it is on the left, the button on the
+        /// right. Anything else is a stat block with its actions under it.
+        /// </summary>
+        private static void AddRows(
+            Transform body, IReadOnlyList<Type> labels, IReadOnlyList<Type> buttons,
+            ShowroomPage page)
+        {
+            if (labels.Count == 1 && buttons.Count == 1)
+            {
+                AddActionRow(body, buttons[0], page, labels[0]);
+                return;
+            }
+            foreach (var label in labels) AddValueRow(body, label);
+            foreach (var button in buttons) AddActionRow(body, button, page, null);
+        }
+
         private static void AddValueRow(Transform section, Type labelType)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ValueRowPrefabPath);
             var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
             row.name = labelType.Name;
             SetText(row.transform.Find("Caption"), Humanize(TrimModelPrefix(labelType)));
-
-            var label = row.AddComponent(labelType);
-            var value = row.transform.Find("Value").GetComponent<Text>();
-            var onUpdate = (UnityEvent<string>)labelType.GetProperty("OnUpdate").GetValue(label);
-            UnityEventTools.AddPersistentListener(
-                onUpdate,
-                (UnityAction<string>)Delegate.CreateDelegate(
-                    typeof(UnityAction<string>), value, "set_text"));
-            EditorUtility.SetDirty(label);
+            BindLabel(row, labelType, row.transform.Find("Value").GetComponent<Text>());
         }
 
-        private static void AddActionRow(Transform section, Type buttonType, ShowroomPage page)
+        private static void AddActionRow(
+            Transform section, Type buttonType, ShowroomPage page, Type captionLabelType)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ActionRowPrefabPath);
             var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
             row.name = buttonType.Name;
-            SetText(row.transform.Find("Label"), Humanize(TrimModelPrefix(buttonType)));
+            var button = row.transform.Find("Button");
+            SetText(button.Find("Label"), Humanize(TrimModelPrefix(buttonType)));
+
+            var caption = row.transform.Find("Caption");
+            if (captionLabelType == null)
+            {
+                // Nothing to say beside the button; the button's own name is
+                // the whole row.
+                caption.gameObject.SetActive(false);
+            }
+            else
+            {
+                BindLabel(row, captionLabelType, caption.GetComponent<Text>());
+            }
 
             var action = row.AddComponent(buttonType);
             var serialized = new SerializedObject(action);
-            serialized.FindProperty("_button").objectReferenceValue = row.GetComponent<Button>();
+            serialized.FindProperty("_button").objectReferenceValue = button.GetComponent<Button>();
             serialized.ApplyModifiedPropertiesWithoutUndo();
 
             // The browser hides the console, so a failure a visitor cannot see
@@ -385,6 +407,18 @@ namespace GS2Studio.Showroom.EditorTools
                 (UnityAction<Gs2Exception, Func<IEnumerator>>)Delegate.CreateDelegate(
                     typeof(UnityAction<Gs2Exception, Func<IEnumerator>>), page, "LogError"));
             EditorUtility.SetDirty(action);
+        }
+
+        /// <summary>Adds a generated label and points its update at a Text.</summary>
+        private static void BindLabel(GameObject host, Type labelType, Text target)
+        {
+            var label = host.AddComponent(labelType);
+            var onUpdate = (UnityEvent<string>)labelType.GetProperty("OnUpdate").GetValue(label);
+            UnityEventTools.AddPersistentListener(
+                onUpdate,
+                (UnityAction<string>)Delegate.CreateDelegate(
+                    typeof(UnityAction<string>), target, "set_text"));
+            EditorUtility.SetDirty(label);
         }
 
         /// <summary>`GS2Studio.Generated.Wallet` -> `Wallet`.</summary>
