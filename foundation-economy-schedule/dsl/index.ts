@@ -320,6 +320,15 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
   .uiComponent(Trigger, ui =>
     ui
       .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Trigger" })
+      // When it was pulled and when it runs out, as the server reported them.
+      // A countdown answers "how long left"; this answers "is the server
+      // saying what I think it is", which is the question when it is not.
+      .templateLabel(
+        "WindowLabel",
+        "{triggeredAt} - {expiresAt}",
+        { triggeredAt: ui.prop("triggeredAt"), expiresAt: ui.prop("expiresAt") },
+        { name: "Trigger" }
+      )
       .value("ExpiresAtValue", ui.prop("expiresAt"), { name: "Trigger" })
       // A trigger that has never been pulled has no window to show, and one
       // that is running has nothing to say about not being pulled.

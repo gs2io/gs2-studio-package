@@ -18,6 +18,29 @@
       "template": "{id}"
     },
     {
+      "componentClassName": "WindowLabel",
+      "id": "5d1bea80-96f1-5cd8-9865-ceb964a68ea2",
+      "kind": "templateLabel",
+      "name": "Trigger",
+      "sources": [
+        {
+          "key": "triggeredAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_F9RRQHZFBAHE291G11WATKA2YB"
+          }
+        },
+        {
+          "key": "expiresAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF"
+          }
+        }
+      ],
+      "template": "{triggeredAt} - {expiresAt}"
+    },
+    {
       "componentClassName": "ExpiresAtValue",
       "id": "6f1b20af-dc0a-5d87-85be-71596bd089e2",
       "kind": "value",
