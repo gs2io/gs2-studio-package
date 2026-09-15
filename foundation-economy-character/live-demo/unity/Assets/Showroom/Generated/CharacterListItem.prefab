@@ -987,6 +987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Character.UI.CharacterExperienceGauge
   _handler: {fileID: 0}
+  _characterExperienceHandler: {fileID: 0}
   _target: {fileID: 6820941678271047166}
 --- !u!114 &7434087392102924563
 MonoBehaviour:
