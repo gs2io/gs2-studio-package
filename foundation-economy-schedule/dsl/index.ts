@@ -297,6 +297,24 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
       )
   )
 
+  // When a window opens and closes is the whole of what a schedule says, so
+  // it ships with the model rather than being rebuilt per screen. An absolute
+  // window carries both ends; a relative one carries neither, because its ends
+  // are whenever the player pulled the trigger and whenever that runs out.
+  .uiComponent(Schedule, ui =>
+    ui
+      .templateLabel(
+        "PeriodLabel",
+        "{startAt} - {endAt}",
+        { startAt: ui.prop("startAt"), endAt: ui.prop("endAt") },
+        { name: "Schedule" }
+      )
+      // Handed over typed so a screen can count down to it rather than print
+      // it. Which of the two a title shows is a question about the title.
+      .value("EndAtValue", ui.prop("endAt"), { name: "Schedule" })
+      .value("StartAtValue", ui.prop("startAt"), { name: "Schedule" })
+  )
+
   // What a trigger is worth knowing about: whether it is running, and until
   // when. Both are the same reading in every title that pulls one.
   .uiComponent(Trigger, ui =>

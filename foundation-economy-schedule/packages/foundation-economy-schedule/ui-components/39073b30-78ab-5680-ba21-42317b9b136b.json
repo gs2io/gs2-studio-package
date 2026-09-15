@@ -1,0 +1,51 @@
+{
+  "id": "39073b30-78ab-5680-ba21-42317b9b136b",
+  "items": [
+    {
+      "componentClassName": "PeriodLabel",
+      "id": "3469b65a-1028-554a-af08-dbc748dc5c3a",
+      "kind": "templateLabel",
+      "name": "Schedule",
+      "sources": [
+        {
+          "key": "startAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T"
+          }
+        },
+        {
+          "key": "endAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_763BX5C31PKQPVJ692CKG0C998"
+          }
+        }
+      ],
+      "template": "{startAt} - {endAt}"
+    },
+    {
+      "componentClassName": "EndAtValue",
+      "id": "f475b830-30e4-5dff-bcd4-f5fe4f06576c",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_763BX5C31PKQPVJ692CKG0C998"
+      }
+    },
+    {
+      "componentClassName": "StartAtValue",
+      "id": "bd1e4ae6-f907-5f54-ab5e-247eb3a39fbf",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T"
+      }
+    }
+  ],
+  "name": "Schedule",
+  "targetDomainType": "Schedule",
+  "targetDomainTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+}
