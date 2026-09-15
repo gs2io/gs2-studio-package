@@ -347,7 +347,7 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           .resourceRef(() => ExperienceModel)
           .mapResourceKey("namespaceName")
           .mapPlaceholder("userId", "#{userId}")
-          .mapStatic("experienceName", "")
+          .mapResourceKey("experienceName")
           .mapParameter("propertyId", "propertyId")
           .mapParameter("experienceValue", "value")
           .mapStatic("truncateExperienceWhenRankUp", null)

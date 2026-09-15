@@ -25,9 +25,8 @@
           "value": "#{userId}"
         },
         {
-          "kind": "static",
-          "parameterName": "experienceName",
-          "value": ""
+          "kind": "resourceKey",
+          "parameterName": "experienceName"
         },
         {
           "kind": "parameter",
