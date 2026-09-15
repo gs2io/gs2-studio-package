@@ -1,0 +1,39 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "propertyId",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{propertyId}"
+            }
+          },
+          {
+            "parameterName": "value",
+            "source": {
+              "kind": "static",
+              "value": 40
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AcquireCharacterExperience",
+        "transformPackageId": "foundation-economy-character"
+      }
+    ]
+  },
+  "id": "7edd0fe9-a211-5132-b101-5886ca9fc8f5",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2FZNNF20R4VKFQ0JMNXKT4B",
+    "typeName": "Character"
+  }
+}

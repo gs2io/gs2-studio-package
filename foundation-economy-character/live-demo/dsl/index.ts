@@ -51,7 +51,9 @@ const CharacterExperience = defineOverlayDomainType(
 const CharacterRecruit = defineDomainType("CharacterRecruit", domainType =>
   domainType
     .property(
-      PT.prop("character", PT.ref(character.typeId("Character"))).masterData().required()
+      PT.prop("character", PT.ref(character.typeId("Character")))
+        .masterData()
+        .required()
     )
     .localizedProperties({
       id: {
@@ -87,6 +89,38 @@ const RecruitRateModel = defineMasterDataResource(resource =>
               Source.parent(Source.direct(CharacterRecruit, "character"))
             ),
             Arg.static("count", 1),
+          ]),
+        });
+    })
+);
+
+/**
+ * Training grants experience to one character the visitor already owns.
+ *
+ * The rate is named after the character because a delegated action on
+ * `Character` must target a resource that mounts `Character` — that is how the
+ * generated loader learns which rate to exchange. The grant's target is the
+ * character's `propertyId`, an item set GRN GS2 mints at recruit time, so the
+ * row carries a `#{propertyId}` placeholder and the click fills it.
+ *
+ * It lives under its own exchange namespace because `RecruitRateModel` names
+ * its rows after the `CharacterRecruit` rows, and those ids are identical to
+ * these; sharing a namespace collides the `rateModels` array on its primary
+ * key and drops the whole `CurrentRateMaster` from the template.
+ */
+const TrainRateModel = defineMasterDataResource(resource =>
+  resource
+    .model(GS2.exchange.RateModel)
+    .mountLocal(Character)
+    .bindings({ name: Bind.domainProperty(Source.direct(Character, "id")) })
+    .addArrayChild("acquireActions", acquireAction => {
+      acquireAction
+        .model(GS2.transaction.AcquireAction)
+        .mountLocal(Character)
+        .bindings({
+          action: Bind.transform(character.packageId, "AcquireCharacterExperience", [
+            Arg.placeholder("propertyId", "#{propertyId}"),
+            Arg.static("value", 40),
           ]),
         });
     })
@@ -169,6 +203,24 @@ export const foundationEconomyCharacterDemo = definePackage(
       .addChild(RecruitRateModel)
   )
 
+  .masterDataResource(resource =>
+    resource
+      .model(GS2.exchange.Namespace)
+      .bindings({
+        name: Bind.static("CharacterTrain"),
+        ...Bind.nulls(
+          "acquireAwaitScript",
+          "exchangeScript",
+          "incrementalExchangeScript",
+          "logSetting"
+        ),
+        transactionSetting: transactionSetting({
+          enableAtomicCommit: Bind.static(true),
+          enableAutoRun: Bind.static(true),
+        }),
+      })
+      .addChild(TrainRateModel)
+  )
   // The label says which character; the button recruits it. Both are generated
   // components a scene wires in the Inspector, which is the point of the demo:
   // nothing here needs a script of its own.
@@ -183,9 +235,44 @@ export const foundationEconomyCharacterDemo = definePackage(
       .buttonAction("RecruitButton", "Recruit", undefined, { name: "CharacterRecruit" })
   )
 
+  // One button on the character itself, beside the experience gauge.
+  .uiComponent(Character, ui =>
+    ui.buttonAction("TrainButton", "Train", undefined, { name: "Character" })
+  )
+
   .delegatedAction(CharacterRecruit, "Recruit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: RecruitRateModel,
     parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+  })
+
+  .delegatedAction(Character, "Train", {
+    targetActionKey: "Gs2Exchange:RateModel.Exchange",
+    targetResource: TrainRateModel,
+    parameterOverrides: [
+      { kind: "static", parameterName: "count", value: 1 },
+      // Fills the row's `#{propertyId}` placeholder with the character the
+      // button is mounted on. The value is minted by GS2 at recruit time, so
+      // it can only be read off the model at the moment of the click.
+      {
+        kind: "listEntries",
+        parameterName: "config",
+        entries: [
+          {
+            kind: "fields",
+            fields: [
+              { name: "key", source: { kind: "static", value: "propertyId" } },
+              {
+                name: "value",
+                source: {
+                  kind: "domainProperty",
+                  propertyName: character.propertyId("Character", "propertyId"),
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
   })
   .build();

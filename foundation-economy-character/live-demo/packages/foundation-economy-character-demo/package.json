@@ -3,7 +3,7 @@
   "name": "foundation-economy-character-demo",
   "version": "0.0.0",
   "dependencies": {
-    "foundation-economy-character": "github:gs2io/gs2-studio-package@*"
+    "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
   "display": {
     "description": {

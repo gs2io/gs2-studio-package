@@ -6,7 +6,49 @@
   "declared": {
     "properties": []
   },
-  "delegatedActions": [],
+  "delegatedActions": [
+    {
+      "methodName": "Train",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        },
+        {
+          "entries": [
+            {
+              "fields": [
+                {
+                  "name": "key",
+                  "source": {
+                    "kind": "static",
+                    "value": "propertyId"
+                  }
+                },
+                {
+                  "name": "value",
+                  "source": {
+                    "kind": "domainProperty",
+                    "propertyId": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD"
+                  }
+                }
+              ],
+              "kind": "fields"
+            }
+          ],
+          "kind": "listEntries",
+          "parameterName": "config"
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "c103bba7-639b-581f-8669-9d68c0a27fa6",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-character-demo"
+      }
+    }
+  ],
   "id": "dt_01M2FZNNF20R4VKFQ0JMNXKT4B",
   "kind": "overlay",
   "name": "Character",

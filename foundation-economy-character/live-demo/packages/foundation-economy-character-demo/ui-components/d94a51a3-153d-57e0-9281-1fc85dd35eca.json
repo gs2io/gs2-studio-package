@@ -1,0 +1,16 @@
+{
+  "id": "d94a51a3-153d-57e0-9281-1fc85dd35eca",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "TrainButton",
+      "delegatedActionKey": "resource:foundation-economy-character-demo:masterData:c103bba7-639b-581f-8669-9d68c0a27fa6::Gs2Exchange:RateModel.Exchange",
+      "id": "d73cd84a-1007-5a00-ad1b-96886093e678",
+      "kind": "buttonAction",
+      "name": "Character"
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_01M2FZNNF20R4VKFQ0JMNXKT4B"
+}
