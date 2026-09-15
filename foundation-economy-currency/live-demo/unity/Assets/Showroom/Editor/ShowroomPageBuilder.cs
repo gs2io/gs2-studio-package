@@ -279,9 +279,10 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// The active toggles a package generated for this handler. A toggle
-        /// has no event to find it by — it switches GameObjects on and off —
-        /// so it is recognised by the pair of target arrays it is given.
+        /// The condition-driven components a package generated for this
+        /// handler. Neither kind has an event to find it by — one switches
+        /// GameObjects on and off, the other greys Selectables out — so each
+        /// is recognised by the pair of target arrays it is given.
         /// </summary>
         private static IReadOnlyList<Type> TogglesFor(Type handler)
         {
@@ -289,10 +290,19 @@ namespace GS2Studio.Showroom.EditorTools
             return SafeTypes(handler.Assembly)
                 .Where(type =>
                     type.IsClass && !type.IsAbstract && type.Namespace == uiNamespace &&
-                    type.GetField("_activeWhenTrue", BindingFlags.Instance | BindingFlags.NonPublic)
-                        ?.FieldType == typeof(GameObject[]))
+                    (TargetArrayField(type, "_activeWhenTrue") != null ||
+                     TargetArrayField(type, "_interactableWhenTrue") != null))
                 .OrderBy(type => type.Name, StringComparer.Ordinal)
                 .ToList();
+        }
+
+        private static FieldInfo TargetArrayField(Type type, string name)
+        {
+            var field = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic);
+            return field?.FieldType == typeof(GameObject[]) ||
+                   field?.FieldType == typeof(Selectable[])
+                ? field
+                : null;
         }
 
         private static int BuildSections(Transform content, ShowroomPage page)
@@ -643,10 +653,18 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// Mounts each active toggle on the section root and points its
-        /// false branch at the rows the demo named. The root is never itself a
-        /// target: switching off the object a toggle lives on would unsubscribe
-        /// it and leave the page stuck in whichever state it last applied.
+        /// Mounts each condition-driven component on the section root and
+        /// points it at the rows the demo named.
+        ///
+        /// An active toggle takes the rows it hides while its condition does
+        /// not hold; an interactable takes the buttons it leaves usable while
+        /// its condition does hold. Both read the same declaration, because
+        /// both answer "which rows does this govern" — what the condition then
+        /// does with them is the component's own business.
+        ///
+        /// The root is never itself a target: switching off the object a
+        /// toggle lives on would unsubscribe it and leave the page stuck in
+        /// whichever state it last applied.
         /// </summary>
         private static void WireToggles(
             GameObject root, IReadOnlyList<Type> toggles, Transform body)
@@ -660,13 +678,12 @@ namespace GS2Studio.Showroom.EditorTools
                         "page.json, so it is left off the page");
                     continue;
                 }
-                var targets = declared
+                var rows = declared
                     .Split('|')
                     .Select(name => body.Find(name.Trim()))
                     .Where(found => found != null)
-                    .Select(found => found.gameObject)
                     .ToList();
-                if (targets.Count == 0)
+                if (rows.Count == 0)
                 {
                     Debug.LogWarning(
                         $"[showroom] {toggleType.Name}: none of '{declared}' is a row " +
@@ -674,13 +691,29 @@ namespace GS2Studio.Showroom.EditorTools
                     continue;
                 }
 
+                var hides = TargetArrayField(toggleType, "_activeWhenTrue") != null;
+                var targets = hides
+                    ? rows.Select(row => (UnityEngine.Object)row.gameObject).ToList()
+                    : rows.Select(row => (UnityEngine.Object)row.GetComponentInChildren<Selectable>(true))
+                        .Where(found => found != null)
+                        .ToList();
+                if (targets.Count == 0)
+                {
+                    Debug.LogWarning(
+                        $"[showroom] {toggleType.Name}: no Selectable on '{declared}'");
+                    continue;
+                }
+
                 var toggle = root.AddComponent(toggleType);
                 var serialized = new SerializedObject(toggle);
-                var whenFalse = serialized.FindProperty("_activeWhenFalse");
-                whenFalse.arraySize = targets.Count;
+                // The true branch enables, the false branch hides: each kind
+                // names the arm that means "the condition is good news".
+                var arm = serialized.FindProperty(
+                    hides ? "_activeWhenFalse" : "_interactableWhenTrue");
+                arm.arraySize = targets.Count;
                 for (var i = 0; i < targets.Count; i++)
                 {
-                    whenFalse.GetArrayElementAtIndex(i).objectReferenceValue = targets[i];
+                    arm.GetArrayElementAtIndex(i).objectReferenceValue = targets[i];
                 }
                 serialized.ApplyModifiedPropertiesWithoutUndo();
                 EditorUtility.SetDirty(toggle);

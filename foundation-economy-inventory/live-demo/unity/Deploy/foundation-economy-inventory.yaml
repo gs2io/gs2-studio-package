@@ -1,0 +1,23 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  InventoryCurrentItemModelMaster_Inventory:
+    Type: "GS2::Inventory::CurrentItemModelMaster"
+    Properties:
+      NamespaceName: "Inventory"
+      Settings:
+        version: "2019-02-05"
+        inventoryModels: []
+        simpleInventoryModels:
+          - name: "Inventory"
+            simpleItemModels:
+              - name: "elixir"
+              - name: "ether"
+              - name: "potion"
+        bigInventoryModels: []
+      Mode: "direct"
+    DependsOn:
+      - "InventoryNamespace_Inventory"
+  InventoryNamespace_Inventory:
+    Type: "GS2::Inventory::Namespace"
+    Properties:
+      Name: "Inventory"

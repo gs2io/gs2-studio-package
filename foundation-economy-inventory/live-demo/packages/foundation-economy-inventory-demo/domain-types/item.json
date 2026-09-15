@@ -1,0 +1,54 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Gain",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "8544d90c-18b6-5f9c-abf8-96fd42e37499",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-inventory-demo"
+      }
+    },
+    {
+      "methodName": "Spend",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "be9cb9ab-350b-5302-980d-5709748b0beb",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-inventory-demo"
+      }
+    }
+  ],
+  "id": "dt_01M2JNQ96HQN4AB5VK9EGMS3YV",
+  "kind": "overlay",
+  "name": "Item",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-inventory",
+    "directSourceTypeId": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6",
+    "sourcePackageId": "foundation-economy-inventory",
+    "sourceTypeId": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6"
+  }
+}

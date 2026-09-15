@@ -1,0 +1,10 @@
+{
+  "gaugeCaptions": {},
+  "listSources": {
+    "Item": "MasterData"
+  },
+  "countdowns": {},
+  "activeToggles": {
+    "ItemOwnedInteractable": ["ItemSpendButton"]
+  }
+}

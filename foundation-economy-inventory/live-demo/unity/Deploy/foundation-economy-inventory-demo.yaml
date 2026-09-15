@@ -1,0 +1,82 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_ItemGain:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "ItemGain"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "elixir"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
+                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"elixir\",\"count\":1}]}"
+          - name: "ether"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
+                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"ether\",\"count\":1}]}"
+          - name: "potion"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
+                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"potion\",\"count\":1}]}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_ItemGain"
+  ExchangeCurrentRateMaster_ItemSpend:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "ItemSpend"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "elixir"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Inventory:ConsumeSimpleItemsByUserId"
+                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"consumeCounts\":[{\"itemName\":\"elixir\",\"count\":1}]}"
+            acquireActions: []
+          - name: "ether"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Inventory:ConsumeSimpleItemsByUserId"
+                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"consumeCounts\":[{\"itemName\":\"ether\",\"count\":1}]}"
+            acquireActions: []
+          - name: "potion"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Inventory:ConsumeSimpleItemsByUserId"
+                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"consumeCounts\":[{\"itemName\":\"potion\",\"count\":1}]}"
+            acquireActions: []
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_ItemSpend"
+  ExchangeNamespace_ItemGain:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "ItemGain"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_ItemSpend:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "ItemSpend"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

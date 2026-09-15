@@ -1,0 +1,18 @@
+{
+  "id": "foundation-economy-inventory-demo",
+  "name": "foundation-economy-inventory-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-inventory": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the items used by the live demo, and the presses that gain and spend them.",
+      "ja": "ライブデモ用のアイテムと、入手・消費の操作を提供します。"
+    },
+    "label": {
+      "en": "Items (demo data)",
+      "ja": "アイテム（デモデータ）"
+    }
+  }
+}

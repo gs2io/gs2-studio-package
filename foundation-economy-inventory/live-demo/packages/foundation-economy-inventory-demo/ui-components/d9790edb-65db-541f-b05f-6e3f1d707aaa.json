@@ -1,0 +1,24 @@
+{
+  "id": "d9790edb-65db-541f-b05f-6e3f1d707aaa",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "GainButton",
+      "delegatedActionKey": "resource:foundation-economy-inventory-demo:masterData:8544d90c-18b6-5f9c-abf8-96fd42e37499::Gs2Exchange:RateModel.Exchange",
+      "id": "9e9c5d85-cbb4-522e-ac1a-8750815395ec",
+      "kind": "buttonAction",
+      "name": "Item"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "SpendButton",
+      "delegatedActionKey": "resource:foundation-economy-inventory-demo:masterData:be9cb9ab-350b-5302-980d-5709748b0beb::Gs2Exchange:RateModel.Exchange",
+      "id": "825bfd1f-2a4f-5740-9a8c-5c3c3a583b36",
+      "kind": "buttonAction",
+      "name": "Item"
+    }
+  ],
+  "name": "Item",
+  "targetDomainType": "Item",
+  "targetDomainTypeId": "dt_01M2JNQ96HQN4AB5VK9EGMS3YV"
+}
