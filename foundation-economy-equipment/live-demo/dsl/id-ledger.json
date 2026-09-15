@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:EquipmentCatalog.equipment": "prop_01M2JQWQ97PWGH9FSBZ6Y5VDH9",
+    "row:dt_FANPG561806ENHYPWV5YRDSHC7.equipmentcollection": "row_01M2JQNB739G31Y0FTNSD3TESF",
+    "row:dt_QQR152BQFJSTM2W1WYZR4RPA98.armor": "row_01M2JQNB73X9JJB3A0FNWPCKBK",
+    "row:dt_QQR152BQFJSTM2W1WYZR4RPA98.weapon": "row_01M2JQNB73G1ZBFZQYMZNJ45VT",
+    "row:dt_R7W960WC22J1FD8E239HDFMD8D.iron-sword": "row_01M2JQNB735N28BWNVFH1RXPZ2",
+    "row:dt_R7W960WC22J1FD8E239HDFMD8D.oak-staff": "row_01M2JQNB73HGAP3A0QA15JRMC9",
+    "row:dt_R7W960WC22J1FD8E239HDFMD8D.steel-shield": "row_01M2JQNB73JPGY358T0M7D4YGX",
+    "row:type:EquipmentCatalog.iron-sword": "row_01M2JQWQ97DBRB9ZWWTSRNANKE",
+    "row:type:EquipmentCatalog.oak-staff": "row_01M2JQWQ97N6YD40FPTR80DGTV",
+    "row:type:EquipmentCatalog.steel-shield": "row_01M2JQWQ979BVEBQS1QWQM3V1E",
+    "type:Equipment": "dt_01M2JQNB738AZQC76A4W5KMKCB",
+    "type:EquipmentCatalog": "dt_01M2JQNB73VGF4V89Q8MNP49ZC",
+    "type:EquipmentCategory": "dt_01M2JQNB73JZ9YW03PX7HHQ7TJ",
+    "type:EquipmentCollection": "dt_01M2JQNB732T7H33CEQQA7N1BR"
+  },
+  "deterministicOverrides": {}
+}

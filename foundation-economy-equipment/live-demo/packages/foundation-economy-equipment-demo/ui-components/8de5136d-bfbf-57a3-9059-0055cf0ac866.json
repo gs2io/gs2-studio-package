@@ -1,0 +1,32 @@
+{
+  "id": "8de5136d-bfbf-57a3-9059-0055cf0ac866",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "04605a5b-d63e-5cc9-b62e-6d0db23a720e",
+      "kind": "templateLabel",
+      "name": "EquipmentCatalog",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        }
+      ],
+      "template": "{id}"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "TakeButton",
+      "delegatedActionKey": "resource:foundation-economy-equipment-demo:masterData:39eeb92c-d246-500a-bce8-193a8863b8e0::Gs2Exchange:RateModel.Exchange",
+      "id": "fa04a734-7b0a-506b-b1a6-1e4fca30a94a",
+      "kind": "buttonAction",
+      "name": "EquipmentCatalog"
+    }
+  ],
+  "name": "EquipmentCatalog",
+  "targetDomainType": "EquipmentCatalog",
+  "targetDomainTypeId": "dt_01M2JQNB73VGF4V89Q8MNP49ZC"
+}

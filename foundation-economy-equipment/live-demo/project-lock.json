@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "commitSha": "8d7f2e567360eb62c7302a8accd0ea7d5a46713f",
+      "integrity": "sha256-B//q5QcUajP2WX3PQhQpVo8hVf2/7qJTTv/ATx7O0Ig=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-equipment",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-equipment/packages/foundation-economy-equipment",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

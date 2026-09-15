@@ -1,0 +1,16 @@
+{
+  "id": "9bc43a0d-1fff-535f-a6b1-165042404443",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "DiscardButton",
+      "delegatedActionKey": "resource:foundation-economy-equipment-demo:masterData:d43aa4bb-cc7f-5214-95c7-1b30bb7e6f0b::Gs2Exchange:RateModel.Exchange",
+      "id": "b2844ffc-d1dc-5b1c-a998-4cb2afb3830a",
+      "kind": "buttonAction",
+      "name": "Equipment"
+    }
+  ],
+  "name": "Equipment",
+  "targetDomainType": "Equipment",
+  "targetDomainTypeId": "dt_01M2JQNB738AZQC76A4W5KMKCB"
+}

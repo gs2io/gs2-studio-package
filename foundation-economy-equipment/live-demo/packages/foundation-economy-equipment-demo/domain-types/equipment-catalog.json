@@ -1,0 +1,74 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "localizedDisplay": {
+          "en": {
+            "description": "Grants one piece of equipment in the demo.",
+            "label": "Catalogue"
+          },
+          "ja": {
+            "description": "デモで装備を1つ入手します。",
+            "label": "装備カタログ"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M2JQWQ97PWGH9FSBZ6Y5VDH9",
+        "localizedDisplay": {
+          "en": {
+            "description": "The equipment this catalogue row grants.",
+            "label": "Equipment"
+          },
+          "ja": {
+            "description": "このカタログ行が付与する装備です。",
+            "label": "装備"
+          }
+        },
+        "name": "equipment",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Take",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "39eeb92c-d246-500a-bce8-193a8863b8e0",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-equipment-demo"
+      }
+    }
+  ],
+  "id": "dt_01M2JQNB73VGF4V89Q8MNP49ZC",
+  "kind": "local",
+  "name": "EquipmentCatalog",
+  "singleEntry": false
+}

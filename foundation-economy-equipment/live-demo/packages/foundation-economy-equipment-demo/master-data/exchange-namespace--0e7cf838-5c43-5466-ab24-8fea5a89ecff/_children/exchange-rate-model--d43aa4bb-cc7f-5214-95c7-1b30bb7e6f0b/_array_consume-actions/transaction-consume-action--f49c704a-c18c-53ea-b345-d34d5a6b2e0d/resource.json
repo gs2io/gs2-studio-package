@@ -1,0 +1,47 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "equipment",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M2JQNB738AZQC76A4W5KMKCB",
+                  "typeName": "Equipment"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          },
+          {
+            "parameterName": "equipmentPropertyId",
+            "source": {
+              "kind": "static",
+              "value": null
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "DeleteEquipment",
+        "transformPackageId": "foundation-economy-equipment"
+      }
+    ]
+  },
+  "id": "f49c704a-c18c-53ea-b345-d34d5a6b2e0d",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2JQNB738AZQC76A4W5KMKCB",
+    "typeName": "Equipment"
+  }
+}

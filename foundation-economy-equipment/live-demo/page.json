@@ -1,0 +1,13 @@
+{
+  "gaugeCaptions": {
+    "EquipmentCollectionCapacityGauge": "EquipmentCollectionCapacityLabel"
+  },
+  "listSources": {
+    "Equipment": "UserData",
+    "EquipmentCatalog": "MasterData"
+  },
+  "countdowns": {},
+  "activeToggles": {
+    "EquipmentCollectionExpandableInteractable": ["EquipmentCollectionExpandButton"]
+  }
+}

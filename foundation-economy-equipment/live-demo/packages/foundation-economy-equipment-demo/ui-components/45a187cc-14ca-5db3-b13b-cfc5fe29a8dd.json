@@ -1,0 +1,16 @@
+{
+  "id": "45a187cc-14ca-5db3-b13b-cfc5fe29a8dd",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "ExpandButton",
+      "delegatedActionKey": "resource:foundation-economy-equipment-demo:masterData:8816eb9a-b8ba-5b8e-a69f-69c913664980::Gs2Exchange:RateModel.Exchange",
+      "id": "ff79ae1a-a970-558f-b0aa-9ae20b247cd4",
+      "kind": "buttonAction",
+      "name": "EquipmentCollection"
+    }
+  ],
+  "name": "EquipmentCollection",
+  "targetDomainType": "EquipmentCollection",
+  "targetDomainTypeId": "dt_01M2JQNB732T7H33CEQQA7N1BR"
+}

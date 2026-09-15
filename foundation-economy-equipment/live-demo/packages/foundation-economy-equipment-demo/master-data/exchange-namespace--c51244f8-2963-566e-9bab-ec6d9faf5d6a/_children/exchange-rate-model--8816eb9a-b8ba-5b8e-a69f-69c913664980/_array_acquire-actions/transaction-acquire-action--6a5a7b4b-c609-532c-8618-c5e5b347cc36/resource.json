@@ -1,0 +1,32 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "value",
+            "source": {
+              "kind": "static",
+              "value": 2
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AddEquipmentCapacity",
+        "transformPackageId": "foundation-economy-equipment"
+      }
+    ]
+  },
+  "id": "6a5a7b4b-c609-532c-8618-c5e5b347cc36",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2JQNB732T7H33CEQQA7N1BR",
+    "typeName": "EquipmentCollection"
+  }
+}
