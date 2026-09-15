@@ -1,0 +1,24 @@
+{
+  "id": "5bd9dd6d-462a-50c9-833c-96a14b3768c9",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "ExtendButton",
+      "delegatedActionKey": "resource:foundation-economy-schedule-demo:masterData:83556a93-8a8f-5de2-aec2-c4645f36d453::Gs2Exchange:RateModel.Exchange",
+      "id": "4ebaa95a-8c9f-539e-969c-5ea3588f4a44",
+      "kind": "buttonAction",
+      "name": "Trigger"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ClearButton",
+      "delegatedActionKey": "resource:foundation-economy-schedule-demo:masterData:0ee053d5-dd24-50ac-b01f-082f3e9d3851::Gs2Exchange:RateModel.Exchange",
+      "id": "9edb7897-d26e-5178-8549-40a66931dd6f",
+      "kind": "buttonAction",
+      "name": "Trigger"
+    }
+  ],
+  "name": "Trigger",
+  "targetDomainType": "Trigger",
+  "targetDomainTypeId": "dt_01M2K159BPQJXG6NHERRE6QEGG"
+}

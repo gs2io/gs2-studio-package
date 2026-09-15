@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M2K159BPQJXG6NHERRE6QEGG",
+            "typeName": "Trigger"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "83556a93-8a8f-5de2-aec2-c4645f36d453",
+  "location": {
+    "modelName": "RateModel",
+    "service": "exchange"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2K159BPQJXG6NHERRE6QEGG",
+    "typeName": "Trigger"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "185f6fa1-decd-50a7-917a-d32301cfb1ee",
+  "items": [
+    {
+      "componentClassName": "WindowLabel",
+      "id": "aa6e6209-da2b-5a2f-ae28-3931118c1501",
+      "kind": "templateLabel",
+      "name": "Schedule",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        },
+        {
+          "key": "scheduleType",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6"
+          }
+        }
+      ],
+      "template": "{id} ({scheduleType})"
+    }
+  ],
+  "name": "Schedule",
+  "targetDomainType": "Schedule",
+  "targetDomainTypeId": "dt_01M2K159BPMEWBYY7W6YT7B1ZP"
+}

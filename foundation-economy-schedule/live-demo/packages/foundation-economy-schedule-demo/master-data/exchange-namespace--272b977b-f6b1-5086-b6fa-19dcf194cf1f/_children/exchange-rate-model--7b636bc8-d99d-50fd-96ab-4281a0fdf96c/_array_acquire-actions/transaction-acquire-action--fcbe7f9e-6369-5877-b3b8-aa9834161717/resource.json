@@ -1,0 +1,51 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "trigger",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M2K1JA50RTYBQZD91E00DJTF",
+                    "typeName": "TriggerPull"
+                  },
+                  "propertyId": "prop_01M2K1JA50HQ4YC5CVCFWZ9DJ7"
+                },
+                "kind": "parent",
+                "parentResourceId": "7b636bc8-d99d-50fd-96ab-4281a0fdf96c"
+              }
+            }
+          },
+          {
+            "parameterName": "ttlMinutes",
+            "source": {
+              "kind": "static",
+              "value": 5
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "PullTrigger",
+        "transformPackageId": "foundation-economy-schedule"
+      }
+    ]
+  },
+  "id": "fcbe7f9e-6369-5877-b3b8-aa9834161717",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2K1JA50RTYBQZD91E00DJTF",
+    "typeName": "TriggerPull"
+  }
+}

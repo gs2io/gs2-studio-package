@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:TriggerPull.trigger": "prop_01M2K1JA50HQ4YC5CVCFWZ9DJ7",
+    "row:dt_55N8HND2SNZV1ZMCJS4NA2BTFD.closed-season": "row_01M2K159BPKAGRSRJCATFSF6P8",
+    "row:dt_55N8HND2SNZV1ZMCJS4NA2BTFD.happy-hour": "row_01M2K159BPGQNYQWAEPN8TM8QP",
+    "row:dt_55N8HND2SNZV1ZMCJS4NA2BTFD.open-season": "row_01M2K159BP6Y23WZ60TXD5HHE1",
+    "row:dt_Y9Y1H4ZR4MS74D3YME76CEGJST.happy-hour": "row_01M2K159BPAKP4Y1TPSP6K12GQ",
+    "row:type:TriggerPull.happy-hour": "row_01M2K1JA50RPYA70AKTZDEWHNV",
+    "type:Schedule": "dt_01M2K159BPMEWBYY7W6YT7B1ZP",
+    "type:Trigger": "dt_01M2K159BPQJXG6NHERRE6QEGG",
+    "type:TriggerPull": "dt_01M2K1JA50RTYBQZD91E00DJTF"
+  },
+  "deterministicOverrides": {}
+}

@@ -1,0 +1,32 @@
+{
+  "id": "084c3a32-161b-5c02-b854-6fecb9a225ab",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "5866f897-159f-5bdb-bf73-69a9beb38131",
+      "kind": "templateLabel",
+      "name": "TriggerPull",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        }
+      ],
+      "template": "{id}"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "PullButton",
+      "delegatedActionKey": "resource:foundation-economy-schedule-demo:masterData:7b636bc8-d99d-50fd-96ab-4281a0fdf96c::Gs2Exchange:RateModel.Exchange",
+      "id": "9db65a27-e995-5df1-aee0-975cd1c765cd",
+      "kind": "buttonAction",
+      "name": "TriggerPull"
+    }
+  ],
+  "name": "TriggerPull",
+  "targetDomainType": "TriggerPull",
+  "targetDomainTypeId": "dt_01M2K1JA50RTYBQZD91E00DJTF"
+}

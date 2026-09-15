@@ -1,0 +1,8 @@
+{
+  "gaugeCaptions": {},
+  "listSources": {},
+  "countdowns": {},
+  "activeToggles": {
+    "TriggerTriggeredInteractable": ["TriggerExtendButton", "TriggerClearButton"]
+  }
+}
