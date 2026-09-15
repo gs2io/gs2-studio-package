@@ -1,5 +1,8 @@
 {
   "gaugeCaptions": {
     "EnergyStaminaGauge": "EnergyStaminaLabel"
+  },
+  "listSources": {
+    "Energy": "MasterData"
   }
 }

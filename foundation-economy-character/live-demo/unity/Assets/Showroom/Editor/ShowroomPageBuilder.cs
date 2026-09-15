@@ -48,6 +48,18 @@ namespace GS2Studio.Showroom.EditorTools
         private static Dictionary<string, string> _gaugeCaptions = new Dictionary<string, string>();
 
         /// <summary>
+        /// Model name to the `Source` a keyed model's list is mounted from, as
+        /// the demo declared it in `page.json`. Which set of rows a page shows
+        /// is the demo's call: a model whose rows are what the player has —
+        /// characters recruited, items owned — lists from user data, while a
+        /// model whose rows are what the title configured and every player
+        /// carries a copy of lists from master data. Defaults to user data,
+        /// which is the safe answer when a row's per-player state needs a key
+        /// no master row can supply.
+        /// </summary>
+        private static Dictionary<string, string> _listSources = new Dictionary<string, string>();
+
+        /// <summary>
         /// Entry point for `-executeMethod`. Reads `-showroomTitle`,
         /// `-showroomSubtitle` and `-showroomRebuildPage`, and owns the exit
         /// code; the work itself is <see cref="BuildPage"/>, which an open
@@ -61,7 +73,8 @@ namespace GS2Studio.Showroom.EditorTools
                     ReadArgument("-showroomTitle"),
                     ReadArgument("-showroomSubtitle"),
                     ReadArgument("-showroomRebuildPage") == "true",
-                    ParsePairs(ReadArgument("-showroomGaugeCaptions")));
+                    ParsePairs(ReadArgument("-showroomGaugeCaptions")),
+                    ParsePairs(ReadArgument("-showroomListSources")));
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -77,14 +90,17 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         public static int BuildPage(string title, string subtitle, bool rebuild)
         {
-            return BuildPage(title, subtitle, rebuild, new Dictionary<string, string>());
+            return BuildPage(
+                title, subtitle, rebuild,
+                new Dictionary<string, string>(), new Dictionary<string, string>());
         }
 
         public static int BuildPage(
             string title, string subtitle, bool rebuild,
-            Dictionary<string, string> gaugeCaptions)
+            Dictionary<string, string> gaugeCaptions, Dictionary<string, string> listSources)
         {
             _gaugeCaptions = gaugeCaptions ?? new Dictionary<string, string>();
+            _listSources = listSources ?? new Dictionary<string, string>();
             var existed = File.Exists(ScenePath);
             if (existed && !rebuild)
             {
@@ -371,22 +387,32 @@ namespace GS2Studio.Showroom.EditorTools
             // A model with no user data at all is generated without the choice,
             // and then the catalogue is the only thing there is to list.
             var source = serialized.FindProperty("_source");
-            if (source != null) source.enumValueIndex = UserDataSourceIndex(listHandler);
+            if (source != null) source.enumValueIndex = ListSourceIndex(listHandler, model);
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
         /// <summary>
-        /// The list handler's `Source.UserData` ordinal, read from the enum the
-        /// generator emitted rather than assumed, so a reordering there cannot
-        /// silently point every demo at the wrong source.
+        /// The ordinal of the `Source` this model's list mounts from, read from
+        /// the enum the generator emitted rather than assumed, so a reordering
+        /// there cannot silently point every demo at the wrong source. The demo
+        /// names the source in `page.json`; `UserData` is the default.
         /// </summary>
-        private static int UserDataSourceIndex(Type listHandler)
+        private static int ListSourceIndex(Type listHandler, string model)
         {
             var sourceEnum = listHandler.GetNestedType("Source");
             if (sourceEnum == null) return 0;
             var names = Enum.GetNames(sourceEnum);
-            var index = Array.IndexOf(names, "UserData");
-            return index < 0 ? 0 : index;
+            var wanted = _listSources.TryGetValue(model, out var declared) ? declared : "UserData";
+            var index = Array.FindIndex(
+                names, name => string.Equals(name, wanted, StringComparison.OrdinalIgnoreCase));
+            if (index < 0)
+            {
+                Debug.LogWarning(
+                    $"[showroom] {model}: no list source named '{wanted}'; " +
+                    $"the generator offers {string.Join(", ", names)}");
+                return 0;
+            }
+            return index;
         }
 
         private static GameObject BuildListItemPrefab(
