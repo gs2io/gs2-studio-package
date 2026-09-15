@@ -46,8 +46,11 @@ const Equipment = defineDomainType("Equipment", dt =>
     })
 );
 
+// One bag per player, so one row: the inventory it is backed by is named by a
+// constant, and a type whose identity never varies has no list to mount.
 const EquipmentCollection = defineDomainType("EquipmentCollection", dt =>
   dt
+    .singleEntry()
     .property(PT.int32("defaultCapacity").masterData().required())
     .property(PT.int32("maximumCapacity").masterData().required())
     .property(PT.int32("currentCapacityUsage").userData().required())

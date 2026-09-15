@@ -25,7 +25,7 @@
     },
     "EquipmentCollection": {
       "id": "dt_FANPG561806ENHYPWV5YRDSHC7",
-      "singleEntry": false,
+      "singleEntry": true,
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_FANPG561806ENHYPWV5YRDSHC7",
       "properties": {
