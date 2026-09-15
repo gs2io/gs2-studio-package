@@ -7,8 +7,8 @@ Resources:
       Settings:
         version: "2019-03-31"
         events:
-          - absoluteBegin: 1704067200000
-            absoluteEnd: 1735689600000
+          - absoluteBegin: 1786904562011
+            absoluteEnd: 1789237362011
             metadata: ""
             name: "closed-season"
             repeatSetting:
@@ -20,8 +20,8 @@ Resources:
             repeatSetting:
               repeatType: "always"
             scheduleType: "relative"
-          - absoluteBegin: 1735689600000
-            absoluteEnd: 2524608000000
+          - absoluteBegin: 1789064562011
+            absoluteEnd: 1789690962011
             metadata: ""
             name: "open-season"
             repeatSetting:

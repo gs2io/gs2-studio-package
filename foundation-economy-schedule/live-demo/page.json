@@ -1,7 +1,10 @@
 {
   "gaugeCaptions": {},
   "listSources": {},
-  "countdowns": {},
+  "countdowns": {
+    "ScheduleEndAtValue": "DeadlineCountdown",
+    "TriggerExpiresAtValue": "DeadlineCountdown"
+  },
   "activeToggles": {
     "TriggerTriggeredInteractable": ["TriggerExtendButton", "TriggerClearButton"]
   }
