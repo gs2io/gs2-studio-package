@@ -39,9 +39,11 @@ namespace GS2Studio.Showroom.EditorTools
         private const string GeneratedNamespacePrefix = "GS2Studio.Generated.";
 
         /// <summary>
-        /// Gauge component name to the label component drawn on it, as the
-        /// demo declared it. Which reading belongs on a bar is the demo's
-        /// call — from here every label looks alike.
+        /// Gauge component name to the label component whose reading is drawn
+        /// on it, as the demo declared it in `page.json`. Which reading belongs
+        /// on a bar is the demo's call — from here every label looks alike. The
+        /// bar's own caption is not declared: it is derived from whichever
+        /// component names the row.
         /// </summary>
         private static Dictionary<string, string> _gaugeCaptions = new Dictionary<string, string>();
 
@@ -149,6 +151,24 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
+        /// Strips the generated components a previous build left on the mount
+        /// itself. <see cref="ClearChildren"/> destroys children and nothing
+        /// else, so page-root handlers would otherwise stack up one copy per
+        /// rebuild — each one binding and reloading alongside the others.
+        /// Only the generated namespace is touched; anything a demo author
+        /// added to the mount by hand is theirs to keep.
+        /// </summary>
+        private static void ClearGeneratedComponents(Transform mount)
+        {
+            var doomed = mount.GetComponents<MonoBehaviour>()
+                .Where(component =>
+                    component != null &&
+                    (component.GetType().Namespace ?? "").StartsWith(GeneratedNamespacePrefix))
+                .ToList();
+            foreach (var component in doomed) UnityEngine.Object.DestroyImmediate(component);
+        }
+
+        /// <summary>
         /// The generated handlers that own a binder of their own, in a stable
         /// order. List and list-item handlers are excluded: they are driven by
         /// a parent rather than standing on their own in a page.
@@ -192,14 +212,26 @@ namespace GS2Studio.Showroom.EditorTools
                 .ToList();
         }
 
-        /// <summary>UI components the same package generated for this handler.</summary>
-        private static IReadOnlyList<Type> UiComponentsFor(Type handler, string eventPropertyName)
+        /// <summary>
+        /// UI components the same package generated for this handler, narrowed
+        /// to those whose event carries the payload the caller knows how to
+        /// wire.
+        ///
+        /// The event name alone is not enough to tell them apart: a `value`
+        /// component publishes its property's native type, so a timestamp
+        /// reading also answers to `OnUpdate`, but as
+        /// `UnityEvent&lt;DateTime&gt;`. The showroom only knows how to put a
+        /// string into a `Text`, so anything else is left undrawn rather than
+        /// cast into a page-wide failure.
+        /// </summary>
+        private static IReadOnlyList<Type> UiComponentsFor(
+            Type handler, string eventPropertyName, Type eventType)
         {
             var uiNamespace = handler.Namespace + ".UI";
             return SafeTypes(handler.Assembly)
                 .Where(type =>
                     type.IsClass && !type.IsAbstract && type.Namespace == uiNamespace &&
-                    type.GetProperty(eventPropertyName) != null)
+                    type.GetProperty(eventPropertyName)?.PropertyType == eventType)
                 .OrderBy(type => type.Name, StringComparer.Ordinal)
                 .ToList();
         }
@@ -208,6 +240,7 @@ namespace GS2Studio.Showroom.EditorTools
         {
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var handlers = GeneratedHandlers();
+            ClearGeneratedComponents(content);
             // Every handler answers a completed action, because an action can
             // change anything the page is showing and a handler has no other
             // way to hear about it.
@@ -216,10 +249,22 @@ namespace GS2Studio.Showroom.EditorTools
 
             foreach (var handler in handlers)
             {
-                var labels = UiComponentsFor(handler, "OnUpdate");
-                var buttons = UiComponentsFor(handler, "OnCompleted");
+                var labels = UiComponentsFor(handler, "OnUpdate", typeof(UnityEvent<string>));
+                var buttons = UiComponentsFor(handler, "OnCompleted", typeof(UnityEvent));
                 var gauges = GaugesFor(handler);
-                if (labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0) continue;
+                if (labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0)
+                {
+                    // Nothing to draw, but something to read: a configuration
+                    // model a package never gave a component of its own is
+                    // still what another section's reading is composed from.
+                    // So it is mounted without a section — an empty heading
+                    // over an empty body says nothing a visitor wants — and
+                    // stays out of `placed`, because a handler that draws
+                    // nothing has nothing to redraw, and reloading it after
+                    // every action would throw away a cache for no one.
+                    if (!NeedsIdentityKeys(handler)) content.gameObject.AddComponent(handler);
+                    continue;
+                }
 
                 var section = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab, content);
                 section.name = ModelNameOf(handler);
@@ -242,7 +287,14 @@ namespace GS2Studio.Showroom.EditorTools
                     continue;
                 }
 
-                placed.Add(section.AddComponent(handler));
+                // A single-entry handler serves the whole page rather than one
+                // section: a component resolves its handler by walking up the
+                // parent chain, so mounting it on the page root puts it above
+                // every section at once. Its own rows still reach it — they
+                // climb `label -> Items -> Section -> content` — and a gauge in
+                // another section's list row can now read it too, which is what
+                // a reading composed from two models needs.
+                placed.Add(content.gameObject.AddComponent(handler));
                 AddRows(ItemsOf(section.transform), labels, buttons, gauges, page);
             }
 
@@ -251,7 +303,7 @@ namespace GS2Studio.Showroom.EditorTools
                 foreach (var button in body.GetComponentsInChildren<MonoBehaviour>(true))
                 {
                     var completed = button.GetType().GetProperty("OnCompleted");
-                    if (completed == null) continue;
+                    if (completed?.PropertyType != typeof(UnityEvent)) continue;
                     var unityEvent = (UnityEvent)completed.GetValue(button);
                     foreach (var handlerComponent in placed)
                         UnityEventTools.AddVoidPersistentListener(
@@ -403,30 +455,42 @@ namespace GS2Studio.Showroom.EditorTools
             // and a plain value generate the same shape, so picking one would
             // be picking arbitrarily. The demo says which, and an unambiguous
             // pairing — one bar, one label — is taken without being told.
-            var overlaid = new Dictionary<Type, Type>();
+            var readings = new Dictionary<Type, Type>();
             foreach (var gauge in gauges)
             {
-                var captionName = _gaugeCaptions.TryGetValue(gauge.Name, out var declared)
+                var readingName = _gaugeCaptions.TryGetValue(gauge.Name, out var declared)
                     ? declared
                     : gauges.Count == 1 && labels.Count == 1 ? labels[0].Name : null;
-                var caption = labels.FirstOrDefault(label => label.Name == captionName);
-                if (caption != null) overlaid[gauge] = caption;
+                var reading = labels.FirstOrDefault(label => label.Name == readingName);
+                if (reading != null) readings[gauge] = reading;
             }
 
             // Values first, then the bars they summarise, then what a visitor
             // can press: read the state, then act on it.
             foreach (var label in labels)
             {
-                if (!overlaid.ContainsValue(label)) AddValueRow(body, label);
+                if (!readings.ContainsValue(label)) AddValueRow(body, label);
             }
             foreach (var gauge in gauges)
             {
-                AddGaugeRow(body, gauge, overlaid.TryGetValue(gauge, out var c) ? c : null);
+                AddGaugeRow(
+                    body, gauge, readings.TryGetValue(gauge, out var reading) ? reading : null);
             }
             foreach (var button in buttons) AddActionRow(body, button, page, null);
         }
 
-        private static void AddGaugeRow(Transform section, Type gaugeType, Type captionLabelType)
+        /// <summary>
+        /// Draws one bar: what it measures on the left, the reading on it.
+        ///
+        /// A fill on its own is a shape a visitor has to guess at, so the row
+        /// is named the same way every other row is — from the component, not
+        /// from prose written here. The reading names it when there is one,
+        /// because the reading is what the number says: a character's bar
+        /// fills with experience and is captioned `Level`, which is what its
+        /// `2/10` counts. With no reading the fill is all there is, so the
+        /// gauge names it.
+        /// </summary>
+        private static void AddGaugeRow(Transform section, Type gaugeType, Type readingLabelType)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(GaugeRowPrefabPath);
             var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
@@ -438,9 +502,13 @@ namespace GS2Studio.Showroom.EditorTools
                 row.transform.Find("Fill").GetComponent<Image>();
             serialized.ApplyModifiedPropertiesWithoutUndo();
 
-            var caption = row.transform.Find("Caption");
-            if (captionLabelType == null) caption.gameObject.SetActive(false);
-            else BindLabel(row, captionLabelType, caption.GetComponent<Text>());
+            SetText(
+                row.transform.Find("Caption"),
+                Humanize(TrimModelPrefix(readingLabelType ?? gaugeType)));
+
+            var value = row.transform.Find("Value");
+            if (readingLabelType == null) value.gameObject.SetActive(false);
+            else BindLabel(row, readingLabelType, value.GetComponent<Text>());
         }
 
         private static void AddValueRow(Transform section, Type labelType)
@@ -507,16 +575,24 @@ namespace GS2Studio.Showroom.EditorTools
             return ns.Substring(GeneratedNamespacePrefix.Length);
         }
 
-        /// <summary>`WalletFreeBalanceLabel` -> `FreeBalance`.</summary>
+        /// <summary>
+        /// `WalletFreeBalanceLabel` -> `FreeBalance`, `CharacterExperienceGauge`
+        /// -> `Experience`. What kind of component it is is already said by the
+        /// row it is drawn in, so only what it reads is left. One suffix goes:
+        /// the rest of the name is the reading, whatever it happens to end in.
+        /// </summary>
         private static string TrimModelPrefix(Type uiComponent)
         {
             var model = (uiComponent.Namespace ?? "")
                 .Replace(GeneratedNamespacePrefix, "").Replace(".UI", "");
             var name = uiComponent.Name;
             if (name.StartsWith(model)) name = name.Substring(model.Length);
-            foreach (var suffix in new[] { "Label", "Button" })
-                if (name.EndsWith(suffix) && name.Length > suffix.Length)
-                    name = name.Substring(0, name.Length - suffix.Length);
+            foreach (var suffix in new[] { "Label", "Button", "Gauge" })
+            {
+                if (!name.EndsWith(suffix) || name.Length <= suffix.Length) continue;
+                name = name.Substring(0, name.Length - suffix.Length);
+                break;
+            }
             return name;
         }
 

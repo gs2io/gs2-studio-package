@@ -40,14 +40,20 @@
       "template": "{currentValue}/{currentMaximumValue}"
     },
     {
-      "componentClassName": "NextRecoveryValue",
-      "id": "a1381543-c3ce-54f0-bf2c-b1496d9d6b63",
-      "kind": "value",
+      "componentClassName": "NextRecoveryLabel",
+      "id": "8d3e3049-613d-59a5-b954-9b4f6ff4cecc",
+      "kind": "templateLabel",
       "name": "Energy",
-      "source": {
-        "kind": "property",
-        "propertyId": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ"
-      }
+      "sources": [
+        {
+          "key": "nextRecoverdAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ"
+          }
+        }
+      ],
+      "template": "{nextRecoverdAt}"
     },
     {
       "arguments": [],

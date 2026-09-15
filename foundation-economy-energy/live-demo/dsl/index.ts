@@ -202,12 +202,16 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
         },
         { name: "Energy" }
       )
-      // The recovery clock, handed to the scene as a `DateTime` rather than as
-      // text: how a countdown reads is the scene's business, and an epoch
-      // printed raw is worse than nothing.
-      .value("NextRecoveryValue", ui.inheritedProp(energy.propertyId("Energy", "nextRecoverdAt")), {
-        name: "Energy",
-      })
+      // The recovery clock. A `value` component would hand the scene a typed
+      // `DateTime` and leave the formatting to a countdown script, but the
+      // showroom page is generated and has no such script — so the reading is
+      // a label, and the page shows when the next tick lands.
+      .templateLabel(
+        "NextRecoveryLabel",
+        "{nextRecoverdAt}",
+        { nextRecoverdAt: ui.inheritedProp(energy.propertyId("Energy", "nextRecoverdAt")) },
+        { name: "Energy" }
+      )
       .buttonAction("ConsumeButton", "Consume", undefined, { name: "Energy" })
       .buttonAction("RecoverButton", "Recover", undefined, { name: "Energy" })
   )
