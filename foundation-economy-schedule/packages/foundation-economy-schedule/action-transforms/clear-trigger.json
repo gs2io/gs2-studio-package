@@ -1,0 +1,51 @@
+{
+  "category": "consume",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ClearTrigger",
+  "outputs": [
+    {
+      "actionName": "Gs2Schedule:DeleteTriggerByUserId",
+      "conditions": [],
+      "id": "out_01M2K0X4KRHYGZYJPWDZGF76VF",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "triggerName",
+          "sourceParameter": "trigger"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "6515e9e9-7c2f-58fa-9fa6-0dd2769a9e7d",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "id": "param_01M2K0X4KRC2H2P0KF8VVHDRX5",
+      "name": "trigger",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST"
+      }
+    }
+  ]
+}

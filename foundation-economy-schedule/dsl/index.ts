@@ -7,6 +7,7 @@ import {
   PT,
   Source,
   transactionSetting,
+  UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -257,6 +258,58 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
         expiresAt: Bind.domainProperties([Source.direct(Trigger, "expiresAt")]),
         triggerId: Bind.skip(),
         userId: Bind.skip(),
+      })
+  )
+
+  // Pulling a trigger is what brings it into existence; extending one only
+  // works on a trigger that is already running, and clearing one is how a
+  // player gets back to the state they started in. A package that models the
+  // trigger has to offer all three or the other two are unreachable.
+  .actionTransform("PullTrigger", at =>
+    at
+      .category("acquire")
+      .parameter("trigger", { type: PT.ref("Trigger") })
+      .parameter("ttlMinutes", { type: PT.int32() })
+      .output("Gs2Schedule:TriggerByUserId", o =>
+        o
+          .resourceRef(() => Namespace)
+          .mapResourceKey("namespaceName")
+          .mapParameter("triggerName", "trigger")
+          .mapPlaceholder("userId", "#{userId}")
+          // Pulling an already-running trigger starts its window over rather
+          // than adding to it: extending is what `TriggerSchedule` is for, and
+          // one press should not quietly do the other one's job.
+          .mapStatic("triggerStrategy", "renew")
+          .mapParameter("ttl", "ttlMinutes")
+          .mapStatic("eventId", null)
+      )
+  )
+  .actionTransform("ClearTrigger", at =>
+    at
+      .category("consume")
+      .parameter("trigger", { type: PT.ref("Trigger") })
+      .output("Gs2Schedule:DeleteTriggerByUserId", o =>
+        o
+          .resourceRef(() => Namespace)
+          .mapResourceKey("namespaceName")
+          .mapParameter("triggerName", "trigger")
+          .mapPlaceholder("userId", "#{userId}")
+      )
+  )
+
+  // What a trigger is worth knowing about: whether it is running, and until
+  // when. Both are the same reading in every title that pulls one.
+  .uiComponent(Trigger, ui =>
+    ui
+      .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Trigger" })
+      .value("ExpiresAtValue", ui.prop("expiresAt"), { name: "Trigger" })
+      // A trigger that has never been pulled has no window to show, and one
+      // that is running has nothing to say about not being pulled.
+      .activeToggle("TriggeredActiveToggle", UiCond.truthy(ui.prop("triggered")), {
+        name: "Trigger",
+      })
+      .interactable("TriggeredInteractable", UiCond.truthy(ui.prop("triggered")), {
+        name: "Trigger",
       })
   )
 

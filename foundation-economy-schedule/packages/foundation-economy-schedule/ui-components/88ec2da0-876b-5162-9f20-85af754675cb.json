@@ -1,0 +1,60 @@
+{
+  "id": "88ec2da0-876b-5162-9f20-85af754675cb",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "46396a13-836f-5253-8772-2fc5d47fa55d",
+      "kind": "templateLabel",
+      "name": "Trigger",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        }
+      ],
+      "template": "{id}"
+    },
+    {
+      "componentClassName": "ExpiresAtValue",
+      "id": "6f1b20af-dc0a-5d87-85be-71596bd089e2",
+      "kind": "value",
+      "name": "Trigger",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF"
+      }
+    },
+    {
+      "componentClassName": "TriggeredActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_6MCAB8KE6ZN15EJK6Q592XR7GA"
+        }
+      },
+      "id": "2d6bec4a-cbbd-522a-ad59-d463cd4830a5",
+      "kind": "activeToggle",
+      "name": "Trigger"
+    },
+    {
+      "componentClassName": "TriggeredInteractable",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_6MCAB8KE6ZN15EJK6Q592XR7GA"
+        }
+      },
+      "id": "c22b42a1-7765-5181-867a-fd4d5b386e6a",
+      "kind": "interactable",
+      "name": "Trigger"
+    }
+  ],
+  "name": "Trigger",
+  "targetDomainType": "Trigger",
+  "targetDomainTypeId": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST"
+}
