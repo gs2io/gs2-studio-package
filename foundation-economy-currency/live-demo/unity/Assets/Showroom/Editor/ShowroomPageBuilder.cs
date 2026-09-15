@@ -39,6 +39,13 @@ namespace GS2Studio.Showroom.EditorTools
         private const string GeneratedNamespacePrefix = "GS2Studio.Generated.";
 
         /// <summary>
+        /// Gauge component name to the label component drawn on it, as the
+        /// demo declared it. Which reading belongs on a bar is the demo's
+        /// call — from here every label looks alike.
+        /// </summary>
+        private static Dictionary<string, string> _gaugeCaptions = new Dictionary<string, string>();
+
+        /// <summary>
         /// Entry point for `-executeMethod`. Reads `-showroomTitle`,
         /// `-showroomSubtitle` and `-showroomRebuildPage`, and owns the exit
         /// code; the work itself is <see cref="BuildPage"/>, which an open
@@ -51,7 +58,8 @@ namespace GS2Studio.Showroom.EditorTools
                 BuildPage(
                     ReadArgument("-showroomTitle"),
                     ReadArgument("-showroomSubtitle"),
-                    ReadArgument("-showroomRebuildPage") == "true");
+                    ReadArgument("-showroomRebuildPage") == "true",
+                    ParsePairs(ReadArgument("-showroomGaugeCaptions")));
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -67,6 +75,14 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         public static int BuildPage(string title, string subtitle, bool rebuild)
         {
+            return BuildPage(title, subtitle, rebuild, new Dictionary<string, string>());
+        }
+
+        public static int BuildPage(
+            string title, string subtitle, bool rebuild,
+            Dictionary<string, string> gaugeCaptions)
+        {
+            _gaugeCaptions = gaugeCaptions ?? new Dictionary<string, string>();
             var existed = File.Exists(ScenePath);
             if (existed && !rebuild)
             {
@@ -382,21 +398,30 @@ namespace GS2Studio.Showroom.EditorTools
                 return;
             }
 
-            // A bar reads better with its value written on it, but which
-            // label belongs there cannot be worked out from here: a template
-            // label and a plain value generate the same shape, so picking one
-            // would be picking arbitrarily. Only an unambiguous pairing — one
-            // bar, one label — is drawn that way; anything else keeps its
-            // labels as their own rows, and a demo author who wants a
-            // particular reading on the bar moves it in the scene.
-            var overlaid = gauges.Count == 1 && labels.Count == 1 ? labels[0] : null;
-            for (var i = 0; i < gauges.Count; i++)
+            // A bar reads better with its value written on it, but which label
+            // belongs there cannot be worked out from here: a template label
+            // and a plain value generate the same shape, so picking one would
+            // be picking arbitrarily. The demo says which, and an unambiguous
+            // pairing — one bar, one label — is taken without being told.
+            var overlaid = new Dictionary<Type, Type>();
+            foreach (var gauge in gauges)
             {
-                AddGaugeRow(body, gauges[i], i == 0 ? overlaid : null);
+                var captionName = _gaugeCaptions.TryGetValue(gauge.Name, out var declared)
+                    ? declared
+                    : gauges.Count == 1 && labels.Count == 1 ? labels[0].Name : null;
+                var caption = labels.FirstOrDefault(label => label.Name == captionName);
+                if (caption != null) overlaid[gauge] = caption;
             }
+
+            // Values first, then the bars they summarise, then what a visitor
+            // can press: read the state, then act on it.
             foreach (var label in labels)
             {
-                if (label != overlaid) AddValueRow(body, label);
+                if (!overlaid.ContainsValue(label)) AddValueRow(body, label);
+            }
+            foreach (var gauge in gauges)
+            {
+                AddGaugeRow(body, gauge, overlaid.TryGetValue(gauge, out var c) ? c : null);
             }
             foreach (var button in buttons) AddActionRow(body, button, page, null);
         }
@@ -502,6 +527,19 @@ namespace GS2Studio.Showroom.EditorTools
             var spaced = System.Text.RegularExpressions.Regex.Replace(
                 pascalCase, "(?<=[a-z0-9])(?=[A-Z])", " ");
             return char.ToUpperInvariant(spaced[0]) + spaced.Substring(1).ToLowerInvariant();
+        }
+
+        /// <summary>`Gauge=Label,Gauge=Label` as the demo declared it.</summary>
+        private static Dictionary<string, string> ParsePairs(string value)
+        {
+            var pairs = new Dictionary<string, string>();
+            if (string.IsNullOrEmpty(value)) return pairs;
+            foreach (var entry in value.Split(','))
+            {
+                var halves = entry.Split('=');
+                if (halves.Length == 2) pairs[halves[0].Trim()] = halves[1].Trim();
+            }
+            return pairs;
         }
 
         private static string ReadArgument(string name)
