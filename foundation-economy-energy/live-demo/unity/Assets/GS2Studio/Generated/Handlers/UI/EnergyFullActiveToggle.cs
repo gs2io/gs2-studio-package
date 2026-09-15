@@ -38,8 +38,8 @@ namespace GS2Studio.Generated.Energy.UI
     /// either array are skipped so a partially-wired Inspector slot does
     /// not crash the apply loop.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/Energy/ActiveToggle/RecoveryPendingToggle")]
-    public sealed class EnergyRecoveryPendingToggle : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/Energy/ActiveToggle/FullActiveToggle")]
+    public sealed class EnergyFullActiveToggle : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private EnergyHandlerBase? _handler;
@@ -60,7 +60,7 @@ namespace GS2Studio.Generated.Energy.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(EnergyRecoveryPendingToggle)} on '{name}': no EnergyHandlerBase found in the parent chain; component inactive.", this);
+                        $"{nameof(EnergyFullActiveToggle)} on '{name}': no EnergyHandlerBase found in the parent chain; component inactive.", this);
                 }
                 return;
             }
