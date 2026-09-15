@@ -1,0 +1,34 @@
+{
+  "id": "aa8ba8a5-7609-53c3-99c1-5a933132db4b",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "c286af08-050a-541f-bda6-5c91d6ef88c9",
+      "kind": "templateLabel",
+      "name": "Equipment",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        }
+      ],
+      "template": "{id}"
+    },
+    {
+      "componentClassName": "PropertyIdValue",
+      "id": "3a49b112-902d-5d3e-a967-1614aa7d9f16",
+      "kind": "value",
+      "name": "Equipment",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_S5796CZNBGWDHWSSHHT1EC00T6"
+      }
+    }
+  ],
+  "name": "Equipment",
+  "targetDomainType": "Equipment",
+  "targetDomainTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D"
+}

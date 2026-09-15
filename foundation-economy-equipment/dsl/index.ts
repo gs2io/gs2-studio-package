@@ -6,6 +6,7 @@ import {
   PT,
   Source,
   transactionSetting,
+  UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -192,6 +193,50 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
         sortValue: Bind.skip(),
         userId: Bind.skip(),
       })
+  )
+
+  // How full the bag is, and whether there is room to make it bigger, are the
+  // same two readings in every title that has one, so they ship with the model.
+  .uiComponent(EquipmentCollection, ui =>
+    ui
+      // Against the capacity the player actually has, not the one the title
+      // starts them with: the whole point of an expandable bag is that the
+      // ceiling moves.
+      .gauge("CapacityGauge", ui.prop("currentCapacityUsage"), ui.prop("currentMaximumCapacity"), {
+        name: "EquipmentCollection",
+        clamp: true,
+      })
+      .templateLabel(
+        "CapacityLabel",
+        "{currentCapacityUsage}/{currentMaximumCapacity}",
+        {
+          currentCapacityUsage: ui.prop("currentCapacityUsage"),
+          currentMaximumCapacity: ui.prop("currentMaximumCapacity"),
+        },
+        { name: "EquipmentCollection" }
+      )
+      // Past the ceiling the title set, there is nothing left to buy, and a
+      // button that fails is worse than one that is plainly unavailable.
+      .interactable(
+        "ExpandableInteractable",
+        UiCond.lt(ui.prop("currentMaximumCapacity"), ui.prop("maximumCapacity")),
+        { name: "EquipmentCollection" }
+      )
+      // A bag with no room left is the state the expand button exists for, so
+      // anything that only matters while it is full hangs off this.
+      .activeToggle(
+        "FullActiveToggle",
+        UiCond.gte(ui.prop("currentCapacityUsage"), ui.prop("currentMaximumCapacity")),
+        { name: "EquipmentCollection" }
+      )
+  )
+
+  .uiComponent(Equipment, ui =>
+    ui
+      // A catalogue row names the equipment; an owned row also carries the
+      // instance it is, which is what tells two of the same sword apart.
+      .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Equipment" })
+      .value("PropertyIdValue", ui.prop("propertyId"), { name: "Equipment" })
   )
 
   .actionTransform("AcquireEquipment", at =>

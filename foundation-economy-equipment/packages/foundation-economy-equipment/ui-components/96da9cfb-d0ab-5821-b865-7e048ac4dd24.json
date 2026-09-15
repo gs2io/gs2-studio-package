@@ -1,0 +1,80 @@
+{
+  "id": "96da9cfb-d0ab-5821-b865-7e048ac4dd24",
+  "items": [
+    {
+      "clamp": true,
+      "componentClassName": "CapacityGauge",
+      "current": {
+        "kind": "property",
+        "propertyId": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4"
+      },
+      "id": "29efecd6-afbb-5aa3-8622-c041543a09cb",
+      "kind": "gauge",
+      "max": {
+        "kind": "property",
+        "propertyId": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ"
+      },
+      "name": "EquipmentCollection"
+    },
+    {
+      "componentClassName": "CapacityLabel",
+      "id": "02e05591-8a26-5454-9d8b-6f8366514d75",
+      "kind": "templateLabel",
+      "name": "EquipmentCollection",
+      "sources": [
+        {
+          "key": "currentCapacityUsage",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4"
+          }
+        },
+        {
+          "key": "currentMaximumCapacity",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ"
+          }
+        }
+      ],
+      "template": "{currentCapacityUsage}/{currentMaximumCapacity}"
+    },
+    {
+      "componentClassName": "ExpandableInteractable",
+      "condition": {
+        "kind": "lt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_J93B9BA3YNMZ1C1K5TDZRDA17W"
+        }
+      },
+      "id": "9007f949-74c3-546b-8056-2c8ff7c0e79b",
+      "kind": "interactable",
+      "name": "EquipmentCollection"
+    },
+    {
+      "componentClassName": "FullActiveToggle",
+      "condition": {
+        "kind": "gte",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ"
+        }
+      },
+      "id": "0558cc6f-eee3-5502-a2a4-305e1f372e7d",
+      "kind": "activeToggle",
+      "name": "EquipmentCollection"
+    }
+  ],
+  "name": "EquipmentCollection",
+  "targetDomainType": "EquipmentCollection",
+  "targetDomainTypeId": "dt_FANPG561806ENHYPWV5YRDSHC7"
+}
