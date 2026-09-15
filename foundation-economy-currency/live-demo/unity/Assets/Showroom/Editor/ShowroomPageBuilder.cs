@@ -60,6 +60,26 @@ namespace GS2Studio.Showroom.EditorTools
         private static Dictionary<string, string> _listSources = new Dictionary<string, string>();
 
         /// <summary>
+        /// Value component name to the MonoBehaviour that draws the time left
+        /// until it, as the demo declared it in `page.json`. What a deadline
+        /// means — and what, if anything, happens when it passes — belongs to
+        /// the service being demonstrated, so the behaviour is written in the
+        /// demo and named here. It needs a serialized `_label` field and a
+        /// `SetDeadline(DateTime)` method; the page fills the first and wires
+        /// the clock to the second. A clock with no behaviour named is left
+        /// undrawn: a `DateTime` has no reading the page can invent.
+        /// </summary>
+        private static Dictionary<string, string> _countdowns = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Active-toggle component name to the rows it shows while its
+        /// condition does not hold, as the demo declared it in `page.json`.
+        /// The condition is authored in the package; which rows it governs is
+        /// a fact about the page.
+        /// </summary>
+        private static Dictionary<string, string> _activeToggles = new Dictionary<string, string>();
+
+        /// <summary>
         /// Entry point for `-executeMethod`. Reads `-showroomTitle`,
         /// `-showroomSubtitle` and `-showroomRebuildPage`, and owns the exit
         /// code; the work itself is <see cref="BuildPage"/>, which an open
@@ -74,7 +94,9 @@ namespace GS2Studio.Showroom.EditorTools
                     ReadArgument("-showroomSubtitle"),
                     ReadArgument("-showroomRebuildPage") == "true",
                     ParsePairs(ReadArgument("-showroomGaugeCaptions")),
-                    ParsePairs(ReadArgument("-showroomListSources")));
+                    ParsePairs(ReadArgument("-showroomListSources")),
+                    ParsePairs(ReadArgument("-showroomCountdowns")),
+                    ParsePairs(ReadArgument("-showroomActiveToggles")));
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -92,15 +114,19 @@ namespace GS2Studio.Showroom.EditorTools
         {
             return BuildPage(
                 title, subtitle, rebuild,
+                new Dictionary<string, string>(), new Dictionary<string, string>(),
                 new Dictionary<string, string>(), new Dictionary<string, string>());
         }
 
         public static int BuildPage(
             string title, string subtitle, bool rebuild,
-            Dictionary<string, string> gaugeCaptions, Dictionary<string, string> listSources)
+            Dictionary<string, string> gaugeCaptions, Dictionary<string, string> listSources,
+            Dictionary<string, string> countdowns, Dictionary<string, string> activeToggles)
         {
             _gaugeCaptions = gaugeCaptions ?? new Dictionary<string, string>();
             _listSources = listSources ?? new Dictionary<string, string>();
+            _countdowns = countdowns ?? new Dictionary<string, string>();
+            _activeToggles = activeToggles ?? new Dictionary<string, string>();
             var existed = File.Exists(ScenePath);
             if (existed && !rebuild)
             {
@@ -252,6 +278,23 @@ namespace GS2Studio.Showroom.EditorTools
                 .ToList();
         }
 
+        /// <summary>
+        /// The active toggles a package generated for this handler. A toggle
+        /// has no event to find it by — it switches GameObjects on and off —
+        /// so it is recognised by the pair of target arrays it is given.
+        /// </summary>
+        private static IReadOnlyList<Type> TogglesFor(Type handler)
+        {
+            var uiNamespace = handler.Namespace + ".UI";
+            return SafeTypes(handler.Assembly)
+                .Where(type =>
+                    type.IsClass && !type.IsAbstract && type.Namespace == uiNamespace &&
+                    type.GetField("_activeWhenTrue", BindingFlags.Instance | BindingFlags.NonPublic)
+                        ?.FieldType == typeof(GameObject[]))
+                .OrderBy(type => type.Name, StringComparer.Ordinal)
+                .ToList();
+        }
+
         private static int BuildSections(Transform content, ShowroomPage page)
         {
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
@@ -268,7 +311,10 @@ namespace GS2Studio.Showroom.EditorTools
                 var labels = UiComponentsFor(handler, "OnUpdate", typeof(UnityEvent<string>));
                 var buttons = UiComponentsFor(handler, "OnCompleted", typeof(UnityEvent));
                 var gauges = GaugesFor(handler);
-                if (labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0)
+                var clocks = UiComponentsFor(handler, "OnUpdate", typeof(UnityEvent<DateTime>));
+                var toggles = TogglesFor(handler);
+                if (labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0 &&
+                    clocks.Count == 0)
                 {
                     // Nothing to draw, but something to read: a configuration
                     // model a package never gave a component of its own is
@@ -299,7 +345,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // copy of the components.
                 if (NeedsIdentityKeys(handler))
                 {
-                    AddList(section, handler, labels, buttons, gauges, page);
+                    AddList(section, handler, labels, buttons, gauges, clocks, toggles, page);
                     continue;
                 }
 
@@ -311,7 +357,9 @@ namespace GS2Studio.Showroom.EditorTools
                 // another section's list row can now read it too, which is what
                 // a reading composed from two models needs.
                 placed.Add(content.gameObject.AddComponent(handler));
-                AddRows(ItemsOf(section.transform), labels, buttons, gauges, page);
+                var body = ItemsOf(section.transform);
+                AddRows(body, labels, buttons, gauges, clocks, page);
+                WireToggles(section, toggles, body);
             }
 
             foreach (var (_, body) in sections)
@@ -360,7 +408,8 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static void AddList(
             GameObject section, Type handler, IReadOnlyList<Type> labels,
-            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges, ShowroomPage page)
+            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges,
+            IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles, ShowroomPage page)
         {
             var model = ModelNameOf(handler);
             var listHandler = SiblingType(handler, model + "ListHandler");
@@ -373,7 +422,8 @@ namespace GS2Studio.Showroom.EditorTools
                 return;
             }
 
-            var itemPrefab = BuildListItemPrefab(model, itemHandler, labels, buttons, gauges, page);
+            var itemPrefab = BuildListItemPrefab(
+                model, itemHandler, labels, buttons, gauges, clocks, toggles, page);
             var list = section.AddComponent(listHandler);
             var serialized = new SerializedObject(list);
             serialized.FindProperty("_itemPrefab").objectReferenceValue =
@@ -417,7 +467,8 @@ namespace GS2Studio.Showroom.EditorTools
 
         private static GameObject BuildListItemPrefab(
             string model, Type itemHandler, IReadOnlyList<Type> labels,
-            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges, ShowroomPage page)
+            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges,
+            IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles, ShowroomPage page)
         {
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var item = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab);
@@ -431,7 +482,9 @@ namespace GS2Studio.Showroom.EditorTools
                 if (child != null) child.gameObject.SetActive(false);
             }
             item.AddComponent(itemHandler);
-            AddRows(ItemsOf(item.transform), labels, buttons, gauges, page);
+            var body = ItemsOf(item.transform);
+            AddRows(body, labels, buttons, gauges, clocks, page);
+            WireToggles(item, toggles, body);
 
             Directory.CreateDirectory(GeneratedPrefabDirectory);
             var path = $"{GeneratedPrefabDirectory}/{model}ListItem.prefab";
@@ -466,9 +519,13 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static void AddRows(
             Transform body, IReadOnlyList<Type> labels, IReadOnlyList<Type> buttons,
-            IReadOnlyList<Type> gauges, ShowroomPage page)
+            IReadOnlyList<Type> gauges, IReadOnlyList<Type> clocks, ShowroomPage page)
         {
-            if (gauges.Count == 0 && labels.Count == 1 && buttons.Count == 1)
+            // Clocks lead: what a visitor is waiting for belongs above what
+            // they are waiting on.
+            foreach (var clock in clocks) AddCountdownRow(body, clock);
+
+            if (clocks.Count == 0 && gauges.Count == 0 && labels.Count == 1 && buttons.Count == 1)
             {
                 // One value and one action is one thing a visitor does, so it
                 // reads as one line.
@@ -535,6 +592,99 @@ namespace GS2Studio.Showroom.EditorTools
             var value = row.transform.Find("Value");
             if (readingLabelType == null) value.gameObject.SetActive(false);
             else BindLabel(row, readingLabelType, value.GetComponent<Text>());
+        }
+
+        /// <summary>
+        /// Draws a `DateTime` reading through the demo's own countdown
+        /// behaviour. A generated `value` component hands over the native type
+        /// precisely so the page can decide how it reads, and only the demo
+        /// knows what its deadline is a deadline for.
+        /// </summary>
+        private static void AddCountdownRow(Transform section, Type clockType)
+        {
+            if (!_countdowns.TryGetValue(clockType.Name, out var behaviourName)) return;
+            var behaviourType = TypeNamed(behaviourName);
+            if (behaviourType == null)
+            {
+                Debug.LogWarning(
+                    $"[showroom] {clockType.Name}: no MonoBehaviour named '{behaviourName}' " +
+                    "in this project; its row is left off the page");
+                return;
+            }
+
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ValueRowPrefabPath);
+            var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
+            row.name = clockType.Name;
+            SetText(row.transform.Find("Caption"), Humanize(TrimModelPrefix(clockType)));
+
+            var clock = row.AddComponent(clockType);
+            var countdown = row.AddComponent(behaviourType);
+            var serialized = new SerializedObject(countdown);
+            serialized.FindProperty("_label").objectReferenceValue =
+                row.transform.Find("Value").GetComponent<Text>();
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+
+            var onUpdate = (UnityEvent<DateTime>)clockType.GetProperty("OnUpdate").GetValue(clock);
+            UnityEventTools.AddPersistentListener(
+                onUpdate,
+                (UnityAction<DateTime>)Delegate.CreateDelegate(
+                    typeof(UnityAction<DateTime>), countdown, "SetDeadline"));
+            EditorUtility.SetDirty(clock);
+            EditorUtility.SetDirty(countdown);
+        }
+
+        /// <summary>A MonoBehaviour the demo wrote, by its unqualified name.</summary>
+        private static Type TypeNamed(string name)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(SafeTypes)
+                .FirstOrDefault(type =>
+                    type.Name == name && typeof(MonoBehaviour).IsAssignableFrom(type));
+        }
+
+        /// <summary>
+        /// Mounts each active toggle on the section root and points its
+        /// false branch at the rows the demo named. The root is never itself a
+        /// target: switching off the object a toggle lives on would unsubscribe
+        /// it and leave the page stuck in whichever state it last applied.
+        /// </summary>
+        private static void WireToggles(
+            GameObject root, IReadOnlyList<Type> toggles, Transform body)
+        {
+            foreach (var toggleType in toggles)
+            {
+                if (!_activeToggles.TryGetValue(toggleType.Name, out var declared))
+                {
+                    Debug.LogWarning(
+                        $"[showroom] {toggleType.Name}: no rows declared for it in " +
+                        "page.json, so it is left off the page");
+                    continue;
+                }
+                var targets = declared
+                    .Split('|')
+                    .Select(name => body.Find(name.Trim()))
+                    .Where(found => found != null)
+                    .Select(found => found.gameObject)
+                    .ToList();
+                if (targets.Count == 0)
+                {
+                    Debug.LogWarning(
+                        $"[showroom] {toggleType.Name}: none of '{declared}' is a row " +
+                        "on this section");
+                    continue;
+                }
+
+                var toggle = root.AddComponent(toggleType);
+                var serialized = new SerializedObject(toggle);
+                var whenFalse = serialized.FindProperty("_activeWhenFalse");
+                whenFalse.arraySize = targets.Count;
+                for (var i = 0; i < targets.Count; i++)
+                {
+                    whenFalse.GetArrayElementAtIndex(i).objectReferenceValue = targets[i];
+                }
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(toggle);
+            }
         }
 
         private static void AddValueRow(Transform section, Type labelType)
@@ -613,7 +763,7 @@ namespace GS2Studio.Showroom.EditorTools
                 .Replace(GeneratedNamespacePrefix, "").Replace(".UI", "");
             var name = uiComponent.Name;
             if (name.StartsWith(model)) name = name.Substring(model.Length);
-            foreach (var suffix in new[] { "Label", "Button", "Gauge" })
+            foreach (var suffix in new[] { "Label", "Button", "Gauge", "Value", "Toggle" })
             {
                 if (!name.EndsWith(suffix) || name.Length <= suffix.Length) continue;
                 name = name.Substring(0, name.Length - suffix.Length);
