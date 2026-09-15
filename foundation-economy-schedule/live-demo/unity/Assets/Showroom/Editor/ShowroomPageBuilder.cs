@@ -80,6 +80,15 @@ namespace GS2Studio.Showroom.EditorTools
         private static Dictionary<string, string> _activeToggles = new Dictionary<string, string>();
 
         /// <summary>
+        /// Model name to the order its rows are drawn in, as the demo declared
+        /// it in `page.json`. What a row means to a reader is not something the
+        /// page can work out: a name, then what was configured, then what is
+        /// happening now is an order someone chose. Components left out keep
+        /// their default place, after the named ones.
+        /// </summary>
+        private static Dictionary<string, string> _rowOrder = new Dictionary<string, string>();
+
+        /// <summary>
         /// Entry point for `-executeMethod`. Reads `-showroomTitle`,
         /// `-showroomSubtitle` and `-showroomRebuildPage`, and owns the exit
         /// code; the work itself is <see cref="BuildPage"/>, which an open
@@ -96,7 +105,8 @@ namespace GS2Studio.Showroom.EditorTools
                     ParsePairs(ReadArgument("-showroomGaugeCaptions")),
                     ParsePairs(ReadArgument("-showroomListSources")),
                     ParsePairs(ReadArgument("-showroomCountdowns")),
-                    ParsePairs(ReadArgument("-showroomActiveToggles")));
+                    ParsePairs(ReadArgument("-showroomActiveToggles")),
+                    ParsePairs(ReadArgument("-showroomRowOrder")));
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -115,18 +125,21 @@ namespace GS2Studio.Showroom.EditorTools
             return BuildPage(
                 title, subtitle, rebuild,
                 new Dictionary<string, string>(), new Dictionary<string, string>(),
-                new Dictionary<string, string>(), new Dictionary<string, string>());
+                new Dictionary<string, string>(), new Dictionary<string, string>(),
+                new Dictionary<string, string>());
         }
 
         public static int BuildPage(
             string title, string subtitle, bool rebuild,
             Dictionary<string, string> gaugeCaptions, Dictionary<string, string> listSources,
-            Dictionary<string, string> countdowns, Dictionary<string, string> activeToggles)
+            Dictionary<string, string> countdowns, Dictionary<string, string> activeToggles,
+            Dictionary<string, string> rowOrder)
         {
             _gaugeCaptions = gaugeCaptions ?? new Dictionary<string, string>();
             _listSources = listSources ?? new Dictionary<string, string>();
             _countdowns = countdowns ?? new Dictionary<string, string>();
             _activeToggles = activeToggles ?? new Dictionary<string, string>();
+            _rowOrder = rowOrder ?? new Dictionary<string, string>();
             var existed = File.Exists(ScenePath);
             if (existed && !rebuild)
             {
@@ -368,7 +381,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // a reading composed from two models needs.
                 placed.Add(content.gameObject.AddComponent(handler));
                 var body = ItemsOf(section.transform);
-                AddRows(body, labels, buttons, gauges, clocks, page);
+                AddRows(ModelNameOf(handler), body, labels, buttons, gauges, clocks, page);
                 WireToggles(section, toggles, body);
             }
 
@@ -493,7 +506,7 @@ namespace GS2Studio.Showroom.EditorTools
             }
             item.AddComponent(itemHandler);
             var body = ItemsOf(item.transform);
-            AddRows(body, labels, buttons, gauges, clocks, page);
+            AddRows(model, body, labels, buttons, gauges, clocks, page);
             WireToggles(item, toggles, body);
 
             Directory.CreateDirectory(GeneratedPrefabDirectory);
@@ -528,11 +541,13 @@ namespace GS2Studio.Showroom.EditorTools
         /// right. Anything else is a stat block with its actions under it.
         /// </summary>
         private static void AddRows(
-            Transform body, IReadOnlyList<Type> labels, IReadOnlyList<Type> buttons,
-            IReadOnlyList<Type> gauges, IReadOnlyList<Type> clocks, ShowroomPage page)
+            string model, Transform body, IReadOnlyList<Type> labels,
+            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges,
+            IReadOnlyList<Type> clocks, ShowroomPage page)
         {
             // Clocks lead: what a visitor is waiting for belongs above what
-            // they are waiting on.
+            // they are waiting on — unless the demo said otherwise, in which
+            // case its order is applied to the finished section below.
             foreach (var clock in clocks) AddCountdownRow(body, clock);
 
             if (clocks.Count == 0 && gauges.Count == 0 && labels.Count == 1 && buttons.Count == 1)
@@ -570,6 +585,33 @@ namespace GS2Studio.Showroom.EditorTools
                     body, gauge, readings.TryGetValue(gauge, out var reading) ? reading : null);
             }
             foreach (var button in buttons) AddActionRow(body, button, page, null);
+            ApplyRowOrder(model, body);
+        }
+
+        /// <summary>
+        /// Reorders the finished rows to the sequence the demo named. Each row
+        /// carries the name of the component it draws, so the declaration is
+        /// written in the same terms as every other one in `page.json`.
+        ///
+        /// Rows the demo did not name keep their relative order and follow the
+        /// named ones — a partial list reads as "these first", not as a filter.
+        /// </summary>
+        private static void ApplyRowOrder(string model, Transform body)
+        {
+            if (!_rowOrder.TryGetValue(model, out var declared)) return;
+            var wanted = declared.Split('|').Select(name => name.Trim()).ToList();
+            var index = 0;
+            foreach (var name in wanted)
+            {
+                var row = body.Find(name);
+                if (row == null)
+                {
+                    Debug.LogWarning(
+                        $"[showroom] {model}: '{name}' is not a row on this section");
+                    continue;
+                }
+                row.SetSiblingIndex(index++);
+            }
         }
 
         /// <summary>

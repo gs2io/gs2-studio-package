@@ -37,7 +37,7 @@
         {
           "kind": "parameter",
           "parameterName": "ttl",
-          "sourceParameter": "ttlMinutes"
+          "sourceParameter": "ttlSeconds"
         },
         {
           "kind": "static",
@@ -64,7 +64,7 @@
     },
     {
       "id": "param_01M2K0X4KRKXFX1VR7EQYP7W4M",
-      "name": "ttlMinutes",
+      "name": "ttlSeconds",
       "required": true,
       "type": {
         "kind": "primitive",

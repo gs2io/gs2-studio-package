@@ -269,7 +269,7 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
     at
       .category("acquire")
       .parameter("trigger", { type: PT.ref("Trigger") })
-      .parameter("ttlMinutes", { type: PT.int32() })
+      .parameter("ttlSeconds", { type: PT.int32() })
       .output("Gs2Schedule:TriggerByUserId", o =>
         o
           .resourceRef(() => Namespace)
@@ -280,7 +280,10 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
           // than adding to it: extending is what `TriggerSchedule` is for, and
           // one press should not quietly do the other one's job.
           .mapStatic("triggerStrategy", "renew")
-          .mapParameter("ttl", "ttlMinutes")
+          // GS2 reads `ttl` as seconds, not minutes — a five that meant five
+          // minutes bought five seconds, and the window was over before the
+          // press that opened it had finished redrawing.
+          .mapParameter("ttl", "ttlSeconds")
           .mapStatic("eventId", null)
       )
   )

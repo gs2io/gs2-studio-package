@@ -60,8 +60,8 @@ const TriggerPull = defineDomainType("TriggerPull", domainType =>
     })
 );
 
-/** The window a pulled trigger stays open for. */
-const TTL_MINUTES = 5;
+/** The window a pulled trigger stays open for. GS2 counts this in seconds. */
+const TTL_SECONDS = 300;
 
 /** What one press of Extend adds. */
 const EXTEND_SECONDS = 60;
@@ -89,7 +89,7 @@ const PullRateModel = defineMasterDataResource(resource =>
         .bindings({
           action: Bind.transform(schedule.packageId, "PullTrigger", [
             Arg.domainProperty("trigger", Source.parent(Source.direct(TriggerPull, "trigger"))),
-            Arg.static("ttlMinutes", TTL_MINUTES),
+            Arg.static("ttlSeconds", TTL_SECONDS),
           ]),
         });
     })

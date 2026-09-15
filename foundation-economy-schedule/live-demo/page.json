@@ -7,5 +7,9 @@
   },
   "activeToggles": {
     "TriggerTriggeredInteractable": ["TriggerExtendButton", "TriggerClearButton"]
+  },
+  "rowOrder": {
+    "Schedule": ["ScheduleWindowLabel", "SchedulePeriodLabel", "ScheduleEndAtValue"],
+    "Trigger": ["TriggerNameLabel", "TriggerWindowLabel", "TriggerExpiresAtValue"]
   }
 }

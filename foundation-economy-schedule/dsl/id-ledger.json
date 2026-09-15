@@ -23,7 +23,7 @@
     "transform:ClearTrigger:parameter:trigger": "param_01M2K0X4KRC2H2P0KF8VVHDRX5",
     "transform:PullTrigger:output:direct:Gs2Schedule:TriggerByUserId#0": "out_01M2K0X4KRNG36N97VM1PJGPD0",
     "transform:PullTrigger:parameter:trigger": "param_01M2K0X4KRE1959XVGZ2W6209R",
-    "transform:PullTrigger:parameter:ttlMinutes": "param_01M2K0X4KRKXFX1VR7EQYP7W4M",
+    "transform:PullTrigger:parameter:ttlSeconds": "param_01M2K0X4KRKXFX1VR7EQYP7W4M",
     "transform:TriggerSchedule:output:direct:Gs2Schedule:ExtendTriggerByUserId#0": "out_01KKR3P8NQB54BE66VPKND2ZHS",
     "transform:TriggerSchedule:parameter:extendSeconds": "param_01KKR3P8NQM08ZGAD9RMXRT5MT",
     "transform:TriggerSchedule:parameter:trigger": "param_01KKR3P8NPJDAJKYTAF2R1S1G0",

@@ -23,10 +23,10 @@
             }
           },
           {
-            "parameterName": "ttlMinutes",
+            "parameterName": "ttlSeconds",
             "source": {
               "kind": "static",
-              "value": 5
+              "value": 300
             }
           }
         ],
