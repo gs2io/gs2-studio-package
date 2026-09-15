@@ -12,7 +12,6 @@ import {
   Bind,
   defineDomainType,
   defineMasterDataResource,
-  defineOverlayDomainType,
   definePackage,
   dependencyPackage,
   PT,
@@ -38,21 +37,13 @@ const WALLET_SLOT = 0;
  * complete a real store purchase, so the demo accepts the fake receipt the
  * client sends; the feature package keeps rejecting it.
  */
-const CurrencyStore = defineOverlayDomainType(
-  "CurrencyStore",
-  currency.overlay("CurrencyStore"),
-  domainType => domainType
-);
+const CurrencyStore = currency.type("CurrencyStore");
 
 /**
  * The feature package defines the store product type but ships no products —
  * a title supplies its own. The demo needs something on the shelf.
  */
-const StoreProduct = defineOverlayDomainType(
-  "StoreProduct",
-  currency.overlay("StoreProduct"),
-  domainType => domainType
-);
+const StoreProduct = currency.type("StoreProduct");
 
 /**
  * Money2 keeps two balances: currency granted for free and currency the player
@@ -165,18 +156,16 @@ export const foundationEconomyCurrencyDemo = definePackage(
     },
   })
   .dependency(CURRENCY_PACKAGE_ID, "github:gs2io/gs2-studio-package")
-  .domainType(CurrencyStore)
-  .domainType(StoreProduct)
   .domainType(FreeDeposit)
   .domainType(PaidDeposit)
 
-  .instance("CurrencyStore", "currencystore", {
+  .instance(CurrencyStore, "currencystore", {
     [currency.propertyId("CurrencyStore", "enableFakeReceipt")]: "Accept",
   })
 
-  .instance("StoreProduct", "coin_small", demoProduct("io.gs2.demo.coin.small"))
-  .instance("StoreProduct", "coin_medium", demoProduct("io.gs2.demo.coin.medium"))
-  .instance("StoreProduct", "coin_large", demoProduct("io.gs2.demo.coin.large"))
+  .instance(StoreProduct, "coin_small", demoProduct("io.gs2.demo.coin.small"))
+  .instance(StoreProduct, "coin_medium", demoProduct("io.gs2.demo.coin.medium"))
+  .instance(StoreProduct, "coin_large", demoProduct("io.gs2.demo.coin.large"))
 
   .instance("FreeDeposit", "freedeposit", { count: 100 })
   .instance("PaidDeposit", "paiddeposit", { count: 50 })

@@ -11,7 +11,6 @@ import {
   Arg,
   Bind,
   defineMasterDataResource,
-  defineOverlayDomainType,
   definePackage,
   dependencyPackage,
   Source,
@@ -26,7 +25,7 @@ import inventorySurface from "../../dsl/dependency-surface.json";
 // resolves to nothing.
 const inventory = dependencyPackage(inventorySurface);
 
-const Item = defineOverlayDomainType("Item", inventory.overlay("Item"), domainType => domainType);
+const Item = inventory.type("Item");
 
 /** One press picks up one, and one press spends one. */
 const STEP = 1;
@@ -92,15 +91,14 @@ export const foundationEconomyInventoryDemo = definePackage(
     },
   })
   .dependency(inventory.packageId, "github:gs2io/gs2-studio-package")
-  .domainType(Item)
 
   // Three items rather than one, because the point of an inventory is that it
   // holds more than one thing and each row counts separately. A player starts
   // with none of any of them: an empty row is what the disabled spend button
   // is there to show.
-  .instance("Item", "potion", {})
-  .instance("Item", "ether", {})
-  .instance("Item", "elixir", {})
+  .instance(Item, "potion", {})
+  .instance(Item, "ether", {})
+  .instance(Item, "elixir", {})
 
   .masterDataResource(resource =>
     resource

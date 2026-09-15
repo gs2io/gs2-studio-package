@@ -13,7 +13,6 @@ import {
   Arg,
   Bind,
   defineMasterDataResource,
-  defineOverlayDomainType,
   definePackage,
   dependencyPackage,
   Source,
@@ -28,11 +27,12 @@ import energySurface from "../../dsl/dependency-surface.json";
 // resolves to nothing.
 const energy = dependencyPackage(energySurface);
 
-const Energy = defineOverlayDomainType(
-  "Energy",
-  energy.overlay("Energy"),
-  domainType => domainType
-);
+/**
+ * The stamina model, named straight through to the feature package. Nothing
+ * here adds a property to it — the demo only hangs rows, two presses and the
+ * readings on it — so there is no overlay to write out.
+ */
+const Energy = energy.type("Energy");
 
 /** Capacity a visitor starts with, and what the gauge measures against. */
 const DEFAULT_MAXIMUM = 50;
@@ -121,9 +121,8 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
     },
   })
   .dependency(energy.packageId, "github:gs2io/gs2-studio-package")
-  .domainType(Energy)
 
-  .instance("Energy", "stamina", {
+  .instance(Energy, "stamina", {
     [energy.propertyId("Energy", "defaultMaximum")]: DEFAULT_MAXIMUM,
     [energy.propertyId("Energy", "useOverflow")]: false,
     [energy.propertyId("Energy", "overflowedMaximum")]: OVERFLOW_MAXIMUM,

@@ -12,7 +12,6 @@ import {
   Bind,
   defineDomainType,
   defineMasterDataResource,
-  defineOverlayDomainType,
   definePackage,
   dependencyPackage,
   PT,
@@ -28,21 +27,9 @@ import characterSurface from "../../dsl/dependency-surface.json";
 // resolves to nothing.
 const character = dependencyPackage(characterSurface);
 
-const Character = defineOverlayDomainType(
-  "Character",
-  character.overlay("Character"),
-  domainType => domainType
-);
-const CharacterCollection = defineOverlayDomainType(
-  "CharacterCollection",
-  character.overlay("CharacterCollection"),
-  domainType => domainType
-);
-const CharacterExperience = defineOverlayDomainType(
-  "CharacterExperience",
-  character.overlay("CharacterExperience"),
-  domainType => domainType
-);
+const Character = character.type("Character");
+const CharacterCollection = character.type("CharacterCollection");
+const CharacterExperience = character.type("CharacterExperience");
 
 /**
  * One character a visitor can recruit. The row names the character it grants,
@@ -155,25 +142,22 @@ export const foundationEconomyCharacterDemo = definePackage(
     },
   })
   .dependency(character.packageId, "github:gs2io/gs2-studio-package")
-  .domainType(Character)
-  .domainType(CharacterCollection)
-  .domainType(CharacterExperience)
   .domainType(CharacterRecruit)
 
-  .instance("CharacterExperience", "characterexperience", {
+  .instance(CharacterExperience, "characterexperience", {
     [character.propertyId("CharacterExperience", "threshold")]: EXPERIENCE_CURVE,
     [character.propertyId("CharacterExperience", "defaultLevelCap")]: 10,
     [character.propertyId("CharacterExperience", "maxLevelCap")]: 50,
   })
-  .instance("CharacterCollection", "charactercollection", {
+  .instance(CharacterCollection, "charactercollection", {
     [character.propertyId("CharacterCollection", "defaultCapacity")]: 20,
     [character.propertyId("CharacterCollection", "maximumCapacity")]: 100,
   })
 
-  .instance("Character", "knight", { [character.propertyId("Character", "sort")]: 100 })
-  .instance("Character", "mage", { [character.propertyId("Character", "sort")]: 200 })
-  .instance("Character", "archer", { [character.propertyId("Character", "sort")]: 300 })
-  .instance("Character", "healer", { [character.propertyId("Character", "sort")]: 400 })
+  .instance(Character, "knight", { [character.propertyId("Character", "sort")]: 100 })
+  .instance(Character, "mage", { [character.propertyId("Character", "sort")]: 200 })
+  .instance(Character, "archer", { [character.propertyId("Character", "sort")]: 300 })
+  .instance(Character, "healer", { [character.propertyId("Character", "sort")]: 400 })
 
   .instance("CharacterRecruit", ROSTER[0], { character: ROSTER[0] })
   .instance("CharacterRecruit", ROSTER[1], { character: ROSTER[1] })
