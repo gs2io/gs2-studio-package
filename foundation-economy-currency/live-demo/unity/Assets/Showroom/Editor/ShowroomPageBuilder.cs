@@ -39,33 +39,18 @@ namespace GS2Studio.Showroom.EditorTools
 
         /// <summary>
         /// Entry point for `-executeMethod`. Reads `-showroomTitle`,
-        /// `-showroomSubtitle` and `-showroomRebuildPage`.
+        /// `-showroomSubtitle` and `-showroomRebuildPage`, and owns the exit
+        /// code; the work itself is <see cref="BuildPage"/>, which an open
+        /// Editor can call directly instead of paying for another launch.
         /// </summary>
         public static void Build()
         {
             try
             {
-                var rebuild = ReadArgument("-showroomRebuildPage") == "true";
-                var existed = File.Exists(ScenePath);
-                if (existed && !rebuild)
-                {
-                    Debug.Log($"[showroom] {ScenePath} already exists; left alone");
-                    EditorApplication.Exit(0);
-                    return;
-                }
-
-                var scene = OpenOrCreateScene(existed);
-                var page = UnityEngine.Object.FindAnyObjectByType<ShowroomPage>();
-                if (page == null) throw new InvalidOperationException("no ShowroomPage in the scene");
-
-                ApplyHeader(page, ReadArgument("-showroomTitle"), ReadArgument("-showroomSubtitle"));
-                var content = ContentMount(page);
-                ClearChildren(content);
-                var sections = BuildSections(content, page);
-
-                EditorSceneManager.MarkSceneDirty(scene);
-                EditorSceneManager.SaveScene(scene, ScenePath);
-                Debug.Log($"[showroom] wrote {ScenePath} with {sections} section(s)");
+                BuildPage(
+                    ReadArgument("-showroomTitle"),
+                    ReadArgument("-showroomSubtitle"),
+                    ReadArgument("-showroomRebuildPage") == "true");
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -73,6 +58,34 @@ namespace GS2Studio.Showroom.EditorTools
                 Debug.LogError($"[showroom] page build threw: {exception}");
                 EditorApplication.Exit(1);
             }
+        }
+
+        /// <summary>
+        /// Writes the demo's page. Returns the number of sections, or -1 when
+        /// the scene already existed and was left alone.
+        /// </summary>
+        public static int BuildPage(string title, string subtitle, bool rebuild)
+        {
+            var existed = File.Exists(ScenePath);
+            if (existed && !rebuild)
+            {
+                Debug.Log($"[showroom] {ScenePath} already exists; left alone");
+                return -1;
+            }
+
+            var scene = OpenOrCreateScene(existed);
+            var page = UnityEngine.Object.FindAnyObjectByType<ShowroomPage>();
+            if (page == null) throw new InvalidOperationException("no ShowroomPage in the scene");
+
+            ApplyHeader(page, title, subtitle);
+            var content = ContentMount(page);
+            ClearChildren(content);
+            var sections = BuildSections(content, page);
+
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene, ScenePath);
+            Debug.Log($"[showroom] wrote {ScenePath} with {sections} section(s)");
+            return sections;
         }
 
         private static UnityEngine.SceneManagement.Scene OpenOrCreateScene(bool existed)
