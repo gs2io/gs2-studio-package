@@ -375,6 +375,21 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
         { name: "Schedule" }
       )
       .value("RelativeEndAtValue", ui.prop("relativeEndAt"), { name: "Schedule" })
+      // Each kind of schedule carries one of the two windows and nothing for
+      // the other, so a page that shows both readings shows one of them empty
+      // on every row. Each toggle names the kind that makes its rows
+      // meaningless: hang the absolute readings off the relative one, and the
+      // relative readings off the absolute one.
+      .activeToggle(
+        "RelativeActiveToggle",
+        UiCond.eq(ui.prop("scheduleType"), ui.lit("relative")),
+        { name: "Schedule" }
+      )
+      .activeToggle(
+        "AbsoluteActiveToggle",
+        UiCond.eq(ui.prop("scheduleType"), ui.lit("absolute")),
+        { name: "Schedule" }
+      )
   )
 
   // What a trigger is worth knowing about: whether it is running, and until

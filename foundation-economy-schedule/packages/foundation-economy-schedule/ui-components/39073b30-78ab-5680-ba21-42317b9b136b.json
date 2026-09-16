@@ -76,6 +76,40 @@
         "kind": "property",
         "propertyId": "prop_01M2M04HC1EW3NMGESBQC8AT6Y"
       }
+    },
+    {
+      "componentClassName": "RelativeActiveToggle",
+      "condition": {
+        "kind": "eq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": "relative"
+        }
+      },
+      "id": "dd7746cf-077e-5704-b444-4a61639e6d30",
+      "kind": "activeToggle",
+      "name": "Schedule"
+    },
+    {
+      "componentClassName": "AbsoluteActiveToggle",
+      "condition": {
+        "kind": "eq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_X0XGB1S39Q0GQWGXV15YP2Q9E6"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": "absolute"
+        }
+      },
+      "id": "753cf8a6-9b75-59ca-93dc-b17928edad70",
+      "kind": "activeToggle",
+      "name": "Schedule"
     }
   ],
   "name": "Schedule",

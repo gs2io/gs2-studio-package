@@ -10,6 +10,14 @@
     "TriggerTriggeredInteractable": [
       "TriggerExtendButton",
       "TriggerClearButton"
+    ],
+    "ScheduleRelativeActiveToggle": [
+      "SchedulePeriodLabel",
+      "ScheduleEndAtValue"
+    ],
+    "ScheduleAbsoluteActiveToggle": [
+      "ScheduleRelativeWindowLabel",
+      "ScheduleRelativeEndAtValue"
     ]
   },
   "rowOrder": {
