@@ -168,7 +168,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6278259662190415575}
-  - {fileID: 7714959391314674988}
+  - {fileID: 9165771316404415259}
   - {fileID: 4994000745151175723}
   m_Father: {fileID: 1816760506836944854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -419,7 +419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3873511907111261612, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
       propertyPath: m_Name
-      value: CharacterMarkButton
+      value: CharacterRecruitButton
       objectReference: {fileID: 0}
     - target: {fileID: 7820905330807624221, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
       propertyPath: m_Pivot.x
@@ -503,7 +503,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8620955594519661148, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
       propertyPath: m_Text
-      value: Mark
+      value: Recruit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -511,14 +511,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3873511907111261612, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8689788151644101092}
+      addedObject: {fileID: 7945502185169709098}
   m_SourcePrefab: {fileID: 100100000, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
 --- !u!1 &2019394182525098906 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3873511907111261612, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
   m_PrefabInstance: {fileID: 3010426285713968694}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8689788151644101092
+--- !u!114 &7945502185169709098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -527,9 +527,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2019394182525098906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf44992ecf4a9914735e75ff863a3703, type: 3}
+  m_Script: {fileID: 11500000, guid: cdc91c3570e0d6680a6d476ee490c85c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Character.UI.CharacterMarkButton
+  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Character.UI.CharacterRecruitButton
   _handler: {fileID: 0}
   _button: {fileID: 5536308044255452587}
   _onCompleted:
@@ -823,7 +823,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4534006095454663094}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &7714959391314674987 stripped
+--- !u!114 &586027936051837723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 7714959391314674986}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+--- !u!1 &2065493994347107731 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 7714959391314674986}
@@ -834,7 +845,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7714959391314674987}
+  m_GameObject: {fileID: 2065493994347107731}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fe6741ad65d994d07b28481d179891e, type: 3}
@@ -844,7 +855,7 @@ MonoBehaviour:
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7714959391314674989}
+      - m_Target: {fileID: 586027936051837723}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -856,19 +867,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &7714959391314674988 stripped
+--- !u!224 &9165771316404415259 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 7714959391314674986}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7714959391314674989 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 7714959391314674986}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text

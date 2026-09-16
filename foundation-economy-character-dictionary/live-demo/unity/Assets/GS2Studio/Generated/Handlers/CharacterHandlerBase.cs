@@ -39,6 +39,14 @@ namespace GS2Studio.Generated.Character
         /// <summary>True when a binder is currently attached.</summary>
         public abstract bool HasValue { get; }
 
+        /// <summary>
+        /// Which axis built the bound row, or null when no binder is attached.
+        /// A row built by an axis that cannot key a loader never ran it, so the
+        /// readings that loader fills are at their default; the binder answers
+        /// that per loader through its <c>Loaded{Loader}</c> flags.
+        /// </summary>
+        public CharacterMountSurface? MountSurface => Binder?.MountSurface;
+
         /// <summary>Fires whenever the bound model changes (initial attach + each binder update).</summary>
         public event Action<Character>? Updated;
 

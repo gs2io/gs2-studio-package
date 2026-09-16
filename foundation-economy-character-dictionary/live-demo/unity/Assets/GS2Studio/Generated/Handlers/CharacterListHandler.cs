@@ -39,6 +39,13 @@ namespace GS2Studio.Generated.Character
     [AddComponentMenu("GS2 Studio/DomainType/Character/Character List Handler")]
     public sealed class CharacterListHandler : MonoBehaviour, ICharacterBinderListSource
     {
+        public enum Source
+        {
+            MasterData,
+            UserData,
+        }
+
+        [SerializeField] private Source _source;
         [SerializeField] private string? _propertyId;
         [SerializeField] private CharacterListItemHandler? _itemPrefab;
         [SerializeField] private Transform? _contentParent;
@@ -246,7 +253,15 @@ namespace GS2Studio.Generated.Character
                 // happens through OnItemAdded rather than a post-mount foreach.
                 AttachCollectionCallbacks(operationGeneration, collection);
 
-                await collection.MountFromInventoryCharacterUserDataAsync(cancellationToken);
+                switch (_source)
+                {
+                    case Source.MasterData:
+                        await collection.MountFromInventoryCharacterMasterDataAsync(cancellationToken);
+                        break;
+                    case Source.UserData:
+                        await collection.MountFromInventoryCharacterUserDataAsync(cancellationToken);
+                        break;
+                }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
                 SyncSiblingOrder(operationGeneration, collection);
@@ -256,7 +271,14 @@ namespace GS2Studio.Generated.Character
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
                     Action collectionChanged = () => OnCollectionChanged(operationGeneration, collection);
                     Action<Exception> collectionFailed = ex => OnCollectionFailed(operationGeneration, collection, ex);
-                    collection.SubscribeFromInventoryCharacterUserData(collectionChanged, collectionFailed);
+                    if (_source == Source.MasterData)
+                    {
+                        collection.SubscribeFromInventoryCharacterMasterData(collectionChanged, collectionFailed);
+                    }
+                    else
+                    {
+                        collection.SubscribeFromInventoryCharacterUserData(collectionChanged, collectionFailed);
+                    }
                 }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
@@ -359,7 +381,13 @@ namespace GS2Studio.Generated.Character
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
-            if (string.IsNullOrEmpty(_propertyId)) return false;
+            switch (_source)
+            {
+                case Source.MasterData:
+                    break;
+                case Source.UserData:
+                    break;
+            }
             return true;
         }
 

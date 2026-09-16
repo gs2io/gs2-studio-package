@@ -20,15 +20,15 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Character.UI
 {
     /// <summary>
-    /// UI button bound to <c>Register</c> on the sibling
+    /// UI button bound to <c>Recruit</c> on the sibling
     /// <c>CharacterHandlerBase</c>. Wires <c>UnityEngine.UI.Button.onClick</c>
-    /// to <c>CharacterHandlerBase.Binder.Register</c> and forwards the
+    /// to <c>CharacterHandlerBase.Binder.Recruit</c> and forwards the
     /// authored argument list. Add this component alongside (or under) a
     /// <c>CharacterHandlerBase</c>; the handler is resolved automatically via
     /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is set.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/Character/ButtonAction/MarkButton")]
-    public sealed class CharacterMarkButton : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/Character/ButtonAction/RecruitButton")]
+    public sealed class CharacterRecruitButton : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private CharacterHandlerBase? _handler;
@@ -88,7 +88,7 @@ namespace GS2Studio.Generated.Character.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(CharacterMarkButton)} on '{name}': no CharacterHandlerBase found in the parent chain; click ignored.", this);
+                        $"{nameof(CharacterRecruitButton)} on '{name}': no CharacterHandlerBase found in the parent chain; click ignored.", this);
                 }
                 return;
             }
@@ -99,18 +99,18 @@ namespace GS2Studio.Generated.Character.UI
             if (model == null) return;
             try
             {
-                await model.Register();
+                await model.Recruit();
             }
             catch (Gs2Exception gs2Error)
             {
-                UnityEngine.Debug.LogError($"CharacterMarkButton: Register failed: {gs2Error}");
+                UnityEngine.Debug.LogError($"CharacterRecruitButton: Recruit failed: {gs2Error}");
                 // A click has nothing to resume from, so no retry is offered.
                 _onFailed.Invoke(gs2Error, null);
                 return;
             }
             catch (Exception ex)
             {
-                UnityEngine.Debug.LogError($"CharacterMarkButton: Register failed: {ex}");
+                UnityEngine.Debug.LogError($"CharacterRecruitButton: Recruit failed: {ex}");
                 return;
             }
             _onCompleted.Invoke();
