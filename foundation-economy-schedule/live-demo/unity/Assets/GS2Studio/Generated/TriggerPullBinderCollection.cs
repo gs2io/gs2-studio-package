@@ -436,6 +436,17 @@ namespace GS2Studio.Generated.TriggerPull
                 else
                 {
                     var binder = await BuildBinderFromExchangeTriggerPullMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeTriggerPullMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);

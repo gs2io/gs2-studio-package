@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7074311766772686148}
   - component: {fileID: 5340548069495417879}
   - component: {fileID: 8539835418608370872}
-  - component: {fileID: 5109365255834552401}
+  - component: {fileID: 7144287799489605387}
   m_Layer: 0
   m_Name: TriggerListItem
   m_TagString: Untagged
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Trigger.TriggerListItemHandler
   _index: 0
   _content: {fileID: 0}
---- !u!114 &5109365255834552401
+--- !u!114 &7144287799489605387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

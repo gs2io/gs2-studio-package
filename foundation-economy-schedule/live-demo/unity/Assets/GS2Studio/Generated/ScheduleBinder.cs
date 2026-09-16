@@ -89,6 +89,12 @@ namespace GS2Studio.Generated.Schedule
         public DateTime? EndAt => _model.EndAt;
         /// <inheritdoc cref="Schedule.Trigger" />
         public string? Trigger => _model.Trigger;
+        /// <inheritdoc cref="Schedule.TriggerFired" />
+        public bool? TriggerFired => _model.TriggerFired;
+        /// <inheritdoc cref="Schedule.RelativeStartAt" />
+        public DateTime? RelativeStartAt => _model.RelativeStartAt;
+        /// <inheritdoc cref="Schedule.RelativeEndAt" />
+        public DateTime? RelativeEndAt => _model.RelativeEndAt;
         /// <inheritdoc cref="Schedule.RepeatType" />
         public string RepeatType => _model.RepeatType;
         /// <inheritdoc cref="Schedule.BeginHour" />
@@ -146,6 +152,7 @@ namespace GS2Studio.Generated.Schedule
         internal bool _mounted;
 
         private readonly EventLoader __scheduleScheduleNamespaceEventLoader;
+        private readonly TriggerLoader __userdataScheduleTriggerLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -158,6 +165,7 @@ namespace GS2Studio.Generated.Schedule
         ) : base(model, gs2, session)
         {
             __scheduleScheduleNamespaceEventLoader = new EventLoader("Schedule", _model.Id);
+            __userdataScheduleTriggerLoader = new TriggerLoader("Schedule", _model.Trigger);
         }
 
         /// <summary>
@@ -165,10 +173,11 @@ namespace GS2Studio.Generated.Schedule
         /// returned model carries the identity state required by loaders
         /// (`_model.Id` and any `_model.{Prop}` references in loader constructors).
         /// </summary>
-        internal static MutableSchedule CreateModel(ScheduleId id)
+        internal static MutableSchedule CreateModel(ScheduleId id, string trigger)
         {
             var model = new MutableSchedule();
             model.Id = id;
+            model.Trigger = trigger;
             return model;
         }
 
@@ -177,12 +186,12 @@ namespace GS2Studio.Generated.Schedule
         /// This is the only external construction path for mount-based usage.
         /// </summary>
         public static async Task<ScheduleBinder> CreateAsync(
-            ScheduleId id,
+            ScheduleId id, string trigger,
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default)
         {
-            var model = CreateModel(id);
+            var model = CreateModel(id, trigger);
             var binder = new ScheduleBinder(model, gs2, session);
             await binder.MountAsync(cancellationToken);
             return binder;
@@ -199,6 +208,9 @@ namespace GS2Studio.Generated.Schedule
             var _scheduleScheduleNamespaceEvent = await __scheduleScheduleNamespaceEventLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyScheduleScheduleNamespaceEvent(_model, _scheduleScheduleNamespaceEvent);
+            var _userdataScheduleTrigger = await __userdataScheduleTriggerLoader.LoadOrNull(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            ApplyUserdataScheduleTrigger(_model, _userdataScheduleTrigger);
             ScheduleOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
             _mounted = true;
         }
@@ -222,6 +234,17 @@ namespace GS2Studio.Generated.Schedule
                 },
                 () => onChange?.Invoke()
             ));
+            _unsubscribers.Add(__userdataScheduleTriggerLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    ApplyUserdataScheduleTrigger(_model, value);
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
         }
 
         /// <summary>
@@ -231,6 +254,7 @@ namespace GS2Studio.Generated.Schedule
         {
             ThrowIfDisposed();
             __scheduleScheduleNamespaceEventLoader.Invalidate(_gs2, _session);
+            __userdataScheduleTriggerLoader.Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -327,6 +351,27 @@ namespace GS2Studio.Generated.Schedule
                 model.EndHour = default;
                 model.RepeatType = string.Empty;
                 model.ScheduleType = string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Shared composition for the <c>__userdataScheduleTriggerLoader</c> source:
+        /// writes the loaded value onto the model, or resets the covered
+        /// properties when <c>source</c> is null. <c>MountAsync</c>,
+        /// <c>Subscribe</c> and external stubs all route through this method.
+        /// </summary>
+        public static void ApplyUserdataScheduleTrigger(IMutableSchedule model, EzTrigger? source)
+        {
+            model.TriggerFired = source != null;
+            if (source != null)
+            {
+                model.RelativeEndAt = source.ExpiresAt == 0 ? null : DateTimeOffset.FromUnixTimeMilliseconds(source.ExpiresAt).UtcDateTime;
+                model.RelativeStartAt = source.TriggeredAt == 0 ? null : DateTimeOffset.FromUnixTimeMilliseconds(source.TriggeredAt).UtcDateTime;
+            }
+            else
+            {
+                model.RelativeEndAt = default;
+                model.RelativeStartAt = default;
             }
         }
         #endregion

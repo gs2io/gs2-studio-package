@@ -424,6 +424,17 @@ namespace GS2Studio.Generated.Trigger
                 else
                 {
                     var binder = await BuildBinderFromExchangeTriggerClearMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeTriggerClearMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -572,6 +583,17 @@ namespace GS2Studio.Generated.Trigger
                 else
                 {
                     var binder = await BuildBinderFromExchangeTriggerExtendMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeTriggerExtendMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -720,6 +742,17 @@ namespace GS2Studio.Generated.Trigger
                 else
                 {
                     var binder = await BuildBinderFromScheduleScheduleUserItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyScheduleScheduleUserItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);

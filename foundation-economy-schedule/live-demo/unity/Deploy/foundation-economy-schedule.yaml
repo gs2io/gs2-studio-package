@@ -21,7 +21,7 @@ Resources:
               repeatType: "always"
             scheduleType: "relative"
           - absoluteBegin: 1789064562011
-            absoluteEnd: 1789690962011
+            absoluteEnd: 1924992000000
             metadata: ""
             name: "open-season"
             repeatSetting:

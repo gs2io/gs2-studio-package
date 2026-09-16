@@ -415,6 +415,17 @@ namespace GS2Studio.Generated.Schedule
                 else
                 {
                     var binder = await BuildBinderFromScheduleScheduleMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyScheduleScheduleMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -462,7 +473,7 @@ namespace GS2Studio.Generated.Schedule
 
         private async Task<ScheduleBinder> BuildBinderFromScheduleScheduleMasterItem(EzEvent item, CancellationToken cancellationToken)
         {
-            var model = ScheduleBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(ScheduleId) : new ScheduleId(item.Name)));
+            var model = ScheduleBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(ScheduleId) : new ScheduleId(item.Name)), item.RelativeTriggerName);
             ApplyScheduleScheduleMasterItemTo(model, item);
             var binder = new ScheduleBinder(model, _gs2, _session);
             await binder.MountAsync(cancellationToken);

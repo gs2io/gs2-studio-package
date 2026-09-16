@@ -31,6 +31,12 @@ namespace GS2Studio.Generated.Schedule
 
         string? Trigger { get; }
 
+        bool? TriggerFired { get; }
+
+        DateTime? RelativeStartAt { get; }
+
+        DateTime? RelativeEndAt { get; }
+
         string RepeatType { get; }
 
         int? BeginHour { get; }
@@ -68,6 +74,9 @@ namespace GS2Studio.Generated.Schedule
         new DateTime? StartAt { get; set; }
         new DateTime? EndAt { get; set; }
         new string? Trigger { get; set; }
+        new bool? TriggerFired { get; set; }
+        new DateTime? RelativeStartAt { get; set; }
+        new DateTime? RelativeEndAt { get; set; }
         new string RepeatType { get; set; }
         new int? BeginHour { get; set; }
         new int? EndHour { get; set; }
@@ -96,6 +105,12 @@ namespace GS2Studio.Generated.Schedule
         public DateTime? EndAt { get; set; }
 
         public string? Trigger { get; set; }
+
+        public bool? TriggerFired { get; set; }
+
+        public DateTime? RelativeStartAt { get; set; }
+
+        public DateTime? RelativeEndAt { get; set; }
 
         public string RepeatType { get; set; } = string.Empty;
 

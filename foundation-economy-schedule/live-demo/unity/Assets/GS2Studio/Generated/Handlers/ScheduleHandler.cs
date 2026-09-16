@@ -32,6 +32,7 @@ namespace GS2Studio.Generated.Schedule
     public sealed class ScheduleHandler : ScheduleHandlerBase
     {
         [SerializeField] private string? _id;
+        [SerializeField] private string? _trigger;
         // Hidden from the Inspector and not serialized. Resolved lazily by
         // searching the entire active scene so the Handler does not have to
         // sit under a Gs2HolderRuntimeContextProvider parent.
@@ -98,10 +99,11 @@ namespace GS2Studio.Generated.Schedule
         /// event + <c>Debug.LogException</c>); await <see cref="ReloadAsync"/>
         /// directly when completion must be observed.
         /// </summary>
-        public void SetKeys(string id)
+        public void SetKeys(string id, string trigger)
         {
             InvalidateBindingIntent();
             _id = id;
+            _trigger = trigger;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
@@ -147,7 +149,7 @@ namespace GS2Studio.Generated.Schedule
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new ScheduleId(_id ?? string.Empty), gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new ScheduleId(_id ?? string.Empty), _trigger, gs2, session, cancellationToken);
                 // Another binding intent took over while CreateAsync was in
                 // flight. Discard the now-stale binder so we never attach an
                 // out-of-date binder.
@@ -269,6 +271,7 @@ namespace GS2Studio.Generated.Schedule
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
+            if (string.IsNullOrEmpty(_trigger)) return false;
             return true;
         }
 

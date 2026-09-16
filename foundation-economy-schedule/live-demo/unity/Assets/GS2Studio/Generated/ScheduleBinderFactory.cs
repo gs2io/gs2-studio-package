@@ -27,7 +27,7 @@ namespace GS2Studio.Generated.Schedule
     public interface IScheduleBinderFactory
     {
         Task<IScheduleBinder> CreateAsync(
-            ScheduleId id,
+            ScheduleId id, string trigger,
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default);
@@ -44,12 +44,12 @@ namespace GS2Studio.Generated.Schedule
         public static readonly DefaultScheduleBinderFactory Instance = new DefaultScheduleBinderFactory();
 
         public async Task<IScheduleBinder> CreateAsync(
-            ScheduleId id,
+            ScheduleId id, string trigger,
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default)
         {
-            return await ScheduleBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await ScheduleBinder.CreateAsync(id, trigger, gs2, session, cancellationToken);
         }
         public IScheduleBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {
