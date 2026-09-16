@@ -1,7 +1,7 @@
 {
   "sections": {
     "Character": {
-      "source": "MasterData",
+      "axis": "InventoryCharacterMaster",
       "rows": ["CharacterNameLabel", "CharacterAcquiredAtLabel", "CharacterRecruitButton"],
       "toggles": { "CharacterUnregisteredInteractable": ["CharacterRecruitButton"] }
     },

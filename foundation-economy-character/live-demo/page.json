@@ -1,6 +1,7 @@
 {
   "sections": {
     "Character": {
+      "axis": "InventoryCharacterUser",
       "rows": [
         "CharacterIdValue",
         "CharacterPropertyIdValue",

@@ -1,7 +1,6 @@
 {
   "sections": {
     "EquipmentCatalog": {
-      "source": "MasterData",
       "rows": [
         {
           "component": "EquipmentCatalogTakeButton",
@@ -22,7 +21,7 @@
       }
     },
     "Equipment": {
-      "source": "UserData",
+      "axis": "InventoryEquipmentUser",
       "rows": ["EquipmentNameLabel", "EquipmentPropertyIdValue", "EquipmentDiscardButton"]
     }
   }

@@ -66,7 +66,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// the point of the type: for as long as the builder composed the page
         /// itself and a demo could only nudge the result, each question it
         /// could not answer became another channel in `page.json` — which
-        /// reading sits on which bar, which side a list mounts from, which
+        /// reading sits on which bar, which axis a list mounts from, which
         /// rows a condition governs, what order they read in. The one that
         /// never arrived was leaving a component off, which is what a page
         /// with one use for a model that has two needs most: a dex and a
@@ -75,13 +75,18 @@ namespace GS2Studio.Showroom.EditorTools
         private class SectionSpec
         {
             /// <summary>
-            /// Which side of the service a keyed model's list mounts from:
-            /// `MasterData` for what the title configured and every player
-            /// carries a copy of, `UserData` for what this player has. Null
-            /// leaves the generator's default, which is user data — the safe
-            /// answer, because a master row has no per-player key.
+            /// Which of the collection's mount axes a keyed model's list reads
+            /// through, named as a member of the generated `{Model}ListAxis`
+            /// enum — a GS2 model and a side, e.g. `InventoryCharacterUser`.
+            ///
+            /// There is no default. A list whose collection offers more than
+            /// one axis cannot be pointed at one of them by anything but the
+            /// page: the generator's own pick is whichever loader it elected
+            /// as primary, which is not an answer to what a page wants to
+            /// show. A section that leaves this null fails the bake rather
+            /// than taking a guess.
             /// </summary>
-            public string Source;
+            public string Axis;
             public List<RowSpec> Rows = new List<RowSpec>();
             /// <summary>Condition component name to the rows it governs.</summary>
             public Dictionary<string, string[]> Toggles = new Dictionary<string, string[]>();
@@ -111,7 +116,8 @@ namespace GS2Studio.Showroom.EditorTools
                     ReadArgument("-showroomTitle"),
                     ReadArgument("-showroomSubtitle"),
                     ReadArgument("-showroomRebuildPage") == "true",
-                    ReadDeclaration(ReadArgument("-showroomDeclaration")));
+                    ReadDeclaration(ReadArgument("-showroomDeclaration")),
+                    writesAxis: true);
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -131,7 +137,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// more than keeping it pretty — the Editor has no JSON reader it can
         /// rely on without taking a package dependency for one.
         ///
-        ///   section  MODEL  SOURCE
+        ///   section  MODEL  AXIS
         ///   row      MODEL  COMPONENT  CAPTION  COUNTDOWN
         ///   toggle   MODEL  CONDITION  ROW|ROW
         ///
@@ -154,7 +160,7 @@ namespace GS2Studio.Showroom.EditorTools
                 }
                 if (parts[0] == "section" && parts.Length > 2 && parts[2].Length > 0)
                 {
-                    section.Source = parts[2];
+                    section.Axis = parts[2];
                 }
                 else if (parts[0] == "row" && parts.Length > 2)
                 {
@@ -179,7 +185,8 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         public static int BuildPage(string title, string subtitle, bool rebuild)
         {
-            return BuildPage(title, subtitle, rebuild, new Dictionary<string, SectionSpec>());
+            return BuildPage(
+                title, subtitle, rebuild, new Dictionary<string, SectionSpec>(), writesAxis: false);
         }
 
         /// <summary>
@@ -191,7 +198,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static int BuildPage(
             string title, string subtitle, bool rebuild,
-            Dictionary<string, SectionSpec> declaredSections)
+            Dictionary<string, SectionSpec> declaredSections, bool writesAxis)
         {
             _declaredSections = declaredSections ?? new Dictionary<string, SectionSpec>();
             var existed = File.Exists(ScenePath);
@@ -208,7 +215,7 @@ namespace GS2Studio.Showroom.EditorTools
             ApplyHeader(page, title, subtitle);
             var content = ContentMount(page);
             ClearChildren(content);
-            var sections = BuildSections(content, page);
+            var sections = BuildSections(content, page, writesAxis);
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene, ScenePath);
@@ -375,7 +382,7 @@ namespace GS2Studio.Showroom.EditorTools
             return field != null && field.FieldType.IsArray ? field : null;
         }
 
-        private static int BuildSections(Transform content, ShowroomPage page)
+        private static int BuildSections(Transform content, ShowroomPage page, bool writesAxis)
         {
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var handlers = GeneratedHandlers();
@@ -428,7 +435,8 @@ namespace GS2Studio.Showroom.EditorTools
                 if (NeedsIdentityKeys(handler))
                 {
                     AddList(
-                        section, handler, labels, buttons, gauges, clocks, toggles, page, spec);
+                        section, handler, labels, buttons, gauges, clocks, toggles, page, spec,
+                        writesAxis);
                     continue;
                 }
 
@@ -493,7 +501,7 @@ namespace GS2Studio.Showroom.EditorTools
             GameObject section, Type handler, IReadOnlyList<Type> labels,
             IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges,
             IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles, ShowroomPage page,
-            SectionSpec spec)
+            SectionSpec spec, bool writesAxis)
         {
             var model = ModelNameOf(handler);
             var listHandler = SiblingType(handler, model + "ListHandler");
@@ -513,40 +521,100 @@ namespace GS2Studio.Showroom.EditorTools
             serialized.FindProperty("_itemPrefab").objectReferenceValue =
                 itemPrefab.GetComponent(itemHandler);
             serialized.FindProperty("_contentParent").objectReferenceValue = ItemsOf(section.transform);
-            // What the player has, not what the catalogue offers. A row mounted
-            // from master data has no user-data key, so reading its per-player
-            // state asks the server for `property/null` and is answered with a
-            // 400 — a page of rows that cannot say anything about themselves.
+            // Which of the collection's mount axes this list reads through.
+            // The field is absent when the collection offers only one.
             //
-            // A model with no user data at all is generated without the choice,
-            // and then the catalogue is the only thing there is to list.
-            var source = serialized.FindProperty("_source");
-            if (source != null) source.enumValueIndex = ListSourceIndex(listHandler, model, spec);
+            // `writesAxis` is false on the three-argument BuildPage overload,
+            // which an open Editor calls with no declaration to read: under
+            // the rule that a missing axis fails the bake, that path could
+            // never build a page carrying a list with more than one axis. It
+            // does not need to. There is a person there, and the axis is a
+            // dropdown in the Inspector — so the field is left holding
+            // whatever it already held, including the zero a freshly added
+            // component starts at, which the generated handler names in the
+            // console until someone picks an axis.
+            if (writesAxis)
+            {
+                var axis = serialized.FindProperty("_axis");
+                if (axis != null)
+                {
+                    // intValue, not enumValueIndex: the axis values are derived
+                    // from member names rather than positions, so they are not
+                    // a dense 0..n-1 range and an index into the member list is
+                    // not the value. intValue is the serialized representation
+                    // itself.
+                    axis.intValue = ListAxisValue(listHandler, model, spec);
+                }
+                else if (!string.IsNullOrEmpty(spec.Axis))
+                {
+                    // The other half of the drift ListAxisValue names. There,
+                    // a field with no enum beside it; here, a declaration with
+                    // no field to put it in. Both mean the demo's generated
+                    // code and what is asking about it disagree, and the one
+                    // thing neither may do is carry on: a declaration nobody
+                    // consumes, dropped without a word, is the failure this
+                    // whole channel exists to stop being possible.
+                    //
+                    // A list with no declaration and no field is not drift. It
+                    // reads through the single axis its collection offers, and
+                    // mounts it directly.
+                    throw new InvalidOperationException(
+                        $"[showroom] {model}: `page.json` names the mount axis '{spec.Axis}', " +
+                        $"but {model}ListHandler has no '_axis' field to put it in. Either the " +
+                        "demo's generated code predates the axis enum — regenerate it before " +
+                        "baking — or this list reads through a single axis and the declaration " +
+                        "should go.");
+                }
+            }
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
         /// <summary>
-        /// The ordinal of the `Source` this model's list mounts from, read from
-        /// the enum the generator emitted rather than assumed, so a reordering
-        /// there cannot silently point every demo at the wrong source. The demo
-        /// names the source in `page.json`; `UserData` is the default.
+        /// The value of the mount axis this model's list reads through, taken
+        /// from the `{Model}ListAxis` enum the generator emitted rather than
+        /// assumed, so a member added or renamed there cannot silently point a
+        /// demo at a different GS2 model.
+        ///
+        /// Every failure throws, and the throw reaches <see cref="Build"/>,
+        /// which exits non-zero. Nothing here falls back to an axis of its own
+        /// choosing: the bake reports only its exit code, so a warning and a
+        /// default would put a page in front of a model nobody asked for and
+        /// leave the run looking clean.
         /// </summary>
-        private static int ListSourceIndex(Type listHandler, string model, SectionSpec section)
+        private static int ListAxisValue(Type listHandler, string model, SectionSpec section)
         {
-            var sourceEnum = listHandler.GetNestedType("Source");
-            if (sourceEnum == null) return 0;
-            var names = Enum.GetNames(sourceEnum);
-            var wanted = string.IsNullOrEmpty(section.Source) ? "UserData" : section.Source;
-            var index = Array.FindIndex(
-                names, name => string.Equals(name, wanted, StringComparison.OrdinalIgnoreCase));
-            if (index < 0)
+            var axisEnum = SiblingType(listHandler, model + "ListAxis");
+            if (axisEnum == null)
             {
-                Debug.LogWarning(
-                    $"[showroom] {model}: no list source named '{wanted}'; " +
-                    $"the generator offers {string.Join(", ", names)}");
-                return 0;
+                throw new InvalidOperationException(
+                    $"[showroom] {model}ListHandler carries an '_axis' field but no " +
+                    $"{model}ListAxis enum sits beside it. The generated code and this " +
+                    "builder have drifted; regenerate the demo's Unity artifacts.");
             }
-            return index;
+            // The zero member is what an unwritten field reads as, not an axis
+            // anything can be pointed at, so it is neither offered nor
+            // accepted. Found by value rather than by name so the generator
+            // stays free to spell it however it likes.
+            var names = Enum.GetNames(axisEnum)
+                .Where(name => Convert.ToInt32(Enum.Parse(axisEnum, name)) != 0)
+                .ToArray();
+            var offered = string.Join(", ", names);
+            if (string.IsNullOrEmpty(section.Axis))
+            {
+                throw new InvalidOperationException(
+                    $"[showroom] {model} reads through one of several mount axes and " +
+                    "`page.json` does not say which. Add \"axis\" to its section; " +
+                    $"the generator offers {offered}.");
+            }
+            // Ordinal, and exact: an axis name is a generated identifier, so a
+            // near miss is a mistake worth naming rather than one to absorb.
+            if (Array.IndexOf(names, section.Axis) < 0)
+            {
+                throw new InvalidOperationException(
+                    $"[showroom] {model}: `page.json` names the mount axis '{section.Axis}', " +
+                    $"which {model}ListAxis does not declare. The generator offers {offered}.");
+            }
+            return Convert.ToInt32(Enum.Parse(axisEnum, section.Axis));
         }
 
         private static GameObject BuildListItemPrefab(

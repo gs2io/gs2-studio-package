@@ -1,7 +1,7 @@
 {
   "sections": {
     "Energy": {
-      "source": "MasterData",
+      "axis": "StaminaEnergyMaster",
       "rows": [
         {
           "component": "EnergyNextRecoveryValue",

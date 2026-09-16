@@ -1,7 +1,7 @@
 {
   "sections": {
     "Item": {
-      "source": "MasterData",
+      "axis": "InventoryInventoryMaster",
       "rows": ["ItemStockLabel", "ItemGainButton", "ItemSpendButton"],
       "toggles": {
         "ItemOwnedInteractable": ["ItemSpendButton"]

@@ -23,6 +23,7 @@
       }
     },
     "Trigger": {
+      "axis": "ScheduleScheduleUser",
       "rows": [
         "TriggerNameLabel",
         "TriggerWindowLabel",
