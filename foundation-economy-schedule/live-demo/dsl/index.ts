@@ -146,22 +146,27 @@ export const foundationEconomyScheduleDemo = definePackage(
   .dependency(schedule.packageId, "github:gs2io/gs2-studio-package")
   .domainType(TriggerPull)
 
-  // Two absolute windows a visitor can compare: one that is open and closes
-  // in a couple of days, so the countdown beside it reads as a countdown, and
-  // one that closed a few days ago and is therefore not listed at all. Both
-  // are fixed on the clock, so every visitor sees the same two — and both were
-  // pinned relative to the day this demo was authored, which is why they will
-  // eventually need moving.
+  // Two absolute windows a visitor can compare: one that is open, and one that
+  // closed and is therefore not listed at all. Both are fixed on the clock, so
+  // every visitor sees the same two.
+  //
+  // The open one ends in 2031 rather than in a few days. This demo is left
+  // standing for months at a time, and a window pinned near the day it was
+  // authored quietly falls out of its own period and stops demonstrating
+  // anything. The countdown beside it reads in days, which is the honest
+  // reading for a window that runs for years.
   .instance(Schedule, "open-season", {
     [schedule.propertyId("Schedule", "scheduleType")]: "absolute",
-    [schedule.propertyId("Schedule", "startAt")]: 1789064562011, // opened five days ago
-    [schedule.propertyId("Schedule", "endAt")]: 1789690962011, // closes in a little over two days
+    [schedule.propertyId("Schedule", "startAt")]: 1789064562011, // 2026-09-10, already open
+    [schedule.propertyId("Schedule", "endAt")]: 1924992000000, // 2031-01-01
     [schedule.propertyId("Schedule", "repeatType")]: "always",
   })
+  // The closed one needs no such care: a window that has already ended stays
+  // ended, and its whole point is not appearing in the list.
   .instance(Schedule, "closed-season", {
     [schedule.propertyId("Schedule", "scheduleType")]: "absolute",
-    [schedule.propertyId("Schedule", "startAt")]: 1786904562011, // ran for a month
-    [schedule.propertyId("Schedule", "endAt")]: 1789237362011, // and closed three days ago
+    [schedule.propertyId("Schedule", "startAt")]: 1786904562011, // 2026-08-16
+    [schedule.propertyId("Schedule", "endAt")]: 1789237362011, // 2026-09-12, closed
     [schedule.propertyId("Schedule", "repeatType")]: "always",
   })
 

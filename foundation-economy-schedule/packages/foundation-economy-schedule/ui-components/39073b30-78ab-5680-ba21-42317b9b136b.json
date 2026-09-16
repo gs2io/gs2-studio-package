@@ -43,6 +43,39 @@
         "kind": "property",
         "propertyId": "prop_XYHSJ4CE1GD4DVWJT1JV06XK5T"
       }
+    },
+    {
+      "componentClassName": "RelativeWindowLabel",
+      "id": "2b2da6b6-785d-58c0-ac5f-6ba2eea3b527",
+      "kind": "templateLabel",
+      "name": "Schedule",
+      "sources": [
+        {
+          "key": "relativeStartAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M2M04HC1DW945VZYF3TSEANQ"
+          }
+        },
+        {
+          "key": "relativeEndAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M2M04HC1EW3NMGESBQC8AT6Y"
+          }
+        }
+      ],
+      "template": "{relativeStartAt} - {relativeEndAt}"
+    },
+    {
+      "componentClassName": "RelativeEndAtValue",
+      "id": "af480017-e83d-5d22-97a7-8484f4c630f0",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_01M2M04HC1EW3NMGESBQC8AT6Y"
+      }
     }
   ],
   "name": "Schedule",

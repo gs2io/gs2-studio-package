@@ -362,6 +362,19 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
       // it. Which of the two a title shows is a question about the title.
       .value("EndAtValue", ui.prop("endAt"), { name: "Schedule" })
       .value("StartAtValue", ui.prop("startAt"), { name: "Schedule" })
+      // The same two readings for the relative case, where the window is the
+      // one this player's trigger opened. A screen that shows both kinds of
+      // schedule in one list reads whichever pair the row has.
+      .templateLabel(
+        "RelativeWindowLabel",
+        "{relativeStartAt} - {relativeEndAt}",
+        {
+          relativeStartAt: ui.prop("relativeStartAt"),
+          relativeEndAt: ui.prop("relativeEndAt"),
+        },
+        { name: "Schedule" }
+      )
+      .value("RelativeEndAtValue", ui.prop("relativeEndAt"), { name: "Schedule" })
   )
 
   // What a trigger is worth knowing about: whether it is running, and until

@@ -3,13 +3,27 @@
   "listSources": {},
   "countdowns": {
     "ScheduleEndAtValue": "DeadlineCountdown",
-    "TriggerExpiresAtValue": "DeadlineCountdown"
+    "TriggerExpiresAtValue": "DeadlineCountdown",
+    "ScheduleRelativeEndAtValue": "DeadlineCountdown"
   },
   "activeToggles": {
-    "TriggerTriggeredInteractable": ["TriggerExtendButton", "TriggerClearButton"]
+    "TriggerTriggeredInteractable": [
+      "TriggerExtendButton",
+      "TriggerClearButton"
+    ]
   },
   "rowOrder": {
-    "Schedule": ["ScheduleWindowLabel", "SchedulePeriodLabel", "ScheduleEndAtValue"],
-    "Trigger": ["TriggerNameLabel", "TriggerWindowLabel", "TriggerExpiresAtValue"]
+    "Schedule": [
+      "ScheduleWindowLabel",
+      "SchedulePeriodLabel",
+      "ScheduleEndAtValue",
+      "ScheduleRelativeWindowLabel",
+      "ScheduleRelativeEndAtValue"
+    ],
+    "Trigger": [
+      "TriggerNameLabel",
+      "TriggerWindowLabel",
+      "TriggerExpiresAtValue"
+    ]
   }
 }
