@@ -1,0 +1,9 @@
+{
+  "gaugeCaptions": {},
+  "listSources": { "Character": "MasterData" },
+  "countdowns": {},
+  "activeToggles": { "CharacterUnregisteredInteractable": ["CharacterMarkButton"] },
+  "rowOrder": {
+    "Character": ["CharacterNameLabel", "CharacterAcquiredAtValue", "CharacterMarkButton"]
+  }
+}

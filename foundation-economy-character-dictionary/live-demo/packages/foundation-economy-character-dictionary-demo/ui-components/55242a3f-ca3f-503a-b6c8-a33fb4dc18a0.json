@@ -1,0 +1,16 @@
+{
+  "id": "55242a3f-ca3f-503a-b6c8-a33fb4dc18a0",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "MarkButton",
+      "delegatedActionKey": "resource:foundation-economy-character-dictionary-demo:masterData:eb8a3f55-48d0-5182-acce-e60cffd98363::Gs2Exchange:RateModel.Exchange",
+      "id": "64a37c55-36b1-5b89-af42-daf9fe47ae20",
+      "kind": "buttonAction",
+      "name": "Character"
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_01M2M8WDV0M1NN3AYHYAHFNAWK"
+}

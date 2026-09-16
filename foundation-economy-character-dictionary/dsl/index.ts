@@ -7,6 +7,7 @@ import {
   PT,
   Source,
   transactionSetting,
+  UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -88,6 +89,21 @@ export const foundationEconomyCharacterDictionary = definePackage(
         name: Bind.skip(),
       });
   })
+
+  // What a dex entry is worth knowing: whether this character has ever been
+  // obtained, and when it first was. Both readings belong here rather than in
+  // a screen, because `acquired` and `acquiredAt` are this package's own
+  // properties and every title that keeps a dex asks the same two questions.
+  .uiComponent(Character, ui =>
+    ui
+      .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Character" })
+      .value("AcquiredAtValue", ui.prop("acquiredAt"), { name: "Character" })
+      // A character already in the dex cannot be added to it again, so
+      // anything that registers one stops being usable once it is registered.
+      .interactable("UnregisteredInteractable", UiCond.not(UiCond.truthy(ui.prop("acquired"))), {
+        name: "Character",
+      })
+  )
 
   .actionTransform("MarkCharacterDictionary", at =>
     at

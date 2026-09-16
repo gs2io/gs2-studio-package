@@ -1,0 +1,50 @@
+{
+  "id": "c7183658-8831-52e4-b6b0-9d3a94ad93a2",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "d4ede874-bb57-573e-aed0-8308d3a6245d",
+      "kind": "templateLabel",
+      "name": "Character",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        }
+      ],
+      "template": "{id}"
+    },
+    {
+      "componentClassName": "AcquiredAtValue",
+      "id": "edf3e77d-c71b-59ae-850a-0734009eceaa",
+      "kind": "value",
+      "name": "Character",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6"
+      }
+    },
+    {
+      "componentClassName": "UnregisteredInteractable",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_TC9NBD65ZXWPT09PFSRX1REHPF"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "cb47dd34-f094-5539-910f-2d46f6f97dd4",
+      "kind": "interactable",
+      "name": "Character"
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV"
+}

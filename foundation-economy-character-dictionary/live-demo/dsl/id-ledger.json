@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "retired": {
+    "row:dt_HAZCRJ576BHDWFVB28NQW77Y01.characterexperience": "row_01M2M8WDV04QFWGCKY73VKW2TY",
+    "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.archer": "row_01M2M8WDV0K8EJ37SYKR0DZDS2",
+    "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.healer": "row_01M2M8WDV00PZ23PG931C5HQNZ",
+    "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.knight": "row_01M2M8WDV02NGNVYAZDDRBV16X",
+    "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.mage": "row_01M2M8WDV02TPCSFY7PJVAQHSP",
+    "row:dt_ZR7PA0W682HX7ZFXGBE4BRF37K.charactercollection": "row_01M2M8WDV0H54GN9W1SB4BGTA1",
+    "type:CharacterCollection": "dt_01M2M8WDV0F55Q58Q0NNCB9NX2",
+    "type:CharacterExperience": "dt_01M2M8WDV0928KH4E55R7CQM0D"
+  },
+  "random": {
+    "type:Character": "dt_01M2M8WDV0M1NN3AYHYAHFNAWK"
+  },
+  "deterministicOverrides": {}
+}

@@ -1,0 +1,35 @@
+{
+  "entries": [
+    {
+      "commitSha": "1d8bb0037c3eb8bedbf27df0cd908a207a9ac0e2",
+      "integrity": "sha256-r/dJeSfoqzjx7gEu1sRhkuYtC75VxVACpdvBXGOTMFw=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-character",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-character/packages/foundation-economy-character",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "1d8bb0037c3eb8bedbf27df0cd908a207a9ac0e2",
+      "integrity": "sha256-r/dJeSfoqzjx7gEu1sRhkuYtC75VxVACpdvBXGOTMFw=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-character-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-character/live-demo/packages/foundation-economy-character-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "1d8bb0037c3eb8bedbf27df0cd908a207a9ac0e2",
+      "integrity": "sha256-r/dJeSfoqzjx7gEu1sRhkuYtC75VxVACpdvBXGOTMFw=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-character-dictionary",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-character-dictionary/packages/foundation-economy-character-dictionary",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}
