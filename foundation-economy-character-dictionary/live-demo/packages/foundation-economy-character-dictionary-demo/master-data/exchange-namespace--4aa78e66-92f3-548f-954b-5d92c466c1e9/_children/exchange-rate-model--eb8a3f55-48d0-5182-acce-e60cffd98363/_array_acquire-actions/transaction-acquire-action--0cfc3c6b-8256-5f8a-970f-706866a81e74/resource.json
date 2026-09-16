@@ -17,24 +17,17 @@
                 "propertyId": "prop_reserved_id"
               }
             }
-          },
-          {
-            "parameterName": "count",
-            "source": {
-              "kind": "static",
-              "value": 1
-            }
           }
         ],
         "kind": "transform",
         "parameterName": "action",
-        "transformName": "AcquireCharacter",
-        "transformPackageId": "foundation-economy-character"
+        "transformName": "MarkCharacterDictionary",
+        "transformPackageId": "foundation-economy-character-dictionary"
       }
     ]
   },
-  "id": "0c7be9f9-71fd-5772-b063-71d573763e63",
-  "index": 0,
+  "id": "0cfc3c6b-8256-5f8a-970f-706866a81e74",
+  "index": 1,
   "location": {
     "modelName": "AcquireAction",
     "service": "transaction"

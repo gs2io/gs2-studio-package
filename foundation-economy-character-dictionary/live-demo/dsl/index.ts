@@ -6,6 +6,13 @@
  * the dex once, keeps the moment it first arrived, and its button stops being
  * usable, because there is no second first time.
  *
+ * Filing a character into the dex is not something a player does afterwards:
+ * it is part of acquiring the character. So the press below recruits and
+ * files in one transaction, by carrying both acquire actions on a single
+ * rate. The recruit in `foundation-economy-character-demo` stays as it is —
+ * that rate is shared with demos that only want a roster, and an action
+ * naming a package they do not install would be dropped from their deploy.
+ *
  * The roster itself comes from `foundation-economy-character-demo`, installed
  * beside this package rather than written out again here. A row filed against
  * a dependency's type lands in that dependency's stack, and every demo that
@@ -30,28 +37,45 @@ const dictionary = dependencyPackage(dictionarySurface);
 
 const Character = dictionary.type("Character");
 
-/** The species a visitor can collect. Sorted the way a dex is read. */
-const ROSTER = [
-  ["knight", 100],
-  ["mage", 200],
-  ["archer", 300],
-  ["healer", 400],
-] as const;
+/** The package owning `AcquireCharacter`, addressed by name like any dependency. */
+const CHARACTER_PACKAGE_ID = "foundation-economy-character";
 
 /**
- * Registering a character, modelled as an exchange that costs nothing.
+ * Recruiting a character, modelled as an exchange that costs nothing.
  *
  * The rate is mounted on `Character` so that each row carries its own: a
  * delegated action on a type must target a resource that mounts that type,
  * which is how the generated loader learns which rate a row's button trades.
+ *
+ * Both acquire actions ride the same rate, so a recruit and its dex entry
+ * commit together or not at all. The acquire comes first, matching the gacha's
+ * rate and the order the transaction reads in.
+ *
+ * That order is not free. The id ledger's structure tokens carry the array
+ * index, so an entry's id follows its position rather than what it does:
+ * putting the acquire first handed it the id the dex entry used to hold, and
+ * the dex entry took a new one. Nothing outside this package names either, so
+ * the churn is invisible here — but reordering these later would move them
+ * again.
  */
-const MarkRateModel = defineMasterDataResource(resource =>
+const DexRecruitRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
     .mountLocal(Character)
     .bindings({ name: Bind.domainProperty(Source.direct(Character, "id")) })
     .addArrayChild("acquireActions", acquireAction => {
       acquireAction
+        .model(GS2.transaction.AcquireAction)
+        .mountLocal(Character)
+        .bindings({
+          action: Bind.transform(CHARACTER_PACKAGE_ID, "AcquireCharacter", [
+            Arg.domainProperty("character", Source.direct(Character, "id")),
+            Arg.static("count", 1),
+          ]),
+        });
+    })
+    .addArrayChild("acquireActions", dictionaryAction => {
+      dictionaryAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
         .bindings({
@@ -69,8 +93,8 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage(
   .display({
     label: { ja: "キャラクター図鑑（デモデータ）", en: "Character Dex (demo data)" },
     description: {
-      ja: "ライブデモ用のキャラクター一覧と、図鑑に登録する操作を提供します。",
-      en: "Supplies the roster the live demo shows, and the press that writes one into the dex.",
+      ja: "ライブデモ用のキャラクター一覧と、勧誘して図鑑を埋める操作を提供します。",
+      en: "Supplies the roster the live demo shows, and the press that recruits one into the dex.",
     },
   })
   .dependency(dictionary.packageId, "github:gs2io/gs2-studio-package")
@@ -82,13 +106,14 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage(
   .dependency("foundation-economy-character-demo", "github:gs2io/gs2-studio-package")
   // The dex overlays a type the character package owns, and an install does not
   // walk a package's own dependencies, so the base package is named here too.
-  .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
+  // It also owns `AcquireCharacter`, which the rate above trades for.
+  .dependency(CHARACTER_PACKAGE_ID, "github:gs2io/gs2-studio-package")
 
   .masterDataResource(resource =>
     resource
       .model(GS2.exchange.Namespace)
       .bindings({
-        name: Bind.static("CharacterDictionaryMark"),
+        name: Bind.static("CharacterDexRecruit"),
         ...Bind.nulls(
           "acquireAwaitScript",
           "exchangeScript",
@@ -97,22 +122,23 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage(
         ),
         // Run and commit server-side: with auto-run off, `Exchange` hands back
         // a stamp sheet the client still has to execute, which can leave the
-        // entry half-written if the page is closed mid-way.
+        // character granted but the dex entry unwritten if the page is closed
+        // mid-way.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
         }),
       })
-      .addChild(MarkRateModel)
+      .addChild(DexRecruitRateModel)
   )
 
   .uiComponent(Character, ui =>
-    ui.buttonAction("MarkButton", "Register", undefined, { name: "Character" })
+    ui.buttonAction("RecruitButton", "Recruit", undefined, { name: "Character" })
   )
 
-  .delegatedAction(Character, "Register", {
+  .delegatedAction(Character, "Recruit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: MarkRateModel,
+    targetResource: DexRecruitRateModel,
     parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
   })
   .build();

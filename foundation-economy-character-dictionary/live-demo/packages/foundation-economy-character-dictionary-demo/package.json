@@ -9,8 +9,8 @@
   },
   "display": {
     "description": {
-      "en": "Supplies the roster the live demo shows, and the press that writes one into the dex.",
-      "ja": "ライブデモ用のキャラクター一覧と、図鑑に登録する操作を提供します。"
+      "en": "Supplies the roster the live demo shows, and the press that recruits one into the dex.",
+      "ja": "ライブデモ用のキャラクター一覧と、勧誘して図鑑を埋める操作を提供します。"
     },
     "label": {
       "en": "Character Dex (demo data)",

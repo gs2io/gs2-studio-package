@@ -8,7 +8,8 @@
     "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.mage": "row_01M2M8WDV02TPCSFY7PJVAQHSP",
     "row:dt_ZR7PA0W682HX7ZFXGBE4BRF37K.charactercollection": "row_01M2M8WDV0H54GN9W1SB4BGTA1",
     "type:CharacterCollection": "dt_01M2M8WDV0F55Q58Q0NNCB9NX2",
-    "type:CharacterExperience": "dt_01M2M8WDV0928KH4E55R7CQM0D"
+    "type:CharacterExperience": "dt_01M2M8WDV0928KH4E55R7CQM0D",
+    "ui:Character:Character:item:MarkButton": "64a37c55-36b1-5b89-af42-daf9fe47ae20"
   },
   "random": {
     "type:Character": "dt_01M2M8WDV0M1NN3AYHYAHFNAWK"

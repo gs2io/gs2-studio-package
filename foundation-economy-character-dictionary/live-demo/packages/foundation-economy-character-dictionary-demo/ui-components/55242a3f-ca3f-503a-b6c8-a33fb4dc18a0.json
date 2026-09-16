@@ -3,9 +3,9 @@
   "items": [
     {
       "arguments": [],
-      "componentClassName": "MarkButton",
+      "componentClassName": "RecruitButton",
       "delegatedActionKey": "resource:foundation-economy-character-dictionary-demo:masterData:eb8a3f55-48d0-5182-acce-e60cffd98363::Gs2Exchange:RateModel.Exchange",
-      "id": "64a37c55-36b1-5b89-af42-daf9fe47ae20",
+      "id": "6b9ed8e9-84b3-5dd7-ba00-4e4a1f3646b7",
       "kind": "buttonAction",
       "name": "Character"
     }
