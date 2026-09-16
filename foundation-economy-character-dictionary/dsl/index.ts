@@ -97,6 +97,16 @@ export const foundationEconomyCharacterDictionary = definePackage(
   .uiComponent(Character, ui =>
     ui
       .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Character" })
+      // When it first arrived, as text. A dex entry is a record of the past,
+      // so there is nothing to count down to — the date itself is the reading.
+      .templateLabel(
+        "AcquiredAtLabel",
+        "{acquiredAt}",
+        { acquiredAt: ui.prop("acquiredAt") },
+        { name: "Character" }
+      )
+      // Handed over typed as well, for a screen that would rather compute with
+      // the moment than print it.
       .value("AcquiredAtValue", ui.prop("acquiredAt"), { name: "Character" })
       // A character already in the dex cannot be added to it again, so
       // anything that registers one stops being usable once it is registered.

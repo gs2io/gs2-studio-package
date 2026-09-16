@@ -18,6 +18,22 @@
       "template": "{id}"
     },
     {
+      "componentClassName": "AcquiredAtLabel",
+      "id": "fab7770c-1f0f-51f6-bbfe-2fb380fe929c",
+      "kind": "templateLabel",
+      "name": "Character",
+      "sources": [
+        {
+          "key": "acquiredAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6"
+          }
+        }
+      ],
+      "template": "{acquiredAt}"
+    },
+    {
       "componentClassName": "AcquiredAtValue",
       "id": "edf3e77d-c71b-59ae-850a-0734009eceaa",
       "kind": "value",
