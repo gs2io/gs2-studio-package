@@ -43,6 +43,14 @@ const Schedule = defineDomainType("Schedule", dt =>
     .property(
       PT.string("trigger").assetDelivery().requiredWhen(Cond.eq("scheduleType", "relative"))
     )
+    // A relative schedule has no window until its trigger fires, and then the
+    // window is the trigger's own: it runs from when the trigger fired until
+    // the trigger expires. Reading it per player is the only way the schedule
+    // can say when it closes, because `startAt` / `endAt` above are the
+    // absolute schedule's times and every player shares them.
+    .property(PT.bool("triggerFired").userData())
+    .property(PT.timestamp("relativeStartAt").userData())
+    .property(PT.timestamp("relativeEndAt").userData())
     // --- Repeat type discriminator ---
     .property(
       PT.prop("repeatType", PT.enum("always", "daily", "weekly", "monthly", "custom"))
@@ -87,6 +95,24 @@ const Schedule = defineDomainType("Schedule", dt =>
         "Reference trigger",
         "相対日時方式の基準にするトリガーです。",
         "Trigger used as the reference for a relative schedule."
+      ),
+      triggerFired: jaEnField(
+        "トリガー発火済み",
+        "Trigger fired",
+        "このプレイヤーに対して基準トリガーが発火済みかを示します。",
+        "Whether the reference trigger has fired for this player."
+      ),
+      relativeStartAt: jaEnField(
+        "相対開始日時",
+        "Relative start time",
+        "相対日時方式で、このプレイヤーの開催期間が始まった日時です。基準トリガーの発火日時と一致します。",
+        "When this player's relative schedule opened. Equals the reference trigger's fire time."
+      ),
+      relativeEndAt: jaEnField(
+        "相対終了日時",
+        "Relative end time",
+        "相対日時方式で、このプレイヤーの開催期間が終わる日時です。基準トリガーの有効期限と一致します。",
+        "When this player's relative schedule closes. Equals the reference trigger's expiration."
       ),
       repeatType: jaEnField(
         "繰り返し方式",
@@ -256,6 +282,26 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
         name: Bind.domainProperty(Source.direct(Trigger, "id")),
         triggeredAt: Bind.domainProperties([Source.direct(Trigger, "triggeredAt")]),
         expiresAt: Bind.domainProperties([Source.direct(Trigger, "expiresAt")]),
+        triggerId: Bind.skip(),
+        userId: Bind.skip(),
+      })
+  )
+
+  // The same GS2 record read from the schedule that names it. Each schedule
+  // row keys this by its own `trigger`, so the window it reports is that
+  // player's window for that schedule — and because the binder subscribes to
+  // the record, pulling, extending or clearing the trigger moves the
+  // schedule's window with it. A schedule whose trigger has never fired has
+  // no record at all, which is what `triggerFired` reports.
+  .userDataResource(r =>
+    r
+      .model(GS2.schedule.Trigger)
+      .mountLocal(Schedule)
+      .existenceProperty("triggerFired")
+      .bindings({
+        name: Bind.domainProperty(Source.direct(Schedule, "trigger")),
+        triggeredAt: Bind.domainProperties([Source.direct(Schedule, "relativeStartAt")]),
+        expiresAt: Bind.domainProperties([Source.direct(Schedule, "relativeEndAt")]),
         triggerId: Bind.skip(),
         userId: Bind.skip(),
       })

@@ -1,0 +1,72 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "existence",
+        "parameterName": "$existence",
+        "propertyId": "prop_01M2M04HC1656GM6SSE6QH09X4"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "expiresAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+              "typeName": "Schedule"
+            },
+            "propertyId": "prop_01M2M04HC1EW3NMGESBQC8AT6Y"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_K8ZPEG5KAWZN5N4HNCS0S3ZQ0E"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "triggerId"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "triggeredAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+              "typeName": "Schedule"
+            },
+            "propertyId": "prop_01M2M04HC1DW945VZYF3TSEANQ"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD",
+      "typeName": "Schedule"
+    }
+  },
+  "id": "8a2ec423-fd12-5fc5-9ec1-6d7e7234c311",
+  "location": {
+    "modelName": "Trigger",
+    "service": "schedule"
+  }
+}

@@ -123,6 +123,72 @@
         }
       },
       {
+        "bindingHint": "userData",
+        "id": "prop_01M2M04HC1656GM6SSE6QH09X4",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the reference trigger has fired for this player.",
+            "label": "Trigger fired"
+          },
+          "ja": {
+            "description": "このプレイヤーに対して基準トリガーが発火済みかを示します。",
+            "label": "トリガー発火済み"
+          }
+        },
+        "name": "triggerFired",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_01M2M04HC1DW945VZYF3TSEANQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "When this player's relative schedule opened. Equals the reference trigger's fire time.",
+            "label": "Relative start time"
+          },
+          "ja": {
+            "description": "相対日時方式で、このプレイヤーの開催期間が始まった日時です。基準トリガーの発火日時と一致します。",
+            "label": "相対開始日時"
+          }
+        },
+        "name": "relativeStartAt",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_01M2M04HC1EW3NMGESBQC8AT6Y",
+        "localizedDisplay": {
+          "en": {
+            "description": "When this player's relative schedule closes. Equals the reference trigger's expiration.",
+            "label": "Relative end time"
+          },
+          "ja": {
+            "description": "相対日時方式で、このプレイヤーの開催期間が終わる日時です。基準トリガーの有効期限と一致します。",
+            "label": "相対終了日時"
+          }
+        },
+        "name": "relativeEndAt",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
         "bindingHint": "masterData",
         "id": "prop_XSTG0QAVN2ADJHS1Q50PXHNY89",
         "localizedDisplay": {
