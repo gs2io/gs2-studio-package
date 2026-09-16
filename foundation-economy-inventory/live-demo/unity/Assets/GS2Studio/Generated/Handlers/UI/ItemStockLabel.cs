@@ -74,7 +74,7 @@ namespace GS2Studio.Generated.Item.UI
 
         private void OnUpdated(Item model)
         {
-            _onUpdate.Invoke($"{model.Id} x{model.Count}");
+            _onUpdate.Invoke($"{model.Id.Value} x{model.Count}");
         }
     }
 }

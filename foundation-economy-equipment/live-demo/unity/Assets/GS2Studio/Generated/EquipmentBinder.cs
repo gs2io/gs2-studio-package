@@ -21,9 +21,32 @@ using Gs2.Unity.Gs2Inventory.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Inventory;
 using Gs2.Util.LitJson;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Equipment
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum EquipmentMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the InventoryEquipment master-data list axis.</summary>
+        [Gs2SkipsLoaders("UserdataInventoryEquipmentItemModel")]
+        InventoryEquipmentMaster,
+
+        /// <summary>Built by the ExchangeEquipmentDiscard master-data list axis.</summary>
+        [Gs2SkipsLoaders("UserdataInventoryEquipmentItemModel")]
+        ExchangeEquipmentDiscardMaster,
+
+        /// <summary>Built by the InventoryEquipment user-data list axis.</summary>
+        InventoryEquipmentUser,
+    }
+
     /// <summary>
     /// Pure read contract for <see cref="EquipmentBinder"/>: the read-only
     /// model surface (<see cref="Equipment"/>) plus the single-fetch
@@ -33,6 +56,15 @@ namespace GS2Studio.Generated.Equipment
     /// </summary>
     public interface IReadOnlyEquipmentBinder : Equipment
     {
+        /// <summary>Which axis built this row.</summary>
+        EquipmentMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// True when this row's mount surface ran the <c>ItemSetLoader</c> load on <c>__userdataInventoryEquipmentItemModelLoader</c>. False means <c>PropertyId</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: no per-row value for _model.PropertyId.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: no per-row value for _model.PropertyId.</remarks>
+        bool LoadedUserdataInventoryEquipmentItemModel { get; }
     }
 
     /// <summary>
@@ -72,7 +104,7 @@ namespace GS2Studio.Generated.Equipment
     /// by the owning derived class. Delegated actions live on the owning
     /// derived class (every binder instance is the owning type).
     /// </summary>
-    public class ReadOnlyEquipmentBinder : IReadOnlyEquipmentBinder
+    public abstract class ReadOnlyEquipmentBinder : IReadOnlyEquipmentBinder
     {
         // `private protected` because the mutable model type is internal; only
         // the same-assembly owning derived binder reads/writes this field.
@@ -94,6 +126,13 @@ namespace GS2Studio.Generated.Equipment
         public int SortValue => _model.SortValue;
         /// <inheritdoc cref="Equipment.PropertyId" />
         public string PropertyId => _model.PropertyId;
+
+        /// <inheritdoc />
+        public abstract EquipmentMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataInventoryEquipmentItemModel { get; }
+
         /// <summary>
         /// Base constructor. Stores the bound model + service handles on the
         /// protected fields shared with the owning derived class. `private
@@ -137,6 +176,20 @@ namespace GS2Studio.Generated.Equipment
         private readonly ItemModelLoader __inventoryEquipmentNamespaceInventoryModelItemModelLoader;
         private readonly ItemSetLoader __userdataInventoryEquipmentItemModelLoader;
 
+        /// <summary>Which construction path built this row.</summary>
+        private readonly EquipmentMountSurface _mountSurfaceValue;
+
+        /// <summary>True when this row's path supplies every key <c>__userdataInventoryEquipmentItemModelLoader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: no per-row value for _model.PropertyId.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: no per-row value for _model.PropertyId.</remarks>
+        private bool Runs__userdataInventoryEquipmentItemModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.InventoryEquipmentUser;
+
+        /// <inheritdoc />
+        public override EquipmentMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataInventoryEquipmentItemModel => Runs__userdataInventoryEquipmentItemModelLoader;
+
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
         /// or one of the list static factories on the companion Collection class.
@@ -144,9 +197,11 @@ namespace GS2Studio.Generated.Equipment
         internal EquipmentBinder(
             MutableEquipment model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            EquipmentMountSurface _mountSurface = EquipmentMountSurface.Full
         ) : base(model, gs2, session)
         {
+            _mountSurfaceValue = _mountSurface;
             __exchangeEquipmentDiscardNamespaceRateModelLoader = new RateModelLoader("EquipmentDiscard", _model.Id);
             __transactionConsumeActionLoader = new RateModelConsumeActionLoader("EquipmentDiscard", _model.Id, 0);
             __inventoryEquipmentNamespaceInventoryModelItemModelLoader = new ItemModelLoader("Equipment", "Equipment", _model.Id);
@@ -203,9 +258,12 @@ namespace GS2Studio.Generated.Equipment
             var _inventoryEquipmentNamespaceInventoryModelItemModel = await __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyInventoryEquipmentNamespaceInventoryModelItemModel(_model, _inventoryEquipmentNamespaceInventoryModelItemModel);
-            var _userdataInventoryEquipmentItemModel = await __userdataInventoryEquipmentItemModelLoader.Load(_gs2, _session);
+            var _userdataInventoryEquipmentItemModel = Runs__userdataInventoryEquipmentItemModelLoader ? await __userdataInventoryEquipmentItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataInventoryEquipmentItemModel(_model, _userdataInventoryEquipmentItemModel);
+            if (Runs__userdataInventoryEquipmentItemModelLoader)
+            {
+                ApplyUserdataInventoryEquipmentItemModel(_model, _userdataInventoryEquipmentItemModel);
+            }
             EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
             if (_transactionConsumeAction != null) RestoreId(_model, _transactionConsumeAction.Action, _transactionConsumeAction.Request);
             _mounted = true;
@@ -259,17 +317,20 @@ namespace GS2Studio.Generated.Equipment
                 },
                 () => onChange?.Invoke()
             ));
-            _unsubscribers.Add(__userdataInventoryEquipmentItemModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataInventoryEquipmentItemModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+            if (Runs__userdataInventoryEquipmentItemModelLoader)
+            {
+                _unsubscribers.Add(__userdataInventoryEquipmentItemModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataInventoryEquipmentItemModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         /// <summary>
@@ -281,7 +342,10 @@ namespace GS2Studio.Generated.Equipment
             __exchangeEquipmentDiscardNamespaceRateModelLoader.Invalidate(_gs2, _session);
             __transactionConsumeActionLoader.Invalidate(_gs2, _session);
             __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
-            __userdataInventoryEquipmentItemModelLoader.Invalidate(_gs2, _session);
+            if (Runs__userdataInventoryEquipmentItemModelLoader)
+            {
+                __userdataInventoryEquipmentItemModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         /// <summary>

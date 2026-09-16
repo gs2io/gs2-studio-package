@@ -356,7 +356,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8132773711418537373}
-  - {fileID: 8798049388865240973}
+  - {fileID: 8446414503374024786}
   - {fileID: 4648266630807344487}
   - {fileID: 6315187968825107174}
   m_Father: {fileID: 2415039025465013737}
@@ -1007,7 +1007,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4950680053813674763}
   m_SourcePrefab: {fileID: 100100000, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
---- !u!1 &3460937135864228945 stripped
+--- !u!1 &4551157420232172430 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6122797242513782781, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
   m_PrefabInstance: {fileID: 7768848073552565363}
@@ -1018,21 +1018,21 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3460937135864228945}
+  m_GameObject: {fileID: 4551157420232172430}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d475fff5ed5fb9364cd1755de7eb20a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Energy.UI.EnergyStaminaGauge
   _handler: {fileID: 0}
-  _target: {fileID: 6481747774380831082}
+  _target: {fileID: 6259028426612719285}
 --- !u!114 &4950680053813674763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3460937135864228945}
+  m_GameObject: {fileID: 4551157420232172430}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 947c42377a842996b2094879959e11c5, type: 3}
@@ -1042,7 +1042,7 @@ MonoBehaviour:
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5602755609254444597}
+      - m_Target: {fileID: 4823283705882046954}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -1054,7 +1054,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5602755609254444597 stripped
+--- !u!114 &4823283705882046954 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2972306281594054041, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
   m_PrefabInstance: {fileID: 7768848073552565363}
@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
---- !u!114 &6481747774380831082 stripped
+--- !u!114 &6259028426612719285 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4399162620050320070, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
   m_PrefabInstance: {fileID: 7768848073552565363}
@@ -1076,7 +1076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
---- !u!224 &8798049388865240973 stripped
+--- !u!224 &8446414503374024786 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2226976225719804961, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
   m_PrefabInstance: {fileID: 7768848073552565363}

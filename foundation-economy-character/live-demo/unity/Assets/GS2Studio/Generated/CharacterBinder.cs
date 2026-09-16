@@ -21,9 +21,33 @@ using Gs2.Unity.Gs2Inventory.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Experience;
 using Gs2Bind.Gs2Inventory;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Character
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum CharacterMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel")]
+        Full,
+
+        /// <summary>Built by the InventoryCharacter master-data list axis.</summary>
+        [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
+        InventoryCharacterMaster,
+
+        /// <summary>Built by the ExchangeCharacterTrain master-data list axis.</summary>
+        [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
+        ExchangeCharacterTrainMaster,
+
+        /// <summary>Built by the InventoryCharacter user-data list axis.</summary>
+        InventoryCharacterUser,
+    }
+
     /// <summary>
     /// Pure read contract for <see cref="CharacterBinder"/>: the read-only
     /// model surface (<see cref="Character"/>) plus the single-fetch
@@ -33,6 +57,23 @@ namespace GS2Studio.Generated.Character
     /// </summary>
     public interface IReadOnlyCharacterBinder : Character
     {
+        /// <summary>Which axis built this row.</summary>
+        CharacterMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// True when this row's readings from the <c>ItemSetLoader</c> load on <c>__userdataInventoryCharacterItemModelLoader</c> are real — its axis either ran it or applied its composition from the list item it was built from. False means <c>PropertyId</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
+        /// </summary>
+        /// <remarks>Full: passes no itemSetName constructor argument.</remarks>
+        /// <remarks>InventoryCharacterMaster: passes no itemSetName constructor argument.</remarks>
+        /// <remarks>ExchangeCharacterTrainMaster: passes no itemSetName constructor argument.</remarks>
+        bool LoadedUserdataInventoryCharacterItemModel { get; }
+
+        /// <summary>
+        /// True when this row's mount surface ran the <c>StatusLoader</c> load on <c>__userdataExperienceCharacterExperienceExperienceModelLoader</c>. False means <c>Experience</c>, <c>NextLevelExperience</c>, <c>PropertyId</c>, <c>LevelCap</c>, <c>Level</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
+        /// </summary>
+        /// <remarks>InventoryCharacterMaster: no per-row value for _model.PropertyId.</remarks>
+        /// <remarks>ExchangeCharacterTrainMaster: no per-row value for _model.PropertyId.</remarks>
+        bool LoadedUserdataExperienceCharacterExperienceExperienceModel { get; }
     }
 
     /// <summary>
@@ -72,7 +113,7 @@ namespace GS2Studio.Generated.Character
     /// by the owning derived class. Delegated actions live on the owning
     /// derived class (every binder instance is the owning type).
     /// </summary>
-    public class ReadOnlyCharacterBinder : IReadOnlyCharacterBinder
+    public abstract class ReadOnlyCharacterBinder : IReadOnlyCharacterBinder
     {
         // `private protected` because the mutable model type is internal; only
         // the same-assembly owning derived binder reads/writes this field.
@@ -100,6 +141,16 @@ namespace GS2Studio.Generated.Character
         public long Experience => _model.Experience;
         /// <inheritdoc cref="Character.NextLevelExperience" />
         public long NextLevelExperience => _model.NextLevelExperience;
+
+        /// <inheritdoc />
+        public abstract CharacterMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataInventoryCharacterItemModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataExperienceCharacterExperienceExperienceModel { get; }
+
         /// <summary>
         /// Base constructor. Stores the bound model + service handles on the
         /// protected fields shared with the owning derived class. `private
@@ -144,6 +195,29 @@ namespace GS2Studio.Generated.Character
         private readonly ItemSetLoader __userdataInventoryCharacterItemModelLoader;
         private readonly StatusLoader __userdataExperienceCharacterExperienceExperienceModelLoader;
 
+        /// <summary>Which construction path built this row.</summary>
+        private readonly CharacterMountSurface _mountSurfaceValue;
+
+        /// <summary>True when this row's path supplies every key <c>__userdataInventoryCharacterItemModelLoader</c> reads.</summary>
+        /// <remarks>Full: passes no itemSetName constructor argument.</remarks>
+        /// <remarks>InventoryCharacterMaster: passes no itemSetName constructor argument.</remarks>
+        /// <remarks>ExchangeCharacterTrainMaster: passes no itemSetName constructor argument.</remarks>
+        private bool Runs__userdataInventoryCharacterItemModelLoader => false;
+
+        /// <summary>True when this row's path supplies every key <c>__userdataExperienceCharacterExperienceExperienceModelLoader</c> reads.</summary>
+        /// <remarks>InventoryCharacterMaster: no per-row value for _model.PropertyId.</remarks>
+        /// <remarks>ExchangeCharacterTrainMaster: no per-row value for _model.PropertyId.</remarks>
+        private bool Runs__userdataExperienceCharacterExperienceExperienceModelLoader => _mountSurfaceValue is CharacterMountSurface.Full or CharacterMountSurface.InventoryCharacterUser;
+
+        /// <inheritdoc />
+        public override CharacterMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataInventoryCharacterItemModel => _mountSurfaceValue is CharacterMountSurface.InventoryCharacterUser;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataExperienceCharacterExperienceExperienceModel => Runs__userdataExperienceCharacterExperienceExperienceModelLoader;
+
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
         /// or one of the list static factories on the companion Collection class.
@@ -152,9 +226,11 @@ namespace GS2Studio.Generated.Character
             MutableCharacter model,
             Gs2Domain gs2,
             IGameSession session,
-            string? itemSetName = null
+            string? itemSetName = null,
+            CharacterMountSurface _mountSurface = CharacterMountSurface.Full
         ) : base(model, gs2, session)
         {
+            _mountSurfaceValue = _mountSurface;
             __transactionAcquireActionLoader = new RateModelAcquireActionLoader("CharacterTrain", _model.Id, 0);
             __exchangeCharacterTrainNamespaceRateModelLoader = new RateModelLoader("CharacterTrain", _model.Id);
             __inventoryCharacterNamespaceInventoryModelItemModelLoader = new ItemModelLoader("Character", "Character", _model.Id);
@@ -212,12 +288,18 @@ namespace GS2Studio.Generated.Character
             var _inventoryCharacterNamespaceInventoryModelItemModel = await __inventoryCharacterNamespaceInventoryModelItemModelLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyInventoryCharacterNamespaceInventoryModelItemModel(_model, _inventoryCharacterNamespaceInventoryModelItemModel);
-            var _userdataInventoryCharacterItemModel = await __userdataInventoryCharacterItemModelLoader.Load(_gs2, _session);
+            var _userdataInventoryCharacterItemModel = Runs__userdataInventoryCharacterItemModelLoader ? await __userdataInventoryCharacterItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataInventoryCharacterItemModel(_model, _userdataInventoryCharacterItemModel);
-            var _userdataExperienceCharacterExperienceExperienceModel = await __userdataExperienceCharacterExperienceExperienceModelLoader.Load(_gs2, _session);
+            if (Runs__userdataInventoryCharacterItemModelLoader)
+            {
+                ApplyUserdataInventoryCharacterItemModel(_model, _userdataInventoryCharacterItemModel);
+            }
+            var _userdataExperienceCharacterExperienceExperienceModel = Runs__userdataExperienceCharacterExperienceExperienceModelLoader ? await __userdataExperienceCharacterExperienceExperienceModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataExperienceCharacterExperienceExperienceModel(_model, _userdataExperienceCharacterExperienceExperienceModel);
+            if (Runs__userdataExperienceCharacterExperienceExperienceModelLoader)
+            {
+                ApplyUserdataExperienceCharacterExperienceExperienceModel(_model, _userdataExperienceCharacterExperienceExperienceModel);
+            }
             _mounted = true;
         }
 
@@ -265,28 +347,34 @@ namespace GS2Studio.Generated.Character
                 },
                 () => onChange?.Invoke()
             ));
-            _unsubscribers.Add(__userdataInventoryCharacterItemModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataInventoryCharacterItemModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__userdataExperienceCharacterExperienceExperienceModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataExperienceCharacterExperienceExperienceModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+            if (Runs__userdataInventoryCharacterItemModelLoader)
+            {
+                _unsubscribers.Add(__userdataInventoryCharacterItemModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataInventoryCharacterItemModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__userdataExperienceCharacterExperienceExperienceModelLoader)
+            {
+                _unsubscribers.Add(__userdataExperienceCharacterExperienceExperienceModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataExperienceCharacterExperienceExperienceModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         /// <summary>
@@ -298,8 +386,14 @@ namespace GS2Studio.Generated.Character
             __transactionAcquireActionLoader.Invalidate(_gs2, _session);
             __exchangeCharacterTrainNamespaceRateModelLoader.Invalidate(_gs2, _session);
             __inventoryCharacterNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
-            __userdataInventoryCharacterItemModelLoader.Invalidate(_gs2, _session);
-            __userdataExperienceCharacterExperienceExperienceModelLoader.Invalidate(_gs2, _session);
+            if (Runs__userdataInventoryCharacterItemModelLoader)
+            {
+                __userdataInventoryCharacterItemModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__userdataExperienceCharacterExperienceExperienceModelLoader)
+            {
+                __userdataExperienceCharacterExperienceExperienceModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         /// <summary>

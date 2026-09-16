@@ -427,6 +427,17 @@ namespace GS2Studio.Generated.Item
                 else
                 {
                     var binder = await BuildBinderFromInventoryInventoryMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyInventoryInventoryMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -575,6 +586,17 @@ namespace GS2Studio.Generated.Item
                 else
                 {
                     var binder = await BuildBinderFromExchangeItemGainMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeItemGainMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -723,6 +745,17 @@ namespace GS2Studio.Generated.Item
                 else
                 {
                     var binder = await BuildBinderFromExchangeItemSpendMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeItemSpendMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -871,6 +904,17 @@ namespace GS2Studio.Generated.Item
                 else
                 {
                     var binder = await BuildBinderFromInventoryInventoryUserItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyInventoryInventoryUserItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);

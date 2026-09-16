@@ -427,6 +427,17 @@ namespace GS2Studio.Generated.Energy
                 else
                 {
                     var binder = await BuildBinderFromStaminaEnergyMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyStaminaEnergyMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -440,16 +451,36 @@ namespace GS2Studio.Generated.Energy
                 {
                     if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
                 }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
                 foreach (var rowKey in toRemove)
                 {
-                    var binder = _bindersByRowKey[rowKey];
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
                     _bindersByRowKey.Remove(rowKey);
                     _binders.Remove(binder);
-                    ItemRemoved?.Invoke(binder);
-                    binder.Dispose();
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
                 }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
             }
-            SortBinders();
+            if (!_disposed) SortBinders();
         }
 
         private async Task<EnergyBinder> BuildBinderFromStaminaEnergyMasterItem(EzStaminaModel item, CancellationToken cancellationToken)
@@ -555,6 +586,17 @@ namespace GS2Studio.Generated.Energy
                 else
                 {
                     var binder = await BuildBinderFromExchangeEnergyRecoverMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeEnergyRecoverMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -568,16 +610,36 @@ namespace GS2Studio.Generated.Energy
                 {
                     if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
                 }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
                 foreach (var rowKey in toRemove)
                 {
-                    var binder = _bindersByRowKey[rowKey];
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
                     _bindersByRowKey.Remove(rowKey);
                     _binders.Remove(binder);
-                    ItemRemoved?.Invoke(binder);
-                    binder.Dispose();
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
                 }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
             }
-            SortBinders();
+            if (!_disposed) SortBinders();
         }
 
         private async Task<EnergyBinder> BuildBinderFromExchangeEnergyRecoverMasterItem(EzRateModel item, CancellationToken cancellationToken)
@@ -683,6 +745,17 @@ namespace GS2Studio.Generated.Energy
                 else
                 {
                     var binder = await BuildBinderFromExchangeEnergyConsumeMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeEnergyConsumeMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -696,16 +769,36 @@ namespace GS2Studio.Generated.Energy
                 {
                     if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
                 }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
                 foreach (var rowKey in toRemove)
                 {
-                    var binder = _bindersByRowKey[rowKey];
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
                     _bindersByRowKey.Remove(rowKey);
                     _binders.Remove(binder);
-                    ItemRemoved?.Invoke(binder);
-                    binder.Dispose();
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
                 }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
             }
-            SortBinders();
+            if (!_disposed) SortBinders();
         }
 
         private async Task<EnergyBinder> BuildBinderFromExchangeEnergyConsumeMasterItem(EzRateModel item, CancellationToken cancellationToken)
@@ -811,6 +904,17 @@ namespace GS2Studio.Generated.Energy
                 else
                 {
                     var binder = await BuildBinderFromStaminaEnergyUserItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyStaminaEnergyUserItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -824,16 +928,36 @@ namespace GS2Studio.Generated.Energy
                 {
                     if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
                 }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
                 foreach (var rowKey in toRemove)
                 {
-                    var binder = _bindersByRowKey[rowKey];
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
                     _bindersByRowKey.Remove(rowKey);
                     _binders.Remove(binder);
-                    ItemRemoved?.Invoke(binder);
-                    binder.Dispose();
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
                 }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
             }
-            SortBinders();
+            if (!_disposed) SortBinders();
         }
 
         private async Task<EnergyBinder> BuildBinderFromStaminaEnergyUserItem(EzStamina item, CancellationToken cancellationToken)

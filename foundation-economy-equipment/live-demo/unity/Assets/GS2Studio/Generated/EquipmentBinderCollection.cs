@@ -444,6 +444,17 @@ namespace GS2Studio.Generated.Equipment
                 else
                 {
                     var binder = await BuildBinderFromInventoryEquipmentMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyInventoryEquipmentMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -493,7 +504,7 @@ namespace GS2Studio.Generated.Equipment
         {
             var model = EquipmentBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EquipmentId) : new EquipmentId(item.Name)), string.Empty);
             ApplyInventoryEquipmentMasterItemTo(model, item);
-            var binder = new EquipmentBinder(model, _gs2, _session);
+            var binder = new EquipmentBinder(model, _gs2, _session, _mountSurface: EquipmentMountSurface.InventoryEquipmentMaster);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
@@ -592,6 +603,17 @@ namespace GS2Studio.Generated.Equipment
                 else
                 {
                     var binder = await BuildBinderFromExchangeEquipmentDiscardMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeEquipmentDiscardMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -641,7 +663,7 @@ namespace GS2Studio.Generated.Equipment
         {
             var model = EquipmentBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EquipmentId) : new EquipmentId(item.Name)), string.Empty);
             ApplyExchangeEquipmentDiscardMasterItemTo(model, item);
-            var binder = new EquipmentBinder(model, _gs2, _session);
+            var binder = new EquipmentBinder(model, _gs2, _session, _mountSurface: EquipmentMountSurface.ExchangeEquipmentDiscardMaster);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
@@ -740,6 +762,17 @@ namespace GS2Studio.Generated.Equipment
                 else
                 {
                     var binder = await BuildBinderFromInventoryEquipmentUserItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyInventoryEquipmentUserItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -789,7 +822,7 @@ namespace GS2Studio.Generated.Equipment
         {
             var model = EquipmentBinder.CreateModel((string.IsNullOrEmpty(item.ItemName) ? default(EquipmentId) : new EquipmentId(item.ItemName)), item.Name);
             ApplyInventoryEquipmentUserItemTo(model, item);
-            var binder = new EquipmentBinder(model, _gs2, _session);
+            var binder = new EquipmentBinder(model, _gs2, _session, _mountSurface: EquipmentMountSurface.InventoryEquipmentUser);
             await binder.MountAsync(cancellationToken);
             return binder;
         }

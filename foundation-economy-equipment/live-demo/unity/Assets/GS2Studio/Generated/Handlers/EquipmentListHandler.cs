@@ -36,13 +36,10 @@ namespace GS2Studio.Generated.Equipment
     [AddComponentMenu("GS2 Studio/DomainType/Equipment/Equipment List Handler")]
     public sealed class EquipmentListHandler : MonoBehaviour, IEquipmentBinderListSource
     {
-        public enum Source
-        {
-            MasterData,
-            UserData,
-        }
-
-        [SerializeField] private Source _source;
+        // Which of EquipmentBinderCollection's mount axes this list reads
+        // through. The enum is a sibling type rather than a member of this
+        // class so the ListBy*Handlers name the same axes, not copies of them.
+        [SerializeField] private EquipmentListAxis _axis;
         [SerializeField] private EquipmentListItemHandler? _itemPrefab;
         [SerializeField] private Transform? _contentParent;
         [SerializeField] private bool _autoSubscribe = true;
@@ -226,6 +223,9 @@ namespace GS2Studio.Generated.Equipment
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
+                var unusableAxisReason = UnusableAxisReason();
+                if (unusableAxisReason != null)
+                    throw new InvalidOperationException(unusableAxisReason);
 
                 var collection = ResolveBinderFactory().CreateCollection(gs2, session);
                 operationCollection = collection;
@@ -249,12 +249,18 @@ namespace GS2Studio.Generated.Equipment
                 // happens through OnItemAdded rather than a post-mount foreach.
                 AttachCollectionCallbacks(operationGeneration, collection);
 
-                switch (_source)
+                // No default arm: UnusableAxisReason already rejected Unset and
+                // every value this package no longer declares, so one case
+                // matches.
+                switch (_axis)
                 {
-                    case Source.MasterData:
+                    case EquipmentListAxis.InventoryEquipmentMaster:
                         await collection.MountFromInventoryEquipmentMasterDataAsync(cancellationToken);
                         break;
-                    case Source.UserData:
+                    case EquipmentListAxis.ExchangeEquipmentDiscardMaster:
+                        await collection.MountFromExchangeEquipmentDiscardMasterDataAsync(cancellationToken);
+                        break;
+                    case EquipmentListAxis.InventoryEquipmentUser:
                         await collection.MountFromInventoryEquipmentUserDataAsync(cancellationToken);
                         break;
                 }
@@ -267,13 +273,17 @@ namespace GS2Studio.Generated.Equipment
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
                     Action collectionChanged = () => OnCollectionChanged(operationGeneration, collection);
                     Action<Exception> collectionFailed = ex => OnCollectionFailed(operationGeneration, collection, ex);
-                    if (_source == Source.MasterData)
+                    switch (_axis)
                     {
-                        collection.SubscribeFromInventoryEquipmentMasterData(collectionChanged, collectionFailed);
-                    }
-                    else
-                    {
-                        collection.SubscribeFromInventoryEquipmentUserData(collectionChanged, collectionFailed);
+                        case EquipmentListAxis.InventoryEquipmentMaster:
+                            collection.SubscribeFromInventoryEquipmentMasterData(collectionChanged, collectionFailed);
+                            break;
+                        case EquipmentListAxis.ExchangeEquipmentDiscardMaster:
+                            collection.SubscribeFromExchangeEquipmentDiscardMasterData(collectionChanged, collectionFailed);
+                            break;
+                        case EquipmentListAxis.InventoryEquipmentUser:
+                            collection.SubscribeFromInventoryEquipmentUserData(collectionChanged, collectionFailed);
+                            break;
                     }
                 }
 
@@ -371,17 +381,62 @@ namespace GS2Studio.Generated.Equipment
             }
         }
 
+        // Every axis this list can be pointed at, for the messages below.
+        private const string AxisMemberNames = "InventoryEquipmentMaster, ExchangeEquipmentDiscardMaster, InventoryEquipmentUser";
+
+        // Warn-once latch for the axis check in IsReadyForReload. Start polls
+        // that check every frame until it passes, so without the latch the log
+        // would repeat for as long as the scene runs.
+        private bool _warnedAxis;
+
+        /// <summary>
+        /// Why <c>_axis</c> is not an axis this list can mount, or null when
+        /// it is one. The readiness gate logs this once and keeps waiting;
+        /// <see cref="ReloadAsync"/> throws it. Neither falls back to an axis of
+        /// its own choosing — a list quietly reading a GS2 model nobody asked
+        /// for is the failure the axis enum exists to remove.
+        /// </summary>
+        private string? UnusableAxisReason()
+        {
+            if (_axis == EquipmentListAxis.Unset)
+            {
+                return "'_axis' is not set: this list has not been told which axis to read from. " +
+                    "Set it to one of: " + AxisMemberNames + ".";
+            }
+            if (!Enum.IsDefined(typeof(EquipmentListAxis), _axis))
+            {
+                return "'_axis' names a mount axis this package no longer generates. " +
+                    "Set it to one of: " + AxisMemberNames + ".";
+            }
+            return null;
+        }
+
         private bool IsReadyForReload()
         {
             if (_isDestroyed) return false;
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
-            switch (_source)
+            var unusableAxisReason = UnusableAxisReason();
+            if (unusableAxisReason != null)
             {
-                case Source.MasterData:
+                if (!_warnedAxis)
+                {
+                    _warnedAxis = true;
+                    Debug.LogError(unusableAxisReason, this);
+                }
+                return false;
+            }
+            // Gate on the selected axis only. The [SerializeField] declarations
+            // are merged across every axis, so gating on all of them would wait
+            // forever on a value the axis this list mounts never reads.
+            switch (_axis)
+            {
+                case EquipmentListAxis.InventoryEquipmentMaster:
                     break;
-                case Source.UserData:
+                case EquipmentListAxis.ExchangeEquipmentDiscardMaster:
+                    break;
+                case EquipmentListAxis.InventoryEquipmentUser:
                     break;
             }
             return true;

@@ -35,6 +35,10 @@ namespace GS2Studio.Generated.Trigger
     [AddComponentMenu("GS2 Studio/DomainType/Trigger/Trigger List Handler")]
     public sealed class TriggerListHandler : MonoBehaviour, ITriggerBinderListSource
     {
+        // Which of TriggerBinderCollection's mount axes this list reads
+        // through. The enum is a sibling type rather than a member of this
+        // class so the ListBy*Handlers name the same axes, not copies of them.
+        [SerializeField] private TriggerListAxis _axis;
         [SerializeField] private TriggerListItemHandler? _itemPrefab;
         [SerializeField] private Transform? _contentParent;
         [SerializeField] private bool _autoSubscribe = true;
@@ -218,6 +222,9 @@ namespace GS2Studio.Generated.Trigger
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
+                var unusableAxisReason = UnusableAxisReason();
+                if (unusableAxisReason != null)
+                    throw new InvalidOperationException(unusableAxisReason);
 
                 var collection = ResolveBinderFactory().CreateCollection(gs2, session);
                 operationCollection = collection;
@@ -241,7 +248,21 @@ namespace GS2Studio.Generated.Trigger
                 // happens through OnItemAdded rather than a post-mount foreach.
                 AttachCollectionCallbacks(operationGeneration, collection);
 
-                await collection.MountFromScheduleScheduleUserDataAsync(cancellationToken);
+                // No default arm: UnusableAxisReason already rejected Unset and
+                // every value this package no longer declares, so one case
+                // matches.
+                switch (_axis)
+                {
+                    case TriggerListAxis.ExchangeTriggerClearMaster:
+                        await collection.MountFromExchangeTriggerClearMasterDataAsync(cancellationToken);
+                        break;
+                    case TriggerListAxis.ExchangeTriggerExtendMaster:
+                        await collection.MountFromExchangeTriggerExtendMasterDataAsync(cancellationToken);
+                        break;
+                    case TriggerListAxis.ScheduleScheduleUser:
+                        await collection.MountFromScheduleScheduleUserDataAsync(cancellationToken);
+                        break;
+                }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
                 SyncSiblingOrder(operationGeneration, collection);
@@ -251,7 +272,18 @@ namespace GS2Studio.Generated.Trigger
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
                     Action collectionChanged = () => OnCollectionChanged(operationGeneration, collection);
                     Action<Exception> collectionFailed = ex => OnCollectionFailed(operationGeneration, collection, ex);
-                    collection.SubscribeFromScheduleScheduleUserData(collectionChanged, collectionFailed);
+                    switch (_axis)
+                    {
+                        case TriggerListAxis.ExchangeTriggerClearMaster:
+                            collection.SubscribeFromExchangeTriggerClearMasterData(collectionChanged, collectionFailed);
+                            break;
+                        case TriggerListAxis.ExchangeTriggerExtendMaster:
+                            collection.SubscribeFromExchangeTriggerExtendMasterData(collectionChanged, collectionFailed);
+                            break;
+                        case TriggerListAxis.ScheduleScheduleUser:
+                            collection.SubscribeFromScheduleScheduleUserData(collectionChanged, collectionFailed);
+                            break;
+                    }
                 }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
@@ -348,12 +380,64 @@ namespace GS2Studio.Generated.Trigger
             }
         }
 
+        // Every axis this list can be pointed at, for the messages below.
+        private const string AxisMemberNames = "ExchangeTriggerClearMaster, ExchangeTriggerExtendMaster, ScheduleScheduleUser";
+
+        // Warn-once latch for the axis check in IsReadyForReload. Start polls
+        // that check every frame until it passes, so without the latch the log
+        // would repeat for as long as the scene runs.
+        private bool _warnedAxis;
+
+        /// <summary>
+        /// Why <c>_axis</c> is not an axis this list can mount, or null when
+        /// it is one. The readiness gate logs this once and keeps waiting;
+        /// <see cref="ReloadAsync"/> throws it. Neither falls back to an axis of
+        /// its own choosing — a list quietly reading a GS2 model nobody asked
+        /// for is the failure the axis enum exists to remove.
+        /// </summary>
+        private string? UnusableAxisReason()
+        {
+            if (_axis == TriggerListAxis.Unset)
+            {
+                return "'_axis' is not set: this list has not been told which axis to read from. " +
+                    "Set it to one of: " + AxisMemberNames + ".";
+            }
+            if (!Enum.IsDefined(typeof(TriggerListAxis), _axis))
+            {
+                return "'_axis' names a mount axis this package no longer generates. " +
+                    "Set it to one of: " + AxisMemberNames + ".";
+            }
+            return null;
+        }
+
         private bool IsReadyForReload()
         {
             if (_isDestroyed) return false;
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
+            var unusableAxisReason = UnusableAxisReason();
+            if (unusableAxisReason != null)
+            {
+                if (!_warnedAxis)
+                {
+                    _warnedAxis = true;
+                    Debug.LogError(unusableAxisReason, this);
+                }
+                return false;
+            }
+            // Gate on the selected axis only. The [SerializeField] declarations
+            // are merged across every axis, so gating on all of them would wait
+            // forever on a value the axis this list mounts never reads.
+            switch (_axis)
+            {
+                case TriggerListAxis.ExchangeTriggerClearMaster:
+                    break;
+                case TriggerListAxis.ExchangeTriggerExtendMaster:
+                    break;
+                case TriggerListAxis.ScheduleScheduleUser:
+                    break;
+            }
             return true;
         }
 

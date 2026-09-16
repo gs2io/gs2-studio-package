@@ -74,7 +74,7 @@ namespace GS2Studio.Generated.CharacterRecruit.UI
 
         private void OnUpdated(CharacterRecruit model)
         {
-            _onUpdate.Invoke($"Recruit {model.Character}");
+            _onUpdate.Invoke($"Recruit {model.Character.Value}");
         }
     }
 }

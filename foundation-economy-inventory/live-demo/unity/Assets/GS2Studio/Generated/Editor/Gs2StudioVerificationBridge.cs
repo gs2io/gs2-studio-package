@@ -17,12 +17,8 @@ namespace GS2Studio.Generated.Runtime
         private const double RequestPollIntervalSeconds = 0.5d;
         private const int MessageLimit = 4096;
 
-        private static VerificationRequest currentRequest;
-        private static string currentRequestKey = string.Empty;
+        private static VerificationRequestState currentRequestState;
         private static double nextRequestPollAt;
-        private static bool compilationFailed;
-        private static bool playModeFailed;
-        private static string failureMessage = string.Empty;
 
         static Gs2StudioVerificationBridge()
         {
@@ -37,33 +33,39 @@ namespace GS2Studio.Generated.Runtime
 
         private static void InitializeFromDisk()
         {
+            VerificationReceipt receipt = ReadReceipt();
             VerificationRequest request = ReadRequest();
             if (request == null)
             {
                 return;
             }
 
-            currentRequest = request;
-            currentRequestKey = RequestKey(request);
-            VerificationReceipt receipt = ReadReceipt();
-            if (!MatchesCurrentRequest(receipt))
+            bool requestChanged = AdoptRequest(request);
+            VerificationRequestState requestState = currentRequestState;
+            if (requestChanged && !MatchesCurrentRequest(receipt, requestState))
             {
-                WriteReceipt("resolvingPackages", false, false, string.Empty);
-                EditorApplication.delayCall += AdvanceAfterResolution;
+                BeginRequest(requestState);
+                return;
+            }
+
+            if (!MatchesCurrentRequest(receipt, requestState))
+            {
+                WriteReceipt(requestState, VerificationPhase.ResolvingPackages, string.Empty);
+                EditorApplication.delayCall += () => AdvanceAfterResolution(requestState);
                 return;
             }
 
             if (EditorApplication.isCompiling)
             {
-                WriteReceipt("compiling", false, false, string.Empty);
+                WriteReceipt(requestState, VerificationPhase.Compiling, string.Empty);
             }
             else if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
-                WriteReceipt("runningPlayMode", true, false, string.Empty);
+                WriteReceipt(requestState, VerificationPhase.RunningPlayMode, string.Empty);
             }
             else if (receipt.phase != "completed" && receipt.phase != "failed")
             {
-                WriteReceipt("awaitingPlayMode", true, false, string.Empty);
+                WriteReceipt(requestState, VerificationPhase.AwaitingPlayMode, string.Empty);
             }
         }
 
@@ -75,66 +77,119 @@ namespace GS2Studio.Generated.Runtime
             }
 
             nextRequestPollAt = EditorApplication.timeSinceStartup + RequestPollIntervalSeconds;
-            VerificationRequest request = ReadRequest();
-            if (request == null)
+            VerificationRequestState requestState = ReadAndAdoptRequest(out bool requestChanged);
+            if (requestState == null)
             {
                 return;
             }
 
-            string requestKey = RequestKey(request);
-            if (requestKey == currentRequestKey)
+            if (!requestChanged)
             {
-                currentRequest = request;
                 return;
             }
 
-            currentRequest = request;
-            currentRequestKey = requestKey;
-            compilationFailed = false;
-            playModeFailed = false;
-            failureMessage = string.Empty;
-            WriteReceipt("resolvingPackages", false, false, string.Empty);
-            EditorApplication.delayCall += AdvanceAfterResolution;
+            BeginRequest(requestState);
         }
 
-        private static void AdvanceAfterResolution()
+        private static void BeginRequest(VerificationRequestState requestState)
         {
-            if (currentRequest == null)
+            if (EditorApplication.isPlaying)
             {
+                requestState.playModeNeedsRestart = true;
+                SchedulePlayModeRestart(requestState);
+            }
+
+            if (EditorApplication.isCompiling)
+            {
+                requestState.compilationAwaitingBoundary = true;
+            }
+
+            WriteReceipt(requestState, VerificationPhase.ResolvingPackages, string.Empty);
+            EditorApplication.delayCall += () => AdvanceAfterResolution(requestState);
+        }
+
+        private static void AdvanceAfterResolution(VerificationRequestState requestState)
+        {
+            VerificationRequestState currentState = ReadAndAdoptRequest(out bool requestChanged);
+            if (
+                currentState == null ||
+                !ReferenceEquals(currentState, requestState)
+            )
+            {
+                if (requestChanged && currentState != null)
+                {
+                    BeginRequest(currentState);
+                }
                 return;
             }
 
             if (EditorApplication.isCompiling)
             {
-                WriteReceipt("compiling", false, false, string.Empty);
+                WriteReceipt(requestState, VerificationPhase.Compiling, string.Empty);
+                requestState.compilationAwaitingBoundary = true;
+                return;
+            }
+
+            if (requestState.compilationAwaitingBoundary)
+            {
+                requestState.compilationAwaitingBoundary = false;
+                RequestScriptCompilationForCurrentRequest(requestState);
                 return;
             }
 
             if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
-                WriteReceipt("runningPlayMode", true, false, string.Empty);
+                WriteReceipt(
+                    requestState,
+                    requestState.playModeNeedsRestart
+                        ? VerificationPhase.AwaitingPlayMode
+                        : VerificationPhase.RunningPlayMode,
+                    string.Empty
+                );
                 return;
             }
 
-            WriteReceipt("awaitingPlayMode", true, false, string.Empty);
+            WriteReceipt(requestState, VerificationPhase.AwaitingPlayMode, string.Empty);
         }
 
-        private static void OnCompilationStarted(object _)
+        // The callback argument is named rather than discarded: a parameter
+        // called `_` is a variable, not a discard, so `out _` below would try
+        // to assign an `object` where a `bool` is wanted and fail to compile.
+        private static void OnCompilationStarted(object compilationContext)
         {
-            RefreshCurrentRequest();
-            if (currentRequest == null)
+            VerificationRequestState requestState = ReadAndAdoptRequest(out _);
+            if (requestState == null)
             {
                 return;
             }
 
-            compilationFailed = false;
-            failureMessage = string.Empty;
-            WriteReceipt("compiling", false, false, string.Empty);
+            // A compilation-start callback is the boundary that owns this
+            // revision, including when polling observed the request just now.
+            // Later callbacks must use this same state or be discarded.
+            requestState.compilationAwaitingBoundary = false;
+            requestState.compilationRecompileRequested = false;
+            requestState.compilationInProgress = true;
+            requestState.compilationFailed = false;
+            requestState.failureMessage = string.Empty;
+            WriteReceipt(requestState, VerificationPhase.Compiling, string.Empty);
         }
 
         private static void OnAssemblyCompilationFinished(string _, CompilerMessage[] messages)
         {
-            if (currentRequest == null)
+            VerificationRequestState requestState = ReadAndAdoptRequest(out bool requestChanged);
+            if (requestState == null)
+            {
+                return;
+            }
+
+            if (requestChanged)
+            {
+                requestState.compilationAwaitingBoundary = true;
+                BeginRequest(requestState);
+                return;
+            }
+
+            if (!requestState.compilationInProgress)
             {
                 return;
             }
@@ -147,65 +202,131 @@ namespace GS2Studio.Generated.Runtime
                     continue;
                 }
 
-                compilationFailed = true;
-                failureMessage = LimitMessage(message.message);
+                requestState.compilationFailed = true;
+                requestState.failureMessage = LimitMessage(message.message);
                 break;
             }
         }
 
         private static void OnCompilationFinished(object _)
         {
-            RefreshCurrentRequest();
-            if (currentRequest == null)
+            VerificationRequestState requestState = ReadAndAdoptRequest(out bool requestChanged);
+            if (requestState == null)
             {
                 return;
             }
 
+            if (requestChanged)
+            {
+                requestState.compilationAwaitingBoundary = true;
+                BeginRequest(requestState);
+                return;
+            }
+
+            if (!requestState.compilationInProgress)
+            {
+                if (requestState.compilationAwaitingBoundary)
+                {
+                    requestState.compilationAwaitingBoundary = false;
+                    RequestScriptCompilationForCurrentRequest(requestState);
+                }
+                return;
+            }
+
+            requestState.compilationInProgress = false;
             WriteReceipt(
-                compilationFailed ? "failed" : "awaitingPlayMode",
-                !compilationFailed,
-                false,
-                failureMessage
+                requestState,
+                requestState.compilationFailed
+                    ? VerificationPhase.CompilationFailed
+                    : VerificationPhase.AwaitingPlayMode,
+                requestState.failureMessage
             );
         }
 
         private static void OnPlayModeStateChanged(PlayModeStateChange state)
         {
-            RefreshCurrentRequest();
-            if (currentRequest == null)
+            VerificationRequestState requestState = ReadAndAdoptRequest(out bool requestChanged);
+            if (requestState == null)
             {
+                return;
+            }
+
+            if (requestChanged)
+            {
+                if (
+                    state == PlayModeStateChange.ExitingEditMode ||
+                    state == PlayModeStateChange.EnteredPlayMode
+                )
+                {
+                    if (requestState.playModeNeedsRestart || requestState.playModeRestartScheduled)
+                    {
+                        SchedulePlayModeRestart(requestState);
+                        return;
+                    }
+
+                    StartPlayMode(requestState);
+                    return;
+                }
+
+                requestState.playModeNeedsRestart = true;
+                BeginRequest(requestState);
+                SchedulePlayModeRestart(requestState);
                 return;
             }
 
             if (state == PlayModeStateChange.ExitingEditMode)
             {
-                playModeFailed = false;
-                failureMessage = string.Empty;
-                WriteReceipt("runningPlayMode", true, false, string.Empty);
+                StartPlayMode(requestState);
                 return;
             }
 
             if (state == PlayModeStateChange.EnteredPlayMode)
             {
-                WriteReceipt("runningPlayMode", true, false, string.Empty);
+                StartPlayMode(requestState);
                 return;
             }
 
             if (state == PlayModeStateChange.ExitingPlayMode)
             {
+                if (!requestState.playModeInProgress)
+                {
+                    if (requestState.playModeNeedsRestart)
+                    {
+                        requestState.playModeNeedsRestart = false;
+                        WriteReceipt(requestState, VerificationPhase.AwaitingPlayMode, string.Empty);
+                        SchedulePlayModeRestart(requestState);
+                    }
+                    return;
+                }
+
+                requestState.playModeInProgress = false;
                 WriteReceipt(
-                    playModeFailed ? "failed" : "completed",
-                    true,
-                    !playModeFailed,
-                    failureMessage
+                    requestState,
+                    requestState.playModeFailed
+                        ? VerificationPhase.PlayModeFailed
+                        : VerificationPhase.Completed,
+                    requestState.failureMessage
                 );
             }
         }
 
         private static void OnLogMessageReceived(string condition, string _, LogType type)
         {
-            if (!EditorApplication.isPlaying || currentRequest == null)
+            if (!EditorApplication.isPlaying)
             {
+                return;
+            }
+
+            VerificationRequestState requestState = ReadAndAdoptRequest(out bool requestChanged);
+            if (requestState == null)
+            {
+                return;
+            }
+
+            if (requestChanged)
+            {
+                requestState.playModeNeedsRestart = true;
+                BeginRequest(requestState);
                 return;
             }
 
@@ -214,20 +335,117 @@ namespace GS2Studio.Generated.Runtime
                 return;
             }
 
-            playModeFailed = true;
-            failureMessage = LimitMessage(condition);
-        }
-
-        private static void RefreshCurrentRequest()
-        {
-            VerificationRequest request = ReadRequest();
-            if (request == null)
+            if (!requestState.playModeInProgress)
             {
                 return;
             }
 
-            currentRequest = request;
-            currentRequestKey = RequestKey(request);
+            requestState.playModeFailed = true;
+            requestState.failureMessage = LimitMessage(condition);
+        }
+
+        private static VerificationRequestState ReadAndAdoptRequest(out bool requestChanged)
+        {
+            VerificationRequest request = ReadRequest();
+            if (request == null)
+            {
+                requestChanged = false;
+                return null;
+            }
+
+            requestChanged = AdoptRequest(request);
+            return currentRequestState;
+        }
+
+        private static void SchedulePlayModeRestart(VerificationRequestState requestState)
+        {
+            if (requestState.playModeRestartScheduled)
+            {
+                return;
+            }
+
+            requestState.playModeRestartScheduled = true;
+            EditorApplication.delayCall += () => RestartPlayMode(requestState);
+        }
+
+        private static void RestartPlayMode(VerificationRequestState requestState)
+        {
+            VerificationRequestState currentState = ReadAndAdoptRequest(out _);
+            requestState.playModeRestartScheduled = false;
+            if (currentState == null || !ReferenceEquals(currentState, requestState))
+            {
+                // The callback belongs to an abandoned state. A transferred
+                // scheduled flag is not the callback currently executing, so
+                // always create a fresh reservation for the adopted state.
+                if (currentState != null)
+                {
+                    currentState.playModeNeedsRestart = true;
+                    currentState.playModeRestartScheduled = false;
+                    BeginRequest(currentState);
+                    SchedulePlayModeRestart(currentState);
+                }
+                return;
+            }
+
+            if (EditorApplication.isCompiling || EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                SchedulePlayModeRestart(requestState);
+                return;
+            }
+
+            requestState.playModeNeedsRestart = false;
+            EditorApplication.isPlaying = true;
+        }
+
+        private static void StartPlayMode(VerificationRequestState requestState)
+        {
+            requestState.playModeNeedsRestart = false;
+            requestState.playModeRestartScheduled = false;
+            requestState.playModeInProgress = true;
+            requestState.playModeFailed = false;
+            requestState.failureMessage = string.Empty;
+            WriteReceipt(requestState, VerificationPhase.RunningPlayMode, string.Empty);
+        }
+
+        private static void RequestScriptCompilationForCurrentRequest(
+            VerificationRequestState requestState
+        )
+        {
+            if (
+                !ReferenceEquals(currentRequestState, requestState) ||
+                requestState.compilationInProgress ||
+                requestState.compilationRecompileRequested
+            )
+            {
+                return;
+            }
+
+            requestState.compilationRecompileRequested = true;
+            WriteReceipt(requestState, VerificationPhase.Compiling, string.Empty);
+            CompilationPipeline.RequestScriptCompilation();
+        }
+
+        private static bool AdoptRequest(VerificationRequest request)
+        {
+            string requestKey = RequestKey(request);
+            if (currentRequestState != null && currentRequestState.key == requestKey)
+            {
+                return false;
+            }
+
+            bool previousPlayModeRequiresRestart =
+                currentRequestState != null &&
+                (currentRequestState.playModeInProgress ||
+                    currentRequestState.playModeNeedsRestart ||
+                    currentRequestState.playModeRestartScheduled);
+            bool previousPlayModeRestartScheduled =
+                currentRequestState != null && currentRequestState.playModeRestartScheduled;
+            currentRequestState = new VerificationRequestState(request, requestKey)
+            {
+                playModeNeedsRestart = previousPlayModeRequiresRestart,
+                playModeRestartScheduled = previousPlayModeRestartScheduled,
+            };
+            return true;
         }
 
         private static VerificationRequest ReadRequest()
@@ -274,14 +492,17 @@ namespace GS2Studio.Generated.Runtime
             }
         }
 
-        private static bool MatchesCurrentRequest(VerificationReceipt receipt)
+        private static bool MatchesCurrentRequest(
+            VerificationReceipt receipt,
+            VerificationRequestState requestState
+        )
         {
             return
                 receipt != null &&
-                currentRequest != null &&
+                requestState != null &&
                 receipt.schemaVersion == 1 &&
-                receipt.unityArtifactRevision == currentRequest.unityArtifactRevision &&
-                receipt.deploymentArtifactRevision == currentRequest.deploymentArtifactRevision;
+                receipt.unityArtifactRevision == requestState.request.unityArtifactRevision &&
+                receipt.deploymentArtifactRevision == requestState.request.deploymentArtifactRevision;
         }
 
         private static string RequestKey(VerificationRequest request)
@@ -300,26 +521,69 @@ namespace GS2Studio.Generated.Runtime
         }
 
         private static void WriteReceipt(
-            string phase,
-            bool compilationPassed,
-            bool playModePassed,
+            VerificationRequestState requestState,
+            VerificationPhase phase,
             string message
         )
         {
-            if (currentRequest == null)
+            if (!ReferenceEquals(currentRequestState, requestState))
             {
                 return;
+            }
+
+            bool compilationPassed;
+            bool playModePassed;
+            string receiptPhase;
+            switch (phase)
+            {
+                case VerificationPhase.ResolvingPackages:
+                    receiptPhase = "resolvingPackages";
+                    compilationPassed = false;
+                    playModePassed = false;
+                    break;
+                case VerificationPhase.Compiling:
+                    receiptPhase = "compiling";
+                    compilationPassed = false;
+                    playModePassed = false;
+                    break;
+                case VerificationPhase.AwaitingPlayMode:
+                    receiptPhase = "awaitingPlayMode";
+                    compilationPassed = true;
+                    playModePassed = false;
+                    break;
+                case VerificationPhase.RunningPlayMode:
+                    receiptPhase = "runningPlayMode";
+                    compilationPassed = true;
+                    playModePassed = false;
+                    break;
+                case VerificationPhase.Completed:
+                    receiptPhase = "completed";
+                    compilationPassed = true;
+                    playModePassed = true;
+                    break;
+                case VerificationPhase.CompilationFailed:
+                    receiptPhase = "failed";
+                    compilationPassed = false;
+                    playModePassed = false;
+                    break;
+                case VerificationPhase.PlayModeFailed:
+                    receiptPhase = "failed";
+                    compilationPassed = true;
+                    playModePassed = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("phase", phase, "Unknown verification phase");
             }
 
             VerificationReceipt receipt = new VerificationReceipt
             {
                 schemaVersion = 1,
-                unityArtifactRevision = currentRequest.unityArtifactRevision,
+                unityArtifactRevision = requestState.request.unityArtifactRevision,
                 compilationPassed = compilationPassed,
                 playModePassed = playModePassed,
-                deploymentArtifactRevision = currentRequest.deploymentArtifactRevision,
+                deploymentArtifactRevision = requestState.request.deploymentArtifactRevision,
                 verifiedAt = DateTime.UtcNow.ToString("O"),
-                phase = phase,
+                phase = receiptPhase,
                 message = LimitMessage(message),
             };
             string temporaryPath = ReceiptPath + ".tmp";
@@ -351,6 +615,38 @@ namespace GS2Studio.Generated.Runtime
                 }
 
                 Debug.LogWarning("GS2 Studio verification receipt could not be written: " + error.Message);
+            }
+        }
+
+        private enum VerificationPhase
+        {
+            ResolvingPackages,
+            Compiling,
+            AwaitingPlayMode,
+            RunningPlayMode,
+            Completed,
+            CompilationFailed,
+            PlayModeFailed,
+        }
+
+        private sealed class VerificationRequestState
+        {
+            public readonly VerificationRequest request;
+            public readonly string key;
+            public bool compilationAwaitingBoundary;
+            public bool compilationInProgress;
+            public bool compilationRecompileRequested;
+            public bool compilationFailed;
+            public bool playModeInProgress;
+            public bool playModeNeedsRestart;
+            public bool playModeRestartScheduled;
+            public bool playModeFailed;
+            public string failureMessage = string.Empty;
+
+            public VerificationRequestState(VerificationRequest request, string key)
+            {
+                this.request = request;
+                this.key = key;
             }
         }
 

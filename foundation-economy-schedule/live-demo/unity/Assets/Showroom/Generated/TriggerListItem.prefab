@@ -136,7 +136,7 @@ MonoBehaviour:
   _handler: {fileID: 0}
   _interactableWhenTrue:
   - {fileID: 8959962983418803440}
-  - {fileID: 6303412896225817156}
+  - {fileID: 3632712430760944092}
   _interactableWhenFalse: []
 --- !u!1 &5113158752666743735
 GameObject:
@@ -360,7 +360,7 @@ RectTransform:
   - {fileID: 2690973275372548900}
   - {fileID: 2597896429111458860}
   - {fileID: 8485491149344994672}
-  - {fileID: 6303412896225817155}
+  - {fileID: 4319892502922960988}
   m_Father: {fileID: 4188308649240540438}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1155,7 +1155,23 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7211240013939382811}
   m_SourcePrefab: {fileID: 100100000, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
---- !u!1 &6303412896225817154 stripped
+--- !u!114 &3632712430760944092 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7283380615494308765, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
+  m_PrefabInstance: {fileID: 6303412896225817153}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!224 &4319892502922960988 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7820905330807624221, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
+  m_PrefabInstance: {fileID: 6303412896225817153}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7114352807347169261 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3873511907111261612, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
   m_PrefabInstance: {fileID: 6303412896225817153}
@@ -1166,14 +1182,14 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6303412896225817154}
+  m_GameObject: {fileID: 7114352807347169261}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20ebd63f965cdb819411447ec4b29842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Trigger.UI.TriggerClearButton
   _handler: {fileID: 0}
-  _button: {fileID: 6303412896225817156}
+  _button: {fileID: 3632712430760944092}
   _onCompleted:
     m_PersistentCalls:
       m_Calls: []
@@ -1192,19 +1208,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &6303412896225817155 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7820905330807624221, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
-  m_PrefabInstance: {fileID: 6303412896225817153}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6303412896225817156 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7283380615494308765, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
-  m_PrefabInstance: {fileID: 6303412896225817153}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button

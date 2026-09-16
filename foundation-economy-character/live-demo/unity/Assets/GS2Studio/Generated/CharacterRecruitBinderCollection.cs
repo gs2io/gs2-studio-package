@@ -436,6 +436,17 @@ namespace GS2Studio.Generated.CharacterRecruit
                 else
                 {
                     var binder = await BuildBinderFromExchangeCharacterRecruitMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeCharacterRecruitMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -449,16 +460,36 @@ namespace GS2Studio.Generated.CharacterRecruit
                 {
                     if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
                 }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
                 foreach (var rowKey in toRemove)
                 {
-                    var binder = _bindersByRowKey[rowKey];
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
                     _bindersByRowKey.Remove(rowKey);
                     _binders.Remove(binder);
-                    ItemRemoved?.Invoke(binder);
-                    binder.Dispose();
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
                 }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
             }
-            SortBinders();
+            if (!_disposed) SortBinders();
         }
 
         private async Task<CharacterRecruitBinder> BuildBinderFromExchangeCharacterRecruitMasterItem(EzRateModel item, CancellationToken cancellationToken)
