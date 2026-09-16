@@ -1,13 +1,29 @@
 {
-  "gaugeCaptions": {
-    "EquipmentCollectionCapacityGauge": "EquipmentCollectionCapacityLabel"
-  },
-  "listSources": {
-    "Equipment": "UserData",
-    "EquipmentCatalog": "MasterData"
-  },
-  "countdowns": {},
-  "activeToggles": {
-    "EquipmentCollectionExpandableInteractable": ["EquipmentCollectionExpandButton"]
+  "sections": {
+    "EquipmentCatalog": {
+      "source": "MasterData",
+      "rows": [
+        {
+          "component": "EquipmentCatalogTakeButton",
+          "caption": "EquipmentCatalogNameLabel"
+        }
+      ]
+    },
+    "EquipmentCollection": {
+      "rows": [
+        {
+          "component": "EquipmentCollectionCapacityGauge",
+          "caption": "EquipmentCollectionCapacityLabel"
+        },
+        "EquipmentCollectionExpandButton"
+      ],
+      "toggles": {
+        "EquipmentCollectionExpandableInteractable": ["EquipmentCollectionExpandButton"]
+      }
+    },
+    "Equipment": {
+      "source": "UserData",
+      "rows": ["EquipmentNameLabel", "EquipmentPropertyIdValue", "EquipmentDiscardButton"]
+    }
   }
 }

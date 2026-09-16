@@ -1,5 +1,23 @@
 {
-  "gaugeCaptions": {
-    "CharacterExperienceGauge": "CharacterLevelLabel"
+  "sections": {
+    "Character": {
+      "rows": [
+        "CharacterIdValue",
+        "CharacterPropertyIdValue",
+        {
+          "component": "CharacterExperienceGauge",
+          "caption": "CharacterLevelLabel"
+        },
+        "CharacterTrainButton"
+      ]
+    },
+    "CharacterRecruit": {
+      "rows": [
+        {
+          "component": "CharacterRecruitRecruitButton",
+          "caption": "CharacterRecruitCharacterLabel"
+        }
+      ]
+    }
   }
 }

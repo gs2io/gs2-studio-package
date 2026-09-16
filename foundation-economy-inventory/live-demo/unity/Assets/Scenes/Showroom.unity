@@ -224,7 +224,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1279414218813259619, guid: 042b40b0d4e5c48b8a029cb8b8c0a766, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1988877710}
+      addedObject: {fileID: 1975017343}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 042b40b0d4e5c48b8a029cb8b8c0a766, type: 3}
 --- !u!224 &159312091 stripped
@@ -487,7 +487,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1988877709
+--- !u!1001 &1975017342
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -593,30 +593,30 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1988877713}
+      addedObject: {fileID: 1975017346}
   m_SourcePrefab: {fileID: 100100000, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
---- !u!224 &1988877710 stripped
+--- !u!224 &1975017343 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 625856722107848772, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1988877709}
+  m_PrefabInstance: {fileID: 1975017342}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1988877711 stripped
+--- !u!224 &1975017344 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7992485640677482743, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1988877709}
+  m_PrefabInstance: {fileID: 1975017342}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1988877712 stripped
+--- !u!1 &1975017345 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1988877709}
+  m_PrefabInstance: {fileID: 1975017342}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1988877713
+--- !u!114 &1975017346
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988877712}
+  m_GameObject: {fileID: 1975017345}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f7b63644f796d4605f1bcdeed7b966a, type: 3}
@@ -624,7 +624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Item.ItemListHandler
   _source: 0
   _itemPrefab: {fileID: 8937436320254113039, guid: 80a10fa3035bd434faeb6e280c835357, type: 3}
-  _contentParent: {fileID: 1988877711}
+  _contentParent: {fileID: 1975017344}
   _autoSubscribe: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

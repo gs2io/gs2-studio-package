@@ -1,14 +1,22 @@
 {
-  "gaugeCaptions": {
-    "EnergyStaminaGauge": "EnergyStaminaLabel"
-  },
-  "listSources": {
-    "Energy": "MasterData"
-  },
-  "countdowns": {
-    "EnergyNextRecoveryValue": "StaminaCountdown"
-  },
-  "activeToggles": {
-    "EnergyFullActiveToggle": ["EnergyNextRecoveryValue"]
+  "sections": {
+    "Energy": {
+      "source": "MasterData",
+      "rows": [
+        {
+          "component": "EnergyNextRecoveryValue",
+          "countdown": "StaminaCountdown"
+        },
+        {
+          "component": "EnergyStaminaGauge",
+          "caption": "EnergyStaminaLabel"
+        },
+        "EnergyConsumeButton",
+        "EnergyRecoverButton"
+      ],
+      "toggles": {
+        "EnergyFullActiveToggle": ["EnergyNextRecoveryValue"]
+      }
+    }
   }
 }

@@ -1,19 +1,17 @@
 {
-  "gaugeCaptions": {},
-  "listSources": {
-    "Character": "MasterData"
-  },
-  "countdowns": {},
-  "activeToggles": {
-    "CharacterUnregisteredInteractable": [
-      "CharacterMarkButton"
-    ]
-  },
-  "rowOrder": {
-    "Character": [
-      "CharacterNameLabel",
-      "CharacterAcquiredAtLabel",
-      "CharacterMarkButton"
-    ]
+  "sections": {
+    "Character": {
+      "source": "MasterData",
+      "rows": ["CharacterNameLabel", "CharacterAcquiredAtLabel", "CharacterMarkButton"],
+      "toggles": { "CharacterUnregisteredInteractable": ["CharacterMarkButton"] }
+    },
+    "CharacterRecruit": {
+      "rows": [
+        {
+          "component": "CharacterRecruitRecruitButton",
+          "caption": "CharacterRecruitCharacterLabel"
+        }
+      ]
+    }
   }
 }

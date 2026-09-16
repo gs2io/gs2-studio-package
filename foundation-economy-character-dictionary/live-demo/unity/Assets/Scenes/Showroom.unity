@@ -224,10 +224,10 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1279414218813259619, guid: 042b40b0d4e5c48b8a029cb8b8c0a766, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 902028671}
+      addedObject: {fileID: 804256667}
     - targetCorrespondingSourceObject: {fileID: 1279414218813259619, guid: 042b40b0d4e5c48b8a029cb8b8c0a766, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1717989468}
+      addedObject: {fileID: 1729816349}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 693791464063420834, guid: 042b40b0d4e5c48b8a029cb8b8c0a766, type: 3}
       insertIndex: -1
@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Gs2Bind.Unity::Gs2Bind.Gs2Account.Gs2PlayerPrefsAccountStore
   keyPrefix: gs2.showroom.account
---- !u!1001 &902028670
+--- !u!1001 &804256666
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -563,30 +563,30 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 902028674}
+      addedObject: {fileID: 804256670}
   m_SourcePrefab: {fileID: 100100000, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
---- !u!224 &902028671 stripped
+--- !u!224 &804256667 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 625856722107848772, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 902028670}
+  m_PrefabInstance: {fileID: 804256666}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &902028672 stripped
+--- !u!224 &804256668 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7992485640677482743, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 902028670}
+  m_PrefabInstance: {fileID: 804256666}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &902028673 stripped
+--- !u!1 &804256669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 902028670}
+  m_PrefabInstance: {fileID: 804256666}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &902028674
+--- !u!114 &804256670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902028673}
+  m_GameObject: {fileID: 804256669}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df4e6cd7df39d545ee90c3a419315eb2, type: 3}
@@ -594,9 +594,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Character.CharacterListHandler
   _propertyId: 
   _itemPrefab: {fileID: 740019264585561046, guid: 9ddc9008c535a4119bfe1945c997ec9f, type: 3}
-  _contentParent: {fileID: 902028672}
+  _contentParent: {fileID: 804256668}
   _autoSubscribe: 1
---- !u!1001 &1717989467
+--- !u!1001 &1729816348
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -702,37 +702,37 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1717989471}
+      addedObject: {fileID: 1729816352}
   m_SourcePrefab: {fileID: 100100000, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
---- !u!224 &1717989468 stripped
+--- !u!224 &1729816349 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 625856722107848772, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1717989467}
+  m_PrefabInstance: {fileID: 1729816348}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1717989469 stripped
+--- !u!224 &1729816350 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7992485640677482743, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1717989467}
+  m_PrefabInstance: {fileID: 1729816348}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1717989470 stripped
+--- !u!1 &1729816351 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1717989467}
+  m_PrefabInstance: {fileID: 1729816348}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1717989471
+--- !u!114 &1729816352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717989470}
+  m_GameObject: {fileID: 1729816351}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e222155238a0722c8afc51ea1a49bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.CharacterRecruit.CharacterRecruitListHandler
   _itemPrefab: {fileID: 5939721662109040533, guid: d0ef1c40c747d4c62b3e188e0b3f1683, type: 3}
-  _contentParent: {fileID: 1717989469}
+  _contentParent: {fileID: 1729816350}
   _autoSubscribe: 1
 --- !u!1 &1747940284
 GameObject:

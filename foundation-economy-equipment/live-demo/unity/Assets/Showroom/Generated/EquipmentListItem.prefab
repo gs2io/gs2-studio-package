@@ -31,7 +31,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8409708970010709770}
-  - {fileID: 2104628465645343953}
+  - {fileID: 655118387011697406}
   - {fileID: 5970411421375394315}
   m_Father: {fileID: 1195029742663839015}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -492,7 +492,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1149972895497519076}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &2104628465645343952 stripped
+--- !u!224 &655118387011697406 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 2104628465645343951}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7678132794925794422 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 2104628465645343951}
@@ -503,7 +508,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104628465645343952}
+  m_GameObject: {fileID: 7678132794925794422}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25760f85b4c7338221cfdaf94a4c466e, type: 3}
@@ -513,7 +518,7 @@ MonoBehaviour:
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2104628465645343954}
+      - m_Target: {fileID: 9080896826571516670}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -528,12 +533,7 @@ MonoBehaviour:
   _onSelect:
     m_PersistentCalls:
       m_Calls: []
---- !u!224 &2104628465645343953 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 2104628465645343951}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2104628465645343954 stripped
+--- !u!114 &9080896826571516670 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 2104628465645343951}

@@ -1,37 +1,49 @@
 {
-  "gaugeCaptions": {},
-  "listSources": {},
-  "countdowns": {
-    "ScheduleEndAtValue": "DeadlineCountdown",
-    "TriggerExpiresAtValue": "DeadlineCountdown",
-    "ScheduleRelativeEndAtValue": "DeadlineCountdown"
-  },
-  "activeToggles": {
-    "TriggerTriggeredInteractable": [
-      "TriggerExtendButton",
-      "TriggerClearButton"
-    ],
-    "ScheduleRelativeActiveToggle": [
-      "SchedulePeriodLabel",
-      "ScheduleEndAtValue"
-    ],
-    "ScheduleAbsoluteActiveToggle": [
-      "ScheduleRelativeWindowLabel",
-      "ScheduleRelativeEndAtValue"
-    ]
-  },
-  "rowOrder": {
-    "Schedule": [
-      "ScheduleWindowLabel",
-      "SchedulePeriodLabel",
-      "ScheduleEndAtValue",
-      "ScheduleRelativeWindowLabel",
-      "ScheduleRelativeEndAtValue"
-    ],
-    "Trigger": [
-      "TriggerNameLabel",
-      "TriggerWindowLabel",
-      "TriggerExpiresAtValue"
-    ]
+  "sections": {
+    "Schedule": {
+      "rows": [
+        "ScheduleWindowLabel",
+        "SchedulePeriodLabel",
+        {
+          "component": "ScheduleEndAtValue",
+          "countdown": "DeadlineCountdown"
+        },
+        "ScheduleRelativeWindowLabel",
+        {
+          "component": "ScheduleRelativeEndAtValue",
+          "countdown": "DeadlineCountdown"
+        }
+      ],
+      "toggles": {
+        "ScheduleRelativeActiveToggle": ["SchedulePeriodLabel", "ScheduleEndAtValue"],
+        "ScheduleAbsoluteActiveToggle": [
+          "ScheduleRelativeWindowLabel",
+          "ScheduleRelativeEndAtValue"
+        ]
+      }
+    },
+    "Trigger": {
+      "rows": [
+        "TriggerNameLabel",
+        "TriggerWindowLabel",
+        {
+          "component": "TriggerExpiresAtValue",
+          "countdown": "DeadlineCountdown"
+        },
+        "TriggerExtendButton",
+        "TriggerClearButton"
+      ],
+      "toggles": {
+        "TriggerTriggeredInteractable": ["TriggerExtendButton", "TriggerClearButton"]
+      }
+    },
+    "TriggerPull": {
+      "rows": [
+        {
+          "component": "TriggerPullPullButton",
+          "caption": "TriggerPullNameLabel"
+        }
+      ]
+    }
   }
 }

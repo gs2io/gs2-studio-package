@@ -39,58 +39,67 @@ namespace GS2Studio.Showroom.EditorTools
         private const string GeneratedNamespacePrefix = "GS2Studio.Generated.";
 
         /// <summary>
-        /// Gauge component name to the label component whose reading is drawn
-        /// on it, as the demo declared it in `page.json`. Which reading belongs
-        /// on a bar is the demo's call — from here every label looks alike. The
-        /// bar's own caption is not declared: it is derived from whichever
-        /// component names the row.
+        /// One row of a section, as the page declares it.
+        ///
+        /// A row names the component it draws and, where that component cannot
+        /// stand alone, what completes it: a bar needs to say what its fill
+        /// counts, and a `DateTime` has no reading until a behaviour turns it
+        /// into time left. Both are facts about the page rather than about the
+        /// component, which is why neither can be read off the assembly — from
+        /// in here a template label and a plain value look exactly alike.
         /// </summary>
-        private static Dictionary<string, string> _gaugeCaptions = new Dictionary<string, string>();
+        private struct RowSpec
+        {
+            public string Component;
+            /// <summary>Label drawn on a bar, or beside a button. Null otherwise.</summary>
+            public string Caption;
+            /// <summary>Behaviour that draws the time left until a `DateTime`. Null otherwise.</summary>
+            public string Countdown;
+        }
 
         /// <summary>
-        /// Model name to the `Source` a keyed model's list is mounted from, as
-        /// the demo declared it in `page.json`. Which set of rows a page shows
-        /// is the demo's call: a model whose rows are what the player has —
-        /// characters recruited, items owned — lists from user data, while a
-        /// model whose rows are what the title configured and every player
-        /// carries a copy of lists from master data. Defaults to user data,
-        /// which is the safe answer when a row's per-player state needs a key
-        /// no master row can supply.
+        /// One section of a page: the rows it carries, in the order it carries
+        /// them, and which of its conditions govern which of them.
+        ///
+        /// Every section is built from one of these, whether the demo wrote it
+        /// or {@link DeriveSection} worked it out from the assembly. That is
+        /// the point of the type: for as long as the builder composed the page
+        /// itself and a demo could only nudge the result, each question it
+        /// could not answer became another channel in `page.json` — which
+        /// reading sits on which bar, which side a list mounts from, which
+        /// rows a condition governs, what order they read in. The one that
+        /// never arrived was leaving a component off, which is what a page
+        /// with one use for a model that has two needs most: a dex and a
+        /// roster show the same `Character` and want different rows.
         /// </summary>
-        private static Dictionary<string, string> _listSources = new Dictionary<string, string>();
+        private class SectionSpec
+        {
+            /// <summary>
+            /// Which side of the service a keyed model's list mounts from:
+            /// `MasterData` for what the title configured and every player
+            /// carries a copy of, `UserData` for what this player has. Null
+            /// leaves the generator's default, which is user data — the safe
+            /// answer, because a master row has no per-player key.
+            /// </summary>
+            public string Source;
+            public List<RowSpec> Rows = new List<RowSpec>();
+            /// <summary>Condition component name to the rows it governs.</summary>
+            public Dictionary<string, string[]> Toggles = new Dictionary<string, string[]>();
+        }
 
         /// <summary>
-        /// Value component name to the MonoBehaviour that draws the time left
-        /// until it, as the demo declared it in `page.json`. What a deadline
-        /// means — and what, if anything, happens when it passes — belongs to
-        /// the service being demonstrated, so the behaviour is written in the
-        /// demo and named here. It needs a serialized `_label` field and a
-        /// `SetDeadline(DateTime)` method; the page fills the first and wires
-        /// the clock to the second. A clock with no behaviour named is left
-        /// undrawn: a `DateTime` has no reading the page can invent.
+        /// What the demo declared, by model name. A model absent from here is
+        /// derived from the assembly instead, and what was derived is logged in
+        /// the same shape `page.json` takes, so an author can paste it back and
+        /// start cutting.
         /// </summary>
-        private static Dictionary<string, string> _countdowns = new Dictionary<string, string>();
-
-        /// <summary>
-        /// Active-toggle component name to the rows it shows while its
-        /// condition does not hold, as the demo declared it in `page.json`.
-        /// The condition is authored in the package; which rows it governs is
-        /// a fact about the page.
-        /// </summary>
-        private static Dictionary<string, string> _activeToggles = new Dictionary<string, string>();
-
-        /// <summary>
-        /// Model name to the order its rows are drawn in, as the demo declared
-        /// it in `page.json`. What a row means to a reader is not something the
-        /// page can work out: a name, then what was configured, then what is
-        /// happening now is an order someone chose. Components left out keep
-        /// their default place, after the named ones.
-        /// </summary>
-        private static Dictionary<string, string> _rowOrder = new Dictionary<string, string>();
+        private static Dictionary<string, SectionSpec> _declaredSections =
+            new Dictionary<string, SectionSpec>();
 
         /// <summary>
         /// Entry point for `-executeMethod`. Reads `-showroomTitle`,
-        /// `-showroomSubtitle` and `-showroomRebuildPage`, and owns the exit
+        /// `-showroomSubtitle`, `-showroomRebuildPage` and the path of the
+        /// declaration `page.mjs` wrote out of `page.json`, and owns the exit
         /// code; the work itself is <see cref="BuildPage"/>, which an open
         /// Editor can call directly instead of paying for another launch.
         /// </summary>
@@ -102,11 +111,7 @@ namespace GS2Studio.Showroom.EditorTools
                     ReadArgument("-showroomTitle"),
                     ReadArgument("-showroomSubtitle"),
                     ReadArgument("-showroomRebuildPage") == "true",
-                    ParsePairs(ReadArgument("-showroomGaugeCaptions")),
-                    ParsePairs(ReadArgument("-showroomListSources")),
-                    ParsePairs(ReadArgument("-showroomCountdowns")),
-                    ParsePairs(ReadArgument("-showroomActiveToggles")),
-                    ParsePairs(ReadArgument("-showroomRowOrder")));
+                    ReadDeclaration(ReadArgument("-showroomDeclaration")));
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -117,29 +122,78 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
+        /// Read the declaration `page.mjs` wrote out of `page.json`.
+        ///
+        /// Tab-separated lines rather than JSON: the authored surface is
+        /// `page.json`, and the half that reads it is Node, where JSON is
+        /// native. What crosses into the Editor is a wire format between two
+        /// halves of one tool, and keeping it parseable by `Split` is worth
+        /// more than keeping it pretty — the Editor has no JSON reader it can
+        /// rely on without taking a package dependency for one.
+        ///
+        ///   section  MODEL  SOURCE
+        ///   row      MODEL  COMPONENT  CAPTION  COUNTDOWN
+        ///   toggle   MODEL  CONDITION  ROW|ROW
+        ///
+        /// A `section` line is what declares the model: a model with no line
+        /// at all is derived from the assembly instead, which is not the same
+        /// as a model that declared no rows and means it.
+        /// </summary>
+        private static Dictionary<string, SectionSpec> ReadDeclaration(string path)
+        {
+            var declared = new Dictionary<string, SectionSpec>();
+            if (string.IsNullOrEmpty(path) || !File.Exists(path)) return declared;
+            foreach (var line in File.ReadAllLines(path))
+            {
+                var parts = line.Split('\t');
+                if (parts.Length < 2 || parts[1].Length == 0) continue;
+                if (!declared.TryGetValue(parts[1], out var section))
+                {
+                    section = new SectionSpec();
+                    declared[parts[1]] = section;
+                }
+                if (parts[0] == "section" && parts.Length > 2 && parts[2].Length > 0)
+                {
+                    section.Source = parts[2];
+                }
+                else if (parts[0] == "row" && parts.Length > 2)
+                {
+                    section.Rows.Add(new RowSpec
+                    {
+                        Component = parts[2],
+                        Caption = parts.Length > 3 && parts[3].Length > 0 ? parts[3] : null,
+                        Countdown = parts.Length > 4 && parts[4].Length > 0 ? parts[4] : null,
+                    });
+                }
+                else if (parts[0] == "toggle" && parts.Length > 3)
+                {
+                    section.Toggles[parts[2]] = parts[3].Split('|');
+                }
+            }
+            return declared;
+        }
+
+        /// <summary>
         /// Writes the demo's page. Returns the number of sections, or -1 when
         /// the scene already existed and was left alone.
         /// </summary>
         public static int BuildPage(string title, string subtitle, bool rebuild)
         {
-            return BuildPage(
-                title, subtitle, rebuild,
-                new Dictionary<string, string>(), new Dictionary<string, string>(),
-                new Dictionary<string, string>(), new Dictionary<string, string>(),
-                new Dictionary<string, string>());
+            return BuildPage(title, subtitle, rebuild, new Dictionary<string, SectionSpec>());
         }
 
-        public static int BuildPage(
+        /// <summary>
+        /// The whole build, once the declaration has been read. Private
+        /// because <see cref="SectionSpec"/> is: an open Editor calls the
+        /// three-argument overload, and a batch run comes through
+        /// <see cref="Build"/>, so the declaration never crosses the type's
+        /// own boundary.
+        /// </summary>
+        private static int BuildPage(
             string title, string subtitle, bool rebuild,
-            Dictionary<string, string> gaugeCaptions, Dictionary<string, string> listSources,
-            Dictionary<string, string> countdowns, Dictionary<string, string> activeToggles,
-            Dictionary<string, string> rowOrder)
+            Dictionary<string, SectionSpec> declaredSections)
         {
-            _gaugeCaptions = gaugeCaptions ?? new Dictionary<string, string>();
-            _listSources = listSources ?? new Dictionary<string, string>();
-            _countdowns = countdowns ?? new Dictionary<string, string>();
-            _activeToggles = activeToggles ?? new Dictionary<string, string>();
-            _rowOrder = rowOrder ?? new Dictionary<string, string>();
+            _declaredSections = declaredSections ?? new Dictionary<string, SectionSpec>();
             var existed = File.Exists(ScenePath);
             if (existed && !rebuild)
             {
@@ -292,10 +346,9 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// The condition-driven components a package generated for this
-        /// handler. Neither kind has an event to find it by — one switches
-        /// GameObjects on and off, the other greys Selectables out — so each
-        /// is recognised by the pair of target arrays it is given.
+        /// The active toggles a package generated for this handler. A toggle
+        /// has no event to find it by — it switches GameObjects on and off —
+        /// so it is recognised by the pair of target arrays it is given.
         /// </summary>
         private static IReadOnlyList<Type> TogglesFor(Type handler)
         {
@@ -309,13 +362,17 @@ namespace GS2Studio.Showroom.EditorTools
                 .ToList();
         }
 
+        /// <summary>
+        /// The serialized target array a condition component exposes under this
+        /// name, or null when it has none. The two kinds hold different things
+        /// — an active toggle switches `GameObject`s off, an interactable greys
+        /// `Selectable`s out — so which name is present is what tells them
+        /// apart, and the element type is left to the component.
+        /// </summary>
         private static FieldInfo TargetArrayField(Type type, string name)
         {
             var field = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic);
-            return field?.FieldType == typeof(GameObject[]) ||
-                   field?.FieldType == typeof(Selectable[])
-                ? field
-                : null;
+            return field != null && field.FieldType.IsArray ? field : null;
         }
 
         private static int BuildSections(Transform content, ShowroomPage page)
@@ -323,11 +380,10 @@ namespace GS2Studio.Showroom.EditorTools
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var handlers = GeneratedHandlers();
             ClearGeneratedComponents(content);
-            // Nothing here reloads a handler after an action. A binder keeps
-            // itself current — it subscribes to what it is bound to and the
-            // value arrives on its own. Calling `Reload` throws that cache away
-            // and fetches again for an answer the page was already going to
-            // get, and overlapping reloads leave duplicate rows behind.
+            // Every handler answers a completed action, because an action can
+            // change anything the page is showing and a handler has no other
+            // way to hear about it.
+            var placed = new List<Component>();
             var sections = new List<(Type Handler, Transform Body)>();
 
             foreach (var handler in handlers)
@@ -344,7 +400,10 @@ namespace GS2Studio.Showroom.EditorTools
                     // model a package never gave a component of its own is
                     // still what another section's reading is composed from.
                     // So it is mounted without a section — an empty heading
-                    // over an empty body says nothing a visitor wants.
+                    // over an empty body says nothing a visitor wants — and
+                    // stays out of `placed`, because a handler that draws
+                    // nothing has nothing to redraw, and reloading it after
+                    // every action would throw away a cache for no one.
                     if (!NeedsIdentityKeys(handler)) content.gameObject.AddComponent(handler);
                     continue;
                 }
@@ -358,6 +417,8 @@ namespace GS2Studio.Showroom.EditorTools
                 // than none.
                 if (explainer != null) explainer.gameObject.SetActive(false);
                 sections.Add((handler, section.transform));
+                var spec = SectionFor(
+                    ModelNameOf(handler), handler, labels, buttons, gauges, clocks, toggles);
 
                 // A handler whose `SetKeys` takes arguments cannot stand on its
                 // own: it would sit in the page with an empty id, bind nothing
@@ -366,7 +427,8 @@ namespace GS2Studio.Showroom.EditorTools
                 // copy of the components.
                 if (NeedsIdentityKeys(handler))
                 {
-                    AddList(section, handler, labels, buttons, gauges, clocks, toggles, page);
+                    AddList(
+                        section, handler, labels, buttons, gauges, clocks, toggles, page, spec);
                     continue;
                 }
 
@@ -377,12 +439,27 @@ namespace GS2Studio.Showroom.EditorTools
                 // climb `label -> Items -> Section -> content` — and a gauge in
                 // another section's list row can now read it too, which is what
                 // a reading composed from two models needs.
-                content.gameObject.AddComponent(handler);
+                placed.Add(content.gameObject.AddComponent(handler));
                 var body = ItemsOf(section.transform);
-                AddRows(ModelNameOf(handler), body, labels, buttons, gauges, clocks, page);
-                WireToggles(section, toggles, body);
+                RealizeRows(ModelNameOf(handler), body, handler, spec, page);
+                WireToggles(ModelNameOf(handler), section, toggles, body, spec);
             }
 
+            foreach (var (_, body) in sections)
+            {
+                foreach (var button in body.GetComponentsInChildren<MonoBehaviour>(true))
+                {
+                    var completed = button.GetType().GetProperty("OnCompleted");
+                    if (completed?.PropertyType != typeof(UnityEvent)) continue;
+                    var unityEvent = (UnityEvent)completed.GetValue(button);
+                    foreach (var handlerComponent in placed)
+                        UnityEventTools.AddVoidPersistentListener(
+                            unityEvent,
+                            (UnityAction)Delegate.CreateDelegate(
+                                typeof(UnityAction), handlerComponent, "Reload"));
+                    EditorUtility.SetDirty(button);
+                }
+            }
             return sections.Count;
         }
 
@@ -415,7 +492,8 @@ namespace GS2Studio.Showroom.EditorTools
         private static void AddList(
             GameObject section, Type handler, IReadOnlyList<Type> labels,
             IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges,
-            IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles, ShowroomPage page)
+            IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles, ShowroomPage page,
+            SectionSpec spec)
         {
             var model = ModelNameOf(handler);
             var listHandler = SiblingType(handler, model + "ListHandler");
@@ -429,7 +507,7 @@ namespace GS2Studio.Showroom.EditorTools
             }
 
             var itemPrefab = BuildListItemPrefab(
-                model, itemHandler, labels, buttons, gauges, clocks, toggles, page);
+                model, itemHandler, labels, buttons, gauges, clocks, toggles, page, spec);
             var list = section.AddComponent(listHandler);
             var serialized = new SerializedObject(list);
             serialized.FindProperty("_itemPrefab").objectReferenceValue =
@@ -443,7 +521,7 @@ namespace GS2Studio.Showroom.EditorTools
             // A model with no user data at all is generated without the choice,
             // and then the catalogue is the only thing there is to list.
             var source = serialized.FindProperty("_source");
-            if (source != null) source.enumValueIndex = ListSourceIndex(listHandler, model);
+            if (source != null) source.enumValueIndex = ListSourceIndex(listHandler, model, spec);
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
@@ -453,12 +531,12 @@ namespace GS2Studio.Showroom.EditorTools
         /// there cannot silently point every demo at the wrong source. The demo
         /// names the source in `page.json`; `UserData` is the default.
         /// </summary>
-        private static int ListSourceIndex(Type listHandler, string model)
+        private static int ListSourceIndex(Type listHandler, string model, SectionSpec section)
         {
             var sourceEnum = listHandler.GetNestedType("Source");
             if (sourceEnum == null) return 0;
             var names = Enum.GetNames(sourceEnum);
-            var wanted = _listSources.TryGetValue(model, out var declared) ? declared : "UserData";
+            var wanted = string.IsNullOrEmpty(section.Source) ? "UserData" : section.Source;
             var index = Array.FindIndex(
                 names, name => string.Equals(name, wanted, StringComparison.OrdinalIgnoreCase));
             if (index < 0)
@@ -474,7 +552,8 @@ namespace GS2Studio.Showroom.EditorTools
         private static GameObject BuildListItemPrefab(
             string model, Type itemHandler, IReadOnlyList<Type> labels,
             IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges,
-            IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles, ShowroomPage page)
+            IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles, ShowroomPage page,
+            SectionSpec spec)
         {
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var item = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab);
@@ -489,8 +568,8 @@ namespace GS2Studio.Showroom.EditorTools
             }
             item.AddComponent(itemHandler);
             var body = ItemsOf(item.transform);
-            AddRows(model, body, labels, buttons, gauges, clocks, page);
-            WireToggles(item, toggles, body);
+            RealizeRows(model, body, itemHandler, spec, page);
+            WireToggles(model, item, toggles, body, spec);
 
             Directory.CreateDirectory(GeneratedPrefabDirectory);
             var path = $"{GeneratedPrefabDirectory}/{model}ListItem.prefab";
@@ -517,84 +596,161 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// Lays out one model's rows.
+        /// Lays out one section's rows from the declaration it was given.
         ///
-        /// A single value with a single action is one thing a visitor does, so
-        /// it reads as one line — what it is on the left, the button on the
-        /// right. Anything else is a stat block with its actions under it.
+        /// One path, whether the demo wrote the declaration or
+        /// <see cref="DeriveSection"/> worked it out: a row names a component
+        /// and this draws it in the shape that component asks for. The order
+        /// rows appear in is the order they were declared in — there is no
+        /// second pass that rearranges a finished section, because nothing
+        /// composes a section that the page did not ask for.
         /// </summary>
-        private static void AddRows(
-            string model, Transform body, IReadOnlyList<Type> labels,
-            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges,
-            IReadOnlyList<Type> clocks, ShowroomPage page)
+        private static void RealizeRows(
+            string model, Transform body, Type handler, SectionSpec section, ShowroomPage page)
         {
-            // Clocks lead: what a visitor is waiting for belongs above what
-            // they are waiting on — unless the demo said otherwise, in which
-            // case its order is applied to the finished section below.
-            foreach (var clock in clocks) AddCountdownRow(body, clock);
+            foreach (var row in section.Rows)
+            {
+                var component = UiComponentNamed(handler, row.Component);
+                if (component == null)
+                {
+                    Debug.LogWarning(
+                        $"[showroom] {model}: no generated component named '{row.Component}'; " +
+                        "that row is left off the page");
+                    continue;
+                }
+                var caption = row.Caption == null ? null : UiComponentNamed(handler, row.Caption);
+                if (row.Caption != null && caption == null)
+                {
+                    Debug.LogWarning(
+                        $"[showroom] {model}: '{row.Component}' names '{row.Caption}' as its " +
+                        "reading, but no such component was generated");
+                }
 
+                if (IsGauge(component)) AddGaugeRow(body, component, caption);
+                else if (IsClock(component)) AddCountdownRow(body, component, row.Countdown);
+                else if (IsButton(component)) AddActionRow(body, component, page, caption);
+                else if (IsLabel(component)) AddValueRow(body, component);
+                else
+                {
+                    Debug.LogWarning(
+                        $"[showroom] {model}: '{row.Component}' is not a kind of row this page " +
+                        "knows how to draw");
+                }
+            }
+        }
+
+        /// <summary>
+        /// What a section looks like when the demo has not said.
+        ///
+        /// A starting point, not a second way to build a page: the result is a
+        /// declaration in exactly the shape `page.json` takes, and it is logged
+        /// so an author can paste it back and cut it down to the rows their
+        /// page is actually for. Everything it decides here, it decides because
+        /// nobody told it — which reading belongs on a bar is a guess that only
+        /// holds when there is one bar and one label, and the order is only the
+        /// order things read in when a section has one purpose.
+        /// </summary>
+        private static SectionSpec DeriveSection(
+            IReadOnlyList<Type> labels, IReadOnlyList<Type> buttons,
+            IReadOnlyList<Type> gauges, IReadOnlyList<Type> clocks,
+            IReadOnlyList<Type> toggles)
+        {
+            var section = new SectionSpec();
+            var readings = new Dictionary<Type, Type>();
+            if (gauges.Count == 1 && labels.Count == 1) readings[gauges[0]] = labels[0];
+
+            // Clocks lead: what a visitor is waiting for belongs above what
+            // they are waiting on.
+            foreach (var clock in clocks)
+            {
+                section.Rows.Add(new RowSpec { Component = clock.Name });
+            }
             if (clocks.Count == 0 && gauges.Count == 0 && labels.Count == 1 && buttons.Count == 1)
             {
                 // One value and one action is one thing a visitor does, so it
                 // reads as one line.
-                AddActionRow(body, buttons[0], page, labels[0]);
-                return;
-            }
-
-            // A bar reads better with its value written on it, but which label
-            // belongs there cannot be worked out from here: a template label
-            // and a plain value generate the same shape, so picking one would
-            // be picking arbitrarily. The demo says which, and an unambiguous
-            // pairing — one bar, one label — is taken without being told.
-            var readings = new Dictionary<Type, Type>();
-            foreach (var gauge in gauges)
-            {
-                var readingName = _gaugeCaptions.TryGetValue(gauge.Name, out var declared)
-                    ? declared
-                    : gauges.Count == 1 && labels.Count == 1 ? labels[0].Name : null;
-                var reading = labels.FirstOrDefault(label => label.Name == readingName);
-                if (reading != null) readings[gauge] = reading;
+                section.Rows.Add(
+                    new RowSpec { Component = buttons[0].Name, Caption = labels[0].Name });
+                return section;
             }
 
             // Values first, then the bars they summarise, then what a visitor
             // can press: read the state, then act on it.
             foreach (var label in labels)
             {
-                if (!readings.ContainsValue(label)) AddValueRow(body, label);
+                if (!readings.ContainsValue(label))
+                    section.Rows.Add(new RowSpec { Component = label.Name });
             }
             foreach (var gauge in gauges)
             {
-                AddGaugeRow(
-                    body, gauge, readings.TryGetValue(gauge, out var reading) ? reading : null);
+                section.Rows.Add(new RowSpec
+                {
+                    Component = gauge.Name,
+                    Caption = readings.TryGetValue(gauge, out var reading) ? reading.Name : null,
+                });
             }
-            foreach (var button in buttons) AddActionRow(body, button, page, null);
-            ApplyRowOrder(model, body);
+            foreach (var button in buttons)
+            {
+                section.Rows.Add(new RowSpec { Component = button.Name });
+            }
+            foreach (var toggle in toggles) section.Toggles[toggle.Name] = new string[0];
+            return section;
         }
 
         /// <summary>
-        /// Reorders the finished rows to the sequence the demo named. Each row
-        /// carries the name of the component it draws, so the declaration is
-        /// written in the same terms as every other one in `page.json`.
-        ///
-        /// Rows the demo did not name keep their relative order and follow the
-        /// named ones — a partial list reads as "these first", not as a filter.
+        /// The section a model is built from: what the demo declared, or what
+        /// the assembly suggests when it declared nothing. A derived section is
+        /// logged in `page.json`'s own shape, because the fastest way to write
+        /// a declaration is to start from the one that was guessed.
         /// </summary>
-        private static void ApplyRowOrder(string model, Transform body)
+        private static SectionSpec SectionFor(
+            string model, Type handler, IReadOnlyList<Type> labels, IReadOnlyList<Type> buttons,
+            IReadOnlyList<Type> gauges, IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles)
         {
-            if (!_rowOrder.TryGetValue(model, out var declared)) return;
-            var wanted = declared.Split('|').Select(name => name.Trim()).ToList();
-            var index = 0;
-            foreach (var name in wanted)
-            {
-                var row = body.Find(name);
-                if (row == null)
-                {
-                    Debug.LogWarning(
-                        $"[showroom] {model}: '{name}' is not a row on this section");
-                    continue;
-                }
-                row.SetSiblingIndex(index++);
-            }
+            if (_declaredSections.TryGetValue(model, out var declared)) return declared;
+            var derived = DeriveSection(labels, buttons, gauges, clocks, toggles);
+            Debug.Log(
+                $"[showroom] {model}: no section declared in page.json; derived " +
+                $"\"rows\": [{string.Join(", ", derived.Rows.Select(RowAsJson))}]");
+            return derived;
+        }
+
+        /// <summary>One derived row, written the way `page.json` writes one.</summary>
+        private static string RowAsJson(RowSpec row)
+        {
+            if (row.Caption == null && row.Countdown == null) return $"\"{row.Component}\"";
+            var extra = row.Caption != null
+                ? $", \"caption\": \"{row.Caption}\""
+                : $", \"countdown\": \"{row.Countdown}\"";
+            return $"{{\"component\": \"{row.Component}\"{extra}}}";
+        }
+
+        private static Type UiComponentNamed(Type handler, string name)
+        {
+            var uiNamespace = handler.Namespace + ".UI";
+            return SafeTypes(handler.Assembly).FirstOrDefault(
+                type => type.Namespace == uiNamespace && type.Name == name);
+        }
+
+        private static bool IsGauge(Type component)
+        {
+            return component.GetField("_target", BindingFlags.Instance | BindingFlags.NonPublic)
+                ?.FieldType == typeof(Image);
+        }
+
+        private static bool IsClock(Type component)
+        {
+            return component.GetProperty("OnUpdate")?.PropertyType == typeof(UnityEvent<DateTime>);
+        }
+
+        private static bool IsButton(Type component)
+        {
+            return component.GetProperty("OnCompleted")?.PropertyType == typeof(UnityEvent);
+        }
+
+        private static bool IsLabel(Type component)
+        {
+            return component.GetProperty("OnUpdate")?.PropertyType == typeof(UnityEvent<string>);
         }
 
         /// <summary>
@@ -635,9 +791,17 @@ namespace GS2Studio.Showroom.EditorTools
         /// precisely so the page can decide how it reads, and only the demo
         /// knows what its deadline is a deadline for.
         /// </summary>
-        private static void AddCountdownRow(Transform section, Type clockType)
+        private static void AddCountdownRow(
+            Transform section, Type clockType, string behaviourName)
         {
-            if (!_countdowns.TryGetValue(clockType.Name, out var behaviourName)) return;
+            if (string.IsNullOrEmpty(behaviourName))
+            {
+                Debug.LogWarning(
+                    $"[showroom] {clockType.Name}: a `DateTime` has no reading until a " +
+                    "behaviour turns it into time left, and this row named none; " +
+                    "its row is left off the page");
+                return;
+            }
             var behaviourType = TypeNamed(behaviourName);
             if (behaviourType == null)
             {
@@ -679,7 +843,7 @@ namespace GS2Studio.Showroom.EditorTools
 
         /// <summary>
         /// Mounts each condition-driven component on the section root and
-        /// points it at the rows the demo named.
+        /// points it at the rows the section declared for it.
         ///
         /// An active toggle takes the rows it hides while its condition does
         /// not hold; an interactable takes the buttons it leaves usable while
@@ -692,40 +856,44 @@ namespace GS2Studio.Showroom.EditorTools
         /// whichever state it last applied.
         /// </summary>
         private static void WireToggles(
-            GameObject root, IReadOnlyList<Type> toggles, Transform body)
+            string model, GameObject root, IReadOnlyList<Type> toggles, Transform body,
+            SectionSpec section)
         {
             foreach (var toggleType in toggles)
             {
-                if (!_activeToggles.TryGetValue(toggleType.Name, out var declared))
+                if (!section.Toggles.TryGetValue(toggleType.Name, out var declared) ||
+                    declared.Length == 0)
                 {
                     Debug.LogWarning(
-                        $"[showroom] {toggleType.Name}: no rows declared for it in " +
-                        "page.json, so it is left off the page");
+                        $"[showroom] {model}: '{toggleType.Name}' governs no rows in this " +
+                        "section's declaration, so it is left off the page");
                     continue;
                 }
                 var rows = declared
-                    .Split('|')
                     .Select(name => body.Find(name.Trim()))
                     .Where(found => found != null)
                     .ToList();
                 if (rows.Count == 0)
                 {
                     Debug.LogWarning(
-                        $"[showroom] {toggleType.Name}: none of '{declared}' is a row " +
-                        "on this section");
+                        $"[showroom] {model}: none of '{string.Join("|", declared)}' is a row " +
+                        $"on this section, so '{toggleType.Name}' is left off the page");
                     continue;
                 }
 
                 var hides = TargetArrayField(toggleType, "_activeWhenTrue") != null;
                 var targets = hides
                     ? rows.Select(row => (UnityEngine.Object)row.gameObject).ToList()
-                    : rows.Select(row => (UnityEngine.Object)row.GetComponentInChildren<Selectable>(true))
+                    : rows
+                        .Select(row =>
+                            (UnityEngine.Object)row.GetComponentInChildren<Selectable>(true))
                         .Where(found => found != null)
                         .ToList();
                 if (targets.Count == 0)
                 {
                     Debug.LogWarning(
-                        $"[showroom] {toggleType.Name}: no Selectable on '{declared}'");
+                        $"[showroom] {model}: no Selectable under " +
+                        $"'{string.Join("|", declared)}' for '{toggleType.Name}'");
                     continue;
                 }
 
@@ -837,19 +1005,6 @@ namespace GS2Studio.Showroom.EditorTools
             var spaced = System.Text.RegularExpressions.Regex.Replace(
                 pascalCase, "(?<=[a-z0-9])(?=[A-Z])", " ");
             return char.ToUpperInvariant(spaced[0]) + spaced.Substring(1).ToLowerInvariant();
-        }
-
-        /// <summary>`Gauge=Label,Gauge=Label` as the demo declared it.</summary>
-        private static Dictionary<string, string> ParsePairs(string value)
-        {
-            var pairs = new Dictionary<string, string>();
-            if (string.IsNullOrEmpty(value)) return pairs;
-            foreach (var entry in value.Split(','))
-            {
-                var halves = entry.Split('=');
-                if (halves.Length == 2) pairs[halves[0].Trim()] = halves[1].Trim();
-            }
-            return pairs;
         }
 
         private static string ReadArgument(string name)

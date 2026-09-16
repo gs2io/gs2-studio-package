@@ -1,10 +1,11 @@
 {
-  "gaugeCaptions": {},
-  "listSources": {
-    "Item": "MasterData"
-  },
-  "countdowns": {},
-  "activeToggles": {
-    "ItemOwnedInteractable": ["ItemSpendButton"]
+  "sections": {
+    "Item": {
+      "source": "MasterData",
+      "rows": ["ItemStockLabel", "ItemGainButton", "ItemSpendButton"],
+      "toggles": {
+        "ItemOwnedInteractable": ["ItemSpendButton"]
+      }
+    }
   }
 }
