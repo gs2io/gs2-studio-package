@@ -400,17 +400,26 @@ namespace GS2Studio.Showroom.EditorTools
                 var gauges = GaugesFor(handler);
                 var clocks = UiComponentsFor(handler, "OnUpdate", typeof(UnityEvent<DateTime>));
                 var toggles = TogglesFor(handler);
-                if (labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0 &&
-                    clocks.Count == 0)
+                // Two ways a model ends up with nothing to draw: a package gave
+                // it no component of its own, or the demo declared a section
+                // for it and left the rows empty. The second is asked here,
+                // before the section prefab exists, rather than where the rest
+                // of the declaration is read — the principle is the one the
+                // first case already states, that an empty heading over an
+                // empty body says nothing a visitor wants, and it holds the
+                // same whether the emptiness was found in the assembly or
+                // written down by the demo.
+                if ((labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0 &&
+                     clocks.Count == 0) || DeclaresNoRows(ModelNameOf(handler)))
                 {
                     // Nothing to draw, but something to read: a configuration
-                    // model a package never gave a component of its own is
+                    // model a package never gave a component of its own — or
+                    // one this page has no use for while another does — is
                     // still what another section's reading is composed from.
-                    // So it is mounted without a section — an empty heading
-                    // over an empty body says nothing a visitor wants — and
-                    // stays out of `placed`, because a handler that draws
-                    // nothing has nothing to redraw, and reloading it after
-                    // every action would throw away a cache for no one.
+                    // So it is mounted without a section, and stays out of
+                    // `placed`, because a handler that draws nothing has
+                    // nothing to redraw, and reloading it after every action
+                    // would throw away a cache for no one.
                     if (!NeedsIdentityKeys(handler)) content.gameObject.AddComponent(handler);
                     continue;
                 }
@@ -763,6 +772,29 @@ namespace GS2Studio.Showroom.EditorTools
             }
             foreach (var toggle in toggles) section.Toggles[toggle.Name] = new string[0];
             return section;
+        }
+
+        /// <summary>
+        /// Whether the demo declared this model's section and gave it no rows.
+        ///
+        /// Asked of the declaration rather than of a <see cref="SectionSpec"/>,
+        /// because the distinction is not in the spec to be asked: a model the
+        /// demo never mentioned and a model it declared with an empty `rows`
+        /// both reach the builder as a spec carrying no rows, and the only
+        /// thing that tells them apart is which dictionary it came out of.
+        /// Membership in <see cref="_declaredSections"/> is already where that
+        /// answer lives — <see cref="SectionFor"/> asks the same question of
+        /// the same place — so it is read from there rather than copied onto
+        /// the spec, where it would be a second answer free to disagree.
+        ///
+        /// A model with no `section` line at all is derived from the assembly
+        /// as before. Leaving a model out of `page.json` is not a way to take
+        /// its section off the page; declaring it with no rows is.
+        /// </summary>
+        private static bool DeclaresNoRows(string model)
+        {
+            return _declaredSections.TryGetValue(model, out var declared) &&
+                declared.Rows.Count == 0;
         }
 
         /// <summary>
