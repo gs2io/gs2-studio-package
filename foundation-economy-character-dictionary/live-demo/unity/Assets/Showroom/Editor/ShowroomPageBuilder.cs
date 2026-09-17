@@ -109,6 +109,20 @@ namespace GS2Studio.Showroom.EditorTools
             /// Empty means the section is a list.
             /// </summary>
             public Dictionary<string, string> Key = new Dictionary<string, string>();
+            /// <summary>
+            /// What a list needs before it will load anything — the collection's
+            /// own keys, to the values this page reads through.
+            ///
+            /// A collection can be a subset rather than everything of its kind:
+            /// a shop's products are the products of one storefront, and which
+            /// storefront is the page's to say. A list left without it reads
+            /// nothing and draws an empty section, which is the same thing a
+            /// page with nothing to show looks like.
+            ///
+            /// Distinct from <see cref="Key"/>: that names one row and takes
+            /// the section off the list, this names which rows the list has.
+            /// </summary>
+            public Dictionary<string, string> Scope = new Dictionary<string, string>();
         }
 
         /// <summary>
@@ -242,6 +256,10 @@ namespace GS2Studio.Showroom.EditorTools
                 else if (parts[0] == "key" && parts.Length > 3)
                 {
                     section.Key[parts[2]] = parts[3];
+                }
+                else if (parts[0] == "scope" && parts.Length > 3)
+                {
+                    section.Scope[parts[2]] = parts[3];
                 }
             }
             return declared;
@@ -878,6 +896,7 @@ namespace GS2Studio.Showroom.EditorTools
         private static void CollectKeyProblems(
             SectionPlan plan, SectionSpec declared, List<string> problems)
         {
+            CollectScopeProblems(plan, declared, problems);
             if (declared.Key.Count == 0) return;
             var identity = IdentityKeyNames(plan.Handler);
             if (identity.Count == 0)
@@ -910,6 +929,54 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
+        /// What a section's declared scope names that its list cannot answer,
+        /// and what its list needs that the section did not name.
+        ///
+        /// A list that reads nothing draws an empty section, and an empty
+        /// section is what a page with nothing to show looks like — so the one
+        /// that could have shown something is refused here instead.
+        /// </summary>
+        private static void CollectScopeProblems(
+            SectionPlan plan, SectionSpec declared, List<string> problems)
+        {
+            if (plan.ListHandler == null)
+            {
+                if (declared.Scope.Count > 0)
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: `page.json` scopes it, and this page draws no " +
+                        "list for it — a scope says which rows a list has.");
+                }
+                return;
+            }
+            var scope = CollectionScopeNames(plan.Handler, plan.Model);
+            foreach (var name in declared.Scope.Keys.OrderBy(name => name, StringComparer.Ordinal))
+            {
+                if (!scope.Contains(name))
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: `page.json` scopes its list by '{name}', which " +
+                        $"is not one of the keys its collection is made with. It is made with " +
+                        $"{Listed(scope)}.");
+                }
+            }
+            foreach (var name in scope)
+            {
+                if (declared.Scope.ContainsKey(name)) continue;
+                // A warning rather than a refusal: whether a collection key is
+                // needed depends on the axis the list reads through. A master
+                // axis that enumerates a whole namespace needs none of them,
+                // and the dex's list is exactly that — so a page that names
+                // nothing is often right, and only the handler's own readiness
+                // check knows when it is not.
+                Debug.LogWarning(
+                    $"[showroom] {plan.Model}: its list is made with '{name}' and the page does " +
+                    "not say which. If its axis reads through that key, the list will read " +
+                    "nothing and the section will draw empty.");
+            }
+        }
+
+        /// <summary>
         /// The keys a model is identified by, as `SetKeys` names them.
         /// </summary>
         private static IReadOnlyList<string> IdentityKeyNames(Type handler)
@@ -936,6 +1003,14 @@ namespace GS2Studio.Showroom.EditorTools
                         $"'{row.Component}', which this demo neither generated nor wrote. It " +
                         $"generated {Listed(DrawableNames(plan))}" +
                         $"{WrittenSuffix()}.");
+                }
+                else if (IsButton(component) && !ReportsFailure(component))
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: '{row.Component}' acts but cannot say when it " +
+                        "failed. A browser hides the console, so a failure a visitor cannot see " +
+                        "reads as nothing having happened — carry an `ErrorEvent OnFailed` the " +
+                        "way a generated button does.");
                 }
                 else if (!IsGauge(component) && !IsClock(component) &&
                          !IsButton(component) && !IsLabel(component))
@@ -1262,6 +1337,18 @@ namespace GS2Studio.Showroom.EditorTools
             // 0..n-1 range and an index into the member list is not the value.
             // intValue is the serialized representation itself.
             if (plan.Axis.HasValue) serialized.FindProperty("_axis").intValue = plan.Axis.Value;
+            foreach (var scope in DeclaredScope(plan.Model))
+            {
+                var property = serialized.FindProperty("_" + scope.Key);
+                if (property.propertyType == SerializedPropertyType.Integer)
+                {
+                    property.intValue = int.Parse(scope.Value, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    property.stringValue = scope.Value;
+                }
+            }
             serialized.ApplyModifiedPropertiesWithoutUndo();
             return ListItemPrefabPath(plan.Model);
         }
@@ -1532,6 +1619,29 @@ namespace GS2Studio.Showroom.EditorTools
         /// its section off the page; declaring it with no rows is.
         /// </summary>
         /// <summary>
+        /// The collection keys this page gave the model's list.
+        /// </summary>
+        private static IReadOnlyDictionary<string, string> DeclaredScope(string model)
+        {
+            return _declaredSections.TryGetValue(model, out var declared)
+                ? declared.Scope
+                : new Dictionary<string, string>();
+        }
+
+        /// <summary>
+        /// The keys a collection is made with, as its factory names them — the
+        /// parameters past the runtime context every collection takes.
+        /// </summary>
+        private static IReadOnlyList<string> CollectionScopeNames(Type handler, string model)
+        {
+            var factory = SiblingType(handler, "I" + model + "BinderFactory");
+            var create = factory?.GetMethod("CreateCollection");
+            return create == null
+                ? new List<string>()
+                : create.GetParameters().Skip(2).Select(parameter => parameter.Name).ToList();
+        }
+
+        /// <summary>
         /// Whether the page pins this model to one row rather than listing it.
         /// </summary>
         private static bool DeclaresKey(string model)
@@ -1672,6 +1782,15 @@ namespace GS2Studio.Showroom.EditorTools
         private static bool IsButton(Type component)
         {
             return component.GetProperty("OnCompleted")?.PropertyType == typeof(UnityEvent);
+        }
+
+        /// <summary>
+        /// Whether a button can hand a failure to the page, which is the other
+        /// half of the shape a row's action carries.
+        /// </summary>
+        private static bool ReportsFailure(Type component)
+        {
+            return component.GetProperty("OnFailed")?.PropertyType == typeof(ErrorEvent);
         }
 
         private static bool IsLabel(Type component)
