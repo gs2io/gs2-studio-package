@@ -503,6 +503,19 @@ namespace GS2Studio.Showroom.EditorTools
                     Toggles = TogglesFor(handler),
                 };
                 plans.Add(plan);
+            }
+
+            // Asked of the assembly alone, and before a single line of the
+            // declaration has been acted on: what a demo wrote down is checked
+            // against what it generated while nothing has yet been built out
+            // of either, so a page that cannot be built is refused rather than
+            // half-drawn.
+            RefuseUnresolvedDeclarations(plans);
+
+            foreach (var plan in plans)
+            {
+                var handler = plan.Handler;
+                var model = plan.Model;
 
                 // Two ways a model ends up with nothing to draw: a package gave
                 // it no component of its own, or the demo declared a section
@@ -546,6 +559,190 @@ namespace GS2Studio.Showroom.EditorTools
                 if (writesAxis) plan.Axis = PlannedAxis(plan.ListHandler, model, plan.Section);
             }
             return plans;
+        }
+
+        /// <summary>
+        /// Refuses a declaration that names something the demo did not
+        /// generate, and says what it did.
+        ///
+        /// Every name in `page.json` is a generated identifier, so a name that
+        /// resolves to nothing is a typo rather than an intention — and a typo
+        /// must not be allowed to read as a page. Left to the build, each of
+        /// them fails quietly in its own way: a misspelled row is a warning and
+        /// a missing line, a misspelled condition is nothing at all, because
+        /// <see cref="WireToggles"/> walks the components the package generated
+        /// and asks the declaration about each, so a key only the declaration
+        /// holds is never looked at.
+        ///
+        /// The reverse is not a failure. Leaving a generated component off is
+        /// what declaring a page is for — a dex and a roster show the same
+        /// model and want different rows — so a component with no line, whether
+        /// a row or a condition, is an omission and stays one.
+        ///
+        /// Everything wrong is collected and thrown together, one line each so
+        /// that `page.mjs`, which filters the Editor log line by line, carries
+        /// all of it through. A bake is a round trip through the Editor, and
+        /// answering one typo at a time costs an author a launch apiece.
+        /// </summary>
+        private static void RefuseUnresolvedDeclarations(IReadOnlyList<SectionPlan> plans)
+        {
+            var byModel = new Dictionary<string, SectionPlan>(StringComparer.Ordinal);
+            foreach (var plan in plans) byModel[plan.Model] = plan;
+
+            var problems = new List<string>();
+            foreach (var entry in _declaredSections.OrderBy(item => item.Key, StringComparer.Ordinal))
+            {
+                if (!byModel.TryGetValue(entry.Key, out var plan))
+                {
+                    problems.Add(
+                        $"[showroom] `page.json` declares a section for '{entry.Key}', which " +
+                        "this demo generated no handler for. It generated " +
+                        $"{Listed(byModel.Keys)}.");
+                    continue;
+                }
+                CollectRowProblems(plan, entry.Value, problems);
+                CollectToggleProblems(plan, entry.Value, problems);
+            }
+            if (problems.Count == 0) return;
+            throw new InvalidOperationException(string.Join("\n", problems));
+        }
+
+        /// <summary>
+        /// What a section's declared rows name that the demo cannot answer: a
+        /// component it never generated, one that is no kind of row this page
+        /// draws, a reading or a countdown behaviour that is not there.
+        /// </summary>
+        private static void CollectRowProblems(
+            SectionPlan plan, SectionSpec declared, List<string> problems)
+        {
+            foreach (var row in declared.Rows)
+            {
+                var component = UiComponentNamed(plan.Handler, row.Component);
+                if (component == null)
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: `page.json` asks for a row of " +
+                        $"'{row.Component}', which this demo generated no component named. It " +
+                        $"generated {Listed(DrawableNames(plan))}.");
+                }
+                else if (!IsGauge(component) && !IsClock(component) &&
+                         !IsButton(component) && !IsLabel(component))
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: '{row.Component}' is not a kind of row this " +
+                        $"page knows how to draw. It draws {Listed(DrawableNames(plan))}.");
+                }
+                if (row.Caption != null && UiComponentNamed(plan.Handler, row.Caption) == null)
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: '{row.Component}' names '{row.Caption}' as " +
+                        "its reading, which this demo generated no component named. It " +
+                        $"generated {Listed(plan.Labels.Select(type => type.Name))}.");
+                }
+                if (row.Countdown == null) continue;
+                var behaviour = TypeNamed(row.Countdown);
+                if (behaviour == null || !IsCountdownBehaviour(behaviour))
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: '{row.Component}' names '{row.Countdown}' as " +
+                        "the behaviour that reads its `DateTime`, and this project has no " +
+                        "MonoBehaviour by that name taking `SetDeadline(DateTime)`. It has " +
+                        $"{Listed(CountdownBehaviours())}.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// What a section's declared conditions name that the demo cannot
+        /// answer: a condition component it never generated, or a row that is
+        /// not one of this section's.
+        ///
+        /// This is the direction <see cref="WireToggles"/> cannot look. It
+        /// starts from the generated conditions, so a key that matches none of
+        /// them is read by nobody, and a condition whose rows are all
+        /// misspelled is the same warning as one whose rows are simply not
+        /// drawn — which is why the empty list is refused here too rather than
+        /// being left to mean "leave this off", a thing dropping the key
+        /// already says.
+        /// </summary>
+        private static void CollectToggleProblems(
+            SectionPlan plan, SectionSpec declared, List<string> problems)
+        {
+            var conditions = plan.Toggles.Select(type => type.Name).ToList();
+            var rows = declared.Rows.Select(row => row.Component).ToList();
+            foreach (var entry in declared.Toggles.OrderBy(item => item.Key, StringComparer.Ordinal))
+            {
+                if (!conditions.Contains(entry.Key, StringComparer.Ordinal))
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: `page.json` gives rows to the condition " +
+                        $"'{entry.Key}', which this demo generated no component named. It " +
+                        $"generated {Listed(conditions)}.");
+                }
+                var governed = entry.Value
+                    .Select(name => name.Trim())
+                    .Where(name => name.Length > 0)
+                    .ToList();
+                if (governed.Count == 0)
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: '{entry.Key}' is declared governing no rows. " +
+                        "A condition is declared with the rows it governs; to leave it off the " +
+                        "page, drop the key.");
+                    continue;
+                }
+                foreach (var name in governed)
+                {
+                    if (rows.Contains(name, StringComparer.Ordinal)) continue;
+                    problems.Add(
+                        $"[showroom] {plan.Model}: '{entry.Key}' governs '{name}', which is not " +
+                        $"a row of this section. Its rows are {Listed(rows)}.");
+                }
+            }
+        }
+
+        /// <summary>Every component this model has a row to draw it in.</summary>
+        private static IEnumerable<string> DrawableNames(SectionPlan plan)
+        {
+            return plan.Labels
+                .Concat(plan.Buttons)
+                .Concat(plan.Gauges)
+                .Concat(plan.Clocks)
+                .Select(type => type.Name);
+        }
+
+        /// <summary>
+        /// The behaviours a countdown row can name: a `SetDeadline(DateTime)`
+        /// is the whole of what one is asked for, and asking for it here is
+        /// what stops a name that resolves to some other MonoBehaviour from
+        /// throwing once the scene exists.
+        /// </summary>
+        private static IReadOnlyList<string> CountdownBehaviours()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(SafeTypes)
+                .Where(IsCountdownBehaviour)
+                .Select(type => type.Name)
+                .ToList();
+        }
+
+        private static bool IsCountdownBehaviour(Type type)
+        {
+            return type.IsClass && !type.IsAbstract &&
+                typeof(MonoBehaviour).IsAssignableFrom(type) &&
+                type.GetMethod("SetDeadline", new[] { typeof(DateTime) }) != null;
+        }
+
+        /// <summary>
+        /// What was on offer, for a message that has to say so in one line and
+        /// in the same order every run.
+        /// </summary>
+        private static string Listed(IEnumerable<string> names)
+        {
+            var ordered = names.Distinct(StringComparer.Ordinal)
+                .OrderBy(name => name, StringComparer.Ordinal)
+                .ToList();
+            return ordered.Count == 0 ? "none" : string.Join(", ", ordered);
         }
 
         /// <summary>
@@ -826,6 +1023,13 @@ namespace GS2Studio.Showroom.EditorTools
         /// rows appear in is the order they were declared in — there is no
         /// second pass that rearranges a finished section, because nothing
         /// composes a section that the page did not ask for.
+        ///
+        /// The warnings below are insurance rather than the guard. A declared
+        /// name that resolves to nothing has already failed the bake in
+        /// <see cref="RefuseUnresolvedDeclarations"/>, before there was a scene
+        /// to leave a row off; what reaches here is a derived section, whose
+        /// rows were read off the assembly and cannot name anything that is not
+        /// in it.
         /// </summary>
         private static void RealizeRows(
             string model, Transform body, Type handler, SectionSpec section, ShowroomPage page)
