@@ -31,8 +31,8 @@ namespace GS2Studio.Generated.Character
         /// <summary>Read from the InventoryCharacter master-data mount axis.</summary>
         InventoryCharacterMaster = 1615793260,
 
-        /// <summary>Read from the ExchangeCharacterDexRecruit master-data mount axis.</summary>
-        ExchangeCharacterDexRecruitMaster = 328040472,
+        /// <summary>Read from the ExchangeCharacterTrain master-data mount axis.</summary>
+        ExchangeCharacterTrainMaster = 649988125,
 
         /// <summary>Read from the DictionaryCharacterDictionary master-data mount axis.</summary>
         DictionaryCharacterDictionaryMaster = 1518030578,

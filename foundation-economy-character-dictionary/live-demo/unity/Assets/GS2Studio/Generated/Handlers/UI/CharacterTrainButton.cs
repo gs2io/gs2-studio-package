@@ -52,8 +52,18 @@ namespace GS2Studio.Generated.Character.UI
         public UnityEvent OnCompleted => _onCompleted;
         public ErrorEvent OnFailed => _onFailed;
 
+        /// <summary>
+        /// Loads the arguments of <c>Train</c> are read from. A row
+        /// built by a mount surface that skips one of these sends that
+        /// argument's default; the surface says which loaders it skips through
+        /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
+        /// compared before a scene is ever run.
+        /// </summary>
+        public static readonly string[] RequiredLoaders = { "UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel" };
+
         private bool _wired;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -97,6 +107,7 @@ namespace GS2Studio.Generated.Character.UI
             // read model, so the `model.X` argument expressions bind to it.
             var model = _handler.Binder;
             if (model == null) return;
+            WarnUnloadedLoadersOnce(model);
             try
             {
                 await model.Train();
@@ -114,6 +125,18 @@ namespace GS2Studio.Generated.Character.UI
                 return;
             }
             _onCompleted.Invoke();
+        }
+
+        // Warn once and still send the click. The arguments below are at their
+        // default either way, and refusing the click would change what the
+        // button does — the point here is to say which of the two it is.
+        private void WarnUnloadedLoadersOnce(IActionableCharacterBinder binder)
+        {
+            if (_warnedUnloadedLoaders) return;
+            if ((binder.LoadedUserdataInventoryCharacterItemModel || binder.LoadedUserdataExperienceCharacterExperienceExperienceModel)) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(CharacterTrainButton)} on '{name}': this row's mount surface did not run UserdataInventoryCharacterItemModel, UserdataExperienceCharacterExperienceExperienceModel, which fills what this component reads (PropertyId, Id); those readings render as their default, not as an absent value.", this);
         }
     }
 }

@@ -13,24 +13,32 @@ Resources:
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
                 request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"archer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+              - action: "Gs2Dictionary:AddEntriesByUserId"
+                request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"archer\"]}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
                 request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"healer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+              - action: "Gs2Dictionary:AddEntriesByUserId"
+                request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"healer\"]}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
                 request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+              - action: "Gs2Dictionary:AddEntriesByUserId"
+                request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"knight\"]}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
                 request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"mage\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+              - action: "Gs2Dictionary:AddEntriesByUserId"
+                request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"mage\"]}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

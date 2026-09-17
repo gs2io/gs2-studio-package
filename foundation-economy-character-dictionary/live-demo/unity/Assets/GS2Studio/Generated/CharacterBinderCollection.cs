@@ -52,8 +52,8 @@ namespace GS2Studio.Generated.Character
         void Invalidate();
         Task MountFromInventoryCharacterMasterDataAsync(CancellationToken cancellationToken = default);
         void SubscribeFromInventoryCharacterMasterData(Action? onChange = null, Action<Exception>? onError = null);
-        Task MountFromExchangeCharacterDexRecruitMasterDataAsync(CancellationToken cancellationToken = default);
-        void SubscribeFromExchangeCharacterDexRecruitMasterData(Action? onChange = null, Action<Exception>? onError = null);
+        Task MountFromExchangeCharacterTrainMasterDataAsync(CancellationToken cancellationToken = default);
+        void SubscribeFromExchangeCharacterTrainMasterData(Action? onChange = null, Action<Exception>? onError = null);
         Task MountFromDictionaryCharacterDictionaryMasterDataAsync(CancellationToken cancellationToken = default);
         void SubscribeFromDictionaryCharacterDictionaryMasterData(Action? onChange = null, Action<Exception>? onError = null);
         Task MountFromInventoryCharacterUserDataAsync(CancellationToken cancellationToken = default);
@@ -286,7 +286,7 @@ namespace GS2Studio.Generated.Character
         {
             ThrowIfDisposed();
             new ItemModelArrayLoader("Character", "Character").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("CharacterDexRecruit").Invalidate(_gs2, _session);
+            new RateModelArrayLoader("CharacterTrain").Invalidate(_gs2, _session);
             new EntryModelArrayLoader("CharacterDictionary").Invalidate(_gs2, _session);
             new ItemSetArrayLoader("Character", "Character").Invalidate(_gs2, _session);
             new EntryArrayLoader("CharacterDictionary").Invalidate(_gs2, _session);
@@ -523,30 +523,30 @@ namespace GS2Studio.Generated.Character
             if (string.IsNullOrEmpty(item.Name)) return null;
             return $"{item.Name}";
         }
-        /// <summary>One-shot Create + MountFromExchangeCharacterDexRecruitMasterDataAsync (no subscription).</summary>
-        public static async Task<CharacterBinderCollection> CreateFromExchangeCharacterDexRecruitMasterDataAsync(
+        /// <summary>One-shot Create + MountFromExchangeCharacterTrainMasterDataAsync (no subscription).</summary>
+        public static async Task<CharacterBinderCollection> CreateFromExchangeCharacterTrainMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
             string propertyId,
             CancellationToken cancellationToken = default)
         {
             var coll = new CharacterBinderCollection(gs2, session, propertyId);
-            await coll.MountFromExchangeCharacterDexRecruitMasterDataAsync(cancellationToken);
+            await coll.MountFromExchangeCharacterTrainMasterDataAsync(cancellationToken);
             return coll;
         }
 
-        public async Task MountFromExchangeCharacterDexRecruitMasterDataAsync(CancellationToken cancellationToken = default)
+        public async Task MountFromExchangeCharacterTrainMasterDataAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("CharacterDexRecruit");
+            var arrayLoader = new RateModelArrayLoader("CharacterTrain");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeCharacterDexRecruitMasterItems(items, attachChildSubscribe: false, cancellationToken);
+            await ReconcileFromExchangeCharacterTrainMasterItems(items, attachChildSubscribe: false, cancellationToken);
             _mounted = true;
         }
 
-        public void SubscribeFromExchangeCharacterDexRecruitMasterData(Action? onChange = null, Action<Exception>? onError = null)
+        public void SubscribeFromExchangeCharacterTrainMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
@@ -561,7 +561,7 @@ namespace GS2Studio.Generated.Character
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("CharacterDexRecruit");
+            var arrayLoader = new RateModelArrayLoader("CharacterTrain");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -570,7 +570,7 @@ namespace GS2Studio.Generated.Character
                     if (_disposed) return;
                     try
                     {
-                        await ReconcileFromExchangeCharacterDexRecruitMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeCharacterTrainMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
                     }
                     catch (Exception ex)
                     {
@@ -581,22 +581,22 @@ namespace GS2Studio.Generated.Character
             ));
         }
 
-        private async Task ReconcileFromExchangeCharacterDexRecruitMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeCharacterTrainMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
                 if (_disposed) return;
-                var rowKey = ExtractExchangeCharacterDexRecruitMasterRowKey(item);
+                var rowKey = ExtractExchangeCharacterTrainMasterRowKey(item);
                 if (rowKey == null) continue;
                 seen.Add(rowKey);
                 if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
                 {
-                    ApplyExchangeCharacterDexRecruitMasterItemTo(existing.MutableModel, item);
+                    ApplyExchangeCharacterTrainMasterItemTo(existing.MutableModel, item);
                 }
                 else
                 {
-                    var binder = await BuildBinderFromExchangeCharacterDexRecruitMasterItem(item, cancellationToken);
+                    var binder = await BuildBinderFromExchangeCharacterTrainMasterItem(item, cancellationToken);
                     if (_disposed)
                     {
                         binder.Dispose();
@@ -604,7 +604,7 @@ namespace GS2Studio.Generated.Character
                     }
                     if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
                     {
-                        ApplyExchangeCharacterDexRecruitMasterItemTo(raced.MutableModel, item);
+                        ApplyExchangeCharacterTrainMasterItemTo(raced.MutableModel, item);
                         binder.Dispose();
                         continue;
                     }
@@ -653,16 +653,16 @@ namespace GS2Studio.Generated.Character
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterBinder> BuildBinderFromExchangeCharacterDexRecruitMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<CharacterBinder> BuildBinderFromExchangeCharacterTrainMasterItem(EzRateModel item, CancellationToken cancellationToken)
         {
             var model = CharacterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name)), string.Empty);
-            ApplyExchangeCharacterDexRecruitMasterItemTo(model, item);
-            var binder = new CharacterBinder(model, _gs2, _session, _mountSurface: CharacterMountSurface.ExchangeCharacterDexRecruitMaster);
+            ApplyExchangeCharacterTrainMasterItemTo(model, item);
+            var binder = new CharacterBinder(model, _gs2, _session, _mountSurface: CharacterMountSurface.ExchangeCharacterTrainMaster);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
 
-        private static void ApplyExchangeCharacterDexRecruitMasterItemTo(MutableCharacter model, EzRateModel item)
+        private static void ApplyExchangeCharacterTrainMasterItemTo(MutableCharacter model, EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -671,14 +671,14 @@ namespace GS2Studio.Generated.Character
             _ = model;
         }
 
-        private CharacterId ExtractExchangeCharacterDexRecruitMasterIdentity(EzRateModel item)
+        private CharacterId ExtractExchangeCharacterTrainMasterIdentity(EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name));
         }
 
-        private string? ExtractExchangeCharacterDexRecruitMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeCharacterTrainMasterRowKey(EzRateModel item)
         {
-            var id = ExtractExchangeCharacterDexRecruitMasterIdentity(item);
+            var id = ExtractExchangeCharacterTrainMasterIdentity(item);
             if (EqualityComparer<CharacterId>.Default.Equals(id, default)) return null;
             if (string.IsNullOrEmpty(item.Name)) return null;
             return $"{item.Name}";
