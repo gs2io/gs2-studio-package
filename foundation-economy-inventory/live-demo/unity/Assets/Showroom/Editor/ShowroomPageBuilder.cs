@@ -855,8 +855,9 @@ namespace GS2Studio.Showroom.EditorTools
                 {
                     problems.Add(
                         $"[showroom] {plan.Model}: `page.json` asks for a row of " +
-                        $"'{row.Component}', which this demo generated no component named. It " +
-                        $"generated {Listed(DrawableNames(plan))}.");
+                        $"'{row.Component}', which this demo neither generated nor wrote. It " +
+                        $"generated {Listed(DrawableNames(plan))}" +
+                        $"{WrittenSuffix()}.");
                 }
                 else if (!IsGauge(component) && !IsClock(component) &&
                          !IsButton(component) && !IsLabel(component))
@@ -869,8 +870,9 @@ namespace GS2Studio.Showroom.EditorTools
                 {
                     problems.Add(
                         $"[showroom] {plan.Model}: '{row.Component}' names '{row.Caption}' as " +
-                        "its reading, which this demo generated no component named. It " +
-                        $"generated {Listed(plan.Labels.Select(type => type.Name))}.");
+                        "its reading, which this demo neither generated nor wrote. It " +
+                        $"generated {Listed(plan.Labels.Select(type => type.Name))}" +
+                        $"{WrittenSuffix()}.");
                 }
             }
         }
@@ -969,6 +971,16 @@ namespace GS2Studio.Showroom.EditorTools
                 typeof(MonoBehaviour).IsAssignableFrom(type) &&
                 !(type.Namespace ?? "").StartsWith(GeneratedNamespacePrefix) &&
                 type.GetMethod("SetDeadline", new[] { typeof(DateTime) }) != null;
+        }
+
+        /// <summary>
+        /// What the demo wrote itself, for a refusal that has to account for
+        /// both halves of what a row may name.
+        /// </summary>
+        private static string WrittenSuffix()
+        {
+            var written = DemoWrittenRowBehaviours().Select(type => type.Name).ToList();
+            return written.Count == 0 ? "" : $", and wrote {Listed(written)}";
         }
 
         /// <summary>
@@ -1475,11 +1487,61 @@ namespace GS2Studio.Showroom.EditorTools
             return $"{{\"component\": \"{row.Component}\", \"caption\": \"{row.Caption}\"}}";
         }
 
+        /// <summary>
+        /// The component a row names: one the package generated for this
+        /// handler, or one the demo wrote itself.
+        ///
+        /// A generated button knows the action it calls and nothing about the
+        /// call's surroundings — which wallet a purchase deposits into, which
+        /// receipt it verifies against. Those are the demo's, the same way the
+        /// countdown behaviour is, so a row may name a behaviour the demo
+        /// wrote. It is drawn exactly like a generated one: this page tells the
+        /// kinds of row apart by shape, so a demo's behaviour is a button when
+        /// it carries a button's shape.
+        ///
+        /// Generated first, so what a package emits cannot be shadowed by a
+        /// name a demo happens to reuse.
+        /// </summary>
         private static Type UiComponentNamed(Type handler, string name)
         {
             var uiNamespace = handler.Namespace + ".UI";
-            return SafeTypes(handler.Assembly).FirstOrDefault(
+            var generated = SafeTypes(handler.Assembly).FirstOrDefault(
                 type => type.Namespace == uiNamespace && type.Name == name);
+            if (generated != null) return generated;
+            var written = DemoWrittenRowBehaviours()
+                .Where(type => type.Name == name)
+                .ToList();
+            if (written.Count > 1)
+            {
+                throw new InvalidOperationException(
+                    $"[showroom] `page.json` asks for a row of '{name}' and this demo wrote " +
+                    $"{written.Count} behaviours by that name ({Listed(written.Select(FullName))}). " +
+                    "A row names one behaviour, so rename all but one.");
+            }
+            return written.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// The behaviours the demo wrote that a page can draw as a row.
+        ///
+        /// Generated components are not among them — a package's own emission
+        /// is found through its handler, and a generator that one day emits the
+        /// same name must not be able to make a demo's behaviour ambiguous.
+        /// </summary>
+        private static IEnumerable<Type> DemoWrittenRowBehaviours()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(SafeTypes)
+                .Where(type =>
+                    type.IsClass && !type.IsAbstract &&
+                    typeof(MonoBehaviour).IsAssignableFrom(type) &&
+                    !(type.Namespace ?? "").StartsWith(GeneratedNamespacePrefix) &&
+                    (IsGauge(type) || IsClock(type) || IsButton(type) || IsLabel(type)));
+        }
+
+        private static string FullName(Type type)
+        {
+            return type.Namespace == null ? type.Name : $"{type.Namespace}.{type.Name}";
         }
 
         private static bool IsGauge(Type component)
