@@ -138,7 +138,7 @@ namespace GS2Studio.Generated.StorePrice
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader = new DisplayItemModelLoader("ShopCurrency", _model.Id, _model.Id);
+            __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader = new DisplayItemModelLoader("ShopCurrency", _model.CurrencyType, _model.Id);
         }
 
         /// <summary>
