@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-energy-demo",
+  "types": {
+    "Energy": {
+      "id": "dt_01M2JG8Q6GMNFPA3732XVHMCN5",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-energy",
+      "canonicalTypeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY"
+    }
+  },
+  "masterDataResources": {
+    "transaction.AcquireAction": "91d2481b-a3cc-557f-bff7-ba4838fea35b",
+    "transaction.ConsumeAction": "e24a590c-f83a-5560-981f-b9b7199f0402"
+  },
+  "transforms": {}
+}

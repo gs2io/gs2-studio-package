@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-character-dictionary-demo",
+  "types": {
+    "CharacterRecruit": {
+      "id": "dt_01M2Q9FEF57E7NB4TFVDZ3VC74",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character-demo",
+      "canonicalTypeId": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}

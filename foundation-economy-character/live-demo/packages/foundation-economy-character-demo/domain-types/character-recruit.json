@@ -46,6 +46,30 @@
           "kind": "ref",
           "targetTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
         }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M2Q9BWYYFN8TWP4PNP1SYWBF",
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions other installed packages add to this recruit. Not authored here.",
+            "label": "Added acquire actions"
+          },
+          "ja": {
+            "description": "同時に導入した他のパッケージが、この勧誘に足す獲得アクションです。直接は編集しません。",
+            "label": "追加の獲得アクション"
+          }
+        },
+        "name": "extraActions",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
       }
     ]
   },

@@ -34,6 +34,13 @@ const CharacterExperience = character.type("CharacterExperience");
 /**
  * One character a visitor can recruit. The row names the character it grants,
  * which is what the exchange hands to `AcquireCharacter`.
+ *
+ * `extraActions` is the room a recruit leaves for the packages installed
+ * beside it. Nothing authors a value for it — a package that wants recruiting
+ * to do something more (file the character into a dex, say) overlays this type
+ * and appends its own action to the slot. Left alone the slot carries no
+ * action at all and is dropped rather than emitted, so a demo that installs
+ * nothing extra exchanges exactly what it did before.
  */
 const CharacterRecruit = defineDomainType("CharacterRecruit", domainType =>
   domainType
@@ -42,6 +49,7 @@ const CharacterRecruit = defineDomainType("CharacterRecruit", domainType =>
         .masterData()
         .required()
     )
+    .property(PT.prop("extraActions", PT.listOf(PT.acquireAction())).masterData())
     .localizedProperties({
       id: {
         ja: { label: "勧誘", description: "デモでキャラクターを1体入手します。" },
@@ -50,6 +58,18 @@ const CharacterRecruit = defineDomainType("CharacterRecruit", domainType =>
       character: {
         ja: { label: "キャラクター", description: "この勧誘が付与するキャラクターです。" },
         en: { label: "Character", description: "The character this recruit grants." },
+      },
+      extraActions: {
+        ja: {
+          label: "追加の獲得アクション",
+          description:
+            "同時に導入した他のパッケージが、この勧誘に足す獲得アクションです。直接は編集しません。",
+        },
+        en: {
+          label: "Added acquire actions",
+          description:
+            "Acquire actions other installed packages add to this recruit. Not authored here.",
+        },
       },
     })
 );
@@ -77,6 +97,18 @@ const RecruitRateModel = defineMasterDataResource(resource =>
             ),
             Arg.static("count", 1),
           ]),
+        });
+    })
+    // The slot descendants append into. It is bound to `extraActions`, which
+    // no row fills, so on its own it names no action and is dropped.
+    .addArrayChild("acquireActions", extraAction => {
+      extraAction
+        .model(GS2.transaction.AcquireAction)
+        .mountLocal(CharacterRecruit)
+        .bindings({
+          action: Bind.domainProperty(
+            Source.parent(Source.direct(CharacterRecruit, "extraActions"))
+          ),
         });
     })
 );

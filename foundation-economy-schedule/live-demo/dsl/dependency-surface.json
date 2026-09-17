@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-schedule-demo",
+  "types": {
+    "Schedule": {
+      "id": "dt_01M2K159BPMEWBYY7W6YT7B1ZP",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-schedule",
+      "canonicalTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+    },
+    "Trigger": {
+      "id": "dt_01M2K159BPQJXG6NHERRE6QEGG",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-schedule",
+      "canonicalTypeId": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST"
+    },
+    "TriggerPull": {
+      "id": "dt_01M2K1JA50RTYBQZD91E00DJTF",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-schedule-demo",
+      "canonicalTypeId": "dt_01M2K1JA50RTYBQZD91E00DJTF",
+      "properties": {
+        "id": "prop_reserved_id",
+        "trigger": "prop_01M2K1JA50HQ4YC5CVCFWZ9DJ7"
+      }
+    }
+  },
+  "masterDataResources": {
+    "transaction.ConsumeAction": "67c7ff8e-c6b3-5f48-81c0-635ebe785354"
+  },
+  "transforms": {}
+}

@@ -1,18 +1,25 @@
 {
   "schemaVersion": 1,
   "retired": {
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0": "4aa78e66-92f3-548f-954b-5d92c466c1e9",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0": "eb8a3f55-48d0-5182-acce-e60cffd98363",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[0]#0": "0c7be9f9-71fd-5772-b063-71d573763e63",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[1]#0": "0cfc3c6b-8256-5f8a-970f-706866a81e74",
     "row:dt_HAZCRJ576BHDWFVB28NQW77Y01.characterexperience": "row_01M2M8WDV04QFWGCKY73VKW2TY",
     "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.archer": "row_01M2M8WDV0K8EJ37SYKR0DZDS2",
     "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.healer": "row_01M2M8WDV00PZ23PG931C5HQNZ",
     "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.knight": "row_01M2M8WDV02NGNVYAZDDRBV16X",
     "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.mage": "row_01M2M8WDV02TPCSFY7PJVAQHSP",
     "row:dt_ZR7PA0W682HX7ZFXGBE4BRF37K.charactercollection": "row_01M2M8WDV0H54GN9W1SB4BGTA1",
+    "type:Character": "dt_01M2M8WDV0M1NN3AYHYAHFNAWK",
     "type:CharacterCollection": "dt_01M2M8WDV0F55Q58Q0NNCB9NX2",
     "type:CharacterExperience": "dt_01M2M8WDV0928KH4E55R7CQM0D",
-    "ui:Character:Character:item:MarkButton": "64a37c55-36b1-5b89-af42-daf9fe47ae20"
+    "ui:Character:Character:definition": "55242a3f-ca3f-503a-b6c8-a33fb4dc18a0",
+    "ui:Character:Character:item:MarkButton": "64a37c55-36b1-5b89-af42-daf9fe47ae20",
+    "ui:Character:Character:item:RecruitButton": "6b9ed8e9-84b3-5dd7-ba00-4e4a1f3646b7"
   },
   "random": {
-    "type:Character": "dt_01M2M8WDV0M1NN3AYHYAHFNAWK"
+    "type:CharacterRecruit": "dt_01M2Q9FEF57E7NB4TFVDZ3VC74"
   },
   "deterministicOverrides": {}
 }

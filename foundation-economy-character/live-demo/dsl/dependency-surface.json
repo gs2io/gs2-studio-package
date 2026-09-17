@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-character-demo",
+  "types": {
+    "Character": {
+      "id": "dt_01M2FZNNF20R4VKFQ0JMNXKT4B",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+    },
+    "CharacterCollection": {
+      "id": "dt_01M2FZNNF238EP6W1N0VCR6GCP",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K"
+    },
+    "CharacterExperience": {
+      "id": "dt_01M2FZNNF26XCS5BNGCW5YSBA2",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01"
+    },
+    "CharacterRecruit": {
+      "id": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character-demo",
+      "canonicalTypeId": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J",
+      "properties": {
+        "character": "prop_01M2GJ5HFJCH04MAQB4D9DQYKY",
+        "extraActions": "prop_01M2Q9BWYYFN8TWP4PNP1SYWBF",
+        "id": "prop_reserved_id"
+      }
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-inventory-demo",
+  "types": {
+    "Item": {
+      "id": "dt_01M2JNQ96HQN4AB5VK9EGMS3YV",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-inventory",
+      "canonicalTypeId": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6"
+    }
+  },
+  "masterDataResources": {
+    "transaction.AcquireAction": "41b87d6b-0edf-5455-9548-dbffc7bc7864",
+    "transaction.ConsumeAction": "d2910222-a99f-584b-833f-1e300d6b2130"
+  },
+  "transforms": {}
+}
