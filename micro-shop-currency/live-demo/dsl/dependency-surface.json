@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-shop-currency-demo",
+  "types": {
+    "CurrencyStore": {
+      "id": "dt_01M2QRVJ72GRV2TF11KC9T8ZWW",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-currency",
+      "canonicalTypeId": "dt_BMT0H7ME2SSDZRHGNZF012YZVR"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}

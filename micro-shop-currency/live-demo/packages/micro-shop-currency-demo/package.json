@@ -1,0 +1,19 @@
+{
+  "id": "micro-shop-currency-demo",
+  "name": "micro-shop-currency-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the wallet a purchase lands in, and the test-purchase setting it needs.",
+      "ja": "ライブデモ用に、通貨ショップの購入先となるウォレットとテスト購入の設定を揃えます。"
+    },
+    "label": {
+      "en": "Currency Shop (demo data)",
+      "ja": "通貨ショップ（デモデータ）"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M2QRVJ72GRV2TF11KC9T8ZWW",
+  "kind": "overlay",
+  "name": "CurrencyStore",
+  "renamedInheritedProperties": {},
+  "singleEntry": true,
+  "source": {
+    "directSourcePackageId": "foundation-economy-currency",
+    "directSourceTypeId": "dt_BMT0H7ME2SSDZRHGNZF012YZVR",
+    "sourcePackageId": "foundation-economy-currency",
+    "sourceTypeId": "dt_BMT0H7ME2SSDZRHGNZF012YZVR"
+  }
+}

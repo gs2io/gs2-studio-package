@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "StoreProduct": {
+      "scope": {
+        "currencyType": "XXX"
+      },
+      "rows": [
+        {
+          "component": "StoreProductBuyButton",
+          "caption": "StoreProductCountLabel"
+        }
+      ]
+    },
+    "Wallet": {
+      "key": {
+        "slot": 0
+      },
+      "rows": [
+        "WalletFreeBalanceLabel",
+        "WalletPaidBalanceLabel",
+        "WalletTotalBalanceLabel"
+      ]
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "CurrencyType": {
+      "rows": []
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_BMT0H7ME2SSDZRHGNZF012YZVR.currencystore": "row_01M2QRTVNC7JK5251ZKV4W39AT",
+    "type:CurrencyStore": "dt_01M2QRVJ72GRV2TF11KC9T8ZWW"
+  },
+  "deterministicOverrides": {}
+}

@@ -1,0 +1,33 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  Money2CurrentModelMaster_Currency:
+    Type: "GS2::Money2::CurrentModelMaster"
+    Properties:
+      NamespaceName: "Currency"
+      Settings:
+        version: "2024-06-20"
+        storeContentModels:
+          - name: "tier1"
+          - name: "tier2"
+          - name: "tier3"
+          - name: "tier4"
+          - name: "tier5"
+        storeSubscriptionContentModels: []
+      Mode: "direct"
+    DependsOn:
+      - "Money2Namespace_Currency"
+  Money2Namespace_Currency:
+    Type: "GS2::Money2::Namespace"
+    Properties:
+      CurrencyUsagePriority: "PrioritizeFree"
+      Name: "Currency"
+      PlatformSetting:
+        AppleAppStore: {}
+        Fake:
+          AcceptFakeReceipt: "Accept"
+        GooglePlay: {}
+      SharedFreeCurrency: false
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

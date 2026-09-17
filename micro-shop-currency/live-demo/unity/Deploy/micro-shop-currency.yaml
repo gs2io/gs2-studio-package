@@ -1,0 +1,207 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ShowcaseCurrentShowcaseMaster_ShopCurrency:
+    Type: "GS2::Showcase::CurrentShowcaseMaster"
+    Properties:
+      NamespaceName: "ShopCurrency"
+      Settings:
+        version: "2019-04-04"
+        showcases:
+          - name: "JPY"
+            displayItems:
+              - displayItemId: "tier1.JPY"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier1"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier1\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":100,\"currency\":\"JPY\",\"count\":10}]}"
+              - displayItemId: "tier2.JPY"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier2"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier2\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":200,\"currency\":\"JPY\",\"count\":50}]}"
+              - displayItemId: "tier3.JPY"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier3"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier3\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":300,\"currency\":\"JPY\",\"count\":250}]}"
+              - displayItemId: "tier4.JPY"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier4"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier4\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":400,\"currency\":\"JPY\",\"count\":1250}]}"
+              - displayItemId: "tier5.JPY"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier5"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier5\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":500,\"currency\":\"JPY\",\"count\":6000}]}"
+          - name: "USD"
+            displayItems:
+              - displayItemId: "tier1.USD"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier1"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier1\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":1,\"currency\":\"USD\",\"count\":10}]}"
+              - displayItemId: "tier2.USD"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier2"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier2\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":2,\"currency\":\"USD\",\"count\":50}]}"
+              - displayItemId: "tier3.USD"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier3"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier3\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":3,\"currency\":\"USD\",\"count\":250}]}"
+              - displayItemId: "tier4.USD"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier4"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier4\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":4,\"currency\":\"USD\",\"count\":1250}]}"
+              - displayItemId: "tier5.USD"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier5"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier5\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":5,\"currency\":\"USD\",\"count\":6000}]}"
+          - name: "XXX"
+            displayItems:
+              - displayItemId: "tier1.XXX"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier1"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier1\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":1,\"currency\":\"XXX\",\"count\":10}]}"
+              - displayItemId: "tier2.XXX"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier2"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier2\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":2,\"currency\":\"XXX\",\"count\":50}]}"
+              - displayItemId: "tier3.XXX"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier3"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier3\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":3,\"currency\":\"XXX\",\"count\":250}]}"
+              - displayItemId: "tier4.XXX"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier4"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier4\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":4,\"currency\":\"XXX\",\"count\":1250}]}"
+              - displayItemId: "tier5.XXX"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "tier5"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"tier5\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":5,\"currency\":\"XXX\",\"count\":6000}]}"
+        randomShowcases: []
+      Mode: "direct"
+    DependsOn:
+      - "ShowcaseNamespace_ShopCurrency"
+  ShowcaseNamespace_ShopCurrency:
+    Type: "GS2::Showcase::Namespace"
+    Properties:
+      Name: "ShopCurrency"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
