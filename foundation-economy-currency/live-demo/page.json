@@ -17,7 +17,14 @@
       ]
     },
     "Wallet": {
-      "rows": ["WalletFreeBalanceLabel", "WalletPaidBalanceLabel", "WalletTotalBalanceLabel"]
+      "key": {
+        "slot": 0
+      },
+      "rows": [
+        "WalletFreeBalanceLabel",
+        "WalletPaidBalanceLabel",
+        "WalletTotalBalanceLabel"
+      ]
     }
   }
 }

@@ -13,6 +13,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -93,6 +94,21 @@ namespace GS2Studio.Showroom.EditorTools
             public List<RowSpec> Rows = new List<RowSpec>();
             /// <summary>Condition component name to the rows it governs.</summary>
             public Dictionary<string, string[]> Toggles = new Dictionary<string, string[]>();
+            /// <summary>
+            /// The one row this section shows, as the keys that name it —
+            /// `SetKeys`' parameters to the values the page pins them to.
+            ///
+            /// A keyed model is a set of rows and is drawn as a list, but a
+            /// list is read by describing, and describing never brings a row
+            /// into being. GS2 creates a user-data row on the read that names
+            /// it, so a row that does not exist yet can only be shown by
+            /// naming its keys: a wallet the player has never deposited into
+            /// is absent from every enumeration and arrives with zeroes the
+            /// moment its slot is read.
+            ///
+            /// Empty means the section is a list.
+            /// </summary>
+            public Dictionary<string, string> Key = new Dictionary<string, string>();
         }
 
         /// <summary>
@@ -222,6 +238,10 @@ namespace GS2Studio.Showroom.EditorTools
                 else if (parts[0] == "toggle" && parts.Length > 3)
                 {
                     section.Toggles[parts[2]] = parts[3].Split('|');
+                }
+                else if (parts[0] == "key" && parts.Length > 3)
+                {
+                    section.Key[parts[2]] = parts[3];
                 }
             }
             return declared;
@@ -535,7 +555,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // Asked here rather than where the list is built, because the
                 // declaration a model needs written depends on it: only a list
                 // with an axis field has an axis to name.
-                if (NeedsIdentityKeys(handler))
+                if (NeedsIdentityKeys(handler) && !DeclaresKey(model))
                 {
                     plan.ListHandler = SiblingType(handler, model + "ListHandler");
                     plan.ItemHandler = SiblingType(handler, model + "ListItemHandler");
@@ -798,6 +818,7 @@ namespace GS2Studio.Showroom.EditorTools
                 }
                 CollectRowProblems(plan, entry.Value, problems);
                 CollectToggleProblems(plan, entry.Value, problems);
+                CollectKeyProblems(plan, entry.Value, problems);
                 if (DrawsClock(plan, entry.Value)) clockModels.Add(entry.Key);
             }
             // Asked of the rows a page declares rather than of the components a
@@ -845,6 +866,63 @@ namespace GS2Studio.Showroom.EditorTools
         /// component it never generated, one that is no kind of row this page
         /// draws, or a reading that is not there.
         /// </summary>
+        /// <summary>
+        /// What a section's declared key names that the model cannot answer.
+        ///
+        /// A key holds the section to one row instead of listing it, so it has
+        /// to name that row exactly: every key the model is identified by, and
+        /// no name it does not have. A partial key would leave the rest at
+        /// whatever a freshly added component starts holding, which is the
+        /// silent mis-binding the list exists to avoid.
+        /// </summary>
+        private static void CollectKeyProblems(
+            SectionPlan plan, SectionSpec declared, List<string> problems)
+        {
+            if (declared.Key.Count == 0) return;
+            var identity = IdentityKeyNames(plan.Handler);
+            if (identity.Count == 0)
+            {
+                problems.Add(
+                    $"[showroom] {plan.Model}: `page.json` names a key for it, and it is not " +
+                    "identified by one — it is a single row already, so there is nothing to pin.");
+                return;
+            }
+            foreach (var name in declared.Key.Keys.OrderBy(name => name, StringComparer.Ordinal))
+            {
+                if (!identity.Contains(name))
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: `page.json` pins '{name}', which is not one of " +
+                        $"the keys this model is identified by. It is identified by " +
+                        $"{Listed(identity)}.");
+                }
+            }
+            foreach (var name in identity)
+            {
+                if (!declared.Key.ContainsKey(name))
+                {
+                    problems.Add(
+                        $"[showroom] {plan.Model}: `page.json` pins it to one row without naming " +
+                        $"'{name}', and a row is named by {Listed(identity)}. Name every one of " +
+                        "them, or drop the key and let the page list the model.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// The keys a model is identified by, as `SetKeys` names them.
+        /// </summary>
+        private static IReadOnlyList<string> IdentityKeyNames(Type handler)
+        {
+            var setKeys = handler.GetMethods()
+                .Where(method => method.Name == "SetKeys")
+                .OrderByDescending(method => method.GetParameters().Length)
+                .FirstOrDefault();
+            return setKeys == null
+                ? new List<string>()
+                : setKeys.GetParameters().Select(parameter => parameter.Name).ToList();
+        }
+
         private static void CollectRowProblems(
             SectionPlan plan, SectionSpec declared, List<string> problems)
         {
@@ -1078,8 +1156,8 @@ namespace GS2Studio.Showroom.EditorTools
                     // `placed`, because a handler that draws nothing has
                     // nothing to redraw, and reloading it after every action
                     // would throw away a cache for no one.
-                    if (!NeedsIdentityKeys(plan.Handler))
-                        content.gameObject.AddComponent(plan.Handler);
+                    if (!NeedsIdentityKeys(plan.Handler) || DeclaresKey(plan.Model))
+                        PlaceHandler(content.gameObject, plan);
                     continue;
                 }
 
@@ -1093,7 +1171,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (explainer != null) explainer.gameObject.SetActive(false);
                 sections.Add((plan.Handler, section.transform));
 
-                if (NeedsIdentityKeys(plan.Handler))
+                if (NeedsIdentityKeys(plan.Handler) && !DeclaresKey(plan.Model))
                 {
                     var itemPrefab = AddList(section, plan, page);
                     if (itemPrefab != null) itemPrefabs.Add(itemPrefab);
@@ -1107,7 +1185,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // climb `label -> Items -> Section -> content` — and a gauge in
                 // another section's list row can now read it too, which is what
                 // a reading composed from two models needs.
-                placed.Add(content.gameObject.AddComponent(plan.Handler));
+                placed.Add(PlaceHandler(content.gameObject, plan));
                 var body = ItemsOf(section.transform);
                 RealizeRows(plan.Model, body, plan.Handler, plan.Section, page, plan.Countdown);
                 WireToggles(plan.Model, section, plan.Toggles, body, plan.Section);
@@ -1453,6 +1531,42 @@ namespace GS2Studio.Showroom.EditorTools
         /// as before. Leaving a model out of `page.json` is not a way to take
         /// its section off the page; declaring it with no rows is.
         /// </summary>
+        /// <summary>
+        /// Whether the page pins this model to one row rather than listing it.
+        /// </summary>
+        private static bool DeclaresKey(string model)
+        {
+            return _declaredSections.TryGetValue(model, out var declared) && declared.Key.Count > 0;
+        }
+
+        /// <summary>
+        /// Mount the handler, holding it to the row the page named.
+        ///
+        /// The keys go in as serialized fields rather than through `SetKeys`,
+        /// because this runs with no scene playing: the handler reads them for
+        /// itself when it starts, which is the same thing the Inspector does.
+        /// </summary>
+        private static Component PlaceHandler(GameObject host, SectionPlan plan)
+        {
+            var component = host.AddComponent(plan.Handler);
+            if (!DeclaresKey(plan.Model)) return component;
+            var serialized = new SerializedObject(component);
+            foreach (var key in _declaredSections[plan.Model].Key)
+            {
+                var property = serialized.FindProperty("_" + key.Key);
+                if (property.propertyType == SerializedPropertyType.Integer)
+                {
+                    property.intValue = int.Parse(key.Value, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    property.stringValue = key.Value;
+                }
+            }
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            return component;
+        }
+
         private static bool DeclaresNoRows(string model)
         {
             return _declaredSections.TryGetValue(model, out var declared) &&
