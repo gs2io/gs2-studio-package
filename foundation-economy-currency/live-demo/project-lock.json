@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "af9ccc364cea41fcf0930a210320e039f8912cec",
-      "integrity": "sha256-xfhd0V5RfJpKeHes199hh24JjrqjiptS4HYY1AqWoC8=",
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
       "owner": "gs2io",
       "packageId": "foundation-economy-currency",
       "repo": "gs2-studio-package",

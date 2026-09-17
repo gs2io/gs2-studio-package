@@ -49,6 +49,13 @@ namespace GS2Studio.Generated.Wallet
         private IWalletBinderFactory? _binderFactory;
 
         private IWalletBinderCollection? _collection;
+        // ReloadAsync binds every collection callback to the operation and
+        // collection that created it. This prevents a stale mount / callback
+        // from mutating the collection installed by a newer reload.
+        private long _reloadGeneration;
+        private Action<IWalletBinder>? _collectionItemAddedCallback;
+        private Action<IWalletBinder>? _collectionItemRemovedCallback;
+        private bool _isDestroyed;
         // Keyed by the non-owning binder view (the same instance the collection
         // yields when iterated / via SyncSiblingOrder); owning binders arrive
         // through the internal ItemAdded/ItemRemoved wiring events.
@@ -64,8 +71,9 @@ namespace GS2Studio.Generated.Wallet
         // OnCollectionChanged. Without this guard, Resort would recurse.
         private bool _suppressOnChange;
 
-        /// <summary>Stable, identity-keyed non-owning view of the current binder set.
-        /// The collection itself is the IReadOnlyList&lt;IActionableWalletBinder&gt;.</summary>
+        /// <summary>Stable index/enumeration view of the current non-owning
+        /// binder set. Model.Id is not unique across rows; the collection
+        /// itself is the IReadOnlyList&lt;IActionableWalletBinder&gt;.</summary>
         public IReadOnlyList<IActionableWalletBinder> Binders =>
             (IReadOnlyList<IActionableWalletBinder>?)_collection ?? Array.Empty<IActionableWalletBinder>();
 
@@ -105,7 +113,9 @@ namespace GS2Studio.Generated.Wallet
             set
             {
                 _comparer = value;
-                if (_collection == null) return;
+                var operationGeneration = _reloadGeneration;
+                var collection = _collection;
+                if (collection == null) return;
                 // Collection.Comparer rejects null with ArgumentNullException;
                 // substitute the generated default comparer so external callers
                 // can clear via `Comparer = null`. The comparer is a nested
@@ -115,13 +125,15 @@ namespace GS2Studio.Generated.Wallet
                 _suppressOnChange = true;
                 try
                 {
-                    _collection.Comparer = applied;
+                    collection.Comparer = applied;
                 }
                 finally
                 {
                     _suppressOnChange = false;
                 }
-                SyncSiblingOrder();
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+                SyncSiblingOrder(operationGeneration, collection);
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
                 ListChanged?.Invoke();
             }
         }
@@ -158,7 +170,9 @@ namespace GS2Studio.Generated.Wallet
         /// </summary>
         public void Resort()
         {
-            if (_collection == null) return;
+            var operationGeneration = _reloadGeneration;
+            var collection = _collection;
+            if (collection == null) return;
             // Re-assigning the same Comparer is the only public re-sort hook
             // on the BinderCollection surface. The setter calls SortBinders
             // and fires _onChange — guard re-entry via _suppressOnChange so
@@ -166,13 +180,15 @@ namespace GS2Studio.Generated.Wallet
             _suppressOnChange = true;
             try
             {
-                _collection.Comparer = _collection.Comparer;
+                collection.Comparer = collection.Comparer;
             }
             finally
             {
                 _suppressOnChange = false;
             }
-            SyncSiblingOrder();
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
         }
 
@@ -183,43 +199,59 @@ namespace GS2Studio.Generated.Wallet
         /// </summary>
         public async Task ReloadAsync(CancellationToken cancellationToken = default)
         {
+            if (_isDestroyed) return;
+            var operationGeneration = ++_reloadGeneration;
+            IWalletBinderCollection? operationCollection = null;
             try
             {
                 Cleanup();
+                if (!IsCurrentOperation(operationGeneration, null)) return;
                 // Cleanup torn down any prior collection; notify so out-of-range
                 // list-item handlers clear before the fresh collection rebuilds.
                 ListChanged?.Invoke();
+                if (operationGeneration != _reloadGeneration) return;
                 var provider = ResolveRuntimeProvider();
                 if (provider == null)
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
 
-                _collection = ResolveBinderFactory().CreateCollection(gs2, session);
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session);
+                operationCollection = collection;
+                if (!IsCurrentOperation(operationGeneration, null))
+                {
+                    collection.Dispose();
+                    return;
+                }
+                _collection = collection;
 
                 // Re-apply a comparer that was set before / between Reloads so
                 // the freshly-built collection adopts it. Done before Mount so
                 // the initial reconcile already produces the sorted order.
                 if (_comparer != null)
                 {
-                    _collection.Comparer = _comparer;
+                    collection.Comparer = _comparer;
                 }
 
                 // Subscribe BEFORE Mount: the collection's reconcile invokes
                 // ItemAdded for every initial binder, so child handler creation
                 // happens through OnItemAdded rather than a post-mount foreach.
-                _collection.ItemAdded += OnItemAdded;
-                _collection.ItemRemoved += OnItemRemoved;
+                AttachCollectionCallbacks(operationGeneration, collection);
 
-                await _collection.MountFromMoney2CurrencyUserDataAsync(cancellationToken);
+                await collection.MountFromMoney2CurrencyUserDataAsync(cancellationToken);
 
-                SyncSiblingOrder();
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+                SyncSiblingOrder(operationGeneration, collection);
 
                 if (_autoSubscribe)
                 {
-                    _collection.SubscribeFromMoney2CurrencyUserData(OnCollectionChanged, OnCollectionFailed);
+                    if (!IsCurrentOperation(operationGeneration, collection)) return;
+                    Action collectionChanged = () => OnCollectionChanged(operationGeneration, collection);
+                    Action<Exception> collectionFailed = ex => OnCollectionFailed(operationGeneration, collection, ex);
+                    collection.SubscribeFromMoney2CurrencyUserData(collectionChanged, collectionFailed);
                 }
 
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
                 ListChanged?.Invoke();
             }
             catch (OperationCanceledException)
@@ -227,20 +259,28 @@ namespace GS2Studio.Generated.Wallet
                 // Cancellation (e.g. GameObject destroyed mid-reload): discard the
                 // partially-built collection and notify so list-item handlers fall
                 // back to empty state, then propagate without raising Failed.
-                Cleanup();
-                ListChanged?.Invoke();
+                if (IsCurrentOperation(operationGeneration, operationCollection))
+                {
+                    Cleanup();
+                    if (IsCurrentOperation(operationGeneration, null)) ListChanged?.Invoke();
+                }
                 throw;
             }
             catch (Exception ex)
             {
-                // Raise Failed for event subscribers, discard the partially-built
-                // collection and notify so list-item handlers fall back to empty
-                // state, then rethrow so an awaiting caller also observes the
-                // failure. The fire-and-forget Start path uses TryReloadAsync,
-                // which logs and swallows.
-                Failed?.Invoke(ex);
-                Cleanup();
-                ListChanged?.Invoke();
+                // Discard the partially-built collection, raise Failed for event
+                // subscribers, and notify so list-item handlers fall back to empty
+                // state. Re-check after each callback-bearing step because either
+                // may synchronously start a newer reload.
+                if (IsCurrentOperation(operationGeneration, operationCollection))
+                {
+                    Cleanup();
+                    if (IsCurrentOperation(operationGeneration, null))
+                    {
+                        Failed?.Invoke(ex);
+                        if (IsCurrentOperation(operationGeneration, null)) ListChanged?.Invoke();
+                    }
+                }
                 throw;
             }
         }
@@ -307,22 +347,55 @@ namespace GS2Studio.Generated.Wallet
 
         private bool IsReadyForReload()
         {
+            if (_isDestroyed) return false;
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             return true;
         }
 
-        private void OnItemAdded(IWalletBinder binder)
+        private bool IsCurrentOperation(long operationGeneration, IWalletBinderCollection? operationCollection)
+            => !_isDestroyed
+                && operationGeneration == _reloadGeneration
+                && (operationCollection == null
+                    ? _collection == null
+                    : ReferenceEquals(_collection, operationCollection));
+
+        private void AttachCollectionCallbacks(
+            long operationGeneration,
+            IWalletBinderCollection collection)
         {
-            CreateItem(binder);
-            SyncSiblingOrder();
+            Action<IWalletBinder> itemAdded = binder =>
+                OnItemAdded(operationGeneration, collection, binder);
+            Action<IWalletBinder> itemRemoved = binder =>
+                OnItemRemoved(operationGeneration, collection, binder);
+            _collectionItemAddedCallback = itemAdded;
+            _collectionItemRemovedCallback = itemRemoved;
+            collection.ItemAdded += itemAdded;
+            collection.ItemRemoved += itemRemoved;
+        }
+
+        private void OnItemAdded(
+            long operationGeneration,
+            IWalletBinderCollection collection,
+            IWalletBinder binder)
+        {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            CreateItem(operationGeneration, collection, binder);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ItemAdded?.Invoke(binder);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
         }
 
-        private void OnItemRemoved(IWalletBinder binder)
+        private void OnItemRemoved(
+            long operationGeneration,
+            IWalletBinderCollection collection,
+            IWalletBinder binder)
         {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             if (_handlers.TryGetValue(binder, out var handler))
             {
                 _handlers.Remove(binder);
@@ -341,15 +414,20 @@ namespace GS2Studio.Generated.Wallet
             }
             // Compact the surviving items' slot indices (and sibling order)
             // before notifying, so ListChanged observers see a consistent list.
-            SyncSiblingOrder();
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ItemRemoved?.Invoke(binder);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
         }
 
-        private void OnCollectionChanged()
+        private void OnCollectionChanged(long operationGeneration, IWalletBinderCollection collection)
         {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             if (_suppressOnChange) return;
-            SyncSiblingOrder();
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
         }
 
@@ -359,13 +437,20 @@ namespace GS2Studio.Generated.Wallet
         /// observing the handler sees background reconcile failures instead of
         /// them being silently swallowed inside the collection's async callback.
         /// </summary>
-        private void OnCollectionFailed(Exception ex)
+        private void OnCollectionFailed(
+            long operationGeneration,
+            IWalletBinderCollection collection,
+            Exception ex)
         {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             Failed?.Invoke(ex);
             Debug.LogException(ex, this);
         }
 
-        private void CreateItem(IWalletBinder binder)
+        private void CreateItem(
+            long operationGeneration,
+            IWalletBinderCollection collection,
+            IWalletBinder binder)
         {
             if (_handlers.ContainsKey(binder)) return;
             if (_itemPrefab == null || _contentParent == null)
@@ -379,7 +464,23 @@ namespace GS2Studio.Generated.Wallet
             // through the collection subscription → OnCollectionChanged →
             // ListChanged → item re-evaluation. Note this means every item
             // re-raises Updated on each membership change as well.
+            if (!IsCurrentOperation(operationGeneration, collection))
+            {
+                handler.gameObject.SetActive(false);
+                Destroy(handler.gameObject);
+                return;
+            }
             handler.AttachTo(this, IndexOf(binder));
+            if (!IsCurrentOperation(operationGeneration, collection))
+            {
+                // AttachTo can synchronously invoke generated-handler events.
+                // If one starts a newer reload, this unregistered instance is
+                // still owned by the stale operation and must be discarded here.
+                handler.Detach();
+                handler.gameObject.SetActive(false);
+                Destroy(handler.gameObject);
+                return;
+            }
             _handlers[binder] = handler;
         }
 
@@ -395,32 +496,58 @@ namespace GS2Studio.Generated.Wallet
 
         private void SyncSiblingOrder()
         {
-            if (_collection == null) return;
+            var operationGeneration = _reloadGeneration;
+            var collection = _collection;
+            if (collection == null) return;
+            SyncSiblingOrder(operationGeneration, collection);
+        }
+
+        private void SyncSiblingOrder(
+            long operationGeneration,
+            IWalletBinderCollection collection)
+        {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             // The collection is the IReadOnlyList<IActionableWalletBinder>; index it
             // directly. `_handlers` is keyed by the same non-owning view.
-            for (var i = 0; i < _collection.Count; i++)
+            for (var i = 0; i < collection.Count; i++)
             {
-                var binder = _collection[i];
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+                var binder = collection[i];
                 if (_handlers.TryGetValue(binder, out var handler) && handler != null)
                 {
                     handler.transform.SetSiblingIndex(i);
+                    if (!IsCurrentOperation(operationGeneration, collection)) return;
                     // The Index setter re-evaluates immediately; assign only on
                     // change to avoid redundant re-binds.
                     if (handler.Index != i) handler.Index = i;
+                    if (!IsCurrentOperation(operationGeneration, collection)) return;
                 }
             }
         }
 
         private void Cleanup()
         {
-            if (_collection != null)
+            // Detach shared state before any Dispose / Detach call can invoke
+            // user code and synchronously start another reload. The remainder
+            // of this method owns only its local snapshot.
+            var collection = _collection;
+            var itemAddedCallback = _collectionItemAddedCallback;
+            var itemRemovedCallback = _collectionItemRemovedCallback;
+            var handlers = new List<WalletListItemHandler>(_handlers.Values);
+            _collection = null;
+            _collectionItemAddedCallback = null;
+            _collectionItemRemovedCallback = null;
+            _handlers.Clear();
+
+            if (collection != null)
             {
-                _collection.ItemAdded -= OnItemAdded;
-                _collection.ItemRemoved -= OnItemRemoved;
-                _collection.Dispose();
-                _collection = null;
+                if (itemAddedCallback != null)
+                    collection.ItemAdded -= itemAddedCallback;
+                if (itemRemovedCallback != null)
+                    collection.ItemRemoved -= itemRemovedCallback;
+                collection.Dispose();
             }
-            foreach (var handler in _handlers.Values)
+            foreach (var handler in handlers)
             {
                 if (handler != null)
                 {
@@ -430,11 +557,12 @@ namespace GS2Studio.Generated.Wallet
                     Destroy(handler.gameObject);
                 }
             }
-            _handlers.Clear();
         }
 
         private void OnDestroy()
         {
+            _isDestroyed = true;
+            _reloadGeneration++;
             Cleanup();
         }
     }

@@ -187,9 +187,9 @@ namespace GS2Studio.Generated.Wallet
         private Action? _onChange;
 
         // Sort comparers — `_configuredComparer` is what consumers observe via
-        // the `Comparer` getter; `_effectiveComparer` always wraps that with
-        // an Id tie-break so SortBinders is stable for non-unique keys and
-        // user-supplied non-stable comparers.
+        // the `Comparer` getter; `_effectiveComparer` wraps it with an Id
+        // tie-break for distinct IDs. Same-ID rows can still compare equal;
+        // SortBinders uses stable OrderBy to preserve their input order.
         private IComparer<IReadOnlyWalletBinder> _configuredComparer = WalletBinderComparer.Default;
         private IComparer<IReadOnlyWalletBinder> _effectiveComparer =
             new WalletBinderIdTieBreakComparer(WalletBinderComparer.Default);
@@ -197,9 +197,11 @@ namespace GS2Studio.Generated.Wallet
         /// <summary>
         /// User-facing comparer driving the binder sort order. Reading returns
         /// the value last assigned (no wrapper leakage). Setting installs an
-        /// Id-tie-break wrapper internally so the sort remains stable even when
-        /// the supplied comparer treats two binders as equal. Typed over the
-        /// non-owning IReadOnlyWalletBinder so it never exposes the owning binder.
+        /// Id-tie-break wrapper internally so distinct Model.Id values have a
+        /// deterministic fallback when the supplied comparer returns 0. Rows
+        /// with the same Id remain equal and rely on SortBinders' stable
+        /// OrderBy. Typed over the non-owning IReadOnlyWalletBinder so
+        /// it never exposes the owning binder.
         /// </summary>
         public IComparer<IReadOnlyWalletBinder> Comparer
         {
@@ -270,11 +272,12 @@ namespace GS2Studio.Generated.Wallet
         }
 
         /// <summary>
-        /// Sorts <see cref="Binders"/> into a deterministic order. Called at
-        /// the tail of every reconcile so consumers see a stable ordering
-        /// across mounts and subscription callbacks. Default is ascending by
-        /// <c>Model.Id</c>; regeneration with an authoring-declared sort key
-        /// will replace this body without touching reconcile call sites.
+        /// Sorts the private <c>_binders</c> list into the configured order.
+        /// Called at the tail of every reconcile so consumers see stable
+        /// ordering across mounts and subscription callbacks. The comparer
+        /// supplies the primary key and Id tie-break; LINQ <c>OrderBy</c>
+        /// preserves input order when both return 0. An authoring-declared
+        /// sort key changes the comparer slot, not this shared sort body.
         /// </summary>
         private void SortBinders()
         {
@@ -412,6 +415,17 @@ namespace GS2Studio.Generated.Wallet
                 else
                 {
                     var binder = await BuildBinderFromMoney2CurrencyUserItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyMoney2CurrencyUserItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
                     if (attachChildSubscribe) binder.Subscribe(_onChange);
                     _bindersByRowKey[rowKey] = binder;
                     _binders.Add(binder);
@@ -425,16 +439,36 @@ namespace GS2Studio.Generated.Wallet
                 {
                     if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
                 }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
                 foreach (var rowKey in toRemove)
                 {
-                    var binder = _bindersByRowKey[rowKey];
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
                     _bindersByRowKey.Remove(rowKey);
                     _binders.Remove(binder);
-                    ItemRemoved?.Invoke(binder);
-                    binder.Dispose();
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
                 }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
             }
-            SortBinders();
+            if (!_disposed) SortBinders();
         }
 
         private async Task<WalletBinder> BuildBinderFromMoney2CurrencyUserItem(EzWallet item, CancellationToken cancellationToken)

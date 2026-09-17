@@ -21,7 +21,7 @@ namespace GS2Studio.Generated.Wallet
     /// </summary>
     public interface IWalletBinderListSource
     {
-        /// <summary>Stable, identity-keyed non-owning view of the current binder set.</summary>
+        /// <summary>Stable index/enumeration view of the current non-owning binder set; Model.Id is not a unique lookup key.</summary>
         IReadOnlyList<IActionableWalletBinder> Binders { get; }
 
         /// <summary>Fires after reload and on each subsequent membership/order change.</summary>
