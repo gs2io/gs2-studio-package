@@ -38,6 +38,7 @@
         }
       ],
       "kind": "transformEntries",
+      "mode": "replace",
       "targetPropertyId": "prop_JPGJM6CM0TRQGXTAVJBYATVNCG"
     }
   ],
