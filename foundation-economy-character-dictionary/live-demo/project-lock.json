@@ -21,8 +21,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "8c07dc8057c76cde1cace17480e7e68c03e64065",
-      "integrity": "sha256-vEboYQp0KZWkdGHH+XLBpWeUTFE3DdG2AhrrQWG0GV0=",
+      "commitSha": "7bee56da019359c16baa2236d5446a9f47ab4e86",
+      "integrity": "sha256-15OrT172LpZUclrsK/2vVE/b2CtIqN3avmWtFf/bxXk=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character-dictionary",
       "repo": "gs2-studio-package",
