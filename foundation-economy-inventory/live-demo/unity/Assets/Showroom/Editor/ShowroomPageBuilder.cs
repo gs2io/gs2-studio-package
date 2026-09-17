@@ -93,6 +93,42 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
+        /// What one generated handler contributes to the page, worked out
+        /// before there is a scene to put any of it in.
+        ///
+        /// Everything here is read from the assembly and the declaration, and
+        /// nothing in it touches an asset, which is what lets the whole page be
+        /// settled — and refused — before <see cref="OpenOrCreateScene"/> runs.
+        /// </summary>
+        private class SectionPlan
+        {
+            public Type Handler;
+            public string Model;
+            public IReadOnlyList<Type> Labels;
+            public IReadOnlyList<Type> Buttons;
+            public IReadOnlyList<Type> Gauges;
+            public IReadOnlyList<Type> Clocks;
+            public IReadOnlyList<Type> Toggles;
+            /// <summary>
+            /// The section this model is drawn as, or null when it has nothing
+            /// to draw. A handler with no section is still mounted — another
+            /// section's reading may be composed from it — it just gets no
+            /// heading of its own.
+            /// </summary>
+            public SectionSpec Section;
+            /// <summary>The list a keyed model's rows are spawned by. Null otherwise.</summary>
+            public Type ListHandler;
+            /// <summary>What one of those rows carries. Null otherwise.</summary>
+            public Type ItemHandler;
+            /// <summary>
+            /// What to write into the list's `_axis`, or null when there is
+            /// nothing to write: the collection offers a single axis and the
+            /// generator emitted no field, or the caller does not write axes.
+            /// </summary>
+            public int? Axis;
+        }
+
+        /// <summary>
         /// What the demo declared, by model name. A model absent from here is
         /// derived from the assembly instead, and what was derived is logged in
         /// the same shape `page.json` takes, so an author can paste it back and
@@ -208,19 +244,78 @@ namespace GS2Studio.Showroom.EditorTools
                 return -1;
             }
 
-            var scene = OpenOrCreateScene(existed);
-            var page = UnityEngine.Object.FindAnyObjectByType<ShowroomPage>();
-            if (page == null) throw new InvalidOperationException("no ShowroomPage in the scene");
+            // Before the scene, and deliberately. OpenOrCreateScene copies the
+            // template onto disk the moment it runs, so anything that throws
+            // after it leaves a page behind that was never built — and the next
+            // bake, which the pipeline runs without `-showroomRebuildPage`,
+            // finds a scene at that path, leaves it alone and reports success.
+            // A demo's first failed bake would set as an empty page that never
+            // fails again. So the page is settled here, where refusing it costs
+            // nothing but the run.
+            var plans = PlanSections(writesAxis);
 
-            ApplyHeader(page, title, subtitle);
-            var content = ContentMount(page);
-            ClearChildren(content);
-            var sections = BuildSections(content, page, writesAxis);
+            int sections;
+            try
+            {
+                var scene = OpenOrCreateScene(existed);
+                var page = UnityEngine.Object.FindAnyObjectByType<ShowroomPage>();
+                if (page == null)
+                    throw new InvalidOperationException("no ShowroomPage in the scene");
 
-            EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene, ScenePath);
+                ApplyHeader(page, title, subtitle);
+                var content = ContentMount(page);
+                ClearChildren(content);
+                sections = BuildSections(content, page, plans);
+
+                EditorSceneManager.MarkSceneDirty(scene);
+                EditorSceneManager.SaveScene(scene, ScenePath);
+            }
+            catch
+            {
+                // Insurance, not the guard. What keeps a failed bake from
+                // leaving an empty page behind is that PlanSections runs first;
+                // this covers only what can still throw once OpenOrCreateScene
+                // has run — a refresh or an open that fails on the copy, a
+                // prefab the template no longer carries, a save that fails —
+                // and it covers nothing at all if the process is killed here,
+                // which is exactly why it cannot be the answer on its own.
+                //
+                // Asked of the disk rather than of how far the run got: the
+                // copy either happened or it did not, and only the file knows.
+                // OpenOrCreateScene also throws when CopyAsset itself refused,
+                // and nothing is left behind to remove in that case.
+                if (!existed && File.Exists(ScenePath)) DiscardCopiedScene();
+                throw;
+            }
             Debug.Log($"[showroom] wrote {ScenePath} with {sections} section(s)");
             return sections;
+        }
+
+        /// <summary>
+        /// Removes the scene this run copied from the template, so a bake that
+        /// failed after the copy leaves nothing for the next one to find and
+        /// leave alone. A failure to remove it is logged and swallowed: the
+        /// exception on its way out is the one worth reading.
+        /// </summary>
+        private static void DiscardCopiedScene()
+        {
+            try
+            {
+                // Out of the scene first: what is being deleted is the asset the
+                // Editor currently has open.
+                EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+                if (AssetDatabase.DeleteAsset(ScenePath)) return;
+                Debug.LogError(
+                    $"[showroom] {ScenePath} was copied for a bake that failed and could not " +
+                    "be removed; delete it before baking again, or the next bake will leave " +
+                    "it alone and report success");
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(
+                    $"[showroom] {ScenePath} was copied for a bake that failed and could not " +
+                    $"be removed: {exception}");
+            }
         }
 
         private static UnityEngine.SceneManagement.Scene OpenOrCreateScene(bool existed)
@@ -382,24 +477,33 @@ namespace GS2Studio.Showroom.EditorTools
             return field != null && field.FieldType.IsArray ? field : null;
         }
 
-        private static int BuildSections(Transform content, ShowroomPage page, bool writesAxis)
+        /// <summary>
+        /// The whole page, worked out from the assembly and the declaration
+        /// and settled before a scene exists.
+        ///
+        /// This is where a bake refuses a demo. Nothing in here writes an
+        /// asset, so a page that cannot be built costs only the run — see
+        /// <see cref="BuildPage"/> for what a refusal after the scene is
+        /// created would cost instead.
+        /// </summary>
+        private static IReadOnlyList<SectionPlan> PlanSections(bool writesAxis)
         {
-            var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
-            var handlers = GeneratedHandlers();
-            ClearGeneratedComponents(content);
-            // Every handler answers a completed action, because an action can
-            // change anything the page is showing and a handler has no other
-            // way to hear about it.
-            var placed = new List<Component>();
-            var sections = new List<(Type Handler, Transform Body)>();
-
-            foreach (var handler in handlers)
+            var plans = new List<SectionPlan>();
+            foreach (var handler in GeneratedHandlers())
             {
-                var labels = UiComponentsFor(handler, "OnUpdate", typeof(UnityEvent<string>));
-                var buttons = UiComponentsFor(handler, "OnCompleted", typeof(UnityEvent));
-                var gauges = GaugesFor(handler);
-                var clocks = UiComponentsFor(handler, "OnUpdate", typeof(UnityEvent<DateTime>));
-                var toggles = TogglesFor(handler);
+                var model = ModelNameOf(handler);
+                var plan = new SectionPlan
+                {
+                    Handler = handler,
+                    Model = model,
+                    Labels = UiComponentsFor(handler, "OnUpdate", typeof(UnityEvent<string>)),
+                    Buttons = UiComponentsFor(handler, "OnCompleted", typeof(UnityEvent)),
+                    Gauges = GaugesFor(handler),
+                    Clocks = UiComponentsFor(handler, "OnUpdate", typeof(UnityEvent<DateTime>)),
+                    Toggles = TogglesFor(handler),
+                };
+                plans.Add(plan);
+
                 // Two ways a model ends up with nothing to draw: a package gave
                 // it no component of its own, or the demo declared a section
                 // for it and left the rows empty. The second is asked here,
@@ -409,8 +513,105 @@ namespace GS2Studio.Showroom.EditorTools
                 // empty body says nothing a visitor wants, and it holds the
                 // same whether the emptiness was found in the assembly or
                 // written down by the demo.
-                if ((labels.Count == 0 && buttons.Count == 0 && gauges.Count == 0 &&
-                     clocks.Count == 0) || DeclaresNoRows(ModelNameOf(handler)))
+                if ((plan.Labels.Count == 0 && plan.Buttons.Count == 0 && plan.Gauges.Count == 0 &&
+                     plan.Clocks.Count == 0) || DeclaresNoRows(model))
+                {
+                    continue;
+                }
+                plan.Section = SectionFor(
+                    model, handler, plan.Labels, plan.Buttons, plan.Gauges, plan.Clocks,
+                    plan.Toggles);
+
+                // A handler whose `SetKeys` takes arguments cannot stand on its
+                // own: it would sit in the page with an empty id, bind nothing
+                // and render a row of blanks. A keyed model is a set of rows,
+                // so its list handler shows them and each row carries its own
+                // copy of the components.
+                if (!NeedsIdentityKeys(handler)) continue;
+                plan.ListHandler = SiblingType(handler, model + "ListHandler");
+                plan.ItemHandler = SiblingType(handler, model + "ListItemHandler");
+                // A missing list handler is a warning rather than a refusal,
+                // and it is raised where the empty section it leaves behind is
+                // built, so the two read as one thing.
+                if (plan.ListHandler == null || plan.ItemHandler == null) continue;
+                // `writesAxis` is false on the three-argument BuildPage
+                // overload, which an open Editor calls with no declaration to
+                // read: under the rule that a missing axis fails the bake, that
+                // path could never build a page carrying a list with more than
+                // one axis. It does not need to. There is a person there, and
+                // the axis is a dropdown in the Inspector — so the field is
+                // left holding whatever it already held, including the zero a
+                // freshly added component starts at, which the generated
+                // handler names in the console until someone picks an axis.
+                if (writesAxis) plan.Axis = PlannedAxis(plan.ListHandler, model, plan.Section);
+            }
+            return plans;
+        }
+
+        /// <summary>
+        /// What this model's list reads through, as the value its `_axis` field
+        /// holds, or null when the generator emitted no such field because the
+        /// collection offers a single axis.
+        ///
+        /// The field is found by reflection rather than through a
+        /// `SerializedObject`, because this is asked before there is a scene to
+        /// add the component to — which is the point of asking it here.
+        /// </summary>
+        private static int? PlannedAxis(Type listHandler, string model, SectionSpec section)
+        {
+            if (AxisField(listHandler) != null) return ListAxisValue(listHandler, model, section);
+            if (string.IsNullOrEmpty(section.Axis)) return null;
+            // The other half of the drift ListAxisValue names. There, a field
+            // with no enum beside it; here, a declaration with no field to put
+            // it in. Both mean the demo's generated code and what is asking
+            // about it disagree, and the one thing neither may do is carry on:
+            // a declaration nobody consumes, dropped without a word, is the
+            // failure this whole channel exists to stop being possible.
+            //
+            // A list with no declaration and no field is not drift. It reads
+            // through the single axis its collection offers, and mounts it
+            // directly.
+            throw new InvalidOperationException(
+                $"[showroom] {model}: `page.json` names the mount axis '{section.Axis}', " +
+                $"but {model}ListHandler has no '_axis' field to put it in. Either the " +
+                "demo's generated code predates the axis enum — regenerate it before " +
+                "baking — or this list reads through a single axis and the declaration " +
+                "should go.");
+        }
+
+        /// <summary>
+        /// The serialized axis field a generated list handler carries, or null
+        /// when its collection offers a single axis and none was emitted.
+        ///
+        /// This depends on how the generator writes the field: `[SerializeField]
+        /// private {Model}ListAxis _axis;`, declared on the handler class
+        /// itself. Were it made public, or moved onto a base class, the lookup
+        /// below would stop finding it and say so to nobody — a list would read
+        /// as having no axis field, so a section declaring one would fail with
+        /// the wrong reason and a section declaring none would be left holding
+        /// `Unset`. Whoever changes where the generator puts `_axis` changes
+        /// this too.
+        /// </summary>
+        private static FieldInfo AxisField(Type listHandler)
+        {
+            var field = listHandler.GetField("_axis", BindingFlags.Instance | BindingFlags.NonPublic);
+            return field != null && field.FieldType.IsEnum ? field : null;
+        }
+
+        private static int BuildSections(
+            Transform content, ShowroomPage page, IReadOnlyList<SectionPlan> plans)
+        {
+            var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
+            ClearGeneratedComponents(content);
+            // Every handler answers a completed action, because an action can
+            // change anything the page is showing and a handler has no other
+            // way to hear about it.
+            var placed = new List<Component>();
+            var sections = new List<(Type Handler, Transform Body)>();
+
+            foreach (var plan in plans)
+            {
+                if (plan.Section == null)
                 {
                     // Nothing to draw, but something to read: a configuration
                     // model a package never gave a component of its own — or
@@ -420,32 +621,24 @@ namespace GS2Studio.Showroom.EditorTools
                     // `placed`, because a handler that draws nothing has
                     // nothing to redraw, and reloading it after every action
                     // would throw away a cache for no one.
-                    if (!NeedsIdentityKeys(handler)) content.gameObject.AddComponent(handler);
+                    if (!NeedsIdentityKeys(plan.Handler))
+                        content.gameObject.AddComponent(plan.Handler);
                     continue;
                 }
 
                 var section = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab, content);
-                section.name = ModelNameOf(handler);
-                SetText(section.transform.Find("Heading"), Humanize(ModelNameOf(handler)));
+                section.name = plan.Model;
+                SetText(section.transform.Find("Heading"), Humanize(plan.Model));
                 var explainer = section.transform.Find("Explainer");
                 // Nothing here knows what to say about the model; a demo author
                 // writes it, and an empty line of placeholder prose is worse
                 // than none.
                 if (explainer != null) explainer.gameObject.SetActive(false);
-                sections.Add((handler, section.transform));
-                var spec = SectionFor(
-                    ModelNameOf(handler), handler, labels, buttons, gauges, clocks, toggles);
+                sections.Add((plan.Handler, section.transform));
 
-                // A handler whose `SetKeys` takes arguments cannot stand on its
-                // own: it would sit in the page with an empty id, bind nothing
-                // and render a row of blanks. A keyed model is a set of rows,
-                // so its list handler shows them and each row carries its own
-                // copy of the components.
-                if (NeedsIdentityKeys(handler))
+                if (NeedsIdentityKeys(plan.Handler))
                 {
-                    AddList(
-                        section, handler, labels, buttons, gauges, clocks, toggles, page, spec,
-                        writesAxis);
+                    AddList(section, plan, page);
                     continue;
                 }
 
@@ -456,10 +649,10 @@ namespace GS2Studio.Showroom.EditorTools
                 // climb `label -> Items -> Section -> content` — and a gauge in
                 // another section's list row can now read it too, which is what
                 // a reading composed from two models needs.
-                placed.Add(content.gameObject.AddComponent(handler));
+                placed.Add(content.gameObject.AddComponent(plan.Handler));
                 var body = ItemsOf(section.transform);
-                RealizeRows(ModelNameOf(handler), body, handler, spec, page);
-                WireToggles(ModelNameOf(handler), section, toggles, body, spec);
+                RealizeRows(plan.Model, body, plan.Handler, plan.Section, page);
+                WireToggles(plan.Model, section, plan.Toggles, body, plan.Section);
             }
 
             foreach (var (_, body) in sections)
@@ -506,75 +699,30 @@ namespace GS2Studio.Showroom.EditorTools
         /// through the parent chain, which is the item handler, so an action
         /// acts on the row it sits in.
         /// </summary>
-        private static void AddList(
-            GameObject section, Type handler, IReadOnlyList<Type> labels,
-            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges,
-            IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles, ShowroomPage page,
-            SectionSpec spec, bool writesAxis)
+        private static void AddList(GameObject section, SectionPlan plan, ShowroomPage page)
         {
-            var model = ModelNameOf(handler);
-            var listHandler = SiblingType(handler, model + "ListHandler");
-            var itemHandler = SiblingType(handler, model + "ListItemHandler");
-            if (listHandler == null || itemHandler == null)
+            if (plan.ListHandler == null || plan.ItemHandler == null)
             {
                 Debug.LogWarning(
-                    $"[showroom] {model} needs identity keys and has no list handler; " +
+                    $"[showroom] {plan.Model} needs identity keys and has no list handler; " +
                     "its section is left empty for a demo author to wire");
                 return;
             }
 
-            var itemPrefab = BuildListItemPrefab(
-                model, itemHandler, labels, buttons, gauges, clocks, toggles, page, spec);
-            var list = section.AddComponent(listHandler);
+            var itemPrefab = BuildListItemPrefab(plan, page);
+            var list = section.AddComponent(plan.ListHandler);
             var serialized = new SerializedObject(list);
             serialized.FindProperty("_itemPrefab").objectReferenceValue =
-                itemPrefab.GetComponent(itemHandler);
+                itemPrefab.GetComponent(plan.ItemHandler);
             serialized.FindProperty("_contentParent").objectReferenceValue = ItemsOf(section.transform);
-            // Which of the collection's mount axes this list reads through.
-            // The field is absent when the collection offers only one.
+            // Which of the collection's mount axes this list reads through,
+            // decided in PlanSections and null when there is nothing to write.
             //
-            // `writesAxis` is false on the three-argument BuildPage overload,
-            // which an open Editor calls with no declaration to read: under
-            // the rule that a missing axis fails the bake, that path could
-            // never build a page carrying a list with more than one axis. It
-            // does not need to. There is a person there, and the axis is a
-            // dropdown in the Inspector — so the field is left holding
-            // whatever it already held, including the zero a freshly added
-            // component starts at, which the generated handler names in the
-            // console until someone picks an axis.
-            if (writesAxis)
-            {
-                var axis = serialized.FindProperty("_axis");
-                if (axis != null)
-                {
-                    // intValue, not enumValueIndex: the axis values are derived
-                    // from member names rather than positions, so they are not
-                    // a dense 0..n-1 range and an index into the member list is
-                    // not the value. intValue is the serialized representation
-                    // itself.
-                    axis.intValue = ListAxisValue(listHandler, model, spec);
-                }
-                else if (!string.IsNullOrEmpty(spec.Axis))
-                {
-                    // The other half of the drift ListAxisValue names. There,
-                    // a field with no enum beside it; here, a declaration with
-                    // no field to put it in. Both mean the demo's generated
-                    // code and what is asking about it disagree, and the one
-                    // thing neither may do is carry on: a declaration nobody
-                    // consumes, dropped without a word, is the failure this
-                    // whole channel exists to stop being possible.
-                    //
-                    // A list with no declaration and no field is not drift. It
-                    // reads through the single axis its collection offers, and
-                    // mounts it directly.
-                    throw new InvalidOperationException(
-                        $"[showroom] {model}: `page.json` names the mount axis '{spec.Axis}', " +
-                        $"but {model}ListHandler has no '_axis' field to put it in. Either the " +
-                        "demo's generated code predates the axis enum — regenerate it before " +
-                        "baking — or this list reads through a single axis and the declaration " +
-                        "should go.");
-                }
-            }
+            // intValue, not enumValueIndex: the axis values are derived from
+            // member names rather than positions, so they are not a dense
+            // 0..n-1 range and an index into the member list is not the value.
+            // intValue is the serialized representation itself.
+            if (plan.Axis.HasValue) serialized.FindProperty("_axis").intValue = plan.Axis.Value;
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
@@ -626,12 +774,9 @@ namespace GS2Studio.Showroom.EditorTools
             return Convert.ToInt32(Enum.Parse(axisEnum, section.Axis));
         }
 
-        private static GameObject BuildListItemPrefab(
-            string model, Type itemHandler, IReadOnlyList<Type> labels,
-            IReadOnlyList<Type> buttons, IReadOnlyList<Type> gauges,
-            IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles, ShowroomPage page,
-            SectionSpec spec)
+        private static GameObject BuildListItemPrefab(SectionPlan plan, ShowroomPage page)
         {
+            var model = plan.Model;
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var item = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab);
             PrefabUtility.UnpackPrefabInstance(
@@ -643,10 +788,10 @@ namespace GS2Studio.Showroom.EditorTools
                 var child = item.transform.Find(label);
                 if (child != null) child.gameObject.SetActive(false);
             }
-            item.AddComponent(itemHandler);
+            item.AddComponent(plan.ItemHandler);
             var body = ItemsOf(item.transform);
-            RealizeRows(model, body, itemHandler, spec, page);
-            WireToggles(model, item, toggles, body, spec);
+            RealizeRows(model, body, plan.ItemHandler, plan.Section, page);
+            WireToggles(model, item, plan.Toggles, body, plan.Section);
 
             Directory.CreateDirectory(GeneratedPrefabDirectory);
             var path = $"{GeneratedPrefabDirectory}/{model}ListItem.prefab";
