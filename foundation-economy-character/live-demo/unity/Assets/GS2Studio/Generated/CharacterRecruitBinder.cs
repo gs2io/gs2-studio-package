@@ -124,6 +124,7 @@ namespace GS2Studio.Generated.CharacterRecruit
         internal bool _mounted;
 
         private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly RateModelAcquireActionLoader __transactionAcquireAction2Loader;
         private readonly RateModelLoader __exchangeCharacterRecruitNamespaceRateModelLoader;
 
         /// <summary>
@@ -136,7 +137,8 @@ namespace GS2Studio.Generated.CharacterRecruit
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("CharacterRecruit", _model.Id, 0);
+            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("CharacterRecruit", _model.Id, 1);
+            __transactionAcquireAction2Loader = new RateModelAcquireActionLoader("CharacterRecruit", _model.Id, 0);
             __exchangeCharacterRecruitNamespaceRateModelLoader = new RateModelLoader("CharacterRecruit", _model.Id);
         }
 
@@ -181,13 +183,18 @@ namespace GS2Studio.Generated.CharacterRecruit
             if (_transactionAcquireAction != null)
             {
             }
+            var _transactionAcquireAction2 = await __transactionAcquireAction2Loader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_transactionAcquireAction2 != null)
+            {
+            }
             var _exchangeCharacterRecruitNamespaceRateModel = await __exchangeCharacterRecruitNamespaceRateModelLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeCharacterRecruitNamespaceRateModel != null)
             {
             }
             _model.Character = new CharacterId(string.Empty);
-            if (_transactionAcquireAction != null) RestoreCharacter(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            if (_transactionAcquireAction2 != null) RestoreCharacter(_model, _transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
             _mounted = true;
         }
 
@@ -199,6 +206,19 @@ namespace GS2Studio.Generated.CharacterRecruit
         {
             ThrowIfDisposed();
             _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
                 _gs2,
                 _session,
                 (_, _, value) =>
@@ -235,6 +255,7 @@ namespace GS2Studio.Generated.CharacterRecruit
         {
             ThrowIfDisposed();
             __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
             __exchangeCharacterRecruitNamespaceRateModelLoader.Invalidate(_gs2, _session);
         }
 
