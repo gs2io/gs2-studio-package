@@ -113,6 +113,29 @@ export const foundationEconomyCharacterDictionary = definePackage(
       .interactable("UnregisteredInteractable", UiCond.not(UiCond.truthy(ui.prop("acquired"))), {
         name: "Character",
       })
+      // A character that has never arrived has no moment to print. `acquiredAt`
+      // is not absent in that case — it is the zero moment, which reads as a
+      // date nobody obtained anything on — so the answer to "when" has to be
+      // given rather than formatted. This is the standing answer for a row the
+      // player has not reached yet; the date above is the answer for one they
+      // have.
+      //
+      // The name reads backwards against the text on purpose. A page derives a
+      // row's caption from the component naming it, so `AcquiredLabel` puts
+      // "Acquired" beside "Not yet" and the row says one thing; naming it for
+      // what it holds would caption it "Unacquired" or "Not yet" and say that
+      // thing twice.
+      .label("AcquiredLabel", ui.lit("Not yet"), { name: "Character" })
+      // Each toggle names the state that makes its rows meaningless, and a
+      // page hangs the other reading off it: the date is nothing to show
+      // before the character is acquired, and "not yet" is nothing to show
+      // after.
+      .activeToggle("UnacquiredActiveToggle", UiCond.not(UiCond.truthy(ui.prop("acquired"))), {
+        name: "Character",
+      })
+      .activeToggle("AcquiredActiveToggle", UiCond.truthy(ui.prop("acquired")), {
+        name: "Character",
+      })
   )
 
   .actionTransform("MarkCharacterDictionary", at =>

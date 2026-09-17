@@ -2,8 +2,17 @@
   "sections": {
     "Character": {
       "axis": "InventoryCharacterMaster",
-      "rows": ["CharacterNameLabel", "CharacterAcquiredAtLabel", "CharacterRecruitButton"],
-      "toggles": { "CharacterUnregisteredInteractable": ["CharacterRecruitButton"] }
+      "rows": [
+        "CharacterNameLabel",
+        "CharacterAcquiredAtLabel",
+        "CharacterAcquiredLabel",
+        "CharacterRecruitButton"
+      ],
+      "toggles": {
+        "CharacterUnregisteredInteractable": ["CharacterRecruitButton"],
+        "CharacterUnacquiredActiveToggle": ["CharacterAcquiredAtLabel"],
+        "CharacterAcquiredActiveToggle": ["CharacterAcquiredLabel"]
+      }
     },
     "CharacterRecruit": {
       "rows": []

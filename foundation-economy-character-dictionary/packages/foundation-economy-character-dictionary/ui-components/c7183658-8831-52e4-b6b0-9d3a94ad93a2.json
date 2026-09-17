@@ -58,6 +58,45 @@
       "id": "cb47dd34-f094-5539-910f-2d46f6f97dd4",
       "kind": "interactable",
       "name": "Character"
+    },
+    {
+      "componentClassName": "AcquiredLabel",
+      "id": "5f0169b3-3021-549e-984d-7031a3b2cdb7",
+      "kind": "label",
+      "name": "Character",
+      "source": {
+        "kind": "literal",
+        "value": "Not yet"
+      }
+    },
+    {
+      "componentClassName": "UnacquiredActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_TC9NBD65ZXWPT09PFSRX1REHPF"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "5558729c-8959-5b14-86bf-295e14aa82f6",
+      "kind": "activeToggle",
+      "name": "Character"
+    },
+    {
+      "componentClassName": "AcquiredActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_TC9NBD65ZXWPT09PFSRX1REHPF"
+        }
+      },
+      "id": "deeeaa2a-c639-5e94-8dcc-dd1039272a56",
+      "kind": "activeToggle",
+      "name": "Character"
     }
   ],
   "name": "Character",
