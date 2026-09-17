@@ -43,18 +43,21 @@ namespace GS2Studio.Showroom.EditorTools
         ///
         /// A row names the component it draws and, where that component cannot
         /// stand alone, what completes it: a bar needs to say what its fill
-        /// counts, and a `DateTime` has no reading until a behaviour turns it
-        /// into time left. Both are facts about the page rather than about the
-        /// component, which is why neither can be read off the assembly — from
-        /// in here a template label and a plain value look exactly alike.
+        /// counts. That is a fact about the page rather than about the
+        /// component, which is why it cannot be read off the assembly — from in
+        /// here a template label and a plain value look exactly alike.
+        ///
+        /// A `DateTime` row completes itself. It has no reading until a
+        /// behaviour turns it into time left, but which behaviour is a fact
+        /// about the demo rather than about the row, and
+        /// <see cref="CountdownBehaviours"/> reads it off the assembly for the
+        /// whole page at once.
         /// </summary>
         private struct RowSpec
         {
             public string Component;
             /// <summary>Label drawn on a bar, or beside a button. Null otherwise.</summary>
             public string Caption;
-            /// <summary>Behaviour that draws the time left until a `DateTime`. Null otherwise.</summary>
-            public string Countdown;
         }
 
         /// <summary>
@@ -116,6 +119,15 @@ namespace GS2Studio.Showroom.EditorTools
             /// heading of its own.
             /// </summary>
             public SectionSpec Section;
+            /// <summary>
+            /// The behaviour this section's `DateTime` rows are drawn through,
+            /// or null when there is none to draw them with: the section
+            /// carries no clock row, or the demo does not answer the convention
+            /// <see cref="CountdownBehaviours"/> states. A declared clock row
+            /// refuses the bake in that second case rather than arriving here
+            /// with nothing.
+            /// </summary>
+            public Type Countdown;
             /// <summary>The list a keyed model's rows are spawned by. Null otherwise.</summary>
             public Type ListHandler;
             /// <summary>What one of those rows carries. Null otherwise.</summary>
@@ -174,7 +186,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// rely on without taking a package dependency for one.
         ///
         ///   section  MODEL  AXIS
-        ///   row      MODEL  COMPONENT  CAPTION  COUNTDOWN
+        ///   row      MODEL  COMPONENT  CAPTION
         ///   toggle   MODEL  CONDITION  ROW|ROW
         ///
         /// A `section` line is what declares the model: a model with no line
@@ -204,7 +216,6 @@ namespace GS2Studio.Showroom.EditorTools
                     {
                         Component = parts[2],
                         Caption = parts.Length > 3 && parts[3].Length > 0 ? parts[3] : null,
-                        Countdown = parts.Length > 4 && parts[4].Length > 0 ? parts[4] : null,
                     });
                 }
                 else if (parts[0] == "toggle" && parts.Length > 3)
@@ -255,6 +266,7 @@ namespace GS2Studio.Showroom.EditorTools
             var plans = PlanSections(writesAxis);
 
             int sections;
+            IReadOnlyCollection<string> itemPrefabs;
             try
             {
                 var scene = OpenOrCreateScene(existed);
@@ -265,7 +277,7 @@ namespace GS2Studio.Showroom.EditorTools
                 ApplyHeader(page, title, subtitle);
                 var content = ContentMount(page);
                 ClearChildren(content);
-                sections = BuildSections(content, page, plans);
+                (sections, itemPrefabs) = BuildSections(content, page, plans);
 
                 EditorSceneManager.MarkSceneDirty(scene);
                 EditorSceneManager.SaveScene(scene, ScenePath);
@@ -287,6 +299,9 @@ namespace GS2Studio.Showroom.EditorTools
                 if (!existed && File.Exists(ScenePath)) DiscardCopiedScene();
                 throw;
             }
+            // After the scene is saved, because the two have to agree: what the
+            // page carries is what stays on disk beside it.
+            RemoveOrphanedListItemPrefabs(itemPrefabs);
             Debug.Log($"[showroom] wrote {ScenePath} with {sections} section(s)");
             return sections;
         }
@@ -505,12 +520,20 @@ namespace GS2Studio.Showroom.EditorTools
                 plans.Add(plan);
             }
 
+            // One behaviour for the whole page, by convention rather than by
+            // declaration. A `DateTime` reads as time left only through
+            // something that counts it down, and which thing that is is a fact
+            // about the demo — it writes one, every clock row reads through it
+            // — so it is found here once instead of being named on every row
+            // that draws a deadline.
+            var countdowns = CountdownBehaviours();
+
             // Asked of the assembly alone, and before a single line of the
             // declaration has been acted on: what a demo wrote down is checked
             // against what it generated while nothing has yet been built out
             // of either, so a page that cannot be built is refused rather than
             // half-drawn.
-            RefuseUnresolvedDeclarations(plans);
+            RefuseUnresolvedDeclarations(plans, countdowns);
 
             foreach (var plan in plans)
             {
@@ -534,6 +557,16 @@ namespace GS2Studio.Showroom.EditorTools
                 plan.Section = SectionFor(
                     model, handler, plan.Labels, plan.Buttons, plan.Gauges, plan.Clocks,
                     plan.Toggles);
+                // Left null when the convention did not settle on one. A
+                // declared clock row has already refused the bake above; what
+                // survives to here with nothing is a derived section in a demo
+                // that has not written its countdown yet, and that row is left
+                // off the page with a warning rather than failing a bake an
+                // author has not declared anything for.
+                if (countdowns.Count == 1 && DrawsClock(plan, plan.Section))
+                {
+                    plan.Countdown = countdowns[0];
+                }
 
                 // A handler whose `SetKeys` takes arguments cannot stand on its
                 // own: it would sit in the page with an empty id, bind nothing
@@ -584,12 +617,14 @@ namespace GS2Studio.Showroom.EditorTools
         /// all of it through. A bake is a round trip through the Editor, and
         /// answering one typo at a time costs an author a launch apiece.
         /// </summary>
-        private static void RefuseUnresolvedDeclarations(IReadOnlyList<SectionPlan> plans)
+        private static void RefuseUnresolvedDeclarations(
+            IReadOnlyList<SectionPlan> plans, IReadOnlyList<Type> countdowns)
         {
             var byModel = new Dictionary<string, SectionPlan>(StringComparer.Ordinal);
             foreach (var plan in plans) byModel[plan.Model] = plan;
 
             var problems = new List<string>();
+            var clockModels = new List<string>();
             foreach (var entry in _declaredSections.OrderBy(item => item.Key, StringComparer.Ordinal))
             {
                 if (!byModel.TryGetValue(entry.Key, out var plan))
@@ -602,15 +637,54 @@ namespace GS2Studio.Showroom.EditorTools
                 }
                 CollectRowProblems(plan, entry.Value, problems);
                 CollectToggleProblems(plan, entry.Value, problems);
+                if (DrawsClock(plan, entry.Value)) clockModels.Add(entry.Key);
+            }
+            // Asked of the rows a page declares rather than of the components a
+            // package generated. A demo can generate a `DateTime` component and
+            // draw no deadline — a dex shows when a character was acquired as a
+            // date, not as a countdown — and requiring a countdown of every demo
+            // that has a clock somewhere would refuse that page for having
+            // nothing wrong with it.
+            if (clockModels.Count > 0 && countdowns.Count != 1)
+            {
+                problems.Add(CountdownConventionProblem(clockModels, countdowns));
             }
             if (problems.Count == 0) return;
             throw new InvalidOperationException(string.Join("\n", problems));
         }
 
         /// <summary>
+        /// Whether any of this section's rows draws a `DateTime`, and so needs
+        /// the demo's countdown behaviour to read as anything.
+        /// </summary>
+        private static bool DrawsClock(SectionPlan plan, SectionSpec section)
+        {
+            var clocks = plan.Clocks.Select(type => type.Name).ToList();
+            return section.Rows.Any(row => clocks.Contains(row.Component, StringComparer.Ordinal));
+        }
+
+        /// <summary>
+        /// Says what the countdown convention asks for and what the demo has,
+        /// in the one line <see cref="RefuseUnresolvedDeclarations"/> throws it
+        /// on.
+        /// </summary>
+        private static string CountdownConventionProblem(
+            IReadOnlyList<string> models, IReadOnlyList<Type> countdowns)
+        {
+            var found = countdowns.Count == 0
+                ? "this demo has none"
+                : $"this demo has {Listed(countdowns.Select(type => type.Name))}";
+            return
+                $"[showroom] `page.json` draws a `DateTime` in {Listed(models)}, which reads " +
+                "as time left only through a behaviour the demo writes — a MonoBehaviour of " +
+                $"its own taking `SetDeadline(DateTime)` — and {found}. A page reads through " +
+                "the one its demo writes, so a demo that draws a deadline writes exactly one.";
+        }
+
+        /// <summary>
         /// What a section's declared rows name that the demo cannot answer: a
         /// component it never generated, one that is no kind of row this page
-        /// draws, a reading or a countdown behaviour that is not there.
+        /// draws, or a reading that is not there.
         /// </summary>
         private static void CollectRowProblems(
             SectionPlan plan, SectionSpec declared, List<string> problems)
@@ -638,16 +712,6 @@ namespace GS2Studio.Showroom.EditorTools
                         $"[showroom] {plan.Model}: '{row.Component}' names '{row.Caption}' as " +
                         "its reading, which this demo generated no component named. It " +
                         $"generated {Listed(plan.Labels.Select(type => type.Name))}.");
-                }
-                if (row.Countdown == null) continue;
-                var behaviour = TypeNamed(row.Countdown);
-                if (behaviour == null || !IsCountdownBehaviour(behaviour))
-                {
-                    problems.Add(
-                        $"[showroom] {plan.Model}: '{row.Component}' names '{row.Countdown}' as " +
-                        "the behaviour that reads its `DateTime`, and this project has no " +
-                        "MonoBehaviour by that name taking `SetDeadline(DateTime)`. It has " +
-                        $"{Listed(CountdownBehaviours())}.");
                 }
             }
         }
@@ -712,17 +776,31 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// The behaviours a countdown row can name: a `SetDeadline(DateTime)`
-        /// is the whole of what one is asked for, and asking for it here is
-        /// what stops a name that resolves to some other MonoBehaviour from
-        /// throwing once the scene exists.
+        /// The behaviours that can draw a `DateTime` as time left: a
+        /// MonoBehaviour the demo wrote taking `SetDeadline(DateTime)`.
+        ///
+        /// This is the whole of the countdown convention. A demo that shows a
+        /// deadline writes one of these, every clock row in its page reads
+        /// through it, and nothing has to be declared — which is what a page
+        /// could never have said well anyway: naming the same behaviour on
+        /// every deadline row said the same thing five times and left a typo
+        /// free to say something else on the sixth.
+        ///
+        /// Generated components are not among them. What a package generates
+        /// hands the page the native `DateTime` precisely so the page can decide
+        /// how it reads, so what decides has to come from outside the generated
+        /// namespace — and a generator that one day emits a `SetDeadline` must
+        /// not be able to make a demo's own behaviour ambiguous.
+        ///
+        /// Ordered, because the count is not always one and the message that
+        /// says so has to read the same on every run.
         /// </summary>
-        private static IReadOnlyList<string> CountdownBehaviours()
+        private static IReadOnlyList<Type> CountdownBehaviours()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(SafeTypes)
                 .Where(IsCountdownBehaviour)
-                .Select(type => type.Name)
+                .OrderBy(type => type.Name, StringComparer.Ordinal)
                 .ToList();
         }
 
@@ -730,6 +808,7 @@ namespace GS2Studio.Showroom.EditorTools
         {
             return type.IsClass && !type.IsAbstract &&
                 typeof(MonoBehaviour).IsAssignableFrom(type) &&
+                !(type.Namespace ?? "").StartsWith(GeneratedNamespacePrefix) &&
                 type.GetMethod("SetDeadline", new[] { typeof(DateTime) }) != null;
         }
 
@@ -795,7 +874,16 @@ namespace GS2Studio.Showroom.EditorTools
             return field != null && field.FieldType.IsEnum ? field : null;
         }
 
-        private static int BuildSections(
+        /// <summary>
+        /// Builds the page's sections, and reports the list-item prefabs it
+        /// wrote along the way so <see cref="RemoveOrphanedListItemPrefabs"/>
+        /// can tell this bake's output from what an earlier one left behind.
+        /// The paths are collected rather than worked out a second time from
+        /// the plans: a plan can carry a keyed model whose list handler is
+        /// missing, which builds no prefab, and a second answer would be free
+        /// to disagree about that.
+        /// </summary>
+        private static (int Sections, IReadOnlyCollection<string> ItemPrefabs) BuildSections(
             Transform content, ShowroomPage page, IReadOnlyList<SectionPlan> plans)
         {
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
@@ -805,6 +893,7 @@ namespace GS2Studio.Showroom.EditorTools
             // way to hear about it.
             var placed = new List<Component>();
             var sections = new List<(Type Handler, Transform Body)>();
+            var itemPrefabs = new List<string>();
 
             foreach (var plan in plans)
             {
@@ -835,7 +924,8 @@ namespace GS2Studio.Showroom.EditorTools
 
                 if (NeedsIdentityKeys(plan.Handler))
                 {
-                    AddList(section, plan, page);
+                    var itemPrefab = AddList(section, plan, page);
+                    if (itemPrefab != null) itemPrefabs.Add(itemPrefab);
                     continue;
                 }
 
@@ -848,7 +938,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // a reading composed from two models needs.
                 placed.Add(content.gameObject.AddComponent(plan.Handler));
                 var body = ItemsOf(section.transform);
-                RealizeRows(plan.Model, body, plan.Handler, plan.Section, page);
+                RealizeRows(plan.Model, body, plan.Handler, plan.Section, page, plan.Countdown);
                 WireToggles(plan.Model, section, plan.Toggles, body, plan.Section);
             }
 
@@ -867,7 +957,7 @@ namespace GS2Studio.Showroom.EditorTools
                     EditorUtility.SetDirty(button);
                 }
             }
-            return sections.Count;
+            return (sections.Count, itemPrefabs);
         }
 
         /// <summary>
@@ -895,15 +985,18 @@ namespace GS2Studio.Showroom.EditorTools
         /// that bind to it. A button inside an item resolves its handler
         /// through the parent chain, which is the item handler, so an action
         /// acts on the row it sits in.
+        ///
+        /// Returns the item prefab it wrote, or null when there was no list to
+        /// build one for.
         /// </summary>
-        private static void AddList(GameObject section, SectionPlan plan, ShowroomPage page)
+        private static string AddList(GameObject section, SectionPlan plan, ShowroomPage page)
         {
             if (plan.ListHandler == null || plan.ItemHandler == null)
             {
                 Debug.LogWarning(
                     $"[showroom] {plan.Model} needs identity keys and has no list handler; " +
                     "its section is left empty for a demo author to wire");
-                return;
+                return null;
             }
 
             var itemPrefab = BuildListItemPrefab(plan, page);
@@ -921,6 +1014,7 @@ namespace GS2Studio.Showroom.EditorTools
             // intValue is the serialized representation itself.
             if (plan.Axis.HasValue) serialized.FindProperty("_axis").intValue = plan.Axis.Value;
             serialized.ApplyModifiedPropertiesWithoutUndo();
+            return ListItemPrefabPath(plan.Model);
         }
 
         /// <summary>
@@ -987,14 +1081,59 @@ namespace GS2Studio.Showroom.EditorTools
             }
             item.AddComponent(plan.ItemHandler);
             var body = ItemsOf(item.transform);
-            RealizeRows(model, body, plan.ItemHandler, plan.Section, page);
+            RealizeRows(model, body, plan.ItemHandler, plan.Section, page, plan.Countdown);
             WireToggles(model, item, plan.Toggles, body, plan.Section);
 
             Directory.CreateDirectory(GeneratedPrefabDirectory);
-            var path = $"{GeneratedPrefabDirectory}/{model}ListItem.prefab";
-            var saved = PrefabUtility.SaveAsPrefabAsset(item, path);
+            var saved = PrefabUtility.SaveAsPrefabAsset(item, ListItemPrefabPath(model));
             UnityEngine.Object.DestroyImmediate(item);
             return saved;
+        }
+
+        /// <summary>Where a model's list-item prefab is written.</summary>
+        private static string ListItemPrefabPath(string model)
+        {
+            return $"{GeneratedPrefabDirectory}/{model}ListItem.prefab";
+        }
+
+        /// <summary>
+        /// Removes the list-item prefabs in the generated directory that this
+        /// bake did not write.
+        ///
+        /// A section that leaves the page takes its list with it, and the
+        /// prefab its rows were spawned from stays behind: nothing in a later
+        /// bake reaches that file again, so it sits in the demo's repository as
+        /// part of a page that is no longer there.
+        ///
+        /// What decides is this run, not the model's name. A model can be a
+        /// list in one demo and a section with no list in another —
+        /// `CharacterRecruit` is both, a roster's list of recruitable
+        /// characters and a dex's single recruit button — so deleting by name
+        /// would take a prefab a sibling demo is still built on. The question
+        /// asked of each file is only whether this bake wrote it.
+        ///
+        /// Called on a bake that built the page, and on no other: the run that
+        /// finds a scene already there and leaves it alone wrote nothing, so
+        /// every prefab would look orphaned to it.
+        /// </summary>
+        private static void RemoveOrphanedListItemPrefabs(IReadOnlyCollection<string> written)
+        {
+            if (!Directory.Exists(GeneratedPrefabDirectory)) return;
+            var found = Directory.GetFiles(GeneratedPrefabDirectory, "*ListItem.prefab")
+                .Select(file => file.Replace('\\', '/'))
+                .OrderBy(path => path, StringComparer.Ordinal);
+            foreach (var path in found)
+            {
+                if (written.Contains(path, StringComparer.Ordinal)) continue;
+                if (AssetDatabase.DeleteAsset(path))
+                {
+                    Debug.Log($"[showroom] removed {path}; this page carries no list for it");
+                    continue;
+                }
+                Debug.LogWarning(
+                    $"[showroom] {path} is left over from a list this page no longer carries " +
+                    "and could not be removed; delete it by hand");
+            }
         }
 
         /// <summary>
@@ -1032,7 +1171,8 @@ namespace GS2Studio.Showroom.EditorTools
         /// in it.
         /// </summary>
         private static void RealizeRows(
-            string model, Transform body, Type handler, SectionSpec section, ShowroomPage page)
+            string model, Transform body, Type handler, SectionSpec section, ShowroomPage page,
+            Type countdown)
         {
             foreach (var row in section.Rows)
             {
@@ -1053,7 +1193,7 @@ namespace GS2Studio.Showroom.EditorTools
                 }
 
                 if (IsGauge(component)) AddGaugeRow(body, component, caption);
-                else if (IsClock(component)) AddCountdownRow(body, component, row.Countdown);
+                else if (IsClock(component)) AddCountdownRow(body, component, countdown);
                 else if (IsButton(component)) AddActionRow(body, component, page, caption);
                 else if (IsLabel(component)) AddValueRow(body, component);
                 else
@@ -1167,11 +1307,8 @@ namespace GS2Studio.Showroom.EditorTools
         /// <summary>One derived row, written the way `page.json` writes one.</summary>
         private static string RowAsJson(RowSpec row)
         {
-            if (row.Caption == null && row.Countdown == null) return $"\"{row.Component}\"";
-            var extra = row.Caption != null
-                ? $", \"caption\": \"{row.Caption}\""
-                : $", \"countdown\": \"{row.Countdown}\"";
-            return $"{{\"component\": \"{row.Component}\"{extra}}}";
+            if (row.Caption == null) return $"\"{row.Component}\"";
+            return $"{{\"component\": \"{row.Component}\", \"caption\": \"{row.Caption}\"}}";
         }
 
         private static Type UiComponentNamed(Type handler, string name)
@@ -1239,24 +1376,24 @@ namespace GS2Studio.Showroom.EditorTools
         /// behaviour. A generated `value` component hands over the native type
         /// precisely so the page can decide how it reads, and only the demo
         /// knows what its deadline is a deadline for.
+        ///
+        /// The warning is insurance rather than the guard. A declared clock row
+        /// in a demo the convention could not answer for has already failed the
+        /// bake in <see cref="RefuseUnresolvedDeclarations"/>, before there was
+        /// a scene to leave a row off. What reaches here with nothing is a
+        /// derived section in a demo that has not written its countdown yet,
+        /// which is where a demo starts.
         /// </summary>
         private static void AddCountdownRow(
-            Transform section, Type clockType, string behaviourName)
+            Transform section, Type clockType, Type behaviourType)
         {
-            if (string.IsNullOrEmpty(behaviourName))
-            {
-                Debug.LogWarning(
-                    $"[showroom] {clockType.Name}: a `DateTime` has no reading until a " +
-                    "behaviour turns it into time left, and this row named none; " +
-                    "its row is left off the page");
-                return;
-            }
-            var behaviourType = TypeNamed(behaviourName);
             if (behaviourType == null)
             {
                 Debug.LogWarning(
-                    $"[showroom] {clockType.Name}: no MonoBehaviour named '{behaviourName}' " +
-                    "in this project; its row is left off the page");
+                    $"[showroom] {clockType.Name}: a `DateTime` has no reading until a " +
+                    "behaviour turns it into time left, and this demo does not have exactly " +
+                    "one MonoBehaviour of its own taking `SetDeadline(DateTime)`; " +
+                    "its row is left off the page");
                 return;
             }
 
@@ -1279,15 +1416,6 @@ namespace GS2Studio.Showroom.EditorTools
                     typeof(UnityAction<DateTime>), countdown, "SetDeadline"));
             EditorUtility.SetDirty(clock);
             EditorUtility.SetDirty(countdown);
-        }
-
-        /// <summary>A MonoBehaviour the demo wrote, by its unqualified name.</summary>
-        private static Type TypeNamed(string name)
-        {
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(SafeTypes)
-                .FirstOrDefault(type =>
-                    type.Name == name && typeof(MonoBehaviour).IsAssignableFrom(type));
         }
 
         /// <summary>

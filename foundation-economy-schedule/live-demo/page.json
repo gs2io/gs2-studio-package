@@ -4,15 +4,9 @@
       "rows": [
         "ScheduleWindowLabel",
         "SchedulePeriodLabel",
-        {
-          "component": "ScheduleEndAtValue",
-          "countdown": "DeadlineCountdown"
-        },
+        "ScheduleEndAtValue",
         "ScheduleRelativeWindowLabel",
-        {
-          "component": "ScheduleRelativeEndAtValue",
-          "countdown": "DeadlineCountdown"
-        }
+        "ScheduleRelativeEndAtValue"
       ],
       "toggles": {
         "ScheduleRelativeActiveToggle": ["SchedulePeriodLabel", "ScheduleEndAtValue"],
@@ -27,10 +21,7 @@
       "rows": [
         "TriggerNameLabel",
         "TriggerWindowLabel",
-        {
-          "component": "TriggerExpiresAtValue",
-          "countdown": "DeadlineCountdown"
-        },
+        "TriggerExpiresAtValue",
         "TriggerExtendButton",
         "TriggerClearButton"
       ],
