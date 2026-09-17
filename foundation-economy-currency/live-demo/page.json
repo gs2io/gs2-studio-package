@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "FreeDeposit": {
+      "rows": [
+        {
+          "component": "FreeDepositDepositButton",
+          "caption": "FreeDepositCountLabel"
+        }
+      ]
+    },
+    "PaidDeposit": {
+      "rows": [
+        {
+          "component": "PaidDepositDepositButton",
+          "caption": "PaidDepositCountLabel"
+        }
+      ]
+    },
+    "Wallet": {
+      "rows": ["WalletFreeBalanceLabel", "WalletPaidBalanceLabel", "WalletTotalBalanceLabel"]
+    }
+  }
+}

@@ -135,16 +135,17 @@ namespace GS2Studio.Showroom.EditorTools
             /// <summary>
             /// What to write into the list's `_axis`, or null when there is
             /// nothing to write: the collection offers a single axis and the
-            /// generator emitted no field, or the caller does not write axes.
+            /// generator emitted no field, or the caller brought no declaration
+            /// to read one from.
             /// </summary>
             public int? Axis;
         }
 
         /// <summary>
         /// What the demo declared, by model name. A model absent from here is
-        /// derived from the assembly instead, and what was derived is logged in
-        /// the same shape `page.json` takes, so an author can paste it back and
-        /// start cutting.
+        /// derived from the assembly instead, and what was derived is written
+        /// out in the same shape `page.json` takes, so an author can paste it
+        /// back and start cutting.
         /// </summary>
         private static Dictionary<string, SectionSpec> _declaredSections =
             new Dictionary<string, SectionSpec>();
@@ -165,7 +166,7 @@ namespace GS2Studio.Showroom.EditorTools
                     ReadArgument("-showroomSubtitle"),
                     ReadArgument("-showroomRebuildPage") == "true",
                     ReadDeclaration(ReadArgument("-showroomDeclaration")),
-                    writesAxis: true);
+                    readsDeclaration: true);
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -229,11 +230,19 @@ namespace GS2Studio.Showroom.EditorTools
         /// <summary>
         /// Writes the demo's page. Returns the number of sections, or -1 when
         /// the scene already existed and was left alone.
+        ///
+        /// For an open Editor, where there is a person: no declaration, so
+        /// every section is derived and none is refused for not having been
+        /// written down. That is the other half of what
+        /// <see cref="CollectUndeclaredSections"/> refuses — a guess is a fine
+        /// place for someone looking at the scene to start, and a bad page for
+        /// a pipeline to publish with nobody watching.
         /// </summary>
         public static int BuildPage(string title, string subtitle, bool rebuild)
         {
             return BuildPage(
-                title, subtitle, rebuild, new Dictionary<string, SectionSpec>(), writesAxis: false);
+                title, subtitle, rebuild, new Dictionary<string, SectionSpec>(),
+                readsDeclaration: false);
         }
 
         /// <summary>
@@ -245,7 +254,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static int BuildPage(
             string title, string subtitle, bool rebuild,
-            Dictionary<string, SectionSpec> declaredSections, bool writesAxis)
+            Dictionary<string, SectionSpec> declaredSections, bool readsDeclaration)
         {
             _declaredSections = declaredSections ?? new Dictionary<string, SectionSpec>();
             var existed = File.Exists(ScenePath);
@@ -263,7 +272,7 @@ namespace GS2Studio.Showroom.EditorTools
             // A demo's first failed bake would set as an empty page that never
             // fails again. So the page is settled here, where refusing it costs
             // nothing but the run.
-            var plans = PlanSections(writesAxis);
+            var plans = PlanSections(readsDeclaration);
 
             int sections;
             IReadOnlyCollection<string> itemPrefabs;
@@ -501,7 +510,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// <see cref="BuildPage"/> for what a refusal after the scene is
         /// created would cost instead.
         /// </summary>
-        private static IReadOnlyList<SectionPlan> PlanSections(bool writesAxis)
+        private static IReadOnlyList<SectionPlan> PlanSections(bool readsDeclaration)
         {
             var plans = new List<SectionPlan>();
             foreach (var handler in GeneratedHandlers())
@@ -517,6 +526,20 @@ namespace GS2Studio.Showroom.EditorTools
                     Clocks = UiComponentsFor(handler, "OnUpdate", typeof(UnityEvent<DateTime>)),
                     Toggles = TogglesFor(handler),
                 };
+                // A handler whose `SetKeys` takes arguments cannot stand on its
+                // own: it would sit in the page with an empty id, bind nothing
+                // and render a row of blanks. A keyed model is a set of rows,
+                // so its list handler shows them and each row carries its own
+                // copy of the components.
+                //
+                // Asked here rather than where the list is built, because the
+                // declaration a model needs written depends on it: only a list
+                // with an axis field has an axis to name.
+                if (NeedsIdentityKeys(handler))
+                {
+                    plan.ListHandler = SiblingType(handler, model + "ListHandler");
+                    plan.ItemHandler = SiblingType(handler, model + "ListItemHandler");
+                }
                 plans.Add(plan);
             }
 
@@ -533,7 +556,7 @@ namespace GS2Studio.Showroom.EditorTools
             // against what it generated while nothing has yet been built out
             // of either, so a page that cannot be built is refused rather than
             // half-drawn.
-            RefuseUnresolvedDeclarations(plans, countdowns);
+            RefuseWhatThePageCannotBuild(plans, countdowns, readsDeclaration);
 
             foreach (var plan in plans)
             {
@@ -549,11 +572,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // empty body says nothing a visitor wants, and it holds the
                 // same whether the emptiness was found in the assembly or
                 // written down by the demo.
-                if ((plan.Labels.Count == 0 && plan.Buttons.Count == 0 && plan.Gauges.Count == 0 &&
-                     plan.Clocks.Count == 0) || DeclaresNoRows(model))
-                {
-                    continue;
-                }
+                if (!HasDrawables(plan) || DeclaresNoRows(model)) continue;
                 plan.Section = SectionFor(
                     model, handler, plan.Labels, plan.Buttons, plan.Gauges, plan.Clocks,
                     plan.Toggles);
@@ -568,19 +587,13 @@ namespace GS2Studio.Showroom.EditorTools
                     plan.Countdown = countdowns[0];
                 }
 
-                // A handler whose `SetKeys` takes arguments cannot stand on its
-                // own: it would sit in the page with an empty id, bind nothing
-                // and render a row of blanks. A keyed model is a set of rows,
-                // so its list handler shows them and each row carries its own
-                // copy of the components.
-                if (!NeedsIdentityKeys(handler)) continue;
-                plan.ListHandler = SiblingType(handler, model + "ListHandler");
-                plan.ItemHandler = SiblingType(handler, model + "ListItemHandler");
-                // A missing list handler is a warning rather than a refusal,
-                // and it is raised where the empty section it leaves behind is
-                // built, so the two read as one thing.
+                // No list, so no axis to write: the model is not keyed, or it is
+                // and the package generated it no list handler. The second is a
+                // warning rather than a refusal, and it is raised where the
+                // empty section it leaves behind is built, so the two read as
+                // one thing.
                 if (plan.ListHandler == null || plan.ItemHandler == null) continue;
-                // `writesAxis` is false on the three-argument BuildPage
+                // `readsDeclaration` is false on the three-argument BuildPage
                 // overload, which an open Editor calls with no declaration to
                 // read: under the rule that a missing axis fails the bake, that
                 // path could never build a page carrying a list with more than
@@ -589,9 +602,156 @@ namespace GS2Studio.Showroom.EditorTools
                 // left holding whatever it already held, including the zero a
                 // freshly added component starts at, which the generated
                 // handler names in the console until someone picks an axis.
-                if (writesAxis) plan.Axis = PlannedAxis(plan.ListHandler, model, plan.Section);
+                if (readsDeclaration) plan.Axis = PlannedAxis(plan.ListHandler, model, plan.Section);
             }
             return plans;
+        }
+
+        /// <summary>
+        /// Whether this model has anything of its own to draw. A package that
+        /// generated no component for it gives the page no section: an empty
+        /// heading over an empty body says nothing a visitor wants, and there
+        /// is nothing for a declaration to name either.
+        /// </summary>
+        private static bool HasDrawables(SectionPlan plan)
+        {
+            return plan.Labels.Count > 0 || plan.Buttons.Count > 0 ||
+                plan.Gauges.Count > 0 || plan.Clocks.Count > 0;
+        }
+
+        /// <summary>
+        /// Everything that stops this page being built, collected and thrown
+        /// once.
+        ///
+        /// Once, because a bake is a round trip through the Editor: answering
+        /// one problem at a time costs an author a launch apiece, and a demo
+        /// starting from nothing has one problem per model. And thrown from
+        /// here, before <see cref="OpenOrCreateScene"/>, so a refusal costs
+        /// only the run.
+        /// </summary>
+        private static void RefuseWhatThePageCannotBuild(
+            IReadOnlyList<SectionPlan> plans, IReadOnlyList<Type> countdowns,
+            bool readsDeclaration)
+        {
+            var problems = new List<string>();
+            CollectUnresolvedDeclarations(plans, countdowns, problems);
+            if (readsDeclaration) CollectUndeclaredSections(plans, problems);
+            if (problems.Count == 0) return;
+            throw new InvalidOperationException(string.Join("\n", problems));
+        }
+
+        /// <summary>
+        /// Refuses a model the demo generated a page's worth of components for
+        /// and never said what to do with, and writes the declaration it would
+        /// take.
+        ///
+        /// <see cref="DeriveSection"/> can always produce something, and for a
+        /// long time it did: a model with no declaration was drawn from the
+        /// guess and the guess was logged. What that cost is that a page could
+        /// be published without anyone having said what was on it — a section
+        /// appears because a package generated a component, in an order nobody
+        /// chose, and the run reports success. The rows a page wants are a
+        /// fact about the page: a dex and a roster show the same `Character`
+        /// and want different ones, and neither is the guess.
+        ///
+        /// So the guess stays and stops being an answer. It is what a demo
+        /// starts from — one line, in `page.json`'s own shape, ready to paste
+        /// under "sections" and cut down — and the bake that offers it refuses
+        /// to draw it.
+        ///
+        /// Only where a declaration was read. An open Editor deriving a page
+        /// for someone looking at the scene is the guess doing its job; see
+        /// <see cref="BuildPage(string, string, bool)"/>.
+        /// </summary>
+        private static void CollectUndeclaredSections(
+            IReadOnlyList<SectionPlan> plans, List<string> problems)
+        {
+            foreach (var plan in plans)
+            {
+                if (!HasDrawables(plan) || _declaredSections.ContainsKey(plan.Model)) continue;
+                problems.Add(
+                    $"[showroom] {plan.Model}: `page.json` declares no section for it, and a " +
+                    "page is what its demo says it is rather than what its package happens to " +
+                    "generate. Here is the guess, to paste under \"sections\" and cut down: " +
+                    DerivedDeclarationJson(plan) + ConditionsOnOffer(plan));
+            }
+        }
+
+        /// <summary>
+        /// The conditions this model generated, named rather than declared.
+        ///
+        /// They are left out of the guess on purpose: a condition is declared
+        /// with the rows it governs, and which rows those are is the page's to
+        /// say — <see cref="DeriveSection"/> can only produce the name and an
+        /// empty list, which <see cref="CollectToggleProblems"/> then refuses.
+        /// A guess that has to be edited before it can be pasted is not a
+        /// starting point.
+        ///
+        /// But dropping them silently would hide that the demo has any, and an
+        /// author reading the guess would never learn there was something to
+        /// wire. So they are said in prose, on the same line, and the page
+        /// takes them when it wants them.
+        /// </summary>
+        private static string ConditionsOnOffer(SectionPlan plan)
+        {
+            if (plan.Toggles.Count == 0) return "";
+            return
+                $" It also generated the conditions {Listed(plan.Toggles.Select(type => type.Name))}" +
+                ", which the guess leaves out because which rows a condition governs is the " +
+                "page's to say; add one to \"toggles\" with the rows it governs to wire it.";
+        }
+
+        /// <summary>
+        /// One derived section, written the way `page.json` writes one, on the
+        /// one line <see cref="CollectUndeclaredSections"/> offers it on.
+        ///
+        /// One line because `page.mjs` filters the Editor's log line by line,
+        /// so a second line of a section is a line an author never sees.
+        ///
+        /// Pasted unedited, this builds. The one thing it cannot answer is left
+        /// as a hole: which of several mount axes a list reads through, which
+        /// nothing but the page can pick — a guess there is the bug the axis
+        /// field exists to stop — so it comes back as the choice rather than
+        /// one of its arms, and fails the next bake in
+        /// <see cref="ListAxisValue"/> until someone makes it.
+        ///
+        /// Conditions are not a hole. Leaving one off the page is an omission
+        /// a page is free to make, so the guess omits them all and
+        /// <see cref="ConditionsOnOffer"/> says what there was.
+        /// </summary>
+        private static string DerivedDeclarationJson(SectionPlan plan)
+        {
+            var derived = DeriveSection(
+                plan.Labels, plan.Buttons, plan.Gauges, plan.Clocks, plan.Toggles);
+            var parts = new List<string>();
+            var axis = DerivedAxisJson(plan);
+            if (axis != null) parts.Add(axis);
+            parts.Add($"\"rows\": [{string.Join(", ", derived.Rows.Select(RowAsJson))}]");
+            return $"\"{plan.Model}\": {{{string.Join(", ", parts)}}}";
+        }
+
+        /// <summary>
+        /// The axis hole a derived section carries, or null when the model has
+        /// no axis to name: it is not a list, or its collection offers a single
+        /// axis and the generator emitted no field to point at one.
+        ///
+        /// A hole rather than a value. The generator's own pick is whichever
+        /// loader it elected as primary, which is not an answer to what a page
+        /// wants to show, so what is offered is the choice rather than one of
+        /// its arms — and pasting it unfilled fails the next bake in
+        /// <see cref="ListAxisValue"/> rather than mounting the wrong one.
+        /// </summary>
+        private static string DerivedAxisJson(SectionPlan plan)
+        {
+            if (plan.ListHandler == null || AxisField(plan.ListHandler) == null) return null;
+            var axisEnum = SiblingType(plan.ListHandler, plan.Model + "ListAxis");
+            // Drift between the generated code and this builder, which
+            // ListAxisValue states in full once there is a declaration to
+            // state it against. Nothing useful to offer here.
+            if (axisEnum == null) return null;
+            var names = Enum.GetNames(axisEnum)
+                .Where(name => Convert.ToInt32(Enum.Parse(axisEnum, name)) != 0);
+            return $"\"axis\": \"<one of: {string.Join(", ", names)}>\"";
         }
 
         /// <summary>
@@ -610,20 +770,21 @@ namespace GS2Studio.Showroom.EditorTools
         /// The reverse is not a failure. Leaving a generated component off is
         /// what declaring a page is for — a dex and a roster show the same
         /// model and want different rows — so a component with no line, whether
-        /// a row or a condition, is an omission and stays one.
+        /// a row or a condition, is an omission and stays one. Leaving a whole
+        /// model out is not an omission, and
+        /// <see cref="CollectUndeclaredSections"/> is where that is answered.
         ///
-        /// Everything wrong is collected and thrown together, one line each so
-        /// that `page.mjs`, which filters the Editor log line by line, carries
-        /// all of it through. A bake is a round trip through the Editor, and
-        /// answering one typo at a time costs an author a launch apiece.
+        /// Each problem takes one line, so that `page.mjs`, which filters the
+        /// Editor log line by line, carries all of them through;
+        /// <see cref="RefuseWhatThePageCannotBuild"/> throws them together.
         /// </summary>
-        private static void RefuseUnresolvedDeclarations(
-            IReadOnlyList<SectionPlan> plans, IReadOnlyList<Type> countdowns)
+        private static void CollectUnresolvedDeclarations(
+            IReadOnlyList<SectionPlan> plans, IReadOnlyList<Type> countdowns,
+            List<string> problems)
         {
             var byModel = new Dictionary<string, SectionPlan>(StringComparer.Ordinal);
             foreach (var plan in plans) byModel[plan.Model] = plan;
 
-            var problems = new List<string>();
             var clockModels = new List<string>();
             foreach (var entry in _declaredSections.OrderBy(item => item.Key, StringComparer.Ordinal))
             {
@@ -649,8 +810,6 @@ namespace GS2Studio.Showroom.EditorTools
             {
                 problems.Add(CountdownConventionProblem(clockModels, countdowns));
             }
-            if (problems.Count == 0) return;
-            throw new InvalidOperationException(string.Join("\n", problems));
         }
 
         /// <summary>
@@ -665,7 +824,7 @@ namespace GS2Studio.Showroom.EditorTools
 
         /// <summary>
         /// Says what the countdown convention asks for and what the demo has,
-        /// in the one line <see cref="RefuseUnresolvedDeclarations"/> throws it
+        /// in the one line <see cref="CollectUnresolvedDeclarations"/> offers it
         /// on.
         /// </summary>
         private static string CountdownConventionProblem(
@@ -1165,7 +1324,7 @@ namespace GS2Studio.Showroom.EditorTools
         ///
         /// The warnings below are insurance rather than the guard. A declared
         /// name that resolves to nothing has already failed the bake in
-        /// <see cref="RefuseUnresolvedDeclarations"/>, before there was a scene
+        /// <see cref="RefuseWhatThePageCannotBuild"/>, before there was a scene
         /// to leave a row off; what reaches here is a derived section, whose
         /// rows were read off the assembly and cannot name anything that is not
         /// in it.
@@ -1209,12 +1368,14 @@ namespace GS2Studio.Showroom.EditorTools
         /// What a section looks like when the demo has not said.
         ///
         /// A starting point, not a second way to build a page: the result is a
-        /// declaration in exactly the shape `page.json` takes, and it is logged
-        /// so an author can paste it back and cut it down to the rows their
-        /// page is actually for. Everything it decides here, it decides because
-        /// nobody told it — which reading belongs on a bar is a guess that only
-        /// holds when there is one bar and one label, and the order is only the
-        /// order things read in when a section has one purpose.
+        /// declaration in exactly the shape `page.json` takes, and
+        /// <see cref="CollectUndeclaredSections"/> hands it to an author to
+        /// paste back and cut down to the rows their page is actually for.
+        /// Everything it decides here, it decides because nobody told it —
+        /// which reading belongs on a bar is a guess that only holds when there
+        /// is one bar and one label, and the order is only the order things
+        /// read in when a section has one purpose. Which is why a bake that
+        /// reads a declaration offers this rather than drawing it.
         /// </summary>
         private static SectionSpec DeriveSection(
             IReadOnlyList<Type> labels, IReadOnlyList<Type> buttons,
@@ -1288,9 +1449,12 @@ namespace GS2Studio.Showroom.EditorTools
 
         /// <summary>
         /// The section a model is built from: what the demo declared, or what
-        /// the assembly suggests when it declared nothing. A derived section is
-        /// logged in `page.json`'s own shape, because the fastest way to write
-        /// a declaration is to start from the one that was guessed.
+        /// the assembly suggests when it declared nothing.
+        ///
+        /// The second only reaches here from an open Editor. A bake that read a
+        /// declaration has already refused the model in
+        /// <see cref="CollectUndeclaredSections"/> and written the guess out
+        /// for an author, rather than drawing a page nobody asked for.
         /// </summary>
         private static SectionSpec SectionFor(
             string model, Type handler, IReadOnlyList<Type> labels, IReadOnlyList<Type> buttons,
@@ -1379,7 +1543,7 @@ namespace GS2Studio.Showroom.EditorTools
         ///
         /// The warning is insurance rather than the guard. A declared clock row
         /// in a demo the convention could not answer for has already failed the
-        /// bake in <see cref="RefuseUnresolvedDeclarations"/>, before there was
+        /// bake in <see cref="RefuseWhatThePageCannotBuild"/>, before there was
         /// a scene to leave a row off. What reaches here with nothing is a
         /// derived section in a demo that has not written its countdown yet,
         /// which is where a demo starts.
