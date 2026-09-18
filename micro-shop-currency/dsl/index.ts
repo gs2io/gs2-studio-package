@@ -203,20 +203,14 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
       .label("CountLabel", ui.prop("count"), { name: "StoreProduct" })
       .value("CountValue", ui.prop("count"), { name: "StoreProduct" })
       .value("IdValue", ui.prop("id"), { name: "StoreProduct" })
-      .value(
-        "AppleAppStoreProductIdValue",
-        ui.inheritedProp(currency.propertyId("StoreProduct", "appleAppStoreProductId")),
-        {
-          name: "StoreProduct",
-        }
-      )
-      .value(
-        "GooglePlayProductIdValue",
-        ui.inheritedProp(currency.propertyId("StoreProduct", "googlePlayProductId")),
-        {
-          name: "StoreProduct",
-        }
-      )
+      // Declared by the currency package rather than here, and named by the
+      // name it publishes: this overlay declares only `count`.
+      .value("AppleAppStoreProductIdValue", ui.prop("appleAppStoreProductId"), {
+        name: "StoreProduct",
+      })
+      .value("GooglePlayProductIdValue", ui.prop("googlePlayProductId"), {
+        name: "StoreProduct",
+      })
   )
   .uiComponent(StorePrice, ui =>
     ui
