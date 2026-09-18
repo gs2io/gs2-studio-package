@@ -99,7 +99,7 @@ namespace GS2Studio.Generated.Gacha.UI
             if (model == null) return;
             try
             {
-                await model.Buy(                    quantity: 1);
+                await model.Buy(quantity: 1);
             }
             catch (Gs2Exception gs2Error)
             {
