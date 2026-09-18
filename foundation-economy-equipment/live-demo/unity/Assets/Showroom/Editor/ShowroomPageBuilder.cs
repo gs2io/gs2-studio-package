@@ -1528,10 +1528,10 @@ namespace GS2Studio.Showroom.EditorTools
                         "reading, but no such component was generated");
                 }
 
-                if (IsGauge(component)) AddGaugeRow(body, component, caption);
-                else if (IsClock(component)) AddCountdownRow(body, component, countdown);
-                else if (IsButton(component)) AddActionRow(body, component, page, caption);
-                else if (IsLabel(component)) AddValueRow(body, component);
+                if (IsGauge(component)) AddGaugeRow(body, model, component, caption);
+                else if (IsClock(component)) AddCountdownRow(body, model, component, countdown);
+                else if (IsButton(component)) AddActionRow(body, model, component, page, caption);
+                else if (IsLabel(component)) AddValueRow(body, model, component);
                 else
                 {
                     Debug.LogWarning(
@@ -1809,7 +1809,8 @@ namespace GS2Studio.Showroom.EditorTools
         /// `2/10` counts. With no reading the fill is all there is, so the
         /// gauge names it.
         /// </summary>
-        private static void AddGaugeRow(Transform section, Type gaugeType, Type readingLabelType)
+        private static void AddGaugeRow(
+            Transform section, string model, Type gaugeType, Type readingLabelType)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(GaugeRowPrefabPath);
             var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
@@ -1823,7 +1824,7 @@ namespace GS2Studio.Showroom.EditorTools
 
             SetText(
                 row.transform.Find("Caption"),
-                Humanize(TrimModelPrefix(readingLabelType ?? gaugeType)));
+                Humanize(TrimModelPrefix(readingLabelType ?? gaugeType, model)));
 
             var value = row.transform.Find("Value");
             if (readingLabelType == null) value.gameObject.SetActive(false);
@@ -1844,7 +1845,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// which is where a demo starts.
         /// </summary>
         private static void AddCountdownRow(
-            Transform section, Type clockType, Type behaviourType)
+            Transform section, string model, Type clockType, Type behaviourType)
         {
             if (behaviourType == null)
             {
@@ -1859,7 +1860,7 @@ namespace GS2Studio.Showroom.EditorTools
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ValueRowPrefabPath);
             var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
             row.name = clockType.Name;
-            SetText(row.transform.Find("Caption"), Humanize(TrimModelPrefix(clockType)));
+            SetText(row.transform.Find("Caption"), Humanize(TrimModelPrefix(clockType, model)));
 
             var clock = row.AddComponent(clockType);
             var countdown = row.AddComponent(behaviourType);
@@ -1949,23 +1950,24 @@ namespace GS2Studio.Showroom.EditorTools
             }
         }
 
-        private static void AddValueRow(Transform section, Type labelType)
+        private static void AddValueRow(Transform section, string model, Type labelType)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ValueRowPrefabPath);
             var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
             row.name = labelType.Name;
-            SetText(row.transform.Find("Caption"), Humanize(TrimModelPrefix(labelType)));
+            SetText(row.transform.Find("Caption"), Humanize(TrimModelPrefix(labelType, model)));
             BindLabel(row, labelType, row.transform.Find("Value").GetComponent<Text>());
         }
 
         private static void AddActionRow(
-            Transform section, Type buttonType, ShowroomPage page, Type captionLabelType)
+            Transform section, string model, Type buttonType, ShowroomPage page,
+            Type captionLabelType)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ActionRowPrefabPath);
             var row = (GameObject)PrefabUtility.InstantiatePrefab(prefab, section);
             row.name = buttonType.Name;
             var button = row.transform.Find("Button");
-            SetText(button.Find("Label"), Humanize(TrimModelPrefix(buttonType)));
+            SetText(button.Find("Label"), Humanize(TrimModelPrefix(buttonType, model)));
 
             var caption = row.transform.Find("Caption");
             if (captionLabelType == null)
@@ -2018,11 +2020,13 @@ namespace GS2Studio.Showroom.EditorTools
         /// -> `Experience`. What kind of component it is is already said by the
         /// row it is drawn in, so only what it reads is left. One suffix goes:
         /// the rest of the name is the reading, whatever it happens to end in.
+        ///
+        /// The model is the section's: a generated component carries it in its
+        /// namespace too, but a demo-written one lives wherever the demo put
+        /// it, and its name is prefixed the same way.
         /// </summary>
-        private static string TrimModelPrefix(Type uiComponent)
+        private static string TrimModelPrefix(Type uiComponent, string model)
         {
-            var model = (uiComponent.Namespace ?? "")
-                .Replace(GeneratedNamespacePrefix, "").Replace(".UI", "");
             var name = uiComponent.Name;
             if (name.StartsWith(model)) name = name.Substring(model.Length);
             foreach (var suffix in new[] { "Label", "Button", "Gauge", "Value", "Toggle" })

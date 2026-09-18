@@ -136,8 +136,7 @@ namespace GS2Studio.Generated.StoreProduct
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly DisplayItemModelConsumeActionLoader __transactionConsumeActionLoader;
-        private readonly DisplayItemModelAcquireActionLoader __transactionAcquireActionLoader;
+
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -149,8 +148,6 @@ namespace GS2Studio.Generated.StoreProduct
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __transactionConsumeActionLoader = new DisplayItemModelConsumeActionLoader("ShopCurrency", _model.Id, _model.Id, 0);
-            __transactionAcquireActionLoader = new DisplayItemModelAcquireActionLoader("ShopCurrency", _model.Id, _model.Id, 0);
         }
 
         /// <summary>
@@ -189,19 +186,7 @@ namespace GS2Studio.Generated.StoreProduct
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            if (_transactionConsumeAction != null)
-            {
-            }
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            if (_transactionAcquireAction != null)
-            {
-            }
-            if (_transactionConsumeAction != null) RestoreId(_model, _transactionConsumeAction.Action, _transactionConsumeAction.Request);
-            _model.Count = default;
-            if (_transactionAcquireAction != null) RestoreCount(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+
             _mounted = true;
         }
 
@@ -212,35 +197,7 @@ namespace GS2Studio.Generated.StoreProduct
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
-                    {
-                    }
-                    if (value != null) RestoreId(_model, value.Action, value.Request);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
-                    {
-                    }
-                    _model.Count = default;
-                    if (value != null) RestoreCount(_model, value.Action, value.Request);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+
         }
 
         /// <summary>
@@ -249,8 +206,7 @@ namespace GS2Studio.Generated.StoreProduct
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+
         }
 
         /// <summary>
@@ -310,6 +266,24 @@ namespace GS2Studio.Generated.StoreProduct
 
             GC.SuppressFinalize(this);
         }
+
+        #region Model composition
+        /// <summary>
+        /// Shared composition for one master-list item of an overlay type:
+        /// reflects the overlay-relevant master fields onto the model. The
+        /// companion Collection's reconcile/build delegate here, and external
+        /// stubs can apply the same mapping to their own model.
+        /// </summary>
+        public static void ApplyShowcaseShopCurrencyMasterItem(IMutableStoreProduct model, EzDisplayItem item)
+        {
+            var __SalesItemConsumeActions = item.SalesItem?.ConsumeActions;
+            var __SalesItemConsumeActions0 = __SalesItemConsumeActions != null && __SalesItemConsumeActions.Count > 0 ? __SalesItemConsumeActions[0] : null;
+            if (__SalesItemConsumeActions0 != null) StoreProductBinder.RestoreId(model, __SalesItemConsumeActions0.Action, __SalesItemConsumeActions0.Request);
+            var __SalesItemAcquireActions = item.SalesItem?.AcquireActions;
+            var __SalesItemAcquireActions0 = __SalesItemAcquireActions != null && __SalesItemAcquireActions.Count > 0 ? __SalesItemAcquireActions[0] : null;
+            if (__SalesItemAcquireActions0 != null) StoreProductBinder.RestoreCount(model, __SalesItemAcquireActions0.Action, __SalesItemAcquireActions0.Request);
+        }
+        #endregion
 
         #region MasterData reverse decode
         public static bool RestoreId(IMutableStoreProduct model, string actionName, string requestJson)

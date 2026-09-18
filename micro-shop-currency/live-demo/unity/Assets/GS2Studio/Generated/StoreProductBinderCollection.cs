@@ -487,11 +487,7 @@ namespace GS2Studio.Generated.StoreProduct
 
         private static void ApplyShowcaseShopCurrencyMasterItemTo(MutableStoreProduct model, EzDisplayItem item)
         {
-            // This loader carries no master-item field assignments; reconcile manages
-            // membership only (per-element field changes are tracked by each element
-            // binder's own Subscribe).
-            _ = item;
-            _ = model;
+            StoreProductBinder.ApplyShowcaseShopCurrencyMasterItem(model, item);
         }
 
         private StoreProductId ExtractShowcaseShopCurrencyMasterIdentity(EzDisplayItem item)
