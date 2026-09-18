@@ -267,9 +267,9 @@ export const foundationEconomyScheduleDemo = definePackage(
       "{id} ({scheduleType})",
       {
         id: ui.prop("id"),
-        // A dependency's declared properties are not visible by name at
-        // single-package build time, so this one is named by its published id.
-        scheduleType: ui.inheritedProp(schedule.propertyId("Schedule", "scheduleType")),
+        // Declared by the schedule package rather than here, and named by the
+        // name it publishes: this demo's overlay declares nothing of its own.
+        scheduleType: ui.prop("scheduleType"),
       },
       { name: "Schedule" }
     )
