@@ -1295,6 +1295,11 @@ namespace GS2Studio.Showroom.EditorTools
         {
             return type.IsClass && !type.IsAbstract &&
                 typeof(MonoBehaviour).IsAssignableFrom(type) &&
+                // The showroom's own reader answers this shape as well. It is
+                // the reading the row already has rather than a reaction a demo
+                // wrote, so taking it here put a second copy of it on every
+                // countdown row, the second one with no label to draw into.
+                type != typeof(ShowroomCountdown) &&
                 !(type.Namespace ?? "").StartsWith(GeneratedNamespacePrefix) &&
                 type.GetMethod("SetDeadline", new[] { typeof(DateTime) }) != null;
         }
@@ -1359,11 +1364,12 @@ namespace GS2Studio.Showroom.EditorTools
         {
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             ClearGeneratedComponents(content);
-            // Every handler answers a completed action, because an action can
-            // change anything the page is showing and a handler has no other
-            // way to hear about it.
-            var placed = new List<Component>();
-            var sections = new List<(Type Handler, Transform Body)>();
+            // Nothing here reloads a handler after an action. A binder keeps
+            // itself current — it subscribes to what it is bound to and the
+            // value arrives on its own. Calling `Reload` throws that cache away
+            // to fetch an answer the page was already going to get, and
+            // overlapping reloads leave duplicate rows behind.
+            var sectionCount = 0;
             var itemPrefabs = new List<string>();
 
             foreach (var plan in plans)
@@ -1374,10 +1380,7 @@ namespace GS2Studio.Showroom.EditorTools
                     // model a package never gave a component of its own — or
                     // one this page has no use for while another does — is
                     // still what another section's reading is composed from.
-                    // So it is mounted without a section, and stays out of
-                    // `placed`, because a handler that draws nothing has
-                    // nothing to redraw, and reloading it after every action
-                    // would throw away a cache for no one.
+                    // So it is mounted without a section of its own.
                     if (!plan.Manifest.keyed || DeclaresKey(plan))
                         PlaceHandler(content.gameObject, plan);
                     continue;
@@ -1391,7 +1394,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // writes it, and an empty line of placeholder prose is worse
                 // than none.
                 if (explainer != null) explainer.gameObject.SetActive(false);
-                sections.Add((plan.Handler, section.transform));
+                sectionCount++;
 
                 if (plan.Manifest.keyed && !DeclaresKey(plan))
                 {
@@ -1407,28 +1410,13 @@ namespace GS2Studio.Showroom.EditorTools
                 // climb `label -> Items -> Section -> content` — and a gauge in
                 // another section's list row can now read it too, which is what
                 // a reading composed from two models needs.
-                placed.Add(PlaceHandler(content.gameObject, plan));
+                PlaceHandler(content.gameObject, plan);
                 var body = ItemsOf(section.transform);
                 RealizeRows(plan, body, plan.Section, page, plan.Countdowns);
                 WireToggles(plan.Model, section, plan.Toggles, body, plan.Section);
             }
 
-            foreach (var (_, body) in sections)
-            {
-                foreach (var button in body.GetComponentsInChildren<MonoBehaviour>(true))
-                {
-                    var completed = button.GetType().GetProperty("OnCompleted");
-                    if (completed?.PropertyType != typeof(UnityEvent)) continue;
-                    var unityEvent = (UnityEvent)completed.GetValue(button);
-                    foreach (var handlerComponent in placed)
-                        UnityEventTools.AddVoidPersistentListener(
-                            unityEvent,
-                            (UnityAction)Delegate.CreateDelegate(
-                                typeof(UnityAction), handlerComponent, "Reload"));
-                    EditorUtility.SetDirty(button);
-                }
-            }
-            return (sections.Count, itemPrefabs);
+            return (sectionCount, itemPrefabs);
         }
 
         /// <summary>
@@ -1781,10 +1769,10 @@ namespace GS2Studio.Showroom.EditorTools
         /// because this runs with no scene playing: the handler reads them for
         /// itself when it starts, which is the same thing the Inspector does.
         /// </summary>
-        private static Component PlaceHandler(GameObject host, SectionPlan plan)
+        private static void PlaceHandler(GameObject host, SectionPlan plan)
         {
             var component = host.AddComponent(plan.Handler);
-            if (!DeclaresKey(plan)) return component;
+            if (!DeclaresKey(plan)) return;
             var serialized = new SerializedObject(component);
             foreach (var key in plan.Declaration.Key)
             {
@@ -1794,7 +1782,6 @@ namespace GS2Studio.Showroom.EditorTools
                 WriteScalar(serialized.FindProperty(parameter.fieldName), parameter, key.Value);
             }
             serialized.ApplyModifiedPropertiesWithoutUndo();
-            return component;
         }
 
         /// <summary>

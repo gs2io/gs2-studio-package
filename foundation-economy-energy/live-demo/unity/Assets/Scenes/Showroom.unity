@@ -224,7 +224,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1279414218813259619, guid: 042b40b0d4e5c48b8a029cb8b8c0a766, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1198268572}
+      addedObject: {fileID: 1101550286}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 042b40b0d4e5c48b8a029cb8b8c0a766, type: 3}
 --- !u!224 &159312091 stripped
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Gs2Bind.Unity::Gs2Bind.Gs2Account.Gs2PlayerPrefsAccountStore
   keyPrefix: gs2.showroom.account
---- !u!1001 &1198268571
+--- !u!1001 &1101550285
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -525,30 +525,30 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1198268575}
+      addedObject: {fileID: 1101550289}
   m_SourcePrefab: {fileID: 100100000, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
---- !u!224 &1198268572 stripped
+--- !u!224 &1101550286 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 625856722107848772, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1198268571}
+  m_PrefabInstance: {fileID: 1101550285}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1198268573 stripped
+--- !u!224 &1101550287 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7992485640677482743, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1198268571}
+  m_PrefabInstance: {fileID: 1101550285}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1198268574 stripped
+--- !u!1 &1101550288 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1198268571}
+  m_PrefabInstance: {fileID: 1101550285}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1198268575
+--- !u!114 &1101550289
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198268574}
+  m_GameObject: {fileID: 1101550288}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2981202b61de43b6d8c7b744efce8f20, type: 3}
@@ -556,7 +556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Energy.EnergyListHandler
   _axis: 1617444772
   _itemPrefab: {fileID: 4589820273833591709, guid: 7edebc75705084cbc99a9cf02cf81556, type: 3}
-  _contentParent: {fileID: 1198268573}
+  _contentParent: {fileID: 1101550287}
   _autoSubscribe: 1
 --- !u!1 &1747940284
 GameObject:
