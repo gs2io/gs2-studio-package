@@ -50,7 +50,6 @@
   "masterDataResources": {
     "lottery.LotteryModel": "188c85a8-f0d5-4534-964a-e9e00604c2d6",
     "lottery.Namespace": "ba9b8acc-859a-4acd-bade-b95f2dcdb6b2",
-    "lottery.PrizeTable": "53d26b27-c20f-4d48-8b1d-fe3f6d23469c",
     "showcase.DisplayItem": "b6c5895e-3066-423a-9090-04d803ad89e9",
     "showcase.Namespace": "de811537-ebb8-4f28-9c50-d64484af063e",
     "showcase.SalesItem": "0247d4b6-2edd-5cbd-b4f7-673903721915",

@@ -125,26 +125,17 @@ const LotteryModel = defineMasterDataResource(resource =>
 );
 
 /**
- * One prize table per gacha. Rarity rows draw a nested table; character rows
- * hand out the character itself and record it in the dex.
+ * One prize table per rarity: the characters that tier can hand out, each
+ * granting the character itself and recording it in the dex. A character rate
+ * names its rarity, and that is what files it under this table rather than
+ * another tier's.
  */
-const PrizeTable = defineMasterDataResource(resource =>
+const RarityPrizeTable = defineMasterDataResource(resource =>
   resource
     .model(GS2.lottery.PrizeTable)
-    .mountLocal(Gacha)
+    .mountLocal(GachaRarity)
     .bindings({
-      name: Bind.domainProperty(Source.direct(Gacha, "id")),
-    })
-    .addArrayChild("prizes", rarityPrize => {
-      rarityPrize
-        .model(GS2.lottery.Prize)
-        .mountLocal(GachaRarityRate)
-        .bindings({
-          type: Bind.static("prize_table"),
-          prizeId: Bind.domainProperty(Source.direct(GachaRarityRate, "id")),
-          prizeTableName: Bind.domainProperty(Source.direct(GachaRarityRate, "id")),
-          weight: Bind.domainProperty(Source.direct(GachaRarityRate, "weight")),
-        });
+      name: Bind.domainProperty(Source.direct(GachaRarity, "id")),
     })
     .addArrayChild("prizes", characterPrize => {
       characterPrize
@@ -185,6 +176,31 @@ const PrizeTable = defineMasterDataResource(resource =>
                 ]
               ),
             });
+        });
+    })
+);
+
+/**
+ * One prize table per gacha. Each row draws a rarity, and the rarity draws
+ * from its own table above; the two tables are named after the gacha and the
+ * rarity, so the draw can follow the name from one to the other.
+ */
+const PrizeTable = defineMasterDataResource(resource =>
+  resource
+    .model(GS2.lottery.PrizeTable)
+    .mountLocal(Gacha)
+    .bindings({
+      name: Bind.domainProperty(Source.direct(Gacha, "id")),
+    })
+    .addArrayChild("prizes", rarityPrize => {
+      rarityPrize
+        .model(GS2.lottery.Prize)
+        .mountLocal(GachaRarityRate)
+        .bindings({
+          type: Bind.static("prize_table"),
+          prizeId: Bind.domainProperty(Source.direct(GachaRarityRate, "id")),
+          prizeTableName: Bind.domainProperty(Source.direct(GachaRarityRate, "rarity")),
+          weight: Bind.domainProperty(Source.direct(GachaRarityRate, "weight")),
         });
     })
 );
@@ -308,6 +324,7 @@ export const microShopCharacterGacha = definePackage("micro-shop-character-gacha
       })
       .addChild(LotteryModel)
       .addChild(PrizeTable)
+      .addChild(RarityPrizeTable)
   )
 
   .masterDataResource(r =>

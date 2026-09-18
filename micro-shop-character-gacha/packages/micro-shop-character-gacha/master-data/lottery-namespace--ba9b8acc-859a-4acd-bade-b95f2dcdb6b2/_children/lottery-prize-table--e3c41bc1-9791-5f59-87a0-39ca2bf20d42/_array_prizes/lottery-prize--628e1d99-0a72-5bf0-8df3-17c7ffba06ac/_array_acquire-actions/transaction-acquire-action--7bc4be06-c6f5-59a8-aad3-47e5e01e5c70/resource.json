@@ -18,7 +18,7 @@
                   "propertyId": "prop_AATTCTRXX4J382EEVEGE9ZYV6W"
                 },
                 "kind": "parent",
-                "parentResourceId": "fa1b8de9-9205-4c96-8778-95f580cc2413"
+                "parentResourceId": "628e1d99-0a72-5bf0-8df3-17c7ffba06ac"
               }
             }
           }
@@ -30,7 +30,7 @@
       }
     ]
   },
-  "id": "4db371b2-a50c-456f-bda4-589008ace413",
+  "id": "7bc4be06-c6f5-59a8-aad3-47e5e01e5c70",
   "index": 1,
   "location": {
     "modelName": "AcquireAction",
