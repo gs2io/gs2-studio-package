@@ -35,9 +35,10 @@ namespace GS2Studio.Generated.Gacha.UI
         [SerializeField] private Button? _button;
 
         /// <summary>
-        /// Raised once the action has completed on the server. A screen that
-        /// shows what the action changed reloads from here — the handler that
-        /// reads it has no way to know an unrelated component wrote to it.
+        /// Raised once the action has completed on the server. A screen hangs
+        /// its own work off this: a transition, a sound, a reading this model
+        /// does not carry. What the action changed does not need it — a bound
+        /// value arrives through the binder's own subscription.
         /// </summary>
         [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
 

@@ -1,11 +1,25 @@
-// Paying for the coins a draw costs, as this demo does it.
+// Buying, as these demos do it.
 //
-// The coins come from the shop, bought the way the shop demo buys them: the
-// generated `Buy` on a store price buys through the platform's store and hands
-// GS2 the receipt that comes back. Away from a real storefront the platform
-// answers from its fake store, and the demo's Money2 namespace is set to
-// accept what that returns. This is the shop demo's behaviour, repeated here
-// because each demo is a Unity project of its own.
+// The shop's purchase is a delegated action on a store price, and a store
+// price is a product paired with a currency. The page lists products, because
+// that is what the shop has a list of; which currency a visitor is buying in
+// is the demo's choice, not the shop's, so the row does not carry it.
+//
+// The shipped purchase is an in-app one, and the demo makes it the way it is
+// made: the generated `Buy` buys through the platform's store and hands GS2
+// the receipt that comes back. Nothing here writes a receipt. Away from a real
+// storefront the platform answers from its fake store, and the demo's Money2
+// namespace is set to accept what that returns.
+//
+// What the demo does supply is what only it can. Which product to buy in the
+// platform's store is an identifier registered there rather than in GS2, and
+// which wallet the currency lands in is the buyer's choice — a store sells to
+// whichever wallet is named.
+//
+// This file is in two demos, byte for byte: each demo is a Unity project of
+// its own, and the shop's purchase is what both of them need. A gate holds the
+// copies equal, because a press that drifts between them is a press that only
+// one visitor gets.
 #nullable enable
 
 using System;
@@ -28,16 +42,23 @@ namespace GS2Studio.Showroom.Demo
 {
     /// <summary>
     /// Buys the product this row shows, in the demo's currency, into the demo's
-    /// wallet, with a test receipt. The shop demo's press, carried here so a
-    /// visitor can afford a draw.
+    /// wallet, with a test receipt.
+    ///
+    /// Shaped like a generated action button on purpose — a `Button` to wire
+    /// and an `OnCompleted` to raise — because that is what the page knows how
+    /// to draw, and this is a row like any other once it is drawn.
     /// </summary>
     [AddComponentMenu("GS2 Studio/Showroom/Buy This Product")]
     public sealed class StoreProductBuyButton : MonoBehaviour
     {
-        /// <summary>The currency the demo prices everything in.</summary>
+        /// <summary>
+        /// The currency the demo prices everything in. The shop sells in three;
+        /// a page that offered all of them would be showing the shop's
+        /// configurability rather than its purchase.
+        /// </summary>
         private const string DemoCurrency = "XXX";
 
-        /// <summary>The demo shows one player with one wallet, slot 0 — the one the gacha draws from.</summary>
+        /// <summary>The demo shows one player with one wallet, slot 0.</summary>
         private const int WalletSlot = 0;
 
         /// <summary>
@@ -59,7 +80,8 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>
         /// Raised when the purchase fails with a GS2 error, which is what the
-        /// page knows how to show. Anything else goes to the page as text.
+        /// page knows how to show. Anything else goes to the page as text —
+        /// see <see cref="Report"/>, and why it has to.
         /// </summary>
         [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
 
@@ -141,6 +163,14 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
+        /// <summary>
+        /// Put a failure where a visitor can see it.
+        ///
+        /// The page's error channel carries a `Gs2Exception`, so a failure of
+        /// any other kind cannot travel it — and a browser hides the console,
+        /// which is where it would otherwise be the only record. The very
+        /// failure this demo hit first was one of those.
+        /// </summary>
         private void Report(string message)
         {
             _page ??= FindAnyObjectByType<ShowroomPage>();

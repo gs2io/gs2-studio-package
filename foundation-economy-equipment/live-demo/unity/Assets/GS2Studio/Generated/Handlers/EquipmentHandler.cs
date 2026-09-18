@@ -115,9 +115,14 @@ namespace GS2Studio.Generated.Equipment
         /// <summary>
         /// Re-reads the bound model from the server, keeping the identity keys
         /// it already has. Parameterless and returning void so it can be wired
-        /// in the Inspector: a component that changes this model through a
-        /// server action raises an event, and this is what answers it — the
-        /// handler has no other way to learn that the value moved.
+        /// in the Inspector.
+        ///
+        /// A bound value does not need this. The binder subscribes to what it
+        /// reads, so an action that writes through the SDK's cache reaches this
+        /// handler on its own. Reload is for what no subscription sees: a value
+        /// the server moved without the cache being told. It discards the
+        /// binder and builds another, so wiring it to every completed action
+        /// throws away a cache the screen was about to read.
         ///
         /// Fire-and-forget, like <see cref="SetKeys"/>: failures surface via
         /// the <see cref="Failed"/> event + <c>Debug.LogException</c>; await

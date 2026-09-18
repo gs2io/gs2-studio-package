@@ -48,7 +48,7 @@ namespace GS2Studio.Showroom.EditorTools
         private const string ManifestDirectory = "Assets/GS2Studio/Generated/Handlers";
         private const string ManifestSuffix = ".showroom.json";
         /// <summary>The manifest schema this builder reads; the generator writes `schemaVersion`.</summary>
-        private const int ManifestSchemaVersion = 1;
+        private const int ManifestSchemaVersion = 2;
 
         // The component manifest, as `JsonUtility` reads it. Field names are
         // the JSON keys the generator writes (`componentManifestPlan.ts`);
@@ -100,11 +100,10 @@ namespace GS2Studio.Showroom.EditorTools
             public int schemaVersion;
             public string model;
             public string @namespace;
+            public string componentNamespace;
             public string handler;
-            public string handlerBase;
             public string listHandler;
             public string listItemHandler;
-            public bool singleEntry;
             public bool keyed;
             public ManifestParameter[] identityKeys;
             public ManifestParameter[] scopeParameters;
@@ -616,7 +615,7 @@ namespace GS2Studio.Showroom.EditorTools
         private static ComponentManifest WithoutNulls(ComponentManifest manifest)
         {
             manifest.@namespace = manifest.@namespace ?? "";
-            manifest.handlerBase = manifest.handlerBase ?? "";
+            manifest.componentNamespace = manifest.componentNamespace ?? "";
             manifest.listHandler = manifest.listHandler ?? "";
             manifest.listItemHandler = manifest.listItemHandler ?? "";
             manifest.itemPrefabField = manifest.itemPrefabField ?? "";
@@ -738,7 +737,7 @@ namespace GS2Studio.Showroom.EditorTools
             return new RowComponent
             {
                 Name = component.className,
-                Type = ResolveType(manifest, manifest.@namespace + ".UI." + component.className),
+                Type = ResolveType(manifest, manifest.componentNamespace + "." + component.className),
                 Kind = kind,
                 Suffix = SuffixOf(component),
                 ReportsFailure = component.reportsFailure,
@@ -765,7 +764,7 @@ namespace GS2Studio.Showroom.EditorTools
                     return new ToggleComponent
                     {
                         Name = component.className,
-                        Type = ResolveType(manifest, manifest.@namespace + ".UI." + component.className),
+                        Type = ResolveType(manifest, manifest.componentNamespace + "." + component.className),
                         Hides = hides,
                         ArmField = SerializedFieldNamed(
                             manifest, component, hides ? "activeWhenFalse" : "interactableWhenTrue"),

@@ -1,4 +1,4 @@
-// Buying, as this demo does it.
+// Buying, as these demos do it.
 //
 // The shop's purchase is a delegated action on a store price, and a store
 // price is a product paired with a currency. The page lists products, because
@@ -15,6 +15,11 @@
 // platform's store is an identifier registered there rather than in GS2, and
 // which wallet the currency lands in is the buyer's choice — a store sells to
 // whichever wallet is named.
+//
+// This file is in two demos, byte for byte: each demo is a Unity project of
+// its own, and the shop's purchase is what both of them need. A gate holds the
+// copies equal, because a press that drifts between them is a press that only
+// one visitor gets.
 #nullable enable
 
 using System;
