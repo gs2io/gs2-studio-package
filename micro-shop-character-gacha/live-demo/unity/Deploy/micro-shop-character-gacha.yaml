@@ -15,13 +15,15 @@ Resources:
           - name: "standard"
             prizes:
               - prizeId: "standard.common"
-                prizeTableName: "standard.common"
+                prizeTableName: "common"
                 type: "prize_table"
                 weight: 80
               - prizeId: "standard.rare"
-                prizeTableName: "standard.rare"
+                prizeTableName: "rare"
                 type: "prize_table"
                 weight: 20
+          - name: "common"
+            prizes:
               - prizeId: "common.archer"
                 type: "action"
                 weight: 1
@@ -38,6 +40,8 @@ Resources:
                     request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
                   - action: "Gs2Dictionary:AddEntriesByUserId"
                     request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"knight\"]}"
+          - name: "rare"
+            prizes:
               - prizeId: "rare.healer"
                 type: "action"
                 weight: 1

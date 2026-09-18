@@ -71,8 +71,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
-      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "commitSha": "eeb58d28e5a43c273614ac29ab5b76aeb8496864",
+      "integrity": "sha256-9I/N2b/MZ3SvTShhizgX1kghpj9Jg243YCG6kHkYUko=",
       "owner": "gs2io",
       "packageId": "micro-shop-character-gacha",
       "repo": "gs2-studio-package",
