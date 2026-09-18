@@ -451,11 +451,8 @@ namespace GS2Studio.Generated.EquipmentCatalog
             return true;
         }
 
-        // Keep this predicate in sync with the WhereEquipment
-        // match helper emitted on EquipmentCatalogBinderCollection (see the
-        // `refNavFilters` macro in _navigationMacros.njk). The duplication is
-        // intentional: sharing the helper would couple the binder-family and
-        // handler-family golden outputs.
+        // This expression uses the same equality renderer/lowering as the
+        // WhereEquipment match helper on the Collection.
         private bool MatchesParent(IReadOnlyEquipmentCatalogBinder binder)
             => EqualityComparer<EquipmentId>.Default.Equals(binder.Equipment, _parentId);
 

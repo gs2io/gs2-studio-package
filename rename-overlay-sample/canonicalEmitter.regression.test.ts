@@ -31,6 +31,7 @@ import { describe, expect, it } from "vitest";
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
 import type {
   RawActionsJson,
+  RawBindJson,
   RawMasterData,
   RawModelsJson,
   RawServicesJson,
@@ -73,6 +74,9 @@ function loadProductionCatalog(): Catalog {
         masterData: (readJsonFile(resolve(catalogsDir, serviceName, "masterData.json")) ?? {
           hasMasterData: false,
         }) as RawMasterData,
+        bind: readJsonFile(resolve(catalogsDir, serviceName, "bind.json")) as
+          | RawBindJson
+          | undefined,
       };
     },
   });

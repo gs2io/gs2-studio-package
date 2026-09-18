@@ -126,7 +126,7 @@ namespace GS2Studio.Generated.StorePrice
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly DisplayItemModelLoader __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader;
+        private readonly DisplayItemLoader __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -138,7 +138,7 @@ namespace GS2Studio.Generated.StorePrice
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader = new DisplayItemModelLoader("ShopCurrency", _model.CurrencyType, _model.Id);
+            __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader = new DisplayItemLoader("ShopCurrency", _model.CurrencyType, _model.Id);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace GS2Studio.Generated.StorePrice
         public async Task Buy(string storeProductId, Gs2.Unity.Gs2Showcase.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Showcase.DisplayItemModelLoader("ShopCurrency", _model.CurrencyType, _model.Id).BuyIncludePaidProduct(_gs2, _session, 1, config, storeProductId: storeProductId);
+            await new Gs2Bind.Gs2Showcase.DisplayItemLoader("ShopCurrency", _model.CurrencyType, _model.Id).BuyIncludePaidProduct(_gs2, _session, storeProductId: storeProductId, quantity: 1, config: config);
         }
         #endregion
 

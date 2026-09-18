@@ -517,7 +517,7 @@ namespace GS2Studio.Generated.Character
         public async Task Train()
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterTrain", _model.Id).Exchange(_gs2, _session, 1, new Gs2.Unity.Gs2Exchange.Model.EzConfig[] { new Gs2.Unity.Gs2Exchange.Model.EzConfig { Key = "propertyId", Value = _model.PropertyId } });
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterTrain", _model.Id).Exchange(_gs2, _session, count: 1, config: new Gs2.Unity.Gs2Exchange.Model.EzConfig[] { new Gs2.Unity.Gs2Exchange.Model.EzConfig { Key = "propertyId", Value = _model.PropertyId } });
         }
         #endregion
 

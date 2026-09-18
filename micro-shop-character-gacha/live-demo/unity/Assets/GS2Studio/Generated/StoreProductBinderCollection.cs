@@ -272,7 +272,7 @@ namespace GS2Studio.Generated.StoreProduct
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new DisplayItemModelArrayLoader("ShopCurrency", _currencyType).Invalidate(_gs2, _session);
+            new ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType).Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace GS2Studio.Generated.StoreProduct
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new DisplayItemModelArrayLoader("ShopCurrency", _currencyType);
+            var arrayLoader = new ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType);
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromShowcaseShopCurrencyMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -384,7 +384,7 @@ namespace GS2Studio.Generated.StoreProduct
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new DisplayItemModelArrayLoader("ShopCurrency", _currencyType);
+            var arrayLoader = new ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType);
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,

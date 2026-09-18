@@ -451,11 +451,8 @@ namespace GS2Studio.Generated.TriggerPull
             return true;
         }
 
-        // Keep this predicate in sync with the WhereTrigger
-        // match helper emitted on TriggerPullBinderCollection (see the
-        // `refNavFilters` macro in _navigationMacros.njk). The duplication is
-        // intentional: sharing the helper would couple the binder-family and
-        // handler-family golden outputs.
+        // This expression uses the same equality renderer/lowering as the
+        // WhereTrigger match helper on the Collection.
         private bool MatchesParent(IReadOnlyTriggerPullBinder binder)
             => EqualityComparer<TriggerId>.Default.Equals(binder.Trigger, _parentId);
 

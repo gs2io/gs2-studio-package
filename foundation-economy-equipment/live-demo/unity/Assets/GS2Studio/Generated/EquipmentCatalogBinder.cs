@@ -300,7 +300,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
         public async Task Take(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentTake", _model.Id).Exchange(_gs2, _session, 1, config);
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentTake", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
         #endregion
 

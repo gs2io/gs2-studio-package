@@ -136,7 +136,7 @@ namespace GS2Studio.Generated.Gacha
         internal bool _mounted;
 
         private readonly LotteryModelLoader __lotteryCharacterGachaNamespaceLotteryModelLoader;
-        private readonly DisplayItemModelLoader __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader;
+        private readonly DisplayItemLoader __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -149,7 +149,7 @@ namespace GS2Studio.Generated.Gacha
         ) : base(model, gs2, session)
         {
             __lotteryCharacterGachaNamespaceLotteryModelLoader = new LotteryModelLoader("CharacterGacha", _model.Id);
-            __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader = new DisplayItemModelLoader("CharacterGacha", "Showcase", _model.Id);
+            __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader = new DisplayItemLoader("CharacterGacha", "Showcase", _model.Id);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace GS2Studio.Generated.Gacha
         public async Task Buy(int quantity, Gs2.Unity.Gs2Showcase.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Showcase.DisplayItemModelLoader("CharacterGacha", "Showcase", _model.Id).Buy(_gs2, _session, quantity, config);
+            await new Gs2Bind.Gs2Showcase.DisplayItemLoader("CharacterGacha", "Showcase", _model.Id).Buy(_gs2, _session, quantity: quantity, config: config);
         }
         #endregion
 

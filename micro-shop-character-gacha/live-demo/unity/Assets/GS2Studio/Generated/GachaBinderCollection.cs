@@ -295,9 +295,9 @@ namespace GS2Studio.Generated.Gacha
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new DisplayItemModelArrayLoader("CharacterGacha", "Showcase").Invalidate(_gs2, _session);
+            new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase").Invalidate(_gs2, _session);
             new LotteryModelArrayLoader("CharacterGacha").Invalidate(_gs2, _session);
-            new DisplayItemModelArrayLoader("CharacterGacha", "Showcase").Invalidate(_gs2, _session);
+            new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace GS2Studio.Generated.Gacha
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new DisplayItemModelArrayLoader("CharacterGacha", "Showcase");
+            var arrayLoader = new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromShowcaseCharacterGachaMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -408,7 +408,7 @@ namespace GS2Studio.Generated.Gacha
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new DisplayItemModelArrayLoader("CharacterGacha", "Showcase");
+            var arrayLoader = new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -703,7 +703,7 @@ namespace GS2Studio.Generated.Gacha
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new DisplayItemModelArrayLoader("CharacterGacha", "Showcase");
+            var arrayLoader = new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromShowcaseCharacterGacha2MasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -725,7 +725,7 @@ namespace GS2Studio.Generated.Gacha
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new DisplayItemModelArrayLoader("CharacterGacha", "Showcase");
+            var arrayLoader = new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,

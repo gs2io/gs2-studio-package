@@ -321,7 +321,7 @@ namespace GS2Studio.Generated.CharacterRecruit
         public async Task Recruit(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterRecruit", _model.Id).Exchange(_gs2, _session, 1, config);
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterRecruit", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
         #endregion
 

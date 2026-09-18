@@ -372,13 +372,13 @@ namespace GS2Studio.Generated.Trigger
         public async Task Extend(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerExtend", _model.Id).Exchange(_gs2, _session, 1, config);
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerExtend", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
 
         public async Task Clear(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerClear", _model.Id).Exchange(_gs2, _session, 1, config);
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerClear", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
         #endregion
 

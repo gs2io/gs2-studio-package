@@ -395,13 +395,13 @@ namespace GS2Studio.Generated.Energy
         public async Task Consume(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyConsume", _model.Id).Exchange(_gs2, _session, 1, config);
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyConsume", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
 
         public async Task Recover(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyRecover", _model.Id).Exchange(_gs2, _session, 1, config);
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyRecover", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
         #endregion
 
