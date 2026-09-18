@@ -53,6 +53,18 @@
   "mountFields": [],
   "components": [
     {
+      "className": "GachaBuyButton",
+      "kind": "buttonAction",
+      "valueType": "",
+      "reportsFailure": true,
+      "serializedFields": [
+        {
+          "role": "button",
+          "name": "_button"
+        }
+      ]
+    },
+    {
       "className": "GachaNameLabel",
       "kind": "templateLabel",
       "valueType": "",

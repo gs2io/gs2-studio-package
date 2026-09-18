@@ -5,6 +5,9 @@
     "Character": {
       "id": "dt_01M2FZNNF20R4VKFQ0JMNXKT4B",
       "singleEntry": false,
+      "delegatedActions": {
+        "Train": "resource:foundation-economy-character-demo:masterData:c103bba7-639b-581f-8669-9d68c0a27fa6::Gs2Exchange:RateModel.Exchange"
+      },
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
     },
@@ -23,6 +26,9 @@
     "CharacterRecruit": {
       "id": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J",
       "singleEntry": false,
+      "delegatedActions": {
+        "Recruit": "resource:foundation-economy-character-demo:masterData:cc2afb32-33a6-5439-a1ec-40d450e67bd6::Gs2Exchange:RateModel.Exchange"
+      },
       "canonicalPackageId": "foundation-economy-character-demo",
       "canonicalTypeId": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J",
       "properties": {

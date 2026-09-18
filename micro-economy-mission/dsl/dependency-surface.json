@@ -5,6 +5,9 @@
     "Mission": {
       "id": "dt_P8YA8929576H08C2Q4YBE5KJXT",
       "singleEntry": false,
+      "delegatedActions": {
+        "Receive": "resource:micro-economy-mission:masterData:97e2eb72-ce85-4fdd-8c8d-01bcfdd8498b::Gs2Mission:MissionTaskModel.Complete"
+      },
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_P8YA8929576H08C2Q4YBE5KJXT",
       "properties": {
@@ -20,6 +23,9 @@
     "MissionCollection": {
       "id": "dt_ZXWN4GKT975S371YFYF3E1DRZ0",
       "singleEntry": false,
+      "delegatedActions": {
+        "Receive": "resource:micro-economy-mission:masterData:daff2a34-703e-4aea-a777-19e8fa874bd4::Gs2Mission:MissionGroupModel.BatchComplete"
+      },
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_ZXWN4GKT975S371YFYF3E1DRZ0",
       "properties": {

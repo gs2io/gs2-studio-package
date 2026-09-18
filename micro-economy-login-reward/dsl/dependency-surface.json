@@ -5,6 +5,9 @@
     "LoginReward": {
       "id": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
       "singleEntry": false,
+      "delegatedActions": {
+        "Receive": "resource:micro-economy-login-reward:userData:36085262-1664-4dfe-a472-c1f8a886ec52::Gs2LoginReward:ReceiveStatus.Receive"
+      },
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
       "properties": {

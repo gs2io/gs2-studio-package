@@ -17,6 +17,9 @@
     "Gacha": {
       "id": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
       "singleEntry": false,
+      "delegatedActions": {
+        "Buy": "resource:micro-shop-character-gacha:masterData:b6c5895e-3066-423a-9090-04d803ad89e9::Gs2Showcase:DisplayItem.Buy"
+      },
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
       "properties": {

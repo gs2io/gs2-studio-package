@@ -16,6 +16,22 @@
         }
       ],
       "template": "{id}"
+    },
+    {
+      "arguments": [
+        {
+          "parameterName": "quantity",
+          "source": {
+            "kind": "literal",
+            "value": 1
+          }
+        }
+      ],
+      "componentClassName": "BuyButton",
+      "delegatedActionKey": "resource:micro-shop-character-gacha:masterData:b6c5895e-3066-423a-9090-04d803ad89e9::Gs2Showcase:DisplayItem.Buy",
+      "id": "209c1bd4-9b9a-5312-90ae-0f2c571ff8c9",
+      "kind": "buttonAction",
+      "name": "Gacha"
     }
   ],
   "name": "Gacha",

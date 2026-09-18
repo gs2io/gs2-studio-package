@@ -164,11 +164,12 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
     [gacha.propertyId("CharacterRate", "weight")]: 1,
   })
 
-  // The row says which gacha it is. The press is the feature package's `Buy`,
-  // which the generated binder carries; a package cannot put a button on an
-  // action it did not declare, so the demo presses it from a behaviour of its
-  // own (`unity/Assets/Showroom/Demo.cs`), the way the shop demo does.
+  // The row says which gacha it is, and the button draws one. `Buy` is the
+  // feature package's action, named here by the name that package publishes
+  // it under; one draw per press, which is what the showcase sells.
   .uiComponent(Gacha, ui =>
-    ui.templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Gacha" })
+    ui
+      .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Gacha" })
+      .buttonAction("BuyButton", "Buy", { quantity: ui.lit(1) }, { name: "Gacha" })
   )
   .build();

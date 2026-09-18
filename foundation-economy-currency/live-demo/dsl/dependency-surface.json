@@ -11,6 +11,9 @@
     "FreeDeposit": {
       "id": "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB",
       "singleEntry": true,
+      "delegatedActions": {
+        "Deposit": "resource:foundation-economy-currency-demo:masterData:1cbfa8cc-52b1-508f-81c1-808d91a6aa81::Gs2Exchange:RateModel.Exchange"
+      },
       "canonicalPackageId": "foundation-economy-currency-demo",
       "canonicalTypeId": "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB",
       "properties": {
@@ -21,6 +24,9 @@
     "PaidDeposit": {
       "id": "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F",
       "singleEntry": true,
+      "delegatedActions": {
+        "Deposit": "resource:foundation-economy-currency-demo:masterData:d2dc210a-a549-52d3-ae66-7fc930d53357::Gs2Exchange:RateModel.Exchange"
+      },
       "canonicalPackageId": "foundation-economy-currency-demo",
       "canonicalTypeId": "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F",
       "properties": {

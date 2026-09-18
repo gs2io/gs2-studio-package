@@ -14,6 +14,9 @@
     "StorePrice": {
       "id": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
       "singleEntry": false,
+      "delegatedActions": {
+        "Buy": "resource:micro-shop-currency:masterData:b01aba03-98e5-4073-859a-f6e0df8eb578::Gs2Showcase:DisplayItem.Buy"
+      },
       "canonicalPackageId": "micro-shop-currency",
       "canonicalTypeId": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
       "properties": {

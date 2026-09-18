@@ -5,6 +5,10 @@
     "Energy": {
       "id": "dt_01M2JG8Q6GMNFPA3732XVHMCN5",
       "singleEntry": false,
+      "delegatedActions": {
+        "Consume": "resource:foundation-economy-energy-demo:masterData:a79d51c8-3652-5fa2-afe0-6076cd004538::Gs2Exchange:RateModel.Exchange",
+        "Recover": "resource:foundation-economy-energy-demo:masterData:3d74622a-fa25-5f3d-a62b-e0cbed4f4788::Gs2Exchange:RateModel.Exchange"
+      },
       "canonicalPackageId": "foundation-economy-energy",
       "canonicalTypeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY"
     }

@@ -5,6 +5,10 @@
     "Item": {
       "id": "dt_01M2JNQ96HQN4AB5VK9EGMS3YV",
       "singleEntry": false,
+      "delegatedActions": {
+        "Gain": "resource:foundation-economy-inventory-demo:masterData:8544d90c-18b6-5f9c-abf8-96fd42e37499::Gs2Exchange:RateModel.Exchange",
+        "Spend": "resource:foundation-economy-inventory-demo:masterData:be9cb9ab-350b-5302-980d-5709748b0beb::Gs2Exchange:RateModel.Exchange"
+      },
       "canonicalPackageId": "foundation-economy-inventory",
       "canonicalTypeId": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6"
     }
