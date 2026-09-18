@@ -1,0 +1,60 @@
+{
+  "sections": {
+    "Gacha": {
+      "key": {
+        "id": "standard"
+      },
+      "rows": [
+        {
+          "component": "GachaBuyButton",
+          "caption": "GachaNameLabel"
+        }
+      ]
+    },
+    "Character": {
+      "axis": "InventoryCharacterUser",
+      "rows": [
+        "CharacterIdValue"
+      ]
+    },
+    "Wallet": {
+      "key": {
+        "slot": 0
+      },
+      "rows": [
+        "WalletFreeBalanceLabel",
+        "WalletPaidBalanceLabel",
+        "WalletTotalBalanceLabel"
+      ]
+    },
+    "StoreProduct": {
+      "scope": {
+        "currencyType": "XXX"
+      },
+      "rows": [
+        {
+          "component": "StoreProductBuyButton",
+          "caption": "StoreProductCountLabel"
+        }
+      ]
+    },
+    "CharacterRecruit": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "CurrencyType": {
+      "rows": []
+    },
+    "Schedule": {
+      "rows": []
+    },
+    "Trigger": {
+      "rows": []
+    },
+    "TriggerPull": {
+      "rows": []
+    }
+  }
+}

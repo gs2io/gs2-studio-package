@@ -1,0 +1,24 @@
+{
+  "id": "ecb47968-9af7-5844-8941-ebeb59650f46",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "5c53f162-ed0f-5ad2-aadd-83f3c972cbb5",
+      "kind": "templateLabel",
+      "name": "Gacha",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        }
+      ],
+      "template": "{id}"
+    }
+  ],
+  "name": "Gacha",
+  "targetDomainType": "Gacha",
+  "targetDomainTypeId": "dt_01M2SBWGXFA863WACPYRNPSP94"
+}

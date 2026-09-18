@@ -1,0 +1,24 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  DictionaryCurrentEntryMaster_CharacterDictionary:
+    Type: "GS2::Dictionary::CurrentEntryMaster"
+    Properties:
+      NamespaceName: "CharacterDictionary"
+      Settings:
+        version: "2020-04-30"
+        entryModels:
+          - name: "archer"
+          - name: "healer"
+          - name: "knight"
+          - name: "mage"
+      Mode: "direct"
+    DependsOn:
+      - "DictionaryNamespace_CharacterDictionary"
+  DictionaryNamespace_CharacterDictionary:
+    Type: "GS2::Dictionary::Namespace"
+    Properties:
+      Name: "CharacterDictionary"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

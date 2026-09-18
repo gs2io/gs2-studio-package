@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M2SBWGXF692QDVTJR6DW65ZE",
+  "kind": "overlay",
+  "name": "CharacterRate",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-shop-character-gacha",
+    "directSourceTypeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+    "sourcePackageId": "micro-shop-character-gacha",
+    "sourceTypeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054"
+  }
+}

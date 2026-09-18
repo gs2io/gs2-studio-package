@@ -1,0 +1,100 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  LotteryCurrentLotteryMaster_CharacterGacha:
+    Type: "GS2::Lottery::CurrentLotteryMaster"
+    Properties:
+      NamespaceName: "CharacterGacha"
+      Settings:
+        version: "2019-02-21"
+        lotteryModels:
+          - method: "prize_table"
+            mode: "normal"
+            name: "standard"
+            prizeTableName: "standard"
+        prizeTables:
+          - name: "standard"
+            prizes:
+              - prizeId: "standard.common"
+                prizeTableName: "standard.common"
+                type: "prize_table"
+                weight: 80
+              - prizeId: "standard.rare"
+                prizeTableName: "standard.rare"
+                type: "prize_table"
+                weight: 20
+              - prizeId: "common.archer"
+                type: "action"
+                weight: 1
+                acquireActions:
+                  - action: "Gs2Inventory:AcquireItemSetByUserId"
+                    request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"archer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                  - action: "Gs2Dictionary:AddEntriesByUserId"
+                    request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"archer\"]}"
+              - prizeId: "common.knight"
+                type: "action"
+                weight: 1
+                acquireActions:
+                  - action: "Gs2Inventory:AcquireItemSetByUserId"
+                    request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                  - action: "Gs2Dictionary:AddEntriesByUserId"
+                    request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"knight\"]}"
+              - prizeId: "rare.healer"
+                type: "action"
+                weight: 1
+                acquireActions:
+                  - action: "Gs2Inventory:AcquireItemSetByUserId"
+                    request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"healer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                  - action: "Gs2Dictionary:AddEntriesByUserId"
+                    request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"healer\"]}"
+              - prizeId: "rare.mage"
+                type: "action"
+                weight: 1
+                acquireActions:
+                  - action: "Gs2Inventory:AcquireItemSetByUserId"
+                    request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"mage\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                  - action: "Gs2Dictionary:AddEntriesByUserId"
+                    request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"mage\"]}"
+      Mode: "direct"
+    DependsOn:
+      - "LotteryNamespace_CharacterGacha"
+  LotteryNamespace_CharacterGacha:
+    Type: "GS2::Lottery::Namespace"
+    Properties:
+      Name: "CharacterGacha"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+  ShowcaseCurrentShowcaseMaster_CharacterGacha:
+    Type: "GS2::Showcase::CurrentShowcaseMaster"
+    Properties:
+      NamespaceName: "CharacterGacha"
+      Settings:
+        version: "2019-04-04"
+        showcases:
+          - name: "Showcase"
+            displayItems:
+              - displayItemId: "standard"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "standard"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:WithdrawByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+                  acquireActions:
+                    - action: "Gs2Lottery:DrawByUserId"
+                      request: "{\"count\":1,\"userId\":\"#{userId}\",\"lotteryName\":\"standard\",\"namespaceName\":\"CharacterGacha\"}"
+        randomShowcases: []
+      Mode: "direct"
+    DependsOn:
+      - "ShowcaseNamespace_CharacterGacha"
+  ShowcaseNamespace_CharacterGacha:
+    Type: "GS2::Showcase::Namespace"
+    Properties:
+      Name: "CharacterGacha"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

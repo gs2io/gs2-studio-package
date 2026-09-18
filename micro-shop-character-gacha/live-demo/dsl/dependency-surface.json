@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-shop-character-gacha-demo",
+  "types": {
+    "CharacterRate": {
+      "id": "dt_01M2SBWGXF692QDVTJR6DW65ZE",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-character-gacha",
+      "canonicalTypeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054"
+    },
+    "CurrencyStore": {
+      "id": "dt_01M2SC6MBTANFKVV7YJBFK67VV",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-currency",
+      "canonicalTypeId": "dt_BMT0H7ME2SSDZRHGNZF012YZVR"
+    },
+    "Gacha": {
+      "id": "dt_01M2SBWGXFA863WACPYRNPSP94",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-character-gacha",
+      "canonicalTypeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3"
+    },
+    "GachaRarity": {
+      "id": "dt_01M2SBWGXFXX6D4HGNHZGGZW0Z",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-character-gacha",
+      "canonicalTypeId": "dt_GX6NYQD4P54A7TXS08MA9F3X7Z"
+    },
+    "GachaRarityRate": {
+      "id": "dt_01M2SBWGXF8BJD3JR4TH0JFWV3",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-character-gacha",
+      "canonicalTypeId": "dt_32H335ZJ31J4690TMPCRQFC04B"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}

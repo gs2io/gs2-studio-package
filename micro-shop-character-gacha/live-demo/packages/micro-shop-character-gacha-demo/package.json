@@ -1,0 +1,26 @@
+{
+  "id": "micro-shop-character-gacha-demo",
+  "name": "micro-shop-character-gacha-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-character": "github:gs2io/gs2-studio-package",
+    "foundation-economy-character-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-character-dictionary": "github:gs2io/gs2-studio-package",
+    "foundation-economy-character-dictionary-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
+    "micro-shop-character-gacha": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies one gacha, its per-rarity rates, and the coins a draw costs.",
+      "ja": "ライブデモ用に、1つのガチャとレアリティ別の排出率、抽選コストを揃えます。"
+    },
+    "label": {
+      "en": "Character Gacha (demo data)",
+      "ja": "キャラガチャ（デモデータ）"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "entries": [
+    {
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-character",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-character/packages/foundation-economy-character",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-character-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-character/live-demo/packages/foundation-economy-character-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-character-dictionary",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-character-dictionary/packages/foundation-economy-character-dictionary",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-character-dictionary-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-character-dictionary/live-demo/packages/foundation-economy-character-dictionary-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/packages/foundation-economy-schedule",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/live-demo/packages/foundation-economy-schedule-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "owner": "gs2io",
+      "packageId": "micro-shop-character-gacha",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-shop-character-gacha/packages/micro-shop-character-gacha",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
+      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "owner": "gs2io",
+      "packageId": "micro-shop-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-shop-currency/packages/micro-shop-currency",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}
