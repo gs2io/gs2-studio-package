@@ -195,8 +195,7 @@ namespace GS2Studio.Showroom.EditorTools
                     ReadArgument("-showroomTitle"),
                     ReadArgument("-showroomSubtitle"),
                     ReadArgument("-showroomRebuildPage") == "true",
-                    ReadDeclaration(ReadArgument("-showroomDeclaration")),
-                    readsDeclaration: true);
+                    ReadArgument("-showroomDeclaration"));
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -226,8 +225,18 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static Dictionary<string, SectionSpec> ReadDeclaration(string path)
         {
+            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            {
+                // A page is what its demo says it is, and the saying is the
+                // declaration: without one there is nothing to build from, and
+                // a guess drawn in its place would be published as if someone
+                // had chosen it.
+                throw new InvalidOperationException(
+                    "[showroom] no page declaration to build from" +
+                    (string.IsNullOrEmpty(path) ? "" : $" at {path}") +
+                    "; `page.mjs` writes one out of the demo's `page.json`");
+            }
             var declared = new Dictionary<string, SectionSpec>();
-            if (string.IsNullOrEmpty(path) || !File.Exists(path)) return declared;
             foreach (var line in File.ReadAllLines(path))
             {
                 var parts = line.Split('\t');
@@ -266,35 +275,31 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// Writes the demo's page. Returns the number of sections, or -1 when
-        /// the scene already existed and was left alone.
+        /// Writes the demo's page from the declaration `page.mjs` wrote out of
+        /// its `page.json`. Returns the number of sections, or -1 when the
+        /// scene already existed and was left alone.
         ///
-        /// For an open Editor, where there is a person: no declaration, so
-        /// every section is derived and none is refused for not having been
-        /// written down. That is the other half of what
-        /// <see cref="CollectUndeclaredSections"/> refuses — a guess is a fine
-        /// place for someone looking at the scene to start, and a bad page for
-        /// a pipeline to publish with nobody watching.
+        /// The same entry whether a batch run or an open Editor calls it: a
+        /// page is built from what its demo declared, never derived, so an
+        /// Editor iterating on `page.json` runs the same build the pipeline
+        /// publishes, and refuses what the pipeline would refuse.
         /// </summary>
-        public static int BuildPage(string title, string subtitle, bool rebuild)
+        public static int BuildPage(
+            string title, string subtitle, bool rebuild, string declarationPath)
         {
-            return BuildPage(
-                title, subtitle, rebuild, new Dictionary<string, SectionSpec>(),
-                readsDeclaration: false);
+            return BuildPage(title, subtitle, rebuild, ReadDeclaration(declarationPath));
         }
 
         /// <summary>
         /// The whole build, once the declaration has been read. Private
-        /// because <see cref="SectionSpec"/> is: an open Editor calls the
-        /// three-argument overload, and a batch run comes through
-        /// <see cref="Build"/>, so the declaration never crosses the type's
-        /// own boundary.
+        /// because <see cref="SectionSpec"/> is: the declaration never crosses
+        /// the type's own boundary.
         /// </summary>
         private static int BuildPage(
             string title, string subtitle, bool rebuild,
-            Dictionary<string, SectionSpec> declaredSections, bool readsDeclaration)
+            Dictionary<string, SectionSpec> declaredSections)
         {
-            _declaredSections = declaredSections ?? new Dictionary<string, SectionSpec>();
+            _declaredSections = declaredSections;
             var existed = File.Exists(ScenePath);
             if (existed && !rebuild)
             {
@@ -310,7 +315,7 @@ namespace GS2Studio.Showroom.EditorTools
             // A demo's first failed bake would set as an empty page that never
             // fails again. So the page is settled here, where refusing it costs
             // nothing but the run.
-            var plans = PlanSections(readsDeclaration);
+            var plans = PlanSections();
 
             int sections;
             IReadOnlyCollection<string> itemPrefabs;
@@ -548,7 +553,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// <see cref="BuildPage"/> for what a refusal after the scene is
         /// created would cost instead.
         /// </summary>
-        private static IReadOnlyList<SectionPlan> PlanSections(bool readsDeclaration)
+        private static IReadOnlyList<SectionPlan> PlanSections()
         {
             var plans = new List<SectionPlan>();
             foreach (var handler in GeneratedHandlers())
@@ -594,7 +599,7 @@ namespace GS2Studio.Showroom.EditorTools
             // against what it generated while nothing has yet been built out
             // of either, so a page that cannot be built is refused rather than
             // half-drawn.
-            RefuseWhatThePageCannotBuild(plans, countdowns, readsDeclaration);
+            RefuseWhatThePageCannotBuild(plans, countdowns);
 
             foreach (var plan in plans)
             {
@@ -611,9 +616,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // same whether the emptiness was found in the assembly or
                 // written down by the demo.
                 if (!HasDrawables(plan) || DeclaresNoRows(model)) continue;
-                plan.Section = SectionFor(
-                    model, handler, plan.Labels, plan.Buttons, plan.Gauges, plan.Clocks,
-                    plan.Toggles);
+                plan.Section = SectionFor(model);
                 // Left null when the convention did not settle on one. A
                 // declared clock row has already refused the bake above; what
                 // survives to here with nothing is a derived section in a demo
@@ -631,16 +634,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // empty section it leaves behind is built, so the two read as
                 // one thing.
                 if (plan.ListHandler == null || plan.ItemHandler == null) continue;
-                // `readsDeclaration` is false on the three-argument BuildPage
-                // overload, which an open Editor calls with no declaration to
-                // read: under the rule that a missing axis fails the bake, that
-                // path could never build a page carrying a list with more than
-                // one axis. It does not need to. There is a person there, and
-                // the axis is a dropdown in the Inspector — so the field is
-                // left holding whatever it already held, including the zero a
-                // freshly added component starts at, which the generated
-                // handler names in the console until someone picks an axis.
-                if (readsDeclaration) plan.Axis = PlannedAxis(plan.ListHandler, model, plan.Section);
+                plan.Axis = PlannedAxis(plan.ListHandler, model, plan.Section);
             }
             return plans;
         }
@@ -668,12 +662,11 @@ namespace GS2Studio.Showroom.EditorTools
         /// only the run.
         /// </summary>
         private static void RefuseWhatThePageCannotBuild(
-            IReadOnlyList<SectionPlan> plans, IReadOnlyList<Type> countdowns,
-            bool readsDeclaration)
+            IReadOnlyList<SectionPlan> plans, IReadOnlyList<Type> countdowns)
         {
             var problems = new List<string>();
             CollectUnresolvedDeclarations(plans, countdowns, problems);
-            if (readsDeclaration) CollectUndeclaredSections(plans, problems);
+            CollectUndeclaredSections(plans, problems);
             if (problems.Count == 0) return;
             throw new InvalidOperationException(string.Join("\n", problems));
         }
@@ -696,10 +689,6 @@ namespace GS2Studio.Showroom.EditorTools
         /// starts from — one line, in `page.json`'s own shape, ready to paste
         /// under "sections" and cut down — and the bake that offers it refuses
         /// to draw it.
-        ///
-        /// Only where a declaration was read. An open Editor deriving a page
-        /// for someone looking at the scene is the guess doing its job; see
-        /// <see cref="BuildPage(string, string, bool)"/>.
         /// </summary>
         private static void CollectUndeclaredSections(
             IReadOnlyList<SectionPlan> plans, List<string> problems)
@@ -1684,24 +1673,18 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// The section a model is built from: what the demo declared, or what
-        /// the assembly suggests when it declared nothing.
-        ///
-        /// The second only reaches here from an open Editor. A bake that read a
-        /// declaration has already refused the model in
-        /// <see cref="CollectUndeclaredSections"/> and written the guess out
-        /// for an author, rather than drawing a page nobody asked for.
+        /// The section a model is built from: what the demo declared. A model
+        /// with drawables and no declaration was refused in
+        /// <see cref="CollectUndeclaredSections"/> before anything was built,
+        /// so reaching here without one is a bug in this builder, not a page
+        /// to guess at.
         /// </summary>
-        private static SectionSpec SectionFor(
-            string model, Type handler, IReadOnlyList<Type> labels, IReadOnlyList<Type> buttons,
-            IReadOnlyList<Type> gauges, IReadOnlyList<Type> clocks, IReadOnlyList<Type> toggles)
+        private static SectionSpec SectionFor(string model)
         {
             if (_declaredSections.TryGetValue(model, out var declared)) return declared;
-            var derived = DeriveSection(labels, buttons, gauges, clocks, toggles);
-            Debug.Log(
-                $"[showroom] {model}: no section declared in page.json; derived " +
-                $"\"rows\": [{string.Join(", ", derived.Rows.Select(RowAsJson))}]");
-            return derived;
+            throw new InvalidOperationException(
+                $"[showroom] {model}: reached the build with no declaration; " +
+                "CollectUndeclaredSections should have refused it");
         }
 
         /// <summary>One derived row, written the way `page.json` writes one.</summary>
