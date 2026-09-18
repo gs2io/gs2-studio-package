@@ -1,0 +1,65 @@
+{
+  "id": "98b1cb1a-a09e-56dd-be86-2e9f729b5452",
+  "items": [
+    {
+      "componentClassName": "UsageLabel",
+      "id": "fe871b88-794d-5676-8a1f-786e69d94163",
+      "kind": "templateLabel",
+      "name": "UsageLimitCounter",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3"
+          }
+        },
+        {
+          "key": "maximum",
+          "source": {
+            "kind": "literal",
+            "value": 5
+          }
+        }
+      ],
+      "template": "{count} / {maximum} used"
+    },
+    {
+      "componentClassName": "NextResetAtValue",
+      "id": "518eb649-e0a0-532c-9ebc-f3295bf50169",
+      "kind": "value",
+      "name": "UsageLimitCounter",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_01M0C6M2N34YDGP2NCGNER2T39"
+      }
+    },
+    {
+      "arguments": [],
+      "componentClassName": "UseButton",
+      "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:77bec475-e0aa-5102-9788-03160da4971f::Gs2Exchange:RateModel.Exchange",
+      "id": "5545f77c-007a-5fe9-b8e6-faa85cc60947",
+      "kind": "buttonAction",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ReturnButton",
+      "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:da615f4d-c1a2-5380-bd00-7751e0ceff20::Gs2Exchange:RateModel.Exchange",
+      "id": "997c16b0-7135-5bb2-8e3f-651fcf887844",
+      "kind": "buttonAction",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ResetButton",
+      "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:4b31ac1d-744c-509d-b406-2ac8c421224f::Gs2Exchange:RateModel.Exchange",
+      "id": "29c8ba51-2adc-56dc-966e-ed2b9b611361",
+      "kind": "buttonAction",
+      "name": "UsageLimitCounter"
+    }
+  ],
+  "name": "UsageLimitCounter",
+  "targetDomainType": "UsageLimitCounter",
+  "targetDomainTypeId": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "daily",
+  "rowKey": "row_01M2TS7XYN416HZCCFTBN8RW9P",
+  "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+  "values": {
+    "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1": "daily",
+    "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3": 0
+  }
+}

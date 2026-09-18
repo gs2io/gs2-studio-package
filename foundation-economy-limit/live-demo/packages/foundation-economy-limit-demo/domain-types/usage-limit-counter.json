@@ -1,0 +1,70 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Use",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "77bec475-e0aa-5102-9788-03160da4971f",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-limit-demo"
+      }
+    },
+    {
+      "methodName": "Return",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "da615f4d-c1a2-5380-bd00-7751e0ceff20",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-limit-demo"
+      }
+    },
+    {
+      "methodName": "Reset",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "4b31ac1d-744c-509d-b406-2ac8c421224f",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-limit-demo"
+      }
+    }
+  ],
+  "id": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05",
+  "kind": "overlay",
+  "name": "UsageLimitCounter",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-limit",
+    "directSourceTypeId": "dt_01M0C6M2N38KVHBHTC1JBRT5YA",
+    "sourcePackageId": "foundation-economy-limit",
+    "sourceTypeId": "dt_01M0C6M2N38KVHBHTC1JBRT5YA"
+  }
+}

@@ -1,0 +1,58 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_AdSpend:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "AdSpend"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "adviewpoint"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2AdReward:ConsumePointByUserId"
+                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+            acquireActions: []
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_AdSpend"
+  ExchangeCurrentRateMaster_AdWatch:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "AdWatch"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "adviewpoint"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2AdReward:AcquirePointByUserId"
+                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_AdWatch"
+  ExchangeNamespace_AdSpend:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "AdSpend"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_AdWatch:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "AdWatch"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

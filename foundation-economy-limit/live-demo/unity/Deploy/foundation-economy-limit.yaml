@@ -1,0 +1,24 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  LimitCurrentLimitMaster_Limit:
+    Type: "GS2::Limit::CurrentLimitMaster"
+    Properties:
+      NamespaceName: "Limit"
+      Settings:
+        version: "2019-04-05"
+        limitModels:
+          - metadata: ""
+            name: "daily"
+            resetHour: 0
+            resetType: "daily"
+      Mode: "direct"
+    DependsOn:
+      - "LimitNamespace_Limit"
+  LimitNamespace_Limit:
+    Type: "GS2::Limit::Namespace"
+    Properties:
+      Name: "Limit"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

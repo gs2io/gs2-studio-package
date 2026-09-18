@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "commitSha": "eeb58d28e5a43c273614ac29ab5b76aeb8496864",
+      "integrity": "sha256-9I/N2b/MZ3SvTShhizgX1kghpj9Jg243YCG6kHkYUko=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-ad",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-ad/packages/foundation-economy-ad",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

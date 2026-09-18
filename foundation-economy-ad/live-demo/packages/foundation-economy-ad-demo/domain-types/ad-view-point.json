@@ -1,0 +1,54 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Watch",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "093e4755-ef40-5452-a492-73bb171b5605",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-ad-demo"
+      }
+    },
+    {
+      "methodName": "Spend",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "a0420304-2917-5ab9-ac34-d211573badc8",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-ad-demo"
+      }
+    }
+  ],
+  "id": "dt_01M2TTJ1F764Z13KTASRBTB2NC",
+  "kind": "overlay",
+  "name": "AdViewPoint",
+  "renamedInheritedProperties": {},
+  "singleEntry": true,
+  "source": {
+    "directSourcePackageId": "foundation-economy-ad",
+    "directSourceTypeId": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
+    "sourcePackageId": "foundation-economy-ad",
+    "sourceTypeId": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW"
+  }
+}

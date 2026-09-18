@@ -1,0 +1,66 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "limit",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05",
+                    "typeName": "UsageLimitCounter"
+                  },
+                  "propertyId": "prop_01M0C6M2N3NJ15T88Q5QET2KVA"
+                },
+                "kind": "parent",
+                "parentResourceId": "da615f4d-c1a2-5380-bd00-7751e0ceff20"
+              }
+            }
+          },
+          {
+            "parameterName": "counter",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05",
+                  "typeName": "UsageLimitCounter"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          },
+          {
+            "parameterName": "countDownValue",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "CountDownUsageLimit",
+        "transformPackageId": "foundation-economy-limit"
+      }
+    ]
+  },
+  "id": "6bf7ae81-62c9-5aea-8afd-4838d6bcefa6",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05",
+    "typeName": "UsageLimitCounter"
+  }
+}

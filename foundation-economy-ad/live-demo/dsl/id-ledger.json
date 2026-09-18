@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_AFCBM1Z879DZAF9085SFW63Z5S.adplatform": "row_01M2TTJ1F7GMKPZHAM23PWRPGM",
+    "row:dt_RTQJBJN6VK3VTEX3WKNGGK17JW.adviewpoint": "row_01M2TTJ1F7BPT31DKMSCA9CQ27",
+    "transform:AcquireAdViewPoint:output:direct:Gs2AdReward:AcquirePointByUserId#0": "out_01M2TTJ1F7SVHWV5NM267VMPD1",
+    "type:AdPlatform": "dt_01M2TTJ1F707G6YN95CHY5KE29",
+    "type:AdViewPoint": "dt_01M2TTJ1F764Z13KTASRBTB2NC"
+  },
+  "deterministicOverrides": {}
+}

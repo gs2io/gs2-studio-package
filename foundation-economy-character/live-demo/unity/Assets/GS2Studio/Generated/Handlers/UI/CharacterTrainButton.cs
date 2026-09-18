@@ -64,6 +64,16 @@ namespace GS2Studio.Generated.Character.UI
 
         private bool _wired;
         private bool _warnedMissingHandler;
+
+        /// <summary>
+        /// True from a click until its action has returned. A click that lands
+        /// in that window is dropped, not queued: a second <c>Train</c>
+        /// issued before the first has finished is the same request twice, and
+        /// for a purchase that is a double charge the server can only refuse
+        /// after the fact. <c>Button.interactable</c> is left alone here since
+        /// an interactable component may own it.
+        /// </summary>
+        private bool _inFlight;
         private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
@@ -91,6 +101,7 @@ namespace GS2Studio.Generated.Character.UI
 
         private async void OnClicked()
         {
+            if (_inFlight) return;
             if (_handler == null)
             {
                 // Surface the wiring failure once instead of silently swallowing
@@ -109,6 +120,7 @@ namespace GS2Studio.Generated.Character.UI
             var model = _handler.Binder;
             if (model == null) return;
             WarnUnloadedLoadersOnce(model);
+            _inFlight = true;
             try
             {
                 await model.Train();
@@ -124,6 +136,10 @@ namespace GS2Studio.Generated.Character.UI
             {
                 UnityEngine.Debug.LogError($"CharacterTrainButton: Train failed: {ex}");
                 return;
+            }
+            finally
+            {
+                _inFlight = false;
             }
             _onCompleted.Invoke();
         }

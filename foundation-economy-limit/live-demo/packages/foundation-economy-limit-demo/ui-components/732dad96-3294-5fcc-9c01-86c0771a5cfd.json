@@ -1,0 +1,38 @@
+{
+  "id": "732dad96-3294-5fcc-9c01-86c0771a5cfd",
+  "items": [
+    {
+      "componentClassName": "ScheduleLabel",
+      "id": "3bc799d3-ff8d-561a-bb34-5068ff4d77d6",
+      "kind": "templateLabel",
+      "name": "UsageLimit",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        },
+        {
+          "key": "resetType",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1"
+          }
+        },
+        {
+          "key": "resetHour",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3"
+          }
+        }
+      ],
+      "template": "{id}: resets {resetType} at {resetHour}:00 UTC"
+    }
+  ],
+  "name": "UsageLimit",
+  "targetDomainType": "UsageLimit",
+  "targetDomainTypeId": "dt_01M2TS7XYNHMV1ZA7013X2QDX5"
+}

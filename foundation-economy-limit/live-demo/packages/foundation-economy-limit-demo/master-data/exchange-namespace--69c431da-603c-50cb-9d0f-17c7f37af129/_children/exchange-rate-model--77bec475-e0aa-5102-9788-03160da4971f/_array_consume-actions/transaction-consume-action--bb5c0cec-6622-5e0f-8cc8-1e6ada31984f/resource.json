@@ -1,0 +1,73 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "limit",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05",
+                    "typeName": "UsageLimitCounter"
+                  },
+                  "propertyId": "prop_01M0C6M2N3NJ15T88Q5QET2KVA"
+                },
+                "kind": "parent",
+                "parentResourceId": "77bec475-e0aa-5102-9788-03160da4971f"
+              }
+            }
+          },
+          {
+            "parameterName": "counter",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05",
+                  "typeName": "UsageLimitCounter"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          },
+          {
+            "parameterName": "countUpValue",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          },
+          {
+            "parameterName": "maxValue",
+            "source": {
+              "kind": "static",
+              "value": 5
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "CountUpUsageLimit",
+        "transformPackageId": "foundation-economy-limit"
+      }
+    ]
+  },
+  "id": "bb5c0cec-6622-5e0f-8cc8-1e6ada31984f",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05",
+    "typeName": "UsageLimitCounter"
+  }
+}

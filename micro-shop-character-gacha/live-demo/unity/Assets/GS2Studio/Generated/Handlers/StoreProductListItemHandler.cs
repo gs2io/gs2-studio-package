@@ -9,7 +9,6 @@ using System;
 
 using UnityEngine;
 using GS2Studio.Generated.CurrencyType;
-using Gs2.Unity.Core.Model;
 using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Showcase;
 using GS2Studio.Generated.Runtime;

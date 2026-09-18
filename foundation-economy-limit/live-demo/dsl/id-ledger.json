@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R.daily": "row_01M2TS7XYN416HZCCFTBN8RW9P",
+    "row:dt_01M0C6M2N38KVHBHTC1JBRT5YA.daily": "row_01M2TS7XYN516MAEW2XSB5C9A6",
+    "type:UsageLimit": "dt_01M2TS7XYNHMV1ZA7013X2QDX5",
+    "type:UsageLimitCounter": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05"
+  },
+  "deterministicOverrides": {}
+}

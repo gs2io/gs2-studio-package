@@ -1,0 +1,24 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AcquireAdViewPoint",
+        "transformPackageId": "foundation-economy-ad-demo"
+      }
+    ]
+  },
+  "id": "6ecd71bf-083f-55a5-9304-4001ebddf9a0",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2TTJ1F764Z13KTASRBTB2NC",
+    "typeName": "AdViewPoint"
+  }
+}

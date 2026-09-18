@@ -1,0 +1,40 @@
+{
+  "id": "c7fed066-5ec2-5300-a2cd-00aa7b0abe90",
+  "items": [
+    {
+      "componentClassName": "BalanceLabel",
+      "id": "40e8c8d6-dd44-5f00-9028-389f2bc09722",
+      "kind": "templateLabel",
+      "name": "AdViewPoint",
+      "sources": [
+        {
+          "key": "value",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_A5PTNHJYSCXW55G2TW376GP36E"
+          }
+        }
+      ],
+      "template": "{value} view(s) banked"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "WatchButton",
+      "delegatedActionKey": "resource:foundation-economy-ad-demo:masterData:093e4755-ef40-5452-a492-73bb171b5605::Gs2Exchange:RateModel.Exchange",
+      "id": "bc42d26e-0b89-5b15-a306-3257a8ca1d6e",
+      "kind": "buttonAction",
+      "name": "AdViewPoint"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "SpendButton",
+      "delegatedActionKey": "resource:foundation-economy-ad-demo:masterData:a0420304-2917-5ab9-ac34-d211573badc8::Gs2Exchange:RateModel.Exchange",
+      "id": "e69e5a50-cd6d-52ee-b13d-93993fcc656a",
+      "kind": "buttonAction",
+      "name": "AdViewPoint"
+    }
+  ],
+  "name": "AdViewPoint",
+  "targetDomainType": "AdViewPoint",
+  "targetDomainTypeId": "dt_01M2TTJ1F764Z13KTASRBTB2NC"
+}

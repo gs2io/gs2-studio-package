@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-ad-demo",
+  "types": {
+    "AdPlatform": {
+      "id": "dt_01M2TTJ1F707G6YN95CHY5KE29",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-ad",
+      "canonicalTypeId": "dt_AFCBM1Z879DZAF9085SFW63Z5S"
+    },
+    "AdViewPoint": {
+      "id": "dt_01M2TTJ1F764Z13KTASRBTB2NC",
+      "singleEntry": true,
+      "delegatedActions": {
+        "Spend": "resource:foundation-economy-ad-demo:masterData:a0420304-2917-5ab9-ac34-d211573badc8::Gs2Exchange:RateModel.Exchange",
+        "Watch": "resource:foundation-economy-ad-demo:masterData:093e4755-ef40-5452-a492-73bb171b5605::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "foundation-economy-ad",
+      "canonicalTypeId": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW"
+    }
+  },
+  "masterDataResources": {
+    "transaction.AcquireAction": "6ecd71bf-083f-55a5-9304-4001ebddf9a0",
+    "transaction.ConsumeAction": "0e684ae7-7d96-5d68-9644-3b5fd9599246"
+  },
+  "transforms": {
+    "AcquireAdViewPoint": []
+  }
+}

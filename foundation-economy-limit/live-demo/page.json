@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "UsageLimit": {
+      "rows": ["UsageLimitScheduleLabel"]
+    },
+    "UsageLimitCounter": {
+      "key": {
+        "id": "daily",
+        "limit": "daily"
+      },
+      "rows": [
+        "UsageLimitCounterUsageLabel",
+        "UsageLimitCounterNextResetAtValue",
+        "UsageLimitCounterUseButton",
+        "UsageLimitCounterReturnButton",
+        "UsageLimitCounterResetButton"
+      ]
+    }
+  }
+}

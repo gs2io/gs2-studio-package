@@ -1,0 +1,43 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "external",
+      "resourceId": "e51dce21-c96b-4ab8-b30e-78b7bea37fb5",
+      "resourceKind": "masterData",
+      "sourcePackageId": "foundation-economy-ad"
+    }
+  ],
+  "name": "AcquireAdViewPoint",
+  "outputs": [
+    {
+      "actionName": "Gs2AdReward:AcquirePointByUserId",
+      "conditions": [],
+      "id": "out_01M2TTJ1F7SVHWV5NM267VMPD1",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "static",
+          "parameterName": "point",
+          "value": 1
+        }
+      ],
+      "resourceRef": {
+        "kind": "external",
+        "resourceId": "e51dce21-c96b-4ab8-b30e-78b7bea37fb5",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-ad"
+      }
+    }
+  ],
+  "parameters": []
+}

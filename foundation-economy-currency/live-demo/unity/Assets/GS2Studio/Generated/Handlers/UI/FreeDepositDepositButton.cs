@@ -56,6 +56,16 @@ namespace GS2Studio.Generated.FreeDeposit.UI
         private bool _wired;
         private bool _warnedMissingHandler;
 
+        /// <summary>
+        /// True from a click until its action has returned. A click that lands
+        /// in that window is dropped, not queued: a second <c>Deposit</c>
+        /// issued before the first has finished is the same request twice, and
+        /// for a purchase that is a double charge the server can only refuse
+        /// after the fact. <c>Button.interactable</c> is left alone here since
+        /// an interactable component may own it.
+        /// </summary>
+        private bool _inFlight;
+
         private void OnEnable()
         {
             ResolveHandler();
@@ -81,6 +91,7 @@ namespace GS2Studio.Generated.FreeDeposit.UI
 
         private async void OnClicked()
         {
+            if (_inFlight) return;
             if (_handler == null)
             {
                 // Surface the wiring failure once instead of silently swallowing
@@ -98,6 +109,7 @@ namespace GS2Studio.Generated.FreeDeposit.UI
             // read model, so the `model.X` argument expressions bind to it.
             var model = _handler.Binder;
             if (model == null) return;
+            _inFlight = true;
             try
             {
                 await model.Deposit();
@@ -113,6 +125,10 @@ namespace GS2Studio.Generated.FreeDeposit.UI
             {
                 UnityEngine.Debug.LogError($"FreeDepositDepositButton: Deposit failed: {ex}");
                 return;
+            }
+            finally
+            {
+                _inFlight = false;
             }
             _onCompleted.Invoke();
         }

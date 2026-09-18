@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M2TTJ1F764Z13KTASRBTB2NC",
+            "typeName": "AdViewPoint"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "093e4755-ef40-5452-a492-73bb171b5605",
+  "location": {
+    "modelName": "RateModel",
+    "service": "exchange"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2TTJ1F764Z13KTASRBTB2NC",
+    "typeName": "AdViewPoint"
+  }
+}

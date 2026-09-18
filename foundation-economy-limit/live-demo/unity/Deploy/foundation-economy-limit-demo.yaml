@@ -1,0 +1,86 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_LimitReset:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "LimitReset"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "daily"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"daily\"}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_LimitReset"
+  ExchangeCurrentRateMaster_LimitReturn:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "LimitReturn"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "daily"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Limit:CountDownByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"daily\",\"userId\":\"#{userId}\",\"countDownValue\":1}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_LimitReturn"
+  ExchangeCurrentRateMaster_LimitUse:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "LimitUse"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "daily"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Limit:CountUpByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"daily\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":5}"
+            acquireActions: []
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_LimitUse"
+  ExchangeNamespace_LimitReset:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "LimitReset"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_LimitReturn:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "LimitReturn"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_LimitUse:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "LimitUse"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
