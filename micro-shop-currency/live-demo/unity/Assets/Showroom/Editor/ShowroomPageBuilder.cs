@@ -1403,10 +1403,10 @@ namespace GS2Studio.Showroom.EditorTools
                     continue;
                 }
 
-                // A single-entry handler serves the whole page rather than one
-                // section: a component resolves its handler by walking up the
-                // parent chain, so mounting it on the page root puts it above
-                // every section at once. Its own rows still reach it — they
+                // A handler the page does not draw as a list serves the whole
+                // page rather than one section: a component resolves its
+                // handler by walking up the parent chain, so mounting it on the
+                // page root puts it above every section at once. Its own rows still reach it — they
                 // climb `label -> Items -> Section -> content` — and a gauge in
                 // another section's list row can now read it too, which is what
                 // a reading composed from two models needs.
