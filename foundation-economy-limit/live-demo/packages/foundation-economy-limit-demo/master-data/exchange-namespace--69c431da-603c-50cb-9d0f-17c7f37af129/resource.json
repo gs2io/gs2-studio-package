@@ -24,7 +24,7 @@
       {
         "kind": "static",
         "parameterName": "name",
-        "value": "LimitUse"
+        "value": "LimitFreeUse"
       },
       {
         "kind": "static",

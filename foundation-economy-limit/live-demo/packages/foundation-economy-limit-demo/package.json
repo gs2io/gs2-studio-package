@@ -3,12 +3,14 @@
   "name": "foundation-economy-limit-demo",
   "version": "0.0.0",
   "dependencies": {
+    "foundation-economy-ad": "github:gs2io/gs2-studio-package",
+    "foundation-economy-ad-demo": "github:gs2io/gs2-studio-package",
     "foundation-economy-limit": "github:gs2io/gs2-studio-package"
   },
   "display": {
     "description": {
-      "en": "Supplies the daily allowance used by the live demo, its counter, and the presses that use, return and reset it.",
-      "ja": "ライブデモ用の日次リセット設定と回数カウンター、利用・返却・リセットの操作を提供します。"
+      "en": "Supplies the daily allowance used by the live demo, its counter, the free and ad-backed presses that use it, and the reset. The view point it spends comes from the ad demo.",
+      "ja": "ライブデモ用の日次リセット設定と回数カウンター、無料枠と広告枠それぞれの利用操作、リセット操作を提供します。視聴枠は広告デモから借ります。"
     },
     "label": {
       "en": "Usage limits (demo data)",

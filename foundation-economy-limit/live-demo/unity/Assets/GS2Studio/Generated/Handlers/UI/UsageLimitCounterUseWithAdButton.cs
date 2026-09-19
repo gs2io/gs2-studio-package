@@ -20,15 +20,15 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.UsageLimitCounter.UI
 {
     /// <summary>
-    /// UI button bound to <c>Use</c> on the sibling
+    /// UI button bound to <c>UseWithAd</c> on the sibling
     /// <c>UsageLimitCounterHandlerBase</c>. Wires <c>UnityEngine.UI.Button.onClick</c>
-    /// to <c>UsageLimitCounterHandlerBase.Binder.Use</c> and forwards the
+    /// to <c>UsageLimitCounterHandlerBase.Binder.UseWithAd</c> and forwards the
     /// authored argument list. Add this component alongside (or under) a
     /// <c>UsageLimitCounterHandlerBase</c>; the handler is resolved automatically via
     /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is set.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/UsageLimitCounter/ButtonAction/UseButton")]
-    public sealed class UsageLimitCounterUseButton : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/UsageLimitCounter/ButtonAction/UseWithAdButton")]
+    public sealed class UsageLimitCounterUseWithAdButton : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private UsageLimitCounterHandlerBase? _handler;
@@ -58,7 +58,7 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 
         /// <summary>
         /// True from a click until its action has returned. A click that lands
-        /// in that window is dropped, not queued: a second <c>Use</c>
+        /// in that window is dropped, not queued: a second <c>UseWithAd</c>
         /// issued before the first has finished is the same request twice, and
         /// for a purchase that is a double charge the server can only refuse
         /// after the fact. <c>Button.interactable</c> is left alone here since
@@ -100,7 +100,7 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(UsageLimitCounterUseButton)} on '{name}': no UsageLimitCounterHandlerBase found in the parent chain; click ignored.", this);
+                        $"{nameof(UsageLimitCounterUseWithAdButton)} on '{name}': no UsageLimitCounterHandlerBase found in the parent chain; click ignored.", this);
                 }
                 return;
             }
@@ -112,18 +112,18 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
             _inFlight = true;
             try
             {
-                await model.Use();
+                await model.UseWithAd();
             }
             catch (Gs2Exception gs2Error)
             {
-                UnityEngine.Debug.LogError($"UsageLimitCounterUseButton: Use failed: {gs2Error}");
+                UnityEngine.Debug.LogError($"UsageLimitCounterUseWithAdButton: UseWithAd failed: {gs2Error}");
                 // A click has nothing to resume from, so no retry is offered.
                 _onFailed.Invoke(gs2Error, null);
                 return;
             }
             catch (Exception ex)
             {
-                UnityEngine.Debug.LogError($"UsageLimitCounterUseButton: Use failed: {ex}");
+                UnityEngine.Debug.LogError($"UsageLimitCounterUseWithAdButton: UseWithAd failed: {ex}");
                 return;
             }
             finally

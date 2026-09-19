@@ -38,24 +38,31 @@
             }
           },
           {
-            "parameterName": "countDownValue",
+            "parameterName": "countUpValue",
             "source": {
               "kind": "static",
               "value": 1
+            }
+          },
+          {
+            "parameterName": "maxValue",
+            "source": {
+              "kind": "static",
+              "value": 5
             }
           }
         ],
         "kind": "transform",
         "parameterName": "action",
-        "transformName": "CountDownUsageLimit",
+        "transformName": "CountUpUsageLimit",
         "transformPackageId": "foundation-economy-limit"
       }
     ]
   },
-  "id": "6bf7ae81-62c9-5aea-8afd-4838d6bcefa6",
-  "index": 0,
+  "id": "e9c0b371-46d6-579c-92d4-88152f32a5d7",
+  "index": 1,
   "location": {
-    "modelName": "AcquireAction",
+    "modelName": "ConsumeAction",
     "service": "transaction"
   },
   "ownMountPath": {

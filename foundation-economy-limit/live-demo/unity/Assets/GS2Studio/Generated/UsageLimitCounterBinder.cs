@@ -44,8 +44,8 @@ namespace GS2Studio.Generated.UsageLimitCounter
     /// </summary>
     public interface IActionableUsageLimitCounterBinder : IReadOnlyUsageLimitCounterBinder
     {
-        Task Use(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
-        Task Return(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
+        Task UseFree(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
+        Task UseWithAd(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
         Task Reset(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
     }
 
@@ -131,12 +131,13 @@ namespace GS2Studio.Generated.UsageLimitCounter
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelLoader __exchangeLimitResetNamespaceRateModelLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelLoader __exchangeLimitUseNamespaceRateModelLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireAction2Loader;
         private readonly RateModelConsumeActionLoader __transactionConsumeActionLoader;
-        private readonly RateModelLoader __exchangeLimitReturnNamespaceRateModelLoader;
+        private readonly RateModelLoader __exchangeLimitResetNamespaceRateModelLoader;
+        private readonly RateModelLoader __exchangeLimitFreeUseNamespaceRateModelLoader;
+        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly RateModelConsumeActionLoader __transactionConsumeAction2Loader;
+        private readonly RateModelLoader __exchangeLimitAdUseNamespaceRateModelLoader;
+        private readonly RateModelConsumeActionLoader __transactionConsumeAction3Loader;
         private readonly CounterLoader __userdataLimitLimitLimitModelLoader;
 
         /// <summary>
@@ -149,12 +150,13 @@ namespace GS2Studio.Generated.UsageLimitCounter
             IGameSession session
         ) : base(model, gs2, session)
         {
+            __transactionConsumeActionLoader = new RateModelConsumeActionLoader("LimitAdUse", _model.Id, 0);
             __exchangeLimitResetNamespaceRateModelLoader = new RateModelLoader("LimitReset", _model.Id);
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("LimitReturn", _model.Id, 0);
-            __exchangeLimitUseNamespaceRateModelLoader = new RateModelLoader("LimitUse", _model.Id);
-            __transactionAcquireAction2Loader = new RateModelAcquireActionLoader("LimitReset", _model.Id, 0);
-            __transactionConsumeActionLoader = new RateModelConsumeActionLoader("LimitUse", _model.Id, 0);
-            __exchangeLimitReturnNamespaceRateModelLoader = new RateModelLoader("LimitReturn", _model.Id);
+            __exchangeLimitFreeUseNamespaceRateModelLoader = new RateModelLoader("LimitFreeUse", _model.Id);
+            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("LimitReset", _model.Id, 0);
+            __transactionConsumeAction2Loader = new RateModelConsumeActionLoader("LimitFreeUse", _model.Id, 0);
+            __exchangeLimitAdUseNamespaceRateModelLoader = new RateModelLoader("LimitAdUse", _model.Id);
+            __transactionConsumeAction3Loader = new RateModelConsumeActionLoader("LimitAdUse", _model.Id, 1);
             __userdataLimitLimitLimitModelLoader = new CounterLoader("Limit", _model.Limit, _model.Id);
         }
 
@@ -195,9 +197,19 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
+            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_transactionConsumeAction != null)
+            {
+            }
             var _exchangeLimitResetNamespaceRateModel = await __exchangeLimitResetNamespaceRateModelLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeLimitResetNamespaceRateModel != null)
+            {
+            }
+            var _exchangeLimitFreeUseNamespaceRateModel = await __exchangeLimitFreeUseNamespaceRateModelLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_exchangeLimitFreeUseNamespaceRateModel != null)
             {
             }
             var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
@@ -205,24 +217,19 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (_transactionAcquireAction != null)
             {
             }
-            var _exchangeLimitUseNamespaceRateModel = await __exchangeLimitUseNamespaceRateModelLoader.Load(_gs2, _session);
+            var _transactionConsumeAction2 = await __transactionConsumeAction2Loader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
-            if (_exchangeLimitUseNamespaceRateModel != null)
+            if (_transactionConsumeAction2 != null)
             {
             }
-            var _transactionAcquireAction2 = await __transactionAcquireAction2Loader.Load(_gs2, _session);
+            var _exchangeLimitAdUseNamespaceRateModel = await __exchangeLimitAdUseNamespaceRateModelLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
-            if (_transactionAcquireAction2 != null)
+            if (_exchangeLimitAdUseNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction3 = await __transactionConsumeAction3Loader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
-            if (_transactionConsumeAction != null)
-            {
-            }
-            var _exchangeLimitReturnNamespaceRateModel = await __exchangeLimitReturnNamespaceRateModelLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            if (_exchangeLimitReturnNamespaceRateModel != null)
+            if (_transactionConsumeAction3 != null)
             {
             }
             var _userdataLimitLimitLimitModel = await __userdataLimitLimitLimitModelLoader.Load(_gs2, _session);
@@ -230,12 +237,12 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ApplyUserdataLimitLimitLimitModel(_model, _userdataLimitLimitLimitModel);
             UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
             if (_transactionAcquireAction == null) _RestoreLimit__transactionAcquireActionCache = null; else _RestoreLimit__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
-            if (_transactionAcquireAction2 == null) _RestoreLimit__transactionAcquireAction2Cache = null; else _RestoreLimit__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
-            if (_transactionConsumeAction == null) _RestoreLimit__transactionConsumeActionCache = null; else _RestoreLimit__transactionConsumeActionCache = (_transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            if (_transactionConsumeAction2 == null) _RestoreLimit__transactionConsumeAction2Cache = null; else _RestoreLimit__transactionConsumeAction2Cache = (_transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
+            if (_transactionConsumeAction3 == null) _RestoreLimit__transactionConsumeAction3Cache = null; else _RestoreLimit__transactionConsumeAction3Cache = (_transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
             RestoreLimitFromSources();
             if (_transactionAcquireAction == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
-            if (_transactionAcquireAction2 == null) _RestoreId__transactionAcquireAction2Cache = null; else _RestoreId__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
-            if (_transactionConsumeAction == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (_transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            if (_transactionConsumeAction2 == null) _RestoreId__transactionConsumeAction2Cache = null; else _RestoreId__transactionConsumeAction2Cache = (_transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
+            if (_transactionConsumeAction3 == null) _RestoreId__transactionConsumeAction3Cache = null; else _RestoreId__transactionConsumeAction3Cache = (_transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
             RestoreIdFromSources();
             _mounted = true;
         }
@@ -247,7 +254,35 @@ namespace GS2Studio.Generated.UsageLimitCounter
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
+            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
             _unsubscribers.Add(__exchangeLimitResetNamespaceRateModelLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__exchangeLimitFreeUseNamespaceRateModelLoader.Subscribe(
                 _gs2,
                 _session,
                 (_, _, value) =>
@@ -279,7 +314,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 },
                 () => onChange?.Invoke()
             ));
-            _unsubscribers.Add(__exchangeLimitUseNamespaceRateModelLoader.Subscribe(
+            _unsubscribers.Add(__transactionConsumeAction2Loader.Subscribe(
                 _gs2,
                 _session,
                 (_, _, value) =>
@@ -288,30 +323,16 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     if (value != null)
                     {
                     }
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
-                    {
-                    }
-                    if (value == null) _RestoreLimit__transactionAcquireAction2Cache = null; else _RestoreLimit__transactionAcquireAction2Cache = (value.Action, value.Request);
+                    if (value == null) _RestoreLimit__transactionConsumeAction2Cache = null; else _RestoreLimit__transactionConsumeAction2Cache = (value.Action, value.Request);
                     RestoreLimitFromSources();
-                    if (value == null) _RestoreId__transactionAcquireAction2Cache = null; else _RestoreId__transactionAcquireAction2Cache = (value.Action, value.Request);
+                    if (value == null) _RestoreId__transactionConsumeAction2Cache = null; else _RestoreId__transactionConsumeAction2Cache = (value.Action, value.Request);
                     RestoreIdFromSources();
                     UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
                     return Task.CompletedTask;
                 },
                 () => onChange?.Invoke()
             ));
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+            _unsubscribers.Add(__exchangeLimitAdUseNamespaceRateModelLoader.Subscribe(
                 _gs2,
                 _session,
                 (_, _, value) =>
@@ -320,16 +341,12 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     if (value != null)
                     {
                     }
-                    if (value == null) _RestoreLimit__transactionConsumeActionCache = null; else _RestoreLimit__transactionConsumeActionCache = (value.Action, value.Request);
-                    RestoreLimitFromSources();
-                    if (value == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (value.Action, value.Request);
-                    RestoreIdFromSources();
                     UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
                     return Task.CompletedTask;
                 },
                 () => onChange?.Invoke()
             ));
-            _unsubscribers.Add(__exchangeLimitReturnNamespaceRateModelLoader.Subscribe(
+            _unsubscribers.Add(__transactionConsumeAction3Loader.Subscribe(
                 _gs2,
                 _session,
                 (_, _, value) =>
@@ -338,6 +355,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     if (value != null)
                     {
                     }
+                    if (value == null) _RestoreLimit__transactionConsumeAction3Cache = null; else _RestoreLimit__transactionConsumeAction3Cache = (value.Action, value.Request);
+                    RestoreLimitFromSources();
+                    if (value == null) _RestoreId__transactionConsumeAction3Cache = null; else _RestoreId__transactionConsumeAction3Cache = (value.Action, value.Request);
+                    RestoreIdFromSources();
                     UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
                     return Task.CompletedTask;
                 },
@@ -362,12 +383,13 @@ namespace GS2Studio.Generated.UsageLimitCounter
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __exchangeLimitResetNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __exchangeLimitUseNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
             __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __exchangeLimitReturnNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            __exchangeLimitResetNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            __exchangeLimitFreeUseNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
+            __exchangeLimitAdUseNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            __transactionConsumeAction3Loader.Invalidate(_gs2, _session);
             __userdataLimitLimitLimitModelLoader.Invalidate(_gs2, _session);
         }
 
@@ -430,16 +452,16 @@ namespace GS2Studio.Generated.UsageLimitCounter
         }
 
         #region Delegated actions
-        public async Task Use(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
+        public async Task UseFree(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Exchange.RateModelLoader("LimitUse", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("LimitFreeUse", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
 
-        public async Task Return(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
+        public async Task UseWithAd(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
-            await new Gs2Bind.Gs2Exchange.RateModelLoader("LimitReturn", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("LimitAdUse", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
 
         public async Task Reset(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
@@ -474,22 +496,13 @@ namespace GS2Studio.Generated.UsageLimitCounter
 
         #region MasterData reverse decode
         private (string Action, string Request)? _RestoreLimit__transactionAcquireActionCache;
-        private (string Action, string Request)? _RestoreLimit__transactionAcquireAction2Cache;
-        private (string Action, string Request)? _RestoreLimit__transactionConsumeActionCache;
+        private (string Action, string Request)? _RestoreLimit__transactionConsumeAction2Cache;
+        private (string Action, string Request)? _RestoreLimit__transactionConsumeAction3Cache;
         public static bool RestoreLimit(IMutableUsageLimitCounter model, string actionName, string requestJson)
         {
             if (requestJson == null) return false;
             var request = JsonMapper.ToObject(requestJson);
-            if (actionName == "Gs2Limit:CountDownByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Limit")
-            {
-                var __value = ReadRequestValue(request, new string[] { "limitName" });
-                if (__value != null)
-                {
-                    model.Limit = (UsageLimitId)__value;
-                    return true;
-                }
-            }
-            else if (actionName == "Gs2Limit:DeleteCounterByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Limit")
+            if (actionName == "Gs2Limit:DeleteCounterByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Limit")
             {
                 var __value = ReadRequestValue(request, new string[] { "limitName" });
                 if (__value != null)
@@ -515,27 +528,18 @@ namespace GS2Studio.Generated.UsageLimitCounter
             _model.Limit = new UsageLimitId(string.Empty);
             var __matched = false;
             if (!__matched && _RestoreLimit__transactionAcquireActionCache.HasValue && RestoreLimit(_model, _RestoreLimit__transactionAcquireActionCache.Value.Action, _RestoreLimit__transactionAcquireActionCache.Value.Request)) __matched = true;
-            if (!__matched && _RestoreLimit__transactionAcquireAction2Cache.HasValue && RestoreLimit(_model, _RestoreLimit__transactionAcquireAction2Cache.Value.Action, _RestoreLimit__transactionAcquireAction2Cache.Value.Request)) __matched = true;
-            if (!__matched && _RestoreLimit__transactionConsumeActionCache.HasValue && RestoreLimit(_model, _RestoreLimit__transactionConsumeActionCache.Value.Action, _RestoreLimit__transactionConsumeActionCache.Value.Request)) __matched = true;
+            if (!__matched && _RestoreLimit__transactionConsumeAction2Cache.HasValue && RestoreLimit(_model, _RestoreLimit__transactionConsumeAction2Cache.Value.Action, _RestoreLimit__transactionConsumeAction2Cache.Value.Request)) __matched = true;
+            if (!__matched && _RestoreLimit__transactionConsumeAction3Cache.HasValue && RestoreLimit(_model, _RestoreLimit__transactionConsumeAction3Cache.Value.Action, _RestoreLimit__transactionConsumeAction3Cache.Value.Request)) __matched = true;
         }
 
         private (string Action, string Request)? _RestoreId__transactionAcquireActionCache;
-        private (string Action, string Request)? _RestoreId__transactionAcquireAction2Cache;
-        private (string Action, string Request)? _RestoreId__transactionConsumeActionCache;
+        private (string Action, string Request)? _RestoreId__transactionConsumeAction2Cache;
+        private (string Action, string Request)? _RestoreId__transactionConsumeAction3Cache;
         public static bool RestoreId(IMutableUsageLimitCounter model, string actionName, string requestJson)
         {
             if (requestJson == null) return false;
             var request = JsonMapper.ToObject(requestJson);
-            if (actionName == "Gs2Limit:CountDownByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Limit")
-            {
-                var __value = ReadRequestValue(request, new string[] { "counterName" });
-                if (__value != null)
-                {
-                    model.Id = (UsageLimitCounterId)__value;
-                    return true;
-                }
-            }
-            else if (actionName == "Gs2Limit:DeleteCounterByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Limit")
+            if (actionName == "Gs2Limit:DeleteCounterByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Limit")
             {
                 var __value = ReadRequestValue(request, new string[] { "counterName" });
                 if (__value != null)
@@ -560,8 +564,8 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             var __matched = false;
             if (!__matched && _RestoreId__transactionAcquireActionCache.HasValue && RestoreId(_model, _RestoreId__transactionAcquireActionCache.Value.Action, _RestoreId__transactionAcquireActionCache.Value.Request)) __matched = true;
-            if (!__matched && _RestoreId__transactionAcquireAction2Cache.HasValue && RestoreId(_model, _RestoreId__transactionAcquireAction2Cache.Value.Action, _RestoreId__transactionAcquireAction2Cache.Value.Request)) __matched = true;
-            if (!__matched && _RestoreId__transactionConsumeActionCache.HasValue && RestoreId(_model, _RestoreId__transactionConsumeActionCache.Value.Action, _RestoreId__transactionConsumeActionCache.Value.Request)) __matched = true;
+            if (!__matched && _RestoreId__transactionConsumeAction2Cache.HasValue && RestoreId(_model, _RestoreId__transactionConsumeAction2Cache.Value.Action, _RestoreId__transactionConsumeAction2Cache.Value.Request)) __matched = true;
+            if (!__matched && _RestoreId__transactionConsumeAction3Cache.HasValue && RestoreId(_model, _RestoreId__transactionConsumeAction3Cache.Value.Action, _RestoreId__transactionConsumeAction3Cache.Value.Request)) __matched = true;
         }
 
         /// <summary>

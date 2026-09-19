@@ -10,26 +10,26 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-using GS2Studio.Generated.UsageLimitCounter;
+using GS2Studio.Generated.AdViewPoint;
 using GS2Studio.Generated.Runtime;
 
-namespace GS2Studio.Generated.UsageLimitCounter.UI
+namespace GS2Studio.Generated.AdViewPoint.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>{count} used. Free presses stop at {free}, ad-backed ones at {adBacked}.</c>. Each <c>{key}</c> placeholder is
-    /// substituted with the resolved value from <c>UsageLimitCounter</c>
+    /// <c>{value} view(s) banked</c>. Each <c>{key}</c> placeholder is
+    /// substituted with the resolved value from <c>AdViewPoint</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
     /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
     /// TextMeshPro, or custom logic — so this component stays agnostic to
     /// the rendering target.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/UsageLimitCounter/TemplateLabel/UsageLabel")]
-    public sealed class UsageLimitCounterUsageLabel : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/AdViewPoint/TemplateLabel/BalanceLabel")]
+    public sealed class AdViewPointBalanceLabel : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
-        [SerializeField] private UsageLimitCounterHandlerBase? _handler;
+        [SerializeField] private AdViewPointHandlerBase? _handler;
         [SerializeField] private UnityEvent<string> _onUpdate = new UnityEvent<string>();
 
         public UnityEvent<string> OnUpdate => _onUpdate;
@@ -48,7 +48,7 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(UsageLimitCounterUsageLabel)} on '{name}': no UsageLimitCounterHandlerBase found in the parent chain; component inactive.", this);
+                        $"{nameof(AdViewPointBalanceLabel)} on '{name}': no AdViewPointHandlerBase found in the parent chain; component inactive.", this);
                 }
                 return;
             }
@@ -69,12 +69,12 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 
         private void ResolveHandler()
         {
-            if (_handler == null) _handler = GetComponentInParent<UsageLimitCounterHandlerBase>();
+            if (_handler == null) _handler = GetComponentInParent<AdViewPointHandlerBase>();
         }
 
-        private void OnUpdated(UsageLimitCounter model)
+        private void OnUpdated(AdViewPoint model)
         {
-            _onUpdate.Invoke($"{model.Count} used. Free presses stop at {3}, ad-backed ones at {5}.");
+            _onUpdate.Invoke($"{model.Value} view(s) banked");
         }
     }
 }

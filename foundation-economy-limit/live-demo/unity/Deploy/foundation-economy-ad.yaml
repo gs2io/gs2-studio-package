@@ -1,0 +1,20 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  AdRewardNamespace_Ad:
+    Type: "GS2::AdReward::Namespace"
+    Properties:
+      Admob:
+        AllowAdUnitIds:
+          - "showroom-demo-placeholder"
+      ChangePointNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      Name: "Ad"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+      UnityAd:
+        Keys:
+          - "showroom-demo-placeholder"

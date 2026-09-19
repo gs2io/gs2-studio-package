@@ -4,6 +4,26 @@
       "commitSha": "eeb58d28e5a43c273614ac29ab5b76aeb8496864",
       "integrity": "sha256-9I/N2b/MZ3SvTShhizgX1kghpj9Jg243YCG6kHkYUko=",
       "owner": "gs2io",
+      "packageId": "foundation-economy-ad",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-ad/packages/foundation-economy-ad",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "5838e14885b273ba2f1d4b1fc0fc6213079838a0",
+      "integrity": "sha256-Jkrn75G4pmOtHXKx9TlgcVkey67cWAEq6eLxJNRbtNM=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-ad-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-ad/live-demo/packages/foundation-economy-ad-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "eeb58d28e5a43c273614ac29ab5b76aeb8496864",
+      "integrity": "sha256-9I/N2b/MZ3SvTShhizgX1kghpj9Jg243YCG6kHkYUko=",
+      "owner": "gs2io",
       "packageId": "foundation-economy-limit",
       "repo": "gs2-studio-package",
       "sourceKind": "github",

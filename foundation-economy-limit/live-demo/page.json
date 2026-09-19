@@ -1,7 +1,7 @@
 {
   "sections": {
-    "UsageLimit": {
-      "rows": ["UsageLimitScheduleLabel"]
+    "AdViewPoint": {
+      "rows": ["AdViewPointBalanceLabel", "AdBreakButton"]
     },
     "UsageLimitCounter": {
       "key": {
@@ -11,10 +11,13 @@
       "rows": [
         "UsageLimitCounterUsageLabel",
         "UsageLimitCounterNextResetAtValue",
-        "UsageLimitCounterUseButton",
-        "UsageLimitCounterReturnButton",
+        "UsageLimitCounterUseFreeButton",
+        "UsageLimitCounterUseWithAdButton",
         "UsageLimitCounterResetButton"
       ]
+    },
+    "UsageLimit": {
+      "rows": ["UsageLimitScheduleLabel"]
     }
   }
 }

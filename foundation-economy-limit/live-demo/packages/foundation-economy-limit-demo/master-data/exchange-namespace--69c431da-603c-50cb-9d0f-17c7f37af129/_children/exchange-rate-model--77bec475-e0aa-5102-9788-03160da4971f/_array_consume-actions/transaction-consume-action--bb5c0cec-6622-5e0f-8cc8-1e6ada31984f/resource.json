@@ -48,7 +48,7 @@
             "parameterName": "maxValue",
             "source": {
               "kind": "static",
-              "value": 5
+              "value": 3
             }
           }
         ],

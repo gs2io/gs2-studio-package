@@ -302,11 +302,11 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     case UsageLimitCounterListAxis.ExchangeLimitResetMaster:
                         await collection.MountFromExchangeLimitResetMasterDataAsync(cancellationToken);
                         break;
-                    case UsageLimitCounterListAxis.ExchangeLimitUseMaster:
-                        await collection.MountFromExchangeLimitUseMasterDataAsync(cancellationToken);
+                    case UsageLimitCounterListAxis.ExchangeLimitFreeUseMaster:
+                        await collection.MountFromExchangeLimitFreeUseMasterDataAsync(cancellationToken);
                         break;
-                    case UsageLimitCounterListAxis.ExchangeLimitReturnMaster:
-                        await collection.MountFromExchangeLimitReturnMasterDataAsync(cancellationToken);
+                    case UsageLimitCounterListAxis.ExchangeLimitAdUseMaster:
+                        await collection.MountFromExchangeLimitAdUseMasterDataAsync(cancellationToken);
                         break;
                     case UsageLimitCounterListAxis.LimitLimitUser:
                         await collection.MountFromLimitLimitUserDataAsync(cancellationToken);
@@ -326,11 +326,11 @@ namespace GS2Studio.Generated.UsageLimitCounter
                         case UsageLimitCounterListAxis.ExchangeLimitResetMaster:
                             collection.SubscribeFromExchangeLimitResetMasterData(collectionChanged, collectionFailed);
                             break;
-                        case UsageLimitCounterListAxis.ExchangeLimitUseMaster:
-                            collection.SubscribeFromExchangeLimitUseMasterData(collectionChanged, collectionFailed);
+                        case UsageLimitCounterListAxis.ExchangeLimitFreeUseMaster:
+                            collection.SubscribeFromExchangeLimitFreeUseMasterData(collectionChanged, collectionFailed);
                             break;
-                        case UsageLimitCounterListAxis.ExchangeLimitReturnMaster:
-                            collection.SubscribeFromExchangeLimitReturnMasterData(collectionChanged, collectionFailed);
+                        case UsageLimitCounterListAxis.ExchangeLimitAdUseMaster:
+                            collection.SubscribeFromExchangeLimitAdUseMasterData(collectionChanged, collectionFailed);
                             break;
                         case UsageLimitCounterListAxis.LimitLimitUser:
                             collection.SubscribeFromLimitLimitUserData(collectionChanged, collectionFailed);
@@ -482,7 +482,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
         }
 
         // Every axis this list can be pointed at, for the messages below.
-        private const string AxisMemberNames = "ExchangeLimitResetMaster, ExchangeLimitUseMaster, ExchangeLimitReturnMaster, LimitLimitUser";
+        private const string AxisMemberNames = "ExchangeLimitResetMaster, ExchangeLimitFreeUseMaster, ExchangeLimitAdUseMaster, LimitLimitUser";
 
         // Warn-once latch for the axis check in IsReadyForReload. Start polls
         // that check every frame until it passes, so without the latch the log
@@ -537,9 +537,9 @@ namespace GS2Studio.Generated.UsageLimitCounter
             {
                 case UsageLimitCounterListAxis.ExchangeLimitResetMaster:
                     break;
-                case UsageLimitCounterListAxis.ExchangeLimitUseMaster:
+                case UsageLimitCounterListAxis.ExchangeLimitFreeUseMaster:
                     break;
-                case UsageLimitCounterListAxis.ExchangeLimitReturnMaster:
+                case UsageLimitCounterListAxis.ExchangeLimitAdUseMaster:
                     break;
                 case UsageLimitCounterListAxis.LimitLimitUser:
                     if (string.IsNullOrEmpty(_limit)) return false;

@@ -31,11 +31,11 @@ namespace GS2Studio.Generated.UsageLimitCounter
         /// <summary>Read from the ExchangeLimitReset master-data mount axis.</summary>
         ExchangeLimitResetMaster = -1095605440,
 
-        /// <summary>Read from the ExchangeLimitUse master-data mount axis.</summary>
-        ExchangeLimitUseMaster = 1137551600,
+        /// <summary>Read from the ExchangeLimitFreeUse master-data mount axis.</summary>
+        ExchangeLimitFreeUseMaster = 137265350,
 
-        /// <summary>Read from the ExchangeLimitReturn master-data mount axis.</summary>
-        ExchangeLimitReturnMaster = 2018627207,
+        /// <summary>Read from the ExchangeLimitAdUse master-data mount axis.</summary>
+        ExchangeLimitAdUseMaster = -601097641,
 
         /// <summary>Read from the LimitLimit user-data mount axis.</summary>
         LimitLimitUser = 1215143124,

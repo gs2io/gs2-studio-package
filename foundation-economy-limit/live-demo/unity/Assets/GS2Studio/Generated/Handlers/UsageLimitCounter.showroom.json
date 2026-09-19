@@ -38,12 +38,12 @@
       "value": -1095605440
     },
     {
-      "name": "ExchangeLimitUseMaster",
-      "value": 1137551600
+      "name": "ExchangeLimitFreeUseMaster",
+      "value": 137265350
     },
     {
-      "name": "ExchangeLimitReturnMaster",
-      "value": 2018627207
+      "name": "ExchangeLimitAdUseMaster",
+      "value": -601097641
     },
     {
       "name": "LimitLimitUser",
@@ -56,12 +56,12 @@
       "mountMethodName": "MountFromExchangeLimitResetMasterDataAsync"
     },
     {
-      "memberName": "ExchangeLimitUseMaster",
-      "mountMethodName": "MountFromExchangeLimitUseMasterDataAsync"
+      "memberName": "ExchangeLimitFreeUseMaster",
+      "mountMethodName": "MountFromExchangeLimitFreeUseMasterDataAsync"
     },
     {
-      "memberName": "ExchangeLimitReturnMaster",
-      "mountMethodName": "MountFromExchangeLimitReturnMasterDataAsync"
+      "memberName": "ExchangeLimitAdUseMaster",
+      "mountMethodName": "MountFromExchangeLimitAdUseMasterDataAsync"
     },
     {
       "memberName": "LimitLimitUser",
@@ -95,7 +95,14 @@
       ]
     },
     {
-      "className": "UsageLimitCounterReturnButton",
+      "className": "UsageLimitCounterUsageLabel",
+      "kind": "templateLabel",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
+      "className": "UsageLimitCounterUseFreeButton",
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -107,14 +114,7 @@
       ]
     },
     {
-      "className": "UsageLimitCounterUsageLabel",
-      "kind": "templateLabel",
-      "valueType": "",
-      "reportsFailure": false,
-      "serializedFields": []
-    },
-    {
-      "className": "UsageLimitCounterUseButton",
+      "className": "UsageLimitCounterUseWithAdButton",
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

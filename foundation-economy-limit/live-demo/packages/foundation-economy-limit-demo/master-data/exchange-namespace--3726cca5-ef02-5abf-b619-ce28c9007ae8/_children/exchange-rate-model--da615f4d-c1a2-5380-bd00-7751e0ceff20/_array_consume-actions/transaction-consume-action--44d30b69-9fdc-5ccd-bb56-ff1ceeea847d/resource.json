@@ -1,0 +1,24 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ConsumeAdViewPoint",
+        "transformPackageId": "foundation-economy-ad"
+      }
+    ]
+  },
+  "id": "44d30b69-9fdc-5ccd-bb56-ff1ceeea847d",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05",
+    "typeName": "UsageLimitCounter"
+  }
+}

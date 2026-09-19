@@ -15,14 +15,21 @@
           }
         },
         {
-          "key": "maximum",
+          "key": "free",
+          "source": {
+            "kind": "literal",
+            "value": 3
+          }
+        },
+        {
+          "key": "adBacked",
           "source": {
             "kind": "literal",
             "value": 5
           }
         }
       ],
-      "template": "{count} / {maximum} used"
+      "template": "{count} used. Free presses stop at {free}, ad-backed ones at {adBacked}."
     },
     {
       "componentClassName": "NextResetAtValue",
@@ -36,17 +43,17 @@
     },
     {
       "arguments": [],
-      "componentClassName": "UseButton",
+      "componentClassName": "UseFreeButton",
       "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:77bec475-e0aa-5102-9788-03160da4971f::Gs2Exchange:RateModel.Exchange",
-      "id": "5545f77c-007a-5fe9-b8e6-faa85cc60947",
+      "id": "c7af1ef0-1f44-5c95-b373-6f48ae4ea360",
       "kind": "buttonAction",
       "name": "UsageLimitCounter"
     },
     {
       "arguments": [],
-      "componentClassName": "ReturnButton",
+      "componentClassName": "UseWithAdButton",
       "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:da615f4d-c1a2-5380-bd00-7751e0ceff20::Gs2Exchange:RateModel.Exchange",
-      "id": "997c16b0-7135-5bb2-8e3f-651fcf887844",
+      "id": "77e52ed6-6913-558c-b781-e39fb7e7e7ee",
       "kind": "buttonAction",
       "name": "UsageLimitCounter"
     },

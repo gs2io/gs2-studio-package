@@ -8,7 +8,7 @@
   },
   "delegatedActions": [
     {
-      "methodName": "Use",
+      "methodName": "UseFree",
       "parameterOverrides": [
         {
           "kind": "static",
@@ -24,7 +24,7 @@
       }
     },
     {
-      "methodName": "Return",
+      "methodName": "UseWithAd",
       "parameterOverrides": [
         {
           "kind": "static",

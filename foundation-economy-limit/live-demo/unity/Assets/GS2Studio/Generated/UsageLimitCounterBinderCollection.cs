@@ -50,10 +50,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
         void Invalidate();
         Task MountFromExchangeLimitResetMasterDataAsync(CancellationToken cancellationToken = default);
         void SubscribeFromExchangeLimitResetMasterData(Action? onChange = null, Action<Exception>? onError = null);
-        Task MountFromExchangeLimitUseMasterDataAsync(CancellationToken cancellationToken = default);
-        void SubscribeFromExchangeLimitUseMasterData(Action? onChange = null, Action<Exception>? onError = null);
-        Task MountFromExchangeLimitReturnMasterDataAsync(CancellationToken cancellationToken = default);
-        void SubscribeFromExchangeLimitReturnMasterData(Action? onChange = null, Action<Exception>? onError = null);
+        Task MountFromExchangeLimitFreeUseMasterDataAsync(CancellationToken cancellationToken = default);
+        void SubscribeFromExchangeLimitFreeUseMasterData(Action? onChange = null, Action<Exception>? onError = null);
+        Task MountFromExchangeLimitAdUseMasterDataAsync(CancellationToken cancellationToken = default);
+        void SubscribeFromExchangeLimitAdUseMasterData(Action? onChange = null, Action<Exception>? onError = null);
         Task MountFromLimitLimitUserDataAsync(CancellationToken cancellationToken = default);
         void SubscribeFromLimitLimitUserData(Action? onChange = null, Action<Exception>? onError = null);
     }
@@ -300,8 +300,8 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             new RateModelArrayLoader("LimitReset").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("LimitUse").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("LimitReturn").Invalidate(_gs2, _session);
+            new RateModelArrayLoader("LimitFreeUse").Invalidate(_gs2, _session);
+            new RateModelArrayLoader("LimitAdUse").Invalidate(_gs2, _session);
             new CounterArrayLoader("Limit").Invalidate(_gs2, _session);
         }
 
@@ -536,30 +536,30 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (string.IsNullOrEmpty(item.Name)) return null;
             return $"{item.Name}";
         }
-        /// <summary>One-shot Create + MountFromExchangeLimitUseMasterDataAsync (no subscription).</summary>
-        public static async Task<UsageLimitCounterBinderCollection> CreateFromExchangeLimitUseMasterDataAsync(
+        /// <summary>One-shot Create + MountFromExchangeLimitFreeUseMasterDataAsync (no subscription).</summary>
+        public static async Task<UsageLimitCounterBinderCollection> CreateFromExchangeLimitFreeUseMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
             string limit,
             CancellationToken cancellationToken = default)
         {
             var coll = new UsageLimitCounterBinderCollection(gs2, session, limit);
-            await coll.MountFromExchangeLimitUseMasterDataAsync(cancellationToken);
+            await coll.MountFromExchangeLimitFreeUseMasterDataAsync(cancellationToken);
             return coll;
         }
 
-        public async Task MountFromExchangeLimitUseMasterDataAsync(CancellationToken cancellationToken = default)
+        public async Task MountFromExchangeLimitFreeUseMasterDataAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("LimitUse");
+            var arrayLoader = new RateModelArrayLoader("LimitFreeUse");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeLimitUseMasterItems(items, attachChildSubscribe: false, cancellationToken);
+            await ReconcileFromExchangeLimitFreeUseMasterItems(items, attachChildSubscribe: false, cancellationToken);
             _mounted = true;
         }
 
-        public void SubscribeFromExchangeLimitUseMasterData(Action? onChange = null, Action<Exception>? onError = null)
+        public void SubscribeFromExchangeLimitFreeUseMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
@@ -574,7 +574,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("LimitUse");
+            var arrayLoader = new RateModelArrayLoader("LimitFreeUse");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -583,7 +583,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     if (_disposed) return;
                     try
                     {
-                        await ReconcileFromExchangeLimitUseMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeLimitFreeUseMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
                     }
                     catch (Exception ex)
                     {
@@ -594,22 +594,22 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ));
         }
 
-        private async Task ReconcileFromExchangeLimitUseMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeLimitFreeUseMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
                 if (_disposed) return;
-                var rowKey = ExtractExchangeLimitUseMasterRowKey(item);
+                var rowKey = ExtractExchangeLimitFreeUseMasterRowKey(item);
                 if (rowKey == null) continue;
                 seen.Add(rowKey);
                 if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
                 {
-                    ApplyExchangeLimitUseMasterItemTo(existing.MutableModel, item);
+                    ApplyExchangeLimitFreeUseMasterItemTo(existing.MutableModel, item);
                 }
                 else
                 {
-                    var binder = await BuildBinderFromExchangeLimitUseMasterItem(item, cancellationToken);
+                    var binder = await BuildBinderFromExchangeLimitFreeUseMasterItem(item, cancellationToken);
                     if (_disposed)
                     {
                         binder.Dispose();
@@ -617,7 +617,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     }
                     if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
                     {
-                        ApplyExchangeLimitUseMasterItemTo(raced.MutableModel, item);
+                        ApplyExchangeLimitFreeUseMasterItemTo(raced.MutableModel, item);
                         binder.Dispose();
                         continue;
                     }
@@ -666,16 +666,16 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitUseMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitFreeUseMasterItem(EzRateModel item, CancellationToken cancellationToken)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
-            ApplyExchangeLimitUseMasterItemTo(model, item);
+            ApplyExchangeLimitFreeUseMasterItemTo(model, item);
             var binder = new UsageLimitCounterBinder(model, _gs2, _session);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
 
-        private static void ApplyExchangeLimitUseMasterItemTo(MutableUsageLimitCounter model, EzRateModel item)
+        private static void ApplyExchangeLimitFreeUseMasterItemTo(MutableUsageLimitCounter model, EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -684,42 +684,42 @@ namespace GS2Studio.Generated.UsageLimitCounter
             _ = model;
         }
 
-        private UsageLimitCounterId ExtractExchangeLimitUseMasterIdentity(EzRateModel item)
+        private UsageLimitCounterId ExtractExchangeLimitFreeUseMasterIdentity(EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name));
         }
 
-        private string? ExtractExchangeLimitUseMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeLimitFreeUseMasterRowKey(EzRateModel item)
         {
-            var id = ExtractExchangeLimitUseMasterIdentity(item);
+            var id = ExtractExchangeLimitFreeUseMasterIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;
             if (string.IsNullOrEmpty(item.Name)) return null;
             return $"{item.Name}";
         }
-        /// <summary>One-shot Create + MountFromExchangeLimitReturnMasterDataAsync (no subscription).</summary>
-        public static async Task<UsageLimitCounterBinderCollection> CreateFromExchangeLimitReturnMasterDataAsync(
+        /// <summary>One-shot Create + MountFromExchangeLimitAdUseMasterDataAsync (no subscription).</summary>
+        public static async Task<UsageLimitCounterBinderCollection> CreateFromExchangeLimitAdUseMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
             string limit,
             CancellationToken cancellationToken = default)
         {
             var coll = new UsageLimitCounterBinderCollection(gs2, session, limit);
-            await coll.MountFromExchangeLimitReturnMasterDataAsync(cancellationToken);
+            await coll.MountFromExchangeLimitAdUseMasterDataAsync(cancellationToken);
             return coll;
         }
 
-        public async Task MountFromExchangeLimitReturnMasterDataAsync(CancellationToken cancellationToken = default)
+        public async Task MountFromExchangeLimitAdUseMasterDataAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("LimitReturn");
+            var arrayLoader = new RateModelArrayLoader("LimitAdUse");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeLimitReturnMasterItems(items, attachChildSubscribe: false, cancellationToken);
+            await ReconcileFromExchangeLimitAdUseMasterItems(items, attachChildSubscribe: false, cancellationToken);
             _mounted = true;
         }
 
-        public void SubscribeFromExchangeLimitReturnMasterData(Action? onChange = null, Action<Exception>? onError = null)
+        public void SubscribeFromExchangeLimitAdUseMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
@@ -734,7 +734,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("LimitReturn");
+            var arrayLoader = new RateModelArrayLoader("LimitAdUse");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -743,7 +743,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     if (_disposed) return;
                     try
                     {
-                        await ReconcileFromExchangeLimitReturnMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeLimitAdUseMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
                     }
                     catch (Exception ex)
                     {
@@ -754,22 +754,22 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ));
         }
 
-        private async Task ReconcileFromExchangeLimitReturnMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeLimitAdUseMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
                 if (_disposed) return;
-                var rowKey = ExtractExchangeLimitReturnMasterRowKey(item);
+                var rowKey = ExtractExchangeLimitAdUseMasterRowKey(item);
                 if (rowKey == null) continue;
                 seen.Add(rowKey);
                 if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
                 {
-                    ApplyExchangeLimitReturnMasterItemTo(existing.MutableModel, item);
+                    ApplyExchangeLimitAdUseMasterItemTo(existing.MutableModel, item);
                 }
                 else
                 {
-                    var binder = await BuildBinderFromExchangeLimitReturnMasterItem(item, cancellationToken);
+                    var binder = await BuildBinderFromExchangeLimitAdUseMasterItem(item, cancellationToken);
                     if (_disposed)
                     {
                         binder.Dispose();
@@ -777,7 +777,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     }
                     if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
                     {
-                        ApplyExchangeLimitReturnMasterItemTo(raced.MutableModel, item);
+                        ApplyExchangeLimitAdUseMasterItemTo(raced.MutableModel, item);
                         binder.Dispose();
                         continue;
                     }
@@ -826,16 +826,16 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitReturnMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitAdUseMasterItem(EzRateModel item, CancellationToken cancellationToken)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
-            ApplyExchangeLimitReturnMasterItemTo(model, item);
+            ApplyExchangeLimitAdUseMasterItemTo(model, item);
             var binder = new UsageLimitCounterBinder(model, _gs2, _session);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
 
-        private static void ApplyExchangeLimitReturnMasterItemTo(MutableUsageLimitCounter model, EzRateModel item)
+        private static void ApplyExchangeLimitAdUseMasterItemTo(MutableUsageLimitCounter model, EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -844,14 +844,14 @@ namespace GS2Studio.Generated.UsageLimitCounter
             _ = model;
         }
 
-        private UsageLimitCounterId ExtractExchangeLimitReturnMasterIdentity(EzRateModel item)
+        private UsageLimitCounterId ExtractExchangeLimitAdUseMasterIdentity(EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name));
         }
 
-        private string? ExtractExchangeLimitReturnMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeLimitAdUseMasterRowKey(EzRateModel item)
         {
-            var id = ExtractExchangeLimitReturnMasterIdentity(item);
+            var id = ExtractExchangeLimitAdUseMasterIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;
             if (string.IsNullOrEmpty(item.Name)) return null;
             return $"{item.Name}";
