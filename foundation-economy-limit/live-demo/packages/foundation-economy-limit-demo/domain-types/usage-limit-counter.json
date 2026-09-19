@@ -40,7 +40,7 @@
       }
     },
     {
-      "methodName": "Reset",
+      "methodName": "ResetEveryAllowance",
       "parameterOverrides": [
         {
           "kind": "static",

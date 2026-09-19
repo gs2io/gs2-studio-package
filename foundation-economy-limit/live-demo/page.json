@@ -3,9 +3,9 @@
     "AdViewPoint": {
       "rows": ["AdViewPointBalanceLabel", "AdBreakButton"]
     },
-    "UsageLimitCounter": {
+    "UsageLimitCounter#Quest attempts (daily)": {
       "key": {
-        "id": "daily",
+        "id": "questAttempt",
         "limit": "daily"
       },
       "rows": [
@@ -13,7 +13,32 @@
         "UsageLimitCounterNextResetAtValue",
         "UsageLimitCounterUseFreeButton",
         "UsageLimitCounterUseWithAdButton",
-        "UsageLimitCounterResetButton"
+        "UsageLimitCounterResetEveryAllowanceButton"
+      ]
+    },
+    "UsageLimitCounter#Shop refreshes (daily)": {
+      "key": {
+        "id": "shopRefresh",
+        "limit": "daily"
+      },
+      "rows": ["UsageLimitCounterAllowanceLabel", "UsageLimitCounterUseFreeButton"]
+    },
+    "UsageLimitCounter#Gift claims (daily)": {
+      "key": {
+        "id": "giftClaim",
+        "limit": "daily"
+      },
+      "rows": ["UsageLimitCounterAllowanceLabel", "UsageLimitCounterUseFreeButton"]
+    },
+    "UsageLimitCounter#Boss challenges (weekly)": {
+      "key": {
+        "id": "bossChallenge",
+        "limit": "weekly"
+      },
+      "rows": [
+        "UsageLimitCounterAllowanceLabel",
+        "UsageLimitCounterNextResetAtValue",
+        "UsageLimitCounterUseFreeButton"
       ]
     },
     "UsageLimit": {

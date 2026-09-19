@@ -76,6 +76,13 @@
   ],
   "components": [
     {
+      "className": "UsageLimitCounterAllowanceLabel",
+      "kind": "templateLabel",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
       "className": "UsageLimitCounterNextResetAtValue",
       "kind": "value",
       "valueType": "DateTime",
@@ -83,7 +90,7 @@
       "serializedFields": []
     },
     {
-      "className": "UsageLimitCounterResetButton",
+      "className": "UsageLimitCounterResetEveryAllowanceButton",
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

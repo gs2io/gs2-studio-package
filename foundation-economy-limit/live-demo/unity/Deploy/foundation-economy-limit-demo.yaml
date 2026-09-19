@@ -7,13 +7,37 @@ Resources:
       Settings:
         version: "2019-08-19"
         rateModels:
-          - name: "daily"
+          - name: "bossChallenge"
             verifyActions: []
             consumeActions:
               - action: "Gs2AdReward:ConsumePointByUserId"
                 request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"daily\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":5}"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"counterName\":\"bossChallenge\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":5}"
+            acquireActions: []
+          - name: "giftClaim"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2AdReward:ConsumePointByUserId"
+                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+              - action: "Gs2Limit:CountUpByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"giftClaim\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":5}"
+            acquireActions: []
+          - name: "questAttempt"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2AdReward:ConsumePointByUserId"
+                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+              - action: "Gs2Limit:CountUpByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"questAttempt\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":5}"
+            acquireActions: []
+          - name: "shopRefresh"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2AdReward:ConsumePointByUserId"
+                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+              - action: "Gs2Limit:CountUpByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"shopRefresh\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":5}"
             acquireActions: []
         incrementalRateModels: []
       Mode: "direct"
@@ -26,11 +50,29 @@ Resources:
       Settings:
         version: "2019-08-19"
         rateModels:
-          - name: "daily"
+          - name: "bossChallenge"
             verifyActions: []
             consumeActions:
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"daily\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":3}"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"counterName\":\"bossChallenge\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":3}"
+            acquireActions: []
+          - name: "giftClaim"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Limit:CountUpByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"giftClaim\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":3}"
+            acquireActions: []
+          - name: "questAttempt"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Limit:CountUpByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"questAttempt\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":3}"
+            acquireActions: []
+          - name: "shopRefresh"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Limit:CountUpByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"shopRefresh\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":3}"
             acquireActions: []
         incrementalRateModels: []
       Mode: "direct"
@@ -43,12 +85,54 @@ Resources:
       Settings:
         version: "2019-08-19"
         rateModels:
-          - name: "daily"
+          - name: "bossChallenge"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"daily\"}"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"questAttempt\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"shopRefresh\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"giftClaim\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"userId\":\"#{userId}\",\"counterName\":\"bossChallenge\"}"
+          - name: "giftClaim"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"questAttempt\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"shopRefresh\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"giftClaim\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"userId\":\"#{userId}\",\"counterName\":\"bossChallenge\"}"
+          - name: "questAttempt"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"questAttempt\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"shopRefresh\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"giftClaim\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"userId\":\"#{userId}\",\"counterName\":\"bossChallenge\"}"
+          - name: "shopRefresh"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"questAttempt\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"shopRefresh\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"giftClaim\"}"
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"userId\":\"#{userId}\",\"counterName\":\"bossChallenge\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

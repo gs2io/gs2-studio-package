@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e4c77c099885a6da0fa1a4f269ecc0f, type: 3}
-  m_Name: daily
+  m_Name: boss-challenge
   m_EditorClassIdentifier: 
-  _rawInstanceId: daily
-  _limit: daily
+  _rawInstanceId: bossChallenge
+  _limit: weekly

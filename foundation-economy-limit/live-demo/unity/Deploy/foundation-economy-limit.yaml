@@ -11,6 +11,11 @@ Resources:
             name: "daily"
             resetHour: 0
             resetType: "daily"
+          - metadata: ""
+            name: "weekly"
+            resetDayOfWeek: "monday"
+            resetHour: 0
+            resetType: "weekly"
       Mode: "direct"
     DependsOn:
       - "LimitNamespace_Limit"

@@ -9,8 +9,8 @@
   },
   "display": {
     "description": {
-      "en": "Supplies the daily allowance used by the live demo, its counter, the free and ad-backed presses that use it, and the reset. The view point it spends comes from the ad demo.",
-      "ja": "ライブデモ用の日次リセット設定と回数カウンター、無料枠と広告枠それぞれの利用操作、リセット操作を提供します。視聴枠は広告デモから借ります。"
+      "en": "Supplies the daily and weekly schedules the live demo shows, the four allowances that follow them, the free and ad-backed presses that use one, and the reset that puts them all back. The view point it spends comes from the ad demo.",
+      "ja": "ライブデモ用の日次・週次のリセット設定と4つの回数カウンター、無料枠と広告枠それぞれの利用操作、全体のリセット操作を提供します。視聴枠は広告デモから借ります。"
     },
     "label": {
       "en": "Usage limits (demo data)",

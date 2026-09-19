@@ -12,7 +12,7 @@
       "id": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05",
       "singleEntry": false,
       "delegatedActions": {
-        "Reset": "resource:foundation-economy-limit-demo:masterData:4b31ac1d-744c-509d-b406-2ac8c421224f::Gs2Exchange:RateModel.Exchange",
+        "ResetEveryAllowance": "resource:foundation-economy-limit-demo:masterData:4b31ac1d-744c-509d-b406-2ac8c421224f::Gs2Exchange:RateModel.Exchange",
         "UseFree": "resource:foundation-economy-limit-demo:masterData:77bec475-e0aa-5102-9788-03160da4971f::Gs2Exchange:RateModel.Exchange",
         "UseWithAd": "resource:foundation-economy-limit-demo:masterData:da615f4d-c1a2-5380-bd00-7751e0ceff20::Gs2Exchange:RateModel.Exchange"
       },
@@ -20,8 +20,6 @@
       "canonicalTypeId": "dt_01M0C6M2N38KVHBHTC1JBRT5YA"
     }
   },
-  "masterDataResources": {
-    "transaction.AcquireAction": "7a838783-a129-57c5-a3e9-eea5efa05b79"
-  },
+  "masterDataResources": {},
   "transforms": {}
 }

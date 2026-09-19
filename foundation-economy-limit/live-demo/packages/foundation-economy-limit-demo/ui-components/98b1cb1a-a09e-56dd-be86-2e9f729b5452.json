@@ -32,6 +32,29 @@
       "template": "{count} used. Free presses stop at {free}, ad-backed ones at {adBacked}."
     },
     {
+      "componentClassName": "AllowanceLabel",
+      "id": "b023bc77-01b7-5f27-8bf7-f25ec3060f33",
+      "kind": "templateLabel",
+      "name": "UsageLimitCounter",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3"
+          }
+        },
+        {
+          "key": "free",
+          "source": {
+            "kind": "literal",
+            "value": 3
+          }
+        }
+      ],
+      "template": "{count} of {free} used"
+    },
+    {
       "componentClassName": "NextResetAtValue",
       "id": "518eb649-e0a0-532c-9ebc-f3295bf50169",
       "kind": "value",
@@ -59,9 +82,9 @@
     },
     {
       "arguments": [],
-      "componentClassName": "ResetButton",
+      "componentClassName": "ResetEveryAllowanceButton",
       "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:4b31ac1d-744c-509d-b406-2ac8c421224f::Gs2Exchange:RateModel.Exchange",
-      "id": "29c8ba51-2adc-56dc-966e-ed2b9b611361",
+      "id": "e1653da6-9cc0-5d1c-91f6-91482e1c40da",
       "kind": "buttonAction",
       "name": "UsageLimitCounter"
     }

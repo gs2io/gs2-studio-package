@@ -7,14 +7,14 @@
             "parameterName": "limit",
             "source": {
               "kind": "static",
-              "value": "daily"
+              "value": "weekly"
             }
           },
           {
             "parameterName": "counter",
             "source": {
               "kind": "static",
-              "value": "questAttempt"
+              "value": "bossChallenge"
             }
           }
         ],
@@ -25,8 +25,8 @@
       }
     ]
   },
-  "id": "7a838783-a129-57c5-a3e9-eea5efa05b79",
-  "index": 0,
+  "id": "5358efee-5325-5428-bdd7-fe48ec284f47",
+  "index": 3,
   "location": {
     "modelName": "AcquireAction",
     "service": "transaction"

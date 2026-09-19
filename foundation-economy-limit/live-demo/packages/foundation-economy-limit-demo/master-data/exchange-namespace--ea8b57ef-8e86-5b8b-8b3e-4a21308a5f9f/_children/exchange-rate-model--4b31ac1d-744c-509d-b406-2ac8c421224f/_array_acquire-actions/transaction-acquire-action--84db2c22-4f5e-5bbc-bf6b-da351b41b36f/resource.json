@@ -14,7 +14,7 @@
             "parameterName": "counter",
             "source": {
               "kind": "static",
-              "value": "questAttempt"
+              "value": "giftClaim"
             }
           }
         ],
@@ -25,8 +25,8 @@
       }
     ]
   },
-  "id": "7a838783-a129-57c5-a3e9-eea5efa05b79",
-  "index": 0,
+  "id": "84db2c22-4f5e-5bbc-bf6b-da351b41b36f",
+  "index": 2,
   "location": {
     "modelName": "AcquireAction",
     "service": "transaction"

@@ -1,0 +1,10 @@
+{
+  "id": "weekly",
+  "rowKey": "row_01M2WP2K9HZVZZGGMWV9EPYF48",
+  "typeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+  "values": {
+    "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1": "weekly",
+    "prop_01M0C5HJ9H8A68TH51QQXSQAFS": "monday",
+    "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3": 0
+  }
+}

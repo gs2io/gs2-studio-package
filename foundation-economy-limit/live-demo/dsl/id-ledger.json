@@ -5,6 +5,7 @@
     "master/exchange:Namespace:unmounted:AdWatch#0/exchange:RateModel:AdViewPoint:#0": "edb4740f-9784-54b2-aa90-38c98cf34e5e",
     "master/exchange:Namespace:unmounted:AdWatch#0/exchange:RateModel:AdViewPoint:#0/transaction:AcquireAction:AdViewPoint:@acquireActions[0]#0": "1e012c35-3e71-5896-a5a4-cac2f20eb069",
     "master/exchange:Namespace:unmounted:LimitReturn#0/exchange:RateModel:UsageLimitCounter:#0/transaction:AcquireAction:UsageLimitCounter:@acquireActions[0]#0": "6bf7ae81-62c9-5aea-8afd-4838d6bcefa6",
+    "row:dt_01M0C6M2N38KVHBHTC1JBRT5YA.daily": "row_01M2TS7XYN516MAEW2XSB5C9A6",
     "row:dt_AFCBM1Z879DZAF9085SFW63Z5S.adplatform": "row_01M2WBVFZQQWV56W6JV9NJZ0TV",
     "row:dt_RTQJBJN6VK3VTEX3WKNGGK17JW.adviewpoint": "row_01M2WBVFZQG07GWKNZ95E7RFQF",
     "transform:AcquireAdViewPoint:output:direct:Gs2AdReward:AcquirePointByUserId#0": "out_01M2WBVFZQ99ZD2T0DA2DQE4WA",
@@ -13,12 +14,17 @@
     "ui:AdViewPoint:AdViewPoint:definition": "d61c620a-08c8-51a1-946a-f63d8ed6321e",
     "ui:AdViewPoint:AdViewPoint:item:BalanceLabel": "5d5d3644-26f7-551b-ba1b-c073c8ad6930",
     "ui:AdViewPoint:AdViewPoint:item:WatchButton": "a2208191-162e-5be6-9886-0a0f57ff8ce7",
+    "ui:UsageLimitCounter:UsageLimitCounter:item:ResetButton": "29c8ba51-2adc-56dc-966e-ed2b9b611361",
     "ui:UsageLimitCounter:UsageLimitCounter:item:ReturnButton": "997c16b0-7135-5bb2-8e3f-651fcf887844",
     "ui:UsageLimitCounter:UsageLimitCounter:item:UseButton": "5545f77c-007a-5fe9-b8e6-faa85cc60947"
   },
   "random": {
     "row:dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R.daily": "row_01M2TS7XYN416HZCCFTBN8RW9P",
-    "row:dt_01M0C6M2N38KVHBHTC1JBRT5YA.daily": "row_01M2TS7XYN516MAEW2XSB5C9A6",
+    "row:dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R.weekly": "row_01M2WP2K9HZVZZGGMWV9EPYF48",
+    "row:dt_01M0C6M2N38KVHBHTC1JBRT5YA.bossChallenge": "row_01M2WP2K9HHJD9025NT8RRKATW",
+    "row:dt_01M0C6M2N38KVHBHTC1JBRT5YA.giftClaim": "row_01M2WP2K9HT7MWG2525P0E5H7Q",
+    "row:dt_01M0C6M2N38KVHBHTC1JBRT5YA.questAttempt": "row_01M2WP2K9H9A2CVYWAN6D1FHV5",
+    "row:dt_01M0C6M2N38KVHBHTC1JBRT5YA.shopRefresh": "row_01M2WP2K9HYZWP4YJGRE6623NJ",
     "type:UsageLimit": "dt_01M2TS7XYNHMV1ZA7013X2QDX5",
     "type:UsageLimitCounter": "dt_01M2TS7XYNDFGTZQSR0G7Z6M05"
   },

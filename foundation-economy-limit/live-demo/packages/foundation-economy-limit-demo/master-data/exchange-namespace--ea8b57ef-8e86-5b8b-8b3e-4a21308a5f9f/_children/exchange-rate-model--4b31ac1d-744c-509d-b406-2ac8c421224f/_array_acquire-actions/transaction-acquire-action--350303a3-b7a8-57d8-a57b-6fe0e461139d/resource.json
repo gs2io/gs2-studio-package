@@ -14,7 +14,7 @@
             "parameterName": "counter",
             "source": {
               "kind": "static",
-              "value": "questAttempt"
+              "value": "shopRefresh"
             }
           }
         ],
@@ -25,8 +25,8 @@
       }
     ]
   },
-  "id": "7a838783-a129-57c5-a3e9-eea5efa05b79",
-  "index": 0,
+  "id": "350303a3-b7a8-57d8-a57b-6fe0e461139d",
+  "index": 1,
   "location": {
     "modelName": "AcquireAction",
     "service": "transaction"
