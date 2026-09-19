@@ -1,7 +1,7 @@
 {
   "sections": {
     "AdViewPoint": {
-      "rows": ["AdViewPointBalanceLabel", "AdViewPointWatchButton", "AdViewPointSpendButton"]
+      "rows": ["AdViewPointBalanceLabel", "AdBreakButton", "AdViewPointSpendButton"]
     }
   }
 }

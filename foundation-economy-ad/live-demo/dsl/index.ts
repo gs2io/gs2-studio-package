@@ -12,8 +12,10 @@
  * as a WebGL player, and the ad networks GS2 accepts do not reach it: Unity
  * Ads supports iOS and Android only, as does the LevelPlay mediation that
  * replaced it, and AdMob is mobile-only too. There is no browser build of
- * either to call. So the Watch button does the one part that is not the SDK's:
- * it tells GS2 a view was completed and asks for the point.
+ * either to call. So the page shows an ad break with the ad missing — a panel
+ * that says on its face that nothing is playing and why — and the press that
+ * dismisses it does the one part that is not the SDK's: it tells GS2 a view
+ * was completed and asks for the point.
  *
  * That split is the shape of the API, not a shortcut taken here.
  * `Gs2AdReward:AcquirePointByUserId` takes a namespace, a user and a number of
@@ -26,7 +28,6 @@
  */
 
 import {
-  Arg,
   Bind,
   defineMasterDataResource,
   definePackage,
