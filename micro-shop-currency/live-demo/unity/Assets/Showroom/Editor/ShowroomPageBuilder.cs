@@ -1,10 +1,11 @@
 // Builds a demo's page out of the components the package generated.
 //
 // A demo exists to show what GS2 Studio produces, so the page is assembled
-// from exactly that: one section per generated handler, a row per generated
-// label, a row per generated button action. Nothing here knows which package
-// it is building for — it reads the component manifests the generator wrote
-// beside its handlers, and the assembly only to turn a name into a `Type`.
+// from exactly that: a row per generated label, a row per generated button
+// action, gathered into the sections the demo declared. Nothing here knows
+// which package it is building for — it reads the component manifests the
+// generator wrote beside its handlers, and the assembly only to turn a name
+// into a `Type`.
 //
 // The output is a scene. It is written once, from `ShowroomTemplate.unity`,
 // and rebuilt from the same declared sections whenever `-showroomRebuildPage`
@@ -193,10 +194,14 @@ namespace GS2Studio.Showroom.EditorTools
         /// itself and a demo could only nudge the result, each question it
         /// could not answer became another channel in `page.json` — which
         /// reading sits on which bar, which axis a list mounts from, which
-        /// rows a condition governs, what order they read in. The one that
-        /// never arrived was leaving a component off, which is what a page
-        /// with one use for a model that has two needs most: a dex and a
-        /// roster show the same `Character` and want different rows.
+        /// rows a condition governs, what order they read in.
+        ///
+        /// What one of these is not is a model. A page declares sections and
+        /// this is one of them, so a model a page has two uses for is declared
+        /// twice and drawn twice — a dex and a roster show the same
+        /// `Character` and want different rows, and which rows either wants is
+        /// the page's to say. See <see cref="DeclaredSection"/> for how a
+        /// section names the model it draws.
         /// </summary>
         private class SectionSpec
         {
@@ -248,17 +253,61 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// What one generated handler contributes to the page, worked out
-        /// before there is a scene to put any of it in.
+        /// One section as `page.json` keyed it: the model it draws, and the
+        /// heading this section of that model carries when the page wrote one.
+        ///
+        /// A key is `Model` or `Model#Heading`. The second form is what lets a
+        /// page draw one model twice, and what follows the `#` is prose a
+        /// visitor reads rather than a generated identifier — which is why it
+        /// is the one thing in the declaration `page.mjs` has to check for
+        /// carrying a separator this reader splits on.
+        /// </summary>
+        private sealed class DeclaredSection
+        {
+            /// <summary>The key exactly as `page.json` wrote it; what every refusal names.</summary>
+            public string Id;
+            public string Model;
+            /// <summary>The heading, or null when the key is a bare model name.</summary>
+            public string Heading;
+            public SectionSpec Spec = new SectionSpec();
+        }
+
+        /// <summary>
+        /// What one section contributes to the page, worked out before there
+        /// is a scene to put any of it in.
         ///
         /// Everything here is read from the manifest and the declaration, and
         /// nothing in it touches an asset, which is what lets the whole page be
         /// settled — and refused — before <see cref="OpenOrCreateScene"/> runs.
+        ///
+        /// One per declared section rather than one per manifest, so a model
+        /// the page declares twice is planned twice. Everything the model
+        /// itself offers — its components, its conditions, its handler type —
+        /// is read once and shared by every section of it, so every question
+        /// about that model is asked of the same answer.
         /// </summary>
         private class SectionPlan
         {
             public ComponentManifest Manifest;
             public string Model;
+            /// <summary>
+            /// The declaration key this section was planned from: `Model`, or
+            /// `Model#Heading`. Equal to <see cref="Model"/> for a model the
+            /// page declared once, or never, which is why every refusal names
+            /// this rather than the model.
+            /// </summary>
+            public string SectionId;
+            /// <summary>What the section's heading reads to a visitor.</summary>
+            public string Heading;
+            /// <summary>
+            /// What the section is called in the scene, and the stem of the
+            /// prefab a list of it spawns its rows from: the key with
+            /// everything but letters and digits taken out, because a heading
+            /// is prose and neither a scene object's name nor an asset path is.
+            /// Two sections coming out the same are refused rather than
+            /// written over one another.
+            /// </summary>
+            public string Name;
             public Type Handler;
             /// <summary>Every component the manifest lists, drawable or not, so a declared name resolves to what it is.</summary>
             public IReadOnlyList<RowComponent> Components;
@@ -268,10 +317,10 @@ namespace GS2Studio.Showroom.EditorTools
             public IReadOnlyList<RowComponent> Clocks;
             public IReadOnlyList<ToggleComponent> Toggles;
             /// <summary>
-            /// What the demo declared for this model, or null when `page.json`
-            /// has no section for it. Carried on the plan rather than looked up
-            /// again, so every question about the declaration is asked of the
-            /// same answer.
+            /// What the demo declared for this section, or null when
+            /// `page.json` has no section for this model at all. Carried on
+            /// the plan rather than looked up again, so every question about
+            /// the declaration is asked of the same answer.
             /// </summary>
             public SectionSpec Declaration;
             /// <summary>
@@ -334,17 +383,23 @@ namespace GS2Studio.Showroom.EditorTools
         /// halves of one tool, and keeping it parseable by `Split` is worth
         /// more than keeping it pretty.
         ///
-        ///   section  MODEL  AXIS
-        ///   row      MODEL  COMPONENT  CAPTION
-        ///   toggle   MODEL  CONDITION  ROW|ROW
-        ///   key      MODEL  NAME  VALUE
-        ///   scope    MODEL  NAME  VALUE
+        ///   section  KEY  AXIS
+        ///   row      KEY  COMPONENT  CAPTION
+        ///   toggle   KEY  CONDITION  ROW|ROW
+        ///   key      KEY  NAME  VALUE
+        ///   scope    KEY  NAME  VALUE
         ///
-        /// A `section` line is what declares the model: a model with no line
-        /// at all is refused with the section the manifest suggests, which is
-        /// not the same as a model that declared no rows and means it.
+        /// KEY is `Model` or `Model#Heading` — see
+        /// <see cref="DeclaredSection"/>. A `section` line is what declares
+        /// the section: a model with no line at all is refused with the
+        /// section the manifest suggests, which is not the same as a model
+        /// that declared no rows and means it.
+        ///
+        /// Returned in the order the keys first appear, because that is the
+        /// order the page draws them in. `page.mjs` writes them in the order
+        /// `page.json` holds them, and a `Dictionary` would lose it.
         /// </summary>
-        private static Dictionary<string, SectionSpec> ReadDeclaration(string path)
+        private static IReadOnlyList<DeclaredSection> ReadDeclaration(string path)
         {
             if (string.IsNullOrEmpty(path) || !File.Exists(path))
             {
@@ -357,16 +412,19 @@ namespace GS2Studio.Showroom.EditorTools
                     (string.IsNullOrEmpty(path) ? "" : $" at {path}") +
                     "; `page.mjs` writes one out of the demo's `page.json`");
             }
-            var declared = new Dictionary<string, SectionSpec>();
+            var declared = new List<DeclaredSection>();
+            var byKey = new Dictionary<string, DeclaredSection>(StringComparer.Ordinal);
             foreach (var line in File.ReadAllLines(path))
             {
                 var parts = line.Split('\t');
                 if (parts.Length < 2 || parts[1].Length == 0) continue;
-                if (!declared.TryGetValue(parts[1], out var section))
+                if (!byKey.TryGetValue(parts[1], out var entry))
                 {
-                    section = new SectionSpec();
-                    declared[parts[1]] = section;
+                    entry = DeclaredSectionKeyed(parts[1]);
+                    byKey[parts[1]] = entry;
+                    declared.Add(entry);
                 }
+                var section = entry.Spec;
                 if (parts[0] == "section" && parts.Length > 2 && parts[2].Length > 0)
                 {
                     section.Axis = parts[2];
@@ -396,6 +454,53 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
+        /// A declaration key split into the model it draws and the heading it
+        /// carries.
+        ///
+        /// `page.mjs` refuses both halves being empty before it writes a line,
+        /// so reaching here with one is the two halves of this tool
+        /// disagreeing rather than a demo's mistake — and a section headed with
+        /// nothing, or drawing a model named by nothing, is not a page anyone
+        /// asked for either way.
+        /// </summary>
+        private static DeclaredSection DeclaredSectionKeyed(string id)
+        {
+            var divider = id.IndexOf('#');
+            if (divider < 0) return new DeclaredSection { Id = id, Model = id, Heading = null };
+            var model = id.Substring(0, divider);
+            var heading = id.Substring(divider + 1);
+            if (model.Length == 0 || heading.Trim().Length == 0)
+            {
+                throw new InvalidOperationException(
+                    $"[showroom] '{id}' names " +
+                    (model.Length == 0 ? "no model to draw" : "no heading to carry") +
+                    "; a section key is a model, or a model and a heading divided by '#'");
+            }
+            return new DeclaredSection { Id = id, Model = model, Heading = heading };
+        }
+
+        /// <summary>
+        /// What a section is called in the scene, and the stem of the prefab a
+        /// list of it spawns its rows from.
+        ///
+        /// A heading is prose: it holds spaces, and the `#` that divides it
+        /// from the model is not a character an asset path should carry. So
+        /// what is kept is the letters and digits, appended to the model, and
+        /// a section the page headed nothing is called after its model exactly
+        /// as it always was.
+        /// </summary>
+        private static string SectionName(DeclaredSection declared)
+        {
+            if (declared.Heading == null) return declared.Model;
+            var name = new System.Text.StringBuilder(declared.Model);
+            foreach (var character in declared.Heading)
+            {
+                if (char.IsLetterOrDigit(character)) name.Append(character);
+            }
+            return name.ToString();
+        }
+
+        /// <summary>
         /// Writes the demo's page from the declaration `page.mjs` wrote out of
         /// its `page.json`. Returns the number of sections, or -1 when the
         /// scene already existed and was left alone.
@@ -418,7 +523,7 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static int BuildPage(
             string title, string subtitle, bool rebuild,
-            Dictionary<string, SectionSpec> declaredSections)
+            IReadOnlyList<DeclaredSection> declaredSections)
         {
             var existed = File.Exists(ScenePath);
             if (existed && !rebuild)
@@ -567,10 +672,14 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// The manifests the generator wrote, one per model, in the order the
-        /// page draws them: by handler class name, ordinal. That is the order
-        /// every page so far was baked in, and a page's section order is part
-        /// of what it published.
+        /// The manifests the generator wrote, one per model, by handler class
+        /// name, ordinal.
+        ///
+        /// Not the order the page draws them in — that is the order the demo
+        /// declared its sections in. This order settles only where a model the
+        /// page never mentioned is mounted among the page's own handlers,
+        /// which is nothing a visitor sees, and it is ordinal so that a bake
+        /// writes the same scene twice running.
         ///
         /// No manifests at all is the one drift this builder can still meet:
         /// generated code that predates the manifest, or a project that was
@@ -787,20 +896,23 @@ namespace GS2Studio.Showroom.EditorTools
         /// created would cost instead.
         /// </summary>
         private static IReadOnlyList<SectionPlan> PlanSections(
-            IReadOnlyDictionary<string, SectionSpec> declaredSections)
+            IReadOnlyList<DeclaredSection> declaredSections)
         {
-            var plans = new List<SectionPlan>();
+            // One per manifest, because what a model offers is the same
+            // whichever section of it is asking: read once here, and shared by
+            // every section the page declares for it.
+            var offered = new Dictionary<string, SectionPlan>(StringComparer.Ordinal);
+            var generated = new List<string>();
             foreach (var manifest in ReadManifests())
             {
-                var model = manifest.model;
                 var components = manifest.components
                     .Select(component => GeneratedRowComponent(manifest, component))
                     .OrderBy(component => component.Name, StringComparer.Ordinal)
                     .ToList();
-                var plan = new SectionPlan
+                offered[manifest.model] = new SectionPlan
                 {
                     Manifest = manifest,
-                    Model = model,
+                    Model = manifest.model,
                     Handler = ResolveType(manifest, manifest.@namespace + "." + manifest.handler),
                     Components = components,
                     Labels = components.Where(component => component.Kind == RowKind.Label).ToList(),
@@ -808,8 +920,37 @@ namespace GS2Studio.Showroom.EditorTools
                     Gauges = components.Where(component => component.Kind == RowKind.Gauge).ToList(),
                     Clocks = components.Where(component => component.Kind == RowKind.Clock).ToList(),
                     Toggles = TogglesOf(manifest),
-                    Declaration = declaredSections.TryGetValue(model, out var declared) ? declared : null,
                 };
+                generated.Add(manifest.model);
+            }
+
+            // The page's own order, and one plan per declaration rather than
+            // per manifest: `page.json` writes its sections down in the order a
+            // visitor reads them, and a model it names twice is drawn twice.
+            var plans = new List<SectionPlan>();
+            var declaredModels = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var declared in declaredSections)
+            {
+                // A key naming a model this demo generated no handler for is
+                // refused in CollectUnresolvedDeclarations, which can say what
+                // it did generate; there is nothing to plan from here.
+                if (!offered.TryGetValue(declared.Model, out var offer)) continue;
+                declaredModels.Add(declared.Model);
+                plans.Add(SectionOf(offer, declared));
+            }
+            // Then every model the page never mentioned, in the order the
+            // manifests read. Each draws no section — it is refused for having
+            // a page's worth of components and no declaration, or it is mounted
+            // so another section's reading can be composed from it — so where
+            // it sits among the page's handlers is nothing a visitor sees.
+            foreach (var model in generated)
+            {
+                if (declaredModels.Contains(model)) continue;
+                plans.Add(SectionOf(offered[model], null));
+            }
+
+            foreach (var plan in plans)
+            {
                 // A handler whose `SetKeys` takes arguments cannot stand on its
                 // own: it would sit in the page with an empty id, bind nothing
                 // and render a row of blanks. A keyed model is a set of rows,
@@ -817,15 +958,15 @@ namespace GS2Studio.Showroom.EditorTools
                 // copy of the components.
                 //
                 // Asked here rather than where the list is built, because the
-                // declaration a model needs written depends on it: only a list
-                // with an axis field has an axis to name.
+                // declaration a section needs written depends on it: only a
+                // list with an axis field has an axis to name.
+                var manifest = plan.Manifest;
                 if (manifest.keyed && !DeclaresKey(plan) &&
                     manifest.listHandler.Length > 0 && manifest.listItemHandler.Length > 0)
                 {
                     plan.ListHandler = ResolveType(manifest, manifest.@namespace + "." + manifest.listHandler);
                     plan.ItemHandler = ResolveType(manifest, manifest.@namespace + "." + manifest.listItemHandler);
                 }
-                plans.Add(plan);
             }
 
             // What the demo wrote to hear a deadline, by convention rather than
@@ -844,16 +985,11 @@ namespace GS2Studio.Showroom.EditorTools
 
             foreach (var plan in plans)
             {
-                // Two ways a model ends up with nothing to draw: a package gave
-                // it no component of its own, or the demo declared a section
-                // for it and left the rows empty. The second is asked here,
-                // before the section prefab exists, rather than where the rest
-                // of the declaration is read — the principle is the one the
-                // first case already states, that an empty heading over an
-                // empty body says nothing a visitor wants, and it holds the
-                // same whether the emptiness was found in the manifest or
-                // written down by the demo.
-                if (!HasDrawables(plan) || DeclaresNoRows(plan)) continue;
+                // Asked here, before the section prefab exists, rather than
+                // where the rest of the declaration is read: a section that
+                // draws nothing is settled along with everything else the page
+                // is refused for.
+                if (DrawsNothing(plan)) continue;
                 plan.Section = SectionFor(plan);
                 if (DrawsClock(plan, plan.Section)) plan.Countdowns = countdowns;
 
@@ -869,6 +1005,41 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
+        /// One section of a model, from what that model offers and what the
+        /// page declared for this section of it. `declared` is null for a model
+        /// the page never mentioned, which is planned the same way so that
+        /// everything downstream can ask it the same questions.
+        ///
+        /// The model's own lists are shared rather than copied: nothing writes
+        /// to them, and two sections of one model disagreeing about what it
+        /// generated would be a page arguing with itself.
+        /// </summary>
+        private static SectionPlan SectionOf(SectionPlan offered, DeclaredSection declared)
+        {
+            return new SectionPlan
+            {
+                Manifest = offered.Manifest,
+                Model = offered.Model,
+                Handler = offered.Handler,
+                Components = offered.Components,
+                Labels = offered.Labels,
+                Buttons = offered.Buttons,
+                Gauges = offered.Gauges,
+                Clocks = offered.Clocks,
+                Toggles = offered.Toggles,
+                SectionId = declared == null ? offered.Model : declared.Id,
+                // A page that headed this section itself says what it says; a
+                // page that did not gets the model's name made readable, which
+                // is the only thing this builder knows about the model.
+                Heading = declared == null || declared.Heading == null
+                    ? Humanize(offered.Model)
+                    : declared.Heading,
+                Name = declared == null ? offered.Model : SectionName(declared),
+                Declaration = declared == null ? null : declared.Spec,
+            };
+        }
+
+        /// <summary>
         /// Whether this model has anything of its own to draw. A package that
         /// generated no component for it gives the page no section: an empty
         /// heading over an empty body says nothing a visitor wants, and there
@@ -878,6 +1049,26 @@ namespace GS2Studio.Showroom.EditorTools
         {
             return plan.Labels.Count > 0 || plan.Buttons.Count > 0 ||
                 plan.Gauges.Count > 0 || plan.Clocks.Count > 0;
+        }
+
+        /// <summary>
+        /// Whether this section draws nothing, and so is a model mounted
+        /// without a heading of its own rather than a section on the page.
+        ///
+        /// Two ways it happens: a package gave the model no component of its
+        /// own, or the demo declared the section and left the rows empty. The
+        /// principle is the same either way — an empty heading over an empty
+        /// body says nothing a visitor wants — and it holds whether the
+        /// emptiness was found in the manifest or written down by the demo.
+        ///
+        /// Asked in one place because two ask it: the refusal in
+        /// <see cref="CollectSectionsAtOdds"/> runs before
+        /// <see cref="SectionPlan.Section"/> is assigned, so it cannot read
+        /// the answer off the plan, and the two must not be able to disagree.
+        /// </summary>
+        private static bool DrawsNothing(SectionPlan plan)
+        {
+            return !HasDrawables(plan) || DeclaresNoRows(plan);
         }
 
         /// <summary>
@@ -892,13 +1083,85 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static void RefuseWhatThePageCannotBuild(
             IReadOnlyList<SectionPlan> plans,
-            IReadOnlyDictionary<string, SectionSpec> declaredSections)
+            IReadOnlyList<DeclaredSection> declaredSections)
         {
             var problems = new List<string>();
             CollectUnresolvedDeclarations(plans, declaredSections, problems);
             CollectUndeclaredSections(plans, problems);
+            CollectCollidingSections(plans, problems);
+            CollectSectionsAtOdds(plans, problems);
             if (problems.Count == 0) return;
             throw new InvalidOperationException(string.Join("\n", problems));
+        }
+
+        /// <summary>
+        /// Refuses a model the page both leaves off and draws.
+        ///
+        /// A section with no rows is how a page leaves a model off, and that
+        /// is said about the model rather than about one section of it: the
+        /// model stays mounted, because another section's reading may be
+        /// composed from it, and only its own heading goes. So a page that
+        /// declares the model a second time has said both things at once, and
+        /// nothing here can tell which it meant.
+        ///
+        /// Left to the build it would be worse than ambiguous. A model that
+        /// draws nothing is mounted on the page root, and so is the first
+        /// section of it that draws something — generated handlers carry no
+        /// `[DisallowMultipleComponent]`, so the second `AddComponent`
+        /// succeeds — and the model would sit on the page twice, with which
+        /// one a row reaches decided by the order they were added. Where the
+        /// two sections pin different keys, that is exactly the silent
+        /// mis-binding <see cref="CollectKeyProblems"/> exists to stop.
+        ///
+        /// Two sections that both draw are not this: they are the page's two
+        /// uses for one model, which is what declaring sections is for, and
+        /// <see cref="BuildSections"/> gives the second its own handler on its
+        /// own section root.
+        /// </summary>
+        private static void CollectSectionsAtOdds(
+            IReadOnlyList<SectionPlan> plans, List<string> problems)
+        {
+            foreach (var group in plans
+                .Where(plan => plan.Declaration != null)
+                .GroupBy(plan => plan.Model, StringComparer.Ordinal)
+                .OrderBy(group => group.Key, StringComparer.Ordinal))
+            {
+                var blank = group.Where(DrawsNothing).Select(plan => plan.SectionId).ToList();
+                if (group.Count() < 2 || blank.Count == 0) continue;
+                problems.Add(
+                    $"[showroom] {group.Key}: `page.json` declares it as " +
+                    $"{Listed(group.Select(plan => plan.SectionId))}, and {Listed(blank)} " +
+                    "draws no rows. Declaring no rows is how a page leaves a model off, so a " +
+                    "page that also draws it elsewhere has said both. To leave it off, declare " +
+                    "it once; to draw it more than once, give every section of it the rows it " +
+                    "draws.");
+            }
+        }
+
+        /// <summary>
+        /// Refuses two sections that would be written to the same place.
+        ///
+        /// What a section is called in the scene is its key with everything but
+        /// letters and digits taken out, because a heading is prose — so two
+        /// headings that differ only in punctuation come out the same. They
+        /// would then name the same object, and where either draws a list they
+        /// would write over each other's item prefab, leaving a page where one
+        /// section is silently the other.
+        /// </summary>
+        private static void CollectCollidingSections(
+            IReadOnlyList<SectionPlan> plans, List<string> problems)
+        {
+            foreach (var group in plans
+                .GroupBy(plan => plan.Name, StringComparer.Ordinal)
+                .OrderBy(group => group.Key, StringComparer.Ordinal))
+            {
+                if (group.Count() < 2) continue;
+                problems.Add(
+                    $"[showroom] {Listed(group.Select(plan => plan.SectionId))} are all written " +
+                    $"as '{group.Key}', which is what a section is called in the scene and what " +
+                    "the prefab its list spawns rows from is named after. Two sections cannot " +
+                    "share it; head them with something that tells them apart.");
+            }
         }
 
         /// <summary>
@@ -1031,24 +1294,28 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static void CollectUnresolvedDeclarations(
             IReadOnlyList<SectionPlan> plans,
-            IReadOnlyDictionary<string, SectionSpec> declaredSections, List<string> problems)
+            IReadOnlyList<DeclaredSection> declaredSections, List<string> problems)
         {
-            var byModel = new Dictionary<string, SectionPlan>(StringComparer.Ordinal);
-            foreach (var plan in plans) byModel[plan.Model] = plan;
-
-            foreach (var entry in declaredSections.OrderBy(item => item.Key, StringComparer.Ordinal))
+            var models = plans.Select(plan => plan.Model).ToList();
+            var byKey = new Dictionary<string, SectionPlan>(StringComparer.Ordinal);
+            foreach (var plan in plans)
             {
-                if (!byModel.TryGetValue(entry.Key, out var plan))
+                if (plan.Declaration != null) byKey[plan.SectionId] = plan;
+            }
+
+            foreach (var declared in declaredSections.OrderBy(item => item.Id, StringComparer.Ordinal))
+            {
+                if (!byKey.TryGetValue(declared.Id, out var plan))
                 {
                     problems.Add(
-                        $"[showroom] `page.json` declares a section for '{entry.Key}', which " +
+                        $"[showroom] `page.json` declares a section for '{declared.Id}', which " +
                         "this demo generated no handler for. It generated " +
-                        $"{Listed(byModel.Keys)}.");
+                        $"{Listed(models)}.");
                     continue;
                 }
-                CollectRowProblems(plan, entry.Value, problems);
-                CollectToggleProblems(plan, entry.Value, problems);
-                CollectKeyProblems(plan, entry.Value, problems);
+                CollectRowProblems(plan, problems);
+                CollectToggleProblems(plan, problems);
+                CollectKeyProblems(plan, problems);
             }
         }
 
@@ -1071,16 +1338,16 @@ namespace GS2Studio.Showroom.EditorTools
         /// whatever a freshly added component starts holding, which is the
         /// silent mis-binding the list exists to avoid.
         /// </summary>
-        private static void CollectKeyProblems(
-            SectionPlan plan, SectionSpec declared, List<string> problems)
+        private static void CollectKeyProblems(SectionPlan plan, List<string> problems)
         {
-            CollectScopeProblems(plan, declared, problems);
+            var declared = plan.Declaration;
+            CollectScopeProblems(plan, problems);
             if (declared.Key.Count == 0) return;
             var identity = IdentityKeyNames(plan);
             if (identity.Count == 0)
             {
                 problems.Add(
-                    $"[showroom] {plan.Model}: `page.json` names a key for it, and it is not " +
+                    $"[showroom] {plan.SectionId}: `page.json` names a key for it, and it is not " +
                     "identified by one — it is a single row already, so there is nothing to pin.");
                 return;
             }
@@ -1089,7 +1356,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (!identity.Contains(name))
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: `page.json` pins '{name}', which is not one of " +
+                        $"[showroom] {plan.SectionId}: `page.json` pins '{name}', which is not one of " +
                         $"the keys this model is identified by. It is identified by " +
                         $"{Listed(identity)}.");
                 }
@@ -1099,7 +1366,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (!declared.Key.ContainsKey(name))
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: `page.json` pins it to one row without naming " +
+                        $"[showroom] {plan.SectionId}: `page.json` pins it to one row without naming " +
                         $"'{name}', and a row is named by {Listed(identity)}. Name every one of " +
                         "them, or drop the key and let the page list the model.");
                 }
@@ -1114,15 +1381,15 @@ namespace GS2Studio.Showroom.EditorTools
         /// section is what a page with nothing to show looks like — so the one
         /// that could have shown something is refused here instead.
         /// </summary>
-        private static void CollectScopeProblems(
-            SectionPlan plan, SectionSpec declared, List<string> problems)
+        private static void CollectScopeProblems(SectionPlan plan, List<string> problems)
         {
+            var declared = plan.Declaration;
             if (plan.ListHandler == null)
             {
                 if (declared.Scope.Count > 0)
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: `page.json` scopes it, and this page draws no " +
+                        $"[showroom] {plan.SectionId}: `page.json` scopes it, and this page draws no " +
                         "list for it — a scope says which rows a list has.");
                 }
                 return;
@@ -1133,7 +1400,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (!scope.Contains(name))
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: `page.json` scopes its list by '{name}', which " +
+                        $"[showroom] {plan.SectionId}: `page.json` scopes its list by '{name}', which " +
                         $"is not one of the keys its collection is made with. It is made with " +
                         $"{Listed(scope)}.");
                 }
@@ -1148,7 +1415,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // nothing is often right, and only the handler's own readiness
                 // check knows when it is not.
                 Debug.LogWarning(
-                    $"[showroom] {plan.Model}: its list is made with '{name}' and the page does " +
+                    $"[showroom] {plan.SectionId}: its list is made with '{name}' and the page does " +
                     "not say which. If its axis reads through that key, the list will read " +
                     "nothing and the section will draw empty.");
             }
@@ -1167,16 +1434,15 @@ namespace GS2Studio.Showroom.EditorTools
         /// component it never generated, one that is no kind of row this page
         /// draws, or a reading that is not there.
         /// </summary>
-        private static void CollectRowProblems(
-            SectionPlan plan, SectionSpec declared, List<string> problems)
+        private static void CollectRowProblems(SectionPlan plan, List<string> problems)
         {
-            foreach (var row in declared.Rows)
+            foreach (var row in plan.Declaration.Rows)
             {
                 var component = UiComponentNamed(plan, row.Component);
                 if (component == null)
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: `page.json` asks for a row of " +
+                        $"[showroom] {plan.SectionId}: `page.json` asks for a row of " +
                         $"'{row.Component}', which this demo neither generated nor wrote. It " +
                         $"generated {Listed(DrawableNames(plan))}" +
                         $"{WrittenSuffix()}.");
@@ -1184,7 +1450,7 @@ namespace GS2Studio.Showroom.EditorTools
                 else if (component.Kind == RowKind.Button && !component.ReportsFailure)
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: '{row.Component}' acts but cannot say when it " +
+                        $"[showroom] {plan.SectionId}: '{row.Component}' acts but cannot say when it " +
                         "failed. A browser hides the console, so a failure a visitor cannot see " +
                         "reads as nothing having happened — carry an `ErrorEvent OnFailed` the " +
                         "way a generated button does.");
@@ -1192,13 +1458,13 @@ namespace GS2Studio.Showroom.EditorTools
                 else if (component.Kind == RowKind.None)
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: '{row.Component}' is not a kind of row this " +
+                        $"[showroom] {plan.SectionId}: '{row.Component}' is not a kind of row this " +
                         $"page knows how to draw. It draws {Listed(DrawableNames(plan))}.");
                 }
                 if (row.Caption != null && UiComponentNamed(plan, row.Caption) == null)
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: '{row.Component}' names '{row.Caption}' as " +
+                        $"[showroom] {plan.SectionId}: '{row.Component}' names '{row.Caption}' as " +
                         "its reading, which this demo neither generated nor wrote. It " +
                         $"generated {Listed(plan.Labels.Select(label => label.Name))}" +
                         $"{WrittenSuffix()}.");
@@ -1219,9 +1485,9 @@ namespace GS2Studio.Showroom.EditorTools
         /// being left to mean "leave this off", a thing dropping the key
         /// already says.
         /// </summary>
-        private static void CollectToggleProblems(
-            SectionPlan plan, SectionSpec declared, List<string> problems)
+        private static void CollectToggleProblems(SectionPlan plan, List<string> problems)
         {
+            var declared = plan.Declaration;
             var conditions = plan.Toggles.Select(toggle => toggle.Name).ToList();
             var rows = declared.Rows.Select(row => row.Component).ToList();
             foreach (var entry in declared.Toggles.OrderBy(item => item.Key, StringComparer.Ordinal))
@@ -1229,7 +1495,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (!conditions.Contains(entry.Key, StringComparer.Ordinal))
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: `page.json` gives rows to the condition " +
+                        $"[showroom] {plan.SectionId}: `page.json` gives rows to the condition " +
                         $"'{entry.Key}', which this demo generated no component named. It " +
                         $"generated {Listed(conditions)}.");
                 }
@@ -1240,7 +1506,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (governed.Count == 0)
                 {
                     problems.Add(
-                        $"[showroom] {plan.Model}: '{entry.Key}' is declared governing no rows. " +
+                        $"[showroom] {plan.SectionId}: '{entry.Key}' is declared governing no rows. " +
                         "A condition is declared with the rows it governs; to leave it off the " +
                         "page, drop the key.");
                     continue;
@@ -1249,7 +1515,7 @@ namespace GS2Studio.Showroom.EditorTools
                 {
                     if (rows.Contains(name, StringComparer.Ordinal)) continue;
                     problems.Add(
-                        $"[showroom] {plan.Model}: '{entry.Key}' governs '{name}', which is not " +
+                        $"[showroom] {plan.SectionId}: '{entry.Key}' governs '{name}', which is not " +
                         $"a row of this section. Its rows are {Listed(rows)}.");
                 }
             }
@@ -1346,7 +1612,7 @@ namespace GS2Studio.Showroom.EditorTools
             // failure this whole channel exists to stop being possible.
             var only = manifest.listAxes.Length == 1 ? manifest.listAxes[0].memberName : null;
             throw new InvalidOperationException(
-                $"[showroom] {plan.Model}: `page.json` names the mount axis '{section.Axis}', " +
+                $"[showroom] {plan.SectionId}: `page.json` names the mount axis '{section.Axis}', " +
                 $"but its list reads through a single axis" +
                 (only == null ? "" : $" ({only})") +
                 " and has nothing to choose between; drop \"axis\" from its section.");
@@ -1373,6 +1639,11 @@ namespace GS2Studio.Showroom.EditorTools
             // overlapping reloads leave duplicate rows behind.
             var sectionCount = 0;
             var itemPrefabs = new List<string>();
+            // Which models already have their handler on the page root. A page
+            // mounts one there per model and no more: a second copy would bind
+            // the same rows twice, and every row that reaches for the model
+            // would have two to choose between.
+            var mounted = new HashSet<string>(StringComparer.Ordinal);
 
             foreach (var plan in plans)
             {
@@ -1384,13 +1655,27 @@ namespace GS2Studio.Showroom.EditorTools
                     // still what another section's reading is composed from.
                     // So it is mounted without a section of its own.
                     if (!plan.Manifest.keyed || DeclaresKey(plan))
+                    {
+                        // A model the page leaves off has no second section to
+                        // take the root instead, so reaching here with one
+                        // already mounted is a page CollectSectionsAtOdds
+                        // should have refused, not one to draw half of.
+                        if (mounted.Contains(plan.Model))
+                        {
+                            throw new InvalidOperationException(
+                                $"[showroom] {plan.SectionId}: a second handler for " +
+                                $"{plan.Model} on the page root; CollectSectionsAtOdds should " +
+                                "have refused it");
+                        }
+                        mounted.Add(plan.Model);
                         PlaceHandler(content.gameObject, plan);
+                    }
                     continue;
                 }
 
                 var section = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab, content);
-                section.name = plan.Model;
-                SetText(section.transform.Find("Heading"), Humanize(plan.Model));
+                section.name = plan.Name;
+                SetText(section.transform.Find("Heading"), plan.Heading);
                 var explainer = section.transform.Find("Explainer");
                 // Nothing here knows what to say about the model; a demo author
                 // writes it, and an empty line of placeholder prose is worse
@@ -1412,10 +1697,30 @@ namespace GS2Studio.Showroom.EditorTools
                 // climb `label -> Items -> Section -> content` — and a gauge in
                 // another section's list row can now read it too, which is what
                 // a reading composed from two models needs.
-                PlaceHandler(content.gameObject, plan);
+                //
+                // Only the first section of a model takes that place. A page
+                // that draws one model twice gives the second its own handler
+                // on its own section root, which its rows reach first — they
+                // stop at `Section` — while every other section still climbs
+                // past to the one on the page root. So the reading composed
+                // across sections is untouched, and the second section is a
+                // second view of the model rather than a second page-wide one.
+                //
+                // Which means the declaration order decides more than where the
+                // sections sit. Where two sections of one model pin different
+                // keys, the one declared first is the one on the page root, and
+                // so the one every other section's composed reading binds to —
+                // a gauge elsewhere that reads this model reads that key.
+                // Nothing here can know which readings are composed from what,
+                // so this is the page's to get right rather than something the
+                // bake can check: declare the section whose key the rest of the
+                // page should see first.
+                var host = mounted.Contains(plan.Model) ? section : content.gameObject;
+                mounted.Add(plan.Model);
+                PlaceHandler(host, plan);
                 var body = ItemsOf(section.transform);
                 RealizeRows(plan, body, plan.Section, page, plan.Countdowns);
-                WireToggles(plan.Model, section, plan.Toggles, body, plan.Section);
+                WireToggles(plan.SectionId, section, plan.Toggles, body, plan.Section);
             }
 
             return (sectionCount, itemPrefabs);
@@ -1436,7 +1741,7 @@ namespace GS2Studio.Showroom.EditorTools
             if (plan.ListHandler == null || plan.ItemHandler == null)
             {
                 Debug.LogWarning(
-                    $"[showroom] {plan.Model} needs identity keys and has no list handler; " +
+                    $"[showroom] {plan.SectionId} needs identity keys and has no list handler; " +
                     "its section is left empty for a demo author to wire");
                 return null;
             }
@@ -1465,7 +1770,7 @@ namespace GS2Studio.Showroom.EditorTools
                 WriteScalar(serialized.FindProperty(parameter.fieldName), parameter, scope.Value);
             }
             serialized.ApplyModifiedPropertiesWithoutUndo();
-            return ListItemPrefabPath(plan.Model);
+            return ListItemPrefabPath(plan.Name);
         }
 
         /// <summary>
@@ -1522,7 +1827,7 @@ namespace GS2Studio.Showroom.EditorTools
             if (string.IsNullOrEmpty(section.Axis))
             {
                 throw new InvalidOperationException(
-                    $"[showroom] {plan.Model} reads through one of several mount axes and " +
+                    $"[showroom] {plan.SectionId} reads through one of several mount axes and " +
                     "`page.json` does not say which. Add \"axis\" to its section; " +
                     $"the generator offers {offered}.");
             }
@@ -1533,7 +1838,7 @@ namespace GS2Studio.Showroom.EditorTools
             if (member == null)
             {
                 throw new InvalidOperationException(
-                    $"[showroom] {plan.Model}: `page.json` names the mount axis '{section.Axis}', " +
+                    $"[showroom] {plan.SectionId}: `page.json` names the mount axis '{section.Axis}', " +
                     $"which {manifest.listAxisEnumTypeName} does not declare. The generator offers {offered}.");
             }
             return member.value;
@@ -1541,12 +1846,11 @@ namespace GS2Studio.Showroom.EditorTools
 
         private static GameObject BuildListItemPrefab(SectionPlan plan, ShowroomPage page)
         {
-            var model = plan.Model;
             var sectionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SectionPrefabPath);
             var item = (GameObject)PrefabUtility.InstantiatePrefab(sectionPrefab);
             PrefabUtility.UnpackPrefabInstance(
                 item, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
-            item.name = model + "ListItem";
+            item.name = plan.Name + "ListItem";
             // An item is one row of the list, so it carries no heading of its own.
             foreach (var label in new[] { "Heading", "Explainer" })
             {
@@ -1556,18 +1860,23 @@ namespace GS2Studio.Showroom.EditorTools
             item.AddComponent(plan.ItemHandler);
             var body = ItemsOf(item.transform);
             RealizeRows(plan, body, plan.Section, page, plan.Countdowns);
-            WireToggles(model, item, plan.Toggles, body, plan.Section);
+            WireToggles(plan.SectionId, item, plan.Toggles, body, plan.Section);
 
             Directory.CreateDirectory(GeneratedPrefabDirectory);
-            var saved = PrefabUtility.SaveAsPrefabAsset(item, ListItemPrefabPath(model));
+            var saved = PrefabUtility.SaveAsPrefabAsset(item, ListItemPrefabPath(plan.Name));
             UnityEngine.Object.DestroyImmediate(item);
             return saved;
         }
 
-        /// <summary>Where a model's list-item prefab is written.</summary>
-        private static string ListItemPrefabPath(string model)
+        /// <summary>
+        /// Where a section's list-item prefab is written. Named after the
+        /// section rather than the model, because a page that draws one model
+        /// as two lists wants a row of each, and naming both after the model
+        /// would have the second write over the first.
+        /// </summary>
+        private static string ListItemPrefabPath(string section)
         {
-            return $"{GeneratedPrefabDirectory}/{model}ListItem.prefab";
+            return $"{GeneratedPrefabDirectory}/{section}ListItem.prefab";
         }
 
         /// <summary>
@@ -1645,6 +1954,10 @@ namespace GS2Studio.Showroom.EditorTools
             SectionPlan plan, Transform body, SectionSpec section, ShowroomPage page,
             IReadOnlyList<Type> countdowns)
         {
+            // The model names the row, because a component carries it as a
+            // prefix and the row's caption is what is left once it goes; the
+            // section names the problem, because two sections of one model
+            // have the same one to report and different declarations to fix.
             var model = plan.Model;
             foreach (var row in section.Rows)
             {
@@ -1652,16 +1965,16 @@ namespace GS2Studio.Showroom.EditorTools
                 if (component == null)
                 {
                     Debug.LogWarning(
-                        $"[showroom] {model}: no generated component named '{row.Component}'; " +
-                        "that row is left off the page");
+                        $"[showroom] {plan.SectionId}: no generated component named " +
+                        $"'{row.Component}'; that row is left off the page");
                     continue;
                 }
                 var caption = row.Caption == null ? null : UiComponentNamed(plan, row.Caption);
                 if (row.Caption != null && caption == null)
                 {
                     Debug.LogWarning(
-                        $"[showroom] {model}: '{row.Component}' names '{row.Caption}' as its " +
-                        "reading, but no such component was generated");
+                        $"[showroom] {plan.SectionId}: '{row.Component}' names '{row.Caption}' as " +
+                        "its reading, but no such component was generated");
                 }
 
                 switch (component.Kind)
@@ -1680,8 +1993,8 @@ namespace GS2Studio.Showroom.EditorTools
                         break;
                     default:
                         Debug.LogWarning(
-                            $"[showroom] {model}: '{row.Component}' is not a kind of row this page " +
-                            "knows how to draw");
+                            $"[showroom] {plan.SectionId}: '{row.Component}' is not a kind of row " +
+                            "this page knows how to draw");
                         break;
                 }
             }
@@ -2021,8 +2334,8 @@ namespace GS2Studio.Showroom.EditorTools
         /// whichever state it last applied.
         /// </summary>
         private static void WireToggles(
-            string model, GameObject root, IReadOnlyList<ToggleComponent> toggles, Transform body,
-            SectionSpec section)
+            string sectionId, GameObject root, IReadOnlyList<ToggleComponent> toggles,
+            Transform body, SectionSpec section)
         {
             foreach (var toggle in toggles)
             {
@@ -2030,7 +2343,7 @@ namespace GS2Studio.Showroom.EditorTools
                     declared.Length == 0)
                 {
                     Debug.LogWarning(
-                        $"[showroom] {model}: '{toggle.Name}' governs no rows in this " +
+                        $"[showroom] {sectionId}: '{toggle.Name}' governs no rows in this " +
                         "section's declaration, so it is left off the page");
                     continue;
                 }
@@ -2041,7 +2354,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (rows.Count == 0)
                 {
                     Debug.LogWarning(
-                        $"[showroom] {model}: none of '{string.Join("|", declared)}' is a row " +
+                        $"[showroom] {sectionId}: none of '{string.Join("|", declared)}' is a row " +
                         $"on this section, so '{toggle.Name}' is left off the page");
                     continue;
                 }
@@ -2056,7 +2369,7 @@ namespace GS2Studio.Showroom.EditorTools
                 if (targets.Count == 0)
                 {
                     Debug.LogWarning(
-                        $"[showroom] {model}: no Selectable under " +
+                        $"[showroom] {sectionId}: no Selectable under " +
                         $"'{string.Join("|", declared)}' for '{toggle.Name}'");
                     continue;
                 }
