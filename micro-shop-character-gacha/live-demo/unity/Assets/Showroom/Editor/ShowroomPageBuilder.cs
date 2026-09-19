@@ -7,9 +7,12 @@
 // beside its handlers, and the assembly only to turn a name into a `Type`.
 //
 // The output is a scene. It is written once, from `ShowroomTemplate.unity`,
-// and from then on it belongs to the demo: a developer opens it, rearranges
-// it, writes better prose. Re-running with `-showroomRebuildPage` replaces the
-// content again, which is what to do after the package's UI components change.
+// and rebuilt from the same declared sections whenever `-showroomRebuildPage`
+// runs. Rebuilding clears and replaces everything under the content mount, so
+// nothing placed there by hand survives a rebuild. Outside it only the
+// header's title and subtitle are rewritten, from what the demo declares; the
+// rest of the page is left alone, and that is where a demo keeps anything of
+// its own.
 #nullable disable
 using System;
 using System.Collections;
