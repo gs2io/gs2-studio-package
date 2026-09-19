@@ -71,7 +71,16 @@ namespace GS2Studio.Showroom.Demo
         private const int OverlaySortingOrder = 100;
 
         private const float CardWidth = 940f;
-        private const float CardHeight = 900f;
+
+        /// <summary>
+        /// Short enough to survive a browser window that is wider than it is
+        /// tall. The canvas scales against 1080x1920 at a match of 0.5, so a
+        /// 1920x700 viewport — a laptop with a bookmarks bar — leaves only 870
+        /// of these units of height, and a card taller than that loses its
+        /// heading and its button off-screen with no way to scroll to them.
+        /// </summary>
+        private const float CardHeight = 724f;
+
         private const float CardPadding = 56f;
 
         // The page's palette, so the break reads as part of the page rather
@@ -144,7 +153,16 @@ namespace GS2Studio.Showroom.Demo
 
         private bool _open;
         private bool _granting;
-        private float _remaining;
+        private bool _ready;
+
+        /// <summary>
+        /// When the wait is up, on the clock that measures seconds rather than
+        /// frames. A browser stops drawing a tab it is not showing, and
+        /// `Time.deltaTime` is clamped to `Time.maximumDeltaTime`, so counting
+        /// frames down would leave a visitor who looked away still waiting for
+        /// a wait that had already passed.
+        /// </summary>
+        private float _readyAt;
 
         private void Start()
         {
@@ -198,14 +216,14 @@ namespace GS2Studio.Showroom.Demo
 
         private void Update()
         {
-            if (!_open || _granting || _remaining <= 0f) return;
-            _remaining -= Time.deltaTime;
-            if (_remaining > 0f)
+            if (!_open || _granting || _ready) return;
+            var remaining = _readyAt - Time.realtimeSinceStartup;
+            if (remaining > 0f)
             {
-                SetStatus($"You can claim the point in {Mathf.CeilToInt(_remaining)}s.");
+                SetStatus($"You can claim the point in {Mathf.CeilToInt(remaining)}s.");
                 return;
             }
-            _remaining = 0f;
+            _ready = true;
             if (_confirmButton != null) _confirmButton.interactable = true;
             SetStatus(ReadyStatus);
         }
@@ -215,7 +233,8 @@ namespace GS2Studio.Showroom.Demo
             if (_open || _overlay == null) return;
             _open = true;
             _granting = false;
-            _remaining = DwellSeconds;
+            _ready = false;
+            _readyAt = Time.realtimeSinceStartup + DwellSeconds;
             if (_confirmButton != null) _confirmButton.interactable = false;
             SetStatus($"You can claim the point in {Mathf.CeilToInt(DwellSeconds)}s.");
             _overlay.SetActive(true);
@@ -305,22 +324,25 @@ namespace GS2Studio.Showroom.Demo
             card.gameObject.AddComponent<Image>().color = CardBackground;
 
             var heading = AddText(card, "Heading", font, Heading, 42, Accent, TextAnchor.UpperLeft);
-            Band((RectTransform)heading.transform, 48f, 60f, CardPadding + 190f);
+            Band((RectTransform)heading.transform, 44f, 56f, CardPadding + 190f);
 
             var rule = NewRect("Rule", card);
-            Band(rule, 124f, 2f);
+            Band(rule, 112f, 2f);
             var ruleImage = rule.gameObject.AddComponent<Image>();
             ruleImage.color = new Color(MutedText.r, MutedText.g, MutedText.b, 0.3f);
             ruleImage.raycastTarget = false;
 
-            var body = AddText(card, "Body", font, Body, 28, PrimaryText, TextAnchor.UpperLeft);
-            Band((RectTransform)body.transform, 156f, 500f);
+            // The band is 360 against a measured 299 the body needs at this
+            // size, so a font whose metrics differ from the editor's has two
+            // spare lines before it would spill over the status line.
+            var body = AddText(card, "Body", font, Body, 24, PrimaryText, TextAnchor.UpperLeft);
+            Band((RectTransform)body.transform, 140f, 360f);
 
-            _statusText = AddText(card, "Status", font, "", 28, MutedText, TextAnchor.MiddleCenter);
-            Band((RectTransform)_statusText.transform, 672f, 52f);
+            _statusText = AddText(card, "Status", font, "", 24, MutedText, TextAnchor.MiddleCenter);
+            Band((RectTransform)_statusText.transform, 516f, 48f);
 
             _confirmButton = AddButton(card, "Confirm", font, ConfirmLabel, Accent, OnAccentText, 32);
-            Band((RectTransform)_confirmButton.transform, 740f, 112f);
+            Band((RectTransform)_confirmButton.transform, 580f, 100f);
             _confirmButton.interactable = false;
 
             // A way out that grants nothing. The panel needs one: the generated
