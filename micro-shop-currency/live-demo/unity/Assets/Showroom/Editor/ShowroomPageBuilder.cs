@@ -2387,6 +2387,49 @@ namespace GS2Studio.Showroom.EditorTools
                 }
                 serialized.ApplyModifiedPropertiesWithoutUndo();
                 EditorUtility.SetDirty(component);
+
+                if (toggle.Hides) HideUntilTheModelSaysOtherwise(targets);
+            }
+        }
+
+        /// <summary>
+        /// Switches off the rows an active toggle governs, so the page does not
+        /// show them before it knows whether it should.
+        ///
+        /// A generated condition applies itself from the model, and a handler
+        /// has no model until it has bound — `OnEnable` subscribes and then
+        /// only calls through when `Model` is already there, which at scene
+        /// start it never is. Baked on, every arm of every condition is
+        /// therefore visible for as long as the sign-in and the first read
+        /// take. Where two conditions partition one range that is not merely
+        /// early, it is wrong: a page offering "use your free go" beside "your
+        /// free goes are spent" is telling a visitor both at once.
+        ///
+        /// Off is not a guess at the condition. It is the page saying it does
+        /// not know yet, and the first `Updated` replaces it with the answer
+        /// — the same `Updated` that fills every label on the page.
+        ///
+        /// **What this costs.** A handler that never binds never raises
+        /// `Updated`, and these rows then stay off for good. Two paths reach
+        /// that: a session that never opens, which leaves the handler waiting
+        /// on `IsReadyForReload` forever, and a `ReloadAsync` that throws,
+        /// which raises `Failed` and does not retry. Both are pages that are
+        /// already dead — every label still reads its authored placeholder and
+        /// every button returns at `if (model == null)` without a word — so
+        /// what changes is a row that did nothing being absent instead of
+        /// present. The sign-in failure at least says so on the status line.
+        ///
+        /// Only active toggles. An interactable greys a `Selectable` rather
+        /// than hiding a row, and a control that is merely enabled early is not
+        /// claiming anything about the model.
+        /// </summary>
+        private static void HideUntilTheModelSaysOtherwise(IEnumerable<UnityEngine.Object> rows)
+        {
+            foreach (var row in rows)
+            {
+                var target = (GameObject)row;
+                target.SetActive(false);
+                EditorUtility.SetDirty(target);
             }
         }
 
