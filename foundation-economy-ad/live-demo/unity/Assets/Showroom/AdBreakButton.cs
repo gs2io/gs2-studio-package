@@ -1,22 +1,12 @@
-// The ad break, as this demo has to show it.
+// The row that banks a view: an ad break, and the grant on the far side of it.
 //
-// A rewarded view is two halves. One is the placement: an ad SDK fills the
-// screen, plays something, and calls back when the view completed. The other
-// is the grant, which is GS2's: `Gs2AdReward:AcquirePointByUserId` takes a
+// The break itself is `AdBreakOverlay` — the panel, the wait, and the press
+// that stands for an ad network's completion callback. What is here is the
+// other half, which is GS2's: `Gs2AdReward:AcquirePointByUserId` takes a
 // namespace, a user and a number of points, and verifies nothing. Deciding
-// that a view really happened belongs to the title, between the two.
-//
-// This demo has only the second half, and cannot have the first: the ad
-// networks GS2 accepts do not reach a browser. Unity Ads supports iOS and
-// Android only, as does the LevelPlay mediation that replaced it, and AdMob
-// is mobile-only too. The showroom is a WebGL player, so there is no
-// placement to play and no completion callback to grant from.
-//
-// So the demo stands where the placement would be and says so. This panel is
-// the shape of an ad break with the ad missing, and the press that closes it
-// is the decision a title would make from its network's callback — spelled
-// out on the panel, because a visitor who cannot tell a mock from the real
-// thing has been misled rather than shown something.
+// that a view really happened belongs to the title, between the two, and this
+// row is that decision spelled out — because a visitor who cannot tell a mock
+// from the real thing has been misled rather than shown something.
 //
 // How it is built matters as much as what it says. The page's rows live under
 // the content mount, and a re-bake clears that mount and re-creates every
@@ -25,8 +15,8 @@
 // page is baked, silently. This row therefore owns the whole break: it adds
 // the generated `AdViewPointWatchButton` to its own GameObject at run time,
 // where the generated component finds the handler by walking up to the mount
-// on its own, and it builds the panel in code. Nothing of either is written
-// to the scene or to a prefab, so a re-bake has nothing to break.
+// on its own, and the panel is built in code. Nothing of either is written to
+// the scene or to a prefab, so a re-bake has nothing to break.
 //
 // Shaped like a generated action button on purpose — a `Button` to wire and
 // an `OnCompleted` to raise, plus the `OnFailed` the page shows failures
@@ -56,58 +46,15 @@ namespace GS2Studio.Showroom.Demo
     [AddComponentMenu("GS2 Studio/Showroom/Ad Break")]
     public sealed class AdBreakButton : MonoBehaviour
     {
-        /// <summary>
-        /// How long the panel stays before it can be dismissed for a point.
-        ///
-        /// A real placement is not skippable until its reward point, and the
-        /// wait is the part of the experience that survives having no ad to
-        /// play. Short, because nobody came here to watch a rectangle.
-        /// </summary>
-        private const float DwellSeconds = 5f;
-
-        /// <summary>
-        /// Above the page's own canvas, which sits at zero.
-        /// </summary>
-        private const int OverlaySortingOrder = 100;
-
-        private const float CardWidth = 940f;
-
-        /// <summary>
-        /// Short enough to survive a browser window that is wider than it is
-        /// tall. The canvas scales against 1080x1920 at a match of 0.5, so a
-        /// 1920x700 viewport — a laptop with a bookmarks bar — leaves only 870
-        /// of these units of height, and a card taller than that loses its
-        /// heading and its button off-screen with no way to scroll to them.
-        /// </summary>
-        private const float CardHeight = 724f;
-
-        private const float CardPadding = 56f;
-
-        // The page's palette, so the break reads as part of the page rather
-        // than as something that landed on top of it.
-        private static readonly Color PageBackdrop = new Color(0.071f, 0.063f, 0.098f, 0.93f);
-        private static readonly Color CardBackground = new Color(0.102f, 0.09f, 0.145f, 1f);
-        private static readonly Color Accent = new Color(0.643f, 0.549f, 1f, 1f);
-        private static readonly Color PrimaryText = new Color(0.922f, 0.91f, 0.949f, 1f);
-        private static readonly Color MutedText = new Color(0.643f, 0.616f, 0.729f, 1f);
-        private static readonly Color OnAccentText = new Color(0.07f, 0.06f, 0.1f, 1f);
-
-        private const string Heading = "Advertisement";
-
         private const string Body =
-            "Nothing is playing here. A rewarded placement would fill this panel in a shipped " +
-            "title, and this demo has none to show: the ad SDKs GS2 accepts are mobile-only — " +
-            "Unity Ads, the LevelPlay mediation that replaced it, and AdMob — and the showroom " +
-            "is a WebGL player.\n\n" +
+            AdBreakOverlay.MissingPlacementBody + "\n\n" +
             "The button below does the half that is not the SDK's. It tells GS2 a view was " +
             "completed and asks for the point; GS2 verifies nothing. A shipped title presses it " +
             "from its ad network's completion callback, and that decision is what this panel is " +
             "standing in for.";
 
-        private const string ConfirmLabel = "I finished watching";
         private const string ReadyStatus = "The placement has finished.";
         private const string GrantingStatus = "Asking GS2 for the point…";
-        private const string CloseLabel = "Close";
 
         /// <summary>
         /// The field the generated button takes its press from, named by the
@@ -146,23 +93,10 @@ namespace GS2Studio.Showroom.Demo
         public ErrorEvent OnFailed => _onFailed;
 
         private AdViewPointWatchButton? _watch;
-        private GameObject? _overlay;
-        private Button? _confirmButton;
-        private Text? _statusText;
+        private AdBreakOverlay? _overlay;
         private ShowroomPage? _page;
 
-        private bool _open;
         private bool _granting;
-        private bool _ready;
-
-        /// <summary>
-        /// When the wait is up, on the clock that measures seconds rather than
-        /// frames. A browser stops drawing a tab it is not showing, and
-        /// `Time.deltaTime` is clamped to `Time.maximumDeltaTime`, so counting
-        /// frames down would leave a visitor who looked away still waiting for
-        /// a wait that had already passed.
-        /// </summary>
-        private float _readyAt;
 
         private void Start()
         {
@@ -181,13 +115,13 @@ namespace GS2Studio.Showroom.Demo
                 return;
             }
 
-            BuildOverlay(_button);
+            _overlay = new AdBreakOverlay(_button, Body, ReadyStatus);
 
             // The generated component goes on this row's own GameObject, which
             // is under the content mount, so it resolves the handler by
             // walking up to it — the same way a baked row's button does.
             _watch = gameObject.AddComponent<AdViewPointWatchButton>();
-            GeneratedButtonField.SetValue(_watch, _confirmButton);
+            GeneratedButtonField.SetValue(_watch, _overlay.ConfirmButton);
 
             // `AddComponent` already ran the component's `OnEnable`, when it
             // had no button to subscribe to. It only subscribes there, so the
@@ -198,46 +132,33 @@ namespace GS2Studio.Showroom.Demo
             _watch.OnCompleted.AddListener(OnGranted);
             _watch.OnFailed.AddListener(OnGrantFailed);
 
-            _confirmButton!.onClick.AddListener(OnConfirmed);
+            _overlay.ConfirmButton.onClick.AddListener(OnConfirmed);
             _button.onClick.AddListener(Open);
         }
 
         private void OnDestroy()
         {
             if (_button != null) _button.onClick.RemoveListener(Open);
-            if (_confirmButton != null) _confirmButton.onClick.RemoveListener(OnConfirmed);
+            if (_overlay != null) _overlay.ConfirmButton.onClick.RemoveListener(OnConfirmed);
             if (_watch != null)
             {
                 _watch.OnCompleted.RemoveListener(OnGranted);
                 _watch.OnFailed.RemoveListener(OnGrantFailed);
             }
-            if (_overlay != null) Destroy(_overlay);
+            if (_overlay != null) _overlay.Destroy();
         }
 
         private void Update()
         {
-            if (!_open || _granting || _ready) return;
-            var remaining = _readyAt - Time.realtimeSinceStartup;
-            if (remaining > 0f)
-            {
-                SetStatus($"You can claim the point in {Mathf.CeilToInt(remaining)}s.");
-                return;
-            }
-            _ready = true;
-            if (_confirmButton != null) _confirmButton.interactable = true;
-            SetStatus(ReadyStatus);
+            if (_granting) return;
+            _overlay?.Tick();
         }
 
         private void Open()
         {
-            if (_open || _overlay == null) return;
-            _open = true;
+            if (_overlay == null || _overlay.IsOpen) return;
             _granting = false;
-            _ready = false;
-            _readyAt = Time.realtimeSinceStartup + DwellSeconds;
-            if (_confirmButton != null) _confirmButton.interactable = false;
-            SetStatus($"You can claim the point in {Mathf.CeilToInt(DwellSeconds)}s.");
-            _overlay.SetActive(true);
+            _overlay.Open();
         }
 
         /// <summary>
@@ -248,9 +169,8 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private void Close()
         {
-            _open = false;
             _granting = false;
-            if (_overlay != null) _overlay.SetActive(false);
+            _overlay?.Close();
         }
 
         /// <summary>
@@ -262,8 +182,7 @@ namespace GS2Studio.Showroom.Demo
         {
             if (_granting) return;
             _granting = true;
-            if (_confirmButton != null) _confirmButton.interactable = false;
-            SetStatus(GrantingStatus);
+            _overlay?.SetBusy(GrantingStatus);
         }
 
         private void OnGranted()
@@ -279,171 +198,16 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Builds the panel: a canvas of its own above the page, a backdrop
-        /// that swallows every press meant for the page beneath it, and the
-        /// card.
-        ///
-        /// Built in code rather than authored, because the page's own content
-        /// is cleared and re-created on every bake and anything authored
-        /// outside it would hold references that a bake quietly breaks. None
-        /// of this is ever written to the scene.
-        /// </summary>
-        private void BuildOverlay(Button row)
-        {
-            var font = PageFont(row);
-
-            var overlay = new GameObject(
-                "AdBreakOverlay", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-            _overlay = overlay;
-
-            var canvas = overlay.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = OverlaySortingOrder;
-
-            // The page's own canvas scales against this, so the break is the
-            // same size on a phone as the rows behind it.
-            var scaler = overlay.GetComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1080f, 1920f);
-            scaler.matchWidthOrHeight = 0.5f;
-
-            var backdrop = NewRect("Backdrop", overlay.transform);
-            Stretch(backdrop);
-            var backdropImage = backdrop.gameObject.AddComponent<Image>();
-            backdropImage.color = PageBackdrop;
-            // Presses meant for the page are the whole point of a placement
-            // that covers it, so the backdrop takes them and does nothing.
-            backdropImage.raycastTarget = true;
-
-            var card = NewRect("Card", backdrop);
-            card.anchorMin = new Vector2(0.5f, 0.5f);
-            card.anchorMax = new Vector2(0.5f, 0.5f);
-            card.pivot = new Vector2(0.5f, 0.5f);
-            card.sizeDelta = new Vector2(CardWidth, CardHeight);
-            card.anchoredPosition = Vector2.zero;
-            card.gameObject.AddComponent<Image>().color = CardBackground;
-
-            var heading = AddText(card, "Heading", font, Heading, 42, Accent, TextAnchor.UpperLeft);
-            Band((RectTransform)heading.transform, 44f, 56f, CardPadding + 190f);
-
-            var rule = NewRect("Rule", card);
-            Band(rule, 112f, 2f);
-            var ruleImage = rule.gameObject.AddComponent<Image>();
-            ruleImage.color = new Color(MutedText.r, MutedText.g, MutedText.b, 0.3f);
-            ruleImage.raycastTarget = false;
-
-            // The band is 360 against a measured 299 the body needs at this
-            // size, so a font whose metrics differ from the editor's has two
-            // spare lines before it would spill over the status line.
-            var body = AddText(card, "Body", font, Body, 24, PrimaryText, TextAnchor.UpperLeft);
-            Band((RectTransform)body.transform, 140f, 360f);
-
-            _statusText = AddText(card, "Status", font, "", 24, MutedText, TextAnchor.MiddleCenter);
-            Band((RectTransform)_statusText.transform, 516f, 48f);
-
-            _confirmButton = AddButton(card, "Confirm", font, ConfirmLabel, Accent, OnAccentText, 32);
-            Band((RectTransform)_confirmButton.transform, 580f, 100f);
-            _confirmButton.interactable = false;
-
-            // A way out that grants nothing. The panel needs one: the generated
-            // press reports a GS2 failure and any other kind only to the
-            // console, and a visitor who pressed before the page had signed in
-            // would otherwise be left looking at a panel that never closes.
-            var close = AddButton(card, "Close", font, CloseLabel, CardBackground, MutedText, 26);
-            var closeRect = (RectTransform)close.transform;
-            closeRect.anchorMin = new Vector2(1f, 1f);
-            closeRect.anchorMax = new Vector2(1f, 1f);
-            closeRect.pivot = new Vector2(1f, 1f);
-            closeRect.sizeDelta = new Vector2(160f, 60f);
-            closeRect.anchoredPosition = new Vector2(-CardPadding, -CardPadding);
-            close.onClick.AddListener(Close);
-
-            overlay.SetActive(false);
-        }
-
-        /// <summary>
-        /// The page's font, taken from the row's own button rather than named.
-        /// Every piece of text on the page is authored in the template, so
-        /// there is one to copy and no way for the panel to drift from it.
-        /// </summary>
-        private static Font PageFont(Button row)
-        {
-            var label = row.GetComponentInChildren<Text>(true);
-            if (label != null && label.font != null) return label.font;
-            return Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        }
-
-        private static RectTransform NewRect(string name, Transform parent)
-        {
-            var created = new GameObject(name, typeof(RectTransform));
-            var rect = (RectTransform)created.transform;
-            rect.SetParent(parent, false);
-            return rect;
-        }
-
-        private static void Stretch(RectTransform rect)
-        {
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
-        }
-
-        /// <summary>
-        /// One band across the card: the card's width less its padding,
-        /// `height` tall, `top` below the card's top edge.
-        /// </summary>
-        private static void Band(RectTransform rect, float top, float height, float rightPadding = CardPadding)
-        {
-            rect.anchorMin = new Vector2(0f, 1f);
-            rect.anchorMax = new Vector2(1f, 1f);
-            rect.pivot = new Vector2(0.5f, 1f);
-            rect.offsetMin = new Vector2(CardPadding, -top - height);
-            rect.offsetMax = new Vector2(-rightPadding, -top);
-        }
-
-        private static Text AddText(
-            Transform parent, string name, Font font, string content, int size, Color color,
-            TextAnchor alignment)
-        {
-            var rect = NewRect(name, parent);
-            var text = rect.gameObject.AddComponent<Text>();
-            text.font = font;
-            text.fontSize = size;
-            text.color = color;
-            text.alignment = alignment;
-            text.horizontalOverflow = HorizontalWrapMode.Wrap;
-            text.verticalOverflow = VerticalWrapMode.Overflow;
-            text.lineSpacing = 1.2f;
-            text.supportRichText = false;
-            text.raycastTarget = false;
-            text.text = content;
-            return text;
-        }
-
-        private static Button AddButton(
-            Transform parent, string name, Font font, string label, Color background,
-            Color labelColor, int size)
-        {
-            var rect = NewRect(name, parent);
-            var image = rect.gameObject.AddComponent<Image>();
-            image.color = background;
-            var button = rect.gameObject.AddComponent<Button>();
-            button.targetGraphic = image;
-            var text = AddText(rect, "Label", font, label, size, labelColor, TextAnchor.MiddleCenter);
-            Stretch((RectTransform)text.transform);
-            return button;
-        }
-
-        private void SetStatus(string status)
-        {
-            if (_statusText != null) _statusText.text = status;
-        }
-
-        /// <summary>
         /// Puts a wiring failure where both a developer and a visitor can see
         /// it. Reflection and a baked reference both fail by being absent, and
         /// a browser hides the console, so neither record is enough on its own.
+        ///
+        /// The page now mirrors what Unity logs as an error, so the first line
+        /// here reaches it on its own and the second is a duplicate — kept on
+        /// purpose, because the mirror cuts a message to its first 200
+        /// characters and these are repair instructions that name a file and a
+        /// field. The one message on this page that must arrive whole is this
+        /// one, so it is also sent the way that does not shorten it.
         /// </summary>
         private void Report(string message)
         {
