@@ -17,15 +17,15 @@
         {
           "key": "free",
           "source": {
-            "kind": "literal",
-            "value": 3
+            "kind": "property",
+            "propertyId": "prop_01M2XCSQW31H7DCABNXZV4E45P"
           }
         },
         {
           "key": "adBacked",
           "source": {
-            "kind": "literal",
-            "value": 5
+            "kind": "property",
+            "propertyId": "prop_01M2XCSQW3YEM6QCAQPT16AN9R"
           }
         }
       ],
@@ -47,12 +47,142 @@
         {
           "key": "free",
           "source": {
-            "kind": "literal",
-            "value": 3
+            "kind": "property",
+            "propertyId": "prop_01M2XCSQW31H7DCABNXZV4E45P"
           }
         }
       ],
       "template": "{count} of {free} used"
+    },
+    {
+      "componentClassName": "NoFreeUsesLeftLabel",
+      "id": "21c73566-8fc3-5098-91aa-2fb282d5cc4c",
+      "kind": "templateLabel",
+      "name": "UsageLimitCounter",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3"
+          }
+        },
+        {
+          "key": "free",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M2XCSQW31H7DCABNXZV4E45P"
+          }
+        }
+      ],
+      "template": "{count} of {free} free uses are spent. The free press is refused until the reset."
+    },
+    {
+      "componentClassName": "NothingLeftLabel",
+      "id": "8ac85283-f92f-5e59-b27a-831924a5574e",
+      "kind": "templateLabel",
+      "name": "UsageLimitCounter",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3"
+          }
+        },
+        {
+          "key": "adBacked",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M2XCSQW3YEM6QCAQPT16AN9R"
+          }
+        }
+      ],
+      "template": "{count} of {adBacked} uses are spent. Both presses are refused until the reset."
+    },
+    {
+      "componentClassName": "FreeUsesSpentActiveToggle",
+      "condition": {
+        "kind": "gte",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_01M2XCSQW31H7DCABNXZV4E45P"
+        }
+      },
+      "id": "9a26a9d1-1dd4-5dd0-b3d6-be556c877095",
+      "kind": "activeToggle",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "componentClassName": "FreeUsesLeftActiveToggle",
+      "condition": {
+        "kind": "lt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_01M2XCSQW31H7DCABNXZV4E45P"
+        }
+      },
+      "id": "4c2fc17f-7093-5ad3-b707-f5a67bd226bc",
+      "kind": "activeToggle",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "componentClassName": "AdUsesUnavailableActiveToggle",
+      "condition": {
+        "children": [
+          {
+            "kind": "lt",
+            "lhs": {
+              "kind": "property",
+              "propertyId": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3"
+            },
+            "rhs": {
+              "kind": "property",
+              "propertyId": "prop_01M2XCSQW31H7DCABNXZV4E45P"
+            }
+          },
+          {
+            "kind": "gte",
+            "lhs": {
+              "kind": "property",
+              "propertyId": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3"
+            },
+            "rhs": {
+              "kind": "property",
+              "propertyId": "prop_01M2XCSQW3YEM6QCAQPT16AN9R"
+            }
+          }
+        ],
+        "kind": "or"
+      },
+      "id": "703a0326-4fa4-50be-91e2-f55ccb3669c7",
+      "kind": "activeToggle",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "componentClassName": "AnyUseLeftActiveToggle",
+      "condition": {
+        "kind": "lt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_01M2XCSQW3YEM6QCAQPT16AN9R"
+        }
+      },
+      "id": "72ba5d2b-e443-5307-84d6-40525de76efa",
+      "kind": "activeToggle",
+      "name": "UsageLimitCounter"
     },
     {
       "componentClassName": "NextResetAtValue",

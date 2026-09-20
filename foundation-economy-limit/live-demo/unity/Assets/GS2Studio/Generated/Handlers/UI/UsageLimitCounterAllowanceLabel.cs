@@ -74,7 +74,7 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 
         private void OnUpdated(UsageLimitCounter model)
         {
-            _onUpdate.Invoke($"{model.Count} of {3} used");
+            _onUpdate.Invoke($"{model.Count} of {model.FreeMax} used");
         }
     }
 }

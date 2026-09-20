@@ -1,0 +1,10 @@
+{
+  "id": "counter3",
+  "rowKey": "row_01M2WTYP5ZQ29CC69NYKVVTN86",
+  "typeId": "dt_01M0C6M2N38KVHBHTC1JBRT5YA",
+  "values": {
+    "prop_01M0C6M2N3NJ15T88Q5QET2KVA": "daily",
+    "prop_01M2XCSQW31H7DCABNXZV4E45P": 6,
+    "prop_01M2XCSQW3YEM6QCAQPT16AN9R": 6
+  }
+}

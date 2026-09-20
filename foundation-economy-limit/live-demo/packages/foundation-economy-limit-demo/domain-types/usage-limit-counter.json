@@ -4,7 +4,34 @@
     "kind": "inherit"
   },
   "declared": {
-    "properties": []
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "Ceiling the free press names; recovered from its count-up action",
+        "id": "prop_01M2XCSQW31H7DCABNXZV4E45P",
+        "name": "freeMax",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Ceiling the ad-backed press names; recovered from its count-up action",
+        "id": "prop_01M2XCSQW3YEM6QCAQPT16AN9R",
+        "name": "adMax",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
   },
   "delegatedActions": [
     {

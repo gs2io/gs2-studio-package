@@ -38,6 +38,16 @@ namespace GS2Studio.Generated.UsageLimitCounter
         /// Next reset time
         /// </summary>
         DateTime NextResetAt { get; }
+
+        /// <summary>
+        /// Ceiling the free press names; recovered from its count-up action
+        /// </summary>
+        int FreeMax { get; }
+
+        /// <summary>
+        /// Ceiling the ad-backed press names; recovered from its count-up action
+        /// </summary>
+        int AdMax { get; }
     }
 
     /// <summary>
@@ -55,6 +65,8 @@ namespace GS2Studio.Generated.UsageLimitCounter
         new UsageLimitId Limit { get; set; }
         new long Count { get; set; }
         new DateTime NextResetAt { get; set; }
+        new int FreeMax { get; set; }
+        new int AdMax { get; set; }
     }
 
     /// <summary>
@@ -71,5 +83,9 @@ namespace GS2Studio.Generated.UsageLimitCounter
         public long Count { get; set; }
 
         public DateTime NextResetAt { get; set; }
+
+        public int FreeMax { get; set; }
+
+        public int AdMax { get; set; }
     }
 }

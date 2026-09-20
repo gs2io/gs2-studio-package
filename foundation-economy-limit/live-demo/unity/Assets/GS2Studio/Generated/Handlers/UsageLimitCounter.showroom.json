@@ -76,6 +76,22 @@
   ],
   "components": [
     {
+      "className": "UsageLimitCounterAdUsesUnavailableActiveToggle",
+      "kind": "activeToggle",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
+        }
+      ]
+    },
+    {
       "className": "UsageLimitCounterAllowanceLabel",
       "kind": "templateLabel",
       "valueType": "",
@@ -83,9 +99,71 @@
       "serializedFields": []
     },
     {
+      "className": "UsageLimitCounterAnyUseLeftActiveToggle",
+      "kind": "activeToggle",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
+        }
+      ]
+    },
+    {
+      "className": "UsageLimitCounterFreeUsesLeftActiveToggle",
+      "kind": "activeToggle",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
+        }
+      ]
+    },
+    {
+      "className": "UsageLimitCounterFreeUsesSpentActiveToggle",
+      "kind": "activeToggle",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
+        }
+      ]
+    },
+    {
       "className": "UsageLimitCounterNextResetAtValue",
       "kind": "value",
       "valueType": "DateTime",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
+      "className": "UsageLimitCounterNoFreeUsesLeftLabel",
+      "kind": "templateLabel",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
+      "className": "UsageLimitCounterNothingLeftLabel",
+      "kind": "templateLabel",
+      "valueType": "",
       "reportsFailure": false,
       "serializedFields": []
     },

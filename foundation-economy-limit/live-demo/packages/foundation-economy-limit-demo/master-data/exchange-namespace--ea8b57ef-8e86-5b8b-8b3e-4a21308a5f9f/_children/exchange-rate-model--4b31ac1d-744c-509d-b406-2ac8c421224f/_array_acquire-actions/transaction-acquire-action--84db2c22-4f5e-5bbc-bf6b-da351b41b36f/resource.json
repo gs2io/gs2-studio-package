@@ -14,7 +14,7 @@
             "parameterName": "counter",
             "source": {
               "kind": "static",
-              "value": "giftClaim"
+              "value": "counter3"
             }
           }
         ],

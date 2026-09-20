@@ -95,6 +95,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
         public long Count => _model.Count;
         /// <inheritdoc cref="UsageLimitCounter.NextResetAt" />
         public DateTime NextResetAt => _model.NextResetAt;
+        /// <inheritdoc cref="UsageLimitCounter.FreeMax" />
+        public int FreeMax => _model.FreeMax;
+        /// <inheritdoc cref="UsageLimitCounter.AdMax" />
+        public int AdMax => _model.AdMax;
         /// <summary>
         /// Base constructor. Stores the bound model + service handles on the
         /// protected fields shared with the owning derived class. `private
@@ -263,6 +267,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (_transactionConsumeAction2 == null) _RestoreId__transactionConsumeAction2Cache = null; else _RestoreId__transactionConsumeAction2Cache = (_transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
             if (_transactionConsumeAction3 == null) _RestoreId__transactionConsumeAction3Cache = null; else _RestoreId__transactionConsumeAction3Cache = (_transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
             RestoreIdFromSources();
+            _model.FreeMax = default;
+            if (_transactionConsumeAction2 != null) RestoreFreeMax(_model, _transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
+            _model.AdMax = default;
+            if (_transactionConsumeAction3 != null) RestoreAdMax(_model, _transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
             _mounted = true;
         }
 
@@ -384,6 +392,8 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     RestoreLimitFromSources();
                     if (value == null) _RestoreId__transactionConsumeAction2Cache = null; else _RestoreId__transactionConsumeAction2Cache = (value.Action, value.Request);
                     RestoreIdFromSources();
+                    _model.FreeMax = default;
+                    if (value != null) RestoreFreeMax(_model, value.Action, value.Request);
                     UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
                     return Task.CompletedTask;
                 },
@@ -416,6 +426,8 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     RestoreLimitFromSources();
                     if (value == null) _RestoreId__transactionConsumeAction3Cache = null; else _RestoreId__transactionConsumeAction3Cache = (value.Action, value.Request);
                     RestoreIdFromSources();
+                    _model.AdMax = default;
+                    if (value != null) RestoreAdMax(_model, value.Action, value.Request);
                     UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
                     return Task.CompletedTask;
                 },
@@ -604,6 +616,38 @@ namespace GS2Studio.Generated.UsageLimitCounter
             var __matched = false;
             if (!__matched && _RestoreId__transactionConsumeAction2Cache.HasValue && RestoreId(_model, _RestoreId__transactionConsumeAction2Cache.Value.Action, _RestoreId__transactionConsumeAction2Cache.Value.Request)) __matched = true;
             if (!__matched && _RestoreId__transactionConsumeAction3Cache.HasValue && RestoreId(_model, _RestoreId__transactionConsumeAction3Cache.Value.Action, _RestoreId__transactionConsumeAction3Cache.Value.Request)) __matched = true;
+        }
+
+        public static bool RestoreFreeMax(IMutableUsageLimitCounter model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Limit:CountUpByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Limit")
+            {
+                var __value = ReadRequestValue(request, new string[] { "maxValue" });
+                if (__value != null)
+                {
+                    model.FreeMax = (int)Convert.ChangeType(__value, typeof(int));
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool RestoreAdMax(IMutableUsageLimitCounter model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Limit:CountUpByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Limit")
+            {
+                var __value = ReadRequestValue(request, new string[] { "maxValue" });
+                if (__value != null)
+                {
+                    model.AdMax = (int)Convert.ChangeType(__value, typeof(int));
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>

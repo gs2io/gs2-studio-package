@@ -20,8 +20,8 @@
  * second press would have to be a second counter.
  *
  * **One schedule governs several independent allowances.** Three of the four
- * follow the daily one, and running out of quest attempts leaves the shop and
- * the gift where they were. The cadence is shared; the tallies are not.
+ * follow the daily one, and running the first of them out leaves the other two
+ * where they were. The cadence is shared; the tallies are not.
  *
  * **A title may keep more than one cadence.** The fourth follows a weekly
  * schedule and differs from the other three in nothing but which row it points
@@ -37,10 +37,52 @@
  * namespace names are fixed, so there was only ever one stack, and whichever
  * demo deployed last would decide what was in it.
  *
+ * Both dependencies are still load-bearing now that the balance is off the
+ * page. The press spends through `foundation-economy-ad`'s
+ * `ConsumeAdViewPoint` and earns through `foundation-economy-ad-demo`'s
+ * `Watch`, so the page leaves the ad type without a heading rather than
+ * without a mount: a model a section declares with no rows keeps its handler
+ * on the page root, which is where the grant finds it.
+ *
  * **No advertisement is played here, and none could be** — the ad networks GS2
  * accepts are mobile-only and the showroom is a WebGL player — so the page
  * shows an ad break with the ad missing, a panel that says on its face that
- * nothing is playing and why. The press inside it is the ad demo's own `Watch`.
+ * nothing is playing and why. There is one of them, on the first counter's
+ * ad-backed press, and the view it stands for is earned and spent while it is
+ * open. The page carries no balance of its own: a point a visitor has to bank
+ * somewhere else before pressing here is a second errand, and the reading of
+ * it is `foundation-economy-ad`'s demo to show rather than this one's.
+ *
+ * **The view is earned first and spent second, and that is two round trips.**
+ * GS2 runs a transaction's verify actions, then its consume actions, then its
+ * acquire actions — a stamp sheet's tasks are its consumes and its sheet is
+ * its acquires — so no single exchange can hand over a point and then take it
+ * back. The press therefore drives `AdViewPoint.Watch` to the grant, waits for
+ * it, and only then exchanges. The panel stays up across both, so what a
+ * visitor sees is one ad break.
+ *
+ * Which is also why the press is offered only between the ceilings. Nothing
+ * makes the second half of a two-part press safe if the first half has already
+ * committed, so the page does not offer the press where the exchange is going
+ * to be refused: a granted view with nothing left to buy is the one failure
+ * the atomic exchange cannot protect against.
+ *
+ * **The free half and the ad half are not both on the page at once.** Which
+ * press the first counter offers is a condition on the count — the free one
+ * while three are left, the ad-backed one between the two ceilings, and
+ * neither past the higher one — so the visitor is told which half they are in
+ * by what there is to press rather than by reading two buttons and working out
+ * which one is still open.
+ *
+ * **The counters are named after nothing.** `counter1` through `counter4`, and
+ * the page heads them the same way. An earlier draft called them quest
+ * attempts, shop refreshes, gift claims and boss challenges, and the invented
+ * errand was doing the reading for the visitor: a page that says "quest
+ * attempts" is a page about quests, and what is actually on it — one number,
+ * two ceilings, two clocks — had to be recovered from behind the fiction. A
+ * counter here is a counter, the fourth says which cadence it follows because
+ * that is the one thing that distinguishes it, and everything else the page
+ * says it says outright.
  *
  * There is no press that hands a use back. `Gs2Limit:CountDownByUserId` is a
  * correction — a refund, a mistaken charge put right — and a player never
@@ -54,10 +96,13 @@ import {
   Arg,
   Bind,
   defineMasterDataResource,
+  defineOverlayDomainType,
   definePackage,
   dependencyPackage,
+  PT,
   Source,
   transactionSetting,
+  UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -81,8 +126,60 @@ const adDemo = dependencyPackage(adDemoSurface);
  */
 const UsageLimit = limit.type("UsageLimit");
 
-/** A tally itself. Four of these are deployed, each naming a schedule. */
-const UsageLimitCounter = limit.type("UsageLimitCounter");
+/**
+ * A tally itself, with the two ceilings its presses name.
+ *
+ * **The ceilings are not stored on the counter.** `Gs2Limit`'s counter record
+ * has no such field and this demo does not invent one: the numbers live where
+ * they always did, inside the count-up requests the two exchange rates deploy.
+ * What this overlay adds is the slot those numbers are read back *into*.
+ *
+ * An ActionTransform runs backwards. A transform that builds a request out of
+ * arguments can be asked, of a materialized `{action, request}` pair, what the
+ * arguments were — which is how the generated binder already recovers `limit`
+ * and `counter` on every mount (`UsageLimitCounterBinder.RestoreLimit`). Those
+ * two come back because they were bound from properties; `maxValue` did not,
+ * because it was a static argument and a static argument has no property to
+ * come back to. Giving it one is the whole change.
+ *
+ * So the page stops holding a second copy of the number. It reads what the
+ * deployed action says, and a page and a stack that have drifted apart say so
+ * instead of the page confidently printing "6 of 3 used".
+ *
+ * The properties are `masterData`: their value is authored here, travels into
+ * the rate's consume action at deploy time, and is read back from that action
+ * at run time. `micro-shop-currency` extends the currency package's
+ * `StoreProduct` with a `count` the same way, and its binder recovers it with
+ * `RestoreCount`.
+ */
+const UsageLimitCounter = defineOverlayDomainType(
+  "UsageLimitCounter",
+  limit.overlay("UsageLimitCounter"),
+  domainType =>
+    domainType
+      .property(
+        PT.int32("freeMax")
+          .masterData()
+          .required()
+          .description("Ceiling the free press names; recovered from its count-up action")
+      )
+      .property(
+        PT.int32("adMax")
+          .masterData()
+          .required()
+          .description("Ceiling the ad-backed press names; recovered from its count-up action")
+      )
+);
+
+/**
+ * The same type as a row rather than as a definition.
+ *
+ * Two handles, because the DSL keeps two things apart. The overlay answers for
+ * the names it declares. An inherited property, though, is addressed by the id
+ * its own package published, which the overlay's typed handle will not take —
+ * and this one will.
+ */
+const UsageLimitCounterRow = limit.type("UsageLimitCounter");
 
 /**
  * The counter's own reference to its schedule.
@@ -124,15 +221,18 @@ const RESET_HOUR = 0;
 const WEEKLY_RESET_DAY = "monday";
 
 /**
- * The four allowances, named for what they count rather than for the schedule
- * they follow — which is the point of them being separate rows. Three follow
- * the daily schedule and one the weekly, and nothing but that reference
- * differs between them.
+ * The four allowances, numbered rather than named.
+ *
+ * A counter counts whatever the title points it at, and naming these after an
+ * errand — quest attempts, shop refreshes — puts a game on the page that is
+ * not there and leaves a visitor working out which part of it is the feature.
+ * The numbers say the one thing that is true of all four: they are four of the
+ * same thing, and nothing but the schedule each points at tells them apart.
  */
-const QUEST_ATTEMPT = "questAttempt";
-const SHOP_REFRESH = "shopRefresh";
-const GIFT_CLAIM = "giftClaim";
-const BOSS_CHALLENGE = "bossChallenge";
+const COUNTER_1 = "counter1";
+const COUNTER_2 = "counter2";
+const COUNTER_3 = "counter3";
+const COUNTER_4 = "counter4";
 
 /**
  * Every counter, with the schedule it follows.
@@ -144,29 +244,32 @@ const BOSS_CHALLENGE = "bossChallenge";
  * make that possible — so neither is written out.
  */
 const ALLOWANCES = [
-  [DAILY, QUEST_ATTEMPT],
-  [DAILY, SHOP_REFRESH],
-  [DAILY, GIFT_CLAIM],
-  [WEEKLY, BOSS_CHALLENGE],
+  { schedule: DAILY, counter: COUNTER_1, freeMax: 3, adMax: 5 },
+  { schedule: DAILY, counter: COUNTER_2, freeMax: 4, adMax: 4 },
+  { schedule: DAILY, counter: COUNTER_3, freeMax: 6, adMax: 6 },
+  { schedule: WEEKLY, counter: COUNTER_4, freeMax: 1, adMax: 1 },
 ] as const;
 
 /**
- * What the free press names as its ceiling — for every counter on the page,
- * because one rate serves all four. Small enough that a visitor reaches it in
- * three presses and sees the fourth refused, which is where the page starts
- * being about anything.
- */
-const FREE_MAX_USES = 3;
-
-/**
- * What the ad-backed press names instead, on the same counter.
+ * Four counters, five distinct numbers, and that is the point.
  *
- * Higher rather than separate: the two presses are not two allowances, they
- * are two answers to "how many is too many" about one tally. Which is why a
- * visitor who has used all three free ones has two left and a visitor who has
- * used five has none, whatever they have banked.
+ * GS2 takes the ceiling at count-up time from the press, so nothing about
+ * these four rows differs except the numbers a press names about them — and
+ * with the same number on all four, a page showing "the ceiling belongs to the
+ * press" would have been showing it with no evidence. They are small enough to
+ * exhaust without tedium: 1, 3, 4, 5, 6.
+ *
+ * The weekly counter takes the smallest. A week is the longest wait on the
+ * page and the allowance that survives it is the one a title would be
+ * stingiest with; at one use it also closes on the visitor's first press,
+ * which is the fastest the page can show a refusal.
+ *
+ * Only the first counter is pressed the ad-backed way, but the ad rate mounts
+ * the counter and so writes a row for all four. Those three rows carry an
+ * `adMax` equal to their free ceiling rather than something higher, because a
+ * number offering an allowance the page never offers would be the one piece of
+ * this data that means nothing.
  */
-const AD_MAX_USES = 5;
 
 /** One press is worth one use. */
 const STEP = 1;
@@ -177,7 +280,8 @@ const STEP = 1;
  *
  * The rate is named after the counter because a delegated action on
  * `UsageLimitCounter` must target a resource that mounts it — that is how the
- * generated loader learns which rate to exchange.
+ * generated loader learns which rate to exchange, and the generator refuses
+ * an unmounted target outright (`delegatedActionTargetNotMountingDomainType`).
  *
  * It lives under its own exchange namespace because the other rates on this
  * counter name their rows the same way; sharing a namespace collides the
@@ -186,8 +290,8 @@ const STEP = 1;
  *
  * One definition, four rows: a resource mounted on a type is deployed once per
  * row of it, and the arguments below are read off each row. So every counter
- * gets a press of its own, each naming its own (limit, counter) pair, without
- * any of them being written out here.
+ * gets a press of its own, each naming its own (limit, counter) pair and its
+ * own ceiling, without any of them being written out here.
  */
 const FreeUseRateModel = defineMasterDataResource(resource =>
   resource
@@ -205,13 +309,16 @@ const FreeUseRateModel = defineMasterDataResource(resource =>
           action: Bind.transform(limit.packageId, "CountUpUsageLimit", [
             Arg.domainProperty(
               "limit",
-              Source.parent(Source.direct(UsageLimitCounter, COUNTER_LIMIT))
+              Source.parent(Source.direct(UsageLimitCounterRow, COUNTER_LIMIT))
             ),
             Arg.domainProperty("counter", Source.direct(UsageLimitCounter, "id")),
             Arg.static("countUpValue", STEP),
-            // The ceiling this press asks for. GS2 refuses a count-up that
-            // would pass it, which is what closes the free half at three.
-            Arg.static("maxValue", FREE_MAX_USES),
+            // The ceiling this press asks for, and the one argument that
+            // differs between the four rows this definition deploys. Bound
+            // from the row rather than stated, so the number travels into the
+            // deployed request and can be read back out of it — a static
+            // argument has no property to come back to.
+            Arg.domainProperty("maxValue", Source.direct(UsageLimitCounter, "freeMax")),
           ]),
         });
     })
@@ -252,11 +359,11 @@ const AdUseRateModel = defineMasterDataResource(resource =>
           action: Bind.transform(limit.packageId, "CountUpUsageLimit", [
             Arg.domainProperty(
               "limit",
-              Source.parent(Source.direct(UsageLimitCounter, COUNTER_LIMIT))
+              Source.parent(Source.direct(UsageLimitCounterRow, COUNTER_LIMIT))
             ),
             Arg.domainProperty("counter", Source.direct(UsageLimitCounter, "id")),
             Arg.static("countUpValue", STEP),
-            Arg.static("maxValue", AD_MAX_USES),
+            Arg.domainProperty("maxValue", Source.direct(UsageLimitCounter, "adMax")),
           ]),
         });
     })
@@ -284,15 +391,15 @@ const ResetEveryAllowanceRateModel = defineMasterDataResource(resource => {
     .model(GS2.exchange.RateModel)
     .mountLocal(UsageLimitCounter)
     .bindings({ name: Bind.domainProperty(Source.direct(UsageLimitCounter, "id")) });
-  for (const [scheduleId, counterId] of ALLOWANCES) {
+  for (const { schedule, counter } of ALLOWANCES) {
     resource.addArrayChild("acquireActions", acquireAction => {
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(UsageLimitCounter)
         .bindings({
           action: Bind.transform(limit.packageId, "ResetUsageLimitCounter", [
-            Arg.static("limit", scheduleId),
-            Arg.static("counter", counterId),
+            Arg.static("limit", schedule),
+            Arg.static("counter", counter),
           ]),
         });
     });
@@ -325,9 +432,15 @@ const withSchedules = definePackage("foundation-economy-limit-demo", "0.0.0")
   // dependencies, so the base package is named here too.
   .dependency(ad.packageId, "github:gs2io/gs2-studio-package")
 
+  // The overlay that carries the two ceilings. Registered outright because it
+  // declares properties: everything else this demo attaches to the counter
+  // would have had the compiler build the same overlay unasked, and it is the
+  // declarations that need writing down.
+  .domainType(UsageLimitCounter)
+
   // Midnight UTC, and it governs three of the four counters below. That is
   // what a schedule is for: the cadence is shared and the tallies are not, so
-  // running out of quest attempts leaves the shop and the gift untouched.
+  // running the first counter out leaves the second and the third untouched.
   .instance(UsageLimit, DAILY, {
     [limit.propertyId("UsageLimit", "resetType")]: "daily",
     [limit.propertyId("UsageLimit", "resetHour")]: RESET_HOUR,
@@ -346,11 +459,21 @@ const withSchedules = definePackage("foundation-economy-limit-demo", "0.0.0")
 // The counters have no master data of their own — a tally is something a
 // player has run up — but naming them here is what deploys a rate per counter,
 // and what gives the page rows to press.
-export const foundationEconomyLimitDemo = ALLOWANCES.reduce(
-  (builder, [scheduleId, counterId]) =>
-    builder.instance(UsageLimitCounter, counterId, { [COUNTER_LIMIT]: scheduleId }),
+const withCounters = ALLOWANCES.reduce(
+  (builder, { schedule, counter, freeMax, adMax }) =>
+    // By type name: the overlay's typed handle is refused for authored rows
+    // (a row belongs to the canonical type), and the dependency's handle
+    // resolves value keys only against what that package publishes. The name
+    // reaches the overlay this package declared, and its declarations with it.
+    builder.instance("UsageLimitCounter", counter, {
+      [COUNTER_LIMIT]: schedule,
+      freeMax,
+      adMax,
+    }),
   withSchedules
-)
+);
+
+export const foundationEconomyLimitDemo = withCounters
   .masterDataResource(resource =>
     resource
       .model(GS2.exchange.Namespace)
@@ -433,17 +556,18 @@ export const foundationEconomyLimitDemo = ALLOWANCES.reduce(
 
   .uiComponent(UsageLimitCounter, ui =>
     ui
-      // Both ceilings are literals because neither lives on the counter: they
-      // live on the two presses below, and nothing on the server would answer
-      // for either. Reading them beside the one count is the page's whole
-      // point.
+      // What the first counter reads: it is pressed two ways and one ceiling
+      // would be half of it. Both are literals because neither lives on the
+      // counter — they live on the two presses, and nothing on the server
+      // would answer for either. Reading them beside the one count is what
+      // says they belong to the presses rather than to the tally.
       .templateLabel(
         "UsageLabel",
         "{count} used. Free presses stop at {free}, ad-backed ones at {adBacked}.",
         {
           count: ui.prop("count"),
-          free: ui.lit(FREE_MAX_USES),
-          adBacked: ui.lit(AD_MAX_USES),
+          free: ui.prop("freeMax"),
+          adBacked: ui.prop("adMax"),
         },
         { name: "UsageLimitCounter" }
       )
@@ -453,9 +577,64 @@ export const foundationEconomyLimitDemo = ALLOWANCES.reduce(
       .templateLabel(
         "AllowanceLabel",
         "{count} of {free} used",
-        { count: ui.prop("count"), free: ui.lit(FREE_MAX_USES) },
+        { count: ui.prop("count"), free: ui.prop("freeMax") },
         { name: "UsageLimitCounter" }
       )
+      // What the page says once a press has started being refused, which is
+      // the whole subject and until this was said by nothing: GS2 answers a
+      // count-up over its ceiling with an error, and an error a browser
+      // swallows reads as a button that does nothing. A standing line is not
+      // the failure being reported — the page can say the press is closed
+      // before anyone presses it.
+      .templateLabel(
+        "NoFreeUsesLeftLabel",
+        "{count} of {free} free uses are spent. The free press is refused until the reset.",
+        { count: ui.prop("count"), free: ui.prop("freeMax") },
+        { name: "UsageLimitCounter" }
+      )
+      // The same sentence at the first counter's other ceiling.
+      .templateLabel(
+        "NothingLeftLabel",
+        "{count} of {adBacked} uses are spent. Both presses are refused until the reset.",
+        { count: ui.prop("count"), adBacked: ui.prop("adMax") },
+        { name: "UsageLimitCounter" }
+      )
+      // The conditions the page shows rows through. A generated active toggle
+      // takes the rows it hides *while its condition holds*, so each one is
+      // written as the state that makes its rows unnecessary — and the free
+      // half and the ad half of the same ceiling are separate conditions
+      // rather than one inverted, because a toggle fills one arm.
+      .activeToggle("FreeUsesSpentActiveToggle", UiCond.gte(ui.prop("count"), ui.prop("freeMax")), {
+        name: "UsageLimitCounter",
+      })
+      .activeToggle("FreeUsesLeftActiveToggle", UiCond.lt(ui.prop("count"), ui.prop("freeMax")), {
+        name: "UsageLimitCounter",
+      })
+      // When there is nothing for the ad-backed press to do: either the free
+      // half is still open, or the tally has passed the higher ceiling too.
+      //
+      // One condition covering both ends rather than two, because two active
+      // toggles pointed at one row both write its active state on every
+      // change and the later one wins. The band between the ceilings is the
+      // only place the press belongs, so the band is what is named.
+      //
+      // It is also what keeps the two round trips honest. The press grants a
+      // view and then spends it, and those cannot be one transaction — GS2
+      // runs a transaction's consume actions before its acquire actions, so
+      // nothing can hand over a point it is about to take. Offering the press
+      // only where the spend can succeed is what stops a refused count-up
+      // leaving a granted view with nothing to buy.
+      .activeToggle(
+        "AdUsesUnavailableActiveToggle",
+        UiCond.or(
+          UiCond.lt(ui.prop("count"), ui.prop("freeMax")),
+          UiCond.gte(ui.prop("count"), ui.prop("adMax"))
+        ),
+        { name: "UsageLimitCounter" }
+      )
+      .activeToggle("AnyUseLeftActiveToggle", UiCond.lt(ui.prop("count"), ui.prop("adMax")), {
+        name: "UsageLimitCounter",
+      })
       .value("NextResetAtValue", ui.prop("nextResetAt"), { name: "UsageLimitCounter" })
       .buttonAction("UseFreeButton", "UseFree", undefined, { name: "UsageLimitCounter" })
       .buttonAction("UseWithAdButton", "UseWithAd", undefined, { name: "UsageLimitCounter" })

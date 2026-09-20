@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>{count} used. Free presses stop at {free}, ad-backed ones at {adBacked}.</c>. Each <c>{key}</c> placeholder is
+    /// <c>{count} of {free} free uses are spent. The free press is refused until the reset.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>UsageLimitCounter</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -25,8 +25,8 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
     /// TextMeshPro, or custom logic — so this component stays agnostic to
     /// the rendering target.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/UsageLimitCounter/TemplateLabel/UsageLabel")]
-    public sealed class UsageLimitCounterUsageLabel : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/UsageLimitCounter/TemplateLabel/NoFreeUsesLeftLabel")]
+    public sealed class UsageLimitCounterNoFreeUsesLeftLabel : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private UsageLimitCounterHandlerBase? _handler;
@@ -48,7 +48,7 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(UsageLimitCounterUsageLabel)} on '{name}': no UsageLimitCounterHandlerBase found in the parent chain; component inactive.", this);
+                        $"{nameof(UsageLimitCounterNoFreeUsesLeftLabel)} on '{name}': no UsageLimitCounterHandlerBase found in the parent chain; component inactive.", this);
                 }
                 return;
             }
@@ -74,7 +74,7 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 
         private void OnUpdated(UsageLimitCounter model)
         {
-            _onUpdate.Invoke($"{model.Count} used. Free presses stop at {model.FreeMax}, ad-backed ones at {model.AdMax}.");
+            _onUpdate.Invoke($"{model.Count} of {model.FreeMax} free uses are spent. The free press is refused until the reset.");
         }
     }
 }

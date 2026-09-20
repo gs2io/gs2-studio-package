@@ -1,45 +1,69 @@
 {
   "sections": {
     "AdViewPoint": {
-      "rows": ["AdViewPointBalanceLabel", "AdBreakButton"]
+      "rows": []
     },
-    "UsageLimitCounter#Quest attempts (daily)": {
+    "UsageLimitCounter#Counter 1 (daily reset)": {
       "key": {
-        "id": "questAttempt",
+        "id": "counter1",
         "limit": "daily"
       },
       "rows": [
         "UsageLimitCounterUsageLabel",
         "UsageLimitCounterNextResetAtValue",
         "UsageLimitCounterUseFreeButton",
-        "UsageLimitCounterUseWithAdButton",
+        "WatchAnAdToUseButton",
+        "UsageLimitCounterNothingLeftLabel",
         "UsageLimitCounterResetEveryAllowanceButton"
-      ]
+      ],
+      "toggles": {
+        "UsageLimitCounterFreeUsesSpentActiveToggle": ["UsageLimitCounterUseFreeButton"],
+        "UsageLimitCounterAdUsesUnavailableActiveToggle": ["WatchAnAdToUseButton"],
+        "UsageLimitCounterAnyUseLeftActiveToggle": ["UsageLimitCounterNothingLeftLabel"]
+      }
     },
-    "UsageLimitCounter#Shop refreshes (daily)": {
+    "UsageLimitCounter#Counter 2 (daily reset)": {
       "key": {
-        "id": "shopRefresh",
+        "id": "counter2",
         "limit": "daily"
       },
-      "rows": ["UsageLimitCounterAllowanceLabel", "UsageLimitCounterUseFreeButton"]
+      "rows": [
+        "UsageLimitCounterAllowanceLabel",
+        "UsageLimitCounterUseFreeButton",
+        "UsageLimitCounterNoFreeUsesLeftLabel"
+      ],
+      "toggles": {
+        "UsageLimitCounterFreeUsesLeftActiveToggle": ["UsageLimitCounterNoFreeUsesLeftLabel"]
+      }
     },
-    "UsageLimitCounter#Gift claims (daily)": {
+    "UsageLimitCounter#Counter 3 (daily reset)": {
       "key": {
-        "id": "giftClaim",
+        "id": "counter3",
         "limit": "daily"
       },
-      "rows": ["UsageLimitCounterAllowanceLabel", "UsageLimitCounterUseFreeButton"]
+      "rows": [
+        "UsageLimitCounterAllowanceLabel",
+        "UsageLimitCounterUseFreeButton",
+        "UsageLimitCounterNoFreeUsesLeftLabel"
+      ],
+      "toggles": {
+        "UsageLimitCounterFreeUsesLeftActiveToggle": ["UsageLimitCounterNoFreeUsesLeftLabel"]
+      }
     },
-    "UsageLimitCounter#Boss challenges (weekly)": {
+    "UsageLimitCounter#Counter 4 (weekly reset)": {
       "key": {
-        "id": "bossChallenge",
+        "id": "counter4",
         "limit": "weekly"
       },
       "rows": [
         "UsageLimitCounterAllowanceLabel",
         "UsageLimitCounterNextResetAtValue",
-        "UsageLimitCounterUseFreeButton"
-      ]
+        "UsageLimitCounterUseFreeButton",
+        "UsageLimitCounterNoFreeUsesLeftLabel"
+      ],
+      "toggles": {
+        "UsageLimitCounterFreeUsesLeftActiveToggle": ["UsageLimitCounterNoFreeUsesLeftLabel"]
+      }
     },
     "UsageLimit": {
       "rows": ["UsageLimitScheduleLabel"]
