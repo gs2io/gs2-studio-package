@@ -11,7 +11,7 @@
     "com.unity.ugui": "2.0.0",
     "io.gs2.bind": "2026.9.7",
     "io.gs2.csharp.sdk": "2026.9.9",
-    "io.gs2.unity.sdk": "2026.9.6"
+    "io.gs2.unity.sdk": "2026.9.7"
   },
   "scopedRegistries": [
     {
