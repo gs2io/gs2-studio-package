@@ -1,7 +1,7 @@
 {
   "id": "micro-economy-skill-tree",
   "name": "micro-economy-skill-tree",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "dependencies": {
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
