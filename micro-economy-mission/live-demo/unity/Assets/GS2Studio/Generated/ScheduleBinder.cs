@@ -154,8 +154,8 @@ namespace GS2Studio.Generated.Schedule
         private GS2Studio.Generated.MissionCollection.MissionCollectionBinderCollection? _missionCollectionsRoot;
         private Task<GS2Studio.Generated.MissionCollection.MissionCollectionBinderCollection>? _missionCollectionsRootTask;
 
-        private readonly EventLoader __scheduleScheduleNamespaceEventLoader;
-        private readonly TriggerLoader __userdataScheduleTriggerLoader;
+        private readonly Gs2Bind.Gs2Schedule.EventLoader __scheduleScheduleNamespaceEventLoader;
+        private readonly Gs2Bind.Gs2Schedule.TriggerLoader __userdataScheduleTriggerLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -167,8 +167,8 @@ namespace GS2Studio.Generated.Schedule
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __scheduleScheduleNamespaceEventLoader = new EventLoader("Schedule", _model.Id);
-            __userdataScheduleTriggerLoader = new TriggerLoader("Schedule", _model.Trigger);
+            __scheduleScheduleNamespaceEventLoader = new Gs2Bind.Gs2Schedule.EventLoader("Schedule", _model.Id);
+            __userdataScheduleTriggerLoader = new Gs2Bind.Gs2Schedule.TriggerLoader("Schedule", _model.Trigger);
         }
 
         /// <summary>
@@ -368,7 +368,7 @@ namespace GS2Studio.Generated.Schedule
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyScheduleScheduleNamespaceEvent(IMutableSchedule model, EzEvent? source)
+        public static void ApplyScheduleScheduleNamespaceEvent(IMutableSchedule model, Gs2.Unity.Gs2Schedule.Model.EzEvent? source)
         {
             if (source != null)
             {
@@ -406,7 +406,7 @@ namespace GS2Studio.Generated.Schedule
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataScheduleTrigger(IMutableSchedule model, EzTrigger? source)
+        public static void ApplyUserdataScheduleTrigger(IMutableSchedule model, Gs2.Unity.Gs2Schedule.Model.EzTrigger? source)
         {
             model.TriggerFired = source != null;
             if (source != null)

@@ -132,11 +132,11 @@ namespace GS2Studio.Generated.Trigger
         private GS2Studio.Generated.TriggerPull.TriggerPullBinderCollection? _triggerPullsRoot;
         private Task<GS2Studio.Generated.TriggerPull.TriggerPullBinderCollection>? _triggerPullsRootTask;
 
-        private readonly RateModelLoader __exchangeTriggerClearNamespaceRateModelLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelConsumeActionLoader __transactionConsumeActionLoader;
-        private readonly RateModelLoader __exchangeTriggerExtendNamespaceRateModelLoader;
-        private readonly TriggerLoader __userdataScheduleTriggerLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeTriggerClearNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeTriggerExtendNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Schedule.TriggerLoader __userdataScheduleTriggerLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -148,11 +148,11 @@ namespace GS2Studio.Generated.Trigger
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __exchangeTriggerClearNamespaceRateModelLoader = new RateModelLoader("TriggerClear", _model.Id);
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("TriggerExtend", _model.Id, 0);
-            __transactionConsumeActionLoader = new RateModelConsumeActionLoader("TriggerClear", _model.Id, 0);
-            __exchangeTriggerExtendNamespaceRateModelLoader = new RateModelLoader("TriggerExtend", _model.Id);
-            __userdataScheduleTriggerLoader = new TriggerLoader("Schedule", _model.Id);
+            __exchangeTriggerClearNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerClear", _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("TriggerExtend", _model.Id, 0);
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("TriggerClear", _model.Id, 0);
+            __exchangeTriggerExtendNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerExtend", _model.Id);
+            __userdataScheduleTriggerLoader = new Gs2Bind.Gs2Schedule.TriggerLoader("Schedule", _model.Id);
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace GS2Studio.Generated.Trigger
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataScheduleTrigger(IMutableTrigger model, EzTrigger? source)
+        public static void ApplyUserdataScheduleTrigger(IMutableTrigger model, Gs2.Unity.Gs2Schedule.Model.EzTrigger? source)
         {
             model.Triggered = source != null;
             if (source != null)

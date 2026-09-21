@@ -289,7 +289,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new RateModelArrayLoader("EquipmentTake").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EquipmentTake").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("EquipmentTake");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EquipmentTake");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeEquipmentTakeMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -400,7 +400,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("EquipmentTake");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EquipmentTake");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -420,7 +420,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
             ));
         }
 
-        private async Task ReconcileFromExchangeEquipmentTakeMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeEquipmentTakeMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -492,7 +492,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EquipmentCatalogBinder> BuildBinderFromExchangeEquipmentTakeMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<EquipmentCatalogBinder> BuildBinderFromExchangeEquipmentTakeMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = EquipmentCatalogBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EquipmentCatalogId) : new EquipmentCatalogId(item.Name)));
             ApplyExchangeEquipmentTakeMasterItemTo(model, item);
@@ -501,7 +501,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
             return binder;
         }
 
-        private static void ApplyExchangeEquipmentTakeMasterItemTo(MutableEquipmentCatalog model, EzRateModel item)
+        private static void ApplyExchangeEquipmentTakeMasterItemTo(MutableEquipmentCatalog model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -510,12 +510,12 @@ namespace GS2Studio.Generated.EquipmentCatalog
             _ = model;
         }
 
-        private EquipmentCatalogId ExtractExchangeEquipmentTakeMasterIdentity(EzRateModel item)
+        private EquipmentCatalogId ExtractExchangeEquipmentTakeMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(EquipmentCatalogId) : new EquipmentCatalogId(item.Name));
         }
 
-        private string? ExtractExchangeEquipmentTakeMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeEquipmentTakeMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeEquipmentTakeMasterIdentity(item);
             if (EqualityComparer<EquipmentCatalogId>.Default.Equals(id, default)) return null;

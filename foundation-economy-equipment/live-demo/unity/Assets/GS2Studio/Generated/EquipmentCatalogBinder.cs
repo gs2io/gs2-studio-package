@@ -123,8 +123,8 @@ namespace GS2Studio.Generated.EquipmentCatalog
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelLoader __exchangeEquipmentTakeNamespaceRateModelLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeEquipmentTakeNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -136,8 +136,8 @@ namespace GS2Studio.Generated.EquipmentCatalog
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __exchangeEquipmentTakeNamespaceRateModelLoader = new RateModelLoader("EquipmentTake", _model.Id);
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("EquipmentTake", _model.Id, 0);
+            __exchangeEquipmentTakeNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentTake", _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentTake", _model.Id, 0);
         }
 
         /// <summary>

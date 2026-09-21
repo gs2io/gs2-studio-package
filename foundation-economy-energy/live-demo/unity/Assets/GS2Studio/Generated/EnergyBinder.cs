@@ -139,12 +139,12 @@ namespace GS2Studio.Generated.Energy
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelLoader __exchangeEnergyRecoverNamespaceRateModelLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelLoader __exchangeEnergyConsumeNamespaceRateModelLoader;
-        private readonly RateModelConsumeActionLoader __transactionConsumeActionLoader;
-        private readonly StaminaModelLoader __staminaEnergyNamespaceStaminaModelLoader;
-        private readonly StaminaLoader __userdataStaminaEnergyStaminaModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeEnergyRecoverNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeEnergyConsumeNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeActionLoader;
+        private readonly Gs2Bind.Gs2Stamina.StaminaModelLoader __staminaEnergyNamespaceStaminaModelLoader;
+        private readonly Gs2Bind.Gs2Stamina.StaminaLoader __userdataStaminaEnergyStaminaModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -156,12 +156,12 @@ namespace GS2Studio.Generated.Energy
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __exchangeEnergyRecoverNamespaceRateModelLoader = new RateModelLoader("EnergyRecover", _model.Id);
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("EnergyRecover", _model.Id, 0);
-            __exchangeEnergyConsumeNamespaceRateModelLoader = new RateModelLoader("EnergyConsume", _model.Id);
-            __transactionConsumeActionLoader = new RateModelConsumeActionLoader("EnergyConsume", _model.Id, 0);
-            __staminaEnergyNamespaceStaminaModelLoader = new StaminaModelLoader("Energy", _model.Id);
-            __userdataStaminaEnergyStaminaModelLoader = new StaminaLoader("Energy", _model.Id);
+            __exchangeEnergyRecoverNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyRecover", _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EnergyRecover", _model.Id, 0);
+            __exchangeEnergyConsumeNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyConsume", _model.Id);
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EnergyConsume", _model.Id, 0);
+            __staminaEnergyNamespaceStaminaModelLoader = new Gs2Bind.Gs2Stamina.StaminaModelLoader("Energy", _model.Id);
+            __userdataStaminaEnergyStaminaModelLoader = new Gs2Bind.Gs2Stamina.StaminaLoader("Energy", _model.Id);
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace GS2Studio.Generated.Energy
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyStaminaEnergyNamespaceStaminaModel(IMutableEnergy model, EzStaminaModel? source)
+        public static void ApplyStaminaEnergyNamespaceStaminaModel(IMutableEnergy model, Gs2.Unity.Gs2Stamina.Model.EzStaminaModel? source)
         {
             if (source != null)
             {
@@ -438,7 +438,7 @@ namespace GS2Studio.Generated.Energy
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataStaminaEnergyStaminaModel(IMutableEnergy model, EzStamina? source)
+        public static void ApplyUserdataStaminaEnergyStaminaModel(IMutableEnergy model, Gs2.Unity.Gs2Stamina.Model.EzStamina? source)
         {
             if (source != null)
             {

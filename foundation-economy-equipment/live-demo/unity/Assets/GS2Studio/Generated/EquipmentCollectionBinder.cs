@@ -129,10 +129,10 @@ namespace GS2Studio.Generated.EquipmentCollection
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelLoader __exchangeEquipmentExpandNamespaceRateModelLoader;
-        private readonly InventoryModelLoader __inventoryEquipmentNamespaceInventoryModelLoader;
-        private readonly InventoryLoader __userdataInventoryEquipmentInventoryModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeEquipmentExpandNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Inventory.InventoryModelLoader __inventoryEquipmentNamespaceInventoryModelLoader;
+        private readonly Gs2Bind.Gs2Inventory.InventoryLoader __userdataInventoryEquipmentInventoryModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -144,10 +144,10 @@ namespace GS2Studio.Generated.EquipmentCollection
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("EquipmentExpand", _model.Id, 0);
-            __exchangeEquipmentExpandNamespaceRateModelLoader = new RateModelLoader("EquipmentExpand", _model.Id);
-            __inventoryEquipmentNamespaceInventoryModelLoader = new InventoryModelLoader("Equipment", "Equipment");
-            __userdataInventoryEquipmentInventoryModelLoader = new InventoryLoader("Equipment", "Equipment");
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentExpand", _model.Id, 0);
+            __exchangeEquipmentExpandNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentExpand", _model.Id);
+            __inventoryEquipmentNamespaceInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryModelLoader("Equipment", "Equipment");
+            __userdataInventoryEquipmentInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryLoader("Equipment", "Equipment");
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace GS2Studio.Generated.EquipmentCollection
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyInventoryEquipmentNamespaceInventoryModel(IMutableEquipmentCollection model, EzInventoryModel? source)
+        public static void ApplyInventoryEquipmentNamespaceInventoryModel(IMutableEquipmentCollection model, Gs2.Unity.Gs2Inventory.Model.EzInventoryModel? source)
         {
             if (source != null)
             {
@@ -367,7 +367,7 @@ namespace GS2Studio.Generated.EquipmentCollection
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataInventoryEquipmentInventoryModel(IMutableEquipmentCollection model, EzInventory? source)
+        public static void ApplyUserdataInventoryEquipmentInventoryModel(IMutableEquipmentCollection model, Gs2.Unity.Gs2Inventory.Model.EzInventory? source)
         {
             if (source != null)
             {

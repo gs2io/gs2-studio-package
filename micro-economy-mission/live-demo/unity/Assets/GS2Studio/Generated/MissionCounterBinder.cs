@@ -135,10 +135,10 @@ namespace GS2Studio.Generated.MissionCounter
         private Task<GS2Studio.Generated.Mission.MissionBinderCollection>? _missionsRootTask;
         private MissionCollectionId _missionsRootScopeMissionCollection = default!;
 
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelLoader __exchangeMissionAdvanceNamespaceRateModelLoader;
-        private readonly CounterModelLoader __missionMissionNamespaceCounterModelLoader;
-        private readonly CounterLoader __userdataMissionMissionCounterModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeMissionAdvanceNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Mission.CounterModelLoader __missionMissionNamespaceCounterModelLoader;
+        private readonly Gs2Bind.Gs2Mission.CounterLoader __userdataMissionMissionCounterModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -150,10 +150,10 @@ namespace GS2Studio.Generated.MissionCounter
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("MissionAdvance", _model.Id, 0);
-            __exchangeMissionAdvanceNamespaceRateModelLoader = new RateModelLoader("MissionAdvance", _model.Id);
-            __missionMissionNamespaceCounterModelLoader = new CounterModelLoader("Mission", _model.Id);
-            __userdataMissionMissionCounterModelLoader = new CounterLoader("Mission", _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("MissionAdvance", _model.Id, 0);
+            __exchangeMissionAdvanceNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("MissionAdvance", _model.Id);
+            __missionMissionNamespaceCounterModelLoader = new Gs2Bind.Gs2Mission.CounterModelLoader("Mission", _model.Id);
+            __userdataMissionMissionCounterModelLoader = new Gs2Bind.Gs2Mission.CounterLoader("Mission", _model.Id);
         }
 
         /// <summary>
@@ -408,7 +408,7 @@ namespace GS2Studio.Generated.MissionCounter
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataMissionMissionCounterModel(IMutableMissionCounter model, EzCounter? source)
+        public static void ApplyUserdataMissionMissionCounterModel(IMutableMissionCounter model, Gs2.Unity.Gs2Mission.Model.EzCounter? source)
         {
             if (source != null)
             {

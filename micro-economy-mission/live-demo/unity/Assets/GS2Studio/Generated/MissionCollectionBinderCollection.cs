@@ -290,8 +290,8 @@ namespace GS2Studio.Generated.MissionCollection
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new MissionGroupModelArrayLoader("Mission").Invalidate(_gs2, _session);
-            new CompleteArrayLoader("Mission").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Mission.MissionGroupModelArrayLoader("Mission").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Mission.CompleteArrayLoader("Mission").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace GS2Studio.Generated.MissionCollection
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new MissionGroupModelArrayLoader("Mission");
+            var arrayLoader = new Gs2Bind.Gs2Mission.MissionGroupModelArrayLoader("Mission");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromMissionMissionMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -402,7 +402,7 @@ namespace GS2Studio.Generated.MissionCollection
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new MissionGroupModelArrayLoader("Mission");
+            var arrayLoader = new Gs2Bind.Gs2Mission.MissionGroupModelArrayLoader("Mission");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -422,7 +422,7 @@ namespace GS2Studio.Generated.MissionCollection
             ));
         }
 
-        private async Task ReconcileFromMissionMissionMasterItems(IList<EzMissionGroupModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromMissionMissionMasterItems(IList<Gs2.Unity.Gs2Mission.Model.EzMissionGroupModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -494,7 +494,7 @@ namespace GS2Studio.Generated.MissionCollection
             if (!_disposed) SortBinders();
         }
 
-        private async Task<MissionCollectionBinder> BuildBinderFromMissionMissionMasterItem(EzMissionGroupModel item, CancellationToken cancellationToken)
+        private async Task<MissionCollectionBinder> BuildBinderFromMissionMissionMasterItem(Gs2.Unity.Gs2Mission.Model.EzMissionGroupModel item, CancellationToken cancellationToken)
         {
             var model = MissionCollectionBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(MissionCollectionId) : new MissionCollectionId(item.Name)));
             ApplyMissionMissionMasterItemTo(model, item);
@@ -503,7 +503,7 @@ namespace GS2Studio.Generated.MissionCollection
             return binder;
         }
 
-        private static void ApplyMissionMissionMasterItemTo(MutableMissionCollection model, EzMissionGroupModel item)
+        private static void ApplyMissionMissionMasterItemTo(MutableMissionCollection model, Gs2.Unity.Gs2Mission.Model.EzMissionGroupModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -512,12 +512,12 @@ namespace GS2Studio.Generated.MissionCollection
             _ = model;
         }
 
-        private MissionCollectionId ExtractMissionMissionMasterIdentity(EzMissionGroupModel item)
+        private MissionCollectionId ExtractMissionMissionMasterIdentity(Gs2.Unity.Gs2Mission.Model.EzMissionGroupModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(MissionCollectionId) : new MissionCollectionId(item.Name));
         }
 
-        private string? ExtractMissionMissionMasterRowKey(EzMissionGroupModel item)
+        private string? ExtractMissionMissionMasterRowKey(Gs2.Unity.Gs2Mission.Model.EzMissionGroupModel item)
         {
             var id = ExtractMissionMissionMasterIdentity(item);
             if (EqualityComparer<MissionCollectionId>.Default.Equals(id, default)) return null;
@@ -539,7 +539,7 @@ namespace GS2Studio.Generated.MissionCollection
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new CompleteArrayLoader("Mission");
+            var arrayLoader = new Gs2Bind.Gs2Mission.CompleteArrayLoader("Mission");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromMissionMissionUserItems(items, attachChildSubscribe: false, cancellationToken);
@@ -561,7 +561,7 @@ namespace GS2Studio.Generated.MissionCollection
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new CompleteArrayLoader("Mission");
+            var arrayLoader = new Gs2Bind.Gs2Mission.CompleteArrayLoader("Mission");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -581,7 +581,7 @@ namespace GS2Studio.Generated.MissionCollection
             ));
         }
 
-        private async Task ReconcileFromMissionMissionUserItems(IList<EzComplete> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromMissionMissionUserItems(IList<Gs2.Unity.Gs2Mission.Model.EzComplete> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -653,7 +653,7 @@ namespace GS2Studio.Generated.MissionCollection
             if (!_disposed) SortBinders();
         }
 
-        private async Task<MissionCollectionBinder> BuildBinderFromMissionMissionUserItem(EzComplete item, CancellationToken cancellationToken)
+        private async Task<MissionCollectionBinder> BuildBinderFromMissionMissionUserItem(Gs2.Unity.Gs2Mission.Model.EzComplete item, CancellationToken cancellationToken)
         {
             var model = MissionCollectionBinder.CreateModel((string.IsNullOrEmpty(item.MissionGroupName) ? default(MissionCollectionId) : new MissionCollectionId(item.MissionGroupName)));
             ApplyMissionMissionUserItemTo(model, item);
@@ -662,18 +662,18 @@ namespace GS2Studio.Generated.MissionCollection
             return binder;
         }
 
-        private static void ApplyMissionMissionUserItemTo(MutableMissionCollection model, EzComplete item)
+        private static void ApplyMissionMissionUserItemTo(MutableMissionCollection model, Gs2.Unity.Gs2Mission.Model.EzComplete item)
         {
             _ = item;
             _ = model;
         }
 
-        private MissionCollectionId ExtractMissionMissionUserIdentity(EzComplete item)
+        private MissionCollectionId ExtractMissionMissionUserIdentity(Gs2.Unity.Gs2Mission.Model.EzComplete item)
         {
             return (string.IsNullOrEmpty(item.MissionGroupName) ? default(MissionCollectionId) : new MissionCollectionId(item.MissionGroupName));
         }
 
-        private string? ExtractMissionMissionUserRowKey(EzComplete item)
+        private string? ExtractMissionMissionUserRowKey(Gs2.Unity.Gs2Mission.Model.EzComplete item)
         {
             var id = ExtractMissionMissionUserIdentity(item);
             if (EqualityComparer<MissionCollectionId>.Default.Equals(id, default)) return null;

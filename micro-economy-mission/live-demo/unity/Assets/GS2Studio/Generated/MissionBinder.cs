@@ -133,9 +133,9 @@ namespace GS2Studio.Generated.Mission
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly MissionTaskModelAcquireActionArrayLoader __transactionAcquireActionLoader;
-        private readonly MissionTaskModelLoader __missionMissionMissionTaskModelLoader;
-        private readonly CompleteLoader __membershipMissionCompleteLoader;
+        private readonly Gs2Bind.Gs2Mission.MissionTaskModelAcquireActionArrayLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Mission.MissionTaskModelLoader __missionMissionMissionTaskModelLoader;
+        private readonly Gs2Bind.Gs2Mission.CompleteLoader __membershipMissionCompleteLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -147,9 +147,9 @@ namespace GS2Studio.Generated.Mission
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new MissionTaskModelAcquireActionArrayLoader("Mission", _model.MissionCollection, _model.Id);
-            __missionMissionMissionTaskModelLoader = new MissionTaskModelLoader("Mission", _model.MissionCollection, _model.Id);
-            __membershipMissionCompleteLoader = new CompleteLoader("Mission", _model.MissionCollection);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Mission.MissionTaskModelAcquireActionArrayLoader("Mission", _model.MissionCollection, _model.Id);
+            __missionMissionMissionTaskModelLoader = new Gs2Bind.Gs2Mission.MissionTaskModelLoader("Mission", _model.MissionCollection, _model.Id);
+            __membershipMissionCompleteLoader = new Gs2Bind.Gs2Mission.CompleteLoader("Mission", _model.MissionCollection);
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace GS2Studio.Generated.Mission
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyMissionMissionMissionTaskModel(IMutableMission model, EzMissionTaskModel? source)
+        public static void ApplyMissionMissionMissionTaskModel(IMutableMission model, Gs2.Unity.Gs2Mission.Model.EzMissionTaskModel? source)
         {
             if (source != null)
             {
@@ -350,7 +350,7 @@ namespace GS2Studio.Generated.Mission
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyMembershipMissionComplete(IMutableMission model, EzComplete? source)
+        public static void ApplyMembershipMissionComplete(IMutableMission model, Gs2.Unity.Gs2Mission.Model.EzComplete? source)
         {
             if (source != null)
             {

@@ -124,11 +124,11 @@ namespace GS2Studio.Generated.AdViewPoint
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelLoader __exchangeAdWatchNamespaceRateModelLoader;
-        private readonly RateModelConsumeActionLoader __transactionConsumeActionLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelLoader __exchangeAdSpendNamespaceRateModelLoader;
-        private readonly PointLoader __userdataAdRewardPointLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeAdWatchNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeAdSpendNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2AdReward.PointLoader __userdataAdRewardPointLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -140,11 +140,11 @@ namespace GS2Studio.Generated.AdViewPoint
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __exchangeAdWatchNamespaceRateModelLoader = new RateModelLoader("AdWatch", _model.Id);
-            __transactionConsumeActionLoader = new RateModelConsumeActionLoader("AdSpend", _model.Id, 0);
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("AdWatch", _model.Id, 0);
-            __exchangeAdSpendNamespaceRateModelLoader = new RateModelLoader("AdSpend", _model.Id);
-            __userdataAdRewardPointLoader = new PointLoader("Ad");
+            __exchangeAdWatchNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("AdWatch", _model.Id);
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("AdSpend", _model.Id, 0);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("AdWatch", _model.Id, 0);
+            __exchangeAdSpendNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("AdSpend", _model.Id);
+            __userdataAdRewardPointLoader = new Gs2Bind.Gs2AdReward.PointLoader("Ad");
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace GS2Studio.Generated.AdViewPoint
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataAdRewardPoint(IMutableAdViewPoint model, EzPoint? source)
+        public static void ApplyUserdataAdRewardPoint(IMutableAdViewPoint model, Gs2.Unity.Gs2AdReward.Model.EzPoint? source)
         {
             if (source != null)
             {

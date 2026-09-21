@@ -207,6 +207,35 @@ namespace GS2Studio.Generated.UsageLimitCounter
             => _binderFactory ?? DefaultUsageLimitCounterBinderFactory.Instance;
 
         /// <summary>
+        /// Overwrites the scope this list reads through and, when the runtime
+        /// and the scope are ready, immediately reloads so the collection
+        /// reflects the new target.
+        ///
+        /// The list counterpart of the Handler's <c>SetKeys</c>. The Inspector
+        /// fields behind these parameters are written when the scene is
+        /// authored, so a scope whose value is decided while the game runs has
+        /// no other way in.
+        ///
+        /// The reload is fire-and-forget (failures surface via the
+        /// <see cref="Failed"/> event + <c>Debug.LogException</c>); await
+        /// <see cref="ReloadAsync"/> directly when completion must be observed.
+        /// </summary>
+        public void SetScope(string limit)
+        {
+            // Retire any reload still in flight BEFORE the scope changes. When
+            // the gate below says this handler is not ready, nothing here
+            // starts a newer operation to supersede that one, and it would go
+            // on to install a collection built for the previous scope.
+            // Bumping the generation is the whole fix: IsCurrentOperation
+            // compares against it at every step of ReloadAsync, so the
+            // in-flight operation drops itself at its next checkpoint.
+            _reloadGeneration++;
+            _limit = limit;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>
         /// Re-runs the underlying collection's sort and refreshes sibling order.
         /// Call this when a sort key driven by per-item user-data changes
         /// (the UsageLimitCounterBinderCollection only re-sorts on list-membership

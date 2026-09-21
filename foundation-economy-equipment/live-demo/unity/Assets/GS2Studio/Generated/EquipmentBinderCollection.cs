@@ -295,9 +295,9 @@ namespace GS2Studio.Generated.Equipment
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new ItemModelArrayLoader("Equipment", "Equipment").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("EquipmentDiscard").Invalidate(_gs2, _session);
-            new ItemSetArrayLoader("Equipment", "Equipment").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Inventory.ItemModelArrayLoader("Equipment", "Equipment").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EquipmentDiscard").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Inventory.ItemSetArrayLoader("Equipment", "Equipment").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace GS2Studio.Generated.Equipment
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new ItemModelArrayLoader("Equipment", "Equipment");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemModelArrayLoader("Equipment", "Equipment");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromInventoryEquipmentMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -408,7 +408,7 @@ namespace GS2Studio.Generated.Equipment
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new ItemModelArrayLoader("Equipment", "Equipment");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemModelArrayLoader("Equipment", "Equipment");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -428,7 +428,7 @@ namespace GS2Studio.Generated.Equipment
             ));
         }
 
-        private async Task ReconcileFromInventoryEquipmentMasterItems(IList<EzItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryEquipmentMasterItems(IList<Gs2.Unity.Gs2Inventory.Model.EzItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -500,7 +500,7 @@ namespace GS2Studio.Generated.Equipment
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EquipmentBinder> BuildBinderFromInventoryEquipmentMasterItem(EzItemModel item, CancellationToken cancellationToken)
+        private async Task<EquipmentBinder> BuildBinderFromInventoryEquipmentMasterItem(Gs2.Unity.Gs2Inventory.Model.EzItemModel item, CancellationToken cancellationToken)
         {
             var model = EquipmentBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EquipmentId) : new EquipmentId(item.Name)), string.Empty);
             ApplyInventoryEquipmentMasterItemTo(model, item);
@@ -509,7 +509,7 @@ namespace GS2Studio.Generated.Equipment
             return binder;
         }
 
-        private static void ApplyInventoryEquipmentMasterItemTo(MutableEquipment model, EzItemModel item)
+        private static void ApplyInventoryEquipmentMasterItemTo(MutableEquipment model, Gs2.Unity.Gs2Inventory.Model.EzItemModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -518,12 +518,12 @@ namespace GS2Studio.Generated.Equipment
             _ = model;
         }
 
-        private EquipmentId ExtractInventoryEquipmentMasterIdentity(EzItemModel item)
+        private EquipmentId ExtractInventoryEquipmentMasterIdentity(Gs2.Unity.Gs2Inventory.Model.EzItemModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(EquipmentId) : new EquipmentId(item.Name));
         }
 
-        private string? ExtractInventoryEquipmentMasterRowKey(EzItemModel item)
+        private string? ExtractInventoryEquipmentMasterRowKey(Gs2.Unity.Gs2Inventory.Model.EzItemModel item)
         {
             var id = ExtractInventoryEquipmentMasterIdentity(item);
             if (EqualityComparer<EquipmentId>.Default.Equals(id, default)) return null;
@@ -545,7 +545,7 @@ namespace GS2Studio.Generated.Equipment
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("EquipmentDiscard");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EquipmentDiscard");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeEquipmentDiscardMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -567,7 +567,7 @@ namespace GS2Studio.Generated.Equipment
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("EquipmentDiscard");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EquipmentDiscard");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -587,7 +587,7 @@ namespace GS2Studio.Generated.Equipment
             ));
         }
 
-        private async Task ReconcileFromExchangeEquipmentDiscardMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeEquipmentDiscardMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -659,7 +659,7 @@ namespace GS2Studio.Generated.Equipment
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EquipmentBinder> BuildBinderFromExchangeEquipmentDiscardMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<EquipmentBinder> BuildBinderFromExchangeEquipmentDiscardMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = EquipmentBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EquipmentId) : new EquipmentId(item.Name)), string.Empty);
             ApplyExchangeEquipmentDiscardMasterItemTo(model, item);
@@ -668,7 +668,7 @@ namespace GS2Studio.Generated.Equipment
             return binder;
         }
 
-        private static void ApplyExchangeEquipmentDiscardMasterItemTo(MutableEquipment model, EzRateModel item)
+        private static void ApplyExchangeEquipmentDiscardMasterItemTo(MutableEquipment model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -677,12 +677,12 @@ namespace GS2Studio.Generated.Equipment
             _ = model;
         }
 
-        private EquipmentId ExtractExchangeEquipmentDiscardMasterIdentity(EzRateModel item)
+        private EquipmentId ExtractExchangeEquipmentDiscardMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(EquipmentId) : new EquipmentId(item.Name));
         }
 
-        private string? ExtractExchangeEquipmentDiscardMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeEquipmentDiscardMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeEquipmentDiscardMasterIdentity(item);
             if (EqualityComparer<EquipmentId>.Default.Equals(id, default)) return null;
@@ -704,7 +704,7 @@ namespace GS2Studio.Generated.Equipment
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new ItemSetArrayLoader("Equipment", "Equipment");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader("Equipment", "Equipment");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromInventoryEquipmentUserItems(items, attachChildSubscribe: false, cancellationToken);
@@ -726,7 +726,7 @@ namespace GS2Studio.Generated.Equipment
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new ItemSetArrayLoader("Equipment", "Equipment");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader("Equipment", "Equipment");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -746,7 +746,7 @@ namespace GS2Studio.Generated.Equipment
             ));
         }
 
-        private async Task ReconcileFromInventoryEquipmentUserItems(IList<EzItemSet> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryEquipmentUserItems(IList<Gs2.Unity.Gs2Inventory.Model.EzItemSet> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -818,7 +818,7 @@ namespace GS2Studio.Generated.Equipment
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EquipmentBinder> BuildBinderFromInventoryEquipmentUserItem(EzItemSet item, CancellationToken cancellationToken)
+        private async Task<EquipmentBinder> BuildBinderFromInventoryEquipmentUserItem(Gs2.Unity.Gs2Inventory.Model.EzItemSet item, CancellationToken cancellationToken)
         {
             var model = EquipmentBinder.CreateModel((string.IsNullOrEmpty(item.ItemName) ? default(EquipmentId) : new EquipmentId(item.ItemName)), item.Name);
             ApplyInventoryEquipmentUserItemTo(model, item);
@@ -827,17 +827,17 @@ namespace GS2Studio.Generated.Equipment
             return binder;
         }
 
-        private static void ApplyInventoryEquipmentUserItemTo(MutableEquipment model, EzItemSet item)
+        private static void ApplyInventoryEquipmentUserItemTo(MutableEquipment model, Gs2.Unity.Gs2Inventory.Model.EzItemSet item)
         {
             EquipmentBinder.ApplyUserdataInventoryEquipmentItemModel(model, item);
         }
 
-        private EquipmentId ExtractInventoryEquipmentUserIdentity(EzItemSet item)
+        private EquipmentId ExtractInventoryEquipmentUserIdentity(Gs2.Unity.Gs2Inventory.Model.EzItemSet item)
         {
             return (string.IsNullOrEmpty(item.ItemName) ? default(EquipmentId) : new EquipmentId(item.ItemName));
         }
 
-        private string? ExtractInventoryEquipmentUserRowKey(EzItemSet item)
+        private string? ExtractInventoryEquipmentUserRowKey(Gs2.Unity.Gs2Inventory.Model.EzItemSet item)
         {
             var id = ExtractInventoryEquipmentUserIdentity(item);
             if (EqualityComparer<EquipmentId>.Default.Equals(id, default)) return null;

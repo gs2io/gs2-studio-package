@@ -275,9 +275,9 @@ namespace GS2Studio.Generated.MissionCounter
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new CounterModelArrayLoader("Mission").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("MissionAdvance").Invalidate(_gs2, _session);
-            new CounterArrayLoader("Mission").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Mission.CounterModelArrayLoader("Mission").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("MissionAdvance").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Mission.CounterArrayLoader("Mission").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace GS2Studio.Generated.MissionCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new CounterModelArrayLoader("Mission");
+            var arrayLoader = new Gs2Bind.Gs2Mission.CounterModelArrayLoader("Mission");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromMissionMissionMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -388,7 +388,7 @@ namespace GS2Studio.Generated.MissionCounter
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new CounterModelArrayLoader("Mission");
+            var arrayLoader = new Gs2Bind.Gs2Mission.CounterModelArrayLoader("Mission");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -408,7 +408,7 @@ namespace GS2Studio.Generated.MissionCounter
             ));
         }
 
-        private async Task ReconcileFromMissionMissionMasterItems(IList<EzCounterModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromMissionMissionMasterItems(IList<Gs2.Unity.Gs2Mission.Model.EzCounterModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -480,7 +480,7 @@ namespace GS2Studio.Generated.MissionCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<MissionCounterBinder> BuildBinderFromMissionMissionMasterItem(EzCounterModel item, CancellationToken cancellationToken)
+        private async Task<MissionCounterBinder> BuildBinderFromMissionMissionMasterItem(Gs2.Unity.Gs2Mission.Model.EzCounterModel item, CancellationToken cancellationToken)
         {
             var model = MissionCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(MissionCounterId) : new MissionCounterId(item.Name)));
             ApplyMissionMissionMasterItemTo(model, item);
@@ -489,7 +489,7 @@ namespace GS2Studio.Generated.MissionCounter
             return binder;
         }
 
-        private static void ApplyMissionMissionMasterItemTo(MutableMissionCounter model, EzCounterModel item)
+        private static void ApplyMissionMissionMasterItemTo(MutableMissionCounter model, Gs2.Unity.Gs2Mission.Model.EzCounterModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -498,12 +498,12 @@ namespace GS2Studio.Generated.MissionCounter
             _ = model;
         }
 
-        private MissionCounterId ExtractMissionMissionMasterIdentity(EzCounterModel item)
+        private MissionCounterId ExtractMissionMissionMasterIdentity(Gs2.Unity.Gs2Mission.Model.EzCounterModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(MissionCounterId) : new MissionCounterId(item.Name));
         }
 
-        private string? ExtractMissionMissionMasterRowKey(EzCounterModel item)
+        private string? ExtractMissionMissionMasterRowKey(Gs2.Unity.Gs2Mission.Model.EzCounterModel item)
         {
             var id = ExtractMissionMissionMasterIdentity(item);
             if (EqualityComparer<MissionCounterId>.Default.Equals(id, default)) return null;
@@ -525,7 +525,7 @@ namespace GS2Studio.Generated.MissionCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("MissionAdvance");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("MissionAdvance");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeMissionAdvanceMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -547,7 +547,7 @@ namespace GS2Studio.Generated.MissionCounter
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("MissionAdvance");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("MissionAdvance");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -567,7 +567,7 @@ namespace GS2Studio.Generated.MissionCounter
             ));
         }
 
-        private async Task ReconcileFromExchangeMissionAdvanceMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeMissionAdvanceMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -639,7 +639,7 @@ namespace GS2Studio.Generated.MissionCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<MissionCounterBinder> BuildBinderFromExchangeMissionAdvanceMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<MissionCounterBinder> BuildBinderFromExchangeMissionAdvanceMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = MissionCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(MissionCounterId) : new MissionCounterId(item.Name)));
             ApplyExchangeMissionAdvanceMasterItemTo(model, item);
@@ -648,7 +648,7 @@ namespace GS2Studio.Generated.MissionCounter
             return binder;
         }
 
-        private static void ApplyExchangeMissionAdvanceMasterItemTo(MutableMissionCounter model, EzRateModel item)
+        private static void ApplyExchangeMissionAdvanceMasterItemTo(MutableMissionCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -657,12 +657,12 @@ namespace GS2Studio.Generated.MissionCounter
             _ = model;
         }
 
-        private MissionCounterId ExtractExchangeMissionAdvanceMasterIdentity(EzRateModel item)
+        private MissionCounterId ExtractExchangeMissionAdvanceMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(MissionCounterId) : new MissionCounterId(item.Name));
         }
 
-        private string? ExtractExchangeMissionAdvanceMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeMissionAdvanceMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeMissionAdvanceMasterIdentity(item);
             if (EqualityComparer<MissionCounterId>.Default.Equals(id, default)) return null;
@@ -684,7 +684,7 @@ namespace GS2Studio.Generated.MissionCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new CounterArrayLoader("Mission");
+            var arrayLoader = new Gs2Bind.Gs2Mission.CounterArrayLoader("Mission");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromMissionMissionUserItems(items, attachChildSubscribe: false, cancellationToken);
@@ -706,7 +706,7 @@ namespace GS2Studio.Generated.MissionCounter
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new CounterArrayLoader("Mission");
+            var arrayLoader = new Gs2Bind.Gs2Mission.CounterArrayLoader("Mission");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -726,7 +726,7 @@ namespace GS2Studio.Generated.MissionCounter
             ));
         }
 
-        private async Task ReconcileFromMissionMissionUserItems(IList<EzCounter> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromMissionMissionUserItems(IList<Gs2.Unity.Gs2Mission.Model.EzCounter> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -798,7 +798,7 @@ namespace GS2Studio.Generated.MissionCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<MissionCounterBinder> BuildBinderFromMissionMissionUserItem(EzCounter item, CancellationToken cancellationToken)
+        private async Task<MissionCounterBinder> BuildBinderFromMissionMissionUserItem(Gs2.Unity.Gs2Mission.Model.EzCounter item, CancellationToken cancellationToken)
         {
             var model = MissionCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(MissionCounterId) : new MissionCounterId(item.Name)));
             ApplyMissionMissionUserItemTo(model, item);
@@ -807,17 +807,17 @@ namespace GS2Studio.Generated.MissionCounter
             return binder;
         }
 
-        private static void ApplyMissionMissionUserItemTo(MutableMissionCounter model, EzCounter item)
+        private static void ApplyMissionMissionUserItemTo(MutableMissionCounter model, Gs2.Unity.Gs2Mission.Model.EzCounter item)
         {
             MissionCounterBinder.ApplyUserdataMissionMissionCounterModel(model, item);
         }
 
-        private MissionCounterId ExtractMissionMissionUserIdentity(EzCounter item)
+        private MissionCounterId ExtractMissionMissionUserIdentity(Gs2.Unity.Gs2Mission.Model.EzCounter item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(MissionCounterId) : new MissionCounterId(item.Name));
         }
 
-        private string? ExtractMissionMissionUserRowKey(EzCounter item)
+        private string? ExtractMissionMissionUserRowKey(Gs2.Unity.Gs2Mission.Model.EzCounter item)
         {
             var id = ExtractMissionMissionUserIdentity(item);
             if (EqualityComparer<MissionCounterId>.Default.Equals(id, default)) return null;

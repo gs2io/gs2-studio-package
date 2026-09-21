@@ -122,8 +122,8 @@ namespace GS2Studio.Generated.FreeDeposit
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelLoader __exchangeCurrencyGrantNamespaceRateModelLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeCurrencyGrantNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -135,8 +135,8 @@ namespace GS2Studio.Generated.FreeDeposit
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __exchangeCurrencyGrantNamespaceRateModelLoader = new RateModelLoader("CurrencyGrant", _model.Id);
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("CurrencyGrant", _model.Id, 0);
+            __exchangeCurrencyGrantNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CurrencyGrant", _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CurrencyGrant", _model.Id, 0);
         }
 
         /// <summary>

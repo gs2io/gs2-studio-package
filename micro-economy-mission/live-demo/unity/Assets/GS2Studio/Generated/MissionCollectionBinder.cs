@@ -126,7 +126,7 @@ namespace GS2Studio.Generated.MissionCollection
         private GS2Studio.Generated.Mission.MissionBinderCollection? _missionsRoot;
         private Task<GS2Studio.Generated.Mission.MissionBinderCollection>? _missionsRootTask;
 
-        private readonly MissionGroupModelLoader __missionMissionNamespaceMissionGroupModelLoader;
+        private readonly Gs2Bind.Gs2Mission.MissionGroupModelLoader __missionMissionNamespaceMissionGroupModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -138,7 +138,7 @@ namespace GS2Studio.Generated.MissionCollection
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __missionMissionNamespaceMissionGroupModelLoader = new MissionGroupModelLoader("Mission", _model.Id);
+            __missionMissionNamespaceMissionGroupModelLoader = new Gs2Bind.Gs2Mission.MissionGroupModelLoader("Mission", _model.Id);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace GS2Studio.Generated.MissionCollection
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyMissionMissionNamespaceMissionGroupModel(IMutableMissionCollection model, EzMissionGroupModel? source)
+        public static void ApplyMissionMissionNamespaceMissionGroupModel(IMutableMissionCollection model, Gs2.Unity.Gs2Mission.Model.EzMissionGroupModel? source)
         {
             if (source != null)
             {

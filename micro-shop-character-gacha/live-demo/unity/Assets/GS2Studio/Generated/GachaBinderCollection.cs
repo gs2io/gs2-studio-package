@@ -295,9 +295,9 @@ namespace GS2Studio.Generated.Gacha
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase").Invalidate(_gs2, _session);
-            new LotteryModelArrayLoader("CharacterGacha").Invalidate(_gs2, _session);
-            new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Lottery.LotteryModelArrayLoader("CharacterGacha").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace GS2Studio.Generated.Gacha
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
+            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromShowcaseCharacterGachaMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -408,7 +408,7 @@ namespace GS2Studio.Generated.Gacha
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
+            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -428,7 +428,7 @@ namespace GS2Studio.Generated.Gacha
             ));
         }
 
-        private async Task ReconcileFromShowcaseCharacterGachaMasterItems(IList<EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromShowcaseCharacterGachaMasterItems(IList<Gs2.Unity.Gs2Showcase.Model.EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -500,7 +500,7 @@ namespace GS2Studio.Generated.Gacha
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GachaBinder> BuildBinderFromShowcaseCharacterGachaMasterItem(EzDisplayItem item, CancellationToken cancellationToken)
+        private async Task<GachaBinder> BuildBinderFromShowcaseCharacterGachaMasterItem(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item, CancellationToken cancellationToken)
         {
             var model = GachaBinder.CreateModel(((item.SalesItem == null || string.IsNullOrEmpty(item.SalesItem.Name)) ? default(GachaId) : new GachaId(item.SalesItem.Name)));
             ApplyShowcaseCharacterGachaMasterItemTo(model, item);
@@ -509,7 +509,7 @@ namespace GS2Studio.Generated.Gacha
             return binder;
         }
 
-        private static void ApplyShowcaseCharacterGachaMasterItemTo(MutableGacha model, EzDisplayItem item)
+        private static void ApplyShowcaseCharacterGachaMasterItemTo(MutableGacha model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -518,12 +518,12 @@ namespace GS2Studio.Generated.Gacha
             _ = model;
         }
 
-        private GachaId ExtractShowcaseCharacterGachaMasterIdentity(EzDisplayItem item)
+        private GachaId ExtractShowcaseCharacterGachaMasterIdentity(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             return ((item.SalesItem == null || string.IsNullOrEmpty(item.SalesItem.Name)) ? default(GachaId) : new GachaId(item.SalesItem.Name));
         }
 
-        private string? ExtractShowcaseCharacterGachaMasterRowKey(EzDisplayItem item)
+        private string? ExtractShowcaseCharacterGachaMasterRowKey(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             var id = ExtractShowcaseCharacterGachaMasterIdentity(item);
             if (EqualityComparer<GachaId>.Default.Equals(id, default)) return null;
@@ -544,7 +544,7 @@ namespace GS2Studio.Generated.Gacha
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new LotteryModelArrayLoader("CharacterGacha");
+            var arrayLoader = new Gs2Bind.Gs2Lottery.LotteryModelArrayLoader("CharacterGacha");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromLotteryCharacterGachaMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -566,7 +566,7 @@ namespace GS2Studio.Generated.Gacha
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new LotteryModelArrayLoader("CharacterGacha");
+            var arrayLoader = new Gs2Bind.Gs2Lottery.LotteryModelArrayLoader("CharacterGacha");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -586,7 +586,7 @@ namespace GS2Studio.Generated.Gacha
             ));
         }
 
-        private async Task ReconcileFromLotteryCharacterGachaMasterItems(IList<EzLotteryModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromLotteryCharacterGachaMasterItems(IList<Gs2.Unity.Gs2Lottery.Model.EzLotteryModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -658,7 +658,7 @@ namespace GS2Studio.Generated.Gacha
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GachaBinder> BuildBinderFromLotteryCharacterGachaMasterItem(EzLotteryModel item, CancellationToken cancellationToken)
+        private async Task<GachaBinder> BuildBinderFromLotteryCharacterGachaMasterItem(Gs2.Unity.Gs2Lottery.Model.EzLotteryModel item, CancellationToken cancellationToken)
         {
             var model = GachaBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(GachaId) : new GachaId(item.Name)));
             ApplyLotteryCharacterGachaMasterItemTo(model, item);
@@ -667,7 +667,7 @@ namespace GS2Studio.Generated.Gacha
             return binder;
         }
 
-        private static void ApplyLotteryCharacterGachaMasterItemTo(MutableGacha model, EzLotteryModel item)
+        private static void ApplyLotteryCharacterGachaMasterItemTo(MutableGacha model, Gs2.Unity.Gs2Lottery.Model.EzLotteryModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -676,12 +676,12 @@ namespace GS2Studio.Generated.Gacha
             _ = model;
         }
 
-        private GachaId ExtractLotteryCharacterGachaMasterIdentity(EzLotteryModel item)
+        private GachaId ExtractLotteryCharacterGachaMasterIdentity(Gs2.Unity.Gs2Lottery.Model.EzLotteryModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(GachaId) : new GachaId(item.Name));
         }
 
-        private string? ExtractLotteryCharacterGachaMasterRowKey(EzLotteryModel item)
+        private string? ExtractLotteryCharacterGachaMasterRowKey(Gs2.Unity.Gs2Lottery.Model.EzLotteryModel item)
         {
             var id = ExtractLotteryCharacterGachaMasterIdentity(item);
             if (EqualityComparer<GachaId>.Default.Equals(id, default)) return null;
@@ -703,7 +703,7 @@ namespace GS2Studio.Generated.Gacha
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
+            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromShowcaseCharacterGacha2MasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -725,7 +725,7 @@ namespace GS2Studio.Generated.Gacha
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
+            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -745,7 +745,7 @@ namespace GS2Studio.Generated.Gacha
             ));
         }
 
-        private async Task ReconcileFromShowcaseCharacterGacha2MasterItems(IList<EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromShowcaseCharacterGacha2MasterItems(IList<Gs2.Unity.Gs2Showcase.Model.EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -817,7 +817,7 @@ namespace GS2Studio.Generated.Gacha
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GachaBinder> BuildBinderFromShowcaseCharacterGacha2MasterItem(EzDisplayItem item, CancellationToken cancellationToken)
+        private async Task<GachaBinder> BuildBinderFromShowcaseCharacterGacha2MasterItem(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item, CancellationToken cancellationToken)
         {
             var model = GachaBinder.CreateModel((string.IsNullOrEmpty(item.DisplayItemId) ? default(GachaId) : new GachaId(item.DisplayItemId)));
             ApplyShowcaseCharacterGacha2MasterItemTo(model, item);
@@ -826,7 +826,7 @@ namespace GS2Studio.Generated.Gacha
             return binder;
         }
 
-        private static void ApplyShowcaseCharacterGacha2MasterItemTo(MutableGacha model, EzDisplayItem item)
+        private static void ApplyShowcaseCharacterGacha2MasterItemTo(MutableGacha model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -835,12 +835,12 @@ namespace GS2Studio.Generated.Gacha
             _ = model;
         }
 
-        private GachaId ExtractShowcaseCharacterGacha2MasterIdentity(EzDisplayItem item)
+        private GachaId ExtractShowcaseCharacterGacha2MasterIdentity(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             return (string.IsNullOrEmpty(item.DisplayItemId) ? default(GachaId) : new GachaId(item.DisplayItemId));
         }
 
-        private string? ExtractShowcaseCharacterGacha2MasterRowKey(EzDisplayItem item)
+        private string? ExtractShowcaseCharacterGacha2MasterRowKey(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             var id = ExtractShowcaseCharacterGacha2MasterIdentity(item);
             if (EqualityComparer<GachaId>.Default.Equals(id, default)) return null;

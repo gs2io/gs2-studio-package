@@ -135,8 +135,8 @@ namespace GS2Studio.Generated.Gacha
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly LotteryModelLoader __lotteryCharacterGachaNamespaceLotteryModelLoader;
-        private readonly DisplayItemLoader __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader;
+        private readonly Gs2Bind.Gs2Lottery.LotteryModelLoader __lotteryCharacterGachaNamespaceLotteryModelLoader;
+        private readonly Gs2Bind.Gs2Showcase.DisplayItemLoader __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -148,8 +148,8 @@ namespace GS2Studio.Generated.Gacha
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __lotteryCharacterGachaNamespaceLotteryModelLoader = new LotteryModelLoader("CharacterGacha", _model.Id);
-            __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader = new DisplayItemLoader("CharacterGacha", "Showcase", _model.Id);
+            __lotteryCharacterGachaNamespaceLotteryModelLoader = new Gs2Bind.Gs2Lottery.LotteryModelLoader("CharacterGacha", _model.Id);
+            __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader = new Gs2Bind.Gs2Showcase.DisplayItemLoader("CharacterGacha", "Showcase", _model.Id);
         }
 
         /// <summary>

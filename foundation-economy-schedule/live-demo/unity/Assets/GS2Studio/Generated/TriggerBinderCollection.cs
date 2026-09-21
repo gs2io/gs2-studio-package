@@ -275,9 +275,9 @@ namespace GS2Studio.Generated.Trigger
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new RateModelArrayLoader("TriggerClear").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("TriggerExtend").Invalidate(_gs2, _session);
-            new TriggerArrayLoader("Schedule").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerClear").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerExtend").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Schedule.TriggerArrayLoader("Schedule").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace GS2Studio.Generated.Trigger
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("TriggerClear");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerClear");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeTriggerClearMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -388,7 +388,7 @@ namespace GS2Studio.Generated.Trigger
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("TriggerClear");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerClear");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -408,7 +408,7 @@ namespace GS2Studio.Generated.Trigger
             ));
         }
 
-        private async Task ReconcileFromExchangeTriggerClearMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeTriggerClearMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -480,7 +480,7 @@ namespace GS2Studio.Generated.Trigger
             if (!_disposed) SortBinders();
         }
 
-        private async Task<TriggerBinder> BuildBinderFromExchangeTriggerClearMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<TriggerBinder> BuildBinderFromExchangeTriggerClearMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = TriggerBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name)));
             ApplyExchangeTriggerClearMasterItemTo(model, item);
@@ -489,7 +489,7 @@ namespace GS2Studio.Generated.Trigger
             return binder;
         }
 
-        private static void ApplyExchangeTriggerClearMasterItemTo(MutableTrigger model, EzRateModel item)
+        private static void ApplyExchangeTriggerClearMasterItemTo(MutableTrigger model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -498,12 +498,12 @@ namespace GS2Studio.Generated.Trigger
             _ = model;
         }
 
-        private TriggerId ExtractExchangeTriggerClearMasterIdentity(EzRateModel item)
+        private TriggerId ExtractExchangeTriggerClearMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name));
         }
 
-        private string? ExtractExchangeTriggerClearMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeTriggerClearMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeTriggerClearMasterIdentity(item);
             if (EqualityComparer<TriggerId>.Default.Equals(id, default)) return null;
@@ -525,7 +525,7 @@ namespace GS2Studio.Generated.Trigger
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("TriggerExtend");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerExtend");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeTriggerExtendMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -547,7 +547,7 @@ namespace GS2Studio.Generated.Trigger
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("TriggerExtend");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerExtend");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -567,7 +567,7 @@ namespace GS2Studio.Generated.Trigger
             ));
         }
 
-        private async Task ReconcileFromExchangeTriggerExtendMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeTriggerExtendMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -639,7 +639,7 @@ namespace GS2Studio.Generated.Trigger
             if (!_disposed) SortBinders();
         }
 
-        private async Task<TriggerBinder> BuildBinderFromExchangeTriggerExtendMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<TriggerBinder> BuildBinderFromExchangeTriggerExtendMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = TriggerBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name)));
             ApplyExchangeTriggerExtendMasterItemTo(model, item);
@@ -648,7 +648,7 @@ namespace GS2Studio.Generated.Trigger
             return binder;
         }
 
-        private static void ApplyExchangeTriggerExtendMasterItemTo(MutableTrigger model, EzRateModel item)
+        private static void ApplyExchangeTriggerExtendMasterItemTo(MutableTrigger model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -657,12 +657,12 @@ namespace GS2Studio.Generated.Trigger
             _ = model;
         }
 
-        private TriggerId ExtractExchangeTriggerExtendMasterIdentity(EzRateModel item)
+        private TriggerId ExtractExchangeTriggerExtendMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name));
         }
 
-        private string? ExtractExchangeTriggerExtendMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeTriggerExtendMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeTriggerExtendMasterIdentity(item);
             if (EqualityComparer<TriggerId>.Default.Equals(id, default)) return null;
@@ -684,7 +684,7 @@ namespace GS2Studio.Generated.Trigger
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new TriggerArrayLoader("Schedule");
+            var arrayLoader = new Gs2Bind.Gs2Schedule.TriggerArrayLoader("Schedule");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromScheduleScheduleUserItems(items, attachChildSubscribe: false, cancellationToken);
@@ -706,7 +706,7 @@ namespace GS2Studio.Generated.Trigger
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new TriggerArrayLoader("Schedule");
+            var arrayLoader = new Gs2Bind.Gs2Schedule.TriggerArrayLoader("Schedule");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -726,7 +726,7 @@ namespace GS2Studio.Generated.Trigger
             ));
         }
 
-        private async Task ReconcileFromScheduleScheduleUserItems(IList<EzTrigger> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromScheduleScheduleUserItems(IList<Gs2.Unity.Gs2Schedule.Model.EzTrigger> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -798,7 +798,7 @@ namespace GS2Studio.Generated.Trigger
             if (!_disposed) SortBinders();
         }
 
-        private async Task<TriggerBinder> BuildBinderFromScheduleScheduleUserItem(EzTrigger item, CancellationToken cancellationToken)
+        private async Task<TriggerBinder> BuildBinderFromScheduleScheduleUserItem(Gs2.Unity.Gs2Schedule.Model.EzTrigger item, CancellationToken cancellationToken)
         {
             var model = TriggerBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name)));
             ApplyScheduleScheduleUserItemTo(model, item);
@@ -807,17 +807,17 @@ namespace GS2Studio.Generated.Trigger
             return binder;
         }
 
-        private static void ApplyScheduleScheduleUserItemTo(MutableTrigger model, EzTrigger item)
+        private static void ApplyScheduleScheduleUserItemTo(MutableTrigger model, Gs2.Unity.Gs2Schedule.Model.EzTrigger item)
         {
             TriggerBinder.ApplyUserdataScheduleTrigger(model, item);
         }
 
-        private TriggerId ExtractScheduleScheduleUserIdentity(EzTrigger item)
+        private TriggerId ExtractScheduleScheduleUserIdentity(Gs2.Unity.Gs2Schedule.Model.EzTrigger item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name));
         }
 
-        private string? ExtractScheduleScheduleUserRowKey(EzTrigger item)
+        private string? ExtractScheduleScheduleUserRowKey(Gs2.Unity.Gs2Schedule.Model.EzTrigger item)
         {
             var id = ExtractScheduleScheduleUserIdentity(item);
             if (EqualityComparer<TriggerId>.Default.Equals(id, default)) return null;

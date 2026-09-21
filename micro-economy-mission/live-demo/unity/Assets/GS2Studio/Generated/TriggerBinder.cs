@@ -123,7 +123,7 @@ namespace GS2Studio.Generated.Trigger
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly TriggerLoader __userdataScheduleTriggerLoader;
+        private readonly Gs2Bind.Gs2Schedule.TriggerLoader __userdataScheduleTriggerLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -135,7 +135,7 @@ namespace GS2Studio.Generated.Trigger
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __userdataScheduleTriggerLoader = new TriggerLoader("Schedule", _model.Id);
+            __userdataScheduleTriggerLoader = new Gs2Bind.Gs2Schedule.TriggerLoader("Schedule", _model.Id);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace GS2Studio.Generated.Trigger
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataScheduleTrigger(IMutableTrigger model, EzTrigger? source)
+        public static void ApplyUserdataScheduleTrigger(IMutableTrigger model, Gs2.Unity.Gs2Schedule.Model.EzTrigger? source)
         {
             model.Triggered = source != null;
             if (source != null)

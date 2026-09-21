@@ -123,9 +123,9 @@ namespace GS2Studio.Generated.CharacterRecruit
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireAction2Loader;
-        private readonly RateModelLoader __exchangeCharacterRecruitNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionArrayLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireAction2Loader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeCharacterRecruitNamespaceRateModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -137,9 +137,9 @@ namespace GS2Studio.Generated.CharacterRecruit
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("CharacterRecruit", _model.Id, 1);
-            __transactionAcquireAction2Loader = new RateModelAcquireActionLoader("CharacterRecruit", _model.Id, 0);
-            __exchangeCharacterRecruitNamespaceRateModelLoader = new RateModelLoader("CharacterRecruit", _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionArrayLoader("CharacterRecruit", _model.Id);
+            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterRecruit", _model.Id, 0);
+            __exchangeCharacterRecruitNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterRecruit", _model.Id);
         }
 
         /// <summary>

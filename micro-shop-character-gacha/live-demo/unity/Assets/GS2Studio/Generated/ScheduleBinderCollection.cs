@@ -268,7 +268,7 @@ namespace GS2Studio.Generated.Schedule
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new EventArrayLoader("Schedule").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Schedule.EventArrayLoader("Schedule").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace GS2Studio.Generated.Schedule
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new EventArrayLoader("Schedule");
+            var arrayLoader = new Gs2Bind.Gs2Schedule.EventArrayLoader("Schedule");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromScheduleScheduleMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -379,7 +379,7 @@ namespace GS2Studio.Generated.Schedule
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new EventArrayLoader("Schedule");
+            var arrayLoader = new Gs2Bind.Gs2Schedule.EventArrayLoader("Schedule");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -399,7 +399,7 @@ namespace GS2Studio.Generated.Schedule
             ));
         }
 
-        private async Task ReconcileFromScheduleScheduleMasterItems(IList<EzEvent> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromScheduleScheduleMasterItems(IList<Gs2.Unity.Gs2Schedule.Model.EzEvent> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -471,7 +471,7 @@ namespace GS2Studio.Generated.Schedule
             if (!_disposed) SortBinders();
         }
 
-        private async Task<ScheduleBinder> BuildBinderFromScheduleScheduleMasterItem(EzEvent item, CancellationToken cancellationToken)
+        private async Task<ScheduleBinder> BuildBinderFromScheduleScheduleMasterItem(Gs2.Unity.Gs2Schedule.Model.EzEvent item, CancellationToken cancellationToken)
         {
             var model = ScheduleBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(ScheduleId) : new ScheduleId(item.Name)), item.RelativeTriggerName);
             ApplyScheduleScheduleMasterItemTo(model, item);
@@ -480,7 +480,7 @@ namespace GS2Studio.Generated.Schedule
             return binder;
         }
 
-        private static void ApplyScheduleScheduleMasterItemTo(MutableSchedule model, EzEvent item)
+        private static void ApplyScheduleScheduleMasterItemTo(MutableSchedule model, Gs2.Unity.Gs2Schedule.Model.EzEvent item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -489,12 +489,12 @@ namespace GS2Studio.Generated.Schedule
             _ = model;
         }
 
-        private ScheduleId ExtractScheduleScheduleMasterIdentity(EzEvent item)
+        private ScheduleId ExtractScheduleScheduleMasterIdentity(Gs2.Unity.Gs2Schedule.Model.EzEvent item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(ScheduleId) : new ScheduleId(item.Name));
         }
 
-        private string? ExtractScheduleScheduleMasterRowKey(EzEvent item)
+        private string? ExtractScheduleScheduleMasterRowKey(Gs2.Unity.Gs2Schedule.Model.EzEvent item)
         {
             var id = ExtractScheduleScheduleMasterIdentity(item);
             if (EqualityComparer<ScheduleId>.Default.Equals(id, default)) return null;

@@ -60,7 +60,7 @@ namespace GS2Studio.Generated.Equipment
         EquipmentMountSurface MountSurface { get; }
 
         /// <summary>
-        /// True when this row's mount surface ran the <c>ItemSetLoader</c> load on <c>__userdataInventoryEquipmentItemModelLoader</c>. False means <c>PropertyId</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
+        /// True when this row's mount surface ran the <c>Gs2Bind.Gs2Inventory.ItemSetLoader</c> load on <c>__userdataInventoryEquipmentItemModelLoader</c>. False means <c>PropertyId</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
         /// </summary>
         /// <remarks>InventoryEquipmentMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentDiscardMaster: no per-row value for _model.PropertyId.</remarks>
@@ -171,10 +171,10 @@ namespace GS2Studio.Generated.Equipment
         private GS2Studio.Generated.EquipmentCatalog.EquipmentCatalogBinderCollection? _equipmentCatalogsRoot;
         private Task<GS2Studio.Generated.EquipmentCatalog.EquipmentCatalogBinderCollection>? _equipmentCatalogsRootTask;
 
-        private readonly RateModelLoader __exchangeEquipmentDiscardNamespaceRateModelLoader;
-        private readonly RateModelConsumeActionLoader __transactionConsumeActionLoader;
-        private readonly ItemModelLoader __inventoryEquipmentNamespaceInventoryModelItemModelLoader;
-        private readonly ItemSetLoader __userdataInventoryEquipmentItemModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeEquipmentDiscardNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeActionLoader;
+        private readonly Gs2Bind.Gs2Inventory.ItemModelLoader __inventoryEquipmentNamespaceInventoryModelItemModelLoader;
+        private readonly Gs2Bind.Gs2Inventory.ItemSetLoader __userdataInventoryEquipmentItemModelLoader;
 
         /// <summary>Which construction path built this row.</summary>
         private readonly EquipmentMountSurface _mountSurfaceValue;
@@ -202,10 +202,10 @@ namespace GS2Studio.Generated.Equipment
         ) : base(model, gs2, session)
         {
             _mountSurfaceValue = _mountSurface;
-            __exchangeEquipmentDiscardNamespaceRateModelLoader = new RateModelLoader("EquipmentDiscard", _model.Id);
-            __transactionConsumeActionLoader = new RateModelConsumeActionLoader("EquipmentDiscard", _model.Id, 0);
-            __inventoryEquipmentNamespaceInventoryModelItemModelLoader = new ItemModelLoader("Equipment", "Equipment", _model.Id);
-            __userdataInventoryEquipmentItemModelLoader = new ItemSetLoader("Equipment", "Equipment", _model.Id, _model.PropertyId);
+            __exchangeEquipmentDiscardNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentDiscard", _model.Id);
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EquipmentDiscard", _model.Id, 0);
+            __inventoryEquipmentNamespaceInventoryModelItemModelLoader = new Gs2Bind.Gs2Inventory.ItemModelLoader("Equipment", "Equipment", _model.Id);
+            __userdataInventoryEquipmentItemModelLoader = new Gs2Bind.Gs2Inventory.ItemSetLoader("Equipment", "Equipment", _model.Id, _model.PropertyId);
         }
 
         /// <summary>
@@ -464,7 +464,7 @@ namespace GS2Studio.Generated.Equipment
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyInventoryEquipmentNamespaceInventoryModelItemModel(IMutableEquipment model, EzItemModel? source)
+        public static void ApplyInventoryEquipmentNamespaceInventoryModelItemModel(IMutableEquipment model, Gs2.Unity.Gs2Inventory.Model.EzItemModel? source)
         {
             if (source != null)
             {
@@ -482,7 +482,7 @@ namespace GS2Studio.Generated.Equipment
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataInventoryEquipmentItemModel(IMutableEquipment model, EzItemSet? source)
+        public static void ApplyUserdataInventoryEquipmentItemModel(IMutableEquipment model, Gs2.Unity.Gs2Inventory.Model.EzItemSet? source)
         {
             if (source != null)
             {

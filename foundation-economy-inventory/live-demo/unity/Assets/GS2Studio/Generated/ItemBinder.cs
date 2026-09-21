@@ -125,12 +125,12 @@ namespace GS2Studio.Generated.Item
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelLoader __exchangeItemGainNamespaceRateModelLoader;
-        private readonly RateModelLoader __exchangeItemSpendNamespaceRateModelLoader;
-        private readonly RateModelConsumeActionLoader __transactionConsumeActionLoader;
-        private readonly SimpleItemModelLoader __inventoryInventoryNamespaceSimpleInventoryModelSimpleItemModelLoader;
-        private readonly SimpleItemLoader __userdataInventoryInventorySimpleItemModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeItemGainNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeItemSpendNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeActionLoader;
+        private readonly Gs2Bind.Gs2Inventory.SimpleItemModelLoader __inventoryInventoryNamespaceSimpleInventoryModelSimpleItemModelLoader;
+        private readonly Gs2Bind.Gs2Inventory.SimpleItemLoader __userdataInventoryInventorySimpleItemModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -142,12 +142,12 @@ namespace GS2Studio.Generated.Item
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("ItemGain", _model.Id, 0);
-            __exchangeItemGainNamespaceRateModelLoader = new RateModelLoader("ItemGain", _model.Id);
-            __exchangeItemSpendNamespaceRateModelLoader = new RateModelLoader("ItemSpend", _model.Id);
-            __transactionConsumeActionLoader = new RateModelConsumeActionLoader("ItemSpend", _model.Id, 0);
-            __inventoryInventoryNamespaceSimpleInventoryModelSimpleItemModelLoader = new SimpleItemModelLoader("Inventory", "Inventory", _model.Id);
-            __userdataInventoryInventorySimpleItemModelLoader = new SimpleItemLoader("Inventory", "Inventory", _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("ItemGain", _model.Id, 0);
+            __exchangeItemGainNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("ItemGain", _model.Id);
+            __exchangeItemSpendNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("ItemSpend", _model.Id);
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("ItemSpend", _model.Id, 0);
+            __inventoryInventoryNamespaceSimpleInventoryModelSimpleItemModelLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelLoader("Inventory", "Inventory", _model.Id);
+            __userdataInventoryInventorySimpleItemModelLoader = new Gs2Bind.Gs2Inventory.SimpleItemLoader("Inventory", "Inventory", _model.Id);
         }
 
         /// <summary>
@@ -402,7 +402,7 @@ namespace GS2Studio.Generated.Item
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataInventoryInventorySimpleItemModel(IMutableItem model, EzSimpleItem? source)
+        public static void ApplyUserdataInventoryInventorySimpleItemModel(IMutableItem model, Gs2.Unity.Gs2Inventory.Model.EzSimpleItem? source)
         {
             if (source != null)
             {

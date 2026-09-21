@@ -123,8 +123,8 @@ namespace GS2Studio.Generated.TriggerPull
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelLoader __exchangeTriggerPullNamespaceRateModelLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeTriggerPullNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -136,8 +136,8 @@ namespace GS2Studio.Generated.TriggerPull
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __exchangeTriggerPullNamespaceRateModelLoader = new RateModelLoader("TriggerPull", _model.Id);
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("TriggerPull", _model.Id, 0);
+            __exchangeTriggerPullNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerPull", _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("TriggerPull", _model.Id, 0);
         }
 
         /// <summary>

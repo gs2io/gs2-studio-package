@@ -123,7 +123,7 @@ namespace GS2Studio.Generated.CharacterExperience
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly ExperienceModelLoader __experienceCharacterExperienceNamespaceExperienceModelLoader;
+        private readonly Gs2Bind.Gs2Experience.ExperienceModelLoader __experienceCharacterExperienceNamespaceExperienceModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -135,7 +135,7 @@ namespace GS2Studio.Generated.CharacterExperience
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __experienceCharacterExperienceNamespaceExperienceModelLoader = new ExperienceModelLoader("CharacterExperience", "Experience");
+            __experienceCharacterExperienceNamespaceExperienceModelLoader = new Gs2Bind.Gs2Experience.ExperienceModelLoader("CharacterExperience", "Experience");
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace GS2Studio.Generated.CharacterExperience
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyExperienceCharacterExperienceNamespaceExperienceModel(IMutableCharacterExperience model, EzExperienceModel? source)
+        public static void ApplyExperienceCharacterExperienceNamespaceExperienceModel(IMutableCharacterExperience model, Gs2.Unity.Gs2Experience.Model.EzExperienceModel? source)
         {
             if (source != null)
             {

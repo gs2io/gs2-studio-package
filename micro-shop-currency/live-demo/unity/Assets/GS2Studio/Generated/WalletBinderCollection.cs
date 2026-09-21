@@ -268,7 +268,7 @@ namespace GS2Studio.Generated.Wallet
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new WalletArrayLoader("Currency").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Money2.WalletArrayLoader("Currency").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace GS2Studio.Generated.Wallet
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new WalletArrayLoader("Currency");
+            var arrayLoader = new Gs2Bind.Gs2Money2.WalletArrayLoader("Currency");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromMoney2CurrencyUserItems(items, attachChildSubscribe: false, cancellationToken);
@@ -379,7 +379,7 @@ namespace GS2Studio.Generated.Wallet
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new WalletArrayLoader("Currency");
+            var arrayLoader = new Gs2Bind.Gs2Money2.WalletArrayLoader("Currency");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -399,7 +399,7 @@ namespace GS2Studio.Generated.Wallet
             ));
         }
 
-        private async Task ReconcileFromMoney2CurrencyUserItems(IList<EzWallet> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromMoney2CurrencyUserItems(IList<Gs2.Unity.Gs2Money2.Model.EzWallet> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -471,7 +471,7 @@ namespace GS2Studio.Generated.Wallet
             if (!_disposed) SortBinders();
         }
 
-        private async Task<WalletBinder> BuildBinderFromMoney2CurrencyUserItem(EzWallet item, CancellationToken cancellationToken)
+        private async Task<WalletBinder> BuildBinderFromMoney2CurrencyUserItem(Gs2.Unity.Gs2Money2.Model.EzWallet item, CancellationToken cancellationToken)
         {
             var model = WalletBinder.CreateModel(new WalletId(item.Slot.ToString()));
             ApplyMoney2CurrencyUserItemTo(model, item);
@@ -480,17 +480,17 @@ namespace GS2Studio.Generated.Wallet
             return binder;
         }
 
-        private static void ApplyMoney2CurrencyUserItemTo(MutableWallet model, EzWallet item)
+        private static void ApplyMoney2CurrencyUserItemTo(MutableWallet model, Gs2.Unity.Gs2Money2.Model.EzWallet item)
         {
             WalletBinder.ApplyUserdataMoney2Wallet(model, item);
         }
 
-        private WalletId ExtractMoney2CurrencyUserIdentity(EzWallet item)
+        private WalletId ExtractMoney2CurrencyUserIdentity(Gs2.Unity.Gs2Money2.Model.EzWallet item)
         {
             return new WalletId(item.Slot.ToString());
         }
 
-        private string? ExtractMoney2CurrencyUserRowKey(EzWallet item)
+        private string? ExtractMoney2CurrencyUserRowKey(Gs2.Unity.Gs2Money2.Model.EzWallet item)
         {
             var id = ExtractMoney2CurrencyUserIdentity(item);
             if (EqualityComparer<WalletId>.Default.Equals(id, default)) return null;

@@ -273,7 +273,7 @@ namespace GS2Studio.Generated.StoreProduct
         /// companion Collection's reconcile/build delegate here, and external
         /// stubs can apply the same mapping to their own model.
         /// </summary>
-        public static void ApplyShowcaseShopCurrencyMasterItem(IMutableStoreProduct model, EzDisplayItem item)
+        public static void ApplyShowcaseShopCurrencyMasterItem(IMutableStoreProduct model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             var __SalesItemConsumeActions = item.SalesItem?.ConsumeActions;
             var __SalesItemConsumeActions0 = __SalesItemConsumeActions != null && __SalesItemConsumeActions.Count > 0 ? __SalesItemConsumeActions[0] : null;

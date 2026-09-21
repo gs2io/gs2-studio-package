@@ -126,7 +126,7 @@ namespace GS2Studio.Generated.StorePrice
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly DisplayItemLoader __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader;
+        private readonly Gs2Bind.Gs2Showcase.DisplayItemLoader __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -138,7 +138,7 @@ namespace GS2Studio.Generated.StorePrice
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader = new DisplayItemLoader("ShopCurrency", _model.CurrencyType, _model.Id);
+            __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader = new Gs2Bind.Gs2Showcase.DisplayItemLoader("ShopCurrency", _model.CurrencyType, _model.Id);
         }
 
         /// <summary>

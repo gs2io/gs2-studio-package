@@ -61,7 +61,7 @@ namespace GS2Studio.Generated.Character
         CharacterMountSurface MountSurface { get; }
 
         /// <summary>
-        /// True when this row's readings from the <c>ItemSetLoader</c> load on <c>__userdataInventoryCharacterItemModelLoader</c> are real — its axis either ran it or applied its composition from the list item it was built from. False means <c>PropertyId</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
+        /// True when this row's readings from the <c>Gs2Bind.Gs2Inventory.ItemSetLoader</c> load on <c>__userdataInventoryCharacterItemModelLoader</c> are real — its axis either ran it or applied its composition from the list item it was built from. False means <c>PropertyId</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
         /// </summary>
         /// <remarks>Full: passes no itemSetName constructor argument.</remarks>
         /// <remarks>InventoryCharacterMaster: passes no itemSetName constructor argument.</remarks>
@@ -69,7 +69,7 @@ namespace GS2Studio.Generated.Character
         bool LoadedUserdataInventoryCharacterItemModel { get; }
 
         /// <summary>
-        /// True when this row's mount surface ran the <c>StatusLoader</c> load on <c>__userdataExperienceCharacterExperienceExperienceModelLoader</c>. False means <c>Experience</c>, <c>NextLevelExperience</c>, <c>PropertyId</c>, <c>LevelCap</c>, <c>Level</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
+        /// True when this row's mount surface ran the <c>Gs2Bind.Gs2Experience.StatusLoader</c> load on <c>__userdataExperienceCharacterExperienceExperienceModelLoader</c>. False means <c>Experience</c>, <c>NextLevelExperience</c>, <c>PropertyId</c>, <c>LevelCap</c>, <c>Level</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
         /// </summary>
         /// <remarks>InventoryCharacterMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeCharacterTrainMaster: no per-row value for _model.PropertyId.</remarks>
@@ -189,11 +189,11 @@ namespace GS2Studio.Generated.Character
         private GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection? _characterRecruitsRoot;
         private Task<GS2Studio.Generated.CharacterRecruit.CharacterRecruitBinderCollection>? _characterRecruitsRootTask;
 
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelLoader __exchangeCharacterTrainNamespaceRateModelLoader;
-        private readonly ItemModelLoader __inventoryCharacterNamespaceInventoryModelItemModelLoader;
-        private readonly ItemSetLoader __userdataInventoryCharacterItemModelLoader;
-        private readonly StatusLoader __userdataExperienceCharacterExperienceExperienceModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeCharacterTrainNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Inventory.ItemModelLoader __inventoryCharacterNamespaceInventoryModelItemModelLoader;
+        private readonly Gs2Bind.Gs2Inventory.ItemSetLoader __userdataInventoryCharacterItemModelLoader;
+        private readonly Gs2Bind.Gs2Experience.StatusLoader __userdataExperienceCharacterExperienceExperienceModelLoader;
 
         /// <summary>Which construction path built this row.</summary>
         private readonly CharacterMountSurface _mountSurfaceValue;
@@ -231,11 +231,11 @@ namespace GS2Studio.Generated.Character
         ) : base(model, gs2, session)
         {
             _mountSurfaceValue = _mountSurface;
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("CharacterTrain", _model.Id, 0);
-            __exchangeCharacterTrainNamespaceRateModelLoader = new RateModelLoader("CharacterTrain", _model.Id);
-            __inventoryCharacterNamespaceInventoryModelItemModelLoader = new ItemModelLoader("Character", "Character", _model.Id);
-            __userdataInventoryCharacterItemModelLoader = new ItemSetLoader("Character", "Character", _model.Id, itemSetName!);
-            __userdataExperienceCharacterExperienceExperienceModelLoader = new StatusLoader("CharacterExperience", "Experience", _model.PropertyId);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterTrain", _model.Id, 0);
+            __exchangeCharacterTrainNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterTrain", _model.Id);
+            __inventoryCharacterNamespaceInventoryModelItemModelLoader = new Gs2Bind.Gs2Inventory.ItemModelLoader("Character", "Character", _model.Id);
+            __userdataInventoryCharacterItemModelLoader = new Gs2Bind.Gs2Inventory.ItemSetLoader("Character", "Character", _model.Id, itemSetName!);
+            __userdataExperienceCharacterExperienceExperienceModelLoader = new Gs2Bind.Gs2Experience.StatusLoader("CharacterExperience", "Experience", _model.PropertyId);
         }
 
         /// <summary>
@@ -512,7 +512,7 @@ namespace GS2Studio.Generated.Character
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyInventoryCharacterNamespaceInventoryModelItemModel(IMutableCharacter model, EzItemModel? source)
+        public static void ApplyInventoryCharacterNamespaceInventoryModelItemModel(IMutableCharacter model, Gs2.Unity.Gs2Inventory.Model.EzItemModel? source)
         {
             if (source != null)
             {
@@ -530,7 +530,7 @@ namespace GS2Studio.Generated.Character
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataInventoryCharacterItemModel(IMutableCharacter model, EzItemSet? source)
+        public static void ApplyUserdataInventoryCharacterItemModel(IMutableCharacter model, Gs2.Unity.Gs2Inventory.Model.EzItemSet? source)
         {
             if (source != null)
             {
@@ -548,7 +548,7 @@ namespace GS2Studio.Generated.Character
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataExperienceCharacterExperienceExperienceModel(IMutableCharacter model, EzStatus? source)
+        public static void ApplyUserdataExperienceCharacterExperienceExperienceModel(IMutableCharacter model, Gs2.Unity.Gs2Experience.Model.EzStatus? source)
         {
             if (source != null)
             {

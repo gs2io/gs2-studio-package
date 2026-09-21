@@ -125,8 +125,8 @@ namespace GS2Studio.Generated.CharacterCollection
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly InventoryModelLoader __inventoryCharacterNamespaceInventoryModelLoader;
-        private readonly InventoryLoader __userdataInventoryCharacterInventoryModelLoader;
+        private readonly Gs2Bind.Gs2Inventory.InventoryModelLoader __inventoryCharacterNamespaceInventoryModelLoader;
+        private readonly Gs2Bind.Gs2Inventory.InventoryLoader __userdataInventoryCharacterInventoryModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -138,8 +138,8 @@ namespace GS2Studio.Generated.CharacterCollection
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __inventoryCharacterNamespaceInventoryModelLoader = new InventoryModelLoader("Character", "Character");
-            __userdataInventoryCharacterInventoryModelLoader = new InventoryLoader("Character", "Character");
+            __inventoryCharacterNamespaceInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryModelLoader("Character", "Character");
+            __userdataInventoryCharacterInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryLoader("Character", "Character");
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace GS2Studio.Generated.CharacterCollection
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyInventoryCharacterNamespaceInventoryModel(IMutableCharacterCollection model, EzInventoryModel? source)
+        public static void ApplyInventoryCharacterNamespaceInventoryModel(IMutableCharacterCollection model, Gs2.Unity.Gs2Inventory.Model.EzInventoryModel? source)
         {
             if (source != null)
             {
@@ -313,7 +313,7 @@ namespace GS2Studio.Generated.CharacterCollection
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataInventoryCharacterInventoryModel(IMutableCharacterCollection model, EzInventory? source)
+        public static void ApplyUserdataInventoryCharacterInventoryModel(IMutableCharacterCollection model, Gs2.Unity.Gs2Inventory.Model.EzInventory? source)
         {
             if (source != null)
             {

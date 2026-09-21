@@ -132,7 +132,7 @@ namespace GS2Studio.Generated.UsageLimit
         private GS2Studio.Generated.UsageLimitCounter.UsageLimitCounterBinderCollection? _usageLimitCountersRoot;
         private Task<GS2Studio.Generated.UsageLimitCounter.UsageLimitCounterBinderCollection>? _usageLimitCountersRootTask;
 
-        private readonly LimitModelLoader __limitLimitNamespaceLimitModelLoader;
+        private readonly Gs2Bind.Gs2Limit.LimitModelLoader __limitLimitNamespaceLimitModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -144,7 +144,7 @@ namespace GS2Studio.Generated.UsageLimit
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __limitLimitNamespaceLimitModelLoader = new LimitModelLoader("Limit", _model.Id);
+            __limitLimitNamespaceLimitModelLoader = new Gs2Bind.Gs2Limit.LimitModelLoader("Limit", _model.Id);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace GS2Studio.Generated.UsageLimit
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyLimitLimitNamespaceLimitModel(IMutableUsageLimit model, EzLimitModel? source)
+        public static void ApplyLimitLimitNamespaceLimitModel(IMutableUsageLimit model, Gs2.Unity.Gs2Limit.Model.EzLimitModel? source)
         {
             if (source != null)
             {

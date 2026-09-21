@@ -128,7 +128,7 @@ namespace GS2Studio.Generated.CurrencyType
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly ShowcaseLoader __showcaseShopCurrencyNamespaceShowcaseLoader;
+        private readonly Gs2Bind.Gs2Showcase.ShowcaseLoader __showcaseShopCurrencyNamespaceShowcaseLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -140,7 +140,7 @@ namespace GS2Studio.Generated.CurrencyType
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __showcaseShopCurrencyNamespaceShowcaseLoader = new ShowcaseLoader("ShopCurrency", _model.Id);
+            __showcaseShopCurrencyNamespaceShowcaseLoader = new Gs2Bind.Gs2Showcase.ShowcaseLoader("ShopCurrency", _model.Id);
         }
 
         /// <summary>

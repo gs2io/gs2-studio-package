@@ -289,7 +289,7 @@ namespace GS2Studio.Generated.CharacterRecruit
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new RateModelArrayLoader("CharacterRecruit").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("CharacterRecruit").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace GS2Studio.Generated.CharacterRecruit
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("CharacterRecruit");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("CharacterRecruit");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeCharacterRecruitMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -400,7 +400,7 @@ namespace GS2Studio.Generated.CharacterRecruit
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("CharacterRecruit");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("CharacterRecruit");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -420,7 +420,7 @@ namespace GS2Studio.Generated.CharacterRecruit
             ));
         }
 
-        private async Task ReconcileFromExchangeCharacterRecruitMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeCharacterRecruitMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -492,7 +492,7 @@ namespace GS2Studio.Generated.CharacterRecruit
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterRecruitBinder> BuildBinderFromExchangeCharacterRecruitMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<CharacterRecruitBinder> BuildBinderFromExchangeCharacterRecruitMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = CharacterRecruitBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterRecruitId) : new CharacterRecruitId(item.Name)));
             ApplyExchangeCharacterRecruitMasterItemTo(model, item);
@@ -501,7 +501,7 @@ namespace GS2Studio.Generated.CharacterRecruit
             return binder;
         }
 
-        private static void ApplyExchangeCharacterRecruitMasterItemTo(MutableCharacterRecruit model, EzRateModel item)
+        private static void ApplyExchangeCharacterRecruitMasterItemTo(MutableCharacterRecruit model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -510,12 +510,12 @@ namespace GS2Studio.Generated.CharacterRecruit
             _ = model;
         }
 
-        private CharacterRecruitId ExtractExchangeCharacterRecruitMasterIdentity(EzRateModel item)
+        private CharacterRecruitId ExtractExchangeCharacterRecruitMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(CharacterRecruitId) : new CharacterRecruitId(item.Name));
         }
 
-        private string? ExtractExchangeCharacterRecruitMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeCharacterRecruitMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeCharacterRecruitMasterIdentity(item);
             if (EqualityComparer<CharacterRecruitId>.Default.Equals(id, default)) return null;

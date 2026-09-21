@@ -277,10 +277,10 @@ namespace GS2Studio.Generated.Item
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new SimpleItemModelArrayLoader("Inventory", "Inventory").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("ItemGain").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("ItemSpend").Invalidate(_gs2, _session);
-            new SimpleItemArrayLoader("Inventory", "Inventory").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Inventory.SimpleItemModelArrayLoader("Inventory", "Inventory").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemGain").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemSpend").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Inventory.SimpleItemArrayLoader("Inventory", "Inventory").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace GS2Studio.Generated.Item
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new SimpleItemModelArrayLoader("Inventory", "Inventory");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelArrayLoader("Inventory", "Inventory");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromInventoryInventoryMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -391,7 +391,7 @@ namespace GS2Studio.Generated.Item
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new SimpleItemModelArrayLoader("Inventory", "Inventory");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelArrayLoader("Inventory", "Inventory");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -411,7 +411,7 @@ namespace GS2Studio.Generated.Item
             ));
         }
 
-        private async Task ReconcileFromInventoryInventoryMasterItems(IList<EzSimpleItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryInventoryMasterItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -483,7 +483,7 @@ namespace GS2Studio.Generated.Item
             if (!_disposed) SortBinders();
         }
 
-        private async Task<ItemBinder> BuildBinderFromInventoryInventoryMasterItem(EzSimpleItemModel item, CancellationToken cancellationToken)
+        private async Task<ItemBinder> BuildBinderFromInventoryInventoryMasterItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item, CancellationToken cancellationToken)
         {
             var model = ItemBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(ItemId) : new ItemId(item.Name)));
             ApplyInventoryInventoryMasterItemTo(model, item);
@@ -492,7 +492,7 @@ namespace GS2Studio.Generated.Item
             return binder;
         }
 
-        private static void ApplyInventoryInventoryMasterItemTo(MutableItem model, EzSimpleItemModel item)
+        private static void ApplyInventoryInventoryMasterItemTo(MutableItem model, Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -501,12 +501,12 @@ namespace GS2Studio.Generated.Item
             _ = model;
         }
 
-        private ItemId ExtractInventoryInventoryMasterIdentity(EzSimpleItemModel item)
+        private ItemId ExtractInventoryInventoryMasterIdentity(Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(ItemId) : new ItemId(item.Name));
         }
 
-        private string? ExtractInventoryInventoryMasterRowKey(EzSimpleItemModel item)
+        private string? ExtractInventoryInventoryMasterRowKey(Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item)
         {
             var id = ExtractInventoryInventoryMasterIdentity(item);
             if (EqualityComparer<ItemId>.Default.Equals(id, default)) return null;
@@ -528,7 +528,7 @@ namespace GS2Studio.Generated.Item
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("ItemGain");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemGain");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeItemGainMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -550,7 +550,7 @@ namespace GS2Studio.Generated.Item
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("ItemGain");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemGain");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -570,7 +570,7 @@ namespace GS2Studio.Generated.Item
             ));
         }
 
-        private async Task ReconcileFromExchangeItemGainMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeItemGainMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -642,7 +642,7 @@ namespace GS2Studio.Generated.Item
             if (!_disposed) SortBinders();
         }
 
-        private async Task<ItemBinder> BuildBinderFromExchangeItemGainMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<ItemBinder> BuildBinderFromExchangeItemGainMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = ItemBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(ItemId) : new ItemId(item.Name)));
             ApplyExchangeItemGainMasterItemTo(model, item);
@@ -651,7 +651,7 @@ namespace GS2Studio.Generated.Item
             return binder;
         }
 
-        private static void ApplyExchangeItemGainMasterItemTo(MutableItem model, EzRateModel item)
+        private static void ApplyExchangeItemGainMasterItemTo(MutableItem model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -660,12 +660,12 @@ namespace GS2Studio.Generated.Item
             _ = model;
         }
 
-        private ItemId ExtractExchangeItemGainMasterIdentity(EzRateModel item)
+        private ItemId ExtractExchangeItemGainMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(ItemId) : new ItemId(item.Name));
         }
 
-        private string? ExtractExchangeItemGainMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeItemGainMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeItemGainMasterIdentity(item);
             if (EqualityComparer<ItemId>.Default.Equals(id, default)) return null;
@@ -687,7 +687,7 @@ namespace GS2Studio.Generated.Item
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("ItemSpend");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemSpend");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeItemSpendMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -709,7 +709,7 @@ namespace GS2Studio.Generated.Item
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("ItemSpend");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemSpend");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -729,7 +729,7 @@ namespace GS2Studio.Generated.Item
             ));
         }
 
-        private async Task ReconcileFromExchangeItemSpendMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeItemSpendMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -801,7 +801,7 @@ namespace GS2Studio.Generated.Item
             if (!_disposed) SortBinders();
         }
 
-        private async Task<ItemBinder> BuildBinderFromExchangeItemSpendMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<ItemBinder> BuildBinderFromExchangeItemSpendMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = ItemBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(ItemId) : new ItemId(item.Name)));
             ApplyExchangeItemSpendMasterItemTo(model, item);
@@ -810,7 +810,7 @@ namespace GS2Studio.Generated.Item
             return binder;
         }
 
-        private static void ApplyExchangeItemSpendMasterItemTo(MutableItem model, EzRateModel item)
+        private static void ApplyExchangeItemSpendMasterItemTo(MutableItem model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -819,12 +819,12 @@ namespace GS2Studio.Generated.Item
             _ = model;
         }
 
-        private ItemId ExtractExchangeItemSpendMasterIdentity(EzRateModel item)
+        private ItemId ExtractExchangeItemSpendMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(ItemId) : new ItemId(item.Name));
         }
 
-        private string? ExtractExchangeItemSpendMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeItemSpendMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeItemSpendMasterIdentity(item);
             if (EqualityComparer<ItemId>.Default.Equals(id, default)) return null;
@@ -846,7 +846,7 @@ namespace GS2Studio.Generated.Item
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new SimpleItemArrayLoader("Inventory", "Inventory");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemArrayLoader("Inventory", "Inventory");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromInventoryInventoryUserItems(items, attachChildSubscribe: false, cancellationToken);
@@ -868,7 +868,7 @@ namespace GS2Studio.Generated.Item
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new SimpleItemArrayLoader("Inventory", "Inventory");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemArrayLoader("Inventory", "Inventory");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -888,7 +888,7 @@ namespace GS2Studio.Generated.Item
             ));
         }
 
-        private async Task ReconcileFromInventoryInventoryUserItems(IList<EzSimpleItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryInventoryUserItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -960,7 +960,7 @@ namespace GS2Studio.Generated.Item
             if (!_disposed) SortBinders();
         }
 
-        private async Task<ItemBinder> BuildBinderFromInventoryInventoryUserItem(EzSimpleItem item, CancellationToken cancellationToken)
+        private async Task<ItemBinder> BuildBinderFromInventoryInventoryUserItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item, CancellationToken cancellationToken)
         {
             var model = ItemBinder.CreateModel((string.IsNullOrEmpty(item.ItemName) ? default(ItemId) : new ItemId(item.ItemName)));
             ApplyInventoryInventoryUserItemTo(model, item);
@@ -969,17 +969,17 @@ namespace GS2Studio.Generated.Item
             return binder;
         }
 
-        private static void ApplyInventoryInventoryUserItemTo(MutableItem model, EzSimpleItem item)
+        private static void ApplyInventoryInventoryUserItemTo(MutableItem model, Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item)
         {
             ItemBinder.ApplyUserdataInventoryInventorySimpleItemModel(model, item);
         }
 
-        private ItemId ExtractInventoryInventoryUserIdentity(EzSimpleItem item)
+        private ItemId ExtractInventoryInventoryUserIdentity(Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item)
         {
             return (string.IsNullOrEmpty(item.ItemName) ? default(ItemId) : new ItemId(item.ItemName));
         }
 
-        private string? ExtractInventoryInventoryUserRowKey(EzSimpleItem item)
+        private string? ExtractInventoryInventoryUserRowKey(Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item)
         {
             var id = ExtractInventoryInventoryUserIdentity(item);
             if (EqualityComparer<ItemId>.Default.Equals(id, default)) return null;

@@ -271,7 +271,7 @@ namespace GS2Studio.Generated.StoreProduct
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType).Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType).Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace GS2Studio.Generated.StoreProduct
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType);
+            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType);
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromShowcaseShopCurrencyMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -383,7 +383,7 @@ namespace GS2Studio.Generated.StoreProduct
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType);
+            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType);
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -403,7 +403,7 @@ namespace GS2Studio.Generated.StoreProduct
             ));
         }
 
-        private async Task ReconcileFromShowcaseShopCurrencyMasterItems(IList<EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromShowcaseShopCurrencyMasterItems(IList<Gs2.Unity.Gs2Showcase.Model.EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -475,7 +475,7 @@ namespace GS2Studio.Generated.StoreProduct
             if (!_disposed) SortBinders();
         }
 
-        private async Task<StoreProductBinder> BuildBinderFromShowcaseShopCurrencyMasterItem(EzDisplayItem item, CancellationToken cancellationToken)
+        private async Task<StoreProductBinder> BuildBinderFromShowcaseShopCurrencyMasterItem(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item, CancellationToken cancellationToken)
         {
             var model = StoreProductBinder.CreateModel(((item.SalesItem == null || string.IsNullOrEmpty(item.SalesItem.Name)) ? default(StoreProductId) : new StoreProductId(item.SalesItem.Name)));
             ApplyShowcaseShopCurrencyMasterItemTo(model, item);
@@ -484,17 +484,17 @@ namespace GS2Studio.Generated.StoreProduct
             return binder;
         }
 
-        private static void ApplyShowcaseShopCurrencyMasterItemTo(MutableStoreProduct model, EzDisplayItem item)
+        private static void ApplyShowcaseShopCurrencyMasterItemTo(MutableStoreProduct model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             StoreProductBinder.ApplyShowcaseShopCurrencyMasterItem(model, item);
         }
 
-        private StoreProductId ExtractShowcaseShopCurrencyMasterIdentity(EzDisplayItem item)
+        private StoreProductId ExtractShowcaseShopCurrencyMasterIdentity(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             return ((item.SalesItem == null || string.IsNullOrEmpty(item.SalesItem.Name)) ? default(StoreProductId) : new StoreProductId(item.SalesItem.Name));
         }
 
-        private string? ExtractShowcaseShopCurrencyMasterRowKey(EzDisplayItem item)
+        private string? ExtractShowcaseShopCurrencyMasterRowKey(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
             var id = ExtractShowcaseShopCurrencyMasterIdentity(item);
             if (EqualityComparer<StoreProductId>.Default.Equals(id, default)) return null;

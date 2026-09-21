@@ -277,9 +277,9 @@ namespace GS2Studio.Generated.Character
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new ItemModelArrayLoader("Character", "Character").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("CharacterTrain").Invalidate(_gs2, _session);
-            new ItemSetArrayLoader("Character", "Character").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Inventory.ItemModelArrayLoader("Character", "Character").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("CharacterTrain").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Inventory.ItemSetArrayLoader("Character", "Character").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -368,7 +368,7 @@ namespace GS2Studio.Generated.Character
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new ItemModelArrayLoader("Character", "Character");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemModelArrayLoader("Character", "Character");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromInventoryCharacterMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -390,7 +390,7 @@ namespace GS2Studio.Generated.Character
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new ItemModelArrayLoader("Character", "Character");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemModelArrayLoader("Character", "Character");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -410,7 +410,7 @@ namespace GS2Studio.Generated.Character
             ));
         }
 
-        private async Task ReconcileFromInventoryCharacterMasterItems(IList<EzItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryCharacterMasterItems(IList<Gs2.Unity.Gs2Inventory.Model.EzItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -482,7 +482,7 @@ namespace GS2Studio.Generated.Character
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterBinder> BuildBinderFromInventoryCharacterMasterItem(EzItemModel item, CancellationToken cancellationToken)
+        private async Task<CharacterBinder> BuildBinderFromInventoryCharacterMasterItem(Gs2.Unity.Gs2Inventory.Model.EzItemModel item, CancellationToken cancellationToken)
         {
             var model = CharacterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name)), string.Empty);
             ApplyInventoryCharacterMasterItemTo(model, item);
@@ -491,7 +491,7 @@ namespace GS2Studio.Generated.Character
             return binder;
         }
 
-        private static void ApplyInventoryCharacterMasterItemTo(MutableCharacter model, EzItemModel item)
+        private static void ApplyInventoryCharacterMasterItemTo(MutableCharacter model, Gs2.Unity.Gs2Inventory.Model.EzItemModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -500,12 +500,12 @@ namespace GS2Studio.Generated.Character
             _ = model;
         }
 
-        private CharacterId ExtractInventoryCharacterMasterIdentity(EzItemModel item)
+        private CharacterId ExtractInventoryCharacterMasterIdentity(Gs2.Unity.Gs2Inventory.Model.EzItemModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name));
         }
 
-        private string? ExtractInventoryCharacterMasterRowKey(EzItemModel item)
+        private string? ExtractInventoryCharacterMasterRowKey(Gs2.Unity.Gs2Inventory.Model.EzItemModel item)
         {
             var id = ExtractInventoryCharacterMasterIdentity(item);
             if (EqualityComparer<CharacterId>.Default.Equals(id, default)) return null;
@@ -527,7 +527,7 @@ namespace GS2Studio.Generated.Character
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("CharacterTrain");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("CharacterTrain");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeCharacterTrainMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -549,7 +549,7 @@ namespace GS2Studio.Generated.Character
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("CharacterTrain");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("CharacterTrain");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -569,7 +569,7 @@ namespace GS2Studio.Generated.Character
             ));
         }
 
-        private async Task ReconcileFromExchangeCharacterTrainMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeCharacterTrainMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -641,7 +641,7 @@ namespace GS2Studio.Generated.Character
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterBinder> BuildBinderFromExchangeCharacterTrainMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<CharacterBinder> BuildBinderFromExchangeCharacterTrainMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = CharacterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name)), string.Empty);
             ApplyExchangeCharacterTrainMasterItemTo(model, item);
@@ -650,7 +650,7 @@ namespace GS2Studio.Generated.Character
             return binder;
         }
 
-        private static void ApplyExchangeCharacterTrainMasterItemTo(MutableCharacter model, EzRateModel item)
+        private static void ApplyExchangeCharacterTrainMasterItemTo(MutableCharacter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -659,12 +659,12 @@ namespace GS2Studio.Generated.Character
             _ = model;
         }
 
-        private CharacterId ExtractExchangeCharacterTrainMasterIdentity(EzRateModel item)
+        private CharacterId ExtractExchangeCharacterTrainMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name));
         }
 
-        private string? ExtractExchangeCharacterTrainMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeCharacterTrainMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeCharacterTrainMasterIdentity(item);
             if (EqualityComparer<CharacterId>.Default.Equals(id, default)) return null;
@@ -686,7 +686,7 @@ namespace GS2Studio.Generated.Character
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new ItemSetArrayLoader("Character", "Character");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader("Character", "Character");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromInventoryCharacterUserItems(items, attachChildSubscribe: false, cancellationToken);
@@ -708,7 +708,7 @@ namespace GS2Studio.Generated.Character
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new ItemSetArrayLoader("Character", "Character");
+            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader("Character", "Character");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -728,7 +728,7 @@ namespace GS2Studio.Generated.Character
             ));
         }
 
-        private async Task ReconcileFromInventoryCharacterUserItems(IList<EzItemSet> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryCharacterUserItems(IList<Gs2.Unity.Gs2Inventory.Model.EzItemSet> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -800,7 +800,7 @@ namespace GS2Studio.Generated.Character
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterBinder> BuildBinderFromInventoryCharacterUserItem(EzItemSet item, CancellationToken cancellationToken)
+        private async Task<CharacterBinder> BuildBinderFromInventoryCharacterUserItem(Gs2.Unity.Gs2Inventory.Model.EzItemSet item, CancellationToken cancellationToken)
         {
             var model = CharacterBinder.CreateModel((string.IsNullOrEmpty(item.ItemName) ? default(CharacterId) : new CharacterId(item.ItemName)), item.ItemSetId);
             ApplyInventoryCharacterUserItemTo(model, item);
@@ -809,17 +809,17 @@ namespace GS2Studio.Generated.Character
             return binder;
         }
 
-        private static void ApplyInventoryCharacterUserItemTo(MutableCharacter model, EzItemSet item)
+        private static void ApplyInventoryCharacterUserItemTo(MutableCharacter model, Gs2.Unity.Gs2Inventory.Model.EzItemSet item)
         {
             CharacterBinder.ApplyUserdataInventoryCharacterItemModel(model, item);
         }
 
-        private CharacterId ExtractInventoryCharacterUserIdentity(EzItemSet item)
+        private CharacterId ExtractInventoryCharacterUserIdentity(Gs2.Unity.Gs2Inventory.Model.EzItemSet item)
         {
             return (string.IsNullOrEmpty(item.ItemName) ? default(CharacterId) : new CharacterId(item.ItemName));
         }
 
-        private string? ExtractInventoryCharacterUserRowKey(EzItemSet item)
+        private string? ExtractInventoryCharacterUserRowKey(Gs2.Unity.Gs2Inventory.Model.EzItemSet item)
         {
             var id = ExtractInventoryCharacterUserIdentity(item);
             if (EqualityComparer<CharacterId>.Default.Equals(id, default)) return null;

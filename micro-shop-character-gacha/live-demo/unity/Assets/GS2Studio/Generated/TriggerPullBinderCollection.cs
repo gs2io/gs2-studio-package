@@ -289,7 +289,7 @@ namespace GS2Studio.Generated.TriggerPull
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new RateModelArrayLoader("TriggerPull").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerPull").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace GS2Studio.Generated.TriggerPull
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("TriggerPull");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerPull");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeTriggerPullMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -400,7 +400,7 @@ namespace GS2Studio.Generated.TriggerPull
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("TriggerPull");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerPull");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -420,7 +420,7 @@ namespace GS2Studio.Generated.TriggerPull
             ));
         }
 
-        private async Task ReconcileFromExchangeTriggerPullMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeTriggerPullMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -492,7 +492,7 @@ namespace GS2Studio.Generated.TriggerPull
             if (!_disposed) SortBinders();
         }
 
-        private async Task<TriggerPullBinder> BuildBinderFromExchangeTriggerPullMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<TriggerPullBinder> BuildBinderFromExchangeTriggerPullMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = TriggerPullBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(TriggerPullId) : new TriggerPullId(item.Name)));
             ApplyExchangeTriggerPullMasterItemTo(model, item);
@@ -501,7 +501,7 @@ namespace GS2Studio.Generated.TriggerPull
             return binder;
         }
 
-        private static void ApplyExchangeTriggerPullMasterItemTo(MutableTriggerPull model, EzRateModel item)
+        private static void ApplyExchangeTriggerPullMasterItemTo(MutableTriggerPull model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -510,12 +510,12 @@ namespace GS2Studio.Generated.TriggerPull
             _ = model;
         }
 
-        private TriggerPullId ExtractExchangeTriggerPullMasterIdentity(EzRateModel item)
+        private TriggerPullId ExtractExchangeTriggerPullMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(TriggerPullId) : new TriggerPullId(item.Name));
         }
 
-        private string? ExtractExchangeTriggerPullMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeTriggerPullMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeTriggerPullMasterIdentity(item);
             if (EqualityComparer<TriggerPullId>.Default.Equals(id, default)) return null;

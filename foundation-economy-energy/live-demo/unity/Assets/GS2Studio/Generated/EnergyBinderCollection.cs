@@ -277,10 +277,10 @@ namespace GS2Studio.Generated.Energy
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new StaminaModelArrayLoader("Energy").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("EnergyRecover").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("EnergyConsume").Invalidate(_gs2, _session);
-            new StaminaArrayLoader("Energy").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Stamina.StaminaModelArrayLoader("Energy").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyRecover").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyConsume").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Stamina.StaminaArrayLoader("Energy").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace GS2Studio.Generated.Energy
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new StaminaModelArrayLoader("Energy");
+            var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaModelArrayLoader("Energy");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromStaminaEnergyMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -391,7 +391,7 @@ namespace GS2Studio.Generated.Energy
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new StaminaModelArrayLoader("Energy");
+            var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaModelArrayLoader("Energy");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -411,7 +411,7 @@ namespace GS2Studio.Generated.Energy
             ));
         }
 
-        private async Task ReconcileFromStaminaEnergyMasterItems(IList<EzStaminaModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromStaminaEnergyMasterItems(IList<Gs2.Unity.Gs2Stamina.Model.EzStaminaModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -483,7 +483,7 @@ namespace GS2Studio.Generated.Energy
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EnergyBinder> BuildBinderFromStaminaEnergyMasterItem(EzStaminaModel item, CancellationToken cancellationToken)
+        private async Task<EnergyBinder> BuildBinderFromStaminaEnergyMasterItem(Gs2.Unity.Gs2Stamina.Model.EzStaminaModel item, CancellationToken cancellationToken)
         {
             var model = EnergyBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EnergyId) : new EnergyId(item.Name)));
             ApplyStaminaEnergyMasterItemTo(model, item);
@@ -492,7 +492,7 @@ namespace GS2Studio.Generated.Energy
             return binder;
         }
 
-        private static void ApplyStaminaEnergyMasterItemTo(MutableEnergy model, EzStaminaModel item)
+        private static void ApplyStaminaEnergyMasterItemTo(MutableEnergy model, Gs2.Unity.Gs2Stamina.Model.EzStaminaModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -501,12 +501,12 @@ namespace GS2Studio.Generated.Energy
             _ = model;
         }
 
-        private EnergyId ExtractStaminaEnergyMasterIdentity(EzStaminaModel item)
+        private EnergyId ExtractStaminaEnergyMasterIdentity(Gs2.Unity.Gs2Stamina.Model.EzStaminaModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(EnergyId) : new EnergyId(item.Name));
         }
 
-        private string? ExtractStaminaEnergyMasterRowKey(EzStaminaModel item)
+        private string? ExtractStaminaEnergyMasterRowKey(Gs2.Unity.Gs2Stamina.Model.EzStaminaModel item)
         {
             var id = ExtractStaminaEnergyMasterIdentity(item);
             if (EqualityComparer<EnergyId>.Default.Equals(id, default)) return null;
@@ -528,7 +528,7 @@ namespace GS2Studio.Generated.Energy
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("EnergyRecover");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyRecover");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeEnergyRecoverMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -550,7 +550,7 @@ namespace GS2Studio.Generated.Energy
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("EnergyRecover");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyRecover");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -570,7 +570,7 @@ namespace GS2Studio.Generated.Energy
             ));
         }
 
-        private async Task ReconcileFromExchangeEnergyRecoverMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeEnergyRecoverMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -642,7 +642,7 @@ namespace GS2Studio.Generated.Energy
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EnergyBinder> BuildBinderFromExchangeEnergyRecoverMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<EnergyBinder> BuildBinderFromExchangeEnergyRecoverMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = EnergyBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EnergyId) : new EnergyId(item.Name)));
             ApplyExchangeEnergyRecoverMasterItemTo(model, item);
@@ -651,7 +651,7 @@ namespace GS2Studio.Generated.Energy
             return binder;
         }
 
-        private static void ApplyExchangeEnergyRecoverMasterItemTo(MutableEnergy model, EzRateModel item)
+        private static void ApplyExchangeEnergyRecoverMasterItemTo(MutableEnergy model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -660,12 +660,12 @@ namespace GS2Studio.Generated.Energy
             _ = model;
         }
 
-        private EnergyId ExtractExchangeEnergyRecoverMasterIdentity(EzRateModel item)
+        private EnergyId ExtractExchangeEnergyRecoverMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(EnergyId) : new EnergyId(item.Name));
         }
 
-        private string? ExtractExchangeEnergyRecoverMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeEnergyRecoverMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeEnergyRecoverMasterIdentity(item);
             if (EqualityComparer<EnergyId>.Default.Equals(id, default)) return null;
@@ -687,7 +687,7 @@ namespace GS2Studio.Generated.Energy
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("EnergyConsume");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyConsume");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeEnergyConsumeMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -709,7 +709,7 @@ namespace GS2Studio.Generated.Energy
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("EnergyConsume");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyConsume");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -729,7 +729,7 @@ namespace GS2Studio.Generated.Energy
             ));
         }
 
-        private async Task ReconcileFromExchangeEnergyConsumeMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeEnergyConsumeMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -801,7 +801,7 @@ namespace GS2Studio.Generated.Energy
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EnergyBinder> BuildBinderFromExchangeEnergyConsumeMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<EnergyBinder> BuildBinderFromExchangeEnergyConsumeMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = EnergyBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EnergyId) : new EnergyId(item.Name)));
             ApplyExchangeEnergyConsumeMasterItemTo(model, item);
@@ -810,7 +810,7 @@ namespace GS2Studio.Generated.Energy
             return binder;
         }
 
-        private static void ApplyExchangeEnergyConsumeMasterItemTo(MutableEnergy model, EzRateModel item)
+        private static void ApplyExchangeEnergyConsumeMasterItemTo(MutableEnergy model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -819,12 +819,12 @@ namespace GS2Studio.Generated.Energy
             _ = model;
         }
 
-        private EnergyId ExtractExchangeEnergyConsumeMasterIdentity(EzRateModel item)
+        private EnergyId ExtractExchangeEnergyConsumeMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(EnergyId) : new EnergyId(item.Name));
         }
 
-        private string? ExtractExchangeEnergyConsumeMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeEnergyConsumeMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeEnergyConsumeMasterIdentity(item);
             if (EqualityComparer<EnergyId>.Default.Equals(id, default)) return null;
@@ -846,7 +846,7 @@ namespace GS2Studio.Generated.Energy
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new StaminaArrayLoader("Energy");
+            var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaArrayLoader("Energy");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromStaminaEnergyUserItems(items, attachChildSubscribe: false, cancellationToken);
@@ -868,7 +868,7 @@ namespace GS2Studio.Generated.Energy
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new StaminaArrayLoader("Energy");
+            var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaArrayLoader("Energy");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -888,7 +888,7 @@ namespace GS2Studio.Generated.Energy
             ));
         }
 
-        private async Task ReconcileFromStaminaEnergyUserItems(IList<EzStamina> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromStaminaEnergyUserItems(IList<Gs2.Unity.Gs2Stamina.Model.EzStamina> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -960,7 +960,7 @@ namespace GS2Studio.Generated.Energy
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EnergyBinder> BuildBinderFromStaminaEnergyUserItem(EzStamina item, CancellationToken cancellationToken)
+        private async Task<EnergyBinder> BuildBinderFromStaminaEnergyUserItem(Gs2.Unity.Gs2Stamina.Model.EzStamina item, CancellationToken cancellationToken)
         {
             var model = EnergyBinder.CreateModel((string.IsNullOrEmpty(item.StaminaName) ? default(EnergyId) : new EnergyId(item.StaminaName)));
             ApplyStaminaEnergyUserItemTo(model, item);
@@ -969,17 +969,17 @@ namespace GS2Studio.Generated.Energy
             return binder;
         }
 
-        private static void ApplyStaminaEnergyUserItemTo(MutableEnergy model, EzStamina item)
+        private static void ApplyStaminaEnergyUserItemTo(MutableEnergy model, Gs2.Unity.Gs2Stamina.Model.EzStamina item)
         {
             EnergyBinder.ApplyUserdataStaminaEnergyStaminaModel(model, item);
         }
 
-        private EnergyId ExtractStaminaEnergyUserIdentity(EzStamina item)
+        private EnergyId ExtractStaminaEnergyUserIdentity(Gs2.Unity.Gs2Stamina.Model.EzStamina item)
         {
             return (string.IsNullOrEmpty(item.StaminaName) ? default(EnergyId) : new EnergyId(item.StaminaName));
         }
 
-        private string? ExtractStaminaEnergyUserRowKey(EzStamina item)
+        private string? ExtractStaminaEnergyUserRowKey(Gs2.Unity.Gs2Stamina.Model.EzStamina item)
         {
             var id = ExtractStaminaEnergyUserIdentity(item);
             if (EqualityComparer<EnergyId>.Default.Equals(id, default)) return null;

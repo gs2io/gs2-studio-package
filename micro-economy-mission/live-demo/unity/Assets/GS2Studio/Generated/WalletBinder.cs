@@ -123,7 +123,7 @@ namespace GS2Studio.Generated.Wallet
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly WalletLoader __userdataMoney2WalletLoader;
+        private readonly Gs2Bind.Gs2Money2.WalletLoader __userdataMoney2WalletLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -136,7 +136,7 @@ namespace GS2Studio.Generated.Wallet
             int slot
         ) : base(model, gs2, session)
         {
-            __userdataMoney2WalletLoader = new WalletLoader("Currency", slot);
+            __userdataMoney2WalletLoader = new Gs2Bind.Gs2Money2.WalletLoader("Currency", slot);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace GS2Studio.Generated.Wallet
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataMoney2Wallet(IMutableWallet model, EzWallet? source)
+        public static void ApplyUserdataMoney2Wallet(IMutableWallet model, Gs2.Unity.Gs2Money2.Model.EzWallet? source)
         {
             if (source != null)
             {

@@ -135,17 +135,17 @@ namespace GS2Studio.Generated.UsageLimitCounter
         private bool _disposed;
         internal bool _mounted;
 
-        private readonly RateModelAcquireActionLoader __transactionAcquireActionLoader;
-        private readonly RateModelConsumeActionLoader __transactionConsumeActionLoader;
-        private readonly RateModelLoader __exchangeLimitResetNamespaceRateModelLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireAction2Loader;
-        private readonly RateModelLoader __exchangeLimitFreeUseNamespaceRateModelLoader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireAction3Loader;
-        private readonly RateModelAcquireActionLoader __transactionAcquireAction4Loader;
-        private readonly RateModelConsumeActionLoader __transactionConsumeAction2Loader;
-        private readonly RateModelLoader __exchangeLimitAdUseNamespaceRateModelLoader;
-        private readonly RateModelConsumeActionLoader __transactionConsumeAction3Loader;
-        private readonly CounterLoader __userdataLimitLimitLimitModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeLimitResetNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireAction2Loader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeLimitFreeUseNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireAction3Loader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireAction4Loader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeAction2Loader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeLimitAdUseNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeAction3Loader;
+        private readonly Gs2Bind.Gs2Limit.CounterLoader __userdataLimitLimitLimitModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -157,17 +157,17 @@ namespace GS2Studio.Generated.UsageLimitCounter
             IGameSession session
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new RateModelAcquireActionLoader("LimitReset", _model.Id, 1);
-            __transactionConsumeActionLoader = new RateModelConsumeActionLoader("LimitAdUse", _model.Id, 0);
-            __exchangeLimitResetNamespaceRateModelLoader = new RateModelLoader("LimitReset", _model.Id);
-            __transactionAcquireAction2Loader = new RateModelAcquireActionLoader("LimitReset", _model.Id, 3);
-            __exchangeLimitFreeUseNamespaceRateModelLoader = new RateModelLoader("LimitFreeUse", _model.Id);
-            __transactionAcquireAction3Loader = new RateModelAcquireActionLoader("LimitReset", _model.Id, 0);
-            __transactionAcquireAction4Loader = new RateModelAcquireActionLoader("LimitReset", _model.Id, 2);
-            __transactionConsumeAction2Loader = new RateModelConsumeActionLoader("LimitFreeUse", _model.Id, 0);
-            __exchangeLimitAdUseNamespaceRateModelLoader = new RateModelLoader("LimitAdUse", _model.Id);
-            __transactionConsumeAction3Loader = new RateModelConsumeActionLoader("LimitAdUse", _model.Id, 1);
-            __userdataLimitLimitLimitModelLoader = new CounterLoader("Limit", _model.Limit, _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", _model.Id, 1);
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("LimitAdUse", _model.Id, 0);
+            __exchangeLimitResetNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("LimitReset", _model.Id);
+            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", _model.Id, 3);
+            __exchangeLimitFreeUseNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("LimitFreeUse", _model.Id);
+            __transactionAcquireAction3Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", _model.Id, 0);
+            __transactionAcquireAction4Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", _model.Id, 2);
+            __transactionConsumeAction2Loader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("LimitFreeUse", _model.Id, 0);
+            __exchangeLimitAdUseNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("LimitAdUse", _model.Id);
+            __transactionConsumeAction3Loader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("LimitAdUse", _model.Id, 1);
+            __userdataLimitLimitLimitModelLoader = new Gs2Bind.Gs2Limit.CounterLoader("Limit", _model.Limit, _model.Id);
         }
 
         /// <summary>
@@ -550,7 +550,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
         /// properties when <c>source</c> is null. <c>MountAsync</c>,
         /// <c>Subscribe</c> and external stubs all route through this method.
         /// </summary>
-        public static void ApplyUserdataLimitLimitLimitModel(IMutableUsageLimitCounter model, EzCounter? source)
+        public static void ApplyUserdataLimitLimitLimitModel(IMutableUsageLimitCounter model, Gs2.Unity.Gs2Limit.Model.EzCounter? source)
         {
             if (source != null)
             {

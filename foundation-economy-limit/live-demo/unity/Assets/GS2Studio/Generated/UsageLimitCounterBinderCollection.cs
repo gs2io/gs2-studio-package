@@ -299,10 +299,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new RateModelArrayLoader("LimitReset").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("LimitFreeUse").Invalidate(_gs2, _session);
-            new RateModelArrayLoader("LimitAdUse").Invalidate(_gs2, _session);
-            new CounterArrayLoader("Limit").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitReset").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitFreeUse").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitAdUse").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Limit.CounterArrayLoader("Limit").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("LimitReset");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitReset");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeLimitResetMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -414,7 +414,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("LimitReset");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitReset");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -434,7 +434,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ));
         }
 
-        private async Task ReconcileFromExchangeLimitResetMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeLimitResetMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -506,7 +506,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitResetMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitResetMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
             ApplyExchangeLimitResetMasterItemTo(model, item);
@@ -515,7 +515,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             return binder;
         }
 
-        private static void ApplyExchangeLimitResetMasterItemTo(MutableUsageLimitCounter model, EzRateModel item)
+        private static void ApplyExchangeLimitResetMasterItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -524,12 +524,12 @@ namespace GS2Studio.Generated.UsageLimitCounter
             _ = model;
         }
 
-        private UsageLimitCounterId ExtractExchangeLimitResetMasterIdentity(EzRateModel item)
+        private UsageLimitCounterId ExtractExchangeLimitResetMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name));
         }
 
-        private string? ExtractExchangeLimitResetMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeLimitResetMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeLimitResetMasterIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;
@@ -552,7 +552,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("LimitFreeUse");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitFreeUse");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeLimitFreeUseMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -574,7 +574,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("LimitFreeUse");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitFreeUse");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -594,7 +594,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ));
         }
 
-        private async Task ReconcileFromExchangeLimitFreeUseMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeLimitFreeUseMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -666,7 +666,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitFreeUseMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitFreeUseMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
             ApplyExchangeLimitFreeUseMasterItemTo(model, item);
@@ -675,7 +675,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             return binder;
         }
 
-        private static void ApplyExchangeLimitFreeUseMasterItemTo(MutableUsageLimitCounter model, EzRateModel item)
+        private static void ApplyExchangeLimitFreeUseMasterItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -684,12 +684,12 @@ namespace GS2Studio.Generated.UsageLimitCounter
             _ = model;
         }
 
-        private UsageLimitCounterId ExtractExchangeLimitFreeUseMasterIdentity(EzRateModel item)
+        private UsageLimitCounterId ExtractExchangeLimitFreeUseMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name));
         }
 
-        private string? ExtractExchangeLimitFreeUseMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeLimitFreeUseMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeLimitFreeUseMasterIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;
@@ -712,7 +712,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new RateModelArrayLoader("LimitAdUse");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitAdUse");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromExchangeLimitAdUseMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -734,7 +734,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new RateModelArrayLoader("LimitAdUse");
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitAdUse");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -754,7 +754,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ));
         }
 
-        private async Task ReconcileFromExchangeLimitAdUseMasterItems(IList<EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeLimitAdUseMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -826,7 +826,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitAdUseMasterItem(EzRateModel item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitAdUseMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
             ApplyExchangeLimitAdUseMasterItemTo(model, item);
@@ -835,7 +835,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             return binder;
         }
 
-        private static void ApplyExchangeLimitAdUseMasterItemTo(MutableUsageLimitCounter model, EzRateModel item)
+        private static void ApplyExchangeLimitAdUseMasterItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -844,12 +844,12 @@ namespace GS2Studio.Generated.UsageLimitCounter
             _ = model;
         }
 
-        private UsageLimitCounterId ExtractExchangeLimitAdUseMasterIdentity(EzRateModel item)
+        private UsageLimitCounterId ExtractExchangeLimitAdUseMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name));
         }
 
-        private string? ExtractExchangeLimitAdUseMasterRowKey(EzRateModel item)
+        private string? ExtractExchangeLimitAdUseMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
             var id = ExtractExchangeLimitAdUseMasterIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;
@@ -872,7 +872,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new CounterArrayLoader("Limit");
+            var arrayLoader = new Gs2Bind.Gs2Limit.CounterArrayLoader("Limit");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromLimitLimitUserItems(items, attachChildSubscribe: false, cancellationToken);
@@ -894,7 +894,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new CounterArrayLoader("Limit");
+            var arrayLoader = new Gs2Bind.Gs2Limit.CounterArrayLoader("Limit");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -914,7 +914,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ));
         }
 
-        private async Task ReconcileFromLimitLimitUserItems(IList<EzCounter> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromLimitLimitUserItems(IList<Gs2.Unity.Gs2Limit.Model.EzCounter> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -986,7 +986,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromLimitLimitUserItem(EzCounter item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder> BuildBinderFromLimitLimitUserItem(Gs2.Unity.Gs2Limit.Model.EzCounter item, CancellationToken cancellationToken)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
             ApplyLimitLimitUserItemTo(model, item);
@@ -995,18 +995,18 @@ namespace GS2Studio.Generated.UsageLimitCounter
             return binder;
         }
 
-        private static void ApplyLimitLimitUserItemTo(MutableUsageLimitCounter model, EzCounter item)
+        private static void ApplyLimitLimitUserItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Limit.Model.EzCounter item)
         {
             _ = item;
             _ = model;
         }
 
-        private UsageLimitCounterId ExtractLimitLimitUserIdentity(EzCounter item)
+        private UsageLimitCounterId ExtractLimitLimitUserIdentity(Gs2.Unity.Gs2Limit.Model.EzCounter item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name));
         }
 
-        private string? ExtractLimitLimitUserRowKey(EzCounter item)
+        private string? ExtractLimitLimitUserRowKey(Gs2.Unity.Gs2Limit.Model.EzCounter item)
         {
             var id = ExtractLimitLimitUserIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;

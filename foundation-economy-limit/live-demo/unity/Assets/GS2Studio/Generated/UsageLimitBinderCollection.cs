@@ -268,7 +268,7 @@ namespace GS2Studio.Generated.UsageLimit
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new LimitModelArrayLoader("Limit").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Limit.LimitModelArrayLoader("Limit").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace GS2Studio.Generated.UsageLimit
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new LimitModelArrayLoader("Limit");
+            var arrayLoader = new Gs2Bind.Gs2Limit.LimitModelArrayLoader("Limit");
             var items = await arrayLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             await ReconcileFromLimitLimitMasterItems(items, attachChildSubscribe: false, cancellationToken);
@@ -379,7 +379,7 @@ namespace GS2Studio.Generated.UsageLimit
             };
             _onChange = notify;
             foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new LimitModelArrayLoader("Limit");
+            var arrayLoader = new Gs2Bind.Gs2Limit.LimitModelArrayLoader("Limit");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,
@@ -399,7 +399,7 @@ namespace GS2Studio.Generated.UsageLimit
             ));
         }
 
-        private async Task ReconcileFromLimitLimitMasterItems(IList<EzLimitModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromLimitLimitMasterItems(IList<Gs2.Unity.Gs2Limit.Model.EzLimitModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
         {
             var seen = new HashSet<string>();
             foreach (var item in items)
@@ -471,7 +471,7 @@ namespace GS2Studio.Generated.UsageLimit
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitBinder> BuildBinderFromLimitLimitMasterItem(EzLimitModel item, CancellationToken cancellationToken)
+        private async Task<UsageLimitBinder> BuildBinderFromLimitLimitMasterItem(Gs2.Unity.Gs2Limit.Model.EzLimitModel item, CancellationToken cancellationToken)
         {
             var model = UsageLimitBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitId) : new UsageLimitId(item.Name)));
             ApplyLimitLimitMasterItemTo(model, item);
@@ -480,7 +480,7 @@ namespace GS2Studio.Generated.UsageLimit
             return binder;
         }
 
-        private static void ApplyLimitLimitMasterItemTo(MutableUsageLimit model, EzLimitModel item)
+        private static void ApplyLimitLimitMasterItemTo(MutableUsageLimit model, Gs2.Unity.Gs2Limit.Model.EzLimitModel item)
         {
             // This loader carries no master-item field assignments; reconcile manages
             // membership only (per-element field changes are tracked by each element
@@ -489,12 +489,12 @@ namespace GS2Studio.Generated.UsageLimit
             _ = model;
         }
 
-        private UsageLimitId ExtractLimitLimitMasterIdentity(EzLimitModel item)
+        private UsageLimitId ExtractLimitLimitMasterIdentity(Gs2.Unity.Gs2Limit.Model.EzLimitModel item)
         {
             return (string.IsNullOrEmpty(item.Name) ? default(UsageLimitId) : new UsageLimitId(item.Name));
         }
 
-        private string? ExtractLimitLimitMasterRowKey(EzLimitModel item)
+        private string? ExtractLimitLimitMasterRowKey(Gs2.Unity.Gs2Limit.Model.EzLimitModel item)
         {
             var id = ExtractLimitLimitMasterIdentity(item);
             if (EqualityComparer<UsageLimitId>.Default.Equals(id, default)) return null;
