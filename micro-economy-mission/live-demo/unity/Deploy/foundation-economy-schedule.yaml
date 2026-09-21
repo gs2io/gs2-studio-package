@@ -1,0 +1,10 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ScheduleNamespace_Schedule:
+    Type: "GS2::Schedule::Namespace"
+    Properties:
+      Name: "Schedule"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

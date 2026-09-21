@@ -1,0 +1,17 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  Money2Namespace_Currency:
+    Type: "GS2::Money2::Namespace"
+    Properties:
+      CurrencyUsagePriority: "PrioritizeFree"
+      Name: "Currency"
+      PlatformSetting:
+        AppleAppStore: {}
+        Fake:
+          AcceptFakeReceipt: "Reject"
+        GooglePlay: {}
+      SharedFreeCurrency: false
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M2ZFVBD5F4WH99KY5JTY205D",
+            "typeName": "MissionCounter"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "416aca15-f598-5b6e-b7f9-e192c3abdd14",
+  "location": {
+    "modelName": "RateModel",
+    "service": "exchange"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2ZFVBD5F4WH99KY5JTY205D",
+    "typeName": "MissionCounter"
+  }
+}

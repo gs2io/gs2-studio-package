@@ -1,0 +1,32 @@
+{
+  "id": "micro-economy-mission-demo",
+  "name": "micro-economy-mission-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "micro-economy-mission": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the live demo's reset settings, the one counter it shows, the four missions that read it, the two groups they belong to, and the press that advances the counter. The rewards land in the currency package's wallet.",
+      "ja": "ライブデモ用のリセット設定、1つのカウンター、それを見る4つのミッションと2つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
+    },
+    "domainTypes": {
+      "dt_01M2ZFVBD5YJVNDAMVXVY17FN0": {
+        "description": {
+          "en": "Adds the free currency a demo mission deposits when it is claimed.",
+          "ja": "デモのミッションに、完了時へ付与する無償通貨の額を足します。"
+        },
+        "label": {
+          "en": "Mission",
+          "ja": "ミッション"
+        }
+      }
+    },
+    "label": {
+      "en": "Missions (demo data)",
+      "ja": "ミッション（デモデータ）"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M2ZFVBD52YMSZTJ1FXDPZMZ8",
+  "kind": "overlay",
+  "name": "MissionSetting",
+  "renamedInheritedProperties": {},
+  "singleEntry": true,
+  "source": {
+    "directSourcePackageId": "micro-economy-mission",
+    "directSourceTypeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV",
+    "sourcePackageId": "micro-economy-mission",
+    "sourceTypeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV"
+  }
+}

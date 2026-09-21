@@ -1,0 +1,47 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "counter",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M2ZFVBD5F4WH99KY5JTY205D",
+                  "typeName": "MissionCounter"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          },
+          {
+            "parameterName": "value",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "IncreaseMissionCounter",
+        "transformPackageId": "micro-economy-mission"
+      }
+    ]
+  },
+  "id": "38a345d7-aa68-5058-a594-c6bec112e7ca",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2ZFVBD5F4WH99KY5JTY205D",
+    "typeName": "MissionCounter"
+  }
+}

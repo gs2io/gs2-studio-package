@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-mission-demo",
+  "types": {
+    "Mission": {
+      "id": "dt_01M2ZFVBD5YJVNDAMVXVY17FN0",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-mission",
+      "canonicalTypeId": "dt_P8YA8929576H08C2Q4YBE5KJXT"
+    },
+    "MissionCollection": {
+      "id": "dt_01M2ZFVBD53M112JMGZPCW4JG8",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-mission",
+      "canonicalTypeId": "dt_ZXWN4GKT975S371YFYF3E1DRZ0"
+    },
+    "MissionCounter": {
+      "id": "dt_01M2ZFVBD5F4WH99KY5JTY205D",
+      "singleEntry": false,
+      "delegatedActions": {
+        "Advance": "resource:micro-economy-mission-demo:masterData:416aca15-f598-5b6e-b7f9-e192c3abdd14::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "micro-economy-mission",
+      "canonicalTypeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE"
+    },
+    "MissionSetting": {
+      "id": "dt_01M2ZFVBD52YMSZTJ1FXDPZMZ8",
+      "singleEntry": true,
+      "canonicalPackageId": "micro-economy-mission",
+      "canonicalTypeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV"
+    }
+  },
+  "masterDataResources": {
+    "exchange.Namespace": "b7c66c9c-661c-51ff-a362-5256de55f7da",
+    "exchange.RateModel": "416aca15-f598-5b6e-b7f9-e192c3abdd14",
+    "transaction.AcquireAction": "38a345d7-aa68-5058-a594-c6bec112e7ca"
+  },
+  "transforms": {}
+}

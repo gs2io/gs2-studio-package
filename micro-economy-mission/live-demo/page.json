@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "MissionCounter#One counter, four windows": {
+      "key": {
+        "id": "counter"
+      },
+      "rows": [
+        "MissionCounterTodayValueLabel",
+        "MissionCounterWeeklyValueLabel",
+        "MissionCounterMonthlyValueLabel",
+        "MissionCounterTotalValueLabel",
+        "MissionCounterAdvanceButton"
+      ]
+    },
+    "MissionCollection#Two groups, one counter": {
+      "axis": "MissionMissionMaster",
+      "rows": ["MissionCollectionResetLabel"]
+    },
+    "Mission#Career missions — claimed once and for all": {
+      "scope": {
+        "missionCollection": "career"
+      },
+      "rows": ["MissionBriefLabel", "MissionClaimButton", "MissionClaimedLabel"],
+      "toggles": {
+        "MissionClaimUnavailableActiveToggle": ["MissionClaimButton"],
+        "MissionUnclaimedActiveToggle": ["MissionClaimedLabel"]
+      }
+    },
+    "Mission#Daily mission — claimable again tomorrow": {
+      "scope": {
+        "missionCollection": "daily"
+      },
+      "rows": ["MissionBriefLabel", "MissionClaimButton", "MissionClaimedLabel"],
+      "toggles": {
+        "MissionClaimUnavailableActiveToggle": ["MissionClaimButton"],
+        "MissionUnclaimedActiveToggle": ["MissionClaimedLabel"]
+      }
+    },
+    "Wallet#Where a claim lands": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "StoreProduct": {
+      "rows": []
+    },
+    "Schedule": {
+      "rows": []
+    },
+    "Trigger": {
+      "rows": []
+    }
+  }
+}

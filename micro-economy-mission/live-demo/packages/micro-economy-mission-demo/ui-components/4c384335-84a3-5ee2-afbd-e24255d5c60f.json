@@ -1,0 +1,99 @@
+{
+  "id": "4c384335-84a3-5ee2-afbd-e24255d5c60f",
+  "items": [
+    {
+      "componentClassName": "BriefLabel",
+      "id": "536d68c6-78ba-5950-b018-13e3f9377923",
+      "kind": "templateLabel",
+      "name": "Mission",
+      "sources": [
+        {
+          "key": "target",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_JW1ZWH5B4R6FXJM3X2K41NRZ6P"
+          }
+        },
+        {
+          "key": "reward",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M2ZFVBD56WH75D9RY8Y1H5T0"
+          }
+        }
+      ],
+      "template": "Wants {target} on the counter. Pays {reward} free currency."
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ClaimButton",
+      "delegatedActionKey": "resource:micro-economy-mission:masterData:97e2eb72-ce85-4fdd-8c8d-01bcfdd8498b::Gs2Mission:MissionTaskModel.Complete",
+      "id": "032975ab-e602-506a-9912-677a52917155",
+      "kind": "buttonAction",
+      "name": "Mission"
+    },
+    {
+      "componentClassName": "ClaimedLabel",
+      "id": "709140f9-db43-59d4-885a-cbfa796b7e26",
+      "kind": "templateLabel",
+      "name": "Mission",
+      "sources": [
+        {
+          "key": "reward",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M2ZFVBD56WH75D9RY8Y1H5T0"
+          }
+        }
+      ],
+      "template": "Claimed. {reward} free currency was paid."
+    },
+    {
+      "componentClassName": "ClaimUnavailableActiveToggle",
+      "condition": {
+        "children": [
+          {
+            "child": {
+              "kind": "truthy",
+              "source": {
+                "kind": "property",
+                "propertyId": "prop_13Z46E8S0DVQMD9QXBE6CDS0CF"
+              }
+            },
+            "kind": "not"
+          },
+          {
+            "kind": "truthy",
+            "source": {
+              "kind": "property",
+              "propertyId": "prop_EV356KV2B8PS2XDNDGM7JRFDSC"
+            }
+          }
+        ],
+        "kind": "or"
+      },
+      "id": "b2e6dc48-37eb-51a4-950c-35441932665d",
+      "kind": "activeToggle",
+      "name": "Mission"
+    },
+    {
+      "componentClassName": "UnclaimedActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_EV356KV2B8PS2XDNDGM7JRFDSC"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "0503415e-3806-53b5-8dbf-a6ecb36b9771",
+      "kind": "activeToggle",
+      "name": "Mission"
+    }
+  ],
+  "name": "Mission",
+  "targetDomainType": "Mission",
+  "targetDomainTypeId": "dt_01M2ZFVBD5YJVNDAMVXVY17FN0"
+}

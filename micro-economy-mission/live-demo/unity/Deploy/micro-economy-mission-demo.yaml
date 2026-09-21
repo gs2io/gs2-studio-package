@@ -1,0 +1,30 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_MissionAdvance:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "MissionAdvance"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "counter"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Mission:IncreaseCounterByUserId"
+                request: "{\"namespaceName\":\"Mission\",\"counterName\":\"counter\",\"userId\":\"#{userId}\",\"value\":1}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_MissionAdvance"
+  ExchangeNamespace_MissionAdvance:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "MissionAdvance"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

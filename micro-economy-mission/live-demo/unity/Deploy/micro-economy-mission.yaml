@@ -1,0 +1,81 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  MissionCurrentMissionMaster_Mission:
+    Type: "GS2::Mission::CurrentMissionMaster"
+    Properties:
+      NamespaceName: "Mission"
+      Settings:
+        version: "2019-05-28"
+        groups:
+          - completeNotificationNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:Mission"
+            name: "career"
+            resetType: "notReset"
+            tasks:
+              - name: "career1"
+                targetCounter:
+                  counterName: "counter"
+                  value: 1
+                verifyCompleteType: "counter"
+                completeAcquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":10}]}"
+              - name: "career3"
+                targetCounter:
+                  counterName: "counter"
+                  value: 3
+                verifyCompleteType: "counter"
+                completeAcquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":30}]}"
+              - name: "career5"
+                targetCounter:
+                  counterName: "counter"
+                  value: 5
+                verifyCompleteType: "counter"
+                completeAcquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":50}]}"
+          - completeNotificationNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:Mission"
+            name: "daily"
+            resetHour: 0
+            resetType: "daily"
+            tasks:
+              - name: "daily2"
+                targetCounter:
+                  counterName: "counter"
+                  value: 2
+                verifyCompleteType: "counter"
+                completeAcquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":20}]}"
+        counters:
+          - name: "counter"
+            scopes:
+              - resetHour: 0
+                resetType: "daily"
+                scopeType: "resetTiming"
+              - resetDayOfWeek: "monday"
+                resetHour: 0
+                resetType: "weekly"
+                scopeType: "resetTiming"
+              - resetDayOfMonth: 1
+                resetHour: 0
+                resetType: "monthly"
+                scopeType: "resetTiming"
+              - resetType: "notReset"
+                scopeType: "resetTiming"
+      Mode: "direct"
+    DependsOn:
+      - "MissionNamespace_Mission"
+  MissionNamespace_Mission:
+    Type: "GS2::Mission::Namespace"
+    Properties:
+      CompleteNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      Name: "Mission"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

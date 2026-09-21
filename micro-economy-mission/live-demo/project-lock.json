@@ -1,0 +1,35 @@
+{
+  "entries": [
+    {
+      "commitSha": "a1ca04fbbbf558e6943a2e0428bffa4b1be1b47c",
+      "integrity": "sha256-5OTWgUeC6Tjf8F86Mgn5pYkdPvCuAOZHnJLdcH9diow=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "a1ca04fbbbf558e6943a2e0428bffa4b1be1b47c",
+      "integrity": "sha256-5OTWgUeC6Tjf8F86Mgn5pYkdPvCuAOZHnJLdcH9diow=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/packages/foundation-economy-schedule",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "a1ca04fbbbf558e6943a2e0428bffa4b1be1b47c",
+      "integrity": "sha256-5OTWgUeC6Tjf8F86Mgn5pYkdPvCuAOZHnJLdcH9diow=",
+      "owner": "gs2io",
+      "packageId": "micro-economy-mission",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-economy-mission/packages/micro-economy-mission",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

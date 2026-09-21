@@ -1,0 +1,31 @@
+{
+  "id": "e9544834-ae3b-50f7-a666-22872968bcbd",
+  "items": [
+    {
+      "componentClassName": "ResetLabel",
+      "id": "98aebfa0-3574-5034-8a66-ef1992bc5e2c",
+      "kind": "templateLabel",
+      "name": "MissionCollection",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        },
+        {
+          "key": "scope",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_MTPT2W75JMKRGK9CXSREB6ZW49"
+          }
+        }
+      ],
+      "template": "{id}: claims reset {scope}"
+    }
+  ],
+  "name": "MissionCollection",
+  "targetDomainType": "MissionCollection",
+  "targetDomainTypeId": "dt_01M2ZFVBD53M112JMGZPCW4JG8"
+}
