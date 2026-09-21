@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:SkillNode.cost": "prop_01M31VN3992YQ74A46F3V3FAAZ",
+    "row:dt_01M0C87BJCRTK0Y3JKH8EHKAR6.first": "row_01M31VN39972RGNYY8ABEXXBAQ",
+    "row:dt_01M0C87BJCRTK0Y3JKH8EHKAR6.last": "row_01M31VN399WE1F5DEPKRJG78JE",
+    "row:dt_01M0C87BJCRTK0Y3JKH8EHKAR6.left": "row_01M31VN399Z72NHHGM8HN9G4RV",
+    "row:dt_01M0C87BJCRTK0Y3JKH8EHKAR6.right": "row_01M31VN399VSKYDFHEA906R6BN",
+    "type:SkillNode": "dt_01M31VN399W8ZV08E5MVG7J9BT"
+  },
+  "deterministicOverrides": {}
+}

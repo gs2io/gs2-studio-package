@@ -1,0 +1,60 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  SkillTreeCurrentTreeMaster_SkillTree:
+    Type: "GS2::SkillTree::CurrentTreeMaster"
+    Properties:
+      NamespaceName: "SkillTree"
+      Settings:
+        version: "2023-09-06"
+        nodeModels:
+          - metadata: ""
+            name: "first"
+            premiseNodeNames: []
+            restrainReturnRate: 0.5
+            releaseVerifyActions: []
+            releaseConsumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+            returnAcquireActions: []
+          - metadata: ""
+            name: "last"
+            premiseNodeNames:
+              - "left"
+              - "right"
+            restrainReturnRate: 0.5
+            releaseVerifyActions: []
+            releaseConsumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":50,\"paidOnly\":false}"
+            returnAcquireActions: []
+          - metadata: ""
+            name: "left"
+            premiseNodeNames:
+              - "first"
+            restrainReturnRate: 0.5
+            releaseVerifyActions: []
+            releaseConsumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":20,\"paidOnly\":false}"
+            returnAcquireActions: []
+          - metadata: ""
+            name: "right"
+            premiseNodeNames:
+              - "first"
+            restrainReturnRate: 0.5
+            releaseVerifyActions: []
+            releaseConsumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":20,\"paidOnly\":false}"
+            returnAcquireActions: []
+      Mode: "direct"
+    DependsOn:
+      - "SkillTreeNamespace_SkillTree"
+  SkillTreeNamespace_SkillTree:
+    Type: "GS2::SkillTree::Namespace"
+    Properties:
+      Name: "SkillTree"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

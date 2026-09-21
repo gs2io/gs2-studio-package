@@ -1,0 +1,13 @@
+{
+  "id": "right",
+  "rowKey": "row_01M31VN399VSKYDFHEA906R6BN",
+  "typeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+  "values": {
+    "prop_01M0C87BJC76SJF2PA9P05K5QH": [
+      "first"
+    ],
+    "prop_01M0C87BJCQ0PCKG2FJQ0H767B": 0.5,
+    "prop_01M0Q02DXK9YCRGGAJHADRMVS6": [],
+    "prop_01M31VN3992YQ74A46F3V3FAAZ": 20
+  }
+}

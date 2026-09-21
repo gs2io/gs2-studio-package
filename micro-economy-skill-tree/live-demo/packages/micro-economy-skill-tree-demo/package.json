@@ -1,0 +1,34 @@
+{
+  "id": "micro-economy-skill-tree-demo",
+  "name": "micro-economy-skill-tree-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-character": "github:gs2io/gs2-studio-package",
+    "foundation-economy-character-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "micro-economy-skill-tree": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the live demo's four skill nodes and the free currency their unlock costs are paid from. What is unlocked is tracked per character.",
+      "ja": "ライブデモ用の4つのスキルノードと、その解放コストを支払う無償通貨を提供します。ノードの解放状況はキャラクターごとに記録されます。"
+    },
+    "domainTypes": {
+      "dt_01M31VN399W8ZV08E5MVG7J9BT": {
+        "description": {
+          "en": "Adds the free currency a demo skill node charges when it is released.",
+          "ja": "デモのスキルノードに、解放時へ消費する無償通貨の額を足します。"
+        },
+        "label": {
+          "en": "Skill node",
+          "ja": "スキルノード"
+        }
+      }
+    },
+    "label": {
+      "en": "Skill tree (demo data)",
+      "ja": "スキルツリー（デモデータ）"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "CharacterRecruit#Get a character to have a tree for": {
+      "rows": [
+        {
+          "component": "CharacterRecruitRecruitButton",
+          "caption": "CharacterRecruitCharacterLabel"
+        }
+      ]
+    },
+    "Character#Whose tree is on screen": {
+      "axis": "InventoryCharacterUser",
+      "rows": ["CharacterIdValue", "CharacterPropertyIdValue", "CharacterOpenTreeButton"]
+    },
+    "FreeDeposit#What the unlock costs are paid from": {
+      "rows": [
+        {
+          "component": "FreeDepositDepositButton",
+          "caption": "FreeDepositCountLabel"
+        }
+      ]
+    },
+    "Wallet": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "SkillNode#The tree": {
+      "rows": [
+        "SkillNodeCostLabel",
+        "SkillNodeNeedsLabel",
+        "SkillNodeReleaseButton",
+        "SkillNodeUnlockedLabel",
+        "SkillNodeRestrainButton"
+      ],
+      "toggles": {
+        "SkillNodeReleasedActiveToggle": ["SkillNodeReleaseButton"],
+        "SkillNodeUnreleasedActiveToggle": ["SkillNodeUnlockedLabel", "SkillNodeRestrainButton"]
+      }
+    },
+    "CharacterCollection": {
+      "rows": []
+    },
+    "CharacterExperience": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    }
+  }
+}
