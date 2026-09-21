@@ -16,6 +16,7 @@ using GS2Studio.Generated.MissionCounter;
 using Gs2.Unity.Core.Model;
 using Gs2.Unity.Gs2Mission.Model;
 using Gs2Bind.Gs2Mission;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.Mission
 {

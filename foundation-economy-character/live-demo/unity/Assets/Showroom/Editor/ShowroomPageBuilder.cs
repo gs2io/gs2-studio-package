@@ -1040,15 +1040,35 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// Whether this model has anything of its own to draw. A package that
-        /// generated no component for it gives the page no section: an empty
-        /// heading over an empty body says nothing a visitor wants, and there
-        /// is nothing for a declaration to name either.
+        /// Whether this model has anything to draw. A model nothing draws gives
+        /// the page no section: an empty heading over an empty body says
+        /// nothing a visitor wants, and there is nothing for a declaration to
+        /// name either.
+        ///
+        /// What the package generated answers first, because that is the whole
+        /// of what a model the page never mentioned has. A declared section can
+        /// answer it the other way: a demo writes its own behaviour where the
+        /// generator refuses to emit one — a delegated action on a call the
+        /// generated binder has no method for, a reading derived from the whole
+        /// list rather than read off one row — and a demo-written behaviour is
+        /// drawn exactly like a generated one. So a section every row of which
+        /// the demo wrote is a section with something to draw, and a manifest
+        /// carrying only conditions does not make it empty.
         /// </summary>
         private static bool HasDrawables(SectionPlan plan)
         {
-            return plan.Labels.Count > 0 || plan.Buttons.Count > 0 ||
-                plan.Gauges.Count > 0 || plan.Clocks.Count > 0;
+            if (plan.Labels.Count > 0 || plan.Buttons.Count > 0 ||
+                plan.Gauges.Count > 0 || plan.Clocks.Count > 0)
+            {
+                return true;
+            }
+            if (plan.Declaration == null) return false;
+            foreach (var row in plan.Declaration.Rows)
+            {
+                var component = UiComponentNamed(plan, row.Component);
+                if (component != null && component.Kind != RowKind.None) return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -1088,6 +1108,7 @@ namespace GS2Studio.Showroom.EditorTools
             var problems = new List<string>();
             CollectUnresolvedDeclarations(plans, declaredSections, problems);
             CollectUndeclaredSections(plans, problems);
+            CollectUndrawnDeclarations(plans, problems);
             CollectCollidingSections(plans, problems);
             CollectSectionsAtOdds(plans, problems);
             if (problems.Count == 0) return;
@@ -1118,6 +1139,35 @@ namespace GS2Studio.Showroom.EditorTools
         /// <see cref="BuildSections"/> gives the second its own handler on its
         /// own section root.
         /// </summary>
+        /// <summary>
+        /// A section the page wrote rows for that would be left off anyway.
+        ///
+        /// Leaving a model off is what an empty row list says, and it is the
+        /// right answer for a model no section of the page names. It is the
+        /// wrong answer for rows a demo wrote down: the heading goes, the rows
+        /// go, the list goes with them, and its item prefab is collected as an
+        /// orphan — and the only trace is a count of sections one lower than
+        /// the page asked for, which reads exactly like a page that was built.
+        /// An hour of a run's own output agreeing with it is the cost, so the
+        /// drop is refused here instead, naming what the page asked for.
+        /// </summary>
+        private static void CollectUndrawnDeclarations(
+            IReadOnlyList<SectionPlan> plans, List<string> problems)
+        {
+            foreach (var plan in plans.Where(plan => plan.Declaration != null)
+                .OrderBy(plan => plan.SectionId, StringComparer.Ordinal))
+            {
+                if (plan.Declaration.Rows.Count == 0) continue;
+                if (HasDrawables(plan)) continue;
+                problems.Add(
+                    $"[showroom] {plan.SectionId}: `page.json` gives it " +
+                    $"{Listed(plan.Declaration.Rows.Select(row => row.Component))}, and none of " +
+                    "them is a kind of row this page draws, so the section would be left off " +
+                    $"without saying so. It generated {Listed(DrawableNames(plan))}" +
+                    $"{WrittenSuffix()}.");
+            }
+        }
+
         private static void CollectSectionsAtOdds(
             IReadOnlyList<SectionPlan> plans, List<string> problems)
         {
