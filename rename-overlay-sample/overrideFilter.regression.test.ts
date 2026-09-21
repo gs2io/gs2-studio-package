@@ -24,7 +24,9 @@ import { describe, expect, it } from "vitest";
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
 import { collectOverriddenDomainTypes, isOverridden } from "~/application/package";
 import { Catalog } from "~/domain/catalog";
-import { DomainTypeName, type PackageDomainTypeRef, PackageId } from "~/domain/core";
+import { DomainTypeName, type PackageDomainTypeRef, PackageId, Result } from "~/domain/core";
+import { PackageCollection } from "~/domain/package";
+import { Project } from "~/domain/project";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 
@@ -49,6 +51,9 @@ describe("rename overlay → source type override registration", () => {
     const allResult = await loadPackages(packagesDir, Catalog.empty());
     const payload = unwrapLoaderResult(allResult);
     const pkgs = payload.packages!;
+    const project = new Project(
+      Result.unwrapInvariant(PackageCollection.from(pkgs), "loaded rename-overlay packages")
+    );
 
     const editablePackageIds = new Set<PackageId>();
     for (const pkg of pkgs) {
@@ -56,7 +61,7 @@ describe("rename overlay → source type override registration", () => {
     }
 
     const overriddenKeys = collectOverriddenDomainTypes({
-      packages: pkgs,
+      project,
       editablePackageIds,
     });
 

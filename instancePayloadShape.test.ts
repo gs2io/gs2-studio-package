@@ -3,12 +3,12 @@ import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-import { getDomainTypeViewReader } from "~/application/domainType";
 import { detectDuplicateInstanceIds } from "~/application/project";
 import { toSafeFileName } from "~/application/shared";
 import { fileInstanceDtoSchema } from "~/adapters/project/gateway";
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
 import { Catalog } from "~/domain/catalog";
+import { Result } from "~/domain/core";
 import { PackageCollection } from "~/domain/package";
 import { Project } from "~/domain/project";
 
@@ -74,14 +74,15 @@ describe("materialized instance payload shape", () => {
       expect(payload.packages).not.toBeNull();
       if (payload.packages === null) return;
 
-      const project = new Project(PackageCollection.fromTrusted(payload.packages));
-      const identityResult = detectDuplicateInstanceIds({
+      const project = new Project(
+        Result.unwrapInvariant(PackageCollection.from(payload.packages), "loaded sample packages")
+      );
+      const diagnostics = detectDuplicateInstanceIds({
         project,
-        viewReader: getDomainTypeViewReader({ project }),
+        validationMode: "strict",
       });
 
-      expect(identityResult.diagnostics).toEqual([]);
-      expect(identityResult.hasBlocking).toBe(false);
+      expect(diagnostics).toEqual([]);
     }
   );
 });
