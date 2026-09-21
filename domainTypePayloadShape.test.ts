@@ -48,7 +48,7 @@ describe("materialized domain type payload shape", () => {
     }
 
     expect(domainTypeCount).toBe(88);
-    expect(overlayCount).toBe(12);
+    expect(overlayCount).toBe(13);
     expect(failures).toEqual([]);
   });
 });

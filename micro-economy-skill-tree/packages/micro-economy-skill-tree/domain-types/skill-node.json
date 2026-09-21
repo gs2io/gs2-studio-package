@@ -123,6 +123,29 @@
           "kind": "primitive",
           "primitiveType": "bool"
         }
+      },
+      {
+        "bindingHint": "none",
+        "description": "Whose tree these flags are read for",
+        "id": "prop_01M31J6RAW8V3FTYH7BX16TM1T",
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier of the character whose unlock state these flags are read for.",
+            "label": "Owning character"
+          },
+          "ja": {
+            "description": "解放状況を読み出す対象のキャラクターを指す識別子です。",
+            "label": "対象キャラクター"
+          }
+        },
+        "name": "owner",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
       }
     ]
   },

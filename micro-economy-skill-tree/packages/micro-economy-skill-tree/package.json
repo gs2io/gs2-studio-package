@@ -1,23 +1,16 @@
 {
   "id": "micro-economy-skill-tree",
   "name": "micro-economy-skill-tree",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "dependencies": {
+    "foundation-economy-character": "github:gs2io/gs2-studio-package"
+  },
   "display": {
     "description": {
       "en": "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per player.",
       "ja": "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはプレイヤーごとに記録されます。"
     },
     "domainTypes": {
-      "dt_01M0C87BJCHGRBT6T7MVKFRRYF": {
-        "description": {
-          "en": "Tracks unlocked skill nodes for an owner such as a character.",
-          "ja": "キャラクターなどの対象ごとに解放済みスキルノードを管理します。"
-        },
-        "label": {
-          "en": "Tree owner",
-          "ja": "スキルツリー所有者"
-        }
-      },
       "dt_01M0C87BJCRTK0Y3JKH8EHKAR6": {
         "description": {
           "en": "Defines an ability node, its unlock cost, and prerequisite nodes in a skill tree.",
@@ -26,6 +19,16 @@
         "label": {
           "en": "Skill node",
           "ja": "スキルノード"
+        }
+      },
+      "dt_01M31J6RAW9QB6RG77DGXG447A": {
+        "description": {
+          "en": "Tracks unlocked skill nodes per character.",
+          "ja": "キャラクターごとに解放済みスキルノードを管理します。"
+        },
+        "label": {
+          "en": "Character",
+          "ja": "キャラクター"
         }
       }
     },

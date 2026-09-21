@@ -8,10 +8,10 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_01M0C87BJCHGRBT6T7MVKFRRYF",
-            "typeName": "SkillTreeOwner"
+            "typeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+            "typeName": "SkillNode"
           },
-          "propertyId": "prop_01M0C87BJCBECHNW29S9WWPEYD"
+          "propertyId": "prop_01M31J6RAW8V3FTYH7BX16TM1T"
         }
       },
       {
@@ -34,13 +34,9 @@
         "parameterName": "userId"
       }
     ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_01M0C87BJCHGRBT6T7MVKFRRYF",
-      "typeName": "SkillTreeOwner"
-    }
+    "declaredMasterLinkId": "6cdca220-144a-5f9f-b6b7-143f1c35222d"
   },
-  "id": "33520d18-18d8-5db2-a2dc-76170437aa02",
+  "id": "ecd0b3f1-c9c7-5846-bc0e-47ef7ee12280",
   "location": {
     "modelName": "Status",
     "service": "skillTree"

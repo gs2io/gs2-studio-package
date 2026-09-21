@@ -1,0 +1,53 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "propertyId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M31J6RAW9QB6RG77DGXG447A",
+            "typeName": "Character"
+          },
+          "propertyId": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD"
+        }
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "releasedNodeNames",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_01M31J6RAW9QB6RG77DGXG447A",
+              "typeName": "Character"
+            },
+            "propertyId": "prop_01M31J6RAWTY5M1G0W2ETQ890K"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "statusId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "6cdca220-144a-5f9f-b6b7-143f1c35222d",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_01M31J6RAW9QB6RG77DGXG447A",
+      "typeName": "Character"
+    }
+  },
+  "id": "786319bd-8b8f-54c4-a561-4b3a57084c32",
+  "location": {
+    "modelName": "Status",
+    "service": "skillTree"
+  }
+}

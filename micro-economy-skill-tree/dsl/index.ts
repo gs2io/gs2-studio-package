@@ -2,7 +2,9 @@ import {
   Bind,
   defineDomainType,
   defineMasterDataResource,
+  defineOverlayDomainType,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -10,6 +12,15 @@ import {
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
+
+import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const character = dependencyPackage(characterSurface);
+
+/** The property inside `foundation-economy-character` this package keys on. */
+const CHARACTER_PROPERTY_ID = character.propertyId("Character", "propertyId");
 
 /**
  * One node of a skill tree: what it costs to unlock, what must already be
@@ -35,6 +46,13 @@ const SkillNode = defineDomainType("SkillNode", dt =>
         .description("Share of the cost refunded when the node is reset")
     )
     .property(PT.bool("released").userData().required().description("Unlocked by this player"))
+    // Which character's tree this row is being read for. It is a scope, not a
+    // per-node fact: the list of nodes is the same for everyone, and the
+    // released flags are only meaningful once a character is chosen. Leaving
+    // the binding hint at `none` is what makes the generator take it as a
+    // runtime scope argument — marking it `userData` would seed it from a
+    // master axis that has no character, and the loader would never run.
+    .property(PT.string("owner").description("Whose tree these flags are read for"))
     .localizedProperties({
       id: jaEnId("スキルノード", "skill node"),
       releaseConsumeActions: jaEnField(
@@ -62,26 +80,35 @@ const SkillNode = defineDomainType("SkillNode", dt =>
         "プレイヤーがこのノードを解放済みかを示します。",
         "Whether the player has unlocked this node."
       ),
+      owner: jaEnField(
+        "対象キャラクター",
+        "Owning character",
+        "解放状況を読み出す対象のキャラクターを指す識別子です。",
+        "Identifier of the character whose unlock state these flags are read for."
+      ),
     })
 );
 
 /**
- * The thing a tree hangs off — a character, a weapon, the player themselves.
- * GS2-SkillTree keys progress by an opaque property id, so what that id means
- * is the project's choice.
+ * The character a tree hangs off.
+ *
+ * GS2-SkillTree keys progress by an opaque property id, and this package spends
+ * the same value the rest of the character packages do — the character's
+ * Inventory ItemSet GRN, which `foundation-economy-character` fills per row.
  */
-const SkillTreeOwner = defineDomainType("SkillTreeOwner", dt =>
-  dt
+const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>
+  domainType
     .property(
-      PT.string("propertyId").userData().required().description("Whose tree this progress is")
+      PT.prop("releasedSkillNodes", PT.listOf(PT.string()))
+        .userData()
+        .description("Skill nodes this character has unlocked")
     )
     .localizedProperties({
-      id: jaEnId("スキルツリー所有者", "skill-tree owner"),
-      propertyId: jaEnField(
-        "所有対象ID",
-        "Owner instance ID",
-        "このスキルツリー進行を所有するキャラクターなどの識別子です。",
-        "Identifier of the character or other entity that owns this skill-tree progress."
+      releasedSkillNodes: jaEnField(
+        "解放済みスキルノード",
+        "Unlocked skill nodes",
+        "このキャラクターが解放済みのスキルノードの一覧です。",
+        "Skill nodes this character has already unlocked."
       ),
     })
 );
@@ -108,7 +135,7 @@ const NodeModel = defineMasterDataResource(resource =>
     })
 );
 
-export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "0.0.0")
+export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "0.1.0")
   .display({
     label: { ja: "スキルツリー", en: "Skill Tree" },
     description: {
@@ -123,15 +150,16 @@ export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "
       en: "Defines an ability node, its unlock cost, and prerequisite nodes in a skill tree.",
     },
   })
-  .displayType(SkillTreeOwner, {
-    label: { ja: "スキルツリー所有者", en: "Tree owner" },
+  .displayType(Character, {
+    label: { ja: "キャラクター", en: "Character" },
     description: {
-      ja: "キャラクターなどの対象ごとに解放済みスキルノードを管理します。",
-      en: "Tracks unlocked skill nodes for an owner such as a character.",
+      ja: "キャラクターごとに解放済みスキルノードを管理します。",
+      en: "Tracks unlocked skill nodes per character.",
     },
   })
+  .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
   .domainType(SkillNode)
-  .domainType(SkillTreeOwner)
+  .domainType(Character)
 
   .masterDataResource(r =>
     r
@@ -144,12 +172,38 @@ export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "
       .addChild(NodeModel)
   )
 
+  // The same GS2 row is read twice because it answers two different questions,
+  // and each answer is keyed from a different model. A `propertyId` binding
+  // resolves against the effective properties of the binder being generated, so
+  // one resource cannot serve both: `CharacterBinder` carries
+  // `Character.propertyId`, `SkillNodeBinder` carries `SkillNode.owner`, and no
+  // two types share a PropertyId.
+  //
+  // Read #1 — the character's own view, the shape `experience` already uses.
   .userDataResource(r =>
     r
       .model(GS2.skillTree.Status)
-      .mountLocal(SkillTreeOwner)
+      .linkedMasterResourceId(NodeModel)
+      .mountLocal(Character)
       .bindings({
-        propertyId: Bind.domainProperty(Source.direct(SkillTreeOwner, "propertyId")),
+        // An overlay's inherited properties have no local name, so the source
+        // PropertyId is written directly.
+        propertyId: Bind.domainProperty(Source.direct("Character", CHARACTER_PROPERTY_ID)),
+        releasedNodeNames: Bind.domainProperties([Source.direct(Character, "releasedSkillNodes")]),
+        statusId: Bind.skip(),
+        userId: Bind.skip(),
+      })
+  )
+
+  // Read #2 — the per-node view. Unmounted on purpose: it writes flags onto
+  // `SkillNode` rows through the membership mapping rather than onto a type it
+  // is mounted on, and its key comes from the scope the node list is shown for.
+  .userDataResource(r =>
+    r
+      .model(GS2.skillTree.Status)
+      .linkedMasterResourceId(NodeModel)
+      .bindings({
+        propertyId: Bind.domainProperty(Source.direct(SkillNode, "owner")),
         statusId: Bind.skip(),
         userId: Bind.skip(),
       })

@@ -380,7 +380,9 @@
         "ja": "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはプレイヤーごとに記録されます。",
         "en": "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per player."
       },
-      "dependsOn": [],
+      "dependsOn": [
+        "foundation-economy-character"
+      ],
       "install": {
         "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-economy-skill-tree/packages/micro-economy-skill-tree"
       }

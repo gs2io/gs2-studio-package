@@ -1,0 +1,48 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "userData",
+        "description": "Skill nodes this character has unlocked",
+        "id": "prop_01M31J6RAWTY5M1G0W2ETQ890K",
+        "localizedDisplay": {
+          "en": {
+            "description": "Skill nodes this character has already unlocked.",
+            "label": "Unlocked skill nodes"
+          },
+          "ja": {
+            "description": "このキャラクターが解放済みのスキルノードの一覧です。",
+            "label": "解放済みスキルノード"
+          }
+        },
+        "name": "releasedSkillNodes",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "elementType": {
+            "kind": "primitive",
+            "primitiveType": "string"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_01M31J6RAW9QB6RG77DGXG447A",
+  "kind": "overlay",
+  "name": "Character",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-character",
+    "directSourceTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+  }
+}
