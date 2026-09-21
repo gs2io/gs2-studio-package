@@ -47,6 +47,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
         // never owns its lifecycle (no Subscribe/Dispose), so it holds the
         // non-owning IActionableEquipmentCatalogBinder.
         private IActionableEquipmentCatalogBinder? _binder;
+        private long _reevaluateGeneration;
 
         public override IActionableEquipmentCatalogBinder? Binder => _binder;
         // The binder implements <see cref="EquipmentCatalog"/>, so it is the model.
@@ -85,6 +86,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
         /// </summary>
         public void Detach()
         {
+            _reevaluateGeneration++;
             if (_list != null)
             {
                 _list.ListChanged -= OnListChanged;
@@ -124,6 +126,7 @@ namespace GS2Studio.Generated.EquipmentCatalog
 
         private void Reevaluate()
         {
+            var generation = ++_reevaluateGeneration;
             var list = _list;
             if (list == null) { _binder = null; SetContentVisible(false); return; }
             var binders = list.Binders;
@@ -134,6 +137,9 @@ namespace GS2Studio.Generated.EquipmentCatalog
                 _binder = binder;
                 SetContentVisible(true);
                 if (changed) RaiseBound(binder);
+                if (generation != _reevaluateGeneration
+                    || !ReferenceEquals(_list, list)
+                    || !ReferenceEquals(_binder, binder)) return;
                 RaiseUpdated(binder);
             }
             else { _binder = null; SetContentVisible(false); }

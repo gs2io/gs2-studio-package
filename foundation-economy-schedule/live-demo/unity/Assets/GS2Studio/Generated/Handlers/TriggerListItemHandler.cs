@@ -48,6 +48,7 @@ namespace GS2Studio.Generated.Trigger
         // never owns its lifecycle (no Subscribe/Dispose), so it holds the
         // non-owning IActionableTriggerBinder.
         private IActionableTriggerBinder? _binder;
+        private long _reevaluateGeneration;
 
         public override IActionableTriggerBinder? Binder => _binder;
         // The binder implements <see cref="Trigger"/>, so it is the model.
@@ -86,6 +87,7 @@ namespace GS2Studio.Generated.Trigger
         /// </summary>
         public void Detach()
         {
+            _reevaluateGeneration++;
             if (_list != null)
             {
                 _list.ListChanged -= OnListChanged;
@@ -125,6 +127,7 @@ namespace GS2Studio.Generated.Trigger
 
         private void Reevaluate()
         {
+            var generation = ++_reevaluateGeneration;
             var list = _list;
             if (list == null) { _binder = null; SetContentVisible(false); return; }
             var binders = list.Binders;
@@ -135,6 +138,9 @@ namespace GS2Studio.Generated.Trigger
                 _binder = binder;
                 SetContentVisible(true);
                 if (changed) RaiseBound(binder);
+                if (generation != _reevaluateGeneration
+                    || !ReferenceEquals(_list, list)
+                    || !ReferenceEquals(_binder, binder)) return;
                 RaiseUpdated(binder);
             }
             else { _binder = null; SetContentVisible(false); }
