@@ -113,7 +113,7 @@ describe("foundation-economy-character fan-out identity (generated C#)", () => {
 
     // User axis: id = itemName (ItemSet.itemName = ItemModel.name = Character:id).
     expect(content).toContain(
-      "private CharacterId ExtractInventoryCharacterUserIdentity(EzItemSet item)"
+      "private CharacterId ExtractInventoryCharacterUserIdentity(Gs2.Unity.Gs2Inventory.Model.EzItemSet item)"
     );
     expect(content).toContain(
       "(string.IsNullOrEmpty(item.ItemName) ? default(CharacterId) : new CharacterId(item.ItemName))"
@@ -122,16 +122,16 @@ describe("foundation-economy-character fan-out identity (generated C#)", () => {
     // Row key: per-item own-key tuple — distinct per stacked ItemSet even when
     // the id repeats. String parts guard with IsNullOrEmpty and skip via null.
     expect(content).toContain(
-      "private string? ExtractInventoryCharacterUserRowKey(EzItemSet item)"
+      "private string? ExtractInventoryCharacterUserRowKey(Gs2.Unity.Gs2Inventory.Model.EzItemSet item)"
     );
     expect(content).toContain(
-      'if (string.IsNullOrEmpty(item.ItemName) || string.IsNullOrEmpty(item.Name)) return null;'
+      "if (string.IsNullOrEmpty(item.ItemName) || string.IsNullOrEmpty(item.Name)) return null;"
     );
     expect(content).toContain('return $"{item.ItemName}.{item.Name}";');
 
     // Master axis revived: same authored binding, per-item `item.Name`.
     expect(content).toContain(
-      "private CharacterId ExtractInventoryCharacterMasterIdentity(EzItemModel item)"
+      "private CharacterId ExtractInventoryCharacterMasterIdentity(Gs2.Unity.Gs2Inventory.Model.EzItemModel item)"
     );
     expect(content).toContain(
       "(string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name))"
