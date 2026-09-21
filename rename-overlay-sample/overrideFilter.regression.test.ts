@@ -24,7 +24,7 @@ import { describe, expect, it } from "vitest";
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
 import { collectOverriddenDomainTypes, isOverridden } from "~/application/package";
 import { Catalog } from "~/domain/catalog";
-import { DomainTypeName, type PackageDomainTypeRef, PackageId, Result } from "~/domain/core";
+import { DomainTypeName, PackageId, Result } from "~/domain/core";
 import { PackageCollection } from "~/domain/package";
 import { Project } from "~/domain/project";
 
@@ -70,7 +70,7 @@ describe("rename overlay → source type override registration", () => {
       expect(sourcePkg, `${sourcePkgName} should be loaded`).toBeDefined();
       if (!sourcePkg) continue;
 
-      const target: PackageDomainTypeRef = {
+      const target = {
         packageId: sourcePkg.id,
         typeName: DomainTypeName.trusted(source),
       };
