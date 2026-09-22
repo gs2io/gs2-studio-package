@@ -19,12 +19,18 @@
     "Energy#The meter the shop refills": {
       "axis": "StaminaEnergyMaster",
       "rows": [
+        "EnergyNextRecoveryValue",
         {
           "component": "EnergyStaminaGauge",
           "caption": "EnergyStaminaLabel"
         },
         "EnergyConsumeButton"
-      ]
+      ],
+      "toggles": {
+        "EnergyFullActiveToggle": [
+          "EnergyNextRecoveryValue"
+        ]
+      }
     },
     "EnergyProduct#The shelf": {
       "axis": "ExchangeEnergyShopMaster",

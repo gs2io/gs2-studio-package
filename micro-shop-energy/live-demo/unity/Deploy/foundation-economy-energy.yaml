@@ -8,7 +8,8 @@ Resources:
         version: "2019-02-14"
         staminaModels:
           - initialCapacity: 50
-            isOverflow: false
+            isOverflow: true
+            maxCapacity: 100
             name: "stamina"
             recoverIntervalMinutes: 1
             recoverValue: 5

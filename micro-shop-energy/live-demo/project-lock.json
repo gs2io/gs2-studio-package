@@ -31,8 +31,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "e50e0f386a5965142049d35f27b850de785c3e21",
-      "integrity": "sha256-0IFs9AhfSEcIE0edBm9uE2ZJvVf/suCfFEdq36QGpFQ=",
+      "commitSha": "cdd1bb9ab9e62dd1cc4985bfad6797d6f500f723",
+      "integrity": "sha256-NWqESMSJ5X2kvg4YGrZ+Zeae+c/pVdSlRmqKYvZJ66E=",
       "owner": "gs2io",
       "packageId": "foundation-economy-energy-demo",
       "repo": "gs2-studio-package",
