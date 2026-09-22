@@ -15,7 +15,9 @@ using System.Threading.Tasks;
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using GS2Studio.Generated.CurrencyType;
+using Gs2.Unity.Gs2Money2.Model;
 using Gs2.Unity.Gs2Showcase.Model;
+using Gs2Bind.Gs2Money2;
 using Gs2Bind.Gs2Showcase;
 
 namespace GS2Studio.Generated.StoreProduct
@@ -46,6 +48,8 @@ namespace GS2Studio.Generated.StoreProduct
         void Invalidate();
         Task MountFromShowcaseShopCurrencyMasterDataAsync(CancellationToken cancellationToken = default);
         void SubscribeFromShowcaseShopCurrencyMasterData(Action? onChange = null, Action<Exception>? onError = null);
+        Task MountFromMoney2CurrencyMasterDataAsync(CancellationToken cancellationToken = default);
+        void SubscribeFromMoney2CurrencyMasterData(Action? onChange = null, Action<Exception>? onError = null);
     }
 
     /// <summary>
@@ -272,6 +276,7 @@ namespace GS2Studio.Generated.StoreProduct
         {
             ThrowIfDisposed();
             new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType).Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Money2.StoreContentModelArrayLoader("Currency").Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -499,6 +504,166 @@ namespace GS2Studio.Generated.StoreProduct
             var id = ExtractShowcaseShopCurrencyMasterIdentity(item);
             if (EqualityComparer<StoreProductId>.Default.Equals(id, default)) return null;
             return id.ToString();
+        }
+        /// <summary>One-shot Create + MountFromMoney2CurrencyMasterDataAsync (no subscription).</summary>
+        public static async Task<StoreProductBinderCollection> CreateFromMoney2CurrencyMasterDataAsync(
+            Gs2Domain gs2,
+            IGameSession session,
+            CurrencyTypeId currencyType,
+            CancellationToken cancellationToken = default)
+        {
+            var coll = new StoreProductBinderCollection(gs2, session, currencyType);
+            await coll.MountFromMoney2CurrencyMasterDataAsync(cancellationToken);
+            return coll;
+        }
+
+        public async Task MountFromMoney2CurrencyMasterDataAsync(CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+            cancellationToken.ThrowIfCancellationRequested();
+            var arrayLoader = new Gs2Bind.Gs2Money2.StoreContentModelArrayLoader("Currency");
+            var items = await arrayLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            await ReconcileFromMoney2CurrencyMasterItems(items, attachChildSubscribe: false, cancellationToken);
+            _mounted = true;
+        }
+
+        public void SubscribeFromMoney2CurrencyMasterData(Action? onChange = null, Action<Exception>? onError = null)
+        {
+            ThrowIfDisposed();
+            if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            _subscriptionActive = true;
+            // Consumer-facing notification, wrapped once so a throwing consumer
+            // callback routes to onError (or Debug) instead of escaping the
+            // loader's async-void chain.
+            Action notify = () =>
+            {
+                try { onChange?.Invoke(); }
+                catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
+            };
+            _onChange = notify;
+            foreach (var b in _binders) b.Subscribe(notify);
+            var arrayLoader = new Gs2Bind.Gs2Money2.StoreContentModelArrayLoader("Currency");
+            _unsubscribers.Add(arrayLoader.Subscribe(
+                _gs2,
+                _session,
+                async (_, _, items) =>
+                {
+                    if (_disposed) return;
+                    try
+                    {
+                        await ReconcileFromMoney2CurrencyMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex);
+                    }
+                },
+                notify
+            ));
+        }
+
+        private async Task ReconcileFromMoney2CurrencyMasterItems(IList<Gs2.Unity.Gs2Money2.Model.EzStoreContentModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        {
+            var seen = new HashSet<string>();
+            foreach (var item in items)
+            {
+                if (_disposed) return;
+                var rowKey = ExtractMoney2CurrencyMasterRowKey(item);
+                if (rowKey == null) continue;
+                seen.Add(rowKey);
+                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                {
+                    ApplyMoney2CurrencyMasterItemTo(existing.MutableModel, item);
+                }
+                else
+                {
+                    var binder = await BuildBinderFromMoney2CurrencyMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyMoney2CurrencyMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
+                    if (attachChildSubscribe) binder.Subscribe(_onChange);
+                    _bindersByRowKey[rowKey] = binder;
+                    _binders.Add(binder);
+                    ItemAdded?.Invoke(binder);
+                }
+            }
+            if (_bindersByRowKey.Count > seen.Count)
+            {
+                var toRemove = new List<string>();
+                foreach (var kv in _bindersByRowKey)
+                {
+                    if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
+                }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
+                foreach (var rowKey in toRemove)
+                {
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
+                    _bindersByRowKey.Remove(rowKey);
+                    _binders.Remove(binder);
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
+                }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
+            }
+            if (!_disposed) SortBinders();
+        }
+
+        private async Task<StoreProductBinder> BuildBinderFromMoney2CurrencyMasterItem(Gs2.Unity.Gs2Money2.Model.EzStoreContentModel item, CancellationToken cancellationToken)
+        {
+            var model = StoreProductBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(StoreProductId) : new StoreProductId(item.Name)));
+            ApplyMoney2CurrencyMasterItemTo(model, item);
+            var binder = new StoreProductBinder(model, _gs2, _session);
+            await binder.MountAsync(cancellationToken);
+            return binder;
+        }
+
+        private static void ApplyMoney2CurrencyMasterItemTo(MutableStoreProduct model, Gs2.Unity.Gs2Money2.Model.EzStoreContentModel item)
+        {
+            // This loader carries no master-item field assignments; reconcile manages
+            // membership only (per-element field changes are tracked by each element
+            // binder's own Subscribe).
+            _ = item;
+            _ = model;
+        }
+
+        private StoreProductId ExtractMoney2CurrencyMasterIdentity(Gs2.Unity.Gs2Money2.Model.EzStoreContentModel item)
+        {
+            return (string.IsNullOrEmpty(item.Name) ? default(StoreProductId) : new StoreProductId(item.Name));
+        }
+
+        private string? ExtractMoney2CurrencyMasterRowKey(Gs2.Unity.Gs2Money2.Model.EzStoreContentModel item)
+        {
+            var id = ExtractMoney2CurrencyMasterIdentity(item);
+            if (EqualityComparer<StoreProductId>.Default.Equals(id, default)) return null;
+            if (string.IsNullOrEmpty(item.Name)) return null;
+            return $"{item.Name}";
         }
 
         internal sealed class StoreProductBinderComparer : IComparer<IReadOnlyStoreProductBinder>

@@ -15,7 +15,9 @@ using Cysharp.Threading.Tasks;
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using GS2Studio.Generated.CurrencyType;
+using Gs2.Unity.Gs2Money2.Model;
 using Gs2.Unity.Gs2Showcase.Model;
+using Gs2Bind.Gs2Money2;
 using Gs2Bind.Gs2Showcase;
 using GS2Studio.Generated.StorePrice;
 using Gs2.Util.LitJson;
@@ -135,7 +137,7 @@ namespace GS2Studio.Generated.StoreProduct
         private bool _disposed;
         internal bool _mounted;
 
-
+        private readonly Gs2Bind.Gs2Money2.StoreContentModelLoader __money2CurrencyNamespaceStoreContentModelLoader;
 
         /// <summary>
         /// Internal constructor. External construction must go through <c>CreateAsync</c>
@@ -147,6 +149,7 @@ namespace GS2Studio.Generated.StoreProduct
             IGameSession session
         ) : base(model, gs2, session)
         {
+            __money2CurrencyNamespaceStoreContentModelLoader = new Gs2Bind.Gs2Money2.StoreContentModelLoader("Currency", _model.Id);
         }
 
         /// <summary>
@@ -185,7 +188,9 @@ namespace GS2Studio.Generated.StoreProduct
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-
+            var _money2CurrencyNamespaceStoreContentModel = await __money2CurrencyNamespaceStoreContentModelLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            ApplyMoney2CurrencyNamespaceStoreContentModel(_model, _money2CurrencyNamespaceStoreContentModel);
             _mounted = true;
         }
 
@@ -196,7 +201,17 @@ namespace GS2Studio.Generated.StoreProduct
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-
+            _unsubscribers.Add(__money2CurrencyNamespaceStoreContentModelLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    ApplyMoney2CurrencyNamespaceStoreContentModel(_model, value);
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
         }
 
         /// <summary>
@@ -205,7 +220,7 @@ namespace GS2Studio.Generated.StoreProduct
         public void Invalidate()
         {
             ThrowIfDisposed();
-
+            __money2CurrencyNamespaceStoreContentModelLoader.Invalidate(_gs2, _session);
         }
 
         /// <summary>
@@ -267,6 +282,26 @@ namespace GS2Studio.Generated.StoreProduct
         }
 
         #region Model composition
+        /// <summary>
+        /// Shared composition for the <c>__money2CurrencyNamespaceStoreContentModelLoader</c> source:
+        /// writes the loaded value onto the model, or resets the covered
+        /// properties when <c>source</c> is null. <c>MountAsync</c>,
+        /// <c>Subscribe</c> and external stubs all route through this method.
+        /// </summary>
+        public static void ApplyMoney2CurrencyNamespaceStoreContentModel(IMutableStoreProduct model, Gs2.Unity.Gs2Money2.Model.EzStoreContentModel? source)
+        {
+            if (source != null)
+            {
+                model.AppleAppStoreProductId = source.AppleAppStore.ProductId;
+                model.GooglePlayProductId = source.GooglePlay.ProductId;
+            }
+            else
+            {
+                model.AppleAppStoreProductId = default;
+                model.GooglePlayProductId = default;
+            }
+        }
+
         /// <summary>
         /// Shared composition for one master-list item of an overlay type:
         /// reflects the overlay-relevant master fields onto the model. The

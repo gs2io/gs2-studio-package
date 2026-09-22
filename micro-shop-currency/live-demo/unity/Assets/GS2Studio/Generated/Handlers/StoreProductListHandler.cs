@@ -16,7 +16,9 @@ using UnityEngine;
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using GS2Studio.Generated.CurrencyType;
+using Gs2.Unity.Gs2Money2.Model;
 using Gs2.Unity.Gs2Showcase.Model;
+using Gs2Bind.Gs2Money2;
 using Gs2Bind.Gs2Showcase;
 using GS2Studio.Generated.Runtime;
 
@@ -33,6 +35,10 @@ namespace GS2Studio.Generated.StoreProduct
     [AddComponentMenu("GS2 Studio/DomainType/StoreProduct/StoreProduct List Handler")]
     public sealed class StoreProductListHandler : MonoBehaviour, IStoreProductBinderListSource
     {
+        // Which of StoreProductBinderCollection's mount axes this list reads
+        // through. The enum is a sibling type rather than a member of this
+        // class so the ListBy*Handlers name the same axes, not copies of them.
+        [SerializeField] private StoreProductListAxis _axis;
         [SerializeField] private string? _currencyType;
         [SerializeField] private StoreProductListItemHandler? _itemPrefab;
         [SerializeField] private Transform? _contentParent;
@@ -246,6 +252,9 @@ namespace GS2Studio.Generated.StoreProduct
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
+                var unusableAxisReason = UnusableAxisReason();
+                if (unusableAxisReason != null)
+                    throw new InvalidOperationException(unusableAxisReason);
 
                 var collection = ResolveBinderFactory().CreateCollection(gs2, session, new CurrencyTypeId(_currencyType ?? string.Empty));
                 operationCollection = collection;
@@ -269,7 +278,18 @@ namespace GS2Studio.Generated.StoreProduct
                 // happens through OnItemAdded rather than a post-mount foreach.
                 AttachCollectionCallbacks(operationGeneration, collection);
 
-                await collection.MountFromShowcaseShopCurrencyMasterDataAsync(cancellationToken);
+                // No default arm: UnusableAxisReason already rejected Unset and
+                // every value this package no longer declares, so one case
+                // matches.
+                switch (_axis)
+                {
+                    case StoreProductListAxis.ShowcaseShopCurrencyMaster:
+                        await collection.MountFromShowcaseShopCurrencyMasterDataAsync(cancellationToken);
+                        break;
+                    case StoreProductListAxis.Money2CurrencyMaster:
+                        await collection.MountFromMoney2CurrencyMasterDataAsync(cancellationToken);
+                        break;
+                }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
                 SyncSiblingOrder(operationGeneration, collection);
@@ -279,7 +299,15 @@ namespace GS2Studio.Generated.StoreProduct
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
                     Action collectionChanged = () => OnCollectionChanged(operationGeneration, collection);
                     Action<Exception> collectionFailed = ex => OnCollectionFailed(operationGeneration, collection, ex);
-                    collection.SubscribeFromShowcaseShopCurrencyMasterData(collectionChanged, collectionFailed);
+                    switch (_axis)
+                    {
+                        case StoreProductListAxis.ShowcaseShopCurrencyMaster:
+                            collection.SubscribeFromShowcaseShopCurrencyMasterData(collectionChanged, collectionFailed);
+                            break;
+                        case StoreProductListAxis.Money2CurrencyMaster:
+                            collection.SubscribeFromMoney2CurrencyMasterData(collectionChanged, collectionFailed);
+                            break;
+                    }
                 }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
@@ -376,13 +404,63 @@ namespace GS2Studio.Generated.StoreProduct
             }
         }
 
+        // Every axis this list can be pointed at, for the messages below.
+        private const string AxisMemberNames = "ShowcaseShopCurrencyMaster, Money2CurrencyMaster";
+
+        // Warn-once latch for the axis check in IsReadyForReload. Start polls
+        // that check every frame until it passes, so without the latch the log
+        // would repeat for as long as the scene runs.
+        private bool _warnedAxis;
+
+        /// <summary>
+        /// Why <c>_axis</c> is not an axis this list can mount, or null when
+        /// it is one. The readiness gate logs this once and keeps waiting;
+        /// <see cref="ReloadAsync"/> throws it. Neither falls back to an axis of
+        /// its own choosing — a list quietly reading a GS2 model nobody asked
+        /// for is the failure the axis enum exists to remove.
+        /// </summary>
+        private string? UnusableAxisReason()
+        {
+            if (_axis == StoreProductListAxis.Unset)
+            {
+                return "'_axis' is not set: this list has not been told which axis to read from. " +
+                    "Set it to one of: " + AxisMemberNames + ".";
+            }
+            if (!Enum.IsDefined(typeof(StoreProductListAxis), _axis))
+            {
+                return "'_axis' names a mount axis this package no longer generates. " +
+                    "Set it to one of: " + AxisMemberNames + ".";
+            }
+            return null;
+        }
+
         private bool IsReadyForReload()
         {
             if (_isDestroyed) return false;
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
-            if (string.IsNullOrEmpty(_currencyType)) return false;
+            var unusableAxisReason = UnusableAxisReason();
+            if (unusableAxisReason != null)
+            {
+                if (!_warnedAxis)
+                {
+                    _warnedAxis = true;
+                    Debug.LogError(unusableAxisReason, this);
+                }
+                return false;
+            }
+            // Gate on the selected axis only. The [SerializeField] declarations
+            // are merged across every axis, so gating on all of them would wait
+            // forever on a value the axis this list mounts never reads.
+            switch (_axis)
+            {
+                case StoreProductListAxis.ShowcaseShopCurrencyMaster:
+                    if (string.IsNullOrEmpty(_currencyType)) return false;
+                    break;
+                case StoreProductListAxis.Money2CurrencyMaster:
+                    break;
+            }
             return true;
         }
 

@@ -8,7 +8,8 @@
 using System;
 
 using UnityEngine;
-
+using Gs2.Unity.Gs2Money2.Model;
+using Gs2Bind.Gs2Money2;
 using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.StoreProduct

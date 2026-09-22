@@ -13,16 +13,21 @@
       "serializedType": "string"
     }
   ],
-  "listHandler": "",
-  "listItemHandler": "",
-  "binderListSource": "",
+  "listHandler": "StoreProductListHandler",
+  "listItemHandler": "StoreProductListItemHandler",
+  "binderListSource": "IStoreProductBinderListSource",
   "scopeParameters": [],
-  "itemPrefabField": "",
-  "contentParentField": "",
+  "itemPrefabField": "_itemPrefab",
+  "contentParentField": "_contentParent",
   "listAxisEnumTypeName": "",
   "listAxisField": "",
   "listAxisMembers": [],
-  "listAxes": [],
+  "listAxes": [
+    {
+      "memberName": "Money2CurrencyMaster",
+      "mountMethodName": "MountFromMoney2CurrencyMasterDataAsync"
+    }
+  ],
   "mountFields": [],
   "components": []
 }

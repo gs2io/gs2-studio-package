@@ -11,14 +11,16 @@ using System.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
-
+using Gs2.Unity.Gs2Money2.Model;
+using Gs2Bind.Gs2Money2;
 
 namespace GS2Studio.Generated.StoreProduct
 {
     /// <summary>
-    /// Construction seam for <see cref="StoreProductBinder"/>. Inject a fake via
+    /// Construction seam for <see cref="StoreProductBinder"/> and
+    /// <see cref="StoreProductBinderCollection"/>. Inject a fake via
     /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
+    /// binder / collection in tests, or wire an alternate
     /// implementation from a DI container. The runtime context (gs2/session)
     /// still flows in as call arguments.
     /// </summary>
@@ -29,6 +31,7 @@ namespace GS2Studio.Generated.StoreProduct
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default);
+        IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
     /// <summary>
@@ -47,6 +50,10 @@ namespace GS2Studio.Generated.StoreProduct
             CancellationToken cancellationToken = default)
         {
             return await StoreProductBinder.CreateAsync(id, gs2, session, cancellationToken);
+        }
+        public IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
+        {
+            return new StoreProductBinderCollection(gs2, session);
         }
     }
 }

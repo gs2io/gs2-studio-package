@@ -25,13 +25,26 @@
   ],
   "itemPrefabField": "_itemPrefab",
   "contentParentField": "_contentParent",
-  "listAxisEnumTypeName": "",
-  "listAxisField": "",
-  "listAxisMembers": [],
+  "listAxisEnumTypeName": "StoreProductListAxis",
+  "listAxisField": "_axis",
+  "listAxisMembers": [
+    {
+      "name": "ShowcaseShopCurrencyMaster",
+      "value": -136075035
+    },
+    {
+      "name": "Money2CurrencyMaster",
+      "value": -711576390
+    }
+  ],
   "listAxes": [
     {
       "memberName": "ShowcaseShopCurrencyMaster",
       "mountMethodName": "MountFromShowcaseShopCurrencyMasterDataAsync"
+    },
+    {
+      "memberName": "Money2CurrencyMaster",
+      "mountMethodName": "MountFromMoney2CurrencyMasterDataAsync"
     }
   ],
   "mountFields": [
