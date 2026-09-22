@@ -1,0 +1,58 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_EnergyConsume:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "EnergyConsume"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "stamina"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Stamina:ConsumeStaminaByUserId"
+                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"consumeValue\":10}"
+            acquireActions: []
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_EnergyConsume"
+  ExchangeCurrentRateMaster_EnergyRecover:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "EnergyRecover"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "stamina"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Stamina:RecoverStaminaByUserId"
+                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":5}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_EnergyRecover"
+  ExchangeNamespace_EnergyConsume:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "EnergyConsume"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_EnergyRecover:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "EnergyRecover"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-shop-energy-demo",
+  "types": {
+    "EnergyProduct": {
+      "id": "dt_01M34HT0W9NARQTBAXX8SWCRFG",
+      "singleEntry": false,
+      "delegatedActions": {
+        "Buy": "resource:micro-shop-energy-demo:masterData:61368253-b5e8-546a-bbcb-7c8a973da29f::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "micro-shop-energy",
+      "canonicalTypeId": "dt_B6ACHCG26EEPJHVNQ7SA1WX2XS"
+    }
+  },
+  "masterDataResources": {
+    "exchange.Namespace": "f3c67ff4-315a-57eb-8780-34dc42db538c",
+    "exchange.RateModel": "61368253-b5e8-546a-bbcb-7c8a973da29f",
+    "transaction.AcquireAction": "a8c36a51-2eb9-52a8-8968-db3f8f1d80ed",
+    "transaction.ConsumeAction": "65f80124-d687-5757-a5fe-838bea239a06"
+  },
+  "transforms": {}
+}

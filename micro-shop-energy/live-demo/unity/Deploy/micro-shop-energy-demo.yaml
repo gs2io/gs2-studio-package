@@ -1,0 +1,48 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_EnergyShop:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "EnergyShop"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "refill_large"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":100,\"paidOnly\":false}"
+            acquireActions:
+              - action: "Gs2Stamina:RecoverStaminaByUserId"
+                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":40}"
+          - name: "refill_medium"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":70,\"paidOnly\":false}"
+            acquireActions:
+              - action: "Gs2Stamina:RecoverStaminaByUserId"
+                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":15}"
+          - name: "refill_small"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":30,\"paidOnly\":false}"
+            acquireActions:
+              - action: "Gs2Stamina:RecoverStaminaByUserId"
+                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":5}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_EnergyShop"
+  ExchangeNamespace_EnergyShop:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "EnergyShop"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

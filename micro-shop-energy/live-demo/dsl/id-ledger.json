@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:EnergyProduct.cost": "prop_01M34HT0W95E26WZ0K2C54N79A",
+    "row:dt_B6ACHCG26EEPJHVNQ7SA1WX2XS.refill_large": "row_01M34HT0W983BH74CT6AXQNEZW",
+    "row:dt_B6ACHCG26EEPJHVNQ7SA1WX2XS.refill_medium": "row_01M34HT0W9CD3WAZG7ECQ4NHCN",
+    "row:dt_B6ACHCG26EEPJHVNQ7SA1WX2XS.refill_small": "row_01M34HT0W90RTWW045YC84YHAZ",
+    "type:EnergyProduct": "dt_01M34HT0W9NARQTBAXX8SWCRFG"
+  },
+  "deterministicOverrides": {}
+}

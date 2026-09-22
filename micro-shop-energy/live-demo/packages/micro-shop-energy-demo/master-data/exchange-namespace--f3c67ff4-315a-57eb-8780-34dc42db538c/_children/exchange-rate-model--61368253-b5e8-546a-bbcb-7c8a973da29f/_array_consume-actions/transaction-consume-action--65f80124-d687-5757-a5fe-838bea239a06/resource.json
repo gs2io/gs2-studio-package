@@ -1,0 +1,58 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "paidOnly",
+            "source": {
+              "kind": "static",
+              "value": false
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M34HT0W9NARQTBAXX8SWCRFG",
+                    "typeName": "EnergyProduct"
+                  },
+                  "propertyId": "prop_01M34HT0W95E26WZ0K2C54N79A"
+                },
+                "kind": "parent",
+                "parentResourceId": "61368253-b5e8-546a-bbcb-7c8a973da29f"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "WithdrawCurrency",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    ]
+  },
+  "id": "65f80124-d687-5757-a5fe-838bea239a06",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M34HT0W9NARQTBAXX8SWCRFG",
+    "typeName": "EnergyProduct"
+  }
+}

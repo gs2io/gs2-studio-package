@@ -1,0 +1,51 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "energy",
+            "source": {
+              "kind": "static",
+              "value": "stamina"
+            }
+          },
+          {
+            "parameterName": "value",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M34HT0W9NARQTBAXX8SWCRFG",
+                    "typeName": "EnergyProduct"
+                  },
+                  "propertyId": "prop_45XJAVDEC9AXXNMSQP6FK7D08X"
+                },
+                "kind": "parent",
+                "parentResourceId": "61368253-b5e8-546a-bbcb-7c8a973da29f"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "RecoveryEnergy",
+        "transformPackageId": "foundation-economy-energy"
+      }
+    ]
+  },
+  "id": "a8c36a51-2eb9-52a8-8968-db3f8f1d80ed",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M34HT0W9NARQTBAXX8SWCRFG",
+    "typeName": "EnergyProduct"
+  }
+}

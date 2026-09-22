@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "FreeDeposit#What the refills are paid for with": {
+      "rows": [
+        {
+          "component": "FreeDepositDepositButton",
+          "caption": "FreeDepositCountLabel"
+        }
+      ]
+    },
+    "Wallet": {
+      "key": {
+        "slot": 0
+      },
+      "rows": [
+        "WalletFreeBalanceLabel"
+      ]
+    },
+    "Energy#The meter the shop refills": {
+      "axis": "StaminaEnergyMaster",
+      "rows": [
+        {
+          "component": "EnergyStaminaGauge",
+          "caption": "EnergyStaminaLabel"
+        },
+        "EnergyConsumeButton"
+      ]
+    },
+    "EnergyProduct#The shelf": {
+      "axis": "ExchangeEnergyShopMaster",
+      "rows": [
+        {
+          "component": "EnergyProductBuyButton",
+          "caption": "EnergyProductOfferLabel"
+        }
+      ]
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "id": "micro-shop-energy-demo",
+  "name": "micro-shop-energy-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-energy": "github:gs2io/gs2-studio-package",
+    "foundation-economy-energy-demo": "github:gs2io/gs2-studio-package",
+    "micro-shop-energy": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the stamina products the live demo sells, what each charges, and the press that buys one.",
+      "ja": "ライブデモ用に、スタミナ商品の品揃えと価格、購入の操作を揃えます。"
+    },
+    "domainTypes": {
+      "dt_01M34HT0W9NARQTBAXX8SWCRFG": {
+        "description": {
+          "en": "A stamina product the live demo sells, with what it refills and what it charges.",
+          "ja": "ライブデモで販売するスタミナ商品と、その回復量・価格です。"
+        },
+        "label": {
+          "en": "Stamina product",
+          "ja": "スタミナ商品"
+        }
+      }
+    },
+    "label": {
+      "en": "Stamina Shop (demo data)",
+      "ja": "スタミナショップ（デモデータ）"
+    }
+  }
+}

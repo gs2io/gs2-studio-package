@@ -1,0 +1,39 @@
+{
+  "id": "4f41e1d5-d5de-554a-b08d-be87a8ca3c74",
+  "items": [
+    {
+      "componentClassName": "OfferLabel",
+      "id": "830c942d-ce31-56b3-a6ef-1266cf150544",
+      "kind": "templateLabel",
+      "name": "EnergyProduct",
+      "sources": [
+        {
+          "key": "recovery",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_45XJAVDEC9AXXNMSQP6FK7D08X"
+          }
+        },
+        {
+          "key": "cost",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M34HT0W95E26WZ0K2C54N79A"
+          }
+        }
+      ],
+      "template": "+{recovery} stamina for {cost}"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "BuyButton",
+      "delegatedActionKey": "resource:micro-shop-energy-demo:masterData:61368253-b5e8-546a-bbcb-7c8a973da29f::Gs2Exchange:RateModel.Exchange",
+      "id": "8317e098-02f5-5eb4-a5d3-4f7dfafa15cd",
+      "kind": "buttonAction",
+      "name": "EnergyProduct"
+    }
+  ],
+  "name": "EnergyProduct",
+  "targetDomainType": "EnergyProduct",
+  "targetDomainTypeId": "dt_01M34HT0W9NARQTBAXX8SWCRFG"
+}
