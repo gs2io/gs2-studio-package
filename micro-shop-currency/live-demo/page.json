@@ -4,6 +4,7 @@
       "scope": {
         "currencyType": "XXX"
       },
+      "axis": "ShowcaseShopCurrencyMaster",
       "rows": [
         {
           "component": "StoreProductBuyButton",
