@@ -1430,6 +1430,16 @@ namespace GS2Studio.Showroom.EditorTools
         /// A list that reads nothing draws an empty section, and an empty
         /// section is what a page with nothing to show looks like — so the one
         /// that could have shown something is refused here instead.
+        ///
+        /// Not the same question as <see cref="CollectUndrawnDeclarations"/>,
+        /// and the two never both answer. That one is about rows: a section
+        /// given rows that none of this page's components can draw, which is a
+        /// section the build would drop without saying so, and it refuses
+        /// before anything is built. This one is about the keys a list is made
+        /// with, and only ever where a list is drawn. The one place they look
+        /// at the same section — rows written that draw nothing — the refusal
+        /// is the answer and the warning below stays quiet, so a page is never
+        /// told two things about one mistake.
         /// </summary>
         private static void CollectScopeProblems(SectionPlan plan, List<string> problems)
         {
@@ -1455,6 +1465,21 @@ namespace GS2Studio.Showroom.EditorTools
                         $"{Listed(scope)}.");
                 }
             }
+            // Only where there is a section to draw empty. A model the page
+            // leaves off is built no section and, being keyed with no key
+            // pinned, mounted no handler either — so there is no list to have
+            // been scoped and nothing to warn about. Said of one anyway, the
+            // warning names a section the page does not have and predicts an
+            // emptiness that cannot happen, which is a page that reads as
+            // half-wired while being exactly what its demo asked for.
+            //
+            // The two refusals above are not guarded by this, and must not be:
+            // both are about a scope the page wrote down, and a scope written
+            // on a section that draws nothing is inert — never read, never
+            // baked into a field — so it is a line whose author believed
+            // something the page does not do. That is worth refusing wherever
+            // it appears.
+            if (DrawsNothing(plan)) return;
             foreach (var name in scope)
             {
                 if (declared.Scope.ContainsKey(name)) continue;

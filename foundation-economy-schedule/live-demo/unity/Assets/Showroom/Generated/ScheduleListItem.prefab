@@ -155,7 +155,7 @@ MonoBehaviour:
   _activeWhenTrue: []
   _activeWhenFalse:
   - {fileID: 2809769573050419004}
-  - {fileID: 5373919402219258000}
+  - {fileID: 4407034269759230006}
 --- !u!1 &2794919254839419858
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +376,7 @@ RectTransform:
   m_Children:
   - {fileID: 5793603434182659566}
   - {fileID: 5000975949398014388}
-  - {fileID: 5373919402219258001}
+  - {fileID: 6823421804426833598}
   - {fileID: 2573973400795929248}
   - {fileID: 2338817164067655272}
   m_Father: {fileID: 8534927256923959398}
@@ -521,6 +521,10 @@ PrefabInstance:
     - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Name
       value: ScheduleRelativeEndAtValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -693,6 +697,10 @@ PrefabInstance:
     - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Name
       value: ScheduleRelativeWindowLabel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1000,6 +1008,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScheduleEndAtValue
       objectReference: {fileID: 0}
+    - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1011,7 +1023,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4549211642467944689}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &5373919402219258000 stripped
+--- !u!114 &3000251414798204606 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 5373919402219257999}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+--- !u!1 &4407034269759230006 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 5373919402219257999}
@@ -1022,7 +1045,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5373919402219258000}
+  m_GameObject: {fileID: 4407034269759230006}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 587fda719d3e50db9a5e348c50ff25cb, type: 3}
@@ -1053,29 +1076,18 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5373919402219258000}
+  m_GameObject: {fileID: 4407034269759230006}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87d24fe564474e5c9afded28e34fec91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Showroom.ShowroomCountdown
-  _label: {fileID: 5373919402219258002}
---- !u!224 &5373919402219258001 stripped
+  _label: {fileID: 3000251414798204606}
+--- !u!224 &6823421804426833598 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 5373919402219257999}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5373919402219258002 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 5373919402219257999}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
 --- !u!1001 &5856192318146353029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1171,6 +1183,10 @@ PrefabInstance:
     - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Name
       value: SchedulePeriodLabel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
