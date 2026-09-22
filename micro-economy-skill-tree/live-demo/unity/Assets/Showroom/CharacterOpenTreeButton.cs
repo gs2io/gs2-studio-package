@@ -5,19 +5,14 @@
 // until the recruit lands. So the value cannot be written into the scene: the
 // bake writes constants, and a constant is what this is not.
 //
-// The generated list says so itself. `SkillNodeBinderCollection` takes an
-// `owner` in its constructor, `SkillNodeListHandler` holds it in a serialized
-// field, and its readiness gate refuses to load while that field is empty —
-// which is why the tree draws nothing until this button is pressed. The
-// handler also carries the way in: `SetScope(string owner)`, the list's
-// counterpart of the single-row handler's `SetKeys`. It replaces the scope and
-// reloads, so a second press on a second character re-aims the same list
-// rather than adding to it.
+// It does not have to be. `SkillNodeBinderCollection` takes the owner in its
+// constructor, so the panel builds its own collection the moment a character
+// is named — which is why the page declares no `SkillNode` section any more.
+// A section existed to mount the list handler, the list handler existed to
+// read the nodes, and the panel reads them itself now.
 //
-// The page declares no `scope` for the section, and the bake warns about
-// exactly that. The warning is right about what it says — the page does not
-// name the value — and the section would indeed draw empty if nothing else
-// supplied one. This is the something else.
+// What is left here is one press: hand the panel the property id this row was
+// bound with, and put the panel up.
 #nullable enable
 
 using UnityEngine;
@@ -28,13 +23,11 @@ using Gs2.Core.Exception;
 using Gs2.Unity.Util;
 
 using GS2Studio.Generated.Character;
-using GS2Studio.Generated.SkillNode;
 
 namespace GS2Studio.Showroom.Demo
 {
     /// <summary>
-    /// Points every skill-node list on the page at the character this row
-    /// shows.
+    /// Opens the skill tree of the character this row shows.
     ///
     /// Shaped like a generated action button on purpose — a `Button` to wire
     /// and an `OnCompleted` to raise — because that is what the page knows how
@@ -47,17 +40,17 @@ namespace GS2Studio.Showroom.Demo
         [SerializeField] private Button? _button;
 
         /// <summary>
-        /// Raised once the scope has been handed over. Nothing else on the
-        /// page reads from it; it is the half of a row's action shape that
-        /// says the press finished.
+        /// Raised once the panel has been opened. Nothing else on the page
+        /// reads from it; it is the half of a row's action shape that says the
+        /// press finished.
         /// </summary>
         [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
 
         /// <summary>
-        /// Never raised: pointing a list at a character talks to nothing, so
-        /// there is no GS2 failure to carry. It is declared because a row's
-        /// action is the pair, and the page wires the failure side of every
-        /// button it draws.
+        /// Never raised: opening a panel talks to nothing, and the read it
+        /// starts reports its own failures on the page's log. It is declared
+        /// because a row's action is the pair, and the page wires the failure
+        /// side of every button it draws.
         /// </summary>
         [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
 
@@ -65,7 +58,6 @@ namespace GS2Studio.Showroom.Demo
         public ErrorEvent OnFailed => _onFailed;
 
         private bool _wired;
-        private ShowroomPage? _page;
 
         private void OnEnable()
         {
@@ -93,30 +85,19 @@ namespace GS2Studio.Showroom.Demo
                 return;
             }
 
-            // Every list, not the first one found: a page is free to show two
-            // trees side by side, and each would then be aimed separately.
-            // There is one here, and pointing all of them at the character the
-            // visitor just pressed is what a press on this row means.
-            var lists = FindObjectsByType<SkillNodeListHandler>(FindObjectsSortMode.None);
-            if (lists.Length == 0)
-            {
-                Report("No skill node list is on the page to point at a character.");
-                return;
-            }
-            foreach (var list in lists) list.SetScope(owner);
+            SkillNodeTreeCanvas.Ensure(PageFont()).OpenFor(owner!);
             _onCompleted.Invoke();
         }
 
         /// <summary>
-        /// Put a failure where a visitor can see it. The page's error channel
-        /// carries a `Gs2Exception`, so a failure of any other kind cannot
-        /// travel it — and a browser hides the console, which is where it
-        /// would otherwise be the only record.
+        /// The page's font, taken from this row's own text rather than named.
+        /// Every piece of text on the page is authored in the template, so
+        /// there is one to copy and no way for the panel to drift from it.
         /// </summary>
-        private void Report(string message)
+        private Font? PageFont()
         {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
+            var label = GetComponentInChildren<Text>(true);
+            return label == null ? null : label.font;
         }
     }
 }

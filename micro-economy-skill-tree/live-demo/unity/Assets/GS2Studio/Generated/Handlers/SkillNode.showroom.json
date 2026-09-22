@@ -47,13 +47,6 @@
   ],
   "components": [
     {
-      "className": "SkillNodeCostLabel",
-      "kind": "templateLabel",
-      "valueType": "",
-      "reportsFailure": false,
-      "serializedFields": []
-    },
-    {
       "className": "SkillNodeReleasedActiveToggle",
       "kind": "activeToggle",
       "valueType": "",
@@ -68,13 +61,6 @@
           "name": "_activeWhenFalse"
         }
       ]
-    },
-    {
-      "className": "SkillNodeUnlockedLabel",
-      "kind": "templateLabel",
-      "valueType": "",
-      "reportsFailure": false,
-      "serializedFields": []
     },
     {
       "className": "SkillNodeUnreleasedActiveToggle",

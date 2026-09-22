@@ -2,38 +2,6 @@
   "id": "99fab2a5-d491-5c00-81c1-56d36c56946b",
   "items": [
     {
-      "componentClassName": "CostLabel",
-      "id": "a5fe90b1-9709-5cac-aae0-e7c06b0b20c7",
-      "kind": "templateLabel",
-      "name": "SkillNode",
-      "sources": [
-        {
-          "key": "cost",
-          "source": {
-            "kind": "property",
-            "propertyId": "prop_01M31VN3992YQ74A46F3V3FAAZ"
-          }
-        }
-      ],
-      "template": "{cost} free currency"
-    },
-    {
-      "componentClassName": "UnlockedLabel",
-      "id": "2efbb720-c1d4-5701-b139-b73147d1c087",
-      "kind": "templateLabel",
-      "name": "SkillNode",
-      "sources": [
-        {
-          "key": "rate",
-          "source": {
-            "kind": "property",
-            "propertyId": "prop_01M0C87BJCQ0PCKG2FJQ0H767B"
-          }
-        }
-      ],
-      "template": "A reset returns {rate} of what it cost."
-    },
-    {
       "componentClassName": "ReleasedActiveToggle",
       "condition": {
         "kind": "truthy",

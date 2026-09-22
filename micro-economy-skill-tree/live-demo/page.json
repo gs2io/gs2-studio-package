@@ -26,18 +26,8 @@
       },
       "rows": ["WalletFreeBalanceLabel"]
     },
-    "SkillNode#The tree": {
-      "rows": [
-        "SkillNodeCostLabel",
-        "SkillNodeNeedsLabel",
-        "SkillNodeReleaseButton",
-        "SkillNodeUnlockedLabel",
-        "SkillNodeRestrainButton"
-      ],
-      "toggles": {
-        "SkillNodeReleasedActiveToggle": ["SkillNodeReleaseButton"],
-        "SkillNodeUnreleasedActiveToggle": ["SkillNodeUnlockedLabel", "SkillNodeRestrainButton"]
-      }
+    "SkillNode": {
+      "rows": []
     },
     "CharacterCollection": {
       "rows": []

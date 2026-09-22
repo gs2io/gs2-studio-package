@@ -17,6 +17,7 @@ using Gs2.Unity.Util;
 using Gs2.Unity.Core.Model;
 using Gs2.Unity.Gs2SkillTree.Model;
 using Gs2Bind.Gs2SkillTree;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.SkillNode
 {
@@ -195,6 +196,14 @@ namespace GS2Studio.Generated.SkillNode
             var _membershipSkillTreeStatus = await __membershipSkillTreeStatusLoader.LoadOrNull(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyMembershipSkillTreeStatus(_model, _membershipSkillTreeStatus);
+            _model.Cost = default;
+            if (_transactionConsumeAction != null)
+            {
+                foreach (var __action in _transactionConsumeAction)
+                {
+                    if (__action != null && RestoreCost(_model, __action.Action, __action.Request)) break;
+                }
+            }
             _mounted = true;
         }
 
@@ -213,6 +222,14 @@ namespace GS2Studio.Generated.SkillNode
                     if (_disposed) return Task.CompletedTask;
                     if (value != null)
                     {
+                    }
+                    _model.Cost = default;
+                    if (value != null)
+                    {
+                        foreach (var __action in value)
+                        {
+                            if (__action != null && RestoreCost(_model, __action.Action, __action.Request)) break;
+                        }
                     }
                     return Task.CompletedTask;
                 },
@@ -348,6 +365,51 @@ namespace GS2Studio.Generated.SkillNode
             {
                 model.Released = default;
             }
+        }
+        #endregion
+
+        #region MasterData reverse decode
+        public static bool RestoreCost(IMutableSkillNode model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Money2:WithdrawByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Currency")
+            {
+                var __value = ReadRequestValue(request, new string[] { "withdrawCount" });
+                if (__value != null)
+                {
+                    model.Cost = (int)Convert.ChangeType(__value, typeof(int));
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Navigates a LitJson request object by string segments. A segment of
+        /// the form <c>[n]</c> selects an array index; any other segment selects
+        /// an object key. Returns the leaf value as string, or null if absent.
+        /// </summary>
+        private static string? ReadRequestValue(JsonData request, string[] segments)
+        {
+            JsonData current = request;
+            foreach (var segment in segments)
+            {
+                if (current == null) return null;
+                if (segment.Length >= 2 && segment[0] == '[' && segment[segment.Length - 1] == ']')
+                {
+                    if (!current.IsArray) return null;
+                    if (!int.TryParse(segment.Substring(1, segment.Length - 2), out var index)) return null;
+                    if (index < 0 || index >= current.Count) return null;
+                    current = current[index];
+                }
+                else
+                {
+                    if (!current.IsObject || !current.Keys.Contains(segment)) return null;
+                    current = current[segment];
+                }
+            }
+            return current == null ? null : current.ToString();
         }
         #endregion
 

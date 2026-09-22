@@ -14,6 +14,7 @@ using Gs2.Unity.Util;
 using Gs2.Unity.Core.Model;
 using Gs2.Unity.Gs2SkillTree.Model;
 using Gs2Bind.Gs2SkillTree;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.SkillNode
 {

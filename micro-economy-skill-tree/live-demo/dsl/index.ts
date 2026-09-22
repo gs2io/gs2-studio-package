@@ -51,10 +51,10 @@
  * `Restrain` are the calls that charge a node and enforce its premises, and a
  * delegated action on either cannot be generated: the catalog gives both a
  * `config` parameter that Gs2Bind's methods do not take, and the generator
- * refuses rather than emit a call that would not compile. So the two buttons
- * are written by hand, the way the shop demo writes its purchase —
- * `SkillNodeReleaseButton` and `SkillNodeRestrainButton` carry the whole of
- * the reasoning.
+ * refuses rather than emit a call that would not compile. So the two calls are
+ * written by hand, the way the shop demo writes its purchase —
+ * `SkillNodeCommands` carries the whole of the reasoning, and the tree widget
+ * (`SkillNodeTreeCanvas`) is what puts a press on each of them.
  */
 
 import { defineOverlayDomainType, definePackage, dependencyPackage, PT, UiCond } from "~/dsl";
@@ -221,43 +221,27 @@ const withNodes = NODES.reduce(
 );
 
 export const microEconomySkillTreeDemo = withNodes
-  // The feature package ships the flag and what a node is; what it does not
-  // ship is a sentence about one, so those are here. The presses are neither
-  // the feature package's nor generated — see the header.
+  // What the page draws of a node is one line, and none of it is generated.
   //
-  // `owner` gets no component. It is the scope the list is read for rather
-  // than a fact about a node — every row in a section carries the same value —
-  // and the character it names is already on the page, as the row whose button
-  // put it there.
+  // A tree is legible only when a child sits directly under its parent, and a
+  // node drawn as a heading with its readings stacked below it is four rows
+  // tall — so the indent is there and nobody can see it. `SkillNodeTreeLine
+  // Label` composes the whole of a node instead: where it sits, what it
+  // charges, and the one fact that matters in the state it is in. A template
+  // label cannot draw the first of those — the shape is derived from every
+  // row at once rather than read off one — and splitting the rest back out
+  // into generated labels is what cost the tree its shape.
+  //
+  // What is left here is the pair of conditions, which decide which of the
+  // two presses a node carries. The presses themselves are neither the
+  // feature package's nor generated — see the header.
+  //
+  // `owner` gets no component either. It is the scope the list is read for
+  // rather than a fact about a node — every row in a section carries the same
+  // value — and the character it names is already on the page, as the row
+  // whose button put it there.
   .uiComponent(SkillNode, ui =>
     ui
-      // What a node charges, read off the row — so a page and a stack that
-      // have drifted apart say so instead of the page confidently printing a
-      // cost nothing enforces. The page heads the row with the component's
-      // own name, so the reading says the amount and not the word again.
-      //
-      // What a node wants released first is the other half, and it is not
-      // here: `premiseNodes` is a list, and a template label interpolates
-      // whatever it is given, which for a list is the name of its class. The
-      // demo writes `SkillNodeNeedsLabel` to read the same property into a
-      // reading.
-      .templateLabel(
-        "CostLabel",
-        "{cost} free currency",
-        { cost: ui.prop("cost") },
-        { name: "SkillNode" }
-      )
-      // What a release leaves behind, on the node rather than in the wallet.
-      // The row only appears once the node is released, so its heading is the
-      // news and the reading is what a reset would give back. The rate is the
-      // row's own, so a released node names the share its own reset will
-      // return instead of a figure written out twice.
-      .templateLabel(
-        "UnlockedLabel",
-        "A reset returns {rate} of what it cost.",
-        { rate: ui.inheritedProp(RESTRAIN_RETURN_RATE) },
-        { name: "SkillNode" }
-      )
       // An active toggle carries the rows its condition empties, so each one
       // below is named for the state in which its row has nothing to say
       // rather than for the state that puts it on the page.
