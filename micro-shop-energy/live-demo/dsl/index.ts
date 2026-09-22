@@ -164,7 +164,10 @@ const BuyRateModel = defineMasterDataResource(resource =>
             Arg.domainProperty(
               "value",
               Source.parent(
-                Source.direct(EnergyProduct, shop.propertyId("EnergyProduct", "recoveryValue"))
+                Source.direct(
+                  EnergyProduct.typeName,
+                  shop.propertyId("EnergyProduct", "recoveryValue")
+                )
               )
             ),
           ]),
@@ -212,15 +215,17 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
   })
   .domainType(EnergyProduct)
 
-  .instance(EnergyProduct, PRODUCTS[0].id, {
+  // New rows use the source type's identity, with values added by this overlay.
+  // The name-based overload resolves local property names and inherited ids together.
+  .instance(EnergyProduct.typeName, PRODUCTS[0].id, {
     [shop.propertyId("EnergyProduct", "recoveryValue")]: PRODUCTS[0].recovery,
     cost: PRODUCTS[0].cost,
   })
-  .instance(EnergyProduct, PRODUCTS[1].id, {
+  .instance(EnergyProduct.typeName, PRODUCTS[1].id, {
     [shop.propertyId("EnergyProduct", "recoveryValue")]: PRODUCTS[1].recovery,
     cost: PRODUCTS[1].cost,
   })
-  .instance(EnergyProduct, PRODUCTS[2].id, {
+  .instance(EnergyProduct.typeName, PRODUCTS[2].id, {
     [shop.propertyId("EnergyProduct", "recoveryValue")]: PRODUCTS[2].recovery,
     cost: PRODUCTS[2].cost,
   })
