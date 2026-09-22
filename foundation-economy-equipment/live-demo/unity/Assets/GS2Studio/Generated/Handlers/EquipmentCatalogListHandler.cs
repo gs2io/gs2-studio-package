@@ -496,14 +496,6 @@ namespace GS2Studio.Generated.EquipmentCatalog
             return -1;
         }
 
-        private void SyncSiblingOrder()
-        {
-            var operationGeneration = _reloadGeneration;
-            var collection = _collection;
-            if (collection == null) return;
-            SyncSiblingOrder(operationGeneration, collection);
-        }
-
         private void SyncSiblingOrder(
             long operationGeneration,
             IEquipmentCatalogBinderCollection collection)

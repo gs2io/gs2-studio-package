@@ -62,9 +62,11 @@ namespace GS2Studio.Generated.Energy.UI
 
         private void OnDisable()
         {
-            if (_handler == null || !_subscribed) return;
-            _handler.Updated -= OnUpdated;
-            _subscribed = false;
+            if (_handler != null && _subscribed)
+            {
+                _handler.Updated -= OnUpdated;
+                _subscribed = false;
+            }
         }
 
         private void ResolveHandler()
