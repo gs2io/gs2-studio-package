@@ -15,6 +15,7 @@ using GS2Studio.Generated.CurrencyType;
 using GS2Studio.Generated.StoreProduct;
 using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Showcase;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.StorePrice
 {

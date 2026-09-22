@@ -18,6 +18,7 @@ using GS2Studio.Generated.CurrencyType;
 using GS2Studio.Generated.StoreProduct;
 using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Showcase;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.StorePrice
 {
@@ -186,6 +187,15 @@ namespace GS2Studio.Generated.StorePrice
             {
             }
             StorePriceOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+            _model.Price = default;
+            var __RestorePrice__showcaseShopCurrencyNamespaceShowcaseDisplayItemSalesItemAcquireActionsSource = _showcaseShopCurrencyNamespaceShowcaseDisplayItem?.SalesItem?.AcquireActions;
+            if (__RestorePrice__showcaseShopCurrencyNamespaceShowcaseDisplayItemSalesItemAcquireActionsSource != null)
+            {
+                foreach (var __action in __RestorePrice__showcaseShopCurrencyNamespaceShowcaseDisplayItemSalesItemAcquireActionsSource)
+                {
+                    if (__action != null && RestorePrice(_model, __action.Action, __action.Request)) break;
+                }
+            }
             _mounted = true;
         }
 
@@ -204,6 +214,15 @@ namespace GS2Studio.Generated.StorePrice
                     if (_disposed) return Task.CompletedTask;
                     if (value != null)
                     {
+                    }
+                    _model.Price = default;
+                    var __RestorePrice__showcaseShopCurrencyNamespaceShowcaseDisplayItemSalesItemAcquireActionsSource = value?.SalesItem?.AcquireActions;
+                    if (__RestorePrice__showcaseShopCurrencyNamespaceShowcaseDisplayItemSalesItemAcquireActionsSource != null)
+                    {
+                        foreach (var __action in __RestorePrice__showcaseShopCurrencyNamespaceShowcaseDisplayItemSalesItemAcquireActionsSource)
+                        {
+                            if (__action != null && RestorePrice(_model, __action.Action, __action.Request)) break;
+                        }
                     }
                     StorePriceOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
                     return Task.CompletedTask;
@@ -284,6 +303,51 @@ namespace GS2Studio.Generated.StorePrice
         {
             EnsureActionContext();
             await new Gs2Bind.Gs2Showcase.DisplayItemLoader("ShopCurrency", _model.CurrencyType, _model.Id).BuyIncludePaidProduct(_gs2, _session, storeProductId: storeProductId, quantity: 1, config: config);
+        }
+        #endregion
+
+        #region MasterData reverse decode
+        public static bool RestorePrice(IMutableStorePrice model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Money2:DepositByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Currency")
+            {
+                var __value = ReadRequestValue(request, new string[] { "depositTransactions", "[0]", "price" });
+                if (__value != null)
+                {
+                    model.Price = (double)Convert.ChangeType(__value, typeof(double));
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Navigates a LitJson request object by string segments. A segment of
+        /// the form <c>[n]</c> selects an array index; any other segment selects
+        /// an object key. Returns the leaf value as string, or null if absent.
+        /// </summary>
+        private static string? ReadRequestValue(JsonData request, string[] segments)
+        {
+            JsonData current = request;
+            foreach (var segment in segments)
+            {
+                if (current == null) return null;
+                if (segment.Length >= 2 && segment[0] == '[' && segment[segment.Length - 1] == ']')
+                {
+                    if (!current.IsArray) return null;
+                    if (!int.TryParse(segment.Substring(1, segment.Length - 2), out var index)) return null;
+                    if (index < 0 || index >= current.Count) return null;
+                    current = current[index];
+                }
+                else
+                {
+                    if (!current.IsObject || !current.Keys.Contains(segment)) return null;
+                    current = current[segment];
+                }
+            }
+            return current == null ? null : current.ToString();
         }
         #endregion
 
