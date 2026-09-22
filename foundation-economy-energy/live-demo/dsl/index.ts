@@ -38,10 +38,13 @@ const Energy = energy.type("Energy");
 const DEFAULT_MAXIMUM = 50;
 
 /**
- * Overflow stays off: with it on the meter can hold more than its own maximum,
- * and a gauge whose value sits past its ceiling reads as broken rather than as
- * a feature. The field is still required and GS2 wants a ceiling no lower than
- * the starting capacity, so it records the headroom overflow would have had.
+ * Overflow is on, and this is the ceiling it raises the meter to.
+ *
+ * A refill bought while the meter is already full would otherwise be paid for
+ * and thrown away, which is the one thing a stamina shop must not do. With
+ * overflow the purchase always lands, and what a visitor sees is the meter
+ * going past the capacity it recovers to on its own — which is what overflow
+ * is.
  */
 const OVERFLOW_MAXIMUM = 100;
 
@@ -124,7 +127,7 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
 
   .instance(Energy, "stamina", {
     [energy.propertyId("Energy", "defaultMaximum")]: DEFAULT_MAXIMUM,
-    [energy.propertyId("Energy", "useOverflow")]: false,
+    [energy.propertyId("Energy", "useOverflow")]: true,
     [energy.propertyId("Energy", "overflowedMaximum")]: OVERFLOW_MAXIMUM,
     [energy.propertyId("Energy", "recoveryIntervalMinutes")]: RECOVERY_INTERVAL_MINUTES,
     [energy.propertyId("Energy", "recoveryValue")]: RECOVERY_VALUE,
