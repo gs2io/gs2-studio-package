@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M35Z5TAMDEHPVZZQMM7PQEVJ",
+  "kind": "overlay",
+  "name": "Message",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-liveops-inbox",
+    "directSourceTypeId": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+    "sourcePackageId": "foundation-liveops-inbox",
+    "sourceTypeId": "dt_GVTDXY1KW1X831ABJENERKSHZA"
+  }
+}

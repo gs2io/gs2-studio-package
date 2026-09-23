@@ -1,0 +1,22 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Ll]ogs/
+[Uu]serSettings/
+*.csproj
+*.sln
+
+# Unity rewrites this from manifest.json on open, recording whatever the last
+# resolve saw. It adds nothing the manifest does not already pin, and it is
+# regenerated on the next open.
+Packages/packages-lock.json
+
+# Written by Unity Purchasing the first time the editor opens the project, and
+# reproduced from the package rather than authored here.
+Assets/Resources/BillingMode.json
+Assets/Resources/BillingMode.json.meta
+
+# A local editor preference, not part of the demo.
+ProjectSettings/PackageManagerSettings.asset

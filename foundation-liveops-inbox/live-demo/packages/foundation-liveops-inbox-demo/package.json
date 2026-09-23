@@ -1,0 +1,18 @@
+{
+  "id": "foundation-liveops-inbox-demo",
+  "name": "foundation-liveops-inbox-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-liveops-inbox": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the announcement used by the live demo, and the press that delivers it to your own inbox.",
+      "ja": "ライブデモ用のお知らせと、それを自分の受信箱へ届ける操作を提供します。"
+    },
+    "label": {
+      "en": "Inbox (demo data)",
+      "ja": "お知らせ・受信箱（デモデータ）"
+    }
+  }
+}

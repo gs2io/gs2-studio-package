@@ -1,0 +1,51 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "metadata",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M35Z5TAM5DV8ADJKFK7ZMDX2",
+                    "typeName": "GlobalMessage"
+                  },
+                  "propertyId": "prop_57TKVNCPPA7DHSTZRX4QJ4W45K"
+                },
+                "kind": "parent",
+                "parentResourceId": "7b483198-2292-5a17-bf09-3fbc3242bbff"
+              }
+            }
+          },
+          {
+            "parameterName": "expireDays",
+            "source": {
+              "kind": "static",
+              "value": 7
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "SendMessage",
+        "transformPackageId": "foundation-liveops-inbox"
+      }
+    ]
+  },
+  "id": "ad85199b-cf29-57aa-99bc-0731b9222ee5",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M35Z5TAM5DV8ADJKFK7ZMDX2",
+    "typeName": "GlobalMessage"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD.welcome": "row_01M35Z5TAMBP3TDCQKCR3F6YXG",
+    "type:GlobalMessage": "dt_01M35Z5TAM5DV8ADJKFK7ZMDX2",
+    "type:Message": "dt_01M35Z5TAMDEHPVZZQMM7PQEVJ"
+  },
+  "deterministicOverrides": {}
+}

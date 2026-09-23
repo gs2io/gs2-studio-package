@@ -1,0 +1,30 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_InboxDeliver:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "InboxDeliver"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "welcome"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inbox:SendMessageByUserId"
+                request: "{\"namespaceName\":\"Inbox\",\"userId\":\"#{userId}\",\"metadata\":\"Welcome to the GS2 inbox demo!\",\"expiresTimeSpan\":{\"days\":7}}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_InboxDeliver"
+  ExchangeNamespace_InboxDeliver:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "InboxDeliver"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

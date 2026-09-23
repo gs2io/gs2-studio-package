@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "commitSha": "5790fa25a2ea0db4d6ae37ec4c1df268462db555",
+      "integrity": "sha256-gm6GT2i+pDdTawttBHlkdtQFGOqHFIRlM2bov8Xn/nM=",
+      "owner": "gs2io",
+      "packageId": "foundation-liveops-inbox",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-liveops-inbox/packages/foundation-liveops-inbox",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

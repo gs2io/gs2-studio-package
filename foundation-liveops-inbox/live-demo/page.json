@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "GlobalMessage#An announcement you can have delivered": {
+      "axis": "ExchangeInboxDeliverMaster",
+      "rows": ["GlobalMessageDeliverButton"]
+    },
+    "Message#Your inbox": {
+      "rows": ["MessagePayloadLabel", "MessageOpenButton", "MessageOpenedLabel"],
+      "toggles": {
+        "MessageReadActiveToggle": ["MessageOpenButton"],
+        "MessageUnreadActiveToggle": ["MessageOpenedLabel"]
+      }
+    }
+  }
+}
