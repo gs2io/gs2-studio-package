@@ -101,6 +101,13 @@
       "valueType": "DateTime",
       "reportsFailure": false,
       "serializedFields": []
+    },
+    {
+      "className": "ScheduleWindowLabel",
+      "kind": "templateLabel",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
     }
   ]
 }

@@ -2,13 +2,19 @@
   "schemaVersion": 1,
   "packageId": "foundation-economy-character-dictionary-demo",
   "types": {
-    "CharacterRecruit": {
-      "id": "dt_01M2Q9FEF57E7NB4TFVDZ3VC74",
+    "Character": {
+      "id": "dt_01M37M3G5DZ5DEQ2RJCGE7FAAG",
       "singleEntry": false,
-      "canonicalPackageId": "foundation-economy-character-demo",
-      "canonicalTypeId": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J"
+      "delegatedActions": {
+        "Recruit": "resource:foundation-economy-character-dictionary-demo:masterData:8a84566b-9fb4-4908-9638-ca366eb208c3::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
     }
   },
-  "masterDataResources": {},
+  "masterDataResources": {
+    "exchange.Namespace": "b4a90983-cdd1-4c22-899d-5940e978a43d",
+    "exchange.RateModel": "8a84566b-9fb4-4908-9638-ca366eb208c3"
+  },
   "transforms": {}
 }

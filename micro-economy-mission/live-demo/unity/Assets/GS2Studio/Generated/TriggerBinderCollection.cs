@@ -14,7 +14,10 @@ using System.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+using Gs2.Unity.Core.Model;
+using Gs2.Unity.Gs2Exchange.Model;
 using Gs2.Unity.Gs2Schedule.Model;
+using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Schedule;
 
 namespace GS2Studio.Generated.Trigger
@@ -43,6 +46,10 @@ namespace GS2Studio.Generated.Trigger
         event Action<ITriggerBinder> ItemAdded;
         event Action<ITriggerBinder> ItemRemoved;
         void Invalidate();
+        Task MountFromExchangeTriggerClearMasterDataAsync(CancellationToken cancellationToken = default);
+        void SubscribeFromExchangeTriggerClearMasterData(Action? onChange = null, Action<Exception>? onError = null);
+        Task MountFromExchangeTriggerExtendMasterDataAsync(CancellationToken cancellationToken = default);
+        void SubscribeFromExchangeTriggerExtendMasterData(Action? onChange = null, Action<Exception>? onError = null);
         Task MountFromScheduleScheduleUserDataAsync(CancellationToken cancellationToken = default);
         void SubscribeFromScheduleScheduleUserData(Action? onChange = null, Action<Exception>? onError = null);
     }
@@ -268,6 +275,8 @@ namespace GS2Studio.Generated.Trigger
         public void Invalidate()
         {
             ThrowIfDisposed();
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerClear").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerExtend").Invalidate(_gs2, _session);
             new Gs2Bind.Gs2Schedule.TriggerArrayLoader("Schedule").Invalidate(_gs2, _session);
         }
 
@@ -342,6 +351,324 @@ namespace GS2Studio.Generated.Trigger
             }
         }
 
+        /// <summary>One-shot Create + MountFromExchangeTriggerClearMasterDataAsync (no subscription).</summary>
+        public static async Task<TriggerBinderCollection> CreateFromExchangeTriggerClearMasterDataAsync(
+            Gs2Domain gs2,
+            IGameSession session,
+            CancellationToken cancellationToken = default)
+        {
+            var coll = new TriggerBinderCollection(gs2, session);
+            await coll.MountFromExchangeTriggerClearMasterDataAsync(cancellationToken);
+            return coll;
+        }
+
+        public async Task MountFromExchangeTriggerClearMasterDataAsync(CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+            cancellationToken.ThrowIfCancellationRequested();
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerClear");
+            var items = await arrayLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            await ReconcileFromExchangeTriggerClearMasterItems(items, attachChildSubscribe: false, cancellationToken);
+            _mounted = true;
+        }
+
+        public void SubscribeFromExchangeTriggerClearMasterData(Action? onChange = null, Action<Exception>? onError = null)
+        {
+            ThrowIfDisposed();
+            if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            _subscriptionActive = true;
+            // Consumer-facing notification, wrapped once so a throwing consumer
+            // callback routes to onError (or Debug) instead of escaping the
+            // loader's async-void chain.
+            Action notify = () =>
+            {
+                try { onChange?.Invoke(); }
+                catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
+            };
+            _onChange = notify;
+            foreach (var b in _binders) b.Subscribe(notify);
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerClear");
+            _unsubscribers.Add(arrayLoader.Subscribe(
+                _gs2,
+                _session,
+                async (_, _, items) =>
+                {
+                    if (_disposed) return;
+                    try
+                    {
+                        await ReconcileFromExchangeTriggerClearMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex);
+                    }
+                },
+                notify
+            ));
+        }
+
+        private async Task ReconcileFromExchangeTriggerClearMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        {
+            var seen = new HashSet<string>();
+            foreach (var item in items)
+            {
+                if (_disposed) return;
+                var rowKey = ExtractExchangeTriggerClearMasterRowKey(item);
+                if (rowKey == null) continue;
+                seen.Add(rowKey);
+                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                {
+                    ApplyExchangeTriggerClearMasterItemTo(existing.MutableModel, item);
+                }
+                else
+                {
+                    var binder = await BuildBinderFromExchangeTriggerClearMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeTriggerClearMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
+                    if (attachChildSubscribe) binder.Subscribe(_onChange);
+                    _bindersByRowKey[rowKey] = binder;
+                    _binders.Add(binder);
+                    ItemAdded?.Invoke(binder);
+                }
+            }
+            if (_bindersByRowKey.Count > seen.Count)
+            {
+                var toRemove = new List<string>();
+                foreach (var kv in _bindersByRowKey)
+                {
+                    if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
+                }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
+                foreach (var rowKey in toRemove)
+                {
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
+                    _bindersByRowKey.Remove(rowKey);
+                    _binders.Remove(binder);
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
+                }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
+            }
+            if (!_disposed) SortBinders();
+        }
+
+        private async Task<TriggerBinder> BuildBinderFromExchangeTriggerClearMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        {
+            var model = TriggerBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name)));
+            ApplyExchangeTriggerClearMasterItemTo(model, item);
+            var binder = new TriggerBinder(model, _gs2, _session);
+            await binder.MountAsync(cancellationToken);
+            return binder;
+        }
+
+        private static void ApplyExchangeTriggerClearMasterItemTo(MutableTrigger model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
+        {
+            // This loader carries no master-item field assignments; reconcile manages
+            // membership only (per-element field changes are tracked by each element
+            // binder's own Subscribe).
+            _ = item;
+            _ = model;
+        }
+
+        private TriggerId ExtractExchangeTriggerClearMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
+        {
+            return (string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name));
+        }
+
+        private string? ExtractExchangeTriggerClearMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
+        {
+            var id = ExtractExchangeTriggerClearMasterIdentity(item);
+            if (EqualityComparer<TriggerId>.Default.Equals(id, default)) return null;
+            if (string.IsNullOrEmpty(item.Name)) return null;
+            return $"{item.Name}";
+        }
+        /// <summary>One-shot Create + MountFromExchangeTriggerExtendMasterDataAsync (no subscription).</summary>
+        public static async Task<TriggerBinderCollection> CreateFromExchangeTriggerExtendMasterDataAsync(
+            Gs2Domain gs2,
+            IGameSession session,
+            CancellationToken cancellationToken = default)
+        {
+            var coll = new TriggerBinderCollection(gs2, session);
+            await coll.MountFromExchangeTriggerExtendMasterDataAsync(cancellationToken);
+            return coll;
+        }
+
+        public async Task MountFromExchangeTriggerExtendMasterDataAsync(CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+            cancellationToken.ThrowIfCancellationRequested();
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerExtend");
+            var items = await arrayLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            await ReconcileFromExchangeTriggerExtendMasterItems(items, attachChildSubscribe: false, cancellationToken);
+            _mounted = true;
+        }
+
+        public void SubscribeFromExchangeTriggerExtendMasterData(Action? onChange = null, Action<Exception>? onError = null)
+        {
+            ThrowIfDisposed();
+            if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            _subscriptionActive = true;
+            // Consumer-facing notification, wrapped once so a throwing consumer
+            // callback routes to onError (or Debug) instead of escaping the
+            // loader's async-void chain.
+            Action notify = () =>
+            {
+                try { onChange?.Invoke(); }
+                catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
+            };
+            _onChange = notify;
+            foreach (var b in _binders) b.Subscribe(notify);
+            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("TriggerExtend");
+            _unsubscribers.Add(arrayLoader.Subscribe(
+                _gs2,
+                _session,
+                async (_, _, items) =>
+                {
+                    if (_disposed) return;
+                    try
+                    {
+                        await ReconcileFromExchangeTriggerExtendMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex);
+                    }
+                },
+                notify
+            ));
+        }
+
+        private async Task ReconcileFromExchangeTriggerExtendMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        {
+            var seen = new HashSet<string>();
+            foreach (var item in items)
+            {
+                if (_disposed) return;
+                var rowKey = ExtractExchangeTriggerExtendMasterRowKey(item);
+                if (rowKey == null) continue;
+                seen.Add(rowKey);
+                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                {
+                    ApplyExchangeTriggerExtendMasterItemTo(existing.MutableModel, item);
+                }
+                else
+                {
+                    var binder = await BuildBinderFromExchangeTriggerExtendMasterItem(item, cancellationToken);
+                    if (_disposed)
+                    {
+                        binder.Dispose();
+                        return;
+                    }
+                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
+                    {
+                        ApplyExchangeTriggerExtendMasterItemTo(raced.MutableModel, item);
+                        binder.Dispose();
+                        continue;
+                    }
+                    if (attachChildSubscribe) binder.Subscribe(_onChange);
+                    _bindersByRowKey[rowKey] = binder;
+                    _binders.Add(binder);
+                    ItemAdded?.Invoke(binder);
+                }
+            }
+            if (_bindersByRowKey.Count > seen.Count)
+            {
+                var toRemove = new List<string>();
+                foreach (var kv in _bindersByRowKey)
+                {
+                    if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
+                }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
+                foreach (var rowKey in toRemove)
+                {
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
+                    _bindersByRowKey.Remove(rowKey);
+                    _binders.Remove(binder);
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
+                }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
+            }
+            if (!_disposed) SortBinders();
+        }
+
+        private async Task<TriggerBinder> BuildBinderFromExchangeTriggerExtendMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        {
+            var model = TriggerBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name)));
+            ApplyExchangeTriggerExtendMasterItemTo(model, item);
+            var binder = new TriggerBinder(model, _gs2, _session);
+            await binder.MountAsync(cancellationToken);
+            return binder;
+        }
+
+        private static void ApplyExchangeTriggerExtendMasterItemTo(MutableTrigger model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
+        {
+            // This loader carries no master-item field assignments; reconcile manages
+            // membership only (per-element field changes are tracked by each element
+            // binder's own Subscribe).
+            _ = item;
+            _ = model;
+        }
+
+        private TriggerId ExtractExchangeTriggerExtendMasterIdentity(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
+        {
+            return (string.IsNullOrEmpty(item.Name) ? default(TriggerId) : new TriggerId(item.Name));
+        }
+
+        private string? ExtractExchangeTriggerExtendMasterRowKey(Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
+        {
+            var id = ExtractExchangeTriggerExtendMasterIdentity(item);
+            if (EqualityComparer<TriggerId>.Default.Equals(id, default)) return null;
+            if (string.IsNullOrEmpty(item.Name)) return null;
+            return $"{item.Name}";
+        }
         /// <summary>One-shot Create + MountFromScheduleScheduleUserDataAsync (no subscription).</summary>
         public static async Task<TriggerBinderCollection> CreateFromScheduleScheduleUserDataAsync(
             Gs2Domain gs2,

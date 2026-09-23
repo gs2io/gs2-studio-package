@@ -62,6 +62,9 @@
     },
     "StorePrice": {
       "rows": []
+    },
+    "TriggerPull": {
+      "rows": []
     }
   }
 }

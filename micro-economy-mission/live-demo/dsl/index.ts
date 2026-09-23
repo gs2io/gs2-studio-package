@@ -281,6 +281,10 @@ const withGroups = definePackage("micro-economy-mission-demo", "0.0.0")
   // does not walk a package's own dependencies, so the package that owns that
   // type is named here too.
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
+  // The schedule demo authors the event windows. They live in the schedule
+  // stack this demo deploys too, so it is installed rather than left out:
+  // deployed from here without it, that stack would lose them.
+  .dependency("foundation-economy-schedule-demo", "github:gs2io/gs2-studio-package")
   // Where a claim pays. The wallet, the namespace and the deposit are all this
   // package's, so none of them is authored again here.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")

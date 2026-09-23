@@ -23,6 +23,7 @@ using Gs2Bind.Gs2Dictionary;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Experience;
 using Gs2Bind.Gs2Inventory;
+using Gs2.Util.LitJson;
 using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Character
@@ -49,6 +50,10 @@ namespace GS2Studio.Generated.Character
         /// <summary>Built by the DictionaryCharacterDictionary master-data list axis.</summary>
         [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
         DictionaryCharacterDictionaryMaster,
+
+        /// <summary>Built by the ExchangeCharacterDexRecruit master-data list axis.</summary>
+        [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
+        ExchangeCharacterDexRecruitMaster,
 
         /// <summary>Built by the InventoryCharacter user-data list axis.</summary>
         InventoryCharacterUser,
@@ -77,6 +82,7 @@ namespace GS2Studio.Generated.Character
         /// <remarks>InventoryCharacterMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>ExchangeCharacterTrainMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>DictionaryCharacterDictionaryMaster: passes no itemSetName constructor argument.</remarks>
+        /// <remarks>ExchangeCharacterDexRecruitMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>DictionaryCharacterDictionaryUser: passes no itemSetName constructor argument.</remarks>
         bool LoadedUserdataInventoryCharacterItemModel { get; }
 
@@ -86,6 +92,7 @@ namespace GS2Studio.Generated.Character
         /// <remarks>InventoryCharacterMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeCharacterTrainMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>DictionaryCharacterDictionaryMaster: no per-row value for _model.PropertyId.</remarks>
+        /// <remarks>ExchangeCharacterDexRecruitMaster: no per-row value for _model.PropertyId.</remarks>
         bool LoadedUserdataExperienceCharacterExperienceExperienceModel { get; }
     }
 
@@ -99,6 +106,7 @@ namespace GS2Studio.Generated.Character
     public interface IActionableCharacterBinder : IReadOnlyCharacterBinder
     {
         Task Train();
+        Task Recruit(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
     }
 
     /// <summary>
@@ -209,6 +217,9 @@ namespace GS2Studio.Generated.Character
         private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeCharacterTrainNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Dictionary.EntryModelLoader __dictionaryCharacterDictionaryNamespaceEntryModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireAction2Loader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireAction3Loader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeCharacterDexRecruitNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Inventory.ItemModelLoader __inventoryCharacterNamespaceInventoryModelItemModelLoader;
         private readonly Gs2Bind.Gs2Dictionary.EntryLoader __userdataDictionaryCharacterDictionaryEntryModelLoader;
         private readonly Gs2Bind.Gs2Inventory.ItemSetLoader __userdataInventoryCharacterItemModelLoader;
@@ -222,6 +233,7 @@ namespace GS2Studio.Generated.Character
         /// <remarks>InventoryCharacterMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>ExchangeCharacterTrainMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>DictionaryCharacterDictionaryMaster: passes no itemSetName constructor argument.</remarks>
+        /// <remarks>ExchangeCharacterDexRecruitMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>DictionaryCharacterDictionaryUser: passes no itemSetName constructor argument.</remarks>
         private bool Runs__userdataInventoryCharacterItemModelLoader => false;
 
@@ -229,6 +241,7 @@ namespace GS2Studio.Generated.Character
         /// <remarks>InventoryCharacterMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeCharacterTrainMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>DictionaryCharacterDictionaryMaster: no per-row value for _model.PropertyId.</remarks>
+        /// <remarks>ExchangeCharacterDexRecruitMaster: no per-row value for _model.PropertyId.</remarks>
         private bool Runs__userdataExperienceCharacterExperienceExperienceModelLoader => _mountSurfaceValue is CharacterMountSurface.Full or CharacterMountSurface.InventoryCharacterUser or CharacterMountSurface.DictionaryCharacterDictionaryUser;
 
         /// <inheritdoc />
@@ -256,6 +269,9 @@ namespace GS2Studio.Generated.Character
             __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterTrain", _model.Id, 0);
             __exchangeCharacterTrainNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterTrain", _model.Id);
             __dictionaryCharacterDictionaryNamespaceEntryModelLoader = new Gs2Bind.Gs2Dictionary.EntryModelLoader("CharacterDictionary", _model.Id);
+            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterDexRecruit", _model.Id, 0);
+            __transactionAcquireAction3Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterDexRecruit", _model.Id, 1);
+            __exchangeCharacterDexRecruitNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterDexRecruit", _model.Id);
             __inventoryCharacterNamespaceInventoryModelItemModelLoader = new Gs2Bind.Gs2Inventory.ItemModelLoader("Character", "Character", _model.Id);
             __userdataDictionaryCharacterDictionaryEntryModelLoader = new Gs2Bind.Gs2Dictionary.EntryLoader("CharacterDictionary", _model.Id);
             __userdataInventoryCharacterItemModelLoader = new Gs2Bind.Gs2Inventory.ItemSetLoader("Character", "Character", _model.Id, itemSetName!);
@@ -314,6 +330,21 @@ namespace GS2Studio.Generated.Character
             if (_dictionaryCharacterDictionaryNamespaceEntryModel != null)
             {
             }
+            var _transactionAcquireAction2 = await __transactionAcquireAction2Loader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_transactionAcquireAction2 != null)
+            {
+            }
+            var _transactionAcquireAction3 = await __transactionAcquireAction3Loader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_transactionAcquireAction3 != null)
+            {
+            }
+            var _exchangeCharacterDexRecruitNamespaceRateModel = await __exchangeCharacterDexRecruitNamespaceRateModelLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_exchangeCharacterDexRecruitNamespaceRateModel != null)
+            {
+            }
             var _inventoryCharacterNamespaceInventoryModelItemModel = await __inventoryCharacterNamespaceInventoryModelItemModelLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyInventoryCharacterNamespaceInventoryModelItemModel(_model, _inventoryCharacterNamespaceInventoryModelItemModel);
@@ -332,6 +363,9 @@ namespace GS2Studio.Generated.Character
             {
                 ApplyUserdataExperienceCharacterExperienceExperienceModel(_model, _userdataExperienceCharacterExperienceExperienceModel);
             }
+            if (_transactionAcquireAction2 == null) _RestoreId__transactionAcquireAction2Cache = null; else _RestoreId__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
+            if (_transactionAcquireAction3 == null) _RestoreId__transactionAcquireAction3Cache = null; else _RestoreId__transactionAcquireAction3Cache = (_transactionAcquireAction3.Action, _transactionAcquireAction3.Request);
+            RestoreIdFromSources();
             _mounted = true;
         }
 
@@ -369,6 +403,49 @@ namespace GS2Studio.Generated.Character
                 () => onChange?.Invoke()
             ));
             _unsubscribers.Add(__dictionaryCharacterDictionaryNamespaceEntryModelLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    if (value == null) _RestoreId__transactionAcquireAction2Cache = null; else _RestoreId__transactionAcquireAction2Cache = (value.Action, value.Request);
+                    RestoreIdFromSources();
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__transactionAcquireAction3Loader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    if (value == null) _RestoreId__transactionAcquireAction3Cache = null; else _RestoreId__transactionAcquireAction3Cache = (value.Action, value.Request);
+                    RestoreIdFromSources();
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__exchangeCharacterDexRecruitNamespaceRateModelLoader.Subscribe(
                 _gs2,
                 _session,
                 (_, _, value) =>
@@ -442,6 +519,9 @@ namespace GS2Studio.Generated.Character
             __transactionAcquireActionLoader.Invalidate(_gs2, _session);
             __exchangeCharacterTrainNamespaceRateModelLoader.Invalidate(_gs2, _session);
             __dictionaryCharacterDictionaryNamespaceEntryModelLoader.Invalidate(_gs2, _session);
+            __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
+            __transactionAcquireAction3Loader.Invalidate(_gs2, _session);
+            __exchangeCharacterDexRecruitNamespaceRateModelLoader.Invalidate(_gs2, _session);
             __inventoryCharacterNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
             __userdataDictionaryCharacterDictionaryEntryModelLoader.Invalidate(_gs2, _session);
             if (Runs__userdataInventoryCharacterItemModelLoader)
@@ -518,6 +598,12 @@ namespace GS2Studio.Generated.Character
         {
             EnsureActionContext();
             await new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterTrain", _model.Id).Exchange(_gs2, _session, count: 1, config: new Gs2.Unity.Gs2Exchange.Model.EzConfig[] { new Gs2.Unity.Gs2Exchange.Model.EzConfig { Key = "propertyId", Value = _model.PropertyId } });
+        }
+
+        public async Task Recruit(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
+        {
+            EnsureActionContext();
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterDexRecruit", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
         #endregion
 
@@ -643,6 +729,69 @@ namespace GS2Studio.Generated.Character
                 model.LevelCap = default;
                 model.Level = default;
             }
+        }
+        #endregion
+
+        #region MasterData reverse decode
+        private (string Action, string Request)? _RestoreId__transactionAcquireAction2Cache;
+        private (string Action, string Request)? _RestoreId__transactionAcquireAction3Cache;
+        public static bool RestoreId(IMutableCharacter model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Inventory:AcquireItemSetByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Character" && ReadRequestValue(request, new string[] { "inventoryName" }) == "Character")
+            {
+                var __value = ReadRequestValue(request, new string[] { "itemName" });
+                if (__value != null)
+                {
+                    model.Id = (CharacterId)__value;
+                    return true;
+                }
+            }
+            else if (actionName == "Gs2Dictionary:AddEntriesByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "CharacterDictionary")
+            {
+                var __value = ReadRequestValue(request, new string[] { "entryModelNames", "[0]" });
+                if (__value != null)
+                {
+                    model.Id = (CharacterId)__value;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void RestoreIdFromSources()
+        {
+            var __matched = false;
+            if (!__matched && _RestoreId__transactionAcquireAction2Cache.HasValue && RestoreId(_model, _RestoreId__transactionAcquireAction2Cache.Value.Action, _RestoreId__transactionAcquireAction2Cache.Value.Request)) __matched = true;
+            if (!__matched && _RestoreId__transactionAcquireAction3Cache.HasValue && RestoreId(_model, _RestoreId__transactionAcquireAction3Cache.Value.Action, _RestoreId__transactionAcquireAction3Cache.Value.Request)) __matched = true;
+        }
+
+        /// <summary>
+        /// Navigates a LitJson request object by string segments. A segment of
+        /// the form <c>[n]</c> selects an array index; any other segment selects
+        /// an object key. Returns the leaf value as string, or null if absent.
+        /// </summary>
+        private static string? ReadRequestValue(JsonData request, string[] segments)
+        {
+            JsonData current = request;
+            foreach (var segment in segments)
+            {
+                if (current == null) return null;
+                if (segment.Length >= 2 && segment[0] == '[' && segment[segment.Length - 1] == ']')
+                {
+                    if (!current.IsArray) return null;
+                    if (!int.TryParse(segment.Substring(1, segment.Length - 2), out var index)) return null;
+                    if (index < 0 || index >= current.Count) return null;
+                    current = current[index];
+                }
+                else
+                {
+                    if (!current.IsObject || !current.Keys.Contains(segment)) return null;
+                    current = current[segment];
+                }
+            }
+            return current == null ? null : current.ToString();
         }
         #endregion
 

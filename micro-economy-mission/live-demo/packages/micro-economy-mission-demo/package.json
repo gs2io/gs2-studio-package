@@ -6,6 +6,7 @@
     "foundation-economy-currency": "github:gs2io/gs2-studio-package",
     "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
     "micro-economy-mission": "github:gs2io/gs2-studio-package",
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },

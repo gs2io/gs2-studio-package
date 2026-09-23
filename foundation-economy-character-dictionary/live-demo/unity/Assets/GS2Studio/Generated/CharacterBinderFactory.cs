@@ -20,6 +20,7 @@ using Gs2Bind.Gs2Dictionary;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Experience;
 using Gs2Bind.Gs2Inventory;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.Character
 {

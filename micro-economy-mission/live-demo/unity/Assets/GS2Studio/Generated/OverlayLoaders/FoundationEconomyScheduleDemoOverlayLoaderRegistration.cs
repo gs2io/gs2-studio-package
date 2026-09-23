@@ -21,7 +21,7 @@ using UnityEditor;
 
 namespace GS2Studio.Generated
 {
-    internal static class FoundationEconomyScheduleOverlayLoaderRegistration
+    internal static class FoundationEconomyScheduleDemoOverlayLoaderRegistration
     {
         private static bool _registered;
 

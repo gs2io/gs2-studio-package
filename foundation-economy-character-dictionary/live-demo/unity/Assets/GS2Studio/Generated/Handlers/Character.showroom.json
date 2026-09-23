@@ -46,6 +46,10 @@
       "value": 1518030578
     },
     {
+      "name": "ExchangeCharacterDexRecruitMaster",
+      "value": 328040472
+    },
+    {
       "name": "InventoryCharacterUser",
       "value": 312520633
     },
@@ -66,6 +70,10 @@
     {
       "memberName": "DictionaryCharacterDictionaryMaster",
       "mountMethodName": "MountFromDictionaryCharacterDictionaryMasterDataAsync"
+    },
+    {
+      "memberName": "ExchangeCharacterDexRecruitMaster",
+      "mountMethodName": "MountFromExchangeCharacterDexRecruitMasterDataAsync"
     },
     {
       "memberName": "InventoryCharacterUser",
@@ -191,6 +199,18 @@
       "valueType": "string",
       "reportsFailure": false,
       "serializedFields": []
+    },
+    {
+      "className": "CharacterRecruitButton",
+      "kind": "buttonAction",
+      "valueType": "",
+      "reportsFailure": true,
+      "serializedFields": [
+        {
+          "role": "button",
+          "name": "_button"
+        }
+      ]
     },
     {
       "className": "CharacterTrainButton",

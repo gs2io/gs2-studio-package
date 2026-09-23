@@ -19,10 +19,31 @@
   "scopeParameters": [],
   "itemPrefabField": "_itemPrefab",
   "contentParentField": "_contentParent",
-  "listAxisEnumTypeName": "",
-  "listAxisField": "",
-  "listAxisMembers": [],
+  "listAxisEnumTypeName": "TriggerListAxis",
+  "listAxisField": "_axis",
+  "listAxisMembers": [
+    {
+      "name": "ExchangeTriggerClearMaster",
+      "value": 1073905719
+    },
+    {
+      "name": "ExchangeTriggerExtendMaster",
+      "value": 425463058
+    },
+    {
+      "name": "ScheduleScheduleUser",
+      "value": -186946978
+    }
+  ],
   "listAxes": [
+    {
+      "memberName": "ExchangeTriggerClearMaster",
+      "mountMethodName": "MountFromExchangeTriggerClearMasterDataAsync"
+    },
+    {
+      "memberName": "ExchangeTriggerExtendMaster",
+      "mountMethodName": "MountFromExchangeTriggerExtendMasterDataAsync"
+    },
     {
       "memberName": "ScheduleScheduleUser",
       "mountMethodName": "MountFromScheduleScheduleUserDataAsync"
@@ -31,11 +52,35 @@
   "mountFields": [],
   "components": [
     {
+      "className": "TriggerClearButton",
+      "kind": "buttonAction",
+      "valueType": "",
+      "reportsFailure": true,
+      "serializedFields": [
+        {
+          "role": "button",
+          "name": "_button"
+        }
+      ]
+    },
+    {
       "className": "TriggerExpiresAtValue",
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
       "serializedFields": []
+    },
+    {
+      "className": "TriggerExtendButton",
+      "kind": "buttonAction",
+      "valueType": "",
+      "reportsFailure": true,
+      "serializedFields": [
+        {
+          "role": "button",
+          "name": "_button"
+        }
+      ]
     },
     {
       "className": "TriggerNameLabel",

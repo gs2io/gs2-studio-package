@@ -193,16 +193,8 @@ namespace GS2Studio.Generated.CharacterRecruit
             if (_exchangeCharacterRecruitNamespaceRateModel != null)
             {
             }
-            _RestoreCharacter__transactionAcquireActionCache.Clear();
-            if (_transactionAcquireAction != null)
-            {
-                foreach (var __action in _transactionAcquireAction)
-                {
-                    if (__action != null) _RestoreCharacter__transactionAcquireActionCache.Add((__action.Action, __action.Request));
-                }
-            }
-            if (_transactionAcquireAction2 == null) _RestoreCharacter__transactionAcquireAction2Cache = null; else _RestoreCharacter__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
-            RestoreCharacterFromSources();
+            _model.Character = new CharacterId(string.Empty);
+            if (_transactionAcquireAction2 != null) RestoreCharacter(_model, _transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
             _mounted = true;
         }
 
@@ -222,15 +214,6 @@ namespace GS2Studio.Generated.CharacterRecruit
                     if (value != null)
                     {
                     }
-                    _RestoreCharacter__transactionAcquireActionCache.Clear();
-                    if (value != null)
-                    {
-                        foreach (var __action in value)
-                        {
-                            if (__action != null) _RestoreCharacter__transactionAcquireActionCache.Add((__action.Action, __action.Request));
-                        }
-                    }
-                    RestoreCharacterFromSources();
                     return Task.CompletedTask;
                 },
                 () => onChange?.Invoke()
@@ -244,8 +227,8 @@ namespace GS2Studio.Generated.CharacterRecruit
                     if (value != null)
                     {
                     }
-                    if (value == null) _RestoreCharacter__transactionAcquireAction2Cache = null; else _RestoreCharacter__transactionAcquireAction2Cache = (value.Action, value.Request);
-                    RestoreCharacterFromSources();
+                    _model.Character = new CharacterId(string.Empty);
+                    if (value != null) RestoreCharacter(_model, value.Action, value.Request);
                     return Task.CompletedTask;
                 },
                 () => onChange?.Invoke()
@@ -343,22 +326,11 @@ namespace GS2Studio.Generated.CharacterRecruit
         #endregion
 
         #region MasterData reverse decode
-        private readonly System.Collections.Generic.List<(string Action, string Request)> _RestoreCharacter__transactionAcquireActionCache = new System.Collections.Generic.List<(string Action, string Request)>();
-        private (string Action, string Request)? _RestoreCharacter__transactionAcquireAction2Cache;
         public static bool RestoreCharacter(IMutableCharacterRecruit model, string actionName, string requestJson)
         {
             if (requestJson == null) return false;
             var request = JsonMapper.ToObject(requestJson);
-            if (actionName == "Gs2Dictionary:AddEntriesByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "CharacterDictionary")
-            {
-                var __value = ReadRequestValue(request, new string[] { "entryModelNames", "[0]" });
-                if (__value != null)
-                {
-                    model.Character = (CharacterId)__value;
-                    return true;
-                }
-            }
-            else if (actionName == "Gs2Inventory:AcquireItemSetByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Character" && ReadRequestValue(request, new string[] { "inventoryName" }) == "Character")
+            if (actionName == "Gs2Inventory:AcquireItemSetByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Character" && ReadRequestValue(request, new string[] { "inventoryName" }) == "Character")
             {
                 var __value = ReadRequestValue(request, new string[] { "itemName" });
                 if (__value != null)
@@ -368,14 +340,6 @@ namespace GS2Studio.Generated.CharacterRecruit
                 }
             }
             return false;
-        }
-
-        private void RestoreCharacterFromSources()
-        {
-            _model.Character = new CharacterId(string.Empty);
-            var __matched = false;
-            foreach (var __action in _RestoreCharacter__transactionAcquireActionCache) { if (!__matched && RestoreCharacter(_model, __action.Action, __action.Request)) { __matched = true; break; } }
-            if (!__matched && _RestoreCharacter__transactionAcquireAction2Cache.HasValue && RestoreCharacter(_model, _RestoreCharacter__transactionAcquireAction2Cache.Value.Action, _RestoreCharacter__transactionAcquireAction2Cache.Value.Request)) __matched = true;
         }
 
         /// <summary>

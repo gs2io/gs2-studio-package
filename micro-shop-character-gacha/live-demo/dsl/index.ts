@@ -75,12 +75,9 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-character-dictionary", "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  // The dex's and the schedule's demos add nothing this page shows. They are
-  // installed because their rows live in stacks this demo deploys too: the
-  // dex demo makes the roster's recruit file into the dex, and the schedule
-  // demo authors the event windows. Deployed from here without them, those
-  // stacks would lose what the other demos put there.
-  .dependency("foundation-economy-character-dictionary-demo", "github:gs2io/gs2-studio-package")
+  // The schedule's demo adds nothing this page shows. It is installed because
+  // its rows live in a stack this demo deploys too: it authors the event
+  // windows, and deployed from here without it, that stack would lose them.
   .dependency("foundation-economy-schedule-demo", "github:gs2io/gs2-studio-package")
   .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
   // The coins: the shop sells them, and the currency package is what the

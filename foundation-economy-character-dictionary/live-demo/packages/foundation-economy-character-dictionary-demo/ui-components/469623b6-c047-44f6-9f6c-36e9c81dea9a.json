@@ -1,0 +1,16 @@
+{
+  "id": "469623b6-c047-44f6-9f6c-36e9c81dea9a",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "RecruitButton",
+      "delegatedActionKey": "resource:foundation-economy-character-dictionary-demo:masterData:8a84566b-9fb4-4908-9638-ca366eb208c3::Gs2Exchange:RateModel.Exchange",
+      "id": "76547ed6-37ba-428f-bcdd-6ff813b5f954",
+      "kind": "buttonAction",
+      "name": "Character"
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_01M37M3G5DZ5DEQ2RJCGE7FAAG"
+}

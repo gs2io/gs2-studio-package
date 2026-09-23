@@ -14,8 +14,12 @@ using Cysharp.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+using Gs2.Unity.Core.Model;
+using Gs2.Unity.Gs2Exchange.Model;
 using Gs2.Unity.Gs2Schedule.Model;
+using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Schedule;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.Trigger
 {
@@ -39,6 +43,8 @@ namespace GS2Studio.Generated.Trigger
     /// </summary>
     public interface IActionableTriggerBinder : IReadOnlyTriggerBinder
     {
+        Task Extend(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
+        Task Clear(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
     }
 
     /// <summary>
@@ -51,6 +57,7 @@ namespace GS2Studio.Generated.Trigger
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
+        Task<GS2Studio.Generated.TriggerPull.IReadOnlyTriggerPullBinderCollection> GetTriggerPulls(CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -122,7 +129,13 @@ namespace GS2Studio.Generated.Trigger
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
+        private GS2Studio.Generated.TriggerPull.TriggerPullBinderCollection? _triggerPullsRoot;
+        private Task<GS2Studio.Generated.TriggerPull.TriggerPullBinderCollection>? _triggerPullsRootTask;
 
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeTriggerClearNamespaceRateModelLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeTriggerExtendNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Schedule.TriggerLoader __userdataScheduleTriggerLoader;
 
         /// <summary>
@@ -135,6 +148,10 @@ namespace GS2Studio.Generated.Trigger
             IGameSession session
         ) : base(model, gs2, session)
         {
+            __exchangeTriggerClearNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerClear", _model.Id);
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("TriggerExtend", _model.Id, 0);
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("TriggerClear", _model.Id, 0);
+            __exchangeTriggerExtendNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerExtend", _model.Id);
             __userdataScheduleTriggerLoader = new Gs2Bind.Gs2Schedule.TriggerLoader("Schedule", _model.Id);
         }
 
@@ -174,9 +191,32 @@ namespace GS2Studio.Generated.Trigger
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
+            var _exchangeTriggerClearNamespaceRateModel = await __exchangeTriggerClearNamespaceRateModelLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_exchangeTriggerClearNamespaceRateModel != null)
+            {
+            }
+            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_transactionAcquireAction != null)
+            {
+            }
+            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_transactionConsumeAction != null)
+            {
+            }
+            var _exchangeTriggerExtendNamespaceRateModel = await __exchangeTriggerExtendNamespaceRateModelLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_exchangeTriggerExtendNamespaceRateModel != null)
+            {
+            }
             var _userdataScheduleTrigger = await __userdataScheduleTriggerLoader.LoadOrNull(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyUserdataScheduleTrigger(_model, _userdataScheduleTrigger);
+            if (_transactionAcquireAction == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            if (_transactionConsumeAction == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (_transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            RestoreIdFromSources();
             _mounted = true;
         }
 
@@ -187,6 +227,62 @@ namespace GS2Studio.Generated.Trigger
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
+            _unsubscribers.Add(__exchangeTriggerClearNamespaceRateModelLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    if (value == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (value.Action, value.Request);
+                    RestoreIdFromSources();
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    if (value == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (value.Action, value.Request);
+                    RestoreIdFromSources();
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__exchangeTriggerExtendNamespaceRateModelLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
             _unsubscribers.Add(__userdataScheduleTriggerLoader.Subscribe(
                 _gs2,
                 _session,
@@ -206,6 +302,10 @@ namespace GS2Studio.Generated.Trigger
         public void Invalidate()
         {
             ThrowIfDisposed();
+            __exchangeTriggerClearNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            __exchangeTriggerExtendNamespaceRateModelLoader.Invalidate(_gs2, _session);
             __userdataScheduleTriggerLoader.Invalidate(_gs2, _session);
         }
 
@@ -263,9 +363,66 @@ namespace GS2Studio.Generated.Trigger
             }
 
             _unsubscribers.Clear();
+            _triggerPullsRoot?.Dispose();
 
             GC.SuppressFinalize(this);
         }
+
+        #region Delegated actions
+        public async Task Extend(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
+        {
+            EnsureActionContext();
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerExtend", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
+        }
+
+        public async Task Clear(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
+        {
+            EnsureActionContext();
+            await new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerClear", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
+        }
+        #endregion
+
+        #region Reference navigation
+        public async Task<GS2Studio.Generated.TriggerPull.IReadOnlyTriggerPullBinderCollection> GetTriggerPulls(CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+            var root = await EnsureTriggerPullsRootAsync(cancellationToken);
+            return root.WhereTrigger(_model.Id);
+        }
+        #endregion
+
+        #region Reference navigation roots
+        private async Task<GS2Studio.Generated.TriggerPull.TriggerPullBinderCollection> EnsureTriggerPullsRootAsync(CancellationToken cancellationToken)
+        {
+            if (_triggerPullsRootTask == null)
+            {
+                _triggerPullsRootTask = BuildTriggerPullsRootAsync(cancellationToken);
+            }
+            var task = _triggerPullsRootTask;
+            GS2Studio.Generated.TriggerPull.TriggerPullBinderCollection root;
+            try
+            {
+                root = await task;
+            }
+            catch
+            {
+                if (ReferenceEquals(_triggerPullsRootTask, task)) _triggerPullsRootTask = null;
+                throw;
+            }
+
+            if (_disposed) { root.Dispose(); ThrowIfDisposed(); }
+            _triggerPullsRoot = root;
+            return _triggerPullsRoot;
+        }
+
+        private async Task<GS2Studio.Generated.TriggerPull.TriggerPullBinderCollection> BuildTriggerPullsRootAsync(CancellationToken cancellationToken)
+        {
+            var root = await GS2Studio.Generated.TriggerPull.TriggerPullBinderCollection.CreateFromExchangeTriggerPullMasterDataAsync(_gs2, _session, cancellationToken);
+            try { root.SubscribeFromExchangeTriggerPullMasterData(); }
+            catch { root.Dispose(); throw; }
+            return root;
+        }
+        #endregion
 
         #region Model composition
         /// <summary>
@@ -288,6 +445,69 @@ namespace GS2Studio.Generated.Trigger
                 model.ExpiresAt = default;
                 model.TriggeredAt = default;
             }
+        }
+        #endregion
+
+        #region MasterData reverse decode
+        private (string Action, string Request)? _RestoreId__transactionAcquireActionCache;
+        private (string Action, string Request)? _RestoreId__transactionConsumeActionCache;
+        public static bool RestoreId(IMutableTrigger model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Schedule:ExtendTriggerByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Schedule")
+            {
+                var __value = ReadRequestValue(request, new string[] { "triggerName" });
+                if (__value != null)
+                {
+                    model.Id = (TriggerId)__value;
+                    return true;
+                }
+            }
+            else if (actionName == "Gs2Schedule:DeleteTriggerByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Schedule")
+            {
+                var __value = ReadRequestValue(request, new string[] { "triggerName" });
+                if (__value != null)
+                {
+                    model.Id = (TriggerId)__value;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void RestoreIdFromSources()
+        {
+            var __matched = false;
+            if (!__matched && _RestoreId__transactionAcquireActionCache.HasValue && RestoreId(_model, _RestoreId__transactionAcquireActionCache.Value.Action, _RestoreId__transactionAcquireActionCache.Value.Request)) __matched = true;
+            if (!__matched && _RestoreId__transactionConsumeActionCache.HasValue && RestoreId(_model, _RestoreId__transactionConsumeActionCache.Value.Action, _RestoreId__transactionConsumeActionCache.Value.Request)) __matched = true;
+        }
+
+        /// <summary>
+        /// Navigates a LitJson request object by string segments. A segment of
+        /// the form <c>[n]</c> selects an array index; any other segment selects
+        /// an object key. Returns the leaf value as string, or null if absent.
+        /// </summary>
+        private static string? ReadRequestValue(JsonData request, string[] segments)
+        {
+            JsonData current = request;
+            foreach (var segment in segments)
+            {
+                if (current == null) return null;
+                if (segment.Length >= 2 && segment[0] == '[' && segment[segment.Length - 1] == ']')
+                {
+                    if (!current.IsArray) return null;
+                    if (!int.TryParse(segment.Substring(1, segment.Length - 2), out var index)) return null;
+                    if (index < 0 || index >= current.Count) return null;
+                    current = current[index];
+                }
+                else
+                {
+                    if (!current.IsObject || !current.Keys.Contains(segment)) return null;
+                    current = current[segment];
+                }
+            }
+            return current == null ? null : current.ToString();
         }
         #endregion
 

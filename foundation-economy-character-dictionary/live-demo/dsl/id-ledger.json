@@ -14,12 +14,20 @@
     "type:Character": "dt_01M2M8WDV0M1NN3AYHYAHFNAWK",
     "type:CharacterCollection": "dt_01M2M8WDV0F55Q58Q0NNCB9NX2",
     "type:CharacterExperience": "dt_01M2M8WDV0928KH4E55R7CQM0D",
+    "type:CharacterRecruit": "dt_01M2Q9FEF57E7NB4TFVDZ3VC74",
     "ui:Character:Character:definition": "55242a3f-ca3f-503a-b6c8-a33fb4dc18a0",
     "ui:Character:Character:item:MarkButton": "64a37c55-36b1-5b89-af42-daf9fe47ae20",
     "ui:Character:Character:item:RecruitButton": "6b9ed8e9-84b3-5dd7-ba00-4e4a1f3646b7"
   },
   "random": {
-    "type:CharacterRecruit": "dt_01M2Q9FEF57E7NB4TFVDZ3VC74"
+    "type:Character": "dt_01M37M3G5DZ5DEQ2RJCGE7FAAG"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0": "b4a90983-cdd1-4c22-899d-5940e978a43d",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0": "8a84566b-9fb4-4908-9638-ca366eb208c3",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[0]#0": "54ae441f-61c1-4129-9200-17dd443d91c2",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[1]#0": "54c22496-58b2-4381-9a45-eeb674077ae6",
+    "ui:Character:Character:definition": "469623b6-c047-44f6-9f6c-36e9c81dea9a",
+    "ui:Character:Character:item:RecruitButton": "76547ed6-37ba-428f-bcdd-6ff813b5f954"
+  }
 }

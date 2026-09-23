@@ -31,6 +31,16 @@
       "version": "0.0.0"
     },
     {
+      "commitSha": "2d95a69dec4452d7304dc4d0eabbbc71cdefb356",
+      "integrity": "sha256-67enc5FDGfCmxkWXcnDoEoGniYV4v3K4XVL42iF+FQA=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/live-demo/packages/foundation-economy-schedule-demo",
+      "version": "0.0.0"
+    },
+    {
       "commitSha": "a1ca04fbbbf558e6943a2e0428bffa4b1be1b47c",
       "integrity": "sha256-5OTWgUeC6Tjf8F86Mgn5pYkdPvCuAOZHnJLdcH9diow=",
       "owner": "gs2io",

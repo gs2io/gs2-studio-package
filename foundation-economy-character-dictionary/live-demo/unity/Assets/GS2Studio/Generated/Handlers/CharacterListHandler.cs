@@ -296,6 +296,9 @@ namespace GS2Studio.Generated.Character
                     case CharacterListAxis.DictionaryCharacterDictionaryMaster:
                         await collection.MountFromDictionaryCharacterDictionaryMasterDataAsync(cancellationToken);
                         break;
+                    case CharacterListAxis.ExchangeCharacterDexRecruitMaster:
+                        await collection.MountFromExchangeCharacterDexRecruitMasterDataAsync(cancellationToken);
+                        break;
                     case CharacterListAxis.InventoryCharacterUser:
                         await collection.MountFromInventoryCharacterUserDataAsync(cancellationToken);
                         break;
@@ -322,6 +325,9 @@ namespace GS2Studio.Generated.Character
                             break;
                         case CharacterListAxis.DictionaryCharacterDictionaryMaster:
                             collection.SubscribeFromDictionaryCharacterDictionaryMasterData(collectionChanged, collectionFailed);
+                            break;
+                        case CharacterListAxis.ExchangeCharacterDexRecruitMaster:
+                            collection.SubscribeFromExchangeCharacterDexRecruitMasterData(collectionChanged, collectionFailed);
                             break;
                         case CharacterListAxis.InventoryCharacterUser:
                             collection.SubscribeFromInventoryCharacterUserData(collectionChanged, collectionFailed);
@@ -427,7 +433,7 @@ namespace GS2Studio.Generated.Character
         }
 
         // Every axis this list can be pointed at, for the messages below.
-        private const string AxisMemberNames = "InventoryCharacterMaster, ExchangeCharacterTrainMaster, DictionaryCharacterDictionaryMaster, InventoryCharacterUser, DictionaryCharacterDictionaryUser";
+        private const string AxisMemberNames = "InventoryCharacterMaster, ExchangeCharacterTrainMaster, DictionaryCharacterDictionaryMaster, ExchangeCharacterDexRecruitMaster, InventoryCharacterUser, DictionaryCharacterDictionaryUser";
 
         // Warn-once latch for the axis check in IsReadyForReload. Start polls
         // that check every frame until it passes, so without the latch the log
@@ -482,6 +488,8 @@ namespace GS2Studio.Generated.Character
                 case CharacterListAxis.ExchangeCharacterTrainMaster:
                     break;
                 case CharacterListAxis.DictionaryCharacterDictionaryMaster:
+                    break;
+                case CharacterListAxis.ExchangeCharacterDexRecruitMaster:
                     break;
                 case CharacterListAxis.InventoryCharacterUser:
                     break;

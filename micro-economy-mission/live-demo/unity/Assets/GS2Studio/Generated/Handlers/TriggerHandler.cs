@@ -14,7 +14,10 @@ using UnityEngine;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+using Gs2.Unity.Core.Model;
+using Gs2.Unity.Gs2Exchange.Model;
 using Gs2.Unity.Gs2Schedule.Model;
+using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Schedule;
 using GS2Studio.Generated.Runtime;
 

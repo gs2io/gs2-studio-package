@@ -1,0 +1,40 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "character",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M37M3G5DZ5DEQ2RJCGE7FAAG",
+                  "typeName": "Character"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "MarkCharacterDictionary",
+        "transformPackageId": "foundation-economy-character-dictionary"
+      }
+    ]
+  },
+  "id": "54c22496-58b2-4381-9a45-eeb674077ae6",
+  "index": 1,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M37M3G5DZ5DEQ2RJCGE7FAAG",
+    "typeName": "Character"
+  }
+}
