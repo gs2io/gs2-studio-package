@@ -25,6 +25,15 @@
         "WalletPaidBalanceLabel",
         "WalletTotalBalanceLabel"
       ]
+    },
+    "StoreProduct": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "CurrencyType": {
+      "rows": []
     }
   }
 }

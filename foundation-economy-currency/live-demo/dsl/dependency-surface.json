@@ -34,6 +34,12 @@
         "id": "prop_reserved_id"
       }
     },
+    "StorePrice": {
+      "id": "dt_01M3796AJKA7DHP6CRTCW0GS73",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-currency",
+      "canonicalTypeId": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M"
+    },
     "StoreProduct": {
       "id": "dt_01M2FXJD9CBSXYYJFKJ4T6Z3YT",
       "singleEntry": false,

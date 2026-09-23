@@ -21,12 +21,16 @@ import {
 import { GS2 } from "~/dsl/gs2";
 
 import currencySurface from "../../dsl/dependency-surface.json";
+import shopSurface from "../../../micro-shop-currency/dsl/dependency-surface.json";
 
 // Materialization publishes the feature package's identities, so everything
 // inherited from it is addressed by name; a typo is a compile error rather
 // than an id that resolves to nothing.
 const currency = dependencyPackage(currencySurface);
 const CURRENCY_PACKAGE_ID = currency.packageId;
+// The shop sells the shelf, and what each product grants and costs is the
+// shop's to declare, so the rows name its properties too.
+const shop = dependencyPackage(shopSurface);
 
 /** The demo shows one player with one wallet, slot 0. */
 const WALLET_SLOT = 0;
@@ -42,6 +46,14 @@ const CurrencyStore = currency.type("CurrencyStore");
 /**
  * The feature package defines the store product type but ships no products —
  * a title supplies its own. The demo needs something on the shelf.
+ *
+ * This is the one place every demo's shelf is authored. A store product lands
+ * in the currency stack, and the shop's price table in the shop's stack, and
+ * every demo holding a wallet or a shop deploys both; so the other demos
+ * install this package instead of stocking a shelf of their own, and the
+ * stacks read the same whichever demo deployed them last. What the shop needs
+ * of a product — the currency it grants and its price in each currency — is
+ * written here beside it for the same reason.
  */
 const StoreProduct = currency.type("StoreProduct");
 
@@ -123,12 +135,15 @@ const PaidDepositRateModel = defineMasterDataResource(resource =>
 );
 
 /** Store-side identifiers are never consumed by the fake-receipt demo path. */
-function demoProduct(productId: string): Record<string, string> {
+function demoProduct(productId: string, count: number): Record<string, string | number> {
   return {
     [currency.propertyId("StoreProduct", "appleAppStoreProductId")]: productId,
     [currency.propertyId("StoreProduct", "googlePlayProductId")]: productId,
+    [shop.propertyId("StoreProduct", "count")]: count,
   };
 }
+
+const StorePrice = shop.type("StorePrice");
 
 export const foundationEconomyCurrencyDemo = definePackage(
   "foundation-economy-currency-demo",
@@ -156,16 +171,48 @@ export const foundationEconomyCurrencyDemo = definePackage(
     },
   })
   .dependency(CURRENCY_PACKAGE_ID, "github:gs2io/gs2-studio-package")
+  .dependency(shop.packageId, "github:gs2io/gs2-studio-package")
   .domainType(FreeDeposit)
   .domainType(PaidDeposit)
 
+  // The store's test-receipt setting is shared the same way as the shelf below.
   .instance(CurrencyStore, "currencystore", {
     [currency.propertyId("CurrencyStore", "enableFakeReceipt")]: "Accept",
   })
 
-  .instance(StoreProduct, "coin_small", demoProduct("io.gs2.demo.coin.small"))
-  .instance(StoreProduct, "coin_medium", demoProduct("io.gs2.demo.coin.medium"))
-  .instance(StoreProduct, "coin_large", demoProduct("io.gs2.demo.coin.large"))
+  .instance(StoreProduct, "coin_small", demoProduct("io.gs2.demo.coin.small", 10))
+  .instance(StoreProduct, "coin_medium", demoProduct("io.gs2.demo.coin.medium", 50))
+  .instance(StoreProduct, "coin_large", demoProduct("io.gs2.demo.coin.large", 250))
+
+  .instance(StorePrice, "coin_small.JPY", {
+    product: "coin_small",
+    currencyType: "JPY",
+    price: 100,
+  })
+  .instance(StorePrice, "coin_small.USD", { product: "coin_small", currencyType: "USD", price: 1 })
+  .instance(StorePrice, "coin_small.XXX", { product: "coin_small", currencyType: "XXX", price: 1 })
+  .instance(StorePrice, "coin_medium.JPY", {
+    product: "coin_medium",
+    currencyType: "JPY",
+    price: 200,
+  })
+  .instance(StorePrice, "coin_medium.USD", {
+    product: "coin_medium",
+    currencyType: "USD",
+    price: 2,
+  })
+  .instance(StorePrice, "coin_medium.XXX", {
+    product: "coin_medium",
+    currencyType: "XXX",
+    price: 2,
+  })
+  .instance(StorePrice, "coin_large.JPY", {
+    product: "coin_large",
+    currencyType: "JPY",
+    price: 300,
+  })
+  .instance(StorePrice, "coin_large.USD", { product: "coin_large", currencyType: "USD", price: 3 })
+  .instance(StorePrice, "coin_large.XXX", { product: "coin_large", currencyType: "XXX", price: 3 })
 
   .instance("FreeDeposit", "freedeposit", { count: 100 })
   .instance("PaidDeposit", "paiddeposit", { count: 50 })

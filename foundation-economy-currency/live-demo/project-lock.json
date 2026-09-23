@@ -9,6 +9,16 @@
       "sourceKind": "github",
       "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
       "version": "0.0.0"
+    },
+    {
+      "commitSha": "733f3e18cc5aceb7e77fe696e52c01af86119d88",
+      "integrity": "sha256-aT6C5PPv5+3Jalm1UzFomR9OZPEwzjlDA6f7UfMk2Sk=",
+      "owner": "gs2io",
+      "packageId": "micro-shop-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-shop-currency/packages/micro-shop-currency",
+      "version": "0.0.0"
     }
   ],
   "schemaVersion": 1
