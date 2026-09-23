@@ -1,0 +1,31 @@
+{
+  "id": "33f71ae7-d47d-57e3-961c-818d6f7ceb9e",
+  "items": [
+    {
+      "componentClassName": "PayloadLabel",
+      "id": "198fab31-e34e-5e01-a589-ec07772394cb",
+      "kind": "label",
+      "name": "Message",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_ZKT412G1WTM0BJ5XF28KBQMQDP"
+      }
+    },
+    {
+      "componentClassName": "ReadActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_EBMPTGK9PGCVVK6XYH81KPEDFK"
+        }
+      },
+      "id": "1f250e9c-f9c2-5f8b-97ec-d1848e76e054",
+      "kind": "activeToggle",
+      "name": "Message"
+    }
+  ],
+  "name": "Message",
+  "targetDomainType": "Message",
+  "targetDomainTypeId": "dt_GVTDXY1KW1X831ABJENERKSHZA"
+}

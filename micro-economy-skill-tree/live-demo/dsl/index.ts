@@ -48,11 +48,14 @@
  * has never been here.
  *
  * **Neither press is a generated one.** `Gs2SkillTree:Release` and
- * `Restrain` are the calls that charge a node and enforce its premises, and a
- * delegated action on either cannot be generated: the catalog gives both a
- * `config` parameter that Gs2Bind's methods do not take, and the generator
- * refuses rather than emit a call that would not compile. So the two calls are
- * written by hand, the way the shop demo writes its purchase —
+ * `Restrain` are the calls that charge a node and enforce its premises. They
+ * were first written by hand because the catalog gave both a `config`
+ * parameter that Gs2Bind's methods do not take, and the generator refused
+ * them. Studio now drops a never-required parameter the hosting Bind method
+ * does not take, so that reason is gone. What remains is that each press hands
+ * over a set of nodes worked out from the tree as drawn, and whether a generated
+ * delegated action can carry that has not been tried. Until it is, the calls
+ * stay written by hand, the way the shop demo writes its purchase —
  * `SkillNodeCommands` carries the whole of the reasoning, and the tree widget
  * (`SkillNodeTreeCanvas`) is what puts a press on each of them.
  */

@@ -3,9 +3,11 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
   PT,
   Source,
   transactionSetting,
+  UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -110,6 +112,21 @@ const InboxNamespace = defineMasterDataResource(resource => {
     });
 });
 
+const InboxMessage = defineUserDataResource(resource =>
+  resource
+    .model(GS2.inbox.Message)
+    .mountLocal(Message)
+    .bindings({
+      name: Bind.domainProperty(Source.direct(Message, "id")),
+      metadata: Bind.domainProperties([Source.direct(Message, "payload")]),
+      receivedAt: Bind.domainProperties([Source.direct(Message, "receivedAt")]),
+      isRead: Bind.domainProperties([Source.direct(Message, "isRead")]),
+      expiresAt: Bind.domainProperties([Source.direct(Message, "expiresAt")]),
+      messageId: Bind.skip(),
+      userId: Bind.skip(),
+    })
+);
+
 export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", "0.0.0")
   .display({
     label: { ja: "お知らせ・受信箱", en: "Inbox" },
@@ -161,19 +178,16 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
       });
   })
 
-  .userDataResource(r =>
-    r
-      .model(GS2.inbox.Message)
-      .mountLocal(Message)
-      .bindings({
-        name: Bind.domainProperty(Source.direct(Message, "id")),
-        metadata: Bind.domainProperties([Source.direct(Message, "payload")]),
-        receivedAt: Bind.domainProperties([Source.direct(Message, "receivedAt")]),
-        isRead: Bind.domainProperties([Source.direct(Message, "isRead")]),
-        expiresAt: Bind.domainProperties([Source.direct(Message, "expiresAt")]),
-        messageId: Bind.skip(),
-        userId: Bind.skip(),
-      })
+  .userDataResource(InboxMessage)
+
+  // Reading the payload and whether it has been opened is the same job in
+  // every title, so the labels live here; where a title puts the Read press is
+  // its own design.
+  .uiComponent(Message, ui =>
+    ui
+      // The payload is the message's GS2 `metadata`, shown as written.
+      .label("PayloadLabel", ui.prop("payload"), { name: "Message" })
+      .activeToggle("ReadActiveToggle", UiCond.truthy(ui.prop("isRead")), { name: "Message" })
   )
 
   .actionTransform("SendMessage", at =>
@@ -210,4 +224,13 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
           .mapStatic("expiresTimeSpan.minutes", null)
       )
   )
+
+  // Opening a message is the Message loader's `Read`: Gs2Bind hosts it there,
+  // keyed by the message's own name. It marks the message read and runs the
+  // rewards the message carries; a message with none is simply marked read.
+  .delegatedAction(Message, "Read", {
+    targetActionKey: "Gs2Inbox:Message.ReadMessage",
+    targetResource: InboxMessage,
+    parameterOverrides: [],
+  })
   .build();

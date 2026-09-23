@@ -12,14 +12,14 @@
 // server's own check reads it as met. What the path is belongs to
 // {@link SkillNodeTree}; this file is only the two calls.
 //
-// They are written by hand because the generator cannot reach them. A
-// delegated action renders every parameter the catalog lists, and the catalog
-// gives both calls a `config` that Gs2Bind does not take (it takes
-// `propertyId`, `nodeModelNames` and `speculativeExecute`) — so the generator
-// refuses rather than emitting a call that would not compile. The refusal is
-// right; what is missing is one parameter in the SDK below it, which is not
-// this demo's to add. So the demo does what the shop demo does with a purchase
-// the generator cannot express, and calls the loader itself.
+// They were first written by hand because the catalog gave both calls a
+// `config` that Gs2Bind does not take (it takes `propertyId`, `nodeModelNames`
+// and `speculativeExecute`), and the generator refused them. Studio now drops a
+// never-required parameter the hosting Bind method does not take, so that
+// reason is gone. What remains is the set: each press hands over a path that
+// {@link SkillNodeTree} works out from the tree as drawn, and whether a generated
+// delegated action can carry that has not been tried. Until it is, the demo
+// does what the shop demo does with a purchase and calls the loader itself.
 //
 // Here rather than on a row's behaviour because the page no longer draws a row
 // per node: the tree is one widget ({@link SkillNodeTreeCanvas}) and the boxes
