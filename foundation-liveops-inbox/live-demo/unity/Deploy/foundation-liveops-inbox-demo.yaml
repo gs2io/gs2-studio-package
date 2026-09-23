@@ -29,7 +29,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Inbox:SendMessageByUserId"
-                request: "{\"namespaceName\":\"Inbox\",\"userId\":\"#{userId}\",\"metadata\":\"A gift from the operator: 100 free currency.\",\"readAcquireActions\":[{\"action\":\"Gs2Money2:DepositByUserId\",\"request\":{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}}],\"expiresTimeSpan\":{\"days\":7}}"
+                request: "{\"namespaceName\":\"Inbox\",\"userId\":\"#{userId}\",\"metadata\":\"A gift from the operator: 100 free currency.\",\"readAcquireActions\":[{\"action\":\"Gs2Money2:DepositByUserId\",\"request\":\"{\\\"namespaceName\\\":\\\"Currency\\\",\\\"userId\\\":\\\"#{userId}\\\",\\\"slot\\\":0,\\\"depositTransactions\\\":[{\\\"price\\\":0,\\\"currency\\\":\\\"\\\",\\\"count\\\":100}]}\"}],\"expiresTimeSpan\":{\"days\":7}}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

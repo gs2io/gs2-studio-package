@@ -189,6 +189,8 @@ namespace GS2Studio.Generated.Gift
             }
             _model.Payload = string.Empty;
             if (_transactionAcquireAction != null) RestorePayload(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            _model.Amount = default;
+            if (_transactionAcquireAction != null) RestoreAmount(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
             _mounted = true;
         }
 
@@ -223,6 +225,8 @@ namespace GS2Studio.Generated.Gift
                     }
                     _model.Payload = string.Empty;
                     if (value != null) RestorePayload(_model, value.Action, value.Request);
+                    _model.Amount = default;
+                    if (value != null) RestoreAmount(_model, value.Action, value.Request);
                     return Task.CompletedTask;
                 },
                 () => onChange?.Invoke()
@@ -322,6 +326,22 @@ namespace GS2Studio.Generated.Gift
             return false;
         }
 
+        public static bool RestoreAmount(IMutableGift model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Inbox:SendMessageByUserId" && ReadEmbeddedRequestValue(request, new string[] { "namespaceName" }) == "Inbox" && ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "action" }) == "Gs2Money2:DepositByUserId" && ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "request", "namespaceName" }) == "Currency")
+            {
+                var __value = ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "request", "depositTransactions", "[0]", "count" });
+                if (__value != null)
+                {
+                    model.Amount = (int)Convert.ChangeType(__value, typeof(int));
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Navigates a LitJson request object by string segments. A segment of
         /// the form <c>[n]</c> selects an array index; any other segment selects
@@ -333,6 +353,46 @@ namespace GS2Studio.Generated.Gift
             foreach (var segment in segments)
             {
                 if (current == null) return null;
+                if (segment.Length >= 2 && segment[0] == '[' && segment[segment.Length - 1] == ']')
+                {
+                    if (!current.IsArray) return null;
+                    if (!int.TryParse(segment.Substring(1, segment.Length - 2), out var index)) return null;
+                    if (index < 0 || index >= current.Count) return null;
+                    current = current[index];
+                }
+                else
+                {
+                    if (!current.IsObject || !current.Keys.Contains(segment)) return null;
+                    current = current[segment];
+                }
+            }
+            return current == null ? null : current.ToString();
+        }
+
+        /// <summary>
+        /// Navigates a LitJson request object like <c>ReadRequestValue</c>, but
+        /// parses a string it meets before the last segment as JSON first: the
+        /// request of an action embedded in another action's request arrives as
+        /// a JSON string. Returns the leaf value as string, or null if absent.
+        /// </summary>
+        private static string? ReadEmbeddedRequestValue(JsonData request, string[] segments)
+        {
+            JsonData current = request;
+            foreach (var segment in segments)
+            {
+                if (current == null) return null;
+                if (current.IsString)
+                {
+                    try
+                    {
+                        current = JsonMapper.ToObject((string)current);
+                    }
+                    catch (JsonException)
+                    {
+                        return null;
+                    }
+                    if (current == null) return null;
+                }
                 if (segment.Length >= 2 && segment[0] == '[' && segment[segment.Length - 1] == ']')
                 {
                     if (!current.IsArray) return null;

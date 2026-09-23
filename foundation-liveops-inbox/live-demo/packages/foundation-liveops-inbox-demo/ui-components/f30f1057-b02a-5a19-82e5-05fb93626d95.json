@@ -6,8 +6,16 @@
       "id": "5b7f9c39-1eed-5e51-b267-4b959789251b",
       "kind": "templateLabel",
       "name": "Gift",
-      "sources": [],
-      "template": "Carries 100 free currency."
+      "sources": [
+        {
+          "key": "amount",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M366KJ86W6DHHYF0288T1VBK"
+          }
+        }
+      ],
+      "template": "Carries {amount} free currency."
     },
     {
       "arguments": [],

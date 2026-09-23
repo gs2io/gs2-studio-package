@@ -238,10 +238,14 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
 
   .uiComponent(Gift, ui =>
     ui
-      // The generator does not yet reverse-decode an argument nested inside
-      // another transform, so the amount cannot be read back off the row; the
-      // caption is written from the same constant as the row instead.
-      .templateLabel("AmountLabel", `Carries ${GIFT_AMOUNT} free currency.`, {}, { name: "Gift" })
+      // Read back off the row: the amount sits in the deposit nested inside
+      // the message this gift's exchange sends.
+      .templateLabel(
+        "AmountLabel",
+        "Carries {amount} free currency.",
+        { amount: ui.prop("amount") },
+        { name: "Gift" }
+      )
       .buttonAction("DeliverButton", "Deliver", undefined, { name: "Gift" })
   )
 

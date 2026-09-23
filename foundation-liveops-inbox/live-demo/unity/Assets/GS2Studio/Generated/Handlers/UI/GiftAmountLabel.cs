@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.Gift.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Carries 100 free currency.</c>. Each <c>{key}</c> placeholder is
+    /// <c>Carries {amount} free currency.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>Gift</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.Gift.UI
 
         private void OnUpdated(Gift model)
         {
-            _onUpdate.Invoke($"Carries 100 free currency.");
+            _onUpdate.Invoke($"Carries {model.Amount} free currency.");
         }
     }
 }
