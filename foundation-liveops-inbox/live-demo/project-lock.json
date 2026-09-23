@@ -11,8 +11,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "d07443ae11d2285218650ab34909f7f3e3610834",
-      "integrity": "sha256-PwswmAzLlinFXDoR6mwRdTCKEtlAkJtVcpESEZ3H/Pc=",
+      "commitSha": "4c3607b7652e5555224ba424539de81850faac4b",
+      "integrity": "sha256-93yjMFBng3a1kHHSaHgalTYh4jJ8+09kzHqd69+hW2U=",
       "owner": "gs2io",
       "packageId": "foundation-economy-currency-demo",
       "repo": "gs2-studio-package",
@@ -28,6 +28,16 @@
       "repo": "gs2-studio-package",
       "sourceKind": "github",
       "subdirectory": "foundation-liveops-inbox/packages/foundation-liveops-inbox",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "d2b163bfe01f40daf06dca3a26e2d5311ee9c83a",
+      "integrity": "sha256-nUTQKNj+FgtXPiSHZm6q2VZkTBKgjiNOH8+PmK1snhA=",
+      "owner": "gs2io",
+      "packageId": "micro-shop-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-shop-currency/packages/micro-shop-currency",
       "version": "0.0.0"
     }
   ],

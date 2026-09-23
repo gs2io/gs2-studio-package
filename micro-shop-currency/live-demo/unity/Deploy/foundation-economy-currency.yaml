@@ -7,11 +7,21 @@ Resources:
       Settings:
         version: "2024-06-20"
         storeContentModels:
-          - name: "tier1"
-          - name: "tier2"
-          - name: "tier3"
-          - name: "tier4"
-          - name: "tier5"
+          - appleAppStore:
+              productId: "io.gs2.demo.coin.large"
+            googlePlay:
+              productId: "io.gs2.demo.coin.large"
+            name: "coin_large"
+          - appleAppStore:
+              productId: "io.gs2.demo.coin.medium"
+            googlePlay:
+              productId: "io.gs2.demo.coin.medium"
+            name: "coin_medium"
+          - appleAppStore:
+              productId: "io.gs2.demo.coin.small"
+            googlePlay:
+              productId: "io.gs2.demo.coin.small"
+            name: "coin_small"
         storeSubscriptionContentModels: []
       Mode: "direct"
     DependsOn:

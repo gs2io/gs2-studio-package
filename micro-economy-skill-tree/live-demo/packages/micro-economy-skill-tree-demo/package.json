@@ -7,7 +7,8 @@
     "foundation-economy-character-demo": "github:gs2io/gs2-studio-package",
     "foundation-economy-currency": "github:gs2io/gs2-studio-package",
     "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-economy-skill-tree": "github:gs2io/gs2-studio-package"
+    "micro-economy-skill-tree": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
     "description": {

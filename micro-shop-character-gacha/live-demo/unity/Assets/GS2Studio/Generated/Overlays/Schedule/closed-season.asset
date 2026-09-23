@@ -15,4 +15,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rawInstanceId: closed-season
   _hasTrigger: 0
-  _trigger: 
+  _trigger: ''

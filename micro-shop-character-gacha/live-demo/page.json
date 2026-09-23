@@ -56,6 +56,12 @@
     },
     "TriggerPull": {
       "rows": []
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
     }
   }
 }

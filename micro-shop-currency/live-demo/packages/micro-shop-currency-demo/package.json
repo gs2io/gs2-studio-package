@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "dependencies": {
     "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
     "description": {
-      "en": "Supplies the wallet a purchase lands in, and the test-purchase setting it needs.",
-      "ja": "ライブデモ用に、通貨ショップの購入先となるウォレットとテスト購入の設定を揃えます。"
+      "en": "Puts the currency demo's shelf in front of the currency shop.",
+      "ja": "ライブデモ用に、通貨デモの商品棚を通貨ショップへ並べます。"
     },
     "label": {
       "en": "Currency Shop (demo data)",

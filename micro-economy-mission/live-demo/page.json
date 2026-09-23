@@ -50,6 +50,18 @@
     },
     "Trigger": {
       "rows": []
+    },
+    "CurrencyType": {
+      "rows": []
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
     }
   }
 }

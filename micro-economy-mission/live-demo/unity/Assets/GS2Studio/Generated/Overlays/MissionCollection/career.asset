@@ -15,4 +15,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rawInstanceId: career
   _hasSchedule: 0
-  _schedule: 
+  _schedule: ''

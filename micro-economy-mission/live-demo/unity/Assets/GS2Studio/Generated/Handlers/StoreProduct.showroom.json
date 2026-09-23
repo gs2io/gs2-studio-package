@@ -3,7 +3,7 @@
   "schemaVersion": 2,
   "model": "StoreProduct",
   "namespace": "GS2Studio.Generated.StoreProduct",
-  "componentNamespace": "",
+  "componentNamespace": "GS2Studio.Generated.StoreProduct.UI",
   "handler": "StoreProductHandler",
   "keyed": true,
   "identityKeys": [
@@ -16,18 +16,78 @@
   "listHandler": "StoreProductListHandler",
   "listItemHandler": "StoreProductListItemHandler",
   "binderListSource": "IStoreProductBinderListSource",
-  "scopeParameters": [],
+  "scopeParameters": [
+    {
+      "name": "currencyType",
+      "fieldName": "_currencyType",
+      "serializedType": "string"
+    }
+  ],
   "itemPrefabField": "_itemPrefab",
   "contentParentField": "_contentParent",
-  "listAxisEnumTypeName": "",
-  "listAxisField": "",
-  "listAxisMembers": [],
+  "listAxisEnumTypeName": "StoreProductListAxis",
+  "listAxisField": "_axis",
+  "listAxisMembers": [
+    {
+      "name": "ShowcaseShopCurrencyMaster",
+      "value": -136075035
+    },
+    {
+      "name": "Money2CurrencyMaster",
+      "value": -711576390
+    }
+  ],
   "listAxes": [
+    {
+      "memberName": "ShowcaseShopCurrencyMaster",
+      "mountMethodName": "MountFromShowcaseShopCurrencyMasterDataAsync"
+    },
     {
       "memberName": "Money2CurrencyMaster",
       "mountMethodName": "MountFromMoney2CurrencyMasterDataAsync"
     }
   ],
-  "mountFields": [],
-  "components": []
+  "mountFields": [
+    {
+      "fieldName": "_currencyType",
+      "serializedType": "string"
+    }
+  ],
+  "components": [
+    {
+      "className": "StoreProductAppleAppStoreProductIdValue",
+      "kind": "value",
+      "valueType": "string",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
+      "className": "StoreProductCountLabel",
+      "kind": "label",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
+      "className": "StoreProductCountValue",
+      "kind": "value",
+      "valueType": "int",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
+      "className": "StoreProductGooglePlayProductIdValue",
+      "kind": "value",
+      "valueType": "string",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
+      "className": "StoreProductIdValue",
+      "kind": "value",
+      "valueType": "string",
+      "reportsFailure": false,
+      "serializedFields": []
+    }
+  ]
 }

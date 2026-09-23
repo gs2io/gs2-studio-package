@@ -205,6 +205,9 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
   // duplicated here.
   .dependency("foundation-economy-energy-demo", "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
+  // The currency demo stocks the currency shop's price table, and an install
+  // does not walk a package's own dependencies, so the shop is named too.
+  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   .displayType(EnergyProduct, {
     label: { ja: "スタミナ商品", en: "Stamina product" },

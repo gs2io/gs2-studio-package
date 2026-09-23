@@ -30,6 +30,15 @@
     },
     "PaidDeposit": {
       "rows": []
+    },
+    "CurrencyType": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
     }
   }
 }

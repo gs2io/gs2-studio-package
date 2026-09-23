@@ -1,5 +1,31 @@
 GS2TemplateFormatVersion: "2019-05-01"
 Resources:
+  Money2CurrentModelMaster_Currency:
+    Type: "GS2::Money2::CurrentModelMaster"
+    Properties:
+      NamespaceName: "Currency"
+      Settings:
+        version: "2024-06-20"
+        storeContentModels:
+          - appleAppStore:
+              productId: "io.gs2.demo.coin.large"
+            googlePlay:
+              productId: "io.gs2.demo.coin.large"
+            name: "coin_large"
+          - appleAppStore:
+              productId: "io.gs2.demo.coin.medium"
+            googlePlay:
+              productId: "io.gs2.demo.coin.medium"
+            name: "coin_medium"
+          - appleAppStore:
+              productId: "io.gs2.demo.coin.small"
+            googlePlay:
+              productId: "io.gs2.demo.coin.small"
+            name: "coin_small"
+        storeSubscriptionContentModels: []
+      Mode: "direct"
+    DependsOn:
+      - "Money2Namespace_Currency"
   Money2Namespace_Currency:
     Type: "GS2::Money2::Namespace"
     Properties:
@@ -8,7 +34,7 @@ Resources:
       PlatformSetting:
         AppleAppStore: {}
         Fake:
-          AcceptFakeReceipt: "Reject"
+          AcceptFakeReceipt: "Accept"
         GooglePlay: {}
       SharedFreeCurrency: false
       TransactionSetting:

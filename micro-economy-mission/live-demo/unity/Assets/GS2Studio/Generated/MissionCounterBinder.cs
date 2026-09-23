@@ -412,6 +412,7 @@ namespace GS2Studio.Generated.MissionCounter
         {
             if (source != null)
             {
+                model.TodayValue = default;
                 if (source.Values != null)
                 {
                     var scopedValue = source.Values
@@ -423,6 +424,7 @@ namespace GS2Studio.Generated.MissionCounter
                         model.TodayValue = scopedValue.Value;
                     }
                 }
+                model.WeeklyValue = default;
                 if (source.Values != null)
                 {
                     var scopedValue2 = source.Values
@@ -434,6 +436,7 @@ namespace GS2Studio.Generated.MissionCounter
                         model.WeeklyValue = scopedValue2.Value;
                     }
                 }
+                model.MonthlyValue = default;
                 if (source.Values != null)
                 {
                     var scopedValue3 = source.Values
@@ -445,6 +448,7 @@ namespace GS2Studio.Generated.MissionCounter
                         model.MonthlyValue = scopedValue3.Value;
                     }
                 }
+                model.TotalValue = default;
                 if (source.Values != null)
                 {
                     var scopedValue4 = source.Values

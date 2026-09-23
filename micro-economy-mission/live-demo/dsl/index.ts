@@ -284,6 +284,13 @@ const withGroups = definePackage("micro-economy-mission-demo", "0.0.0")
   // Where a claim pays. The wallet, the namespace and the deposit are all this
   // package's, so none of them is authored again here.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
+  // Its rows — the store and its shelf — live in the currency stack every demo
+  // holding a wallet deploys. Deployed from here without them, that stack
+  // would lose what the other demos put there.
+  .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
+  // The currency demo stocks the currency shop's price table, and an install
+  // does not walk a package's own dependencies, so the shop is named too.
+  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   // The overlay that carries what a mission pays. Registered outright because
   // it declares a property and hosts the append: everything else this demo

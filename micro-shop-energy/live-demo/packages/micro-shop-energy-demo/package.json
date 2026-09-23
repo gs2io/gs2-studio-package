@@ -7,6 +7,7 @@
     "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
     "foundation-economy-energy": "github:gs2io/gs2-studio-package",
     "foundation-economy-energy-demo": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package",
     "micro-shop-energy": "github:gs2io/gs2-studio-package"
   },
   "display": {

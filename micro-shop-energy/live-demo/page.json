@@ -46,6 +46,12 @@
     },
     "StoreProduct": {
       "rows": []
+    },
+    "CurrencyType": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
     }
   }
 }

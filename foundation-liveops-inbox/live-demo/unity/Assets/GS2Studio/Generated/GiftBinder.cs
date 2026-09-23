@@ -330,7 +330,7 @@ namespace GS2Studio.Generated.Gift
         {
             if (requestJson == null) return false;
             var request = JsonMapper.ToObject(requestJson);
-            if (actionName == "Gs2Inbox:SendMessageByUserId" && ReadEmbeddedRequestValue(request, new string[] { "namespaceName" }) == "Inbox" && ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "action" }) == "Gs2Money2:DepositByUserId" && ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "request", "namespaceName" }) == "Currency")
+            if (actionName == "Gs2Inbox:SendMessageByUserId" && ReadEmbeddedRequestValue(request, new string[] { "namespaceName" }) == "Inbox" && ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "action" }) == "Gs2Money2:DepositByUserId" && ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "request", "namespaceName" }) == "Currency" && ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "request", "depositTransactions", "[0]", "price" }) == (0L).ToString() && ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "request", "depositTransactions", "[0]", "currency" }) == "")
             {
                 var __value = ReadEmbeddedRequestValue(request, new string[] { "readAcquireActions", "[0]", "request", "depositTransactions", "[0]", "count" });
                 if (__value != null)

@@ -158,6 +158,9 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
   // package, and the last one deployed wins. Depending on its demo package too
   // deploys the same stack the currency demo does, store products included.
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
+  // The currency demo stocks the currency shop's price table, and an install
+  // does not walk a package's own dependencies, so the shop is named too.
+  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
   .domainType(Gift)
 
   // A global message must carry a reception period, but it only gates

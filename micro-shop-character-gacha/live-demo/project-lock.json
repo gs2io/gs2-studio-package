@@ -51,6 +51,16 @@
       "version": "0.0.0"
     },
     {
+      "commitSha": "4c3607b7652e5555224ba424539de81850faac4b",
+      "integrity": "sha256-93yjMFBng3a1kHHSaHgalTYh4jJ8+09kzHqd69+hW2U=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+      "version": "0.0.0"
+    },
+    {
       "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
       "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
       "owner": "gs2io",
@@ -81,8 +91,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
-      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "commitSha": "d2b163bfe01f40daf06dca3a26e2d5311ee9c83a",
+      "integrity": "sha256-nUTQKNj+FgtXPiSHZm6q2VZkTBKgjiNOH8+PmK1snhA=",
       "owner": "gs2io",
       "packageId": "micro-shop-currency",
       "repo": "gs2-studio-package",

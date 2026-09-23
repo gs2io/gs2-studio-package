@@ -1,0 +1,36 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_CurrencyGrant:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CurrencyGrant"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "freedeposit"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Money2:DepositByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}"
+          - name: "paiddeposit"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Money2:DepositByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":120,\"currency\":\"JPY\",\"count\":50}]}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_CurrencyGrant"
+  ExchangeNamespace_CurrencyGrant:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "CurrencyGrant"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

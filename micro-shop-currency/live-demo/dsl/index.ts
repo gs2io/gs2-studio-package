@@ -1,23 +1,17 @@
 /**
  * Live demo content for `micro-shop-currency`.
  *
- * The shop is already whole in the feature package: the products, the prices
- * each is sold at in each currency, the showcase they are displayed through,
- * and the purchase itself. A demo of it adds no shop content — what it adds is
- * the things a shop needs around it to be watchable.
+ * The shop is the feature package: the showcase, the price table and the
+ * purchase. What it sells, and for how much, ships nowhere in it — that is a
+ * title's business — so this demo installs `foundation-economy-currency-demo`,
+ * which stocks the shelf: its coin packs, the currency each grants and the
+ * price it is sold at in each currency, and the store's test-receipt setting.
  *
- * It needs somewhere for the currency to land, and it needs a browser to be
- * able to buy at all. The wallet comes from `foundation-economy-currency`,
- * which this package depends on; the test receipt is accepted by a setting on
- * that package's store, which the shipped package is right to leave off and
- * this demo turns on.
- *
- * That package's own demo is not installed beside this one, though it would
- * have brought both. It stocks the shelf with products of its own, and a store
- * product is the currency package's type, so two packages holding rows of it
- * leaves no answer to which one's stack they belong in — the deploy build says
- * so rather than picking. Its deposit buttons would be beside the point here
- * anyway: buying is how a visitor gets currency in this demo.
+ * A store product is the currency package's type, so every row of it lands in
+ * the currency stack that every demo holding a wallet deploys. That demo is the
+ * one place the shelf is authored; this one, like every other demo that deploys
+ * that stack, derives from it rather than authoring a second version that the
+ * last deploy would win with.
  *
  * It needs the purchase to be pressable. A purchase names the wallet it
  * deposits into and the receipt it verifies against through the transaction's
@@ -38,8 +32,8 @@ export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "
   .display({
     label: { ja: "通貨ショップ（デモデータ）", en: "Currency Shop (demo data)" },
     description: {
-      ja: "ライブデモ用に、通貨ショップの購入先となるウォレットとテスト購入の設定を揃えます。",
-      en: "Supplies the wallet a purchase lands in, and the test-purchase setting it needs.",
+      ja: "ライブデモ用に、通貨デモの商品棚を通貨ショップへ並べます。",
+      en: "Puts the currency demo's shelf in front of the currency shop.",
     },
   })
   .dependency(shop.packageId, "github:gs2io/gs2-studio-package")
@@ -48,9 +42,6 @@ export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "
   // so the base package is named here too.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
 
-  // A browser cannot complete a real store purchase, so the demo's store takes
-  // the test receipt the client sends. The shipped package keeps rejecting it.
-  .instance(currency.type("CurrencyStore"), "currencystore", {
-    [currency.propertyId("CurrencyStore", "enableFakeReceipt")]: "Accept",
-  })
+  // The shelf and the store's test-receipt setting: authored once, there.
+  .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
   .build();

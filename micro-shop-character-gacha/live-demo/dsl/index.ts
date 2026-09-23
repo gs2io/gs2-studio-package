@@ -17,11 +17,11 @@
  * for nothing is not one worth drawing for.
  *
  * The currency comes from the shop, which the gacha package depends on and
- * which is how this demo's visitor gets coins: the products are the shop
- * package's own rows. What a browser cannot do is complete a real store
- * purchase, so the currency package's store is told to accept the test
- * receipt — the same row the shop's demo authors, and the same value, so the
- * shared currency stack reads the same whichever demo deployed last.
+ * which is how this demo's visitor gets coins. What it sells, what each pack
+ * costs, and the store that takes a browser's test receipt are the currency
+ * demo's, installed beside this package rather than written out again: they
+ * live in stacks every demo holding a wallet or a shop deploys, and a second
+ * author of them would be a second version, and the last deploy would win.
  *
  * One draw costs coins from the wallet the shop fills. The cost is the
  * currency package's own withdraw, bound into the gacha's `consumeActions`
@@ -50,7 +50,7 @@ const CharacterRate = gacha.type("CharacterRate");
 /** The wallet the shop deposits into and the gacha draws from. */
 const WALLET_SLOT = 0;
 
-/** What one pull costs, in the shop's coins. Tier 1 buys ten. */
+/** What one pull costs, in the shop's coins. The small coin pack buys ten. */
 const DRAW_COST = 10;
 
 /** The roster `foundation-economy-character-demo` ships, by rarity. */
@@ -86,12 +86,9 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
   // The coins: the shop sells them, and the currency package is what the
   // wallet and the store are rows of.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-
-  // A browser cannot complete a real store purchase, so the demo's store takes
-  // the test receipt the client sends. The shipped package keeps rejecting it.
-  .instance(currency.type("CurrencyStore"), "currencystore", {
-    [currency.propertyId("CurrencyStore", "enableFakeReceipt")]: "Accept",
-  })
+  // The shelf, the prices and the store's test-receipt setting are authored
+  // once, by the currency demo; this one derives from it.
+  .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
 
   // Two tiers, so a visitor can see the rates matter: four pulls in five land
   // a common character.

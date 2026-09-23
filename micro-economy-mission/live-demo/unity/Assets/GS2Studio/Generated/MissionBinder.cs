@@ -387,7 +387,7 @@ namespace GS2Studio.Generated.Mission
         {
             if (requestJson == null) return false;
             var request = JsonMapper.ToObject(requestJson);
-            if (actionName == "Gs2Money2:DepositByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Currency")
+            if (actionName == "Gs2Money2:DepositByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Currency" && ReadRequestValue(request, new string[] { "depositTransactions", "[0]", "price" }) == (0L).ToString() && ReadRequestValue(request, new string[] { "depositTransactions", "[0]", "currency" }) == "")
             {
                 var __value = ReadRequestValue(request, new string[] { "depositTransactions", "[0]", "count" });
                 if (__value != null)

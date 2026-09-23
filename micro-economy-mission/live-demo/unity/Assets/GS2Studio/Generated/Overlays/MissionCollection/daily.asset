@@ -15,4 +15,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rawInstanceId: daily
   _hasSchedule: 0
-  _schedule: 
+  _schedule: ''

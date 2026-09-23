@@ -14,8 +14,13 @@ using Cysharp.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+using GS2Studio.Generated.CurrencyType;
 using Gs2.Unity.Gs2Money2.Model;
+using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Money2;
+using Gs2Bind.Gs2Showcase;
+using GS2Studio.Generated.StorePrice;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.StoreProduct
 {
@@ -28,6 +33,7 @@ namespace GS2Studio.Generated.StoreProduct
     /// </summary>
     public interface IReadOnlyStoreProductBinder : StoreProduct
     {
+        Task<IStorePriceBinder> GetStorePrice(CurrencyTypeId currencyType, CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -85,6 +91,8 @@ namespace GS2Studio.Generated.StoreProduct
         public string? AppleAppStoreProductId => _model.AppleAppStoreProductId;
         /// <inheritdoc cref="StoreProduct.GooglePlayProductId" />
         public string? GooglePlayProductId => _model.GooglePlayProductId;
+        /// <inheritdoc cref="StoreProduct.Count" />
+        public int Count => _model.Count;
         /// <summary>
         /// Base constructor. Stores the bound model + service handles on the
         /// protected fields shared with the owning derived class. `private
@@ -109,6 +117,14 @@ namespace GS2Studio.Generated.StoreProduct
         /// owns the lazily-built child Collection root it disposes.
         /// </summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+
+        #region Single-fetch navigation
+        public async Task<IStorePriceBinder> GetStorePrice(CurrencyTypeId currencyType, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposedForNavigation();
+            return await StorePriceBinder.CreateAsync(_model.Id, currencyType, _gs2, _session, cancellationToken);
+        }
+        #endregion
     }
 
     /// <summary>
@@ -284,6 +300,83 @@ namespace GS2Studio.Generated.StoreProduct
                 model.AppleAppStoreProductId = default;
                 model.GooglePlayProductId = default;
             }
+        }
+
+        /// <summary>
+        /// Shared composition for one master-list item of an overlay type:
+        /// reflects the overlay-relevant master fields onto the model. The
+        /// companion Collection's reconcile/build delegate here, and external
+        /// stubs can apply the same mapping to their own model.
+        /// </summary>
+        public static void ApplyShowcaseShopCurrencyMasterItem(IMutableStoreProduct model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
+        {
+            var __SalesItemConsumeActions = item.SalesItem?.ConsumeActions;
+            var __SalesItemConsumeActions0 = __SalesItemConsumeActions != null && __SalesItemConsumeActions.Count > 0 ? __SalesItemConsumeActions[0] : null;
+            if (__SalesItemConsumeActions0 != null) StoreProductBinder.RestoreId(model, __SalesItemConsumeActions0.Action, __SalesItemConsumeActions0.Request);
+            var __SalesItemAcquireActions = item.SalesItem?.AcquireActions;
+            var __SalesItemAcquireActions0 = __SalesItemAcquireActions != null && __SalesItemAcquireActions.Count > 0 ? __SalesItemAcquireActions[0] : null;
+            if (__SalesItemAcquireActions0 != null) StoreProductBinder.RestoreCount(model, __SalesItemAcquireActions0.Action, __SalesItemAcquireActions0.Request);
+        }
+        #endregion
+
+        #region MasterData reverse decode
+        public static bool RestoreId(IMutableStoreProduct model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Money2:VerifyReceiptByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Currency")
+            {
+                var __value = ReadRequestValue(request, new string[] { "contentName" });
+                if (__value != null)
+                {
+                    model.Id = (StoreProductId)__value;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool RestoreCount(IMutableStoreProduct model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Money2:DepositByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Currency")
+            {
+                var __value = ReadRequestValue(request, new string[] { "depositTransactions", "[0]", "count" });
+                if (__value != null)
+                {
+                    model.Count = (int)Convert.ChangeType(__value, typeof(int));
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Navigates a LitJson request object by string segments. A segment of
+        /// the form <c>[n]</c> selects an array index; any other segment selects
+        /// an object key. Returns the leaf value as string, or null if absent.
+        /// </summary>
+        private static string? ReadRequestValue(JsonData request, string[] segments)
+        {
+            JsonData current = request;
+            foreach (var segment in segments)
+            {
+                if (current == null) return null;
+                if (segment.Length >= 2 && segment[0] == '[' && segment[segment.Length - 1] == ']')
+                {
+                    if (!current.IsArray) return null;
+                    if (!int.TryParse(segment.Substring(1, segment.Length - 2), out var index)) return null;
+                    if (index < 0 || index >= current.Count) return null;
+                    current = current[index];
+                }
+                else
+                {
+                    if (!current.IsObject || !current.Keys.Contains(segment)) return null;
+                    current = current[segment];
+                }
+            }
+            return current == null ? null : current.ToString();
         }
         #endregion
 

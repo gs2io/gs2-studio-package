@@ -26,6 +26,8 @@ namespace GS2Studio.Generated.StoreProduct
         string? AppleAppStoreProductId { get; }
 
         string? GooglePlayProductId { get; }
+
+        int Count { get; }
     }
 
     /// <summary>
@@ -42,6 +44,7 @@ namespace GS2Studio.Generated.StoreProduct
         new StoreProductId Id { get; set; }
         new string? AppleAppStoreProductId { get; set; }
         new string? GooglePlayProductId { get; set; }
+        new int Count { get; set; }
     }
 
     /// <summary>
@@ -56,5 +59,7 @@ namespace GS2Studio.Generated.StoreProduct
         public string? AppleAppStoreProductId { get; set; }
 
         public string? GooglePlayProductId { get; set; }
+
+        public int Count { get; set; }
     }
 }

@@ -27,6 +27,12 @@
     },
     "CurrencyType": {
       "rows": []
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
     }
   }
 }

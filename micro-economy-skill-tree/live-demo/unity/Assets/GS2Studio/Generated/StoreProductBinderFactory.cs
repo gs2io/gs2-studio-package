@@ -11,8 +11,13 @@ using System.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+using GS2Studio.Generated.CurrencyType;
 using Gs2.Unity.Gs2Money2.Model;
+using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Money2;
+using Gs2Bind.Gs2Showcase;
+using GS2Studio.Generated.StorePrice;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.StoreProduct
 {
@@ -31,7 +36,7 @@ namespace GS2Studio.Generated.StoreProduct
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default);
-        IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
+        IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, CurrencyTypeId currencyType);
     }
 
     /// <summary>
@@ -51,9 +56,9 @@ namespace GS2Studio.Generated.StoreProduct
         {
             return await StoreProductBinder.CreateAsync(id, gs2, session, cancellationToken);
         }
-        public IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
+        public IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, CurrencyTypeId currencyType)
         {
-            return new StoreProductBinderCollection(gs2, session);
+            return new StoreProductBinderCollection(gs2, session, currencyType);
         }
     }
 }

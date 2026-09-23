@@ -200,6 +200,9 @@ const withDependencies = definePackage("micro-economy-skill-tree-demo", "0.0.0")
   // What the costs are charged against, and the press that funds them.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
+  // The currency demo stocks the currency shop's price table, and an install
+  // does not walk a package's own dependencies, so the shop is named too.
+  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   // The overlay that carries what a node costs. Registered outright because it
   // declares a property and hosts the append.
