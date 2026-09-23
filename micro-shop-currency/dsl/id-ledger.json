@@ -1,19 +1,11 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "property:StorePrice.currencyType": "prop_HWY29H9JCBTCX27T4BQDSTJMV0",
-    "property:StorePrice.price": "prop_NW3JXP6ZEQE4DP99TJHZEB68AD",
-    "property:StorePrice.product": "prop_4QH1Q546W880NVDGJRGNVCWV07",
-    "property:StoreProduct.count": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7",
+  "retired": {
     "row:dt_JQQFPC83PRYTWMZ43RV3T4SKSB.tier1": "row_03004QH4P2DKK8G66XDH9YRMSJ",
     "row:dt_JQQFPC83PRYTWMZ43RV3T4SKSB.tier2": "row_03ZAZTE6MEYDDVZWXSBB859FAX",
     "row:dt_JQQFPC83PRYTWMZ43RV3T4SKSB.tier3": "row_032H7FR570VHH00ZR3BRG10T7Z",
     "row:dt_JQQFPC83PRYTWMZ43RV3T4SKSB.tier4": "row_008H8TE0T59YVDHY4813RY1FCJ",
     "row:dt_JQQFPC83PRYTWMZ43RV3T4SKSB.tier5": "row_0AA9F5CY7B818CCM1MBA629J4D",
-    "row:type:CurrencyType.JPY": "row_0FJ2D55WWP0KY6J214TVG3WHZQ",
-    "row:type:CurrencyType.USD": "row_0W247SMA6R3HXCV2W1T1X9MYKV",
-    "row:type:CurrencyType.XXX": "row_0HJRNVQAXAA3XQGB9B79HY2WFC",
     "row:type:StorePrice.tier1.JPY": "row_0QQH7G9Q5A8M3C0CHBBCRX1EFZ",
     "row:type:StorePrice.tier1.USD": "row_029BNWFXPGH19HQ4FC937P4QPQ",
     "row:type:StorePrice.tier1.XXX": "row_0R40RCB7P6RC2QC90WTDHBPY9E",
@@ -28,7 +20,16 @@
     "row:type:StorePrice.tier4.XXX": "row_0SWWTMM5FEQNNPZNS8RGKQ02QM",
     "row:type:StorePrice.tier5.JPY": "row_03783587EJVMSBATF00CY8M7N8",
     "row:type:StorePrice.tier5.USD": "row_0ZTS3G8EE55CD4Q3GQSXSK17A6",
-    "row:type:StorePrice.tier5.XXX": "row_05H2K29EQCGY6BTTJ3CNCNYGH3",
+    "row:type:StorePrice.tier5.XXX": "row_05H2K29EQCGY6BTTJ3CNCNYGH3"
+  },
+  "random": {
+    "property:StorePrice.currencyType": "prop_HWY29H9JCBTCX27T4BQDSTJMV0",
+    "property:StorePrice.price": "prop_NW3JXP6ZEQE4DP99TJHZEB68AD",
+    "property:StorePrice.product": "prop_4QH1Q546W880NVDGJRGNVCWV07",
+    "property:StoreProduct.count": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7",
+    "row:type:CurrencyType.JPY": "row_0FJ2D55WWP0KY6J214TVG3WHZQ",
+    "row:type:CurrencyType.USD": "row_0W247SMA6R3HXCV2W1T1X9MYKV",
+    "row:type:CurrencyType.XXX": "row_0HJRNVQAXAA3XQGB9B79HY2WFC",
     "type:CurrencyType": "dt_QM3KC8SJTDM4W54DTSPXM8HTRD",
     "type:StorePrice": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
     "type:StoreProduct": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8"

@@ -28,9 +28,9 @@ describe("canonical instance type fixture integrity", () => {
       typeId => !representedCanonicalTypeIds.has(typeId)
     );
 
-    expect(pkg.instances.getAuthoredValueInstances()).toHaveLength(33);
-    expect(pkg.instances.getAllInstances()).toHaveLength(39);
-    expect(undeclaredTypeIds).toHaveLength(9);
+    expect(pkg.instances.getAuthoredValueInstances()).toHaveLength(53);
+    expect(pkg.instances.getAllInstances()).toHaveLength(54);
+    expect(undeclaredTypeIds).toHaveLength(11);
   });
 
   it("keys every persisted row by a unique canonical type in the dependency closure", async () => {

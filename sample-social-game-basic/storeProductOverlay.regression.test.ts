@@ -1,6 +1,9 @@
 /**
  * Regression test for: "Failed to set overlay: overlayHostingDeclarationNotFound"
  * when editing StoreProduct.appleAppStoreProductId in sample-social-game-basic.
+ * The sample now authors its store products rather than overriding the shop's,
+ * so it holds no StoreProduct overlay on disk; the edit below is what still
+ * pins overriding a dependency's row without declaring its type.
  *
  * Pins declaration-free dependency authoring:
  *
@@ -54,7 +57,7 @@ describe("StoreProduct overlay edit regression (sample-social-game-basic)", () =
 
     // Use a synthetic sourceInstanceId that does not collide with any overlay
     // authored on disk; this keeps the regression idempotent if the fixture
-    // gains another overlay in overlay/store-product/*.json.
+    // ever gains a StoreProduct overlay on disk again.
     const existingOverlayIds = new Set(overlaysBefore.map(o => o.sourceInstanceId as string));
     let targetId = "regression-target";
     let suffix = 0;

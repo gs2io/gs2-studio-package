@@ -6,7 +6,10 @@
       "id": "dt_01M0C826WJ0HDTQG636AHV341M",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+      "addedProperties": {
+        "grade": "prop_01M0C826WJ0M7QGYB50KVWBD98"
+      }
     },
     "CharacterGradeStep": {
       "id": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",

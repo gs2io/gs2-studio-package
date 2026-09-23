@@ -6,7 +6,10 @@
       "id": "dt_01M31VN399W8ZV08E5MVG7J9BT",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-skill-tree",
-      "canonicalTypeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6"
+      "canonicalTypeId": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",
+      "addedProperties": {
+        "cost": "prop_01M31VN3992YQ74A46F3V3FAAZ"
+      }
     }
   },
   "masterDataResources": {},

@@ -6,7 +6,11 @@
       "id": "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+      "addedProperties": {
+        "acquired": "prop_TC9NBD65ZXWPT09PFSRX1REHPF",
+        "acquiredAt": "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6"
+      }
     }
   },
   "masterDataResources": {

@@ -30,7 +30,10 @@
       "id": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-currency",
-      "canonicalTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB"
+      "canonicalTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+      "addedProperties": {
+        "count": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7"
+      }
     }
   },
   "masterDataResources": {

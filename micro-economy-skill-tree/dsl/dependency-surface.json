@@ -6,7 +6,10 @@
       "id": "dt_01M31J6RAW9QB6RG77DGXG447A",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+      "addedProperties": {
+        "releasedSkillNodes": "prop_01M31J6RAWTY5M1G0W2ETQ890K"
+      }
     },
     "SkillNode": {
       "id": "dt_01M0C87BJCRTK0Y3JKH8EHKAR6",

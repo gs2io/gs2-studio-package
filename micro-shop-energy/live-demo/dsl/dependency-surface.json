@@ -9,7 +9,10 @@
         "Buy": "resource:micro-shop-energy-demo:masterData:61368253-b5e8-546a-bbcb-7c8a973da29f::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "micro-shop-energy",
-      "canonicalTypeId": "dt_B6ACHCG26EEPJHVNQ7SA1WX2XS"
+      "canonicalTypeId": "dt_B6ACHCG26EEPJHVNQ7SA1WX2XS",
+      "addedProperties": {
+        "cost": "prop_01M34HT0W95E26WZ0K2C54N79A"
+      }
     }
   },
   "masterDataResources": {

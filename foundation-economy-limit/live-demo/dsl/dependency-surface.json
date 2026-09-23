@@ -17,7 +17,11 @@
         "UseWithAd": "resource:foundation-economy-limit-demo:masterData:da615f4d-c1a2-5380-bd00-7751e0ceff20::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "foundation-economy-limit",
-      "canonicalTypeId": "dt_01M0C6M2N38KVHBHTC1JBRT5YA"
+      "canonicalTypeId": "dt_01M0C6M2N38KVHBHTC1JBRT5YA",
+      "addedProperties": {
+        "adMax": "prop_01M2XCSQW3YEM6QCAQPT16AN9R",
+        "freeMax": "prop_01M2XCSQW31H7DCABNXZV4E45P"
+      }
     }
   },
   "masterDataResources": {},

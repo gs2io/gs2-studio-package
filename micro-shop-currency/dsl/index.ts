@@ -176,27 +176,9 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
   .instance("CurrencyType", "USD", {})
   .instance("CurrencyType", "XXX", {})
 
-  .instance("StoreProduct", "tier1", { count: 10 })
-  .instance("StoreProduct", "tier2", { count: 50 })
-  .instance("StoreProduct", "tier3", { count: 250 })
-  .instance("StoreProduct", "tier4", { count: 1250 })
-  .instance("StoreProduct", "tier5", { count: 6000 })
-
-  .instance(StorePrice, "tier1.JPY", { product: "tier1", currencyType: "JPY", price: 100 })
-  .instance(StorePrice, "tier1.USD", { product: "tier1", currencyType: "USD", price: 1 })
-  .instance(StorePrice, "tier1.XXX", { product: "tier1", currencyType: "XXX", price: 1 })
-  .instance(StorePrice, "tier2.JPY", { product: "tier2", currencyType: "JPY", price: 200 })
-  .instance(StorePrice, "tier2.USD", { product: "tier2", currencyType: "USD", price: 2 })
-  .instance(StorePrice, "tier2.XXX", { product: "tier2", currencyType: "XXX", price: 2 })
-  .instance(StorePrice, "tier3.JPY", { product: "tier3", currencyType: "JPY", price: 300 })
-  .instance(StorePrice, "tier3.USD", { product: "tier3", currencyType: "USD", price: 3 })
-  .instance(StorePrice, "tier3.XXX", { product: "tier3", currencyType: "XXX", price: 3 })
-  .instance(StorePrice, "tier4.JPY", { product: "tier4", currencyType: "JPY", price: 400 })
-  .instance(StorePrice, "tier4.USD", { product: "tier4", currencyType: "USD", price: 4 })
-  .instance(StorePrice, "tier4.XXX", { product: "tier4", currencyType: "XXX", price: 4 })
-  .instance(StorePrice, "tier5.JPY", { product: "tier5", currencyType: "JPY", price: 500 })
-  .instance(StorePrice, "tier5.USD", { product: "tier5", currencyType: "USD", price: 5 })
-  .instance(StorePrice, "tier5.XXX", { product: "tier5", currencyType: "XXX", price: 5 })
+  // No products or prices ship here: what a store sells, and for how much, is
+  // the title's business. The currency types are what the price table is laid
+  // out by, so they do.
 
   .uiComponent(StoreProduct, ui =>
     ui

@@ -6,7 +6,10 @@
       "id": "dt_01M0C84Y321K5KHKYHWHMAVTH5",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-equipment",
-      "canonicalTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D"
+      "canonicalTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D",
+      "addedProperties": {
+        "enchantments": "prop_01M0C84Y32CKRCM57ZVFNSN5KJ"
+      }
     },
     "EquipmentEnchant": {
       "id": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
