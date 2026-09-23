@@ -44,7 +44,8 @@
     ],
     "SendMessageWithReward": [
       "metadata",
-      "expireDays"
+      "expireDays",
+      "rewards"
     ]
   }
 }

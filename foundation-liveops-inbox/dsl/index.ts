@@ -207,17 +207,25 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
           .mapStatic("expiresTimeSpan.minutes", null)
       )
   )
+  // The rewards run when the player opens the message. With this namespace's
+  // transaction setting (no atomic commit), GS2 passes a single reward through
+  // as it is and folds two or more into a Gs2JobQueue push to `queue:default`,
+  // so that job queue namespace must exist (Studio has no JobQueue catalog to
+  // provision it) and its jobs must be run, by the namespace's auto-run or by
+  // the client.
   .actionTransform("SendMessageWithReward", at =>
     at
       .category("acquire")
       .parameter("metadata", { type: PT.string() })
       .parameter("expireDays", { type: PT.int32() })
+      .parameter("rewards", { type: PT.listOf(PT.acquireAction()) })
       .output("Gs2Inbox:SendMessageByUserId", o =>
         o
           .resourceRef(() => InboxNamespace)
           .mapResourceKey("namespaceName")
           .mapPlaceholder("userId", "#{userId}")
           .mapParameter("metadata", "metadata")
+          .mapParameter("readAcquireActions", "rewards")
           .mapStatic("expiresAt", null)
           .mapParameter("expiresTimeSpan.days", "expireDays")
           .mapStatic("expiresTimeSpan.hours", null)

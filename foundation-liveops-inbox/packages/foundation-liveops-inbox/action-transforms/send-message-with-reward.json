@@ -30,6 +30,11 @@
           "sourceParameter": "metadata"
         },
         {
+          "kind": "parameter",
+          "parameterName": "readAcquireActions",
+          "sourceParameter": "rewards"
+        },
+        {
           "kind": "static",
           "parameterName": "expiresAt",
           "value": null
@@ -74,6 +79,18 @@
       "type": {
         "kind": "primitive",
         "primitiveType": "int32"
+      }
+    },
+    {
+      "id": "param_01M365XDJ22GG9D8ND7D1FJBDJ",
+      "name": "rewards",
+      "required": true,
+      "type": {
+        "elementType": {
+          "category": "acquire",
+          "kind": "action"
+        },
+        "kind": "list"
       }
     }
   ]
