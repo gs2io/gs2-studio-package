@@ -2,6 +2,20 @@
   "schemaVersion": 1,
   "packageId": "foundation-liveops-inbox-demo",
   "types": {
+    "Gift": {
+      "id": "dt_01M366KJ86CGA0WKTYSW9PAQCT",
+      "singleEntry": true,
+      "delegatedActions": {
+        "Deliver": "resource:foundation-liveops-inbox-demo:masterData:84b0149d-8df9-59dd-b174-7008ada2f877::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "foundation-liveops-inbox-demo",
+      "canonicalTypeId": "dt_01M366KJ86CGA0WKTYSW9PAQCT",
+      "properties": {
+        "amount": "prop_01M366KJ86W6DHHYF0288T1VBK",
+        "id": "prop_reserved_id",
+        "payload": "prop_01M366KJ86F7745KSHZ41A69FB"
+      }
+    },
     "GlobalMessage": {
       "id": "dt_01M35Z5TAM5DV8ADJKFK7ZMDX2",
       "singleEntry": false,
@@ -18,10 +32,6 @@
       "canonicalTypeId": "dt_GVTDXY1KW1X831ABJENERKSHZA"
     }
   },
-  "masterDataResources": {
-    "exchange.Namespace": "a52941ad-0da7-518f-b7ca-77077fbdcd3b",
-    "exchange.RateModel": "7b483198-2292-5a17-bf09-3fbc3242bbff",
-    "transaction.AcquireAction": "ad85199b-cf29-57aa-99bc-0731b9222ee5"
-  },
+  "masterDataResources": {},
   "transforms": {}
 }

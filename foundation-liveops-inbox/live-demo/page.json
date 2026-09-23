@@ -4,12 +4,32 @@
       "axis": "ExchangeInboxDeliverMaster",
       "rows": ["GlobalMessageDeliverButton"]
     },
+    "Gift#A gift with free currency attached": {
+      "rows": [
+        {
+          "component": "GiftDeliverButton",
+          "caption": "GiftAmountLabel"
+        }
+      ]
+    },
     "Message#Your inbox": {
       "rows": ["MessagePayloadLabel", "MessageOpenButton", "MessageOpenedLabel"],
       "toggles": {
         "MessageReadActiveToggle": ["MessageOpenButton"],
         "MessageUnreadActiveToggle": ["MessageOpenedLabel"]
       }
+    },
+    "Wallet#Where the gift lands": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
     }
   }
 }

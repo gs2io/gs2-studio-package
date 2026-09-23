@@ -1,8 +1,28 @@
 {
   "entries": [
     {
-      "commitSha": "5790fa25a2ea0db4d6ae37ec4c1df268462db555",
-      "integrity": "sha256-gm6GT2i+pDdTawttBHlkdtQFGOqHFIRlM2bov8Xn/nM=",
+      "commitSha": "d07443ae11d2285218650ab34909f7f3e3610834",
+      "integrity": "sha256-PwswmAzLlinFXDoR6mwRdTCKEtlAkJtVcpESEZ3H/Pc=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "d07443ae11d2285218650ab34909f7f3e3610834",
+      "integrity": "sha256-PwswmAzLlinFXDoR6mwRdTCKEtlAkJtVcpESEZ3H/Pc=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "d07443ae11d2285218650ab34909f7f3e3610834",
+      "integrity": "sha256-PwswmAzLlinFXDoR6mwRdTCKEtlAkJtVcpESEZ3H/Pc=",
       "owner": "gs2io",
       "packageId": "foundation-liveops-inbox",
       "repo": "gs2-studio-package",

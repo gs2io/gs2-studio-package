@@ -1,0 +1,9 @@
+{
+  "id": "gift",
+  "rowKey": "row_01M366KJ86ZVCF6KXWSRP8YCX2",
+  "typeId": "dt_01M366KJ86CGA0WKTYSW9PAQCT",
+  "values": {
+    "prop_01M366KJ86F7745KSHZ41A69FB": "A gift from the operator: 100 free currency.",
+    "prop_01M366KJ86W6DHHYF0288T1VBK": 100
+  }
+}

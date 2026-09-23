@@ -1,0 +1,24 @@
+{
+  "id": "f30f1057-b02a-5a19-82e5-05fb93626d95",
+  "items": [
+    {
+      "componentClassName": "AmountLabel",
+      "id": "5b7f9c39-1eed-5e51-b267-4b959789251b",
+      "kind": "templateLabel",
+      "name": "Gift",
+      "sources": [],
+      "template": "Carries 100 free currency."
+    },
+    {
+      "arguments": [],
+      "componentClassName": "DeliverButton",
+      "delegatedActionKey": "resource:foundation-liveops-inbox-demo:masterData:84b0149d-8df9-59dd-b174-7008ada2f877::Gs2Exchange:RateModel.Exchange",
+      "id": "4d438eaa-bb40-5dda-990e-13f07fd99413",
+      "kind": "buttonAction",
+      "name": "Gift"
+    }
+  ],
+  "name": "Gift",
+  "targetDomainType": "Gift",
+  "targetDomainTypeId": "dt_01M366KJ86CGA0WKTYSW9PAQCT"
+}

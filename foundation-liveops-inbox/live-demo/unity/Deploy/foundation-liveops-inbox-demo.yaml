@@ -17,10 +17,38 @@ Resources:
       Mode: "direct"
     DependsOn:
       - "ExchangeNamespace_InboxDeliver"
+  ExchangeCurrentRateMaster_InboxGift:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "InboxGift"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "gift"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inbox:SendMessageByUserId"
+                request: "{\"namespaceName\":\"Inbox\",\"userId\":\"#{userId}\",\"metadata\":\"A gift from the operator: 100 free currency.\",\"readAcquireActions\":[{\"action\":\"Gs2Money2:DepositByUserId\",\"request\":{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}}],\"expiresTimeSpan\":{\"days\":7}}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_InboxGift"
   ExchangeNamespace_InboxDeliver:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "InboxDeliver"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_InboxGift:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "InboxGift"
       TransactionSetting:
         AcquireActionUseJobQueue: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"

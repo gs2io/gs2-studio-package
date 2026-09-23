@@ -1,0 +1,98 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the gift.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "贈り物を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M366KJ86F7745KSHZ41A69FB",
+        "localizedDisplay": {
+          "en": {
+            "description": "Content of the message the gift arrives with.",
+            "label": "Message payload"
+          },
+          "ja": {
+            "description": "贈り物と一緒に届くメッセージの内容です。",
+            "label": "メッセージ内容"
+          }
+        },
+        "name": "payload",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M366KJ86W6DHHYF0288T1VBK",
+        "localizedDisplay": {
+          "en": {
+            "description": "Free currency received when the message is opened.",
+            "label": "Free currency",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "メッセージを開いたときに受け取る無償通貨の量です。",
+            "label": "無償通貨",
+            "unit": "通貨"
+          }
+        },
+        "name": "amount",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Deliver",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "84b0149d-8df9-59dd-b174-7008ada2f877",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-liveops-inbox-demo"
+      }
+    }
+  ],
+  "id": "dt_01M366KJ86CGA0WKTYSW9PAQCT",
+  "kind": "local",
+  "name": "Gift",
+  "singleEntry": true
+}

@@ -1,0 +1,87 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "metadata",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_01M366KJ86CGA0WKTYSW9PAQCT",
+                    "typeName": "Gift"
+                  },
+                  "propertyId": "prop_01M366KJ86F7745KSHZ41A69FB"
+                },
+                "kind": "parent",
+                "parentResourceId": "84b0149d-8df9-59dd-b174-7008ada2f877"
+              }
+            }
+          },
+          {
+            "parameterName": "expireDays",
+            "source": {
+              "kind": "static",
+              "value": 7
+            }
+          },
+          {
+            "parameterName": "rewards",
+            "source": {
+              "arguments": [
+                {
+                  "parameterName": "slot",
+                  "source": {
+                    "kind": "static",
+                    "value": 0
+                  }
+                },
+                {
+                  "parameterName": "count",
+                  "source": {
+                    "kind": "domainProperty",
+                    "source": {
+                      "innerSource": {
+                        "kind": "direct",
+                        "mountPath": {
+                          "kind": "local",
+                          "typeId": "dt_01M366KJ86CGA0WKTYSW9PAQCT",
+                          "typeName": "Gift"
+                        },
+                        "propertyId": "prop_01M366KJ86W6DHHYF0288T1VBK"
+                      },
+                      "kind": "parent",
+                      "parentResourceId": "84b0149d-8df9-59dd-b174-7008ada2f877"
+                    }
+                  }
+                }
+              ],
+              "kind": "actionTransformRef",
+              "transformName": "DepositFreeCurrency",
+              "transformPackageId": "foundation-economy-currency"
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "SendMessageWithReward",
+        "transformPackageId": "foundation-liveops-inbox"
+      }
+    ]
+  },
+  "id": "fb0df09e-fe32-5c0c-90bb-5d1b48150e56",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M366KJ86CGA0WKTYSW9PAQCT",
+    "typeName": "Gift"
+  }
+}
