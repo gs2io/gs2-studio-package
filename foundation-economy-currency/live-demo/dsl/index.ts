@@ -5,6 +5,9 @@
  * demo needs a few of them relaxed, and it needs something a visitor can
  * actually press. Both belong here rather than in the shipped package: this
  * package depends on the feature package and adds only what the demo needs.
+ *
+ * It is also where every demo's store shelf is authored, with the currency
+ * shop's price table beside it — see the note on `demoProduct` below.
  */
 
 import {
@@ -52,8 +55,8 @@ const CurrencyStore = currency.type("CurrencyStore");
  * every demo holding a wallet or a shop deploys both; so the other demos
  * install this package instead of stocking a shelf of their own, and the
  * stacks read the same whichever demo deployed them last. What the shop needs
- * of a product — the currency it grants and its price in each currency — is
- * written here beside it for the same reason.
+ * of a product — the amount of currency it grants and its price in each
+ * currency — is written here beside it for the same reason.
  */
 const StoreProduct = currency.type("StoreProduct");
 
@@ -134,7 +137,10 @@ const PaidDepositRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/** Store-side identifiers are never consumed by the fake-receipt demo path. */
+/**
+ * A shelf product: the store-side identifiers, which the fake-receipt demo path
+ * never consumes, and the amount of currency the shop grants for it.
+ */
 function demoProduct(productId: string, count: number): Record<string, string | number> {
   return {
     [currency.propertyId("StoreProduct", "appleAppStoreProductId")]: productId,
@@ -152,8 +158,8 @@ export const foundationEconomyCurrencyDemo = definePackage(
   .display({
     label: { ja: "通貨（デモ）", en: "Currency (demo)" },
     description: {
-      ja: "ライブデモ用の設定上書きと無償付与を提供します。",
-      en: "Supplies the live demo's setting overrides and its free currency grants.",
+      ja: "ライブデモ用の設定上書き、無償付与、全デモ共通の商品棚と価格を提供します。",
+      en: "Supplies the live demo's setting overrides, its free currency grants, and the store shelf and prices every demo shares.",
     },
   })
   .displayType(FreeDeposit, {

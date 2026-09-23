@@ -8,8 +8,8 @@
   },
   "display": {
     "description": {
-      "en": "Supplies the live demo's setting overrides and its free currency grants.",
-      "ja": "ライブデモ用の設定上書きと無償付与を提供します。"
+      "en": "Supplies the live demo's setting overrides, its free currency grants, and the store shelf and prices every demo shares.",
+      "ja": "ライブデモ用の設定上書き、無償付与、全デモ共通の商品棚と価格を提供します。"
     },
     "domainTypes": {
       "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB": {
