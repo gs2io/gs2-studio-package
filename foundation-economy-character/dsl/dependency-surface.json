@@ -63,10 +63,6 @@
     "AddCharacterCapacity": [
       "value"
     ],
-    "ByeCharacter": [
-      "character",
-      "propertyId"
-    ],
     "IncreaseCharacterLevelCap": [
       "propertyId",
       "value"

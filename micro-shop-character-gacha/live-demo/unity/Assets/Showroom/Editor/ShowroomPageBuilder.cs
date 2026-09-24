@@ -157,9 +157,9 @@ namespace GS2Studio.Showroom.EditorTools
         {
             public string Name;
             public Type Type;
-            /// <summary>True for an active toggle, which hides objects; false for an interactable, which greys selectables.</summary>
+            /// <summary>True for an active toggle, which shows its rows only while its condition is false; false for an interactable, which leaves its buttons usable only while its condition is true.</summary>
             public bool Hides;
-            /// <summary>The arm that means "the condition is good news": `_activeWhenFalse` or `_interactableWhenTrue`.</summary>
+            /// <summary>The arm the page's rows go into: `_activeWhenFalse` (rows shown only while the condition is false) or `_interactableWhenTrue` (buttons usable only while it is true).</summary>
             public string ArmField;
         }
 
@@ -861,10 +861,12 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// The conditions a manifest lists. An active toggle hides objects
-        /// while its condition does not hold, an interactable greys selectables
-        /// out; each is written into the arm that means the condition is good
-        /// news, and the manifest says what that arm is called.
+        /// The conditions a manifest lists. An active toggle hides its rows
+        /// while its condition holds and shows them while it does not; an
+        /// interactable leaves its buttons usable only while its condition
+        /// holds. Each kind's rows go into its own arm (`_activeWhenFalse` or
+        /// `_interactableWhenTrue`), and the manifest says what that arm is
+        /// called.
         /// </summary>
         private static IReadOnlyList<ToggleComponent> TogglesOf(ComponentManifest manifest)
         {
@@ -1268,7 +1270,9 @@ namespace GS2Studio.Showroom.EditorTools
             return
                 $" It also generated the conditions {Listed(plan.Toggles.Select(toggle => toggle.Name))}" +
                 ", which the guess leaves out because which rows a condition governs is the " +
-                "page's to say; add one to \"toggles\" with the rows it governs to wire it.";
+                "page's to say; add one to \"toggles\" with the rows it governs to wire it " +
+                "(an active toggle shows its rows only while its condition is false, an " +
+                "interactable leaves its buttons usable only while its condition is true).";
         }
 
         /// <summary>
@@ -2398,9 +2402,9 @@ namespace GS2Studio.Showroom.EditorTools
         /// Mounts each condition-driven component on the section root and
         /// points it at the rows the section declared for it.
         ///
-        /// An active toggle takes the rows it hides while its condition does
-        /// not hold; an interactable takes the buttons it leaves usable while
-        /// its condition does hold. Both read the same declaration, because
+        /// An active toggle takes the rows it shows only while its condition
+        /// does not hold; an interactable takes the buttons it leaves usable
+        /// only while its condition does hold. Both read the same declaration, because
         /// both answer "which rows does this govern" — what the condition then
         /// does with them is the component's own business.
         ///
@@ -2451,9 +2455,10 @@ namespace GS2Studio.Showroom.EditorTools
 
                 var component = root.AddComponent(toggle.Type);
                 var serialized = new SerializedObject(component);
-                // The true branch enables, the false branch hides: each kind
-                // names the arm that means "the condition is good news", and
-                // the manifest says what that arm is called.
+                // An active toggle's rows go into its false arm (visible only
+                // while the condition is false); an interactable's into its
+                // true arm (usable only while it is true). The manifest says
+                // what each arm is called.
                 var arm = serialized.FindProperty(toggle.ArmField);
                 arm.arraySize = targets.Count;
                 for (var i = 0; i < targets.Count; i++)

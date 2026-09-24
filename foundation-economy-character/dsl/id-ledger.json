@@ -1,6 +1,9 @@
 {
   "schemaVersion": 1,
   "retired": {
+    "transform:ByeCharacter:output:direct:Gs2Inventory:ConsumeItemSetByUserId#0": "out_01KSZ28R69KRNTZEGP95Y5JRCJ",
+    "transform:ByeCharacter:parameter:character": "param_01KSZ27ZVMTPX91YA56A68NFH2",
+    "transform:ByeCharacter:parameter:propertyId": "param_01KSZ28A1ZSKDKP7DQZJ1J7R16",
     "ui:Character:Character:item:ExperienceLabel": "e7248a23-a04a-46f9-8671-9744866ba9bd",
     "ui:Character:Character:item:LevelCapLabel": "9b45050f-eb2f-4bb5-a0b7-2ac571777a54"
   },
@@ -26,9 +29,6 @@
     "transform:AcquireCharacterExperience:parameter:value": "param_01KJSWSKBTVBA45HN61GTA2HTC",
     "transform:AddCharacterCapacity:output:direct:Gs2Inventory:AddCapacityByUserId#0": "out_01KJSZJNZHQEPQ2SKS6EYGHZTA",
     "transform:AddCharacterCapacity:parameter:value": "param_01KJSZHDM9HSN282Y6QX99N4VA",
-    "transform:ByeCharacter:output:direct:Gs2Inventory:ConsumeItemSetByUserId#0": "out_01KSZ28R69KRNTZEGP95Y5JRCJ",
-    "transform:ByeCharacter:parameter:character": "param_01KSZ27ZVMTPX91YA56A68NFH2",
-    "transform:ByeCharacter:parameter:propertyId": "param_01KSZ28A1ZSKDKP7DQZJ1J7R16",
     "transform:IncreaseCharacterLevelCap:output:direct:Gs2Experience:AddRankCapByUserId#0": "out_01KTXR15A1M4JA2KED0ZMC0WQZ",
     "transform:IncreaseCharacterLevelCap:parameter:propertyId": "param_01KTXR0EH3E0BSPZ7253SZ45NN",
     "transform:IncreaseCharacterLevelCap:parameter:value": "param_01KTXR0AGNYGQ861PP6DY9MZWX",

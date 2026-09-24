@@ -39,6 +39,9 @@ npm run check:package-materialization
 ledger へ追加します。rename では既存 ID を新 token へ移します。削除時は active section の
 token と ID を `retired` へ移し、現行 identity に再適用されない tombstone として予約します。
 override のない決定的 ID は削除前に token と計算済み ID を `retired` へ追加してください。
+override なしで退役した決定的 token が再び現れると同じ ID に再計算されるので、新しい
+identity として `deterministicOverrides` に新しい ID を記録します（gate が候補 ID を添えて
+報告します）。
 
 新規パッケージの ledger は次の canonical JSON から開始します。
 

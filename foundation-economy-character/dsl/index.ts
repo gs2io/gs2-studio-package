@@ -362,22 +362,6 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           .mapStatic("truncateExperienceWhenRankUp", null)
       )
   )
-  .actionTransform("ByeCharacter", at =>
-    at
-      .category("consume")
-      .parameter("character", { type: PT.ref("Character") })
-      .parameter("propertyId", { type: PT.string() })
-      .output("Gs2Inventory:ConsumeItemSetByUserId", o =>
-        o
-          .resourceRef(() => ItemModel)
-          .mapResourceKey("namespaceName")
-          .mapResourceKey("inventoryName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("itemName", "character")
-          .mapStatic("consumeCount", 1)
-          .mapParameter("itemSetName", "propertyId")
-      )
-  )
   // Keyed like `AcquireCharacterExperience`: the level status key, suffix and all.
   .actionTransform("IncreaseCharacterLevelCap", at =>
     at
