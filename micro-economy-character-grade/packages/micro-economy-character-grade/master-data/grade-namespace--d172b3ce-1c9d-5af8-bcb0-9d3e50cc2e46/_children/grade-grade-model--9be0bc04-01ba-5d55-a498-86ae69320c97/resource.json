@@ -3,11 +3,6 @@
     "declaredBindings": [
       {
         "kind": "static",
-        "parameterName": "experienceModelId.grnKey.namespaceName",
-        "value": "CharacterExperience"
-      },
-      {
-        "kind": "static",
         "parameterName": "metadata",
         "value": ""
       },
@@ -27,6 +22,10 @@
     "grnMounts": [
       {
         "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          },
           {
             "grnKeyName": "experienceName",
             "sourceKeyName": "experienceName"

@@ -94,14 +94,10 @@ const GradeModel = defineMasterDataResource(resource =>
       name: Bind.static("CharacterGrade"),
       metadata: Bind.static(""),
     })
-    // Works around the resource build reading a parent key off the model's own
-    // bindings: a `namespaceName` mounted from the model resource comes out as
-    // the model's name. The namespace is bound by name instead, as the enhance
-    // package does for the same model, until the build reads it from the parent.
     .grnFieldMount("experienceModelId", CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID, [
+      { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
       { grnKeyName: "experienceName", sourceKeyName: "experienceName" },
     ])
-    .grnKeyBinding("experienceModelId", "namespaceName", Bind.static("CharacterExperience"))
     .addArrayChild("gradeEntries", gradeEntry => {
       gradeEntry
         .model(GS2.grade.GradeEntryModel)

@@ -117,9 +117,9 @@ const RateModel = defineMasterDataResource(resource =>
       Bind.domainProperty(Source.direct(CharacterEnhance, "id"))
     )
     .grnFieldMount("experienceModelId", CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID, [
+      { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
       { grnKeyName: "experienceName", sourceKeyName: "experienceName" },
     ])
-    .grnKeyBinding("experienceModelId", "namespaceName", Bind.static("CharacterExperience"))
     .addArrayChild("bonusRates", bonusRate => {
       bonusRate
         .model(GS2.enhance.BonusRate)

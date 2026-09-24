@@ -25,11 +25,6 @@
         "value": ""
       },
       {
-        "kind": "static",
-        "parameterName": "experienceModelId.grnKey.namespaceName",
-        "value": "CharacterExperience"
-      },
-      {
         "kind": "domainProperty",
         "parameterName": "materialInventoryModelId.grnKey.inventoryName",
         "source": {
@@ -109,6 +104,10 @@
       },
       {
         "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          },
           {
             "grnKeyName": "experienceName",
             "sourceKeyName": "experienceName"
