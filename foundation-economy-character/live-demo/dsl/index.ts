@@ -149,8 +149,17 @@ const TrainRateModel = defineMasterDataResource(resource =>
  * A gentle curve: ten levels reachable inside a short demo session, with
  * headroom left so the level cap sits visibly below the maximum. GS2 rejects
  * a threshold below 1, so the first entry starts at 1 rather than 0.
+ *
+ * The number of entries is the highest level GS2 lets a character reach
+ * (one more than the count), whatever the cap says. The first ten are what the
+ * default cap of 10 plays through; the rest, a flat 600 apart, are the room a
+ * limit break opens up to the maximum cap of 30, and change nothing a demo
+ * that never raises the cap shows.
  */
-const EXPERIENCE_CURVE = [1, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200];
+const EXPERIENCE_CURVE = [
+  1, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 3800, 4400, 5000, 5600, 6200, 6800, 7400,
+  8000, 8600, 9200, 9800, 10400, 11000, 11600, 12200, 12800, 13400, 14000, 14600,
+];
 
 /** The roster, in the order a visitor reads it. */
 const ROSTER = ["knight", "mage", "archer", "healer"] as const;
@@ -179,7 +188,7 @@ export const foundationEconomyCharacterDemo = definePackage(
   .instance(CharacterExperience, "characterexperience", {
     [character.propertyId("CharacterExperience", "threshold")]: EXPERIENCE_CURVE,
     [character.propertyId("CharacterExperience", "defaultLevelCap")]: 10,
-    [character.propertyId("CharacterExperience", "maxLevelCap")]: 50,
+    [character.propertyId("CharacterExperience", "maxLevelCap")]: EXPERIENCE_CURVE.length + 1,
   })
   .instance(CharacterCollection, "charactercollection", {
     [character.propertyId("CharacterCollection", "defaultCapacity")]: 20,
