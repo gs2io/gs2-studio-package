@@ -8,7 +8,7 @@ Resources:
         version: "2019-01-11"
         experienceModels:
           - defaultRankCap: 10
-            maxRankCap: 50
+            maxRankCap: 30
             name: "Experience"
             rankThreshold:
               values:
@@ -22,6 +22,25 @@ Resources:
                 - 1900
                 - 2500
                 - 3200
+                - 3800
+                - 4400
+                - 5000
+                - 5600
+                - 6200
+                - 6800
+                - 7400
+                - 8000
+                - 8600
+                - 9200
+                - 9800
+                - 10400
+                - 11000
+                - 11600
+                - 12200
+                - 12800
+                - 13400
+                - 14000
+                - 14600
             acquireActionRates: []
       Mode: "direct"
     DependsOn:

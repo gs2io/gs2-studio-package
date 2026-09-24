@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_01M0C826WJAVB4NEKDQ1MYZY4X.grade1": "row_01M38CEKHND0MTHFJCPDBN4GF6",
+    "row:dt_01M0C826WJAVB4NEKDQ1MYZY4X.grade2": "row_01M38CEKHN7ZW0V2CPSFG73K7T",
+    "row:dt_01M0C826WJAVB4NEKDQ1MYZY4X.grade3": "row_01M38E3YJTDQHYWHRFE6WESEM5",
+    "type:Character": "dt_01M38CEKHN1M3R6WEAD3SMXVX3",
+    "type:CharacterGradeStep": "dt_01M38CEKHN6A2KA2CHNJQ5676W"
+  },
+  "deterministicOverrides": {}
+}

@@ -1,0 +1,73 @@
+{
+  "id": "0e132b79-ac04-555b-8ed7-e15a91a79a1c",
+  "items": [
+    {
+      "componentClassName": "GradeLabel",
+      "id": "1e88e282-c590-58e4-9509-4138f53b6b02",
+      "kind": "templateLabel",
+      "name": "Character",
+      "sources": [
+        {
+          "key": "grade",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M0C826WJ0M7QGYB50KVWBD98"
+          }
+        }
+      ],
+      "template": "Grade {grade}"
+    },
+    {
+      "componentClassName": "LimitBreakInteractable",
+      "condition": {
+        "children": [
+          {
+            "kind": "eq",
+            "lhs": {
+              "kind": "property",
+              "propertyId": "prop_0J6H8XWJG1W95S2S7HRDRQSWF2"
+            },
+            "rhs": {
+              "kind": "property",
+              "propertyId": "prop_T2TXPQVC3TS41W3CY3RB4X4G8C"
+            }
+          },
+          {
+            "kind": "lt",
+            "lhs": {
+              "kind": "property",
+              "propertyId": "prop_01M0C826WJ0M7QGYB50KVWBD98"
+            },
+            "rhs": {
+              "kind": "literal",
+              "value": 3
+            }
+          }
+        ],
+        "kind": "and"
+      },
+      "id": "311da985-c4f5-5a33-bba7-284c1fd8de1e",
+      "kind": "interactable",
+      "name": "Character"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "LimitBreakButton",
+      "delegatedActionKey": "resource:micro-economy-character-grade-demo:masterData:35ef4c24-9c21-5c64-bf3e-af3dc57821a9::Gs2Exchange:RateModel.Exchange",
+      "id": "c0083b3e-67db-5f9f-a90d-e5c5ceb33c7b",
+      "kind": "buttonAction",
+      "name": "Character"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "TrainHardButton",
+      "delegatedActionKey": "resource:micro-economy-character-grade-demo:masterData:d5fea068-1de8-5319-869a-af533fe6b6d1::Gs2Exchange:RateModel.Exchange",
+      "id": "b39b905e-36aa-530f-8903-b0294ff1cc91",
+      "kind": "buttonAction",
+      "name": "Character"
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_01M38CEKHN1M3R6WEAD3SMXVX3"
+}

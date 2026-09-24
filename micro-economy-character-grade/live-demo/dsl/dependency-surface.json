@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-character-grade-demo",
+  "types": {
+    "Character": {
+      "id": "dt_01M38CEKHN1M3R6WEAD3SMXVX3",
+      "singleEntry": false,
+      "delegatedActions": {
+        "LimitBreak": "resource:micro-economy-character-grade-demo:masterData:35ef4c24-9c21-5c64-bf3e-af3dc57821a9::Gs2Exchange:RateModel.Exchange",
+        "TrainHard": "resource:micro-economy-character-grade-demo:masterData:d5fea068-1de8-5319-869a-af533fe6b6d1::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+    },
+    "CharacterGradeStep": {
+      "id": "dt_01M38CEKHN6A2KA2CHNJQ5676W",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-character-grade",
+      "canonicalTypeId": "dt_01M0C826WJAVB4NEKDQ1MYZY4X"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}

@@ -1,0 +1,38 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  GradeCurrentGradeMaster_CharacterGrade:
+    Type: "GS2::Grade::CurrentGradeMaster"
+    Properties:
+      NamespaceName: "CharacterGrade"
+      Settings:
+        version: "2023-12-25"
+        gradeModels:
+          - metadata: ""
+            name: "CharacterGrade"
+            experienceModelId: "grn:gs2:{region}:{ownerId}:experience:CharacterExperience:model:Experience"
+            defaultGrades: []
+            gradeEntries:
+              - gradeUpPropertyIdRegex: ".*"
+                metadata: ""
+                propertyIdRegex: ".*"
+                rankCapValue: 10
+              - gradeUpPropertyIdRegex: ".*"
+                metadata: ""
+                propertyIdRegex: ".*"
+                rankCapValue: 20
+              - gradeUpPropertyIdRegex: ".*"
+                metadata: ""
+                propertyIdRegex: ".*"
+                rankCapValue: 30
+            acquireActionRates: []
+      Mode: "direct"
+    DependsOn:
+      - "GradeNamespace_CharacterGrade"
+  GradeNamespace_CharacterGrade:
+    Type: "GS2::Grade::Namespace"
+    Properties:
+      Name: "CharacterGrade"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

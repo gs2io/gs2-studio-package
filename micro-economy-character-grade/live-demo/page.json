@@ -1,0 +1,35 @@
+{
+  "sections": {
+    "CharacterRecruit#Get a character to break the limit of": {
+      "rows": [
+        {
+          "component": "CharacterRecruitRecruitButton",
+          "caption": "CharacterRecruitCharacterLabel"
+        }
+      ]
+    },
+    "Character#Train to the cap, then break it": {
+      "axis": "InventoryCharacterUser",
+      "rows": [
+        "CharacterIdValue",
+        {
+          "component": "CharacterExperienceGauge",
+          "caption": "CharacterLevelLabel"
+        },
+        "CharacterGradeLabel",
+        "CharacterTrainHardButton",
+        "CharacterLimitBreakButton"
+      ],
+      "toggles": { "CharacterLimitBreakInteractable": ["CharacterLimitBreakButton"] }
+    },
+    "CharacterCollection": {
+      "rows": []
+    },
+    "CharacterExperience": {
+      "rows": []
+    },
+    "CharacterGradeStep": {
+      "rows": []
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M38CEKHN6A2KA2CHNJQ5676W",
+  "kind": "overlay",
+  "name": "CharacterGradeStep",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-character-grade",
+    "directSourceTypeId": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+    "sourcePackageId": "micro-economy-character-grade",
+    "sourceTypeId": "dt_01M0C826WJAVB4NEKDQ1MYZY4X"
+  }
+}

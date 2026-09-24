@@ -1,0 +1,94 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_CharacterGradeTrain:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CharacterGradeTrain"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "archer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Experience:AddExperienceByUserId"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":1000}"
+          - name: "healer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Experience:AddExperienceByUserId"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":1000}"
+          - name: "knight"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Experience:AddExperienceByUserId"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":1000}"
+          - name: "mage"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Experience:AddExperienceByUserId"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":1000}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_CharacterGradeTrain"
+  ExchangeCurrentRateMaster_CharacterLimitBreak:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CharacterLimitBreak"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "archer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Grade:AddGradeByUserId"
+                request: "{\"namespaceName\":\"CharacterGrade\",\"userId\":\"#{userId}\",\"gradeName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}\",\"gradeValue\":1}"
+          - name: "healer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Grade:AddGradeByUserId"
+                request: "{\"namespaceName\":\"CharacterGrade\",\"userId\":\"#{userId}\",\"gradeName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}\",\"gradeValue\":1}"
+          - name: "knight"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Grade:AddGradeByUserId"
+                request: "{\"namespaceName\":\"CharacterGrade\",\"userId\":\"#{userId}\",\"gradeName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}\",\"gradeValue\":1}"
+          - name: "mage"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Grade:AddGradeByUserId"
+                request: "{\"namespaceName\":\"CharacterGrade\",\"userId\":\"#{userId}\",\"gradeName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}\",\"gradeValue\":1}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_CharacterLimitBreak"
+  ExchangeNamespace_CharacterGradeTrain:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "CharacterGradeTrain"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_CharacterLimitBreak:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "CharacterLimitBreak"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

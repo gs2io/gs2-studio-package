@@ -1,0 +1,20 @@
+{
+  "id": "micro-economy-character-grade-demo",
+  "name": "micro-economy-character-grade-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-character": "github:gs2io/gs2-studio-package",
+    "foundation-economy-character-demo": "github:gs2io/gs2-studio-package",
+    "micro-economy-character-grade": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the grade steps the live demo raises through, and the presses that train and break the limit.",
+      "ja": "ライブデモ用の限界突破の段階表と、限界突破・強い訓練の操作を提供します。"
+    },
+    "label": {
+      "en": "Character Grades (demo data)",
+      "ja": "キャラクター限界突破（デモデータ）"
+    }
+  }
+}

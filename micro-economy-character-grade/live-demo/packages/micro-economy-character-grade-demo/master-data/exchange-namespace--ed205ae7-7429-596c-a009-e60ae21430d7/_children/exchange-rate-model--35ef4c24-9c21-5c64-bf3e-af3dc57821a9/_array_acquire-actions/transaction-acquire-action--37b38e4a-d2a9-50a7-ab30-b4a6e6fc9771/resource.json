@@ -1,0 +1,39 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "propertyId",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{propertyId}"
+            }
+          },
+          {
+            "parameterName": "gradeValue",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "PromoteCharacterGrade",
+        "transformPackageId": "micro-economy-character-grade"
+      }
+    ]
+  },
+  "id": "37b38e4a-d2a9-50a7-ab30-b4a6e6fc9771",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M38CEKHN1M3R6WEAD3SMXVX3",
+    "typeName": "Character"
+  }
+}

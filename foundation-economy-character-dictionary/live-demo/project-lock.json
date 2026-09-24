@@ -11,8 +11,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "7561032118d0c97fdd90981162676e03fb0fbfc2",
-      "integrity": "sha256-Z08dPdyYRtP/NkrAPFzb20ax6sGVgjLt3TP+G2+IjYY=",
+      "commitSha": "44313ce76c1e9e418e880484754a2ce674ebea6a",
+      "integrity": "sha256-sTOdmSl2ZUuvwGVZuzHn71aAv8aeu+vCkCVsUbDlhu8=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character-demo",
       "repo": "gs2-studio-package",
