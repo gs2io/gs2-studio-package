@@ -1,0 +1,16 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterEnhanceMaterial"
+      }
+    ]
+  },
+  "id": "1d1edfb4-119a-599c-ad5b-40cd86ad8209",
+  "location": {
+    "modelName": "Namespace",
+    "service": "inventory"
+  }
+}

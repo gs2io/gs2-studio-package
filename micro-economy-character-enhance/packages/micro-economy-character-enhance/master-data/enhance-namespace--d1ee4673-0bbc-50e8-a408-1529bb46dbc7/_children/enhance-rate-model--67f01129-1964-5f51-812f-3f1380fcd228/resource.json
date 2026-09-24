@@ -4,20 +4,14 @@
       {
         "kind": "static",
         "parameterName": "acquireExperienceHierarchy",
-        "value": []
+        "value": [
+          "experience"
+        ]
       },
       {
-        "kind": "domainProperty",
+        "kind": "static",
         "parameterName": "acquireExperienceSuffix",
-        "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_01M0C7T116VP42973VYFS2PRV0",
-            "typeName": "CharacterEnhance"
-          },
-          "propertyId": "prop_01M0C7T1166P354AK6Q48J86RN"
-        }
+        "value": ":level"
       },
       {
         "kind": "static",
@@ -25,17 +19,9 @@
         "value": ""
       },
       {
-        "kind": "domainProperty",
-        "parameterName": "materialInventoryModelId.grnKey.inventoryName",
-        "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_01M0C7T116VP42973VYFS2PRV0",
-            "typeName": "CharacterEnhance"
-          },
-          "propertyId": "prop_reserved_id"
-        }
+        "kind": "static",
+        "parameterName": "materialInventoryModelId",
+        "value": "grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:simple:model:Material"
       },
       {
         "kind": "static",
@@ -45,19 +31,6 @@
       {
         "kind": "domainProperty",
         "parameterName": "name",
-        "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_01M0C7T116VP42973VYFS2PRV0",
-            "typeName": "CharacterEnhance"
-          },
-          "propertyId": "prop_reserved_id"
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "targetInventoryModelId.grnKey.inventoryName",
         "source": {
           "kind": "direct",
           "mountPath": {
@@ -87,20 +60,14 @@
           {
             "grnKeyName": "namespaceName",
             "sourceKeyName": "namespaceName"
+          },
+          {
+            "grnKeyName": "inventoryName",
+            "sourceKeyName": "inventoryName"
           }
         ],
         "mountedResourceId": "62805db8-2e40-4a2c-a1c4-38e0c07d49f8",
         "parameterName": "targetInventoryModelId"
-      },
-      {
-        "keyMappings": [
-          {
-            "grnKeyName": "namespaceName",
-            "sourceKeyName": "namespaceName"
-          }
-        ],
-        "mountedResourceId": "62805db8-2e40-4a2c-a1c4-38e0c07d49f8",
-        "parameterName": "materialInventoryModelId"
       },
       {
         "keyMappings": [

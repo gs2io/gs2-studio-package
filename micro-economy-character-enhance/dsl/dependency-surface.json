@@ -8,7 +8,6 @@
       "canonicalPackageId": "micro-economy-character-enhance",
       "canonicalTypeId": "dt_01M0C7T116VP42973VYFS2PRV0",
       "properties": {
-        "acquireExperienceSuffix": "prop_01M0C7T1166P354AK6Q48J86RN",
         "id": "prop_reserved_id"
       }
     },
@@ -23,12 +22,37 @@
         "rate": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
         "weight": "prop_01M0C7T11668CNMKJ4725QV6M0"
       }
+    },
+    "CharacterEnhanceMaterial": {
+      "id": "dt_01M39BQK138YNXWMJAA98ZPA8R",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-character-enhance",
+      "canonicalTypeId": "dt_01M39BQK138YNXWMJAA98ZPA8R",
+      "properties": {
+        "count": "prop_01M39BQK13M2QDCA75568952FF",
+        "id": "prop_reserved_id",
+        "metadata": "prop_01M39BQK13YNDJTRM83252F25Q"
+      }
     }
   },
   "masterDataResources": {
     "enhance.BonusRate": "bf692436-39c5-5a66-94a0-2bd70058df41",
     "enhance.Namespace": "d1ee4673-0bbc-50e8-a408-1529bb46dbc7",
-    "enhance.RateModel": "67f01129-1964-5f51-812f-3f1380fcd228"
+    "enhance.RateModel": "67f01129-1964-5f51-812f-3f1380fcd228",
+    "inventory.Namespace": "1d1edfb4-119a-599c-ad5b-40cd86ad8209",
+    "inventory.SimpleInventoryModel": "f2c149c0-767f-54ac-bd60-fa4f80c99a34",
+    "inventory.SimpleItemModel": "5672918b-8690-504d-b2c6-1d5fd42440a7"
   },
-  "transforms": {}
+  "transforms": {
+    "AcquireCharacterEnhanceMaterial": [
+      "material",
+      "count"
+    ],
+    "EnhanceCharacter": [
+      "enhance",
+      "targetItemSetId",
+      "materialItemSetId",
+      "count"
+    ]
+  }
 }

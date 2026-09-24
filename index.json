@@ -329,8 +329,8 @@
         "en": "Character Enhancement"
       },
       "description": {
-        "ja": "手持ちのキャラクターを素材にして、別のキャラクターに経験値を与えます。大成功の倍率も設定できます。",
-        "en": "Feeds characters to another character as material, turning them into experience, with configurable bonus multipliers."
+        "ja": "強化素材アイテムを消費してキャラクターに経験値を与えます。大成功の倍率も設定できます。",
+        "en": "Enhances a character with material items, turning them into experience, with configurable bonus multipliers."
       },
       "dependsOn": ["foundation-economy-character"],
       "install": {

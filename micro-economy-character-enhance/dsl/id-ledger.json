@@ -1,13 +1,25 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "property:CharacterEnhance.acquireExperienceSuffix": "prop_01M0C7T1166P354AK6Q48J86RN"
+  },
   "random": {
-    "property:CharacterEnhance.acquireExperienceSuffix": "prop_01M0C7T1166P354AK6Q48J86RN",
     "property:CharacterEnhanceBonus.enhance": "prop_01M0C7T116EE8PEHMGMD3AWB3N",
     "property:CharacterEnhanceBonus.rate": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
     "property:CharacterEnhanceBonus.weight": "prop_01M0C7T11668CNMKJ4725QV6M0",
+    "property:CharacterEnhanceMaterial.count": "prop_01M39BQK13M2QDCA75568952FF",
+    "property:CharacterEnhanceMaterial.metadata": "prop_01M39BQK13YNDJTRM83252F25Q",
+    "transform:AcquireCharacterEnhanceMaterial:output:direct:Gs2Inventory:AcquireSimpleItemsByUserId#0": "out_01M39BQK14QTSJD3QMADQN3Z3B",
+    "transform:AcquireCharacterEnhanceMaterial:parameter:count": "param_01M39BQK140QVJZMC9N07PN3VN",
+    "transform:AcquireCharacterEnhanceMaterial:parameter:material": "param_01M39BQK14QM78XBKXKPMVF6AG",
+    "transform:EnhanceCharacter:output:direct:Gs2Enhance:DirectEnhanceByUserId#0": "out_01M39BQK14DR34NVYQMJ4C4G44",
+    "transform:EnhanceCharacter:parameter:count": "param_01M39BQK14K5WX5X0JG6MZWJ6E",
+    "transform:EnhanceCharacter:parameter:enhance": "param_01M39BQK14G1G4DVYFP94HWVVS",
+    "transform:EnhanceCharacter:parameter:materialItemSetId": "param_01M39BQK14ZMK698839JZT83Y2",
+    "transform:EnhanceCharacter:parameter:targetItemSetId": "param_01M39BQK14WQWBYGJH66CW6T3Z",
     "type:CharacterEnhance": "dt_01M0C7T116VP42973VYFS2PRV0",
-    "type:CharacterEnhanceBonus": "dt_01M0C7T116ST3H2Z9X2ANQRRD2"
+    "type:CharacterEnhanceBonus": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+    "type:CharacterEnhanceMaterial": "dt_01M39BQK138YNXWMJAA98ZPA8R"
   },
   "deterministicOverrides": {}
 }

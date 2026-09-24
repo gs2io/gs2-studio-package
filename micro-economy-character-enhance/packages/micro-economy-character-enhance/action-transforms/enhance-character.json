@@ -1,0 +1,98 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "67f01129-1964-5f51-812f-3f1380fcd228",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "EnhanceCharacter",
+  "outputs": [
+    {
+      "actionName": "Gs2Enhance:DirectEnhanceByUserId",
+      "conditions": [],
+      "id": "out_01M39BQK14DR34NVYQMJ4C4G44",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "rateName",
+          "sourceParameter": "enhance"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "targetItemSetId",
+          "sourceParameter": "targetItemSetId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "materials[0].materialItemSetId",
+          "sourceParameter": "materialItemSetId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "materials[0].count",
+          "sourceParameter": "count"
+        },
+        {
+          "kind": "static",
+          "parameterName": "config",
+          "value": null
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "67f01129-1964-5f51-812f-3f1380fcd228",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "id": "param_01M39BQK14G1G4DVYFP94HWVVS",
+      "name": "enhance",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_01M0C7T116VP42973VYFS2PRV0"
+      }
+    },
+    {
+      "id": "param_01M39BQK14WQWBYGJH66CW6T3Z",
+      "name": "targetItemSetId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "id": "param_01M39BQK14ZMK698839JZT83Y2",
+      "name": "materialItemSetId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "id": "param_01M39BQK14K5WX5X0JG6MZWJ6E",
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

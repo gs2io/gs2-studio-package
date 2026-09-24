@@ -1,0 +1,43 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "metadata",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M39BQK138YNXWMJAA98ZPA8R",
+            "typeName": "CharacterEnhanceMaterial"
+          },
+          "propertyId": "prop_01M39BQK13YNDJTRM83252F25Q"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M39BQK138YNXWMJAA98ZPA8R",
+            "typeName": "CharacterEnhanceMaterial"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "5672918b-8690-504d-b2c6-1d5fd42440a7",
+  "index": 0,
+  "location": {
+    "modelName": "SimpleItemModel",
+    "service": "inventory"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M39BQK138YNXWMJAA98ZPA8R",
+    "typeName": "CharacterEnhanceMaterial"
+  }
+}

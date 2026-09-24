@@ -56,8 +56,8 @@ describe("materialized package localized display coverage", () => {
     }
 
     expect(packageNames).toHaveLength(32);
-    expect(domainTypeCount).toBe(76);
-    expect(propertyCount).toBe(312);
+    expect(domainTypeCount).toBe(77);
+    expect(propertyCount).toBe(314);
     expect(missing).toEqual([]);
   });
 });

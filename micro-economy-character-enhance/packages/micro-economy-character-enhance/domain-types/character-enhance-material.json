@@ -1,0 +1,82 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the enhancement material.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "強化素材を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Item metadata JSON carrying the experience it grants, e.g. {\"experience\": 100}",
+        "id": "prop_01M39BQK13YNDJTRM83252F25Q",
+        "localizedDisplay": {
+          "en": {
+            "description": "JSON carrying the experience one material grants, written under experience, e.g. {\"experience\": 100}.",
+            "label": "Material metadata"
+          },
+          "ja": {
+            "description": "素材 1 個が与える経験値を持つ JSON です。{\"experience\": 100} のように experience に経験値を書きます。",
+            "label": "素材メタデータ"
+          }
+        },
+        "name": "metadata",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_01M39BQK13M2QDCA75568952FF",
+        "localizedDisplay": {
+          "en": {
+            "description": "Quantity of the enhancement material owned by the player.",
+            "label": "Owned quantity",
+            "unit": "items"
+          },
+          "ja": {
+            "description": "プレイヤーが所持している強化素材の数量です。",
+            "label": "所持数",
+            "unit": "個"
+          }
+        },
+        "name": "count",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_01M39BQK138YNXWMJAA98ZPA8R",
+  "kind": "local",
+  "name": "CharacterEnhanceMaterial",
+  "singleEntry": false
+}

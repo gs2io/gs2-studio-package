@@ -7,8 +7,8 @@
   },
   "display": {
     "description": {
-      "en": "Feeds characters to another character as material, turning them into experience, with configurable bonus multipliers.",
-      "ja": "手持ちのキャラクターを素材にして、別のキャラクターに経験値を与えます。大成功の倍率も設定できます。"
+      "en": "Enhances a character with material items, turning them into experience, with configurable bonus multipliers.",
+      "ja": "強化素材アイテムを消費してキャラクターに経験値を与えます。大成功の倍率も設定できます。"
     },
     "domainTypes": {
       "dt_01M0C7T116ST3H2Z9X2ANQRRD2": {
@@ -23,12 +23,22 @@
       },
       "dt_01M0C7T116VP42973VYFS2PRV0": {
         "description": {
-          "en": "Configures the metadata suffix used to read experience when a character is acquired.",
-          "ja": "キャラクター獲得時に経験値を読み取るメタデータのサフィックスを設定します。"
+          "en": "Registers a character enhancement recipe; an enhancement names the recipe by this ID.",
+          "ja": "キャラクター強化のレシピを登録します。強化を実行するときはこの ID で指定します。"
         },
         "label": {
           "en": "Enhancement recipe",
           "ja": "強化レシピ"
+        }
+      },
+      "dt_01M39BQK138YNXWMJAA98ZPA8R": {
+        "description": {
+          "en": "Configures the material items used to enhance characters and the experience each one grants.",
+          "ja": "キャラクター強化に使う素材アイテムと、1 個あたりの経験値を設定します。"
+        },
+        "label": {
+          "en": "Enhancement material",
+          "ja": "強化素材"
         }
       }
     },
