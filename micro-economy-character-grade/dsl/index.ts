@@ -11,6 +11,7 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { CHARACTER_LEVEL_KEY_SUFFIX } from "../../dsl/characterLevelKey";
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
@@ -60,14 +61,14 @@ const CharacterGradeStep = defineDomainType("CharacterGradeStep", dt =>
       propertyIdRegex: jaEnField(
         "対象キャラクター条件",
         "Target character pattern",
-        "このグレード段階を適用できるキャラクター個体IDの正規表現です。",
-        "Regular expression matching character instance IDs eligible for this grade."
+        "このグレード段階を適用できるキャラクターの正規表現です。照合対象はキャラクター個体ID（アイテムセットの GRN）にレベル用の接尾辞 `:level` を付けた値です。",
+        "Regular expression matching characters eligible for this grade. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended."
       ),
       gradeUpPropertyIdRegex: jaEnField(
         "素材キャラクター条件",
         "Material character pattern",
-        "グレードアップ素材として消費できるキャラクター個体IDの正規表現です。",
-        "Regular expression matching character instance IDs that may be consumed for grade-up."
+        "グレードアップ素材として消費できるキャラクターの正規表現です。照合対象はキャラクター個体ID（アイテムセットの GRN）にレベル用の接尾辞 `:level` を付けた値です。",
+        "Regular expression matching characters that may be consumed for grade-up. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended."
       ),
     })
 );
@@ -160,14 +161,21 @@ export const microEconomyCharacterGrade = definePackage("micro-economy-character
       .bindings({
         gradeValue: Bind.domainProperties([Source.direct(Character, "grade")]),
         // An overlay's inherited properties have no local name, so the source
-        // PropertyId is written directly.
-        propertyId: Bind.domainProperty(Source.direct("Character", CHARACTER_PROPERTY_ID)),
+        // PropertyId is written directly. GS2-Grade applies a rank cap to the
+        // experience status with this same key, so it carries the level suffix.
+        propertyId: Bind.domainPropertyKey(
+          Source.direct("Character", CHARACTER_PROPERTY_ID),
+          CHARACTER_LEVEL_KEY_SUFFIX
+        ),
         statusId: Bind.skip(),
         gradeName: Bind.skip(),
         userId: Bind.skip(),
       })
   )
 
+  // Every grade transform takes the grade status key, which is the level
+  // status key (the character's `propertyId` plus the level suffix): GS2-Grade
+  // hands it unchanged to the experience status when it applies a rank cap.
   .actionTransform("PromoteCharacterGrade", at =>
     at
       .category("acquire")

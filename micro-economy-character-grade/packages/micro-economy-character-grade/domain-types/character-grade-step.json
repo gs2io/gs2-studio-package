@@ -56,11 +56,11 @@
         "id": "prop_01M0C826WJ6E8SVGPGFX2Z52T3",
         "localizedDisplay": {
           "en": {
-            "description": "Regular expression matching character instance IDs eligible for this grade.",
+            "description": "Regular expression matching characters eligible for this grade. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended.",
             "label": "Target character pattern"
           },
           "ja": {
-            "description": "このグレード段階を適用できるキャラクター個体IDの正規表現です。",
+            "description": "このグレード段階を適用できるキャラクターの正規表現です。照合対象はキャラクター個体ID（アイテムセットの GRN）にレベル用の接尾辞 `:level` を付けた値です。",
             "label": "対象キャラクター条件"
           }
         },
@@ -79,11 +79,11 @@
         "id": "prop_01M0C826WJN2XGK5PMWPSYNZ5W",
         "localizedDisplay": {
           "en": {
-            "description": "Regular expression matching character instance IDs that may be consumed for grade-up.",
+            "description": "Regular expression matching characters that may be consumed for grade-up. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended.",
             "label": "Material character pattern"
           },
           "ja": {
-            "description": "グレードアップ素材として消費できるキャラクター個体IDの正規表現です。",
+            "description": "グレードアップ素材として消費できるキャラクターの正規表現です。照合対象はキャラクター個体ID（アイテムセットの GRN）にレベル用の接尾辞 `:level` を付けた値です。",
             "label": "素材キャラクター条件"
           }
         },

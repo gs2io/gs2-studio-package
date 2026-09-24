@@ -20,6 +20,7 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { CHARACTER_LEVEL_KEY_PLACEHOLDER } from "../../../dsl/characterLevelKey";
 import characterSurface from "../../dsl/dependency-surface.json";
 
 // Materialization publishes the feature package's identities, so everything
@@ -119,8 +120,9 @@ const RecruitRateModel = defineMasterDataResource(resource =>
  * The rate is named after the character because a delegated action on
  * `Character` must target a resource that mounts `Character` — that is how the
  * generated loader learns which rate to exchange. The grant's target is the
- * character's `propertyId`, an item set GRN GS2 mints at recruit time, so the
- * row carries a `#{propertyId}` placeholder and the click fills it.
+ * character's level status, keyed by its `propertyId` (an item set GRN GS2
+ * mints at recruit time) plus the level suffix, so the row carries a
+ * `#{propertyId}` placeholder and the click fills it.
  *
  * It lives under its own exchange namespace because `RecruitRateModel` names
  * its rows after the `CharacterRecruit` rows, and those ids are identical to
@@ -138,7 +140,7 @@ const TrainRateModel = defineMasterDataResource(resource =>
         .mountLocal(Character)
         .bindings({
           action: Bind.transform(character.packageId, "AcquireCharacterExperience", [
-            Arg.placeholder("propertyId", "#{propertyId}"),
+            Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
             Arg.static("value", 40),
           ]),
         });

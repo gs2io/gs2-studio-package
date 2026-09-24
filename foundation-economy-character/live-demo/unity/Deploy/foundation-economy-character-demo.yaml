@@ -47,25 +47,25 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":40}"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":40}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":40}"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":40}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":40}"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":40}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}\",\"experienceValue\":40}"
+                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":40}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

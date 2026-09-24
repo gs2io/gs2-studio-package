@@ -36,7 +36,7 @@
         ]
       },
       {
-        "kind": "domainProperty",
+        "kind": "domainPropertyKey",
         "parameterName": "propertyId",
         "source": {
           "kind": "direct",
@@ -46,7 +46,8 @@
             "typeName": "Character"
           },
           "propertyId": "prop_37JJ37ED8GWPZH1A1H4P7DJ5KD"
-        }
+        },
+        "suffix": ":level"
       },
       {
         "kind": "domainProperties",

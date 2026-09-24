@@ -7,7 +7,7 @@
             "parameterName": "propertyId",
             "source": {
               "kind": "placeholder",
-              "value": "#{propertyId}"
+              "value": "#{propertyId}:level"
             }
           },
           {

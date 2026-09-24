@@ -60,7 +60,7 @@ namespace GS2Studio.Generated.Character.UI
         /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
         /// compared before a scene is ever run.
         /// </summary>
-        public static readonly string[] RequiredLoaders = { "UserdataInventoryCharacterItemModel", "UserdataGradeCharacterGradeGradeModel", "UserdataExperienceCharacterExperienceExperienceModel" };
+        public static readonly string[] RequiredLoaders = { "UserdataInventoryCharacterItemModel" };
 
         private bool _wired;
         private bool _warnedMissingHandler;
@@ -150,10 +150,10 @@ namespace GS2Studio.Generated.Character.UI
         private void WarnUnloadedLoadersOnce(IActionableCharacterBinder binder)
         {
             if (_warnedUnloadedLoaders) return;
-            if ((binder.LoadedUserdataInventoryCharacterItemModel || binder.LoadedUserdataGradeCharacterGradeGradeModel || binder.LoadedUserdataExperienceCharacterExperienceExperienceModel)) return;
+            if (binder.LoadedUserdataInventoryCharacterItemModel) return;
             _warnedUnloadedLoaders = true;
             Debug.LogWarning(
-                $"{nameof(CharacterTrainButton)} on '{name}': this row's mount surface did not run UserdataInventoryCharacterItemModel, UserdataGradeCharacterGradeGradeModel, UserdataExperienceCharacterExperienceExperienceModel, which fills what this component reads (PropertyId, Id); those readings render as their default, not as an absent value.", this);
+                $"{nameof(CharacterTrainButton)} on '{name}': this row's mount surface did not run UserdataInventoryCharacterItemModel, which fills what this component reads (PropertyId, Id); those readings render as their default, not as an absent value.", this);
         }
     }
 }

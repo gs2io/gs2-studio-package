@@ -41,8 +41,18 @@ namespace GS2Studio.Generated.Character.UI
         [SerializeField] private CharacterExperienceHandlerBase? _characterExperienceHandler;
         [SerializeField] private Image? _target;
 
+        /// <summary>
+        /// Loads this component's readings come from. A row built by a mount
+        /// surface that skips one of these renders those readings as their
+        /// default; the surface says which loaders it skips through
+        /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
+        /// compared before a scene is ever run.
+        /// </summary>
+        public static readonly string[] RequiredLoaders = { "UserdataExperienceCharacterExperienceExperienceModel" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
         private bool _characterExperienceSubscribed;
         private bool _warnedMissingCharacterExperienceHandler;
 
@@ -112,6 +122,7 @@ namespace GS2Studio.Generated.Character.UI
 
         private void OnUpdated(Character model)
         {
+            WarnUnloadedLoadersOnce();
             if (_target == null) return;
             var current = System.Convert.ToDouble(model.Experience, System.Globalization.CultureInfo.InvariantCulture);
             var max = ResolveMaxBand(model);
@@ -119,6 +130,21 @@ namespace GS2Studio.Generated.Character.UI
             var span = max - min;
             var fraction = span > 0d ? (current - min) / span : 0d;            if (fraction < 0d) fraction = 0d;
             else if (fraction > 1d) fraction = 1d;            _target.fillAmount = (float)fraction;
+        }
+
+        // Warn once and keep drawing. The readings below are at their default
+        // either way, and going silent would blank a label that mixes loaded
+        // and unloaded readings — the point here is to say which of the two it
+        // is, not to change what is drawn.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataExperienceCharacterExperienceExperienceModel) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(CharacterExperienceGauge)} on '{name}': this row's mount surface did not run UserdataExperienceCharacterExperienceExperienceModel, which fills what this component reads (Experience); those readings render as their default, not as an absent value.", this);
         }
 
         // The companion model changed, so anything read from it is stale.

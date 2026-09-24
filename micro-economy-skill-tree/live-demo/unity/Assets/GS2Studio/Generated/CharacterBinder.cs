@@ -78,7 +78,7 @@ namespace GS2Studio.Generated.Character
         bool LoadedUserdataSkillTreeSkillTreeNodeModel { get; }
 
         /// <summary>
-        /// True when this row's mount surface ran the <c>Gs2Bind.Gs2Experience.StatusLoader</c> load on <c>__userdataExperienceCharacterExperienceExperienceModelLoader</c>. False means <c>Experience</c>, <c>NextLevelExperience</c>, <c>PropertyId</c>, <c>LevelCap</c>, <c>Level</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
+        /// True when this row's mount surface ran the <c>Gs2Bind.Gs2Experience.StatusLoader</c> load on <c>__userdataExperienceCharacterExperienceExperienceModelLoader</c>. False means <c>Experience</c>, <c>NextLevelExperience</c>, <c>LevelCap</c>, <c>Level</c> were never loaded — not that they are absent, which is what their default value would otherwise say.
         /// </summary>
         /// <remarks>InventoryCharacterMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeCharacterTrainMaster: no per-row value for _model.PropertyId.</remarks>
@@ -259,7 +259,7 @@ namespace GS2Studio.Generated.Character
             __inventoryCharacterNamespaceInventoryModelItemModelLoader = new Gs2Bind.Gs2Inventory.ItemModelLoader("Character", "Character", _model.Id);
             __userdataInventoryCharacterItemModelLoader = new Gs2Bind.Gs2Inventory.ItemSetLoader("Character", "Character", _model.Id, itemSetName!);
             __userdataSkillTreeSkillTreeNodeModelLoader = new Gs2Bind.Gs2SkillTree.StatusLoader("SkillTree", _model.PropertyId);
-            __userdataExperienceCharacterExperienceExperienceModelLoader = new Gs2Bind.Gs2Experience.StatusLoader("CharacterExperience", "Experience", _model.PropertyId);
+            __userdataExperienceCharacterExperienceExperienceModelLoader = new Gs2Bind.Gs2Experience.StatusLoader("CharacterExperience", "Experience", (string.IsNullOrEmpty(_model.PropertyId) ? null : _model.PropertyId + ":level"));
         }
 
         /// <summary>
@@ -622,7 +622,6 @@ namespace GS2Studio.Generated.Character
             {
                 model.Experience = source.ExperienceValue;
                 model.NextLevelExperience = source.NextRankUpExperienceValue;
-                model.PropertyId = source.PropertyId;
                 model.LevelCap = source.RankCapValue;
                 model.Level = source.RankValue;
             }
@@ -630,7 +629,6 @@ namespace GS2Studio.Generated.Character
             {
                 model.Experience = default;
                 model.NextLevelExperience = default;
-                model.PropertyId = string.Empty;
                 model.LevelCap = default;
                 model.Level = default;
             }

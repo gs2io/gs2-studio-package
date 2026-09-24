@@ -10,6 +10,7 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { CHARACTER_LEVEL_KEY_SUFFIX } from "../../dsl/characterLevelKey";
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const CharacterExperience = defineDomainType("CharacterExperience", dt =>
@@ -259,7 +260,12 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
       .linkedMasterResourceId(ExperienceModel)
       .mountLocal(Character)
       .bindings({
-        propertyId: Bind.domainProperty(Source.direct(Character, "propertyId")),
+        // Keyed by the item set GRN plus a suffix, which is where enhancement
+        // adds experience; the item set is what writes `propertyId`.
+        propertyId: Bind.domainPropertyKey(
+          Source.direct(Character, "propertyId"),
+          CHARACTER_LEVEL_KEY_SUFFIX
+        ),
         rankValue: Bind.domainProperties([Source.direct(Character, "level")]),
         rankCapValue: Bind.domainProperties([Source.direct(Character, "levelCap")]),
         experienceValue: Bind.domainProperties([Source.direct(Character, "experience")]),
@@ -337,6 +343,9 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           .mapParameter("addCapacityValue", "value")
       )
   )
+  // `propertyId` here is the level status key — the character's `propertyId`
+  // plus the level suffix — not the bare item set GRN; a caller that passes
+  // the GRN writes to a status nothing reads.
   .actionTransform("AcquireCharacterExperience", at =>
     at
       .category("acquire")
@@ -369,6 +378,7 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           .mapParameter("itemSetName", "propertyId")
       )
   )
+  // Keyed like `AcquireCharacterExperience`: the level status key, suffix and all.
   .actionTransform("IncreaseCharacterLevelCap", at =>
     at
       .category("acquire")

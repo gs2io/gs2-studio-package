@@ -43,6 +43,7 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { CHARACTER_LEVEL_KEY_PLACEHOLDER } from "../../../dsl/characterLevelKey";
 import gradeSurface from "../../dsl/dependency-surface.json";
 import characterDemoSurface from "../../../foundation-economy-character/live-demo/dsl/dependency-surface.json";
 import characterSurface from "../../../foundation-economy-character/dsl/dependency-surface.json";
@@ -77,7 +78,8 @@ const TRAIN_HARD_EXPERIENCE = 1000;
  * character, like the character demo's training: a delegated action on
  * `Character` must target a resource that mounts `Character`, which is how the
  * generated loader learns which rate a row's button trades. The target is the
- * character's `propertyId`, minted by GS2 at recruit time, so the row carries a
+ * character's grade status, keyed like its level status by the `propertyId`
+ * GS2 mints at recruit time plus the level suffix, so the row carries a
  * `#{propertyId}` placeholder and the click fills it.
  */
 const LimitBreakRateModel = defineMasterDataResource(resource =>
@@ -91,7 +93,7 @@ const LimitBreakRateModel = defineMasterDataResource(resource =>
         .mountLocal(Character)
         .bindings({
           action: Bind.transform(grade.packageId, "PromoteCharacterGrade", [
-            Arg.placeholder("propertyId", "#{propertyId}"),
+            Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
             Arg.static("gradeValue", 1),
           ]),
         });
@@ -110,7 +112,7 @@ const TrainHardRateModel = defineMasterDataResource(resource =>
         .mountLocal(Character)
         .bindings({
           action: Bind.transform(character.packageId, "AcquireCharacterExperience", [
-            Arg.placeholder("propertyId", "#{propertyId}"),
+            Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
             Arg.static("value", TRAIN_HARD_EXPERIENCE),
           ]),
         });
