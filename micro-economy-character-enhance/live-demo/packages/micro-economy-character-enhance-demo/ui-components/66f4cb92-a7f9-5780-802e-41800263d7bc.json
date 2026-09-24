@@ -1,0 +1,24 @@
+{
+  "id": "66f4cb92-a7f9-5780-802e-41800263d7bc",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "EnhanceWithPotionButton",
+      "delegatedActionKey": "resource:micro-economy-character-enhance-demo:masterData:aae600ec-5a4f-5ec6-81ad-386d21c28f80::Gs2Exchange:RateModel.Exchange",
+      "id": "38117702-5317-5508-9951-7d34d8afd89d",
+      "kind": "buttonAction",
+      "name": "Character"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "EnhanceWithElixirButton",
+      "delegatedActionKey": "resource:micro-economy-character-enhance-demo:masterData:c056571c-7e21-5067-bf8c-d67b88315bfd::Gs2Exchange:RateModel.Exchange",
+      "id": "505d319a-0db5-51a9-9668-3d6fc7a262a3",
+      "kind": "buttonAction",
+      "name": "Character"
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_01M39DVMXDJTJD6NZRHVPPXP7V"
+}

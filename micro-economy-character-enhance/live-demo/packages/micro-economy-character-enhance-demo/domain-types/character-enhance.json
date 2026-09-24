@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M39DVMXC4GXXNE4SS8WFA40G",
+  "kind": "overlay",
+  "name": "CharacterEnhance",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-character-enhance",
+    "directSourceTypeId": "dt_01M0C7T116VP42973VYFS2PRV0",
+    "sourcePackageId": "micro-economy-character-enhance",
+    "sourceTypeId": "dt_01M0C7T116VP42973VYFS2PRV0"
+  }
+}

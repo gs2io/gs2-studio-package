@@ -1,0 +1,47 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "material",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M39DVMXCNK9ATRVFW18CKSQ1",
+                  "typeName": "CharacterEnhanceMaterial"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AcquireCharacterEnhanceMaterial",
+        "transformPackageId": "micro-economy-character-enhance"
+      }
+    ]
+  },
+  "id": "9d91c5c9-5e84-56d3-99ea-73bf96385aa6",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M39DVMXCNK9ATRVFW18CKSQ1",
+    "typeName": "CharacterEnhanceMaterial"
+  }
+}

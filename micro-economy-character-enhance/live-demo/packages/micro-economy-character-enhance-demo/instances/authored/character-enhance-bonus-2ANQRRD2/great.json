@@ -1,0 +1,10 @@
+{
+  "id": "great",
+  "rowKey": "row_01M39DVMXCC8XBGT38HJFAA213",
+  "typeId": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+  "values": {
+    "prop_01M0C7T11668CNMKJ4725QV6M0": 20,
+    "prop_01M0C7T1168RQ1BP1M3PC2A1NJ": 1.5,
+    "prop_01M0C7T116EE8PEHMGMD3AWB3N": "Basic"
+  }
+}

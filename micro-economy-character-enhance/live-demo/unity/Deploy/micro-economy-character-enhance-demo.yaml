@@ -1,0 +1,128 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_CharacterEnhanceMaterialGet:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CharacterEnhanceMaterialGet"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "ExperienceElixir"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhanceMaterial\",\"inventoryName\":\"Material\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"ExperienceElixir\",\"count\":1}]}"
+          - name: "ExperiencePotion"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhanceMaterial\",\"inventoryName\":\"Material\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"ExperiencePotion\",\"count\":1}]}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_CharacterEnhanceMaterialGet"
+  ExchangeCurrentRateMaster_CharacterEnhanceWithElixir:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CharacterEnhanceWithElixir"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "archer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Enhance:DirectEnhanceByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperienceElixir\",\"count\":1}]}"
+          - name: "healer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Enhance:DirectEnhanceByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperienceElixir\",\"count\":1}]}"
+          - name: "knight"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Enhance:DirectEnhanceByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperienceElixir\",\"count\":1}]}"
+          - name: "mage"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Enhance:DirectEnhanceByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperienceElixir\",\"count\":1}]}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_CharacterEnhanceWithElixir"
+  ExchangeCurrentRateMaster_CharacterEnhanceWithPotion:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CharacterEnhanceWithPotion"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "archer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Enhance:DirectEnhanceByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperiencePotion\",\"count\":1}]}"
+          - name: "healer"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Enhance:DirectEnhanceByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperiencePotion\",\"count\":1}]}"
+          - name: "knight"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Enhance:DirectEnhanceByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperiencePotion\",\"count\":1}]}"
+          - name: "mage"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Enhance:DirectEnhanceByUserId"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperiencePotion\",\"count\":1}]}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_CharacterEnhanceWithPotion"
+  ExchangeNamespace_CharacterEnhanceMaterialGet:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "CharacterEnhanceMaterialGet"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_CharacterEnhanceWithElixir:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "CharacterEnhanceWithElixir"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_CharacterEnhanceWithPotion:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "CharacterEnhanceWithPotion"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_01M0C7T116ST3H2Z9X2ANQRRD2.great": "row_01M39DVMXCC8XBGT38HJFAA213",
+    "row:dt_01M0C7T116ST3H2Z9X2ANQRRD2.normal": "row_01M39DVMXC2AE8FH39VMAAP56B",
+    "row:dt_01M0C7T116VP42973VYFS2PRV0.Basic": "row_01M39DVMXCDQ9AS565GEKBC5K5",
+    "row:dt_01M39BQK138YNXWMJAA98ZPA8R.ExperienceElixir": "row_01M39DVMXCXM7NDQ97RKG8KYES",
+    "row:dt_01M39BQK138YNXWMJAA98ZPA8R.ExperiencePotion": "row_01M39DVMXC5CFXJD39NQ8NPCXT",
+    "type:Character": "dt_01M39DVMXDJTJD6NZRHVPPXP7V",
+    "type:CharacterEnhance": "dt_01M39DVMXC4GXXNE4SS8WFA40G",
+    "type:CharacterEnhanceBonus": "dt_01M39DVMXC05DECAVR5BXWRYX9",
+    "type:CharacterEnhanceMaterial": "dt_01M39DVMXCNK9ATRVFW18CKSQ1"
+  },
+  "deterministicOverrides": {}
+}

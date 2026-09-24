@@ -1,0 +1,53 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "enhance",
+            "source": {
+              "kind": "static",
+              "value": "Basic"
+            }
+          },
+          {
+            "parameterName": "targetItemSetId",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{propertyId}"
+            }
+          },
+          {
+            "parameterName": "materialItemSetId",
+            "source": {
+              "kind": "static",
+              "value": "grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperiencePotion"
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "EnhanceCharacter",
+        "transformPackageId": "micro-economy-character-enhance"
+      }
+    ]
+  },
+  "id": "7efd3e0c-f047-56b8-be83-24fdf3d9349a",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M39DVMXDJTJD6NZRHVPPXP7V",
+    "typeName": "Character"
+  }
+}

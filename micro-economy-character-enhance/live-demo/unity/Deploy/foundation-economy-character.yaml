@@ -1,0 +1,95 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExperienceCurrentExperienceMaster_CharacterExperience:
+    Type: "GS2::Experience::CurrentExperienceMaster"
+    Properties:
+      NamespaceName: "CharacterExperience"
+      Settings:
+        version: "2019-01-11"
+        experienceModels:
+          - defaultRankCap: 10
+            maxRankCap: 30
+            name: "Experience"
+            rankThreshold:
+              values:
+                - 1
+                - 100
+                - 250
+                - 450
+                - 700
+                - 1000
+                - 1400
+                - 1900
+                - 2500
+                - 3200
+                - 3800
+                - 4400
+                - 5000
+                - 5600
+                - 6200
+                - 6800
+                - 7400
+                - 8000
+                - 8600
+                - 9200
+                - 9800
+                - 10400
+                - 11000
+                - 11600
+                - 12200
+                - 12800
+                - 13400
+                - 14000
+                - 14600
+            acquireActionRates: []
+      Mode: "direct"
+    DependsOn:
+      - "ExperienceNamespace_CharacterExperience"
+  ExperienceNamespace_CharacterExperience:
+    Type: "GS2::Experience::Namespace"
+    Properties:
+      Name: "CharacterExperience"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+  InventoryCurrentItemModelMaster_Character:
+    Type: "GS2::Inventory::CurrentItemModelMaster"
+    Properties:
+      NamespaceName: "Character"
+      Settings:
+        version: "2019-02-05"
+        inventoryModels:
+          - initialCapacity: 20
+            maxCapacity: 100
+            name: "Character"
+            itemModels:
+              - allowMultipleStacks: true
+                name: "archer"
+                sortValue: 300
+                stackingLimit: 1
+              - allowMultipleStacks: true
+                name: "healer"
+                sortValue: 400
+                stackingLimit: 1
+              - allowMultipleStacks: true
+                name: "knight"
+                sortValue: 100
+                stackingLimit: 1
+              - allowMultipleStacks: true
+                name: "mage"
+                sortValue: 200
+                stackingLimit: 1
+        simpleInventoryModels: []
+        bigInventoryModels: []
+      Mode: "direct"
+    DependsOn:
+      - "InventoryNamespace_Character"
+  InventoryNamespace_Character:
+    Type: "GS2::Inventory::Namespace"
+    Properties:
+      Name: "Character"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

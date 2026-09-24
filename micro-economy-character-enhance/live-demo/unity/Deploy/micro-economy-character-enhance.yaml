@@ -1,0 +1,57 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  EnhanceCurrentRateMaster_CharacterEnhance:
+    Type: "GS2::Enhance::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CharacterEnhance"
+      Settings:
+        version: "2020-08-22"
+        rateModels:
+          - acquireExperienceHierarchy:
+              - "experience"
+            acquireExperienceSuffix: ":level"
+            description: ""
+            materialInventoryModelId: "grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:simple:model:Material"
+            metadata: ""
+            name: "Basic"
+            targetInventoryModelId: "grn:gs2:{region}:{ownerId}:inventory:Character:model:Character"
+            experienceModelId: "grn:gs2:{region}:{ownerId}:experience:CharacterExperience:model:Experience"
+            bonusRates:
+              - rate: 1.5
+                weight: 20
+              - rate: 1
+                weight: 80
+        unleashRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "EnhanceNamespace_CharacterEnhance"
+  EnhanceNamespace_CharacterEnhance:
+    Type: "GS2::Enhance::Namespace"
+    Properties:
+      Name: "CharacterEnhance"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+  InventoryCurrentItemModelMaster_CharacterEnhanceMaterial:
+    Type: "GS2::Inventory::CurrentItemModelMaster"
+    Properties:
+      NamespaceName: "CharacterEnhanceMaterial"
+      Settings:
+        version: "2019-02-05"
+        inventoryModels: []
+        simpleInventoryModels:
+          - name: "Material"
+            simpleItemModels:
+              - metadata: "{\"experience\":1000}"
+                name: "ExperienceElixir"
+              - metadata: "{\"experience\":300}"
+                name: "ExperiencePotion"
+        bigInventoryModels: []
+      Mode: "direct"
+    DependsOn:
+      - "InventoryNamespace_CharacterEnhanceMaterial"
+  InventoryNamespace_CharacterEnhanceMaterial:
+    Type: "GS2::Inventory::Namespace"
+    Properties:
+      Name: "CharacterEnhanceMaterial"

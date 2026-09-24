@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-character-enhance-demo",
+  "types": {
+    "Character": {
+      "id": "dt_01M39DVMXDJTJD6NZRHVPPXP7V",
+      "singleEntry": false,
+      "delegatedActions": {
+        "EnhanceWithElixir": "resource:micro-economy-character-enhance-demo:masterData:c056571c-7e21-5067-bf8c-d67b88315bfd::Gs2Exchange:RateModel.Exchange",
+        "EnhanceWithPotion": "resource:micro-economy-character-enhance-demo:masterData:aae600ec-5a4f-5ec6-81ad-386d21c28f80::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "foundation-economy-character",
+      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+    },
+    "CharacterEnhance": {
+      "id": "dt_01M39DVMXC4GXXNE4SS8WFA40G",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-character-enhance",
+      "canonicalTypeId": "dt_01M0C7T116VP42973VYFS2PRV0"
+    },
+    "CharacterEnhanceBonus": {
+      "id": "dt_01M39DVMXC05DECAVR5BXWRYX9",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-character-enhance",
+      "canonicalTypeId": "dt_01M0C7T116ST3H2Z9X2ANQRRD2"
+    },
+    "CharacterEnhanceMaterial": {
+      "id": "dt_01M39DVMXCNK9ATRVFW18CKSQ1",
+      "singleEntry": false,
+      "delegatedActions": {
+        "Get": "resource:micro-economy-character-enhance-demo:masterData:b45b7483-92ac-5940-a845-86ae51d8a6b6::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "micro-economy-character-enhance",
+      "canonicalTypeId": "dt_01M39BQK138YNXWMJAA98ZPA8R"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}

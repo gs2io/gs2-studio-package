@@ -1,0 +1,40 @@
+{
+  "sections": {
+    "CharacterRecruit#Get a character to enhance": {
+      "rows": [
+        {
+          "component": "CharacterRecruitRecruitButton",
+          "caption": "CharacterRecruitCharacterLabel"
+        }
+      ]
+    },
+    "Character#Spend materials to level up": {
+      "axis": "InventoryCharacterUser",
+      "rows": [
+        "CharacterIdValue",
+        {
+          "component": "CharacterExperienceGauge",
+          "caption": "CharacterLevelLabel"
+        },
+        "CharacterEnhanceWithPotionButton",
+        "CharacterEnhanceWithElixirButton"
+      ]
+    },
+    "CharacterEnhanceMaterial#Materials": {
+      "axis": "InventoryCharacterEnhanceMaterialMaster",
+      "rows": ["CharacterEnhanceMaterialStockLabel", "CharacterEnhanceMaterialGetButton"]
+    },
+    "CharacterCollection": {
+      "rows": []
+    },
+    "CharacterExperience": {
+      "rows": []
+    },
+    "CharacterEnhance": {
+      "rows": []
+    },
+    "CharacterEnhanceBonus": {
+      "rows": []
+    }
+  }
+}
