@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "fa3020563225d442a0c14114f02246e2a4f90f82",
-      "integrity": "sha256-q1sszToNS6sBpyLmLade5oniOHrtaJnok5yB7qfTVpc=",
+      "commitSha": "7f72e1842bc6823425816ff5aa32adb57b00f37c",
+      "integrity": "sha256-7sJFBphu2TumfFqk66qKN2Epi389qpGGDe7ly8dPp4M=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character",
       "repo": "gs2-studio-package",
@@ -11,8 +11,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "44313ce76c1e9e418e880484754a2ce674ebea6a",
-      "integrity": "sha256-sTOdmSl2ZUuvwGVZuzHn71aAv8aeu+vCkCVsUbDlhu8=",
+      "commitSha": "7f72e1842bc6823425816ff5aa32adb57b00f37c",
+      "integrity": "sha256-7sJFBphu2TumfFqk66qKN2Epi389qpGGDe7ly8dPp4M=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character-demo",
       "repo": "gs2-studio-package",
@@ -21,8 +21,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "fa3020563225d442a0c14114f02246e2a4f90f82",
-      "integrity": "sha256-q1sszToNS6sBpyLmLade5oniOHrtaJnok5yB7qfTVpc=",
+      "commitSha": "7f72e1842bc6823425816ff5aa32adb57b00f37c",
+      "integrity": "sha256-7sJFBphu2TumfFqk66qKN2Epi389qpGGDe7ly8dPp4M=",
       "owner": "gs2io",
       "packageId": "foundation-economy-currency",
       "repo": "gs2-studio-package",
@@ -31,8 +31,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "4c3607b7652e5555224ba424539de81850faac4b",
-      "integrity": "sha256-93yjMFBng3a1kHHSaHgalTYh4jJ8+09kzHqd69+hW2U=",
+      "commitSha": "7f72e1842bc6823425816ff5aa32adb57b00f37c",
+      "integrity": "sha256-7sJFBphu2TumfFqk66qKN2Epi389qpGGDe7ly8dPp4M=",
       "owner": "gs2io",
       "packageId": "foundation-economy-currency-demo",
       "repo": "gs2-studio-package",
@@ -41,8 +41,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "fa3020563225d442a0c14114f02246e2a4f90f82",
-      "integrity": "sha256-q1sszToNS6sBpyLmLade5oniOHrtaJnok5yB7qfTVpc=",
+      "commitSha": "7f72e1842bc6823425816ff5aa32adb57b00f37c",
+      "integrity": "sha256-7sJFBphu2TumfFqk66qKN2Epi389qpGGDe7ly8dPp4M=",
       "owner": "gs2io",
       "packageId": "micro-economy-skill-tree",
       "repo": "gs2-studio-package",
@@ -51,8 +51,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "d2b163bfe01f40daf06dca3a26e2d5311ee9c83a",
-      "integrity": "sha256-nUTQKNj+FgtXPiSHZm6q2VZkTBKgjiNOH8+PmK1snhA=",
+      "commitSha": "7f72e1842bc6823425816ff5aa32adb57b00f37c",
+      "integrity": "sha256-7sJFBphu2TumfFqk66qKN2Epi389qpGGDe7ly8dPp4M=",
       "owner": "gs2io",
       "packageId": "micro-shop-currency",
       "repo": "gs2-studio-package",
