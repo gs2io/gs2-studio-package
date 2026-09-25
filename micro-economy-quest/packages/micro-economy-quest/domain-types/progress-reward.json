@@ -30,11 +30,11 @@
         "id": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B",
         "localizedDisplay": {
           "en": {
-            "description": "Identifier of a reward item earned during the quest.",
+            "description": "GRN of the resource granted as a reward when the quest is completed.",
             "label": "Reward item ID"
           },
           "ja": {
-            "description": "進行中のクエストで獲得した報酬アイテムの識別子です。",
+            "description": "クリア時に付与される報酬リソースの GRN です。",
             "label": "報酬アイテムID"
           }
         },
@@ -52,12 +52,12 @@
         "id": "prop_RYDWJ2B6D96NAN85AF8SDXD12F",
         "localizedDisplay": {
           "en": {
-            "description": "Quantity of the reward item earned.",
+            "description": "Quantity of the reward granted when the quest is completed.",
             "label": "Reward quantity",
             "unit": "items"
           },
           "ja": {
-            "description": "獲得した報酬アイテムの数量です。",
+            "description": "クリア時に付与される報酬の数量です。",
             "label": "報酬数",
             "unit": "個"
           }

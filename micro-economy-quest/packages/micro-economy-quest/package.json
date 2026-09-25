@@ -13,8 +13,8 @@
     "domainTypes": {
       "dt_1P091J81MXDA5VBTFMMT4PP0RQ": {
         "description": {
-          "en": "Defines rewards granted at milestones during quest progress.",
-          "ja": "クエスト進行中の達成段階ごとに付与する報酬を設定します。"
+          "en": "A reward the quest in progress grants when it is completed.",
+          "ja": "進行中のクエストをクリアしたときに付与される報酬です。"
         },
         "label": {
           "en": "Quest reward",
@@ -23,8 +23,8 @@
       },
       "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4": {
         "description": {
-          "en": "Tracks a player's quest progress, completion value, and reward claims.",
-          "ja": "プレイヤーのクエスト進行状況、達成値、報酬受取状態を管理します。"
+          "en": "Tracks the quest a player has in progress and the rewards completing it grants.",
+          "ja": "プレイヤーが進行中のクエストと、クリア時に付与される報酬を管理します。"
         },
         "label": {
           "en": "Quest progress",
@@ -33,8 +33,8 @@
       },
       "dt_8KGQ5PW8KF4540B06JKKQ6QF96": {
         "description": {
-          "en": "Groups related quests and defines their order and progression unit.",
-          "ja": "関連するクエストをまとめ、公開順序と進行単位を設定します。"
+          "en": "Groups related quests and sets the schedule they are available on.",
+          "ja": "関連するクエストをまとめ、開催スケジュールを設定します。"
         },
         "label": {
           "en": "Quest group",

@@ -3,6 +3,7 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
   dependencyPackage,
   PT,
   Source,
@@ -21,7 +22,7 @@ const schedule = dependencyPackage(scheduleSurface);
 /** The schedule type this package points its quest groups at. */
 const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
 
-/** One reward line of an in-flight quest run. */
+/** One reward the open quest run grants when it is completed. */
 const ProgressReward = defineDomainType("ProgressReward", dt =>
   dt
     .property(PT.string("itemId").userData().required())
@@ -31,37 +32,59 @@ const ProgressReward = defineDomainType("ProgressReward", dt =>
       itemId: jaEnField(
         "報酬アイテムID",
         "Reward item ID",
-        "進行中のクエストで獲得した報酬アイテムの識別子です。",
-        "Identifier of a reward item earned during the quest."
+        "クリア時に付与される報酬リソースの GRN です。",
+        "GRN of the resource granted as a reward when the quest is completed."
       ),
       value: jaEnField(
         "報酬数",
         "Reward quantity",
-        "獲得した報酬アイテムの数量です。",
-        "Quantity of the reward item earned.",
+        "クリア時に付与される報酬の数量です。",
+        "Quantity of the reward granted when the quest is completed.",
         { ja: "個", en: "items" }
       ),
     })
 );
 
-/** The quest run a player currently has open. */
+/**
+ * The quest run a player currently has open. GS2 keeps at most one per player,
+ * so the type is single-entry; `inProgress` is false while there is none.
+ *
+ * `quest` and `questCollection` are filled from the progress's quest model GRN
+ * (see `ProgressResource`), which is what lets a screen show which quest is
+ * running.
+ */
 const Progress = defineDomainType("Progress", dt =>
   dt
+    .singleEntry()
+    .property(PT.bool("inProgress").userData().required())
     .property(PT.prop("quest", PT.ref("Quest")).userData().required())
+    .property(PT.prop("questCollection", PT.ref("QuestCollection")).userData().required())
     .property(PT.prop("rewards", PT.listOf(PT.inline("ProgressReward"))).userData())
     .localizedProperties({
       id: jaEnId("クエスト進行", "quest progress"),
+      inProgress: jaEnField(
+        "進行中",
+        "In progress",
+        "プレイヤーが進行中のクエストを持っているかを示します。",
+        "Whether the player has a quest in progress."
+      ),
       quest: jaEnField(
         "進行中のクエスト",
         "Active quest",
         "プレイヤーが現在進行しているクエストです。",
         "Quest currently in progress for the player."
       ),
+      questCollection: jaEnField(
+        "進行中のクエストグループ",
+        "Active quest group",
+        "進行中のクエストが属するクエストグループです。",
+        "Quest group of the quest currently in progress."
+      ),
       rewards: jaEnField(
-        "獲得済み報酬",
-        "Earned rewards",
-        "クエスト進行中に獲得した報酬の一覧です。",
-        "Rewards earned during the active quest."
+        "クリア報酬",
+        "Completion rewards",
+        "進行中のクエストをクリアしたときに付与される報酬の一覧です。開始時に決まります。",
+        "Rewards granted when the quest in progress is completed; decided when it starts."
       ),
     })
 );
@@ -205,6 +228,41 @@ const QuestGroupModel = defineMasterDataResource(resource =>
     .addArrayChild("quests", QuestModel)
 );
 
+/** GRN format of `Progress.questModelId`, as the catalog declares it. */
+const QUEST_MODEL_GRN_FORMAT =
+  "grn:gs2:{region}:{ownerId}:quest:{namespaceName}:group:{questGroupName}:quest:{questName}";
+
+/**
+ * The player's open quest run. GS2 answers NotFound when there is none, which
+ * `inProgress` reads as absent. The progress's own GRN is not the row's id —
+ * the single row is always `progress` — so it is not bound.
+ */
+const ProgressResource = defineUserDataResource(resource =>
+  resource
+    .model(GS2.quest.Progress)
+    .mountLocal(Progress)
+    .linkedMasterResourceId(QuestModel)
+    .existenceProperty("inProgress")
+    .bindings({
+      progressId: Bind.skip(),
+      randomSeed: Bind.skip(),
+      transactionId: Bind.skip(),
+      userId: Bind.skip(),
+    })
+    .grnRefBinding("questModelId", QUEST_MODEL_GRN_FORMAT, [
+      { extractedKeyName: "questName", target: Quest, targetKeyPropertyName: "id" },
+      {
+        extractedKeyName: "questGroupName",
+        target: QuestCollection,
+        targetKeyPropertyName: "id",
+      },
+    ])
+    .modelArrayDecodeBinding("rewards", Progress, "rewards", [
+      { fieldName: "itemId", targetPropertyName: "itemId" },
+      { fieldName: "value", targetPropertyName: "value" },
+    ])
+);
+
 export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
   .display({
     label: { ja: "クエスト", en: "Quests" },
@@ -216,22 +274,22 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
   .displayType(ProgressReward, {
     label: { ja: "クエスト報酬", en: "Quest reward" },
     description: {
-      ja: "クエスト進行中の達成段階ごとに付与する報酬を設定します。",
-      en: "Defines rewards granted at milestones during quest progress.",
+      ja: "進行中のクエストをクリアしたときに付与される報酬です。",
+      en: "A reward the quest in progress grants when it is completed.",
     },
   })
   .displayType(Progress, {
     label: { ja: "クエスト進行", en: "Quest progress" },
     description: {
-      ja: "プレイヤーのクエスト進行状況、達成値、報酬受取状態を管理します。",
-      en: "Tracks a player's quest progress, completion value, and reward claims.",
+      ja: "プレイヤーが進行中のクエストと、クリア時に付与される報酬を管理します。",
+      en: "Tracks the quest a player has in progress and the rewards completing it grants.",
     },
   })
   .displayType(QuestCollection, {
     label: { ja: "クエストグループ", en: "Quest group" },
     description: {
-      ja: "関連するクエストをまとめ、公開順序と進行単位を設定します。",
-      en: "Groups related quests and defines their order and progression unit.",
+      ja: "関連するクエストをまとめ、開催スケジュールを設定します。",
+      en: "Groups related quests and sets the schedule they are available on.",
     },
   })
   .displayType(Quest, {
@@ -270,21 +328,22 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
       .arrayMembershipMapping("completeQuestNames", Quest, "id", "completed")
   )
 
-  .userDataResource(r =>
-    r
-      .model(GS2.quest.Progress)
-      .mountLocal(Progress)
-      .linkedMasterResourceId(QuestModel)
-      .bindings({
-        progressId: Bind.domainProperties([Source.direct(Progress, "id")]),
-        questModelId: Bind.domainProperties([Source.direct(Progress, "quest")]),
-        randomSeed: Bind.skip(),
-        transactionId: Bind.skip(),
-        userId: Bind.skip(),
-      })
-      .modelArrayDecodeBinding("rewards", Progress, "rewards", [
-        { fieldName: "itemId", targetPropertyName: "itemId" },
-        { fieldName: "value", targetPropertyName: "value" },
-      ])
-  )
+  .userDataResource(ProgressResource)
+
+  // `force` is pinned to false: a run left open (the app closed mid-quest) is
+  // resumed from the progress panel, whereas `true` would silently discard it
+  // and spend the start cost again.
+  .delegatedAction(Quest, "Start", {
+    targetActionKey: "Gs2Quest:QuestModel.Start",
+    targetResource: QuestModel,
+    parameterOverrides: [{ kind: "static", parameterName: "force", value: false }],
+  })
+  // Rewards are left out, so GS2 grants the ones the run drew at start. A type
+  // takes one delegated action per target action, so there is no separate
+  // give-up (`isComplete: false`) alongside this.
+  .delegatedAction(Progress, "Complete", {
+    targetActionKey: "Gs2Quest:Progress.End",
+    targetResource: ProgressResource,
+    parameterOverrides: [{ kind: "static", parameterName: "isComplete", value: true }],
+  })
   .build();

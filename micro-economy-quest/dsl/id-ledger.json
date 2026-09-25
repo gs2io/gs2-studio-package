@@ -2,7 +2,9 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
+    "property:Progress.inProgress": "prop_01M3B64HDT3QJP9Q43RA6FDABJ",
     "property:Progress.quest": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
+    "property:Progress.questCollection": "prop_01M3B64HDTB6BVM5FSTMYMPZJF",
     "property:Progress.rewards": "prop_NJ83FK0CB975M336Z7THVNWE7P",
     "property:ProgressReward.itemId": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B",
     "property:ProgressReward.value": "prop_RYDWJ2B6D96NAN85AF8SDXD12F",

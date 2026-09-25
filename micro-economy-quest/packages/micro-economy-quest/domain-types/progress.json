@@ -27,6 +27,28 @@
       },
       {
         "bindingHint": "userData",
+        "id": "prop_01M3B64HDT3QJP9Q43RA6FDABJ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has a quest in progress.",
+            "label": "In progress"
+          },
+          "ja": {
+            "description": "プレイヤーが進行中のクエストを持っているかを示します。",
+            "label": "進行中"
+          }
+        },
+        "name": "inProgress",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "userData",
         "id": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
         "localizedDisplay": {
           "en": {
@@ -49,15 +71,37 @@
       },
       {
         "bindingHint": "userData",
+        "id": "prop_01M3B64HDTB6BVM5FSTMYMPZJF",
+        "localizedDisplay": {
+          "en": {
+            "description": "Quest group of the quest currently in progress.",
+            "label": "Active quest group"
+          },
+          "ja": {
+            "description": "進行中のクエストが属するクエストグループです。",
+            "label": "進行中のクエストグループ"
+          }
+        },
+        "name": "questCollection",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_8KGQ5PW8KF4540B06JKKQ6QF96"
+        }
+      },
+      {
+        "bindingHint": "userData",
         "id": "prop_NJ83FK0CB975M336Z7THVNWE7P",
         "localizedDisplay": {
           "en": {
-            "description": "Rewards earned during the active quest.",
-            "label": "Earned rewards"
+            "description": "Rewards granted when the quest in progress is completed; decided when it starts.",
+            "label": "Completion rewards"
           },
           "ja": {
-            "description": "クエスト進行中に獲得した報酬の一覧です。",
-            "label": "獲得済み報酬"
+            "description": "進行中のクエストをクリアしたときに付与される報酬の一覧です。開始時に決まります。",
+            "label": "クリア報酬"
           }
         },
         "name": "rewards",
@@ -74,9 +118,26 @@
       }
     ]
   },
-  "delegatedActions": [],
+  "delegatedActions": [
+    {
+      "methodName": "Complete",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "isComplete",
+          "value": true
+        }
+      ],
+      "targetActionKey": "Gs2Quest:Progress.End",
+      "targetResource": {
+        "resourceId": "9ac18116-1a82-4675-a9d9-99d273856fea",
+        "resourceKind": "userData",
+        "sourcePackageId": "micro-economy-quest"
+      }
+    }
+  ],
   "id": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
   "kind": "local",
   "name": "Progress",
-  "singleEntry": false
+  "singleEntry": true
 }

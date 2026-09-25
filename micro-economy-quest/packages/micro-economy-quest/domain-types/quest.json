@@ -167,7 +167,24 @@
       }
     ]
   },
-  "delegatedActions": [],
+  "delegatedActions": [
+    {
+      "methodName": "Start",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "force",
+          "value": false
+        }
+      ],
+      "targetActionKey": "Gs2Quest:QuestModel.Start",
+      "targetResource": {
+        "resourceId": "2e3a67b1-c335-4cc2-9c86-09b26d8f45ce",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-quest"
+      }
+    }
+  ],
   "id": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
   "kind": "local",
   "name": "Quest",

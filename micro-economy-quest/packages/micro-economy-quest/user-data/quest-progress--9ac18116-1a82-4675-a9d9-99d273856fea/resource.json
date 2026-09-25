@@ -2,34 +2,38 @@
   "authored": {
     "declaredBindings": [
       {
-        "kind": "domainProperties",
-        "parameterName": "progressId",
-        "sources": [
-          {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
-              "typeName": "Progress"
-            },
-            "propertyId": "prop_reserved_id"
-          }
-        ]
+        "kind": "existence",
+        "parameterName": "$existence",
+        "propertyId": "prop_01M3B64HDT3QJP9Q43RA6FDABJ"
       },
       {
-        "kind": "domainProperties",
-        "parameterName": "questModelId",
-        "sources": [
+        "kind": "skip",
+        "parameterName": "progressId"
+      },
+      {
+        "grnFormat": "grn:gs2:{region}:{ownerId}:quest:{namespaceName}:group:{questGroupName}:quest:{questName}",
+        "keyMappings": [
           {
-            "kind": "direct",
-            "mountPath": {
+            "extractedKeyName": "questGroupName",
+            "targetKeyPropertyId": "prop_reserved_id",
+            "targetMountPath": {
               "kind": "local",
-              "typeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
-              "typeName": "Progress"
-            },
-            "propertyId": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T"
+              "typeId": "dt_8KGQ5PW8KF4540B06JKKQ6QF96",
+              "typeName": "QuestCollection"
+            }
+          },
+          {
+            "extractedKeyName": "questName",
+            "targetKeyPropertyId": "prop_reserved_id",
+            "targetMountPath": {
+              "kind": "local",
+              "typeId": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+              "typeName": "Quest"
+            }
           }
-        ]
+        ],
+        "kind": "grnRef",
+        "parameterName": "questModelId"
       },
       {
         "kind": "skip",
