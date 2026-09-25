@@ -310,12 +310,33 @@ namespace GS2Studio.Generated.StoreProduct
         /// </summary>
         public static void ApplyShowcaseShopCurrencyMasterItem(IMutableStoreProduct model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
         {
+            var __restoredId = false;
             var __SalesItemConsumeActions = item.SalesItem?.ConsumeActions;
-            var __SalesItemConsumeActions0 = __SalesItemConsumeActions != null && __SalesItemConsumeActions.Count > 0 ? __SalesItemConsumeActions[0] : null;
-            if (__SalesItemConsumeActions0 != null) StoreProductBinder.RestoreId(model, __SalesItemConsumeActions0.Action, __SalesItemConsumeActions0.Request);
+            if (!__restoredId && __SalesItemConsumeActions != null)
+            {
+                foreach (var __actionId in __SalesItemConsumeActions)
+                {
+                    if (__actionId != null && StoreProductBinder.RestoreId(model, __actionId.Action, __actionId.Request))
+                    {
+                        __restoredId = true;
+                        break;
+                    }
+                }
+            }
+            model.Count = default;
+            var __restoredCount = false;
             var __SalesItemAcquireActions = item.SalesItem?.AcquireActions;
-            var __SalesItemAcquireActions0 = __SalesItemAcquireActions != null && __SalesItemAcquireActions.Count > 0 ? __SalesItemAcquireActions[0] : null;
-            if (__SalesItemAcquireActions0 != null) StoreProductBinder.RestoreCount(model, __SalesItemAcquireActions0.Action, __SalesItemAcquireActions0.Request);
+            if (!__restoredCount && __SalesItemAcquireActions != null)
+            {
+                foreach (var __actionCount in __SalesItemAcquireActions)
+                {
+                    if (__actionCount != null && StoreProductBinder.RestoreCount(model, __actionCount.Action, __actionCount.Request))
+                    {
+                        __restoredCount = true;
+                        break;
+                    }
+                }
+            }
         }
         #endregion
 

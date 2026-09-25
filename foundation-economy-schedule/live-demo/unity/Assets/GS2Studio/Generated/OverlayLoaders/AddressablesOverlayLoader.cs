@@ -23,6 +23,20 @@
 //   that match the studio-side asset emission. The model type name is
 //   injected via the constructor `typeName` parameter at startup.
 //
+// Placement caveat:
+//   Studio codegen emits the assets under
+//   `Assets/GS2Studio/Generated/Resources/Overlays/` for the
+//   Resources loader, and this layout does not fit Addressables cleanly.
+//   Marking one of them addressable makes Unity offer to move it to a
+//   `Resources_moved/` folder:
+//   - If you accept, the next codegen run writes the asset back under
+//     `Resources/` with the same deterministic GUID and the stale-file sweep
+//     deletes the moved copy, so the Addressables entry ends up pointing into
+//     `Resources/` again.
+//   - If you decline, the asset ships twice: once in the Resources build data
+//     and once in the Addressables bundle.
+//   None of the Studio live demos or StudioSample use Addressables.
+//
 // Project-wide uniqueness:
 //   `<TypeName>` x `<instanceId>` must be unique across the entire project.
 //   Re-using the same pair from a different package will collide on the

@@ -6,7 +6,7 @@
 // Filesystem-safe name normalization shared by every overlay loader.
 //
 // The studio-side codegen writes overlay assets under
-//   Overlays/<TypeName>/<safeInstanceId>.asset
+//   Resources/Overlays/<TypeName>/<safeInstanceId>.asset
 // where `<safeInstanceId>` is the original domain-type instance id passed
 // through this normalizer. Composite primary keys (e.g. `"JPY.tier1"`)
 // embed characters outside `[A-Za-z0-9_-]` (`.` in this case) that need

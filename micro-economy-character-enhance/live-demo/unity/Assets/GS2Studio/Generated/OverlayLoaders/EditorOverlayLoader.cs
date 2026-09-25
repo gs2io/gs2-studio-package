@@ -20,8 +20,10 @@ namespace GS2Studio.Generated
     /// <c>Assets/</c>, in contrast with the runtime loaders
     /// (<c>ResourcesOverlayLoader</c>, <c>AddressablesOverlayLoader</c>) which
     /// require the asset to live at the fixed
-    /// <c>Overlays/&lt;TypeName&gt;/&lt;safeInstanceId&gt;</c> path/address. Used
-    /// as the auto-injected <c>Active</c> when running inside the Unity
+    /// <c>Overlays/&lt;TypeName&gt;/&lt;safeInstanceId&gt;</c>
+    /// path (under a <c>Resources</c> folder) or address. Because this loader
+    /// finds assets anywhere, Play Mode cannot prove the player-time placement.
+    /// Used as the auto-injected <c>Active</c> when running inside the Unity
     /// Editor. The incoming <c>instanceId</c> is normalized via
     /// <see cref="OverlayInstanceIdNormalizer.ToSafeFileName(string)"/> so the
     /// filter and the <c>asset.name</c> comparison line up with the

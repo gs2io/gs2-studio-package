@@ -309,7 +309,7 @@ namespace GS2Studio.Generated.TriggerPull
         {
             if (requestJson == null) return false;
             var request = JsonMapper.ToObject(requestJson);
-            if (actionName == "Gs2Schedule:TriggerByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Schedule")
+            if (actionName == "Gs2Schedule:TriggerByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Schedule" && ReadRequestValue(request, new string[] { "triggerStrategy" }) == "renew")
             {
                 var __value = ReadRequestValue(request, new string[] { "triggerName" });
                 if (__value != null)

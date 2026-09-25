@@ -8,6 +8,10 @@
 // Placement convention:
 //   Overlay assets must live at
 //     Assets/.../Resources/Overlays/<TypeName>/<safeInstanceId>.asset
+//   Studio codegen emits them at
+//     Assets/GS2Studio/Generated/Resources/Overlays/<TypeName>/<safeInstanceId>.asset
+//   `Resources.Load` only searches folders named `Resources`; an asset
+//   outside one loads in the Editor (AssetDatabase) but is null in a player.
 //   where `<TypeName>` is the model's domain type name (e.g. `StorePrice`)
 //   — NOT the entry class name (`StorePriceOverlayEntry`) — and
 //   `<safeInstanceId>` is the instance id normalized through

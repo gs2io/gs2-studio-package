@@ -500,7 +500,7 @@ namespace GS2Studio.Generated.Equipment
         {
             if (requestJson == null) return false;
             var request = JsonMapper.ToObject(requestJson);
-            if (actionName == "Gs2Inventory:ConsumeItemSetByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Equipment" && ReadRequestValue(request, new string[] { "inventoryName" }) == "Equipment")
+            if (actionName == "Gs2Inventory:ConsumeItemSetByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Equipment" && ReadRequestValue(request, new string[] { "inventoryName" }) == "Equipment" && ReadRequestValue(request, new string[] { "consumeCount" }) == (1L).ToString())
             {
                 var __value = ReadRequestValue(request, new string[] { "itemName" });
                 if (__value != null)
