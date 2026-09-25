@@ -250,6 +250,31 @@ namespace GS2Studio.Showroom.EditorTools
             /// the section off the list, this names which rows the list has.
             /// </summary>
             public Dictionary<string, string> Scope = new Dictionary<string, string>();
+            /// <summary>
+            /// Where the one row this section shows is named at run time, or
+            /// null when the page names it — with <see cref="Key"/> — or lists
+            /// the model instead.
+            ///
+            /// Distinct from <see cref="Key"/>, and exclusive with it: that
+            /// pins a row the page knows before it runs, this follows a row
+            /// only another section's row knows — the quest a visitor is on is
+            /// whichever one they started. See <see cref="KeyFromSpec"/>.
+            /// </summary>
+            public KeyFromSpec KeyFrom;
+        }
+
+        /// <summary>
+        /// A section's keys, read at run time off the row another section of
+        /// the same page shows, by <see cref="ShowroomKeyRelay"/>.
+        /// </summary>
+        private sealed class KeyFromSpec
+        {
+            /// <summary>The key of the section the keys are read from, as `page.json` wrote it. Null when only `keyof` lines arrived.</summary>
+            public string Section;
+            /// <summary>This model's keys, as `SetKeys` names them, to the source model's properties they are read from.</summary>
+            public Dictionary<string, string> Keys = new Dictionary<string, string>();
+            /// <summary>A `bool` property of the source model the section is shown only while it holds, or null.</summary>
+            public string While;
         }
 
         /// <summary>
@@ -347,6 +372,14 @@ namespace GS2Studio.Showroom.EditorTools
             /// generator emitted no field.
             /// </summary>
             public int? Axis;
+            /// <summary>
+            /// The handler this section mounted, once <see cref="BuildSections"/>
+            /// has placed it; null for a list or a model left unmounted. What a
+            /// section taking its keys from this one is wired to.
+            /// </summary>
+            public Component Mounted;
+            /// <summary>The section object in the scene, once built; null for a model drawn without one.</summary>
+            public GameObject SectionObject;
         }
 
         /// <summary>
@@ -388,6 +421,8 @@ namespace GS2Studio.Showroom.EditorTools
         ///   toggle   KEY  CONDITION  ROW|ROW
         ///   key      KEY  NAME  VALUE
         ///   scope    KEY  NAME  VALUE
+        ///   keyfrom  KEY  SOURCE-KEY  WHILE
+        ///   keyof    KEY  NAME  SOURCE-PROPERTY
         ///
         /// KEY is `Model` or `Model#Heading` — see
         /// <see cref="DeclaredSection"/>. A `section` line is what declares
@@ -448,6 +483,17 @@ namespace GS2Studio.Showroom.EditorTools
                 else if (parts[0] == "scope" && parts.Length > 3)
                 {
                     section.Scope[parts[2]] = parts[3];
+                }
+                else if (parts[0] == "keyfrom" && parts.Length > 2)
+                {
+                    section.KeyFrom = section.KeyFrom ?? new KeyFromSpec();
+                    section.KeyFrom.Section = parts[2].Length > 0 ? parts[2] : null;
+                    section.KeyFrom.While = parts.Length > 3 && parts[3].Length > 0 ? parts[3] : null;
+                }
+                else if (parts[0] == "keyof" && parts.Length > 3)
+                {
+                    section.KeyFrom = section.KeyFrom ?? new KeyFromSpec();
+                    section.KeyFrom.Keys[parts[2]] = parts[3];
                 }
             }
             return declared;
@@ -963,7 +1009,7 @@ namespace GS2Studio.Showroom.EditorTools
                 // declaration a section needs written depends on it: only a
                 // list with an axis field has an axis to name.
                 var manifest = plan.Manifest;
-                if (manifest.keyed && !DeclaresKey(plan) &&
+                if (manifest.keyed && !PinsOneRow(plan) &&
                     manifest.listHandler.Length > 0 && manifest.listItemHandler.Length > 0)
                 {
                     plan.ListHandler = ResolveType(manifest, manifest.@namespace + "." + manifest.listHandler);
@@ -1370,6 +1416,7 @@ namespace GS2Studio.Showroom.EditorTools
                 CollectRowProblems(plan, problems);
                 CollectToggleProblems(plan, problems);
                 CollectKeyProblems(plan, problems);
+                CollectKeyFromProblems(plan, byKey, problems);
             }
         }
 
@@ -1396,7 +1443,9 @@ namespace GS2Studio.Showroom.EditorTools
         {
             var declared = plan.Declaration;
             CollectScopeProblems(plan, problems);
-            if (declared.Key.Count == 0) return;
+            // A key beside a keyFrom is refused in CollectKeyFromProblems; what
+            // the key itself names is beside the point once it is.
+            if (declared.Key.Count == 0 || DeclaresKeyFrom(plan)) return;
             var identity = IdentityKeyNames(plan);
             if (identity.Count == 0)
             {
@@ -1428,6 +1477,166 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
+        /// What a section taking its keys from another names that the two
+        /// models cannot answer.
+        ///
+        /// The relay that carries the keys reads by reflection at run time, so
+        /// every name it will read is settled here instead, while a refusal
+        /// costs only the run: a key it cannot hand over would leave the
+        /// section off the page for good, which reads exactly like a visitor
+        /// who has nothing in progress.
+        ///
+        /// Asked of both sections. This one has to be one keyed row, named by
+        /// text keys, every one of them and nothing else; the other has to be
+        /// one row too — a list has no row to read from — and must not itself
+        /// wait on a third, because a chain of relays is a page nobody can
+        /// reason about when one link is missing.
+        /// </summary>
+        private static void CollectKeyFromProblems(
+            SectionPlan plan, IReadOnlyDictionary<string, SectionPlan> declaredSections,
+            List<string> problems)
+        {
+            if (!DeclaresKeyFrom(plan)) return;
+            var declared = plan.Declaration;
+            var keyFrom = declared.KeyFrom;
+            var prefix = $"[showroom] {plan.SectionId}: `page.json` takes its keys from another section";
+
+            var alongside = new List<string>();
+            if (declared.Key.Count > 0) alongside.Add("\"key\"");
+            if (declared.Scope.Count > 0) alongside.Add("\"scope\"");
+            if (!string.IsNullOrEmpty(declared.Axis)) alongside.Add("\"axis\"");
+            if (alongside.Count > 0)
+            {
+                problems.Add(
+                    $"{prefix} and also declares {string.Join(" and ", alongside)}. A section taking " +
+                    "its keys from another shows one row whose keys arrive at run time, so it pins " +
+                    "none of its own and has no list to scope or read through an axis; drop them.");
+            }
+
+            var identity = IdentityKeyNames(plan);
+            if (!plan.Manifest.keyed || identity.Count == 0)
+            {
+                problems.Add(
+                    $"{prefix}, and it is not identified by any — it is a single row already, so " +
+                    "there is nothing to hand it. Drop \"keyFrom\".");
+            }
+            else
+            {
+                foreach (var name in keyFrom.Keys.Keys.OrderBy(name => name, StringComparer.Ordinal))
+                {
+                    if (identity.Contains(name)) continue;
+                    problems.Add(
+                        $"{prefix} and hands it '{name}', which is not one of the keys this model " +
+                        $"is identified by. It is identified by {Listed(identity)}.");
+                }
+                foreach (var name in identity)
+                {
+                    if (keyFrom.Keys.ContainsKey(name)) continue;
+                    problems.Add(
+                        $"{prefix} without naming where '{name}' comes from, and a row is named " +
+                        $"by {Listed(identity)}. Name every one of them.");
+                }
+                var nonText = plan.Manifest.identityKeys
+                    .Where(parameter => parameter.serializedType != "string")
+                    .Select(parameter => $"'{parameter.name}' ({parameter.serializedType})")
+                    .ToList();
+                if (nonText.Count > 0)
+                {
+                    problems.Add(
+                        $"{prefix}, and those keys arrive as text, which {string.Join(", ", nonText)} " +
+                        "is not. Only a model identified by text keys can take them from another row.");
+                }
+                else if (keyFrom.Keys.Keys.All(identity.Contains) && identity.All(keyFrom.Keys.ContainsKey))
+                {
+                    var setKeys = ShowroomKeyRelay.SetKeysOf(plan.Handler, identity.Count);
+                    var parameters = setKeys == null
+                        ? new List<string>()
+                        : setKeys.GetParameters().Select(parameter => parameter.Name).ToList();
+                    if (setKeys == null || !parameters.OrderBy(name => name, StringComparer.Ordinal)
+                            .SequenceEqual(identity.OrderBy(name => name, StringComparer.Ordinal), StringComparer.Ordinal))
+                    {
+                        problems.Add(
+                            $"{prefix}, and {plan.Handler.Name} has no `SetKeys` taking exactly " +
+                            $"{Listed(identity)} as strings; the generator and this builder " +
+                            "disagree, so update whichever is older.");
+                    }
+                }
+                if (plan.Handler.GetEvent("Updated") == null || ShowroomKeyRelay.ModelTypeOf(plan.Handler) == null)
+                {
+                    problems.Add(
+                        $"{prefix}, and {plan.Handler.Name} raises no `Updated` or has no `Model` to " +
+                        "show it by; the generator and this builder disagree, so update whichever is older.");
+                }
+            }
+
+            if (DrawsNothing(plan))
+            {
+                problems.Add(
+                    $"{prefix} and draws nothing, so there is no row for those keys to show. Give it " +
+                    "the rows it draws.");
+            }
+
+            if (keyFrom.Section == null ||
+                !declaredSections.TryGetValue(keyFrom.Section, out var source) ||
+                ReferenceEquals(source, plan))
+            {
+                problems.Add(
+                    $"{prefix}, '{keyFrom.Section ?? ""}', which is not another section of this page. " +
+                    $"It declares {Listed(declaredSections.Keys.Where(key => key != plan.SectionId))}.");
+                return;
+            }
+            if (DeclaresKeyFrom(source))
+            {
+                problems.Add(
+                    $"{prefix}, '{source.SectionId}', which takes its own keys from another. Take " +
+                    "them from a section that shows one row of its own.");
+                return;
+            }
+            if (source.Manifest.keyed && !DeclaresKey(source))
+            {
+                problems.Add(
+                    $"{prefix}, '{source.SectionId}', which is a list and has no one row to read " +
+                    "them from. Pin it with \"key\", or take them from a section that shows one row.");
+                return;
+            }
+            var sourceModel = ShowroomKeyRelay.ModelTypeOf(source.Handler);
+            if (sourceModel == null || source.Handler.GetEvent("Updated") == null)
+            {
+                problems.Add(
+                    $"{prefix}, '{source.SectionId}', whose {source.Handler.Name} raises no `Updated` " +
+                    "or has no `Model` to read; the generator and this builder disagree, so update " +
+                    "whichever is older.");
+                return;
+            }
+            var offered = ShowroomKeyRelay.ModelProperties(sourceModel);
+            // Asked of the relay's own predicates, so what the bake accepts is
+            // exactly what the relay will read.
+            var keyable = offered.Where(ShowroomKeyRelay.IsKeyProperty).Select(property => property.Name);
+            foreach (var entry in keyFrom.Keys.OrderBy(item => item.Key, StringComparer.Ordinal))
+            {
+                var property = ShowroomKeyRelay.ModelProperty(sourceModel, entry.Value);
+                if (property != null && ShowroomKeyRelay.IsKeyProperty(property)) continue;
+                problems.Add(
+                    $"{prefix} and reads '{entry.Key}' off '{entry.Value}', which {source.Model} " +
+                    (property == null
+                        ? "does not have"
+                        : $"has as {property.PropertyType.Name}, and a key is text or a generated id") +
+                    $". Its keys can be read off {Listed(keyable)}.");
+            }
+            if (keyFrom.While != null)
+            {
+                var condition = ShowroomKeyRelay.ModelProperty(sourceModel, keyFrom.While);
+                if (condition == null || !ShowroomKeyRelay.IsConditionProperty(condition))
+                {
+                    problems.Add(
+                        $"{prefix} while '{keyFrom.While}' holds, which {source.Model} has no bool " +
+                        "property named. Its bool properties are " +
+                        $"{Listed(offered.Where(ShowroomKeyRelay.IsConditionProperty).Select(property => property.Name))}.");
+                }
+            }
+        }
+
+        /// <summary>
         /// What a section's declared scope names that its list cannot answer,
         /// and what its list needs that the section did not name.
         ///
@@ -1448,6 +1657,11 @@ namespace GS2Studio.Showroom.EditorTools
         private static void CollectScopeProblems(SectionPlan plan, List<string> problems)
         {
             var declared = plan.Declaration;
+            // A section taking its keys from another is refused for carrying a
+            // scope in CollectKeyFromProblems, which can say why; saying here
+            // too that it draws no list would tell the page two things about
+            // one mistake.
+            if (DeclaresKeyFrom(plan)) return;
             if (plan.ListHandler == null)
             {
                 if (declared.Scope.Count > 0)
@@ -1733,7 +1947,7 @@ namespace GS2Studio.Showroom.EditorTools
                     // one this page has no use for while another does — is
                     // still what another section's reading is composed from.
                     // So it is mounted without a section of its own.
-                    if (!plan.Manifest.keyed || DeclaresKey(plan))
+                    if (!plan.Manifest.keyed || PinsOneRow(plan))
                     {
                         // A model the page leaves off has no second section to
                         // take the root instead, so reaching here with one
@@ -1747,7 +1961,7 @@ namespace GS2Studio.Showroom.EditorTools
                                 "have refused it");
                         }
                         mounted.Add(plan.Model);
-                        PlaceHandler(content.gameObject, plan);
+                        plan.Mounted = PlaceHandler(content.gameObject, plan);
                     }
                     continue;
                 }
@@ -1762,7 +1976,8 @@ namespace GS2Studio.Showroom.EditorTools
                 if (explainer != null) explainer.gameObject.SetActive(false);
                 sectionCount++;
 
-                if (plan.Manifest.keyed && !DeclaresKey(plan))
+                plan.SectionObject = section;
+                if (plan.Manifest.keyed && !PinsOneRow(plan))
                 {
                     var itemPrefab = AddList(section, plan, page);
                     if (itemPrefab != null) itemPrefabs.Add(itemPrefab);
@@ -1794,15 +2009,80 @@ namespace GS2Studio.Showroom.EditorTools
                 // so this is the page's to get right rather than something the
                 // bake can check: declare the section whose key the rest of the
                 // page should see first.
-                var host = mounted.Contains(plan.Model) ? section : content.gameObject;
-                mounted.Add(plan.Model);
-                PlaceHandler(host, plan);
+                //
+                // A section taking its keys from another is never the page-wide
+                // one. Its row moves at run time, so a reading elsewhere
+                // composed from it would move with it; it takes its own
+                // section root, beside the relay that hides that root, and
+                // leaves the page root to a section of the model that does not
+                // move.
+                GameObject host;
+                if (DeclaresKeyFrom(plan))
+                {
+                    host = section;
+                }
+                else
+                {
+                    host = mounted.Contains(plan.Model) ? section : content.gameObject;
+                    mounted.Add(plan.Model);
+                }
+                plan.Mounted = PlaceHandler(host, plan);
                 var body = ItemsOf(section.transform);
                 RealizeRows(plan, body, plan.Section, page, plan.Countdowns);
                 WireToggles(plan.SectionId, section, plan.Toggles, body, plan.Section);
             }
 
+            // After every section, because the section a relay reads may be
+            // declared after the one it governs, and its handler is not placed
+            // until its own turn comes.
+            WireKeyRelays(plans);
+
             return (sectionCount, itemPrefabs);
+        }
+
+        /// <summary>
+        /// Puts a <see cref="ShowroomKeyRelay"/> on every section that takes its
+        /// keys from another, pointed at that section's handler and its own.
+        ///
+        /// On the section it governs and nowhere else: the relay hides that
+        /// section, and a rebuild clears the sections away with everything on
+        /// them, so nothing it wires outlives the bake that wired it. The
+        /// section is left active. The relay decides at `Awake` whether it is
+        /// on the page, and a section baked inactive never wakes to decide.
+        /// </summary>
+        private static void WireKeyRelays(IReadOnlyList<SectionPlan> plans)
+        {
+            foreach (var plan in plans.Where(DeclaresKeyFrom))
+            {
+                var keyFrom = plan.Declaration.KeyFrom;
+                var source = plans.FirstOrDefault(candidate =>
+                    candidate.Declaration != null &&
+                    string.Equals(candidate.SectionId, keyFrom.Section, StringComparison.Ordinal));
+                if (plan.SectionObject == null || plan.Mounted == null ||
+                    source == null || source.Mounted == null)
+                {
+                    throw new InvalidOperationException(
+                        $"[showroom] {plan.SectionId}: reached the build with no handler to take " +
+                        $"its keys from '{keyFrom.Section}', or none to give them to; " +
+                        "CollectKeyFromProblems should have refused it");
+                }
+                // In the order `SetKeys` takes them, which is what the relay
+                // calls it with; the names were matched in CollectKeyFromProblems.
+                var parameters = ShowroomKeyRelay.SetKeysOf(plan.Handler, keyFrom.Keys.Count).GetParameters();
+                var relay = plan.SectionObject.AddComponent<ShowroomKeyRelay>();
+                var serialized = new SerializedObject(relay);
+                serialized.FindProperty("_source").objectReferenceValue = source.Mounted;
+                serialized.FindProperty("_target").objectReferenceValue = plan.Mounted;
+                var properties = serialized.FindProperty("_keyProperties");
+                properties.arraySize = parameters.Length;
+                for (var i = 0; i < parameters.Length; i++)
+                {
+                    properties.GetArrayElementAtIndex(i).stringValue = keyFrom.Keys[parameters[i].Name];
+                }
+                serialized.FindProperty("_whileProperty").stringValue = keyFrom.While ?? "";
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(relay);
+            }
         }
 
         /// <summary>
@@ -2157,16 +2437,41 @@ namespace GS2Studio.Showroom.EditorTools
         }
 
         /// <summary>
-        /// Mount the handler, holding it to the row the page named.
+        /// Whether the page names this section's one row at run time, from
+        /// the row another section shows.
+        /// </summary>
+        private static bool DeclaresKeyFrom(SectionPlan plan)
+        {
+            return plan.Declaration != null && plan.Declaration.KeyFrom != null;
+        }
+
+        /// <summary>
+        /// Whether this section shows one row of a keyed model rather than
+        /// listing it — named by the page, or by another section's row. Every
+        /// place that decides between a list and a single mounted handler asks
+        /// this rather than <see cref="DeclaresKey"/>, so a section taking its
+        /// keys from another is never half a list.
+        /// </summary>
+        private static bool PinsOneRow(SectionPlan plan)
+        {
+            return DeclaresKey(plan) || DeclaresKeyFrom(plan);
+        }
+
+        /// <summary>
+        /// Mount the handler, holding it to the row the page named, and return
+        /// it for whatever else is wired to it.
         ///
         /// The keys go in as serialized fields rather than through `SetKeys`,
         /// because this runs with no scene playing: the handler reads them for
         /// itself when it starts, which is the same thing the Inspector does.
         /// </summary>
-        private static void PlaceHandler(GameObject host, SectionPlan plan)
+        private static Component PlaceHandler(GameObject host, SectionPlan plan)
         {
             var component = host.AddComponent(plan.Handler);
-            if (!DeclaresKey(plan)) return;
+            // A section that takes its keys from another has none to write:
+            // they arrive at run time through the relay, and until then the
+            // handler holds none and binds nothing.
+            if (!DeclaresKey(plan) || DeclaresKeyFrom(plan)) return component;
             var serialized = new SerializedObject(component);
             foreach (var key in plan.Declaration.Key)
             {
@@ -2176,6 +2481,7 @@ namespace GS2Studio.Showroom.EditorTools
                 WriteScalar(serialized.FindProperty(parameter.fieldName), parameter, key.Value);
             }
             serialized.ApplyModifiedPropertiesWithoutUndo();
+            return component;
         }
 
         /// <summary>
