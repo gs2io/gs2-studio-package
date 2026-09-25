@@ -7,10 +7,11 @@
 // two words that are not a time — "not set" before a deadline has been given
 // and "ended" once it has passed.
 //
-// A demo that needs a deadline to do something — credit a recovery when it
-// arrives, say — writes a behaviour of its own taking `SetDeadline(DateTime)`,
-// and the page builder wires the same reading into it beside this one. This
-// behaviour draws; it does not decide.
+// A demo that needs a deadline to do something writes a behaviour of its own
+// taking `SetDeadline(DateTime)`, and the page builder wires the same reading
+// into it beside this one. A value that time changes on the server, such as
+// a stamina recovering, is not one of those: its loader already re-emits it
+// when it changes. This behaviour draws; it does not decide.
 #nullable disable
 using System;
 using UnityEngine;
