@@ -1,0 +1,78 @@
+{
+  "sections": {
+    "Quest#Pick a quest — finish the running one before starting another": {
+      "scope": {
+        "collection": "main"
+      },
+      "rows": ["QuestNameLabel", "QuestBriefLabel", "QuestStartButton", "QuestClearedLabel"],
+      "toggles": {
+        "QuestUnclearedActiveToggle": ["QuestClearedLabel"]
+      }
+    },
+    "Progress#Your quest in progress": {
+      "rows": ["ProgressIdleLabel", "ProgressCompleteButton"],
+      "toggles": {
+        "ProgressIdleActiveToggle": ["ProgressCompleteButton"],
+        "ProgressRunningActiveToggle": ["ProgressIdleLabel"]
+      }
+    },
+    "Quest#Running": {
+      "keyFrom": {
+        "section": "Progress#Your quest in progress",
+        "keys": {
+          "id": "Quest",
+          "collection": "QuestCollection"
+        },
+        "while": "InProgress"
+      },
+      "rows": ["QuestRunningLabel"]
+    },
+    "Energy#What a start costs": {
+      "axis": "StaminaEnergyMaster",
+      "rows": [
+        "EnergyNextRecoveryValue",
+        {
+          "component": "EnergyStaminaGauge",
+          "caption": "EnergyStaminaLabel"
+        },
+        "EnergyRecoverButton"
+      ],
+      "toggles": {
+        "EnergyFullActiveToggle": ["EnergyNextRecoveryValue"]
+      }
+    },
+    "Wallet#Where a clear pays": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "QuestCollection": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    },
+    "Schedule": {
+      "rows": []
+    },
+    "Trigger": {
+      "rows": []
+    },
+    "TriggerPull": {
+      "rows": []
+    },
+    "CurrencyType": {
+      "rows": []
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    }
+  }
+}

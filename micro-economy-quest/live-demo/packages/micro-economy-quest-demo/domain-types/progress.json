@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M3B97NH40F6QD8YS61YH520C",
+  "kind": "overlay",
+  "name": "Progress",
+  "renamedInheritedProperties": {},
+  "singleEntry": true,
+  "source": {
+    "directSourcePackageId": "micro-economy-quest",
+    "directSourceTypeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+    "sourcePackageId": "micro-economy-quest",
+    "sourceTypeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4"
+  }
+}

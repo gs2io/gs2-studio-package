@@ -1,0 +1,53 @@
+{
+  "id": "af34ae92-85b0-5437-a4ac-13b586c0e6cc",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "CompleteButton",
+      "delegatedActionKey": "resource:micro-economy-quest:userData:9ac18116-1a82-4675-a9d9-99d273856fea::Gs2Quest:Progress.End",
+      "id": "4c09b3c5-ba4a-5e02-8f86-2211b72e22ff",
+      "kind": "buttonAction",
+      "name": "Progress"
+    },
+    {
+      "componentClassName": "IdleLabel",
+      "id": "e7775188-ff96-511a-8e44-b0df20b51dcd",
+      "kind": "templateLabel",
+      "name": "Progress",
+      "sources": [],
+      "template": "No quest in progress"
+    },
+    {
+      "componentClassName": "IdleActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M3B64HDT3QJP9Q43RA6FDABJ"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "7a75b80e-20e9-51d1-9dfd-a8a77b1df2ea",
+      "kind": "activeToggle",
+      "name": "Progress"
+    },
+    {
+      "componentClassName": "RunningActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_01M3B64HDT3QJP9Q43RA6FDABJ"
+        }
+      },
+      "id": "4e293800-2a7e-57c8-b50c-acf49055ab63",
+      "kind": "activeToggle",
+      "name": "Progress"
+    }
+  ],
+  "name": "Progress",
+  "targetDomainType": "Progress",
+  "targetDomainTypeId": "dt_01M3B97NH40F6QD8YS61YH520C"
+}

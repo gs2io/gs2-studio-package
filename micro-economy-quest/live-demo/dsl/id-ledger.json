@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:Quest.displayName": "prop_01M3B97NH4NBTSQ41Z9GP123A3",
+    "property:Quest.firstClearReward": "prop_01M3B97NH42P2686A260RXP7RB",
+    "property:Quest.reward": "prop_01M3B97NH43YNX2NJ26RQ26NF0",
+    "property:Quest.staminaCost": "prop_01M3B97NH4AJZQQ39WHMY9FR3E",
+    "row:dt_8KGQ5PW8KF4540B06JKKQ6QF96.main": "row_01M3B97NH4W0XJ1B004J0ZY2D3",
+    "row:dt_KYDYPCC3WB3CVWB7PH6H5TCBYC.quest1": "row_01M3B97NH4V71QFPY941J3KBXJ",
+    "row:dt_KYDYPCC3WB3CVWB7PH6H5TCBYC.quest2": "row_01M3B97NH4JQY0YHANW7B8KC0G",
+    "row:dt_KYDYPCC3WB3CVWB7PH6H5TCBYC.quest3": "row_01M3B97NH4YW0WZ20M4VWX5K0C",
+    "type:Progress": "dt_01M3B97NH40F6QD8YS61YH520C",
+    "type:Quest": "dt_01M3B97NH4MCGMNVN4ESDRCECG",
+    "type:QuestCollection": "dt_01M3B97NH4WBJD1WQ3TSQVZ7R5"
+  },
+  "deterministicOverrides": {}
+}

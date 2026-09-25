@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-quest-demo",
+  "types": {
+    "Progress": {
+      "id": "dt_01M3B97NH40F6QD8YS61YH520C",
+      "singleEntry": true,
+      "canonicalPackageId": "micro-economy-quest",
+      "canonicalTypeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4"
+    },
+    "Quest": {
+      "id": "dt_01M3B97NH4MCGMNVN4ESDRCECG",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-quest",
+      "canonicalTypeId": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+      "addedProperties": {
+        "displayName": "prop_01M3B97NH4NBTSQ41Z9GP123A3",
+        "firstClearReward": "prop_01M3B97NH42P2686A260RXP7RB",
+        "reward": "prop_01M3B97NH43YNX2NJ26RQ26NF0",
+        "staminaCost": "prop_01M3B97NH4AJZQQ39WHMY9FR3E"
+      }
+    },
+    "QuestCollection": {
+      "id": "dt_01M3B97NH4WBJD1WQ3TSQVZ7R5",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-quest",
+      "canonicalTypeId": "dt_8KGQ5PW8KF4540B06JKKQ6QF96"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}
