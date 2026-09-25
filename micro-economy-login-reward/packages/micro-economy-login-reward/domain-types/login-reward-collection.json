@@ -79,12 +79,12 @@
         "id": "prop_NFHPA3CG7FM9RX44J7NAWPT1ET",
         "localizedDisplay": {
           "en": {
-            "description": "UTC hour when the login reward advances to the next day.",
+            "description": "UTC hour when streaming moves on to the next day. Not used when a schedule is set.",
             "label": "Daily reset hour",
             "unit": "hour"
           },
           "ja": {
-            "description": "ログイン日数を次の日へ進めるUTC時刻です。",
+            "description": "streaming で受け取り日を次の日へ進めるUTC時刻です。開催スケジュールを指定したときは使われません。",
             "label": "日付更新時刻",
             "unit": "時"
           }
@@ -105,11 +105,11 @@
         "id": "prop_01M3CDS330E35JNBG69ADAZ31P",
         "localizedDisplay": {
           "en": {
-            "description": "Whether streaming returns to the first step after the last one is claimed.",
+            "description": "Whether streaming returns to the first step after the last one is claimed. Missed-receive relief is unavailable while it is enabled.",
             "label": "Repeat"
           },
           "ja": {
-            "description": "streaming で最後の段階まで受け取った後、最初の段階へ戻るかどうかです。",
+            "description": "streaming で最後の段階まで受け取った後、最初の段階へ戻るかどうかです。有効にすると取り逃し救済は使えません。",
             "label": "繰り返し"
           }
         },
@@ -132,11 +132,11 @@
         "id": "prop_01M3CDS330QE86VNCF2B97886B",
         "localizedDisplay": {
           "en": {
-            "description": "Lets a player claim a missed step in exchange for the relief consume actions.",
+            "description": "Lets a player claim a missed step in exchange for the relief consume actions. In schedule mode the step to claim must be given.",
             "label": "Missed-receive relief"
           },
           "ja": {
-            "description": "受け取り損ねた段階を、救済の消費アクションと引き換えに受け取れるようにします。",
+            "description": "受け取り損ねた段階を、救済の消費アクションと引き換えに受け取れるようにします。schedule では受け取る段階の指定が必要です。",
             "label": "取り逃し救済"
           }
         },

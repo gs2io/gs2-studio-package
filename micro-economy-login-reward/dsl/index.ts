@@ -40,6 +40,8 @@ const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
         .requiredWhen(Cond.eq("mode", "streaming"))
     )
     .property(PT.prop("missedReceiveRelief", PT.enum("enabled", "disabled")).masterData())
+    // Not tied to missedReceiveRelief: an empty list is a valid free relief, and
+    // GS2 drops the list from the deployed model while relief is disabled.
     .property(
       PT.prop("missedReceiveReliefConsumeActions", PT.listOf(PT.consumeAction())).masterData()
     )
@@ -62,21 +64,21 @@ const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
       resetHour: jaEnField(
         "日付更新時刻",
         "Daily reset hour",
-        "ログイン日数を次の日へ進めるUTC時刻です。",
-        "UTC hour when the login reward advances to the next day.",
+        "streaming で受け取り日を次の日へ進めるUTC時刻です。開催スケジュールを指定したときは使われません。",
+        "UTC hour when streaming moves on to the next day. Not used when a schedule is set.",
         { ja: "時", en: "hour" }
       ),
       repeat: jaEnField(
         "繰り返し",
         "Repeat",
-        "streaming で最後の段階まで受け取った後、最初の段階へ戻るかどうかです。",
-        "Whether streaming returns to the first step after the last one is claimed."
+        "streaming で最後の段階まで受け取った後、最初の段階へ戻るかどうかです。有効にすると取り逃し救済は使えません。",
+        "Whether streaming returns to the first step after the last one is claimed. Missed-receive relief is unavailable while it is enabled."
       ),
       missedReceiveRelief: jaEnField(
         "取り逃し救済",
         "Missed-receive relief",
-        "受け取り損ねた段階を、救済の消費アクションと引き換えに受け取れるようにします。",
-        "Lets a player claim a missed step in exchange for the relief consume actions."
+        "受け取り損ねた段階を、救済の消費アクションと引き換えに受け取れるようにします。schedule では受け取る段階の指定が必要です。",
+        "Lets a player claim a missed step in exchange for the relief consume actions. In schedule mode the step to claim must be given."
       ),
       missedReceiveReliefConsumeActions: jaEnField(
         "救済の消費アクション",
