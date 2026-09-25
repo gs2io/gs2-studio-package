@@ -68,10 +68,11 @@ describe("Schedule assetDelivery codegen regression (foundation-economy-schedule
     const scheduleEntry = entry.artifacts.files.find(f => f.fileName === "ScheduleOverlayEntry.cs");
     expect(scheduleEntry, "ScheduleOverlayEntry.cs").toBeDefined();
 
-    // The per-instance .asset payload must be emitted under the type folder.
+    // The per-instance .asset payload must be emitted under the type folder,
+    // inside a Resources folder so the player-time Resources loader finds it.
     const asset = entry.artifacts.files.find(
-      f => f.fileName === "Overlays/Schedule/login-bonus-event.asset"
+      f => f.fileName === "Resources/Overlays/Schedule/login-bonus-event.asset"
     );
-    expect(asset, "Overlays/Schedule/login-bonus-event.asset").toBeDefined();
+    expect(asset, "Resources/Overlays/Schedule/login-bonus-event.asset").toBeDefined();
   });
 });
