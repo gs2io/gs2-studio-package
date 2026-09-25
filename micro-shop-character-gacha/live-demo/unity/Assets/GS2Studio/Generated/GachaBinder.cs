@@ -46,7 +46,7 @@ namespace GS2Studio.Generated.Gacha
     /// </summary>
     public interface IActionableGachaBinder : IReadOnlyGachaBinder
     {
-        Task Buy(int quantity, Gs2.Unity.Gs2Showcase.Model.EzConfig[]? config = null);
+        Task Buy(int? quantity = null, Gs2.Unity.Gs2Showcase.Model.EzConfig[]? config = null);
     }
 
     /// <summary>
@@ -312,7 +312,7 @@ namespace GS2Studio.Generated.Gacha
         }
 
         #region Delegated actions
-        public async Task Buy(int quantity, Gs2.Unity.Gs2Showcase.Model.EzConfig[]? config = null)
+        public async Task Buy(int? quantity = null, Gs2.Unity.Gs2Showcase.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
             await new Gs2Bind.Gs2Showcase.DisplayItemLoader("CharacterGacha", "Showcase", _model.Id).Buy(_gs2, _session, quantity: quantity, config: config);
