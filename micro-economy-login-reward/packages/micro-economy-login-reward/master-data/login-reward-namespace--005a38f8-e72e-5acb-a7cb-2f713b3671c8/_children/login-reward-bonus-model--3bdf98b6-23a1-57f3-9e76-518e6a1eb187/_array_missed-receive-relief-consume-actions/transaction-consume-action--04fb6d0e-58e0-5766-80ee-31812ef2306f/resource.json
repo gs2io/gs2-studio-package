@@ -1,0 +1,34 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "action",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+              "typeName": "LoginRewardCollection"
+            },
+            "propertyId": "prop_01M3CDS330A2F2YQMY9FNA3T7M"
+          },
+          "kind": "parent",
+          "parentResourceId": "3bdf98b6-23a1-57f3-9e76-518e6a1eb187"
+        }
+      }
+    ]
+  },
+  "id": "04fb6d0e-58e0-5766-80ee-31812ef2306f",
+  "index": 0,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+    "typeName": "LoginRewardCollection"
+  }
+}

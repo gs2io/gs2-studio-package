@@ -70,46 +70,10 @@
           },
           "kind": "list"
         }
-      },
-      {
-        "bindingHint": "userData",
-        "id": "prop_ZXRNPBQQCJM49N2Z27FQETSRWY",
-        "localizedDisplay": {
-          "en": {
-            "description": "Login steps already claimed by the player.",
-            "label": "Received steps"
-          },
-          "ja": {
-            "description": "プレイヤーが受け取り済みのログイン段階を示します。",
-            "label": "受取済み段階"
-          }
-        },
-        "name": "receivedSteps",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "elementType": {
-            "kind": "primitive",
-            "primitiveType": "bool"
-          },
-          "kind": "list"
-        }
       }
     ]
   },
-  "delegatedActions": [
-    {
-      "methodName": "Receive",
-      "parameterOverrides": [],
-      "targetActionKey": "Gs2LoginReward:ReceiveStatus.Receive",
-      "targetResource": {
-        "resourceId": "36085262-1664-4dfe-a472-c1f8a886ec52",
-        "resourceKind": "userData",
-        "sourcePackageId": "micro-economy-login-reward"
-      }
-    }
-  ],
+  "delegatedActions": [],
   "id": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
   "kind": "local",
   "name": "LoginReward",

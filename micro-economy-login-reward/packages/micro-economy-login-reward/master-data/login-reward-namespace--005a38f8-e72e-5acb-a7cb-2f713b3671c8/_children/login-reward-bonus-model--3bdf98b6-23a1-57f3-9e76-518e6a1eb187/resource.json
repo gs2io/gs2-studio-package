@@ -2,9 +2,30 @@
   "authored": {
     "declaredBindings": [
       {
-        "kind": "static",
+        "kind": "domainProperty",
+        "parameterName": "missedReceiveRelief",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_01M3CDS330QE86VNCF2B97886B"
+        }
+      },
+      {
+        "kind": "domainProperty",
         "parameterName": "mode",
-        "value": "schedule"
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_01M3CDS330CMZX53TRZEHQPTRX"
+        }
       },
       {
         "kind": "domainProperty",
@@ -36,6 +57,19 @@
         "kind": "static",
         "parameterName": "periodEventId.grnKey.namespaceName",
         "value": "Schedule"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeat",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_01M3CDS330E35JNBG69ADAZ31P"
+        }
       },
       {
         "kind": "domainProperty",

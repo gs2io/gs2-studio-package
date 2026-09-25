@@ -1,0 +1,51 @@
+{
+  "category": "acquire",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "3bdf98b6-23a1-57f3-9e76-518e6a1eb187",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ResetReceiveStatus",
+  "outputs": [
+    {
+      "actionName": "Gs2LoginReward:DeleteReceiveStatusByUserId",
+      "conditions": [],
+      "id": "out_01M3CDS3318BK7B6711P4078WR",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "bonusModelName",
+          "sourceParameter": "loginRewardCollection"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "3bdf98b6-23a1-57f3-9e76-518e6a1eb187",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "id": "param_01M3CDS331JEB1CMG0KPTXVWF4",
+      "name": "loginRewardCollection",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P"
+      }
+    }
+  ]
+}

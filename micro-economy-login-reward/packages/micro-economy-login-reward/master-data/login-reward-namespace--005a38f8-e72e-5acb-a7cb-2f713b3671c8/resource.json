@@ -34,12 +34,12 @@
       {
         "kind": "static",
         "parameterName": "transactionSetting.enableAtomicCommit",
-        "value": false
+        "value": true
       },
       {
         "kind": "static",
         "parameterName": "transactionSetting.enableAutoRun",
-        "value": false
+        "value": true
       },
       {
         "kind": "static",

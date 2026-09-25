@@ -5,25 +5,31 @@
     "LoginReward": {
       "id": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
       "singleEntry": false,
-      "delegatedActions": {
-        "Receive": "resource:micro-economy-login-reward:userData:36085262-1664-4dfe-a472-c1f8a886ec52::Gs2LoginReward:ReceiveStatus.Receive"
-      },
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
       "properties": {
         "acquireActions": "prop_JPGJM6CM0TRQGXTAVJBYATVNCG",
         "id": "prop_reserved_id",
-        "loginRewardCollection": "prop_0N4V6CN66SVVQH7S0S3Z909D1A",
-        "receivedSteps": "prop_ZXRNPBQQCJM49N2Z27FQETSRWY"
+        "loginRewardCollection": "prop_0N4V6CN66SVVQH7S0S3Z909D1A"
       }
     },
     "LoginRewardCollection": {
       "id": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
       "singleEntry": false,
+      "delegatedActions": {
+        "MissedReceive": "resource:micro-economy-login-reward:userData:36085262-1664-4dfe-a472-c1f8a886ec52::Gs2LoginReward:ReceiveStatus.MissedReceive",
+        "Receive": "resource:micro-economy-login-reward:userData:36085262-1664-4dfe-a472-c1f8a886ec52::Gs2LoginReward:ReceiveStatus.Receive"
+      },
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
       "properties": {
         "id": "prop_reserved_id",
+        "lastReceivedAt": "prop_01M3CDS3307PAW74XKV4GXD6HK",
+        "missedReceiveRelief": "prop_01M3CDS330QE86VNCF2B97886B",
+        "missedReceiveReliefConsumeActions": "prop_01M3CDS330A2F2YQMY9FNA3T7M",
+        "mode": "prop_01M3CDS330CMZX53TRZEHQPTRX",
+        "receivedSteps": "prop_01M3CDS33034EBKHQWCY415F48",
+        "repeat": "prop_01M3CDS330E35JNBG69ADAZ31P",
         "resetHour": "prop_NFHPA3CG7FM9RX44J7NAWPT1ET",
         "schedule": "prop_A2TYYY7WW1Z4306M5CGDJRBEKJ"
       }
@@ -39,7 +45,12 @@
     "loginReward.BonusModel": "3bdf98b6-23a1-57f3-9e76-518e6a1eb187",
     "loginReward.Namespace": "005a38f8-e72e-5acb-a7cb-2f713b3671c8",
     "loginReward.Reward": "de30e83f-37c0-579a-a4dc-b3918862a28d",
-    "transaction.AcquireAction": "3ca17687-f805-5398-b07f-e277edc45611"
+    "transaction.AcquireAction": "3ca17687-f805-5398-b07f-e277edc45611",
+    "transaction.ConsumeAction": "04fb6d0e-58e0-5766-80ee-31812ef2306f"
   },
-  "transforms": {}
+  "transforms": {
+    "ResetReceiveStatus": [
+      "loginRewardCollection"
+    ]
+  }
 }

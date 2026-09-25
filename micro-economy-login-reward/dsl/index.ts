@@ -1,5 +1,6 @@
 import {
   Bind,
+  Cond,
   defineDomainType,
   defineMasterDataResource,
   defineOverlayDomainType,
@@ -20,12 +21,38 @@ import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-su
 // mistake is a compile error rather than an id that resolves to nothing.
 const schedule = dependencyPackage(scheduleSurface);
 
+// GS2 keeps one receive status per bonus model and decides the step itself,
+// so the status and both presses live on the group, not on a reward row.
+// "schedule" counts days from the schedule's start; "streaming" counts the
+// days the player has claimed, advancing at resetHour (UTC).
 const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
   dt
-    .property(PT.prop("schedule", PT.ref("Schedule")).assetDelivery().required())
-    .property(PT.int32("resetHour").masterData().required())
+    .property(PT.prop("mode", PT.enum("schedule", "streaming")).masterData().required())
+    .property(
+      PT.prop("schedule", PT.ref("Schedule"))
+        .assetDelivery()
+        .requiredWhen(Cond.eq("mode", "schedule"))
+    )
+    .property(PT.int32("resetHour").masterData().requiredWhen(Cond.eq("mode", "streaming")))
+    .property(
+      PT.prop("repeat", PT.enum("enabled", "disabled"))
+        .masterData()
+        .requiredWhen(Cond.eq("mode", "streaming"))
+    )
+    .property(PT.prop("missedReceiveRelief", PT.enum("enabled", "disabled")).masterData())
+    .property(
+      PT.prop("missedReceiveReliefConsumeActions", PT.listOf(PT.consumeAction())).masterData()
+    )
+    .property(PT.prop("receivedSteps", PT.listOf(PT.bool())).userData())
+    .property(PT.timestamp("lastReceivedAt").userData())
     .localizedProperties({
       id: jaEnId("ログインボーナスグループ", "login reward group"),
+      mode: jaEnField(
+        "進行モード",
+        "Progress mode",
+        "schedule は開催開始からの日数で、streaming は受け取った日数で段階を決めます。",
+        "schedule picks the step by days since the schedule started; streaming by days claimed."
+      ),
       schedule: jaEnField(
         "開催スケジュール",
         "Availability schedule",
@@ -39,6 +66,36 @@ const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
         "UTC hour when the login reward advances to the next day.",
         { ja: "時", en: "hour" }
       ),
+      repeat: jaEnField(
+        "繰り返し",
+        "Repeat",
+        "streaming で最後の段階まで受け取った後、最初の段階へ戻るかどうかです。",
+        "Whether streaming returns to the first step after the last one is claimed."
+      ),
+      missedReceiveRelief: jaEnField(
+        "取り逃し救済",
+        "Missed-receive relief",
+        "受け取り損ねた段階を、救済の消費アクションと引き換えに受け取れるようにします。",
+        "Lets a player claim a missed step in exchange for the relief consume actions."
+      ),
+      missedReceiveReliefConsumeActions: jaEnField(
+        "救済の消費アクション",
+        "Relief consume actions",
+        "取り逃した段階を受け取るときに実行する消費アクションです。",
+        "Consume actions executed when claiming a missed step."
+      ),
+      receivedSteps: jaEnField(
+        "受取済み段階",
+        "Received steps",
+        "プレイヤーが受け取り済みの段階を、先頭から順に示します。",
+        "Steps the player has claimed, in step order."
+      ),
+      lastReceivedAt: jaEnField(
+        "最終受取日時",
+        "Last received at",
+        "プレイヤーが最後に報酬を受け取った日時です。",
+        "When the player last claimed a reward."
+      ),
     })
 );
 
@@ -48,7 +105,6 @@ const LoginReward = defineDomainType("LoginReward", dt =>
       PT.prop("loginRewardCollection", PT.ref("LoginRewardCollection")).assetDelivery().required()
     )
     .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
-    .property(PT.prop("receivedSteps", PT.listOf(PT.bool())).userData().required())
     .localizedProperties({
       id: jaEnId("ログインボーナス", "login reward"),
       loginRewardCollection: jaEnField(
@@ -63,12 +119,6 @@ const LoginReward = defineDomainType("LoginReward", dt =>
         "このログイン段階で実行する報酬アクションです。",
         "Reward actions executed for this login step."
       ),
-      receivedSteps: jaEnField(
-        "受取済み段階",
-        "Received steps",
-        "プレイヤーが受け取り済みのログイン段階を示します。",
-        "Login steps already claimed by the player."
-      ),
     })
 );
 
@@ -79,7 +129,11 @@ const BonusModel = defineMasterDataResource(resource =>
     .model(GS2.loginReward.BonusModel)
     .mountLocal(LoginRewardCollection)
     .bindings({
-      mode: Bind.static("schedule"),
+      mode: Bind.domainProperty(Source.direct(LoginRewardCollection, "mode")),
+      repeat: Bind.domainProperty(Source.direct(LoginRewardCollection, "repeat")),
+      missedReceiveRelief: Bind.domainProperty(
+        Source.direct(LoginRewardCollection, "missedReceiveRelief")
+      ),
       name: Bind.domainProperty(Source.direct(LoginRewardCollection, "id")),
       resetHour: Bind.domainProperty(Source.direct(LoginRewardCollection, "resetHour")),
     })
@@ -105,17 +159,28 @@ const BonusModel = defineMasterDataResource(resource =>
             });
         });
     })
+    .addArrayChild("missedReceiveReliefConsumeActions", consumeAction => {
+      consumeAction
+        .model(GS2.transaction.ConsumeAction)
+        .mountLocal(LoginRewardCollection)
+        .bindings({
+          action: Bind.domainProperty(
+            Source.parent(Source.direct(LoginRewardCollection, "missedReceiveReliefConsumeActions"))
+          ),
+        });
+    })
 );
 
 const ReceiveStatus = defineUserDataResource(resource =>
   resource
     .model(GS2.loginReward.ReceiveStatus)
-    .mountLocal(LoginReward)
+    .mountLocal(LoginRewardCollection)
     .linkedMasterResourceId(BonusModel)
     .bindings({
-      bonusModelName: Bind.skip(),
+      bonusModelName: Bind.domainProperty(Source.direct(LoginRewardCollection, "id")),
       receiveStatusId: Bind.skip(),
-      receivedSteps: Bind.domainProperties([Source.direct(LoginReward, "receivedSteps")]),
+      lastReceivedAt: Bind.domainProperty(Source.direct(LoginRewardCollection, "lastReceivedAt")),
+      receivedSteps: Bind.domainProperties([Source.direct(LoginRewardCollection, "receivedSteps")]),
       userId: Bind.skip(),
     })
 );
@@ -160,14 +225,35 @@ export const microEconomyLoginReward = definePackage("micro-economy-login-reward
         logSetting: Bind.null(),
         name: Bind.static("LoginReward"),
         receiveScript: Bind.null(),
-        transactionSetting: transactionSetting(),
+        transactionSetting: transactionSetting({
+          enableAtomicCommit: Bind.static(true),
+          enableAutoRun: Bind.static(true),
+        }),
       })
       .addChild(BonusModel)
   )
   .userDataResource(ReceiveStatus)
 
-  .delegatedAction(LoginReward, "Receive", {
+  .delegatedAction(LoginRewardCollection, "Receive", {
     targetActionKey: "Gs2LoginReward:ReceiveStatus.Receive",
     targetResource: ReceiveStatus,
   })
+  .delegatedAction(LoginRewardCollection, "MissedReceive", {
+    targetActionKey: "Gs2LoginReward:ReceiveStatus.MissedReceive",
+    targetResource: ReceiveStatus,
+  })
+  // Deleting the status starts the player over from the first step. The group
+  // arrives as a reference so each group's own status is the one removed.
+  .actionTransform("ResetReceiveStatus", at =>
+    at
+      .category("acquire")
+      .parameter("loginRewardCollection", { type: PT.ref("LoginRewardCollection") })
+      .output("Gs2LoginReward:DeleteReceiveStatusByUserId", o =>
+        o
+          .resourceRef(() => BonusModel)
+          .mapResourceKey("namespaceName")
+          .mapParameter("bonusModelName", "loginRewardCollection")
+          .mapPlaceholder("userId", "#{userId}")
+      )
+  )
   .build();

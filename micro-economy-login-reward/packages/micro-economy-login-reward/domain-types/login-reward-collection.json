@@ -26,6 +26,31 @@
         }
       },
       {
+        "bindingHint": "masterData",
+        "id": "prop_01M3CDS330CMZX53TRZEHQPTRX",
+        "localizedDisplay": {
+          "en": {
+            "description": "schedule picks the step by days since the schedule started; streaming by days claimed.",
+            "label": "Progress mode"
+          },
+          "ja": {
+            "description": "schedule は開催開始からの日数で、streaming は受け取った日数で段階を決めます。",
+            "label": "進行モード"
+          }
+        },
+        "name": "mode",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "schedule",
+            "streaming"
+          ]
+        }
+      },
+      {
         "bindingHint": "assetDelivery",
         "id": "prop_A2TYYY7WW1Z4306M5CGDJRBEKJ",
         "localizedDisplay": {
@@ -40,7 +65,9 @@
         },
         "name": "schedule",
         "requirement": {
-          "kind": "always"
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"mode\",\"value\":\"schedule\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
         },
         "type": {
           "kind": "ref",
@@ -64,16 +91,162 @@
         },
         "name": "resetHour",
         "requirement": {
-          "kind": "always"
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"mode\",\"value\":\"streaming\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
         },
         "type": {
           "kind": "primitive",
           "primitiveType": "int32"
         }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M3CDS330E35JNBG69ADAZ31P",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether streaming returns to the first step after the last one is claimed.",
+            "label": "Repeat"
+          },
+          "ja": {
+            "description": "streaming で最後の段階まで受け取った後、最初の段階へ戻るかどうかです。",
+            "label": "繰り返し"
+          }
+        },
+        "name": "repeat",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"mode\",\"value\":\"streaming\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "enabled",
+            "disabled"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M3CDS330QE86VNCF2B97886B",
+        "localizedDisplay": {
+          "en": {
+            "description": "Lets a player claim a missed step in exchange for the relief consume actions.",
+            "label": "Missed-receive relief"
+          },
+          "ja": {
+            "description": "受け取り損ねた段階を、救済の消費アクションと引き換えに受け取れるようにします。",
+            "label": "取り逃し救済"
+          }
+        },
+        "name": "missedReceiveRelief",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "enabled",
+            "disabled"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M3CDS330A2F2YQMY9FNA3T7M",
+        "localizedDisplay": {
+          "en": {
+            "description": "Consume actions executed when claiming a missed step.",
+            "label": "Relief consume actions"
+          },
+          "ja": {
+            "description": "取り逃した段階を受け取るときに実行する消費アクションです。",
+            "label": "救済の消費アクション"
+          }
+        },
+        "name": "missedReceiveReliefConsumeActions",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "elementType": {
+            "kind": "consumeAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_01M3CDS33034EBKHQWCY415F48",
+        "localizedDisplay": {
+          "en": {
+            "description": "Steps the player has claimed, in step order.",
+            "label": "Received steps"
+          },
+          "ja": {
+            "description": "プレイヤーが受け取り済みの段階を、先頭から順に示します。",
+            "label": "受取済み段階"
+          }
+        },
+        "name": "receivedSteps",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "elementType": {
+            "kind": "primitive",
+            "primitiveType": "bool"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_01M3CDS3307PAW74XKV4GXD6HK",
+        "localizedDisplay": {
+          "en": {
+            "description": "When the player last claimed a reward.",
+            "label": "Last received at"
+          },
+          "ja": {
+            "description": "プレイヤーが最後に報酬を受け取った日時です。",
+            "label": "最終受取日時"
+          }
+        },
+        "name": "lastReceivedAt",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
       }
     ]
   },
-  "delegatedActions": [],
+  "delegatedActions": [
+    {
+      "methodName": "Receive",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2LoginReward:ReceiveStatus.Receive",
+      "targetResource": {
+        "resourceId": "36085262-1664-4dfe-a472-c1f8a886ec52",
+        "resourceKind": "userData",
+        "sourcePackageId": "micro-economy-login-reward"
+      }
+    },
+    {
+      "methodName": "MissedReceive",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2LoginReward:ReceiveStatus.MissedReceive",
+      "targetResource": {
+        "resourceId": "36085262-1664-4dfe-a472-c1f8a886ec52",
+        "resourceKind": "userData",
+        "sourcePackageId": "micro-economy-login-reward"
+      }
+    }
+  ],
   "id": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
   "kind": "local",
   "name": "LoginRewardCollection",
