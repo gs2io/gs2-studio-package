@@ -1,0 +1,61 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  QuestCurrentQuestMaster_Quest:
+    Type: "GS2::Quest::CurrentQuestMaster"
+    Properties:
+      NamespaceName: "Quest"
+      Settings:
+        version: "2019-05-14"
+        groups:
+          - name: "main"
+            quests:
+              - name: "quest1"
+                contents:
+                  - completeAcquireActions:
+                      - action: "Gs2Money2:DepositByUserId"
+                        request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":10}]}"
+                firstCompleteAcquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}"
+                verifyActions: []
+                consumeActions:
+                  - action: "Gs2Stamina:ConsumeStaminaByUserId"
+                    request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"consumeValue\":10}"
+                failedAcquireActions: []
+              - name: "quest2"
+                contents:
+                  - completeAcquireActions:
+                      - action: "Gs2Money2:DepositByUserId"
+                        request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":30}]}"
+                firstCompleteAcquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":200}]}"
+                verifyActions: []
+                consumeActions:
+                  - action: "Gs2Stamina:ConsumeStaminaByUserId"
+                    request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"consumeValue\":20}"
+                failedAcquireActions: []
+              - name: "quest3"
+                contents:
+                  - completeAcquireActions:
+                      - action: "Gs2Money2:DepositByUserId"
+                        request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":60}]}"
+                firstCompleteAcquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":300}]}"
+                verifyActions: []
+                consumeActions:
+                  - action: "Gs2Stamina:ConsumeStaminaByUserId"
+                    request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"consumeValue\":30}"
+                failedAcquireActions: []
+      Mode: "direct"
+    DependsOn:
+      - "QuestNamespace_Quest"
+  QuestNamespace_Quest:
+    Type: "GS2::Quest::Namespace"
+    Properties:
+      Name: "Quest"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

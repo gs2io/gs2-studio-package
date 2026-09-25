@@ -1,0 +1,29 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  StaminaCurrentStaminaMaster_Energy:
+    Type: "GS2::Stamina::CurrentStaminaMaster"
+    Properties:
+      NamespaceName: "Energy"
+      Settings:
+        version: "2019-02-14"
+        staminaModels:
+          - initialCapacity: 50
+            isOverflow: true
+            maxCapacity: 100
+            name: "stamina"
+            recoverIntervalMinutes: 1
+            recoverValue: 5
+            maxStaminaTable: null
+            recoverIntervalTable: null
+            recoverValueTable: null
+      Mode: "direct"
+    DependsOn:
+      - "StaminaNamespace_Energy"
+  StaminaNamespace_Energy:
+    Type: "GS2::Stamina::Namespace"
+    Properties:
+      Name: "Energy"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

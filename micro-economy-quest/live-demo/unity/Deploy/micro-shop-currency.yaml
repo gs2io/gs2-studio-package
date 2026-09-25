@@ -1,0 +1,135 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ShowcaseCurrentShowcaseMaster_ShopCurrency:
+    Type: "GS2::Showcase::CurrentShowcaseMaster"
+    Properties:
+      NamespaceName: "ShopCurrency"
+      Settings:
+        version: "2019-04-04"
+        showcases:
+          - name: "JPY"
+            displayItems:
+              - displayItemId: "coin_large.JPY"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "coin_large"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_large\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":300,\"currency\":\"JPY\",\"count\":250}]}"
+              - displayItemId: "coin_medium.JPY"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "coin_medium"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_medium\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":200,\"currency\":\"JPY\",\"count\":50}]}"
+              - displayItemId: "coin_small.JPY"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "coin_small"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_small\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":100,\"currency\":\"JPY\",\"count\":10}]}"
+          - name: "USD"
+            displayItems:
+              - displayItemId: "coin_large.USD"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "coin_large"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_large\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":3,\"currency\":\"USD\",\"count\":250}]}"
+              - displayItemId: "coin_medium.USD"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "coin_medium"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_medium\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":2,\"currency\":\"USD\",\"count\":50}]}"
+              - displayItemId: "coin_small.USD"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "coin_small"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_small\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":1,\"currency\":\"USD\",\"count\":10}]}"
+          - name: "XXX"
+            displayItems:
+              - displayItemId: "coin_large.XXX"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "coin_large"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_large\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":3,\"currency\":\"XXX\",\"count\":250}]}"
+              - displayItemId: "coin_medium.XXX"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "coin_medium"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_medium\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":2,\"currency\":\"XXX\",\"count\":50}]}"
+              - displayItemId: "coin_small.XXX"
+                type: "salesItem"
+                salesItem:
+                  metadata: ""
+                  name: "coin_small"
+                  verifyActions: []
+                  consumeActions:
+                    - action: "Gs2Money2:VerifyReceiptByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_small\",\"receipt\":\"#{receipt}\"}"
+                  acquireActions:
+                    - action: "Gs2Money2:DepositByUserId"
+                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":1,\"currency\":\"XXX\",\"count\":10}]}"
+        randomShowcases: []
+      Mode: "direct"
+    DependsOn:
+      - "ShowcaseNamespace_ShopCurrency"
+  ShowcaseNamespace_ShopCurrency:
+    Type: "GS2::Showcase::Namespace"
+    Properties:
+      Name: "ShopCurrency"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
