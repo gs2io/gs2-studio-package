@@ -52,18 +52,6 @@
   "mountFields": [],
   "components": [
     {
-      "className": "LoginRewardCollectionCatchUpButton",
-      "kind": "buttonAction",
-      "valueType": "",
-      "reportsFailure": true,
-      "serializedFields": [
-        {
-          "role": "button",
-          "name": "_button"
-        }
-      ]
-    },
-    {
       "className": "LoginRewardCollectionLastReceivedLabel",
       "kind": "templateLabel",
       "valueType": "",

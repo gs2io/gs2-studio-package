@@ -104,8 +104,6 @@ namespace GS2Studio.Generated.LoginRewardCollection
         public IReadOnlyList<bool>? ReceivedSteps => _model.ReceivedSteps;
         /// <inheritdoc cref="LoginRewardCollection.LastReceivedAt" />
         public DateTime? LastReceivedAt => _model.LastReceivedAt;
-        /// <inheritdoc cref="LoginRewardCollection.CatchUpCost" />
-        public int CatchUpCost => _model.CatchUpCost;
         /// <summary>
         /// Base constructor. Stores the bound model + service handles on the
         /// protected fields shared with the owning derived class. `private
@@ -226,14 +224,6 @@ namespace GS2Studio.Generated.LoginRewardCollection
             ApplyUserdataLoginRewardLoginRewardBonusModel(_model, _userdataLoginRewardLoginRewardBonusModel);
             LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
             if (_transactionAcquireAction != null) RestoreId(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
-            _model.CatchUpCost = default;
-            if (_transactionConsumeAction != null)
-            {
-                foreach (var __action in _transactionConsumeAction)
-                {
-                    if (__action != null && RestoreCatchUpCost(_model, __action.Action, __action.Request)) break;
-                }
-            }
             _mounted = true;
         }
 
@@ -281,14 +271,6 @@ namespace GS2Studio.Generated.LoginRewardCollection
                     if (_disposed) return Task.CompletedTask;
                     if (value != null)
                     {
-                    }
-                    _model.CatchUpCost = default;
-                    if (value != null)
-                    {
-                        foreach (var __action in value)
-                        {
-                            if (__action != null && RestoreCatchUpCost(_model, __action.Action, __action.Request)) break;
-                        }
                     }
                     LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
                     return Task.CompletedTask;
@@ -512,22 +494,6 @@ namespace GS2Studio.Generated.LoginRewardCollection
                 if (__value != null)
                 {
                     model.Id = (LoginRewardCollectionId)__value;
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static bool RestoreCatchUpCost(IMutableLoginRewardCollection model, string actionName, string requestJson)
-        {
-            if (requestJson == null) return false;
-            var request = JsonMapper.ToObject(requestJson);
-            if (actionName == "Gs2Money2:WithdrawByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Currency")
-            {
-                var __value = ReadRequestValue(request, new string[] { "withdrawCount" });
-                if (__value != null)
-                {
-                    model.CatchUpCost = (int)Convert.ChangeType(__value, typeof(int));
                     return true;
                 }
             }

@@ -37,11 +37,6 @@ namespace GS2Studio.Generated.LoginRewardCollection
         IReadOnlyList<bool>? ReceivedSteps { get; }
 
         DateTime? LastReceivedAt { get; }
-
-        /// <summary>
-        /// Free currency charged to claim a missed day
-        /// </summary>
-        int CatchUpCost { get; }
     }
 
     /// <summary>
@@ -63,7 +58,6 @@ namespace GS2Studio.Generated.LoginRewardCollection
         new string? MissedReceiveRelief { get; set; }
         new IReadOnlyList<bool>? ReceivedSteps { get; set; }
         new DateTime? LastReceivedAt { get; set; }
-        new int CatchUpCost { get; set; }
     }
 
     /// <summary>
@@ -88,7 +82,5 @@ namespace GS2Studio.Generated.LoginRewardCollection
         public IReadOnlyList<bool>? ReceivedSteps { get; set; }
 
         public DateTime? LastReceivedAt { get; set; }
-
-        public int CatchUpCost { get; set; }
     }
 }

@@ -4,27 +4,30 @@
  * The feature package is a login bonus with no bonus in it: it declares the
  * group a player claims against, the reward rows mounted on that group's
  * `rewards[]`, and the presses GS2 offers — `Receive` and `MissedReceive`. What
- * a title ships as its bonus — how many days, what each pays, and what it
- * costs to catch up on a missed day — is not the package's to guess, so this
- * package supplies one seven-day track.
+ * a title ships as its bonus — how many days and what each pays — is not the
+ * package's to guess, so this package supplies one seven-day track.
  *
  * A visitor presses Receive and watches the first day's coins land in the
  * wallet and the first row of the track turn to "Received". A second Receive
  * the same day is refused (`alreadyReceived`): the track advances once a day,
- * at 15:00 UTC, which is midnight in Japan. So the page carries Catch up
- * (`MissedReceive`), which claims the next day early for a few coins, and
- * Start over, which deletes the receive status so the track begins again.
+ * at 15:00 UTC, which is midnight in Japan. So the page carries Advance one
+ * day, which moves the visitor's clock on GS2 forward 24 hours so the next day
+ * can be received now, and Start over, which deletes the receive status so the
+ * track begins again.
+ *
+ * **Advance one day is the demo's own.** It sets the account's time offset,
+ * which no package action does, so it is a hand-written Unity component
+ * (`Assets/Showroom/`) rather than a press declared here, and it signs in with
+ * the demo's own client (`live-demo/client-stack.yaml`), whose policy allows
+ * the call. The track itself is untouched: it is the same bonus a title
+ * would ship, seen on a faster clock.
  *
  * **Streaming, not scheduled.** The group counts the days the player has
  * claimed rather than the days since an event opened, so a visitor always
  * starts from day one and there is no event window that has to be open. Repeat
- * is off, which is what lets relief be on: past day seven both presses are
- * refused rather than the track wrapping round.
- *
- * **Catch up does not look at today.** GS2 hands out the next unclaimed step
- * whether or not today's has been taken, so a visitor who catches up before
- * receiving has paid for the day they could have had free. The page says so
- * rather than hiding the press.
+ * is off: past day seven Receive is refused rather than the track wrapping
+ * round. Relief is off too, because a missed day is reached by advancing the
+ * clock rather than by paying for it.
  *
  * **Start over is an exchange.** GS2 has no client action that deletes a
  * receive status; the feature package ships the deletion as an acquire
@@ -65,7 +68,7 @@ const currency = dependencyPackage(currencySurface);
  */
 const PublishedLoginRewardCollection = loginReward.type("LoginRewardCollection");
 
-/** The wallet the page shows, every reward lands in and every catch-up draws from. */
+/** The wallet the page shows and every reward lands in. */
 const WALLET_SLOT = 0;
 
 /** The one track on the page. */
@@ -76,9 +79,6 @@ const DAILY = "daily";
  * midnight in Japan.
  */
 const RESET_HOUR = 15;
-
-/** What claiming a missed day costs, in free currency. */
-const CATCH_UP_COST = 5;
 
 /**
  * The seven days, in the order they are claimed. The ids sort in this order,
@@ -97,61 +97,12 @@ const DAYS = [
 ] as const;
 
 /**
- * The group, overlaid so it can carry what catching up costs.
- *
- * `missedReceiveReliefConsumeActions` is the slot the feature package leaves
- * open; one withdrawal is appended to it and `catchUpCost` decides how big it
- * is. The property belongs to the type this overlay extends, so it is
- * addressed by id: a single-package build does not load its dependency
- * closure, so the name would pass through unresolved.
+ * The group, overlaid so the page's presses and labels, and the start-over
+ * rate mounted on it, have a type of this package's to hang from.
  */
 const LoginRewardCollection = defineOverlayDomainType(
   "LoginRewardCollection",
-  {
-    ...loginReward.overlay("LoginRewardCollection"),
-    actionPropertyTransforms: [
-      {
-        targetProperty: loginReward.propertyId(
-          "LoginRewardCollection",
-          "missedReceiveReliefConsumeActions"
-        ),
-        kind: "transformEntries",
-        mode: "append",
-        entries: [
-          {
-            transformPackageId: currency.packageId,
-            transformName: "WithdrawCurrency",
-            arguments: [
-              { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              // Free currency, which is what every day on the track pays in.
-              { parameterName: "paidOnly", source: { kind: "static", value: false } },
-              {
-                parameterName: "count",
-                source: { kind: "domainProperty", propertyName: "catchUpCost" },
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  domainType =>
-    domainType
-      .property(
-        PT.int32("catchUpCost")
-          .masterData()
-          .required()
-          .description("Free currency charged to claim a missed day")
-      )
-      .localizedProperties({
-        catchUpCost: jaEnField(
-          "取り逃し救済の費用",
-          "Catch-up cost",
-          "受け取り損ねた日を受け取るときに消費する無償通貨の額です。",
-          "Free currency spent to claim a missed day.",
-          { ja: "通貨", en: "currency" }
-        ),
-      })
+  loginReward.overlay("LoginRewardCollection")
 );
 
 /**
@@ -248,15 +199,15 @@ const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
   .display({
     label: { ja: "ログインボーナス（デモデータ）", en: "Login rewards (demo data)" },
     description: {
-      ja: "ライブデモ用の 7 日間のログインボーナスと、各日の報酬コイン・取り逃し救済の費用・やり直しの操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
-      en: "Supplies the live demo's seven-day login bonus, the coins each day pays, what catching up costs, and the press that starts the track over. The rewards land in the currency package's wallet.",
+      ja: "ライブデモ用の 7 日間のログインボーナスと、各日の報酬コイン・やり直しの操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+      en: "Supplies the live demo's seven-day login bonus, the coins each day pays, and the press that starts the track over. The rewards land in the currency package's wallet.",
     },
   })
   .displayType(LoginRewardCollection, {
     label: { ja: "ログインボーナスグループ", en: "Login reward group" },
     description: {
-      ja: "デモのログインボーナスグループに、取り逃し救済の費用を足します。",
-      en: "Adds what catching up costs to a demo login reward group.",
+      ja: "デモのログインボーナスグループに、受け取り・やり直しの操作と表示を付けます。",
+      en: "Gives a demo login reward group its receive and start-over presses and its labels.",
     },
   })
   .displayType(LoginReward, {
@@ -274,7 +225,7 @@ const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
   // Its event windows live in the schedule stack this demo deploys too;
   // deployed from here without them, that stack would lose them.
   .dependency("foundation-economy-schedule-demo", "github:gs2io/gs2-studio-package")
-  // Where a day pays and what a catch-up is charged against.
+  // Where a day pays.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
   // The currency demo stocks the currency shop's price table, and an install
@@ -284,16 +235,13 @@ const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
   .domainType(LoginRewardCollection)
   .domainType(LoginReward)
 
-  // Streaming with repeat off and relief on: the track counts claimed days,
-  // stops after day seven, and lets a missed day be bought. The relief slot is
-  // authored empty because the withdrawal is appended to it.
+  // Streaming with repeat and relief off: the track counts claimed days and
+  // stops after day seven, and the next day is reached by advancing the clock.
   .instance(LoginRewardCollection.typeName, DAILY, {
     [loginReward.propertyId("LoginRewardCollection", "mode")]: "streaming",
     [loginReward.propertyId("LoginRewardCollection", "repeat")]: "disabled",
-    [loginReward.propertyId("LoginRewardCollection", "missedReceiveRelief")]: "enabled",
+    [loginReward.propertyId("LoginRewardCollection", "missedReceiveRelief")]: "disabled",
     [loginReward.propertyId("LoginRewardCollection", "resetHour")]: RESET_HOUR,
-    [loginReward.propertyId("LoginRewardCollection", "missedReceiveReliefConsumeActions")]: [],
-    catchUpCost: CATCH_UP_COST,
   });
 
 // Authored by type name so the rows reach the overlay this package declares,
@@ -337,12 +285,9 @@ export const microEconomyLoginRewardDemo = withDays
   // shows of a login bonus is the title's decision.
   .uiComponent(LoginRewardCollection, ui =>
     ui
-      // `Receive` and `MissedReceive` are the feature package's own presses;
-      // GS2 picks the step, so neither takes an argument.
+      // `Receive` is the feature package's own press; GS2 picks the step, so
+      // it takes no argument.
       .buttonAction("ReceiveButton", "Receive", undefined, { name: "LoginRewardCollection" })
-      .buttonAction("CatchUpButton", "MissedReceive", undefined, {
-        name: "LoginRewardCollection",
-      })
       .buttonAction("StartOverButton", "StartOver", undefined, { name: "LoginRewardCollection" })
       // A label rather than a value: a timestamp value is drawn as a
       // countdown, and this is a moment in the past. GS2 stores it in UTC.
@@ -358,8 +303,8 @@ export const microEconomyLoginRewardDemo = withDays
       )
       .templateLabel(
         "RuleLabel",
-        "A new day starts at 15:00 UTC (midnight in Japan). Catch up claims the next day now for {catchUpCost} coins. Receive today's reward first, or you pay for it.",
-        { catchUpCost: ui.prop("catchUpCost") },
+        "A new day starts at 15:00 UTC (midnight in Japan). Advance one day moves your clock forward 24 hours, so the next day can be received now.",
+        {},
         { name: "LoginRewardCollection" }
       )
   )

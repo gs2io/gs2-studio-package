@@ -7,7 +7,6 @@
       "rows": [
         "LoginRewardCollectionRuleLabel",
         "LoginRewardCollectionReceiveButton",
-        "LoginRewardCollectionCatchUpButton",
         "LoginRewardCollectionStartOverButton",
         "LoginRewardCollectionLastReceivedLabel"
       ]

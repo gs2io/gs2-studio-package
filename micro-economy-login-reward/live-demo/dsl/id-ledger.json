@@ -1,10 +1,12 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "property:LoginRewardCollection.catchUpCost": "prop_01M3E1NYQWTDMTKK9AHQQXBVQA",
+    "ui:LoginRewardCollection:LoginRewardCollection:item:CatchUpButton": "4b076d4a-1fed-57b7-9b5d-8b6b88e34234"
+  },
   "random": {
     "property:LoginReward.coins": "prop_01M3E1NYQWQ84PA61Z003RWE77",
     "property:LoginReward.displayName": "prop_01M3E1NYQWW3EF79PFBVF6R6P8",
-    "property:LoginRewardCollection.catchUpCost": "prop_01M3E1NYQWTDMTKK9AHQQXBVQA",
     "row:dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV.day1": "row_01M3E1NYQWEVXG5NQ6ZM51V1S5",
     "row:dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV.day2": "row_01M3E1NYQW00Q9R4ANCQVY29DR",
     "row:dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV.day3": "row_01M3E1NYQWMW07R1VXW5VXDMBT",

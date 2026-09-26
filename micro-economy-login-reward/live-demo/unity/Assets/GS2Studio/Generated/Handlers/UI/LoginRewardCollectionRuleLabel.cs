@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.LoginRewardCollection.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>A new day starts at 15:00 UTC (midnight in Japan). Catch up claims the next day now for {catchUpCost} coins. Receive today's reward first, or you pay for it.</c>. Each <c>{key}</c> placeholder is
+    /// <c>A new day starts at 15:00 UTC (midnight in Japan). Advance one day moves your clock forward 24 hours, so the next day can be received now.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>LoginRewardCollection</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.LoginRewardCollection.UI
 
         private void OnUpdated(LoginRewardCollection model)
         {
-            _onUpdate.Invoke($"A new day starts at 15:00 UTC (midnight in Japan). Catch up claims the next day now for {model.CatchUpCost} coins. Receive today's reward first, or you pay for it.");
+            _onUpdate.Invoke($"A new day starts at 15:00 UTC (midnight in Japan). Advance one day moves your clock forward 24 hours, so the next day can be received now.");
         }
     }
 }

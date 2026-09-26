@@ -1,71 +1,10 @@
 {
-  "actionPropertyTransforms": [
-    {
-      "entries": [
-        {
-          "arguments": [
-            {
-              "parameterName": "slot",
-              "source": {
-                "kind": "static",
-                "value": 0
-              }
-            },
-            {
-              "parameterName": "paidOnly",
-              "source": {
-                "kind": "static",
-                "value": false
-              }
-            },
-            {
-              "parameterName": "count",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_01M3E1NYQWTDMTKK9AHQQXBVQA"
-              }
-            }
-          ],
-          "transformName": "WithdrawCurrency",
-          "transformPackageId": "foundation-economy-currency"
-        }
-      ],
-      "kind": "transformEntries",
-      "mode": "append",
-      "targetPropertyId": "prop_01M3CDS330A2F2YQMY9FNA3T7M"
-    }
-  ],
+  "actionPropertyTransforms": [],
   "compositeKeyMode": {
     "kind": "inherit"
   },
   "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "Free currency charged to claim a missed day",
-        "id": "prop_01M3E1NYQWTDMTKK9AHQQXBVQA",
-        "localizedDisplay": {
-          "en": {
-            "description": "Free currency spent to claim a missed day.",
-            "label": "Catch-up cost",
-            "unit": "currency"
-          },
-          "ja": {
-            "description": "受け取り損ねた日を受け取るときに消費する無償通貨の額です。",
-            "label": "取り逃し救済の費用",
-            "unit": "通貨"
-          }
-        },
-        "name": "catchUpCost",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
-        }
-      }
-    ]
+    "properties": []
   },
   "delegatedActions": [
     {

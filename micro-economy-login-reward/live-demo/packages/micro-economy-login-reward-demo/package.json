@@ -12,14 +12,14 @@
   },
   "display": {
     "description": {
-      "en": "Supplies the live demo's seven-day login bonus, the coins each day pays, what catching up costs, and the press that starts the track over. The rewards land in the currency package's wallet.",
-      "ja": "ライブデモ用の 7 日間のログインボーナスと、各日の報酬コイン・取り逃し救済の費用・やり直しの操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
+      "en": "Supplies the live demo's seven-day login bonus, the coins each day pays, and the press that starts the track over. The rewards land in the currency package's wallet.",
+      "ja": "ライブデモ用の 7 日間のログインボーナスと、各日の報酬コイン・やり直しの操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
     "domainTypes": {
       "dt_01M3E1NYQW6S5Q0ZTXYXH42M01": {
         "description": {
-          "en": "Adds what catching up costs to a demo login reward group.",
-          "ja": "デモのログインボーナスグループに、取り逃し救済の費用を足します。"
+          "en": "Gives a demo login reward group its receive and start-over presses and its labels.",
+          "ja": "デモのログインボーナスグループに、受け取り・やり直しの操作と表示を付けます。"
         },
         "label": {
           "en": "Login reward group",

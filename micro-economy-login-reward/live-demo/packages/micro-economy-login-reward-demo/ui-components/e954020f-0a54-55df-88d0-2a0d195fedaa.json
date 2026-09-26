@@ -11,14 +11,6 @@
     },
     {
       "arguments": [],
-      "componentClassName": "CatchUpButton",
-      "delegatedActionKey": "resource:micro-economy-login-reward:userData:36085262-1664-4dfe-a472-c1f8a886ec52::Gs2LoginReward:ReceiveStatus.MissedReceive",
-      "id": "4b076d4a-1fed-57b7-9b5d-8b6b88e34234",
-      "kind": "buttonAction",
-      "name": "LoginRewardCollection"
-    },
-    {
-      "arguments": [],
       "componentClassName": "StartOverButton",
       "delegatedActionKey": "resource:micro-economy-login-reward-demo:masterData:e622b584-c597-5a12-b1bb-6d97ced02379::Gs2Exchange:RateModel.Exchange",
       "id": "f0de0305-acbd-53b6-ad64-efaa37f50a97",
@@ -46,16 +38,8 @@
       "id": "b6d712e8-bc0e-5c39-a8f8-f22cce823060",
       "kind": "templateLabel",
       "name": "LoginRewardCollection",
-      "sources": [
-        {
-          "key": "catchUpCost",
-          "source": {
-            "kind": "property",
-            "propertyId": "prop_01M3E1NYQWTDMTKK9AHQQXBVQA"
-          }
-        }
-      ],
-      "template": "A new day starts at 15:00 UTC (midnight in Japan). Catch up claims the next day now for {catchUpCost} coins. Receive today's reward first, or you pay for it."
+      "sources": [],
+      "template": "A new day starts at 15:00 UTC (midnight in Japan). Advance one day moves your clock forward 24 hours, so the next day can be received now."
     }
   ],
   "name": "LoginRewardCollection",

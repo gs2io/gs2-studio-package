@@ -19,10 +19,7 @@
         "StartOver": "resource:micro-economy-login-reward-demo:masterData:e622b584-c597-5a12-b1bb-6d97ced02379::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "micro-economy-login-reward",
-      "canonicalTypeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
-      "addedProperties": {
-        "catchUpCost": "prop_01M3E1NYQWTDMTKK9AHQQXBVQA"
-      }
+      "canonicalTypeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P"
     }
   },
   "masterDataResources": {
