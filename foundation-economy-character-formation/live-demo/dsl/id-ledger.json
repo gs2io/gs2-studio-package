@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_1YKD2ZM08CX2D22TCPED995K2N.characterformation": "row_01M3EW2TJTA3K1VT92QEGE2QA5",
+    "row:dt_Z73MGN3WHWKHC8PF714HS91E62.slot1": "row_01M3EW2TJT8VX30E4PC8H1JKS3",
+    "row:dt_Z73MGN3WHWKHC8PF714HS91E62.slot2": "row_01M3EW2TJTH3456JJPAJXE4F5J",
+    "row:dt_Z73MGN3WHWKHC8PF714HS91E62.slot3": "row_01M3EW2TJTE5G5ARBAFT87BC9E",
+    "type:CharacterFormation": "dt_01M3EW2TJTB2M7YSB5A7XG1JWV",
+    "type:CharacterFormationSlot": "dt_01M3EW2TJT8PR6HHW4B4N2K45S"
+  },
+  "deterministicOverrides": {}
+}

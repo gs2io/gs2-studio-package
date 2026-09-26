@@ -1,0 +1,8 @@
+{
+  "id": "slot3",
+  "rowKey": "row_01M3EW2TJTE5G5ARBAFT87BC9E",
+  "typeId": "dt_Z73MGN3WHWKHC8PF714HS91E62",
+  "values": {
+    "prop_6F9A9WPY3YAQ0SS8E7F5H2YXFA": "grn:gs2:{region}:{ownerId}:inventory:Character:user:{userId}:inventory:Character:item:.*"
+  }
+}

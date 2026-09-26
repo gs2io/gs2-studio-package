@@ -1,0 +1,30 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_CharacterFormationExpand:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "CharacterFormationExpand"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "characterformation"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Formation:AddMoldCapacityByUserId"
+                request: "{\"namespaceName\":\"CharacterFormation\",\"userId\":\"#{userId}\",\"moldModelName\":\"CharacterFormation\",\"capacity\":1}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_CharacterFormationExpand"
+  ExchangeNamespace_CharacterFormationExpand:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "CharacterFormationExpand"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

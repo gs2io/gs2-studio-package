@@ -1,0 +1,34 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  FormationCurrentFormMaster_CharacterFormation:
+    Type: "GS2::Formation::CurrentFormMaster"
+    Properties:
+      NamespaceName: "CharacterFormation"
+      Settings:
+        version: "2019-09-09"
+        moldModels:
+          - initialMaxCapacity: 2
+            maxCapacity: 4
+            name: "CharacterFormation"
+            formModel:
+              metadata: ""
+              name: "CharacterFormation"
+              slots:
+                - name: "slot1"
+                  propertyRegex: "grn:gs2:{region}:{ownerId}:inventory:Character:user:{userId}:inventory:Character:item:.*"
+                - name: "slot2"
+                  propertyRegex: "grn:gs2:{region}:{ownerId}:inventory:Character:user:{userId}:inventory:Character:item:.*"
+                - name: "slot3"
+                  propertyRegex: "grn:gs2:{region}:{ownerId}:inventory:Character:user:{userId}:inventory:Character:item:.*"
+        propertyFormModels: []
+      Mode: "direct"
+    DependsOn:
+      - "FormationNamespace_CharacterFormation"
+  FormationNamespace_CharacterFormation:
+    Type: "GS2::Formation::Namespace"
+    Properties:
+      Name: "CharacterFormation"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

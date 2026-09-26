@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-economy-character-formation-demo",
+  "types": {
+    "CharacterFormation": {
+      "id": "dt_01M3EW2TJTB2M7YSB5A7XG1JWV",
+      "singleEntry": true,
+      "delegatedActions": {
+        "Expand": "resource:foundation-economy-character-formation-demo:masterData:1de22e5a-9fb1-54ee-9ae6-c086d6b7bf97::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "foundation-economy-character-formation",
+      "canonicalTypeId": "dt_1YKD2ZM08CX2D22TCPED995K2N"
+    },
+    "CharacterFormationSlot": {
+      "id": "dt_01M3EW2TJT8PR6HHW4B4N2K45S",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-character-formation",
+      "canonicalTypeId": "dt_Z73MGN3WHWKHC8PF714HS91E62"
+    }
+  },
+  "masterDataResources": {
+    "exchange.Namespace": "9da83036-faac-5de8-8a4f-4aaaf554715e",
+    "exchange.RateModel": "1de22e5a-9fb1-54ee-9ae6-c086d6b7bf97",
+    "transaction.AcquireAction": "c6bae761-ce97-5f8b-8984-4c492e79853a"
+  },
+  "transforms": {}
+}

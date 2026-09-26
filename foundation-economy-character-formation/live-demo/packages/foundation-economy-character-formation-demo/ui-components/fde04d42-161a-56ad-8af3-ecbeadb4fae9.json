@@ -1,0 +1,56 @@
+{
+  "id": "fde04d42-161a-56ad-8af3-ecbeadb4fae9",
+  "items": [
+    {
+      "componentClassName": "SaveAreaLabel",
+      "id": "fa32c9e7-c50a-52bc-92da-8d39399e98f9",
+      "kind": "templateLabel",
+      "name": "CharacterFormation",
+      "sources": [
+        {
+          "key": "currentSaveArea",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6"
+          }
+        },
+        {
+          "key": "maximumSaveArea",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_ASEE9H5F0YR01T0HPZTY19XY2V"
+          }
+        }
+      ],
+      "template": "{currentSaveArea} of {maximumSaveArea} parties"
+    },
+    {
+      "componentClassName": "ExpandInteractable",
+      "condition": {
+        "kind": "lt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_Y6NW81DJM6VR8ZK0H8BQ66XXC6"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_ASEE9H5F0YR01T0HPZTY19XY2V"
+        }
+      },
+      "id": "27db9268-43f5-506d-aa80-5e81df25db80",
+      "kind": "interactable",
+      "name": "CharacterFormation"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ExpandButton",
+      "delegatedActionKey": "resource:foundation-economy-character-formation-demo:masterData:1de22e5a-9fb1-54ee-9ae6-c086d6b7bf97::Gs2Exchange:RateModel.Exchange",
+      "id": "aef5685d-6543-58e3-9418-14cbff25602e",
+      "kind": "buttonAction",
+      "name": "CharacterFormation"
+    }
+  ],
+  "name": "CharacterFormation",
+  "targetDomainType": "CharacterFormation",
+  "targetDomainTypeId": "dt_01M3EW2TJTB2M7YSB5A7XG1JWV"
+}

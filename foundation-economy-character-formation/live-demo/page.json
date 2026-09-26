@@ -1,0 +1,44 @@
+{
+  "sections": {
+    "CharacterRecruit#Recruit a character": {
+      "rows": [
+        {
+          "component": "CharacterRecruitRecruitButton",
+          "caption": "CharacterRecruitCharacterLabel"
+        }
+      ]
+    },
+    "Character#Your characters": {
+      "axis": "InventoryCharacterUser",
+      "rows": ["CharacterIdValue", "CharacterPutInPartyButton", "CharacterTakeOutOfPartyButton"]
+    },
+    "CharacterFormation#Parties": {
+      "rows": [
+        "CharacterFormationSaveAreaLabel",
+        {
+          "component": "CharacterFormationNextPartyButton",
+          "caption": "CharacterFormationEditingLabel"
+        },
+        "CharacterFormationExpandButton"
+      ],
+      "toggles": {
+        "CharacterFormationExpandInteractable": ["CharacterFormationExpandButton"]
+      }
+    },
+    "CharacterFormationForm#Party members": {
+      "scope": {
+        "moldModelName": "CharacterFormation"
+      },
+      "rows": ["CharacterFormationFormSlotsLabel"]
+    },
+    "CharacterFormationSlot": {
+      "rows": []
+    },
+    "CharacterCollection": {
+      "rows": []
+    },
+    "CharacterExperience": {
+      "rows": []
+    }
+  }
+}

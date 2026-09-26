@@ -1,0 +1,32 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "value",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "IncreaseSaveArea",
+        "transformPackageId": "foundation-economy-character-formation"
+      }
+    ]
+  },
+  "id": "c6bae761-ce97-5f8b-8984-4c492e79853a",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M3EW2TJTB2M7YSB5A7XG1JWV",
+    "typeName": "CharacterFormation"
+  }
+}
