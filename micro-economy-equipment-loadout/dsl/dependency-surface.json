@@ -35,7 +35,9 @@
   "masterDataResources": {
     "formation.Namespace": "6a3916fa-763d-5473-9cce-e43dfe130772",
     "formation.PropertyFormModel": "ecd79306-b165-53b0-8b2c-5baf0db143a8",
-    "formation.SlotModel": "8116533b-568e-598e-86a8-0d5dec3e7baf"
+    "formation.SlotModel": "8116533b-568e-598e-86a8-0d5dec3e7baf",
+    "script.Namespace": "f291f9e2-d1b4-51ee-9d9f-f078e8b76cdb",
+    "script.Script": "7a32e876-196a-5d46-914f-2504f6359564"
   },
   "transforms": {}
 }

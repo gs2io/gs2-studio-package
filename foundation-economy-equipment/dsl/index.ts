@@ -108,6 +108,9 @@ const InventoryModel = defineMasterDataResource(resource =>
       name: Bind.static("Equipment"),
       initialCapacity: Bind.domainProperty(Source.direct(EquipmentCollection, "defaultCapacity")),
       maxCapacity: Bind.domainProperty(Source.direct(EquipmentCollection, "maximumCapacity")),
+      // A piece a character wears is referenced by it, and a referenced piece
+      // is not consumed or discarded out from under the character.
+      protectReferencedItem: Bind.static(true),
     })
     .addArrayChild("itemModels", ItemModel)
 );

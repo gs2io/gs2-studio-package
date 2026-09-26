@@ -6,6 +6,8 @@ import {
   definePackage,
   dependencyPackage,
   PT,
+  scriptGrn,
+  scriptSetting,
   Source,
   transactionSetting,
 } from "~/dsl";
@@ -14,6 +16,8 @@ import { GS2 } from "~/dsl/gs2";
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
+
+import updatePropertyFormLua from "./scripts/update-property-form.lua?raw";
 
 // Addressed by name against the identities the dependency publishes, so a
 // mistake is a compile error rather than an id that resolves to nothing.
@@ -83,6 +87,14 @@ const Character = defineOverlayDomainType("Character", character.overlay("Charac
     })
 );
 
+/**
+ * The script that keeps one piece of equipment on one character. GS2-Formation
+ * runs it before saving a loadout; it marks what was put on in the equipment's
+ * referenceOf and refuses a piece another character already wears.
+ */
+const SCRIPT_NAMESPACE = "CharacterEquipmentScript";
+const UPDATE_PROPERTY_FORM_SCRIPT = "UpdatePropertyForm";
+
 const PropertyFormModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.formation.PropertyFormModel)
@@ -141,15 +153,32 @@ export const microEconomyEquipmentLoadout = definePackage(
 
   .masterDataResource(r =>
     r
+      .model(GS2.script.Namespace)
+      .bindings({
+        name: Bind.static(SCRIPT_NAMESPACE),
+        ...Bind.nulls("logSetting"),
+        transactionSetting: transactionSetting(),
+      })
+      .addChild(script =>
+        script.model(GS2.script.Script).bindings({
+          name: Bind.static(UPDATE_PROPERTY_FORM_SCRIPT),
+          description: Bind.static("Keeps one piece of equipment on one character at a time."),
+          script: Bind.static(updatePropertyFormLua),
+          // The script compares ids; a numeric-looking id must stay a string.
+          disableStringNumberToNumber: Bind.static(true),
+        })
+      )
+  )
+
+  .masterDataResource(r =>
+    r
       .model(GS2.formation.Namespace)
       .bindings({
         name: Bind.static("CharacterEquipment"),
-        ...Bind.nulls(
-          "logSetting",
-          "updateFormScript",
-          "updateMoldScript",
-          "updatePropertyFormScript"
-        ),
+        ...Bind.nulls("logSetting", "updateFormScript", "updateMoldScript"),
+        updatePropertyFormScript: scriptSetting({
+          triggerScriptId: scriptGrn(SCRIPT_NAMESPACE, UPDATE_PROPERTY_FORM_SCRIPT),
+        }),
         transactionSetting: transactionSetting(),
       })
       .addChild(PropertyFormModel)

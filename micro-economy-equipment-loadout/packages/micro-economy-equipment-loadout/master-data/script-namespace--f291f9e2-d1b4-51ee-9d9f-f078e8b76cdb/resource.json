@@ -9,7 +9,7 @@
       {
         "kind": "static",
         "parameterName": "name",
-        "value": "CharacterEquipment"
+        "value": "CharacterEquipmentScript"
       },
       {
         "kind": "static",
@@ -45,42 +45,12 @@
         "kind": "static",
         "parameterName": "transactionSetting.transactionUseDistributor",
         "value": false
-      },
-      {
-        "kind": "static",
-        "parameterName": "updateFormScript",
-        "value": null
-      },
-      {
-        "kind": "static",
-        "parameterName": "updateMoldScript",
-        "value": null
-      },
-      {
-        "kind": "static",
-        "parameterName": "updatePropertyFormScript.doneTriggerQueueNamespaceId",
-        "value": null
-      },
-      {
-        "kind": "static",
-        "parameterName": "updatePropertyFormScript.doneTriggerScriptId",
-        "value": null
-      },
-      {
-        "kind": "static",
-        "parameterName": "updatePropertyFormScript.doneTriggerTargetType",
-        "value": "none"
-      },
-      {
-        "kind": "static",
-        "parameterName": "updatePropertyFormScript.triggerScriptId",
-        "value": "grn:gs2:{region}:{ownerId}:script:CharacterEquipmentScript:script:UpdatePropertyForm"
       }
     ]
   },
-  "id": "6a3916fa-763d-5473-9cce-e43dfe130772",
+  "id": "f291f9e2-d1b4-51ee-9d9f-f078e8b76cdb",
   "location": {
     "modelName": "Namespace",
-    "service": "formation"
+    "service": "script"
   }
 }

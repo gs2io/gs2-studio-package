@@ -31,6 +31,11 @@
         "kind": "static",
         "parameterName": "name",
         "value": "Equipment"
+      },
+      {
+        "kind": "static",
+        "parameterName": "protectReferencedItem",
+        "value": true
       }
     ]
   },
