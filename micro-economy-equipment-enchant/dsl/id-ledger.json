@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
+    "property:Equipment.enchant": "prop_01M3EGWJ3JWTJ1S2A79EMTPARQ",
     "property:Equipment.enchantments": "prop_01M0C84Y32CKRCM57ZVFNSN5KJ",
     "property:EquipmentEnchant.maximumParameterCount": "prop_01M0C84Y32NTFEV004CWFSAF5R",
     "property:EquipmentEnchantOption.enchant": "prop_01M0C84Y322HQ5SXAZ4NRD8HCB",

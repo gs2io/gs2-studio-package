@@ -140,8 +140,16 @@ const EquipmentEnchantment = defineDomainType("EquipmentEnchantment", dt =>
 /** The rolled bonuses, added to the equipment package's own type. */
 const Equipment = defineOverlayDomainType("Equipment", equipment.overlay("Equipment"), domainType =>
   domainType
+    // No storage: the equipment list takes it as a runtime scope argument.
+    .property(PT.prop("enchant", PT.ref("EquipmentEnchant")))
     .property(PT.prop("enchantments", PT.listOf(PT.inline("EquipmentEnchantment"))).userData())
     .localizedProperties({
+      enchant: jaEnField(
+        "エンチャント設定",
+        "Enchantment configuration",
+        "一覧ごとに 1 つのエンチャント設定を指定します。指定しないと装備の一覧は空になります。",
+        "Set one enchantment configuration per list. Without it the equipment list stays empty."
+      ),
       enchantments: jaEnField(
         "付与済み効果",
         "Enchantments",
@@ -215,8 +223,8 @@ export const microEconomyEquipmentEnchant = definePackage(
   .displayType(EquipmentEnchantOption, {
     label: { ja: "エンチャント効果", en: "Enchant option" },
     description: {
-      ja: "抽選対象となるエンチャント効果と値の範囲を設定します。",
-      en: "Defines an enchantment effect that can be rolled and its value range.",
+      ja: "抽選対象となるエンチャント効果と、付与されたときの固定の効果値を設定します。",
+      en: "Defines an enchantment effect that can be rolled and the fixed value it grants.",
     },
   })
   .displayType(EquipmentEnchantment, {

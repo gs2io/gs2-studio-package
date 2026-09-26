@@ -53,8 +53,8 @@
       },
       "dt_01M0C84Y32ZDSA8TEZHPNG3MNK": {
         "description": {
-          "en": "Defines an enchantment effect that can be rolled and its value range.",
-          "ja": "抽選対象となるエンチャント効果と値の範囲を設定します。"
+          "en": "Defines an enchantment effect that can be rolled and the fixed value it grants.",
+          "ja": "抽選対象となるエンチャント効果と、付与されたときの固定の効果値を設定します。"
         },
         "label": {
           "en": "Enchant option",

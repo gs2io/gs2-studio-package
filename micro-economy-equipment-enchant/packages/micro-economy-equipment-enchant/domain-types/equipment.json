@@ -6,6 +6,28 @@
   "declared": {
     "properties": [
       {
+        "bindingHint": "none",
+        "id": "prop_01M3EGWJ3JWTJ1S2A79EMTPARQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Set one enchantment configuration per list. Without it the equipment list stays empty.",
+            "label": "Enchantment configuration"
+          },
+          "ja": {
+            "description": "一覧ごとに 1 つのエンチャント設定を指定します。指定しないと装備の一覧は空になります。",
+            "label": "エンチャント設定"
+          }
+        },
+        "name": "enchant",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q"
+        }
+      },
+      {
         "bindingHint": "userData",
         "id": "prop_01M0C84Y32CKRCM57ZVFNSN5KJ",
         "localizedDisplay": {
