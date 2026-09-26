@@ -7,8 +7,10 @@
       "rows": [
         "LoginRewardCollectionRuleLabel",
         "LoginRewardCollectionReceiveButton",
+        "LoginRewardCollectionAdvanceOneDayButton",
         "LoginRewardCollectionStartOverButton",
-        "LoginRewardCollectionLastReceivedLabel"
+        "LoginRewardCollectionLastReceivedLabel",
+        "LoginRewardCollectionDemoClockLabel"
       ]
     },
     "LoginReward#Seven days": {
