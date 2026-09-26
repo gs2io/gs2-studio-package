@@ -2,7 +2,7 @@
 //
 // A slot in a GS2-Formation party holds a property id, and the formation only
 // takes one that the inventory holding it has signed: the page asks the
-// character inventory for a signed copy of the item set this row shows, and
+// character inventory for a signed copy of the item set of the character tapped, and
 // hands the body and the signature to the formation. That is why these are
 // written by hand rather than generated. The formation's catalog offers no
 // delegated action that sets a slot, and a server-side exchange would have to
@@ -12,15 +12,16 @@
 // they are, a named slot is replaced, and a named slot with no body is
 // emptied. So both presses send exactly one slot.
 //
-// The party being edited is the page's own state rather than GS2's, so it
-// lives here, beside the two presses that read it.
+// Which party a press acts on is the board's to say: it is the page's own
+// state rather than GS2's, so it is passed in.
 //
 // Nothing here reloads or invalidates anything. Setting a form puts the new
-// form into the SDK cache, and the party list subscribes to it.
+// form into the SDK cache, and the party board subscribes to it.
 #nullable enable
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 using Gs2.Unity.Core;
@@ -34,7 +35,8 @@ using InventoryItemSet = Gs2.Gs2Inventory.Model.ItemSet;
 namespace GS2Studio.Showroom.Demo
 {
     /// <summary>
-    /// The party being edited, and the two presses that change it.
+    /// The two presses that change a party, and the reads they share with the
+    /// board.
     /// </summary>
     internal static class FormationCommands
     {
@@ -50,12 +52,6 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private const string PropertyType = "gs2_inventory";
 
-        /// <summary>The party the presses act on, counted from 0.</summary>
-        public static int EditingIndex { get; private set; }
-
-        /// <summary>Raised with the new index when the party being edited changes.</summary>
-        public static event Action<int>? EditingChanged;
-
         /// <summary>
         /// Whether a press is between reading the party and writing it. Two
         /// presses in that window would both see the same empty slot, and the
@@ -63,47 +59,21 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private static bool _inFlight;
 
-        private static bool _switching;
-
         /// <summary>
-        /// Moves the edit to the next party, back to the first after the last.
-        /// Only parties the player has are visited: reading a form past the
-        /// capacity creates a record GS2 then refuses to use.
-        /// </summary>
-        public static async Task NextParty()
-        {
-            if (_switching) return;
-            _switching = true;
-            try
-            {
-                var (gs2, session) = Runtime();
-                var capacity = await Capacity(gs2, session);
-                if (capacity <= 0) return;
-                EditingIndex = (EditingIndex + 1) % capacity;
-                EditingChanged?.Invoke(EditingIndex);
-            }
-            finally
-            {
-                _switching = false;
-            }
-        }
-
-        /// <summary>
-        /// Puts the character in the first empty slot of the party being
-        /// edited. Returns a note for the page when there was nothing to do,
-        /// or null when the slot was set.
+        /// Puts the character in the first empty slot of the party at the
+        /// index, counted from 0. Returns a note for the page when there was
+        /// nothing to do, or null when the slot was set.
         ///
         /// A character already in this party stays where it is. The same
         /// character in another party is allowed, as GS2 allows it.
         /// </summary>
-        public static async Task<string?> PutIn(string characterPropertyId)
+        public static async Task<string?> PutIn(string characterPropertyId, int index)
         {
             if (_inFlight) return "Still saving the last change.";
             _inFlight = true;
             try
             {
                 var (gs2, session) = Runtime();
-                var index = EditingIndex;
                 var party = $"party {index + 1}";
                 var occupied = await Occupied(gs2, session, index);
                 foreach (var slot in occupied)
@@ -156,18 +126,17 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Empties the slot of the party being edited that holds the character.
+        /// Empties the slot of the party at the index that holds the character.
         /// Returns a note for the page when the character is not in it, or null
         /// when the slot was emptied.
         /// </summary>
-        public static async Task<string?> TakeOut(string characterPropertyId)
+        public static async Task<string?> TakeOut(string characterPropertyId, int index)
         {
             if (_inFlight) return "Still saving the last change.";
             _inFlight = true;
             try
             {
                 var (gs2, session) = Runtime();
-                var index = EditingIndex;
                 string? held = null;
                 foreach (var slot in await Occupied(gs2, session, index))
                 {
@@ -200,13 +169,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>How many parties the player has.</summary>
-        public static async Task<int> Capacity(Gs2Domain gs2, IGameSession session)
-        {
-            var mold = await new Gs2Bind.Gs2Formation.MoldLoader(Namespace, MoldModel).Load(gs2, session);
-            return mold?.Capacity ?? 0;
-        }
-
         /// <summary>
         /// The slot names of the party shape, in the order the shape lists
         /// them. A form only carries the slots that were ever set, so this is
@@ -234,15 +196,23 @@ namespace GS2Studio.Showroom.Demo
             return string.IsNullOrEmpty(name) ? propertyId : name;
         }
 
+        /// <summary>
+        /// The signed-in session, or false while the page is still signing in.
+        /// </summary>
+        public static bool TryRuntime(
+            [NotNullWhen(true)] out Gs2Domain? gs2, [NotNullWhen(true)] out IGameSession? session)
+        {
+            gs2 = null;
+            session = null;
+            var runtime = UnityEngine.Object.FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
+            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
+        }
+
         /// <summary>The signed-in session these calls travel on.</summary>
         public static (Gs2Domain Gs2, IGameSession Session) Runtime()
         {
-            var runtime = UnityEngine.Object.FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
-            if (runtime == null || !runtime.TryGet(out var gs2, out var session) ||
-                gs2 == null || session == null)
-            {
+            if (!TryRuntime(out var gs2, out var session))
                 throw new InvalidOperationException("The GS2 runtime context is not available.");
-            }
             return (gs2, session);
         }
 

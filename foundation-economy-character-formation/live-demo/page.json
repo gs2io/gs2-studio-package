@@ -8,28 +8,23 @@
         }
       ]
     },
-    "Character#Your characters": {
-      "axis": "InventoryCharacterUser",
-      "rows": ["CharacterIdValue", "CharacterPutInPartyButton", "CharacterTakeOutOfPartyButton"]
-    },
-    "CharacterFormation#Parties": {
+    "CharacterFormation#Party": {
       "rows": [
-        "CharacterFormationSaveAreaLabel",
+        "CharacterFormationBoardPanel",
         {
-          "component": "CharacterFormationNextPartyButton",
-          "caption": "CharacterFormationEditingLabel"
-        },
-        "CharacterFormationExpandButton"
+          "component": "CharacterFormationExpandButton",
+          "caption": "CharacterFormationSaveAreaLabel"
+        }
       ],
       "toggles": {
         "CharacterFormationExpandInteractable": ["CharacterFormationExpandButton"]
       }
     },
-    "CharacterFormationForm#Party members": {
-      "scope": {
-        "moldModelName": "CharacterFormation"
-      },
-      "rows": ["CharacterFormationFormSlotsLabel"]
+    "Character": {
+      "rows": []
+    },
+    "CharacterFormationForm": {
+      "rows": []
     },
     "CharacterFormationSlot": {
       "rows": []

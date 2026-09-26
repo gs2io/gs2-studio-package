@@ -41,6 +41,16 @@ namespace GS2Studio.Showroom.EditorTools
         private const string ValueRowPrefabPath = "Assets/Showroom/ShowroomValueRow.prefab";
         private const string ActionRowPrefabPath = "Assets/Showroom/ShowroomActionRow.prefab";
         private const string GaugeRowPrefabPath = "Assets/Showroom/ShowroomGaugeRow.prefab";
+
+        /// <summary>The field that makes a demo-written behaviour a panel, and where its region goes.</summary>
+        private const string PanelField = "_panel";
+
+        /// <summary>
+        /// Fields a panel may carry to draw in the page's own look: the action
+        /// row's button to clone, and the font every row's text uses.
+        /// </summary>
+        private const string PanelButtonTemplateField = "_buttonTemplate";
+        private const string PanelFontField = "_font";
         private const string GeneratedPrefabDirectory = "Assets/Showroom/Generated";
         private const string GeneratedNamespacePrefix = "GS2Studio.Generated.";
 
@@ -132,6 +142,11 @@ namespace GS2Studio.Showroom.EditorTools
             Clock,
             Button,
             Gauge,
+            /// <summary>
+            /// A region a demo-written behaviour draws itself, at run time.
+            /// For a screen no row can say, such as a party board.
+            /// </summary>
+            Panel,
         }
 
         /// <summary>
@@ -144,11 +159,11 @@ namespace GS2Studio.Showroom.EditorTools
             public string Name;
             public Type Type;
             public RowKind Kind;
-            /// <summary>What the class name carries after its reading — `Label`, `Button`, `Gauge`, `Value`.</summary>
+            /// <summary>What the class name carries after its reading — `Label`, `Button`, `Gauge`, `Value`, `Panel`.</summary>
             public string Suffix;
             /// <summary>Whether it exposes `ErrorEvent OnFailed`; asked of buttons only.</summary>
             public bool ReportsFailure;
-            /// <summary>The field a gauge's fill or a button's `Button` goes into. Null for the rest.</summary>
+            /// <summary>The field a gauge's fill, a button's `Button` or a panel's region goes into. Null for the rest.</summary>
             public string TargetField;
         }
 
@@ -1754,7 +1769,19 @@ namespace GS2Studio.Showroom.EditorTools
                         $"[showroom] {plan.SectionId}: '{row.Component}' is not a kind of row this " +
                         $"page knows how to draw. It draws {Listed(DrawableNames(plan))}.");
                 }
-                if (row.Caption != null && UiComponentNamed(plan, row.Caption) == null)
+                if (component != null && component.Kind == RowKind.Panel)
+                {
+                    CollectPanelFieldProblems(plan, component, problems);
+                }
+                var reading = row.Caption == null ? null : UiComponentNamed(plan, row.Caption);
+                if (row.Caption != null && component != null && component.Kind == RowKind.Panel)
+                {
+                    problems.Add(
+                        $"[showroom] {plan.SectionId}: '{row.Component}' is a panel, which draws " +
+                        $"its own region and has no line to put '{row.Caption}' beside. Give the " +
+                        "reading its own row.");
+                }
+                else if (row.Caption != null && reading == null)
                 {
                     problems.Add(
                         $"[showroom] {plan.SectionId}: '{row.Component}' names '{row.Caption}' as " +
@@ -1762,6 +1789,37 @@ namespace GS2Studio.Showroom.EditorTools
                         $"generated {Listed(plan.Labels.Select(label => label.Name))}" +
                         $"{WrittenSuffix()}.");
                 }
+                else if (reading != null && reading.Kind != RowKind.Label)
+                {
+                    // A reading is text put beside the row, and only a label
+                    // publishes text.
+                    problems.Add(
+                        $"[showroom] {plan.SectionId}: '{row.Component}' names '{row.Caption}' as " +
+                        $"its reading, and that is no label. It generated " +
+                        $"{Listed(plan.Labels.Select(label => label.Name))}{WrittenSuffix()}.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// A panel's style fields declared with a type the bake cannot fill.
+        /// Each is optional, but one that is declared and cannot be filled
+        /// would be a null the page only finds on a device.
+        /// </summary>
+        private static void CollectPanelFieldProblems(
+            SectionPlan plan, RowComponent panel, List<string> problems)
+        {
+            foreach (var (field, expected) in new[]
+                     {
+                         (PanelButtonTemplateField, typeof(Button)),
+                         (PanelFontField, typeof(Font)),
+                     })
+            {
+                var declared = panel.Type.GetField(field, BindingFlags.Instance | BindingFlags.NonPublic)?.FieldType;
+                if (declared == null || declared == expected) continue;
+                problems.Add(
+                    $"[showroom] {plan.SectionId}: {panel.Name}.{field} is a {declared.Name}, " +
+                    $"and a panel's {field} takes a {expected.Name}.");
             }
         }
 
@@ -2350,6 +2408,9 @@ namespace GS2Studio.Showroom.EditorTools
                     case RowKind.Label:
                         AddValueRow(body, model, component);
                         break;
+                    case RowKind.Panel:
+                        AddPanelRow(body, component);
+                        break;
                     default:
                         Debug.LogWarning(
                             $"[showroom] {plan.SectionId}: '{row.Component}' is not a kind of row " +
@@ -2581,6 +2642,10 @@ namespace GS2Studio.Showroom.EditorTools
         /// </summary>
         private static RowComponent WrittenRowComponent(Type type)
         {
+            // Asked first: a panel draws everything inside it, so whatever
+            // else it happens to carry is not a second shape for its row.
+            if (IsPanel(type))
+                return new RowComponent { Name = type.Name, Type = type, Kind = RowKind.Panel, Suffix = "Panel", TargetField = PanelField };
             if (IsGauge(type))
                 return new RowComponent { Name = type.Name, Type = type, Kind = RowKind.Gauge, Suffix = "Gauge", TargetField = "_target" };
             if (IsClock(type))
@@ -2599,6 +2664,12 @@ namespace GS2Studio.Showroom.EditorTools
         private static string FullName(Type type)
         {
             return type.Namespace == null ? type.Name : $"{type.Namespace}.{type.Name}";
+        }
+
+        private static bool IsPanel(Type component)
+        {
+            return component.GetField(PanelField, BindingFlags.Instance | BindingFlags.NonPublic)
+                ?.FieldType == typeof(RectTransform);
         }
 
         private static bool IsGauge(Type component)
@@ -2864,6 +2935,46 @@ namespace GS2Studio.Showroom.EditorTools
                 (UnityAction<Gs2Exception, Func<IEnumerator>>)Delegate.CreateDelegate(
                     typeof(UnityAction<Gs2Exception, Func<IEnumerator>>), page, "LogError"));
             EditorUtility.SetDirty(action);
+        }
+
+        /// <summary>
+        /// A region the component fills itself once the page runs. It stacks
+        /// what it adds from the top, and is as tall as that, so the section
+        /// grows with it.
+        ///
+        /// The two style fields are filled only when the component declares
+        /// them; <see cref="CollectPanelFieldProblems"/> has already refused
+        /// one declared with a type they cannot take.
+        /// </summary>
+        private static void AddPanelRow(Transform section, RowComponent panel)
+        {
+            var row = new GameObject(panel.Name, typeof(RectTransform));
+            row.transform.SetParent(section, false);
+            var layout = row.AddComponent<VerticalLayoutGroup>();
+            layout.spacing = 12;
+            layout.childControlWidth = true;
+            layout.childControlHeight = true;
+            layout.childForceExpandWidth = true;
+            layout.childForceExpandHeight = false;
+
+            var component = row.AddComponent(panel.Type);
+            var serialized = new SerializedObject(component);
+            serialized.FindProperty(panel.TargetField).objectReferenceValue = row.GetComponent<RectTransform>();
+
+            var buttonTemplate = serialized.FindProperty(PanelButtonTemplateField);
+            if (buttonTemplate != null)
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ActionRowPrefabPath);
+                buttonTemplate.objectReferenceValue = prefab.transform.Find("Button").GetComponent<Button>();
+            }
+            var font = serialized.FindProperty(PanelFontField);
+            if (font != null)
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ValueRowPrefabPath);
+                font.objectReferenceValue = prefab.transform.Find("Value").GetComponent<Text>().font;
+            }
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(component);
         }
 
         /// <summary>Adds a generated label and points its update at a Text.</summary>
