@@ -9,8 +9,10 @@
 // than generated.
 //
 // Each slot names the equipment it accepts with a pattern, and GS2 checks the
-// signed item set against it. A piece the pattern does not name is refused by
-// GS2, not by the page: that refusal is what the demo is for.
+// signed item set against it. The loadout package also runs a script before
+// every save that keeps one piece on one character: it marks a piece put on in
+// the item set's referenceOf and refuses one another character already wears.
+// Both refusals come from GS2, not from the page: that is what the demo is for.
 //
 // Setting a form merges by slot name: slots the call does not name stay as
 // they are, a named slot is replaced, and a named slot with no body is
@@ -104,6 +106,18 @@ namespace GS2Studio.Showroom.Demo
                 {
                     return $"GS2 refused: {ItemName(equipmentPropertyId)} does not fit the {slotName} slot.";
                 }
+                catch (Gs2Exception error) when (RefusedByScript(error, "alreadyEquipped"))
+                {
+                    return $"GS2 refused: {ItemName(equipmentPropertyId)} is worn by another character. Take it off there first.";
+                }
+                catch (Gs2Exception error) when (RefusedByScript(error, "sameItemTwice"))
+                {
+                    return $"GS2 refused: take off the {ItemName(equipmentPropertyId)} in this slot first, then put this one on.";
+                }
+                catch (Gs2Exception error) when (RefusedByScript(error, "wornTwice"))
+                {
+                    return $"GS2 refused: {ItemName(equipmentPropertyId)} is already in another slot of this character.";
+                }
                 return null;
             }
             finally
@@ -122,6 +136,23 @@ namespace GS2Studio.Showroom.Demo
             foreach (var detail in error.Errors)
             {
                 if (detail.Message == "formation.slot.propertyId.error.notMatchRegex") return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Whether the loadout script refused the save for the named reason.
+        /// The script's own message reaches the client embedded in the error
+        /// GS2-Script reports, so it is looked for inside rather than matched,
+        /// and GS2-Formation passes the refusal on as a bad gateway rather than
+        /// a bad request, so the check is made on any Gs2Exception.
+        /// </summary>
+        private static bool RefusedByScript(Gs2Exception error, string reason)
+        {
+            if (error.Errors == null) return false;
+            foreach (var detail in error.Errors)
+            {
+                if (detail.Message != null && detail.Message.Contains($"loadout.equipment.{reason}")) return true;
             }
             return false;
         }
