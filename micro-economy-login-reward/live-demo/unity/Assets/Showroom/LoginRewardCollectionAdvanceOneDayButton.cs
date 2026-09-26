@@ -15,7 +15,8 @@
 // The offset travels in the access token, which is issued at sign-in, so the
 // session signs in again once the account has the new offset. The token's
 // own `TimeOffset` is left alone: the SDK reads it as part of the session's
-// identity, and the sign-in fills it from what the server now holds.
+// identity, and the account sign-in never fills it, so it stays null and the
+// page's subscriptions keep their key.
 #nullable enable
 
 using System;
