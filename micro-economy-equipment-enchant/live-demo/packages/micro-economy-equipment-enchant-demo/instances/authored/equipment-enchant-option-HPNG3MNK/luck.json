@@ -1,0 +1,11 @@
+{
+  "id": "luck",
+  "rowKey": "row_01M3EPA5ZVN0G76G9J9HXDYP25",
+  "typeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+  "values": {
+    "prop_01M0C84Y322HQ5SXAZ4NRD8HCB": "standard",
+    "prop_01M0C84Y322KQSQH802HVDHC06": "luck",
+    "prop_01M0C84Y32EXX5ACY856FE9P29": 5,
+    "prop_01M0C84Y32ZBF6RHYW41VPWFA2": 3
+  }
+}

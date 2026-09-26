@@ -1,0 +1,24 @@
+{
+  "id": "fd585108-3541-5837-901c-3565f302ef7f",
+  "items": [
+    {
+      "componentClassName": "RuleLabel",
+      "id": "f68b14ea-90b4-57eb-a1ae-ef1fbc236840",
+      "kind": "templateLabel",
+      "name": "EquipmentEnchant",
+      "sources": [
+        {
+          "key": "maximum",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M0C84Y32NTFEV004CWFSAF5R"
+          }
+        }
+      ],
+      "template": "A piece rolls 1 to {maximum} bonuses when it is first read. Reroll draws the same number again for 10 coins. Add bonus draws one more for 30 coins, up to {maximum}."
+    }
+  ],
+  "name": "EquipmentEnchant",
+  "targetDomainType": "EquipmentEnchant",
+  "targetDomainTypeId": "dt_01M3EPA5ZVHJW7XDJTN7H62N9W"
+}

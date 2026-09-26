@@ -1,0 +1,23 @@
+{
+  "id": "micro-economy-equipment-enchant-demo",
+  "name": "micro-economy-equipment-enchant-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-equipment": "github:gs2io/gs2-studio-package",
+    "foundation-economy-equipment-demo": "github:gs2io/gs2-studio-package",
+    "micro-economy-equipment-enchant": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the enchantment pool the live demo rolls from, and the presses that reroll a piece's bonuses or add one.",
+      "ja": "ライブデモ用のエンチャント設定と、効果の引き直し・追加の操作を提供します。"
+    },
+    "label": {
+      "en": "Equipment Enchantment (demo data)",
+      "ja": "装備エンチャント（デモデータ）"
+    }
+  }
+}

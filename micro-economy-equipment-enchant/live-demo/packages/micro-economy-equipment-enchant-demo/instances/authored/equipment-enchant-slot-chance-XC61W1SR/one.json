@@ -1,0 +1,10 @@
+{
+  "id": "one",
+  "rowKey": "row_01M3EPA5ZVHT53P69MW5EX8ZT7",
+  "typeId": "dt_01M0C84Y32MFW05C5TXC61W1SR",
+  "values": {
+    "prop_01M0C84Y3236PN0MXQNS8GXGKR": "standard",
+    "prop_01M0C84Y32K8455NCTCVPXBKC0": 50,
+    "prop_01M0C84Y32TQRT07W6CT9MCVZM": 1
+  }
+}

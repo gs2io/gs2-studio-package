@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "EquipmentEnchant#How enchanting works": {
+      "rows": ["EquipmentEnchantRuleLabel"]
+    },
+    "EquipmentCatalog#Take a piece of equipment": {
+      "rows": [
+        {
+          "component": "EquipmentCatalogTakeButton",
+          "caption": "EquipmentCatalogNameLabel"
+        }
+      ]
+    },
+    "Equipment#Your equipment and its bonuses": {
+      "axis": "InventoryEquipmentUser",
+      "scope": {
+        "enchant": "standard"
+      },
+      "rows": [
+        "EquipmentNameLabel",
+        "EquipmentEnchantmentsLabel",
+        "EquipmentRerollButton",
+        "EquipmentAddBonusButton"
+      ]
+    },
+    "EquipmentCollection#Inventory space": {
+      "rows": [
+        {
+          "component": "EquipmentCollectionCapacityGauge",
+          "caption": "EquipmentCollectionCapacityLabel"
+        },
+        "EquipmentCollectionExpandButton"
+      ],
+      "toggles": {
+        "EquipmentCollectionExpandableInteractable": ["EquipmentCollectionExpandButton"]
+      }
+    },
+    "FreeDeposit#Get coins": {
+      "rows": [
+        {
+          "component": "FreeDepositDepositButton",
+          "caption": "FreeDepositCountLabel"
+        }
+      ]
+    },
+    "Wallet#Where the coins come from": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "EquipmentEnchantOption": {
+      "rows": []
+    },
+    "EquipmentEnchantSlotChance": {
+      "rows": []
+    },
+    "CurrencyType": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    }
+  }
+}

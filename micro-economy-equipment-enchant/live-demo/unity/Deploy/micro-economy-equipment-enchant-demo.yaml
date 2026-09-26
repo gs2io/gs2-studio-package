@@ -1,0 +1,94 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_EquipmentEnchantAdd:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "EquipmentEnchantAdd"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "iron-sword"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":30,\"paidOnly\":false}"
+            acquireActions:
+              - action: "Gs2Enchant:AddRarityParameterStatusByUserId"
+                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"count\":1}"
+          - name: "oak-staff"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":30,\"paidOnly\":false}"
+            acquireActions:
+              - action: "Gs2Enchant:AddRarityParameterStatusByUserId"
+                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"count\":1}"
+          - name: "steel-shield"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":30,\"paidOnly\":false}"
+            acquireActions:
+              - action: "Gs2Enchant:AddRarityParameterStatusByUserId"
+                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"count\":1}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_EquipmentEnchantAdd"
+  ExchangeCurrentRateMaster_EquipmentEnchantReroll:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "EquipmentEnchantReroll"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "iron-sword"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+            acquireActions:
+              - action: "Gs2Enchant:ReDrawRarityParameterStatusByUserId"
+                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\"}"
+          - name: "oak-staff"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+            acquireActions:
+              - action: "Gs2Enchant:ReDrawRarityParameterStatusByUserId"
+                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\"}"
+          - name: "steel-shield"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+            acquireActions:
+              - action: "Gs2Enchant:ReDrawRarityParameterStatusByUserId"
+                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\"}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_EquipmentEnchantReroll"
+  ExchangeNamespace_EquipmentEnchantAdd:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "EquipmentEnchantAdd"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_EquipmentEnchantReroll:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "EquipmentEnchantReroll"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

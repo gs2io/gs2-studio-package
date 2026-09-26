@@ -1,0 +1,46 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "enchant",
+            "source": {
+              "kind": "static",
+              "value": "standard"
+            }
+          },
+          {
+            "parameterName": "propertyId",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{propertyId}"
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AddEquipmentEnchantmentSlot",
+        "transformPackageId": "micro-economy-equipment-enchant"
+      }
+    ]
+  },
+  "id": "6ddd98ea-efd2-5891-9394-72c2dbfaaeea",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M3EPA5ZV6VDSR8C7H8KWAWGY",
+    "typeName": "Equipment"
+  }
+}

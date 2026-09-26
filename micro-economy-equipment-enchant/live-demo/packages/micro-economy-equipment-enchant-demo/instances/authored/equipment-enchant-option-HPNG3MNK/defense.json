@@ -1,0 +1,11 @@
+{
+  "id": "defense",
+  "rowKey": "row_01M3EPA5ZVDRBZ5M76DDR8YCP8",
+  "typeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+  "values": {
+    "prop_01M0C84Y322HQ5SXAZ4NRD8HCB": "standard",
+    "prop_01M0C84Y322KQSQH802HVDHC06": "defense",
+    "prop_01M0C84Y32EXX5ACY856FE9P29": 25,
+    "prop_01M0C84Y32ZBF6RHYW41VPWFA2": 10
+  }
+}

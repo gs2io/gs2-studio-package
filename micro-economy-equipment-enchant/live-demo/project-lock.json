@@ -1,0 +1,65 @@
+{
+  "entries": [
+    {
+      "commitSha": "41c3168f7300766911bfaa7e4e23f1b40b16e060",
+      "integrity": "sha256-gvsY10dSZE3mNMN+aswd1u5nSQojdxGEkCuTio0ATI4=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "41c3168f7300766911bfaa7e4e23f1b40b16e060",
+      "integrity": "sha256-gvsY10dSZE3mNMN+aswd1u5nSQojdxGEkCuTio0ATI4=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "41c3168f7300766911bfaa7e4e23f1b40b16e060",
+      "integrity": "sha256-gvsY10dSZE3mNMN+aswd1u5nSQojdxGEkCuTio0ATI4=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-equipment",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-equipment/packages/foundation-economy-equipment",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "41c3168f7300766911bfaa7e4e23f1b40b16e060",
+      "integrity": "sha256-gvsY10dSZE3mNMN+aswd1u5nSQojdxGEkCuTio0ATI4=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-equipment-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-equipment/live-demo/packages/foundation-economy-equipment-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "41c3168f7300766911bfaa7e4e23f1b40b16e060",
+      "integrity": "sha256-gvsY10dSZE3mNMN+aswd1u5nSQojdxGEkCuTio0ATI4=",
+      "owner": "gs2io",
+      "packageId": "micro-economy-equipment-enchant",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-economy-equipment-enchant/packages/micro-economy-equipment-enchant",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "41c3168f7300766911bfaa7e4e23f1b40b16e060",
+      "integrity": "sha256-gvsY10dSZE3mNMN+aswd1u5nSQojdxGEkCuTio0ATI4=",
+      "owner": "gs2io",
+      "packageId": "micro-shop-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-shop-currency/packages/micro-shop-currency",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

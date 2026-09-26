@@ -1,0 +1,62 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  EnchantCurrentParameterMaster_EquipmentEnchant:
+    Type: "GS2::Enchant::CurrentParameterMaster"
+    Properties:
+      NamespaceName: "EquipmentEnchant"
+      Settings:
+        version: "2023-07-18"
+        balanceParameterModels: []
+        rarityParameterModels:
+          - maximumParameterCount: 3
+            metadata: ""
+            name: "standard"
+            parameterCounts:
+              - count: 1
+                weight: 50
+              - count: 3
+                weight: 15
+              - count: 2
+                weight: 35
+            parameters:
+              - metadata: ""
+                name: "attack"
+                resourceName: "attack"
+                resourceValue: 12
+                weight: 25
+              - metadata: ""
+                name: "critical"
+                resourceName: "critical"
+                resourceValue: 5
+                weight: 10
+              - metadata: ""
+                name: "defense"
+                resourceName: "defense"
+                resourceValue: 10
+                weight: 25
+              - metadata: ""
+                name: "hp"
+                resourceName: "hp"
+                resourceValue: 50
+                weight: 20
+              - metadata: ""
+                name: "luck"
+                resourceName: "luck"
+                resourceValue: 3
+                weight: 5
+              - metadata: ""
+                name: "speed"
+                resourceName: "speed"
+                resourceValue: 4
+                weight: 15
+      Mode: "direct"
+    DependsOn:
+      - "EnchantNamespace_EquipmentEnchant"
+  EnchantNamespace_EquipmentEnchant:
+    Type: "GS2::Enchant::Namespace"
+    Properties:
+      Name: "EquipmentEnchant"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

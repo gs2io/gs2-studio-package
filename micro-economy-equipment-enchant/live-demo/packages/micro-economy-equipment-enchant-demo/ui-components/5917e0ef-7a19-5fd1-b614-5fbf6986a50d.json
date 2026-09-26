@@ -1,0 +1,24 @@
+{
+  "id": "5917e0ef-7a19-5fd1-b614-5fbf6986a50d",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "RerollButton",
+      "delegatedActionKey": "resource:micro-economy-equipment-enchant-demo:masterData:eb2be823-9bfa-5d72-abfa-492224ec9e14::Gs2Exchange:RateModel.Exchange",
+      "id": "2e774e5d-1e1c-5787-ae48-c42048581f55",
+      "kind": "buttonAction",
+      "name": "Equipment"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "AddBonusButton",
+      "delegatedActionKey": "resource:micro-economy-equipment-enchant-demo:masterData:3085a595-ef77-5868-ae4b-03deae9f1ef3::Gs2Exchange:RateModel.Exchange",
+      "id": "c90ba73d-fc62-5145-a2ad-ab1991809bcf",
+      "kind": "buttonAction",
+      "name": "Equipment"
+    }
+  ],
+  "name": "Equipment",
+  "targetDomainType": "Equipment",
+  "targetDomainTypeId": "dt_01M3EPA5ZV6VDSR8C7H8KWAWGY"
+}

@@ -1,0 +1,110 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_EquipmentDiscard:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "EquipmentDiscard"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "iron-sword"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Inventory:ConsumeItemSetByUserId"
+                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"userId\":\"#{userId}\",\"itemName\":\"iron-sword\",\"consumeCount\":1}"
+            acquireActions: []
+          - name: "oak-staff"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Inventory:ConsumeItemSetByUserId"
+                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"userId\":\"#{userId}\",\"itemName\":\"oak-staff\",\"consumeCount\":1}"
+            acquireActions: []
+          - name: "steel-shield"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Inventory:ConsumeItemSetByUserId"
+                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"userId\":\"#{userId}\",\"itemName\":\"steel-shield\",\"consumeCount\":1}"
+            acquireActions: []
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_EquipmentDiscard"
+  ExchangeCurrentRateMaster_EquipmentExpand:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "EquipmentExpand"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "equipmentcollection"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AddCapacityByUserId"
+                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"userId\":\"#{userId}\",\"addCapacityValue\":2}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_EquipmentExpand"
+  ExchangeCurrentRateMaster_EquipmentTake:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "EquipmentTake"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "iron-sword"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireItemSetByUserId"
+                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"itemName\":\"iron-sword\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+          - name: "oak-staff"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireItemSetByUserId"
+                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"itemName\":\"oak-staff\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+          - name: "steel-shield"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Inventory:AcquireItemSetByUserId"
+                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"itemName\":\"steel-shield\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_EquipmentTake"
+  ExchangeNamespace_EquipmentDiscard:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "EquipmentDiscard"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_EquipmentExpand:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "EquipmentExpand"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_EquipmentTake:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "EquipmentTake"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

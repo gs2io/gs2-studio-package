@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-economy-equipment-enchant-demo",
+  "types": {
+    "Equipment": {
+      "id": "dt_01M3EPA5ZV6VDSR8C7H8KWAWGY",
+      "singleEntry": false,
+      "delegatedActions": {
+        "AddBonus": "resource:micro-economy-equipment-enchant-demo:masterData:3085a595-ef77-5868-ae4b-03deae9f1ef3::Gs2Exchange:RateModel.Exchange",
+        "Reroll": "resource:micro-economy-equipment-enchant-demo:masterData:eb2be823-9bfa-5d72-abfa-492224ec9e14::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "foundation-economy-equipment",
+      "canonicalTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D"
+    },
+    "EquipmentEnchant": {
+      "id": "dt_01M3EPA5ZVHJW7XDJTN7H62N9W",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-equipment-enchant",
+      "canonicalTypeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q"
+    },
+    "EquipmentEnchantOption": {
+      "id": "dt_01M3EPA5ZVR166YJRTWCES0KGZ",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-equipment-enchant",
+      "canonicalTypeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK"
+    },
+    "EquipmentEnchantSlotChance": {
+      "id": "dt_01M3EPA5ZVZZBTW0R23AD29HQ2",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-equipment-enchant",
+      "canonicalTypeId": "dt_01M0C84Y32MFW05C5TXC61W1SR"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}
