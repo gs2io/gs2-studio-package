@@ -1,0 +1,88 @@
+# The login reward demo's own client.
+#
+# The demo's "Advance one day" button calls Gs2Account:UpdateTimeOffset from
+# the player, which the shared ApplicationAccess client may not do. This stack
+# declares a separate client with ApplicationAccess plus that one action, so
+# the project's Default stack stays as it is. The showroom pipeline deploys it
+# as demo-micro-economy-login-reward-client (the `client` stage) and scaffold
+# writes its outputs into ShowroomEnvironment.asset.
+#
+# Read this before widening anything below:
+#
+# - The client secret is public. It is compiled into the WebGL player every
+#   visitor downloads, and ShowroomEnvironment.asset is committed with the
+#   demo, so it is also in this package repository's git history.
+# - Anyone holding the secret who knows a userId in the `Account` namespace can
+#   change that account's timeOffset, and can read its password: the
+#   UpdateTimeOffset response returns the whole Account, password included.
+#   The namespace is the one every showroom demo signs in to, not one of this
+#   demo's own.
+# - That is tolerable only while userIds do not circulate. The demo accounts
+#   are anonymous and nothing shows one visitor another's userId today. A demo
+#   that does (a ranking, a friend list, a guild roster, a message sender, ...)
+#   completes the conditions for taking over other visitors' accounts. Before
+#   adding such a demo, move this demo to an account namespace of its own and
+#   narrow the Resources below to it.
+# - Resources is limited to the `Account` namespace; `*` would reach every
+#   account namespace in the project.
+# - Deploying this stack again keeps the secret. Deleting the stack and
+#   creating it anew issues a new one, after which scaffold
+#   (--credentials-only), page, the WebGL build and publishing all have to be
+#   redone.
+
+GS2TemplateFormatVersion: "2019-05-01"
+
+Globals:
+  Alias:
+    ClientUserName: demo-login-reward-client
+    TimeOffsetPolicyName: demo-login-reward-client-time-offset
+
+Resources:
+
+  IdentifierClientUser:
+    Type: GS2::Identifier::User
+    Properties:
+      Name: ${ClientUserName}
+      Description: Client of the login reward live demo
+
+  IdentifierClientUserAttachApplicationAccess:
+    Type: GS2::Identifier::AttachSecurityPolicy
+    Properties:
+      UserName: ${ClientUserName}
+      SecurityPolicyId: grn:gs2::system:identifier:securityPolicy:ApplicationAccess
+    DependsOn:
+      - IdentifierClientUser
+
+  IdentifierTimeOffsetPolicy:
+    Type: GS2::Identifier::SecurityPolicy
+    Properties:
+      Name: ${TimeOffsetPolicyName}
+      Description: Lets the login reward live demo move a signed-in player's clock forward
+      Policy:
+        Version: "2016-04-01"
+        Statements:
+          - Effect: Allow
+            Actions:
+              - Gs2Account:UpdateTimeOffset
+            Resources:
+              - "grn:gs2:{region}:{ownerId}:account:Account:account:*"
+
+  IdentifierClientUserAttachTimeOffsetPolicy:
+    Type: GS2::Identifier::AttachSecurityPolicy
+    Properties:
+      UserName: ${ClientUserName}
+      SecurityPolicyId: !GetAttr IdentifierTimeOffsetPolicy.Item.SecurityPolicyId
+    DependsOn:
+      - IdentifierClientUser
+      - IdentifierTimeOffsetPolicy
+
+  IdentifierClientIdentifier:
+    Type: GS2::Identifier::Identifier
+    Properties:
+      UserName: ${ClientUserName}
+    DependsOn:
+      - IdentifierClientUser
+
+Outputs:
+  ApplicationClientId: !GetAttr IdentifierClientIdentifier.Item.ClientId
+  ApplicationClientSecret: !GetAttr IdentifierClientIdentifier.ClientSecret
