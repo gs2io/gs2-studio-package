@@ -1,0 +1,30 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_LoginRewardStartOver:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "LoginRewardStartOver"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "daily"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2LoginReward:DeleteReceiveStatusByUserId"
+                request: "{\"namespaceName\":\"LoginReward\",\"bonusModelName\":\"daily\",\"userId\":\"#{userId}\"}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_LoginRewardStartOver"
+  ExchangeNamespace_LoginRewardStartOver:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "LoginRewardStartOver"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

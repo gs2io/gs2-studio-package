@@ -1,0 +1,40 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "loginRewardCollection",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M3E1NYQW6S5Q0ZTXYXH42M01",
+                  "typeName": "LoginRewardCollection"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ResetReceiveStatus",
+        "transformPackageId": "micro-economy-login-reward"
+      }
+    ]
+  },
+  "id": "6de5a894-3c55-5133-91ab-5b04702c6c01",
+  "index": 0,
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M3E1NYQW6S5Q0ZTXYXH42M01",
+    "typeName": "LoginRewardCollection"
+  }
+}

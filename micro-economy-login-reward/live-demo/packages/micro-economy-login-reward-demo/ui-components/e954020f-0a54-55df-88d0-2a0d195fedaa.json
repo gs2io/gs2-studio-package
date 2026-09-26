@@ -1,0 +1,64 @@
+{
+  "id": "e954020f-0a54-55df-88d0-2a0d195fedaa",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "ReceiveButton",
+      "delegatedActionKey": "resource:micro-economy-login-reward:userData:36085262-1664-4dfe-a472-c1f8a886ec52::Gs2LoginReward:ReceiveStatus.Receive",
+      "id": "5fd6e94e-5a9a-5082-9740-27b937e4e3f9",
+      "kind": "buttonAction",
+      "name": "LoginRewardCollection"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "CatchUpButton",
+      "delegatedActionKey": "resource:micro-economy-login-reward:userData:36085262-1664-4dfe-a472-c1f8a886ec52::Gs2LoginReward:ReceiveStatus.MissedReceive",
+      "id": "4b076d4a-1fed-57b7-9b5d-8b6b88e34234",
+      "kind": "buttonAction",
+      "name": "LoginRewardCollection"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "StartOverButton",
+      "delegatedActionKey": "resource:micro-economy-login-reward-demo:masterData:e622b584-c597-5a12-b1bb-6d97ced02379::Gs2Exchange:RateModel.Exchange",
+      "id": "f0de0305-acbd-53b6-ad64-efaa37f50a97",
+      "kind": "buttonAction",
+      "name": "LoginRewardCollection"
+    },
+    {
+      "componentClassName": "LastReceivedLabel",
+      "id": "e09ec0de-2268-5af6-bcdb-2d06b0d1947a",
+      "kind": "templateLabel",
+      "name": "LoginRewardCollection",
+      "sources": [
+        {
+          "key": "lastReceivedAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M3CDS3307PAW74XKV4GXD6HK"
+          }
+        }
+      ],
+      "template": "Last received: {lastReceivedAt} (UTC)"
+    },
+    {
+      "componentClassName": "RuleLabel",
+      "id": "b6d712e8-bc0e-5c39-a8f8-f22cce823060",
+      "kind": "templateLabel",
+      "name": "LoginRewardCollection",
+      "sources": [
+        {
+          "key": "catchUpCost",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M3E1NYQWTDMTKK9AHQQXBVQA"
+          }
+        }
+      ],
+      "template": "A new day starts at 15:00 UTC (midnight in Japan). Catch up claims the next day now for {catchUpCost} coins — receive today's reward first, or you pay for it."
+    }
+  ],
+  "name": "LoginRewardCollection",
+  "targetDomainType": "LoginRewardCollection",
+  "targetDomainTypeId": "dt_01M3E1NYQW6S5Q0ZTXYXH42M01"
+}

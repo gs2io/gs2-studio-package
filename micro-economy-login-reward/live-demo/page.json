@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "LoginRewardCollection#Daily bonus": {
+      "key": {
+        "id": "daily"
+      },
+      "rows": [
+        "LoginRewardCollectionRuleLabel",
+        "LoginRewardCollectionReceiveButton",
+        "LoginRewardCollectionCatchUpButton",
+        "LoginRewardCollectionStartOverButton",
+        "LoginRewardCollectionLastReceivedLabel"
+      ]
+    },
+    "LoginReward#Seven days": {
+      "scope": {
+        "loginRewardCollection": "daily"
+      },
+      "rows": ["LoginRewardDayLabel", "LoginRewardReceivedLabel"],
+      "toggles": {
+        "LoginRewardUnreceivedActiveToggle": ["LoginRewardReceivedLabel"]
+      }
+    },
+    "Wallet#Where the coins land": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "CurrencyType": {
+      "rows": []
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "Schedule": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    },
+    "Trigger": {
+      "rows": []
+    },
+    "TriggerPull": {
+      "rows": []
+    }
+  }
+}

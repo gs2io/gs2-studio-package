@@ -1,0 +1,45 @@
+{
+  "id": "micro-economy-login-reward-demo",
+  "name": "micro-economy-login-reward-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
+    "micro-economy-login-reward": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the live demo's seven-day login bonus, the coins each day pays, what catching up costs, and the press that starts the track over. The rewards land in the currency package's wallet.",
+      "ja": "ライブデモ用の 7 日間のログインボーナスと、各日の報酬コイン・取り逃し救済の費用・やり直しの操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
+    },
+    "domainTypes": {
+      "dt_01M3E1NYQW6S5Q0ZTXYXH42M01": {
+        "description": {
+          "en": "Adds what catching up costs to a demo login reward group.",
+          "ja": "デモのログインボーナスグループに、取り逃し救済の費用を足します。"
+        },
+        "label": {
+          "en": "Login reward group",
+          "ja": "ログインボーナスグループ"
+        }
+      },
+      "dt_01M3E1NYQWRWXZDP2V0D57T86S": {
+        "description": {
+          "en": "Adds a display name and the coins it pays to a demo login reward.",
+          "ja": "デモのログインボーナスに、表示名と報酬コインを足します。"
+        },
+        "label": {
+          "en": "Login reward",
+          "ja": "ログインボーナス"
+        }
+      }
+    },
+    "label": {
+      "en": "Login rewards (demo data)",
+      "ja": "ログインボーナス（デモデータ）"
+    }
+  }
+}

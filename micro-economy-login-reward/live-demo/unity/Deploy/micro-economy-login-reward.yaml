@@ -1,0 +1,54 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  LoginRewardCurrentBonusMaster_LoginReward:
+    Type: "GS2::LoginReward::CurrentBonusMaster"
+    Properties:
+      NamespaceName: "LoginReward"
+      Settings:
+        version: "2023-07-11"
+        bonusModels:
+          - missedReceiveRelief: "enabled"
+            mode: "streaming"
+            name: "daily"
+            repeat: "disabled"
+            resetHour: 15
+            rewards:
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":10}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":20}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":30}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":40}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":50}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":60}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}"
+            missedReceiveReliefVerifyActions: []
+            missedReceiveReliefConsumeActions:
+              - action: "Gs2Money2:WithdrawByUserId"
+                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":5,\"paidOnly\":false}"
+      Mode: "direct"
+    DependsOn:
+      - "LoginRewardNamespace_LoginReward"
+  LoginRewardNamespace_LoginReward:
+    Type: "GS2::LoginReward::Namespace"
+    Properties:
+      Name: "LoginReward"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

@@ -1,0 +1,70 @@
+{
+  "id": "59cea9f0-0c95-5f3b-aa00-3adf8f9fbaa0",
+  "items": [
+    {
+      "componentClassName": "DayLabel",
+      "id": "c76d535f-356d-5151-86aa-019eb54ba240",
+      "kind": "templateLabel",
+      "name": "LoginReward",
+      "sources": [
+        {
+          "key": "displayName",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M3E1NYQWW3EF79PFBVF6R6P8"
+          }
+        },
+        {
+          "key": "coins",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M3E1NYQWQ84PA61Z003RWE77"
+          }
+        }
+      ],
+      "template": "{displayName}: {coins} coins"
+    },
+    {
+      "componentClassName": "ReceivedLabel",
+      "id": "fa07b73e-3422-5387-ab8c-2864febde4c0",
+      "kind": "templateLabel",
+      "name": "LoginReward",
+      "sources": [],
+      "template": "Received"
+    },
+    {
+      "componentClassName": "ReceivedActiveToggle",
+      "condition": {
+        "kind": "rowElement",
+        "list": {
+          "kind": "property",
+          "propertyId": "prop_01M3CDS33034EBKHQWCY415F48"
+        },
+        "sourceDomainTypeId": "dt_01M3E1NYQW6S5Q0ZTXYXH42M01"
+      },
+      "id": "61f08882-b637-5704-a32b-95477505a4ae",
+      "kind": "activeToggle",
+      "name": "LoginReward"
+    },
+    {
+      "componentClassName": "UnreceivedActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "rowElement",
+          "list": {
+            "kind": "property",
+            "propertyId": "prop_01M3CDS33034EBKHQWCY415F48"
+          },
+          "sourceDomainTypeId": "dt_01M3E1NYQW6S5Q0ZTXYXH42M01"
+        },
+        "kind": "not"
+      },
+      "id": "a0125df3-0818-5da5-ab0b-ce98b5b70544",
+      "kind": "activeToggle",
+      "name": "LoginReward"
+    }
+  ],
+  "name": "LoginReward",
+  "targetDomainType": "LoginReward",
+  "targetDomainTypeId": "dt_01M3E1NYQWRWXZDP2V0D57T86S"
+}

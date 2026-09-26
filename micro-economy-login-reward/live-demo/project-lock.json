@@ -1,0 +1,65 @@
+{
+  "entries": [
+    {
+      "commitSha": "0cffd82e3b72ebf2d23d5e77309da45cd7f402d1",
+      "integrity": "sha256-hPbkrjaC3uoI2YXEyMdcyR9ynWzwBBiVj8JmhBZug7c=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "0cffd82e3b72ebf2d23d5e77309da45cd7f402d1",
+      "integrity": "sha256-hPbkrjaC3uoI2YXEyMdcyR9ynWzwBBiVj8JmhBZug7c=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "0cffd82e3b72ebf2d23d5e77309da45cd7f402d1",
+      "integrity": "sha256-hPbkrjaC3uoI2YXEyMdcyR9ynWzwBBiVj8JmhBZug7c=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/packages/foundation-economy-schedule",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "0cffd82e3b72ebf2d23d5e77309da45cd7f402d1",
+      "integrity": "sha256-hPbkrjaC3uoI2YXEyMdcyR9ynWzwBBiVj8JmhBZug7c=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/live-demo/packages/foundation-economy-schedule-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "0cffd82e3b72ebf2d23d5e77309da45cd7f402d1",
+      "integrity": "sha256-hPbkrjaC3uoI2YXEyMdcyR9ynWzwBBiVj8JmhBZug7c=",
+      "owner": "gs2io",
+      "packageId": "micro-economy-login-reward",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-economy-login-reward/packages/micro-economy-login-reward",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "0cffd82e3b72ebf2d23d5e77309da45cd7f402d1",
+      "integrity": "sha256-hPbkrjaC3uoI2YXEyMdcyR9ynWzwBBiVj8JmhBZug7c=",
+      "owner": "gs2io",
+      "packageId": "micro-shop-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-shop-currency/packages/micro-shop-currency",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

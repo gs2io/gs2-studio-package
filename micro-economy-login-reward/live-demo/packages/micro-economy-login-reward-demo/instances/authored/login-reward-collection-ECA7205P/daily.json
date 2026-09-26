@@ -1,0 +1,13 @@
+{
+  "id": "daily",
+  "rowKey": "row_01M3E1NYQW3RZXCK2CXVH2PHM2",
+  "typeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+  "values": {
+    "prop_01M3CDS330A2F2YQMY9FNA3T7M": [],
+    "prop_01M3CDS330CMZX53TRZEHQPTRX": "streaming",
+    "prop_01M3CDS330E35JNBG69ADAZ31P": "disabled",
+    "prop_01M3CDS330QE86VNCF2B97886B": "enabled",
+    "prop_01M3E1NYQWTDMTKK9AHQQXBVQA": 5,
+    "prop_NFHPA3CG7FM9RX44J7NAWPT1ET": 15
+  }
+}
