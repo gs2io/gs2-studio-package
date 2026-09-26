@@ -1,0 +1,30 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  FormationCurrentFormMaster_CharacterEquipment:
+    Type: "GS2::Formation::CurrentFormMaster"
+    Properties:
+      NamespaceName: "CharacterEquipment"
+      Settings:
+        version: "2019-09-09"
+        moldModels: []
+        propertyFormModels:
+          - metadata: ""
+            name: "CharacterEquipment"
+            slots:
+              - metadata: ""
+                name: "armor"
+                propertyRegex: "^grn:gs2:{region}:{ownerId}:inventory:Equipment:user:{userId}:inventory:Equipment:item:(steel-shield):itemSet:[^:]+$"
+              - metadata: ""
+                name: "weapon"
+                propertyRegex: "^grn:gs2:{region}:{ownerId}:inventory:Equipment:user:{userId}:inventory:Equipment:item:(iron-sword|oak-staff):itemSet:[^:]+$"
+      Mode: "direct"
+    DependsOn:
+      - "FormationNamespace_CharacterEquipment"
+  FormationNamespace_CharacterEquipment:
+    Type: "GS2::Formation::Namespace"
+    Properties:
+      Name: "CharacterEquipment"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

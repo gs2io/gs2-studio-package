@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ.armor": "row_01M3F5XAX07AMG0K0Y3ZK8S0AY",
+    "row:dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ.weapon": "row_01M3F5XAX05AT5BHNV16RXRB74",
+    "type:EquipmentSlot": "dt_01M3F5XAX0TX6870YVGG772J1G"
+  },
+  "deterministicOverrides": {}
+}

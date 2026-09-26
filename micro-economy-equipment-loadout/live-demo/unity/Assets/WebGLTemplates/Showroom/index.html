@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>{{{ PRODUCT_NAME }}}</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #12101a;
+        overflow: hidden;
+      }
+      #unity-container {
+        position: absolute;
+        inset: 0;
+      }
+      #unity-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: #12101a;
+      }
+      #unity-loading {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        color: #a49dba;
+        font:
+          14px/1.6 ui-sans-serif,
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+      #unity-bar {
+        width: 220px;
+        height: 3px;
+        background: #2d2740;
+        overflow: hidden;
+      }
+      #unity-bar-fill {
+        width: 0%;
+        height: 100%;
+        background: #a48cff;
+        transition: width 0.2s ease-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="unity-container">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div id="unity-loading">
+        <div>Loading {{{ PRODUCT_NAME }}}</div>
+        <div id="unity-bar"><div id="unity-bar-fill"></div></div>
+      </div>
+    </div>
+    <script src="Build/{{{ LOADER_FILENAME }}}"></script>
+    <script>
+      var loading = document.querySelector("#unity-loading");
+      var barFill = document.querySelector("#unity-bar-fill");
+      createUnityInstance(
+        document.querySelector("#unity-canvas"),
+        {
+          dataUrl: "Build/{{{ DATA_FILENAME }}}",
+          frameworkUrl: "Build/{{{ FRAMEWORK_FILENAME }}}",
+          codeUrl: "Build/{{{ CODE_FILENAME }}}",
+          streamingAssetsUrl: "StreamingAssets",
+          companyName: "{{{ COMPANY_NAME }}}",
+          productName: "{{{ PRODUCT_NAME }}}",
+          productVersion: "{{{ PRODUCT_VERSION }}}",
+          autoSyncPersistentDataPath: true,
+        },
+        function (progress) {
+          barFill.style.width = Math.round(progress * 100) + "%";
+        }
+      )
+        .then(function () {
+          loading.style.display = "none";
+        })
+        .catch(function (message) {
+          loading.textContent = message;
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "id": "armor",
+  "rowKey": "row_01M3F5XAX07AMG0K0Y3ZK8S0AY",
+  "typeId": "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ",
+  "values": {
+    "prop_01M0CDYNB5E7VX7G7ED1SRD7JR": "^grn:gs2:{region}:{ownerId}:inventory:Equipment:user:{userId}:inventory:Equipment:item:(steel-shield):itemSet:[^:]+$"
+  }
+}

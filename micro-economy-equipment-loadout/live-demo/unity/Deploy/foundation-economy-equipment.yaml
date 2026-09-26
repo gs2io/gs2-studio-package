@@ -1,0 +1,38 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  InventoryCurrentItemModelMaster_Equipment:
+    Type: "GS2::Inventory::CurrentItemModelMaster"
+    Properties:
+      NamespaceName: "Equipment"
+      Settings:
+        version: "2019-02-05"
+        inventoryModels:
+          - initialCapacity: 4
+            maxCapacity: 10
+            name: "Equipment"
+            itemModels:
+              - allowMultipleStacks: true
+                name: "iron-sword"
+                sortValue: 100
+                stackingLimit: 1
+              - allowMultipleStacks: true
+                name: "oak-staff"
+                sortValue: 200
+                stackingLimit: 1
+              - allowMultipleStacks: true
+                name: "steel-shield"
+                sortValue: 300
+                stackingLimit: 1
+        simpleInventoryModels: []
+        bigInventoryModels: []
+      Mode: "direct"
+    DependsOn:
+      - "InventoryNamespace_Equipment"
+  InventoryNamespace_Equipment:
+    Type: "GS2::Inventory::Namespace"
+    Properties:
+      Name: "Equipment"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

@@ -1,0 +1,9 @@
+<!-- The showroom host discovers generated handlers and UI components by
+     reflection, so the managed linker must keep them and the GS2 runtime. -->
+<linker>
+  <assembly fullname="Assembly-CSharp" preserve="all" />
+  <assembly fullname="Gs2" preserve="all" />
+  <assembly fullname="Gs2.Unity" preserve="all" />
+  <assembly fullname="Gs2Bind" preserve="all" />
+  <assembly fullname="Gs2Bind.Unity" preserve="all" />
+</linker>

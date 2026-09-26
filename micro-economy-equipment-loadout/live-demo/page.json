@@ -1,0 +1,50 @@
+{
+  "sections": {
+    "CharacterRecruit#Recruit a character": {
+      "rows": [
+        {
+          "component": "CharacterRecruitRecruitButton",
+          "caption": "CharacterRecruitCharacterLabel"
+        }
+      ]
+    },
+    "EquipmentCatalog#Take equipment": {
+      "rows": [
+        {
+          "component": "EquipmentCatalogTakeButton",
+          "caption": "EquipmentCatalogNameLabel"
+        }
+      ]
+    },
+    "EquipmentCollection#Loadout": {
+      "rows": ["EquipmentLoadoutBoardPanel"]
+    },
+    "EquipmentCollection#Equipment bag": {
+      "rows": [
+        {
+          "component": "EquipmentCollectionCapacityGauge",
+          "caption": "EquipmentCollectionCapacityLabel"
+        },
+        "EquipmentCollectionExpandButton"
+      ],
+      "toggles": {
+        "EquipmentCollectionExpandableInteractable": ["EquipmentCollectionExpandButton"]
+      }
+    },
+    "Character": {
+      "rows": []
+    },
+    "CharacterCollection": {
+      "rows": []
+    },
+    "CharacterExperience": {
+      "rows": []
+    },
+    "Equipment": {
+      "rows": []
+    },
+    "EquipmentSlot": {
+      "rows": []
+    }
+  }
+}

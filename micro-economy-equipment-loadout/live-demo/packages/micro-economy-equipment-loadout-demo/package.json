@@ -1,0 +1,22 @@
+{
+  "id": "micro-economy-equipment-loadout-demo",
+  "name": "micro-economy-equipment-loadout-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-character": "github:gs2io/gs2-studio-package",
+    "foundation-economy-character-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-equipment": "github:gs2io/gs2-studio-package",
+    "foundation-economy-equipment-demo": "github:gs2io/gs2-studio-package",
+    "micro-economy-equipment-loadout": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the weapon and armor slots the live demo uses.",
+      "ja": "ライブデモ用の武器スロットと防具スロットを提供します。"
+    },
+    "label": {
+      "en": "Equipment Loadout (demo data)",
+      "ja": "装備の装着（デモデータ）"
+    }
+  }
+}
