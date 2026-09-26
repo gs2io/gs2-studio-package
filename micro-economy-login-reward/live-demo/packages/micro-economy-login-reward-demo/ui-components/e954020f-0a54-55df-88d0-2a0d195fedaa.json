@@ -55,7 +55,7 @@
           }
         }
       ],
-      "template": "A new day starts at 15:00 UTC (midnight in Japan). Catch up claims the next day now for {catchUpCost} coins — receive today's reward first, or you pay for it."
+      "template": "A new day starts at 15:00 UTC (midnight in Japan). Catch up claims the next day now for {catchUpCost} coins. Receive today's reward first, or you pay for it."
     }
   ],
   "name": "LoginRewardCollection",

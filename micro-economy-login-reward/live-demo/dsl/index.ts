@@ -358,7 +358,7 @@ export const microEconomyLoginRewardDemo = withDays
       )
       .templateLabel(
         "RuleLabel",
-        "A new day starts at 15:00 UTC (midnight in Japan). Catch up claims the next day now for {catchUpCost} coins — receive today's reward first, or you pay for it.",
+        "A new day starts at 15:00 UTC (midnight in Japan). Catch up claims the next day now for {catchUpCost} coins. Receive today's reward first, or you pay for it.",
         { catchUpCost: ui.prop("catchUpCost") },
         { name: "LoginRewardCollection" }
       )
