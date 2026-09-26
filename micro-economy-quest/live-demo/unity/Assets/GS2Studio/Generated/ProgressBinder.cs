@@ -182,6 +182,21 @@ namespace GS2Studio.Generated.Progress
             var _userdataQuestQuestQuestModel = await __userdataQuestQuestQuestModelLoader.LoadOrNull(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyUserdataQuestQuestQuestModel(_model, _userdataQuestQuestQuestModel);
+            var __rewardsItems = new List<GS2Studio.Generated.ProgressReward.ProgressReward>();
+            if (_userdataQuestQuestQuestModel?.Rewards != null)
+            {
+                foreach (var __element in _userdataQuestQuestQuestModel.Rewards)
+                {
+                    if (__element == null) continue;
+                    if (__element.ItemId == null) continue;
+                    var row = new GS2Studio.Generated.ProgressReward.MutableProgressReward();
+                    row.Id = new GS2Studio.Generated.ProgressReward.ProgressRewardId(string.Empty);
+                    row.ItemId = __element.ItemId;
+                    row.Value = __element.Value;
+                    __rewardsItems.Add(row);
+                }
+            }
+            _model.Rewards = __rewardsItems;
             _mounted = true;
         }
 
@@ -199,6 +214,21 @@ namespace GS2Studio.Generated.Progress
                 {
                     if (_disposed) return Task.CompletedTask;
                     ApplyUserdataQuestQuestQuestModel(_model, value);
+                    var __rewardsItems = new List<GS2Studio.Generated.ProgressReward.ProgressReward>();
+                    if (value?.Rewards != null)
+                    {
+                        foreach (var __element in value.Rewards)
+                        {
+                            if (__element == null) continue;
+                            if (__element.ItemId == null) continue;
+                            var row = new GS2Studio.Generated.ProgressReward.MutableProgressReward();
+                            row.Id = new GS2Studio.Generated.ProgressReward.ProgressRewardId(string.Empty);
+                            row.ItemId = __element.ItemId;
+                            row.Value = __element.Value;
+                            __rewardsItems.Add(row);
+                        }
+                    }
+                    _model.Rewards = __rewardsItems;
                     return Task.CompletedTask;
                 },
                 () => onChange?.Invoke()

@@ -488,10 +488,6 @@ namespace GS2Studio.Generated.Equipment
             {
                 model.PropertyId = source.Name;
             }
-            else
-            {
-                model.PropertyId = string.Empty;
-            }
         }
         #endregion
 

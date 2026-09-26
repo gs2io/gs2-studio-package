@@ -605,7 +605,6 @@ namespace GS2Studio.Generated.Character
             }
             else
             {
-                model.PropertyId = string.Empty;
                 model.ReleasedSkillNodes = default;
             }
         }
