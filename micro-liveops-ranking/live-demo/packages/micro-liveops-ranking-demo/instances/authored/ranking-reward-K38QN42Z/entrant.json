@@ -1,0 +1,11 @@
+{
+  "id": "entrant",
+  "rowKey": "row_01M3HP36RMZGSY6HZCFN0MCWC9",
+  "typeId": "dt_01M0C5QTC12JW853EKK38QN42Z",
+  "values": {
+    "prop_01M0C5QTC1DSVX6VMXA31P7T1R": 1001,
+    "prop_01M0C5QTC1PT2SC2DM4MFFH880": "contest",
+    "prop_01M0C5QTC1XDPQC02MC3PAHSFT": [],
+    "prop_01M3HP36RM61TMJ7110DJBF1JN": 30
+  }
+}

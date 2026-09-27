@@ -1,0 +1,54 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  Ranking2CurrentRankingMaster_Ranking:
+    Type: "GS2::Ranking2::CurrentRankingMaster"
+    Properties:
+      NamespaceName: "Ranking"
+      Settings:
+        version: "2024-05-30"
+        globalRankingModels:
+          - maximumValue: 1000
+            metadata: ""
+            minimumValue: 1
+            name: "contest"
+            orderDirection: "desc"
+            rewardCalculationIndex: "rank"
+            sum: false
+            entryPeriodEventId: "grn:gs2:{region}:{ownerId}:schedule:Schedule:event:ranking-contest"
+            rankingRewards:
+              - metadata: "{\"thresholdRank\":{\"present\":true,\"value\":1},\"ranking\":{\"present\":true,\"value\":\"contest\"}}"
+                thresholdRank: 1
+                acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":300}]}"
+              - metadata: "{\"thresholdRank\":{\"present\":true,\"value\":10},\"ranking\":{\"present\":true,\"value\":\"contest\"}}"
+                thresholdRank: 10
+                acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":80}]}"
+              - metadata: "{\"thresholdRank\":{\"present\":true,\"value\":1001},\"ranking\":{\"present\":true,\"value\":\"contest\"}}"
+                thresholdRank: 1001
+                acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":30}]}"
+              - metadata: "{\"thresholdRank\":{\"present\":true,\"value\":3},\"ranking\":{\"present\":true,\"value\":\"contest\"}}"
+                thresholdRank: 3
+                acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":150}]}"
+        clusterRankingModels: []
+        subscribeRankingModels: []
+      Mode: "direct"
+    DependsOn:
+      - "Ranking2Namespace_Ranking"
+  Ranking2Namespace_Ranking:
+    Type: "GS2::Ranking2::Namespace"
+    Properties:
+      Name: "Ranking"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

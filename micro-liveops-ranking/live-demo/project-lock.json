@@ -1,0 +1,65 @@
+{
+  "entries": [
+    {
+      "commitSha": "cd3305b55bbb32cf778d9d2d8966e7bc0f723125",
+      "integrity": "sha256-5mkEownDxMdCjmKGdnvybXWoFX6+HFHios1COB16Jrw=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "cd3305b55bbb32cf778d9d2d8966e7bc0f723125",
+      "integrity": "sha256-5mkEownDxMdCjmKGdnvybXWoFX6+HFHios1COB16Jrw=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "cd3305b55bbb32cf778d9d2d8966e7bc0f723125",
+      "integrity": "sha256-5mkEownDxMdCjmKGdnvybXWoFX6+HFHios1COB16Jrw=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/packages/foundation-economy-schedule",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "cd3305b55bbb32cf778d9d2d8966e7bc0f723125",
+      "integrity": "sha256-5mkEownDxMdCjmKGdnvybXWoFX6+HFHios1COB16Jrw=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/live-demo/packages/foundation-economy-schedule-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "cd3305b55bbb32cf778d9d2d8966e7bc0f723125",
+      "integrity": "sha256-5mkEownDxMdCjmKGdnvybXWoFX6+HFHios1COB16Jrw=",
+      "owner": "gs2io",
+      "packageId": "micro-liveops-ranking",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-liveops-ranking/packages/micro-liveops-ranking",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "cd3305b55bbb32cf778d9d2d8966e7bc0f723125",
+      "integrity": "sha256-5mkEownDxMdCjmKGdnvybXWoFX6+HFHios1COB16Jrw=",
+      "owner": "gs2io",
+      "packageId": "micro-shop-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-shop-currency/packages/micro-shop-currency",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

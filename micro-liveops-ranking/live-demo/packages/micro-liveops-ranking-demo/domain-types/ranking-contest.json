@@ -1,0 +1,68 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "localizedDisplay": {
+          "en": {
+            "description": "The few minutes in which a visitor can score.",
+            "label": "Contest"
+          },
+          "ja": {
+            "description": "ランキングに参加できる数分間の枠です。",
+            "label": "コンテスト"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "StartContest",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "c3e19020-0b4e-5a85-8984-e27e2922cb90",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-liveops-ranking-demo"
+      }
+    },
+    {
+      "methodName": "FinishContest",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "b6844618-62d8-5fdd-9cec-bd7fefc91279",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-liveops-ranking-demo"
+      }
+    }
+  ],
+  "id": "dt_01M3HP36RM3N50HEQ42VKC8AJ1",
+  "kind": "local",
+  "name": "RankingContest",
+  "singleEntry": true
+}

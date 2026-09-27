@@ -1,0 +1,75 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "static",
+                "value": 0
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_01M3HP36RM61TMJ7110DJBF1JN"
+              }
+            }
+          ],
+          "transformName": "DepositFreeCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "append",
+      "targetPropertyId": "prop_01M0C5QTC1XDPQC02MC3PAHSFT"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "Free currency this tier deposits when it is received",
+        "id": "prop_01M3HP36RM61TMJ7110DJBF1JN",
+        "localizedDisplay": {
+          "en": {
+            "description": "Free currency paid when this tier's reward is received.",
+            "label": "Reward coins",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "この順位帯の報酬を受け取ったときに付与する無償通貨の額です。",
+            "label": "報酬コイン",
+            "unit": "通貨"
+          }
+        },
+        "name": "coins",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_01M3HP36RM2KFTM6EGQY72A05W",
+  "kind": "overlay",
+  "name": "RankingReward",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-liveops-ranking",
+    "directSourceTypeId": "dt_01M0C5QTC12JW853EKK38QN42Z",
+    "sourcePackageId": "micro-liveops-ranking",
+    "sourceTypeId": "dt_01M0C5QTC12JW853EKK38QN42Z"
+  }
+}

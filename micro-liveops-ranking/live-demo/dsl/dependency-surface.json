@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-liveops-ranking-demo",
+  "types": {
+    "Ranking": {
+      "id": "dt_01M3HP36RMGCK4X2FQXST8DGRY",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-liveops-ranking",
+      "canonicalTypeId": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV"
+    },
+    "RankingContest": {
+      "id": "dt_01M3HP36RM3N50HEQ42VKC8AJ1",
+      "singleEntry": true,
+      "delegatedActions": {
+        "FinishContest": "resource:micro-liveops-ranking-demo:masterData:b6844618-62d8-5fdd-9cec-bd7fefc91279::Gs2Exchange:RateModel.Exchange",
+        "StartContest": "resource:micro-liveops-ranking-demo:masterData:c3e19020-0b4e-5a85-8984-e27e2922cb90::Gs2Exchange:RateModel.Exchange"
+      },
+      "canonicalPackageId": "micro-liveops-ranking-demo",
+      "canonicalTypeId": "dt_01M3HP36RM3N50HEQ42VKC8AJ1",
+      "properties": {
+        "id": "prop_reserved_id"
+      }
+    },
+    "RankingReward": {
+      "id": "dt_01M3HP36RM2KFTM6EGQY72A05W",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-liveops-ranking",
+      "canonicalTypeId": "dt_01M0C5QTC12JW853EKK38QN42Z",
+      "addedProperties": {
+        "coins": "prop_01M3HP36RM61TMJ7110DJBF1JN"
+      }
+    }
+  },
+  "masterDataResources": {
+    "transaction.AcquireAction": "b2ea6016-f51b-5e1f-94eb-ba643163f8ec",
+    "transaction.ConsumeAction": "87fe58ba-c3d7-5239-b2b2-cb1b9f7ab8b5"
+  },
+  "transforms": {}
+}

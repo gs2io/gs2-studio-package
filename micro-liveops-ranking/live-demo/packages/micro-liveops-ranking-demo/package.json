@@ -1,0 +1,45 @@
+{
+  "id": "micro-liveops-ranking-demo",
+  "name": "micro-liveops-ranking-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
+    "micro-liveops-ranking": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the live demo's shared ranking, the coins each reward tier pays, and the presses that start and finish a contest. The rewards land in the currency package's wallet.",
+      "ja": "ライブデモ用に、全員で共有するランキングと順位帯ごとの報酬コイン、コンテストの開始・終了の操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
+    },
+    "domainTypes": {
+      "dt_01M3HP36RM2KFTM6EGQY72A05W": {
+        "description": {
+          "en": "Adds the coins it pays to a demo ranking reward tier.",
+          "ja": "デモのランキング報酬に、報酬コインを足します。"
+        },
+        "label": {
+          "en": "Ranking reward",
+          "ja": "ランキング報酬"
+        }
+      },
+      "dt_01M3HP36RM3N50HEQ42VKC8AJ1": {
+        "description": {
+          "en": "The contest's start and finish presses and its rule.",
+          "ja": "コンテストの開始・終了の操作と説明です。"
+        },
+        "label": {
+          "en": "Contest",
+          "ja": "コンテスト"
+        }
+      }
+    },
+    "label": {
+      "en": "Rankings (demo data)",
+      "ja": "ランキング（デモデータ）"
+    }
+  }
+}

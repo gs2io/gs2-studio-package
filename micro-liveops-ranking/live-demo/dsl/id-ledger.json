@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:RankingReward.coins": "prop_01M3HP36RM61TMJ7110DJBF1JN",
+    "row:dt_01M0C5QTC12JW853EKK38QN42Z.entrant": "row_01M3HP36RMZGSY6HZCFN0MCWC9",
+    "row:dt_01M0C5QTC12JW853EKK38QN42Z.first": "row_01M3HP36RMZ6AWHT2ZFQJK4M7N",
+    "row:dt_01M0C5QTC12JW853EKK38QN42Z.top10": "row_01M3HP36RM83NV44CE9Z6KCW2Z",
+    "row:dt_01M0C5QTC12JW853EKK38QN42Z.top3": "row_01M3HP36RMCSVGGMMRYPBTT6N3",
+    "row:dt_01M0C5QTC1BDRSX4T1WSDJXDQV.contest": "row_01M3HP36RMCH02YXTHC9CCX5ST",
+    "row:type:RankingContest.rankingcontest": "row_01M3HP36RM2X44MKQJ4FEQ63BJ",
+    "type:Ranking": "dt_01M3HP36RMGCK4X2FQXST8DGRY",
+    "type:RankingContest": "dt_01M3HP36RM3N50HEQ42VKC8AJ1",
+    "type:RankingReward": "dt_01M3HP36RM2KFTM6EGQY72A05W"
+  },
+  "deterministicOverrides": {}
+}

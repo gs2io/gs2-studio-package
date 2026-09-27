@@ -17,12 +17,12 @@
 #   UpdateTimeOffset response returns the whole Account, password included.
 #   The namespace is the one every showroom demo signs in to, not one of this
 #   demo's own.
-# - That is tolerable only while userIds do not circulate. The demo accounts
-#   are anonymous and nothing shows one visitor another's userId today. A demo
-#   that does (a ranking, a friend list, a guild roster, a message sender, ...)
-#   completes the conditions for taking over other visitors' accounts. Before
-#   adding such a demo, move this demo to an account namespace of its own and
-#   narrow the Resources below to it.
+# - userIds do circulate: the ranking demo's board hands every visitor the
+#   userIds of the others on it. So anyone holding this secret can take over
+#   another visitor's demo account. That is accepted: the accounts are
+#   anonymous and hold nothing but demo data. Should that stop being true,
+#   move this demo to an account namespace of its own and narrow the Resources
+#   below to it.
 # - Resources is limited to the `Account` namespace; `*` would reach every
 #   account namespace in the project.
 # - The idle reward and buff demos hold clients with the same permission.

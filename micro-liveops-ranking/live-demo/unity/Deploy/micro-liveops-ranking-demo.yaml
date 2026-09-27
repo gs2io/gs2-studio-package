@@ -1,0 +1,58 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_RankingContestFinish:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "RankingContestFinish"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "rankingcontest"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Schedule:DeleteTriggerByUserId"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"ranking-contest\",\"userId\":\"#{userId}\"}"
+            acquireActions: []
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_RankingContestFinish"
+  ExchangeCurrentRateMaster_RankingContestStart:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "RankingContestStart"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "rankingcontest"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Schedule:TriggerByUserId"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"ranking-contest\",\"userId\":\"#{userId}\",\"triggerStrategy\":\"renew\",\"ttl\":180}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_RankingContestStart"
+  ExchangeNamespace_RankingContestFinish:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "RankingContestFinish"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_RankingContestStart:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "RankingContestStart"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

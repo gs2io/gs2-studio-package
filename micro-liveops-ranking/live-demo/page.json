@@ -1,0 +1,44 @@
+{
+  "sections": {
+    "RankingContest#Score contest": {
+      "rows": [
+        "RankingContestRuleLabel",
+        "RankingContestStatusLabel",
+        "RankingContestEndsValue",
+        "RankingContestStartContestButton",
+        "RankingContestPlayButton",
+        "RankingContestFinishContestButton",
+        "RankingContestYouLabel",
+        "RankingContestReceiveButton",
+        "RankingContestBoardPanel"
+      ]
+    },
+    "Wallet#Where the coins land": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "Schedule": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    },
+    "Trigger": {
+      "rows": []
+    },
+    "TriggerPull": {
+      "rows": []
+    }
+  }
+}
