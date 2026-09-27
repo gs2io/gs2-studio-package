@@ -10,6 +10,7 @@ Resources:
           - initialCapacity: 4
             maxCapacity: 10
             name: "Equipment"
+            protectReferencedItem: true
             itemModels:
               - allowMultipleStacks: true
                 name: "iron-sword"

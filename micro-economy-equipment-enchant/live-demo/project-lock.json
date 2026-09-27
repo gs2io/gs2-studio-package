@@ -21,8 +21,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "41c3168f7300766911bfaa7e4e23f1b40b16e060",
-      "integrity": "sha256-gvsY10dSZE3mNMN+aswd1u5nSQojdxGEkCuTio0ATI4=",
+      "commitSha": "375aac014a5692f76562f6c1bc0d3580b1e6c3b7",
+      "integrity": "sha256-4GFaWjpudqRpbNso4hVxVZl91rFkTzsr/TSO95KEUsc=",
       "owner": "gs2io",
       "packageId": "foundation-economy-equipment",
       "repo": "gs2-studio-package",

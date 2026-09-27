@@ -21,8 +21,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "f98615217998284b63eaa8e8072e544fb6d19a38",
-      "integrity": "sha256-oEMrtF9pTL4aaI9m5yL0FqVQ5nj1olN1orUD+jOc99I=",
+      "commitSha": "375aac014a5692f76562f6c1bc0d3580b1e6c3b7",
+      "integrity": "sha256-4GFaWjpudqRpbNso4hVxVZl91rFkTzsr/TSO95KEUsc=",
       "owner": "gs2io",
       "packageId": "foundation-economy-equipment",
       "repo": "gs2-studio-package",
@@ -41,8 +41,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "f98615217998284b63eaa8e8072e544fb6d19a38",
-      "integrity": "sha256-oEMrtF9pTL4aaI9m5yL0FqVQ5nj1olN1orUD+jOc99I=",
+      "commitSha": "375aac014a5692f76562f6c1bc0d3580b1e6c3b7",
+      "integrity": "sha256-4GFaWjpudqRpbNso4hVxVZl91rFkTzsr/TSO95KEUsc=",
       "owner": "gs2io",
       "packageId": "micro-economy-equipment-loadout",
       "repo": "gs2-studio-package",
