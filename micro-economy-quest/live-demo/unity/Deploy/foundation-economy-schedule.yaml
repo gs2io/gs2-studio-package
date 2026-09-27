@@ -27,6 +27,12 @@ Resources:
             repeatSetting:
               repeatType: "always"
             scheduleType: "absolute"
+          - metadata: ""
+            name: "ranking-contest"
+            relativeTriggerName: "ranking-contest"
+            repeatSetting:
+              repeatType: "always"
+            scheduleType: "relative"
       Mode: "direct"
     DependsOn:
       - "ScheduleNamespace_Schedule"

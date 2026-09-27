@@ -67,19 +67,37 @@ namespace GS2Studio.Showroom.Demo
             if (_rows == null || _hint == null || _contest == null || !_contest.HasValue) return;
             Clear(_rows);
 
-            // The visitor's own place is read fresh, while the board can be a
-            // few minutes old, so their row is taken off the board and put
-            // back where their fresh rank says.
+            // The visitor's own score is read fresh, while the board can be a
+            // few minutes old. Their row is taken off the board and put back
+            // where their score now falls, and the places are counted again
+            // from the top, since GS2 never shares a place between two
+            // players. A visitor ranked below the board keeps the rank GS2
+            // gave them, under it.
             var board = _contest.Board;
             var places = board
                 .Where(place => place.UserId != _contest.UserId)
                 .Select(place => (rank: place.Rank, name: Tag(place.UserId), score: place.Score, own: false))
                 .ToList();
-            if (_contest.Best != null)
+            var best = _contest.Best;
+            if (best != null && (_contest.Rank ?? int.MaxValue) <= RankingContestState.BoardSize)
             {
-                places.Add((rank: _contest.Rank, name: "You", score: _contest.Best, own: true));
+                var at = places.FindIndex(place => (place.score ?? long.MinValue) < best);
+                places.Insert(at < 0 ? places.Count : at, (rank: null, name: "You", score: best, own: true));
+                // The board is cut back to its size from the bottom, never
+                // dropping the visitor's own row.
+                while (places.Count > RankingContestState.BoardSize)
+                {
+                    places.RemoveAt(places.FindLastIndex(place => !place.own));
+                }
+                places = places
+                    .Select((place, index) => (rank: (int?)(index + 1), place.name, place.score, place.own))
+                    .ToList();
             }
-            foreach (var place in places.OrderBy(place => place.rank ?? int.MaxValue))
+            else if (best != null)
+            {
+                places.Add((rank: _contest.Rank, name: "You", score: best, own: true));
+            }
+            foreach (var place in places)
             {
                 Row(place.rank, place.name, place.score, place.own);
             }

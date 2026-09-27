@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c4e553fd7b954a989fa98da6d2ed3c6, type: 3}
-  m_Name: first
+  m_Name: '1001-contest'
   m_EditorClassIdentifier: 
-  _rawInstanceId: first
+  _rawInstanceId: '1001.contest'
   _ranking: contest

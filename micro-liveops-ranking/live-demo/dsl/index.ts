@@ -77,10 +77,10 @@ const WALLET_SLOT = 0;
  * but finished outside the top 1000.
  */
 const TIERS = [
-  { id: "first", thresholdRank: 1, coins: 300 },
-  { id: "top3", thresholdRank: 3, coins: 150 },
-  { id: "top10", thresholdRank: 10, coins: 80 },
-  { id: "entrant", thresholdRank: 1001, coins: 30 },
+  { thresholdRank: 1, coins: 300 },
+  { thresholdRank: 3, coins: 150 },
+  { thresholdRank: 10, coins: 80 },
+  { thresholdRank: 1001, coins: 30 },
 ] as const;
 
 /**
@@ -280,8 +280,10 @@ const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.0")
 // and its properties with it. The acquire slot is authored empty because the
 // feature package requires it and the deposit is appended.
 const withTiers = TIERS.reduce(
-  (builder, { id, thresholdRank, coins }) =>
-    builder.instance(RankingReward.typeName, id, {
+  (builder, { thresholdRank, coins }) =>
+    // A reward tier is keyed by its ranking and threshold, and its id is
+    // those values as the package orders them.
+    builder.instance(RankingReward.typeName, `${thresholdRank}.${CONTEST}`, {
       [ranking.propertyId("RankingReward", "ranking")]: CONTEST,
       [ranking.propertyId("RankingReward", "thresholdRank")]: thresholdRank,
       [ranking.propertyId("RankingReward", "acquireActions")]: [],

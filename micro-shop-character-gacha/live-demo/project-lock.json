@@ -61,8 +61,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "7f72e1842bc6823425816ff5aa32adb57b00f37c",
-      "integrity": "sha256-7sJFBphu2TumfFqk66qKN2Epi389qpGGDe7ly8dPp4M=",
+      "commitSha": "f675544768970359b3d782e887c7a5d223118166",
+      "integrity": "sha256-ajyd6uaa5j2CScbT2hMw2LBjVKemwF4uHdVj+kUe0co=",
       "owner": "gs2io",
       "packageId": "foundation-economy-schedule-demo",
       "repo": "gs2-studio-package",

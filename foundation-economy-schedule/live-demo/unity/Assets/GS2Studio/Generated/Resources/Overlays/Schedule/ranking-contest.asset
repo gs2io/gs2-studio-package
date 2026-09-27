@@ -10,8 +10,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c4e553fd7b954a989fa98da6d2ed3c6, type: 3}
-  m_Name: entrant
+  m_Script: {fileID: 11500000, guid: 88b0209686515bc3ae4935969925ec63, type: 3}
+  m_Name: ranking-contest
   m_EditorClassIdentifier: 
-  _rawInstanceId: entrant
-  _ranking: contest
+  _rawInstanceId: ranking-contest
+  _hasTrigger: 1
+  _trigger: ranking-contest
