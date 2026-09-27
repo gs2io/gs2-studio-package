@@ -1,0 +1,75 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "static",
+                "value": 0
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_01M3GBBQCA52T922M9XCBSVBWX"
+              }
+            }
+          ],
+          "transformName": "DepositFreeCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "append",
+      "targetPropertyId": "prop_01M0PRB5RFJJP0NG8XT0WHEGD2"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "Free currency one interval away deposits",
+        "id": "prop_01M3GBBQCA52T922M9XCBSVBWX",
+        "localizedDisplay": {
+          "en": {
+            "description": "Free currency paid for each interval away.",
+            "label": "Reward coins",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "放置 1 区間ごとに付与する無償通貨の額です。",
+            "label": "報酬コイン",
+            "unit": "通貨"
+          }
+        },
+        "name": "coins",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_01M3GBBQCAS6Q9M23ZR45EMPGY",
+  "kind": "overlay",
+  "name": "IdleReward",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-idle",
+    "directSourceTypeId": "dt_4201EMDQW9HN9AMKXT0WQHMKJY",
+    "sourcePackageId": "foundation-economy-idle",
+    "sourceTypeId": "dt_4201EMDQW9HN9AMKXT0WQHMKJY"
+  }
+}

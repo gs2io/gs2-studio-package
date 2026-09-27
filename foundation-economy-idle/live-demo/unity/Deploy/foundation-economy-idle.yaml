@@ -1,0 +1,30 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  IdleCurrentCategoryMaster_Idle:
+    Type: "GS2::Idle::CurrentCategoryMaster"
+    Properties:
+      NamespaceName: "Idle"
+      Settings:
+        version: "2023-06-06"
+        categoryModels:
+          - defaultMaximumIdleMinutes: 480
+            name: "Idle"
+            rewardIntervalMinutes: 60
+            acquireActions:
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":10}]}"
+      Mode: "direct"
+    DependsOn:
+      - "IdleNamespace_Idle"
+  IdleNamespace_Idle:
+    Type: "GS2::Idle::Namespace"
+    Properties:
+      Name: "Idle"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

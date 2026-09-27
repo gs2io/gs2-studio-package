@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:IdleReward.coins": "prop_01M3GBBQCA52T922M9XCBSVBWX",
+    "row:dt_4201EMDQW9HN9AMKXT0WQHMKJY.hourly": "row_01M3GBBQCAQBPT144SK4T7EE8G",
+    "row:dt_Z6SXCQEAXBV8T2DND6NY7ASEYY.idlestatus": "row_01M3GBBQCATYXQ6JC0FZMVS6PF",
+    "type:IdleReward": "dt_01M3GBBQCAS6Q9M23ZR45EMPGY",
+    "type:IdleStatus": "dt_01M3GBBQCATXNFNDGYNA3BX5XA"
+  },
+  "deterministicOverrides": {}
+}

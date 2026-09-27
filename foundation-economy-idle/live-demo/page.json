@@ -1,0 +1,40 @@
+{
+  "sections": {
+    "IdleStatus#Idle rewards": {
+      "rows": [
+        "IdleStatusRuleLabel",
+        "IdleStatusIdleTimeLabel",
+        "IdleStatusClaimableLabel",
+        "IdleStatusNextRewardLabel",
+        "IdleStatusReceiveButton",
+        "IdleStatusAdvanceOneHourButton",
+        "IdleStatusAdvanceEightHoursButton",
+        "IdleStatusDemoClockLabel"
+      ]
+    },
+    "Wallet#Where the coins land": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "IdleReward": {
+      "rows": []
+    },
+    "CurrencyType": {
+      "rows": []
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    }
+  }
+}
