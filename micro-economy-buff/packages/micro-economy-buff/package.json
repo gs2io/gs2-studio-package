@@ -7,8 +7,8 @@
   },
   "display": {
     "description": {
-      "en": "Temporarily scales what an action hands out, targeted by action and limited to a period.",
-      "ja": "報酬の獲得量などを一時的に倍率で増減させます。対象のアクションと期間を指定できます。"
+      "en": "Temporarily scales what a service hands out, targeted by action or model and limited to a period.",
+      "ja": "報酬の獲得量などを一時的に倍率で増減させます。対象のアクションまたはモデルと期間を指定できます。"
     },
     "domainTypes": {
       "dt_01M0C89EMY1KAND5SNBFR7N0GQ": {

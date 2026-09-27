@@ -54,7 +54,33 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "Action whose result is scaled, e.g. Gs2Inventory:AcquireItemSetByUserId",
+        "description": "Whether an action's request or a model's field is scaled",
+        "id": "prop_01M3H7QBTW58XD1ZXS13HFR700",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether an action's request or a model's field is modified.",
+            "label": "Target type"
+          },
+          "ja": {
+            "description": "アクションのリクエストを補正するか、モデルのフィールドを補正するかです。",
+            "label": "対象の種類"
+          }
+        },
+        "name": "targetType",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "action",
+            "model"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Action whose request is scaled, e.g. Gs2Inventory:AcquireItemSetByUserId",
         "id": "prop_01M0C89EMZPTFXVVWJ02HQV42R",
         "localizedDisplay": {
           "en": {
@@ -68,6 +94,56 @@
         },
         "name": "targetActionName",
         "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"targetType\",\"value\":\"action\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Model whose field is scaled, e.g. Gs2Idle:CategoryModel",
+        "id": "prop_01M3H7QBTW5VDJVHEZM4T083FD",
+        "localizedDisplay": {
+          "en": {
+            "description": "GS2 model whose field is modified.",
+            "label": "Target model"
+          },
+          "ja": {
+            "description": "補正対象にするGS2モデル名です。",
+            "label": "対象モデル"
+          }
+        },
+        "name": "targetModelName",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"targetType\",\"value\":\"model\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Field that is scaled, e.g. acquireCount or acquireActions",
+        "id": "prop_01M0C89EMZW9H9204T4H2A3A8M",
+        "localizedDisplay": {
+          "en": {
+            "description": "Field within the target action or model that is modified.",
+            "label": "Target field"
+          },
+          "ja": {
+            "description": "対象アクションまたはモデルの中で補正するフィールド名です。",
+            "label": "対象フィールド"
+          }
+        },
+        "name": "targetFieldName",
+        "requirement": {
           "kind": "always"
         },
         "type": {
@@ -77,19 +153,42 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "Field of that action's request to scale, e.g. acquireCount",
-        "id": "prop_01M0C89EMZW9H9204T4H2A3A8M",
+        "description": "Model the condition GRN names, e.g. Gs2Idle:CategoryModel",
+        "id": "prop_01M3H7QBTW63DNA8HS3YGK9918",
         "localizedDisplay": {
           "en": {
-            "description": "Field within the target action that is modified.",
-            "label": "Target field"
+            "description": "Model the condition GRN refers to.",
+            "label": "Condition model"
           },
           "ja": {
-            "description": "対象アクション内で補正するフィールド名です。",
-            "label": "対象フィールド"
+            "description": "適用条件の GRN が指すモデル名です。",
+            "label": "条件モデル"
           }
         },
-        "name": "targetFieldName",
+        "name": "conditionModelName",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "GRN the buff applies to, with {region} and {ownerId} left for GS2 to fill",
+        "id": "prop_01M3H7QBTWC73G3V8N4E6HJD25",
+        "localizedDisplay": {
+          "en": {
+            "description": "GRN of what this buff applies to.",
+            "label": "Condition GRN"
+          },
+          "ja": {
+            "description": "このバフを適用する対象の GRN です。",
+            "label": "条件 GRN"
+          }
+        },
+        "name": "conditionGrn",
         "requirement": {
           "kind": "always"
         },
