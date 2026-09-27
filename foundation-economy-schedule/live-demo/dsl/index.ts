@@ -178,6 +178,17 @@ export const foundationEconomyScheduleDemo = definePackage(
     [schedule.propertyId("Schedule", "repeatType")]: "always",
   })
 
+  // The ranking demo's contest window, relative for the same reason: each
+  // visitor opens their own few minutes to play in, and the rewards are paid
+  // once it has closed. It lives here because every demo holding the schedule
+  // stack deploys this list, and a second author of it would be a second
+  // version of the stack.
+  .instance(Schedule, "ranking-contest", {
+    [schedule.propertyId("Schedule", "scheduleType")]: "relative",
+    [schedule.propertyId("Schedule", "trigger")]: "ranking-contest",
+    [schedule.propertyId("Schedule", "repeatType")]: "always",
+  })
+
   // The trigger itself. It has no master data — a trigger is something a
   // player has or has not pulled — but naming it here is what lets the extend
   // and clear rates be named after it.
