@@ -27,6 +27,9 @@ const IdleReward = defineDomainType("IdleReward", dt =>
 
 const IdleStatus = defineDomainType("IdleStatus", dt =>
   dt
+    // One idle category per player. Without a single entry the status has no
+    // key to read it by, and nothing on a page can mount it.
+    .singleEntry()
     .property(PT.int32("rewardIntervalMinutes").masterData().required())
     .property(PT.int32("defaultMaximumIdleMinutes").masterData().required())
     .property(PT.int32("currentIdleMinutes").userData().required())
@@ -136,7 +139,14 @@ export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0
         logSetting: Bind.null(),
         name: Bind.static("Idle"),
         ...Bind.nulls("overrideAcquireActionsScriptId", "receiveScript"),
-        transactionSetting: transactionSetting(),
+        // Receive pays out through a transaction. Without auto-run GS2 hands
+        // back a stamp sheet the client has to run, and with no key to sign
+        // it refuses Receive outright; atomic keeps the reset and the payout
+        // together.
+        transactionSetting: transactionSetting({
+          enableAtomicCommit: Bind.static(true),
+          enableAutoRun: Bind.static(true),
+        }),
       })
       .addChild(CategoryModel)
   )
@@ -156,5 +166,10 @@ export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0
         userId: Bind.skip(),
       })
   )
+
+  .delegatedAction(IdleStatus, "Receive", {
+    targetActionKey: "Gs2Idle:CategoryModel.Receive",
+    targetResource: CategoryModel,
+  })
 
   .build();

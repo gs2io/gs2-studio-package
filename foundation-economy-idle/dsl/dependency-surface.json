@@ -14,7 +14,10 @@
     },
     "IdleStatus": {
       "id": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
-      "singleEntry": false,
+      "singleEntry": true,
+      "delegatedActions": {
+        "Receive": "resource:foundation-economy-idle:masterData:e2079f30-5204-49e7-8898-254c4f59f23e::Gs2Idle:CategoryModel.Receive"
+      },
       "canonicalPackageId": "foundation-economy-idle",
       "canonicalTypeId": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
       "properties": {

@@ -145,9 +145,20 @@
       }
     ]
   },
-  "delegatedActions": [],
+  "delegatedActions": [
+    {
+      "methodName": "Receive",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2Idle:CategoryModel.Receive",
+      "targetResource": {
+        "resourceId": "e2079f30-5204-49e7-8898-254c4f59f23e",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-idle"
+      }
+    }
+  ],
   "id": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY",
   "kind": "local",
   "name": "IdleStatus",
-  "singleEntry": false
+  "singleEntry": true
 }
