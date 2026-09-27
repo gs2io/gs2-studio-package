@@ -10,8 +10,8 @@
   },
   "display": {
     "description": {
-      "en": "Supplies the live demo's idle reward: 10 coins for every hour away, up to eight hours. The rewards land in the currency package's wallet.",
-      "ja": "ライブデモ用の放置報酬（1 時間ごとに 10 コイン、上限 8 時間）を提供します。報酬は通貨パッケージのウォレットへ入ります。"
+      "en": "Supplies the live demo's idle reward: a few coins every five minutes away and a bigger drop every hour, up to eight hours. The rewards land in the currency package's wallet.",
+      "ja": "ライブデモ用の放置報酬（5 分ごとに少し、1 時間ごとに多めのコイン、上限 8 時間）を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
     "domainTypes": {
       "dt_01M3GBBQCAS6Q9M23ZR45EMPGY": {

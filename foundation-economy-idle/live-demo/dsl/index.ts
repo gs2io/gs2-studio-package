@@ -5,8 +5,13 @@
  * once, up to a cap, and Receive pays everything built up and starts the count
  * again. The feature package is the idle category and the Receive press; what
  * an interval pays and how long the player may stay away are the title's
- * decision, so this package supplies them: every hour away pays 10 coins, and
- * the count stops at eight hours.
+ * decision, so this package supplies them: every five minutes away pays a few
+ * coins, every twelfth interval (an hour away, counted from the last Receive)
+ * pays a bigger drop instead, and the count stops at eight hours.
+ *
+ * GS2 pays the i-th interval from the i-th reward, round and round, so the
+ * hourly drop is simply the twelfth of twelve rewards. The rewards are laid
+ * out in the order of their ids, which {@link REWARDS} keeps.
  *
  * **Hours pass on a button.** Waiting an hour is no demo, so the page carries
  * Advance one hour and Advance eight hours, which move the visitor's clock on
@@ -40,11 +45,22 @@ const currency = dependencyPackage(currencySurface);
 const WALLET_SLOT = 0;
 
 /** How often being away pays, and for how long it keeps counting. */
-const REWARD_INTERVAL_MINUTES = 60;
+const REWARD_INTERVAL_MINUTES = 5;
 const MAXIMUM_IDLE_MINUTES = 8 * 60;
 
-/** What one interval pays. */
-const COINS_PER_INTERVAL = 10;
+/** What an ordinary interval pays, and what the hourly one does. */
+const COINS_PER_INTERVAL = 5;
+const COINS_PER_HOUR_DROP = 50;
+
+/**
+ * One reward per interval of an hour, in the order GS2 pays them. The ids
+ * sort in this order, which is the order the deployed rewards are laid out
+ * in; the last is the hourly drop.
+ */
+const REWARDS = Array.from({ length: 60 / REWARD_INTERVAL_MINUTES }, (_, index) => ({
+  id: `interval${String(index + 1).padStart(2, "0")}`,
+  coins: index === 60 / REWARD_INTERVAL_MINUTES - 1 ? COINS_PER_HOUR_DROP : COINS_PER_INTERVAL,
+}));
 
 /**
  * The category, overlaid so the page's press and rule have a type of this
@@ -102,12 +118,12 @@ const IdleReward = defineOverlayDomainType(
       })
 );
 
-export const foundationEconomyIdleDemo = definePackage("foundation-economy-idle-demo", "0.0.0")
+const withStatus = definePackage("foundation-economy-idle-demo", "0.0.0")
   .display({
     label: { ja: "放置報酬（デモデータ）", en: "Idle rewards (demo data)" },
     description: {
-      ja: "ライブデモ用の放置報酬（1 時間ごとに 10 コイン、上限 8 時間）を提供します。報酬は通貨パッケージのウォレットへ入ります。",
-      en: "Supplies the live demo's idle reward: 10 coins for every hour away, up to eight hours. The rewards land in the currency package's wallet.",
+      ja: "ライブデモ用の放置報酬（5 分ごとに少し、1 時間ごとに多めのコイン、上限 8 時間）を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+      en: "Supplies the live demo's idle reward: a few coins every five minutes away and a bigger drop every hour, up to eight hours. The rewards land in the currency package's wallet.",
     },
   })
   .displayType(IdleStatus, {
@@ -138,14 +154,21 @@ export const foundationEconomyIdleDemo = definePackage("foundation-economy-idle-
   .instance(IdleStatus.typeName, "idlestatus", {
     [idle.propertyId("IdleStatus", "rewardIntervalMinutes")]: REWARD_INTERVAL_MINUTES,
     [idle.propertyId("IdleStatus", "defaultMaximumIdleMinutes")]: MAXIMUM_IDLE_MINUTES,
-  })
-  // Authored by type name so the row reaches the overlay this package
-  // declares, and its property with it. The acquire slot is authored empty
-  // because the feature package requires it and the deposit is appended.
-  .instance(IdleReward.typeName, "hourly", {
-    [idle.propertyId("IdleReward", "acquireActions")]: [],
-    coins: COINS_PER_INTERVAL,
-  })
+  });
+
+// Authored by type name so the rows reach the overlay this package declares,
+// and its property with them. The acquire slot is authored empty because the
+// feature package requires it and the deposit is appended.
+const withRewards = REWARDS.reduce(
+  (builder, { id, coins }) =>
+    builder.instance(IdleReward.typeName, id, {
+      [idle.propertyId("IdleReward", "acquireActions")]: [],
+      coins,
+    }),
+  withStatus
+);
+
+export const foundationEconomyIdleDemo = withRewards
 
   // The feature package ships the press but no components: what a title
   // shows of an idle reward is the title's decision.
@@ -153,7 +176,7 @@ export const foundationEconomyIdleDemo = definePackage("foundation-economy-idle-
     ui
       .templateLabel(
         "RuleLabel",
-        `Every ${REWARD_INTERVAL_MINUTES} minutes away pays ${COINS_PER_INTERVAL} coins, for up to ${MAXIMUM_IDLE_MINUTES / 60} hours. Receive pays what has built up and starts the count again; minutes short of a full ${REWARD_INTERVAL_MINUTES} are dropped.`,
+        `Every ${REWARD_INTERVAL_MINUTES} minutes away pays ${COINS_PER_INTERVAL} coins, and every ${REWARDS.length}th interval pays ${COINS_PER_HOUR_DROP} instead, for up to ${MAXIMUM_IDLE_MINUTES / 60} hours. Receive pays what has built up and starts the count again; minutes short of a full ${REWARD_INTERVAL_MINUTES} are dropped.`,
         {},
         { name: "IdleStatus" }
       )

@@ -7,7 +7,7 @@
       "kind": "templateLabel",
       "name": "IdleStatus",
       "sources": [],
-      "template": "Every 60 minutes away pays 10 coins, for up to 8 hours. Receive pays what has built up and starts the count again; minutes short of a full 60 are dropped."
+      "template": "Every 5 minutes away pays 5 coins, and every 12th interval pays 50 instead, for up to 8 hours. Receive pays what has built up and starts the count again; minutes short of a full 5 are dropped."
     },
     {
       "arguments": [],

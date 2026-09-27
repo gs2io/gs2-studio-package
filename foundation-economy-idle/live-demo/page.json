@@ -5,7 +5,7 @@
         "IdleStatusRuleLabel",
         "IdleStatusIdleTimeLabel",
         "IdleStatusClaimableLabel",
-        "IdleStatusNextRewardLabel",
+        "IdleStatusNextRewardValue",
         "IdleStatusReceiveButton",
         "IdleStatusAdvanceOneHourButton",
         "IdleStatusAdvanceEightHoursButton",

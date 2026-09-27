@@ -8,10 +8,14 @@
 // client, because the SDK's own prediction keeps only the rewards and does not
 // cache the status either.
 //
-// Between reads the idle time is carried forward a minute at a time on the
-// page, up to the cap, and read again when it crosses into a new interval (the
-// rewards change there), when the demo clock has moved and the session carries
-// it, when the status changes (Receive), and once a minute besides.
+// Between reads the idle time is worked out on the page from when it started,
+// up to the cap. GS2 does not hand that moment back, but its next-reward time
+// is the start, plus the whole minutes idle, plus one interval, so the start
+// follows from it; the demo clock's offset turns it into this device's time.
+// That also gives the moment the next interval pays, which the page counts
+// down to. It is read again when the idle time crosses into a new interval
+// (the rewards change there), when the demo clock has moved and the session
+// carries it, when the status changes (Receive), and once a minute besides.
 //
 // Nothing here reloads or invalidates anything.
 #nullable enable
@@ -85,19 +89,73 @@ namespace GS2Studio.Showroom.Demo
         public long ClaimableCoins { get; private set; }
 
         /// <summary>
-        /// The idle time now: the last read, carried forward by the minutes
-        /// since, up to the cap.
+        /// The idle time now, up to the cap: from when it started when that is
+        /// known, and otherwise the last read carried forward by the minutes
+        /// since.
         /// </summary>
         public int IdleMinutes
         {
             get
             {
-                var carried = _readIdleMinutes + (int)((Time.realtimeSinceStartup - _readAt) / 60f);
-                return MaximumIdleMinutes > 0 ? Math.Min(MaximumIdleMinutes, carried) : carried;
+                var started = IdleStartedAt;
+                var idle = started != null
+                    ? (int)Math.Floor((DateTime.UtcNow - started.Value).TotalMinutes)
+                    : _readIdleMinutes + (int)((Time.realtimeSinceStartup - _readAt) / 60f);
+                idle = Math.Max(0, idle);
+                return MaximumIdleMinutes > 0 ? Math.Min(MaximumIdleMinutes, idle) : idle;
+            }
+        }
+
+        /// <summary>
+        /// When the next interval pays, on this device's clock, or null while
+        /// that is not known or the cap has stopped the count.
+        /// </summary>
+        public DateTime? NextRewardAt
+        {
+            get
+            {
+                var started = IdleStartedAt;
+                var interval = RewardIntervalMinutes;
+                if (started == null || interval <= 0) return null;
+                var idle = IdleMinutes;
+                if (MaximumIdleMinutes > 0 && idle >= MaximumIdleMinutes) return null;
+                return started.Value.AddMinutes((idle / interval + 1) * interval);
+            }
+        }
+
+        /// <summary>
+        /// When the idle time started, on this device's clock. GS2 reports its
+        /// next-reward time as the start plus the whole minutes idle plus one
+        /// interval, which holds only below the cap, where the minutes reported
+        /// are not cut short.
+        /// </summary>
+        private DateTime? IdleStartedAt
+        {
+            get
+            {
+                var interval = RewardIntervalMinutes;
+                if (_readNextRewardsAt <= 0 || interval <= 0) return null;
+                if (MaximumIdleMinutes > 0 && _readIdleMinutes >= MaximumIdleMinutes) return null;
+                return DateTimeOffset.FromUnixTimeMilliseconds(_readNextRewardsAt).UtcDateTime
+                    .AddMinutes(-(interval + _readIdleMinutes))
+                    .AddSeconds(-DemoTimeOffset.Get(_userId));
             }
         }
 
         private int _readIdleMinutes;
+        private long _readNextRewardsAt;
+        /// <summary>The player the last read was for, whose demo clock offset applies.</summary>
+        private string _userId = "";
+
+        /// <summary>
+        /// When the last read made because the idle time crossed into a new
+        /// interval went out. This device's clock runs a little ahead of or
+        /// behind the server's, so the crossing can be seen here a few seconds
+        /// before GS2 sees it; the reads it asks for are spaced out meanwhile.
+        /// </summary>
+        private float _crossingReadAt = float.NegativeInfinity;
+
+        private const float CrossingReadSeconds = 3f;
         private float _readAt;
         private float _attemptedAt = float.NegativeInfinity;
         private float _intervalAttemptedAt = float.NegativeInfinity;
@@ -152,13 +210,28 @@ namespace GS2Studio.Showroom.Demo
                 }
                 var crossed = RewardIntervalMinutes > 0 &&
                     IdleMinutes / RewardIntervalMinutes != _readIdleMinutes / RewardIntervalMinutes;
-                if (crossed || now - _attemptedAt >= RefreshSeconds) Read();
+                if (crossed && now - _crossingReadAt >= CrossingReadSeconds)
+                {
+                    _crossingReadAt = now;
+                    Read();
+                }
+                else if (now - _attemptedAt >= RefreshSeconds) Read();
                 Updated?.Invoke();
             }
         }
 
         private void OnClockApplied(string userId)
         {
+            Read();
+            // Signing in again can finish before the new token is the one the
+            // session sends, so the first read may still go out on the old
+            // clock. One more a moment later settles it.
+            StartCoroutine(ReadAfter(3f));
+        }
+
+        private IEnumerator ReadAfter(float seconds)
+        {
+            yield return new WaitForSecondsRealtime(seconds);
             Read();
         }
 
@@ -204,6 +277,11 @@ namespace GS2Studio.Showroom.Demo
                         .WithAccessToken(session!.AccessToken.Token));
                 if (this == null) return;
                 _readIdleMinutes = result?.Status?.IdleMinutes ?? 0;
+                _readNextRewardsAt = result?.Status?.NextRewardsAt ?? 0;
+                // The server's times are on the demo clock. They are moved onto
+                // this device's clock with the player's current offset, read
+                // each time it is needed, so a change shows before the next read.
+                _userId = session!.UserId;
                 MaximumIdleMinutes = result?.Status?.MaximumIdleMinutes ?? 0;
                 ClaimableCoins = CoinsIn(result?.Items);
                 _readAt = Time.realtimeSinceStartup;

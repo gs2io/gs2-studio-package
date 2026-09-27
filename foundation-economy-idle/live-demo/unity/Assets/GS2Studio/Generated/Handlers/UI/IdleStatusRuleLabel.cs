@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.IdleStatus.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Every 60 minutes away pays 10 coins, for up to 8 hours. Receive pays what has built up and starts the count again; minutes short of a full 60 are dropped.</c>. Each <c>{key}</c> placeholder is
+    /// <c>Every 5 minutes away pays 5 coins, and every 12th interval pays 50 instead, for up to 8 hours. Receive pays what has built up and starts the count again; minutes short of a full 5 are dropped.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>IdleStatus</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.IdleStatus.UI
 
         private void OnUpdated(IdleStatus model)
         {
-            _onUpdate.Invoke($"Every 60 minutes away pays 10 coins, for up to 8 hours. Receive pays what has built up and starts the count again; minutes short of a full 60 are dropped.");
+            _onUpdate.Invoke($"Every 5 minutes away pays 5 coins, and every 12th interval pays 50 instead, for up to 8 hours. Receive pays what has built up and starts the count again; minutes short of a full 5 are dropped.");
         }
     }
 }

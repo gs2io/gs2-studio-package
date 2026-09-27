@@ -9,11 +9,44 @@ Resources:
         categoryModels:
           - defaultMaximumIdleMinutes: 480
             name: "Idle"
-            rewardIntervalMinutes: 60
+            rewardIntervalMinutes: 5
             acquireActions:
               - acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":10}]}"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":5}]}"
+              - acquireActions:
+                  - action: "Gs2Money2:DepositByUserId"
+                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":50}]}"
       Mode: "direct"
     DependsOn:
       - "IdleNamespace_Idle"
