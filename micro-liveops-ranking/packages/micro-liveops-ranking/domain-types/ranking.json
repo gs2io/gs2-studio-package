@@ -75,15 +75,15 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "Accumulate submitted scores instead of keeping the best",
+        "description": "Add each submitted score to the last instead of replacing it",
         "id": "prop_01M0C5QTC17VN2W6CEXEDHZCEW",
         "localizedDisplay": {
           "en": {
-            "description": "Whether submitted scores are accumulated instead of keeping one result.",
+            "description": "Whether submitted scores are added up. Otherwise the last score submitted replaces the one before.",
             "label": "Sum scores"
           },
           "ja": {
-            "description": "複数回送信したスコアを合算するかを設定します。",
+            "description": "複数回送信したスコアを合算するかを設定します。合算しない場合は、最後に送信したスコアで上書きされます。",
             "label": "スコアを合算"
           }
         },

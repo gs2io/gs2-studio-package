@@ -79,7 +79,7 @@
       {
         "kind": "static",
         "parameterName": "rewardCalculationIndex",
-        "value": null
+        "value": "rank"
       },
       {
         "kind": "domainProperty",

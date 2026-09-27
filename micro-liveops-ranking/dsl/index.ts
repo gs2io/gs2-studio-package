@@ -35,7 +35,7 @@ const Ranking = defineDomainType("Ranking", dt =>
     .property(
       PT.bool("sum")
         .masterData()
-        .description("Accumulate submitted scores instead of keeping the best")
+        .description("Add each submitted score to the last instead of replacing it")
     )
     .property(PT.int64("minimumValue").masterData().description("Lowest score accepted"))
     .property(PT.int64("maximumValue").masterData().description("Highest score accepted"))
@@ -57,8 +57,8 @@ const Ranking = defineDomainType("Ranking", dt =>
       sum: jaEnField(
         "スコアを合算",
         "Sum scores",
-        "複数回送信したスコアを合算するかを設定します。",
-        "Whether submitted scores are accumulated instead of keeping one result."
+        "複数回送信したスコアを合算するかを設定します。合算しない場合は、最後に送信したスコアで上書きされます。",
+        "Whether submitted scores are added up. Otherwise the last score submitted replaces the one before."
       ),
       minimumValue: jaEnField(
         "最小スコア",
@@ -82,7 +82,12 @@ const Ranking = defineDomainType("Ranking", dt =>
     })
 );
 
-/** What the players down to `thresholdRank` receive when the season ends. */
+/**
+ * What the players down to `thresholdRank` receive once the season is over.
+ * A player receives the tier with the smallest threshold at or below their
+ * rank; a player who scored but is outside the top 1000 receives tier 1001.
+ * A player who never scored receives nothing.
+ */
 const RankingReward = defineDomainType("RankingReward", dt =>
   dt
     .property(PT.prop("ranking", PT.ref("Ranking")).assetDelivery().required())
@@ -90,7 +95,9 @@ const RankingReward = defineDomainType("RankingReward", dt =>
       PT.int32("thresholdRank")
         .masterData()
         .required()
-        .description("Best rank that misses this reward tier")
+        .description(
+          "Lowest placement this reward tier pays; 1001 pays those ranked below the top 1000"
+        )
     )
     .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
     .compositeKey("ranking", "thresholdRank")
@@ -105,8 +112,8 @@ const RankingReward = defineDomainType("RankingReward", dt =>
       thresholdRank: jaEnField(
         "順位しきい値",
         "Rank threshold",
-        "この報酬を受け取れる最下位の順位です。",
-        "Lowest placement eligible for this reward.",
+        "この報酬を受け取れる最下位の順位です。1001 は上位 1000 位に入らなかったプレイヤー向けです。",
+        "Lowest placement eligible for this reward. 1001 is for players outside the top 1000.",
         { ja: "位", en: "place" }
       ),
       acquireActions: jaEnField(
@@ -129,7 +136,9 @@ const GlobalRankingModel = defineMasterDataResource(resource =>
       sum: Bind.domainProperty(Source.direct(Ranking, "sum")),
       minimumValue: Bind.domainProperty(Source.direct(Ranking, "minimumValue")),
       maximumValue: Bind.domainProperty(Source.direct(Ranking, "maximumValue")),
-      ...Bind.nulls("accessPeriodEventId", "rewardCalculationIndex"),
+      // Tiers are matched against the player's rank, as `thresholdRank` says.
+      rewardCalculationIndex: Bind.static("rank"),
+      ...Bind.nulls("accessPeriodEventId"),
     })
     .grnFieldMount("entryPeriodEventId", schedule.resourceId("schedule.Namespace"), [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
@@ -192,7 +201,14 @@ export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.0
       .bindings({
         name: Bind.static("Ranking"),
         logSetting: Bind.null(),
-        transactionSetting: transactionSetting(),
+        // Receiving a reward pays out through a transaction. Without auto-run
+        // GS2 hands back a stamp sheet the client has to run, and with no key
+        // to sign it the receipt fails; atomic keeps the receipt record and
+        // the payout together.
+        transactionSetting: transactionSetting({
+          enableAtomicCommit: Bind.static(true),
+          enableAutoRun: Bind.static(true),
+        }),
       })
       .addChild(GlobalRankingModel)
   )

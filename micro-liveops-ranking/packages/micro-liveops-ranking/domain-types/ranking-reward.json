@@ -52,16 +52,16 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "Best rank that misses this reward tier",
+        "description": "Lowest placement this reward tier pays; 1001 pays those ranked below the top 1000",
         "id": "prop_01M0C5QTC1DSVX6VMXA31P7T1R",
         "localizedDisplay": {
           "en": {
-            "description": "Lowest placement eligible for this reward.",
+            "description": "Lowest placement eligible for this reward. 1001 is for players outside the top 1000.",
             "label": "Rank threshold",
             "unit": "place"
           },
           "ja": {
-            "description": "この報酬を受け取れる最下位の順位です。",
+            "description": "この報酬を受け取れる最下位の順位です。1001 は上位 1000 位に入らなかったプレイヤー向けです。",
             "label": "順位しきい値",
             "unit": "位"
           }
