@@ -21,8 +21,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "cf972e21cf691a9290e12eb55ed5d0adced8b89a",
-      "integrity": "sha256-T4XUFNRCVN5DJAj8njTm9EwjtxvTP8YGknpBe60Qqdw=",
+      "commitSha": "15bba021e9ad24b358ed12518ac1eff6715738af",
+      "integrity": "sha256-Wask9ZYKhRx/QxRa1l+BouXvRaneQIXqupMqwiP08JE=",
       "owner": "gs2io",
       "packageId": "foundation-economy-idle",
       "repo": "gs2-studio-package",
