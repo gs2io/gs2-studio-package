@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "BuffCampaign#Double idle rewards campaign": {
+      "rows": [
+        "BuffCampaignRuleLabel",
+        "BuffCampaignStatusLabel",
+        "BuffCampaignEndsValue",
+        "BuffCampaignStartCampaignButton",
+        "BuffCampaignEndCampaignButton"
+      ]
+    },
+    "IdleStatus#Idle rewards": {
+      "rows": [
+        "IdleStatusRuleLabel",
+        "IdleStatusIdleTimeLabel",
+        "IdleStatusClaimableLabel",
+        "IdleStatusNextRewardValue",
+        "IdleStatusReceiveButton",
+        "IdleStatusAdvanceOneHourButton",
+        "IdleStatusAdvanceEightHoursButton",
+        "IdleStatusDemoClockLabel"
+      ]
+    },
+    "Wallet#Where the coins land": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "Schedule": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    },
+    "Trigger": {
+      "rows": []
+    },
+    "TriggerPull": {
+      "rows": []
+    }
+  }
+}

@@ -1,0 +1,58 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_BuffCampaignEnd:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "BuffCampaignEnd"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "buffcampaign"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Schedule:DeleteTriggerByUserId"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\"}"
+            acquireActions: []
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_BuffCampaignEnd"
+  ExchangeCurrentRateMaster_BuffCampaignStart:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "BuffCampaignStart"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "buffcampaign"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Schedule:TriggerByUserId"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\",\"triggerStrategy\":\"renew\",\"ttl\":86400}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_BuffCampaignStart"
+  ExchangeNamespace_BuffCampaignEnd:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "BuffCampaignEnd"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_BuffCampaignStart:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "BuffCampaignStart"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

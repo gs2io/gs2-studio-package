@@ -1,0 +1,47 @@
+{
+  "id": "micro-economy-buff-demo",
+  "name": "micro-economy-buff-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-idle": "github:gs2io/gs2-studio-package",
+    "foundation-economy-idle-demo": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
+    "micro-economy-buff": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the live demo's buff that doubles idle rewards during a campaign, and the presses that start and end the campaign.",
+      "ja": "ライブデモ用に、キャンペーン中は放置報酬を 2 倍にするバフと、キャンペーンの開始・終了の操作を提供します。"
+    },
+    "domainTypes": {
+      "dt_01M3H855QTWKVXS9MYVWCQT9MR": {
+        "description": {
+          "en": "The demo buff, which doubles idle rewards during the campaign.",
+          "ja": "デモのバフです。キャンペーン中の放置報酬を 2 倍にします。"
+        },
+        "label": {
+          "en": "Buff",
+          "ja": "バフ"
+        }
+      },
+      "dt_01M3H94DYC2ZVBKF19PYBEWMYF": {
+        "description": {
+          "en": "The campaign's start and end presses and its rule.",
+          "ja": "キャンペーンの開始・終了の操作と説明です。"
+        },
+        "label": {
+          "en": "Campaign",
+          "ja": "キャンペーン"
+        }
+      }
+    },
+    "label": {
+      "en": "Buffs (demo data)",
+      "ja": "バフ（デモデータ）"
+    }
+  }
+}

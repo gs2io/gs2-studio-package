@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_01M0C89EMY1KAND5SNBFR7N0GQ.double-idle": "row_01M3H855QVS9T055RANN7FEMK4",
+    "row:type:BuffCampaign.buffcampaign": "row_01M3H94DYCZYHTM3M2Q8KRENKA",
+    "type:Buff": "dt_01M3H855QTWKVXS9MYVWCQT9MR",
+    "type:BuffCampaign": "dt_01M3H94DYC2ZVBKF19PYBEWMYF"
+  },
+  "deterministicOverrides": {}
+}

@@ -1,0 +1,40 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ScheduleCurrentEventMaster_Schedule:
+    Type: "GS2::Schedule::CurrentEventMaster"
+    Properties:
+      NamespaceName: "Schedule"
+      Settings:
+        version: "2019-03-31"
+        events:
+          - absoluteBegin: 1786904562011
+            absoluteEnd: 1789237362011
+            metadata: ""
+            name: "closed-season"
+            repeatSetting:
+              repeatType: "always"
+            scheduleType: "absolute"
+          - metadata: ""
+            name: "happy-hour"
+            relativeTriggerName: "happy-hour"
+            repeatSetting:
+              repeatType: "always"
+            scheduleType: "relative"
+          - absoluteBegin: 1789064562011
+            absoluteEnd: 1924992000000
+            metadata: ""
+            name: "open-season"
+            repeatSetting:
+              repeatType: "always"
+            scheduleType: "absolute"
+      Mode: "direct"
+    DependsOn:
+      - "ScheduleNamespace_Schedule"
+  ScheduleNamespace_Schedule:
+    Type: "GS2::Schedule::Namespace"
+    Properties:
+      Name: "Schedule"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

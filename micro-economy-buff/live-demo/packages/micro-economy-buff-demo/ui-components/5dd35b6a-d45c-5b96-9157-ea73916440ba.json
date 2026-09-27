@@ -1,0 +1,32 @@
+{
+  "id": "5dd35b6a-d45c-5b96-9157-ea73916440ba",
+  "items": [
+    {
+      "componentClassName": "RuleLabel",
+      "id": "198cc3e0-2e4f-5588-b254-649b6894b9f0",
+      "kind": "templateLabel",
+      "name": "BuffCampaign",
+      "sources": [],
+      "template": "During a campaign, idle rewards are multiplied by 2. The buff applies when you receive, so everything built up at that moment is doubled. A campaign runs for 24 hours."
+    },
+    {
+      "arguments": [],
+      "componentClassName": "StartCampaignButton",
+      "delegatedActionKey": "resource:micro-economy-buff-demo:masterData:d9dbce3f-b3ae-53b9-87b0-d82cb831c997::Gs2Exchange:RateModel.Exchange",
+      "id": "70abae7d-7e58-576f-a5d8-3e6165bd7c69",
+      "kind": "buttonAction",
+      "name": "BuffCampaign"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "EndCampaignButton",
+      "delegatedActionKey": "resource:micro-economy-buff-demo:masterData:c2fd213e-a357-5457-abab-05369acee4ee::Gs2Exchange:RateModel.Exchange",
+      "id": "f8e02b4c-8f8a-5cc0-932e-dcf70ace7eea",
+      "kind": "buttonAction",
+      "name": "BuffCampaign"
+    }
+  ],
+  "name": "BuffCampaign",
+  "targetDomainType": "BuffCampaign",
+  "targetDomainTypeId": "dt_01M3H94DYC2ZVBKF19PYBEWMYF"
+}

@@ -1,0 +1,33 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  BuffCurrentBuffMaster_Buff:
+    Type: "GS2::Buff::CurrentBuffMaster"
+    Properties:
+      NamespaceName: "Buff"
+      Settings:
+        version: "2024-04-15"
+        buffEntryModels:
+          - expression: "mul"
+            metadata: ""
+            name: "double-idle"
+            priority: 0
+            targetType: "model"
+            applyPeriodScheduleEventId: "grn:gs2:{region}:{ownerId}:schedule:Schedule:event:happy-hour"
+            targetModel:
+              rate: 2
+              targetFieldName: "acquireActions"
+              targetModelName: "Gs2Idle:CategoryModel"
+              conditionGrns:
+                - targetGrn: "grn:gs2:{region}:{ownerId}:idle:Idle:model:Idle"
+                  targetModelName: "Gs2Idle:CategoryModel"
+      Mode: "direct"
+    DependsOn:
+      - "BuffNamespace_Buff"
+  BuffNamespace_Buff:
+    Type: "GS2::Buff::Namespace"
+    Properties:
+      Name: "Buff"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
