@@ -61,8 +61,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "9c3c1abb05a7fbbf5d2ab141b5f7d6fee5d29ff9",
-      "integrity": "sha256-XFyIyrtF3vpPTMcc+RCCkfvHfNJS5ind/3at11LGAUU=",
+      "commitSha": "6c3cde32b24a027727eeae3aff709934a528626d",
+      "integrity": "sha256-XW6GPGClTrOcGO2XwEjrloDy2RTyh+fn7L5XrxJ1aXc=",
       "owner": "gs2io",
       "packageId": "micro-economy-buff",
       "repo": "gs2-studio-package",
