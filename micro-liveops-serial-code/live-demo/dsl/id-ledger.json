@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "row:dt_01M0C5VXZY2ZJKK4DERTCAZHXD.WELCOME2026": "row_01M3JVP252W21HS9J11J5Y2ATC",
+    "row:type:SerialCodeRedemption.serialcoderedemption": "row_01M3JVP252T4PHE01YFB47VMRB",
+    "transform:CountRedemption:output:direct:Gs2Limit:CountUpByUserId#0": "out_01M3JVP25246BB3V2R4C7XQG3Q",
+    "type:SerialCodeCampaign": "dt_01M3JVP25225RMKS765NA4MYT1",
+    "type:SerialCodeRedemption": "dt_01M3JVP251QMTHBBV0K7JPJPFH"
+  },
+  "deterministicOverrides": {}
+}

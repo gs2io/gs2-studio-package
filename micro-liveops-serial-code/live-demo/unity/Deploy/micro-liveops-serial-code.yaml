@@ -1,0 +1,23 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  SerialKeyCurrentCampaignMaster_SerialCode:
+    Type: "GS2::SerialKey::CurrentCampaignMaster"
+    Properties:
+      NamespaceName: "SerialCode"
+      Settings:
+        version: "2022-09-13"
+        campaignModels:
+          - enableCampaignCode: true
+            metadata: ""
+            name: "WELCOME2026"
+      Mode: "direct"
+    DependsOn:
+      - "SerialKeyNamespace_SerialCode"
+  SerialKeyNamespace_SerialCode:
+    Type: "GS2::SerialKey::Namespace"
+    Properties:
+      Name: "SerialCode"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

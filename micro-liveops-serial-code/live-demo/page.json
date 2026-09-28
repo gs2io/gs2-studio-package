@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "SerialCodeRedemption#Redeem a campaign code": {
+      "rows": ["SerialCodeRedemptionRuleLabel", "SerialCodeRedemptionRedeemPanel"]
+    },
+    "Wallet#Where the coins land": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "code",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{code}"
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "UseSerialCode",
+        "transformPackageId": "micro-liveops-serial-code"
+      }
+    ]
+  },
+  "id": "d13a850f-3f44-5072-987d-f5a3626fb2fb",
+  "index": 1,
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M3JVP251QMTHBBV0K7JPJPFH",
+    "typeName": "SerialCodeRedemption"
+  }
+}

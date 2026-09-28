@@ -1,0 +1,33 @@
+{
+  "id": "micro-liveops-serial-code-demo",
+  "name": "micro-liveops-serial-code-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "micro-liveops-serial-code": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the live demo's one campaign code and the redemption that pays coins for it, once per visitor. The coins land in the currency package's wallet.",
+      "ja": "ライブデモ用に、キャンペーンコード 1 つと、それを 1 人 1 回だけ引き換えてコインを受け取る操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
+    },
+    "domainTypes": {
+      "dt_01M3JVP251QMTHBBV0K7JPJPFH": {
+        "description": {
+          "en": "Redeeming a serial code, and the limit on how often.",
+          "ja": "シリアルコードの引き換えと、その回数制限です。"
+        },
+        "label": {
+          "en": "Code redemption",
+          "ja": "コードの引き換え"
+        }
+      }
+    },
+    "label": {
+      "en": "Serial Codes (demo data)",
+      "ja": "シリアルコード（デモデータ）"
+    }
+  }
+}

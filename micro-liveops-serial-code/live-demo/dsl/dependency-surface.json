@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-liveops-serial-code-demo",
+  "types": {
+    "SerialCodeCampaign": {
+      "id": "dt_01M3JVP25225RMKS765NA4MYT1",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-liveops-serial-code",
+      "canonicalTypeId": "dt_01M0C5VXZY2ZJKK4DERTCAZHXD"
+    },
+    "SerialCodeRedemption": {
+      "id": "dt_01M3JVP251QMTHBBV0K7JPJPFH",
+      "singleEntry": true,
+      "canonicalPackageId": "micro-liveops-serial-code-demo",
+      "canonicalTypeId": "dt_01M3JVP251QMTHBBV0K7JPJPFH",
+      "properties": {
+        "id": "prop_reserved_id"
+      }
+    }
+  },
+  "masterDataResources": {
+    "exchange.Namespace": "02f6e245-4bc2-5f54-8e0a-5736320e34ef",
+    "exchange.RateModel": "99fceeb3-2afe-514c-9021-90cb2627011d",
+    "limit.LimitModel": "f9a7032e-fff6-59c8-8cc9-60d46fc4f661",
+    "limit.Namespace": "9b32057e-8b3f-5920-b401-32cbf939933d",
+    "transaction.AcquireAction": "92313e1b-ae8d-5f1c-88e3-990b7624eefc"
+  },
+  "transforms": {
+    "CountRedemption": []
+  }
+}

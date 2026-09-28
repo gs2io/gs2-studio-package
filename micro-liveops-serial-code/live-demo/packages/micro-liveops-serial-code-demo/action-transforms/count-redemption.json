@@ -1,0 +1,56 @@
+{
+  "category": "consume",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "f9a7032e-fff6-59c8-8cc9-60d46fc4f661",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "CountRedemption",
+  "outputs": [
+    {
+      "actionName": "Gs2Limit:CountUpByUserId",
+      "conditions": [],
+      "id": "out_01M3JVP25246BB3V2R4C7XQG3Q",
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "static",
+          "parameterName": "limitName",
+          "value": "serialcoderedemption"
+        },
+        {
+          "kind": "static",
+          "parameterName": "counterName",
+          "value": "redeemed"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "static",
+          "parameterName": "countUpValue",
+          "value": 1
+        },
+        {
+          "kind": "static",
+          "parameterName": "maxValue",
+          "value": 1
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "f9a7032e-fff6-59c8-8cc9-60d46fc4f661",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": []
+}

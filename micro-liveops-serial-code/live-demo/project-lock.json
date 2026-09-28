@@ -1,0 +1,45 @@
+{
+  "entries": [
+    {
+      "commitSha": "58cb3be206287b809ebfa055af9f3390b6d9eac2",
+      "integrity": "sha256-1LvYDoXuSzbQlT+y/Y7jd1qmne5u+o2J3Ad0AmPu8nc=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "58cb3be206287b809ebfa055af9f3390b6d9eac2",
+      "integrity": "sha256-1LvYDoXuSzbQlT+y/Y7jd1qmne5u+o2J3Ad0AmPu8nc=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "58cb3be206287b809ebfa055af9f3390b6d9eac2",
+      "integrity": "sha256-1LvYDoXuSzbQlT+y/Y7jd1qmne5u+o2J3Ad0AmPu8nc=",
+      "owner": "gs2io",
+      "packageId": "micro-liveops-serial-code",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-liveops-serial-code/packages/micro-liveops-serial-code",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "58cb3be206287b809ebfa055af9f3390b6d9eac2",
+      "integrity": "sha256-1LvYDoXuSzbQlT+y/Y7jd1qmne5u+o2J3Ad0AmPu8nc=",
+      "owner": "gs2io",
+      "packageId": "micro-shop-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-shop-currency/packages/micro-shop-currency",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}
