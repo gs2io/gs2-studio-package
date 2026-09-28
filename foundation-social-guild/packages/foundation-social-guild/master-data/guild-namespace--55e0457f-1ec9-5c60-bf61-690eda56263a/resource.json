@@ -38,8 +38,23 @@
       },
       {
         "kind": "static",
-        "parameterName": "joinNotification",
-        "value": null
+        "parameterName": "joinNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinNotification.sound",
+        "value": ""
       },
       {
         "kind": "static",
@@ -48,8 +63,23 @@
       },
       {
         "kind": "static",
-        "parameterName": "leaveNotification",
-        "value": null
+        "parameterName": "leaveNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveNotification.sound",
+        "value": ""
       },
       {
         "kind": "static",
@@ -68,13 +98,43 @@
       },
       {
         "kind": "static",
-        "parameterName": "receiveRequestNotification",
-        "value": null
+        "parameterName": "receiveRequestNotification.enable",
+        "value": "Enabled"
       },
       {
         "kind": "static",
-        "parameterName": "removeRequestNotification",
-        "value": null
+        "parameterName": "receiveRequestNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "removeRequestNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "removeRequestNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "removeRequestNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "removeRequestNotification.sound",
+        "value": ""
       },
       {
         "kind": "static",

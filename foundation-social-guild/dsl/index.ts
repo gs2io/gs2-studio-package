@@ -19,15 +19,20 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 const GuildRole = defineDomainType("GuildRole", dt =>
   dt
     .property(
-      PT.string("policyDocument").masterData().required().description("GS2 guild policy document")
+      PT.string("policyDocument")
+        .masterData()
+        .required()
+        .description(
+          "GS2 policy document for acting as the guild; deny everything explicitly rather than leaving it empty"
+        )
     )
     .localizedProperties({
       id: jaEnId("ギルド権限", "guild role"),
       policyDocument: jaEnField(
         "権限ポリシー",
         "Permission policy",
-        "このロールに許可する操作を記述したGS2ポリシーです。",
-        "GS2 policy document describing operations allowed for this role."
+        "このロールのメンバーがギルドとして振る舞うとき（Assume）に許可する操作を記述した GS2 ポリシーです。何も許可しないロールは、空にせず、Effect を Deny、Actions と Resources を * にした文で、すべてを拒否するポリシーを明示してください。空のポリシーは、GS2 の版によっては全許可として扱われます。",
+        "GS2 policy document describing what a member with this role may do while acting as the guild (Assume). For a role that may do nothing, do not leave it empty: write a policy that denies everything, with one statement whose Effect is Deny and whose Actions and Resources are *. Some GS2 versions treat an empty policy as allowing everything."
       ),
     })
 );
@@ -87,15 +92,15 @@ const Guild = defineDomainType("Guild", dt =>
       inactivityPeriodDays: jaEnField(
         "マスター不在判定期間",
         "Master inactivity period",
-        "ギルドマスター交代を可能にする無活動期間です。",
-        "Inactivity period after which the guild master position can be reassigned.",
+        "ギルドマスターの無活動がこの日数続くと、最古参のメンバーがマスターに昇格できる（PromoteSeniorMember）ようになります。",
+        "Days of guild master inactivity after which the most senior member may promote themselves to master (PromoteSeniorMember).",
         { ja: "日", en: "days" }
       ),
       rejoinCoolTimeMinutes: jaEnField(
         "再参加待機時間",
         "Rejoin cooldown",
-        "脱退後に同じギルドへ再参加できるまでの待機時間です。",
-        "Wait time before a player may rejoin a guild they left.",
+        "脱退した後、どのギルドにも参加できるようになるまでの待機時間です。",
+        "Wait time after leaving before a player may join any guild again.",
         { ja: "分", en: "minutes" }
       ),
       maxConcurrentJoinGuilds: jaEnField(
@@ -108,9 +113,9 @@ const Guild = defineDomainType("Guild", dt =>
       maxConcurrentGuildMasterCount: jaEnField(
         "同時マスター上限",
         "Concurrent master limit",
-        "プレイヤーが同時にマスターを務められるギルド数です。",
-        "Maximum number of guilds a player may lead at once.",
-        { ja: "件", en: "guilds" }
+        "1 つのギルドに同時に置けるギルドマスターの人数です。",
+        "Maximum number of guild masters one guild may have at once.",
+        { ja: "人", en: "masters" }
       ),
       guildMasterRole: jaEnField(
         "マスターロール",
@@ -165,19 +170,26 @@ const GuildModel = defineMasterDataResource(resource =>
     })
 );
 
+const notificationConfig = {
+  enable: Bind.static("Enabled"),
+  enableTransferMobileNotification: Bind.static(false),
+  gatewayNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:gateway:default"),
+  sound: Bind.static(""),
+};
+
 export const foundationSocialGuild = definePackage("foundation-social-guild", "0.0.0")
   .display({
     label: { ja: "ギルド", en: "Guilds" },
     description: {
       ja: "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。",
-      en: "Handles player guilds — capacity, permission roles, and which guild a player belongs to.",
+      en: "Handles player guilds: capacity, permission roles, and which guild a player belongs to.",
     },
   })
   .displayType(Guild, {
     label: { ja: "ギルド種別", en: "Guild kind" },
     description: {
-      ja: "ギルドの参加方式、定員、カスタム項目などの基本設定を定義します。",
-      en: "Defines a guild kind's join policy, capacity, and custom properties.",
+      ja: "ギルドの種類ごとに、定員・マスターの交代・再参加の待機・権限ロールを設定します。1 行は、プレイヤーが所属しているその種類のギルドを表します。",
+      en: "Configures a guild kind's capacity, master succession, rejoin wait and roles. A row is a guild of that kind the player belongs to.",
     },
   })
   .displayType(GuildRole, {
@@ -195,16 +207,16 @@ export const foundationSocialGuild = definePackage("foundation-social-guild", "0
       .model(GS2.guild.Namespace)
       .bindings({
         name: Bind.static("Guild"),
-        ...Bind.nulls(
-          "changeNotification",
-          "joinNotification",
-          "leaveNotification",
-          "changeMemberNotification"
-        ),
+        // Membership changes reach the players they concern through the
+        // gateway, which is how a client's list of joined guilds, and a
+        // master's list of join requests, stay current.
+        joinNotification: notificationConfig,
+        leaveNotification: notificationConfig,
+        receiveRequestNotification: notificationConfig,
+        removeRequestNotification: notificationConfig,
+        ...Bind.nulls("changeNotification", "changeMemberNotification"),
         changeMemberNotificationIgnoreChangeMetadata: Bind.static(false),
         ...Bind.nulls(
-          "receiveRequestNotification",
-          "removeRequestNotification",
           "createGuildScript",
           "updateGuildScript",
           "joinGuildScript",

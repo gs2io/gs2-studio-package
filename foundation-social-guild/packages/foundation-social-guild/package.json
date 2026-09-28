@@ -4,14 +4,14 @@
   "version": "0.0.0",
   "display": {
     "description": {
-      "en": "Handles player guilds — capacity, permission roles, and which guild a player belongs to.",
+      "en": "Handles player guilds: capacity, permission roles, and which guild a player belongs to.",
       "ja": "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。"
     },
     "domainTypes": {
       "dt_01M0C5T6AF24NKHPZ1Z4R946FT": {
         "description": {
-          "en": "Defines a guild kind's join policy, capacity, and custom properties.",
-          "ja": "ギルドの参加方式、定員、カスタム項目などの基本設定を定義します。"
+          "en": "Configures a guild kind's capacity, master succession, rejoin wait and roles. A row is a guild of that kind the player belongs to.",
+          "ja": "ギルドの種類ごとに、定員・マスターの交代・再参加の待機・権限ロールを設定します。1 行は、プレイヤーが所属しているその種類のギルドを表します。"
         },
         "label": {
           "en": "Guild kind",

@@ -81,12 +81,12 @@
         "id": "prop_01M0C5T6AFE1EJ9CXYGJSJMT8Y",
         "localizedDisplay": {
           "en": {
-            "description": "Inactivity period after which the guild master position can be reassigned.",
+            "description": "Days of guild master inactivity after which the most senior member may promote themselves to master (PromoteSeniorMember).",
             "label": "Master inactivity period",
             "unit": "days"
           },
           "ja": {
-            "description": "ギルドマスター交代を可能にする無活動期間です。",
+            "description": "ギルドマスターの無活動がこの日数続くと、最古参のメンバーがマスターに昇格できる（PromoteSeniorMember）ようになります。",
             "label": "マスター不在判定期間",
             "unit": "日"
           }
@@ -106,12 +106,12 @@
         "id": "prop_01M0C5T6AF1GMQB80XDAVM0NJ2",
         "localizedDisplay": {
           "en": {
-            "description": "Wait time before a player may rejoin a guild they left.",
+            "description": "Wait time after leaving before a player may join any guild again.",
             "label": "Rejoin cooldown",
             "unit": "minutes"
           },
           "ja": {
-            "description": "脱退後に同じギルドへ再参加できるまでの待機時間です。",
+            "description": "脱退した後、どのギルドにも参加できるようになるまでの待機時間です。",
             "label": "再参加待機時間",
             "unit": "分"
           }
@@ -154,14 +154,14 @@
         "id": "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
         "localizedDisplay": {
           "en": {
-            "description": "Maximum number of guilds a player may lead at once.",
+            "description": "Maximum number of guild masters one guild may have at once.",
             "label": "Concurrent master limit",
-            "unit": "guilds"
+            "unit": "masters"
           },
           "ja": {
-            "description": "プレイヤーが同時にマスターを務められるギルド数です。",
+            "description": "1 つのギルドに同時に置けるギルドマスターの人数です。",
             "label": "同時マスター上限",
-            "unit": "件"
+            "unit": "人"
           }
         },
         "name": "maxConcurrentGuildMasterCount",

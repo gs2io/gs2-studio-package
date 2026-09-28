@@ -250,7 +250,7 @@
       },
       "description": {
         "ja": "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。",
-        "en": "Handles player guilds — capacity, permission roles, and which guild a player belongs to."
+        "en": "Handles player guilds: capacity, permission roles, and which guild a player belongs to."
       },
       "dependsOn": [],
       "install": {

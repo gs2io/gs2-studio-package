@@ -27,15 +27,15 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "GS2 guild policy document",
+        "description": "GS2 policy document for acting as the guild; deny everything explicitly rather than leaving it empty",
         "id": "prop_01M0C5T6AF0SDEH7DPDWXDST0T",
         "localizedDisplay": {
           "en": {
-            "description": "GS2 policy document describing operations allowed for this role.",
+            "description": "GS2 policy document describing what a member with this role may do while acting as the guild (Assume). For a role that may do nothing, do not leave it empty: write a policy that denies everything, with one statement whose Effect is Deny and whose Actions and Resources are *. Some GS2 versions treat an empty policy as allowing everything.",
             "label": "Permission policy"
           },
           "ja": {
-            "description": "このロールに許可する操作を記述したGS2ポリシーです。",
+            "description": "このロールのメンバーがギルドとして振る舞うとき（Assume）に許可する操作を記述した GS2 ポリシーです。何も許可しないロールは、空にせず、Effect を Deny、Actions と Resources を * にした文で、すべてを拒否するポリシーを明示してください。空のポリシーは、GS2 の版によっては全許可として扱われます。",
             "label": "権限ポリシー"
           }
         },
