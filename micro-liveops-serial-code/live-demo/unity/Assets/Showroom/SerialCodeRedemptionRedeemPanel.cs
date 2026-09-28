@@ -1,4 +1,5 @@
-// A code field and its Redeem press, with whether the visitor has redeemed.
+// A code field and its Redeem press, with whether the visitor has redeemed,
+// and a Start over press that clears the redemption so it can be tried again.
 //
 // A row of the page reads one value or makes one press, and typing is
 // neither, so this draws its own region. What the visitor types is handed to
@@ -43,6 +44,9 @@ namespace GS2Studio.Showroom.Demo
         private const string RedeemRate = "serialcoderedemption";
         private const string CodeConfigKey = "code";
 
+        /// <summary>The exchange that clears the visitor's redemption.</summary>
+        private const string StartOverNamespace = "SerialCodeStartOver";
+
         /// <summary>The usage counter the redemption is counted on.</summary>
         private const string LimitNamespace = "SerialCodeLimit";
         private const string LimitName = "serialcoderedemption";
@@ -64,6 +68,10 @@ namespace GS2Studio.Showroom.Demo
 
         private InputField? _field;
         private Button? _redeem;
+        private Button? _startOver;
+
+        /// <summary>Whether the visitor has redeemed, as last read; null before the first read.</summary>
+        private bool? _redeemed;
         private Text? _status;
         private bool _busy;
         private Coroutine? _waiting;
@@ -122,6 +130,60 @@ namespace GS2Studio.Showroom.Demo
             if (label != null) label.text = "Redeem";
             _redeem.onClick.RemoveAllListeners();
             _redeem.onClick.AddListener(Redeem);
+
+            _startOver = Instantiate(_buttonTemplate!, _panel!);
+            _startOver.name = "StartOverButton";
+            var startOverLabel = _startOver.GetComponentInChildren<Text>();
+            if (startOverLabel != null) startOverLabel.text = "Start over";
+            _startOver.onClick.RemoveAllListeners();
+            _startOver.onClick.AddListener(StartOver);
+        }
+
+        /// <summary>
+        /// Clears the visitor's redemption through the start-over exchange,
+        /// since a client may not delete its counter itself.
+        /// </summary>
+        private async void StartOver()
+        {
+            if (_busy) return;
+            if (!TryRuntime(out var gs2, out var session))
+            {
+                Log("Not signed in yet.");
+                return;
+            }
+            // GS2 refuses to delete a counter that was never counted.
+            if (_redeemed == false)
+            {
+                Log("You have not redeemed yet, so there is nothing to clear.");
+                return;
+            }
+            _busy = true;
+            SetInteractable(false);
+            try
+            {
+                var transaction = await gs2!.Exchange.Namespace(StartOverNamespace).Me(session!).Exchange()
+                    .ExchangeAsync(RedeemRate, 1, speculativeExecute: false);
+                if (transaction != null) await transaction.WaitAsync(true);
+                if (this == null) return;
+                Log("Your redemption is cleared; you can redeem again.");
+            }
+            catch (Exception error)
+            {
+                if (this == null) return;
+                Log($"Starting over failed: {error.Message}");
+            }
+            finally
+            {
+                _busy = false;
+                if (this != null) SetInteractable(true);
+            }
+            ReadRedeemed();
+        }
+
+        private void SetInteractable(bool interactable)
+        {
+            if (_redeem != null) _redeem.interactable = interactable;
+            if (_startOver != null) _startOver.interactable = interactable;
         }
 
         private async void Redeem()
@@ -144,7 +206,7 @@ namespace GS2Studio.Showroom.Demo
                 return;
             }
             _busy = true;
-            if (_redeem != null) _redeem.interactable = false;
+            SetInteractable(false);
             try
             {
                 var transaction = await gs2!.Exchange.Namespace(ExchangeNamespace).Me(session!).Exchange()
@@ -173,7 +235,7 @@ namespace GS2Studio.Showroom.Demo
             finally
             {
                 _busy = false;
-                if (this != null && _redeem != null) _redeem.interactable = true;
+                if (this != null) SetInteractable(true);
             }
             ReadRedeemed();
         }
@@ -231,6 +293,7 @@ namespace GS2Studio.Showroom.Demo
                 return;
             }
             if (this == null || _status == null) return;
+            _redeemed = redeemed;
             _status.text = redeemed
                 ? "You have redeemed your code."
                 : "You have not redeemed a code yet.";

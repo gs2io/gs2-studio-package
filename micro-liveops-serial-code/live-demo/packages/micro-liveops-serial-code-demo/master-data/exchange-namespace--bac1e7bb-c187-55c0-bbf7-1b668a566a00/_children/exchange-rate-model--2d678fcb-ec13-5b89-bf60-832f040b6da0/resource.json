@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M3JVP251QMTHBBV0K7JPJPFH",
+            "typeName": "SerialCodeRedemption"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      }
+    ]
+  },
+  "id": "2d678fcb-ec13-5b89-bf60-832f040b6da0",
+  "location": {
+    "modelName": "RateModel",
+    "service": "exchange"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M3JVP251QMTHBBV0K7JPJPFH",
+    "typeName": "SerialCodeRedemption"
+  }
+}

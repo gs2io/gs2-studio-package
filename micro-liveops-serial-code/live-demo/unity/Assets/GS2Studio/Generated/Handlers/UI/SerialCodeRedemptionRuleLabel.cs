@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.SerialCodeRedemption.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Type the campaign code WELCOME2026 and redeem it for 100 coins. Each visitor can redeem it once. Codes are case sensitive, and a wrong one is refused.</c>. Each <c>{key}</c> placeholder is
+    /// <c>Type the campaign code WELCOME2026 and redeem it for 100 coins. Each visitor can redeem it once; Start over clears your redemption so you can try again. Codes are case sensitive, and a wrong one is refused.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>SerialCodeRedemption</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.SerialCodeRedemption.UI
 
         private void OnUpdated(SerialCodeRedemption model)
         {
-            _onUpdate.Invoke($"Type the campaign code WELCOME2026 and redeem it for 100 coins. Each visitor can redeem it once. Codes are case sensitive, and a wrong one is refused.");
+            _onUpdate.Invoke($"Type the campaign code WELCOME2026 and redeem it for 100 coins. Each visitor can redeem it once; Start over clears your redemption so you can try again. Codes are case sensitive, and a wrong one is refused.");
         }
     }
 }

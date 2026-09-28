@@ -121,9 +121,11 @@ namespace GS2Studio.Generated.SerialCodeRedemption
         internal bool _mounted;
 
         private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeActionLoader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeSerialCodeStartOverNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeSerialCodeRedeemNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeAction2Loader;
+        private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireAction2Loader;
         private readonly Gs2Bind.Gs2Limit.LimitModelLoader __limitSerialCodeLimitNamespaceLimitModelLoader;
 
         /// <summary>
@@ -137,9 +139,11 @@ namespace GS2Studio.Generated.SerialCodeRedemption
         ) : base(model, gs2, session)
         {
             __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("SerialCodeRedeem", _model.Id, 0);
+            __exchangeSerialCodeStartOverNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("SerialCodeStartOver", _model.Id);
             __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("SerialCodeRedeem", _model.Id, 0);
             __exchangeSerialCodeRedeemNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("SerialCodeRedeem", _model.Id);
             __transactionConsumeAction2Loader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("SerialCodeRedeem", _model.Id, 1);
+            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("SerialCodeStartOver", _model.Id, 0);
             __limitSerialCodeLimitNamespaceLimitModelLoader = new Gs2Bind.Gs2Limit.LimitModelLoader("SerialCodeLimit", _model.Id);
         }
 
@@ -184,6 +188,11 @@ namespace GS2Studio.Generated.SerialCodeRedemption
             if (_transactionConsumeAction != null)
             {
             }
+            var _exchangeSerialCodeStartOverNamespaceRateModel = await __exchangeSerialCodeStartOverNamespaceRateModelLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_exchangeSerialCodeStartOverNamespaceRateModel != null)
+            {
+            }
             var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
@@ -197,6 +206,11 @@ namespace GS2Studio.Generated.SerialCodeRedemption
             var _transactionConsumeAction2 = await __transactionConsumeAction2Loader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction2 != null)
+            {
+            }
+            var _transactionAcquireAction2 = await __transactionAcquireAction2Loader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_transactionAcquireAction2 != null)
             {
             }
             var _limitSerialCodeLimitNamespaceLimitModel = await __limitSerialCodeLimitNamespaceLimitModelLoader.Load(_gs2, _session);
@@ -215,6 +229,19 @@ namespace GS2Studio.Generated.SerialCodeRedemption
         {
             ThrowIfDisposed();
             _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
+            _unsubscribers.Add(__exchangeSerialCodeStartOverNamespaceRateModelLoader.Subscribe(
                 _gs2,
                 _session,
                 (_, _, value) =>
@@ -266,6 +293,19 @@ namespace GS2Studio.Generated.SerialCodeRedemption
                 },
                 () => onChange?.Invoke()
             ));
+            _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
             _unsubscribers.Add(__limitSerialCodeLimitNamespaceLimitModelLoader.Subscribe(
                 _gs2,
                 _session,
@@ -288,9 +328,11 @@ namespace GS2Studio.Generated.SerialCodeRedemption
         {
             ThrowIfDisposed();
             __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            __exchangeSerialCodeStartOverNamespaceRateModelLoader.Invalidate(_gs2, _session);
             __transactionAcquireActionLoader.Invalidate(_gs2, _session);
             __exchangeSerialCodeRedeemNamespaceRateModelLoader.Invalidate(_gs2, _session);
             __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
+            __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
             __limitSerialCodeLimitNamespaceLimitModelLoader.Invalidate(_gs2, _session);
         }
 

@@ -21,10 +21,38 @@ Resources:
       Mode: "direct"
     DependsOn:
       - "ExchangeNamespace_SerialCodeRedeem"
+  ExchangeCurrentRateMaster_SerialCodeStartOver:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "SerialCodeStartOver"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "serialcoderedemption"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Limit:DeleteCounterByUserId"
+                request: "{\"namespaceName\":\"SerialCodeLimit\",\"limitName\":\"serialcoderedemption\",\"counterName\":\"redeemed\",\"userId\":\"#{userId}\"}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_SerialCodeStartOver"
   ExchangeNamespace_SerialCodeRedeem:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "SerialCodeRedeem"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_SerialCodeStartOver:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "SerialCodeStartOver"
       TransactionSetting:
         AcquireActionUseJobQueue: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"

@@ -7,7 +7,7 @@
       "kind": "templateLabel",
       "name": "SerialCodeRedemption",
       "sources": [],
-      "template": "Type the campaign code WELCOME2026 and redeem it for 100 coins. Each visitor can redeem it once. Codes are case sensitive, and a wrong one is refused."
+      "template": "Type the campaign code WELCOME2026 and redeem it for 100 coins. Each visitor can redeem it once; Start over clears your redemption so you can try again. Codes are case sensitive, and a wrong one is refused."
     }
   ],
   "name": "SerialCodeRedemption",
