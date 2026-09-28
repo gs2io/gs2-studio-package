@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "AgreementVersion#Terms and versions": {
+      "key": {
+        "id": "terms"
+      },
+      "rows": ["AgreementVersionRuleLabel", "AgreementVersionCheckPanel"]
+    }
+  }
+}

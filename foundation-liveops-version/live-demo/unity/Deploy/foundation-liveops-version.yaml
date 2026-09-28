@@ -1,0 +1,77 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  VersionCurrentVersionMaster_Version:
+    Type: "GS2::Version::CurrentVersionMaster"
+    Properties:
+      NamespaceName: "Version"
+      Settings:
+        version: "2019-10-09"
+        versionModels:
+          - errorVersion:
+              major: 1
+              micro: 0
+              minor: 0
+            name: "app"
+            needSignature: false
+            scope: "passive"
+            type: "simple"
+            warningVersion:
+              major: 1
+              micro: 0
+              minor: 1
+          - errorVersion:
+              major: 1
+              micro: 0
+              minor: 0
+            name: "asset"
+            needSignature: false
+            scope: "passive"
+            type: "simple"
+            warningVersion:
+              major: 2
+              micro: 0
+              minor: 0
+          - approveRequirement: "optional"
+            currentVersion:
+              major: 1
+              micro: 0
+              minor: 0
+            errorVersion:
+              major: 0
+              micro: 0
+              minor: 0
+            name: "marketing"
+            scope: "active"
+            type: "simple"
+            warningVersion:
+              major: 0
+              micro: 0
+              minor: 0
+          - approveRequirement: "required"
+            currentVersion:
+              major: 2
+              micro: 0
+              minor: 0
+            errorVersion:
+              major: 0
+              micro: 0
+              minor: 0
+            name: "terms"
+            scope: "active"
+            type: "simple"
+            warningVersion:
+              major: 1
+              micro: 0
+              minor: 0
+      Mode: "direct"
+    DependsOn:
+      - "VersionNamespace_Version"
+  VersionNamespace_Version:
+    Type: "GS2::Version::Namespace"
+    Properties:
+      AssumeUserId: "grn:gs2::{ownerId}:identifier:user:demo-version-passed"
+      Name: "Version"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

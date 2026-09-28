@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M3K2ERGHCMH9NNRA4NSZFVZK",
+  "kind": "overlay",
+  "name": "AgreementVersion",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-liveops-version",
+    "directSourceTypeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+    "sourcePackageId": "foundation-liveops-version",
+    "sourceTypeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4"
+  }
+}

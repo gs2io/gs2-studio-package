@@ -1,0 +1,78 @@
+# The version gate live demo's own client, and the user a player who passes
+# the version check is signed in as.
+#
+# - The client is ApplicationAccess plus reading one's own accepted version
+#   (Gs2Version:GetAcceptVersion), which the demo's generated agreement
+#   loader needs and ApplicationAccess grants only once GS2 rolls the updated
+#   policy out. The extra policy can go when it has.
+# - The passed user carries no policy at all. GS2 hands a player who passes the
+#   check that user's project token, and a demo gives it to anonymous visitors,
+#   so the token must be able to do nothing.
+# - Deploying this stack again keeps the secret. Deleting the stack and
+#   creating it anew issues a new one, after which scaffold
+#   (--credentials-only), page, the WebGL build and publishing all have to be
+#   redone.
+
+GS2TemplateFormatVersion: "2019-05-01"
+
+Globals:
+  Alias:
+    ClientUserName: demo-version-client
+    AcceptVersionPolicyName: demo-version-client-get-accept-version
+    PassedUserName: demo-version-passed
+
+Resources:
+
+  IdentifierClientUser:
+    Type: GS2::Identifier::User
+    Properties:
+      Name: ${ClientUserName}
+      Description: Client of the version gate live demo
+
+  IdentifierClientUserAttachApplicationAccess:
+    Type: GS2::Identifier::AttachSecurityPolicy
+    Properties:
+      UserName: ${ClientUserName}
+      SecurityPolicyId: grn:gs2::system:identifier:securityPolicy:ApplicationAccess
+    DependsOn:
+      - IdentifierClientUser
+
+  IdentifierAcceptVersionPolicy:
+    Type: GS2::Identifier::SecurityPolicy
+    Properties:
+      Name: ${AcceptVersionPolicyName}
+      Description: Lets the version gate live demo read a player's own accepted version
+      Policy:
+        Version: "2016-04-01"
+        Statements:
+          - Effect: Allow
+            Actions:
+              - Gs2Version:GetAcceptVersion
+            Resources:
+              - "*"
+
+  IdentifierClientUserAttachAcceptVersionPolicy:
+    Type: GS2::Identifier::AttachSecurityPolicy
+    Properties:
+      UserName: ${ClientUserName}
+      SecurityPolicyId: !GetAttr IdentifierAcceptVersionPolicy.Item.SecurityPolicyId
+    DependsOn:
+      - IdentifierClientUser
+      - IdentifierAcceptVersionPolicy
+
+  IdentifierClientIdentifier:
+    Type: GS2::Identifier::Identifier
+    Properties:
+      UserName: ${ClientUserName}
+    DependsOn:
+      - IdentifierClientUser
+
+  IdentifierPassedUser:
+    Type: GS2::Identifier::User
+    Properties:
+      Name: ${PassedUserName}
+      Description: Who a player passing the version gate live demo's check is signed in as; it holds no policy
+
+Outputs:
+  ApplicationClientId: !GetAttr IdentifierClientIdentifier.Item.ClientId
+  ApplicationClientSecret: !GetAttr IdentifierClientIdentifier.ClientSecret

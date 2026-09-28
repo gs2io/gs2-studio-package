@@ -1,0 +1,18 @@
+{
+  "id": "foundation-liveops-version-demo",
+  "name": "foundation-liveops-version-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-liveops-version": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies the live demo's required and optional agreements, the app and asset versions the client reports, and the user a player who passes is signed in as.",
+      "ja": "ライブデモ用に、必須と任意の利用規約、アプリとアセットの申告バージョン、確認を通過したときのユーザーを提供します。"
+    },
+    "label": {
+      "en": "Version Gate (demo data)",
+      "ja": "バージョン管理（デモデータ）"
+    }
+  }
+}

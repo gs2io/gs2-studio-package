@@ -1,0 +1,16 @@
+{
+  "id": "2b144198-730b-5c05-a464-9e8153f68d0d",
+  "items": [
+    {
+      "componentClassName": "RuleLabel",
+      "id": "c39c4ce7-6b22-5919-8ac4-46a7a2340fdd",
+      "kind": "templateLabel",
+      "name": "AgreementVersion",
+      "sources": [],
+      "template": "The check passes only when nothing is an error. Terms is required at 2.0.0: accepting 1.0.0 still warns. Marketing is optional and can be rejected, but leaving it unanswered is an error. The app warns at 1.1.0 and below and is refused at 1.0.0 and below; the assets warn at 2.0.0 and below and are refused at 1.0.0 and below."
+    }
+  ],
+  "name": "AgreementVersion",
+  "targetDomainType": "AgreementVersion",
+  "targetDomainTypeId": "dt_01M3K2ERGHCMH9NNRA4NSZFVZK"
+}
