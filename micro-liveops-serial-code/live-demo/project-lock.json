@@ -21,8 +21,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "58cb3be206287b809ebfa055af9f3390b6d9eac2",
-      "integrity": "sha256-1LvYDoXuSzbQlT+y/Y7jd1qmne5u+o2J3Ad0AmPu8nc=",
+      "commitSha": "7aa90961a1f3c1f70641f73f02df926df3a7746d",
+      "integrity": "sha256-sG/PV/BMXHAMKoqch2RnNAnszd3JGy/MhfWyBHtQE3Q=",
       "owner": "gs2io",
       "packageId": "micro-liveops-serial-code",
       "repo": "gs2-studio-package",
