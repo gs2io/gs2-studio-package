@@ -23,13 +23,15 @@
     "property:EmbeddedVersion.warningMajor": "prop_JV8X380AFH866SVX2HJR3FMP4V",
     "property:EmbeddedVersion.warningMicro": "prop_JNSG2T4XZEK7T0RFFT4FHYS77N",
     "property:EmbeddedVersion.warningMinor": "prop_Q1QVGEVNDQ31WXBSQ3CTK8PEYS",
+    "property:VersionGate.assumeUserId": "prop_01M3K283QDFDN94YEKNGWVCN1J",
     "type:AgreementVersion": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
-    "type:EmbeddedVersion": "dt_39GHCE719ZNVPNJCZ2M921Q32H"
+    "type:EmbeddedVersion": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+    "type:VersionGate": "dt_01M3K283QDW0KQVBWZ5K14DY27"
   },
   "deterministicOverrides": {
-    "master/version:Namespace:unmounted:Version#0": "95af84e6-cd24-4944-8bed-f69cde2524c5",
-    "master/version:Namespace:unmounted:Version#0/version:VersionModel:AgreementVersion:#0": "6149ce8d-9f29-4770-8a8c-c09eb4d2ff22",
-    "master/version:Namespace:unmounted:Version#0/version:VersionModel:EmbeddedVersion:#0": "0e571227-2505-47e5-b82e-7dfdca827151",
+    "master/version:Namespace:VersionGate:Version#0": "95af84e6-cd24-4944-8bed-f69cde2524c5",
+    "master/version:Namespace:VersionGate:Version#0/version:VersionModel:AgreementVersion:#0": "6149ce8d-9f29-4770-8a8c-c09eb4d2ff22",
+    "master/version:Namespace:VersionGate:Version#0/version:VersionModel:EmbeddedVersion:#0": "0e571227-2505-47e5-b82e-7dfdca827151",
     "user/version:AcceptVersion:AgreementVersion:#0": "e5b9fb94-4e0c-4412-afef-2905a30591b3"
   }
 }

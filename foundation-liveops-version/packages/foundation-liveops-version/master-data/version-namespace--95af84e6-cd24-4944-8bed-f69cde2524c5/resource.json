@@ -3,8 +3,71 @@
     "declaredBindings": [
       {
         "kind": "static",
+        "parameterName": "acceptVersionScript",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "assumeUserId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M3K283QDW0KQVBWZ5K14DY27",
+            "typeName": "VersionGate"
+          },
+          "propertyId": "prop_01M3K283QDFDN94YEKNGWVCN1J"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "checkVersionTriggerScriptId",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
         "parameterName": "name",
         "value": "Version"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
       }
     ]
   },
@@ -12,5 +75,10 @@
   "location": {
     "modelName": "Namespace",
     "service": "version"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M3K283QDW0KQVBWZ5K14DY27",
+    "typeName": "VersionGate"
   }
 }

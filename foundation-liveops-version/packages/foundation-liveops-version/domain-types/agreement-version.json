@@ -30,11 +30,11 @@
         "id": "prop_GMMBV2TGK8XPGGR6QZA7CB0F1Y",
         "localizedDisplay": {
           "en": {
-            "description": "Whether approval of this agreement is required.",
+            "description": "Whether approval of this agreement is required. An optional one can also be rejected, but a player who has neither accepted nor rejected it fails the version check.",
             "label": "Approval requirement"
           },
           "ja": {
-            "description": "この規約への同意を必須にするかを設定します。",
+            "description": "この規約への同意を必須にするかを設定します。任意にすると拒否もできますが、同意も拒否もしていないプレイヤーはバージョン確認でエラーになります。",
             "label": "同意要否"
           }
         },
@@ -168,11 +168,11 @@
         "id": "prop_01M0PWK4QGM5B5CWGZE3GAZ3PC",
         "localizedDisplay": {
           "en": {
-            "description": "Major component of the minimum version that triggers a warning.",
+            "description": "Major component of the version at or below which an acceptance triggers a warning.",
             "label": "Warning major version"
           },
           "ja": {
-            "description": "警告を表示する最小バージョンのメジャー値です。",
+            "description": "このバージョン以下に同意しているとき警告になるバージョンのメジャー値です。",
             "label": "警告メジャーバージョン"
           }
         },
@@ -190,11 +190,11 @@
         "id": "prop_01M0PWK4QG52B50F2Q3HMPJDQS",
         "localizedDisplay": {
           "en": {
-            "description": "Minor component of the minimum version that triggers a warning.",
+            "description": "Minor component of the version at or below which an acceptance triggers a warning.",
             "label": "Warning minor version"
           },
           "ja": {
-            "description": "警告を表示する最小バージョンのマイナー値です。",
+            "description": "このバージョン以下に同意しているとき警告になるバージョンのマイナー値です。",
             "label": "警告マイナーバージョン"
           }
         },
@@ -212,11 +212,11 @@
         "id": "prop_01M0PWK4QGB6FARGAKYTJCE3GD",
         "localizedDisplay": {
           "en": {
-            "description": "Micro component of the minimum version that triggers a warning.",
+            "description": "Micro component of the version at or below which an acceptance triggers a warning.",
             "label": "Warning micro version"
           },
           "ja": {
-            "description": "警告を表示する最小バージョンのマイクロ値です。",
+            "description": "このバージョン以下に同意しているとき警告になるバージョンのマイクロ値です。",
             "label": "警告マイクロバージョン"
           }
         },
@@ -234,11 +234,11 @@
         "id": "prop_01M0PWK4QG0W3BR71K2BSE1A8S",
         "localizedDisplay": {
           "en": {
-            "description": "Major component of the minimum version that blocks use.",
+            "description": "Major component of the version at or below which an acceptance blocks use.",
             "label": "Error major version"
           },
           "ja": {
-            "description": "利用を拒否する最小バージョンのメジャー値です。",
+            "description": "このバージョン以下に同意しているとき利用を拒否するバージョンのメジャー値です。",
             "label": "拒否メジャーバージョン"
           }
         },
@@ -256,11 +256,11 @@
         "id": "prop_01M0PWK4QGQ6V970FH4XQPDM3D",
         "localizedDisplay": {
           "en": {
-            "description": "Minor component of the minimum version that blocks use.",
+            "description": "Minor component of the version at or below which an acceptance blocks use.",
             "label": "Error minor version"
           },
           "ja": {
-            "description": "利用を拒否する最小バージョンのマイナー値です。",
+            "description": "このバージョン以下に同意しているとき利用を拒否するバージョンのマイナー値です。",
             "label": "拒否マイナーバージョン"
           }
         },
@@ -278,11 +278,11 @@
         "id": "prop_01M0PWK4QGZBDE3TA5C6D6G07J",
         "localizedDisplay": {
           "en": {
-            "description": "Micro component of the minimum version that blocks use.",
+            "description": "Micro component of the version at or below which an acceptance blocks use.",
             "label": "Error micro version"
           },
           "ja": {
-            "description": "利用を拒否する最小バージョンのマイクロ値です。",
+            "description": "このバージョン以下に同意しているとき利用を拒否するバージョンのマイクロ値です。",
             "label": "拒否マイクロバージョン"
           }
         },

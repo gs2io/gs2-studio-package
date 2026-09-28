@@ -217,8 +217,8 @@
         "en": "Version Gate"
       },
       "description": {
-        "ja": "利用規約の同意バージョンやアプリの埋め込みバージョンを管理します。",
-        "en": "Tracks agreement (terms of service) versions and the app's embedded version."
+        "ja": "利用規約の同意バージョンと、アプリやアセットのようにクライアントが申告するバージョンを確認します。",
+        "en": "Checks the agreement (terms of service) versions a player accepted, and the versions a client reports, such as its app and asset versions."
       },
       "dependsOn": [],
       "install": {

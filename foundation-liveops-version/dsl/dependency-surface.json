@@ -40,6 +40,16 @@
         "warningMicro": "prop_JNSG2T4XZEK7T0RFFT4FHYS77N",
         "warningMinor": "prop_Q1QVGEVNDQ31WXBSQ3CTK8PEYS"
       }
+    },
+    "VersionGate": {
+      "id": "dt_01M3K283QDW0KQVBWZ5K14DY27",
+      "singleEntry": true,
+      "canonicalPackageId": "foundation-liveops-version",
+      "canonicalTypeId": "dt_01M3K283QDW0KQVBWZ5K14DY27",
+      "properties": {
+        "assumeUserId": "prop_01M3K283QDFDN94YEKNGWVCN1J",
+        "id": "prop_reserved_id"
+      }
     }
   },
   "masterDataResources": {

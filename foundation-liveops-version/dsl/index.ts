@@ -1,4 +1,12 @@
-import { Bind, defineDomainType, defineMasterDataResource, definePackage, PT, Source } from "~/dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  PT,
+  Source,
+  transactionSetting,
+} from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -25,8 +33,8 @@ const AgreementVersion = defineDomainType("AgreementVersion", dt =>
       required: jaEnField(
         "同意要否",
         "Approval requirement",
-        "この規約への同意を必須にするかを設定します。",
-        "Whether approval of this agreement is required."
+        "この規約への同意を必須にするかを設定します。任意にすると拒否もできますが、同意も拒否もしていないプレイヤーはバージョン確認でエラーになります。",
+        "Whether approval of this agreement is required. An optional one can also be rejected, but a player who has neither accepted nor rejected it fails the version check."
       ),
       currentMajor: jaEnField(
         "公開メジャーバージョン",
@@ -61,38 +69,38 @@ const AgreementVersion = defineDomainType("AgreementVersion", dt =>
       warningMajor: jaEnField(
         "警告メジャーバージョン",
         "Warning major version",
-        "警告を表示する最小バージョンのメジャー値です。",
-        "Major component of the minimum version that triggers a warning."
+        "このバージョン以下に同意しているとき警告になるバージョンのメジャー値です。",
+        "Major component of the version at or below which an acceptance triggers a warning."
       ),
       warningMinor: jaEnField(
         "警告マイナーバージョン",
         "Warning minor version",
-        "警告を表示する最小バージョンのマイナー値です。",
-        "Minor component of the minimum version that triggers a warning."
+        "このバージョン以下に同意しているとき警告になるバージョンのマイナー値です。",
+        "Minor component of the version at or below which an acceptance triggers a warning."
       ),
       warningMicro: jaEnField(
         "警告マイクロバージョン",
         "Warning micro version",
-        "警告を表示する最小バージョンのマイクロ値です。",
-        "Micro component of the minimum version that triggers a warning."
+        "このバージョン以下に同意しているとき警告になるバージョンのマイクロ値です。",
+        "Micro component of the version at or below which an acceptance triggers a warning."
       ),
       errorMajor: jaEnField(
         "拒否メジャーバージョン",
         "Error major version",
-        "利用を拒否する最小バージョンのメジャー値です。",
-        "Major component of the minimum version that blocks use."
+        "このバージョン以下に同意しているとき利用を拒否するバージョンのメジャー値です。",
+        "Major component of the version at or below which an acceptance blocks use."
       ),
       errorMinor: jaEnField(
         "拒否マイナーバージョン",
         "Error minor version",
-        "利用を拒否する最小バージョンのマイナー値です。",
-        "Minor component of the minimum version that blocks use."
+        "このバージョン以下に同意しているとき利用を拒否するバージョンのマイナー値です。",
+        "Minor component of the version at or below which an acceptance blocks use."
       ),
       errorMicro: jaEnField(
         "拒否マイクロバージョン",
         "Error micro version",
-        "利用を拒否する最小バージョンのマイクロ値です。",
-        "Micro component of the minimum version that blocks use."
+        "このバージョン以下に同意しているとき利用を拒否するバージョンのマイクロ値です。",
+        "Micro component of the version at or below which an acceptance blocks use."
       ),
       acceptedMajor: jaEnField(
         "同意済みメジャーバージョン",
@@ -124,42 +132,69 @@ const EmbeddedVersion = defineDomainType("EmbeddedVersion", dt =>
     .property(PT.int32("errorMinor").masterData().required())
     .property(PT.int32("errorMicro").masterData().required())
     .localizedProperties({
-      id: jaEnId("アプリバージョン", "application version configuration"),
+      id: jaEnId("申告バージョン", "reported version"),
       warningMajor: jaEnField(
         "警告メジャーバージョン",
         "Warning major version",
-        "更新警告を表示する最小アプリバージョンのメジャー値です。",
-        "Major component of the minimum app version that triggers an update warning."
+        "申告されたバージョンがこれ以下のとき更新を促す警告になるバージョンのメジャー値です。",
+        "Major component of the version at or below which a reported version triggers an update warning."
       ),
       warningMinor: jaEnField(
         "警告マイナーバージョン",
         "Warning minor version",
-        "更新警告を表示する最小アプリバージョンのマイナー値です。",
-        "Minor component of the minimum app version that triggers an update warning."
+        "申告されたバージョンがこれ以下のとき更新を促す警告になるバージョンのマイナー値です。",
+        "Minor component of the version at or below which a reported version triggers an update warning."
       ),
       warningMicro: jaEnField(
         "警告マイクロバージョン",
         "Warning micro version",
-        "更新警告を表示する最小アプリバージョンのマイクロ値です。",
-        "Micro component of the minimum app version that triggers an update warning."
+        "申告されたバージョンがこれ以下のとき更新を促す警告になるバージョンのマイクロ値です。",
+        "Micro component of the version at or below which a reported version triggers an update warning."
       ),
       errorMajor: jaEnField(
         "必須更新メジャーバージョン",
         "Required major version",
-        "利用を拒否する最小アプリバージョンのメジャー値です。",
-        "Major component of the minimum app version allowed to run."
+        "申告されたバージョンがこれ以下のとき利用を拒否するバージョンのメジャー値です。",
+        "Major component of the version at or below which a reported version is refused."
       ),
       errorMinor: jaEnField(
         "必須更新マイナーバージョン",
         "Required minor version",
-        "利用を拒否する最小アプリバージョンのマイナー値です。",
-        "Minor component of the minimum app version allowed to run."
+        "申告されたバージョンがこれ以下のとき利用を拒否するバージョンのマイナー値です。",
+        "Minor component of the version at or below which a reported version is refused."
       ),
       errorMicro: jaEnField(
         "必須更新マイクロバージョン",
         "Required micro version",
-        "利用を拒否する最小アプリバージョンのマイクロ値です。",
-        "Micro component of the minimum app version allowed to run."
+        "申告されたバージョンがこれ以下のとき利用を拒否するバージョンのマイクロ値です。",
+        "Micro component of the version at or below which a reported version is refused."
+      ),
+    })
+);
+
+/**
+ * The version gate itself. When a player's check finds no errors, GS2 signs
+ * them in as `assumeUserId` and hands back that user's project token, so the
+ * gate is where a title names that user.
+ */
+const VersionGate = defineDomainType("VersionGate", dt =>
+  dt
+    .singleEntry()
+    .property(
+      PT.string("assumeUserId")
+        .masterData()
+        .required()
+        .description(
+          "GRN of the GS2-Identifier user a player who passes the check is signed in as: grn:gs2::{ownerId}:identifier:user:<name>"
+        )
+    )
+    .localizedProperties({
+      id: jaEnId("バージョン確認", "version gate"),
+      assumeUserId: jaEnField(
+        "通過後のユーザー",
+        "User after passing",
+        "バージョン確認を通過したプレイヤーに発行するプロジェクトトークンの GS2-Identifier ユーザーです。grn:gs2::{ownerId}:identifier:user:<名前> の形式で指定します。",
+        "GS2-Identifier user whose project token a player receives on passing the version check, as grn:gs2::{ownerId}:identifier:user:<name>."
       ),
     })
 );
@@ -195,8 +230,8 @@ export const foundationLiveopsVersion = definePackage("foundation-liveops-versio
   .display({
     label: { ja: "バージョン管理", en: "Version Gate" },
     description: {
-      ja: "利用規約の同意バージョンやアプリの埋め込みバージョンを管理します。",
-      en: "Tracks agreement (terms of service) versions and the app's embedded version.",
+      ja: "利用規約の同意バージョンと、アプリやアセットのようにクライアントが申告するバージョンを確認します。",
+      en: "Checks the agreement (terms of service) versions a player accepted, and the versions a client reports, such as its app and asset versions.",
     },
   })
   .displayType(AgreementVersion, {
@@ -207,19 +242,31 @@ export const foundationLiveopsVersion = definePackage("foundation-liveops-versio
     },
   })
   .displayType(EmbeddedVersion, {
-    label: { ja: "アプリバージョン", en: "App version" },
+    label: { ja: "申告バージョン", en: "Reported version" },
     description: {
-      ja: "利用可能なアプリバージョンと更新時の扱いを設定します。",
-      en: "Defines supported application versions and the required update behavior.",
+      ja: "アプリやアセットのように、クライアントが自分のバージョンを申告して確認を受けるものです。警告と利用拒否になるバージョンを設定します。",
+      en: "Something the client reports its own version of, such as the app or its assets, and the versions at or below which that version warns or is refused.",
     },
   })
+  .displayType(VersionGate, {
+    label: { ja: "バージョン確認", en: "Version gate" },
+    description: {
+      ja: "バージョン確認を通過したプレイヤーをどのユーザーとして扱うかを設定します。",
+      en: "Configures which user a player who passes the version check is signed in as.",
+    },
+  })
+  .domainType(VersionGate)
   .domainType(AgreementVersion)
   .domainType(EmbeddedVersion)
   .masterDataResource(r =>
     r
       .model(GS2.version.Namespace)
+      .mountLocal(VersionGate)
       .bindings({
         name: Bind.static("Version"),
+        assumeUserId: Bind.domainProperty(Source.direct(VersionGate, "assumeUserId")),
+        ...Bind.nulls("acceptVersionScript", "checkVersionTriggerScriptId", "logSetting"),
+        transactionSetting: transactionSetting(),
       })
       .addChild(AgreementVersionModel)
       .addChild(child => {
