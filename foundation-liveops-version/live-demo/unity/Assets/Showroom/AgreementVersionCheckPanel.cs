@@ -69,6 +69,8 @@ namespace GS2Studio.Showroom.Demo
         private Button? _appButton;
         private Button? _assetButton;
         private readonly List<Button> _buttons = new List<Button>();
+        /// <summary>Bumped by every read of the answers as it starts; only the latest one to start is shown.</summary>
+        private int _answersGeneration;
         private int _app;
         private int _asset;
         private bool _busy;
@@ -180,7 +182,9 @@ namespace GS2Studio.Showroom.Demo
         /// Checks every version at once and shows the verdict for each. GS2
         /// issues a project token only when nothing is an error.
         /// </summary>
-        private void Check() =>
+        private void Check()
+        {
+            if (_verdict != null && !_busy) _verdict.text = "Checking...";
             Run(async (client, token) =>
             {
                 var result = await client.CheckVersionAsync(new CheckVersionRequest()
@@ -203,7 +207,11 @@ namespace GS2Studio.Showroom.Demo
                         : "Not passed: no project token.");
                 }
                 return passed ? "The version check passed." : "The version check did not pass.";
-            }, readAfter: false);
+            }, readAfter: false, onFailed: () =>
+            {
+                if (_verdict != null) _verdict.text = "The check failed; see the log below.";
+            });
+        }
 
         private static HashSet<string> Names(VersionStatus[]? statuses) =>
             new HashSet<string>((statuses ?? Array.Empty<VersionStatus>())
@@ -214,6 +222,7 @@ namespace GS2Studio.Showroom.Demo
         private async void ReadAnswers()
         {
             if (!TryRuntime(out var gs2, out var session)) return;
+            var generation = ++_answersGeneration;
             AcceptVersion[] items;
             try
             {
@@ -228,7 +237,7 @@ namespace GS2Studio.Showroom.Demo
                 Debug.LogError($"{nameof(AgreementVersionCheckPanel)}: your answers could not be read: {error}");
                 return;
             }
-            if (this == null || _answers == null) return;
+            if (this == null || _answers == null || generation != _answersGeneration) return;
             _answers.text = string.Join("\n", new[] { Terms, Marketing }.Select(name =>
             {
                 var item = items.FirstOrDefault(entry => entry.VersionName == name);
@@ -239,7 +248,10 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>Runs one press, one at a time, and puts what it says on the page.</summary>
-        private async void Run(Func<Gs2VersionRestClient, string, Task<string>> press, bool readAfter)
+        private async void Run(
+            Func<Gs2VersionRestClient, string, Task<string>> press,
+            bool readAfter,
+            Action? onFailed = null)
         {
             if (_busy) return;
             if (!TryRuntime(out var gs2, out var session))
@@ -258,11 +270,15 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Gs2Exception error)
             {
-                if (this != null) Log($"GS2 refused: {error.Message}");
+                if (this == null) return;
+                Log($"GS2 refused: {error.Message}");
+                onFailed?.Invoke();
             }
             catch (Exception error)
             {
-                if (this != null) Log($"Failed: {error.Message}");
+                if (this == null) return;
+                Log($"Failed: {error.Message}");
+                onFailed?.Invoke();
             }
             finally
             {

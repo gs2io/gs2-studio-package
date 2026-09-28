@@ -49,7 +49,7 @@ Resources:
             Actions:
               - Gs2Version:GetAcceptVersion
             Resources:
-              - "*"
+              - "grn:gs2:{region}:{ownerId}:version:Version:*"
 
   IdentifierClientUserAttachAcceptVersionPolicy:
     Type: GS2::Identifier::AttachSecurityPolicy
