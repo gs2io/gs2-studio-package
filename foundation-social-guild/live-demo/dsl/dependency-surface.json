@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-social-guild-demo",
+  "types": {
+    "Guild": {
+      "id": "dt_01M3KW8K6KKWZ4EHGFFS1T8TE1",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-guild",
+      "canonicalTypeId": "dt_01M0C5T6AF24NKHPZ1Z4R946FT"
+    },
+    "GuildRole": {
+      "id": "dt_01M3KW8K6K0APHZXSCNVPE1SH7",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-guild",
+      "canonicalTypeId": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}

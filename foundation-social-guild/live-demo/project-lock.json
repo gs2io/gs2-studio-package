@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "commitSha": "6e0da9c433ca1b9c913556a3d3e566b104cc38c7",
+      "integrity": "sha256-9IM7WLZW8RJ9pteAug8AdVpGvgYVZZ03AFtP/+fQzqs=",
+      "owner": "gs2io",
+      "packageId": "foundation-social-guild",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-social-guild/packages/foundation-social-guild",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

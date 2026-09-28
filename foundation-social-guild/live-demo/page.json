@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "GuildRole#Guild lobby": {
+      "key": {
+        "id": "master"
+      },
+      "rows": ["GuildRoleLobbyPanel"]
+    },
+    "Guild#Your guilds": {
+      "axis": "GuildGuildUser",
+      "rows": ["GuildMembershipLabel", "GuildCapacityLabel"]
+    }
+  }
+}
