@@ -175,7 +175,8 @@ const EmbeddedVersion = defineDomainType("EmbeddedVersion", dt =>
 /**
  * The version gate itself. When a player's check finds no errors, GS2 signs
  * them in as `assumeUserId` and hands back that user's project token, so the
- * gate is where a title names that user.
+ * gate is where a title names that user. The namespace is mounted on it, so
+ * a project that authors no gate deploys no namespace: GS2 requires the user.
  */
 const VersionGate = defineDomainType("VersionGate", dt =>
   dt
@@ -251,8 +252,8 @@ export const foundationLiveopsVersion = definePackage("foundation-liveops-versio
   .displayType(VersionGate, {
     label: { ja: "バージョン確認", en: "Version gate" },
     description: {
-      ja: "バージョン確認を通過したプレイヤーをどのユーザーとして扱うかを設定します。",
-      en: "Configures which user a player who passes the version check is signed in as.",
+      ja: "バージョン確認を通過したプレイヤーをどのユーザーとして扱うかを設定します。この行が無いと、バージョン管理の名前空間とバージョンモデルはデプロイされません。",
+      en: "Configures which user a player who passes the version check is signed in as. Without this row, the version namespace and its version models are not deployed.",
     },
   })
   .domainType(VersionGate)
