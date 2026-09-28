@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "120aaf725da229032f67f4f1ed7563c46beef0ba",
-      "integrity": "sha256-vjihZYf9Y70LWRPb9pnsZtnPs7fiGVJWMdo66Rm7HN8=",
+      "commitSha": "d7feb107adcd12d2b7a219aefeb4a044f890b242",
+      "integrity": "sha256-8qiicUFZ80azFvJ0E4T015eOAggOzhF6X+alJxXIuT4=",
       "owner": "gs2io",
       "packageId": "foundation-liveops-version",
       "repo": "gs2-studio-package",
