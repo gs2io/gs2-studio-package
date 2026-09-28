@@ -27,15 +27,15 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "Accept one shared code for the whole campaign instead of per-player codes",
+        "description": "Mark the campaign id as a shared code; GS2 currently accepts the id whether or not this is set",
         "id": "prop_01M0C5VXZYGKT11KXY634Y6J5N",
         "localizedDisplay": {
           "en": {
-            "description": "Whether one shared code may be used for the entire campaign.",
+            "description": "Marks the campaign id as a code shared by every player. GS2 currently accepts the id whatever this says, any number of times.",
             "label": "Shared campaign code"
           },
           "ja": {
-            "description": "キャンペーン全体で共通のコードを利用できるかを設定します。",
+            "description": "キャンペーン ID を全員共通のコードとして扱うことを示します。現在の GS2 はこの設定に関係なくキャンペーン ID を受け付け、何度でも使えます。",
             "label": "共通キャンペーンコード"
           }
         },

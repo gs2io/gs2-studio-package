@@ -13,24 +13,30 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 /**
  * A batch of redeemable codes — a launch giveaway, an apology gift, a code
- * printed on a physical item. The codes themselves are issued at runtime and
- * are not authored here; what a project authors is the campaign they belong
- * to, and the reward is whatever transaction the redeeming flow runs.
+ * printed on a physical item. Per-player codes are issued at runtime and are
+ * not authored here; what a project authors is the campaign they belong to,
+ * and the reward is whatever transaction the redeeming flow runs.
+ *
+ * The campaign's own id is also a code: GS2 accepts it from every player, any
+ * number of times, and records nothing when it is used. A title that wants it
+ * once per player counts the uses itself.
  */
 const SerialCodeCampaign = defineDomainType("SerialCodeCampaign", dt =>
   dt
     .property(
       PT.bool("enableCampaignCode")
         .masterData()
-        .description("Accept one shared code for the whole campaign instead of per-player codes")
+        .description(
+          "Mark the campaign id as a shared code; GS2 currently accepts the id whether or not this is set"
+        )
     )
     .localizedProperties({
       id: jaEnId("コードキャンペーン", "serial-code campaign"),
       enableCampaignCode: jaEnField(
         "共通キャンペーンコード",
         "Shared campaign code",
-        "キャンペーン全体で共通のコードを利用できるかを設定します。",
-        "Whether one shared code may be used for the entire campaign."
+        "キャンペーン ID を全員共通のコードとして扱うことを示します。現在の GS2 はこの設定に関係なくキャンペーン ID を受け付け、何度でも使えます。",
+        "Marks the campaign id as a code shared by every player. GS2 currently accepts the id whatever this says, any number of times."
       ),
     })
 );
