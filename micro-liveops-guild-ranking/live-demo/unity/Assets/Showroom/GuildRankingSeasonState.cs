@@ -25,6 +25,13 @@
 // about again. Playing and receiving go through the SDK, so the wallet the
 // page shows hears the reward land.
 //
+// The visitor can move their own clock a day forward (Advance one day). GS2
+// then reads the season, the board and the past seasons on that clock, so
+// every "now" here is this device's time plus the offset the demo gave the
+// account, and once the session has signed in again with the new offset
+// everything is read afresh: the season the visitor played is over for them,
+// and shows under what they can receive for.
+//
 // A read answers for the moment it started. One that started before a play or
 // a receipt, before the guild or the season changed, or before a newer read of
 // the same thing, is dropped when it lands, so it cannot put back what the
@@ -97,6 +104,13 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>How long to wait before reading the past seasons again after they could not be read.</summary>
         private const float PastRetrySeconds = 30f;
 
+        /// <summary>
+        /// How long after the clock moved everything is read once more:
+        /// signing in again can finish before the new token is the one the
+        /// session sends, so the first reads may still go out on the old clock.
+        /// </summary>
+        private const float ClockSettleSeconds = 3f;
+
         private const int PageSize = 100;
 
         private static GuildRankingSeasonState? _instance;
@@ -135,8 +149,16 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>The season being played, once the event has been read.</summary>
         public long? Season { get; private set; }
 
-        /// <summary>When the season turns over, once the event has been read.</summary>
+        /// <summary>When the season turns over on GS2's clock, once the event has been read.</summary>
         public DateTime? SeasonEndsAt { get; private set; }
+
+        /// <summary>
+        /// When the season turns over on this device's clock, which is what
+        /// the page counts down against: GS2's time less the offset the demo
+        /// gave the visitor's account.
+        /// </summary>
+        public DateTime? SeasonEndsOnDevice =>
+            SeasonEndsAt?.AddSeconds(-DemoTimeOffset.Get(UserId));
 
         /// <summary>Why the season could not be read, or null.</summary>
         public string? SeasonProblem { get; private set; }
@@ -178,6 +200,12 @@ namespace GS2Studio.Showroom.Demo
         public string? PastProblem { get; private set; }
 
         private bool _readingSeason;
+
+        /// <summary>Set when the season must be read again although it is not over, as after the clock moved.</summary>
+        private bool _seasonStale;
+
+        /// <summary>Bumped by every season read as it starts, and whenever the clock moved.</summary>
+        private int _seasonGeneration;
         private bool _readingStanding;
         private bool _readStandingAgain;
         private bool _readingPast;
@@ -236,11 +264,13 @@ namespace GS2Studio.Showroom.Demo
 
         private void OnEnable()
         {
+            DemoTimeOffset.Applied += OnClockApplied;
             StartCoroutine(Run());
         }
 
         private void OnDisable()
         {
+            DemoTimeOffset.Applied -= OnClockApplied;
             StopFollowingJoined();
         }
 
@@ -254,18 +284,21 @@ namespace GS2Studio.Showroom.Demo
 
         private IEnumerator Run()
         {
-            while (!GuildRankingDemo.TryRuntime(out _, out _))
+            IGameSession? session;
+            while (!GuildRankingDemo.TryRuntime(out _, out session))
             {
                 yield return new WaitForSeconds(0.25f);
             }
+            // Known before the first read, so that read is on the visitor's clock.
+            UserId = session!.UserId;
             var tick = new WaitForSecondsRealtime(TickSeconds);
             while (true)
             {
                 var now = Time.realtimeSinceStartup;
-                // The season is read again once it is over; until then the
-                // event answers the same.
-                var over = SeasonEndsAt != null && DateTime.UtcNow >= SeasonEndsAt;
-                if (now >= _nextSeasonRead && (Season == null || over)) ReadSeason();
+                // The season is read again once it is over, or once the clock
+                // moved; until then the event answers the same.
+                var over = SeasonEndsAt != null && ServerNow() >= SeasonEndsAt;
+                if (now >= _nextSeasonRead && (Season == null || over || _seasonStale)) ReadSeason();
                 if (now >= _nextMembershipWatch)
                 {
                     if (!_followingJoined)
@@ -313,7 +346,7 @@ namespace GS2Studio.Showroom.Demo
             if (!GuildKnown) return "Still reading your guild; try again in a moment.";
             if (GuildId == null) return "You are not in a guild. Found one or join one in the lobby above, then play.";
             if (Season == null) return SeasonProblem ?? "Still reading the season; try again in a moment.";
-            if (SeasonEndsAt != null && DateTime.UtcNow >= SeasonEndsAt)
+            if (SeasonEndsAt != null && ServerNow() >= SeasonEndsAt)
             {
                 return "The season just turned over; press Play again in a moment.";
             }
@@ -391,6 +424,7 @@ namespace GS2Studio.Showroom.Demo
             catch (BadRequestException error) when (GuildRankingDemo.Refused(error, "inSchedule") || GuildRankingDemo.Refused(error, "outOfSchedule"))
             {
                 // This device's clock can run ahead of GS2's by a moment.
+                _seasonStale = true;
                 _nextSeasonRead = 0;
                 return $"GS2 says season {target.Season} is still being played (inSchedule); it pays once it is over.";
             }
@@ -430,6 +464,49 @@ namespace GS2Studio.Showroom.Demo
         }
 
         // ------------------------------------------------------------------
+        // The demo clock
+
+        /// <summary>
+        /// Now on GS2's clock for the visitor: this device's time plus the
+        /// offset the demo gave their account.
+        /// </summary>
+        private DateTime ServerNow() => DateTime.UtcNow.AddSeconds(DemoTimeOffset.Get(UserId));
+
+        /// <summary>
+        /// The session signed in again on the visitor's new clock: the season,
+        /// the board and the past seasons are read afresh on it, and once more
+        /// a moment later.
+        /// </summary>
+        private void OnClockApplied(string userId)
+        {
+            if (userId != UserId || this == null) return;
+            ReadAllAgain();
+            StartCoroutine(ReadAllAfter(ClockSettleSeconds));
+        }
+
+        private IEnumerator ReadAllAfter(float seconds)
+        {
+            yield return new WaitForSecondsRealtime(seconds);
+            ReadAllAgain();
+        }
+
+        /// <summary>
+        /// Drops what reads already out will answer, and has the next tick read
+        /// everything again. A season that changed starts its board afresh.
+        /// </summary>
+        private void ReadAllAgain()
+        {
+            _seasonGeneration++;
+            _seasonStale = true;
+            _nextSeasonRead = 0;
+            _standingGeneration++;
+            _nextStandingRead = 0;
+            _pastGeneration++;
+            _nextPastRead = 0;
+            Updated?.Invoke();
+        }
+
+        // ------------------------------------------------------------------
         // Reads
 
         /// <summary>
@@ -440,6 +517,8 @@ namespace GS2Studio.Showroom.Demo
         {
             if (_readingSeason || !GuildRankingDemo.TryRuntime(out var gs2, out var session)) return;
             _readingSeason = true;
+            _seasonStale = false;
+            var generation = ++_seasonGeneration;
             _nextSeasonRead = Time.realtimeSinceStartup + SeasonRetrySeconds;
             try
             {
@@ -449,7 +528,8 @@ namespace GS2Studio.Showroom.Demo
                         .WithEventName(SeasonEvent)
                         .WithAccessToken(session!.AccessToken.Token)
                         .WithIsInSchedule(false));
-                if (this == null) return;
+                // A read that went out before the clock moved answers for the old clock.
+                if (this == null || generation != _seasonGeneration) return;
                 var repeat = result?.RepeatSchedule;
                 var endsAt = repeat?.CurrentRepeatEndAt;
                 if (repeat?.RepeatCount == null || endsAt == null)
@@ -468,7 +548,7 @@ namespace GS2Studio.Showroom.Demo
                     SeasonEndsAt = ends;
                     // A season that GS2 still calls current although this
                     // device's clock says it is over is read again shortly.
-                    _nextSeasonRead = Time.realtimeSinceStartup + (ends > DateTime.UtcNow ? SeasonRetrySeconds : 5f);
+                    _nextSeasonRead = Time.realtimeSinceStartup + (ends > ServerNow() ? SeasonRetrySeconds : 5f);
                     if (changed)
                     {
                         _standingGeneration++;
@@ -485,7 +565,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (NotFoundException)
             {
-                if (this == null) return;
+                if (this == null || generation != _seasonGeneration) return;
                 SeasonProblem = "The season's event guild-season is not deployed yet, so no season is open.";
                 Season = null;
                 SeasonEndsAt = null;

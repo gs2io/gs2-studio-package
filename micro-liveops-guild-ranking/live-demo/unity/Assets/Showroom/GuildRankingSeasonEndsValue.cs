@@ -1,8 +1,11 @@
 // When the season being played turns over, for the page to count down to.
 //
 // Handed over as a `DateTime`, which the page draws as time left. It is the
-// schedule event's current repeat end, the next 00:00 UTC; until the event has
-// been read the deadline is left unset.
+// schedule event's current repeat end, the next 00:00 UTC on GS2's clock for
+// the visitor, moved onto this device's clock, which is the one the page
+// counts down against: after Advance one day it is a day earlier here than
+// the date GS2 reports. Until the event has been read the deadline is left
+// unset.
 #nullable enable
 
 using System;
@@ -39,7 +42,7 @@ namespace GS2Studio.Showroom.Demo
         private void Publish()
         {
             if (_season == null) return;
-            var endsAt = _season.SeasonEndsAt ?? default;
+            var endsAt = _season.SeasonEndsOnDevice ?? default;
             if (_published == endsAt) return;
             _published = endsAt;
             _onUpdate.Invoke(endsAt);

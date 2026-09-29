@@ -17,9 +17,11 @@
       "rows": [
         "GuildRankingRuleLabel",
         "GuildRankingSeasonEndsValue",
+        "GuildRankingDemoClockLabel",
         "GuildRankingGuildLabel",
         "GuildRankingYouLabel",
         "GuildRankingPlayButton",
+        "GuildRankingAdvanceOneDayButton",
         "GuildRankingPreviousLabel",
         "GuildRankingReceiveButton",
         "GuildRankingBoardPanel"

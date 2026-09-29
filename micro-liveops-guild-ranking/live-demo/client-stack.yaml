@@ -1,0 +1,91 @@
+# The guild ranking demo's own client.
+#
+# The demo's "Advance one day" button calls Gs2Account:UpdateTimeOffset from
+# the player, which the shared ApplicationAccess client may not do. This stack
+# declares a separate client with ApplicationAccess plus that one action, so
+# the project's Default stack stays as it is. The showroom pipeline deploys it
+# as demo-micro-liveops-guild-ranking-client (the `client` stage) and scaffold
+# writes its outputs into ShowroomEnvironment.asset.
+#
+# Read this before widening anything below:
+#
+# - The client secret is public. It is compiled into the WebGL player every
+#   visitor downloads, and ShowroomEnvironment.asset is committed with the
+#   demo, so it is also in this package repository's git history.
+# - Anyone holding the secret who knows a userId in the `Account` namespace can
+#   change that account's timeOffset, and can read its password: the
+#   UpdateTimeOffset response returns the whole Account, password included.
+#   The namespace is the one every showroom demo signs in to, not one of this
+#   demo's own.
+# - userIds do circulate: the ranking demo's board, and this demo's guild
+#   boards, hand every visitor the userIds of the others on them. So anyone
+#   holding this secret can take over another visitor's demo account. That
+#   is accepted: the accounts are
+#   anonymous and hold nothing but demo data. Should that stop being true,
+#   move this demo to an account namespace of its own and narrow the Resources
+#   below to it.
+# - Resources is limited to the `Account` namespace; `*` would reach every
+#   account namespace in the project.
+# - The login reward, idle reward and buff demos hold clients with the same
+#   permission. Each is its own stack so any can be withdrawn alone.
+# - Deploying this stack again keeps the secret. Deleting the stack and
+#   creating it anew issues a new one, after which scaffold
+#   (--credentials-only), page, the WebGL build and publishing all have to be
+#   redone.
+
+GS2TemplateFormatVersion: "2019-05-01"
+
+Globals:
+  Alias:
+    ClientUserName: demo-guild-ranking-client
+    TimeOffsetPolicyName: demo-guild-ranking-client-time-offset
+
+Resources:
+
+  IdentifierClientUser:
+    Type: GS2::Identifier::User
+    Properties:
+      Name: ${ClientUserName}
+      Description: Client of the guild ranking live demo
+
+  IdentifierClientUserAttachApplicationAccess:
+    Type: GS2::Identifier::AttachSecurityPolicy
+    Properties:
+      UserName: ${ClientUserName}
+      SecurityPolicyId: grn:gs2::system:identifier:securityPolicy:ApplicationAccess
+    DependsOn:
+      - IdentifierClientUser
+
+  IdentifierTimeOffsetPolicy:
+    Type: GS2::Identifier::SecurityPolicy
+    Properties:
+      Name: ${TimeOffsetPolicyName}
+      Description: Lets the guild ranking live demo move a signed-in player's clock forward
+      Policy:
+        Version: "2016-04-01"
+        Statements:
+          - Effect: Allow
+            Actions:
+              - Gs2Account:UpdateTimeOffset
+            Resources:
+              - "grn:gs2:{region}:{ownerId}:account:Account:account:*"
+
+  IdentifierClientUserAttachTimeOffsetPolicy:
+    Type: GS2::Identifier::AttachSecurityPolicy
+    Properties:
+      UserName: ${ClientUserName}
+      SecurityPolicyId: !GetAttr IdentifierTimeOffsetPolicy.Item.SecurityPolicyId
+    DependsOn:
+      - IdentifierClientUser
+      - IdentifierTimeOffsetPolicy
+
+  IdentifierClientIdentifier:
+    Type: GS2::Identifier::Identifier
+    Properties:
+      UserName: ${ClientUserName}
+    DependsOn:
+      - IdentifierClientUser
+
+Outputs:
+  ApplicationClientId: !GetAttr IdentifierClientIdentifier.Item.ClientId
+  ApplicationClientSecret: !GetAttr IdentifierClientIdentifier.ClientSecret
