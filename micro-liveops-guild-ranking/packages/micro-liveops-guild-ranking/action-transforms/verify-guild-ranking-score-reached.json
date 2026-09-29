@@ -73,6 +73,7 @@
       }
     },
     {
+      "description": "GRN of the guild whose ranking this is: grn:gs2:{region}:{ownerId}:guild:<namespace>:guild:<guild model>:<guild name>",
       "id": "param_01M0CE422W0G7W7F4YTBJM9TNZ",
       "name": "guildName",
       "required": true,

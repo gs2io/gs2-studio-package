@@ -52,7 +52,7 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "Best rank that misses this reward tier",
+        "description": "Lowest placement within the guild this reward tier pays",
         "id": "prop_01M0CE422VB0QC0K8VTSFSJ02Z",
         "localizedDisplay": {
           "en": {

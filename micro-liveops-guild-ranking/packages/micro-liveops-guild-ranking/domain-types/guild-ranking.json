@@ -75,15 +75,15 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "Accumulate submitted scores instead of keeping the best",
+        "description": "Add each submission from the same member to their last one instead of replacing it",
         "id": "prop_01M0CE422VX2GRKKR10S2S34BA",
         "localizedDisplay": {
           "en": {
-            "description": "Whether scores submitted by guild members are accumulated.",
+            "description": "Whether scores a member submits are added up. Otherwise the member's last score submitted replaces the one before.",
             "label": "Sum scores"
           },
           "ja": {
-            "description": "ギルドメンバーが送信したスコアを合算するかを設定します。",
+            "description": "同じメンバーが複数回送信したスコアを合算するかを設定します。合算しない場合は、最後に送信したスコアで上書きされます。",
             "label": "スコアを合算"
           }
         },

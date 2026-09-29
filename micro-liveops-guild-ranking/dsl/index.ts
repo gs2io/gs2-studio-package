@@ -22,9 +22,9 @@ const SCHEDULE_NAMESPACE_RESOURCE_ID = schedule.resourceId("schedule.Namespace")
 
 /**
  * A leaderboard scoped to a cluster rather than the whole player base. GS2
- * knows three cluster kinds; this package uses guilds, so members compete
- * within their own guild and guilds are ranked against each other without the
- * project having to partition scores itself.
+ * knows three cluster kinds; this package uses guilds, so each guild keeps its
+ * own board and ranks its members against each other without the project
+ * having to partition scores itself. There is no ranking between guilds.
  */
 const GuildRanking = defineDomainType("GuildRanking", dt =>
   dt
@@ -38,7 +38,9 @@ const GuildRanking = defineDomainType("GuildRanking", dt =>
     .property(
       PT.bool("sum")
         .masterData()
-        .description("Accumulate submitted scores instead of keeping the best")
+        .description(
+          "Add each submission from the same member to their last one instead of replacing it"
+        )
     )
     .property(PT.int64("minimumValue").masterData().description("Lowest score accepted"))
     .property(PT.int64("maximumValue").masterData().description("Highest score accepted"))
@@ -60,8 +62,8 @@ const GuildRanking = defineDomainType("GuildRanking", dt =>
       sum: jaEnField(
         "スコアを合算",
         "Sum scores",
-        "ギルドメンバーが送信したスコアを合算するかを設定します。",
-        "Whether scores submitted by guild members are accumulated."
+        "同じメンバーが複数回送信したスコアを合算するかを設定します。合算しない場合は、最後に送信したスコアで上書きされます。",
+        "Whether scores a member submits are added up. Otherwise the member's last score submitted replaces the one before."
       ),
       minimumValue: jaEnField(
         "最小スコア",
@@ -93,7 +95,7 @@ const GuildRankingReward = defineDomainType("GuildRankingReward", dt =>
       PT.int32("thresholdRank")
         .masterData()
         .required()
-        .description("Best rank that misses this reward tier")
+        .description("Lowest placement within the guild this reward tier pays")
     )
     .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
     .compositeKey("ranking", "thresholdRank")
@@ -133,7 +135,11 @@ const ClusterRankingModel = defineMasterDataResource(resource =>
       sum: Bind.domainProperty(Source.direct(GuildRanking, "sum")),
       minimumValue: Bind.domainProperty(Source.direct(GuildRanking, "minimumValue")),
       maximumValue: Bind.domainProperty(Source.direct(GuildRanking, "maximumValue")),
-      ...Bind.nulls("accessPeriodEventId", "rewardCalculationIndex"),
+      accessPeriodEventId: Bind.null(),
+      // Tiers are matched against the rank, where tied members share a
+      // placement. Left null GS2 matches the 0-based index instead, so the
+      // first and second member would both fall into a threshold 1 tier.
+      rewardCalculationIndex: Bind.static("rank"),
     })
     .grnFieldMount("entryPeriodEventId", SCHEDULE_NAMESPACE_RESOURCE_ID, [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
@@ -175,8 +181,8 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
   .displayType(GuildRanking, {
     label: { ja: "ギルドランキング", en: "Guild ranking" },
     description: {
-      ja: "ギルド単位で競うランキングの集計方法、開催期間、参加条件を設定します。",
-      en: "Configures scoring, availability, and participation rules for a guild ranking.",
+      ja: "ギルドごとにメンバー同士で競うランキングの集計方法、開催期間、参加条件を設定します。",
+      en: "Configures scoring, availability, and participation rules for a ranking of members within each guild.",
     },
   })
   .displayType(GuildRankingReward, {
@@ -197,7 +203,14 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
       .bindings({
         name: Bind.static("GuildRanking"),
         logSetting: Bind.null(),
-        transactionSetting: transactionSetting(),
+        // Receiving a reward pays out through a transaction. Without auto-run
+        // GS2 hands back a stamp sheet the client has to run, and with no key
+        // to sign it the receipt fails; atomic keeps the receipt record and
+        // the payout together.
+        transactionSetting: transactionSetting({
+          enableAtomicCommit: Bind.static(true),
+          enableAutoRun: Bind.static(true),
+        }),
       })
       .addChild(ClusterRankingModel)
   )
@@ -222,7 +235,11 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
     at
       .category("consume")
       .parameter("ranking", { type: PT.ref("GuildRanking") })
-      .parameter("guildName", { type: PT.string() })
+      .parameter("guildName", {
+        type: PT.string(),
+        description:
+          "GRN of the guild whose ranking this is: grn:gs2:{region}:{ownerId}:guild:<namespace>:guild:<guild model>:<guild name>",
+      })
       .parameter("season", { type: PT.int64() })
       .output("Gs2Ranking2:CreateClusterRankingReceivedRewardByUserId", o =>
         o
@@ -238,7 +255,11 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
     at
       .category("verify")
       .parameter("ranking", { type: PT.ref("GuildRanking") })
-      .parameter("guildName", { type: PT.string() })
+      .parameter("guildName", {
+        type: PT.string(),
+        description:
+          "GRN of the guild whose ranking this is: grn:gs2:{region}:{ownerId}:guild:<namespace>:guild:<guild model>:<guild name>",
+      })
       .parameter("season", { type: PT.int64() })
       .parameter("score", { type: PT.int64() })
       .output("Gs2Ranking2:VerifyClusterRankingScoreByUserId", o =>
