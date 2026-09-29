@@ -41,8 +41,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "5b458784c156c4080a30efbcc1a6c7b658528675",
-      "integrity": "sha256-4z3JPPGwLcAdlf3eI0hAXFbSHujllRkbY1jPq2TIC3E=",
+      "commitSha": "8354fa4c183f9392bbc39219bb422b3df59ef9be",
+      "integrity": "sha256-HA74Mk5+wLyGgjRmVPW97u6r/JBGSoxrGxzC2m4RWbc=",
       "owner": "gs2io",
       "packageId": "foundation-economy-schedule",
       "repo": "gs2-studio-package",
@@ -51,8 +51,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "f675544768970359b3d782e887c7a5d223118166",
-      "integrity": "sha256-ajyd6uaa5j2CScbT2hMw2LBjVKemwF4uHdVj+kUe0co=",
+      "commitSha": "8354fa4c183f9392bbc39219bb422b3df59ef9be",
+      "integrity": "sha256-HA74Mk5+wLyGgjRmVPW97u6r/JBGSoxrGxzC2m4RWbc=",
       "owner": "gs2io",
       "packageId": "foundation-economy-schedule-demo",
       "repo": "gs2-studio-package",
