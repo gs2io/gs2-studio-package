@@ -45,7 +45,9 @@ namespace GS2Studio.Showroom.Demo
                 return;
             }
             var where = next.GuildDisplayName ?? "a guild that is gone";
-            var rank = next.Rank != null ? $"rank {next.Rank}" : "unranked";
+            // The rank is as GS2 has it now: guildmates who did not advance their
+            // clock may still be playing this season.
+            var rank = next.Rank != null ? $"rank {next.Rank} for now" : "unranked";
             var more = _season.MoreWaiting > 0 ? $" ({_season.MoreWaiting} earlier season(s) wait too)" : "";
             _onUpdate.Invoke($"Season {next.Season} in {where}: {rank} with {next.Score} points, ready to receive{more}");
         }

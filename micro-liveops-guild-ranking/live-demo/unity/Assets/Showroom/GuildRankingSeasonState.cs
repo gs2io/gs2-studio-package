@@ -19,11 +19,13 @@
 //
 // GS2 does not announce a new score, so the board is read through the REST
 // client every few seconds; it has no cache in the way, so what another member
-// scored shows at the next read. The past seasons are read when the page
+// scored shows at the next read. Which past seasons wait is read when the page
 // starts, when the season turns over and after a receipt, since nothing else
-// changes them; a season known to be received or to pay nothing is not asked
-// about again. Playing and receiving go through the SDK, so the wallet the
-// page shows hears the reward land.
+// changes that; a season known to be received or to pay nothing is not asked
+// about again. The rank in the season that waits is read with every board
+// read, though: after the visitor advanced their clock, that season is still
+// being played by guildmates who did not. Playing and receiving go through
+// the SDK, so the wallet the page shows hears the reward land.
 //
 // The visitor can move their own clock a day forward (Advance one day). GS2
 // then reads the season, the board and the past seasons on that clock, so
@@ -206,6 +208,12 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>Bumped by every season read as it starts, and whenever the clock moved.</summary>
         private int _seasonGeneration;
+
+        /// <summary>
+        /// Set when the visitor's clock moved and the session has not signed in
+        /// on it yet; it stays set when signing in again failed.
+        /// </summary>
+        private bool _clockNotApplied;
         private bool _readingStanding;
         private bool _readStandingAgain;
         private bool _readingPast;
@@ -222,10 +230,6 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>Seasons GS2 said pay nothing for the visitor, keyed by guild and season.</summary>
         private readonly HashSet<(string, long)> _paysNothing = new HashSet<(string, long)>();
-
-        /// <summary>The visitor's final rank and score in a season that is over, keyed by guild and season.</summary>
-        private readonly Dictionary<(string, long), (int? rank, long? score)> _finalStanding =
-            new Dictionary<(string, long), (int? rank, long? score)>();
 
         /// <summary>The names of guilds the visitor scored in, keyed by full id; null once the guild is gone.</summary>
         private readonly Dictionary<string, string?> _guildNames = new Dictionary<string, string?>();
@@ -264,12 +268,14 @@ namespace GS2Studio.Showroom.Demo
 
         private void OnEnable()
         {
+            DemoTimeOffset.Changed += OnClockChanged;
             DemoTimeOffset.Applied += OnClockApplied;
             StartCoroutine(Run());
         }
 
         private void OnDisable()
         {
+            DemoTimeOffset.Changed -= OnClockChanged;
             DemoTimeOffset.Applied -= OnClockApplied;
             StopFollowingJoined();
         }
@@ -348,6 +354,11 @@ namespace GS2Studio.Showroom.Demo
             if (Season == null) return SeasonProblem ?? "Still reading the season; try again in a moment.";
             if (SeasonEndsAt != null && ServerNow() >= SeasonEndsAt)
             {
+                if (_clockNotApplied)
+                {
+                    return "Your clock moved forward, but this page has not signed in on the new clock yet. " +
+                        "If this does not clear in a moment, reload the page: the next sign-in carries the new clock.";
+                }
                 return "The season just turned over; press Play again in a moment.";
             }
 
@@ -477,9 +488,16 @@ namespace GS2Studio.Showroom.Demo
         /// the board and the past seasons are read afresh on it, and once more
         /// a moment later.
         /// </summary>
+        /// <summary>The offset is stored; the session signs in on it next.</summary>
+        private void OnClockChanged(string userId)
+        {
+            if (userId == UserId) _clockNotApplied = true;
+        }
+
         private void OnClockApplied(string userId)
         {
             if (userId != UserId || this == null) return;
+            _clockNotApplied = false;
             ReadAllAgain();
             StartCoroutine(ReadAllAfter(ClockSettleSeconds));
         }
@@ -802,7 +820,28 @@ namespace GS2Studio.Showroom.Demo
                     .WithLimit(BoardSize)
                     .WithAccessToken(token));
 
-            if (this == null || generation != _standingGeneration) return;
+            // The season waiting to be received is read along with the board,
+            // since its rank moves while guildmates who did not advance their
+            // clock still play it.
+            var waiting = Next;
+            var pastGeneration = _pastGeneration;
+            (int? rank, long? score)? waitingStanding = null;
+            if (waiting != null)
+            {
+                waitingStanding = await ReadStandingIn(client, token, waiting.GuildId, waiting.Season);
+            }
+
+            if (this == null) return;
+            if (waiting != null && waitingStanding != null && Next == waiting && pastGeneration == _pastGeneration)
+            {
+                waiting.Rank = waitingStanding.Value.rank;
+                waiting.Score = waitingStanding.Value.score ?? waiting.Score;
+            }
+            if (generation != _standingGeneration)
+            {
+                if (waiting != null) Updated?.Invoke();
+                return;
+            }
             Total = own?.Item?.Score;
             Rank = own?.Item?.Rank;
             Board = board?.Items ?? Array.Empty<ClusterRankingData>();
@@ -916,20 +955,12 @@ namespace GS2Studio.Showroom.Demo
             {
                 var latest = waiting[0];
                 var key = (latest.ClusterName, latest.Season!.Value);
-                // A season that is over keeps its ranks, and a guild keeps its
-                // name until it is gone, so each is asked once.
-                if (!_finalStanding.TryGetValue(key, out var standing))
-                {
-                    var rank = await client.GetClusterRankingAsync(
-                        new GetClusterRankingRequest()
-                            .WithNamespaceName(RankingNamespace)
-                            .WithRankingName(RankingName)
-                            .WithClusterName(latest.ClusterName)
-                            .WithSeason(latest.Season)
-                            .WithAccessToken(token));
-                    standing = (rank?.Item?.Rank, rank?.Item?.Score ?? latest.Score);
-                    _finalStanding[key] = standing;
-                }
+                // The rank is read every time: a season that is over for the
+                // visitor, who advanced their clock, is still being played by
+                // guildmates who did not, so their scores can still pass it.
+                // A guild keeps its name until it is gone, so that is asked once.
+                var standing = await ReadStandingIn(client, token, latest.ClusterName, key.Item2);
+                standing.score ??= latest.Score;
                 if (!_guildNames.TryGetValue(latest.ClusterName, out var displayName))
                 {
                     displayName = await DisplayNameOf(gs2, session, latest.ClusterName);
@@ -951,6 +982,20 @@ namespace GS2Studio.Showroom.Demo
             PastKnown = true;
             PastProblem = null;
             Updated?.Invoke();
+        }
+
+        /// <summary>The visitor's rank and score in a guild's board for a season, as GS2 has them now.</summary>
+        private static async Task<(int? rank, long? score)> ReadStandingIn(
+            Gs2Ranking2RestClient client, string token, string guildId, long season)
+        {
+            var result = await client.GetClusterRankingAsync(
+                new GetClusterRankingRequest()
+                    .WithNamespaceName(RankingNamespace)
+                    .WithRankingName(RankingName)
+                    .WithClusterName(guildId)
+                    .WithSeason(season)
+                    .WithAccessToken(token));
+            return (result?.Item?.Rank, result?.Item?.Score);
         }
 
         /// <summary>
