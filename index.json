@@ -9,8 +9,8 @@
         "en": "Account Transfer"
       },
       "description": {
-        "ja": "機種変更時のアカウント引き継ぎコードを発行・管理します。",
-        "en": "Issues and manages transfer codes so players can move their account to a new device."
+        "ja": "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。",
+        "en": "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser."
       },
       "dependsOn": [],
       "install": {

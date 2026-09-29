@@ -1,0 +1,79 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_reserved_id",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the transfer code.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "引き継ぎコードを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_01M3Q7JPT619NTVBDVGNB7M08F",
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier registered as the transfer code. The password is never stored, so it cannot be shown.",
+            "label": "Transfer ID"
+          },
+          "ja": {
+            "description": "引き継ぎコードとして登録した識別子です。パスワードは保存されないため表示できません。",
+            "label": "引き継ぎ用ID"
+          }
+        },
+        "name": "userIdentifier",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_01M3Q7JPT6CWGBF5DTQE7JZM8M",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has registered a transfer code.",
+            "label": "Registered"
+          },
+          "ja": {
+            "description": "プレイヤーが引き継ぎコードを登録しているかを示します。",
+            "label": "登録済み"
+          }
+        },
+        "name": "registered",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ",
+  "kind": "local",
+  "name": "TransferCode",
+  "singleEntry": false
+}

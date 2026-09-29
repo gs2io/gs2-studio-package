@@ -19,6 +19,17 @@
         "id": "prop_reserved_id",
         "type": "prop_JXHFG6A90WH8TQJAD96FQC1S5M"
       }
+    },
+    "TransferCode": {
+      "id": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-core-identity",
+      "canonicalTypeId": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ",
+      "properties": {
+        "id": "prop_reserved_id",
+        "registered": "prop_01M3Q7JPT6CWGBF5DTQE7JZM8M",
+        "userIdentifier": "prop_01M3Q7JPT619NTVBDVGNB7M08F"
+      }
     }
   },
   "masterDataResources": {

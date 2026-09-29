@@ -1,0 +1,53 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "existence",
+        "parameterName": "$existence",
+        "propertyId": "prop_01M3Q7JPT6CWGBF5DTQE7JZM8M"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "type",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ",
+            "typeName": "TransferCode"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "userIdentifier",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ",
+              "typeName": "TransferCode"
+            },
+            "propertyId": "prop_01M3Q7JPT619NTVBDVGNB7M08F"
+          }
+        ]
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ",
+      "typeName": "TransferCode"
+    }
+  },
+  "id": "44806e51-8a08-5dc7-b584-ffc56e7f2dfb",
+  "location": {
+    "modelName": "TakeOver",
+    "service": "account"
+  }
+}

@@ -4,10 +4,20 @@
   "version": "0.0.0",
   "display": {
     "description": {
-      "en": "Issues and manages transfer codes so players can move their account to a new device.",
-      "ja": "機種変更時のアカウント引き継ぎコードを発行・管理します。"
+      "en": "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
+      "ja": "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。"
     },
     "domainTypes": {
+      "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ": {
+        "description": {
+          "en": "The ID-and-password transfer code a player has registered.",
+          "ja": "プレイヤーが登録した、IDとパスワードによる引き継ぎコードです。"
+        },
+        "label": {
+          "en": "Transfer code",
+          "ja": "引き継ぎコード"
+        }
+      },
       "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ": {
         "description": {
           "en": "Configures the OIDC connection and authentication settings used for account transfer.",

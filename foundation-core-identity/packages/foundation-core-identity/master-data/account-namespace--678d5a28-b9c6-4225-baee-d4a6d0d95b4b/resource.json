@@ -13,6 +13,11 @@
       },
       {
         "kind": "static",
+        "parameterName": "changePasswordIfTakeOver",
+        "value": false
+      },
+      {
+        "kind": "static",
         "parameterName": "createAccountScript",
         "value": null
       },

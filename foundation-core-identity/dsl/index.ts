@@ -96,6 +96,39 @@ const TakeOverSetting = defineDomainType("TakeOverSetting", dt =>
     })
 );
 
+/**
+ * The take-over type number a transfer code (identifier + password) is
+ * registered under. GS2-Account refuses password take-over for any type that
+ * has a TakeOverTypeModel, and OIDC types are numbered upward from 0, so the
+ * password slot sits at the upper bound of the allowed range (0..1024) where
+ * no TakeOverSetting row may ever land.
+ */
+export const TRANSFER_CODE_TAKE_OVER_TYPE = 1024;
+
+// A player's password take-over slot. It has no master: the reserved id is the
+// take-over type number (`TRANSFER_CODE_TAKE_OVER_TYPE`), and GS2 only stores
+// the identifier and a password hash, so the identifier is all there is to read.
+const TransferCode = defineDomainType("TransferCode", dt =>
+  dt
+    .property(PT.string("userIdentifier").userData().required())
+    .property(PT.bool("registered").userData().required())
+    .localizedProperties({
+      id: jaEnId("引き継ぎコード", "transfer code"),
+      userIdentifier: jaEnField(
+        "引き継ぎ用ID",
+        "Transfer ID",
+        "引き継ぎコードとして登録した識別子です。パスワードは保存されないため表示できません。",
+        "Identifier registered as the transfer code. The password is never stored, so it cannot be shown."
+      ),
+      registered: jaEnField(
+        "登録済み",
+        "Registered",
+        "プレイヤーが引き継ぎコードを登録しているかを示します。",
+        "Whether the player has registered a transfer code."
+      ),
+    })
+);
+
 const TakeOverTypeModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.account.TakeOverTypeModel)
@@ -122,8 +155,8 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
   .display({
     label: { ja: "引き継ぎ設定", en: "Account Transfer" },
     description: {
-      ja: "機種変更時のアカウント引き継ぎコードを発行・管理します。",
-      en: "Issues and manages transfer codes so players can move their account to a new device.",
+      ja: "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。",
+      en: "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
     },
   })
   .displayType(TakeOverSetting, {
@@ -133,7 +166,15 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
       en: "Configures the OIDC connection and authentication settings used for account transfer.",
     },
   })
+  .displayType(TransferCode, {
+    label: { ja: "引き継ぎコード", en: "Transfer code" },
+    description: {
+      ja: "プレイヤーが登録した、IDとパスワードによる引き継ぎコードです。",
+      en: "The ID-and-password transfer code a player has registered.",
+    },
+  })
   .domainType(TakeOverSetting)
+  .domainType(TransferCode)
   .instance(TakeOverSetting, "apple", {
     type: 0,
     configurationPath: "https://appleid.apple.com/.well-known/openid-configuration",
@@ -156,6 +197,10 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
       .model(GS2.account.Namespace)
       .bindings({
         name: Bind.static("Account"),
+        // Taking over with a transfer code must not rotate the source
+        // account's password, or the device that issued the code could no
+        // longer log in.
+        changePasswordIfTakeOver: Bind.static(false),
         ...Bind.nulls(
           "authenticationScript",
           "banScript",
@@ -178,6 +223,20 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
         type: Bind.skip(),
         userId: Bind.skip(),
         userIdentifier: Bind.skip(),
+      })
+  )
+
+  // The same GS2 record, read as the player's transfer code. The reserved id
+  // is the take-over type, so each row keys the record by its own type.
+  .userDataResource(r =>
+    r
+      .model(GS2.account.TakeOver)
+      .mountLocal(TransferCode)
+      .existenceProperty("registered")
+      .bindings({
+        type: Bind.domainProperty(Source.direct(TransferCode, "id")),
+        userIdentifier: Bind.domainProperties([Source.direct(TransferCode, "userIdentifier")]),
+        userId: Bind.skip(),
       })
   )
 

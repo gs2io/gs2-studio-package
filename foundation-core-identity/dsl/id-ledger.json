@@ -11,9 +11,12 @@
     "property:TakeOverSetting.doneEndpointUrl": "prop_XDRZ798BRBRW9W35MRHXEXCAAX",
     "property:TakeOverSetting.hasTakeOver": "prop_5Z93QPG4VQED3EX517PW0H7BWA",
     "property:TakeOverSetting.type": "prop_JXHFG6A90WH8TQJAD96FQC1S5M",
+    "property:TransferCode.registered": "prop_01M3Q7JPT6CWGBF5DTQE7JZM8M",
+    "property:TransferCode.userIdentifier": "prop_01M3Q7JPT619NTVBDVGNB7M08F",
     "row:type:TakeOverSetting.apple": "row_00S01SNZHH4M1H63XE12H2G0SP",
     "row:type:TakeOverSetting.google": "row_0E1BZ05RKKKQT8YBG6NXYEFSXF",
-    "type:TakeOverSetting": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ"
+    "type:TakeOverSetting": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+    "type:TransferCode": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ"
   },
   "deterministicOverrides": {
     "master/account:Namespace:unmounted:Account#0": "678d5a28-b9c6-4225-baee-d4a6d0d95b4b",
