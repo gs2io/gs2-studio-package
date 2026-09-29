@@ -31,6 +31,10 @@ namespace GS2Studio.Showroom.Demo
         [DllImport("__Internal")] private static extern void ShowroomClipboardPaste();
         [DllImport("__Internal")] private static extern int ShowroomClipboardStatus();
         [DllImport("__Internal")] private static extern string ShowroomClipboardTake();
+        [DllImport("__Internal")] private static extern void ShowroomClipboardAbandon();
+
+        /// <summary>Gives up on the request in flight; a late answer to it is dropped.</summary>
+        public static void Abandon() => ShowroomClipboardAbandon();
 
         public static void Copy(string text) => ShowroomClipboardCopy(text);
 
@@ -70,6 +74,12 @@ namespace GS2Studio.Showroom.Demo
         {
             _text = GUIUtility.systemCopyBuffer ?? "";
             _outcome = Outcome.Done;
+        }
+
+        public static void Abandon()
+        {
+            _outcome = Outcome.Waiting;
+            _text = "";
         }
 
         public static Outcome Poll(out string text)

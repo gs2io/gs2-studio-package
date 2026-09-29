@@ -47,8 +47,20 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>The other player's id, read from the row; null while the row is still arriving.</summary>
         protected abstract string? RowUserId();
 
-        /// <summary>Acts on the other player and says what was done.</summary>
-        protected abstract Task<string> Act(VisitorDomain visitor, string userId);
+        /// <summary>
+        /// The name the row shows for the other player; their tag when the
+        /// row carries no profile.
+        /// </summary>
+        protected virtual string RowName(string userId) => FriendDemo.Tag(userId);
+
+        /// <summary>Acts on the other player and says what was done, naming them as the row does.</summary>
+        protected abstract Task<string> Act(VisitorDomain visitor, string userId, string name);
+
+        /// <summary>
+        /// Corrects the SDK's cache when GS2 says the other player is no
+        /// longer there and the SDK leaves it as it was; nothing by default.
+        /// </summary>
+        protected virtual void WhenGone(VisitorDomain visitor) { }
 
         private void OnEnable()
         {
@@ -68,16 +80,17 @@ namespace GS2Studio.Showroom.Demo
         {
             var userId = RowUserId();
             if (string.IsNullOrEmpty(userId)) return;
+            var name = RowName(userId!);
             var completed = false;
             FriendDemo.Run(Press, async visitor =>
             {
-                var message = await Act(visitor, userId!);
+                var message = await Act(visitor, userId!, name);
                 completed = true;
                 return message;
             }, () =>
             {
                 if (completed && this != null) _onCompleted.Invoke();
-            });
+            }, WhenGone);
         }
     }
 }

@@ -17,19 +17,6 @@ using VisitorDomain = Gs2.Gs2Friend.Domain.Model.UserAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>What a press is about, so a refusal can be explained in its terms.</summary>
-    public enum FriendPress
-    {
-        Send,
-        Cancel,
-        Accept,
-        Decline,
-        Remove,
-        Follow,
-        Unfollow,
-        SaveProfile,
-    }
-
     /// <summary>The friend page's shared helpers.</summary>
     public static class FriendDemo
     {
@@ -60,31 +47,61 @@ namespace GS2Studio.Showroom.Demo
             gs2.Super.Friend.Namespace(Namespace).AccessToken(session.AccessToken);
 
         /// <summary>
+        /// How long after a list on the page changed a press is refused: a
+        /// row that just appeared or vanished moves every button below it,
+        /// and a press in that moment may land on a different button than
+        /// the visitor aimed at.
+        /// </summary>
+        private const float SettleSeconds = 0.6f;
+
+        private static float _lastChange = float.NegativeInfinity;
+
+        /// <summary>Says that a list on the page just changed what it shows.</summary>
+        public static void MarkChanged() => _lastChange = Time.realtimeSinceStartup;
+
+        /// <summary>
         /// Runs one press, one at a time across the whole page, and says the
         /// outcome in the page's log. What it changed reaches every reader
-        /// through the SDK's cache, so nothing is read again here.
+        /// through the SDK's cache, so nothing is read again here, except:
+        /// <paramref name="whenGone"/> runs when GS2 says what was pressed on
+        /// no longer exists and the SDK does not correct its cache itself.
+        /// Returns whether the press started. <paramref name="pressed"/> is
+        /// false for what the page does on its own, which no moving button
+        /// can have misdirected.
         /// </summary>
-        public static async void Run(FriendPress press, Func<VisitorDomain, Task<string>> action, Action? afterward = null)
+        public static bool Run(FriendPress press, Func<VisitorDomain, Task<string>> action, Action? afterward = null, Action<VisitorDomain>? whenGone = null, bool pressed = true)
         {
             if (_busy)
             {
                 Log("One moment: the last press is still going.");
-                return;
+                return false;
+            }
+            if (pressed && Time.realtimeSinceStartup - _lastChange < SettleSeconds)
+            {
+                Log("The list just changed; press again.");
+                return false;
             }
             if (!TryRuntime(out var gs2, out var session))
             {
                 Log("Not signed in yet.");
-                return;
+                return false;
             }
             _busy = true;
+            Execute(press, Visitor(gs2!, session!), action, afterward, whenGone);
+            return true;
+        }
+
+        private static async void Execute(FriendPress press, VisitorDomain visitor, Func<VisitorDomain, Task<string>> action, Action? afterward, Action<VisitorDomain>? whenGone)
+        {
             try
             {
-                Log(await action(Visitor(gs2!, session!)));
+                Log(await action(visitor));
             }
             catch (Gs2Exception error)
             {
                 Debug.LogWarning($"{nameof(FriendDemo)}: {press} refused: {error}");
                 Log(Explain(press, error));
+                if (error is NotFoundException) whenGone?.Invoke(visitor);
             }
             catch (Exception error)
             {
@@ -97,6 +114,12 @@ namespace GS2Studio.Showroom.Demo
             }
             afterward?.Invoke();
         }
+
+        /// <summary>
+        /// The Unfollow SDK call leaves a follow GS2 no longer has in its
+        /// cache, and no notification corrects it, so the list is read again.
+        /// </summary>
+        public static void ForgetFollows(VisitorDomain visitor) => visitor.Follow(WithProfile).InvalidateFollows();
 
         /// <summary>Says why GS2 refused, for the refusals a visitor can meet.</summary>
         public static string Explain(FriendPress press, Gs2Exception error)
@@ -113,7 +136,9 @@ namespace GS2Studio.Showroom.Demo
                     _ => "That is gone.",
                 };
             }
-            if (text.Contains("capacity.error.full")) return "You have too many requests waiting; cancel one first.";
+            // A full outbox drops its oldest request instead; this refusal means
+            // the visitor already has as many friends as GS2 allows.
+            if (text.Contains("capacity.error.full")) return "You already have as many friends as GS2 allows (1000); remove one first.";
             if (text.Contains("error.duplicate"))
             {
                 return press switch

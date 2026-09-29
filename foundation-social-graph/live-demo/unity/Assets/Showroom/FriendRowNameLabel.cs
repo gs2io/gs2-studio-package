@@ -23,6 +23,9 @@ namespace GS2Studio.Showroom.Demo
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
+        /// <summary>The name this label last showed; null until it has shown one.</summary>
+        public string? Shown { get; private set; }
+
         /// <summary>The other player's id, read from the row; null while the row is still arriving.</summary>
         protected abstract string? RowUserId();
 
@@ -35,6 +38,7 @@ namespace GS2Studio.Showroom.Demo
         {
             Stop();
             _userId = null;
+            Shown = null;
         }
 
         private void Update()
@@ -43,8 +47,14 @@ namespace GS2Studio.Showroom.Demo
             var userId = RowUserId();
             if (string.IsNullOrEmpty(userId) || userId == _userId) return;
             _userId = userId;
-            _onUpdate.Invoke(FriendDemo.Tag(userId));
+            Show(FriendDemo.Tag(userId));
             Watch(userId!);
+        }
+
+        private void Show(string name)
+        {
+            Shown = name;
+            _onUpdate.Invoke(name);
         }
 
         private void Stop()
@@ -65,7 +75,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 var id = await profile.SubscribeWithInitialCallAsync(model => _inbox.Enqueue(() =>
                 {
-                    if (ticket == _ticket && model != null) _onUpdate.Invoke(FriendDemo.NameOf(userId, model.Value));
+                    if (ticket == _ticket && model != null) Show(FriendDemo.NameOf(userId, model.Value));
                 }));
                 if (ticket == _ticket && this != null) _unsubscribe = () => profile.Unsubscribe(id);
                 else profile.Unsubscribe(id);

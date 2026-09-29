@@ -21,10 +21,15 @@ namespace GS2Studio.Showroom.Demo
 
         protected override string? RowUserId() => GetComponentInParent<FollowHandlerBase>()?.Model?.Id.Value;
 
-        protected override async Task<string> Act(VisitorDomain visitor, string userId)
+        protected override string RowName(string userId) =>
+            FriendDemo.NameOf(userId, GetComponentInParent<FollowHandlerBase>()?.Model?.PublicProfile);
+
+        protected override async Task<string> Act(VisitorDomain visitor, string userId, string name)
         {
             await visitor.Follow(FriendDemo.WithProfile).FollowUser(userId).UnfollowAsync(new UnfollowRequest());
-            return $"You no longer follow {FriendDemo.Tag(userId)}.";
+            return $"You no longer follow {name}.";
         }
+
+        protected override void WhenGone(VisitorDomain visitor) => FriendDemo.ForgetFollows(visitor);
     }
 }

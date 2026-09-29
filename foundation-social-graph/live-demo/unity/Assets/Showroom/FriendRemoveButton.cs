@@ -21,10 +21,13 @@ namespace GS2Studio.Showroom.Demo
 
         protected override string? RowUserId() => GetComponentInParent<FriendHandlerBase>()?.Model?.Id.Value;
 
-        protected override async Task<string> Act(VisitorDomain visitor, string userId)
+        protected override string RowName(string userId) =>
+            FriendDemo.NameOf(userId, GetComponentInParent<FriendHandlerBase>()?.Model?.PublicProfile);
+
+        protected override async Task<string> Act(VisitorDomain visitor, string userId, string name)
         {
             await visitor.Friend(FriendDemo.WithProfile).DeleteFriendAsync(new DeleteFriendRequest().WithTargetUserId(userId));
-            return $"You and {FriendDemo.Tag(userId)} are no longer friends.";
+            return $"You and {name} are no longer friends.";
         }
     }
 }

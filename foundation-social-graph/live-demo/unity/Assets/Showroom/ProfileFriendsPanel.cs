@@ -82,6 +82,14 @@ namespace GS2Studio.Showroom.Demo
 
         private Clipboard _clipboard;
 
+        /// <summary>
+        /// How long the clipboard may take to answer. A browser can leave a
+        /// permission prompt open, or never settle, and the buttons would
+        /// otherwise wait for it forever.
+        /// </summary>
+        private const float ClipboardSeconds = 10f;
+        private float _clipboardDeadline;
+
         /// <summary>The visitor, set once they are signed in.</summary>
         private Gs2.Unity.Core.Gs2Domain? _gs2;
         private VisitorDomain? _visitor;
@@ -118,6 +126,9 @@ namespace GS2Studio.Showroom.Demo
         private bool _profileEdited;
         private bool _filling;
         private bool _defaultNameTried;
+
+        /// <summary>What the result area was last drawn from; null before the first draw.</summary>
+        private string? _shown;
 
         private void OnEnable()
         {
@@ -231,6 +242,7 @@ namespace GS2Studio.Showroom.Demo
             _follows = null;
             _targetProfile = null;
             _targetFailed = false;
+            _shown = null;
         }
 
         private void Update()
@@ -247,11 +259,16 @@ namespace GS2Studio.Showroom.Demo
             if (Time.realtimeSinceStartup >= _nextTick) Tick();
         }
 
-        /// <summary>Every 30 seconds, tries again a watch that failed to start.</summary>
+        /// <summary>
+        /// Every 30 seconds, tries again a watch that failed to start, and
+        /// naming a visitor whose naming could not start.
+        /// </summary>
         private void Tick()
         {
             _nextTick = Time.realtimeSinceStartup + TickSeconds;
             if (_profileWatch.Failed) WatchProfile();
+            // Naming waits for any press that was running when the profile arrived.
+            if (_profile != null) NameIfUnnamed(_profile);
             if (_friendsWatch.Failed) WatchFriends();
             if (_sentWatch.Failed) WatchSent();
             if (_receivedWatch.Failed) WatchReceived();
@@ -281,7 +298,9 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                if (watch.Is(ticket)) Debug.LogWarning($"{nameof(ProfileFriendsPanel)}: {what} could not be read again: {error}");
+                // Tick starts the watch again, so the list is not left unknown.
+                if (!watch.Fail(ticket)) return;
+                Debug.LogWarning($"{nameof(ProfileFriendsPanel)}: {what} could not be read again: {error}");
             }
         }
 
@@ -325,7 +344,7 @@ namespace GS2Studio.Showroom.Demo
                 callback => visitor.SubscribeFriendsWithInitialCallAsync(callback, FriendDemo.WithProfile),
                 id => visitor.UnsubscribeFriends(id, FriendDemo.WithProfile),
                 () => visitor.FriendsAsync(FriendDemo.WithProfile),
-                items => _friends = items,
+                items => _friends = Store(_friends, items, friend => friend.UserId),
                 "your friends");
         }
 
@@ -336,7 +355,7 @@ namespace GS2Studio.Showroom.Demo
                 callback => visitor.SubscribeSendRequestsWithInitialCallAsync(callback),
                 id => visitor.UnsubscribeSendRequests(id),
                 () => visitor.SendRequestsAsync(),
-                items => _sent = items,
+                items => _sent = Store(_sent, items, request => request.TargetUserId),
                 "the requests you sent");
         }
 
@@ -347,7 +366,7 @@ namespace GS2Studio.Showroom.Demo
                 callback => visitor.SubscribeReceiveRequestsWithInitialCallAsync(callback),
                 id => visitor.UnsubscribeReceiveRequests(id),
                 () => visitor.ReceiveRequestsAsync(),
-                items => _received = items,
+                items => _received = Store(_received, items, request => request.UserId),
                 "the requests sent to you");
         }
 
@@ -358,8 +377,19 @@ namespace GS2Studio.Showroom.Demo
                 callback => follow.SubscribeFollowsWithInitialCallAsync(callback),
                 id => follow.UnsubscribeFollows(id),
                 () => follow.FollowsAsync(),
-                items => _follows = items,
+                items => _follows = Store(_follows, items, follow => follow.UserId),
                 "the players you follow");
+        }
+
+        /// <summary>
+        /// Keeps what a list now holds, and tells the page when the players
+        /// on it changed: rows appear or vanish then, and presses wait a
+        /// moment for the buttons to settle.
+        /// </summary>
+        private static T[] Store<T>(T[]? before, T[] after, Func<T, string?> key)
+        {
+            if (before == null || !before.Select(key).SequenceEqual(after.Select(key))) FriendDemo.MarkChanged();
+            return after;
         }
 
         /// <summary>
@@ -440,16 +470,16 @@ namespace GS2Studio.Showroom.Demo
         private void NameIfUnnamed(Profile profile)
         {
             if (_defaultNameTried || !string.IsNullOrWhiteSpace(profile.PublicProfile)) return;
-            _defaultNameTried = true;
             var name = FriendDemo.Tag(_userId);
-            FriendDemo.Run(FriendPress.SaveProfile, async visitor =>
+            // Tried again on the next profile read when the press could not start.
+            _defaultNameTried = FriendDemo.Run(FriendPress.SaveProfile, async visitor =>
             {
                 await visitor.Profile().UpdateAsync(new UpdateProfileRequest()
                     .WithPublicProfile(name)
                     .WithFriendProfile(profile.FriendProfile ?? "")
                     .WithFollowerProfile(profile.FollowerProfile ?? ""));
                 return $"You go by {name} until you choose a name below.";
-            });
+            }, pressed: false);
         }
 
         // ------------------------------------------------------------------
@@ -459,6 +489,11 @@ namespace GS2Studio.Showroom.Demo
         private void Draw()
         {
             if (_result == null) return;
+            // Rebuilt only when what it shows changes, so a button is not
+            // replaced under the cursor by an identical one.
+            var shown = Signature();
+            if (shown == _shown) return;
+            _shown = shown;
             Clear(_result);
             if (_targetId == null) return;
             if (_targetId == _userId)
@@ -514,6 +549,23 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
+        /// <summary>Everything the result area draws from, as one comparable value.</summary>
+        private string Signature()
+        {
+            var targetId = _targetId;
+            if (targetId == null) return "";
+            bool? Has<T>(T[]? items, Func<T, string?> key) => items?.Any(item => key(item) == targetId);
+            return string.Join("|",
+                targetId,
+                _userId,
+                _targetProfile == null ? "(unread)" : "=" + (_targetProfile.Value ?? ""),
+                _targetFailed,
+                Has(_friends, friend => friend.UserId),
+                Has(_sent, request => request.TargetUserId),
+                Has(_received, request => request.UserId),
+                Has(_follows, follow => follow.UserId));
+        }
+
         // ------------------------------------------------------------------
         // Pressing
 
@@ -521,6 +573,7 @@ namespace GS2Studio.Showroom.Demo
         {
             if (_userId.Length == 0 || _clipboard != Clipboard.Idle) return;
             _clipboard = Clipboard.Copying;
+            _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
             ShowroomClipboard.Copy(_userId);
         }
 
@@ -528,6 +581,7 @@ namespace GS2Studio.Showroom.Demo
         {
             if (_clipboard != Clipboard.Idle) return;
             _clipboard = Clipboard.Pasting;
+            _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
             ShowroomClipboard.Paste();
         }
 
@@ -540,7 +594,14 @@ namespace GS2Studio.Showroom.Demo
         {
             if (_clipboard == Clipboard.Idle) return;
             var outcome = ShowroomClipboard.Poll(out var text);
-            if (outcome == ShowroomClipboard.Outcome.Waiting) return;
+            if (outcome == ShowroomClipboard.Outcome.Waiting)
+            {
+                if (Time.realtimeSinceStartup < _clipboardDeadline) return;
+                // The browser has not answered; a late answer is dropped.
+                ShowroomClipboard.Abandon();
+                outcome = ShowroomClipboard.Outcome.Refused;
+                text = "no answer";
+            }
             var doing = _clipboard;
             _clipboard = Clipboard.Idle;
             if (doing == Clipboard.Copying)
@@ -645,7 +706,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 await visitor.Follow(FriendDemo.WithProfile).FollowUser(targetId).UnfollowAsync(new UnfollowRequest());
                 return $"You no longer follow {TargetName(targetId)}.";
-            });
+            }, whenGone: FriendDemo.ForgetFollows);
 
         private string TargetName(string targetId) =>
             _targetId == targetId && _targetProfile != null

@@ -21,10 +21,14 @@ namespace GS2Studio.Showroom.Demo
 
         protected override string? RowUserId() => GetComponentInParent<ReceiveFriendRequestHandlerBase>()?.Model?.Id.Value;
 
-        protected override async Task<string> Act(VisitorDomain visitor, string userId)
+        /// <summary>A request carries no profile; the row's name label read it.</summary>
+        protected override string RowName(string userId) =>
+            GetComponentInParent<ReceiveFriendRequestHandlerBase>()?.GetComponentInChildren<ReceiveFriendRequestNameLabel>()?.Shown ?? FriendDemo.Tag(userId);
+
+        protected override async Task<string> Act(VisitorDomain visitor, string userId, string name)
         {
             await visitor.ReceiveFriendRequest(userId).RejectAsync(new RejectRequestRequest());
-            return $"Declined the request from {FriendDemo.Tag(userId)}.";
+            return $"Declined the request from {name}.";
         }
     }
 }
