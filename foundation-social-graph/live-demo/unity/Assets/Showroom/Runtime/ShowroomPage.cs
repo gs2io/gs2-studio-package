@@ -143,7 +143,9 @@ namespace GS2Studio.Showroom
         }
 
         /// <summary>
-        /// Wire to `Gs2AutoLoginAction.onError`. Separate from
+        /// Wire to `ShowroomAccountStore`'s `_onSignInFailed`, which passes on
+        /// every `Gs2AutoLoginAction.onError` it does not recover from by
+        /// replacing a refused saved account. Separate from
         /// <see cref="LogError"/> because this failure means the page itself is
         /// unusable, not that one action did not go through — without it the
         /// status line sits on "Connecting…" forever.

@@ -786,8 +786,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 547293983}
-        m_TargetAssemblyTypeName: Gs2Bind.Gs2Account.Gs2PlayerPrefsAccountStore,
-          Gs2Bind.Unity
+        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomAccountStore,
+          Assembly-CSharp
         m_MethodName: Remember
         m_Mode: 0
         m_Arguments:
@@ -802,8 +802,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 547293983}
-        m_TargetAssemblyTypeName: Gs2Bind.Gs2Account.Gs2PlayerPrefsAccountStore,
-          Gs2Bind.Unity
+        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomAccountStore,
+          Assembly-CSharp
         m_MethodName: Restore
         m_Mode: 0
         m_Arguments:
@@ -832,8 +832,9 @@ MonoBehaviour:
   onError:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 159312092}
-        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomPage, Assembly-CSharp
+      - m_Target: {fileID: 547293983}
+        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomAccountStore,
+          Assembly-CSharp
         m_MethodName: OnSignInFailed
         m_Mode: 0
         m_Arguments:
@@ -919,10 +920,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 547293976}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eff42efb2228fc8a517650f79f66e76d, type: 3}
+  m_Script: {fileID: 11500000, guid: 73b22ec27d0641c684f31d50312b7a74, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Gs2Bind.Unity::Gs2Bind.Gs2Account.Gs2PlayerPrefsAccountStore
-  keyPrefix: gs2.showroom.account
+  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Showroom.ShowroomAccountStore
+  _keyPrefix: gs2.showroom.account
+  _onReplacingAccount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 159312092}
+        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomPage, Assembly-CSharp
+        m_MethodName: Log
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onSignInFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 159312092}
+        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomPage, Assembly-CSharp
+        m_MethodName: OnSignInFailed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &728940635
 PrefabInstance:
   m_ObjectHideFlags: 0
