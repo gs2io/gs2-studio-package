@@ -189,6 +189,24 @@ export const foundationEconomyScheduleDemo = definePackage(
     [schedule.propertyId("Schedule", "repeatType")]: "always",
   })
 
+  // The guild ranking demo's season, shared by every visitor: a guild's board
+  // is only meaningful when all of its members score in the same season.
+  // Repeating daily with the same begin and end hour keeps it open all day and
+  // turns it over at UTC 00:00; GS2 numbers seasons by that repeat count, so
+  // the start sits exactly on a UTC midnight. It ends in 2031 for the same
+  // reason as the open season above. It lives here, not in the guild ranking
+  // demo, because every demo that depends on this one deploys the schedule
+  // stack from a byte-identical template, and a second author of this list
+  // would be a second version of that stack.
+  .instance(Schedule, "guild-season", {
+    [schedule.propertyId("Schedule", "scheduleType")]: "absolute",
+    [schedule.propertyId("Schedule", "startAt")]: 1788220800000, // 2026-09-01T00:00:00Z
+    [schedule.propertyId("Schedule", "endAt")]: 1924992000000, // 2031-01-01
+    [schedule.propertyId("Schedule", "repeatType")]: "daily",
+    [schedule.propertyId("Schedule", "beginHour")]: 0,
+    [schedule.propertyId("Schedule", "endHour")]: 0,
+  })
+
   // The trigger itself. It has no master data — a trigger is something a
   // player has or has not pulled — but naming it here is what lets the extend
   // and clear rates be named after it.
