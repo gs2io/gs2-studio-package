@@ -1,18 +1,21 @@
-// The guild lobby: founding, finding and joining a guild, answering join
-// requests, and leaving, handing over or disbanding. Copied from the guild
-// demo and extended for the guild ranking page: a member can copy their
-// guild's id, and a visitor can paste one and join that guild at once. The
-// search lists a new guild only after a minute or two, and two visitors who
-// want to rank against each other should not have to wait for it.
+// The guild lobby: founding, finding and joining a guild, and leaving,
+// handing over or disbanding. Copied from the guild demo and cut down for the
+// guild ranking page: every guild founded here lets anybody join, and only
+// such guilds are offered or joined, so nobody waits on a master's approval.
+// The guild namespace is shared with the guild demo, whose guilds may ask for
+// approval; those are left out of the list and refused when joined by id.
+// A member can copy their guild's id, and a visitor can paste one and join
+// that guild at once. The search lists a new guild only after a minute or
+// two, and two visitors who want to rank against each other should not have
+// to wait for it.
 //
 // A row of the page reads one value or makes one press, and a lobby is a
 // search, a form and a guild's worth of members, so this draws its own region.
 // None of it is an action a package can host.
 //
 // Reads go through the SDK's domain and are watched in its cache: the guilds
-// the visitor joined, then either their guild (and, for a master, the
-// requests it received) or the requests the visitor sent. GS2's notifications
-// clear those caches when another player joins, leaves or asks, and the SDK's
+// the visitor joined, then their guild. GS2's notifications clear those
+// caches when another player joins or leaves, and the SDK's
 // own writes update them after a press, so the SDK reads them again and the
 // panel hears the result. Nothing is asked of GS2 on a timer except the guild
 // search, which the cache cannot hold: it is asked again every 30 seconds
@@ -29,12 +32,12 @@
 //
 // Writes go through the same domain, so the generated rows of the guilds the
 // visitor belongs to update from there too. A list is invalidated here only
-// when GS2 answers that something on it no longer exists (the visitor's guild,
-// or a request to join it), since no notification would correct it.
+// when GS2 answers that the visitor's guild no longer exists, since no
+// notification would correct it.
 //
-// Answering requests, handing over and disbanding are done as the guild: the
-// master assumes the guild, and GS2 lets the guild token do only what the
-// master role's policy allows.
+// Handing over and disbanding are done as the guild: the master assumes the
+// guild, and GS2 lets the guild token do only what the master role's policy
+// allows.
 //
 // The lobby grows and shrinks as the visitor's state changes, and every row
 // of the page below it moves; a press that lands in that moment is refused and
@@ -78,6 +81,7 @@ namespace GS2Studio.Showroom.Demo
         private const string GuildNamespace = "Guild";
         private const string GuildKind = "adventurers";
         private const string MasterRole = "master";
+        private const string OpenPolicy = "anybody";
 
         /// <summary>
         /// How often the lobby searches again, and how often a watch that
@@ -127,7 +131,6 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>What the region was last drawn from; null before the first draw.</summary>
         private string? _shown;
         private StringBuilder? _drawing;
-        private bool _approval;
         private bool _busy;
         private Coroutine? _signingIn;
         private ShowroomPage? _page;
@@ -149,8 +152,6 @@ namespace GS2Studio.Showroom.Demo
 
         private readonly Watch _joinedWatch = new Watch();
         private readonly Watch _guildWatch = new Watch();
-        private readonly Watch _receivedWatch = new Watch();
-        private readonly Watch _sentWatch = new Watch();
         private readonly Watch _search = new Watch();
 
         /// <summary>The guild the joined list names, once it has been read.</summary>
@@ -166,12 +167,8 @@ namespace GS2Studio.Showroom.Demo
         private string? _guildName;
         private GuildModel? _guild;
         private bool _guildGone;
-        private ReceiveMemberRequest[] _received = Array.Empty<ReceiveMemberRequest>();
-        private GuildAccessTokenDomain? _receivedFrom;
         private GuildModel[] _found = Array.Empty<GuildModel>();
         private bool _foundKnown;
-        private SendMemberRequest[] _sent = Array.Empty<SendMemberRequest>();
-        private bool _sentKnown;
 
         /// <summary>The guild token, kept until it runs out or the guild changes.</summary>
         private AuthAccessToken? _guildToken;
@@ -253,8 +250,6 @@ namespace GS2Studio.Showroom.Demo
         {
             _joinedWatch.Stop();
             _guildWatch.Stop();
-            _receivedWatch.Stop();
-            _sentWatch.Stop();
             _search.Stop();
             while (_inbox.TryDequeue(out _)) { }
             _gs2 = null;
@@ -266,12 +261,8 @@ namespace GS2Studio.Showroom.Demo
             _guildName = null;
             _guild = null;
             _guildGone = false;
-            _received = Array.Empty<ReceiveMemberRequest>();
-            _receivedFrom = null;
             _found = Array.Empty<GuildModel>();
             _foundKnown = false;
-            _sent = Array.Empty<SendMemberRequest>();
-            _sentKnown = false;
             _guildToken = null;
             _shown = null;
         }
@@ -291,24 +282,19 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Follows the joined list: enters the guild it names, or the lobby,
-        /// and watches the guild's requests while the visitor is its master.
+        /// Follows the joined list: enters the guild it names, or the lobby.
         /// Then draws what is known.
         /// </summary>
         private void Settle()
         {
             if (!_membershipKnown) return;
             if (!_entered || _membership != _guildName) Enter(_membership);
-            if (_guildName != null)
+            if (_guildName != null && _guildGone)
             {
-                if (_guildGone)
-                {
-                    // Drawing the lobby here would invite a member to found
-                    // or join another guild.
-                    ReadFailed("Your guild could not be read.");
-                    return;
-                }
-                if (_guild != null) FollowRole(_guild);
+                // Drawing the lobby here would invite a member to found or
+                // join another guild.
+                ReadFailed("Your guild could not be read.");
+                return;
             }
             Draw();
         }
@@ -322,8 +308,6 @@ namespace GS2Studio.Showroom.Demo
         private void Enter(string? guildName)
         {
             _guildWatch.Stop();
-            StopReceived();
-            _sentWatch.Stop();
             _search.Stop();
             _entered = true;
             _guildName = guildName;
@@ -331,51 +315,16 @@ namespace GS2Studio.Showroom.Demo
             _guildGone = false;
             _found = Array.Empty<GuildModel>();
             _foundKnown = false;
-            _sent = Array.Empty<SendMemberRequest>();
-            _sentKnown = false;
-            if (guildName != null)
-            {
-                WatchGuild(guildName);
-            }
-            else
-            {
-                WatchSent();
-                Search();
-            }
-        }
-
-        /// <summary>
-        /// A master watches the requests the guild received; anybody else
-        /// does not, and does not keep the guild token.
-        /// </summary>
-        private void FollowRole(GuildModel guild)
-        {
-            if (RoleOf(guild, _userId) == MasterRole)
-            {
-                if (_receivedWatch.Idle) WatchReceived(guild.Name);
-            }
-            else
-            {
-                // A master's token must not outlive the role.
-                if (!_receivedWatch.Idle) StopReceived();
-                _guildToken = null;
-            }
-        }
-
-        private void StopReceived()
-        {
-            _receivedWatch.Stop();
-            _received = Array.Empty<ReceiveMemberRequest>();
-            _receivedFrom = null;
+            // A guild token must not outlive the guild it acts as.
             _guildToken = null;
+            if (guildName != null) WatchGuild(guildName);
+            else Search();
         }
 
         /// <summary>
         /// Every 30 seconds: searches again while in the lobby, tries again a
-        /// watch that failed to start, reads again what a running watch
-        /// follows (from the cache, unless the cache lost it), and renews the
-        /// guild token before it runs out, since the SDK reads the requests
-        /// again with that token whenever GS2 says one arrived.
+        /// watch that failed to start, and reads again what a running watch
+        /// follows (from the cache, unless the cache lost it).
         /// </summary>
         private void Tick()
         {
@@ -385,15 +334,11 @@ namespace GS2Studio.Showroom.Demo
             if (!_entered) return;
             if (_guildName == null)
             {
-                if (_sentWatch.Failed) WatchSent();
-                else _sentWatch.Reread();
                 Search();
                 return;
             }
             if (_guildWatch.Failed) WatchGuild(_guildName);
             else _guildWatch.Reread();
-            if (_receivedWatch.Failed && _guild != null) WatchReceived(_guild.Name);
-            else if (_receivedWatch.Running) RenewGuildToken(_guildName);
         }
 
         /// <summary>Hands an SDK callback to the main thread, for as long as its watch lasts.</summary>
@@ -512,83 +457,10 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// The requests the master's guild received; the SDK reads them again
-        /// when GS2 says one arrived or was withdrawn, and an answer removes
-        /// it. A failure here is said on the page and leaves the rest of the
-        /// guild drawn.
-        /// </summary>
-        private async void WatchReceived(string guildName)
-        {
-            var gs2 = _gs2;
-            var session = _session;
-            if (gs2 == null || session == null) return;
-            var ticket = _receivedWatch.Start();
-            try
-            {
-                var token = await GuildToken(new Gs2GuildRestClient(gs2.Super.RestSession), session.AccessToken.Token, guildName, GuildTokenMarginMs);
-                if (!_receivedWatch.Is(ticket)) return;
-                var guild = gs2.Super.Guild.Namespace(GuildNamespace).GuildAccessToken(GuildKind, token);
-                void Apply(ReceiveMemberRequest[]? received) => Post(_receivedWatch, ticket, () =>
-                {
-                    _received = received ?? Array.Empty<ReceiveMemberRequest>();
-                    _receivedFrom = guild;
-                });
-                void Reread() => this.Reread(_receivedWatch, ticket, () => guild.ReceiveRequestsAsync(), Apply, "the requests to join");
-                var id = await guild.SubscribeReceiveRequestsWithInitialCallAsync(received =>
-                {
-                    // An empty list may only mean the cache no longer holds it.
-                    if (received == null || received.Length == 0) Reread();
-                    else Apply(received);
-                });
-                _receivedWatch.Attach(ticket, () => guild.UnsubscribeReceiveRequests(id), Reread);
-            }
-            catch (Exception error)
-            {
-                if (!_receivedWatch.Fail(ticket)) return;
-                Debug.LogError($"{nameof(GuildRoleRankingLobbyPanel)}: the join requests could not be read: {error}");
-                _guildToken = null;
-                ReadFailed($"The requests to join could not be read: {error.Message}");
-            }
-        }
-
-        /// <summary>
-        /// The requests the visitor sent; a press updates them, and the SDK
-        /// reads them again when GS2 says one was answered.
-        /// </summary>
-        private async void WatchSent()
-        {
-            var visitor = _visitor;
-            if (visitor == null) return;
-            var ticket = _sentWatch.Start();
-            void Apply(SendMemberRequest[]? sent) => Post(_sentWatch, ticket, () =>
-            {
-                _sent = sent ?? Array.Empty<SendMemberRequest>();
-                _sentKnown = true;
-                _readFailure = null;
-            });
-            void Reread() => this.Reread(_sentWatch, ticket, () => visitor.SendRequestsAsync(GuildKind), Apply, "the sent requests");
-            try
-            {
-                var id = await visitor.SubscribeSendRequestsWithInitialCallAsync(sent =>
-                {
-                    // An empty list may only mean the cache no longer holds it.
-                    if (sent == null || sent.Length == 0) Reread();
-                    else Apply(sent);
-                }, GuildKind);
-                _sentWatch.Attach(ticket, () => visitor.UnsubscribeSendRequests(id, GuildKind), Reread);
-            }
-            catch (Exception error)
-            {
-                if (!_sentWatch.Fail(ticket)) return;
-                Debug.LogError($"{nameof(GuildRoleRankingLobbyPanel)}: the sent requests could not be read: {error}");
-                ReadFailed($"The guilds could not be read: {error.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Searches for guilds with room. A search is not kept in the cache,
-        /// so this asks GS2 each time; only the latest search to start is
-        /// drawn, and only while the visitor is still in the lobby.
+        /// Searches for guilds with room that anybody may join. A search is
+        /// not kept in the cache, so this asks GS2 each time; only the latest
+        /// search to start is drawn, and only while the visitor is still in
+        /// the lobby.
         /// </summary>
         private async void Search()
         {
@@ -600,6 +472,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 var found = await visitor.SearchGuildsAsync(
                         GuildKind,
+                        joinPolicies: new[] { OpenPolicy },
                         includeFullMembersGuild: false,
                         orderBy: "last_updated")
                     .Take(SearchLimit)
@@ -620,29 +493,6 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Renews the guild token shortly before it runs out, then reads the
-        /// requests again with it. The token is renewed in place, so the
-        /// watch on the requests keeps reading with it.
-        /// </summary>
-        private async void RenewGuildToken(string guildName)
-        {
-            var gs2 = _gs2;
-            var session = _session;
-            if (gs2 == null || session == null) return;
-            try
-            {
-                await GuildToken(new Gs2GuildRestClient(gs2.Super.RestSession), session.AccessToken.Token, guildName,
-                    GuildTokenMarginMs + (long)(TickSeconds * 1000));
-                _receivedWatch.Reread();
-            }
-            catch (Exception error)
-            {
-                // The next tick tries again while the token is still good.
-                Debug.LogError($"{nameof(GuildRoleRankingLobbyPanel)}: the guild token could not be renewed: {error}");
-            }
-        }
-
-        /// <summary>
         /// Says a failed read on the page once; the same failure again stays
         /// quiet until a read succeeds.
         /// </summary>
@@ -655,14 +505,13 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>
         /// The token to act as the guild, assumed again when it runs out
-        /// within the margin or belongs to another guild. A token for the same
-        /// guild is renewed in place, so whatever holds it keeps working.
+        /// within a minute or belongs to another guild.
         /// </summary>
-        private async Task<AuthAccessToken> GuildToken(Gs2GuildRestClient client, string token, string guildName, long marginMs)
+        private async Task<AuthAccessToken> GuildToken(Gs2GuildRestClient client, string token, string guildName)
         {
             var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             var kept = _guildToken;
-            if (kept != null && kept.UserId == guildName && (kept.Expire ?? 0) > now + marginMs)
+            if (kept != null && kept.UserId == guildName && (kept.Expire ?? 0) > now + GuildTokenMarginMs)
             {
                 return kept;
             }
@@ -671,11 +520,6 @@ namespace GS2Studio.Showroom.Demo
                 .WithGuildModelName(GuildKind)
                 .WithGuildName(guildName)
                 .WithAccessToken(token));
-            if (kept != null && kept == _guildToken && kept.UserId == assumed.UserId)
-            {
-                kept.WithToken(assumed.Token).WithExpire(assumed.Expire);
-                return kept;
-            }
             _guildToken = new AuthAccessToken()
                 .WithToken(assumed.Token)
                 .WithUserId(assumed.UserId)
@@ -700,7 +544,6 @@ namespace GS2Studio.Showroom.Demo
 
             public bool Running { get; private set; }
             public bool Failed { get; private set; }
-            public bool Idle => !Running && !Failed;
 
             public int Start()
             {
@@ -769,7 +612,7 @@ namespace GS2Studio.Showroom.Demo
             }
             else
             {
-                if (!_sentKnown || !_foundKnown) return;
+                if (!_foundKnown) return;
                 Clear(_body);
                 _nameField.gameObject.SetActive(true);
                 _joinRegion.gameObject.SetActive(true);
@@ -788,7 +631,7 @@ namespace GS2Studio.Showroom.Demo
         {
             var members = guild.Members ?? Array.Empty<Member>();
             var master = RoleOf(guild, _userId) == MasterRole;
-            Caption(_body!, $"{guild.DisplayName}  ({members.Length}/{guild.CurrentMaximumMemberCount ?? 0}, {JoinPolicyText(guild.JoinPolicy)})", 18, LightText);
+            Caption(_body!, $"{guild.DisplayName}  ({members.Length}/{guild.CurrentMaximumMemberCount ?? 0})", 18, LightText);
             Caption(_body!, $"Guild id: {guild.Name}", 15, MutedText);
             var id = guild.Name;
             Press(_body!, "Copy the guild id, for another visitor to join by", () => Copy(id));
@@ -800,13 +643,6 @@ namespace GS2Studio.Showroom.Demo
 
             if (master)
             {
-                if (_received.Length > 0) Caption(_body!, "Requests to join", 15, MutedText);
-                foreach (var request in _received)
-                {
-                    var from = request.UserId;
-                    Press(_body!, $"Accept {Tag(from)}", () => Answer(guild.Name, from, true));
-                    Press(_body!, $"Decline {Tag(from)}", () => Answer(guild.Name, from, false));
-                }
                 var others = members.Where(member => member.UserId != _userId).OrderBy(member => member.JoinedAt ?? 0).ToArray();
                 if (others.Length > 0)
                 {
@@ -826,11 +662,6 @@ namespace GS2Studio.Showroom.Demo
 
         private void DrawLobby()
         {
-            Press(_body!, $"Join policy: {JoinPolicyText(_approval ? "approval" : "anybody")} (press to change)", () =>
-            {
-                _approval = !_approval;
-                Draw();
-            });
             Press(_body!, "Create a guild with this name", Create);
 
             Caption(_body!, "Guilds you can join", 15, MutedText);
@@ -838,22 +669,9 @@ namespace GS2Studio.Showroom.Demo
             foreach (var guild in _found)
             {
                 var name = guild.Name;
-                var pending = _sent.Any(request => request.TargetGuildName == name);
-                var approval = guild.JoinPolicy == "approval";
-                var label = $"{guild.DisplayName}  ({guild.Members?.Length ?? 0}/{guild.CurrentMaximumMemberCount ?? 0})";
-                if (pending)
-                {
-                    Press(_body!, $"Cancel the request to {label}", () => CancelRequest(name));
-                }
-                else
-                {
-                    Press(_body!, approval ? $"Ask to join {label}" : $"Join {label}", () => Join(name, approval));
-                }
+                Press(_body!, $"Join {guild.DisplayName}  ({guild.Members?.Length ?? 0}/{guild.CurrentMaximumMemberCount ?? 0})", () => Join(name));
             }
         }
-
-        private static string JoinPolicyText(string? policy) =>
-            policy == "approval" ? "the master approves" : "anybody joins";
 
         // ------------------------------------------------------------------
         // Pressing
@@ -866,24 +684,23 @@ namespace GS2Studio.Showroom.Demo
                 Log($"Name the guild first, in 1 to {NameLimit} characters.");
                 return;
             }
-            var policy = _approval ? "approval" : "anybody";
             Run(async (gs2, session) =>
             {
                 await gs2.Super.Guild.Namespace(GuildNamespace).AccessToken(session.AccessToken)
                     .CreateGuildAsync(new CreateGuildRequest()
                         .WithGuildModelName(GuildKind)
                         .WithDisplayName(name)
-                        .WithJoinPolicy(policy));
+                        .WithJoinPolicy(OpenPolicy));
                 if (_nameField != null) _nameField.text = "";
                 return $"Created {name}.";
             });
         }
 
         /// <summary>
-        /// Asks to join, or joins at once. A guild joined at once leaves the
-        /// lobby, so the search is asked again only otherwise.
+        /// Joins at once. A guild joined leaves the lobby, so the search is
+        /// asked again only when the join failed.
         /// </summary>
-        private void Join(string guildName, bool approval)
+        private void Join(string guildName)
         {
             var joined = false;
             Run(async (gs2, session) =>
@@ -892,23 +709,13 @@ namespace GS2Studio.Showroom.Demo
                     .SendRequestAsync(new SendRequestRequest()
                         .WithGuildModelName(GuildKind)
                         .WithTargetGuildName(guildName));
-                joined = !approval;
-                return approval ? "Asked to join; the master decides." : "Joined the guild.";
+                joined = true;
+                return "Joined the guild.";
             }, afterward: () =>
             {
                 if (!joined) Search();
             });
         }
-
-        private void CancelRequest(string guildName) =>
-            Run(async (gs2, session) =>
-            {
-                await gs2.Super.Guild.Namespace(GuildNamespace).AccessToken(session.AccessToken)
-                    .DeleteAsync(new DeleteRequestRequest()
-                        .WithGuildModelName(GuildKind)
-                        .WithTargetGuildName(guildName));
-                return "Cancelled the request.";
-            }, afterward: Search);
 
         private void Leave(string guildName) =>
             Run(async (gs2, session) =>
@@ -918,16 +725,6 @@ namespace GS2Studio.Showroom.Demo
                     .WithdrawalAsync(new WithdrawalRequest());
                 return "Left the guild.";
             }, whenGone: ReadJoinedAgain);
-
-        private void Answer(string guildName, string fromUserId, bool accept) =>
-            Run(async (gs2, session) =>
-            {
-                var guild = await AsGuild(gs2, session, guildName);
-                var request = guild.ReceiveMemberRequest(fromUserId);
-                if (accept) await request.AcceptAsync(new AcceptRequestRequest());
-                else await request.RejectAsync(new RejectRequestRequest());
-                return accept ? $"Accepted {Tag(fromUserId)}." : $"Declined {Tag(fromUserId)}.";
-            }, whenGone: () => _receivedFrom?.InvalidateReceiveRequests());
 
         /// <summary>
         /// Promotes the longest-standing other member to master, then leaves.
@@ -1007,9 +804,10 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Joins the guild whose id is in the field, or asks to when its
-        /// master approves members. A full id is accepted too: the guild's
-        /// name is its last part.
+        /// Joins the guild whose id is in the field, when anybody may join
+        /// it. A guild whose master approves members is not asked: this demo
+        /// joins only open guilds. A full id is accepted too: the guild's name
+        /// is its last part.
         /// </summary>
         private void JoinById()
         {
@@ -1037,13 +835,13 @@ namespace GS2Studio.Showroom.Demo
                     guild = null;
                 }
                 if (guild == null) return "No guild has that id. Check it with the member who sent it; the guild may have been disbanded.";
-                var approval = guild.JoinPolicy == "approval";
+                if (guild.JoinPolicy != OpenPolicy) return $"{guild.DisplayName} needs its master's approval, and this demo joins only open guilds. Create one or pick one from the list.";
                 await guilds.AccessToken(session.AccessToken)
                     .SendRequestAsync(new SendRequestRequest()
                         .WithGuildModelName(GuildKind)
                         .WithTargetGuildName(id));
                 if (_joinField != null) _joinField.text = "";
-                return approval ? $"Asked to join {guild.DisplayName}; the master decides." : $"Joined {guild.DisplayName}.";
+                return $"Joined {guild.DisplayName}.";
             }, afterward: Search);
         }
 
@@ -1057,7 +855,7 @@ namespace GS2Studio.Showroom.Demo
         private async Task<GuildAccessTokenDomain> AsGuild(Gs2Domain gs2, IGameSession session, string? guildName)
         {
             if (guildName == null) throw new InvalidOperationException("Not in a guild.");
-            var token = await GuildToken(new Gs2GuildRestClient(gs2.Super.RestSession), session.AccessToken.Token, guildName, GuildTokenMarginMs);
+            var token = await GuildToken(new Gs2GuildRestClient(gs2.Super.RestSession), session.AccessToken.Token, guildName);
             return gs2.Super.Guild.Namespace(GuildNamespace).GuildAccessToken(GuildKind, token);
         }
 
