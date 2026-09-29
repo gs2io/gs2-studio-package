@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "Profile#You": {
+      "key": {
+        "id": "profile"
+      },
+      "rows": [
+        "ProfileNameLabel",
+        "ProfileFriendProfileLabel",
+        "ProfileFollowerProfileLabel",
+        "ProfileFriendsPanel"
+      ]
+    },
+    "ReceiveFriendRequest#Friend requests to you": {
+      "rows": [
+        "ReceiveFriendRequestNameLabel",
+        "ReceiveFriendRequestIdLabel",
+        "ReceiveFriendRequestAcceptButton",
+        "ReceiveFriendRequestDeclineButton"
+      ]
+    },
+    "SendFriendRequest#Friend requests you sent": {
+      "rows": [
+        "SendFriendRequestNameLabel",
+        "SendFriendRequestIdLabel",
+        "SendFriendRequestCancelButton"
+      ]
+    },
+    "Friend#Your friends": {
+      "rows": ["FriendNameLabel", "FriendFriendProfileLabel", "FriendRemoveButton"]
+    },
+    "Follow#Players you follow": {
+      "rows": ["FollowNameLabel", "FollowFollowerProfileLabel", "FollowUnfollowButton"]
+    }
+  }
+}

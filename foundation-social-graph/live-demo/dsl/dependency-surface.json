@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-social-graph-demo",
+  "types": {
+    "Follow": {
+      "id": "dt_01M3P3R0RFXB09VNVX08VVP71B",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_12CDXGXXRQVPJVMA9VGATG195G"
+    },
+    "Friend": {
+      "id": "dt_01M3P3R0RF3CJ781SN1811WM1K",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_2NM467EMK37WAPSYGR7JJGVY8W"
+    },
+    "Profile": {
+      "id": "dt_01M3P3R0RF3XJ96HGBX4XN2R60",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_YHKCS7SG3P32HV1NWCAAT47AFB"
+    },
+    "ReceiveFriendRequest": {
+      "id": "dt_01M3P3R0RF8FYC7FDBGGZZ5RTE",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C"
+    },
+    "SendFriendRequest": {
+      "id": "dt_01M3P3R0RFM28TAKNKBXE8TAEF",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-social-graph",
+      "canonicalTypeId": "dt_TBCFR2E0A8DGCGR2RVHN4EQGR8"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}

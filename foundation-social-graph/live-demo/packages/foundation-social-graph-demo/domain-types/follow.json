@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_01M3P3R0RFXB09VNVX08VVP71B",
+  "kind": "overlay",
+  "name": "Follow",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-social-graph",
+    "directSourceTypeId": "dt_12CDXGXXRQVPJVMA9VGATG195G",
+    "sourcePackageId": "foundation-social-graph",
+    "sourceTypeId": "dt_12CDXGXXRQVPJVMA9VGATG195G"
+  }
+}

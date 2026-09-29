@@ -1,0 +1,30 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  FriendNamespace_Friend:
+    Type: "GS2::Friend::Namespace"
+    Properties:
+      AcceptRequestNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      CancelRequestNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      DeleteFriendNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      Name: "Friend"
+      ReceiveRequestNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      RejectRequestNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

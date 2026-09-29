@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "commitSha": "9404857df59330157f42ac5b19afad7dc3388164",
+      "integrity": "sha256-S49d87Ve2X+le6VOAAlPHK2Snlv7LAK2FGIBvfniUTY=",
+      "owner": "gs2io",
+      "packageId": "foundation-social-graph",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-social-graph/packages/foundation-social-graph",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}
