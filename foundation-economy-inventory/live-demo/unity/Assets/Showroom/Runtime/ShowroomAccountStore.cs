@@ -26,6 +26,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 #endif
 using Gs2.Core.Exception;
+using Gs2.Gs2Account.Exception;
 using Gs2.Unity.Util;
 using Gs2Bind.Gs2Account;
 using UnityEngine;
@@ -122,15 +123,30 @@ namespace GS2Studio.Showroom
         }
 
         /// <summary>
-        /// Whether the server refused the account itself: a wrong password
-        /// (`PasswordIncorrectException`, an `UnauthorizedException`) or a user
-        /// id the namespace does not know (`NotFoundException` about the
-        /// `account` component, as opposed to a missing namespace). Anything
-        /// else, a timeout or an unreachable server above all, is not.
+        /// Whether the server refused the saved credentials themselves, which
+        /// is exactly two answers from the account service's `Authentication`:
+        ///
+        /// - a wrong password. The SDK raises `PasswordIncorrectException` for
+        ///   the error code `account.password.invalid`; the code is matched as
+        ///   well, so the answer is still recognised if a caller in between
+        ///   hands the plain exception on.
+        /// - a user id the namespace does not know: a `NotFoundException` about
+        ///   the `account` component, as opposed to a missing namespace.
+        ///
+        /// Every other `UnauthorizedException` is deliberately not a refusal of
+        /// the saved account: a banned account (`BannedInfinityException`), a
+        /// rejected auth signature or gateway session, or an expired project
+        /// token all fail again for a new account, or say nothing about this
+        /// one. Neither is a timeout or an unreachable server.
         /// </summary>
         private static bool IsCredentialRefusal(Gs2Exception error)
         {
-            if (error is UnauthorizedException) return true;
+            if (error is PasswordIncorrectException) return true;
+            if (error is UnauthorizedException)
+            {
+                return error.Errors != null &&
+                       error.Errors.Any(entry => entry != null && entry.Code == PasswordInvalidCode);
+            }
             if (error is NotFoundException)
             {
                 return error.Errors != null &&
@@ -138,6 +154,9 @@ namespace GS2Studio.Showroom
             }
             return false;
         }
+
+        /// <summary>The account service's error code for a wrong password.</summary>
+        private const string PasswordInvalidCode = "account.password.invalid";
 
         private static string Summarize(Gs2Exception error)
         {
@@ -147,7 +166,9 @@ namespace GS2Studio.Showroom
                     .Where(entry => entry != null && !string.IsNullOrEmpty(entry.Message))
                     .Select(entry => entry.Message)
                     .ToArray();
-            return messages.Length > 0 ? string.Join(", ", messages) : error.GetType().Name;
+            return messages.Length > 0
+                ? $"{error.GetType().Name}: {string.Join(", ", messages)}"
+                : error.GetType().Name;
         }
 
 #if UNITY_WEBGL && !UNITY_EDITOR
