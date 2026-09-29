@@ -42,7 +42,6 @@
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C",
       "properties": {
-        "fromPublicProfile": "prop_8385BCWPDH6PVR79CSMQ19ZNZP",
         "id": "prop_reserved_id"
       }
     },
@@ -52,8 +51,7 @@
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_TBCFR2E0A8DGCGR2RVHN4EQGR8",
       "properties": {
-        "id": "prop_reserved_id",
-        "targetPublicProfile": "prop_2C18P9AZQNC61BC93J6R7XH83Q"
+        "id": "prop_reserved_id"
       }
     }
   },

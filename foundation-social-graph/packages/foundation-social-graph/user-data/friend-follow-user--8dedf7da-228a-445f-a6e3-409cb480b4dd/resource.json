@@ -43,6 +43,11 @@
           },
           "propertyId": "prop_reserved_id"
         }
+      },
+      {
+        "kind": "static",
+        "parameterName": "withProfile",
+        "value": true
       }
     ],
     "declaredTypeMount": {

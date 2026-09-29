@@ -2,19 +2,8 @@
   "authored": {
     "declaredBindings": [
       {
-        "kind": "domainProperties",
-        "parameterName": "publicProfile",
-        "sources": [
-          {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_TBCFR2E0A8DGCGR2RVHN4EQGR8",
-              "typeName": "SendFriendRequest"
-            },
-            "propertyId": "prop_2C18P9AZQNC61BC93J6R7XH83Q"
-          }
-        ]
+        "kind": "skip",
+        "parameterName": "publicProfile"
       },
       {
         "kind": "domainProperty",

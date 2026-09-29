@@ -73,27 +73,17 @@ const Friend = defineDomainType("Friend", dt =>
     })
 );
 
+// The SDK never returns a profile on friend requests, so request types carry
+// only the other player's id.
 const SendFriendRequest = defineDomainType("SendFriendRequest", dt =>
-  dt.property(PT.string("targetPublicProfile").userData()).localizedProperties({
+  dt.localizedProperties({
     id: jaEnId("送信フレンド申請", "outgoing friend request"),
-    targetPublicProfile: jaEnField(
-      "申請先プロフィール",
-      "Target profile",
-      "申請先プレイヤーの公開プロフィール情報です。",
-      "Public profile information of the request recipient."
-    ),
   })
 );
 
 const ReceiveFriendRequest = defineDomainType("ReceiveFriendRequest", dt =>
-  dt.property(PT.string("fromPublicProfile").userData()).localizedProperties({
+  dt.localizedProperties({
     id: jaEnId("受信フレンド申請", "incoming friend request"),
-    fromPublicProfile: jaEnField(
-      "申請元プロフィール",
-      "Sender profile",
-      "申請元プレイヤーの公開プロフィール情報です。",
-      "Public profile information of the request sender."
-    ),
   })
 );
 
@@ -109,21 +99,21 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
     label: { ja: "フレンド・プロフィール", en: "Friends & Profile" },
     description: {
       ja: "フレンド申請・フォロー・プロフィールなど、プレイヤー同士のつながりを扱います。",
-      en: "Handles friend requests, follows, and profiles — the connections between players.",
+      en: "Handles friend requests, follows, and profiles: the connections between players.",
     },
   })
   .displayType(Follow, {
     label: { ja: "フォロー", en: "Follow" },
     description: {
-      ja: "プレイヤーがフォローしている相手との関係を管理します。",
-      en: "Tracks the players followed by a player.",
+      ja: "プレイヤーがフォローしている相手との関係を管理します。プロフィールはフォロー一覧から取得します。フォロワー一覧はありません。",
+      en: "Tracks the players followed by a player. Profiles come from the follow list. There is no follower list.",
     },
   })
   .displayType(Friend, {
     label: { ja: "フレンド", en: "Friend" },
     description: {
-      ja: "承認済みのフレンド関係を管理します。",
-      en: "Tracks confirmed friendship relationships between players.",
+      ja: "承認済みのフレンド関係を管理します。プロフィールはフレンド一覧から取得します。",
+      en: "Tracks confirmed friendship relationships between players. Profiles come from the friend list.",
     },
   })
   .displayType(Profile, {
@@ -136,15 +126,15 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
   .displayType(ReceiveFriendRequest, {
     label: { ja: "フレンド申請（受信）", en: "Incoming friend request" },
     description: {
-      ja: "他のプレイヤーから受け取ったフレンド申請を管理します。",
-      en: "Tracks friend requests received from other players.",
+      ja: "他のプレイヤーから受け取ったフレンド申請を管理します。申請元のプロフィールは含みません。",
+      en: "Tracks friend requests received from other players. Requests carry no sender profile.",
     },
   })
   .displayType(SendFriendRequest, {
     label: { ja: "フレンド申請（送信）", en: "Outgoing friend request" },
     description: {
-      ja: "他のプレイヤーへ送信したフレンド申請を管理します。",
-      en: "Tracks friend requests sent to other players.",
+      ja: "他のプレイヤーへ送信したフレンド申請を管理します。申請先のプロフィールは含みません。",
+      en: "Tracks friend requests sent to other players. Requests carry no recipient profile.",
     },
   })
   .domainType(Profile)
@@ -198,6 +188,8 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
         friendProfile: Bind.domainProperties([Source.direct(Friend, "friendProfile")]),
         publicProfile: Bind.domainProperties([Source.direct(Friend, "publicProfile")]),
         userId: Bind.domainProperty(Source.direct(Friend, "id")),
+        // Load profiles with the friend list and each row.
+        withProfile: Bind.static(true),
       })
   )
 
@@ -209,6 +201,8 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
         followerProfile: Bind.domainProperties([Source.direct(Follow, "followerProfile")]),
         publicProfile: Bind.domainProperties([Source.direct(Follow, "publicProfile")]),
         userId: Bind.domainProperty(Source.direct(Follow, "id")),
+        // Load profiles with the follow list and each row.
+        withProfile: Bind.static(true),
       })
   )
 
@@ -217,9 +211,7 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
       .model(GS2.friend.SendFriendRequest)
       .mountLocal(SendFriendRequest)
       .bindings({
-        publicProfile: Bind.domainProperties([
-          Source.direct(SendFriendRequest, "targetPublicProfile"),
-        ]),
+        publicProfile: Bind.skip(),
         targetUserId: Bind.domainProperty(Source.direct(SendFriendRequest, "id")),
         userId: Bind.skip(),
       })
@@ -230,9 +222,7 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
       .model(GS2.friend.ReceiveFriendRequest)
       .mountLocal(ReceiveFriendRequest)
       .bindings({
-        publicProfile: Bind.domainProperties([
-          Source.direct(ReceiveFriendRequest, "fromPublicProfile"),
-        ]),
+        publicProfile: Bind.skip(),
         targetUserId: Bind.skip(),
         userId: Bind.domainProperty(Source.direct(ReceiveFriendRequest, "id")),
       })

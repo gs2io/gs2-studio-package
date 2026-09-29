@@ -24,28 +24,6 @@
           "kind": "primitive",
           "primitiveType": "string"
         }
-      },
-      {
-        "bindingHint": "userData",
-        "id": "prop_2C18P9AZQNC61BC93J6R7XH83Q",
-        "localizedDisplay": {
-          "en": {
-            "description": "Public profile information of the request recipient.",
-            "label": "Target profile"
-          },
-          "ja": {
-            "description": "申請先プレイヤーの公開プロフィール情報です。",
-            "label": "申請先プロフィール"
-          }
-        },
-        "name": "targetPublicProfile",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
       }
     ]
   },

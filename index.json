@@ -234,7 +234,7 @@
       },
       "description": {
         "ja": "フレンド申請・フォロー・プロフィールなど、プレイヤー同士のつながりを扱います。",
-        "en": "Handles friend requests, follows, and profiles — the connections between players."
+        "en": "Handles friend requests, follows, and profiles: the connections between players."
       },
       "dependsOn": [],
       "install": {

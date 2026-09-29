@@ -11,12 +11,18 @@
  *
  * The collection's per-item apply is matched on the same recorded type, so a
  * one-sided switch would silently turn `ApplyFriendFriendUserItemTo` into a
- * no-op; the apply call is pinned here too.
+ * no-op. The request types now bind no property from the item, so the apply
+ * call is pinned on the Friend and Follow collections instead.
  *
- * The Friend collection exists because `friend::FriendUser` is listable, and
- * `FriendUserArrayLoader` defaults `withProfile` to `false`, so the collection
- * constructs it with the namespace alone rather than passing a string where
- * Bind takes `bool`.
+ * The Friend collection exists because `friend::FriendUser` is listable. The
+ * package binds `withProfile` to the typed static literal `true` on the
+ * Friend and Follow resources, so every loader built for them (the array
+ * loader of the collection and the element loader of each row) passes the
+ * same C# `bool` named argument and shares one SDK cache parent key.
+ *
+ * Friend requests carry no profile: the SDK drops `withProfile` on the
+ * request lists and never fills `PublicProfile`, so the request types bind
+ * only the other player's id and their binders never read `PublicProfile`.
  */
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -53,31 +59,61 @@ describe("foundation-social-graph generated C# names the recorded Ez types", () 
       expect(content, fileName).not.toContain("EzReceiveFriendRequest");
     }
     expect(files.get("SendFriendRequestBinder.cs")).toContain(
-      "ApplyUserdataFriendSendFriendRequest(IMutableSendFriendRequest model, Gs2.Unity.Gs2Friend.Model.EzFriendRequest? source)"
+      'new Gs2Bind.Gs2Friend.SendFriendRequestLoader("Friend", _model.Id)'
     );
     expect(files.get("ReceiveFriendRequestBinderCollection.cs")).toContain(
       "IList<Gs2.Unity.Gs2Friend.Model.EzFriendRequest> items"
     );
   });
 
-  it("applies each list item to its row through the loader that reads the same Ez type", async () => {
+  it("keys friend request rows by the other player's id and never reads a request profile", async () => {
     const files = await generateSocialGraphFiles();
 
     expect(files.get("SendFriendRequestBinderCollection.cs")).toContain(
-      "SendFriendRequestBinder.ApplyUserdataFriendSendFriendRequest(model, item);"
+      "new SendFriendRequestId(item.TargetUserId)"
     );
     expect(files.get("ReceiveFriendRequestBinderCollection.cs")).toContain(
-      "ReceiveFriendRequestBinder.ApplyUserdataFriendReceiveFriendRequest(model, item);"
+      "new ReceiveFriendRequestId(item.UserId)"
     );
+    for (const fileName of [
+      "SendFriendRequest.cs",
+      "SendFriendRequestBinder.cs",
+      "SendFriendRequestBinderCollection.cs",
+      "ReceiveFriendRequest.cs",
+      "ReceiveFriendRequestBinder.cs",
+      "ReceiveFriendRequestBinderCollection.cs",
+    ]) {
+      const content = files.get(fileName);
+      expect(content, `${fileName} must be emitted`).toBeDefined();
+      expect(content, fileName).not.toContain("PublicProfile");
+    }
   });
 
-  it("lists friends through FriendUserArrayLoader without a string withProfile argument", async () => {
-    const files = await generateSocialGraphFiles();
-    const collection = files.get("FriendBinderCollection.cs");
+  it.each([
+    ["Friend", "FriendUser"],
+    ["Follow", "FollowUser"],
+  ])(
+    "loads %s profiles by passing withProfile: true to every %s loader",
+    async (typeName, modelName) => {
+      const files = await generateSocialGraphFiles();
+      const collection = files.get(`${typeName}BinderCollection.cs`);
+      const binder = files.get(`${typeName}Binder.cs`);
 
-    expect(collection, "FriendBinderCollection.cs must be emitted").toBeDefined();
-    expect(collection).toContain('new Gs2Bind.Gs2Friend.FriendUserArrayLoader("Friend")');
-    expect(collection).not.toMatch(/FriendUserArrayLoader\("Friend", "[^"]*"\)/);
-    expect(collection).toContain("FriendBinder.ApplyUserdataFriendFriendUser(model, item);");
-  });
+      expect(collection, `${typeName}BinderCollection.cs must be emitted`).toBeDefined();
+      expect(collection).toContain(
+        `var arrayLoader = new Gs2Bind.Gs2Friend.${modelName}ArrayLoader("Friend", withProfile: true);`
+      );
+      expect(collection).toContain(
+        `new Gs2Bind.Gs2Friend.${modelName}ArrayLoader("Friend", withProfile: true).Invalidate(_gs2, _session);`
+      );
+      expect(collection).not.toMatch(new RegExp(`${modelName}ArrayLoader\\("Friend"\\)`));
+      expect(collection).toContain(
+        `${typeName}Binder.ApplyUserdataFriend${modelName}(model, item);`
+      );
+      expect(binder).toContain(
+        `new Gs2Bind.Gs2Friend.${modelName}Loader("Friend", _model.Id, withProfile: true)`
+      );
+      expect(binder).toContain("model.PublicProfile = source.PublicProfile;");
+    }
+  );
 });
