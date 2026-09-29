@@ -1,0 +1,59 @@
+{
+  "sections": {
+    "GuildRole#Guild lobby": {
+      "key": {
+        "id": "master"
+      },
+      "rows": ["GuildRoleRankingLobbyPanel"]
+    },
+    "Guild#Your guilds": {
+      "axis": "GuildGuildUser",
+      "rows": ["GuildMembershipLabel"]
+    },
+    "GuildRanking#Guild ranking": {
+      "key": {
+        "id": "guild"
+      },
+      "rows": [
+        "GuildRankingRuleLabel",
+        "GuildRankingSeasonEndsValue",
+        "GuildRankingGuildLabel",
+        "GuildRankingYouLabel",
+        "GuildRankingPlayButton",
+        "GuildRankingPreviousLabel",
+        "GuildRankingReceiveButton",
+        "GuildRankingBoardPanel"
+      ]
+    },
+    "Wallet#Where the coins land": {
+      "key": {
+        "slot": 0
+      },
+      "rows": ["WalletFreeBalanceLabel"]
+    },
+    "GuildRankingReward": {
+      "rows": []
+    },
+    "FreeDeposit": {
+      "rows": []
+    },
+    "PaidDeposit": {
+      "rows": []
+    },
+    "Schedule": {
+      "rows": []
+    },
+    "StorePrice": {
+      "rows": []
+    },
+    "StoreProduct": {
+      "rows": []
+    },
+    "Trigger": {
+      "rows": []
+    },
+    "TriggerPull": {
+      "rows": []
+    }
+  }
+}

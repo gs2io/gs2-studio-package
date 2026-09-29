@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "retired": {},
+  "random": {
+    "property:GuildRankingReward.coins": "prop_01M3PKBSERV99KGY47GKSG75VA",
+    "row:dt_01M0CE422VDT5R1HBS4KHAF8RE.1.guild": "row_01M3PKBSER818XDM0PG5FKMPWZ",
+    "row:dt_01M0CE422VDT5R1HBS4KHAF8RE.10.guild": "row_01M3PKBSERQS79PVEQ0JCMV4QW",
+    "row:dt_01M0CE422VDT5R1HBS4KHAF8RE.3.guild": "row_01M3PKBSERCXKE1Z1F974HNK1Y",
+    "row:dt_01M0CE422VWKB1V6XFZWXFJQZ9.guild": "row_01M3PKBSER8NJMN6359944M1W8",
+    "type:GuildRanking": "dt_01M3PKBSERPEQY9XN4DFHWV5Y1",
+    "type:GuildRankingReward": "dt_01M3PKBSERB4VKYASEP2635GJZ"
+  },
+  "deterministicOverrides": {}
+}

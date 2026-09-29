@@ -1,0 +1,86 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  ExchangeCurrentRateMaster_TriggerClear:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "TriggerClear"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "happy-hour"
+            verifyActions: []
+            consumeActions:
+              - action: "Gs2Schedule:DeleteTriggerByUserId"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\"}"
+            acquireActions: []
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_TriggerClear"
+  ExchangeCurrentRateMaster_TriggerExtend:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "TriggerExtend"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "happy-hour"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Schedule:ExtendTriggerByUserId"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\",\"extendSeconds\":60}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_TriggerExtend"
+  ExchangeCurrentRateMaster_TriggerPull:
+    Type: "GS2::Exchange::CurrentRateMaster"
+    Properties:
+      NamespaceName: "TriggerPull"
+      Settings:
+        version: "2019-08-19"
+        rateModels:
+          - name: "happy-hour"
+            verifyActions: []
+            consumeActions: []
+            acquireActions:
+              - action: "Gs2Schedule:TriggerByUserId"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\",\"triggerStrategy\":\"renew\",\"ttl\":300}"
+        incrementalRateModels: []
+      Mode: "direct"
+    DependsOn:
+      - "ExchangeNamespace_TriggerPull"
+  ExchangeNamespace_TriggerClear:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "TriggerClear"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_TriggerExtend:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "TriggerExtend"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
+  ExchangeNamespace_TriggerPull:
+    Type: "GS2::Exchange::Namespace"
+    Properties:
+      Name: "TriggerPull"
+      TransactionSetting:
+        AcquireActionUseJobQueue: false
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: true
+        EnableAutoRun: true
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

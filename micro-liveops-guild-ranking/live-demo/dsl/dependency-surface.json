@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "packageId": "micro-liveops-guild-ranking-demo",
+  "types": {
+    "GuildRanking": {
+      "id": "dt_01M3PKBSERPEQY9XN4DFHWV5Y1",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-liveops-guild-ranking",
+      "canonicalTypeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9"
+    },
+    "GuildRankingReward": {
+      "id": "dt_01M3PKBSERB4VKYASEP2635GJZ",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-liveops-guild-ranking",
+      "canonicalTypeId": "dt_01M0CE422VDT5R1HBS4KHAF8RE",
+      "addedProperties": {
+        "coins": "prop_01M3PKBSERV99KGY47GKSG75VA"
+      }
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}

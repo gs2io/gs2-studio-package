@@ -1,0 +1,85 @@
+{
+  "entries": [
+    {
+      "commitSha": "9fbdb232c76a830443a748a36728be1011ad5456",
+      "integrity": "sha256-H3GCKGFcWO5icvG9wygppuaZ3BsbSV9/cuLCdo36Fv0=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/packages/foundation-economy-currency",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "9fbdb232c76a830443a748a36728be1011ad5456",
+      "integrity": "sha256-H3GCKGFcWO5icvG9wygppuaZ3BsbSV9/cuLCdo36Fv0=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-currency-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "9fbdb232c76a830443a748a36728be1011ad5456",
+      "integrity": "sha256-H3GCKGFcWO5icvG9wygppuaZ3BsbSV9/cuLCdo36Fv0=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/packages/foundation-economy-schedule",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "9fbdb232c76a830443a748a36728be1011ad5456",
+      "integrity": "sha256-H3GCKGFcWO5icvG9wygppuaZ3BsbSV9/cuLCdo36Fv0=",
+      "owner": "gs2io",
+      "packageId": "foundation-economy-schedule-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-economy-schedule/live-demo/packages/foundation-economy-schedule-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "9fbdb232c76a830443a748a36728be1011ad5456",
+      "integrity": "sha256-H3GCKGFcWO5icvG9wygppuaZ3BsbSV9/cuLCdo36Fv0=",
+      "owner": "gs2io",
+      "packageId": "foundation-social-guild",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-social-guild/packages/foundation-social-guild",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "9fbdb232c76a830443a748a36728be1011ad5456",
+      "integrity": "sha256-H3GCKGFcWO5icvG9wygppuaZ3BsbSV9/cuLCdo36Fv0=",
+      "owner": "gs2io",
+      "packageId": "foundation-social-guild-demo",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-social-guild/live-demo/packages/foundation-social-guild-demo",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "9fbdb232c76a830443a748a36728be1011ad5456",
+      "integrity": "sha256-H3GCKGFcWO5icvG9wygppuaZ3BsbSV9/cuLCdo36Fv0=",
+      "owner": "gs2io",
+      "packageId": "micro-liveops-guild-ranking",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-liveops-guild-ranking/packages/micro-liveops-guild-ranking",
+      "version": "0.0.0"
+    },
+    {
+      "commitSha": "9fbdb232c76a830443a748a36728be1011ad5456",
+      "integrity": "sha256-H3GCKGFcWO5icvG9wygppuaZ3BsbSV9/cuLCdo36Fv0=",
+      "owner": "gs2io",
+      "packageId": "micro-shop-currency",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "micro-shop-currency/packages/micro-shop-currency",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

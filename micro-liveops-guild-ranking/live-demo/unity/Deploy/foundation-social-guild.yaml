@@ -1,0 +1,53 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  GuildCurrentGuildMaster_Guild:
+    Type: "GS2::Guild::CurrentGuildMaster"
+    Properties:
+      NamespaceName: "Guild"
+      Settings:
+        version: "2024-04-25"
+        guildModels:
+          - defaultMaximumMemberCount: 5
+            guildMasterRole: "master"
+            guildMemberDefaultRole: "member"
+            inactivityPeriodDays: 7
+            maxConcurrentJoinGuilds: 1
+            maximumMemberCount: 10
+            metadata: ""
+            name: "adventurers"
+            rejoinCoolTimeMinutes: 0
+            roles:
+              - metadata: ""
+                name: "master"
+                policyDocument: "{\"Version\":\"2016-04-01\",\"Statements\":[{\"Effect\":\"Allow\",\"Actions\":[\"Gs2Guild:DescribeReceiveRequests\",\"Gs2Guild:AcceptRequest\",\"Gs2Guild:RejectRequest\",\"Gs2Guild:UpdateMemberRole\",\"Gs2Guild:DeleteGuild\"],\"Resources\":[\"*\"]}]}"
+              - metadata: ""
+                name: "member"
+                policyDocument: "{\"Version\":\"2016-04-01\",\"Statements\":[{\"Effect\":\"Deny\",\"Actions\":[\"*\"],\"Resources\":[\"*\"]}]}"
+      Mode: "direct"
+    DependsOn:
+      - "GuildNamespace_Guild"
+  GuildNamespace_Guild:
+    Type: "GS2::Guild::Namespace"
+    Properties:
+      ChangeMemberNotificationIgnoreChangeMetadata: false
+      JoinNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      LeaveNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      Name: "Guild"
+      ReceiveRequestNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      RemoveRequestNotification:
+        Enable: "Enabled"
+        EnableTransferMobileNotification: false
+        GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
