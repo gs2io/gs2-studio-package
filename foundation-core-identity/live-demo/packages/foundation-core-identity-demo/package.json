@@ -1,0 +1,18 @@
+{
+  "id": "foundation-core-identity-demo",
+  "name": "foundation-core-identity-demo",
+  "version": "0.0.0",
+  "dependencies": {
+    "foundation-core-identity": "github:gs2io/gs2-studio-package"
+  },
+  "display": {
+    "description": {
+      "en": "Supplies what the live demo shows of a transfer code.",
+      "ja": "ライブデモ用に、引き継ぎコードの表示項目を提供します。"
+    },
+    "label": {
+      "en": "Account Transfer (demo display)",
+      "ja": "引き継ぎ設定（デモ表示）"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "384d4f0d-8967-53ad-86b1-9bfd6dc5a733",
+  "items": [
+    {
+      "componentClassName": "IdentifierLabel",
+      "fallbackText": "None issued yet",
+      "id": "80eb159e-8eea-572a-a69f-340fbd9abbe9",
+      "kind": "templateLabel",
+      "name": "TransferCode",
+      "sources": [
+        {
+          "key": "userIdentifier",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M3Q7JPT619NTVBDVGNB7M08F"
+          }
+        }
+      ],
+      "template": "{userIdentifier}"
+    }
+  ],
+  "name": "TransferCode",
+  "targetDomainType": "TransferCode",
+  "targetDomainTypeId": "dt_01M3QBMRWJQDXA7SN0BHEB4PDY"
+}

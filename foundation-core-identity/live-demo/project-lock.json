@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "commitSha": "6c7931e237f179130b000392cd3d61ca4fab6016",
+      "integrity": "sha256-iNirIUzv7r5nSrM9E3uOpF09Qy9XbPxCEZMReTSC17s=",
+      "owner": "gs2io",
+      "packageId": "foundation-core-identity",
+      "repo": "gs2-studio-package",
+      "sourceKind": "github",
+      "subdirectory": "foundation-core-identity/packages/foundation-core-identity",
+      "version": "0.0.0"
+    }
+  ],
+  "schemaVersion": 1
+}

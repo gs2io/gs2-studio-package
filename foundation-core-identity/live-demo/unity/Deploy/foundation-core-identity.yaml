@@ -1,0 +1,39 @@
+GS2TemplateFormatVersion: "2019-05-01"
+Resources:
+  AccountCurrentModelMaster_Account:
+    Type: "GS2::Account::CurrentModelMaster"
+    Properties:
+      NamespaceName: "Account"
+      Settings:
+        version: "2024-07-30"
+        takeOverTypeModels:
+          - openIdConnectSetting:
+              additionalReturnValues: []
+              additionalScopeValues: []
+              appleKeyId: "dummy"
+              applePrivateKeyPem: "dummy"
+              appleTeamId: "dummy"
+              clientId: "dummy"
+              configurationPath: "https://appleid.apple.com/.well-known/openid-configuration"
+              doneEndpointUrl: "dummy"
+            type: 0
+          - openIdConnectSetting:
+              additionalReturnValues: []
+              additionalScopeValues: []
+              clientId: "dummy"
+              clientSecret: "dummy"
+              configurationPath: "https://accounts.google.com/.well-known/openid-configuration"
+              doneEndpointUrl: "dummy"
+            type: 1
+      Mode: "direct"
+    DependsOn:
+      - "AccountNamespace_Account"
+  AccountNamespace_Account:
+    Type: "GS2::Account::Namespace"
+    Properties:
+      ChangePasswordIfTakeOver: false
+      Name: "Account"
+      TransactionSetting:
+        DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAutoRun: false
+        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"

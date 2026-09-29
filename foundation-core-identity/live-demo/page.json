@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "TransferCode#Your transfer code": {
+      "key": {
+        "type": 1024
+      },
+      "rows": ["TransferCodeIdentifierLabel", "TransferCodePanel"]
+    },
+    "TakeOverSetting": {
+      "rows": []
+    }
+  }
+}

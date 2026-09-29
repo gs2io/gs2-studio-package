@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "packageId": "foundation-core-identity-demo",
+  "types": {
+    "TransferCode": {
+      "id": "dt_01M3QBMRWJQDXA7SN0BHEB4PDY",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-core-identity",
+      "canonicalTypeId": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ"
+    }
+  },
+  "masterDataResources": {},
+  "transforms": {}
+}
