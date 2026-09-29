@@ -222,6 +222,13 @@ namespace GS2Studio.Showroom.Demo
 
         private bool _followingJoined;
 
+        /// <summary>The SDK handles the joined guilds are followed with, captured on the main thread.</summary>
+        private Gs2Domain? _followDomain;
+        private IGameSession? _followSession;
+
+        /// <summary>Set when reading the joined guilds or the guild they name failed, so the tick tries again.</summary>
+        private bool _membershipFailed;
+
         private float _nextSeasonRead;
         private float _nextMembershipWatch;
         private float _nextStandingRead;
@@ -259,10 +266,22 @@ namespace GS2Studio.Showroom.Demo
                 // event answers the same.
                 var over = SeasonEndsAt != null && DateTime.UtcNow >= SeasonEndsAt;
                 if (now >= _nextSeasonRead && (Season == null || over)) ReadSeason();
-                if (!_followingJoined && now >= _nextMembershipWatch)
+                if (now >= _nextMembershipWatch)
                 {
-                    _nextMembershipWatch = now + MembershipRetrySeconds;
-                    FollowJoined();
+                    if (!_followingJoined)
+                    {
+                        _nextMembershipWatch = now + MembershipRetrySeconds;
+                        FollowJoined();
+                    }
+                    else if (_joinedSubscription != null && (!GuildKnown || _membershipFailed))
+                    {
+                        // A read of the list or of its guild failed, and the
+                        // SDK hands over the list again only when it changes.
+                        _nextMembershipWatch = now + MembershipRetrySeconds;
+                        _membershipFailed = false;
+                        _joinedGuildName = null;
+                        RereadJoined(_visitor!, _joinedTicket, _followDomain!, _followSession!);
+                    }
                 }
                 if (now >= _nextStandingRead)
                 {
@@ -323,7 +342,14 @@ namespace GS2Studio.Showroom.Demo
                 return "GS2 refused the score (notFound): the season is not open right now. The page reads the season again.";
             }
             if (this == null) return "";
-            if (guildId != GuildId || season != Season) return $"You scored {score}.";
+            if (season != Season)
+            {
+                // The season turned over while the score was on its way; the
+                // season it went to is over now, so it may pay.
+                _nextPastRead = 0;
+                return $"You scored {score}.";
+            }
+            if (guildId != GuildId) return $"You scored {score}.";
             _standingGeneration++;
             Total = (Total ?? 0) + score;
             Updated?.Invoke();
@@ -489,13 +515,15 @@ namespace GS2Studio.Showroom.Demo
             var player = session!;
             var visitor = domain.Super.Guild.Namespace(GuildRankingDemo.GuildNamespace).AccessToken(player.AccessToken);
             _visitor = visitor;
+            _followDomain = domain;
+            _followSession = player;
             UserId = player.UserId;
             try
             {
                 var id = await visitor.SubscribeJoinedGuildsWithInitialCallAsync(joined =>
                 {
                     // An empty list may only mean the cache no longer holds it.
-                    if (joined == null || joined.Length == 0) RereadJoined(visitor, ticket);
+                    if (joined == null || joined.Length == 0) RereadJoined(visitor, ticket, domain, player);
                     else Post(ticket, () => ApplyJoined(joined, domain, player));
                 }, GuildRankingDemo.GuildKind);
                 if (ticket == _joinedTicket) _joinedSubscription = id;
@@ -507,6 +535,8 @@ namespace GS2Studio.Showroom.Demo
                 Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guilds could not be followed: {error}");
                 _followingJoined = false;
                 _visitor = null;
+                _followDomain = null;
+                _followSession = null;
             }
         }
 
@@ -518,8 +548,11 @@ namespace GS2Studio.Showroom.Demo
             var visitor = _visitor;
             var id = _joinedSubscription;
             _visitor = null;
+            _followDomain = null;
+            _followSession = null;
             _joinedSubscription = null;
             _followingJoined = false;
+            _membershipFailed = false;
             if (visitor != null && id != null) visitor.UnsubscribeJoinedGuilds(id.Value, GuildRankingDemo.GuildKind);
             while (_inbox.TryDequeue(out _)) { }
         }
@@ -534,19 +567,20 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>
         /// Reads the joined guilds again through the domain, which answers
         /// from the cache while the cache holds them and otherwise reads them
-        /// from GS2.
+        /// from GS2. It may run on the SDK's thread, so it touches nothing of
+        /// Unity's and hands what it read to the main thread.
         /// </summary>
-        private async void RereadJoined(VisitorDomain visitor, int ticket)
+        private async void RereadJoined(VisitorDomain visitor, int ticket, Gs2Domain domain, IGameSession player)
         {
             try
             {
                 var joined = await visitor.JoinedGuildsAsync(GuildRankingDemo.GuildKind).ToArrayAsync();
-                if (!GuildRankingDemo.TryRuntime(out var gs2, out var session)) return;
-                Post(ticket, () => ApplyJoined(joined, gs2!, session!));
+                Post(ticket, () => ApplyJoined(joined, domain, player));
             }
             catch (Exception error)
             {
-                if (ticket == _joinedTicket) Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guilds could not be read again: {error}");
+                Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guilds could not be read again: {error}");
+                Post(ticket, () => _membershipFailed = true);
             }
         }
 
@@ -590,8 +624,10 @@ namespace GS2Studio.Showroom.Demo
             {
                 if (ticket != _guildReadTicket || this == null) return;
                 Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guild could not be read: {error}");
-                // Read again on the next list the SDK hands over.
+                // Read again on the next list the SDK hands over, or at the
+                // next retry.
                 _joinedGuildName = null;
+                _membershipFailed = true;
                 return;
             }
             if (ticket != _guildReadTicket || this == null) return;
