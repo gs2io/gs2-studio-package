@@ -71,9 +71,11 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         public static bool Run(FriendPress press, Func<VisitorDomain, Task<string>> action, Action? afterward = null, Action<VisitorDomain>? whenGone = null, bool pressed = true)
         {
+            // What the page does on its own says nothing when it cannot start:
+            // the visitor did not ask for it, and it is tried again later.
             if (_busy)
             {
-                Log("One moment: the last press is still going.");
+                if (pressed) Log("One moment: the last press is still going.");
                 return false;
             }
             if (pressed && Time.realtimeSinceStartup - _lastChange < SettleSeconds)
@@ -83,7 +85,7 @@ namespace GS2Studio.Showroom.Demo
             }
             if (!TryRuntime(out var gs2, out var session))
             {
-                Log("Not signed in yet.");
+                if (pressed) Log("Not signed in yet.");
                 return false;
             }
             _busy = true;

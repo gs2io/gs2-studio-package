@@ -494,6 +494,11 @@ namespace GS2Studio.Showroom.Demo
             var shown = Signature();
             if (shown == _shown) return;
             _shown = shown;
+            // The panel sits above the lists, so redrawing it can move every
+            // row button below; presses wait for that too. It is marked only
+            // when what is shown changed, so a press lands at most once in
+            // the pause and the next one goes through.
+            FriendDemo.MarkChanged();
             Clear(_result);
             if (_targetId == null) return;
             if (_targetId == _userId)
