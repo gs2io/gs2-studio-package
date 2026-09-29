@@ -46,4 +46,19 @@ describe("transfer code live demo", () => {
     expect(declared).not.toBeNull();
     expect(Number(declared![1])).toBe(TRANSFER_CODE_TAKE_OVER_TYPE);
   });
+
+  // The panel reads the remembered account back before it reloads, under the
+  // keys the scene's account store writes.
+  it("reads the remembered account back under the scene's account store keys", () => {
+    const source = readFileSync(
+      resolve(liveDemoRoot, "unity/Assets/Showroom/IdentityDemo.cs"),
+      "utf8"
+    );
+    const scene = readFileSync(resolve(liveDemoRoot, "unity/Assets/Scenes/Showroom.unity"), "utf8");
+    const prefixes = [...scene.matchAll(/^ {2}_keyPrefix: (\S+)$/gm)].map(match => match[1]);
+
+    expect(prefixes).toHaveLength(1);
+    expect(source).toContain(`RememberedUserIdKey = "${prefixes[0]}.userId"`);
+    expect(source).toContain(`RememberedPasswordKey = "${prefixes[0]}.password"`);
+  });
 });

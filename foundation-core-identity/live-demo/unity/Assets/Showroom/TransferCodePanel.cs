@@ -67,6 +67,9 @@ namespace GS2Studio.Showroom.Demo
         private InputField? _takePasswordField;
         private Coroutine? _signingIn;
 
+        /// <summary>Which demo's link the clipboard is copying, for the log line when it answers.</summary>
+        private string _copyingName = "";
+
         /// <summary>What the clipboard is being asked to do, until it answers.</summary>
         private enum Clipboard
         {
@@ -155,6 +158,7 @@ namespace GS2Studio.Showroom.Demo
             Caption(panel, "Take over another browser's account", 15, MutedText);
             _takeIdField = Field(panel, "TakeId", "Transfer ID, like demo-XXXX-XXXX", 64);
             _takePasswordField = Field(panel, "TakePassword", "Password, like XXXX-XXXX-XXXX-XXXX", 64);
+            _takePasswordField.contentType = InputField.ContentType.Password;
             Press(panel, "Paste the ID and password", Paste);
             Press(panel, "Take over that account", TakeOver);
             Caption(panel,
@@ -193,7 +197,7 @@ namespace GS2Studio.Showroom.Demo
         {
             if (!IdentityDemo.TryRuntime(out var gs2, out var session)) return;
             _userId = session!.UserId;
-            Debug.Log($"{nameof(TransferCodePanel)}: signed in as {_userId}");
+            Debug.Log($"{nameof(TransferCodePanel)}: signed in as {IdentityDemo.Tag(_userId)}");
             if (_accountText != null) _accountText.text = $"This browser is signed in as {IdentityDemo.Tag(_userId)}.";
             _code = IdentityDemo.Me(gs2!, session).TakeOver(IdentityDemo.TakeOverType);
             _nextTick = Time.realtimeSinceStartup + TickSeconds;
@@ -261,9 +265,10 @@ namespace GS2Studio.Showroom.Demo
         /// Keeps whether a code is registered, and turns the one issuing
         /// button into what it now does.
         /// </summary>
-        private void SetRegistered(EzTakeOver? model)
+        private void SetRegistered(EzTakeOver? model) => SetRegistered(model != null);
+
+        private void SetRegistered(bool registered)
         {
-            var registered = model != null;
             if (_registered == registered) return;
             _registered = registered;
             IdentityDemo.MarkChanged();
@@ -275,27 +280,51 @@ namespace GS2Studio.Showroom.Demo
 
         private void IssueOrReissue()
         {
+            if (_reloading) return;
             var replacing = _registered == true;
+            var issued = false;
             IdentityDemo.Run(replacing ? IdentityPress.Reissue : IdentityPress.Issue, async (gs2, session) =>
             {
                 var code = IdentityDemo.Me(gs2, session).TakeOver(IdentityDemo.TakeOverType);
-                if (replacing)
+                if (replacing) await Delete(gs2, session);
+                (string Identifier, string Password) registered;
+                try
                 {
-                    try
-                    {
-                        await IdentityDemo.Me(gs2, session).DeleteTakeOverSettingAsync(IdentityDemo.TakeOverType);
-                    }
-                    catch (NotFoundException)
-                    {
-                        // Already gone (deleted from another tab): issuing is what was asked for.
-                    }
+                    registered = await Register(code);
                 }
-                var (identifier, password) = await Register(code);
-                ShowIssued(identifier, password);
+                catch (Gs2Exception error) when (!replacing && IdentityDemo.IsAlreadyRegistered(error))
+                {
+                    // GS2 sends no notification when a code is added elsewhere,
+                    // e.g. by the browser this account was taken over from, so
+                    // the SDK's cache can say "none" while GS2 has one. The
+                    // visitor asked for a working code, so the one GS2 has is
+                    // replaced in the same press.
+                    replacing = true;
+                    await Delete(gs2, session);
+                    registered = await Register(code);
+                }
+                issued = true;
+                ShowIssued(registered.Identifier, registered.Password);
                 return replacing
-                    ? $"Replaced your transfer code: the new ID is {identifier}. The old code no longer works."
-                    : $"Issued a transfer code: the ID is {identifier}. Copy the password now; it is not shown again.";
+                    ? $"Replaced your transfer code: the new ID is {registered.Identifier}. The old code no longer works."
+                    : $"Issued a transfer code: the ID is {registered.Identifier}. Copy the password now; it is not shown again.";
+            }, afterward: () =>
+            {
+                if (issued) SetRegistered(true);
             });
+        }
+
+        /// <summary>Deletes the account's transfer code; one already gone is what was asked for.</summary>
+        private static async Task Delete(Gs2.Unity.Core.Gs2Domain gs2, Gs2.Unity.Util.IGameSession session)
+        {
+            try
+            {
+                await IdentityDemo.Me(gs2, session).DeleteTakeOverSettingAsync(IdentityDemo.TakeOverType);
+            }
+            catch (NotFoundException)
+            {
+                // Deleted from another tab or browser.
+            }
         }
 
         /// <summary>
@@ -372,6 +401,7 @@ namespace GS2Studio.Showroom.Demo
 
             string? takenUserId = null;
             string? takenPassword = null;
+            var own = false;
             IdentityDemo.Run(IdentityPress.TakeOver, async (gs2, session) =>
             {
                 var account = await IdentityDemo.Accounts(gs2).DoTakeOverAsync(IdentityDemo.TakeOverType, identifier, password);
@@ -380,21 +410,34 @@ namespace GS2Studio.Showroom.Demo
                 {
                     return "GS2 accepted the code but did not hand the account over; nothing was changed.";
                 }
-                if (model.UserId == session.UserId)
-                {
-                    return $"That code is this browser's own: it is already signed in as {IdentityDemo.Tag(model.UserId)}.";
-                }
                 takenUserId = model.UserId;
                 takenPassword = model.Password;
+                if (model.UserId == session.UserId)
+                {
+                    // Remembered all the same, so the saved password is the
+                    // one GS2 now holds for this account.
+                    own = true;
+                    return $"That code is this browser's own: it is already signed in as {IdentityDemo.Tag(model.UserId)}.";
+                }
                 return $"Took over {IdentityDemo.Tag(model.UserId)}. Reloading to sign in as it...";
             }, afterward: () =>
             {
                 if (takenUserId == null || takenPassword == null) return;
                 // localStorage writes are synchronous, so the reloaded page reads this.
                 store.Remember(takenUserId, takenPassword);
+                var stuck = IdentityDemo.IsRemembered(takenUserId, takenPassword);
                 takenPassword = null;
                 if (_takePasswordField != null) _takePasswordField.text = "";
+                if (!stuck)
+                {
+                    IdentityDemo.Log(own
+                        ? "The browser did not keep the account: its storage is blocked, so the next visit starts a new account."
+                        : "The browser did not keep the account: its storage is blocked (private mode or blocked site data), so reloading would not sign in as it. Allow site data and try again.");
+                    return;
+                }
+                if (own) return;
                 _reloading = true;
+                IdentityDemo.Freeze();
                 StartCoroutine(ReloadSoon());
             });
         }
@@ -410,7 +453,7 @@ namespace GS2Studio.Showroom.Demo
 
         private void CopyCode()
         {
-            if (_clipboard != Clipboard.Idle) return;
+            if (_reloading || _clipboard != Clipboard.Idle) return;
             var identifier = _issuedIdField?.text ?? "";
             var password = _issuedPasswordField?.text ?? "";
             if (identifier.Length == 0 || password.Length == 0)
@@ -427,18 +470,16 @@ namespace GS2Studio.Showroom.Demo
 
         private void CopyLink(string link, string name)
         {
-            if (_clipboard != Clipboard.Idle) return;
+            if (_reloading || _clipboard != Clipboard.Idle) return;
             _clipboard = Clipboard.CopyingLink;
             _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
             _copyingName = name;
             ShowroomClipboard.Copy(link);
         }
 
-        private string _copyingName = "";
-
         private void Paste()
         {
-            if (_clipboard != Clipboard.Idle) return;
+            if (_reloading || _clipboard != Clipboard.Idle) return;
             _clipboard = Clipboard.Pasting;
             _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
             ShowroomClipboard.Paste();

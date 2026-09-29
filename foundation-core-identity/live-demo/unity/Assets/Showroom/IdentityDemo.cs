@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 using Gs2.Core.Exception;
+using Gs2.Gs2Account.Exception;
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 
@@ -44,6 +45,7 @@ namespace GS2Studio.Showroom.Demo
         private const string Alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 
         private static bool _busy;
+        private static bool _frozen;
         private static ShowroomPage? _page;
 
         /// <summary>The signed-in player's SDK handles, once signed in.</summary>
@@ -82,6 +84,11 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         public static bool Run(IdentityPress press, Func<Gs2Domain, IGameSession, Task<string>> action, Action? afterward = null)
         {
+            if (_frozen)
+            {
+                Log("The page is reloading.");
+                return false;
+            }
             if (_busy)
             {
                 Log("One moment: the last press is still going.");
@@ -117,8 +124,10 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
+                // The type only: the message of an unexpected failure may carry
+                // what the request carried.
                 Debug.LogError($"{nameof(IdentityDemo)}: {press} failed: {error.GetType().Name}");
-                Log($"Failed: {error.Message}");
+                Log($"Failed: {error.GetType().Name}");
             }
             finally
             {
@@ -126,6 +135,34 @@ namespace GS2Studio.Showroom.Demo
             }
             afterward?.Invoke();
         }
+
+        /// <summary>Refuses every press from now on: the page is about to reload as another account.</summary>
+        public static void Freeze() => _frozen = true;
+
+        /// <summary>
+        /// The keys <c>ShowroomAccountStore</c> keeps the account under: its
+        /// <c>_keyPrefix</c> as every showroom scene sets it, plus the suffixes
+        /// it appends.
+        /// </summary>
+        private const string RememberedUserIdKey = "gs2.showroom.account.userId";
+        private const string RememberedPasswordKey = "gs2.showroom.account.password";
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        [System.Runtime.InteropServices.DllImport("__Internal")]
+        private static extern string ShowroomBrowserStorage_Get(string key);
+
+        private static string? ReadRemembered(string key) => ShowroomBrowserStorage_Get(key);
+#else
+        private static string? ReadRemembered(string key) => PlayerPrefs.GetString(key, null);
+#endif
+
+        /// <summary>
+        /// Whether the store now holds exactly this account, read back from
+        /// where the next page reads it. A browser that blocks site data
+        /// accepts the write and keeps nothing.
+        /// </summary>
+        public static bool IsRemembered(string userId, string password) =>
+            ReadRemembered(RememberedUserIdKey) == userId && ReadRemembered(RememberedPasswordKey) == password;
 
         /// <summary>The kind of a refusal and GS2's codes for it.</summary>
         public static string Summary(Gs2Exception error)
@@ -154,6 +191,7 @@ namespace GS2Studio.Showroom.Demo
                     if (error is InternalServerErrorException) return "GS2 could not register the code (the ID may have been taken). Press again for a new one.";
                     break;
                 case IdentityPress.TakeOver:
+                    if (error is BannedInfinityException) return "That account is banned, so it cannot be taken over.";
                     if (error is UnauthorizedException) return "The password does not match that ID. Check both, or issue a new code in the other browser.";
                     if (error is NotFoundException) return "No transfer code has that ID. Check it: the other browser may have deleted or reissued its code.";
                     break;
