@@ -136,9 +136,8 @@ const ClusterRankingModel = defineMasterDataResource(resource =>
       minimumValue: Bind.domainProperty(Source.direct(GuildRanking, "minimumValue")),
       maximumValue: Bind.domainProperty(Source.direct(GuildRanking, "maximumValue")),
       accessPeriodEventId: Bind.null(),
-      // Tiers are matched against the rank, where tied members share a
-      // placement. Left null GS2 matches the 0-based index instead, so the
-      // first and second member would both fall into a threshold 1 tier.
+      // Tiers are matched against the member's rank, as `thresholdRank` says;
+      // tied members share a placement.
       rewardCalculationIndex: Bind.static("rank"),
     })
     .grnFieldMount("entryPeriodEventId", SCHEDULE_NAMESPACE_RESOURCE_ID, [
