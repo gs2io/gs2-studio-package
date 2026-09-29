@@ -30,7 +30,12 @@ namespace GS2Studio.Showroom.Demo
 
         private void Publish()
         {
-            if (_season == null || !_season.GuildKnown) return;
+            if (_season == null) return;
+            if (!_season.GuildKnown)
+            {
+                _onUpdate.Invoke("Reading your guild...");
+                return;
+            }
             if (_season.GuildId == null)
             {
                 _onUpdate.Invoke("Not in a guild");
@@ -46,7 +51,11 @@ namespace GS2Studio.Showroom.Demo
                 _onUpdate.Invoke("Reading your guild's board...");
                 return;
             }
-            var scored = _season.Board.Length;
+            // The board is read only down to its last shown place, and members
+            // who left keep theirs, so past that it can only say "more".
+            var scored = _season.BoardHasMore
+                ? $"more than {GuildRankingSeasonState.BoardSize}"
+                : _season.Board.Length.ToString();
             _onUpdate.Invoke(_season.Total == null
                 ? "Not on your guild's board yet this season"
                 : _season.Rank != null

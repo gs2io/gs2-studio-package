@@ -64,7 +64,9 @@ const WALLET_SLOT = 0;
 /**
  * The reward tiers, best first. A member receives the tier with the smallest
  * threshold at or below their rank in their guild. A guild holds at most ten
- * members, so every member who scored receives one.
+ * members at once, but the scores of members who left stay on its board, so a
+ * board can run past ten places, and 11th place or lower receives nothing
+ * (GS2 answers noRewards).
  */
 const TIERS = [
   { thresholdRank: 1, coins: 300 },
@@ -201,7 +203,7 @@ export const microLiveopsGuildRankingDemo = withTiers
   .uiComponent(GuildRanking, ui =>
     ui.templateLabel(
       "RuleLabel",
-      `Each guild has its own board: you are ranked against the other members of your guild, not guild against guild. Each Play adds ${MINIMUM_SCORE} to ${MAXIMUM_SCORE} points to your total for today's season, and seasons turn over every day at 00:00 UTC. Once a season is over, receive coins for it by the rank you finished at in your guild: ${TIER_SUMMARY}. A guild of one always finishes 1st, so founding a guild alone pays the top tier; this demo allows that because its coins are play money.`,
+      `Each guild has its own board: you are ranked against the other members of your guild, not guild against guild. Each Play adds ${MINIMUM_SCORE} to ${MAXIMUM_SCORE} points to your total for today's season, and seasons turn over every day at 00:00 UTC. Once a season is over, receive coins for it by the rank you finished at in your guild: ${TIER_SUMMARY}. A guild holds at most ten members at once, but the scores of members who left stay on its board, so 11th place or lower earns nothing. A guild of one always finishes 1st, so founding a guild alone pays the top tier. A reward is received once per guild and season, so a player who scores in one guild and then in another, even one they founded again after disbanding the first, receives again for the same season as a different guild. This demo allows both because its coins are play money.`,
       {},
       { name: "GuildRanking" }
     )

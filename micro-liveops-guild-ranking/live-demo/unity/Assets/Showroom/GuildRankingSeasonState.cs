@@ -8,16 +8,22 @@
 //
 // GS2 numbers a season by how many times the schedule demo's daily event
 // `guild-season` has repeated, so the season and the moment it turns over are
-// read from that event, once, and again only when the season is over. The
-// visitor's guild is read every few seconds, and it is the guild's full id,
-// read from GS2 once per guild, that the scores are filed under. The guild,
-// the board, the visitor's total and their past seasons are read through the
-// REST client and are shown as they are: nothing here writes into the SDK
-// cache, reloads or invalidates anything, so the lobby's view of the same
-// guild is the SDK's alone. GS2 does not announce a new
-// score, so the board is read every few seconds; it has no cache in the way,
-// so what another member scored shows at the next read. Playing and receiving
-// go through the SDK, so the wallet the page shows hears the reward land.
+// read from that event, once, and again only when the season is over.
+//
+// The visitor's guild is followed through the SDK, the same way the lobby
+// follows it: a subscription to the joined guilds, which the SDK reads again
+// when GS2 says the visitor joined or left, and the guild itself read once per
+// guild through the domain for its full id, which the scores are filed under,
+// and its name. Nothing here reloads or invalidates the SDK's cache; the
+// lobby and this share what it holds.
+//
+// GS2 does not announce a new score, so the board is read through the REST
+// client every few seconds; it has no cache in the way, so what another member
+// scored shows at the next read. The past seasons are read when the page
+// starts, when the season turns over and after a receipt, since nothing else
+// changes them; a season known to be received or to pay nothing is not asked
+// about again. Playing and receiving go through the SDK, so the wallet the
+// page shows hears the reward land.
 //
 // A read answers for the moment it started. One that started before a play or
 // a receipt, before the guild or the season changed, or before a newer read of
@@ -27,14 +33,19 @@
 
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Linq;
+
 using Gs2.Core.Exception;
 using Gs2.Gs2Guild;
+using Gs2.Gs2Guild.Model;
 using Gs2.Gs2Guild.Request;
 using Gs2.Gs2Ranking2;
 using Gs2.Gs2Ranking2.Model;
@@ -43,6 +54,9 @@ using Gs2.Gs2Schedule;
 using Gs2.Gs2Schedule.Request;
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+
+using GuildModel = Gs2.Gs2Guild.Model.Guild;
+using VisitorDomain = Gs2.Gs2Guild.Domain.Model.UserAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
@@ -64,16 +78,24 @@ namespace GS2Studio.Showroom.Demo
         public const int MinimumScore = 1;
         public const int MaximumScore = 100;
 
-        /// <summary>How many places the board shows; a guild holds at most ten members.</summary>
+        /// <summary>
+        /// How many places the board shows. A guild holds at most ten members
+        /// at once, but members who left keep their places, so a board can
+        /// hold more.
+        /// </summary>
         public const int BoardSize = 10;
 
         private const float TickSeconds = 1f;
-        private const float MembershipPollSeconds = 3f;
         private const float StandingPollSeconds = 6f;
-        private const float PastPollSeconds = 60f;
 
         /// <summary>How long to wait before reading the event again after it could not be read.</summary>
         private const float SeasonRetrySeconds = 30f;
+
+        /// <summary>How long to wait before following the joined guilds again after it failed to start.</summary>
+        private const float MembershipRetrySeconds = 5f;
+
+        /// <summary>How long to wait before reading the past seasons again after they could not be read.</summary>
+        private const float PastRetrySeconds = 30f;
 
         private const int PageSize = 100;
 
@@ -137,8 +159,11 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>The visitor's rank in their guild this season, or null before their first play.</summary>
         public int? Rank { get; private set; }
 
-        /// <summary>The guild's board this season, best first.</summary>
+        /// <summary>The top of the guild's board this season, best first, at most <see cref="BoardSize"/> places.</summary>
         public ClusterRankingData[] Board { get; private set; } = Array.Empty<ClusterRankingData>();
+
+        /// <summary>Whether the guild's board holds more places than <see cref="Board"/> shows.</summary>
+        public bool BoardHasMore { get; private set; }
 
         /// <summary>Whether the past seasons have been read once.</summary>
         public bool PastKnown { get; private set; }
@@ -153,7 +178,6 @@ namespace GS2Studio.Showroom.Demo
         public string? PastProblem { get; private set; }
 
         private bool _readingSeason;
-        private bool _readingMembership;
         private bool _readingStanding;
         private bool _readStandingAgain;
         private bool _readingPast;
@@ -165,17 +189,60 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>Bumped by every past read as it starts, and by every receipt.</summary>
         private int _pastGeneration;
 
-        /// <summary>Seasons GS2 said pay nothing for the visitor's rank, keyed by guild and season.</summary>
+        /// <summary>Seasons the visitor received for, keyed by guild and season; a receipt is final.</summary>
+        private readonly HashSet<(string, long)> _received = new HashSet<(string, long)>();
+
+        /// <summary>Seasons GS2 said pay nothing for the visitor, keyed by guild and season.</summary>
         private readonly HashSet<(string, long)> _paysNothing = new HashSet<(string, long)>();
 
+        /// <summary>The visitor's final rank and score in a season that is over, keyed by guild and season.</summary>
+        private readonly Dictionary<(string, long), (int? rank, long? score)> _finalStanding =
+            new Dictionary<(string, long), (int? rank, long? score)>();
+
+        /// <summary>The names of guilds the visitor scored in, keyed by full id; null once the guild is gone.</summary>
+        private readonly Dictionary<string, string?> _guildNames = new Dictionary<string, string?>();
+
+        /// <summary>What the SDK reported, waiting for the main thread.</summary>
+        private readonly ConcurrentQueue<Action> _inbox = new ConcurrentQueue<Action>();
+
+        /// <summary>The signed-in visitor's guild domain, while the joined guilds are followed.</summary>
+        private VisitorDomain? _visitor;
+
+        /// <summary>The subscription to the joined guilds, once it started.</summary>
+        private ulong? _joinedSubscription;
+
+        /// <summary>Bumped whenever the joined guilds stop being followed; a callback under an older one is dropped.</summary>
+        private int _joinedTicket;
+
+        /// <summary>Bumped whenever the joined list names a guild to read; a read under an older one is dropped.</summary>
+        private int _guildReadTicket;
+
+        /// <summary>The guild name the joined list last named, or null.</summary>
+        private string? _joinedGuildName;
+
+        private bool _followingJoined;
+
         private float _nextSeasonRead;
-        private float _nextMembershipRead;
+        private float _nextMembershipWatch;
         private float _nextStandingRead;
         private float _nextPastRead;
 
         private void OnEnable()
         {
             StartCoroutine(Run());
+        }
+
+        private void OnDisable()
+        {
+            StopFollowingJoined();
+        }
+
+        private void Update()
+        {
+            while (_inbox.TryDequeue(out var apply))
+            {
+                apply();
+            }
         }
 
         private IEnumerator Run()
@@ -192,10 +259,10 @@ namespace GS2Studio.Showroom.Demo
                 // event answers the same.
                 var over = SeasonEndsAt != null && DateTime.UtcNow >= SeasonEndsAt;
                 if (now >= _nextSeasonRead && (Season == null || over)) ReadSeason();
-                if (now >= _nextMembershipRead)
+                if (!_followingJoined && now >= _nextMembershipWatch)
                 {
-                    _nextMembershipRead = now + MembershipPollSeconds;
-                    ReadMembership();
+                    _nextMembershipWatch = now + MembershipRetrySeconds;
+                    FollowJoined();
                 }
                 if (now >= _nextStandingRead)
                 {
@@ -204,7 +271,9 @@ namespace GS2Studio.Showroom.Demo
                 }
                 if (now >= _nextPastRead)
                 {
-                    _nextPastRead = now + PastPollSeconds;
+                    // Read on start and when the season turns over; a receipt
+                    // reads again itself, and a failed read sets a retry.
+                    _nextPastRead = float.PositiveInfinity;
                     ReadPast();
                 }
                 yield return tick;
@@ -241,8 +310,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (BadRequestException error) when (GuildRankingDemo.Refused(error, "notInclude"))
             {
-                // The visitor left, or was removed, since the guild was last read.
-                _nextMembershipRead = 0;
+                // The visitor left, or was removed, and the SDK has not heard yet.
                 return "GS2 refused the score (notInclude): you are not a member of that guild any more. Scores count only for the guild you belong to.";
             }
             catch (NotFoundException)
@@ -290,6 +358,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (BadRequestException error) when (GuildRankingDemo.Refused(error, "alreadyReceived"))
             {
+                _received.Add((target.GuildId, target.Season));
                 ForgetNext(target);
                 return $"GS2 says season {target.Season} was already received (alreadyReceived).";
             }
@@ -307,10 +376,14 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (NotFoundException)
             {
+                // Asking again would get the same answer, so the season is
+                // put with those that pay nothing.
+                _paysNothing.Add((target.GuildId, target.Season));
                 ForgetNext(target);
                 return $"GS2 has no score of yours for season {target.Season} (notFound).";
             }
             if (this == null) return "";
+            _received.Add((target.GuildId, target.Season));
             ForgetNext(target);
             var rank = target.Rank != null ? $"rank {target.Rank}" : "your rank";
             return $"Received the reward for season {target.Season}: {rank} in {where}.";
@@ -377,6 +450,7 @@ namespace GS2Studio.Showroom.Demo
                         Total = null;
                         Rank = null;
                         Board = Array.Empty<ClusterRankingData>();
+                        BoardHasMore = false;
                         _nextStandingRead = 0;
                         _nextPastRead = 0;
                     }
@@ -402,71 +476,153 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Reads which guild the visitor belongs to, and, when it changed,
-        /// that guild's full id and name. One read is out at a time.
+        /// Follows the guilds the visitor joined, as the lobby does: the SDK
+        /// hands over the list on subscribing and again whenever GS2 says the
+        /// visitor joined or left. A failure to start is tried again shortly.
         /// </summary>
-        private async void ReadMembership()
+        private async void FollowJoined()
         {
-            if (_readingMembership || !GuildRankingDemo.TryRuntime(out var gs2, out var session)) return;
-            _readingMembership = true;
+            if (_followingJoined || !GuildRankingDemo.TryRuntime(out var gs2, out var session)) return;
+            _followingJoined = true;
+            var ticket = ++_joinedTicket;
+            var domain = gs2!;
+            var player = session!;
+            var visitor = domain.Super.Guild.Namespace(GuildRankingDemo.GuildNamespace).AccessToken(player.AccessToken);
+            _visitor = visitor;
+            UserId = player.UserId;
             try
             {
-                var client = new Gs2GuildRestClient(gs2!.Super.RestSession);
-                var token = session!.AccessToken.Token;
-                var joined = await client.DescribeJoinedGuildsAsync(
-                    new DescribeJoinedGuildsRequest()
-                        .WithNamespaceName(GuildRankingDemo.GuildNamespace)
-                        .WithGuildModelName(GuildRankingDemo.GuildKind)
-                        .WithAccessToken(token));
-                var name = joined?.Items?.FirstOrDefault(entry => entry?.GuildModelName == GuildRankingDemo.GuildKind)?.GuildName;
-                var guildId = GuildId;
-                var displayName = GuildDisplayName;
-                if (name == null)
+                var id = await visitor.SubscribeJoinedGuildsWithInitialCallAsync(joined =>
                 {
-                    guildId = null;
-                    displayName = null;
-                }
-                else if (guildId == null || GuildRankingDemo.GuildNameOf(guildId) != name)
-                {
-                    var guild = await client.GetGuildAsync(
-                        new GetGuildRequest()
-                            .WithNamespaceName(GuildRankingDemo.GuildNamespace)
-                            .WithGuildModelName(GuildRankingDemo.GuildKind)
-                            .WithGuildName(name)
-                            .WithAccessToken(token));
-                    guildId = guild?.Item?.GuildId;
-                    displayName = guild?.Item?.DisplayName;
-                }
-                if (this == null) return;
-                UserId = session.UserId;
-                var changed = !GuildKnown || guildId != GuildId || displayName != GuildDisplayName;
-                if (guildId != GuildId)
-                {
-                    _standingGeneration++;
-                    StandingKnown = false;
-                    Total = null;
-                    Rank = null;
-                    Board = Array.Empty<ClusterRankingData>();
-                    _nextStandingRead = 0;
-                }
-                GuildKnown = true;
-                GuildId = guildId;
-                GuildDisplayName = displayName;
-                if (changed) Updated?.Invoke();
-            }
-            catch (NotFoundException)
-            {
-                // The guild was disbanded between the two reads; the next
-                // read no longer lists it.
+                    // An empty list may only mean the cache no longer holds it.
+                    if (joined == null || joined.Length == 0) RereadJoined(visitor, ticket);
+                    else Post(ticket, () => ApplyJoined(joined, domain, player));
+                }, GuildRankingDemo.GuildKind);
+                if (ticket == _joinedTicket) _joinedSubscription = id;
+                else visitor.UnsubscribeJoinedGuilds(id, GuildRankingDemo.GuildKind);
             }
             catch (Exception error)
             {
-                Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guild could not be read: {error}");
+                if (ticket != _joinedTicket) return;
+                Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guilds could not be followed: {error}");
+                _followingJoined = false;
+                _visitor = null;
             }
-            finally
+        }
+
+        /// <summary>Stops following the joined guilds and drops what the SDK still has to report.</summary>
+        private void StopFollowingJoined()
+        {
+            _joinedTicket++;
+            _guildReadTicket++;
+            var visitor = _visitor;
+            var id = _joinedSubscription;
+            _visitor = null;
+            _joinedSubscription = null;
+            _followingJoined = false;
+            if (visitor != null && id != null) visitor.UnsubscribeJoinedGuilds(id.Value, GuildRankingDemo.GuildKind);
+            while (_inbox.TryDequeue(out _)) { }
+        }
+
+        /// <summary>Hands an SDK callback to the main thread, unless the guilds stopped being followed first.</summary>
+        private void Post(int ticket, Action apply) =>
+            _inbox.Enqueue(() =>
             {
-                _readingMembership = false;
+                if (ticket == _joinedTicket && this != null) apply();
+            });
+
+        /// <summary>
+        /// Reads the joined guilds again through the domain, which answers
+        /// from the cache while the cache holds them and otherwise reads them
+        /// from GS2.
+        /// </summary>
+        private async void RereadJoined(VisitorDomain visitor, int ticket)
+        {
+            try
+            {
+                var joined = await visitor.JoinedGuildsAsync(GuildRankingDemo.GuildKind).ToArrayAsync();
+                if (!GuildRankingDemo.TryRuntime(out var gs2, out var session)) return;
+                Post(ticket, () => ApplyJoined(joined, gs2!, session!));
             }
+            catch (Exception error)
+            {
+                if (ticket == _joinedTicket) Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guilds could not be read again: {error}");
+            }
+        }
+
+        /// <summary>
+        /// Takes in which guild the joined list names. A guild it did not name
+        /// before is read through the domain for its full id and name.
+        /// </summary>
+        private void ApplyJoined(JoinedGuild[]? joined, Gs2Domain gs2, IGameSession session)
+        {
+            // The SDK hands over the whole list, of every kind.
+            var name = joined?.FirstOrDefault(entry => entry?.GuildModelName == GuildRankingDemo.GuildKind)?.GuildName;
+            if (name == null)
+            {
+                _guildReadTicket++;
+                _joinedGuildName = null;
+                SetGuild(null, null);
+                return;
+            }
+            if (name == _joinedGuildName && GuildKnown && GuildId != null) return;
+            _joinedGuildName = name;
+            ReadGuild(gs2, session, name);
+        }
+
+        /// <summary>Reads the named guild through the domain; a newer name, or leaving, drops what it read.</summary>
+        private async void ReadGuild(Gs2Domain gs2, IGameSession session, string name)
+        {
+            var ticket = ++_guildReadTicket;
+            GuildModel? guild = null;
+            try
+            {
+                guild = await gs2.Super.Guild.Namespace(GuildRankingDemo.GuildNamespace)
+                    .Guild(GuildRankingDemo.GuildKind, name)
+                    .ModelAsync(session.AccessToken);
+            }
+            catch (NotFoundException)
+            {
+                // Disbanded after the list was read; the SDK hears the visitor
+                // left and hands over the list again.
+            }
+            catch (Exception error)
+            {
+                if (ticket != _guildReadTicket || this == null) return;
+                Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guild could not be read: {error}");
+                // Read again on the next list the SDK hands over.
+                _joinedGuildName = null;
+                return;
+            }
+            if (ticket != _guildReadTicket || this == null) return;
+            if (guild?.GuildId == null)
+            {
+                // The guild is gone although the list still names it; until
+                // the list catches up the visitor has no guild to play for.
+                _joinedGuildName = null;
+                SetGuild(null, null);
+                return;
+            }
+            SetGuild(guild.GuildId, guild.DisplayName);
+        }
+
+        /// <summary>Records the visitor's guild, and starts its board afresh when it changed.</summary>
+        private void SetGuild(string? guildId, string? displayName)
+        {
+            if (guildId != GuildId)
+            {
+                _standingGeneration++;
+                StandingKnown = false;
+                Total = null;
+                Rank = null;
+                Board = Array.Empty<ClusterRankingData>();
+                BoardHasMore = false;
+                _nextStandingRead = 0;
+            }
+            GuildKnown = true;
+            GuildId = guildId;
+            GuildDisplayName = displayName;
+            Updated?.Invoke();
         }
 
         /// <summary>
@@ -534,6 +690,7 @@ namespace GS2Studio.Showroom.Demo
             Total = own?.Item?.Score;
             Rank = own?.Item?.Rank;
             Board = board?.Items ?? Array.Empty<ClusterRankingData>();
+            BoardHasMore = !string.IsNullOrEmpty(board?.NextPageToken);
             StandingKnown = true;
             Updated?.Invoke();
         }
@@ -542,7 +699,9 @@ namespace GS2Studio.Showroom.Demo
         /// Reads every score the visitor made in this ranking and every reward
         /// they received, and finds the latest season that is over and still
         /// pays. A visitor who changed guilds has one score per guild in a
-        /// season, and each is received on its own.
+        /// season, and each is received on its own. Called on start, when the
+        /// season turns over and after a receipt; a failed read is tried again
+        /// shortly.
         /// </summary>
         private async void ReadPast()
         {
@@ -562,6 +721,7 @@ namespace GS2Studio.Showroom.Demo
             catch (Exception error)
             {
                 Debug.LogError($"{nameof(GuildRankingSeasonState)}: the past seasons could not be read: {error}");
+                if (this != null) _nextPastRead = Time.realtimeSinceStartup + PastRetrySeconds;
                 if (this != null && !PastKnown)
                 {
                     PastProblem = $"Your past seasons could not be read: {error.Message}";
@@ -600,28 +760,38 @@ namespace GS2Studio.Showroom.Demo
                 pageToken = page?.NextPageToken;
             } while (!string.IsNullOrEmpty(pageToken));
 
-            var received = new HashSet<(string, long)>();
-            pageToken = null;
-            do
-            {
-                var page = await client.DescribeClusterRankingReceivedRewardsAsync(
-                    new DescribeClusterRankingReceivedRewardsRequest()
-                        .WithNamespaceName(RankingNamespace)
-                        .WithRankingName(RankingName)
-                        .WithPageToken(pageToken)
-                        .WithLimit(PageSize)
-                        .WithAccessToken(token));
-                foreach (var receipt in page?.Items ?? Array.Empty<ClusterRankingReceivedReward>())
-                {
-                    if (receipt?.ClusterName != null && receipt.Season != null) received.Add((receipt.ClusterName, receipt.Season.Value));
-                }
-                pageToken = page?.NextPageToken;
-            } while (!string.IsNullOrEmpty(pageToken));
+            bool Settled(ClusterRankingScore score) =>
+                _received.Contains((score.ClusterName, score.Season!.Value)) ||
+                _paysNothing.Contains((score.ClusterName, score.Season!.Value));
 
-            var waiting = scores
+            var over = scores
                 .Where(score => score?.ClusterName != null && score.Season != null && score.Season < current)
-                .Where(score => !received.Contains((score.ClusterName, score.Season!.Value)))
-                .Where(score => !_paysNothing.Contains((score.ClusterName, score.Season!.Value)))
+                .ToArray();
+
+            // The receipts are read only while a season that is over is not
+            // yet known to be received or to pay nothing.
+            if (over.Any(score => !Settled(score)))
+            {
+                pageToken = null;
+                do
+                {
+                    var page = await client.DescribeClusterRankingReceivedRewardsAsync(
+                        new DescribeClusterRankingReceivedRewardsRequest()
+                            .WithNamespaceName(RankingNamespace)
+                            .WithRankingName(RankingName)
+                            .WithPageToken(pageToken)
+                            .WithLimit(PageSize)
+                            .WithAccessToken(token));
+                    foreach (var receipt in page?.Items ?? Array.Empty<ClusterRankingReceivedReward>())
+                    {
+                        if (receipt?.ClusterName != null && receipt.Season != null) _received.Add((receipt.ClusterName, receipt.Season.Value));
+                    }
+                    pageToken = page?.NextPageToken;
+                } while (!string.IsNullOrEmpty(pageToken));
+            }
+
+            var waiting = over
+                .Where(score => !Settled(score))
                 .OrderByDescending(score => score.Season)
                 .ToArray();
 
@@ -629,22 +799,34 @@ namespace GS2Studio.Showroom.Demo
             if (waiting.Length > 0)
             {
                 var latest = waiting[0];
+                var key = (latest.ClusterName, latest.Season!.Value);
+                // A season that is over keeps its ranks, and a guild keeps its
+                // name until it is gone, so each is asked once.
+                if (!_finalStanding.TryGetValue(key, out var standing))
+                {
+                    var rank = await client.GetClusterRankingAsync(
+                        new GetClusterRankingRequest()
+                            .WithNamespaceName(RankingNamespace)
+                            .WithRankingName(RankingName)
+                            .WithClusterName(latest.ClusterName)
+                            .WithSeason(latest.Season)
+                            .WithAccessToken(token));
+                    standing = (rank?.Item?.Rank, rank?.Item?.Score ?? latest.Score);
+                    _finalStanding[key] = standing;
+                }
+                if (!_guildNames.TryGetValue(latest.ClusterName, out var displayName))
+                {
+                    displayName = await DisplayNameOf(gs2, session, latest.ClusterName);
+                    _guildNames[latest.ClusterName] = displayName;
+                }
                 next = new PastSeason
                 {
-                    Season = latest.Season!.Value,
+                    Season = key.Item2,
                     GuildId = latest.ClusterName,
-                    Score = latest.Score,
+                    GuildDisplayName = displayName,
+                    Score = standing.score,
+                    Rank = standing.rank,
                 };
-                var rank = await client.GetClusterRankingAsync(
-                    new GetClusterRankingRequest()
-                        .WithNamespaceName(RankingNamespace)
-                        .WithRankingName(RankingName)
-                        .WithClusterName(latest.ClusterName)
-                        .WithSeason(latest.Season)
-                        .WithAccessToken(token));
-                next.Rank = rank?.Item?.Rank;
-                next.Score = rank?.Item?.Score ?? next.Score;
-                next.GuildDisplayName = await DisplayNameOf(gs2, session, latest.ClusterName);
             }
 
             if (this == null || generation != _pastGeneration) return;

@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.GuildRanking.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Each guild has its own board: you are ranked against the other members of your guild, not guild against guild. Each Play adds 1 to 100 points to your total for today's season, and seasons turn over every day at 00:00 UTC. Once a season is over, receive coins for it by the rank you finished at in your guild: 1st 300, top 3 150, top 10 50. A guild of one always finishes 1st, so founding a guild alone pays the top tier; this demo allows that because its coins are play money.</c>. Each <c>{key}</c> placeholder is
+    /// <c>Each guild has its own board: you are ranked against the other members of your guild, not guild against guild. Each Play adds 1 to 100 points to your total for today's season, and seasons turn over every day at 00:00 UTC. Once a season is over, receive coins for it by the rank you finished at in your guild: 1st 300, top 3 150, top 10 50. A guild holds at most ten members at once, but the scores of members who left stay on its board, so 11th place or lower earns nothing. A guild of one always finishes 1st, so founding a guild alone pays the top tier. A reward is received once per guild and season, so a player who scores in one guild and then in another, even one they founded again after disbanding the first, receives again for the same season as a different guild. This demo allows both because its coins are play money.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>GuildRanking</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.GuildRanking.UI
 
         private void OnUpdated(GuildRanking model)
         {
-            _onUpdate.Invoke($"Each guild has its own board: you are ranked against the other members of your guild, not guild against guild. Each Play adds 1 to 100 points to your total for today's season, and seasons turn over every day at 00:00 UTC. Once a season is over, receive coins for it by the rank you finished at in your guild: 1st 300, top 3 150, top 10 50. A guild of one always finishes 1st, so founding a guild alone pays the top tier; this demo allows that because its coins are play money.");
+            _onUpdate.Invoke($"Each guild has its own board: you are ranked against the other members of your guild, not guild against guild. Each Play adds 1 to 100 points to your total for today's season, and seasons turn over every day at 00:00 UTC. Once a season is over, receive coins for it by the rank you finished at in your guild: 1st 300, top 3 150, top 10 50. A guild holds at most ten members at once, but the scores of members who left stay on its board, so 11th place or lower earns nothing. A guild of one always finishes 1st, so founding a guild alone pays the top tier. A reward is received once per guild and season, so a player who scores in one guild and then in another, even one they founded again after disbanding the first, receives again for the same season as a different guild. This demo allows both because its coins are play money.");
         }
     }
 }

@@ -1,5 +1,6 @@
-// The visitor's guild's board for the season being played: every member who
-// has scored, best first.
+// The visitor's guild's board for the season being played: the top places,
+// best first. Members who left the guild keep their places, so a board can
+// hold more than the ten members a guild has at once.
 //
 // A row of the page reads one value, and a board is a table, so this draws its
 // own region. Every visitor is anonymous, so a place is named by a short tag
@@ -97,16 +98,19 @@ namespace GS2Studio.Showroom.Demo
             }
             else
             {
-                // A guild holds at most ten members, so the visitor who scored
-                // is always on the board; this only covers a read that raced a
-                // play.
+                // Only the top places are read, and members who left keep
+                // theirs, so a visitor who scored can be below them; their own
+                // place is added under the board. It also covers a read that
+                // raced a play.
                 if (season.Total != null && places.All(place => !place.own))
                 {
                     places.Add((rank: season.Rank, name: "You", score: season.Total, own: true));
                 }
                 hint = places.Count == 0
                     ? "No one in your guild has scored this season yet. Press Play to be the first."
-                    : "Only your guild's members are ranked here. The board is read again every few seconds.";
+                    : season.BoardHasMore
+                        ? $"The top {GuildRankingSeasonState.BoardSize} places in your guild, including members who left. The board is read again every few seconds."
+                        : "Only your guild's members, and members who left it, are ranked here. The board is read again every few seconds.";
             }
 
             // Drawn again only when what it shows changed: a row that appears

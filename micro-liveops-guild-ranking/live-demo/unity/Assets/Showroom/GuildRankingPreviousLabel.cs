@@ -35,6 +35,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 if (_season.PastProblem != null) _onUpdate.Invoke(_season.PastProblem);
                 else if (_season.Season == null && _season.SeasonProblem != null) _onUpdate.Invoke("Past seasons are read once a season is open.");
+                else _onUpdate.Invoke("Reading your past seasons...");
                 return;
             }
             var next = _season.Next;
