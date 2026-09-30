@@ -39,7 +39,7 @@ namespace GS2Studio.Showroom
 
         private void Start()
         {
-            SetStatus("Connecting…");
+            SetStatus("Connecting...");
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace GS2Studio.Showroom
             var line = breakAt < 0 ? message : message.Substring(0, breakAt);
             return line.Length <= MirroredLineLength
                 ? line
-                : line.Substring(0, MirroredLineLength) + "…";
+                : line.Substring(0, MirroredLineLength) + "...";
         }
 
         /// <summary>Wire to `Gs2AutoLoginAction.OnAutoLoginComplete`.</summary>
@@ -148,7 +148,7 @@ namespace GS2Studio.Showroom
         /// replacing a refused saved account. Separate from
         /// <see cref="LogError"/> because this failure means the page itself is
         /// unusable, not that one action did not go through — without it the
-        /// status line sits on "Connecting…" forever.
+        /// status line sits on "Connecting..." forever.
         /// </summary>
         public void OnSignInFailed(Gs2Exception error, Func<IEnumerator> retry)
         {
