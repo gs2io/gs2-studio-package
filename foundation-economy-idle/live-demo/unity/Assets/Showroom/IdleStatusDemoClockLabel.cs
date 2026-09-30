@@ -76,8 +76,7 @@ namespace GS2Studio.Showroom.Demo
 
             if (!DemoTimeOffset.TryGet(session.UserId, out var offset)) return;
             var now = DateTime.UtcNow.AddSeconds(offset);
-            _onUpdate.Invoke(
-                "Demo clock: " + now.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture) + " UTC");
+            _onUpdate.Invoke(now.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture) + " UTC");
         }
     }
 }

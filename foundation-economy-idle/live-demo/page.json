@@ -4,7 +4,7 @@
       "rows": [
         "IdleStatusRuleLabel",
         "IdleStatusIdleTimeLabel",
-        "IdleStatusClaimableLabel",
+        "IdleStatusToReceiveLabel",
         "IdleStatusNextRewardValue",
         "IdleStatusReceiveButton",
         "IdleStatusAdvanceOneHourButton",

@@ -120,7 +120,7 @@ const IdleReward = defineOverlayDomainType(
 
 const withStatus = definePackage("foundation-economy-idle-demo", "0.0.0")
   .display({
-    label: { ja: "放置報酬（デモデータ）", en: "Idle rewards (demo data)" },
+    label: { ja: "放置報酬（デモデータ）", en: "Idle Rewards (demo data)" },
     description: {
       ja: "ライブデモ用の放置報酬（5 分ごとに少し、1 時間ごとに多めのコイン、上限 8 時間）を提供します。報酬は通貨パッケージのウォレットへ入ります。",
       en: "Supplies the live demo's idle reward: a few coins every five minutes away and a bigger drop every hour, up to eight hours. The rewards land in the currency package's wallet.",
