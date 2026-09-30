@@ -1,6 +1,6 @@
 {
   "sections": {
-    "Quest#Pick a quest — finish the running one before starting another": {
+    "Quest#Pick a quest (one at a time)": {
       "scope": {
         "collection": "main"
       },

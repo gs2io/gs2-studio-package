@@ -118,7 +118,7 @@ namespace GS2Studio.Showroom.Demo
         /// came back would read as a press that did nothing — so the board has
         /// a moment with nothing on it and this is what it says then.
         /// </summary>
-        private const string ReadingMessage = "Reading this character's tree…";
+        private const string ReadingMessage = "Reading this character's tree...";
 
         // The page's palette, so the board reads as part of the page rather
         // than as something that landed on top of it.
@@ -688,7 +688,7 @@ namespace GS2Studio.Showroom.Demo
                 var unknown = SkillNodeTree.UnknownPremises(node, byName);
                 if (unknown.Count > 0) return "needs " + SkillNodeTree.Listed(unknown);
                 if (plan.Count <= 1) return "ready";
-                return $"releases {plan.Count} · {PlanCost(plan, byName)} total";
+                return $"releases {plan.Count}, {PlanCost(plan, byName)} total";
             }
             if (plan.Count > 1)
             {
@@ -698,11 +698,11 @@ namespace GS2Studio.Showroom.Demo
                 var shared = SharedReturn(plan, byName);
                 return shared == null
                     ? $"restrains {plan.Count}"
-                    : $"restrains {plan.Count} · {shared}% back";
+                    : $"restrains {plan.Count}, {shared}% back";
             }
             var rate = node.RestrainReturnRate;
             if (rate == null) return "unlocked";
-            return $"unlocked · {Percent(rate.Value)}% back";
+            return $"unlocked, {Percent(rate.Value)}% back";
         }
 
         /// <summary>What the whole plan charges.</summary>

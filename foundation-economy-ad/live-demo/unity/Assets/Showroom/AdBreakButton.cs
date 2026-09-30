@@ -54,7 +54,7 @@ namespace GS2Studio.Showroom.Demo
             "standing in for.";
 
         private const string ReadyStatus = "The placement has finished.";
-        private const string GrantingStatus = "Asking GS2 for the point…";
+        private const string GrantingStatus = "Asking GS2 for the point...";
 
         /// <summary>
         /// The field the generated button takes its press from, named by the

@@ -88,8 +88,8 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         public const string MissingPlacementBody =
             "Nothing is playing here. A rewarded placement would fill this panel in a shipped " +
-            "title, and this demo has none to show: the ad SDKs GS2 accepts are mobile-only — " +
-            "Unity Ads, the LevelPlay mediation that replaced it, and AdMob — and the showroom " +
+            "title, and this demo has none to show: the ad SDKs GS2 accepts are mobile-only (" +
+            "Unity Ads, the LevelPlay mediation that replaced it, and AdMob), and the showroom " +
             "is a WebGL player.";
 
         private readonly GameObject _root;
