@@ -11,8 +11,8 @@
       "ja": "ライブデモ用に、引き継ぎコードの表示項目を提供します。"
     },
     "label": {
-      "en": "Account Transfer (demo display)",
-      "ja": "引き継ぎ設定（デモ表示）"
+      "en": "Account Transfer (demo data)",
+      "ja": "引き継ぎ設定（デモデータ）"
     }
   }
 }

@@ -29,7 +29,7 @@ const TransferCode = identity.type("TransferCode");
 
 export const foundationCoreIdentityDemo = definePackage("foundation-core-identity-demo", "0.0.0")
   .display({
-    label: { ja: "引き継ぎ設定（デモ表示）", en: "Account Transfer (demo display)" },
+    label: { ja: "引き継ぎ設定（デモデータ）", en: "Account Transfer (demo data)" },
     description: {
       ja: "ライブデモ用に、引き継ぎコードの表示項目を提供します。",
       en: "Supplies what the live demo shows of a transfer code.",
