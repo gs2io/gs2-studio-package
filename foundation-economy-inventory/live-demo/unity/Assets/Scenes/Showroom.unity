@@ -224,7 +224,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1279414218813259619, guid: 042b40b0d4e5c48b8a029cb8b8c0a766, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1644671528}
+      addedObject: {fileID: 1023524753}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 042b40b0d4e5c48b8a029cb8b8c0a766, type: 3}
 --- !u!224 &159312091 stripped
@@ -282,8 +282,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 547293983}
-        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomAccountStore,
-          Assembly-CSharp
+        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomAccountStore, Assembly-CSharp
         m_MethodName: Remember
         m_Mode: 0
         m_Arguments:
@@ -298,8 +297,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 547293983}
-        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomAccountStore,
-          Assembly-CSharp
+        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomAccountStore, Assembly-CSharp
         m_MethodName: Restore
         m_Mode: 0
         m_Arguments:
@@ -329,8 +327,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 547293983}
-        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomAccountStore,
-          Assembly-CSharp
+        m_TargetAssemblyTypeName: GS2Studio.Showroom.ShowroomAccountStore, Assembly-CSharp
         m_MethodName: OnSignInFailed
         m_Mode: 0
         m_Arguments:
@@ -450,7 +447,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1001 &1644671527
+--- !u!1001 &1023524752
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -540,7 +537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 786990252522046572, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
       propertyPath: m_Text
-      value: Item
+      value: Your items
       objectReference: {fileID: 0}
     - target: {fileID: 1810128401183231899, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
       propertyPath: m_IsActive
@@ -548,7 +545,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
       propertyPath: m_Name
-      value: Item
+      value: ItemYouritems
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -556,38 +553,38 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1644671531}
+      addedObject: {fileID: 1023524756}
   m_SourcePrefab: {fileID: 100100000, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
---- !u!224 &1644671528 stripped
+--- !u!224 &1023524753 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 625856722107848772, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1644671527}
+  m_PrefabInstance: {fileID: 1023524752}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1644671529 stripped
+--- !u!224 &1023524754 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7992485640677482743, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1644671527}
+  m_PrefabInstance: {fileID: 1023524752}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1644671530 stripped
+--- !u!1 &1023524755 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3497113260685230719, guid: d004acd3370924f888706b1c41c9c1ab, type: 3}
-  m_PrefabInstance: {fileID: 1644671527}
+  m_PrefabInstance: {fileID: 1023524752}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1644671531
+--- !u!114 &1023524756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644671530}
+  m_GameObject: {fileID: 1023524755}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f7b63644f796d4605f1bcdeed7b966a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Item.ItemListHandler
   _axis: 1190108295
-  _itemPrefab: {fileID: 8937436320254113039, guid: 80a10fa3035bd434faeb6e280c835357, type: 3}
-  _contentParent: {fileID: 1644671529}
+  _itemPrefab: {fileID: 7462838406248880051, guid: 115709b6d5e1f44c885231552ab4dfe6, type: 3}
+  _contentParent: {fileID: 1023524754}
   _autoSubscribe: 1
 --- !u!1 &1747940284
 GameObject:

@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "retired": {
     "row:dt_BMT0H7ME2SSDZRHGNZF012YZVR.currencystore": "row_01M2SC6MBTEM0V3MA3908Z5WY9",
-    "type:CurrencyStore": "dt_01M2SC6MBTANFKVV7YJBFK67VV"
+    "type:CurrencyStore": "dt_01M2SC6MBTANFKVV7YJBFK67VV",
+    "ui:Gacha:Gacha:item:NameLabel": "5c53f162-ed0f-5ad2-aadd-83f3c972cbb5"
   },
   "random": {
     "row:dt_32H335ZJ31J4690TMPCRQFC04B.standard.common": "row_01M2SBWGXFNW8NB7XDSJE193Q9",
@@ -17,7 +18,8 @@
     "type:CharacterRate": "dt_01M2SBWGXF692QDVTJR6DW65ZE",
     "type:Gacha": "dt_01M2SBWGXFA863WACPYRNPSP94",
     "type:GachaRarity": "dt_01M2SBWGXFXX6D4HGNHZGGZW0Z",
-    "type:GachaRarityRate": "dt_01M2SBWGXF8BJD3JR4TH0JFWV3"
+    "type:GachaRarityRate": "dt_01M2SBWGXF8BJD3JR4TH0JFWV3",
+    "type:StoreProduct": "dt_01M3SE2SVFGA8DSZZJGBAK29Y4"
   },
   "deterministicOverrides": {}
 }

@@ -8,6 +8,33 @@
       "id": "ff79ae1a-a970-558f-b0aa-9ae20b247cd4",
       "kind": "buttonAction",
       "name": "EquipmentCollection"
+    },
+    {
+      "componentClassName": "NoneYetLabel",
+      "id": "af3ac489-ce80-5de3-bff7-f8609d462315",
+      "kind": "label",
+      "name": "EquipmentCollection",
+      "source": {
+        "kind": "literal",
+        "value": "Take a piece of equipment above to start."
+      }
+    },
+    {
+      "componentClassName": "HoldsAnyActiveToggle",
+      "condition": {
+        "kind": "gt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": 0
+        }
+      },
+      "id": "94d82d8d-1796-51d6-8931-58eb60385606",
+      "kind": "activeToggle",
+      "name": "EquipmentCollection"
     }
   ],
   "name": "EquipmentCollection",

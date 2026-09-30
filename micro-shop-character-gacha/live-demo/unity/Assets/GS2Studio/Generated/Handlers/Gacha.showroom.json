@@ -64,8 +64,8 @@
       ]
     },
     {
-      "className": "GachaNameLabel",
-      "kind": "templateLabel",
+      "className": "GachaDrawLabel",
+      "kind": "label",
       "valueType": "",
       "reportsFailure": false,
       "serializedFields": []

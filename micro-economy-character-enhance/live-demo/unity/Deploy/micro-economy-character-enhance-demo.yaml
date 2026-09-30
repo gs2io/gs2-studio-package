@@ -7,18 +7,18 @@ Resources:
       Settings:
         version: "2019-08-19"
         rateModels:
-          - name: "ExperienceElixir"
+          - name: "elixir"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhanceMaterial\",\"inventoryName\":\"Material\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"ExperienceElixir\",\"count\":1}]}"
-          - name: "ExperiencePotion"
+                request: "{\"namespaceName\":\"CharacterEnhanceMaterial\",\"inventoryName\":\"Material\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"elixir\",\"count\":1}]}"
+          - name: "potion"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhanceMaterial\",\"inventoryName\":\"Material\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"ExperiencePotion\",\"count\":1}]}"
+                request: "{\"namespaceName\":\"CharacterEnhanceMaterial\",\"inventoryName\":\"Material\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"potion\",\"count\":1}]}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -35,25 +35,25 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperienceElixir\",\"count\":1}]}"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\",\"count\":1}]}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperienceElixir\",\"count\":1}]}"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\",\"count\":1}]}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperienceElixir\",\"count\":1}]}"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\",\"count\":1}]}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperienceElixir\",\"count\":1}]}"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\",\"count\":1}]}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -70,25 +70,25 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperiencePotion\",\"count\":1}]}"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\",\"count\":1}]}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperiencePotion\",\"count\":1}]}"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\",\"count\":1}]}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperiencePotion\",\"count\":1}]}"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\",\"count\":1}]}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperiencePotion\",\"count\":1}]}"
+                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\",\"count\":1}]}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

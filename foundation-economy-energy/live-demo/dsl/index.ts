@@ -182,11 +182,11 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
   // designs for itself.
   .uiComponent(Energy, ui =>
     ui
-      .buttonAction("ConsumeButton", "Consume", undefined, { name: "Energy" })
+      .buttonAction("SpendButton", "Spend", undefined, { name: "Energy" })
       .buttonAction("RecoverButton", "Recover", undefined, { name: "Energy" })
   )
 
-  .delegatedAction(Energy, "Consume", {
+  .delegatedAction(Energy, "Spend", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ConsumeRateModel,
     parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],

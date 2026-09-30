@@ -3,9 +3,9 @@
   "items": [
     {
       "arguments": [],
-      "componentClassName": "ConsumeButton",
+      "componentClassName": "SpendButton",
       "delegatedActionKey": "resource:foundation-economy-energy-demo:masterData:a79d51c8-3652-5fa2-afe0-6076cd004538::Gs2Exchange:RateModel.Exchange",
-      "id": "638c955b-b499-5133-acb2-ce24d7724024",
+      "id": "febf7256-d0d3-5e74-a953-382f96203588",
       "kind": "buttonAction",
       "name": "Energy"
     },

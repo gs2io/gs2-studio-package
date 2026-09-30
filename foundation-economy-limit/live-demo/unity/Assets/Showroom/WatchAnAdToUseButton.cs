@@ -69,12 +69,9 @@ namespace GS2Studio.Showroom.Demo
     {
         private const string Body =
             AdBreakOverlay.MissingPlacementBody + "\n\n" +
-            "The button below does the half that is not the SDK's, in the two steps GS2 makes of " +
-            "it. First it tells GS2 the view was completed and takes the point; GS2 verifies " +
-            "nothing, and deciding a view really happened is the title's. Then it exchanges that " +
-            "point for one use of this allowance, counted against the higher of its two ceilings: " +
-            "one transaction, committed atomically, so a refused count-up cannot spend the " +
-            "point. A shipped title starts both from its ad network's completion callback.";
+            "The button below tells GS2 the view finished, then spends the point on one use of " +
+            "this allowance, in one transaction. A shipped title starts this from its ad " +
+            "network's completion callback.";
 
         private const string ReadyStatus = "The placement has finished.";
         private const string GrantingStatus = "Asking GS2 for the view...";

@@ -414,7 +414,7 @@ const ResetEveryAllowanceRateModel = defineMasterDataResource(resource => {
  */
 const withSchedules = definePackage("foundation-economy-limit-demo", "0.0.0")
   .display({
-    label: { ja: "回数制限（デモデータ）", en: "Usage limits (demo data)" },
+    label: { ja: "回数制限（デモデータ）", en: "Usage Limits (demo data)" },
     description: {
       ja: "ライブデモ用の日次・週次のリセット設定と4つの回数カウンター、無料枠と広告枠それぞれの利用操作、全体のリセット操作を提供します。視聴枠は広告デモから借ります。",
       en: "Supplies the daily and weekly schedules the live demo shows, the four allowances that follow them, the free and ad-backed presses that use one, and the reset that puts them all back. The view point it spends comes from the ad demo.",
@@ -541,17 +541,35 @@ export const foundationEconomyLimitDemo = withCounters
   // readings and the presses for the counter and its schedule. The ad
   // balance and the press that banks a view are the ad demo's, and the page
   // draws them from there.
+  //
+  // One sentence per cadence rather than one that names the cadence: a weekly
+  // schedule also has to say which day, and a daily one has no day to say.
+  // Each toggle names the cadence that makes its row wrong, so the page shows
+  // exactly one of the two on every schedule.
   .uiComponent(UsageLimit, ui =>
-    ui.templateLabel(
-      "ScheduleLabel",
-      "{id}: resets {resetType} at {resetHour}:00 UTC",
-      {
-        id: ui.prop("id"),
-        resetType: ui.prop("resetType"),
-        resetHour: ui.prop("resetHour"),
-      },
-      { name: "UsageLimit" }
-    )
+    ui
+      .templateLabel(
+        "ScheduleLabel",
+        "{id}: resets every day at {resetHour}:00 UTC",
+        { id: ui.prop("id"), resetHour: ui.prop("resetHour") },
+        { name: "UsageLimit" }
+      )
+      .templateLabel(
+        "WeeklyScheduleLabel",
+        "{id}: resets every {resetDayOfWeek} at {resetHour}:00 UTC",
+        {
+          id: ui.prop("id"),
+          resetDayOfWeek: ui.prop("resetDayOfWeek"),
+          resetHour: ui.prop("resetHour"),
+        },
+        { name: "UsageLimit" }
+      )
+      .activeToggle("WeeklyActiveToggle", UiCond.eq(ui.prop("resetType"), ui.lit(WEEKLY)), {
+        name: "UsageLimit",
+      })
+      .activeToggle("NotWeeklyActiveToggle", UiCond.neq(ui.prop("resetType"), ui.lit(WEEKLY)), {
+        name: "UsageLimit",
+      })
   )
 
   .uiComponent(UsageLimitCounter, ui =>
@@ -563,7 +581,7 @@ export const foundationEconomyLimitDemo = withCounters
       // says they belong to the presses rather than to the tally.
       .templateLabel(
         "UsageLabel",
-        "{count} used. Free presses stop at {free}, ad-backed ones at {adBacked}.",
+        "{count} used. Free uses stop at {free}, ad-backed uses at {adBacked}.",
         {
           count: ui.prop("count"),
           free: ui.prop("freeMax"),
@@ -588,14 +606,14 @@ export const foundationEconomyLimitDemo = withCounters
       // before anyone presses it.
       .templateLabel(
         "NoFreeUsesLeftLabel",
-        "{count} of {free} free uses are spent. The free press is refused until the reset.",
+        "{count} of {free} free uses are spent. Free uses come back at the next reset.",
         { count: ui.prop("count"), free: ui.prop("freeMax") },
         { name: "UsageLimitCounter" }
       )
       // The same sentence at the first counter's other ceiling.
       .templateLabel(
         "NothingLeftLabel",
-        "{count} of {adBacked} uses are spent. Both presses are refused until the reset.",
+        "{count} of {adBacked} uses are spent. Nothing more until the next reset.",
         { count: ui.prop("count"), adBacked: ui.prop("adMax") },
         { name: "UsageLimitCounter" }
       )
@@ -635,7 +653,9 @@ export const foundationEconomyLimitDemo = withCounters
       .activeToggle("AnyUseLeftActiveToggle", UiCond.lt(ui.prop("count"), ui.prop("adMax")), {
         name: "UsageLimitCounter",
       })
-      .value("NextResetAtValue", ui.prop("nextResetAt"), { name: "UsageLimitCounter" })
+      // Drawn as the time left rather than a clock time, so the row reads
+      // "Next reset in".
+      .value("NextResetInValue", ui.prop("nextResetAt"), { name: "UsageLimitCounter" })
       .buttonAction("UseFreeButton", "UseFree", undefined, { name: "UsageLimitCounter" })
       .buttonAction("UseWithAdButton", "UseWithAd", undefined, { name: "UsageLimitCounter" })
       .buttonAction("ResetEveryAllowanceButton", "ResetEveryAllowance", undefined, {

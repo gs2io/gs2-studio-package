@@ -334,7 +334,7 @@ namespace GS2Studio.Showroom.Demo
         private void OnWalletUpdated(WalletModel model)
         {
             _overlay?.SetBalance(
-                $"Balance {model.Free.ToString(CultureInfo.InvariantCulture)}");
+                $"Your coins: {model.Free.ToString(CultureInfo.InvariantCulture)}");
         }
 
         private void OnDestroy()
@@ -630,7 +630,7 @@ namespace GS2Studio.Showroom.Demo
             Band((RectTransform)title.transform, 8f, 26f);
 
             var cost = AddText(
-                fill, "Cost", $"Cost {node.Cost.ToString(CultureInfo.InvariantCulture)}", 15,
+                fill, "Cost", $"{node.Cost.ToString(CultureInfo.InvariantCulture)} coins", 15,
                 released ? Accent : MutedText, TextAnchor.MiddleCenter);
             Band((RectTransform)cost.transform, 34f, 18f);
 

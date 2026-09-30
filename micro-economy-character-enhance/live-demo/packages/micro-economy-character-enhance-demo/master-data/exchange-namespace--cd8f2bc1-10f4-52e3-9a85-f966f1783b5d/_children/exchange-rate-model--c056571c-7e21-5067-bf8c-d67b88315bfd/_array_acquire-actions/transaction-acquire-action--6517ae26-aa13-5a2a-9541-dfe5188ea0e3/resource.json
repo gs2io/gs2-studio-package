@@ -21,7 +21,7 @@
             "parameterName": "materialItemSetId",
             "source": {
               "kind": "static",
-              "value": "grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:ExperienceElixir"
+              "value": "grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir"
             }
           },
           {

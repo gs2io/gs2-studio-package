@@ -1,6 +1,6 @@
 {
   "sections": {
-    "CharacterRecruit#Get a character to have a tree for": {
+    "CharacterRecruit#Recruit a character": {
       "rows": [
         {
           "component": "CharacterRecruitRecruitButton",
@@ -8,11 +8,11 @@
         }
       ]
     },
-    "Character#Whose tree is on screen": {
+    "Character#Open a character's tree": {
       "axis": "InventoryCharacterUser",
-      "rows": ["CharacterIdValue", "CharacterPropertyIdValue", "CharacterOpenTreeButton"]
+      "rows": ["CharacterIdValue", "CharacterOpenTreeButton"]
     },
-    "FreeDeposit#What the unlock costs are paid from": {
+    "FreeDeposit#Get coins": {
       "rows": [
         {
           "component": "FreeDepositDepositButton",
@@ -20,7 +20,7 @@
         }
       ]
     },
-    "Wallet": {
+    "Wallet#Your coins": {
       "key": {
         "slot": 0
       },

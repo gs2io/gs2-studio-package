@@ -1,23 +1,28 @@
 {
   "sections": {
-    "Character": {
-      "axis": "InventoryCharacterUser",
-      "rows": [
-        "CharacterIdValue",
-        "CharacterPropertyIdValue",
-        {
-          "component": "CharacterExperienceGauge",
-          "caption": "CharacterLevelLabel"
-        },
-        "CharacterTrainButton"
-      ]
-    },
-    "CharacterRecruit": {
+    "CharacterRecruit#Recruit a character": {
       "rows": [
         {
           "component": "CharacterRecruitRecruitButton",
           "caption": "CharacterRecruitCharacterLabel"
         }
+      ]
+    },
+    "CharacterCollection#Your characters": {
+      "rows": ["CharacterCollectionSlotsLabel", "CharacterCollectionNoneYetLabel"],
+      "toggles": {
+        "CharacterCollectionOwnsAnyActiveToggle": ["CharacterCollectionNoneYetLabel"]
+      }
+    },
+    "Character#Train a character": {
+      "axis": "InventoryCharacterUser",
+      "rows": [
+        "CharacterIdValue",
+        {
+          "component": "CharacterExperienceGauge",
+          "caption": "CharacterLevelLabel"
+        },
+        "CharacterTrainButton"
       ]
     }
   }

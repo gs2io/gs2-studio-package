@@ -1,6 +1,6 @@
 {
   "sections": {
-    "CharacterRecruit#Get a character to break the limit of": {
+    "CharacterRecruit#Recruit a character": {
       "rows": [
         {
           "component": "CharacterRecruitRecruitButton",

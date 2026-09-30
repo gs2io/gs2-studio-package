@@ -175,7 +175,7 @@ const NODES = [
  */
 const withDependencies = definePackage("micro-economy-skill-tree-demo", "0.0.0")
   .display({
-    label: { ja: "スキルツリー（デモデータ）", en: "Skill tree (demo data)" },
+    label: { ja: "スキルツリー（デモデータ）", en: "Skill Tree (demo data)" },
     description: {
       ja: "ライブデモ用の4つのスキルノードと、その解放コストを支払う無償通貨を提供します。ノードの解放状況はキャラクターごとに記録されます。",
       en: "Supplies the live demo's four skill nodes and the free currency their unlock costs are paid from. What is unlocked is tracked per character.",

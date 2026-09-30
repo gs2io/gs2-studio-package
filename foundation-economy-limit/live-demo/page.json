@@ -10,7 +10,7 @@
       },
       "rows": [
         "UsageLimitCounterUsageLabel",
-        "UsageLimitCounterNextResetAtValue",
+        "UsageLimitCounterNextResetInValue",
         "UsageLimitCounterUseFreeButton",
         "WatchAnAdToUseButton",
         "UsageLimitCounterNothingLeftLabel",
@@ -29,6 +29,7 @@
       },
       "rows": [
         "UsageLimitCounterAllowanceLabel",
+        "UsageLimitCounterNextResetInValue",
         "UsageLimitCounterUseFreeButton",
         "UsageLimitCounterNoFreeUsesLeftLabel"
       ],
@@ -43,6 +44,7 @@
       },
       "rows": [
         "UsageLimitCounterAllowanceLabel",
+        "UsageLimitCounterNextResetInValue",
         "UsageLimitCounterUseFreeButton",
         "UsageLimitCounterNoFreeUsesLeftLabel"
       ],
@@ -57,7 +59,7 @@
       },
       "rows": [
         "UsageLimitCounterAllowanceLabel",
-        "UsageLimitCounterNextResetAtValue",
+        "UsageLimitCounterNextResetInValue",
         "UsageLimitCounterUseFreeButton",
         "UsageLimitCounterNoFreeUsesLeftLabel"
       ],
@@ -65,8 +67,12 @@
         "UsageLimitCounterFreeUsesLeftActiveToggle": ["UsageLimitCounterNoFreeUsesLeftLabel"]
       }
     },
-    "UsageLimit": {
-      "rows": ["UsageLimitScheduleLabel"]
+    "UsageLimit#Reset schedules": {
+      "rows": ["UsageLimitScheduleLabel", "UsageLimitWeeklyScheduleLabel"],
+      "toggles": {
+        "UsageLimitWeeklyActiveToggle": ["UsageLimitScheduleLabel"],
+        "UsageLimitNotWeeklyActiveToggle": ["UsageLimitWeeklyScheduleLabel"]
+      }
     }
   }
 }

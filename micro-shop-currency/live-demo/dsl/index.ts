@@ -28,6 +28,8 @@ import currencySurface from "../../../foundation-economy-currency/dsl/dependency
 const shop = dependencyPackage(shopSurface);
 const currency = dependencyPackage(currencySurface);
 
+const StoreProduct = shop.type("StoreProduct");
+
 export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "0.0.0")
   .display({
     label: { ja: "通貨ショップ（デモデータ）", en: "Currency Shop (demo data)" },
@@ -44,4 +46,16 @@ export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "
 
   // The shelf and the store's test-receipt setting: authored once, there.
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
+
+  // What a product row says: the pack in coins rather than a bare number.
+  // The product has no display name of its own, and its price lives on a
+  // different row per store currency.
+  .uiComponent(StoreProduct, ui =>
+    ui.templateLabel(
+      "CoinsLabel",
+      "{count} coins",
+      { count: ui.inheritedProp(shop.propertyId("StoreProduct", "count")) },
+      { name: "StoreProduct" }
+    )
+  )
   .build();

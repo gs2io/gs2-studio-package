@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>{count} used. Free presses stop at {free}, ad-backed ones at {adBacked}.</c>. Each <c>{key}</c> placeholder is
+    /// <c>{count} used. Free uses stop at {free}, ad-backed uses at {adBacked}.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>UsageLimitCounter</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 
         private void OnUpdated(UsageLimitCounter model)
         {
-            _onUpdate.Invoke($"{model.Count} used. Free presses stop at {model.FreeMax}, ad-backed ones at {model.AdMax}.");
+            _onUpdate.Invoke($"{model.Count} used. Free uses stop at {model.FreeMax}, ad-backed uses at {model.AdMax}.");
         }
     }
 }

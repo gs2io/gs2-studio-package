@@ -9,7 +9,7 @@
         "localizedDisplay": {
           "en": {
             "description": "Grants one piece of equipment in the demo.",
-            "label": "Catalogue"
+            "label": "Catalog"
           },
           "ja": {
             "description": "デモで装備を1つ入手します。",
@@ -30,7 +30,7 @@
         "id": "prop_01M2JQWQ97PWGH9FSBZ6Y5VDH9",
         "localizedDisplay": {
           "en": {
-            "description": "The equipment this catalogue row grants.",
+            "description": "The equipment this catalog row grants.",
             "label": "Equipment"
           },
           "ja": {

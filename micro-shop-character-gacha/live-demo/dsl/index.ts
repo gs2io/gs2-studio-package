@@ -35,17 +35,20 @@ import { definePackage, dependencyPackage } from "~/dsl";
 import gachaSurface from "../../dsl/dependency-surface.json";
 import characterDemoSurface from "../../../foundation-economy-character/live-demo/dsl/dependency-surface.json";
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
+import shopSurface from "../../../micro-shop-currency/dsl/dependency-surface.json";
 
 const gacha = dependencyPackage(gachaSurface);
 // A demo installed beside another demo is a dependency like any other: its
 // rows are addressed by name off the surface it publishes.
 const characterDemo = dependencyPackage(characterDemoSurface);
 const currency = dependencyPackage(currencySurface);
+const shop = dependencyPackage(shopSurface);
 
 const Gacha = gacha.type("Gacha");
 const GachaRarity = gacha.type("GachaRarity");
 const GachaRarityRate = gacha.type("GachaRarityRate");
 const CharacterRate = gacha.type("CharacterRate");
+const StoreProduct = shop.type("StoreProduct");
 
 /** The wallet the shop deposits into and the gacha draws from. */
 const WALLET_SLOT = 0;
@@ -61,7 +64,7 @@ const STANDARD = "standard";
 
 export const microShopCharacterGachaDemo = definePackage("micro-shop-character-gacha-demo", "0.0.0")
   .display({
-    label: { ja: "キャラガチャ（デモデータ）", en: "Character Gacha (demo data)" },
+    label: { ja: "キャラクターガチャ（デモデータ）", en: "Character Gacha (demo data)" },
     description: {
       ja: "ライブデモ用に、1つのガチャとレアリティ別の排出率、抽選コストを揃えます。",
       en: "Supplies one gacha, its per-rarity rates, and the coins a draw costs.",
@@ -158,12 +161,23 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
     [gacha.propertyId("CharacterRate", "weight")]: 1,
   })
 
-  // The row says which gacha it is, and the button draws one. `Buy` is the
+  // The row says what a draw costs, and the button draws one. `Buy` is the
   // feature package's action, named here by the name that package publishes
-  // it under; one draw per press, which is what the showcase sells.
+  // it under; one draw per press, which is what the showcase sells. The gacha
+  // has no display name of its own, so the row says what it does instead.
   .uiComponent(Gacha, ui =>
     ui
-      .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Gacha" })
+      .label("DrawLabel", ui.lit(`Draw a character for ${DRAW_COST} coins`), { name: "Gacha" })
       .buttonAction("BuyButton", "Buy", { quantity: ui.lit(1) }, { name: "Gacha" })
+  )
+
+  // What a coin pack row says: the pack in coins rather than a bare number.
+  .uiComponent(StoreProduct, ui =>
+    ui.templateLabel(
+      "CoinsLabel",
+      "{count} coins",
+      { count: ui.inheritedProp(shop.propertyId("StoreProduct", "count")) },
+      { name: "StoreProduct" }
+    )
   )
   .build();

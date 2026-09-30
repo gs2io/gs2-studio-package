@@ -1,6 +1,6 @@
 {
   "sections": {
-    "Character": {
+    "Character#Character dex": {
       "axis": "InventoryCharacterMaster",
       "rows": [
         "CharacterNameLabel",

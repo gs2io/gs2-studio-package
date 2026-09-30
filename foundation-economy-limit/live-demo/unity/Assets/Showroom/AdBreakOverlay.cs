@@ -87,10 +87,8 @@ namespace GS2Studio.Showroom.Demo
         /// actually about and it differs from row to row.
         /// </summary>
         public const string MissingPlacementBody =
-            "Nothing is playing here. A rewarded placement would fill this panel in a shipped " +
-            "title, and this demo has none to show: the ad SDKs GS2 accepts are mobile-only (" +
-            "Unity Ads, the LevelPlay mediation that replaced it, and AdMob), and the showroom " +
-            "is a WebGL player.";
+            "Nothing plays here: GS2's ad SDKs (Unity Ads, LevelPlay, AdMob) are mobile-only, " +
+            "and this page runs in a browser.";
 
         private readonly GameObject _root;
         private readonly Button _confirmButton;
@@ -160,9 +158,9 @@ namespace GS2Studio.Showroom.Demo
             ruleImage.color = new Color(MutedText.r, MutedText.g, MutedText.b, 0.3f);
             ruleImage.raycastTarget = false;
 
-            // The band is 360 against a measured 299 the longest body needs at
-            // this size, so a font whose metrics differ from the editor's has
-            // two spare lines before it would spill over the status line.
+            // The band is 360, well over what the longest body needs at this
+            // size, so a font whose metrics differ from the editor's has spare
+            // lines before it would spill over the status line.
             var bodyText = AddText(card, "Body", font, body, 24, PrimaryText, TextAnchor.UpperLeft);
             Band((RectTransform)bodyText.transform, 140f, 360f);
 

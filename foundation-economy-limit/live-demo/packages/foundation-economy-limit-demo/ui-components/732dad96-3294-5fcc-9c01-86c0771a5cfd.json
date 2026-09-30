@@ -15,10 +15,33 @@
           }
         },
         {
-          "key": "resetType",
+          "key": "resetHour",
           "source": {
             "kind": "property",
-            "propertyId": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1"
+            "propertyId": "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3"
+          }
+        }
+      ],
+      "template": "{id}: resets every day at {resetHour}:00 UTC"
+    },
+    {
+      "componentClassName": "WeeklyScheduleLabel",
+      "id": "dc14159c-cf90-502c-a69b-68b595737aaa",
+      "kind": "templateLabel",
+      "name": "UsageLimit",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_reserved_id"
+          }
+        },
+        {
+          "key": "resetDayOfWeek",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M0C5HJ9H8A68TH51QQXSQAFS"
           }
         },
         {
@@ -29,7 +52,41 @@
           }
         }
       ],
-      "template": "{id}: resets {resetType} at {resetHour}:00 UTC"
+      "template": "{id}: resets every {resetDayOfWeek} at {resetHour}:00 UTC"
+    },
+    {
+      "componentClassName": "WeeklyActiveToggle",
+      "condition": {
+        "kind": "eq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": "weekly"
+        }
+      },
+      "id": "2bc1a072-f6b3-5da9-ae99-f5c07daa167e",
+      "kind": "activeToggle",
+      "name": "UsageLimit"
+    },
+    {
+      "componentClassName": "NotWeeklyActiveToggle",
+      "condition": {
+        "kind": "neq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": "weekly"
+        }
+      },
+      "id": "c2796688-d5d4-526b-8aaa-84b4ddfed1a5",
+      "kind": "activeToggle",
+      "name": "UsageLimit"
     }
   ],
   "name": "UsageLimit",

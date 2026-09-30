@@ -3,14 +3,14 @@
  *
  * The feature package models a bag and the equipment that goes in it, but
  * ships neither — what a title sells and how big a bag it gives are a title's
- * decisions. This package supplies a small catalogue, a bag to put it in, and
+ * decisions. This package supplies a small catalog, a bag to put it in, and
  * the three presses that move them: take one, throw one away, and buy room
  * for more.
  *
- * The catalogue and the bag are the same model read from two places, so they
+ * The catalog and the bag are the same model read from two places, so they
  * are two overlays of it: one listed from the master data a title authored,
  * one from what a player actually holds. Seeing both at once is the point —
- * one sword in the catalogue becomes as many rows in the bag as the player
+ * one sword in the catalog becomes as many rows in the bag as the player
  * has taken.
  */
 
@@ -24,6 +24,7 @@ import {
   PT,
   Source,
   transactionSetting,
+  UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -40,7 +41,7 @@ const EquipmentCategory = equipment.type("EquipmentCategory");
 const Equipment = equipment.type("Equipment");
 
 /**
- * One piece of equipment a visitor can take. The catalogue is not a second
+ * One piece of equipment a visitor can take. The catalog is not a second
  * overlay of `Equipment`: a page draws one section per model and generates one
  * set of classes per model, so two views of one model collide. A row that
  * names the equipment it grants is a model of its own, and it is also what the
@@ -56,11 +57,11 @@ const EquipmentCatalog = defineDomainType("EquipmentCatalog", domainType =>
     .localizedProperties({
       id: {
         ja: { label: "装備カタログ", description: "デモで装備を1つ入手します。" },
-        en: { label: "Catalogue", description: "Grants one piece of equipment in the demo." },
+        en: { label: "Catalog", description: "Grants one piece of equipment in the demo." },
       },
       equipment: {
         ja: { label: "装備", description: "このカタログ行が付与する装備です。" },
-        en: { label: "Equipment", description: "The equipment this catalogue row grants." },
+        en: { label: "Equipment", description: "The equipment this catalog row grants." },
       },
     })
 );
@@ -146,7 +147,7 @@ export const foundationEconomyEquipmentDemo = definePackage(
     label: { ja: "装備（デモデータ）", en: "Equipment (demo data)" },
     description: {
       ja: "ライブデモ用の装備カタログと所持枠、入手・破棄・拡張の操作を提供します。",
-      en: "Supplies the equipment catalogue and bag used by the live demo, and the presses that take, discard and expand.",
+      en: "Supplies the equipment catalog and bag used by the live demo, and the presses that take, discard and expand.",
     },
   })
   .dependency(equipment.packageId, "github:gs2io/gs2-studio-package")
@@ -164,11 +165,11 @@ export const foundationEconomyEquipmentDemo = definePackage(
     [equipment.propertyId("EquipmentCollection", "maximumCapacity")]: MAXIMUM_CAPACITY,
   })
 
-  // Three pieces rather than one: a catalogue is a list, and the bag beside it
+  // Three pieces rather than one: a catalog is a list, and the bag beside it
   // only reads as a bag when it holds more than one kind of thing. Sort values
   // are spaced so a title could slot something between them.
   // The equipment itself, which the feature package's `ItemModel` turns into
-  // the catalogue GS2 holds. Sort values are spaced so a title could slot
+  // the catalog GS2 holds. Sort values are spaced so a title could slot
   // something between them.
   .instance(Equipment, "iron-sword", {
     [equipment.propertyId("Equipment", "category")]: "weapon",
@@ -183,7 +184,7 @@ export const foundationEconomyEquipmentDemo = definePackage(
     [equipment.propertyId("Equipment", "sortValue")]: 300,
   })
 
-  // One catalogue row per piece: what a visitor presses to take it.
+  // One catalog row per piece: what a visitor presses to take it.
   .instance("EquipmentCatalog", "iron-sword", { equipment: "iron-sword" })
   .instance("EquipmentCatalog", "oak-staff", { equipment: "oak-staff" })
   .instance("EquipmentCatalog", "steel-shield", { equipment: "steel-shield" })
@@ -250,7 +251,7 @@ export const foundationEconomyEquipmentDemo = definePackage(
       .addChild(ExpandRateModel)
   )
 
-  // The catalogue is its own model, so it needs its own name to show; the bag
+  // The catalog is its own model, so it needs its own name to show; the bag
   // and the readings on it come from the feature package.
   .uiComponent(EquipmentCatalog, ui =>
     ui
@@ -262,8 +263,19 @@ export const foundationEconomyEquipmentDemo = definePackage(
     ui.buttonAction("DiscardButton", "Discard", undefined, { name: "Equipment" })
   )
 
+  // The hint is what an empty bag reads: a list with no rows draws nothing,
+  // so without it a first visit shows a heading over a blank.
   .uiComponent(EquipmentCollection, ui =>
-    ui.buttonAction("ExpandButton", "Expand", undefined, { name: "EquipmentCollection" })
+    ui
+      .buttonAction("ExpandButton", "Expand", undefined, { name: "EquipmentCollection" })
+      .label("NoneYetLabel", ui.lit("Take a piece of equipment above to start."), {
+        name: "EquipmentCollection",
+      })
+      .activeToggle(
+        "HoldsAnyActiveToggle",
+        UiCond.gt(ui.prop("currentCapacityUsage"), ui.lit(0)),
+        { name: "EquipmentCollection" }
+      )
   )
 
   .delegatedAction(EquipmentCatalog, "Take", {

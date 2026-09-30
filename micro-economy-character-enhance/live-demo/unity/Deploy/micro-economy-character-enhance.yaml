@@ -44,9 +44,9 @@ Resources:
           - name: "Material"
             simpleItemModels:
               - metadata: "{\"experience\":1000}"
-                name: "ExperienceElixir"
+                name: "elixir"
               - metadata: "{\"experience\":300}"
-                name: "ExperiencePotion"
+                name: "potion"
         bigInventoryModels: []
       Mode: "direct"
     DependsOn:

@@ -15,7 +15,7 @@
           }
         }
       ],
-      "template": "Deposit {count} paid"
+      "template": "Deposit {count} paid coins"
     },
     {
       "arguments": [],

@@ -25,6 +25,12 @@
       "singleEntry": false,
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_32H335ZJ31J4690TMPCRQFC04B"
+    },
+    "StoreProduct": {
+      "id": "dt_01M3SE2SVFGA8DSZZJGBAK29Y4",
+      "singleEntry": false,
+      "canonicalPackageId": "foundation-economy-currency",
+      "canonicalTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB"
     }
   },
   "masterDataResources": {},

@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.UsageLimit.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>{id}: resets {resetType} at {resetHour}:00 UTC</c>. Each <c>{key}</c> placeholder is
+    /// <c>{id}: resets every day at {resetHour}:00 UTC</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>UsageLimit</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.UsageLimit.UI
 
         private void OnUpdated(UsageLimit model)
         {
-            _onUpdate.Invoke($"{model.Id.Value}: resets {model.ResetType} at {model.ResetHour}:00 UTC");
+            _onUpdate.Invoke($"{model.Id.Value}: resets every day at {model.ResetHour}:00 UTC");
         }
     }
 }

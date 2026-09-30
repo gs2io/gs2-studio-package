@@ -17,6 +17,7 @@ import {
   PT,
   Source,
   transactionSetting,
+  UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -265,6 +266,28 @@ export const foundationEconomyCharacterDemo = definePackage(
   // One button on the character itself, beside the experience gauge.
   .uiComponent(Character, ui =>
     ui.buttonAction("TrainButton", "Train", undefined, { name: "Character" })
+  )
+
+  // What the roster reads above the list of owned characters: how full it
+  // is, and, while it is empty, where the first one comes from. A list with
+  // no rows draws nothing, so without the hint a first visit shows a heading
+  // over a blank.
+  .uiComponent(CharacterCollection, ui =>
+    ui
+      .templateLabel(
+        "SlotsLabel",
+        "{usage} of {capacity} used",
+        { usage: ui.prop("currentCpacityUsage"), capacity: ui.prop("currentCpacity") },
+        { name: "CharacterCollection" }
+      )
+      .label("NoneYetLabel", ui.lit("Recruit a character above to start."), {
+        name: "CharacterCollection",
+      })
+      .activeToggle(
+        "OwnsAnyActiveToggle",
+        UiCond.gt(ui.prop("currentCpacityUsage"), ui.lit(0)),
+        { name: "CharacterCollection" }
+      )
   )
 
   .delegatedAction(CharacterRecruit, "Recruit", {

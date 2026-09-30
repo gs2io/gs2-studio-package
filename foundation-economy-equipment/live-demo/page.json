@@ -1,6 +1,6 @@
 {
   "sections": {
-    "EquipmentCatalog": {
+    "EquipmentCatalog#Take equipment": {
       "rows": [
         {
           "component": "EquipmentCatalogTakeButton",
@@ -8,21 +8,23 @@
         }
       ]
     },
-    "EquipmentCollection": {
+    "EquipmentCollection#Equipment bag": {
       "rows": [
         {
           "component": "EquipmentCollectionCapacityGauge",
           "caption": "EquipmentCollectionCapacityLabel"
         },
-        "EquipmentCollectionExpandButton"
+        "EquipmentCollectionExpandButton",
+        "EquipmentCollectionNoneYetLabel"
       ],
       "toggles": {
-        "EquipmentCollectionExpandableInteractable": ["EquipmentCollectionExpandButton"]
+        "EquipmentCollectionExpandableInteractable": ["EquipmentCollectionExpandButton"],
+        "EquipmentCollectionHoldsAnyActiveToggle": ["EquipmentCollectionNoneYetLabel"]
       }
     },
-    "Equipment": {
+    "Equipment#Your equipment": {
       "axis": "InventoryEquipmentUser",
-      "rows": ["EquipmentNameLabel", "EquipmentPropertyIdValue", "EquipmentDiscardButton"]
+      "rows": ["EquipmentNameLabel", "EquipmentDiscardButton"]
     }
   }
 }

@@ -218,7 +218,7 @@ export const microEconomyEquipmentEnchantDemo = definePackage(
   .uiComponent(EquipmentEnchant, ui =>
     ui.templateLabel(
       "RuleLabel",
-      "A piece rolls 1 to {maximum} bonuses when it is first read. Reroll draws the same number again for 10 coins. Add bonus draws one more for 30 coins, up to {maximum}.",
+      `A piece rolls 1 to {maximum} bonuses when it is first read. Reroll draws the same number again for ${REROLL_COST} coins. Add bonus draws one more for ${ADD_BONUS_COST} coins, up to {maximum}.`,
       { maximum: ui.inheritedProp(MAXIMUM_PARAMETER_COUNT) },
       { name: "EquipmentEnchant" }
     )

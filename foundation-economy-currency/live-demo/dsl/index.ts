@@ -156,7 +156,7 @@ export const foundationEconomyCurrencyDemo = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "通貨（デモ）", en: "Currency (demo)" },
+    label: { ja: "通貨（デモデータ）", en: "Currency (demo data)" },
     description: {
       ja: "ライブデモ用の設定上書き、無償付与、全デモ共通の商品棚と価格を提供します。",
       en: "Supplies the live demo's setting overrides, its free currency grants, and the store shelf and prices every demo shares.",
@@ -255,7 +255,7 @@ export const foundationEconomyCurrencyDemo = definePackage(
     ui
       .templateLabel(
         "CountLabel",
-        "Deposit {count} free",
+        "Deposit {count} free coins",
         { count: ui.prop("count") },
         { name: "FreeDeposit" }
       )
@@ -265,7 +265,7 @@ export const foundationEconomyCurrencyDemo = definePackage(
     ui
       .templateLabel(
         "CountLabel",
-        "Deposit {count} paid",
+        "Deposit {count} paid coins",
         { count: ui.prop("count") },
         { name: "PaidDeposit" }
       )

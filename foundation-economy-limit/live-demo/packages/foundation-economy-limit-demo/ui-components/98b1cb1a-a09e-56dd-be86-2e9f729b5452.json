@@ -29,7 +29,7 @@
           }
         }
       ],
-      "template": "{count} used. Free presses stop at {free}, ad-backed ones at {adBacked}."
+      "template": "{count} used. Free uses stop at {free}, ad-backed uses at {adBacked}."
     },
     {
       "componentClassName": "AllowanceLabel",
@@ -75,7 +75,7 @@
           }
         }
       ],
-      "template": "{count} of {free} free uses are spent. The free press is refused until the reset."
+      "template": "{count} of {free} free uses are spent. Free uses come back at the next reset."
     },
     {
       "componentClassName": "NothingLeftLabel",
@@ -98,7 +98,7 @@
           }
         }
       ],
-      "template": "{count} of {adBacked} uses are spent. Both presses are refused until the reset."
+      "template": "{count} of {adBacked} uses are spent. Nothing more until the next reset."
     },
     {
       "componentClassName": "FreeUsesSpentActiveToggle",
@@ -185,8 +185,8 @@
       "name": "UsageLimitCounter"
     },
     {
-      "componentClassName": "NextResetAtValue",
-      "id": "518eb649-e0a0-532c-9ebc-f3295bf50169",
+      "componentClassName": "NextResetInValue",
+      "id": "be828ca0-fd06-50c7-a2dc-bcdbc24dd395",
       "kind": "value",
       "name": "UsageLimitCounter",
       "source": {

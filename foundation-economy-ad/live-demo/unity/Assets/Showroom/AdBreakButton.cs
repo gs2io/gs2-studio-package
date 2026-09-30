@@ -48,10 +48,8 @@ namespace GS2Studio.Showroom.Demo
     {
         private const string Body =
             AdBreakOverlay.MissingPlacementBody + "\n\n" +
-            "The button below does the half that is not the SDK's. It tells GS2 a view was " +
-            "completed and asks for the point; GS2 verifies nothing. A shipped title presses it " +
-            "from its ad network's completion callback, and that decision is what this panel is " +
-            "standing in for.";
+            "The button below tells GS2 the view finished and takes the point. GS2 does not " +
+            "verify it; a shipped title presses this from its ad network's completion callback.";
 
         private const string ReadyStatus = "The placement has finished.";
         private const string GrantingStatus = "Asking GS2 for the point...";

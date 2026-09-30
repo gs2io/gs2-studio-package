@@ -1,0 +1,58 @@
+{
+  "id": "8f0ed251-298f-5736-8651-aa357bcb2530",
+  "items": [
+    {
+      "componentClassName": "SlotsLabel",
+      "id": "24e5657c-7465-5593-bde8-43a1004670f8",
+      "kind": "templateLabel",
+      "name": "CharacterCollection",
+      "sources": [
+        {
+          "key": "usage",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_3MYYM6EEDJBYJCPMK4SRJFM58Q"
+          }
+        },
+        {
+          "key": "capacity",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_WJ08C0DHN3KEMP4GW454S2KM0Q"
+          }
+        }
+      ],
+      "template": "{usage} of {capacity} used"
+    },
+    {
+      "componentClassName": "NoneYetLabel",
+      "id": "1374c5aa-7282-553e-bc88-07c14b81f5f5",
+      "kind": "label",
+      "name": "CharacterCollection",
+      "source": {
+        "kind": "literal",
+        "value": "Recruit a character above to start."
+      }
+    },
+    {
+      "componentClassName": "OwnsAnyActiveToggle",
+      "condition": {
+        "kind": "gt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_3MYYM6EEDJBYJCPMK4SRJFM58Q"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": 0
+        }
+      },
+      "id": "d6b3327d-6a67-517c-a327-ca691f8d239a",
+      "kind": "activeToggle",
+      "name": "CharacterCollection"
+    }
+  ],
+  "name": "CharacterCollection",
+  "targetDomainType": "CharacterCollection",
+  "targetDomainTypeId": "dt_01M2FZNNF238EP6W1N0VCR6GCP"
+}

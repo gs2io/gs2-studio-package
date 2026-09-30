@@ -62,6 +62,13 @@
       "serializedFields": []
     },
     {
+      "className": "StoreProductCoinsLabel",
+      "kind": "templateLabel",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
       "className": "StoreProductCountLabel",
       "kind": "label",
       "valueType": "",

@@ -1,6 +1,6 @@
 {
   "sections": {
-    "Energy": {
+    "Energy#Your stamina": {
       "axis": "StaminaEnergyMaster",
       "rows": [
         "EnergyNextRecoveryValue",
@@ -8,7 +8,7 @@
           "component": "EnergyStaminaGauge",
           "caption": "EnergyStaminaLabel"
         },
-        "EnergyConsumeButton",
+        "EnergySpendButton",
         "EnergyRecoverButton"
       ],
       "toggles": {

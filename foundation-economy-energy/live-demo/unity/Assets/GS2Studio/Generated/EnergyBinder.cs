@@ -43,7 +43,7 @@ namespace GS2Studio.Generated.Energy
     /// </summary>
     public interface IActionableEnergyBinder : IReadOnlyEnergyBinder
     {
-        Task Consume(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
+        Task Spend(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
         Task Recover(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
     }
 
@@ -392,7 +392,7 @@ namespace GS2Studio.Generated.Energy
         }
 
         #region Delegated actions
-        public async Task Consume(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
+        public async Task Spend(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null)
         {
             EnsureActionContext();
             await new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyConsume", _model.Id).Exchange(_gs2, _session, count: 1, config: config);

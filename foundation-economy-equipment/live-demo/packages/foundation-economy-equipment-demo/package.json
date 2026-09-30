@@ -7,7 +7,7 @@
   },
   "display": {
     "description": {
-      "en": "Supplies the equipment catalogue and bag used by the live demo, and the presses that take, discard and expand.",
+      "en": "Supplies the equipment catalog and bag used by the live demo, and the presses that take, discard and expand.",
       "ja": "ライブデモ用の装備カタログと所持枠、入手・破棄・拡張の操作を提供します。"
     },
     "label": {

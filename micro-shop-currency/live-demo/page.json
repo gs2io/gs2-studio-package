@@ -1,6 +1,6 @@
 {
   "sections": {
-    "StoreProduct": {
+    "StoreProduct#Buy coins": {
       "scope": {
         "currencyType": "XXX"
       },
@@ -8,11 +8,11 @@
       "rows": [
         {
           "component": "StoreProductBuyButton",
-          "caption": "StoreProductCountLabel"
+          "caption": "StoreProductCoinsLabel"
         }
       ]
     },
-    "Wallet": {
+    "Wallet#Your coins": {
       "key": {
         "slot": 0
       },

@@ -31,7 +31,46 @@
   "mountFields": [],
   "components": [
     {
+      "className": "UsageLimitNotWeeklyActiveToggle",
+      "kind": "activeToggle",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
+        }
+      ]
+    },
+    {
       "className": "UsageLimitScheduleLabel",
+      "kind": "templateLabel",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
+      "className": "UsageLimitWeeklyActiveToggle",
+      "kind": "activeToggle",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
+        }
+      ]
+    },
+    {
+      "className": "UsageLimitWeeklyScheduleLabel",
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

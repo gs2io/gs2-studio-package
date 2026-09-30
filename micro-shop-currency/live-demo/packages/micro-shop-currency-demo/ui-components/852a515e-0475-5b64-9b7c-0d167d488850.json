@@ -1,0 +1,24 @@
+{
+  "id": "852a515e-0475-5b64-9b7c-0d167d488850",
+  "items": [
+    {
+      "componentClassName": "CoinsLabel",
+      "id": "35617c9b-fa35-57fc-983e-1318acd2587c",
+      "kind": "templateLabel",
+      "name": "StoreProduct",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7"
+          }
+        }
+      ],
+      "template": "{count} coins"
+    }
+  ],
+  "name": "StoreProduct",
+  "targetDomainType": "StoreProduct",
+  "targetDomainTypeId": "dt_01M3SE2SVJEDKZMA18QN5R2SNH"
+}

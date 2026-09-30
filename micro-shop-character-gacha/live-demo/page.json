@@ -1,23 +1,23 @@
 {
   "sections": {
-    "Gacha": {
+    "Gacha#Draw a character": {
       "key": {
         "id": "standard"
       },
       "rows": [
         {
           "component": "GachaBuyButton",
-          "caption": "GachaNameLabel"
+          "caption": "GachaDrawLabel"
         }
       ]
     },
-    "Character": {
+    "Character#Your characters": {
       "axis": "InventoryCharacterUser",
       "rows": [
         "CharacterIdValue"
       ]
     },
-    "Wallet": {
+    "Wallet#Your coins": {
       "key": {
         "slot": 0
       },
@@ -27,7 +27,7 @@
         "WalletTotalBalanceLabel"
       ]
     },
-    "StoreProduct": {
+    "StoreProduct#Buy coins": {
       "scope": {
         "currencyType": "XXX"
       },
@@ -35,7 +35,7 @@
       "rows": [
         {
           "component": "StoreProductBuyButton",
-          "caption": "StoreProductCountLabel"
+          "caption": "StoreProductCoinsLabel"
         }
       ]
     },

@@ -1,6 +1,6 @@
 {
   "sections": {
-    "CharacterRecruit#Get a character to enhance": {
+    "CharacterRecruit#Recruit a character": {
       "rows": [
         {
           "component": "CharacterRecruitRecruitButton",

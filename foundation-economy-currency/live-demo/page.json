@@ -1,6 +1,6 @@
 {
   "sections": {
-    "FreeDeposit": {
+    "FreeDeposit#Get coins": {
       "rows": [
         {
           "component": "FreeDepositDepositButton",
@@ -8,7 +8,7 @@
         }
       ]
     },
-    "PaidDeposit": {
+    "PaidDeposit#Get paid coins": {
       "rows": [
         {
           "component": "PaidDepositDepositButton",
@@ -16,7 +16,7 @@
         }
       ]
     },
-    "Wallet": {
+    "Wallet#Your coins": {
       "key": {
         "slot": 0
       },

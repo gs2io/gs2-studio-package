@@ -2,20 +2,14 @@
   "id": "ecb47968-9af7-5844-8941-ebeb59650f46",
   "items": [
     {
-      "componentClassName": "NameLabel",
-      "id": "5c53f162-ed0f-5ad2-aadd-83f3c972cbb5",
-      "kind": "templateLabel",
+      "componentClassName": "DrawLabel",
+      "id": "9ecec6ff-e84f-5d5e-8eb5-b79f30617aab",
+      "kind": "label",
       "name": "Gacha",
-      "sources": [
-        {
-          "key": "id",
-          "source": {
-            "kind": "property",
-            "propertyId": "prop_reserved_id"
-          }
-        }
-      ],
-      "template": "{id}"
+      "source": {
+        "kind": "literal",
+        "value": "Draw a character for 10 coins"
+      }
     },
     {
       "arguments": [

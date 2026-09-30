@@ -1,6 +1,6 @@
 {
   "sections": {
-    "Item": {
+    "Item#Your items": {
       "axis": "InventoryInventoryMaster",
       "rows": ["ItemStockLabel", "ItemGainButton", "ItemSpendButton"],
       "toggles": {

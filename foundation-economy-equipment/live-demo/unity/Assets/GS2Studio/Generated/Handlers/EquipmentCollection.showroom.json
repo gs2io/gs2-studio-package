@@ -81,6 +81,29 @@
           "name": "_activeWhenFalse"
         }
       ]
+    },
+    {
+      "className": "EquipmentCollectionHoldsAnyActiveToggle",
+      "kind": "activeToggle",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
+        }
+      ]
+    },
+    {
+      "className": "EquipmentCollectionNoneYetLabel",
+      "kind": "label",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
     }
   ]
 }

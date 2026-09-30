@@ -56,8 +56,8 @@ const MATERIAL_COUNT = enhance.propertyId("CharacterEnhanceMaterial", "count");
 const RECIPE = "Basic";
 
 /** The materials, and the experience one of each is worth. */
-const POTION = "ExperiencePotion";
-const ELIXIR = "ExperienceElixir";
+const POTION = "potion";
+const ELIXIR = "elixir";
 const POTION_EXPERIENCE = 300;
 const ELIXIR_EXPERIENCE = 1000;
 

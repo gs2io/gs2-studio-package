@@ -147,7 +147,7 @@
       ]
     },
     {
-      "className": "UsageLimitCounterNextResetAtValue",
+      "className": "UsageLimitCounterNextResetInValue",
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,

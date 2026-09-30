@@ -15,7 +15,7 @@
           }
         }
       ],
-      "template": "Deposit {count} free"
+      "template": "Deposit {count} free coins"
     },
     {
       "arguments": [],

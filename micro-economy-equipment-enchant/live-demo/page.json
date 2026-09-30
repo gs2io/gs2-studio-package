@@ -3,7 +3,7 @@
     "EquipmentEnchant#How enchanting works": {
       "rows": ["EquipmentEnchantRuleLabel"]
     },
-    "EquipmentCatalog#Take a piece of equipment": {
+    "EquipmentCatalog#Take equipment": {
       "rows": [
         {
           "component": "EquipmentCatalogTakeButton",
@@ -23,7 +23,7 @@
         "EquipmentAddBonusButton"
       ]
     },
-    "EquipmentCollection#Inventory space": {
+    "EquipmentCollection#Equipment bag": {
       "rows": [
         {
           "component": "EquipmentCollectionCapacityGauge",
@@ -43,7 +43,7 @@
         }
       ]
     },
-    "Wallet#Where the coins come from": {
+    "Wallet#Your coins": {
       "key": {
         "slot": 0
       },

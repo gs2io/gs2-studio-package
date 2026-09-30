@@ -8,7 +8,7 @@
   },
   "delegatedActions": [
     {
-      "methodName": "Consume",
+      "methodName": "Spend",
       "parameterOverrides": [
         {
           "kind": "static",
