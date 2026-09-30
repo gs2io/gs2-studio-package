@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.EnergyProduct.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>+{recovery} stamina for {cost}</c>. Each <c>{key}</c> placeholder is
+    /// <c>+{recovery} stamina for {cost} coins</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>EnergyProduct</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.EnergyProduct.UI
 
         private void OnUpdated(EnergyProduct model)
         {
-            _onUpdate.Invoke($"+{model.RecoveryValue} stamina for {model.Cost}");
+            _onUpdate.Invoke($"+{model.RecoveryValue} stamina for {model.Cost} coins");
         }
     }
 }

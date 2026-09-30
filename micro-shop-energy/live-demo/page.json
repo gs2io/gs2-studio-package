@@ -8,13 +8,11 @@
         }
       ]
     },
-    "Wallet": {
+    "Wallet#Your coins": {
       "key": {
         "slot": 0
       },
-      "rows": [
-        "WalletFreeBalanceLabel"
-      ]
+      "rows": ["WalletFreeBalanceLabel"]
     },
     "Energy#The meter the shop refills": {
       "axis": "StaminaEnergyMaster",
@@ -27,9 +25,7 @@
         "EnergyConsumeButton"
       ],
       "toggles": {
-        "EnergyFullActiveToggle": [
-          "EnergyNextRecoveryValue"
-        ]
+        "EnergyFullActiveToggle": ["EnergyNextRecoveryValue"]
       }
     },
     "EnergyProduct#The shelf": {

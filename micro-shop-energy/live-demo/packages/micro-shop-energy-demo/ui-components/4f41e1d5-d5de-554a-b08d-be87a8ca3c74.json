@@ -22,7 +22,7 @@
           }
         }
       ],
-      "template": "+{recovery} stamina for {cost}"
+      "template": "+{recovery} stamina for {cost} coins"
     },
     {
       "arguments": [],

@@ -263,7 +263,7 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
     ui
       .templateLabel(
         "OfferLabel",
-        "+{recovery} stamina for {cost}",
+        "+{recovery} stamina for {cost} coins",
         { recovery: ui.prop("recoveryValue"), cost: ui.prop("cost") },
         { name: "EnergyProduct" }
       )
