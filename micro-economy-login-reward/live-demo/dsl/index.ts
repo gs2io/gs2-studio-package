@@ -80,6 +80,12 @@ const DAILY = "daily";
  */
 const RESET_HOUR = 15;
 
+/** {@link RESET_HOUR} as the rule prints it, and the same moment in Japan. */
+const RESET_TIME = `${String(RESET_HOUR).padStart(2, "0")}:00 UTC`;
+const RESET_HOUR_IN_JAPAN = (RESET_HOUR + 9) % 24;
+const RESET_TIME_IN_JAPAN =
+  RESET_HOUR_IN_JAPAN === 0 ? "midnight in Japan" : `${RESET_HOUR_IN_JAPAN}:00 in Japan`;
+
 /**
  * The seven days, in the order they are claimed. The ids sort in this order,
  * which is the order the deployed `rewards[]` is laid out in and so the step
@@ -182,10 +188,7 @@ const StartOverRateModel = defineMasterDataResource(resource =>
         .mountLocal(LoginRewardCollection)
         .bindings({
           action: Bind.transform(loginReward.packageId, "ResetReceiveStatus", [
-            Arg.domainProperty(
-              "loginRewardCollection",
-              Source.direct(LoginRewardCollection, "id")
-            ),
+            Arg.domainProperty("loginRewardCollection", Source.direct(LoginRewardCollection, "id")),
           ]),
         });
     })
@@ -197,7 +200,7 @@ const StartOverRateModel = defineMasterDataResource(resource =>
  */
 const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
   .display({
-    label: { ja: "ログインボーナス（デモデータ）", en: "Login rewards (demo data)" },
+    label: { ja: "ログインボーナス（デモデータ）", en: "Login Rewards (demo data)" },
     description: {
       ja: "ライブデモ用の 7 日間のログインボーナスと、各日の報酬コイン・やり直しの操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
       en: "Supplies the live demo's seven-day login bonus, the coins each day pays, and the press that starts the track over. The rewards land in the currency package's wallet.",
@@ -329,7 +332,7 @@ export const microEconomyLoginRewardDemo = withDays
       )
       .templateLabel(
         "RuleLabel",
-        "A new day starts at 15:00 UTC (midnight in Japan). Advance one day moves your clock forward 24 hours, so the next day can be received now.",
+        `A new day starts at ${RESET_TIME} (${RESET_TIME_IN_JAPAN}). Advance one day moves your clock forward 24 hours, so the next day can be received now.`,
         {},
         { name: "LoginRewardCollection" }
       )
