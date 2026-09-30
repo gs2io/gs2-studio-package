@@ -200,7 +200,6 @@ namespace GS2Studio.Generated.CharacterEnhanceBonus
         private readonly List<WeakReference<ReadOnlyCharacterEnhanceBonusBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyCharacterEnhanceBonusBinderCollection>>();
         private bool _disposed;
         private bool _mounted;
-        private bool _subscriptionActive;
         private Action? _onChange;
 
         // Sort comparers — `_configuredComparer` is what consumers observe via
