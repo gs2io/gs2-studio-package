@@ -41,7 +41,7 @@
         "EnergyFullActiveToggle": ["EnergyNextRecoveryValue"]
       }
     },
-    "Wallet#Where a clear pays": {
+    "Wallet#Where the coins land": {
       "key": {
         "slot": 0
       },

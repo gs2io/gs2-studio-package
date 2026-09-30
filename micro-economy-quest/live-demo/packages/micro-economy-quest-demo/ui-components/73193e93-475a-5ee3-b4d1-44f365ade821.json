@@ -45,7 +45,7 @@
           }
         }
       ],
-      "template": "Costs {staminaCost} stamina. Pays {reward}, plus {firstClearReward} on the first clear."
+      "template": "Costs {staminaCost} stamina. Pays {reward} coins, plus {firstClearReward} on the first clear."
     },
     {
       "componentClassName": "RunningLabel",

@@ -254,7 +254,7 @@ export const microEconomyQuestDemo = withQuests
       )
       .templateLabel(
         "BriefLabel",
-        "Costs {staminaCost} stamina. Pays {reward}, plus {firstClearReward} on the first clear.",
+        "Costs {staminaCost} stamina. Pays {reward} coins, plus {firstClearReward} on the first clear.",
         {
           staminaCost: ui.prop("staminaCost"),
           reward: ui.prop("reward"),

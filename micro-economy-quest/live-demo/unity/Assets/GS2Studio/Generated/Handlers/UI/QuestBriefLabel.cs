@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.Quest.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Costs {staminaCost} stamina. Pays {reward}, plus {firstClearReward} on the first clear.</c>. Each <c>{key}</c> placeholder is
+    /// <c>Costs {staminaCost} stamina. Pays {reward} coins, plus {firstClearReward} on the first clear.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>Quest</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.Quest.UI
 
         private void OnUpdated(Quest model)
         {
-            _onUpdate.Invoke($"Costs {model.StaminaCost} stamina. Pays {model.Reward}, plus {model.FirstClearReward} on the first clear.");
+            _onUpdate.Invoke($"Costs {model.StaminaCost} stamina. Pays {model.Reward} coins, plus {model.FirstClearReward} on the first clear.");
         }
     }
 }
