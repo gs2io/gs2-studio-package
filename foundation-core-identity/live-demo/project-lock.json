@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "af501953c582a0c7982272ef56b3c4be755cfdaa",
-      "integrity": "sha256-HxVYeq7V4uFbmHM+xk5LGxbY6hMrZMfKZPFbyrPBaVs=",
+      "commitSha": "4ba817237887237ecb8d948fc9f0f55bac775b73",
+      "integrity": "sha256-zY9/otfEzxOgsJcneYA4AHpQ1Kf5N0gKKD/bEWRbmOA=",
       "owner": "gs2io",
       "packageId": "foundation-core-identity",
       "repo": "gs2-studio-package",

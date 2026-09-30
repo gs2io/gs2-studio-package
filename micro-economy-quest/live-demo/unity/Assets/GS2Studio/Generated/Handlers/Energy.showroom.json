@@ -60,18 +60,6 @@
   "mountFields": [],
   "components": [
     {
-      "className": "EnergyConsumeButton",
-      "kind": "buttonAction",
-      "valueType": "",
-      "reportsFailure": true,
-      "serializedFields": [
-        {
-          "role": "button",
-          "name": "_button"
-        }
-      ]
-    },
-    {
       "className": "EnergyFullActiveToggle",
       "kind": "activeToggle",
       "valueType": "",
@@ -96,6 +84,18 @@
     },
     {
       "className": "EnergyRecoverButton",
+      "kind": "buttonAction",
+      "valueType": "",
+      "reportsFailure": true,
+      "serializedFields": [
+        {
+          "role": "button",
+          "name": "_button"
+        }
+      ]
+    },
+    {
+      "className": "EnergySpendButton",
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

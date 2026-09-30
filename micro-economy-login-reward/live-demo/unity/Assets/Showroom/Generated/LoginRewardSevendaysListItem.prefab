@@ -30,8 +30,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7697764711194164708}
-  - {fileID: 4747872296510153335}
+  - {fileID: 6179363586397703236}
+  - {fileID: 7607026209285387385}
   m_Father: {fileID: 8293048421940629181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -216,7 +216,7 @@ MonoBehaviour:
   _loginRewardCollectionHandler: {fileID: 0}
   _activeWhenTrue: []
   _activeWhenFalse:
-  - {fileID: 4747872296510153334}
+  - {fileID: 7607026209285387384}
 --- !u!1 &3619480524380622405
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,15 +495,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4137172997817350813, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Text
-      value: Received
+      value: Day
       objectReference: {fileID: 0}
     - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Name
-      value: LoginRewardReceivedLabel
-      objectReference: {fileID: 0}
-    - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: LoginRewardDayLabel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -511,30 +507,41 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 210742714298679418}
+      addedObject: {fileID: 5615600620719711811}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &4747872296510153334 stripped
+--- !u!114 &2509388242056698948 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 4747872296510153333}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+--- !u!1 &3916097416985899724 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 4747872296510153333}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &210742714298679418
+--- !u!114 &5615600620719711811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4747872296510153334}
+  m_GameObject: {fileID: 3916097416985899724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52f570f15eb9b7a0ce24a70125192479, type: 3}
+  m_Script: {fileID: 11500000, guid: ea6911293b6b15d864ca494f8c7b07a8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.LoginReward.UI.LoginRewardReceivedLabel
+  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.LoginReward.UI.LoginRewardDayLabel
   _handler: {fileID: 0}
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4747872296510153336}
+      - m_Target: {fileID: 2509388242056698948}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -546,23 +553,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &4747872296510153335 stripped
+--- !u!224 &6179363586397703236 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 4747872296510153333}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4747872296510153336 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 4747872296510153333}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
---- !u!1001 &9147271519739319253
+--- !u!1001 &7607026209285387383
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -652,11 +648,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4137172997817350813, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Text
-      value: Day
+      value: Received
       objectReference: {fileID: 0}
     - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Name
-      value: LoginRewardDayLabel
+      value: LoginRewardReceivedLabel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -664,30 +664,30 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5615600620719711811}
+      addedObject: {fileID: 210742714298679418}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &669544940224578412 stripped
+--- !u!1 &7607026209285387384 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 9147271519739319253}
+  m_PrefabInstance: {fileID: 7607026209285387383}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5615600620719711811
+--- !u!114 &210742714298679418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669544940224578412}
+  m_GameObject: {fileID: 7607026209285387384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea6911293b6b15d864ca494f8c7b07a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 52f570f15eb9b7a0ce24a70125192479, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.LoginReward.UI.LoginRewardDayLabel
+  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.LoginReward.UI.LoginRewardReceivedLabel
   _handler: {fileID: 0}
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144088385171434980}
+      - m_Target: {fileID: 7607026209285387386}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -699,10 +699,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2144088385171434980 stripped
+--- !u!224 &7607026209285387385 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 7607026209285387383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7607026209285387386 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 9147271519739319253}
+  m_PrefabInstance: {fileID: 7607026209285387383}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -710,8 +715,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
---- !u!224 &7697764711194164708 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 9147271519739319253}
-  m_PrefabAsset: {fileID: 0}

@@ -32,7 +32,7 @@ namespace GS2Studio.Generated.GuildRankingReward
         GuildRankingRewardThresholdRank ThresholdRank { get; }
 
         /// <summary>
-        /// Free currency this tier deposits when it is received
+        /// Coins this tier deposits when it is received
         /// </summary>
         int Coins { get; }
     }

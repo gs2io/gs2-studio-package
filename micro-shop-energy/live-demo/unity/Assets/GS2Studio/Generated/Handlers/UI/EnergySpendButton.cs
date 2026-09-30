@@ -20,15 +20,15 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Energy.UI
 {
     /// <summary>
-    /// UI button bound to <c>Consume</c> on the sibling
+    /// UI button bound to <c>Spend</c> on the sibling
     /// <c>EnergyHandlerBase</c>. Wires <c>UnityEngine.UI.Button.onClick</c>
-    /// to <c>EnergyHandlerBase.Binder.Consume</c> and forwards the
+    /// to <c>EnergyHandlerBase.Binder.Spend</c> and forwards the
     /// authored argument list. Add this component alongside (or under) a
     /// <c>EnergyHandlerBase</c>; the handler is resolved automatically via
     /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is set.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/Energy/ButtonAction/ConsumeButton")]
-    public sealed class EnergyConsumeButton : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/Energy/ButtonAction/SpendButton")]
+    public sealed class EnergySpendButton : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private EnergyHandlerBase? _handler;
@@ -58,7 +58,7 @@ namespace GS2Studio.Generated.Energy.UI
 
         /// <summary>
         /// True from a click until its action has returned. A click that lands
-        /// in that window is dropped, not queued: a second <c>Consume</c>
+        /// in that window is dropped, not queued: a second <c>Spend</c>
         /// issued before the first has finished is the same request twice, and
         /// for a purchase that is a double charge the server can only refuse
         /// after the fact. <c>Button.interactable</c> is left alone here since
@@ -100,7 +100,7 @@ namespace GS2Studio.Generated.Energy.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(EnergyConsumeButton)} on '{name}': no EnergyHandlerBase found in the parent chain; click ignored.", this);
+                        $"{nameof(EnergySpendButton)} on '{name}': no EnergyHandlerBase found in the parent chain; click ignored.", this);
                 }
                 return;
             }
@@ -112,18 +112,18 @@ namespace GS2Studio.Generated.Energy.UI
             _inFlight = true;
             try
             {
-                await model.Consume();
+                await model.Spend();
             }
             catch (Gs2Exception gs2Error)
             {
-                UnityEngine.Debug.LogError($"EnergyConsumeButton: Consume failed: {gs2Error}");
+                UnityEngine.Debug.LogError($"EnergySpendButton: Spend failed: {gs2Error}");
                 // A click has nothing to resume from, so no retry is offered.
                 _onFailed.Invoke(gs2Error, null);
                 return;
             }
             catch (Exception ex)
             {
-                UnityEngine.Debug.LogError($"EnergyConsumeButton: Consume failed: {ex}");
+                UnityEngine.Debug.LogError($"EnergySpendButton: Spend failed: {ex}");
                 return;
             }
             finally

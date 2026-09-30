@@ -219,7 +219,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8055956875271462730}
-  - {fileID: 7280380850446849370}
+  - {fileID: 4079040940596101330}
   - {fileID: 8635738797342330216}
   m_Father: {fileID: 4093876693083439212}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -656,7 +656,34 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4631634041600494808}
   m_SourcePrefab: {fileID: 100100000, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
---- !u!1 &3393004362211149446 stripped
+--- !u!114 &1099905094424854890 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2972306281594054041, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
+  m_PrefabInstance: {fileID: 2773202571589149939}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+--- !u!114 &1977240850551524917 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4399162620050320070, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
+  m_PrefabInstance: {fileID: 2773202571589149939}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!224 &4079040940596101330 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2226976225719804961, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
+  m_PrefabInstance: {fileID: 2773202571589149939}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8251982845489386254 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6122797242513782781, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
   m_PrefabInstance: {fileID: 2773202571589149939}
@@ -667,7 +694,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3393004362211149446}
+  m_GameObject: {fileID: 8251982845489386254}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee1024d2f0c02e23d99f3bbc8c6d9114, type: 3}
@@ -675,14 +702,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Character.UI.CharacterExperienceGauge
   _handler: {fileID: 0}
   _characterExperienceHandler: {fileID: 0}
-  _target: {fileID: 5107684248361540541}
+  _target: {fileID: 1977240850551524917}
 --- !u!114 &4631634041600494808
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3393004362211149446}
+  m_GameObject: {fileID: 8251982845489386254}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dee79f11c128c6d6a87f055e035cc046, type: 3}
@@ -692,7 +719,7 @@ MonoBehaviour:
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5967573022262383842}
+      - m_Target: {fileID: 1099905094424854890}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -704,33 +731,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5107684248361540541 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4399162620050320070, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
-  m_PrefabInstance: {fileID: 2773202571589149939}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
---- !u!114 &5967573022262383842 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2972306281594054041, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
-  m_PrefabInstance: {fileID: 2773202571589149939}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
---- !u!224 &7280380850446849370 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2226976225719804961, guid: 18d19115bf0f54f9c992c40608495428, type: 3}
-  m_PrefabInstance: {fileID: 2773202571589149939}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8930309150285771131
 PrefabInstance:
   m_ObjectHideFlags: 0

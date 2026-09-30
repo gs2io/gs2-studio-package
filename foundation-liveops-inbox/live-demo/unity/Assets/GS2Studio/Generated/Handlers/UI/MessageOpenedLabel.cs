@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.Message.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Opened</c>. Each <c>{key}</c> placeholder is
+    /// <c>Opened.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>Message</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.Message.UI
 
         private void OnUpdated(Message model)
         {
-            _onUpdate.Invoke($"Opened");
+            _onUpdate.Invoke($"Opened.");
         }
     }
 }

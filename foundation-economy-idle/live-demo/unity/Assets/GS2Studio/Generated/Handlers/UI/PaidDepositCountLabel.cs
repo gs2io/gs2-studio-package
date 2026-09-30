@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.PaidDeposit.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Deposit {count} paid</c>. Each <c>{key}</c> placeholder is
+    /// <c>Deposit {count} paid coins</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>PaidDeposit</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.PaidDeposit.UI
 
         private void OnUpdated(PaidDeposit model)
         {
-            _onUpdate.Invoke($"Deposit {model.Count} paid");
+            _onUpdate.Invoke($"Deposit {model.Count} paid coins");
         }
     }
 }

@@ -13,19 +13,13 @@
     },
     "Character#Your characters": {
       "axis": "InventoryCharacterUser",
-      "rows": [
-        "CharacterIdValue"
-      ]
+      "rows": ["CharacterIdValue"]
     },
     "Wallet#Your coins": {
       "key": {
         "slot": 0
       },
-      "rows": [
-        "WalletFreeBalanceLabel",
-        "WalletPaidBalanceLabel",
-        "WalletTotalBalanceLabel"
-      ]
+      "rows": ["WalletFreeBalanceLabel", "WalletPaidBalanceLabel", "WalletTotalBalanceLabel"]
     },
     "StoreProduct#Buy coins": {
       "scope": {
@@ -61,6 +55,9 @@
       "rows": []
     },
     "PaidDeposit": {
+      "rows": []
+    },
+    "CharacterCollection": {
       "rows": []
     }
   }

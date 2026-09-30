@@ -15,6 +15,9 @@
     },
     "CharacterRecruit": {
       "rows": []
+    },
+    "CharacterCollection": {
+      "rows": []
     }
   }
 }

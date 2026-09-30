@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "11a5c456bd98463c373d424a4e74d446f1e7b561",
-      "integrity": "sha256-UY2kFZpDs4ZwAS9NspP1wVkqeknGhpW8nJPrnhwD6JQ=",
+      "commitSha": "4ba817237887237ecb8d948fc9f0f55bac775b73",
+      "integrity": "sha256-zY9/otfEzxOgsJcneYA4AHpQ1Kf5N0gKKD/bEWRbmOA=",
       "owner": "gs2io",
       "packageId": "foundation-economy-currency",
       "repo": "gs2-studio-package",
@@ -11,8 +11,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "733f3e18cc5aceb7e77fe696e52c01af86119d88",
-      "integrity": "sha256-aT6C5PPv5+3Jalm1UzFomR9OZPEwzjlDA6f7UfMk2Sk=",
+      "commitSha": "4ba817237887237ecb8d948fc9f0f55bac775b73",
+      "integrity": "sha256-zY9/otfEzxOgsJcneYA4AHpQ1Kf5N0gKKD/bEWRbmOA=",
       "owner": "gs2io",
       "packageId": "micro-shop-currency",
       "repo": "gs2-studio-package",

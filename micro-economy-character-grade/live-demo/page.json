@@ -8,6 +8,12 @@
         }
       ]
     },
+    "CharacterCollection#Your characters": {
+      "rows": ["CharacterCollectionSlotsLabel", "CharacterCollectionNoneYetLabel"],
+      "toggles": {
+        "CharacterCollectionOwnsAnyActiveToggle": ["CharacterCollectionNoneYetLabel"]
+      }
+    },
     "Character#Train to the cap, then break it": {
       "axis": "InventoryCharacterUser",
       "rows": [
@@ -20,10 +26,9 @@
         "CharacterTrainHardButton",
         "CharacterLimitBreakButton"
       ],
-      "toggles": { "CharacterLimitBreakInteractable": ["CharacterLimitBreakButton"] }
-    },
-    "CharacterCollection": {
-      "rows": []
+      "toggles": {
+        "CharacterLimitBreakInteractable": ["CharacterLimitBreakButton"]
+      }
     },
     "CharacterExperience": {
       "rows": []

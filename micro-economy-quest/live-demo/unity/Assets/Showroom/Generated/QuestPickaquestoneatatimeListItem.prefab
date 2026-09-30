@@ -168,7 +168,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8086329731066981197}
-  - {fileID: 1237004282462601333}
+  - {fileID: 362801542632173122}
   - {fileID: 778831019829865620}
   - {fileID: 2618562215963939475}
   m_Father: {fileID: 5078372518843473218}
@@ -510,7 +510,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7418325296822928987}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &1237004282462601332 stripped
+--- !u!224 &362801542632173122 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 1237004282462601331}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7390875104331239626 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 1237004282462601331}
@@ -521,7 +526,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1237004282462601332}
+  m_GameObject: {fileID: 7390875104331239626}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 439601d4931a2899e60becad2ef2e7a0, type: 3}
@@ -531,7 +536,7 @@ MonoBehaviour:
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1237004282462601334}
+      - m_Target: {fileID: 8221971111842233922}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -543,12 +548,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &1237004282462601333 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 1237004282462601331}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1237004282462601334 stripped
+--- !u!114 &8221971111842233922 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 1237004282462601331}

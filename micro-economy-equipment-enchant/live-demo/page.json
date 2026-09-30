@@ -29,10 +29,12 @@
           "component": "EquipmentCollectionCapacityGauge",
           "caption": "EquipmentCollectionCapacityLabel"
         },
-        "EquipmentCollectionExpandButton"
+        "EquipmentCollectionExpandButton",
+        "EquipmentCollectionNoneYetLabel"
       ],
       "toggles": {
-        "EquipmentCollectionExpandableInteractable": ["EquipmentCollectionExpandButton"]
+        "EquipmentCollectionExpandableInteractable": ["EquipmentCollectionExpandButton"],
+        "EquipmentCollectionHoldsAnyActiveToggle": ["EquipmentCollectionNoneYetLabel"]
       }
     },
     "FreeDeposit#Get coins": {

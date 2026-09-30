@@ -22,7 +22,7 @@
           "component": "EnergyStaminaGauge",
           "caption": "EnergyStaminaLabel"
         },
-        "EnergyConsumeButton"
+        "EnergySpendButton"
       ],
       "toggles": {
         "EnergyFullActiveToggle": ["EnergyNextRecoveryValue"]

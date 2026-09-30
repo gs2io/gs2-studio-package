@@ -29,7 +29,7 @@ namespace GS2Studio.Generated.LoginReward
         string DisplayName { get; }
 
         /// <summary>
-        /// Free currency this day deposits when it is claimed
+        /// Coins this day deposits when it is claimed
         /// </summary>
         int Coins { get; }
     }

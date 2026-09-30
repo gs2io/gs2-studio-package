@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.Mission.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Received: {reward} coins paid.</c>. Each <c>{key}</c> placeholder is
+    /// <c>Received {reward} coins.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>Mission</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.Mission.UI
 
         private void OnUpdated(Mission model)
         {
-            _onUpdate.Invoke($"Received: {model.RewardAmount} coins paid.");
+            _onUpdate.Invoke($"Received {model.RewardAmount} coins.");
         }
     }
 }

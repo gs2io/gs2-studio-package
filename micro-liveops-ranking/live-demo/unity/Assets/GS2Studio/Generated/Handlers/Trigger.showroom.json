@@ -71,6 +71,13 @@
       "serializedFields": []
     },
     {
+      "className": "TriggerExpiresInValue",
+      "kind": "value",
+      "valueType": "DateTime",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
       "className": "TriggerExtendButton",
       "kind": "buttonAction",
       "valueType": "",

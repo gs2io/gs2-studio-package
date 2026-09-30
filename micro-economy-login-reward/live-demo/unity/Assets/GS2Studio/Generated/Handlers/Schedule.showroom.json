@@ -52,7 +52,21 @@
       ]
     },
     {
+      "className": "ScheduleClosesInValue",
+      "kind": "value",
+      "valueType": "DateTime",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
       "className": "ScheduleEndAtValue",
+      "kind": "value",
+      "valueType": "DateTime",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
+      "className": "ScheduleEndsInValue",
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,

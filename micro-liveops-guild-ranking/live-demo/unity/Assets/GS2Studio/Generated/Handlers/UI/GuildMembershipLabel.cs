@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.Guild.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Guild id {joinedGuildName}</c>. Each <c>{key}</c> placeholder is
+    /// <c>You are a member. The lobby above shows which guild.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>Guild</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -34,18 +34,8 @@ namespace GS2Studio.Generated.Guild.UI
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
-        /// <summary>
-        /// Loads this component's readings come from. A row built by a mount
-        /// surface that skips one of these renders those readings as their
-        /// default; the surface says which loaders it skips through
-        /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
-        /// compared before a scene is ever run.
-        /// </summary>
-        public static readonly string[] RequiredLoaders = { "UserdataGuildGuildGuildModel" };
-
         private bool _subscribed;
         private bool _warnedMissingHandler;
-        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -86,23 +76,7 @@ namespace GS2Studio.Generated.Guild.UI
 
         private void OnUpdated(Guild model)
         {
-            WarnUnloadedLoadersOnce();
-            _onUpdate.Invoke($"Guild id {model.JoinedGuildName}");
-        }
-
-        // Warn once and keep drawing. The readings below are at their default
-        // either way, and going silent would blank a label that mixes loaded
-        // and unloaded readings — the point here is to say which of the two it
-        // is, not to change what is drawn.
-        private void WarnUnloadedLoadersOnce()
-        {
-            if (_warnedUnloadedLoaders) return;
-            var binder = _handler?.Binder;
-            if (binder == null) return;
-            if (binder.LoadedUserdataGuildGuildGuildModel) return;
-            _warnedUnloadedLoaders = true;
-            Debug.LogWarning(
-                $"{nameof(GuildMembershipLabel)} on '{name}': this row's mount surface did not run UserdataGuildGuildGuildModel, which fills what this component reads (JoinedGuildName); those readings render as their default, not as an absent value.", this);
+            _onUpdate.Invoke($"You are a member. The lobby above shows which guild.");
         }
     }
 }

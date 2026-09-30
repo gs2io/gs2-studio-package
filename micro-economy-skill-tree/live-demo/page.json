@@ -8,6 +8,12 @@
         }
       ]
     },
+    "CharacterCollection#Your characters": {
+      "rows": ["CharacterCollectionSlotsLabel", "CharacterCollectionNoneYetLabel"],
+      "toggles": {
+        "CharacterCollectionOwnsAnyActiveToggle": ["CharacterCollectionNoneYetLabel"]
+      }
+    },
     "Character#Open a character's tree": {
       "axis": "InventoryCharacterUser",
       "rows": ["CharacterIdValue", "CharacterOpenTreeButton"]
@@ -27,9 +33,6 @@
       "rows": ["WalletFreeBalanceLabel"]
     },
     "SkillNode": {
-      "rows": []
-    },
-    "CharacterCollection": {
       "rows": []
     },
     "CharacterExperience": {

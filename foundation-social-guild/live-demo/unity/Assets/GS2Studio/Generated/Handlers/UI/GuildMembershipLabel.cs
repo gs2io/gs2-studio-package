@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.Guild.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Member. The lobby above shows the guild.</c>. Each <c>{key}</c> placeholder is
+    /// <c>You are a member. The lobby above shows which guild.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>Guild</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.Guild.UI
 
         private void OnUpdated(Guild model)
         {
-            _onUpdate.Invoke($"Member. The lobby above shows the guild.");
+            _onUpdate.Invoke($"You are a member. The lobby above shows which guild.");
         }
     }
 }

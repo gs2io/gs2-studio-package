@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.FreeDeposit.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Deposit {count} free</c>. Each <c>{key}</c> placeholder is
+    /// <c>Deposit {count} free coins</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>FreeDeposit</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.FreeDeposit.UI
 
         private void OnUpdated(FreeDeposit model)
         {
-            _onUpdate.Invoke($"Deposit {model.Count} free");
+            _onUpdate.Invoke($"Deposit {model.Count} free coins");
         }
     }
 }

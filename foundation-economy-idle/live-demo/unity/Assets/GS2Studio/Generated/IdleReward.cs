@@ -24,7 +24,7 @@ namespace GS2Studio.Generated.IdleReward
         IdleRewardId Id { get; }
 
         /// <summary>
-        /// Free currency one interval away deposits
+        /// Coins one interval away deposits
         /// </summary>
         int Coins { get; }
     }

@@ -44,7 +44,7 @@ namespace GS2Studio.Generated.SkillNode
         string? Owner { get; }
 
         /// <summary>
-        /// Free currency this node charges when it is released
+        /// Coins this node charges when it is released
         /// </summary>
         int Cost { get; }
     }
