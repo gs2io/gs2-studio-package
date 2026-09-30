@@ -81,6 +81,11 @@ namespace GS2Studio.Showroom.EditorTools
             // bucket — the browser then decompresses natively.
             PlayerSettings.WebGL.decompressionFallback = false;
             PlayerSettings.WebGL.dataCaching = true;
+            // Payloads named by their content hash: `publish.mjs` serves them
+            // with a long immutable cache and refuses a build named otherwise.
+            // Set here so a freshly scaffolded demo, whose ProjectSettings
+            // default to plain names, builds the same way as the rest.
+            PlayerSettings.WebGL.nameFilesAsHashes = true;
             // A diagnostic build keeps managed symbols so a stack trace names the
             // method that threw; the shipping build stays lean.
             PlayerSettings.WebGL.exceptionSupport = diagnostics
