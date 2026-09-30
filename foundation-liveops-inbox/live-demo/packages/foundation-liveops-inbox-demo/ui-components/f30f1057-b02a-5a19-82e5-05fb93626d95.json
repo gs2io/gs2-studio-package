@@ -15,7 +15,7 @@
           }
         }
       ],
-      "template": "Carries {amount} free currency."
+      "template": "Carries {amount} coins."
     },
     {
       "arguments": [],

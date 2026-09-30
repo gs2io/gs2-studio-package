@@ -4,7 +4,7 @@
       "axis": "ExchangeInboxDeliverMaster",
       "rows": ["GlobalMessageDeliverButton"]
     },
-    "Gift#A gift with free currency attached": {
+    "Gift#A gift with coins attached": {
       "rows": [
         {
           "component": "GiftDeliverButton",
@@ -19,7 +19,7 @@
         "MessageUnreadActiveToggle": ["MessageOpenedLabel"]
       }
     },
-    "Wallet#Where the gift lands": {
+    "Wallet#Where the coins land": {
       "key": {
         "slot": 0
       },

@@ -174,7 +174,7 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
   })
 
   .instance("Gift", "gift", {
-    payload: `A gift from the operator: ${GIFT_AMOUNT} free currency.`,
+    payload: `A gift from the operator: ${GIFT_AMOUNT} coins.`,
     amount: GIFT_AMOUNT,
   })
 
@@ -228,7 +228,7 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
       // loader's `Gs2Inbox:ReadMessage`, so the demo supplies the button and
       // nothing else.
       .buttonAction("OpenButton", "Read", undefined, { name: "Message" })
-      .templateLabel("OpenedLabel", "Opened.", {}, { name: "Message" })
+      .templateLabel("OpenedLabel", "Opened", {}, { name: "Message" })
       // An active toggle carries the rows its condition empties. The feature
       // package's `ReadActiveToggle` empties the Open button once a message is
       // read; this one empties the note until then. Written as `not(isRead)`
@@ -245,7 +245,7 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
       // the message this gift's exchange sends.
       .templateLabel(
         "AmountLabel",
-        "Carries {amount} free currency.",
+        "Carries {amount} coins.",
         { amount: ui.prop("amount") },
         { name: "Gift" }
       )
