@@ -140,9 +140,11 @@ namespace GS2Studio.Showroom.Demo
                 var interval = RewardIntervalMinutes;
                 if (_readNextRewardsAt <= 0 || interval <= 0) return null;
                 if (MaximumIdleMinutes > 0 && _readIdleMinutes >= MaximumIdleMinutes) return null;
+                // Until the account's offset is read, the start is not known on this device's clock.
+                if (!DemoTimeOffset.TryGet(_userId, out var offset)) return null;
                 return DateTimeOffset.FromUnixTimeMilliseconds(_readNextRewardsAt).UtcDateTime
                     .AddMinutes(-(interval + _readIdleMinutes))
-                    .AddSeconds(-DemoTimeOffset.Get(_userId));
+                    .AddSeconds(-offset);
             }
         }
 

@@ -9,11 +9,22 @@
 // wallet the page shows hears the reward land.
 //
 // The window is the contest trigger, which Start and Finish contest move with
-// exchanges run on the server; nothing tells the page, so the trigger is read
-// every few seconds, and again whenever a press needs to know. The board is
-// read less often, and again after every play. GS2 keeps the top of the board
-// for a few minutes, so another visitor's new score can take that long to
-// appear; a visitor's own score is placed on it straight away.
+// exchanges run on the server; nothing tells the page. A trigger that is not
+// pulled answers NotFound, which is the settled "not started" rather than a
+// failure: only a press changes it. So the trigger is read when the page
+// starts, in the moments after this page's own Start or Finish press, whenever
+// a press needs to know, and otherwise only now and then, for a press on
+// another page signed in to the same account. The window closing on its own
+// needs no read: its end is known and checked against the clock every second.
+//
+// GS2 times the window on the account's clock, which the demos that advance
+// time move forward, so its end is moved back onto this device's clock by the
+// account's offset before it is compared with this device's time.
+//
+// The board is read every minute, and again after every play. GS2 keeps the
+// top of the board for a few minutes anyway, so another visitor's new score
+// can take that long to appear; a visitor's own score is placed on it straight
+// away.
 //
 // A read answers for the moment it started. One that started before a play or
 // a receipt, or before a newer read of the same thing, is dropped when it
@@ -22,6 +33,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,6 +47,8 @@ using Gs2.Gs2Schedule;
 using Gs2.Gs2Schedule.Request;
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+
+using GS2Studio.Generated.RankingContest.UI;
 
 namespace GS2Studio.Showroom.Demo
 {
@@ -65,8 +79,22 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>How many places the board shows.</summary>
         public const int BoardSize = 10;
 
-        private const float TriggerPollSeconds = 3f;
-        private const float StandingPollSeconds = 15f;
+        /// <summary>
+        /// How often the trigger is read when nothing on this page can have
+        /// changed it: a press on another page signed in to the same account.
+        /// </summary>
+        private const float TriggerBackstopSeconds = 60f;
+
+        /// <summary>
+        /// A press is read at once and then <see cref="PressReads"/> more
+        /// times, <see cref="PressReadSeconds"/> apart. The exchange behind a
+        /// press finishes on the server, so the first read after it can come
+        /// too early; the reads stop once one sees the trigger move.
+        /// </summary>
+        private const float PressReadSeconds = 2f;
+        private const int PressReads = 2;
+
+        private const float StandingPollSeconds = 60f;
 
         private static RankingContestState? _instance;
 
@@ -88,19 +116,27 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>Raised whenever what the rows show may have changed.</summary>
         public event Action? Updated;
 
-        /// <summary>Whether the trigger and the standing have both been read once.</summary>
-        public bool HasValue => _triggerRead && _standingRead;
+        /// <summary>
+        /// Whether the trigger, the standing and the account's clock offset
+        /// have all been read once.
+        /// </summary>
+        public bool HasValue => _triggerRead && _standingRead && DemoTimeOffset.Has(UserId);
 
         /// <summary>Whether the visitor's window is open now.</summary>
         public bool Open => EndsAt != null;
 
-        /// <summary>When the visitor's window closes, or null while it is not open.</summary>
+        /// <summary>
+        /// When the visitor's window closes, on this device's clock, or null
+        /// while it is not open or the account's clock offset is not read yet.
+        /// </summary>
         public DateTime? EndsAt
         {
             get
             {
                 if (_triggerExpiresAt <= 0) return null;
-                var ends = DateTimeOffset.FromUnixTimeMilliseconds(_triggerExpiresAt).UtcDateTime;
+                if (!DemoTimeOffset.TryGet(UserId, out var offset)) return null;
+                var ends = DateTimeOffset.FromUnixTimeMilliseconds(_triggerExpiresAt).UtcDateTime
+                    .AddSeconds(-offset);
                 return ends > DateTime.UtcNow ? ends : null;
             }
         }
@@ -134,31 +170,55 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>Bumped by every standing read as it starts, and by every play and receipt.</summary>
         private int _standingGeneration;
 
+        /// <summary>When the trigger is read next, on the realtime clock.</summary>
+        private float _nextTriggerRead;
+
+        /// <summary>How many of the reads that follow a press are still to come.</summary>
+        private int _pressReadsLeft;
+
+        /// <summary>Set while a failure has been logged, so a lasting one is logged once.</summary>
+        private bool _triggerFailureLogged;
+        private bool _standingFailureLogged;
+
+        private readonly List<UnityEngine.Events.UnityEvent> _pressEvents = new List<UnityEngine.Events.UnityEvent>();
+
         private void OnEnable()
         {
+            DemoTimeOffset.Loaded += OnOffsetLoaded;
             StartCoroutine(Run());
+        }
+
+        private void OnDisable()
+        {
+            DemoTimeOffset.Loaded -= OnOffsetLoaded;
+            foreach (var pressed in _pressEvents) pressed.RemoveListener(OnPressed);
+            _pressEvents.Clear();
         }
 
         private IEnumerator Run()
         {
-            while (!TryRuntime(out _, out _))
+            IGameSession? session;
+            while (!TryRuntime(out _, out session))
             {
                 yield return new WaitForSeconds(0.25f);
             }
+            UserId = session!.UserId;
+            ListenToPresses();
+            DemoTimeOffset.TryGet(UserId, out _);
             ReadTrigger();
             ReadStanding();
 
-            var poll = new WaitForSecondsRealtime(TriggerPollSeconds);
-            var sinceStanding = 0f;
+            var tick = new WaitForSecondsRealtime(1f);
+            var nextStandingRead = Time.realtimeSinceStartup + StandingPollSeconds;
             var wasOpen = Open;
             while (true)
             {
-                yield return poll;
-                ReadTrigger();
-                sinceStanding += TriggerPollSeconds;
-                if (sinceStanding >= StandingPollSeconds)
+                yield return tick;
+                var now = Time.realtimeSinceStartup;
+                if (now >= _nextTriggerRead) ReadTrigger();
+                if (now >= nextStandingRead)
                 {
-                    sinceStanding = 0f;
+                    nextStandingRead = now + StandingPollSeconds;
                     ReadStanding();
                 }
                 // The window closes on its own without the trigger changing,
@@ -166,6 +226,42 @@ namespace GS2Studio.Showroom.Demo
                 if (wasOpen != Open) Updated?.Invoke();
                 wasOpen = Open;
             }
+        }
+
+        /// <summary>
+        /// Hears the page's Start and Finish contest buttons, which are the
+        /// presses on this page that move the trigger.
+        /// </summary>
+        private void ListenToPresses()
+        {
+            foreach (var button in FindObjectsByType<RankingContestStartContestButton>(
+                         FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                Listen(button.OnCompleted);
+            }
+            foreach (var button in FindObjectsByType<RankingContestFinishContestButton>(
+                         FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                Listen(button.OnCompleted);
+            }
+        }
+
+        private void Listen(UnityEngine.Events.UnityEvent pressed)
+        {
+            pressed.AddListener(OnPressed);
+            _pressEvents.Add(pressed);
+        }
+
+        private void OnPressed()
+        {
+            _pressReadsLeft = PressReads;
+            ReadTrigger();
+        }
+
+        /// <summary>The account's clock offset was read: the window's end on this device moved.</summary>
+        private void OnOffsetLoaded(string userId)
+        {
+            if (userId == UserId) Updated?.Invoke();
         }
 
         /// <summary>
@@ -217,6 +313,7 @@ namespace GS2Studio.Showroom.Demo
         public async Task<string> Receive()
         {
             if (!TryRuntime(out var gs2, out var session)) return "Not signed in yet.";
+            if (!HasValue) return "Still reading your standing; try again in a moment.";
             if (Open) await ReadTriggerOnce(gs2!, session!);
             if (Open) return "Your contest is still open. Finish it, or wait for it to end, to receive.";
             if (Best == null) return "Play at least once to receive a reward.";
@@ -286,6 +383,17 @@ namespace GS2Studio.Showroom.Demo
         private async Task ReadTriggerOnce(Gs2Domain gs2, IGameSession session)
         {
             var generation = ++_triggerGeneration;
+            // The next read is due on the backstop, or sooner while a press
+            // is settling; a read that fails waits for the backstop too.
+            if (_pressReadsLeft > 0)
+            {
+                _pressReadsLeft--;
+                _nextTriggerRead = Time.realtimeSinceStartup + PressReadSeconds;
+            }
+            else
+            {
+                _nextTriggerRead = Time.realtimeSinceStartup + TriggerBackstopSeconds;
+            }
             long expiresAt;
             try
             {
@@ -298,17 +406,31 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (NotFoundException)
             {
+                // Not pulled: the contest has not started, until a press pulls it.
                 expiresAt = 0;
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(RankingContestState)}: the contest trigger could not be read: {error}");
+                if (!_triggerFailureLogged)
+                {
+                    _triggerFailureLogged = true;
+                    Debug.LogError($"{nameof(RankingContestState)}: the contest trigger could not be read: {error}");
+                }
                 return;
             }
-            if (this == null || generation != _triggerGeneration) return;
-            var changed = !_triggerRead || expiresAt != _triggerExpiresAt;
+            if (this == null) return;
+            _triggerFailureLogged = false;
+            if (generation != _triggerGeneration) return;
+            var moved = _triggerRead && expiresAt != _triggerExpiresAt;
+            var changed = !_triggerRead || moved;
             _triggerRead = true;
             _triggerExpiresAt = expiresAt;
+            if (moved)
+            {
+                // The press has landed; the rest of its reads are not needed.
+                _pressReadsLeft = 0;
+                _nextTriggerRead = Time.realtimeSinceStartup + TriggerBackstopSeconds;
+            }
             if (changed) Updated?.Invoke();
         }
 
@@ -329,10 +451,15 @@ namespace GS2Studio.Showroom.Demo
             try
             {
                 await ReadStandingOnce(gs2!, session!);
+                _standingFailureLogged = false;
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(RankingContestState)}: the board could not be read: {error}");
+                if (!_standingFailureLogged)
+                {
+                    _standingFailureLogged = true;
+                    Debug.LogError($"{nameof(RankingContestState)}: the board could not be read: {error}");
+                }
             }
             finally
             {

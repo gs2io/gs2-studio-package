@@ -20,7 +20,7 @@ namespace GS2Studio.Showroom.Demo
 {
     /// <summary>
     /// Publishes the signed-in player's clock on GS2 (now, plus the offset
-    /// this demo gave their account) as text.
+    /// their account has) as text.
     /// </summary>
     [AddComponentMenu("GS2 Studio/Showroom/Demo Clock")]
     public sealed class GuildRankingDemoClockLabel : MonoBehaviour
@@ -35,12 +35,14 @@ namespace GS2Studio.Showroom.Demo
         private void OnEnable()
         {
             DemoTimeOffset.Changed += OnOffsetChanged;
+            DemoTimeOffset.Loaded += OnOffsetChanged;
             _ticking = StartCoroutine(Tick());
         }
 
         private void OnDisable()
         {
             DemoTimeOffset.Changed -= OnOffsetChanged;
+            DemoTimeOffset.Loaded -= OnOffsetChanged;
             if (_ticking != null) StopCoroutine(_ticking);
             _ticking = null;
         }
@@ -61,8 +63,9 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Nothing is shown until a player has signed in: the offset is theirs,
-        /// and the time without it would be a clock the server does not use.
+        /// Nothing is shown until a player has signed in and their account's
+        /// offset has been read: the time without it would be a clock the
+        /// server does not use.
         /// </summary>
         private void Publish()
         {
@@ -72,7 +75,8 @@ namespace GS2Studio.Showroom.Demo
                 return;
             }
 
-            var now = DateTime.UtcNow.AddSeconds(DemoTimeOffset.Get(session.UserId));
+            if (!DemoTimeOffset.TryGet(session.UserId, out var offset)) return;
+            var now = DateTime.UtcNow.AddSeconds(offset);
             _onUpdate.Invoke(
                 "Demo clock: " + now.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture) + " UTC");
         }

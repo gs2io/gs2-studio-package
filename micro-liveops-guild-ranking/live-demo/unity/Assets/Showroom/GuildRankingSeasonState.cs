@@ -115,6 +115,14 @@ namespace GS2Studio.Showroom.Demo
 
         private const int PageSize = 100;
 
+        /// <summary>The reads whose failures are logged once until they work again; see <see cref="LogFailure"/>.</summary>
+        private const string SeasonFailure = "the season could not be read";
+        private const string FollowFailure = "the guilds could not be followed";
+        private const string RereadFailure = "the guilds could not be read again";
+        private const string GuildFailure = "the guild could not be read";
+        private const string BoardFailure = "the board could not be read";
+        private const string PastFailure = "the past seasons could not be read";
+
         private static GuildRankingSeasonState? _instance;
 
         /// <summary>The page's season, made on first use.</summary>
@@ -156,11 +164,11 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>
         /// When the season turns over on this device's clock, which is what
-        /// the page counts down against: GS2's time less the offset the demo
-        /// gave the visitor's account.
+        /// the page counts down against: GS2's time less the offset the
+        /// visitor's account has. Null until that offset has been read.
         /// </summary>
         public DateTime? SeasonEndsOnDevice =>
-            SeasonEndsAt?.AddSeconds(-DemoTimeOffset.Get(UserId));
+            DemoTimeOffset.TryGet(UserId, out var offset) ? SeasonEndsAt?.AddSeconds(-offset) : null;
 
         /// <summary>Why the season could not be read, or null.</summary>
         public string? SeasonProblem { get; private set; }
@@ -266,10 +274,18 @@ namespace GS2Studio.Showroom.Demo
         private float _nextStandingRead;
         private float _nextPastRead;
 
+        /// <summary>
+        /// The reads that failed and were logged. A read that keeps failing is
+        /// tried again every few seconds, and logging each try would fill the
+        /// page's log, so it is logged once until it works again.
+        /// </summary>
+        private readonly HashSet<string> _failing = new HashSet<string>();
+
         private void OnEnable()
         {
             DemoTimeOffset.Changed += OnClockChanged;
             DemoTimeOffset.Applied += OnClockApplied;
+            DemoTimeOffset.Loaded += OnOffsetLoaded;
             StartCoroutine(Run());
         }
 
@@ -277,7 +293,29 @@ namespace GS2Studio.Showroom.Demo
         {
             DemoTimeOffset.Changed -= OnClockChanged;
             DemoTimeOffset.Applied -= OnClockApplied;
+            DemoTimeOffset.Loaded -= OnOffsetLoaded;
             StopFollowingJoined();
+        }
+
+        /// <summary>Logs a failed read, unless the same read failed last time too.</summary>
+        private void LogFailure(string what, Exception error, bool warning = false)
+        {
+            lock (_failing)
+            {
+                if (!_failing.Add(what)) return;
+            }
+            var message = $"{nameof(GuildRankingSeasonState)}: {what}: {error}";
+            if (warning) Debug.LogWarning(message);
+            else Debug.LogError(message);
+        }
+
+        /// <summary>The read worked, so its next failure is logged again.</summary>
+        private void Recovered(string what)
+        {
+            lock (_failing)
+            {
+                _failing.Remove(what);
+            }
         }
 
         private void Update()
@@ -297,13 +335,16 @@ namespace GS2Studio.Showroom.Demo
             }
             // Known before the first read, so that read is on the visitor's clock.
             UserId = session!.UserId;
+            DemoTimeOffset.TryGet(UserId, out _);
             var tick = new WaitForSecondsRealtime(TickSeconds);
             while (true)
             {
                 var now = Time.realtimeSinceStartup;
                 // The season is read again once it is over, or once the clock
-                // moved; until then the event answers the same.
-                var over = SeasonEndsAt != null && ServerNow() >= SeasonEndsAt;
+                // moved; until then the event answers the same. Whether it is
+                // over waits for the account's offset.
+                var over = SeasonEndsAt != null && DemoTimeOffset.TryGet(UserId, out _) &&
+                    ServerNow() >= SeasonEndsAt;
                 if (now >= _nextSeasonRead && (Season == null || over || _seasonStale)) ReadSeason();
                 if (now >= _nextMembershipWatch)
                 {
@@ -352,6 +393,7 @@ namespace GS2Studio.Showroom.Demo
             if (!GuildKnown) return "Still reading your guild; try again in a moment.";
             if (GuildId == null) return "You are not in a guild. Found one or join one in the lobby above, then play.";
             if (Season == null) return SeasonProblem ?? "Still reading the season; try again in a moment.";
+            if (!DemoTimeOffset.Has(UserId)) return "Still reading your clock; try again in a moment.";
             if (SeasonEndsAt != null && ServerNow() >= SeasonEndsAt)
             {
                 if (_clockNotApplied)
@@ -479,7 +521,7 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>
         /// Now on GS2's clock for the visitor: this device's time plus the
-        /// offset the demo gave their account.
+        /// offset their account has (none while it is not read yet).
         /// </summary>
         private DateTime ServerNow() => DateTime.UtcNow.AddSeconds(DemoTimeOffset.Get(UserId));
 
@@ -500,6 +542,15 @@ namespace GS2Studio.Showroom.Demo
             _clockNotApplied = false;
             ReadAllAgain();
             StartCoroutine(ReadAllAfter(ClockSettleSeconds));
+        }
+
+        /// <summary>
+        /// The account's offset was read. The session signed in with it
+        /// already, so nothing is read again; only the countdown moves.
+        /// </summary>
+        private void OnOffsetLoaded(string userId)
+        {
+            if (userId == UserId && this != null) Updated?.Invoke();
         }
 
         private IEnumerator ReadAllAfter(float seconds)
@@ -546,8 +597,10 @@ namespace GS2Studio.Showroom.Demo
                         .WithEventName(SeasonEvent)
                         .WithAccessToken(session!.AccessToken.Token)
                         .WithIsInSchedule(false));
+                if (this == null) return;
+                Recovered(SeasonFailure);
                 // A read that went out before the clock moved answers for the old clock.
-                if (this == null || generation != _seasonGeneration) return;
+                if (generation != _seasonGeneration) return;
                 var repeat = result?.RepeatSchedule;
                 var endsAt = repeat?.CurrentRepeatEndAt;
                 if (repeat?.RepeatCount == null || endsAt == null)
@@ -583,7 +636,9 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (NotFoundException)
             {
-                if (this == null || generation != _seasonGeneration) return;
+                if (this == null) return;
+                Recovered(SeasonFailure);
+                if (generation != _seasonGeneration) return;
                 SeasonProblem = "The season's event guild-season is not deployed yet, so no season is open.";
                 Season = null;
                 SeasonEndsAt = null;
@@ -591,7 +646,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(GuildRankingSeasonState)}: the season could not be read: {error}");
+                if (this != null) LogFailure(SeasonFailure, error);
             }
             finally
             {
@@ -624,13 +679,17 @@ namespace GS2Studio.Showroom.Demo
                     if (joined == null || joined.Length == 0) RereadJoined(visitor, ticket, domain, player);
                     else Post(ticket, () => ApplyJoined(joined, domain, player));
                 }, GuildRankingDemo.GuildKind);
-                if (ticket == _joinedTicket) _joinedSubscription = id;
+                if (ticket == _joinedTicket)
+                {
+                    _joinedSubscription = id;
+                    Recovered(FollowFailure);
+                }
                 else visitor.UnsubscribeJoinedGuilds(id, GuildRankingDemo.GuildKind);
             }
             catch (Exception error)
             {
                 if (ticket != _joinedTicket) return;
-                Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guilds could not be followed: {error}");
+                LogFailure(FollowFailure, error, warning: true);
                 _followingJoined = false;
                 _visitor = null;
                 _followDomain = null;
@@ -673,11 +732,12 @@ namespace GS2Studio.Showroom.Demo
             try
             {
                 var joined = await visitor.JoinedGuildsAsync(GuildRankingDemo.GuildKind).ToArrayAsync();
+                Recovered(RereadFailure);
                 Post(ticket, () => ApplyJoined(joined, domain, player));
             }
             catch (Exception error)
             {
-                Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guilds could not be read again: {error}");
+                LogFailure(RereadFailure, error, warning: true);
                 Post(ticket, () => _membershipFailed = true);
             }
         }
@@ -721,7 +781,7 @@ namespace GS2Studio.Showroom.Demo
             catch (Exception error)
             {
                 if (ticket != _guildReadTicket || this == null) return;
-                Debug.LogWarning($"{nameof(GuildRankingSeasonState)}: the guild could not be read: {error}");
+                LogFailure(GuildFailure, error, warning: true);
                 // Read again on the next list the SDK hands over, or at the
                 // next retry.
                 _joinedGuildName = null;
@@ -729,6 +789,7 @@ namespace GS2Studio.Showroom.Demo
                 return;
             }
             if (ticket != _guildReadTicket || this == null) return;
+            Recovered(GuildFailure);
             if (guild?.GuildId == null)
             {
                 // The guild is gone although the list still names it; until
@@ -779,10 +840,11 @@ namespace GS2Studio.Showroom.Demo
             try
             {
                 await ReadStandingOnce(gs2!, session!, guildId, season.Value);
+                Recovered(BoardFailure);
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(GuildRankingSeasonState)}: the board could not be read: {error}");
+                LogFailure(BoardFailure, error);
             }
             finally
             {
@@ -872,10 +934,11 @@ namespace GS2Studio.Showroom.Demo
             try
             {
                 await ReadPastOnce(gs2!, session!, season.Value);
+                Recovered(PastFailure);
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(GuildRankingSeasonState)}: the past seasons could not be read: {error}");
+                LogFailure(PastFailure, error);
                 if (this != null) _nextPastRead = Time.realtimeSinceStartup + PastRetrySeconds;
                 if (this != null && !PastKnown)
                 {

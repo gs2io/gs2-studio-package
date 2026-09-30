@@ -1,9 +1,10 @@
-// Moving the player's clock forward, as this demo does it.
+// Moving the player's clock forward, as the demos that show time do it.
 //
-// Idle rewards build up by the hour, and a visitor does not wait eight hours
-// to see the cap. GS2 keeps a time offset on each account that the server adds
-// to "now" for every request the account's access token signs, so the demo
-// moves that offset forward and the idle time on GS2 moves with it.
+// What these demos show builds up over hours or days (idle rewards, a daily
+// login reward, a daily season), and a visitor does not wait that long. GS2
+// keeps a time offset on each account that the server adds to "now" for every
+// request the account's access token signs, so the demo moves that offset
+// forward and everything GS2 times moves with it.
 //
 // No package action sets the offset (it is an account setting, not game
 // state) and the Ez SDK has no call for it, so this goes through the core
@@ -39,7 +40,7 @@ namespace GS2Studio.Showroom.Demo
     {
         /// <summary>
         /// Whether one advance is already on its way. Two at once would both
-        /// read the same stored offset and move the clock once, not twice.
+        /// read the same offset and move the clock once, not twice.
         /// </summary>
         private static bool _running;
 
@@ -86,7 +87,15 @@ namespace GS2Studio.Showroom.Demo
                 return false;
             }
 
+            // Read afresh: another demo on the same account may have moved the
+            // clock since this page last looked, and an advance from a stale
+            // offset would move it back.
             var userId = session.UserId;
+            if (!await DemoTimeOffset.Read())
+            {
+                report("The demo clock could not be read from GS2, so it was not moved. Try again in a moment.");
+                return false;
+            }
             var next = (long)DemoTimeOffset.Get(userId) + seconds;
             if (next > DemoTimeOffset.MaxSeconds)
             {
