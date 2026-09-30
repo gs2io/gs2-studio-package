@@ -41,7 +41,7 @@
         "en": "Character Dex"
       },
       "description": {
-        "ja": "これまでに入手したキャラクターの種類を記録する図鑑機能です。",
+        "ja": "これまでに入手したキャラクターの種類を図鑑に記録します。",
         "en": "Keeps a dex of every character species the player has ever obtained."
       },
       "dependsOn": ["foundation-economy-character"],
@@ -57,7 +57,7 @@
         "en": "Party Formation"
       },
       "description": {
-        "ja": "手持ちキャラクターを組み合わせて編成を作る機能です。",
+        "ja": "手持ちのキャラクターを組み合わせて編成を作ります。",
         "en": "Lets players build formations by combining characters from their collection."
       },
       "dependsOn": ["foundation-economy-character"],
@@ -89,8 +89,8 @@
         "en": "Currency"
       },
       "description": {
-        "ja": "ゲーム内通貨の残高（ウォレット）と、通貨で買える商品を扱います。",
-        "en": "Manages an in-game currency balance (wallet) and the products it can buy."
+        "ja": "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。",
+        "en": "Manages an in-game currency balance (wallet) and the store products that sell it."
       },
       "dependsOn": [],
       "install": {
@@ -106,7 +106,7 @@
       },
       "description": {
         "ja": "時間経過で回復するスタミナ（行動力）を管理します。",
-        "en": "Manages a stamina/energy meter that recovers over time."
+        "en": "Manages a stamina meter that recovers over time."
       },
       "dependsOn": [],
       "install": {
@@ -121,8 +121,8 @@
         "en": "Equipment"
       },
       "description": {
-        "ja": "キャラクターに装備させる武器や防具の所持・カテゴリを管理します。",
-        "en": "Manages the weapons and gear characters own and equip, grouped by category."
+        "ja": "プレイヤーが所持する武器や防具を、カテゴリごとに管理します。",
+        "en": "Manages the weapons and gear a player owns, grouped by category."
       },
       "dependsOn": [],
       "install": {
@@ -153,7 +153,7 @@
         "en": "Items"
       },
       "description": {
-        "ja": "プレイヤーが所持するアイテムの基本的な在庫管理です。",
+        "ja": "プレイヤーが所持するアイテムの在庫を管理します。",
         "en": "Basic inventory management for items the player owns."
       },
       "dependsOn": [],
@@ -185,7 +185,7 @@
         "en": "Scheduling"
       },
       "description": {
-        "ja": "期間限定イベントなど、他の機能が使う日程・トリガーの共通基盤です。",
+        "ja": "期間限定イベントなど、他の機能が使う日程とトリガーを共通基盤として提供します。",
         "en": "Shared date-range and trigger infrastructure other features build on."
       },
       "dependsOn": [],
@@ -297,8 +297,8 @@
         "en": "Serial Codes"
       },
       "description": {
-        "ja": "配布したシリアルコードを引き換える機能です。コードのまとまり（キャンペーン）を定義します。",
-        "en": "Redeems serial codes you hand out, organised into campaigns."
+        "ja": "配布したシリアルコードを引き換えます。コードはキャンペーン単位でまとめます。",
+        "en": "Redeems serial codes you hand out, organized into campaigns."
       },
       "dependsOn": [],
       "install": {
@@ -377,8 +377,8 @@
         "en": "Skill Tree"
       },
       "description": {
-        "ja": "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはプレイヤーごとに記録されます。",
-        "en": "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per player."
+        "ja": "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはキャラクターごとに記録されます。",
+        "en": "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per character."
       },
       "dependsOn": [
         "foundation-economy-character"
@@ -427,8 +427,8 @@
         "en": "Missions"
       },
       "description": {
-        "ja": "日次・週次などのミッションと、その達成条件・報酬を管理します。",
-        "en": "Manages daily and weekly missions along with their conditions and rewards."
+        "ja": "日次・週次・リセットなしのミッションと、その達成条件・報酬を管理します。",
+        "en": "Manages missions that reset daily, weekly or never, along with their conditions and rewards."
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {
@@ -443,8 +443,8 @@
         "en": "Quests"
       },
       "description": {
-        "ja": "プレイヤーが進行させるクエストと、達成時の進捗・報酬を管理します。",
-        "en": "Manages quests players progress through, along with their progress and completion rewards."
+        "ja": "プレイヤーが進めるクエストと、その進行状況・クリア報酬を管理します。",
+        "en": "Manages quests players take on, their progress and their clear rewards."
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {
@@ -455,7 +455,7 @@
       "id": "micro-shop-character-gacha",
       "role": "shop",
       "label": {
-        "ja": "キャラガチャ",
+        "ja": "キャラクターガチャ",
         "en": "Character Gacha"
       },
       "description": {
@@ -496,7 +496,7 @@
         "en": "Currency Shop"
       },
       "description": {
-        "ja": "通貨を購入できる商品と価格を扱うショップ機能です。",
+        "ja": "通貨を購入できる商品と価格を扱います。",
         "en": "A shop for purchasing currency, with configurable products and prices."
       },
       "dependsOn": ["foundation-economy-currency"],
@@ -512,7 +512,7 @@
         "en": "Stamina Shop"
       },
       "description": {
-        "ja": "スタミナを回復する商品を販売するショップ機能です。",
+        "ja": "スタミナを回復する商品を販売します。",
         "en": "A shop that sells products to refill stamina."
       },
       "dependsOn": ["foundation-economy-energy"],

@@ -250,7 +250,7 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
   .display({
     label: { ja: "スケジュール基盤", en: "Scheduling" },
     description: {
-      ja: "期間限定イベントなど、他の機能が使う日程・トリガーの共通基盤です。",
+      ja: "期間限定イベントなど、他の機能が使う日程とトリガーを共通基盤として提供します。",
       en: "Shared date-range and trigger infrastructure other features build on.",
     },
   })

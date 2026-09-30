@@ -72,7 +72,7 @@ export const microShopEnergy = definePackage("micro-shop-energy", "0.0.0")
   .display({
     label: { ja: "スタミナショップ", en: "Stamina Shop" },
     description: {
-      ja: "スタミナを回復する商品を販売するショップ機能です。",
+      ja: "スタミナを回復する商品を販売します。",
       en: "A shop that sells products to refill stamina.",
     },
   })

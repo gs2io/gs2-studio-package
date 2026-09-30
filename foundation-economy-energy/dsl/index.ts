@@ -101,7 +101,7 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
     label: { ja: "スタミナ", en: "Stamina" },
     description: {
       ja: "時間経過で回復するスタミナ（行動力）を管理します。",
-      en: "Manages a stamina/energy meter that recovers over time.",
+      en: "Manages a stamina meter that recovers over time.",
     },
   })
   .displayType(Energy, {

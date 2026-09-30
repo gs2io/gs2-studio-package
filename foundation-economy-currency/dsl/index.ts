@@ -126,8 +126,8 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .display({
     label: { ja: "通貨", en: "Currency" },
     description: {
-      ja: "ゲーム内通貨の残高（ウォレット）と、通貨で買える商品を扱います。",
-      en: "Manages an in-game currency balance (wallet) and the products it can buy.",
+      ja: "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。",
+      en: "Manages an in-game currency balance (wallet) and the store products that sell it.",
     },
   })
   .displayType(CurrencyStore, {

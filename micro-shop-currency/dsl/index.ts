@@ -142,7 +142,7 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
   .display({
     label: { ja: "通貨ショップ", en: "Currency Shop" },
     description: {
-      ja: "通貨を購入できる商品と価格を扱うショップ機能です。",
+      ja: "通貨を購入できる商品と価格を扱います。",
       en: "A shop for purchasing currency, with configurable products and prices.",
     },
   })

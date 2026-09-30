@@ -8,7 +8,7 @@
   "display": {
     "description": {
       "en": "A shop for purchasing currency, with configurable products and prices.",
-      "ja": "通貨を購入できる商品と価格を扱うショップ機能です。"
+      "ja": "通貨を購入できる商品と価格を扱います。"
     },
     "domainTypes": {
       "dt_4C1ZT24FH0ST09YC0VE1TB7SK8": {

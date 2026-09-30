@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "display": {
     "description": {
-      "en": "Manages an in-game currency balance (wallet) and the products it can buy.",
-      "ja": "ゲーム内通貨の残高（ウォレット）と、通貨で買える商品を扱います。"
+      "en": "Manages an in-game currency balance (wallet) and the store products that sell it.",
+      "ja": "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。"
     },
     "domainTypes": {
       "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5": {

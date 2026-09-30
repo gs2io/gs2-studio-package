@@ -8,7 +8,7 @@
   "display": {
     "description": {
       "en": "Keeps a dex of every character species the player has ever obtained.",
-      "ja": "これまでに入手したキャラクターの種類を記録する図鑑機能です。"
+      "ja": "これまでに入手したキャラクターの種類を図鑑に記録します。"
     },
     "domainTypes": {
       "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV": {

@@ -139,8 +139,8 @@ export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "
   .display({
     label: { ja: "スキルツリー", en: "Skill Tree" },
     description: {
-      ja: "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはプレイヤーごとに記録されます。",
-      en: "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per player.",
+      ja: "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはキャラクターごとに記録されます。",
+      en: "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per character.",
     },
   })
   .displayType(SkillNode, {

@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "display": {
     "description": {
-      "en": "Redeems serial codes you hand out, organised into campaigns.",
-      "ja": "配布したシリアルコードを引き換える機能です。コードのまとまり（キャンペーン）を定義します。"
+      "en": "Redeems serial codes you hand out, organized into campaigns.",
+      "ja": "配布したシリアルコードを引き換えます。コードはキャンペーン単位でまとめます。"
     },
     "domainTypes": {
       "dt_01M0C5VXZY2ZJKK4DERTCAZHXD": {

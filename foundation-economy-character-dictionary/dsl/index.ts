@@ -55,7 +55,7 @@ export const foundationEconomyCharacterDictionary = definePackage(
   .display({
     label: { ja: "キャラクター図鑑", en: "Character Dex" },
     description: {
-      ja: "これまでに入手したキャラクターの種類を記録する図鑑機能です。",
+      ja: "これまでに入手したキャラクターの種類を図鑑に記録します。",
       en: "Keeps a dex of every character species the player has ever obtained.",
     },
   })

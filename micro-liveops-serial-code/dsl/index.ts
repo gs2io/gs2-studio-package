@@ -58,8 +58,8 @@ export const microLiveopsSerialCode = definePackage("micro-liveops-serial-code",
   .display({
     label: { ja: "シリアルコード", en: "Serial Codes" },
     description: {
-      ja: "配布したシリアルコードを引き換える機能です。コードのまとまり（キャンペーン）を定義します。",
-      en: "Redeems serial codes you hand out, organised into campaigns.",
+      ja: "配布したシリアルコードを引き換えます。コードはキャンペーン単位でまとめます。",
+      en: "Redeems serial codes you hand out, organized into campaigns.",
     },
   })
   .displayType(SerialCodeCampaign, {

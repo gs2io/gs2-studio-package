@@ -119,8 +119,8 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
   .display({
     label: { ja: "装備", en: "Equipment" },
     description: {
-      ja: "キャラクターに装備させる武器や防具の所持・カテゴリを管理します。",
-      en: "Manages the weapons and gear characters own and equip, grouped by category.",
+      ja: "プレイヤーが所持する武器や防具を、カテゴリごとに管理します。",
+      en: "Manages the weapons and gear a player owns, grouped by category.",
     },
   })
   .displayType(EquipmentCategory, {

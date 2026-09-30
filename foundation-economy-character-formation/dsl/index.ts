@@ -124,7 +124,7 @@ export const foundationEconomyCharacterFormation = definePackage(
   .display({
     label: { ja: "パーティ編成", en: "Party Formation" },
     description: {
-      ja: "手持ちキャラクターを組み合わせて編成を作る機能です。",
+      ja: "手持ちのキャラクターを組み合わせて編成を作ります。",
       en: "Lets players build formations by combining characters from their collection.",
     },
   })

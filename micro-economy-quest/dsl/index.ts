@@ -267,8 +267,8 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
   .display({
     label: { ja: "クエスト", en: "Quests" },
     description: {
-      ja: "プレイヤーが進行させるクエストと、達成時の進捗・報酬を管理します。",
-      en: "Manages quests players progress through, along with their progress and completion rewards.",
+      ja: "プレイヤーが進めるクエストと、その進行状況・クリア報酬を管理します。",
+      en: "Manages quests players take on, their progress and their clear rewards.",
     },
   })
   .displayType(ProgressReward, {

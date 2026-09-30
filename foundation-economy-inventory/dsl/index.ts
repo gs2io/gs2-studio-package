@@ -37,7 +37,7 @@ export const foundationEconomyInventory = definePackage("foundation-economy-inve
   .display({
     label: { ja: "アイテム", en: "Items" },
     description: {
-      ja: "プレイヤーが所持するアイテムの基本的な在庫管理です。",
+      ja: "プレイヤーが所持するアイテムの在庫を管理します。",
       en: "Basic inventory management for items the player owns.",
     },
   })

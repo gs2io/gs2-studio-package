@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "display": {
     "description": {
-      "en": "Manages a stamina/energy meter that recovers over time.",
+      "en": "Manages a stamina meter that recovers over time.",
       "ja": "時間経過で回復するスタミナ（行動力）を管理します。"
     },
     "domainTypes": {

@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "display": {
     "description": {
-      "en": "Manages the weapons and gear characters own and equip, grouped by category.",
-      "ja": "キャラクターに装備させる武器や防具の所持・カテゴリを管理します。"
+      "en": "Manages the weapons and gear a player owns, grouped by category.",
+      "ja": "プレイヤーが所持する武器や防具を、カテゴリごとに管理します。"
     },
     "domainTypes": {
       "dt_FANPG561806ENHYPWV5YRDSHC7": {

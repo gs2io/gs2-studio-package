@@ -271,7 +271,7 @@ const Showcase = defineMasterDataResource(resource =>
 
 export const microShopCharacterGacha = definePackage("micro-shop-character-gacha", "0.0.0")
   .display({
-    label: { ja: "キャラガチャ", en: "Character Gacha" },
+    label: { ja: "キャラクターガチャ", en: "Character Gacha" },
     description: {
       ja: "通貨を消費してキャラクターを排出するガチャです。排出率をレアリティごとに設定できます。",
       en: "A currency-funded gacha that draws characters, with per-rarity drop rates.",
