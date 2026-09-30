@@ -42,15 +42,15 @@
     "properties": [
       {
         "bindingHint": "masterData",
-        "description": "Free currency this node charges when it is released",
+        "description": "Coins this node charges when it is released",
         "id": "prop_01M31VN3992YQ74A46F3V3FAAZ",
         "localizedDisplay": {
           "en": {
-            "description": "Free currency spent to unlock this node.",
+            "description": "Coins spent to unlock this node.",
             "label": "Unlock cost"
           },
           "ja": {
-            "description": "このノードを解放するときに消費する無償通貨の額です。",
+            "description": "このノードを解放するときに消費するコインの額です。",
             "label": "解放コスト"
           }
         },

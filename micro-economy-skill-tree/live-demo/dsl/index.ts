@@ -142,14 +142,14 @@ const SkillNode = defineOverlayDomainType(
         PT.int32("cost")
           .masterData()
           .required()
-          .description("Free currency this node charges when it is released")
+          .description("Coins this node charges when it is released")
       )
       .localizedProperties({
         cost: jaEnField(
           "解放コスト",
           "Unlock cost",
-          "このノードを解放するときに消費する無償通貨の額です。",
-          "Free currency spent to unlock this node."
+          "このノードを解放するときに消費するコインの額です。",
+          "Coins spent to unlock this node."
         ),
       })
 );
@@ -177,15 +177,15 @@ const withDependencies = definePackage("micro-economy-skill-tree-demo", "0.0.0")
   .display({
     label: { ja: "スキルツリー（デモデータ）", en: "Skill Tree (demo data)" },
     description: {
-      ja: "ライブデモ用の4つのスキルノードと、その解放コストを支払う無償通貨を提供します。ノードの解放状況はキャラクターごとに記録されます。",
-      en: "Supplies the live demo's four skill nodes and the free currency their unlock costs are paid from. What is unlocked is tracked per character.",
+      ja: "ライブデモ用の 4 つのスキルノードと、その解放コストを支払うコインを提供します。ノードの解放状況はキャラクターごとに記録されます。",
+      en: "Supplies the live demo's four skill nodes and the coins their unlock costs are paid from. What is unlocked is tracked per character.",
     },
   })
   .displayType(SkillNode, {
     label: { ja: "スキルノード", en: "Skill node" },
     description: {
-      ja: "デモのスキルノードに、解放時へ消費する無償通貨の額を足します。",
-      en: "Adds the free currency a demo skill node charges when it is released.",
+      ja: "デモのスキルノードに、解放時へ消費するコインの額を足します。",
+      en: "Adds the coins a demo skill node charges when it is released.",
     },
   })
   .dependency(skillTree.packageId, "github:gs2io/gs2-studio-package")

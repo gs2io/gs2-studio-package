@@ -293,8 +293,8 @@ export const microEconomyMission = definePackage("micro-economy-mission", "0.0.0
   .display({
     label: { ja: "ミッション", en: "Missions" },
     description: {
-      ja: "日次・週次・リセットなしのミッションと、その達成条件・報酬を管理します。",
-      en: "Manages missions that reset daily, weekly or never, along with their conditions and rewards.",
+      ja: "日次・週次・月次・リセットなしのミッションと、その達成条件・報酬を管理します。",
+      en: "Manages missions that reset daily, weekly, monthly or never, along with their conditions and rewards.",
     },
   })
   .displayType(MissionCollection, {

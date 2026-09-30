@@ -35,16 +35,16 @@
     "properties": [
       {
         "bindingHint": "masterData",
-        "description": "Free currency one interval away deposits",
+        "description": "Coins one interval away deposits",
         "id": "prop_01M3GBBQCA52T922M9XCBSVBWX",
         "localizedDisplay": {
           "en": {
-            "description": "Free currency paid for each interval away.",
+            "description": "Coins paid for each interval away.",
             "label": "Reward coins",
             "unit": "currency"
           },
           "ja": {
-            "description": "放置 1 区間ごとに付与する無償通貨の額です。",
+            "description": "放置 1 区間ごとに付与するコインの額です。",
             "label": "報酬コイン",
             "unit": "通貨"
           }

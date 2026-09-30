@@ -27,7 +27,7 @@
       },
       "rows": ["QuestRunningLabel"]
     },
-    "Energy#What a start costs": {
+    "Energy#Your stamina": {
       "axis": "StaminaEnergyMaster",
       "rows": [
         "EnergyNextRecoveryValue",

@@ -46,7 +46,7 @@
           }
         }
       ],
-      "template": "Received: {reward} coins paid."
+      "template": "Received {reward} coins."
     },
     {
       "componentClassName": "ReceiveUnavailableActiveToggle",

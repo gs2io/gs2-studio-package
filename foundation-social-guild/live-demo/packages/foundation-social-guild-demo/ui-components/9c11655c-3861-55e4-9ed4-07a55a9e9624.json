@@ -7,7 +7,7 @@
       "kind": "templateLabel",
       "name": "Guild",
       "sources": [],
-      "template": "Member. The lobby above shows the guild."
+      "template": "You are a member. The lobby above shows which guild."
     },
     {
       "componentClassName": "CapacityLabel",

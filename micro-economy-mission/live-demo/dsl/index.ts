@@ -419,7 +419,7 @@ export const microEconomyMissionDemo = withMissions
       // twice.
       .templateLabel(
         "ReceivedLabel",
-        "Received: {reward} coins paid.",
+        "Received {reward} coins.",
         { reward: ui.prop("rewardAmount") },
         { name: "Mission" }
       )

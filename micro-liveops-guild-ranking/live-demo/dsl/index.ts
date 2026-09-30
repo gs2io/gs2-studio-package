@@ -139,14 +139,14 @@ const GuildRankingReward = defineOverlayDomainType(
         PT.int32("coins")
           .masterData()
           .required()
-          .description("Free currency this tier deposits when it is received")
+          .description("Coins this tier deposits when it is received")
       )
       .localizedProperties({
         coins: jaEnField(
           "報酬コイン",
           "Reward coins",
-          "この順位帯の報酬を受け取ったときに付与する無償通貨の額です。",
-          "Free currency paid when this tier's reward is received.",
+          "この順位帯の報酬を受け取ったときに付与するコインの額です。",
+          "Coins paid when this tier's reward is received.",
           { ja: "通貨", en: "currency" }
         ),
       })
@@ -222,7 +222,7 @@ export const microLiveopsGuildRankingDemo = withTiers
   .uiComponent(GuildRanking, ui =>
     ui.templateLabel(
       "RuleLabel",
-      `You are ranked within your guild, not guild against guild. Each Play adds ${MINIMUM_SCORE} to ${MAXIMUM_SCORE} points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: ${TIER_SUMMARY}. Advance one day ends the season for you right away; guildmates who did not advance are still in it.`,
+      `You are ranked within your guild, not guild against guild. Each play adds ${MINIMUM_SCORE} to ${MAXIMUM_SCORE} points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: ${TIER_SUMMARY}. Advance one day ends the season for you right away; guildmates who did not advance are still in it.`,
       {},
       { name: "GuildRanking" }
     )

@@ -16,7 +16,7 @@
   "display": {
     "description": {
       "en": "Supplies one gacha, its per-rarity rates, and the coins a draw costs.",
-      "ja": "ライブデモ用に、1つのガチャとレアリティ別の排出率、抽選コストを揃えます。"
+      "ja": "ライブデモ用に、1 つのガチャとレアリティ別の排出率、抽選コストを揃えます。"
     },
     "label": {
       "en": "Character Gacha (demo data)",

@@ -15,7 +15,7 @@
       "kind": "templateLabel",
       "name": "Message",
       "sources": [],
-      "template": "Opened"
+      "template": "Opened."
     },
     {
       "componentClassName": "UnreadActiveToggle",

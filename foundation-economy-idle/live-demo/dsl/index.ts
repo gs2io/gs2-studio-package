@@ -105,14 +105,14 @@ const IdleReward = defineOverlayDomainType(
         PT.int32("coins")
           .masterData()
           .required()
-          .description("Free currency one interval away deposits")
+          .description("Coins one interval away deposits")
       )
       .localizedProperties({
         coins: jaEnField(
           "報酬コイン",
           "Reward coins",
-          "放置 1 区間ごとに付与する無償通貨の額です。",
-          "Free currency paid for each interval away.",
+          "放置 1 区間ごとに付与するコインの額です。",
+          "Coins paid for each interval away.",
           { ja: "通貨", en: "currency" }
         ),
       })

@@ -149,14 +149,14 @@ const RankingReward = defineOverlayDomainType(
         PT.int32("coins")
           .masterData()
           .required()
-          .description("Free currency this tier deposits when it is received")
+          .description("Coins this tier deposits when it is received")
       )
       .localizedProperties({
         coins: jaEnField(
           "報酬コイン",
           "Reward coins",
-          "この順位帯の報酬を受け取ったときに付与する無償通貨の額です。",
-          "Free currency paid when this tier's reward is received.",
+          "この順位帯の報酬を受け取ったときに付与するコインの額です。",
+          "Coins paid when this tier's reward is received.",
           { ja: "通貨", en: "currency" }
         ),
       })

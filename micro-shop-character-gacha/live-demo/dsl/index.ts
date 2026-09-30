@@ -66,7 +66,7 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
   .display({
     label: { ja: "キャラクターガチャ（デモデータ）", en: "Character Gacha (demo data)" },
     description: {
-      ja: "ライブデモ用に、1つのガチャとレアリティ別の排出率、抽選コストを揃えます。",
+      ja: "ライブデモ用に、1 つのガチャとレアリティ別の排出率、抽選コストを揃えます。",
       en: "Supplies one gacha, its per-rarity rates, and the coins a draw costs.",
     },
   })

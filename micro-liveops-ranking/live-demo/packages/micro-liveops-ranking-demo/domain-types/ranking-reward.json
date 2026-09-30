@@ -35,16 +35,16 @@
     "properties": [
       {
         "bindingHint": "masterData",
-        "description": "Free currency this tier deposits when it is received",
+        "description": "Coins this tier deposits when it is received",
         "id": "prop_01M3HP36RM61TMJ7110DJBF1JN",
         "localizedDisplay": {
           "en": {
-            "description": "Free currency paid when this tier's reward is received.",
+            "description": "Coins paid when this tier's reward is received.",
             "label": "Reward coins",
             "unit": "currency"
           },
           "ja": {
-            "description": "この順位帯の報酬を受け取ったときに付与する無償通貨の額です。",
+            "description": "この順位帯の報酬を受け取ったときに付与するコインの額です。",
             "label": "報酬コイン",
             "unit": "通貨"
           }

@@ -7,7 +7,7 @@
       "kind": "templateLabel",
       "name": "AgreementVersion",
       "sources": [],
-      "template": "You pass when nothing is an error. Accept the terms at 2.0.0 (1.0.0 only warns), and answer marketing either way. The app is refused at 1.0.0 and below and warned up to 1.1.0; the assets likewise at 1.0.0 and 2.0.0."
+      "template": "You pass when nothing is an error. Accept the terms at 2.0.0 (1.0.0 only warns), and answer marketing either way. The app is refused at 1.0.0 and below and warned up to 1.1.0; the assets are refused at 1.0.0 and below and warned up to 2.0.0."
     }
   ],
   "name": "AgreementVersion",

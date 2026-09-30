@@ -107,7 +107,7 @@ export const foundationSocialGuildDemo = definePackage("foundation-social-guild-
     ui
       .templateLabel(
         "MembershipLabel",
-        "Member. The lobby above shows the guild.",
+        "You are a member. The lobby above shows which guild.",
         {},
         { name: "Guild" }
       )

@@ -77,10 +77,10 @@ const Gift = defineDomainType("Gift", domainType =>
         "Content of the message the gift arrives with."
       ),
       amount: jaEnField(
-        "無償通貨",
-        "Free currency",
-        "メッセージを開いたときに受け取る無償通貨の量です。",
-        "Free currency received when the message is opened.",
+        "コイン",
+        "Coins",
+        "メッセージを開いたときに受け取るコインの量です。",
+        "Coins received when the message is opened.",
         { ja: "通貨", en: "currency" }
       ),
     })
@@ -228,7 +228,7 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
       // loader's `Gs2Inbox:ReadMessage`, so the demo supplies the button and
       // nothing else.
       .buttonAction("OpenButton", "Read", undefined, { name: "Message" })
-      .templateLabel("OpenedLabel", "Opened", {}, { name: "Message" })
+      .templateLabel("OpenedLabel", "Opened.", {}, { name: "Message" })
       // An active toggle carries the rows its condition empties. The feature
       // package's `ReadActiveToggle` empties the Open button once a message is
       // read; this one empties the note until then. Written as `not(isRead)`

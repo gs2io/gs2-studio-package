@@ -57,16 +57,16 @@
       },
       {
         "bindingHint": "masterData",
-        "description": "Free currency this day deposits when it is claimed",
+        "description": "Coins this day deposits when it is claimed",
         "id": "prop_01M3E1NYQWQ84PA61Z003RWE77",
         "localizedDisplay": {
           "en": {
-            "description": "Free currency paid when this day is claimed.",
+            "description": "Coins paid when this day is claimed.",
             "label": "Reward coins",
             "unit": "currency"
           },
           "ja": {
-            "description": "この日を受け取ったときに付与する無償通貨の額です。",
+            "description": "この日を受け取ったときに付与するコインの額です。",
             "label": "報酬コイン",
             "unit": "通貨"
           }

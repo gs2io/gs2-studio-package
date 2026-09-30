@@ -125,7 +125,7 @@ export const foundationLiveopsVersionDemo = definePackage(
   .uiComponent(AgreementVersion, ui =>
     ui.templateLabel(
       "RuleLabel",
-      `You pass when nothing is an error. Accept the terms at ${dotted(TERMS_CURRENT)} (${dotted(TERMS_WARNING)} only warns), and answer marketing either way. The app is refused at ${dotted(APP_ERROR)} and below and warned up to ${dotted(APP_WARNING)}; the assets likewise at ${dotted(ASSET_ERROR)} and ${dotted(ASSET_WARNING)}.`,
+      `You pass when nothing is an error. Accept the terms at ${dotted(TERMS_CURRENT)} (${dotted(TERMS_WARNING)} only warns), and answer marketing either way. The app is refused at ${dotted(APP_ERROR)} and below and warned up to ${dotted(APP_WARNING)}; the assets are refused at ${dotted(ASSET_ERROR)} and below and warned up to ${dotted(ASSET_WARNING)}.`,
       {},
       { name: "AgreementVersion" }
     )

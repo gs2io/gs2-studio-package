@@ -52,13 +52,13 @@
         "id": "prop_01M366KJ86W6DHHYF0288T1VBK",
         "localizedDisplay": {
           "en": {
-            "description": "Free currency received when the message is opened.",
-            "label": "Free currency",
+            "description": "Coins received when the message is opened.",
+            "label": "Coins",
             "unit": "currency"
           },
           "ja": {
-            "description": "メッセージを開いたときに受け取る無償通貨の量です。",
-            "label": "無償通貨",
+            "description": "メッセージを開いたときに受け取るコインの量です。",
+            "label": "コイン",
             "unit": "通貨"
           }
         },

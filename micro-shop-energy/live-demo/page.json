@@ -1,6 +1,6 @@
 {
   "sections": {
-    "FreeDeposit#What the refills are paid for with": {
+    "FreeDeposit#Get coins": {
       "rows": [
         {
           "component": "FreeDepositDepositButton",
@@ -14,7 +14,7 @@
       },
       "rows": ["WalletFreeBalanceLabel"]
     },
-    "Energy#The meter the shop refills": {
+    "Energy#Your stamina": {
       "axis": "StaminaEnergyMaster",
       "rows": [
         "EnergyNextRecoveryValue",

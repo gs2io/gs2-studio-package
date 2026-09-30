@@ -427,8 +427,8 @@
         "en": "Missions"
       },
       "description": {
-        "ja": "日次・週次・リセットなしのミッションと、その達成条件・報酬を管理します。",
-        "en": "Manages missions that reset daily, weekly or never, along with their conditions and rewards."
+        "ja": "日次・週次・月次・リセットなしのミッションと、その達成条件・報酬を管理します。",
+        "en": "Manages missions that reset daily, weekly, monthly or never, along with their conditions and rewards."
       },
       "dependsOn": ["foundation-economy-schedule"],
       "install": {

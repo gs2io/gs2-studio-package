@@ -149,7 +149,7 @@ const LoginReward = defineOverlayDomainType(
         PT.int32("coins")
           .masterData()
           .required()
-          .description("Free currency this day deposits when it is claimed")
+          .description("Coins this day deposits when it is claimed")
       )
       .localizedProperties({
         displayName: jaEnField(
@@ -161,8 +161,8 @@ const LoginReward = defineOverlayDomainType(
         coins: jaEnField(
           "報酬コイン",
           "Reward coins",
-          "この日を受け取ったときに付与する無償通貨の額です。",
-          "Free currency paid when this day is claimed.",
+          "この日を受け取ったときに付与するコインの額です。",
+          "Coins paid when this day is claimed.",
           { ja: "通貨", en: "currency" }
         ),
       })

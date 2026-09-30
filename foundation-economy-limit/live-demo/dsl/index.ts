@@ -221,6 +221,15 @@ const RESET_HOUR = 0;
 const WEEKLY_RESET_DAY = "monday";
 
 /**
+ * The reset as the page reads it. The labels spell these out rather than
+ * reading `resetHour` and `resetDayOfWeek` off the row: the row holds `0` and
+ * `monday`, and a template has no way to pad the one or capitalise the other.
+ * Both schedules share the hour, so one clock serves both sentences.
+ */
+const RESET_CLOCK = `${String(RESET_HOUR).padStart(2, "0")}:00`;
+const WEEKLY_RESET_DAY_LABEL = WEEKLY_RESET_DAY.charAt(0).toUpperCase() + WEEKLY_RESET_DAY.slice(1);
+
+/**
  * The four allowances, numbered rather than named.
  *
  * A counter counts whatever the title points it at, and naming these after an
@@ -550,18 +559,14 @@ export const foundationEconomyLimitDemo = withCounters
     ui
       .templateLabel(
         "ScheduleLabel",
-        "{id}: resets every day at {resetHour}:00 UTC",
-        { id: ui.prop("id"), resetHour: ui.prop("resetHour") },
+        `Resets every day at ${RESET_CLOCK} UTC`,
+        {},
         { name: "UsageLimit" }
       )
       .templateLabel(
         "WeeklyScheduleLabel",
-        "{id}: resets every {resetDayOfWeek} at {resetHour}:00 UTC",
-        {
-          id: ui.prop("id"),
-          resetDayOfWeek: ui.prop("resetDayOfWeek"),
-          resetHour: ui.prop("resetHour"),
-        },
+        `Resets every ${WEEKLY_RESET_DAY_LABEL} at ${RESET_CLOCK} UTC`,
+        {},
         { name: "UsageLimit" }
       )
       .activeToggle("WeeklyActiveToggle", UiCond.eq(ui.prop("resetType"), ui.lit(WEEKLY)), {
