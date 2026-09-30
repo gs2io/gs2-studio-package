@@ -54,19 +54,7 @@
       "serializedFields": []
     },
     {
-      "className": "MissionClaimButton",
-      "kind": "buttonAction",
-      "valueType": "",
-      "reportsFailure": true,
-      "serializedFields": [
-        {
-          "role": "button",
-          "name": "_button"
-        }
-      ]
-    },
-    {
-      "className": "MissionClaimUnavailableActiveToggle",
+      "className": "MissionCompletedActiveToggle",
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -82,14 +70,35 @@
       ]
     },
     {
-      "className": "MissionClaimedLabel",
-      "kind": "templateLabel",
+      "className": "MissionNotReceivedActiveToggle",
+      "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
-      "serializedFields": []
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
+        }
+      ]
     },
     {
-      "className": "MissionCompletedActiveToggle",
+      "className": "MissionReceiveButton",
+      "kind": "buttonAction",
+      "valueType": "",
+      "reportsFailure": true,
+      "serializedFields": [
+        {
+          "role": "button",
+          "name": "_button"
+        }
+      ]
+    },
+    {
+      "className": "MissionReceiveUnavailableActiveToggle",
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -121,20 +130,11 @@
       ]
     },
     {
-      "className": "MissionUnclaimedActiveToggle",
-      "kind": "activeToggle",
+      "className": "MissionReceivedLabel",
+      "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
-      "serializedFields": [
-        {
-          "role": "activeWhenTrue",
-          "name": "_activeWhenTrue"
-        },
-        {
-          "role": "activeWhenFalse",
-          "name": "_activeWhenFalse"
-        }
-      ]
+      "serializedFields": []
     }
   ]
 }

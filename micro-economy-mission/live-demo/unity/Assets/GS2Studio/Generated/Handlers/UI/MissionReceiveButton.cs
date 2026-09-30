@@ -27,8 +27,8 @@ namespace GS2Studio.Generated.Mission.UI
     /// <c>MissionHandlerBase</c>; the handler is resolved automatically via
     /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is set.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/Mission/ButtonAction/ClaimButton")]
-    public sealed class MissionClaimButton : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/Mission/ButtonAction/ReceiveButton")]
+    public sealed class MissionReceiveButton : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private MissionHandlerBase? _handler;
@@ -100,7 +100,7 @@ namespace GS2Studio.Generated.Mission.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(MissionClaimButton)} on '{name}': no MissionHandlerBase found in the parent chain; click ignored.", this);
+                        $"{nameof(MissionReceiveButton)} on '{name}': no MissionHandlerBase found in the parent chain; click ignored.", this);
                 }
                 return;
             }
@@ -116,14 +116,14 @@ namespace GS2Studio.Generated.Mission.UI
             }
             catch (Gs2Exception gs2Error)
             {
-                UnityEngine.Debug.LogError($"MissionClaimButton: Receive failed: {gs2Error}");
+                UnityEngine.Debug.LogError($"MissionReceiveButton: Receive failed: {gs2Error}");
                 // A click has nothing to resume from, so no retry is offered.
                 _onFailed.Invoke(gs2Error, null);
                 return;
             }
             catch (Exception ex)
             {
-                UnityEngine.Debug.LogError($"MissionClaimButton: Receive failed: {ex}");
+                UnityEngine.Debug.LogError($"MissionReceiveButton: Receive failed: {ex}");
                 return;
             }
             finally

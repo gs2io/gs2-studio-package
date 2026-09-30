@@ -22,19 +22,19 @@
           }
         }
       ],
-      "template": "Wants {target} on the counter. Pays {reward} free currency."
+      "template": "Wants {target} on the counter. Pays {reward} coins."
     },
     {
       "arguments": [],
-      "componentClassName": "ClaimButton",
+      "componentClassName": "ReceiveButton",
       "delegatedActionKey": "resource:micro-economy-mission:masterData:97e2eb72-ce85-4fdd-8c8d-01bcfdd8498b::Gs2Mission:MissionTaskModel.Complete",
-      "id": "032975ab-e602-506a-9912-677a52917155",
+      "id": "87539ea4-7480-58d7-9a80-169c6dee8bff",
       "kind": "buttonAction",
       "name": "Mission"
     },
     {
-      "componentClassName": "ClaimedLabel",
-      "id": "709140f9-db43-59d4-885a-cbfa796b7e26",
+      "componentClassName": "ReceivedLabel",
+      "id": "bdef0a88-1fe8-510f-994d-005b5e527161",
       "kind": "templateLabel",
       "name": "Mission",
       "sources": [
@@ -46,10 +46,10 @@
           }
         }
       ],
-      "template": "Claimed. {reward} free currency was paid."
+      "template": "Received: {reward} coins paid."
     },
     {
-      "componentClassName": "ClaimUnavailableActiveToggle",
+      "componentClassName": "ReceiveUnavailableActiveToggle",
       "condition": {
         "children": [
           {
@@ -72,12 +72,12 @@
         ],
         "kind": "or"
       },
-      "id": "b2e6dc48-37eb-51a4-950c-35441932665d",
+      "id": "4cf45026-9ae5-51d5-93ab-ee132eb4135f",
       "kind": "activeToggle",
       "name": "Mission"
     },
     {
-      "componentClassName": "UnclaimedActiveToggle",
+      "componentClassName": "NotReceivedActiveToggle",
       "condition": {
         "child": {
           "kind": "truthy",
@@ -88,7 +88,7 @@
         },
         "kind": "not"
       },
-      "id": "0503415e-3806-53b5-8dbf-a6ecb36b9771",
+      "id": "83f53768-780a-5eb8-bdd1-533cf57b4fb0",
       "kind": "activeToggle",
       "name": "Mission"
     }

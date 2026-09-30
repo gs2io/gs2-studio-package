@@ -1,6 +1,13 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "ui:Mission:Mission:item:ClaimButton": "032975ab-e602-506a-9912-677a52917155",
+    "ui:Mission:Mission:item:ClaimUnavailableActiveToggle": "b2e6dc48-37eb-51a4-950c-35441932665d",
+    "ui:Mission:Mission:item:ClaimedLabel": "709140f9-db43-59d4-885a-cbfa796b7e26",
+    "ui:Mission:Mission:item:UnclaimedActiveToggle": "0503415e-3806-53b5-8dbf-a6ecb36b9771",
+    "ui:MissionCollection:MissionCollection:definition": "e9544834-ae3b-50f7-a666-22872968bcbd",
+    "ui:MissionCollection:MissionCollection:item:ResetLabel": "98aebfa0-3574-5034-8a66-ef1992bc5e2c"
+  },
   "random": {
     "property:Mission.rewardAmount": "prop_01M2ZFVBD56WH75D9RY8Y1H5T0",
     "row:dt_8PNR995T1Y2063NYZJMVKSHZNE.counter": "row_01M2ZFVBD5BWQJ9D8VT2E03SE3",

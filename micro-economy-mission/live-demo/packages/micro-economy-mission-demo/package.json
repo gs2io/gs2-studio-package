@@ -13,13 +13,13 @@
   "display": {
     "description": {
       "en": "Supplies the live demo's reset settings, the one counter it shows, the four missions that read it, the two groups they belong to, and the press that advances the counter. The rewards land in the currency package's wallet.",
-      "ja": "ライブデモ用のリセット設定、1つのカウンター、それを見る4つのミッションと2つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
+      "ja": "ライブデモ用のリセット設定、1 つのカウンター、それを見る 4 つのミッションと 2 つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
     "domainTypes": {
       "dt_01M2ZFVBD5YJVNDAMVXVY17FN0": {
         "description": {
-          "en": "Adds the free currency a demo mission deposits when it is claimed.",
-          "ja": "デモのミッションに、完了時へ付与する無償通貨の額を足します。"
+          "en": "Adds the coins a demo mission pays when its reward is received.",
+          "ja": "デモのミッションに、報酬の受け取り時に付与するコインの額を足します。"
         },
         "label": {
           "en": "Mission",

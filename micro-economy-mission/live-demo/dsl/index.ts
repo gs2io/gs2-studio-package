@@ -162,7 +162,7 @@ const Mission = defineOverlayDomainType(
       PT.int32("rewardAmount")
         .masterData()
         .required()
-        .description("Free currency this mission deposits when its reward is claimed")
+        .description("Coins this mission pays when its reward is received")
     )
 );
 
@@ -265,15 +265,15 @@ const withGroups = definePackage("micro-economy-mission-demo", "0.0.0")
   .display({
     label: { ja: "ミッション（デモデータ）", en: "Missions (demo data)" },
     description: {
-      ja: "ライブデモ用のリセット設定、1つのカウンター、それを見る4つのミッションと2つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+      ja: "ライブデモ用のリセット設定、1 つのカウンター、それを見る 4 つのミッションと 2 つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
       en: "Supplies the live demo's reset settings, the one counter it shows, the four missions that read it, the two groups they belong to, and the press that advances the counter. The rewards land in the currency package's wallet.",
     },
   })
   .displayType(Mission, {
     label: { ja: "ミッション", en: "Mission" },
     description: {
-      ja: "デモのミッションに、完了時へ付与する無償通貨の額を足します。",
-      en: "Adds the free currency a demo mission deposits when it is claimed.",
+      ja: "デモのミッションに、報酬の受け取り時に付与するコインの額を足します。",
+      en: "Adds the coins a demo mission pays when its reward is received.",
     },
   })
   .dependency(mission.packageId, "github:gs2io/gs2-studio-package")
@@ -372,8 +372,10 @@ export const microEconomyMissionDemo = withMissions
   )
 
   // The feature package ships the four counter readings, and the page draws
-  // those as they come. What it does not ship is a sentence about a group, a
-  // sentence about a mission, or a press that claims one, so those are here.
+  // those as they come. What it does not ship is a sentence about a mission
+  // or a press that receives its reward, so those are here. A group gets no
+  // sentence: its cadence is GS2's enum value (`notReset`), and the section
+  // titles already say which group resets.
   //
   // It also ships two conditions — `CompletedActiveToggle` and
   // `ReceivedActiveToggle` — and the page governs no row with either, though
@@ -391,15 +393,6 @@ export const microEconomyMissionDemo = withMissions
   // reads it back — so a component pointed at it is refused outright
   // ("binder data could not be resolved"). What it decides is on the page
   // through the rows it shaped, not as a reading of its own.
-  .uiComponent(MissionCollection, ui =>
-    ui.templateLabel(
-      "ResetLabel",
-      "{id}: claims reset {scope}",
-      { id: ui.prop("id"), scope: ui.prop("scope") },
-      { name: "MissionCollection" }
-    )
-  )
-
   .uiComponent(MissionCounter, ui =>
     ui.buttonAction("AdvanceButton", "Advance", undefined, { name: "MissionCounter" })
   )
@@ -412,20 +405,21 @@ export const microEconomyMissionDemo = withMissions
       // confidently printing a target nothing enforces.
       .templateLabel(
         "BriefLabel",
-        "Wants {target} on the counter. Pays {reward} free currency.",
+        "Wants {target} on the counter. Pays {reward} coins.",
         { target: ui.prop("targetValue"), reward: ui.prop("rewardAmount") },
         { name: "Mission" }
       )
       // `Receive` is the feature package's own press — one mission's reward,
       // through `Gs2Mission:MissionTaskModel.Complete` — so the demo supplies
       // the button and nothing else.
-      .buttonAction("ClaimButton", "Receive", undefined, { name: "Mission" })
-      // What a claim leaves behind, on the mission rather than in the wallet.
-      // The amount is the row's own, so a claimed mission names the number its
-      // deposit actually carried instead of a figure written out twice.
+      .buttonAction("ReceiveButton", "Receive", undefined, { name: "Mission" })
+      // What receiving leaves behind, on the mission rather than in the
+      // wallet. The amount is the row's own, so a received mission names the
+      // number its deposit actually carried instead of a figure written out
+      // twice.
       .templateLabel(
-        "ClaimedLabel",
-        "Claimed. {reward} free currency was paid.",
+        "ReceivedLabel",
+        "Received: {reward} coins paid.",
         { reward: ui.prop("rewardAmount") },
         { name: "Mission" }
       )
@@ -433,12 +427,12 @@ export const microEconomyMissionDemo = withMissions
       // below is named for the state in which its row has nothing to say
       // rather than for the state that puts it on the page.
       //
-      // Claiming is open between the target and the reward: below the target
-      // GS2 refuses the press, and past the reward there is nothing left to
-      // take. The button is therefore governed by the union of those two, and
+      // Receiving is open between the target and the reward: below the
+      // target GS2 refuses the press, and past the reward there is nothing
+      // left to take. The button is therefore governed by the union of those two, and
       // a press the server would turn down is never offered.
       .activeToggle(
-        "ClaimUnavailableActiveToggle",
+        "ReceiveUnavailableActiveToggle",
         UiCond.or(
           UiCond.not(UiCond.truthy(ui.prop("completed"))),
           UiCond.truthy(ui.prop("received"))
@@ -449,7 +443,7 @@ export const microEconomyMissionDemo = withMissions
       // Written as `not(received)` rather than through `invert`, because the
       // generated `<summary>` is built from the condition and not from the
       // flag, and would otherwise describe the opposite of what it does.
-      .activeToggle("UnclaimedActiveToggle", UiCond.not(UiCond.truthy(ui.prop("received"))), {
+      .activeToggle("NotReceivedActiveToggle", UiCond.not(UiCond.truthy(ui.prop("received"))), {
         name: "Mission",
       })
   )

@@ -36,7 +36,7 @@ namespace GS2Studio.Generated.Mission
         bool Received { get; }
 
         /// <summary>
-        /// Free currency this mission deposits when its reward is claimed
+        /// Coins this mission pays when its reward is received
         /// </summary>
         int RewardAmount { get; }
     }

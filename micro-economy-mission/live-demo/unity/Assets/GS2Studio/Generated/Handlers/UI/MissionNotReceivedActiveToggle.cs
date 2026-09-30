@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.Mission.UI
 {
     /// <summary>
     /// Drives <c>GameObject.SetActive(bool)</c> on two GameObject groups
-    /// based on the condition <c>or(not(truthy(completed)), truthy(received))</c> evaluated
+    /// based on the condition <c>not(truthy(received))</c> evaluated
     /// against the sibling <c>MissionHandler.Model</c>:
     /// <list type="bullet">
     ///   <item><c>_activeWhenTrue</c> — shown when the condition holds.</item>
@@ -38,8 +38,8 @@ namespace GS2Studio.Generated.Mission.UI
     /// either array are skipped so a partially-wired Inspector slot does
     /// not crash the apply loop.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/Mission/ActiveToggle/ClaimUnavailableActiveToggle")]
-    public sealed class MissionClaimUnavailableActiveToggle : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/Mission/ActiveToggle/NotReceivedActiveToggle")]
+    public sealed class MissionNotReceivedActiveToggle : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private MissionHandlerBase? _handler;
@@ -60,7 +60,7 @@ namespace GS2Studio.Generated.Mission.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(MissionClaimUnavailableActiveToggle)} on '{name}': no MissionHandlerBase found in the parent chain; component inactive.", this);
+                        $"{nameof(MissionNotReceivedActiveToggle)} on '{name}': no MissionHandlerBase found in the parent chain; component inactive.", this);
                 }
                 return;
             }
@@ -88,7 +88,7 @@ namespace GS2Studio.Generated.Mission.UI
 
         private void OnUpdated(Mission model)
         {
-            bool result = (!(((object?)model.Completed) switch { null => false, bool __b => __b, string __s => !string.IsNullOrEmpty(__s), int __i => __i != 0, long __l => __l != 0L, float __f => __f != 0f, double __d => __d != 0d, _ => true }) || ((object?)model.Received) switch { null => false, bool __b => __b, string __s => !string.IsNullOrEmpty(__s), int __i => __i != 0, long __l => __l != 0L, float __f => __f != 0f, double __d => __d != 0d, _ => true });
+            bool result = !(((object?)model.Received) switch { null => false, bool __b => __b, string __s => !string.IsNullOrEmpty(__s), int __i => __i != 0, long __l => __l != 0L, float __f => __f != 0f, double __d => __d != 0d, _ => true });
             ApplyActiveState(_activeWhenTrue, result);
             ApplyActiveState(_activeWhenFalse, !result);
         }

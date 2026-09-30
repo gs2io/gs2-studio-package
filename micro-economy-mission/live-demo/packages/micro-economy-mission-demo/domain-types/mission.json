@@ -35,7 +35,7 @@
     "properties": [
       {
         "bindingHint": "masterData",
-        "description": "Free currency this mission deposits when its reward is claimed",
+        "description": "Coins this mission pays when its reward is received",
         "id": "prop_01M2ZFVBD56WH75D9RY8Y1H5T0",
         "name": "rewardAmount",
         "requirement": {

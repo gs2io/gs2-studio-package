@@ -12,31 +12,30 @@
         "MissionCounterAdvanceButton"
       ]
     },
-    "MissionCollection#Two groups, one counter": {
-      "axis": "MissionMissionMaster",
-      "rows": ["MissionCollectionResetLabel"]
+    "MissionCollection": {
+      "rows": []
     },
     "Mission#Career missions: receive once": {
       "scope": {
         "missionCollection": "career"
       },
-      "rows": ["MissionBriefLabel", "MissionClaimButton", "MissionClaimedLabel"],
+      "rows": ["MissionBriefLabel", "MissionReceiveButton", "MissionReceivedLabel"],
       "toggles": {
-        "MissionClaimUnavailableActiveToggle": ["MissionClaimButton"],
-        "MissionUnclaimedActiveToggle": ["MissionClaimedLabel"]
+        "MissionReceiveUnavailableActiveToggle": ["MissionReceiveButton"],
+        "MissionNotReceivedActiveToggle": ["MissionReceivedLabel"]
       }
     },
     "Mission#Daily mission: receive again tomorrow": {
       "scope": {
         "missionCollection": "daily"
       },
-      "rows": ["MissionBriefLabel", "MissionClaimButton", "MissionClaimedLabel"],
+      "rows": ["MissionBriefLabel", "MissionReceiveButton", "MissionReceivedLabel"],
       "toggles": {
-        "MissionClaimUnavailableActiveToggle": ["MissionClaimButton"],
-        "MissionUnclaimedActiveToggle": ["MissionClaimedLabel"]
+        "MissionReceiveUnavailableActiveToggle": ["MissionReceiveButton"],
+        "MissionNotReceivedActiveToggle": ["MissionReceivedLabel"]
       }
     },
-    "Wallet#Where a claim lands": {
+    "Wallet#Where the coins land": {
       "key": {
         "slot": 0
       },

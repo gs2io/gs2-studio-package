@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.Mission.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Claimed. {reward} free currency was paid.</c>. Each <c>{key}</c> placeholder is
+    /// <c>Received: {reward} coins paid.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>Mission</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -25,8 +25,8 @@ namespace GS2Studio.Generated.Mission.UI
     /// TextMeshPro, or custom logic — so this component stays agnostic to
     /// the rendering target.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/Mission/TemplateLabel/ClaimedLabel")]
-    public sealed class MissionClaimedLabel : MonoBehaviour
+    [AddComponentMenu("GS2 Studio/DomainType/Mission/TemplateLabel/ReceivedLabel")]
+    public sealed class MissionReceivedLabel : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private MissionHandlerBase? _handler;
@@ -48,7 +48,7 @@ namespace GS2Studio.Generated.Mission.UI
                 {
                     _warnedMissingHandler = true;
                     Debug.LogWarning(
-                        $"{nameof(MissionClaimedLabel)} on '{name}': no MissionHandlerBase found in the parent chain; component inactive.", this);
+                        $"{nameof(MissionReceivedLabel)} on '{name}': no MissionHandlerBase found in the parent chain; component inactive.", this);
                 }
                 return;
             }
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.Mission.UI
 
         private void OnUpdated(Mission model)
         {
-            _onUpdate.Invoke($"Claimed. {model.RewardAmount} free currency was paid.");
+            _onUpdate.Invoke($"Received: {model.RewardAmount} coins paid.");
         }
     }
 }
