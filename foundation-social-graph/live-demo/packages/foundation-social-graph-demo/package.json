@@ -11,8 +11,8 @@
       "ja": "ライブデモ用に、プロフィール・フレンド・フォロー・フレンド申請の表示項目を提供します。"
     },
     "label": {
-      "en": "Friends & Profile (demo display)",
-      "ja": "フレンド・プロフィール（デモ表示）"
+      "en": "Friends & Profile (demo data)",
+      "ja": "フレンド・プロフィール（デモデータ）"
     }
   }
 }

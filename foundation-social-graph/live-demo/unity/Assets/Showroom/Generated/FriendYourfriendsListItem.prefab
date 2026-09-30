@@ -30,8 +30,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6541880226700440238}
-  - {fileID: 4852661430536469349}
+  - {fileID: 6303433228044899666}
+  - {fileID: 5480911416658537337}
   - {fileID: 2911839515775139495}
   m_Father: {fileID: 6521494649602840491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -478,11 +478,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4137172997817350813, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Text
-      value: Friend profile
+      value: Name
       objectReference: {fileID: 0}
     - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Name
-      value: FriendFriendProfileLabel
+      value: FriendNameLabel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -490,30 +490,41 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1407310700743347172}
+      addedObject: {fileID: 6472264774609624962}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &4852661430536469348 stripped
+--- !u!114 &2335373834605970770 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 4852661430536469347}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+--- !u!1 &3810903679930624986 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 4852661430536469347}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1407310700743347172
+--- !u!114 &6472264774609624962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4852661430536469348}
+  m_GameObject: {fileID: 3810903679930624986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7c6303dcf1ae1f2c2a04baabc11942, type: 3}
+  m_Script: {fileID: 11500000, guid: a0983d43c6a96f1d1f9116eb05b87e89, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Friend.UI.FriendFriendProfileLabel
+  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Friend.UI.FriendNameLabel
   _handler: {fileID: 0}
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4852661430536469350}
+      - m_Target: {fileID: 2335373834605970770}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -525,22 +536,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &4852661430536469349 stripped
+--- !u!224 &6303433228044899666 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 4852661430536469347}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4852661430536469350 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 4852661430536469347}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
 --- !u!1001 &4963390558954826938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -701,7 +701,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1001 &5686704530498935967
+--- !u!1001 &5480911416658537335
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -791,11 +791,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4137172997817350813, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Text
-      value: Name
+      value: Friend profile
       objectReference: {fileID: 0}
     - target: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       propertyPath: m_Name
-      value: FriendNameLabel
+      value: FriendFriendProfileLabel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -803,41 +803,30 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6472264774609624962}
+      addedObject: {fileID: 1407310700743347172}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!114 &3304459435334525614 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 5686704530498935967}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
---- !u!1 &4129847917850479654 stripped
+--- !u!1 &5480911416658537336 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 5686704530498935967}
+  m_PrefabInstance: {fileID: 5480911416658537335}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6472264774609624962
+--- !u!114 &1407310700743347172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4129847917850479654}
+  m_GameObject: {fileID: 5480911416658537336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0983d43c6a96f1d1f9116eb05b87e89, type: 3}
+  m_Script: {fileID: 11500000, guid: ed7c6303dcf1ae1f2c2a04baabc11942, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Friend.UI.FriendNameLabel
+  m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Friend.UI.FriendFriendProfileLabel
   _handler: {fileID: 0}
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3304459435334525614}
+      - m_Target: {fileID: 5480911416658537338}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -849,8 +838,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &6541880226700440238 stripped
+--- !u!224 &5480911416658537337 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 5686704530498935967}
+  m_PrefabInstance: {fileID: 5480911416658537335}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5480911416658537338 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 5480911416658537335}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
