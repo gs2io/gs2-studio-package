@@ -34,6 +34,43 @@
       "template": "Last received: {lastReceivedAt} (UTC)"
     },
     {
+      "componentClassName": "NeverReceivedLabel",
+      "id": "fd38fded-2063-57e8-847c-be25228295ca",
+      "kind": "templateLabel",
+      "name": "LoginRewardCollection",
+      "sources": [],
+      "template": "Last received: not yet"
+    },
+    {
+      "componentClassName": "NeverReceivedActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_01M3CDS3307PAW74XKV4GXD6HK"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "bbfaa1c4-5a12-540d-9194-18d355dbbc92",
+      "kind": "activeToggle",
+      "name": "LoginRewardCollection"
+    },
+    {
+      "componentClassName": "ReceivedOnceActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_01M3CDS3307PAW74XKV4GXD6HK"
+        }
+      },
+      "id": "7c306b2a-6f59-5e93-a41a-209b979999ba",
+      "kind": "activeToggle",
+      "name": "LoginRewardCollection"
+    },
+    {
       "componentClassName": "RuleLabel",
       "id": "b6d712e8-bc0e-5c39-a8f8-f22cce823060",
       "kind": "templateLabel",

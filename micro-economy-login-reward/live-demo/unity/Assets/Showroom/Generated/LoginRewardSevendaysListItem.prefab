@@ -31,7 +31,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7044766709015639695}
-  - {fileID: 9147271519739319255}
+  - {fileID: 7697764711194164708}
   m_Father: {fileID: 8293048421940629181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -216,7 +216,7 @@ MonoBehaviour:
   _loginRewardCollectionHandler: {fileID: 0}
   _activeWhenTrue: []
   _activeWhenFalse:
-  - {fileID: 9147271519739319254}
+  - {fileID: 669544940224578412}
 --- !u!1 &3619480524380622405
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +666,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 210742714298679418}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &9147271519739319254 stripped
+--- !u!1 &669544940224578412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 9147271519739319253}
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9147271519739319254}
+  m_GameObject: {fileID: 669544940224578412}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52f570f15eb9b7a0ce24a70125192479, type: 3}
@@ -687,7 +687,7 @@ MonoBehaviour:
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9147271519739319256}
+      - m_Target: {fileID: 2144088385171434980}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -699,12 +699,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &9147271519739319255 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 9147271519739319253}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &9147271519739319256 stripped
+--- !u!114 &2144088385171434980 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 9147271519739319253}
@@ -715,3 +710,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+--- !u!224 &7697764711194164708 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 9147271519739319253}
+  m_PrefabAsset: {fileID: 0}

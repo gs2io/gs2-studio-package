@@ -10,8 +10,15 @@
         "LoginRewardCollectionAdvanceOneDayButton",
         "LoginRewardCollectionStartOverButton",
         "LoginRewardCollectionLastReceivedLabel",
+        "LoginRewardCollectionNeverReceivedLabel",
         "LoginRewardCollectionDemoClockLabel"
-      ]
+      ],
+      "toggles": {
+        "LoginRewardCollectionNeverReceivedActiveToggle": [
+          "LoginRewardCollectionLastReceivedLabel"
+        ],
+        "LoginRewardCollectionReceivedOnceActiveToggle": ["LoginRewardCollectionNeverReceivedLabel"]
+      }
     },
     "LoginReward#Seven days": {
       "scope": {

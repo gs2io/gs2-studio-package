@@ -301,6 +301,32 @@ export const microEconomyLoginRewardDemo = withDays
         },
         { name: "LoginRewardCollection" }
       )
+      // Before the first Receive GS2 has no moment to report, and the label
+      // above would read "Last received:  (UTC)"; this sentence stands in.
+      .templateLabel(
+        "NeverReceivedLabel",
+        "Last received: not yet",
+        {},
+        { name: "LoginRewardCollection" }
+      )
+      // An active toggle carries the rows its condition empties: the moment
+      // is hidden while there is none, the stand-in once there is.
+      .activeToggle(
+        "NeverReceivedActiveToggle",
+        UiCond.not(
+          UiCond.truthy(
+            ui.inheritedProp(loginReward.propertyId("LoginRewardCollection", "lastReceivedAt"))
+          )
+        ),
+        { name: "LoginRewardCollection" }
+      )
+      .activeToggle(
+        "ReceivedOnceActiveToggle",
+        UiCond.truthy(
+          ui.inheritedProp(loginReward.propertyId("LoginRewardCollection", "lastReceivedAt"))
+        ),
+        { name: "LoginRewardCollection" }
+      )
       .templateLabel(
         "RuleLabel",
         "A new day starts at 15:00 UTC (midnight in Japan). Advance one day moves your clock forward 24 hours, so the next day can be received now.",

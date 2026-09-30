@@ -59,6 +59,29 @@
       "serializedFields": []
     },
     {
+      "className": "LoginRewardCollectionNeverReceivedActiveToggle",
+      "kind": "activeToggle",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
+        }
+      ]
+    },
+    {
+      "className": "LoginRewardCollectionNeverReceivedLabel",
+      "kind": "templateLabel",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
       "className": "LoginRewardCollectionReceiveButton",
       "kind": "buttonAction",
       "valueType": "",
@@ -67,6 +90,22 @@
         {
           "role": "button",
           "name": "_button"
+        }
+      ]
+    },
+    {
+      "className": "LoginRewardCollectionReceivedOnceActiveToggle",
+      "kind": "activeToggle",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "activeWhenTrue",
+          "name": "_activeWhenTrue"
+        },
+        {
+          "role": "activeWhenFalse",
+          "name": "_activeWhenFalse"
         }
       ]
     },
