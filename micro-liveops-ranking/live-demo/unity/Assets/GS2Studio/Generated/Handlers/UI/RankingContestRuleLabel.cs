@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.RankingContest.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>Start a contest to get 3 minutes to play. Each play scores 1 to 1000, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: 1st 300, top 3 150, top 10 80, anyone else who played 30. You need to have played. Each visitor receives once, for the rank they hold when they do; later contests only move you on the board.</c>. Each <c>{key}</c> placeholder is
+    /// <c>Start a contest to get 3 minutes to play. Each play scores 1 to 1000, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: 1st 300, 2nd-3rd 150, 4th-10th 80, anyone else who played 30. You receive once, for the rank you hold at that moment.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>RankingContest</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.RankingContest.UI
 
         private void OnUpdated(RankingContest model)
         {
-            _onUpdate.Invoke($"Start a contest to get 3 minutes to play. Each play scores 1 to 1000, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: 1st 300, top 3 150, top 10 80, anyone else who played 30. You need to have played. Each visitor receives once, for the rank they hold when they do; later contests only move you on the board.");
+            _onUpdate.Invoke($"Start a contest to get 3 minutes to play. Each play scores 1 to 1000, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: 1st 300, 2nd-3rd 150, 4th-10th 80, anyone else who played 30. You receive once, for the rank you hold at that moment.");
         }
     }
 }

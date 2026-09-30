@@ -88,13 +88,29 @@ const TIERS = [
  * listed from GS2: the coins sit inside the deposit appended to each tier, and
  * nothing reads them back out of it.
  */
-const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }) =>
-  thresholdRank === 1
-    ? `1st ${coins}`
-    : thresholdRank === 1001
-      ? `anyone else who played ${coins}`
-      : `top ${thresholdRank} ${coins}`
-).join(", ");
+const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }, index) => {
+  if (thresholdRank === 1001) return `anyone else who played ${coins}`;
+  const from = index === 0 ? 1 : TIERS[index - 1].thresholdRank + 1;
+  const ranks =
+    from === thresholdRank ? ordinal(from) : `${ordinal(from)}-${ordinal(thresholdRank)}`;
+  return `${ranks} ${coins}`;
+}).join(", ");
+
+/** `1` -> `1st`, `3` -> `3rd`, `12` -> `12th`, for the rule a visitor reads. */
+function ordinal(rank: number): string {
+  const lastTwo = rank % 100;
+  if (lastTwo >= 11 && lastTwo <= 13) return `${rank}th`;
+  switch (rank % 10) {
+    case 1:
+      return `${rank}st`;
+    case 2:
+      return `${rank}nd`;
+    case 3:
+      return `${rank}rd`;
+    default:
+      return `${rank}th`;
+  }
+}
 
 /**
  * The reward tier, overlaid so it can carry what it pays.
@@ -312,7 +328,7 @@ export const microLiveopsRankingDemo = withTiers
     ui
       .templateLabel(
         "RuleLabel",
-        `Start a contest to get ${CONTEST_SECONDS / 60} minutes to play. Each play scores 1 to ${MAXIMUM_SCORE}, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: ${TIER_SUMMARY}. You need to have played. Each visitor receives once, for the rank they hold when they do; later contests only move you on the board.`,
+        `Start a contest to get ${CONTEST_SECONDS / 60} minutes to play. Each play scores 1 to ${MAXIMUM_SCORE}, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: ${TIER_SUMMARY}. You receive once, for the rank you hold at that moment.`,
         {},
         { name: "RankingContest" }
       )
