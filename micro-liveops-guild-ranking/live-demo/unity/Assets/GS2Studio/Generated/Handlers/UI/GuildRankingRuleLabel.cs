@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.GuildRanking.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>You are ranked within your guild, not guild against guild. Each Play adds 1 to 100 points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: 1st 300, top 3 150, top 10 50. Advance one day ends the season for you right away; guildmates who did not advance are still in it.</c>. Each <c>{key}</c> placeholder is
+    /// <c>You are ranked within your guild, not guild against guild. Each Play adds 1 to 100 points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: 1st 300, 2nd-3rd 150, 4th-10th 50. Advance one day ends the season for you right away; guildmates who did not advance are still in it.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>GuildRanking</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.GuildRanking.UI
 
         private void OnUpdated(GuildRanking model)
         {
-            _onUpdate.Invoke($"You are ranked within your guild, not guild against guild. Each Play adds 1 to 100 points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: 1st 300, top 3 150, top 10 50. Advance one day ends the season for you right away; guildmates who did not advance are still in it.");
+            _onUpdate.Invoke($"You are ranked within your guild, not guild against guild. Each Play adds 1 to 100 points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: 1st 300, 2nd-3rd 150, 4th-10th 50. Advance one day ends the season for you right away; guildmates who did not advance are still in it.");
         }
     }
 }

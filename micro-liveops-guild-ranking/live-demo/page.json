@@ -6,10 +6,6 @@
       },
       "rows": ["GuildRoleRankingLobbyPanel"]
     },
-    "Guild#Your guilds": {
-      "axis": "GuildGuildUser",
-      "rows": ["GuildMembershipLabel"]
-    },
     "GuildRanking#Guild ranking": {
       "key": {
         "id": "guild"
@@ -55,6 +51,9 @@
       "rows": []
     },
     "TriggerPull": {
+      "rows": []
+    },
+    "Guild": {
       "rows": []
     }
   }

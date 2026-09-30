@@ -79,9 +79,28 @@ const TIERS = [
  * listed from GS2: the coins sit inside the deposit appended to each tier, and
  * nothing reads them back out of it.
  */
-const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }) =>
-  thresholdRank === 1 ? `1st ${coins}` : `top ${thresholdRank} ${coins}`
-).join(", ");
+const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }, index) => {
+  const from = index === 0 ? 1 : TIERS[index - 1].thresholdRank + 1;
+  const ranks =
+    from === thresholdRank ? ordinal(from) : `${ordinal(from)}-${ordinal(thresholdRank)}`;
+  return `${ranks} ${coins}`;
+}).join(", ");
+
+/** `1` -> `1st`, `3` -> `3rd`, `12` -> `12th`, for the rule a visitor reads. */
+function ordinal(rank: number): string {
+  const lastTwo = rank % 100;
+  if (lastTwo >= 11 && lastTwo <= 13) return `${rank}th`;
+  switch (rank % 10) {
+    case 1:
+      return `${rank}st`;
+    case 2:
+      return `${rank}nd`;
+    case 3:
+      return `${rank}rd`;
+    default:
+      return `${rank}th`;
+  }
+}
 
 /**
  * The reward tier, overlaid so it can carry what it pays.
