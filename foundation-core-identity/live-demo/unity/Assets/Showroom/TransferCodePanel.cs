@@ -44,13 +44,6 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>How long the page shows the outcome of a take-over before it reloads.</summary>
         private const float ReloadDelaySeconds = 1.5f;
 
-        /// <summary>The demos a visitor is pointed to, which sign in as the same account.</summary>
-        private static readonly (string Id, string Name)[] OtherDemos =
-        {
-            ("foundation-economy-currency", "Currency demo"),
-            ("foundation-social-graph", "Friends demo"),
-        };
-
         private static readonly Color RowColor = new Color(0.16f, 0.15f, 0.22f, 1f);
         private static readonly Color LightText = new Color(0.922f, 0.91f, 0.949f, 1f);
         private static readonly Color MutedText = new Color(0.643f, 0.616f, 0.729f, 1f);
@@ -67,15 +60,11 @@ namespace GS2Studio.Showroom.Demo
         private InputField? _takePasswordField;
         private Coroutine? _signingIn;
 
-        /// <summary>Which demo's link the clipboard is copying, for the log line when it answers.</summary>
-        private string _copyingName = "";
-
         /// <summary>What the clipboard is being asked to do, until it answers.</summary>
         private enum Clipboard
         {
             Idle,
             CopyingCode,
-            CopyingLink,
             Pasting,
         }
 
@@ -163,31 +152,8 @@ namespace GS2Studio.Showroom.Demo
             Press(panel, "Take over that account", TakeOver);
             Caption(panel,
                 "Taking over replaces the account this browser remembers, and the page reloads as the other account. " +
-                "This browser's current account cannot be reached from here again.", 13, MutedText);
-
-            Caption(panel, "The other demos here sign in as the same account. Open one in this browser to see its data:", 14, MutedText);
-            foreach (var (id, name) in OtherDemos)
-            {
-                var link = LinkTo(id);
-                var field = Field(panel, name, link, 256);
-                field.readOnly = true;
-                field.text = link;
-                Press(panel, $"Copy the {name} link", () => CopyLink(link, name));
-            }
-        }
-
-        /// <summary>
-        /// Another demo's page on this site: each is published to its own
-        /// directory beside this one.
-        /// </summary>
-        private static string LinkTo(string demoId)
-        {
-            var here = Application.absoluteURL ?? "";
-            var end = here.IndexOfAny(new[] { '?', '#' });
-            if (end >= 0) here = here.Substring(0, end);
-            var directory = here.Substring(0, here.LastIndexOf('/') + 1).TrimEnd('/');
-            var parent = directory.Substring(0, directory.LastIndexOf('/') + 1);
-            return parent.Length == 0 ? $"../{demoId}/" : $"{parent}{demoId}/";
+                "This browser's current account cannot be reached from here again. " +
+                "The other showroom demos opened in this browser then sign in as that account too.", 13, MutedText);
         }
 
         // ------------------------------------------------------------------
@@ -468,15 +434,6 @@ namespace GS2Studio.Showroom.Demo
             ShowroomClipboard.Copy($"{identifier} {password}");
         }
 
-        private void CopyLink(string link, string name)
-        {
-            if (_reloading || _clipboard != Clipboard.Idle) return;
-            _clipboard = Clipboard.CopyingLink;
-            _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
-            _copyingName = name;
-            ShowroomClipboard.Copy(link);
-        }
-
         private void Paste()
         {
             if (_reloading || _clipboard != Clipboard.Idle) return;
@@ -504,18 +461,12 @@ namespace GS2Studio.Showroom.Demo
             }
             var doing = _clipboard;
             _clipboard = Clipboard.Idle;
-            switch (doing)
+            if (doing == Clipboard.CopyingCode)
             {
-                case Clipboard.CopyingCode:
-                    IdentityDemo.Log(outcome == ShowroomClipboard.Outcome.Done
-                        ? "Copied the ID and password. Paste them into this page in the other browser."
-                        : $"The browser did not let the page copy ({text}). Select the ID and password above and copy them.");
-                    return;
-                case Clipboard.CopyingLink:
-                    IdentityDemo.Log(outcome == ShowroomClipboard.Outcome.Done
-                        ? $"Copied the {_copyingName} link."
-                        : $"The browser did not let the page copy ({text}). Select the link above and copy it.");
-                    return;
+                IdentityDemo.Log(outcome == ShowroomClipboard.Outcome.Done
+                    ? "Copied the ID and password. Paste them into this page in the other browser."
+                    : $"The browser did not let the page copy ({text}). Select the ID and password above and copy them.");
+                return;
             }
             if (outcome != ShowroomClipboard.Outcome.Done)
             {
