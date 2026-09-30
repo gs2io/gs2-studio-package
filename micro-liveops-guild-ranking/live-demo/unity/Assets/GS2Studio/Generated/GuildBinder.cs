@@ -370,8 +370,6 @@ namespace GS2Studio.Generated.Guild
             if (source != null)
             {
                 model.DefaultMaximumMemberCount = source.DefaultMaximumMemberCount;
-                // Unsupported type conversion: key::RoleModel → GuildRoleId
-                // Unsupported type conversion: key::RoleModel → GuildRoleId
                 model.InactivityPeriodDays = source.InactivityPeriodDays;
                 model.MaxConcurrentGuildMasterCount = source.MaxConcurrentGuildMasterCount;
                 model.MaxConcurrentJoinGuilds = source.MaxConcurrentJoinGuilds;
