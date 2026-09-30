@@ -1,27 +1,24 @@
 {
   "sections": {
-    "Schedule": {
+    "Schedule#Event windows": {
       "rows": [
         "ScheduleWindowLabel",
         "SchedulePeriodLabel",
-        "ScheduleEndAtValue",
+        "ScheduleEndsInValue",
         "ScheduleRelativeWindowLabel",
-        "ScheduleRelativeEndAtValue"
+        "ScheduleClosesInValue"
       ],
       "toggles": {
-        "ScheduleRelativeActiveToggle": ["SchedulePeriodLabel", "ScheduleEndAtValue"],
-        "ScheduleAbsoluteActiveToggle": [
-          "ScheduleRelativeWindowLabel",
-          "ScheduleRelativeEndAtValue"
-        ]
+        "ScheduleRelativeActiveToggle": ["SchedulePeriodLabel", "ScheduleEndsInValue"],
+        "ScheduleAbsoluteActiveToggle": ["ScheduleRelativeWindowLabel", "ScheduleClosesInValue"]
       }
     },
-    "Trigger": {
+    "Trigger#Your trigger": {
       "axis": "ScheduleScheduleUser",
       "rows": [
         "TriggerNameLabel",
         "TriggerWindowLabel",
-        "TriggerExpiresAtValue",
+        "TriggerExpiresInValue",
         "TriggerExtendButton",
         "TriggerClearButton"
       ],
@@ -29,7 +26,7 @@
         "TriggerTriggeredInteractable": ["TriggerExtendButton", "TriggerClearButton"]
       }
     },
-    "TriggerPull": {
+    "TriggerPull#Start your window": {
       "rows": [
         {
           "component": "TriggerPullPullButton",

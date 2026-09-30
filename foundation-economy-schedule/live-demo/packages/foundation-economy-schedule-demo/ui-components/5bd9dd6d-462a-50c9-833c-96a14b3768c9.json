@@ -2,6 +2,16 @@
   "id": "5bd9dd6d-462a-50c9-833c-96a14b3768c9",
   "items": [
     {
+      "componentClassName": "ExpiresInValue",
+      "id": "6a0ca61a-5ff8-5713-ae5d-7d2d67d73e65",
+      "kind": "value",
+      "name": "Trigger",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_Y1EZ6CBQ1RAAPRHXEV9D6D1DPF"
+      }
+    },
+    {
       "arguments": [],
       "componentClassName": "ExtendButton",
       "delegatedActionKey": "resource:foundation-economy-schedule-demo:masterData:83556a93-8a8f-5de2-aec2-c4645f36d453::Gs2Exchange:RateModel.Exchange",

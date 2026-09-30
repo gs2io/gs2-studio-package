@@ -50,7 +50,7 @@ const TriggerPull = defineDomainType("TriggerPull", domainType =>
     )
     .localizedProperties({
       id: {
-        ja: { label: "トリガー発火", description: "デモでトリガーを1つ引きます。" },
+        ja: { label: "トリガー発火", description: "デモでトリガーを 1 つ引きます。" },
         en: { label: "Pull", description: "Pulls one trigger in the demo." },
       },
       trigger: {
@@ -283,25 +283,34 @@ export const foundationEconomyScheduleDemo = definePackage(
       .buttonAction("PullButton", "Pull", undefined, { name: "TriggerPull" })
   )
 
+  // The feature package hands its end times over as `EndAtValue` and
+  // `ExpiresAtValue`, which the page draws as countdowns: a caption that says
+  // "at" over a remaining duration misreads. The demo's own names say "in".
   .uiComponent(Trigger, ui =>
     ui
+      .value("ExpiresInValue", ui.prop("expiresAt"), { name: "Trigger" })
       .buttonAction("ExtendButton", "Extend", undefined, { name: "Trigger" })
       .buttonAction("ClearButton", "Clear", undefined, { name: "Trigger" })
   )
 
   // A schedule row says what it is and when its window runs.
   .uiComponent(Schedule, ui =>
-    ui.templateLabel(
-      "WindowLabel",
-      "{id} ({scheduleType})",
-      {
-        id: ui.prop("id"),
-        // Declared by the schedule package rather than here, and named by the
-        // name it publishes: this demo's overlay declares nothing of its own.
-        scheduleType: ui.prop("scheduleType"),
-      },
-      { name: "Schedule" }
-    )
+    ui
+      .templateLabel(
+        "WindowLabel",
+        "{id} ({scheduleType})",
+        {
+          id: ui.prop("id"),
+          // Declared by the schedule package rather than here, and named by the
+          // name it publishes: this demo's overlay declares nothing of its own.
+          scheduleType: ui.prop("scheduleType"),
+        },
+        { name: "Schedule" }
+      )
+      .value("EndsInValue", ui.prop("endAt"), { name: "Schedule" })
+      // The relative window is the visitor's own; only one of the two shows
+      // on a row, so the second reading gets a name of its own.
+      .value("ClosesInValue", ui.prop("relativeEndAt"), { name: "Schedule" })
   )
 
   .delegatedAction(TriggerPull, "Pull", {

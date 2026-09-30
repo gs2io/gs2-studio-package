@@ -23,6 +23,26 @@
         }
       ],
       "template": "{id} ({scheduleType})"
+    },
+    {
+      "componentClassName": "EndsInValue",
+      "id": "d3fbf314-cc91-5155-b631-7e0e94ae2403",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_763BX5C31PKQPVJ692CKG0C998"
+      }
+    },
+    {
+      "componentClassName": "ClosesInValue",
+      "id": "7dea423d-4047-56f7-8c4f-2ecf7de0a58e",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_01M2M04HC1EW3NMGESBQC8AT6Y"
+      }
     }
   ],
   "name": "Schedule",
