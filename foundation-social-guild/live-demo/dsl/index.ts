@@ -101,13 +101,14 @@ export const foundationSocialGuildDemo = definePackage("foundation-social-guild-
   // The feature package ships no components: what a title shows of a guild is
   // the title's decision.
   // A membership carries only the id GS2 gave the guild, not the name its
-  // founder typed; the panel above shows that name.
+  // founder typed. The id means nothing to a visitor, so the row says that the
+  // membership exists and leaves the name to the lobby panel above.
   .uiComponent(Guild, ui =>
     ui
       .templateLabel(
         "MembershipLabel",
-        "Guild id {joinedGuildName}",
-        { joinedGuildName: ui.inheritedProp(guild.propertyId("Guild", "joinedGuildName")) },
+        "Member. The lobby above shows the guild.",
+        {},
         { name: "Guild" }
       )
       .templateLabel(

@@ -6,7 +6,7 @@
       },
       "rows": ["GuildRoleLobbyPanel"]
     },
-    "Guild#Your guilds": {
+    "Guild#Your guild": {
       "axis": "GuildGuildUser",
       "rows": ["GuildMembershipLabel", "GuildCapacityLabel"]
     }

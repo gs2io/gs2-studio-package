@@ -6,16 +6,8 @@
       "id": "21fe913d-8b8d-5a10-b7cb-a5961d2214d8",
       "kind": "templateLabel",
       "name": "Guild",
-      "sources": [
-        {
-          "key": "joinedGuildName",
-          "source": {
-            "kind": "property",
-            "propertyId": "prop_01M0C5T6AFPW7S477FQF46NT07"
-          }
-        }
-      ],
-      "template": "Guild id {joinedGuildName}"
+      "sources": [],
+      "template": "Member. The lobby above shows the guild."
     },
     {
       "componentClassName": "CapacityLabel",
