@@ -45,6 +45,21 @@ const PASSED_USER = "grn:gs2::{ownerId}:identifier:user:demo-version-passed";
 
 type Triple = readonly [number, number, number];
 
+/** The terms version a player must accept, and the accepted versions that only warn. */
+const TERMS_CURRENT: Triple = [2, 0, 0];
+const TERMS_WARNING: Triple = [1, 0, 0];
+/** The reported app versions that warn, and those that are refused. */
+const APP_WARNING: Triple = [1, 1, 0];
+const APP_ERROR: Triple = [1, 0, 0];
+/** The reported asset versions that warn, and those that are refused. */
+const ASSET_WARNING: Triple = [2, 0, 0];
+const ASSET_ERROR: Triple = [1, 0, 0];
+
+/** `[2, 0, 0]` -> `2.0.0`, for the rule a visitor reads. */
+function dotted(value: Triple): string {
+  return value.join(".");
+}
+
 /** Authors a version triple into an agreement's `<prefix>Major/Minor/Micro` properties. */
 function agreementVersion(prefix: "current" | "warning" | "error", value: Triple) {
   return {
@@ -83,8 +98,8 @@ export const foundationLiveopsVersionDemo = definePackage(
 
   .instance(AgreementVersion, "terms", {
     [version.propertyId("AgreementVersion", "required")]: "required",
-    ...agreementVersion("current", [2, 0, 0]),
-    ...agreementVersion("warning", [1, 0, 0]),
+    ...agreementVersion("current", TERMS_CURRENT),
+    ...agreementVersion("warning", TERMS_WARNING),
     ...agreementVersion("error", [0, 0, 0]),
   })
   .instance(AgreementVersion, "marketing", {
@@ -95,12 +110,12 @@ export const foundationLiveopsVersionDemo = definePackage(
   })
 
   .instance(EmbeddedVersion, "app", {
-    ...reportedVersion("warning", [1, 1, 0]),
-    ...reportedVersion("error", [1, 0, 0]),
+    ...reportedVersion("warning", APP_WARNING),
+    ...reportedVersion("error", APP_ERROR),
   })
   .instance(EmbeddedVersion, "asset", {
-    ...reportedVersion("warning", [2, 0, 0]),
-    ...reportedVersion("error", [1, 0, 0]),
+    ...reportedVersion("warning", ASSET_WARNING),
+    ...reportedVersion("error", ASSET_ERROR),
   })
 
   // The feature package ships no components: what a title shows of its gate
@@ -110,7 +125,7 @@ export const foundationLiveopsVersionDemo = definePackage(
   .uiComponent(AgreementVersion, ui =>
     ui.templateLabel(
       "RuleLabel",
-      "The check passes only when nothing is an error. Terms is required at 2.0.0: accepting 1.0.0 still warns. Marketing is optional and can be rejected, but leaving it unanswered is an error. The app warns at 1.1.0 and below and is refused at 1.0.0 and below; the assets warn at 2.0.0 and below and are refused at 1.0.0 and below.",
+      `You pass when nothing is an error. Accept the terms at ${dotted(TERMS_CURRENT)} (${dotted(TERMS_WARNING)} only warns), and answer marketing either way. The app is refused at ${dotted(APP_ERROR)} and below and warned up to ${dotted(APP_WARNING)}; the assets likewise at ${dotted(ASSET_ERROR)} and ${dotted(ASSET_WARNING)}.`,
       {},
       { name: "AgreementVersion" }
     )

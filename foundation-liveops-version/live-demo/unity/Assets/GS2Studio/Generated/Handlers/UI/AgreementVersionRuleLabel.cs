@@ -17,7 +17,7 @@ namespace GS2Studio.Generated.AgreementVersion.UI
 {
     /// <summary>
     /// UI label bound to the template
-    /// <c>The check passes only when nothing is an error. Terms is required at 2.0.0: accepting 1.0.0 still warns. Marketing is optional and can be rejected, but leaving it unanswered is an error. The app warns at 1.1.0 and below and is refused at 1.0.0 and below; the assets warn at 2.0.0 and below and are refused at 1.0.0 and below.</c>. Each <c>{key}</c> placeholder is
+    /// <c>You pass when nothing is an error. Accept the terms at 2.0.0 (1.0.0 only warns), and answer marketing either way. The app is refused at 1.0.0 and below and warned up to 1.1.0; the assets likewise at 1.0.0 and 2.0.0.</c>. Each <c>{key}</c> placeholder is
     /// substituted with the resolved value from <c>AgreementVersion</c>
     /// on every Handler <c>Updated</c> event and the rendered string is
     /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.AgreementVersion.UI
 
         private void OnUpdated(AgreementVersion model)
         {
-            _onUpdate.Invoke($"The check passes only when nothing is an error. Terms is required at 2.0.0: accepting 1.0.0 still warns. Marketing is optional and can be rejected, but leaving it unanswered is an error. The app warns at 1.1.0 and below and is refused at 1.0.0 and below; the assets warn at 2.0.0 and below and are refused at 1.0.0 and below.");
+            _onUpdate.Invoke($"You pass when nothing is an error. Accept the terms at 2.0.0 (1.0.0 only warns), and answer marketing either way. The app is refused at 1.0.0 and below and warned up to 1.1.0; the assets likewise at 1.0.0 and 2.0.0.");
         }
     }
 }
