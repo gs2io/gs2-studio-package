@@ -8,8 +8,9 @@
 // stands in where the SDK has no type for it yet.
 //
 // The entries read are the ones `ShowroomErrors` reads: the list the SDK
-// parsed, and the entries inside a body it left unparsed, which is how a
-// refusal from inside an atomically committed transaction arrives.
+// parsed, and the entries inside a body it left unparsed (how an SDK older
+// than io.gs2.csharp.sdk 2026.9.22 hands over a refusal from inside a
+// transaction).
 //
 // A few refusals carry no code at all: a request field's validation (a
 // profile text that is too long) and a handful GS2 has not coded yet. Those

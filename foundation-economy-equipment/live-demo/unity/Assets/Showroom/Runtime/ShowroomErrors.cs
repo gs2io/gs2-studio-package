@@ -1,24 +1,20 @@
 // What a failure says on the page, which is never nothing and never raw JSON.
 //
 // `Gs2Exception.Errors` is the server's own account of what went wrong and is
-// the right thing to show, but the SDK fills it by parsing the exception's
-// message as that list, and there is a whole class of failure whose message is
-// not one. A namespace that commits atomically runs its actions server-side
-// and reports a refused one through the transaction result, which the SDK
-// raises as an exception carrying that action's own result body
-// (`RanTransactionAccessTokenDomain.HandleResult`) or as
-// `UnknownException("Ran transaction failed.")`. Neither parses, so `Errors`
-// comes back empty, and `error.Message` is the body as GS2 sent it: JSON. For
-// a refused action that body is GS2's full error record,
-// `{"errors": [{"component", "message", "code"}], "result", "stack", "metadata"}`.
+// the right thing to show. Since io.gs2.csharp.sdk 2026.9.22 the SDK fills it
+// on every path, including an action refused inside a transaction, whose
+// result body (GS2's full error record,
+// `{"errors": [{"component", "message", "code"}], "result", "stack", "metadata"}`)
+// it parses and raises as the action's typed exception. Older SDKs left that
+// body unparsed in `error.Message`, and `UnknownException("Ran transaction
+// failed.")` still carries no list at all.
 //
-// So the list is used when the SDK filled one, the body is unwrapped the way
-// the SDK's own HTTP path unwraps it when it did not, and the exception's
-// type names the failure when even that says nothing. `ShowroomRefusal` reads
-// the same entries (by their code, never their message), so a refusal
-// recognised by code and a refusal shown to the visitor come from one
-// reading. An entry with a code and no message is shown by its code, never
-// as the raw record.
+// So the list is used when the SDK filled one, a body is unwrapped the way the
+// SDK unwraps it when it did not, and the exception's type names the failure
+// when even that says nothing. `ShowroomRefusal` reads the same entries (by
+// their code, never their message), so a refusal recognised by code and a
+// refusal shown to the visitor come from one reading. An entry with a code and
+// no message is shown by its code, never as the raw record.
 #nullable enable
 
 using System;
