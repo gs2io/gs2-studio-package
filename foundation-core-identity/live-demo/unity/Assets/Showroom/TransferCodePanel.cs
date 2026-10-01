@@ -16,18 +16,23 @@
 //
 // Whether this account has a code is watched in the SDK's cache, which the
 // SDK's own writes update, so the panel hears an issue or a delete without
-// asking GS2 again.
+// asking GS2 again. What the SDK reports reaches the panel through its
+// `ShowroomInbox`, drained in `Update`.
+//
+// Every press here carries a password or its result, so its failures are
+// reported by kind and GS2's codes only (`ShowroomPressOptions.Redact`).
 #nullable enable
 
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
 using UnityEngine;
 using UnityEngine.UI;
 
 using Gs2.Core.Exception;
+using Gs2.Unity.Core;
+using Gs2.Unity.Util;
 
 using TakeOverDomain = Gs2.Unity.Gs2Account.Domain.Model.EzTakeOverGameSessionDomain;
 using EzTakeOver = Gs2.Unity.Gs2Account.Model.EzTakeOver;
@@ -60,23 +65,8 @@ namespace GS2Studio.Showroom.Demo
         private InputField? _takePasswordField;
         private Coroutine? _signingIn;
 
-        /// <summary>What the clipboard is being asked to do, until it answers.</summary>
-        private enum Clipboard
-        {
-            Idle,
-            CopyingCode,
-            Pasting,
-        }
-
-        private Clipboard _clipboard;
-
-        /// <summary>
-        /// How long the clipboard may take to answer. A browser can leave a
-        /// permission prompt open, or never settle, and the buttons would
-        /// otherwise wait for it forever.
-        /// </summary>
-        private const float ClipboardSeconds = 10f;
-        private float _clipboardDeadline;
+        /// <summary>The panel's Copy or Paste, until the browser answers.</summary>
+        private readonly ShowroomClipboardRequest _clipboard = new ShowroomClipboardRequest();
 
         /// <summary>The signed-in account, set once signed in.</summary>
         private string _userId = "";
@@ -89,18 +79,21 @@ namespace GS2Studio.Showroom.Demo
         private bool? _registered;
 
         /// <summary>What the SDK said, handed over to the main thread.</summary>
-        private readonly ConcurrentQueue<Action> _inbox = new ConcurrentQueue<Action>();
-        private int _watchTicket;
-        private Action? _unsubscribe;
-        private bool _watchFailed;
+        private readonly ShowroomInbox _inbox = new ShowroomInbox();
+        private readonly ShowroomWatch _watch;
         private float _nextTick;
         private bool _reloading;
+
+        public TransferCodePanel()
+        {
+            _watch = new ShowroomWatch(_inbox, ShowroomWatch.RereadFailure.Keep, "your transfer code");
+        }
 
         private void OnEnable()
         {
             if (_panel == null || _buttonTemplate == null || _font == null)
             {
-                IdentityDemo.Log("The transfer panel was baked without its region, button or font.");
+                ShowroomLog.Say("The transfer panel was baked without its region, button or font.");
                 return;
             }
             if (_accountText == null) Build();
@@ -112,12 +105,13 @@ namespace GS2Studio.Showroom.Demo
             if (_signingIn != null) StopCoroutine(_signingIn);
             _signingIn = null;
             StopWatching();
+            _clipboard.Abandon();
             ForgetIssued();
         }
 
         private IEnumerator WaitForSignIn()
         {
-            while (!IdentityDemo.TryRuntime(out _, out _))
+            while (!ShowroomRuntime.TryGet(out _, out _))
             {
                 yield return new WaitForSeconds(0.25f);
             }
@@ -161,45 +155,35 @@ namespace GS2Studio.Showroom.Demo
 
         private void StartWatching()
         {
-            if (!IdentityDemo.TryRuntime(out var gs2, out var session)) return;
-            _userId = session!.UserId;
-            Debug.Log($"{nameof(TransferCodePanel)}: signed in as {IdentityDemo.Tag(_userId)}");
-            if (_accountText != null) _accountText.text = $"This browser is signed in as {IdentityDemo.Tag(_userId)}.";
-            _code = IdentityDemo.Me(gs2!, session).TakeOver(IdentityDemo.TakeOverType);
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
+            _userId = session.UserId;
+            Debug.Log($"{nameof(TransferCodePanel)}: signed in as {ShowroomPlayerTag.Of(_userId)}");
+            if (_accountText != null) _accountText.text = $"This browser is signed in as {ShowroomPlayerTag.Of(_userId)}.";
+            _code = IdentityDemo.Me(gs2, session).TakeOver(IdentityDemo.TakeOverType);
             _nextTick = Time.realtimeSinceStartup + TickSeconds;
             Watch();
         }
 
-        private async void Watch()
+        private void Watch()
         {
             var code = _code;
             if (code == null) return;
-            StopSubscription();
-            var ticket = ++_watchTicket;
-            _watchFailed = false;
-            try
-            {
-                var id = await code.SubscribeWithInitialCallAsync(model => _inbox.Enqueue(() =>
-                {
-                    if (ticket == _watchTicket) SetRegistered(model);
-                }));
-                if (ticket == _watchTicket) _unsubscribe = () => code.Unsubscribe(id);
-                else code.Unsubscribe(id);
-            }
-            catch (Gs2Exception error)
-            {
-                if (ticket != _watchTicket) return;
-                _watchFailed = true;
-                Debug.LogWarning($"{nameof(TransferCodePanel)}: your transfer code could not be read: {IdentityDemo.Summary(error)}");
-                IdentityDemo.Log($"Your transfer code could not be read ({IdentityDemo.Summary(error)}); trying again shortly.");
-            }
+            _watch.Subscribe<EzTakeOver>(
+                callback => code.SubscribeWithInitialCallAsync(callback),
+                code.Unsubscribe,
+                SetRegistered,
+                failed: WatchFailed);
         }
 
-        private void StopSubscription()
+        /// <summary>
+        /// Says a failed start by kind and code only: what the SDK read is
+        /// this account's transfer code. The tick tries again.
+        /// </summary>
+        private static void WatchFailed(Exception error)
         {
-            var unsubscribe = _unsubscribe;
-            _unsubscribe = null;
-            unsubscribe?.Invoke();
+            var summary = error is Gs2Exception gs2Error ? ShowroomErrors.Summary(gs2Error) : error.GetType().Name;
+            Debug.LogWarning($"[showroom] {nameof(TransferCodePanel)}: your transfer code could not be read: {summary}");
+            ShowroomLog.Say($"Your transfer code could not be read ({summary}); trying again shortly.");
         }
 
         /// <summary>
@@ -208,19 +192,17 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private void StopWatching()
         {
-            _watchTicket++;
-            StopSubscription();
-            while (_inbox.TryDequeue(out _)) { }
+            _watch.Stop();
+            _inbox.Clear();
             _code = null;
             _registered = null;
-            _watchFailed = false;
         }
 
         private void Update()
         {
-            PollClipboard();
-            while (_inbox.TryDequeue(out var apply)) apply();
-            if (_code != null && _watchFailed && Time.realtimeSinceStartup >= _nextTick)
+            _clipboard.Poll();
+            _inbox.Drain();
+            if (_code != null && _watch.Failed && Time.realtimeSinceStartup >= _nextTick)
             {
                 _nextTick = Time.realtimeSinceStartup + TickSeconds;
                 Watch();
@@ -237,7 +219,7 @@ namespace GS2Studio.Showroom.Demo
         {
             if (_registered == registered) return;
             _registered = registered;
-            IdentityDemo.MarkChanged();
+            ShowroomSettle.MarkChanged();
             if (_issueLabel != null) _issueLabel.text = registered ? "Delete and reissue" : "Issue a transfer code";
         }
 
@@ -249,7 +231,7 @@ namespace GS2Studio.Showroom.Demo
             if (_reloading) return;
             var replacing = _registered == true;
             var issued = false;
-            IdentityDemo.Run(replacing ? IdentityPress.Reissue : IdentityPress.Issue, async (gs2, session) =>
+            Run(replacing ? IdentityPress.Reissue : IdentityPress.Issue, async (gs2, session) =>
             {
                 var code = IdentityDemo.Me(gs2, session).TakeOver(IdentityDemo.TakeOverType);
                 if (replacing) await Delete(gs2, session);
@@ -274,14 +256,14 @@ namespace GS2Studio.Showroom.Demo
                 return replacing
                     ? $"Replaced your transfer code: the new ID is {registered.Identifier}. The old code no longer works."
                     : $"Issued a transfer code: the ID is {registered.Identifier}. Copy the password now; it is not shown again.";
-            }, afterward: () =>
+            }, () =>
             {
                 if (issued) SetRegistered(true);
             });
         }
 
         /// <summary>Deletes the account's transfer code; one already gone is what was asked for.</summary>
-        private static async Task Delete(Gs2.Unity.Core.Gs2Domain gs2, Gs2.Unity.Util.IGameSession session)
+        private static async Task Delete(Gs2Domain gs2, IGameSession session)
         {
             try
             {
@@ -310,7 +292,7 @@ namespace GS2Studio.Showroom.Demo
                 }
                 catch (InternalServerErrorException error) when (attempt == 0)
                 {
-                    Debug.LogWarning($"{nameof(TransferCodePanel)}: a new transfer ID was refused ({IdentityDemo.Summary(error)}); trying another.");
+                    Debug.LogWarning($"{nameof(TransferCodePanel)}: a new transfer ID was refused ({ShowroomErrors.Summary(error)}); trying another.");
                 }
             }
         }
@@ -338,37 +320,37 @@ namespace GS2Studio.Showroom.Demo
             var passwordText = (_takePasswordField?.text ?? "").Trim();
             if (identifierText.Length == 0 || passwordText.Length == 0)
             {
-                IdentityDemo.Log("Paste or type the other browser's transfer ID and password first.");
+                ShowroomLog.Say("Paste or type the other browser's transfer ID and password first.");
                 return;
             }
             if (identifierText.Contains('@') || passwordText.Contains('@'))
             {
-                IdentityDemo.Log("That looks like an email address. A transfer ID looks like demo-XXXX-XXXX; this page never asks for an email address or a password of your own.");
+                ShowroomLog.Say("That looks like an email address. A transfer ID looks like demo-XXXX-XXXX; this page never asks for an email address or a password of your own.");
                 return;
             }
             var identifier = IdentityDemo.ParseIdentifier(identifierText);
             if (identifier == null)
             {
-                IdentityDemo.Log("That is not a transfer ID: it looks like demo-XXXX-XXXX, as the other browser shows it.");
+                ShowroomLog.Say("That is not a transfer ID: it looks like demo-XXXX-XXXX, as the other browser shows it.");
                 return;
             }
             var password = IdentityDemo.ParsePassword(passwordText);
             if (password == null)
             {
-                IdentityDemo.Log("That is not a transfer code password: it looks like XXXX-XXXX-XXXX-XXXX, as the other browser shows it.");
+                ShowroomLog.Say("That is not a transfer code password: it looks like XXXX-XXXX-XXXX-XXXX, as the other browser shows it.");
                 return;
             }
             var store = FindAnyObjectByType<ShowroomAccountStore>();
             if (store == null)
             {
-                IdentityDemo.Log("This page has no account store, so it cannot remember another account.");
+                ShowroomLog.Say("This page has no account store, so it cannot remember another account.");
                 return;
             }
 
             string? takenUserId = null;
             string? takenPassword = null;
             var own = false;
-            IdentityDemo.Run(IdentityPress.TakeOver, async (gs2, session) =>
+            Run(IdentityPress.TakeOver, async (gs2, session) =>
             {
                 var account = await IdentityDemo.Accounts(gs2).DoTakeOverAsync(IdentityDemo.TakeOverType, identifier, password);
                 var model = await account.ModelAsync();
@@ -383,10 +365,10 @@ namespace GS2Studio.Showroom.Demo
                     // Remembered all the same, so the saved password is the
                     // one GS2 now holds for this account.
                     own = true;
-                    return $"That code is this browser's own: it is already signed in as {IdentityDemo.Tag(model.UserId)}.";
+                    return $"That code is this browser's own: it is already signed in as {ShowroomPlayerTag.Of(model.UserId)}.";
                 }
-                return $"Took over {IdentityDemo.Tag(model.UserId)}. Reloading to sign in as it...";
-            }, afterward: () =>
+                return $"Took over {ShowroomPlayerTag.Of(model.UserId)}. Reloading to sign in as it...";
+            }, () =>
             {
                 if (takenUserId == null || takenPassword == null) return;
                 // localStorage writes are synchronous, so the reloaded page reads this.
@@ -396,16 +378,34 @@ namespace GS2Studio.Showroom.Demo
                 if (_takePasswordField != null) _takePasswordField.text = "";
                 if (!stuck)
                 {
-                    IdentityDemo.Log(own
+                    ShowroomLog.Say(own
                         ? "The browser did not keep the account: its storage is blocked, so the next visit starts a new account."
                         : "The browser did not keep the account: its storage is blocked (private mode or blocked site data), so reloading would not sign in as it. Allow site data and try again.");
                     return;
                 }
                 if (own) return;
                 _reloading = true;
-                IdentityDemo.Freeze();
+                ShowroomPress.Freeze();
                 StartCoroutine(ReloadSoon());
             });
+        }
+
+        /// <summary>
+        /// Runs one press through the page's press runner, redacted, with the
+        /// refusals a visitor can meet explained in its terms.
+        /// <paramref name="afterward"/> runs once the press is over, whether
+        /// it worked or not.
+        /// </summary>
+        private void Run(IdentityPress press, Func<Gs2Domain, IGameSession, Task<string>> action, Action afterward)
+        {
+            ShowroomPress.Run(new ShowroomPressOptions
+            {
+                Name = $"{nameof(TransferCodePanel)} {press}",
+                Owner = this,
+                Redact = true,
+                Explain = error => IdentityDemo.Explain(press, error),
+                Afterward = afterward,
+            }, action);
         }
 
         private IEnumerator ReloadSoon()
@@ -419,61 +419,35 @@ namespace GS2Studio.Showroom.Demo
 
         private void CopyCode()
         {
-            if (_reloading || _clipboard != Clipboard.Idle) return;
+            if (_reloading || _clipboard.Pending) return;
             var identifier = _issuedIdField?.text ?? "";
             var password = _issuedPasswordField?.text ?? "";
             if (identifier.Length == 0 || password.Length == 0)
             {
-                IdentityDemo.Log(_registered == true
+                ShowroomLog.Say(_registered == true
                     ? "The password was shown only when the code was issued. Press \"Delete and reissue\" for a new code to copy."
                     : "Issue a transfer code first.");
                 return;
             }
-            _clipboard = Clipboard.CopyingCode;
-            _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
-            ShowroomClipboard.Copy($"{identifier} {password}");
+            // A refusal is not a failure of the page: the browser decides, so
+            // the visitor is told how to do it by hand.
+            if (!_clipboard.Copy($"{identifier} {password}",
+                    () => ShowroomLog.Say("Copied the ID and password. Paste them into this page in the other browser."),
+                    reason => ShowroomLog.Say($"The browser did not let the page copy ({reason}). Select the ID and password above and copy them.")))
+            {
+                ShowroomLog.Say("One moment: the browser is still answering the last copy or paste.");
+            }
         }
 
         private void Paste()
         {
-            if (_reloading || _clipboard != Clipboard.Idle) return;
-            _clipboard = Clipboard.Pasting;
-            _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
-            ShowroomClipboard.Paste();
-        }
-
-        /// <summary>
-        /// Hands over what the clipboard answered. A refusal is not a failure
-        /// of the page: the browser decides, so the visitor is told how to do
-        /// it by hand.
-        /// </summary>
-        private void PollClipboard()
-        {
-            if (_clipboard == Clipboard.Idle) return;
-            var outcome = ShowroomClipboard.Poll(out var text);
-            if (outcome == ShowroomClipboard.Outcome.Waiting)
+            if (_reloading || _clipboard.Pending) return;
+            if (!_clipboard.Paste(
+                    FillFromPaste,
+                    reason => ShowroomLog.Say($"The browser did not let the page paste ({reason}). Type the ID and password into the fields instead.")))
             {
-                if (Time.realtimeSinceStartup < _clipboardDeadline) return;
-                // The browser has not answered; a late answer is dropped.
-                ShowroomClipboard.Abandon();
-                outcome = ShowroomClipboard.Outcome.Refused;
-                text = "no answer";
+                ShowroomLog.Say("One moment: the browser is still answering the last copy or paste.");
             }
-            var doing = _clipboard;
-            _clipboard = Clipboard.Idle;
-            if (doing == Clipboard.CopyingCode)
-            {
-                IdentityDemo.Log(outcome == ShowroomClipboard.Outcome.Done
-                    ? "Copied the ID and password. Paste them into this page in the other browser."
-                    : $"The browser did not let the page copy ({text}). Select the ID and password above and copy them.");
-                return;
-            }
-            if (outcome != ShowroomClipboard.Outcome.Done)
-            {
-                IdentityDemo.Log($"The browser did not let the page paste ({text}). Type the ID and password into the fields instead.");
-                return;
-            }
-            FillFromPaste(text);
         }
 
         /// <summary>
@@ -485,7 +459,7 @@ namespace GS2Studio.Showroom.Demo
         {
             if (text.Contains('@'))
             {
-                IdentityDemo.Log("What was pasted looks like an email address, not a transfer code. Nothing was filled in.");
+                ShowroomLog.Say("What was pasted looks like an email address, not a transfer code. Nothing was filled in.");
                 return;
             }
             var filled = false;
@@ -505,7 +479,7 @@ namespace GS2Studio.Showroom.Demo
                     filled = true;
                 }
             }
-            IdentityDemo.Log(filled
+            ShowroomLog.Say(filled
                 ? "Pasted. Check the fields, then press \"Take over that account\"."
                 : "What was pasted is not a transfer code. Copy the ID and password from the other browser's page.");
         }

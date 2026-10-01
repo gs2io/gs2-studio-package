@@ -1,13 +1,13 @@
-// What the transfer page's hand-written parts share: reaching the signed-in
-// player, running one press at a time, making transfer codes, saying why GS2
-// refused, and the short name an account goes by.
+// What the transfer page's hand-written parts share beyond the showroom
+// runtime: the account namespace and take-over type, making and reading
+// transfer codes, and explaining GS2's refusals of them. Reaching the player,
+// running presses, logging and player tags are the runtime's
+// (`ShowroomRuntime`, `ShowroomPress`, `ShowroomLog`, `ShowroomPlayerTag`).
 #nullable enable
 
 using System;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 using UnityEngine;
 
@@ -44,100 +44,11 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private const string Alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 
-        private static bool _busy;
-        private static bool _frozen;
-        private static ShowroomPage? _page;
-
-        /// <summary>The signed-in player's SDK handles, once signed in.</summary>
-        public static bool TryRuntime(out Gs2Domain? gs2, out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = UnityEngine.Object.FindAnyObjectByType<GS2Studio.Generated.Runtime.Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
-        }
-
         /// <summary>The SDK's account namespace, for what runs without a session.</summary>
         public static AccountNamespaceDomain Accounts(Gs2Domain gs2) => gs2.Account.Namespace(Namespace);
 
         /// <summary>The SDK's domain for the signed-in player's account.</summary>
         public static AccountDomain Me(Gs2Domain gs2, IGameSession session) => Accounts(gs2).Me(session);
-
-        /// <summary>
-        /// How long after what the page shows changed a press is refused: a
-        /// button that just changed its meaning may be pressed for the one it
-        /// had a moment ago.
-        /// </summary>
-        private const float SettleSeconds = 0.6f;
-
-        private static float _lastChange = float.NegativeInfinity;
-
-        /// <summary>Says that what a button does just changed.</summary>
-        public static void MarkChanged() => _lastChange = Time.realtimeSinceStartup;
-
-        /// <summary>
-        /// Runs one press, one at a time across the whole page, and says the
-        /// outcome in the page's log. What it changed reaches every reader
-        /// through the SDK's cache, so nothing is read again here.
-        /// <paramref name="afterward"/> runs once the press is over, whether it
-        /// worked or not. Returns whether the press started.
-        /// </summary>
-        public static bool Run(IdentityPress press, Func<Gs2Domain, IGameSession, Task<string>> action, Action? afterward = null)
-        {
-            if (_frozen)
-            {
-                Log("The page is reloading.");
-                return false;
-            }
-            if (_busy)
-            {
-                Log("One moment: the last press is still going.");
-                return false;
-            }
-            if (Time.realtimeSinceStartup - _lastChange < SettleSeconds)
-            {
-                Log("The page just changed; press again.");
-                return false;
-            }
-            if (!TryRuntime(out var gs2, out var session))
-            {
-                Log("Not signed in yet.");
-                return false;
-            }
-            _busy = true;
-            Execute(press, gs2!, session!, action, afterward);
-            return true;
-        }
-
-        private static async void Execute(IdentityPress press, Gs2Domain gs2, IGameSession session, Func<Gs2Domain, IGameSession, Task<string>> action, Action? afterward)
-        {
-            try
-            {
-                Log(await action(gs2, session));
-            }
-            catch (Gs2Exception error)
-            {
-                // Only the kind and GS2's own codes: a request that carried a
-                // password is never echoed into the browser console.
-                Debug.LogWarning($"{nameof(IdentityDemo)}: {press} refused: {Summary(error)}");
-                Log(Explain(press, error));
-            }
-            catch (Exception error)
-            {
-                // The type only: the message of an unexpected failure may carry
-                // what the request carried.
-                Debug.LogError($"{nameof(IdentityDemo)}: {press} failed: {error.GetType().Name}");
-                Log($"Failed: {error.GetType().Name}");
-            }
-            finally
-            {
-                _busy = false;
-            }
-            afterward?.Invoke();
-        }
-
-        /// <summary>Refuses every press from now on: the page is about to reload as another account.</summary>
-        public static void Freeze() => _frozen = true;
 
         /// <summary>
         /// The keys <c>ShowroomAccountStore</c> keeps the account under: its
@@ -164,23 +75,22 @@ namespace GS2Studio.Showroom.Demo
         public static bool IsRemembered(string userId, string password) =>
             ReadRemembered(RememberedUserIdKey) == userId && ReadRemembered(RememberedPasswordKey) == password;
 
-        /// <summary>The kind of a refusal and GS2's codes for it.</summary>
-        public static string Summary(Gs2Exception error)
-        {
-            var codes = error.Errors?.Select(detail => detail.Code).Where(code => !string.IsNullOrEmpty(code)).ToArray()
-                ?? Array.Empty<string>();
-            return codes.Length == 0 ? error.GetType().Name : $"{error.GetType().Name} ({string.Join(", ", codes)})";
-        }
-
-        private static string Text(Gs2Exception error) =>
-            string.Join(" ", error.Errors?.Select(detail => detail.Code + " " + detail.message) ?? Array.Empty<string>()) + " " + error.Message;
-
-        /// <summary>Whether GS2 refused because the player already has a transfer code.</summary>
+        /// <summary>
+        /// Whether GS2 refused because the player already has a transfer code.
+        ///
+        /// The SDK has no exception type for this refusal, so its message is
+        /// matched (`account.takeOver.takeOver.error.alreadyExists`); switch
+        /// to the error code once the SDK carries one.
+        /// </summary>
         public static bool IsAlreadyRegistered(Gs2Exception error) =>
-            error is ConflictException || Text(error).Contains("alreadyExists");
+            error is ConflictException || ShowroomRefusal.Has(error, "takeOver.error.alreadyExists");
 
-        /// <summary>Says why GS2 refused, for the refusals a visitor can meet.</summary>
-        public static string Explain(IdentityPress press, Gs2Exception error)
+        /// <summary>
+        /// Says why GS2 refused, for the refusals a visitor can meet; null
+        /// leaves any other refusal to the press runner, which reports it by
+        /// kind and code only, since these requests carry a password.
+        /// </summary>
+        public static string? Explain(IdentityPress press, Gs2Exception error)
         {
             switch (press)
             {
@@ -192,11 +102,11 @@ namespace GS2Studio.Showroom.Demo
                     break;
                 case IdentityPress.TakeOver:
                     if (error is BannedInfinityException) return "That account is banned, so it cannot be taken over.";
-                    if (error is UnauthorizedException) return "The password does not match that ID. Check both, or issue a new code in the other browser.";
+                    if (error is PasswordIncorrectException) return "The password does not match that ID. Check both, or issue a new code in the other browser.";
                     if (error is NotFoundException) return "No transfer code has that ID. Check it: the other browser may have deleted or reissued its code.";
                     break;
             }
-            return $"GS2 refused: {Summary(error)}";
+            return null;
         }
 
         /// <summary>
@@ -259,31 +169,6 @@ namespace GS2Studio.Showroom.Demo
                 if (expected ? text[index] != '-' : Alphabet.IndexOf(text[index]) < 0) return false;
             }
             return true;
-        }
-
-        /// <summary>
-        /// A short, stable name for an account: the same id always reads the
-        /// same. The friend demo names a player the same way, so the tag here
-        /// is the name the account goes by there until it chooses one.
-        /// </summary>
-        public static string Tag(string? userId)
-        {
-            unchecked
-            {
-                var hash = 2166136261u;
-                foreach (var character in userId ?? "")
-                {
-                    hash = (hash ^ character) * 16777619u;
-                }
-                return $"Player {hash & 0xFFFF:X4}";
-            }
-        }
-
-        public static void Log(string message)
-        {
-            if (_page == null) _page = UnityEngine.Object.FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-            else Debug.LogWarning($"{nameof(IdentityDemo)}: {message}");
         }
     }
 }
