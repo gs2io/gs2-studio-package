@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.LoginRewardCollection.UI
 
         private void OnUpdated(LoginRewardCollection model)
         {
-            _onUpdate.Invoke($"Last received: {model.LastReceivedAt} (UTC)");
+            _onUpdate.Invoke($"Last received: {(model.LastReceivedAt.HasValue ? model.LastReceivedAt.Value.ToString("yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture) : string.Empty)} (UTC)");
         }
     }
 }

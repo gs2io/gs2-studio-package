@@ -33,7 +33,7 @@ namespace GS2Studio.Generated.Energy
     /// shared parent-list surface.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Energy/Energy List Handler")]
-    public sealed class EnergyListHandler : MonoBehaviour, IEnergyBinderListSource
+    public sealed class EnergyListHandler : MonoBehaviour, IEnergyBinderListSource, IGs2ListState
     {
         // Which of EnergyBinderCollection's mount axes this list reads
         // through. The enum is a sibling type rather than a member of this
@@ -60,6 +60,11 @@ namespace GS2Studio.Generated.Energy
         // collection that created it. This prevents a stale mount / callback
         // from mutating the collection installed by a newer reload.
         private long _reloadGeneration;
+        // True once a reload has mounted its collection, false from the start
+        // of the next reload (Cleanup) until that one mounts. Lets a consumer
+        // tell "still loading" from "loaded and empty" — ListChanged fires in
+        // both states.
+        private bool _isLoaded;
         private Action<IEnergyBinder>? _collectionItemAddedCallback;
         private Action<IEnergyBinder>? _collectionItemRemovedCallback;
         private bool _isDestroyed;
@@ -86,6 +91,13 @@ namespace GS2Studio.Generated.Energy
 
         /// <summary>Fires after Reload completes and on each subsequent membership change.</summary>
         public event Action? ListChanged;
+
+        /// <summary>Whether the current collection has finished its initial mount.
+        /// False while a reload is in flight and after one failed.</summary>
+        public bool IsLoaded => _isLoaded;
+
+        /// <summary>How many rows <see cref="Binders"/> holds.</summary>
+        public int Count => Binders.Count;
 
         /// <summary>Fires once for each binder added (initial mount + subsequent additions).</summary>
         public event Action<IActionableEnergyBinder>? ItemAdded;
@@ -293,6 +305,7 @@ namespace GS2Studio.Generated.Energy
                 }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
+                _isLoaded = true;
                 ListChanged?.Invoke();
             }
             catch (OperationCanceledException)
@@ -617,6 +630,7 @@ namespace GS2Studio.Generated.Energy
             // Detach shared state before any Dispose / Detach call can invoke
             // user code and synchronously start another reload. The remainder
             // of this method owns only its local snapshot.
+            _isLoaded = false;
             var collection = _collection;
             var itemAddedCallback = _collectionItemAddedCallback;
             var itemRemovedCallback = _collectionItemRemovedCallback;

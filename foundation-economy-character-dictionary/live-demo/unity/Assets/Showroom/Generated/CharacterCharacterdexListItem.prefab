@@ -31,7 +31,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4923765101981310535}
-  - {fileID: 6302986497397449814}
+  - {fileID: 4853440110419151461}
   - {fileID: 3713047734621114039}
   - {fileID: 723462177082602377}
   m_Father: {fileID: 3552384978848787716}
@@ -329,7 +329,7 @@ MonoBehaviour:
   _handler: {fileID: 0}
   _activeWhenTrue: []
   _activeWhenFalse:
-  - {fileID: 6302986497397449813}
+  - {fileID: 2360912855946392813}
 --- !u!1 &9058386043534830187
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,7 +842,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2822475367832367066}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &6302986497397449813 stripped
+--- !u!1 &2360912855946392813 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 6302986497397449812}
@@ -853,7 +853,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6302986497397449813}
+  m_GameObject: {fileID: 2360912855946392813}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fe6741ad65d994d07b28481d179891e, type: 3}
@@ -863,7 +863,7 @@ MonoBehaviour:
   _onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6302986497397449815}
+      - m_Target: {fileID: 3767334955194407525}
         m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
         m_MethodName: set_text
         m_Mode: 0
@@ -875,12 +875,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &6302986497397449814 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 6302986497397449812}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6302986497397449815 stripped
+--- !u!114 &3767334955194407525 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 6302986497397449812}
@@ -891,6 +886,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+--- !u!224 &4853440110419151461 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 6302986497397449812}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7386799432778326420
 PrefabInstance:
   m_ObjectHideFlags: 0

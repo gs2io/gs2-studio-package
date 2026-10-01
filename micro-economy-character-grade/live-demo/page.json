@@ -16,6 +16,7 @@
     },
     "Character#Train to the cap, then break it": {
       "axis": "InventoryCharacterUser",
+      "empty": "Recruit a character above to start.",
       "rows": [
         "CharacterIdValue",
         {

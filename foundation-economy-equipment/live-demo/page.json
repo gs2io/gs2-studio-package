@@ -24,6 +24,7 @@
     },
     "Equipment#Your equipment": {
       "axis": "InventoryEquipmentUser",
+      "empty": "Take equipment above to start.",
       "rows": ["EquipmentNameLabel", "EquipmentDiscardButton"]
     }
   }

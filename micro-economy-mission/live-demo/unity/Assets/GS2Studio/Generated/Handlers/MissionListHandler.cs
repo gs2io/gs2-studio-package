@@ -33,7 +33,7 @@ namespace GS2Studio.Generated.Mission
     /// shared parent-list surface.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Mission/Mission List Handler")]
-    public sealed class MissionListHandler : MonoBehaviour, IMissionBinderListSource
+    public sealed class MissionListHandler : MonoBehaviour, IMissionBinderListSource, IGs2ListState
     {
         [SerializeField] private string? _missionCollection;
         [SerializeField] private MissionListItemHandler? _itemPrefab;
@@ -57,6 +57,11 @@ namespace GS2Studio.Generated.Mission
         // collection that created it. This prevents a stale mount / callback
         // from mutating the collection installed by a newer reload.
         private long _reloadGeneration;
+        // True once a reload has mounted its collection, false from the start
+        // of the next reload (Cleanup) until that one mounts. Lets a consumer
+        // tell "still loading" from "loaded and empty" — ListChanged fires in
+        // both states.
+        private bool _isLoaded;
         private Action<IMissionBinder>? _collectionItemAddedCallback;
         private Action<IMissionBinder>? _collectionItemRemovedCallback;
         private bool _isDestroyed;
@@ -83,6 +88,13 @@ namespace GS2Studio.Generated.Mission
 
         /// <summary>Fires after Reload completes and on each subsequent membership change.</summary>
         public event Action? ListChanged;
+
+        /// <summary>Whether the current collection has finished its initial mount.
+        /// False while a reload is in flight and after one failed.</summary>
+        public bool IsLoaded => _isLoaded;
+
+        /// <summary>How many rows <see cref="Binders"/> holds.</summary>
+        public int Count => Binders.Count;
 
         /// <summary>Fires once for each binder added (initial mount + subsequent additions).</summary>
         public event Action<IActionableMissionBinder>? ItemAdded;
@@ -285,6 +297,7 @@ namespace GS2Studio.Generated.Mission
                 }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
+                _isLoaded = true;
                 ListChanged?.Invoke();
             }
             catch (OperationCanceledException)
@@ -556,6 +569,7 @@ namespace GS2Studio.Generated.Mission
             // Detach shared state before any Dispose / Detach call can invoke
             // user code and synchronously start another reload. The remainder
             // of this method owns only its local snapshot.
+            _isLoaded = false;
             var collection = _collection;
             var itemAddedCallback = _collectionItemAddedCallback;
             var itemRemovedCallback = _collectionItemRemovedCallback;

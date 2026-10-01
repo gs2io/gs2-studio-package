@@ -13,6 +13,7 @@
     },
     "Character#Your characters": {
       "axis": "InventoryCharacterUser",
+      "empty": "Draw a character above to start.",
       "rows": ["CharacterIdValue"]
     },
     "Wallet#Your coins": {

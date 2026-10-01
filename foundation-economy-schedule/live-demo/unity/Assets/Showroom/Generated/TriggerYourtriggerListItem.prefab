@@ -32,7 +32,7 @@ RectTransform:
   m_Children:
   - {fileID: 6290452133858464445}
   - {fileID: 4797544431604892183}
-  - {fileID: 1197962376668099145}
+  - {fileID: 324913025079991414}
   - {fileID: 4675378681703167039}
   - {fileID: 3882122335376468772}
   m_Father: {fileID: 1110866837529585979}
@@ -515,7 +515,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2626024041141985066}
   m_SourcePrefab: {fileID: 100100000, guid: fb136fec56e284e97997421158848314, type: 3}
---- !u!1 &1197962376668099144 stripped
+--- !u!224 &324913025079991414 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
+  m_PrefabInstance: {fileID: 1197962376668099143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7429555133420577534 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8627508653779521721, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 1197962376668099143}
@@ -526,7 +531,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197962376668099144}
+  m_GameObject: {fileID: 7429555133420577534}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33f07fd69a86a715183e185c0f6644d6, type: 3}
@@ -557,19 +562,14 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197962376668099144}
+  m_GameObject: {fileID: 7429555133420577534}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87d24fe564474e5c9afded28e34fec91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Showroom.ShowroomCountdown
-  _label: {fileID: 1197962376668099146}
---- !u!224 &1197962376668099145 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1450817429669146161, guid: fb136fec56e284e97997421158848314, type: 3}
-  m_PrefabInstance: {fileID: 1197962376668099143}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1197962376668099146 stripped
+  _label: {fileID: 8327423521020349558}
+--- !u!114 &8327423521020349558 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7147485276165848625, guid: fb136fec56e284e97997421158848314, type: 3}
   m_PrefabInstance: {fileID: 1197962376668099143}

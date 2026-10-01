@@ -128,7 +128,7 @@ RectTransform:
   - {fileID: 9148362619778260847}
   - {fileID: 3518736913053627517}
   - {fileID: 7327698150438478284}
-  - {fileID: 2808868555877764746}
+  - {fileID: 5364478645620743317}
   m_Father: {fileID: 3897777171538613785}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Character.UI.CharacterLimitBreakInteractable
   _handler: {fileID: 0}
   _interactableWhenTrue:
-  - {fileID: 2808868555877764747}
+  - {fileID: 4893406209372773653}
   _interactableWhenFalse: []
 --- !u!1001 &664379158030414801
 PrefabInstance:
@@ -829,7 +829,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8037061354368594386}
   m_SourcePrefab: {fileID: 100100000, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
---- !u!1 &2808868555877764745 stripped
+--- !u!1 &1385527172059831076 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3873511907111261612, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
   m_PrefabInstance: {fileID: 2808868555877764744}
@@ -840,14 +840,14 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2808868555877764745}
+  m_GameObject: {fileID: 1385527172059831076}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1bfac56da97fb5d63686d9f56495585e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Character.UI.CharacterLimitBreakButton
   _handler: {fileID: 0}
-  _button: {fileID: 2808868555877764747}
+  _button: {fileID: 4893406209372773653}
   _onCompleted:
     m_PersistentCalls:
       m_Calls: []
@@ -866,12 +866,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &2808868555877764746 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7820905330807624221, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
-  m_PrefabInstance: {fileID: 2808868555877764744}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2808868555877764747 stripped
+--- !u!114 &4893406209372773653 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7283380615494308765, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
   m_PrefabInstance: {fileID: 2808868555877764744}
@@ -882,6 +877,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!224 &5364478645620743317 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7820905330807624221, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
+  m_PrefabInstance: {fileID: 2808868555877764744}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6774108407840699972
 PrefabInstance:
   m_ObjectHideFlags: 0

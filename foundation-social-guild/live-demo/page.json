@@ -8,6 +8,7 @@
     },
     "Guild#Your guild": {
       "axis": "GuildGuildUser",
+      "empty": "Create or join a guild above to start.",
       "rows": ["GuildMembershipLabel", "GuildCapacityLabel"]
     }
   }

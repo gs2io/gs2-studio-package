@@ -12,6 +12,7 @@
       ]
     },
     "ReceiveFriendRequest#Friend requests to you": {
+      "empty": "Nothing here yet.",
       "rows": [
         "ReceiveFriendRequestNameLabel",
         "ReceiveFriendRequestIdLabel",
@@ -20,6 +21,7 @@
       ]
     },
     "SendFriendRequest#Friend requests you sent": {
+      "empty": "Nothing here yet.",
       "rows": [
         "SendFriendRequestNameLabel",
         "SendFriendRequestIdLabel",
@@ -27,9 +29,11 @@
       ]
     },
     "Friend#Your friends": {
+      "empty": "Nothing here yet.",
       "rows": ["FriendNameLabel", "FriendFriendProfileLabel", "FriendRemoveButton"]
     },
     "Follow#Players you follow": {
+      "empty": "Nothing here yet.",
       "rows": ["FollowNameLabel", "FollowFollowerProfileLabel", "FollowUnfollowButton"]
     }
   }

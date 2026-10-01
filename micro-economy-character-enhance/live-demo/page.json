@@ -16,6 +16,7 @@
     },
     "Character#Spend materials to level up": {
       "axis": "InventoryCharacterUser",
+      "empty": "Recruit a character above to start.",
       "rows": [
         "CharacterIdValue",
         {

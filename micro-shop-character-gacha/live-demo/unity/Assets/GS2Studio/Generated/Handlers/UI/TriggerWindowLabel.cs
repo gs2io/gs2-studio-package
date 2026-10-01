@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.Trigger.UI
 
         private void OnUpdated(Trigger model)
         {
-            _onUpdate.Invoke($"{model.TriggeredAt} - {model.ExpiresAt}");
+            _onUpdate.Invoke($"{model.TriggeredAt.ToString("yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)} - {model.ExpiresAt.ToString("yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)}");
         }
     }
 }

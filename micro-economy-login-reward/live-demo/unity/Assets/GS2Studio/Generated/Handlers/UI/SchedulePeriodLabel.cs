@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.Schedule.UI
 
         private void OnUpdated(Schedule model)
         {
-            _onUpdate.Invoke($"{model.StartAt} - {model.EndAt}");
+            _onUpdate.Invoke($"{(model.StartAt.HasValue ? model.StartAt.Value.ToString("yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture) : string.Empty)} - {(model.EndAt.HasValue ? model.EndAt.Value.ToString("yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture) : string.Empty)}");
         }
     }
 }

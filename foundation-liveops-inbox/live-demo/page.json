@@ -13,6 +13,7 @@
       ]
     },
     "Message#Your inbox": {
+      "empty": "Nothing here yet.",
       "rows": ["MessagePayloadLabel", "MessageOpenButton", "MessageOpenedLabel"],
       "toggles": {
         "MessageReadActiveToggle": ["MessageOpenButton"],

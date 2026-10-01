@@ -276,6 +276,18 @@ namespace GS2Studio.Showroom.EditorTools
             /// whichever one they started. See <see cref="KeyFromSpec"/>.
             /// </summary>
             public KeyFromSpec KeyFrom;
+            /// <summary>
+            /// What the section's list says once it has loaded and holds no
+            /// rows, or null to say nothing.
+            ///
+            /// A list that loaded nothing and a list still loading look the
+            /// same from its rows alone, so the line is shown by
+            /// <see cref="ShowroomEmptyState"/>, which asks the generated list
+            /// handler's `IGs2ListState` which of the two it is. Only a list
+            /// can be empty in that sense: a section showing one row is never
+            /// without it, so this is refused anywhere else.
+            /// </summary>
+            public string Empty;
         }
 
         /// <summary>
@@ -438,6 +450,7 @@ namespace GS2Studio.Showroom.EditorTools
         ///   scope    KEY  NAME  VALUE
         ///   keyfrom  KEY  SOURCE-KEY  WHILE
         ///   keyof    KEY  NAME  SOURCE-PROPERTY
+        ///   empty    KEY  TEXT
         ///
         /// KEY is `Model` or `Model#Heading` — see
         /// <see cref="DeclaredSection"/>. A `section` line is what declares
@@ -509,6 +522,10 @@ namespace GS2Studio.Showroom.EditorTools
                 {
                     section.KeyFrom = section.KeyFrom ?? new KeyFromSpec();
                     section.KeyFrom.Keys[parts[2]] = parts[3];
+                }
+                else if (parts[0] == "empty" && parts.Length > 2 && parts[2].Length > 0)
+                {
+                    section.Empty = parts[2];
                 }
             }
             return declared;
@@ -1432,6 +1449,7 @@ namespace GS2Studio.Showroom.EditorTools
                 CollectToggleProblems(plan, problems);
                 CollectKeyProblems(plan, problems);
                 CollectKeyFromProblems(plan, byKey, problems);
+                CollectEmptyProblems(plan, problems);
             }
         }
 
@@ -1443,6 +1461,34 @@ namespace GS2Studio.Showroom.EditorTools
         {
             var clocks = plan.Clocks.Select(clock => clock.Name).ToList();
             return section.Rows.Any(row => clocks.Contains(row.Component, StringComparer.Ordinal));
+        }
+
+        /// <summary>
+        /// Refuses an empty line on a section that draws no list.
+        ///
+        /// The line is what a list says when it has loaded nothing, so on a
+        /// section showing one row, or on one the page leaves off, it would be
+        /// written down and never shown — a declaration nobody consumes, which
+        /// is the failure a refusal here exists to prevent.
+        /// </summary>
+        private static void CollectEmptyProblems(SectionPlan plan, List<string> problems)
+        {
+            if (plan.Declaration?.Empty == null || DrawsList(plan)) return;
+            problems.Add(
+                $"[showroom] {plan.SectionId}: `page.json` gives it an \"empty\" line, and this page " +
+                "draws no list for it — the line is what a list says once it has loaded no rows.");
+        }
+
+        /// <summary>
+        /// Whether this section is drawn as a generated list: a keyed model the
+        /// page neither pins to one row nor leaves off, with a list handler to
+        /// spawn its rows. The same conditions <see cref="BuildSections"/> and
+        /// <see cref="AddList"/> act on.
+        /// </summary>
+        private static bool DrawsList(SectionPlan plan)
+        {
+            return !DrawsNothing(plan) && plan.Manifest.keyed && !PinsOneRow(plan) &&
+                plan.ListHandler != null && plan.ItemHandler != null;
         }
 
         /// <summary>
@@ -2187,7 +2233,43 @@ namespace GS2Studio.Showroom.EditorTools
                 WriteScalar(serialized.FindProperty(parameter.fieldName), parameter, scope.Value);
             }
             serialized.ApplyModifiedPropertiesWithoutUndo();
+            if (plan.Declaration.Empty != null) AddEmptyState(section, list, plan.Declaration.Empty);
             return ListItemPrefabPath(plan.Name);
+        }
+
+        /// <summary>
+        /// Puts the line a list shows once it has loaded no rows beside its
+        /// rows, and the <see cref="ShowroomEmptyState"/> that shows it.
+        ///
+        /// A sibling of `Items` rather than a child: the list handler owns the
+        /// order of everything under `Items` and destroys what it did not
+        /// spawn on a reload. Styled as the section's explainer, because it is
+        /// the same kind of line — prose about the section rather than a row
+        /// of it — and baked hidden, so a list still loading never flashes it.
+        /// </summary>
+        private static void AddEmptyState(GameObject section, Component list, string text)
+        {
+            var explainer = section.transform.Find("Explainer");
+            if (explainer == null)
+                throw new InvalidOperationException(
+                    $"{section.name} has no Explainer line to style its empty line on; the section prefab is out of date");
+            var items = ItemsOf(section.transform);
+            var empty = UnityEngine.Object.Instantiate(explainer.gameObject, section.transform);
+            empty.name = "Empty";
+            empty.transform.SetSiblingIndex(items.GetSiblingIndex() + 1);
+            var label = empty.GetComponent<Text>();
+            if (label == null)
+                throw new InvalidOperationException(
+                    $"{section.name}'s Explainer carries no Text; the section prefab is out of date");
+            label.text = text;
+            empty.SetActive(false);
+
+            var state = section.AddComponent<ShowroomEmptyState>();
+            var serialized = new SerializedObject(state);
+            serialized.FindProperty("_list").objectReferenceValue = list;
+            serialized.FindProperty("_empty").objectReferenceValue = empty;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(state);
         }
 
         /// <summary>

@@ -13,6 +13,7 @@
     },
     "Equipment#Your equipment and its bonuses": {
       "axis": "InventoryEquipmentUser",
+      "empty": "Take equipment above to start.",
       "scope": {
         "enchant": "standard"
       },

@@ -76,7 +76,7 @@ namespace GS2Studio.Generated.Character.UI
 
         private void OnUpdated(Character model)
         {
-            _onUpdate.Invoke($"{model.AcquiredAt}");
+            _onUpdate.Invoke($"{model.AcquiredAt.ToString("yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)}");
         }
     }
 }

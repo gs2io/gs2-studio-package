@@ -220,7 +220,7 @@ RectTransform:
   m_Children:
   - {fileID: 6971499223003132583}
   - {fileID: 5959242125692618165}
-  - {fileID: 6469340554979789323}
+  - {fileID: 3841246140412860436}
   m_Father: {fileID: 1180472443350775619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -403,7 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Item.UI.ItemOwnedInteractable
   _handler: {fileID: 0}
   _interactableWhenTrue:
-  - {fileID: 6469340554979789324}
+  - {fileID: 4383254651254364564}
   _interactableWhenFalse: []
 --- !u!1001 &4483919288101279656
 PrefabInstance:
@@ -674,7 +674,23 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 618278946689215555}
   m_SourcePrefab: {fileID: 100100000, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
---- !u!1 &6469340554979789322 stripped
+--- !u!224 &3841246140412860436 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7820905330807624221, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
+  m_PrefabInstance: {fileID: 6469340554979789321}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4383254651254364564 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7283380615494308765, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
+  m_PrefabInstance: {fileID: 6469340554979789321}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!1 &7784133838468652965 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3873511907111261612, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
   m_PrefabInstance: {fileID: 6469340554979789321}
@@ -685,14 +701,14 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6469340554979789322}
+  m_GameObject: {fileID: 7784133838468652965}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f164af697cc8753714153dd8c2b66e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GS2Studio.Generated.Item.UI.ItemSpendButton
   _handler: {fileID: 0}
-  _button: {fileID: 6469340554979789324}
+  _button: {fileID: 4383254651254364564}
   _onCompleted:
     m_PersistentCalls:
       m_Calls: []
@@ -711,22 +727,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &6469340554979789323 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7820905330807624221, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
-  m_PrefabInstance: {fileID: 6469340554979789321}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6469340554979789324 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7283380615494308765, guid: 6b43bb595c3094b18b76bb5f9165d308, type: 3}
-  m_PrefabInstance: {fileID: 6469340554979789321}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1001 &8403131245791059094
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@
     },
     "Character#Open a character's tree": {
       "axis": "InventoryCharacterUser",
+      "empty": "Recruit a character above to start.",
       "rows": ["CharacterIdValue", "CharacterOpenTreeButton"]
     },
     "FreeDeposit#Get coins": {
