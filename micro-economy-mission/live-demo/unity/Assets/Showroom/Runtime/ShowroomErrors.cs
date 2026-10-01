@@ -8,7 +8,9 @@
 // raises as an exception carrying that action's own result body
 // (`RanTransactionAccessTokenDomain.HandleResult`) or as
 // `UnknownException("Ran transaction failed.")`. Neither parses, so `Errors`
-// comes back empty, and `error.Message` is the body as GS2 sent it: JSON.
+// comes back empty, and `error.Message` is the body as GS2 sent it: JSON. For
+// a refused action that body is GS2's full error record,
+// `{"errors": [{"component", "message", "code"}], "result", "stack", "metadata"}`.
 //
 // So the list is used when the SDK filled one, the body is unwrapped the way
 // the SDK's own HTTP path unwraps it when it did not, and the exception's
@@ -110,13 +112,15 @@ namespace GS2Studio.Showroom
         /// readable text of it when it holds none.
         ///
         /// GS2 wraps its error list in <c>{"message": "&lt;the list, as a string&gt;"}</c>,
-        /// and an action inside a transaction is reported by handing that whole
-        /// envelope over rather than the list inside it. Unwrapping is
-        /// therefore a loop: an object with a string <c>message</c> is one
-        /// layer, and an array of them is the list itself. A layer's message
-        /// that is not JSON is a message in its own right. Anything else is
-        /// handed back as <paramref name="text"/>, because a body this cannot
-        /// read is still more than a blank line.
+        /// and an action inside a transaction is reported by handing over an
+        /// envelope rather than the list inside it: either that one, or the
+        /// full error record, whose <c>errors</c> holds the list itself.
+        /// Unwrapping is therefore a loop: an object with a string
+        /// <c>message</c> is one layer, an object with an <c>errors</c> array
+        /// is the record, and an array of them is the list itself. A layer's
+        /// message that is not JSON is a message in its own right. Anything
+        /// else is handed back as <paramref name="text"/>, because a body this
+        /// cannot read is still more than a blank line.
         /// </summary>
         private static List<string> BodyMessages(string? body, out string text)
         {
@@ -142,6 +146,14 @@ namespace GS2Studio.Showroom
                 {
                     if (unwrappedLayer && text.Length > 0) messages.Add(text);
                     return messages;
+                }
+                // The full error record: its list is read like a bare one.
+                if (parsed.IsObject &&
+                    parsed.Keys.Contains("errors") &&
+                    parsed["errors"] != null &&
+                    parsed["errors"].IsArray)
+                {
+                    parsed = parsed["errors"];
                 }
                 if (parsed.IsArray)
                 {
