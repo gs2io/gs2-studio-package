@@ -9,8 +9,8 @@ namespace GS2Studio.Showroom.Demo
 {
     /// <summary>Plays once for the visitor's guild.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Guild Season Play")]
-    public sealed class GuildRankingPlayButton : GuildSeasonPress
+    public sealed class GuildRankingPlayButton : ShowroomPressButton
     {
-        private protected override Task<string> Press(GuildRankingSeasonState season) => season.Play();
+        protected override Task<string> Press() => GuildRankingSeasonState.Shared.Play();
     }
 }

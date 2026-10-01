@@ -42,7 +42,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -116,12 +115,12 @@ namespace GS2Studio.Showroom.Demo
         private const int PageSize = 100;
 
         /// <summary>The reads whose failures are logged once until they work again; see <see cref="LogFailure"/>.</summary>
-        private const string SeasonFailure = "the season could not be read";
-        private const string FollowFailure = "the guilds could not be followed";
-        private const string RereadFailure = "the guilds could not be read again";
-        private const string GuildFailure = "the guild could not be read";
-        private const string BoardFailure = "the board could not be read";
-        private const string PastFailure = "the past seasons could not be read";
+        private const string SeasonFailure = "The season could not be read";
+        private const string FollowFailure = "The guilds could not be followed";
+        private const string RereadFailure = "The guilds could not be read again";
+        private const string GuildFailure = "The guild could not be read";
+        private const string BoardFailure = "The board could not be read";
+        private const string PastFailure = "The past seasons could not be read";
 
         private static GuildRankingSeasonState? _instance;
 
@@ -243,7 +242,7 @@ namespace GS2Studio.Showroom.Demo
         private readonly Dictionary<string, string?> _guildNames = new Dictionary<string, string?>();
 
         /// <summary>What the SDK reported, waiting for the main thread.</summary>
-        private readonly ConcurrentQueue<Action> _inbox = new ConcurrentQueue<Action>();
+        private readonly ShowroomInbox _inbox = new ShowroomInbox();
 
         /// <summary>The signed-in visitor's guild domain, while the joined guilds are followed.</summary>
         private VisitorDomain? _visitor;
@@ -275,11 +274,11 @@ namespace GS2Studio.Showroom.Demo
         private float _nextPastRead;
 
         /// <summary>
-        /// The reads that failed and were logged. A read that keeps failing is
-        /// tried again every few seconds, and logging each try would fill the
-        /// page's log, so it is logged once until it works again.
+        /// One latch per read. A read that keeps failing is tried again every
+        /// few seconds, and saying each try would fill the page's log, so it
+        /// is said once until it works again. Main thread only.
         /// </summary>
-        private readonly HashSet<string> _failing = new HashSet<string>();
+        private readonly Dictionary<string, ShowroomLatch> _failures = new Dictionary<string, ShowroomLatch>();
 
         private void OnEnable()
         {
@@ -297,44 +296,42 @@ namespace GS2Studio.Showroom.Demo
             StopFollowingJoined();
         }
 
-        /// <summary>Logs a failed read, unless the same read failed last time too.</summary>
-        private void LogFailure(string what, Exception error, bool warning = false)
+        /// <summary>Says a failed read, unless the same read failed last time too. Main thread only.</summary>
+        private void LogFailure(string what, Exception error)
         {
-            lock (_failing)
-            {
-                if (!_failing.Add(what)) return;
-            }
-            var message = $"{nameof(GuildRankingSeasonState)}: {what}: {error}";
-            if (warning) Debug.LogWarning(message);
-            else Debug.LogError(message);
+            Latch(what).Fail(what, error);
         }
 
-        /// <summary>The read worked, so its next failure is logged again.</summary>
+        /// <summary>The read worked, so its next failure is said again. Main thread only.</summary>
         private void Recovered(string what)
         {
-            lock (_failing)
+            Latch(what).Succeeded();
+        }
+
+        private ShowroomLatch Latch(string what)
+        {
+            if (!_failures.TryGetValue(what, out var latch))
             {
-                _failing.Remove(what);
+                latch = new ShowroomLatch();
+                _failures[what] = latch;
             }
+            return latch;
         }
 
         private void Update()
         {
-            while (_inbox.TryDequeue(out var apply))
-            {
-                apply();
-            }
+            _inbox.Drain();
         }
 
         private IEnumerator Run()
         {
             IGameSession? session;
-            while (!GuildRankingDemo.TryRuntime(out _, out session))
+            while (!ShowroomRuntime.TryGet(out _, out session))
             {
                 yield return new WaitForSeconds(0.25f);
             }
             // Known before the first read, so that read is on the visitor's clock.
-            UserId = session!.UserId;
+            UserId = session.UserId;
             DemoTimeOffset.TryGet(UserId, out _);
             var tick = new WaitForSecondsRealtime(TickSeconds);
             while (true)
@@ -389,7 +386,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         public async Task<string> Play()
         {
-            if (!GuildRankingDemo.TryRuntime(out var gs2, out var session)) return "Not signed in yet.";
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
             if (!GuildKnown) return "Still reading your guild; try again in a moment.";
             if (GuildId == null) return "You are not in a guild. Found one or join one in the lobby above, then play.";
             if (Season == null) return SeasonProblem ?? "Still reading the season; try again in a moment.";
@@ -409,11 +406,11 @@ namespace GS2Studio.Showroom.Demo
             var score = UnityEngine.Random.Range(MinimumScore, MaximumScore + 1);
             try
             {
-                await gs2!.Ranking2.Namespace(RankingNamespace).ClusterRankingModel(RankingName)
-                    .ClusterRankingSeason(guildId, season, session!)
+                await gs2.Ranking2.Namespace(RankingNamespace).ClusterRankingModel(RankingName)
+                    .ClusterRankingSeason(guildId, season, session)
                     .PutClusterRankingAsync(score);
             }
-            catch (BadRequestException error) when (GuildRankingDemo.Refused(error, "notInclude"))
+            catch (BadRequestException error) when (ShowroomRefusal.Has(error, "notInclude"))
             {
                 // The visitor left, or was removed, and the SDK has not heard yet.
                 return "GS2 refused the score (notInclude): you are not a member of that guild any more. Scores count only for the guild you belong to.";
@@ -450,7 +447,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         public async Task<string> Receive()
         {
-            if (!GuildRankingDemo.TryRuntime(out var gs2, out var session)) return "Not signed in yet.";
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
             if (!PastKnown) return PastProblem ?? "Still reading your past seasons; try again in a moment.";
             var target = Next;
             if (target == null)
@@ -462,26 +459,26 @@ namespace GS2Studio.Showroom.Demo
             {
                 // The season is named: left out, GS2 would take the season
                 // being played, which is still open and cannot pay.
-                var transaction = await gs2!.Ranking2.Namespace(RankingNamespace).ClusterRankingModel(RankingName)
-                    .ClusterRankingSeason(target.GuildId, target.Season, session!)
+                var transaction = await gs2.Ranking2.Namespace(RankingNamespace).ClusterRankingModel(RankingName)
+                    .ClusterRankingSeason(target.GuildId, target.Season, session)
                     .ClusterRankingReceivedReward()
                     .ReceiveClusterRankingRewardAsync(speculativeExecute: false);
                 if (transaction != null) await transaction.WaitAsync(true);
             }
-            catch (BadRequestException error) when (GuildRankingDemo.Refused(error, "alreadyReceived"))
+            catch (BadRequestException error) when (ShowroomRefusal.Has(error, "alreadyReceived"))
             {
                 _received.Add((target.GuildId, target.Season));
                 ForgetNext(target);
                 return $"GS2 says season {target.Season} was already received (alreadyReceived).";
             }
-            catch (BadRequestException error) when (GuildRankingDemo.Refused(error, "inSchedule") || GuildRankingDemo.Refused(error, "outOfSchedule"))
+            catch (BadRequestException error) when (ShowroomRefusal.Has(error, "inSchedule") || ShowroomRefusal.Has(error, "outOfSchedule"))
             {
                 // This device's clock can run ahead of GS2's by a moment.
                 _seasonStale = true;
                 _nextSeasonRead = 0;
                 return $"GS2 says season {target.Season} is still being played (inSchedule); it pays once it is over.";
             }
-            catch (NotFoundException error) when (GuildRankingDemo.Refused(error, "noRewards"))
+            catch (NotFoundException error) when (ShowroomRefusal.Has(error, "noRewards"))
             {
                 _paysNothing.Add((target.GuildId, target.Season));
                 ForgetNext(target);
@@ -584,18 +581,18 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private async void ReadSeason()
         {
-            if (_readingSeason || !GuildRankingDemo.TryRuntime(out var gs2, out var session)) return;
+            if (_readingSeason || !ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             _readingSeason = true;
             _seasonStale = false;
             var generation = ++_seasonGeneration;
             _nextSeasonRead = Time.realtimeSinceStartup + SeasonRetrySeconds;
             try
             {
-                var result = await new Gs2ScheduleRestClient(gs2!.Super.RestSession).GetEventAsync(
+                var result = await new Gs2ScheduleRestClient(gs2.Super.RestSession).GetEventAsync(
                     new GetEventRequest()
                         .WithNamespaceName(ScheduleNamespace)
                         .WithEventName(SeasonEvent)
-                        .WithAccessToken(session!.AccessToken.Token)
+                        .WithAccessToken(session.AccessToken.Token)
                         .WithIsInSchedule(false));
                 if (this == null) return;
                 Recovered(SeasonFailure);
@@ -661,11 +658,11 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private async void FollowJoined()
         {
-            if (_followingJoined || !GuildRankingDemo.TryRuntime(out var gs2, out var session)) return;
+            if (_followingJoined || !ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             _followingJoined = true;
             var ticket = ++_joinedTicket;
-            var domain = gs2!;
-            var player = session!;
+            var domain = gs2;
+            var player = session;
             var visitor = domain.Super.Guild.Namespace(GuildRankingDemo.GuildNamespace).AccessToken(player.AccessToken);
             _visitor = visitor;
             _followDomain = domain;
@@ -689,7 +686,7 @@ namespace GS2Studio.Showroom.Demo
             catch (Exception error)
             {
                 if (ticket != _joinedTicket) return;
-                LogFailure(FollowFailure, error, warning: true);
+                LogFailure(FollowFailure, error);
                 _followingJoined = false;
                 _visitor = null;
                 _followDomain = null;
@@ -711,12 +708,12 @@ namespace GS2Studio.Showroom.Demo
             _followingJoined = false;
             _membershipFailed = false;
             if (visitor != null && id != null) visitor.UnsubscribeJoinedGuilds(id.Value, GuildRankingDemo.GuildKind);
-            while (_inbox.TryDequeue(out _)) { }
+            _inbox.Clear();
         }
 
         /// <summary>Hands an SDK callback to the main thread, unless the guilds stopped being followed first.</summary>
         private void Post(int ticket, Action apply) =>
-            _inbox.Enqueue(() =>
+            _inbox.Post(() =>
             {
                 if (ticket == _joinedTicket && this != null) apply();
             });
@@ -732,13 +729,19 @@ namespace GS2Studio.Showroom.Demo
             try
             {
                 var joined = await visitor.JoinedGuildsAsync(GuildRankingDemo.GuildKind).ToArrayAsync();
-                Recovered(RereadFailure);
-                Post(ticket, () => ApplyJoined(joined, domain, player));
+                Post(ticket, () =>
+                {
+                    Recovered(RereadFailure);
+                    ApplyJoined(joined, domain, player);
+                });
             }
             catch (Exception error)
             {
-                LogFailure(RereadFailure, error, warning: true);
-                Post(ticket, () => _membershipFailed = true);
+                Post(ticket, () =>
+                {
+                    LogFailure(RereadFailure, error);
+                    _membershipFailed = true;
+                });
             }
         }
 
@@ -781,7 +784,7 @@ namespace GS2Studio.Showroom.Demo
             catch (Exception error)
             {
                 if (ticket != _guildReadTicket || this == null) return;
-                LogFailure(GuildFailure, error, warning: true);
+                LogFailure(GuildFailure, error);
                 // Read again on the next list the SDK hands over, or at the
                 // next retry.
                 _joinedGuildName = null;
@@ -827,7 +830,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private async void ReadStanding()
         {
-            if (!GuildRankingDemo.TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             if (_readingStanding)
             {
                 _readStandingAgain = true;
@@ -839,7 +842,7 @@ namespace GS2Studio.Showroom.Demo
             _readingStanding = true;
             try
             {
-                await ReadStandingOnce(gs2!, session!, guildId, season.Value);
+                await ReadStandingOnce(gs2, session, guildId, season.Value);
                 Recovered(BoardFailure);
             }
             catch (Exception error)
@@ -922,7 +925,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private async void ReadPast()
         {
-            if (!GuildRankingDemo.TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             if (_readingPast)
             {
                 _readPastAgain = true;
@@ -933,7 +936,7 @@ namespace GS2Studio.Showroom.Demo
             _readingPast = true;
             try
             {
-                await ReadPastOnce(gs2!, session!, season.Value);
+                await ReadPastOnce(gs2, session, season.Value);
                 Recovered(PastFailure);
             }
             catch (Exception error)
@@ -942,7 +945,7 @@ namespace GS2Studio.Showroom.Demo
                 if (this != null) _nextPastRead = Time.realtimeSinceStartup + PastRetrySeconds;
                 if (this != null && !PastKnown)
                 {
-                    PastProblem = $"Your past seasons could not be read: {error.Message}";
+                    PastProblem = $"Your past seasons could not be read: {ShowroomErrors.Describe(error)}";
                     Updated?.Invoke();
                 }
             }

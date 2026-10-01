@@ -41,7 +41,7 @@ namespace GS2Studio.Showroom.Demo
         {
             if (_panel == null || _font == null)
             {
-                GuildRankingDemo.Log("The guild board was baked without its region or font.");
+                ShowroomLog.Say("The guild board was baked without its region or font.");
                 return;
             }
             if (_rows == null) Build();
@@ -74,7 +74,7 @@ namespace GS2Studio.Showroom.Demo
             var season = _season;
             string hint;
             var places = season.Board
-                .Select(place => (rank: place.Rank, name: place.UserId == season.UserId ? "You" : GuildRankingDemo.Tag(place.UserId), score: place.Score, own: place.UserId == season.UserId))
+                .Select(place => (rank: place.Rank, name: place.UserId == season.UserId ? "You" : ShowroomPlayerTag.Of(place.UserId), score: place.Score, own: place.UserId == season.UserId))
                 .ToList();
             if (!season.GuildKnown)
             {
@@ -119,7 +119,7 @@ namespace GS2Studio.Showroom.Demo
             var shown = hint + "|" + string.Join(";", places.Select(place => $"{place.rank}:{place.name}:{place.score}"));
             if (shown == _shown) return;
             _shown = shown;
-            GuildRankingDemo.MarkChanged();
+            ShowroomSettle.MarkChanged();
             Clear(_rows);
             foreach (var place in places)
             {

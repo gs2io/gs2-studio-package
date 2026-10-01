@@ -131,9 +131,7 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>What the region was last drawn from; null before the first draw.</summary>
         private string? _shown;
         private StringBuilder? _drawing;
-        private bool _busy;
         private Coroutine? _signingIn;
-        private ShowroomPage? _page;
 
         /// <summary>The visitor, set once they are signed in.</summary>
         private Gs2Domain? _gs2;
@@ -178,7 +176,7 @@ namespace GS2Studio.Showroom.Demo
         {
             if (_panel == null || _buttonTemplate == null || _font == null)
             {
-                Log("The guild lobby was baked without its region, button or font.");
+                ShowroomLog.Say("The guild lobby was baked without its region, button or font.");
                 return;
             }
             if (_body == null) Build();
@@ -194,7 +192,7 @@ namespace GS2Studio.Showroom.Demo
 
         private IEnumerator WaitForSignIn()
         {
-            while (!TryRuntime(out _, out _))
+            while (!ShowroomRuntime.TryGet(out _, out _))
             {
                 yield return new WaitForSeconds(0.25f);
             }
@@ -233,10 +231,10 @@ namespace GS2Studio.Showroom.Demo
 
         private void StartWatching()
         {
-            if (!TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             _gs2 = gs2;
             _session = session;
-            _visitor = gs2!.Super.Guild.Namespace(GuildNamespace).AccessToken(session!.AccessToken);
+            _visitor = gs2.Super.Guild.Namespace(GuildNamespace).AccessToken(session.AccessToken);
             _userId = session.UserId;
             _nextTick = Time.realtimeSinceStartup + TickSeconds;
             WatchJoined();
@@ -396,8 +394,8 @@ namespace GS2Studio.Showroom.Demo
             catch (Exception error)
             {
                 if (!_joinedWatch.Fail(ticket)) return;
-                Debug.LogError($"{nameof(GuildRoleRankingLobbyPanel)}: the guilds could not be read: {error}");
-                ReadFailed($"The guilds could not be read: {error.Message}");
+                Debug.LogWarning($"{nameof(GuildRoleRankingLobbyPanel)}: the guilds could not be read: {error}");
+                ReadFailed($"The guilds could not be read: {ShowroomErrors.Describe(error)}");
             }
         }
 
@@ -432,8 +430,8 @@ namespace GS2Studio.Showroom.Demo
             catch (Exception error)
             {
                 if (!_guildWatch.Fail(ticket)) return;
-                Debug.LogError($"{nameof(GuildRoleRankingLobbyPanel)}: the guild could not be read: {error}");
-                ReadFailed($"The guilds could not be read: {error.Message}");
+                Debug.LogWarning($"{nameof(GuildRoleRankingLobbyPanel)}: the guild could not be read: {error}");
+                ReadFailed($"The guilds could not be read: {ShowroomErrors.Describe(error)}");
             }
         }
 
@@ -487,8 +485,8 @@ namespace GS2Studio.Showroom.Demo
             catch (Exception error)
             {
                 if (!_search.Is(ticket)) return;
-                Debug.LogError($"{nameof(GuildRoleRankingLobbyPanel)}: the guilds could not be searched: {error}");
-                ReadFailed($"The guilds could not be read: {error.Message}");
+                Debug.LogWarning($"{nameof(GuildRoleRankingLobbyPanel)}: the guilds could not be searched: {error}");
+                ReadFailed($"The guilds could not be read: {ShowroomErrors.Describe(error)}");
             }
         }
 
@@ -500,7 +498,7 @@ namespace GS2Studio.Showroom.Demo
         {
             if (this == null || message == _readFailure) return;
             _readFailure = message;
-            Log(message);
+            ShowroomLog.Say(message);
         }
 
         /// <summary>
@@ -623,7 +621,7 @@ namespace GS2Studio.Showroom.Demo
             // Presses wait only when what is shown changed: redrawing the
             // same rows moves nothing.
             var shown = drawing.ToString();
-            if (shown != _shown) GuildRankingDemo.MarkChanged();
+            if (shown != _shown) ShowroomSettle.MarkChanged();
             _shown = shown;
         }
 
@@ -638,7 +636,7 @@ namespace GS2Studio.Showroom.Demo
             foreach (var member in members.OrderBy(member => member.JoinedAt ?? 0))
             {
                 var you = member.UserId == _userId ? "  (you)" : "";
-                Caption(_body!, $"{Tag(member.UserId)}  {member.RoleName}{you}", 16, member.UserId == _userId ? LightText : MutedText);
+                Caption(_body!, $"{ShowroomPlayerTag.Of(member.UserId)}  {member.RoleName}{you}", 16, member.UserId == _userId ? LightText : MutedText);
             }
 
             if (master)
@@ -647,7 +645,7 @@ namespace GS2Studio.Showroom.Demo
                 if (others.Length > 0)
                 {
                     var heir = others[0].UserId;
-                    Press(_body!, $"Hand over to {Tag(heir)} and leave", () => HandOver(guild.Name, heir));
+                    Press(_body!, $"Hand over to {ShowroomPlayerTag.Of(heir)} and leave", () => HandOver(guild.Name, heir));
                 }
                 else
                 {
@@ -681,7 +679,7 @@ namespace GS2Studio.Showroom.Demo
             var name = (_nameField?.text ?? "").Trim();
             if (name.Length == 0 || name.Length > NameLimit || name.Any(char.IsControl))
             {
-                Log($"Name the guild first, in 1 to {NameLimit} characters.");
+                ShowroomLog.Say($"Name the guild first, in 1 to {NameLimit} characters.");
                 return;
             }
             Run(async (gs2, session) =>
@@ -741,7 +739,7 @@ namespace GS2Studio.Showroom.Demo
                     .JoinedGuild(GuildKind, guildName)
                     .WithdrawalAsync(new WithdrawalRequest());
                 _guildToken = null;
-                return $"Handed the guild to {Tag(heir)} and left.";
+                return $"Handed the guild to {ShowroomPlayerTag.Of(heir)} and left.";
             }, whenGone: ReadJoinedAgain);
 
         private void Disband(string guildName) =>
@@ -790,14 +788,14 @@ namespace GS2Studio.Showroom.Demo
             _clipboard = Clipboard.Idle;
             if (doing == Clipboard.Copying)
             {
-                Log(outcome == ShowroomClipboard.Outcome.Done
+                ShowroomLog.Say(outcome == ShowroomClipboard.Outcome.Done
                     ? "Copied the guild id. Send it to the visitor who should join."
                     : $"The browser did not let the page copy ({text}). Select the guild id above and copy it, or read it out.");
                 return;
             }
             if (outcome != ShowroomClipboard.Outcome.Done)
             {
-                Log($"The browser did not let the page paste ({text}). Type the guild id into the field instead.");
+                ShowroomLog.Say($"The browser did not let the page paste ({text}). Type the guild id into the field instead.");
                 return;
             }
             if (_joinField != null) _joinField.text = text.Trim();
@@ -814,12 +812,12 @@ namespace GS2Studio.Showroom.Demo
             var id = GuildRankingDemo.GuildNameOf((_joinField?.text ?? "").Trim());
             if (id.Length == 0)
             {
-                Log("Paste or type a guild id first.");
+                ShowroomLog.Say("Paste or type a guild id first.");
                 return;
             }
             if (id.Any(character => char.IsWhiteSpace(character) || char.IsControl(character)))
             {
-                Log("That does not look like a guild id: it has no spaces, like the one a member copies from their guild.");
+                ShowroomLog.Say("That does not look like a guild id: it has no spaces, like the one a member copies from their guild.");
                 return;
             }
             Run(async (gs2, session) =>
@@ -860,75 +858,41 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Runs one press, one at a time. What it changed reaches the panel
-        /// through the SDK's cache, so nothing is read again here, except:
-        /// <paramref name="afterward"/> runs once the press is over, whether
-        /// it worked or not, and <paramref name="whenGone"/> runs when GS2
-        /// says what was pressed on no longer exists.
+        /// Runs one press through the page's press runner, so it waits its
+        /// turn with every other press on the page. What it changed reaches
+        /// the panel through the SDK's cache, so nothing is read again here,
+        /// except: <paramref name="afterward"/> runs once the press is over,
+        /// whether it worked or not, and <paramref name="whenGone"/> runs when
+        /// GS2 says what was pressed on no longer exists.
         /// </summary>
-        private async void Run(Func<Gs2Domain, IGameSession, Task<string>> press, Action? afterward = null, Action? whenGone = null)
+        private void Run(Func<Gs2Domain, IGameSession, Task<string>> press, Action? afterward = null, Action? whenGone = null)
         {
-            if (_busy) return;
-            if (!TryRuntime(out var gs2, out var session))
+            ShowroomPress.Run(new ShowroomPressOptions
             {
-                Log("Not signed in yet.");
-                return;
-            }
-            _busy = true;
-            try
-            {
-                var message = await press(gs2!, session!);
-                if (this != null) Log(message);
-            }
-            catch (Gs2Exception error)
-            {
-                if (this != null)
-                {
-                    Log(Explain(error));
-                    if (error is NotFoundException) whenGone?.Invoke();
-                }
-            }
-            catch (Exception error)
-            {
-                if (this != null) Log($"Failed: {error.Message}");
-            }
-            finally
-            {
-                _busy = false;
-            }
-            if (this != null) afterward?.Invoke();
+                Name = nameof(GuildRoleRankingLobbyPanel),
+                Owner = this,
+                Explain = Explain,
+                WhenGone = whenGone,
+                Afterward = afterward,
+            }, press);
         }
 
-        /// <summary>Says why GS2 refused, for the refusals a visitor can meet.</summary>
-        private static string Explain(Gs2Exception error)
+        /// <summary>
+        /// Says why GS2 refused, for the refusals a visitor can meet; null
+        /// leaves any other refusal to the runner's reading of it.
+        /// </summary>
+        private static string? Explain(Gs2Exception error)
         {
             var text = string.Join(" ", error.Errors?.Select(detail => detail.message) ?? Array.Empty<string>()) + " " + error.Message;
             if (text.Contains("maximumJoinedGathering")) return "That player already belongs to a guild.";
             if (text.Contains("members.error.tooMany")) return "That guild is full.";
             if (text.Contains("master.error.require")) return "A guild cannot be left without a master; hand it over or disband it.";
             if (error is NotFoundException) return "That guild is gone.";
-            return $"GS2 refused: {error.Message}";
+            return null;
         }
 
         // ------------------------------------------------------------------
         // Building blocks
-
-        /// <summary>
-        /// A short, stable name for an anonymous player: the same id always
-        /// reads the same.
-        /// </summary>
-        private static string Tag(string? userId)
-        {
-            unchecked
-            {
-                var hash = 2166136261u;
-                foreach (var character in userId ?? "")
-                {
-                    hash = (hash ^ character) * 16777619u;
-                }
-                return $"Player {hash & 0xFFFF:X4}";
-            }
-        }
 
         private InputField NameField() => Field(_panel!, "NameField", "Name your guild", NameLimit);
 
@@ -979,7 +943,7 @@ namespace GS2Studio.Showroom.Demo
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() =>
             {
-                if (GuildRankingDemo.Settled()) onClick();
+                if (ShowroomSettle.Settled()) onClick();
             });
         }
 
@@ -1015,21 +979,6 @@ namespace GS2Studio.Showroom.Demo
                 child.SetActive(false);
                 Destroy(child);
             }
-        }
-
-        private void Log(string message)
-        {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-            else Debug.LogWarning($"GuildRoleRankingLobbyPanel: {message}", this);
-        }
-
-        private static bool TryRuntime(out Gs2Domain? gs2, out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = FindAnyObjectByType<GS2Studio.Generated.Runtime.Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
         }
     }
 }

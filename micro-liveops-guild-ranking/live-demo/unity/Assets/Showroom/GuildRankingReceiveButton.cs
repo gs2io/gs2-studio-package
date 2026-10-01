@@ -9,8 +9,8 @@ namespace GS2Studio.Showroom.Demo
 {
     /// <summary>Receives a past season's reward for the visitor's rank in their guild.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Guild Season Receive")]
-    public sealed class GuildRankingReceiveButton : GuildSeasonPress
+    public sealed class GuildRankingReceiveButton : ShowroomPressButton
     {
-        private protected override Task<string> Press(GuildRankingSeasonState season) => season.Receive();
+        protected override Task<string> Press() => GuildRankingSeasonState.Shared.Receive();
     }
 }
