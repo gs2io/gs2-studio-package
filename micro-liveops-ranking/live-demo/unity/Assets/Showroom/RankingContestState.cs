@@ -34,7 +34,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using UnityEngine;
@@ -176,9 +175,9 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>How many of the reads that follow a press are still to come.</summary>
         private int _pressReadsLeft;
 
-        /// <summary>Set while a failure has been logged, so a lasting one is logged once.</summary>
-        private bool _triggerFailureLogged;
-        private bool _standingFailureLogged;
+        /// <summary>Say a lasting failure once, until a read succeeds again.</summary>
+        private readonly ShowroomLatch _triggerFailures = new ShowroomLatch();
+        private readonly ShowroomLatch _standingFailures = new ShowroomLatch();
 
         private readonly List<UnityEngine.Events.UnityEvent> _pressEvents = new List<UnityEngine.Events.UnityEvent>();
 
@@ -198,11 +197,11 @@ namespace GS2Studio.Showroom.Demo
         private IEnumerator Run()
         {
             IGameSession? session;
-            while (!TryRuntime(out _, out session))
+            while (!ShowroomRuntime.TryGet(out _, out session))
             {
                 yield return new WaitForSeconds(0.25f);
             }
-            UserId = session!.UserId;
+            UserId = session.UserId;
             ListenToPresses();
             DemoTimeOffset.TryGet(UserId, out _);
             ReadTrigger();
@@ -272,11 +271,11 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         public async Task<string> Play()
         {
-            if (!TryRuntime(out var gs2, out var session)) return "Not signed in yet.";
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
             if (!HasValue) return "Still reading your standing; try again in a moment.";
             // Start contest runs on the server and nothing tells the page, so
             // the window is read again before a press is refused for it.
-            if (!Open) await ReadTriggerOnce(gs2!, session!);
+            if (!Open) await ReadTriggerOnce(gs2, session);
             if (!Open) return "Your contest is not open. Press Start contest first.";
 
             var score = UnityEngine.Random.Range(1, MaximumScore + 1);
@@ -286,8 +285,8 @@ namespace GS2Studio.Showroom.Demo
             }
             try
             {
-                await gs2!.Ranking2.Namespace(RankingNamespace).GlobalRankingModel(RankingName)
-                    .GlobalRankingSeason(Season, session!)
+                await gs2.Ranking2.Namespace(RankingNamespace).GlobalRankingModel(RankingName)
+                    .GlobalRankingSeason(Season, session)
                     .PutGlobalRankingAsync(score);
             }
             catch (NotFoundException)
@@ -312,30 +311,30 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         public async Task<string> Receive()
         {
-            if (!TryRuntime(out var gs2, out var session)) return "Not signed in yet.";
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
             if (!HasValue) return "Still reading your standing; try again in a moment.";
-            if (Open) await ReadTriggerOnce(gs2!, session!);
+            if (Open) await ReadTriggerOnce(gs2, session);
             if (Open) return "Your contest is still open. Finish it, or wait for it to end, to receive.";
             if (Best == null) return "Play at least once to receive a reward.";
             if (Received) return "You have already received this contest's reward.";
             try
             {
-                var transaction = await gs2!.Ranking2.Namespace(RankingNamespace).GlobalRankingModel(RankingName)
-                    .GlobalRankingSeason(Season, session!)
+                var transaction = await gs2.Ranking2.Namespace(RankingNamespace).GlobalRankingModel(RankingName)
+                    .GlobalRankingSeason(Season, session)
                     .GlobalRankingReceivedReward()
                     .ReceiveGlobalRankingRewardAsync(speculativeExecute: false);
                 if (transaction != null) await transaction.WaitAsync(true);
             }
-            catch (BadRequestException error) when (Refused(error, "alreadyReceived"))
+            catch (BadRequestException error) when (ShowroomRefusal.Has(error, "alreadyReceived"))
             {
                 _standingGeneration++;
                 Received = true;
                 Updated?.Invoke();
                 return "You have already received this contest's reward.";
             }
-            catch (BadRequestException error) when (Refused(error, "inSchedule"))
+            catch (BadRequestException error) when (ShowroomRefusal.Has(error, "inSchedule"))
             {
-                // This device's clock can run behind GS2's by a moment.
+                // This device's clock can run ahead of GS2's by a moment.
                 ReadTrigger();
                 return "Your contest has not quite closed yet; try again in a moment.";
             }
@@ -347,10 +346,6 @@ namespace GS2Studio.Showroom.Demo
             return "Received the reward for your rank.";
         }
 
-        /// <summary>Whether GS2 refused for the given reason.</summary>
-        private static bool Refused(Gs2Exception error, string reason) =>
-            error.Errors?.Any(detail => detail.message?.EndsWith("." + reason) == true) == true;
-
         /// <summary>
         /// Reads the contest trigger. One read is out at a time; asking during
         /// it makes one more when it returns, so an older answer cannot land
@@ -358,7 +353,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private async void ReadTrigger()
         {
-            if (!TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             if (_readingTrigger)
             {
                 _readTriggerAgain = true;
@@ -367,7 +362,7 @@ namespace GS2Studio.Showroom.Demo
             _readingTrigger = true;
             try
             {
-                await ReadTriggerOnce(gs2!, session!);
+                await ReadTriggerOnce(gs2, session);
             }
             finally
             {
@@ -411,15 +406,11 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                if (!_triggerFailureLogged)
-                {
-                    _triggerFailureLogged = true;
-                    Debug.LogError($"{nameof(RankingContestState)}: the contest trigger could not be read: {error}");
-                }
+                if (this != null) _triggerFailures.Fail("The contest trigger could not be read", error);
                 return;
             }
             if (this == null) return;
-            _triggerFailureLogged = false;
+            _triggerFailures.Succeeded();
             if (generation != _triggerGeneration) return;
             var moved = _triggerRead && expiresAt != _triggerExpiresAt;
             var changed = !_triggerRead || moved;
@@ -441,7 +432,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private async void ReadStanding()
         {
-            if (!TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             if (_readingStanding)
             {
                 _readStandingAgain = true;
@@ -450,16 +441,12 @@ namespace GS2Studio.Showroom.Demo
             _readingStanding = true;
             try
             {
-                await ReadStandingOnce(gs2!, session!);
-                _standingFailureLogged = false;
+                await ReadStandingOnce(gs2, session);
+                if (this != null) _standingFailures.Succeeded();
             }
             catch (Exception error)
             {
-                if (!_standingFailureLogged)
-                {
-                    _standingFailureLogged = true;
-                    Debug.LogError($"{nameof(RankingContestState)}: the board could not be read: {error}");
-                }
+                if (this != null) _standingFailures.Fail("The board could not be read", error);
             }
             finally
             {
@@ -525,14 +512,6 @@ namespace GS2Studio.Showroom.Demo
             Received = received;
             _standingRead = true;
             Updated?.Invoke();
-        }
-
-        internal static bool TryRuntime(out Gs2Domain? gs2, out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = FindAnyObjectByType<GS2Studio.Generated.Runtime.Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
         }
     }
 }

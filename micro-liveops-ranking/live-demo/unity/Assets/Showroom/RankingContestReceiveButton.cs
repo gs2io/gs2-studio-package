@@ -9,8 +9,8 @@ namespace GS2Studio.Showroom.Demo
 {
     /// <summary>Receives the contest reward for the visitor's rank.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Contest Receive")]
-    public sealed class RankingContestReceiveButton : ContestPress
+    public sealed class RankingContestReceiveButton : ShowroomPressButton
     {
-        private protected override Task<string> Press(RankingContestState contest) => contest.Receive();
+        protected override Task<string> Press() => RankingContestState.Shared.Receive();
     }
 }

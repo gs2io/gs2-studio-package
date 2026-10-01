@@ -10,8 +10,8 @@ namespace GS2Studio.Showroom.Demo
 {
     /// <summary>Plays once while the visitor's contest is open.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Contest Play")]
-    public sealed class RankingContestPlayButton : ContestPress
+    public sealed class RankingContestPlayButton : ShowroomPressButton
     {
-        private protected override Task<string> Press(RankingContestState contest) => contest.Play();
+        protected override Task<string> Press() => RankingContestState.Shared.Play();
     }
 }

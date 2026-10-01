@@ -2,8 +2,8 @@
 // when it is not among them.
 //
 // A row of the page reads one value, and a board is a table, so this draws its
-// own region. Every visitor is anonymous, so a place is named by a short tag
-// made from the player's id rather than by anything a player wrote; the
+// own region. Every visitor is anonymous, so a place is named by the showroom's
+// player tag (`ShowroomPlayerTag`) rather than by anything a player wrote; the
 // visitor's own place reads "You".
 #nullable enable
 
@@ -30,13 +30,12 @@ namespace GS2Studio.Showroom.Demo
         private RectTransform? _rows;
         private Text? _hint;
         private RankingContestState? _contest;
-        private ShowroomPage? _page;
 
         private void OnEnable()
         {
             if (_panel == null || _font == null)
             {
-                Log("The contest board was baked without its region or font.");
+                ShowroomLog.Say("The contest board was baked without its region or font.");
                 return;
             }
             if (_rows == null) Build();
@@ -76,7 +75,7 @@ namespace GS2Studio.Showroom.Demo
             var board = _contest.Board;
             var places = board
                 .Where(place => place.UserId != _contest.UserId)
-                .Select(place => (rank: place.Rank, name: Tag(place.UserId), score: place.Score, own: false))
+                .Select(place => (rank: place.Rank, name: ShowroomPlayerTag.Of(place.UserId), score: place.Score, own: false))
                 .ToList();
             var best = _contest.Best;
             if (best != null && (_contest.Rank ?? int.MaxValue) <= RankingContestState.BoardSize)
@@ -153,23 +152,6 @@ namespace GS2Studio.Showroom.Demo
             return label;
         }
 
-        /// <summary>
-        /// A short, stable name for an anonymous player: the same id always
-        /// reads the same, and two ids rarely read alike.
-        /// </summary>
-        private static string Tag(string? userId)
-        {
-            unchecked
-            {
-                var hash = 2166136261u;
-                foreach (var character in userId ?? "")
-                {
-                    hash = (hash ^ character) * 16777619u;
-                }
-                return $"Player {hash & 0xFFFF:X4}";
-            }
-        }
-
         private static RectTransform Child(string name, RectTransform parent)
         {
             var child = new GameObject(name, typeof(RectTransform)).GetComponent<RectTransform>();
@@ -188,13 +170,6 @@ namespace GS2Studio.Showroom.Demo
                 child.SetActive(false);
                 Destroy(child);
             }
-        }
-
-        private void Log(string message)
-        {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-            else Debug.LogWarning($"RankingContestBoardPanel: {message}", this);
         }
     }
 }
