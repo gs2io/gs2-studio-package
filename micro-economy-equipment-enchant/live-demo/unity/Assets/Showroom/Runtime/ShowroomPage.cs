@@ -11,10 +11,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Gs2.Core.Exception;
-using Gs2.Core.Model;
-using Gs2.Util.LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -62,8 +59,8 @@ namespace GS2Studio.Showroom
         ///
         /// A failure the wire *does* carry arrives twice: once as the console's
         /// own first line, cut short by <see cref="FirstLine"/>, and once as
-        /// <see cref="Describe"/>'s full reading of it. That is the right way
-        /// round — the second line is the better one, and its absence is now
+        /// <see cref="ShowroomErrors.Describe"/>'s full reading of it. That is
+        /// the right way round — the second line is the better one, and its absence is now
         /// itself visible on the page rather than only in a console nobody has
         /// open.
         /// </summary>
@@ -166,118 +163,11 @@ namespace GS2Studio.Showroom
         /// </summary>
         public void LogError(Gs2Exception error, Func<IEnumerator> retry)
         {
-            // `Describe` reads an error body the SDK left unparsed, which is by
-            // definition a shape nothing here has seen. A throw in it would be
-            // swallowed by the event that called this and take the whole line
-            // with it, so the reading is allowed to fail and the type name
-            // stands in — the one thing the page must not do is print nothing.
-            string described;
-            try
-            {
-                described = Describe(error);
-            }
-            catch (System.Exception failure)
-            {
-                described = error == null
-                    ? $"the action failed, and reading the failure failed too: {failure.Message}"
-                    : $"{error.GetType().Name} (reading it failed: {failure.Message})";
-            }
-            Log(described);
-        }
-
-        /// <summary>
-        /// What a failure says on the page, which is never nothing.
-        ///
-        /// `Gs2Exception.Errors` is the server's own account of what went wrong
-        /// and is the right thing to show — but the SDK fills it by parsing the
-        /// exception's message as that list, and there is a whole class of
-        /// failure whose message is not one. A namespace that commits
-        /// atomically runs its actions server-side and reports a refused one
-        /// through the transaction result, which the SDK raises as an exception
-        /// carrying that action's own result body
-        /// (`RanTransactionAccessTokenDomain.HandleResult`) or as
-        /// `UnknownException("Ran transaction failed.")`. Neither parses, so
-        /// `Errors` comes back empty and joining it wrote a blank line: a
-        /// refused count-up reached this page as a timestamp and nothing else,
-        /// which reads exactly like the press having done nothing.
-        ///
-        /// So the list is used when the SDK filled one, the body is unwrapped
-        /// the way the SDK's own HTTP path unwraps it when it did not, and the
-        /// exception's type names the failure when even that says nothing.
-        /// </summary>
-        private static string Describe(Gs2Exception error)
-        {
-            if (error == null) return "the action failed and said nothing about why";
-            var reported = Joined(error.Errors);
-            if (reported.Length > 0) return reported;
-            var unwrapped = Unwrap(error.Message);
-            return unwrapped.Length > 0 ? $"{error.GetType().Name}: {unwrapped}" : error.GetType().Name;
-        }
-
-        /// <summary>The messages a `RequestError[]` carries, as one line.</summary>
-        private static string Joined(RequestError[] errors)
-        {
-            if (errors == null) return "";
-            return string.Join(
-                ", ",
-                errors
-                    .Where(entry => entry != null && !string.IsNullOrEmpty(entry.Message))
-                    .Select(entry => entry.Message));
-        }
-
-        /// <summary>
-        /// The readable part of an error body the SDK left unparsed.
-        ///
-        /// GS2 wraps its error list in `{"message": "<the list, as a string>"}`,
-        /// and an action inside a transaction is reported by handing that whole
-        /// envelope over rather than the list inside it. Unwrapping is
-        /// therefore a loop: an object with a string `message` is one layer,
-        /// and an array of them is the list itself. Anything else is handed
-        /// back as it came, because a body this cannot read is still more than
-        /// a blank line.
-        /// </summary>
-        private static string Unwrap(string body)
-        {
-            if (string.IsNullOrEmpty(body)) return "";
-            var text = body.Trim();
-            // Bounded rather than `while (true)`: the shapes above nest twice at
-            // most, and a body that keeps unwrapping is malformed.
-            for (var depth = 0; depth < 4; depth++)
-            {
-                JsonData parsed;
-                try
-                {
-                    parsed = JsonMapper.ToObject(text);
-                }
-                catch (System.Exception)
-                {
-                    return text;
-                }
-                if (parsed == null) return text;
-                if (parsed.IsArray)
-                {
-                    var messages = new List<string>();
-                    for (var i = 0; i < parsed.Count; i++)
-                    {
-                        var entry = parsed[i];
-                        if (entry == null || !entry.IsObject) continue;
-                        if (!entry.Keys.Contains("message")) continue;
-                        if (entry["message"] == null || !entry["message"].IsString) continue;
-                        messages.Add((string)entry["message"]);
-                    }
-                    return messages.Count > 0 ? string.Join(", ", messages) : text;
-                }
-                if (parsed.IsObject &&
-                    parsed.Keys.Contains("message") &&
-                    parsed["message"] != null &&
-                    parsed["message"].IsString)
-                {
-                    text = ((string)parsed["message"]).Trim();
-                    continue;
-                }
-                return text;
-            }
-            return text;
+            // `Describe` never throws and never returns nothing: it reads an
+            // error body nothing here has seen, and a throw out of this would
+            // be swallowed by the event that called it and take the line with
+            // it.
+            Log(ShowroomErrors.Describe(error));
         }
 
         /// <summary>Writes one line to the on-screen log. WebGL hides the console.</summary>
