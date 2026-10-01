@@ -86,13 +86,6 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>How long before it runs out the guild token is renewed.</summary>
         private const long GuildTokenMarginMs = 60_000;
 
-        /// <summary>
-        /// GS2's code for a player who already belongs to as many guilds as
-        /// the kind allows. Founding a guild refuses with it, and the SDK has
-        /// no exception type for that call.
-        /// </summary>
-        private const string MaximumJoinedCode = "user.joinedGuild.tooMany";
-
         private static readonly Color RowColor = new Color(0.16f, 0.15f, 0.22f, 1f);
         private static readonly Color LightText = new Color(0.922f, 0.91f, 0.949f, 1f);
         private static readonly Color MutedText = new Color(0.643f, 0.616f, 0.729f, 1f);
@@ -813,12 +806,12 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>
         /// Says why GS2 refused, for the refusals a visitor can meet, by the
-        /// SDK's exception type or GS2's error code; null leaves any other
-        /// refusal to the runner's reading of it.
+        /// SDK's exception type; null leaves any other refusal to the runner's
+        /// reading of it.
         /// </summary>
         private static string? Explain(Gs2Exception error)
         {
-            if (error is MaximumJoinedGuildsReachedException || ShowroomRefusal.HasCode(error, MaximumJoinedCode)) return "That player already belongs to a guild.";
+            if (error is MaximumJoinedGuildsReachedException) return "That player already belongs to a guild.";
             if (error is MaximumMembersReachedException) return "That guild is full.";
             if (error is GuildMasterRequiredException) return "A guild cannot be left without a master; hand it over or disband it.";
             if (error is NotFoundException) return "That guild is gone.";

@@ -75,31 +75,20 @@ namespace GS2Studio.Showroom.Demo
         public static bool IsRemembered(string userId, string password) =>
             ReadRemembered(RememberedUserIdKey) == userId && ReadRemembered(RememberedPasswordKey) == password;
 
-        /// <summary>
-        /// Whether GS2 refused because the player already has a transfer code:
-        /// by its client error code, which the SDK has no exception type for.
-        /// </summary>
-        public static bool IsAlreadyRegistered(Gs2Exception error) =>
-            ShowroomRefusal.HasCode(error, TakeOverAlreadyExistsCode);
+        /// <summary>Whether GS2 refused because the player already has a transfer code.</summary>
+        public static bool IsAlreadyRegistered(Gs2Exception error) => error is TakeOverAlreadyExistsException;
 
         /// <summary>
         /// Whether GS2 refused the transfer code ID because another player
-        /// already holds it. GS2 answers a 409 that it does not retry, coded
-        /// account.takeOver.userIdentifier.duplicate; the code is what the
-        /// SDK's TakeOverIdentifierAlreadyUsedException resolves from, and the
-        /// SDK this demo pins has no such type yet. A server without that code,
-        /// and two players racing for one ID, end at the database's create
-        /// guard instead, a 409 with no code raised at the "create" component.
+        /// already holds it. GS2 checks the ID before it commits and answers
+        /// with the SDK's TakeOverIdentifierAlreadyUsedException, a 409 it
+        /// does not retry. Two players racing for one ID both pass that check,
+        /// and the later commit ends at the database's create guard instead: a
+        /// 409 with no code, raised at the "create" component.
         /// </summary>
         public static bool IsIdentifierTaken(Gs2Exception error) =>
-            ShowroomRefusal.HasCode(error, TakeOverIdentifierTakenCode)
+            error is TakeOverIdentifierAlreadyUsedException
             || (error is ConflictException && ShowroomRefusal.IsComponent(error, CreateGuardComponent));
-
-        /// <summary>GS2's code for a transfer code the player already has.</summary>
-        private const string TakeOverAlreadyExistsCode = "account.takeOver.alreadyExists";
-
-        /// <summary>GS2's code for a transfer code ID another player already holds.</summary>
-        private const string TakeOverIdentifierTakenCode = "account.takeOver.userIdentifier.duplicate";
 
         /// <summary>The component of GS2's uncoded duplicate refusal from the database's create guard.</summary>
         private const string CreateGuardComponent = "create";

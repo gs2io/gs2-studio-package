@@ -33,6 +33,9 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Gs2Exchange.Model;
 using Gs2.Unity.Util;
 
+using CodeNotFoundException = Gs2.Gs2SerialKey.Exception.CodeNotFoundException;
+using CounterOverflowException = Gs2.Gs2Limit.Exception.OverflowException;
+
 namespace GS2Studio.Showroom.Demo
 {
     /// <summary>Draws the code field and Redeem press into the region the page gives it.</summary>
@@ -216,28 +219,23 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>
         /// Says why GS2 refused. The exchange's actions run together and the
-        /// SDK reports the first one, in the rate's order, that failed: the
-        /// usage counter when the visitor has redeemed already, the code when
-        /// it is not one GS2 knows.
+        /// SDK reports the first one, in the rate's order, that failed, typed
+        /// by that action: the usage counter's overflow when the visitor has
+        /// redeemed already, the serial key's not-found when the code is not
+        /// one GS2 knows.
         /// </summary>
         private static string Explain(Gs2Exception error, string code)
         {
-            if (ShowroomRefusal.HasCode(error, CounterOverflowCode))
+            if (error is CounterOverflowException)
             {
                 return "You have already redeemed a code; each visitor can redeem once.";
             }
-            if (error is NotFoundException || ShowroomRefusal.HasCode(error, CodeNotFoundCode))
+            if (error is CodeNotFoundException)
             {
                 return $"{code} is not a code GS2 knows. Codes are case sensitive.";
             }
             return $"Redeeming {code} failed: {ShowroomErrors.Describe(error)}";
         }
-
-        /// <summary>GS2's code for a usage counter already at its limit: the visitor redeemed already.</summary>
-        private const string CounterOverflowCode = "limit.counter.overflow";
-
-        /// <summary>GS2's code for a serial code it does not know.</summary>
-        private const string CodeNotFoundCode = "code.code.notFound";
 
         /// <summary>Reads whether the visitor has redeemed, off the usage counter.</summary>
         private async void ReadRedeemed()

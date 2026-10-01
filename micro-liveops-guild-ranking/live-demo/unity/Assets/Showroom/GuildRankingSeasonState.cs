@@ -56,6 +56,7 @@ using Gs2.Gs2Guild;
 using Gs2.Gs2Guild.Model;
 using Gs2.Gs2Guild.Request;
 using Gs2.Gs2Ranking2;
+using Gs2.Gs2Ranking2.Exception;
 using Gs2.Gs2Ranking2.Model;
 using Gs2.Gs2Ranking2.Request;
 using Gs2.Gs2Schedule;
@@ -81,21 +82,6 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>The schedule namespace and the daily event that numbers the seasons.</summary>
         private const string ScheduleNamespace = "Schedule";
         private const string SeasonEvent = "guild-season";
-
-        /// <summary>GS2's code for a reward already received for the season.</summary>
-        private const string AlreadyReceivedCode = "ranking2.rankingReward.alreadyReceived";
-
-        /// <summary>GS2's code for a season still being played.</summary>
-        private const string InScheduleCode = "ranking2.rankingReward.inSchedule";
-
-        /// <summary>GS2's code for a season ahead of its own: this device's clock ran ahead.</summary>
-        private const string OutOfScheduleCode = "ranking2.rankingReward.outOfSchedule";
-
-        /// <summary>GS2's code for a score from a player outside the guild.</summary>
-        private const string NotIncludedCode = "ranking2.cluster.notInclude";
-
-        /// <summary>GS2's code for a rank that earns no reward tier.</summary>
-        private const string NoRewardsCode = "ranking2.rankingReward.noRewards";
 
         /// <summary>What one play can score, which is the ranking's own range.</summary>
         public const int MinimumScore = 1;
@@ -425,7 +411,7 @@ namespace GS2Studio.Showroom.Demo
                     .ClusterRankingSeason(guildId, season, session)
                     .PutClusterRankingAsync(score);
             }
-            catch (BadRequestException error) when (ShowroomRefusal.HasCode(error, NotIncludedCode))
+            catch (NotIncludedInClusterException)
             {
                 // The visitor left, or was removed, and the SDK has not heard yet.
                 return "GS2 refused the score (notInclude): you are not a member of that guild any more. Scores count only for the guild you belong to.";
@@ -480,20 +466,20 @@ namespace GS2Studio.Showroom.Demo
                     .ReceiveClusterRankingRewardAsync(speculativeExecute: false);
                 if (transaction != null) await transaction.WaitAsync(true);
             }
-            catch (BadRequestException error) when (ShowroomRefusal.HasCode(error, AlreadyReceivedCode))
+            catch (RewardAlreadyReceivedException)
             {
                 _received.Add((target.GuildId, target.Season));
                 ForgetNext(target);
                 return $"GS2 says season {target.Season} was already received (alreadyReceived).";
             }
-            catch (BadRequestException error) when (ShowroomRefusal.HasAnyCode(error, InScheduleCode, OutOfScheduleCode))
+            catch (BadRequestException error) when (error is SeasonNotEndedException || error is SeasonNotStartedException)
             {
                 // This device's clock can run ahead of GS2's by a moment.
                 _seasonStale = true;
                 _nextSeasonRead = 0;
                 return $"GS2 says season {target.Season} is still being played (inSchedule); it pays once it is over.";
             }
-            catch (NotFoundException error) when (ShowroomRefusal.HasCode(error, NoRewardsCode))
+            catch (NoRankingRewardException)
             {
                 _paysNothing.Add((target.GuildId, target.Season));
                 ForgetNext(target);

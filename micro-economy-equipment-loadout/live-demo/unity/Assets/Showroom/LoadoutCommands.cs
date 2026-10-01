@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Gs2.Core.Exception;
+using Gs2.Gs2Formation.Exception;
 using Gs2.Unity.Core;
 using Gs2.Unity.Gs2Formation.Model;
 using Gs2.Unity.Util;
@@ -91,7 +92,7 @@ namespace GS2Studio.Showroom.Demo
                             },
                         });
             }
-            catch (BadRequestException error) when (ShowroomRefusal.HasCode(error, NotMatchRegexCode))
+            catch (PropertyIdNotMatchRegexException)
             {
                 return $"GS2 refused: {ItemName(equipmentPropertyId)} does not fit the {slotName} slot.";
             }
@@ -110,11 +111,6 @@ namespace GS2Studio.Showroom.Demo
             // The board shows the change; the page has nothing to add.
             return "";
         }
-
-        /// <summary>
-        /// GS2's code for equipment that is not one the slot's pattern names.
-        /// </summary>
-        private const string NotMatchRegexCode = "formation.slot.propertyId.notMatchRegex";
 
         /// <summary>
         /// Whether the loadout script refused the save for the named reason.

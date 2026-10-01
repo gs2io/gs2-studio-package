@@ -40,6 +40,7 @@ using UnityEngine;
 
 using Gs2.Core.Exception;
 using Gs2.Gs2Ranking2;
+using Gs2.Gs2Ranking2.Exception;
 using Gs2.Gs2Ranking2.Model;
 using Gs2.Gs2Ranking2.Request;
 using Gs2.Gs2Schedule;
@@ -325,14 +326,14 @@ namespace GS2Studio.Showroom.Demo
                     .ReceiveGlobalRankingRewardAsync(speculativeExecute: false);
                 if (transaction != null) await transaction.WaitAsync(true);
             }
-            catch (BadRequestException error) when (ShowroomRefusal.HasCode(error, "ranking2.rankingReward.alreadyReceived"))
+            catch (RewardAlreadyReceivedException)
             {
                 _standingGeneration++;
                 Received = true;
                 Updated?.Invoke();
                 return "You have already received this contest's reward.";
             }
-            catch (BadRequestException error) when (ShowroomRefusal.HasCode(error, "ranking2.rankingReward.inSchedule"))
+            catch (SeasonNotEndedException)
             {
                 // This device's clock can run ahead of GS2's by a moment.
                 ReadTrigger();
