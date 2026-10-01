@@ -26,18 +26,18 @@
 // it draws are the presses. What a press does is the same either way, so it is
 // the one thing both halves would have had to agree about.
 //
+// The widget runs each call through `ShowroomPress` and hands in the
+// signed-in client.
+//
 // Nothing here reloads anything. The widget's own collection subscribes to the
 // status these write, so it redraws itself when a release lands.
 #nullable enable
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
-
-using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Showroom.Demo
 {
@@ -64,9 +64,9 @@ namespace GS2Studio.Showroom.Demo
         /// the call; `plan` is everything the transaction covers, which
         /// includes it.
         /// </summary>
-        public static async Task Release(string node, IReadOnlyList<string> plan, string owner)
+        public static async Task Release(
+            Gs2Domain gs2, IGameSession session, string node, IReadOnlyList<string> plan, string owner)
         {
-            var (gs2, session) = Runtime();
             await new Gs2Bind.Gs2SkillTree.NodeModelLoader(Namespace, node).Release(
                 gs2, session, propertyId: owner, nodeModelNames: Names(plan));
         }
@@ -80,9 +80,9 @@ namespace GS2Studio.Showroom.Demo
         /// a node something still hangs off goes back exactly when the call
         /// also carries what hangs off it.
         /// </summary>
-        public static async Task Restrain(string node, IReadOnlyList<string> plan, string owner)
+        public static async Task Restrain(
+            Gs2Domain gs2, IGameSession session, string node, IReadOnlyList<string> plan, string owner)
         {
-            var (gs2, session) = Runtime();
             await new Gs2Bind.Gs2SkillTree.NodeModelLoader(Namespace, node).Restrain(
                 gs2, session, propertyId: owner, nodeModelNames: Names(plan));
         }
@@ -93,25 +93,6 @@ namespace GS2Studio.Showroom.Demo
             var names = new string[plan.Count];
             for (var index = 0; index < plan.Count; index++) names[index] = plan[index];
             return names;
-        }
-
-        /// <summary>
-        /// The signed-in session these calls travel on.
-        ///
-        /// Thrown for rather than returned as an absence: a press that reaches
-        /// here has a node and an owner, so a missing runtime is the page
-        /// itself being unbuilt rather than anything the visitor did, and the
-        /// caller reports it the same way it reports a refusal from GS2.
-        /// </summary>
-        private static (Gs2Domain Gs2, IGameSession Session) Runtime()
-        {
-            var runtime = UnityEngine.Object.FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
-            if (runtime == null || !runtime.TryGet(out var gs2, out var session) ||
-                gs2 == null || session == null)
-            {
-                throw new InvalidOperationException("The GS2 runtime context is not available.");
-            }
-            return (gs2, session);
         }
     }
 }

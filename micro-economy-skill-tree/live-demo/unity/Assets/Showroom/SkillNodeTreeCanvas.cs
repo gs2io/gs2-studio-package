@@ -64,9 +64,6 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-using Gs2.Core.Exception;
-
-using GS2Studio.Generated.Runtime;
 using GS2Studio.Generated.SkillNode;
 using GS2Studio.Generated.Wallet;
 
@@ -154,7 +151,12 @@ namespace GS2Studio.Showroom.Demo
         private RectTransform? _board;
         private RectTransform? _lines;
         private RectTransform? _boxes;
-        private ShowroomPage? _page;
+
+        /// <summary>
+        /// What the collection's subscription reports, handed to the main
+        /// thread and applied in <see cref="LateUpdate"/>.
+        /// </summary>
+        private readonly ShowroomInbox _inbox = new ShowroomInbox();
 
         /// <summary>
         /// The nodes, read for whoever the panel was last opened for. Built
@@ -256,11 +258,9 @@ namespace GS2Studio.Showroom.Demo
             // Whatever the last character left on the board is not this one's.
             _dirty = true;
 
-            var runtime = FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
-            if (runtime == null || !runtime.TryGet(out var gs2, out var session) ||
-                gs2 == null || session == null)
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session))
             {
-                Report("The GS2 runtime context is not available, so the tree cannot be read.");
+                ShowroomLog.Say("Not signed in yet, so the tree cannot be read.");
                 return;
             }
 
@@ -298,8 +298,7 @@ namespace GS2Studio.Showroom.Demo
                     _owner = null;
                 }
                 collection?.Dispose();
-                Report($"The skill tree could not be read: {error.Message}");
-                Debug.LogException(error, this);
+                ShowroomLog.Failure("The skill tree could not be read", error);
             }
         }
 
@@ -340,6 +339,7 @@ namespace GS2Studio.Showroom.Demo
         private void OnDestroy()
         {
             _generation++;
+            _inbox.Clear();
             UnsubscribeFromTheWallet();
             DisposeCollection();
             _overlay?.Destroy();
@@ -349,13 +349,12 @@ namespace GS2Studio.Showroom.Demo
 
         private void OnCollectionChanged()
         {
-            _dirty = true;
+            _inbox.Post(() => _dirty = true);
         }
 
         private void OnCollectionFailed(Exception error)
         {
-            Report($"The skill tree could not be read: {error.Message}");
-            Debug.LogException(error, this);
+            _inbox.Post(() => ShowroomLog.Failure("The skill tree could not be read", error));
         }
 
         /// <summary>
@@ -366,6 +365,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private void LateUpdate()
         {
+            _inbox.Drain();
             if (!_dirty) return;
             _dirty = false;
             Redraw();
@@ -760,44 +760,41 @@ namespace GS2Studio.Showroom.Demo
         ///
         /// Nothing reloads afterwards. The collection is subscribed to each
         /// node's status, so the board redraws itself when the release lands;
-        /// the redraw here is only to take the wait back off, and to put a
-        /// refusal in front of a visitor whose board never changed.
+        /// the redraw here is only to take the wait back off. The press runs
+        /// through `ShowroomPress`, which waits its turn with every other press
+        /// on the page and says a refusal on the page's log.
         /// </summary>
-        private async void Press(
+        private void Press(
             string node, IReadOnlyList<string> plan, string owner, bool release)
         {
             if (_pressing != null || plan.Count == 0) return;
             _pressing = new HashSet<string>(plan, StringComparer.Ordinal);
             _dirty = true;
-            try
+            var started = ShowroomPress.Run(new ShowroomPressOptions
             {
-                await (release
-                    ? SkillNodeCommands.Release(node, plan, owner)
-                    : SkillNodeCommands.Restrain(node, plan, owner));
-            }
-            catch (Gs2Exception error)
-            {
-                // Two lines: what was asked for, then the server's own account
-                // of why not. A refusal names a rule rather than a node, and a
-                // plan of four that comes back "not enough" is a different
-                // thing to read than the same words after a plan of one.
-                Report($"{Attempt(plan, release)} was refused.");
-                ReportError(error);
-                Debug.LogError($"SkillNodeTreeCanvas: {node} failed: {error}", this);
-            }
-            catch (Exception error)
-            {
-                Report($"{Attempt(plan, release)}: {error.Message}");
-                Debug.LogError($"SkillNodeTreeCanvas: {node} failed: {error}", this);
-            }
-            finally
-            {
-                // The panel goes with the scene, and a press can outlive it.
-                if (this != null)
+                Name = $"{(release ? "releasing" : "restraining")} {node}",
+                Owner = this,
+                // What was asked for, then the server's own account of why
+                // not. A refusal names a rule rather than a node, and a plan
+                // of four that comes back "not enough" is a different thing to
+                // read than the same words after a plan of one.
+                Explain = error => $"{Attempt(plan, release)} was refused: {ShowroomErrors.Describe(error)}",
+                Afterward = () =>
                 {
                     _pressing = null;
                     _dirty = true;
-                }
+                },
+            }, async (gs2, session) =>
+            {
+                await (release
+                    ? SkillNodeCommands.Release(gs2, session, node, plan, owner)
+                    : SkillNodeCommands.Restrain(gs2, session, node, plan, owner));
+                return "";
+            });
+            if (!started)
+            {
+                _pressing = null;
+                _dirty = true;
             }
         }
 
@@ -806,22 +803,6 @@ namespace GS2Studio.Showroom.Demo
         {
             var verb = release ? "Releasing" : "Restraining";
             return $"{verb} {SkillNodeTree.Listed(plan)}";
-        }
-
-        /// <summary>
-        /// Put a failure where a visitor can see it. A browser hides the
-        /// console, which is otherwise the only record.
-        /// </summary>
-        private void Report(string message)
-        {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-        }
-
-        private void ReportError(Gs2Exception error)
-        {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.LogError(error, null);
         }
 
         private static void ClearChildren(Transform parent)
