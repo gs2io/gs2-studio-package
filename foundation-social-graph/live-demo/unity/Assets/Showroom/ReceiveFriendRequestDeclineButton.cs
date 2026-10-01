@@ -17,13 +17,13 @@ namespace GS2Studio.Showroom.Demo
     [AddComponentMenu("GS2 Studio/Showroom/Decline This Friend Request")]
     public sealed class ReceiveFriendRequestDeclineButton : FriendRowButton
     {
-        protected override FriendPress Press => FriendPress.Decline;
+        protected override FriendPress Kind => FriendPress.Decline;
 
         protected override string? RowUserId() => GetComponentInParent<ReceiveFriendRequestHandlerBase>()?.Model?.Id.Value;
 
         /// <summary>A request carries no profile; the row's name label read it.</summary>
         protected override string RowName(string userId) =>
-            GetComponentInParent<ReceiveFriendRequestHandlerBase>()?.GetComponentInChildren<ReceiveFriendRequestNameLabel>()?.Shown ?? FriendDemo.Tag(userId);
+            GetComponentInParent<ReceiveFriendRequestHandlerBase>()?.GetComponentInChildren<ReceiveFriendRequestNameLabel>()?.Shown ?? ShowroomPlayerTag.Of(userId);
 
         protected override async Task<string> Act(VisitorDomain visitor, string userId, string name)
         {

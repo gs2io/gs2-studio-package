@@ -3,46 +3,26 @@
 //
 // None of these presses is an action the package can host (GS2-Friend has no
 // transactions to delegate), so each is a small hand-written button shaped
-// like a generated one: a `Button` to wire and an `OnCompleted` to raise,
-// which is what the page knows how to draw. The row's handler is found in the
-// parents, the way generated components find theirs.
+// like a generated one (`ShowroomPressButton`): a `Button` to wire, an
+// `OnCompleted` to raise and an `OnFailed` the page reports through, which is
+// what the page knows how to draw. The press waits its turn with every other
+// press on the page. The row's handler is found in the parents, the way
+// generated components find theirs.
 #nullable enable
 
 using System.Threading.Tasks;
 
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
-
-using Gs2.Unity.Util;
+using Gs2.Core.Exception;
 
 using VisitorDomain = Gs2.Gs2Friend.Domain.Model.UserAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
     /// <summary>A press that acts on the player this row shows.</summary>
-    public abstract class FriendRowButton : MonoBehaviour
+    public abstract class FriendRowButton : ShowroomPressButton
     {
-        [SerializeField] private Button? _button;
-
-        /// <summary>Raised once the press went through.</summary>
-        [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
-
-        /// <summary>
-        /// Never raised: a refusal is explained on the page's log in the
-        /// press's own terms instead of as GS2's raw error. It is declared
-        /// because a row's action is the pair, and the page wires the failure
-        /// side of every button it draws.
-        /// </summary>
-        [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
-
-        public UnityEvent OnCompleted => _onCompleted;
-        public ErrorEvent OnFailed => _onFailed;
-
-        private bool _wired;
-
         /// <summary>What the press is, for explaining a refusal.</summary>
-        protected abstract FriendPress Press { get; }
+        protected abstract FriendPress Kind { get; }
 
         /// <summary>The other player's id, read from the row; null while the row is still arriving.</summary>
         protected abstract string? RowUserId();
@@ -51,7 +31,7 @@ namespace GS2Studio.Showroom.Demo
         /// The name the row shows for the other player; their tag when the
         /// row carries no profile.
         /// </summary>
-        protected virtual string RowName(string userId) => FriendDemo.Tag(userId);
+        protected virtual string RowName(string userId) => ShowroomPlayerTag.Of(userId);
 
         /// <summary>Acts on the other player and says what was done, naming them as the row does.</summary>
         protected abstract Task<string> Act(VisitorDomain visitor, string userId, string name);
@@ -62,35 +42,27 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         protected virtual void WhenGone(VisitorDomain visitor) { }
 
-        private void OnEnable()
-        {
-            if (_button == null || _wired) return;
-            _button.onClick.AddListener(OnClicked);
-            _wired = true;
-        }
+        protected override string PressName => $"Friend {Kind}";
 
-        private void OnDisable()
-        {
-            if (_button == null || !_wired) return;
-            _button.onClick.RemoveListener(OnClicked);
-            _wired = false;
-        }
+        protected override string? Explain(Gs2Exception error) => FriendDemo.Explain(Kind, error);
 
-        private void OnClicked()
+        protected override async Task<string> Press()
         {
             var userId = RowUserId();
-            if (string.IsNullOrEmpty(userId)) return;
+            // A row still arriving has nobody to act on yet.
+            if (string.IsNullOrEmpty(userId)) return "";
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
+            var visitor = FriendDemo.Visitor(gs2, session);
             var name = RowName(userId!);
-            var completed = false;
-            FriendDemo.Run(Press, async visitor =>
+            try
             {
-                var message = await Act(visitor, userId!, name);
-                completed = true;
-                return message;
-            }, () =>
+                return await Act(visitor, userId!, name);
+            }
+            catch (NotFoundException)
             {
-                if (completed && this != null) _onCompleted.Invoke();
-            }, WhenGone);
+                WhenGone(visitor);
+                throw;
+            }
         }
     }
 }

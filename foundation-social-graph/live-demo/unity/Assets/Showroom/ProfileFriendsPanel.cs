@@ -16,24 +16,24 @@
 // change without asking GS2 on a timer. GS2 does not announce profile edits,
 // so another player's name is as fresh as the SDK's cache of it.
 //
-// The SDK can hand a watcher an empty list while it is still reading the list
-// again, so an empty list is read again through the domain before it is
-// believed. The domain answers from the cache while the cache holds the list,
-// so this costs nothing while all is well. A watch that failed to start is
-// tried again every 30 seconds.
+// Each read is a `ShowroomWatch`, which hands what the SDK reports to the
+// panel's `ShowroomInbox`, drained in `Update`. The SDK can hand a watcher an
+// empty list while it is still reading the list again, so an empty list is
+// read again through the domain before it is believed; a list that cannot be
+// read again fails its watch. A watch that failed is started again every 30
+// seconds.
+//
+// The result area is a `ShowroomRegion`: rebuilt only when what it shows
+// changed, and the page's presses wait a moment after it moved.
 #nullable enable
 
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 using UnityEngine;
 using UnityEngine.UI;
-
-using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Linq;
 
 using Gs2.Gs2Friend.Model;
 using Gs2.Gs2Friend.Request;
@@ -69,26 +69,11 @@ namespace GS2Studio.Showroom.Demo
         private InputField? _friendField;
         private InputField? _followerField;
         private InputField? _targetField;
-        private RectTransform? _result;
+        private ShowroomRegion? _result;
         private Coroutine? _signingIn;
 
-        /// <summary>What the clipboard is being asked to do, until it answers.</summary>
-        private enum Clipboard
-        {
-            Idle,
-            Copying,
-            Pasting,
-        }
-
-        private Clipboard _clipboard;
-
-        /// <summary>
-        /// How long the clipboard may take to answer. A browser can leave a
-        /// permission prompt open, or never settle, and the buttons would
-        /// otherwise wait for it forever.
-        /// </summary>
-        private const float ClipboardSeconds = 10f;
-        private float _clipboardDeadline;
+        /// <summary>The panel's Copy or Paste, until the browser answers.</summary>
+        private readonly ShowroomClipboardRequest _clipboard = new ShowroomClipboardRequest();
 
         /// <summary>The visitor, set once they are signed in.</summary>
         private Gs2.Unity.Core.Gs2Domain? _gs2;
@@ -100,15 +85,15 @@ namespace GS2Studio.Showroom.Demo
         /// What the SDK said, handed over to the main thread. Update applies
         /// everything that arrived since the last frame and then draws once.
         /// </summary>
-        private readonly ConcurrentQueue<Action> _inbox = new ConcurrentQueue<Action>();
+        private readonly ShowroomInbox _inbox = new ShowroomInbox();
         private float _nextTick;
 
-        private readonly Watch _profileWatch = new Watch();
-        private readonly Watch _friendsWatch = new Watch();
-        private readonly Watch _sentWatch = new Watch();
-        private readonly Watch _receivedWatch = new Watch();
-        private readonly Watch _followsWatch = new Watch();
-        private readonly Watch _targetWatch = new Watch();
+        private readonly ShowroomWatch _profileWatch;
+        private readonly ShowroomWatch _friendsWatch;
+        private readonly ShowroomWatch _sentWatch;
+        private readonly ShowroomWatch _receivedWatch;
+        private readonly ShowroomWatch _followsWatch;
+        private readonly ShowroomWatch _targetWatch;
 
         /// <summary>What was read; null until it has been.</summary>
         private Profile? _profile;
@@ -127,14 +112,23 @@ namespace GS2Studio.Showroom.Demo
         private bool _filling;
         private bool _defaultNameTried;
 
-        /// <summary>What the result area was last drawn from; null before the first draw.</summary>
-        private string? _shown;
+        public ProfileFriendsPanel()
+        {
+            // A list that cannot be read again is subscribed afresh by the tick.
+            ShowroomWatch Watch(string what) => new ShowroomWatch(_inbox, ShowroomWatch.RereadFailure.Restart, what);
+            _profileWatch = Watch("your profile");
+            _friendsWatch = Watch("your friends");
+            _sentWatch = Watch("the requests you sent");
+            _receivedWatch = Watch("the requests sent to you");
+            _followsWatch = Watch("the players you follow");
+            _targetWatch = Watch("the profile of the player looked up");
+        }
 
         private void OnEnable()
         {
             if (_panel == null || _buttonTemplate == null || _font == null)
             {
-                FriendDemo.Log("The friend panel was baked without its region, button or font.");
+                ShowroomLog.Say("The friend panel was baked without its region, button or font.");
                 return;
             }
             if (_result == null) Build();
@@ -146,11 +140,12 @@ namespace GS2Studio.Showroom.Demo
             if (_signingIn != null) StopCoroutine(_signingIn);
             _signingIn = null;
             StopWatching();
+            _clipboard.Abandon();
         }
 
         private IEnumerator WaitForSignIn()
         {
-            while (!FriendDemo.TryRuntime(out _, out _))
+            while (!ShowroomRuntime.TryGet(out _, out _))
             {
                 yield return new WaitForSeconds(0.25f);
             }
@@ -184,8 +179,9 @@ namespace GS2Studio.Showroom.Demo
             Press(panel, "Paste an id", Paste);
             Press(panel, "Look them up", LookUp);
 
-            _result = Child("Result", panel);
-            var layout = _result.gameObject.AddComponent<VerticalLayoutGroup>();
+            var result = Child("Result", panel);
+            _result = new ShowroomRegion(result, _buttonTemplate!, _font!);
+            var layout = result.gameObject.AddComponent<VerticalLayoutGroup>();
             layout.spacing = 8;
             layout.childControlWidth = true;
             layout.childControlHeight = true;
@@ -202,11 +198,11 @@ namespace GS2Studio.Showroom.Demo
 
         private void StartWatching()
         {
-            if (!FriendDemo.TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             _gs2 = gs2;
-            _visitor = FriendDemo.Visitor(gs2!, session!);
+            _visitor = FriendDemo.Visitor(gs2, session);
             _follow = _visitor.Follow(FriendDemo.WithProfile);
-            _userId = session!.UserId;
+            _userId = session.UserId;
             Debug.Log($"{nameof(ProfileFriendsPanel)}: signed in as {_userId}");
             if (_ownIdField != null) _ownIdField.text = _userId;
             _nextTick = Time.realtimeSinceStartup + TickSeconds;
@@ -231,7 +227,7 @@ namespace GS2Studio.Showroom.Demo
             _receivedWatch.Stop();
             _followsWatch.Stop();
             _targetWatch.Stop();
-            while (_inbox.TryDequeue(out _)) { }
+            _inbox.Clear();
             _gs2 = null;
             _visitor = null;
             _follow = null;
@@ -242,20 +238,13 @@ namespace GS2Studio.Showroom.Demo
             _follows = null;
             _targetProfile = null;
             _targetFailed = false;
-            _shown = null;
         }
 
         private void Update()
         {
-            PollClipboard();
+            _clipboard.Poll();
             if (_visitor == null) return;
-            var arrived = false;
-            while (_inbox.TryDequeue(out var apply))
-            {
-                apply();
-                arrived = true;
-            }
-            if (arrived) Draw();
+            if (_inbox.Drain()) Draw();
             if (Time.realtimeSinceStartup >= _nextTick) Tick();
         }
 
@@ -276,109 +265,58 @@ namespace GS2Studio.Showroom.Demo
             if (_targetWatch.Failed && _targetId != null) WatchTarget(_targetId);
         }
 
-        /// <summary>Hands an SDK callback to the main thread, for as long as its watch lasts.</summary>
-        private void Post(Watch watch, int ticket, Action apply) =>
-            _inbox.Enqueue(() =>
-            {
-                if (watch.Is(ticket)) apply();
-            });
-
         /// <summary>
-        /// Reads a watched list again through the domain and hands what it
-        /// read over. The domain answers from the cache while the cache holds
-        /// the list, and otherwise reads it from GS2 and caches it, which also
-        /// tells every watcher.
+        /// Says a watch that could not start, once per start; the tick starts
+        /// it again.
         /// </summary>
-        private async void Reread<T>(Watch watch, int ticket, Func<IUniTaskAsyncEnumerable<T>> read, Action<T[]> apply, string what)
+        private static void WatchFailed(ShowroomWatch watch, Exception error)
         {
-            try
-            {
-                var items = await read().ToArrayAsync();
-                if (watch.Is(ticket)) apply(items);
-            }
-            catch (Exception error)
-            {
-                // Tick starts the watch again, so the list is not left unknown.
-                if (!watch.Fail(ticket)) return;
-                Debug.LogWarning($"{nameof(ProfileFriendsPanel)}: {what} could not be read again: {error}");
-            }
-        }
-
-        /// <summary>
-        /// Subscribes to one of the visitor's lists. An empty list may only
-        /// mean the cache no longer holds it, so it is read again first.
-        /// </summary>
-        private async void WatchList<T>(
-            Watch watch,
-            Func<Action<T[]>, UniTask<ulong>> subscribe,
-            Action<ulong> unsubscribe,
-            Func<IUniTaskAsyncEnumerable<T>> read,
-            Action<T[]> store,
-            string what)
-        {
-            if (_visitor == null) return;
-            var ticket = watch.Start();
-            void Apply(T[]? items) => Post(watch, ticket, () => store(items ?? Array.Empty<T>()));
-            void Reread() => this.Reread(watch, ticket, read, Apply, what);
-            try
-            {
-                var id = await subscribe(items =>
-                {
-                    if (items == null || items.Length == 0) Reread();
-                    else Apply(items);
-                });
-                watch.Attach(ticket, () => unsubscribe(id));
-            }
-            catch (Exception error)
-            {
-                if (!watch.Fail(ticket)) return;
-                Debug.LogError($"{nameof(ProfileFriendsPanel)}: {what} could not be read: {error}");
-                FriendDemo.Log($"{char.ToUpperInvariant(what[0])}{what.Substring(1)} could not be read: {error.Message}");
-            }
+            var what = char.ToUpperInvariant(watch.What[0]) + watch.What.Substring(1);
+            ShowroomLog.Failure($"{what} could not be read", error);
         }
 
         private void WatchFriends()
         {
             var visitor = _visitor!;
-            WatchList<FriendUser>(_friendsWatch,
+            _friendsWatch.SubscribeList<FriendUser>(
                 callback => visitor.SubscribeFriendsWithInitialCallAsync(callback, FriendDemo.WithProfile),
                 id => visitor.UnsubscribeFriends(id, FriendDemo.WithProfile),
                 () => visitor.FriendsAsync(FriendDemo.WithProfile),
                 items => _friends = Store(_friends, items, friend => friend.UserId),
-                "your friends");
+                error => WatchFailed(_friendsWatch, error));
         }
 
         private void WatchSent()
         {
             var visitor = _visitor!;
-            WatchList<SendFriendRequest>(_sentWatch,
+            _sentWatch.SubscribeList<SendFriendRequest>(
                 callback => visitor.SubscribeSendRequestsWithInitialCallAsync(callback),
                 id => visitor.UnsubscribeSendRequests(id),
                 () => visitor.SendRequestsAsync(),
                 items => _sent = Store(_sent, items, request => request.TargetUserId),
-                "the requests you sent");
+                error => WatchFailed(_sentWatch, error));
         }
 
         private void WatchReceived()
         {
             var visitor = _visitor!;
-            WatchList<ReceiveFriendRequest>(_receivedWatch,
+            _receivedWatch.SubscribeList<ReceiveFriendRequest>(
                 callback => visitor.SubscribeReceiveRequestsWithInitialCallAsync(callback),
                 id => visitor.UnsubscribeReceiveRequests(id),
                 () => visitor.ReceiveRequestsAsync(),
                 items => _received = Store(_received, items, request => request.UserId),
-                "the requests sent to you");
+                error => WatchFailed(_receivedWatch, error));
         }
 
         private void WatchFollows()
         {
             var follow = _follow!;
-            WatchList<FollowUser>(_followsWatch,
+            _followsWatch.SubscribeList<FollowUser>(
                 callback => follow.SubscribeFollowsWithInitialCallAsync(callback),
                 id => follow.UnsubscribeFollows(id),
                 () => follow.FollowsAsync(),
                 items => _follows = Store(_follows, items, follow => follow.UserId),
-                "the players you follow");
+                error => WatchFailed(_followsWatch, error));
         }
 
         /// <summary>
@@ -388,7 +326,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private static T[] Store<T>(T[]? before, T[] after, Func<T, string?> key)
         {
-            if (before == null || !before.Select(key).SequenceEqual(after.Select(key))) FriendDemo.MarkChanged();
+            if (before == null || !before.Select(key).SequenceEqual(after.Select(key))) ShowroomSettle.MarkChanged();
             return after;
         }
 
@@ -396,57 +334,46 @@ namespace GS2Studio.Showroom.Demo
         /// The visitor's own profile. GS2 creates it on the first read; a
         /// visitor who has no name yet is given their tag, once.
         /// </summary>
-        private async void WatchProfile()
+        private void WatchProfile()
         {
             var visitor = _visitor;
             if (visitor == null) return;
             var profile = visitor.Profile();
-            var ticket = _profileWatch.Start();
-            try
-            {
-                var id = await profile.SubscribeWithInitialCallAsync(model => Post(_profileWatch, ticket, () =>
+            _profileWatch.Subscribe<Profile>(
+                callback => profile.SubscribeWithInitialCallAsync(callback),
+                profile.Unsubscribe,
+                model =>
                 {
                     if (model == null) return;
                     _profile = model;
                     FillProfileFields(model);
                     NameIfUnnamed(model);
-                }));
-                _profileWatch.Attach(ticket, () => profile.Unsubscribe(id));
-            }
-            catch (Exception error)
-            {
-                if (!_profileWatch.Fail(ticket)) return;
-                Debug.LogError($"{nameof(ProfileFriendsPanel)}: your profile could not be read: {error}");
-                FriendDemo.Log($"Your profile could not be read: {error.Message}");
-            }
+                },
+                failed: error => WatchFailed(_profileWatch, error));
         }
 
         /// <summary>The public profile of the player looked up.</summary>
-        private async void WatchTarget(string userId)
+        private void WatchTarget(string userId)
         {
             var gs2 = _gs2;
             if (gs2 == null) return;
             PublicProfileDomain profile = gs2.Super.Friend.Namespace(FriendDemo.Namespace).User(userId).PublicProfile();
-            var ticket = _targetWatch.Start();
             _targetProfile = null;
             _targetFailed = false;
-            try
-            {
-                var id = await profile.SubscribeWithInitialCallAsync(model => Post(_targetWatch, ticket, () =>
+            _targetWatch.Subscribe<PublicProfile>(
+                callback => profile.SubscribeWithInitialCallAsync(callback),
+                profile.Unsubscribe,
+                model =>
                 {
                     if (model != null) _targetProfile = model;
-                }));
-                _targetWatch.Attach(ticket, () => profile.Unsubscribe(id));
-            }
-            catch (Exception error)
-            {
-                if (!_targetWatch.Fail(ticket)) return;
-                Debug.LogWarning($"{nameof(ProfileFriendsPanel)}: the profile of {userId} could not be read: {error}");
-                _inbox.Enqueue(() =>
+                },
+                failed: error =>
                 {
+                    // Said in the result area rather than the log.
+                    Debug.LogWarning($"[showroom] {nameof(ProfileFriendsPanel)}: the profile of {userId} could not be read: {error}");
                     _targetFailed = true;
+                    Draw();
                 });
-            }
         }
 
         /// <summary>
@@ -470,9 +397,9 @@ namespace GS2Studio.Showroom.Demo
         private void NameIfUnnamed(Profile profile)
         {
             if (_defaultNameTried || !string.IsNullOrWhiteSpace(profile.PublicProfile)) return;
-            var name = FriendDemo.Tag(_userId);
+            var name = ShowroomPlayerTag.Of(_userId);
             // Tried again on the next profile read when the press could not start.
-            _defaultNameTried = FriendDemo.Run(FriendPress.SaveProfile, async visitor =>
+            _defaultNameTried = FriendDemo.Run(FriendPress.SaveProfile, this, async visitor =>
             {
                 await visitor.Profile().UpdateAsync(new UpdateProfileRequest()
                     .WithPublicProfile(name)
@@ -485,144 +412,102 @@ namespace GS2Studio.Showroom.Demo
         // ------------------------------------------------------------------
         // Drawing
 
-        /// <summary>What the visitor and the player looked up are to each other.</summary>
+        /// <summary>
+        /// What the visitor and the player looked up are to each other. The
+        /// region is rebuilt only when that changed, so a button is not
+        /// replaced under the cursor by an identical one.
+        /// </summary>
         private void Draw()
         {
-            if (_result == null) return;
-            // Rebuilt only when what it shows changes, so a button is not
-            // replaced under the cursor by an identical one.
-            var shown = Signature();
-            if (shown == _shown) return;
-            _shown = shown;
-            // The panel sits above the lists, so redrawing it can move every
-            // row button below; presses wait for that too. It is marked only
-            // when what is shown changed, so a press lands at most once in
-            // the pause and the next one goes through.
-            FriendDemo.MarkChanged();
-            Clear(_result);
-            if (_targetId == null) return;
-            if (_targetId == _userId)
+            _result?.Draw(Describe);
+        }
+
+        private void Describe(ShowroomRegion.Description region)
+        {
+            var targetId = _targetId;
+            if (targetId == null) return;
+            if (targetId == _userId)
             {
-                Caption(_result, "That is your own id. Look up another player's.", 16, LightText);
+                region.Caption("That is your own id. Look up another player's.", 16, LightText);
                 return;
             }
-            var targetId = _targetId;
             var name = _targetProfile == null
-                ? (_targetFailed ? $"{FriendDemo.Tag(targetId)} (their profile could not be read)" : $"{FriendDemo.Tag(targetId)} (reading...)")
+                ? (_targetFailed ? $"{ShowroomPlayerTag.Of(targetId)} (their profile could not be read)" : $"{ShowroomPlayerTag.Of(targetId)} (reading...)")
                 : FriendDemo.NameOf(targetId, _targetProfile.Value);
-            Caption(_result, name, 18, LightText);
+            region.Caption(name, 18, LightText);
             if (_targetProfile != null && string.IsNullOrWhiteSpace(_targetProfile.Value))
             {
                 // GS2 creates a profile on the first read, so an id nobody
                 // uses reads as a player without a name.
-                Caption(_result, "This player has no name yet. Check the id if you expected one.", 14, MutedText);
+                region.Caption("This player has no name yet. Check the id if you expected one.", 14, MutedText);
             }
             if (_friends == null || _sent == null || _received == null || _follows == null)
             {
-                Caption(_result, "Reading your lists...", 15, MutedText);
+                region.Caption("Reading your lists...", 15, MutedText);
                 return;
             }
 
             if (_friends.Any(friend => friend.UserId == targetId))
             {
-                Caption(_result, "You are friends.", 15, MutedText);
-                Press(_result, "Remove friend", () => Remove(targetId));
+                region.Caption("You are friends.", 15, MutedText);
+                region.Press("Remove friend", () => Remove(targetId));
             }
             else if (_sent.Any(request => request.TargetUserId == targetId))
             {
-                Caption(_result, "You asked to be friends. Waiting for their answer.", 15, MutedText);
-                Press(_result, "Cancel your request", () => Cancel(targetId));
+                region.Caption("You asked to be friends. Waiting for their answer.", 15, MutedText);
+                region.Press("Cancel your request", () => Cancel(targetId));
             }
             else if (_received.Any(request => request.UserId == targetId))
             {
-                Caption(_result, "They asked to be friends.", 15, MutedText);
-                Press(_result, "Accept their request", () => Answer(targetId, true));
-                Press(_result, "Decline their request", () => Answer(targetId, false));
+                region.Caption("They asked to be friends.", 15, MutedText);
+                region.Press("Accept their request", () => Answer(targetId, true));
+                region.Press("Decline their request", () => Answer(targetId, false));
             }
             else
             {
-                Press(_result, "Send a friend request", () => Send(targetId));
+                region.Press("Send a friend request", () => Send(targetId));
             }
 
             if (_follows.Any(follow => follow.UserId == targetId))
             {
-                Press(_result, "Unfollow", () => Unfollow(targetId));
+                region.Press("Unfollow", () => Unfollow(targetId));
             }
             else
             {
-                Press(_result, "Follow", () => Follow(targetId));
+                region.Press("Follow", () => Follow(targetId));
             }
-        }
-
-        /// <summary>Everything the result area draws from, as one comparable value.</summary>
-        private string Signature()
-        {
-            var targetId = _targetId;
-            if (targetId == null) return "";
-            bool? Has<T>(T[]? items, Func<T, string?> key) => items?.Any(item => key(item) == targetId);
-            return string.Join("|",
-                targetId,
-                _userId,
-                _targetProfile == null ? "(unread)" : "=" + (_targetProfile.Value ?? ""),
-                _targetFailed,
-                Has(_friends, friend => friend.UserId),
-                Has(_sent, request => request.TargetUserId),
-                Has(_received, request => request.UserId),
-                Has(_follows, follow => follow.UserId));
         }
 
         // ------------------------------------------------------------------
         // Pressing
 
+        // A clipboard refusal is not a failure of the page: the browser
+        // decides, so the visitor is told how to do it by hand.
+
         private void Copy()
         {
-            if (_userId.Length == 0 || _clipboard != Clipboard.Idle) return;
-            _clipboard = Clipboard.Copying;
-            _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
-            ShowroomClipboard.Copy(_userId);
+            if (_userId.Length == 0 || _clipboard.Pending) return;
+            if (!_clipboard.Copy(_userId,
+                    () => ShowroomLog.Say("Copied your id. Send it to the other player."),
+                    reason => ShowroomLog.Say($"The browser did not let the page copy ({reason}). Select the id above and copy it, or read it out.")))
+            {
+                ShowroomLog.Say("One moment: the browser is still answering the last copy or paste.");
+            }
         }
 
         private void Paste()
         {
-            if (_clipboard != Clipboard.Idle) return;
-            _clipboard = Clipboard.Pasting;
-            _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
-            ShowroomClipboard.Paste();
-        }
-
-        /// <summary>
-        /// Hands over what the clipboard answered. A refusal is not a failure
-        /// of the page: the browser decides, so the visitor is told how to do
-        /// it by hand.
-        /// </summary>
-        private void PollClipboard()
-        {
-            if (_clipboard == Clipboard.Idle) return;
-            var outcome = ShowroomClipboard.Poll(out var text);
-            if (outcome == ShowroomClipboard.Outcome.Waiting)
+            if (_clipboard.Pending) return;
+            if (!_clipboard.Paste(
+                    text =>
+                    {
+                        if (_targetField != null) _targetField.text = text.Trim();
+                        LookUp();
+                    },
+                    reason => ShowroomLog.Say($"The browser did not let the page paste ({reason}). Type the id into the field instead.")))
             {
-                if (Time.realtimeSinceStartup < _clipboardDeadline) return;
-                // The browser has not answered; a late answer is dropped.
-                ShowroomClipboard.Abandon();
-                outcome = ShowroomClipboard.Outcome.Refused;
-                text = "no answer";
+                ShowroomLog.Say("One moment: the browser is still answering the last copy or paste.");
             }
-            var doing = _clipboard;
-            _clipboard = Clipboard.Idle;
-            if (doing == Clipboard.Copying)
-            {
-                FriendDemo.Log(outcome == ShowroomClipboard.Outcome.Done
-                    ? "Copied your id. Send it to the other player."
-                    : $"The browser did not let the page copy ({text}). Select the id above and copy it, or read it out.");
-                return;
-            }
-            if (outcome != ShowroomClipboard.Outcome.Done)
-            {
-                FriendDemo.Log($"The browser did not let the page paste ({text}). Type the id into the field instead.");
-                return;
-            }
-            if (_targetField != null) _targetField.text = text.Trim();
-            LookUp();
         }
 
         private void LookUp()
@@ -630,12 +515,12 @@ namespace GS2Studio.Showroom.Demo
             var id = (_targetField?.text ?? "").Trim().ToLowerInvariant();
             if (id.Length == 0)
             {
-                FriendDemo.Log("Paste or type another player's id first.");
+                ShowroomLog.Say("Paste or type another player's id first.");
                 return;
             }
             if (!PlayerId.IsMatch(id))
             {
-                FriendDemo.Log("That does not look like a player id: it has 36 letters, digits and dashes, like the one above.");
+                ShowroomLog.Say("That does not look like a player id: it has 36 letters, digits and dashes, like the one above.");
                 return;
             }
             _targetId = id;
@@ -653,10 +538,10 @@ namespace GS2Studio.Showroom.Demo
             var followerProfile = (_followerField?.text ?? "").Trim();
             if (publicProfile.Length == 0)
             {
-                FriendDemo.Log("Choose a name first: other players see it on your requests.");
+                ShowroomLog.Say("Choose a name first: other players see it on your requests.");
                 return;
             }
-            FriendDemo.Run(FriendPress.SaveProfile, async visitor =>
+            FriendDemo.Run(FriendPress.SaveProfile, this, async visitor =>
             {
                 await visitor.Profile().UpdateAsync(new UpdateProfileRequest()
                     .WithPublicProfile(publicProfile)
@@ -668,21 +553,21 @@ namespace GS2Studio.Showroom.Demo
         }
 
         private void Send(string targetId) =>
-            FriendDemo.Run(FriendPress.Send, async visitor =>
+            FriendDemo.Run(FriendPress.Send, this, async visitor =>
             {
                 await visitor.SendRequestAsync(new SendRequestRequest().WithTargetUserId(targetId));
                 return $"Sent a friend request to {TargetName(targetId)}.";
             });
 
         private void Cancel(string targetId) =>
-            FriendDemo.Run(FriendPress.Cancel, async visitor =>
+            FriendDemo.Run(FriendPress.Cancel, this, async visitor =>
             {
                 await visitor.SendFriendRequest(targetId).DeleteAsync(new DeleteRequestRequest());
                 return $"Cancelled your request to {TargetName(targetId)}.";
             });
 
         private void Answer(string targetId, bool accept) =>
-            FriendDemo.Run(accept ? FriendPress.Accept : FriendPress.Decline, async visitor =>
+            FriendDemo.Run(accept ? FriendPress.Accept : FriendPress.Decline, this, async visitor =>
             {
                 var request = visitor.ReceiveFriendRequest(targetId);
                 if (accept) await request.AcceptAsync(new AcceptRequestRequest());
@@ -693,78 +578,36 @@ namespace GS2Studio.Showroom.Demo
             });
 
         private void Remove(string targetId) =>
-            FriendDemo.Run(FriendPress.Remove, async visitor =>
+            FriendDemo.Run(FriendPress.Remove, this, async visitor =>
             {
                 await visitor.Friend(FriendDemo.WithProfile).DeleteFriendAsync(new DeleteFriendRequest().WithTargetUserId(targetId));
                 return $"You and {TargetName(targetId)} are no longer friends.";
             });
 
         private void Follow(string targetId) =>
-            FriendDemo.Run(FriendPress.Follow, async visitor =>
+            FriendDemo.Run(FriendPress.Follow, this, async visitor =>
             {
                 await visitor.Follow(FriendDemo.WithProfile).FollowAsync(new FollowRequest().WithTargetUserId(targetId));
                 return $"You follow {TargetName(targetId)}.";
             });
 
-        private void Unfollow(string targetId) =>
-            FriendDemo.Run(FriendPress.Unfollow, async visitor =>
+        private void Unfollow(string targetId)
+        {
+            var visitor = _visitor;
+            FriendDemo.Run(FriendPress.Unfollow, this, async following =>
             {
-                await visitor.Follow(FriendDemo.WithProfile).FollowUser(targetId).UnfollowAsync(new UnfollowRequest());
+                await following.Follow(FriendDemo.WithProfile).FollowUser(targetId).UnfollowAsync(new UnfollowRequest());
                 return $"You no longer follow {TargetName(targetId)}.";
-            }, whenGone: FriendDemo.ForgetFollows);
+            }, whenGone: () =>
+            {
+                if (visitor != null) FriendDemo.ForgetFollows(visitor);
+            });
+        }
 
         private string TargetName(string targetId) =>
             _targetId == targetId && _targetProfile != null
                 ? FriendDemo.NameOf(targetId, _targetProfile.Value)
-                : FriendDemo.Tag(targetId);
-
-        /// <summary>
-        /// One subscription. Stopping it, or starting it again, retires its
-        /// ticket: whatever the SDK reports under an old ticket is dropped,
-        /// and a subscription that finishes starting after that is dropped at
-        /// once.
-        /// </summary>
-        private sealed class Watch
-        {
-            private int _ticket;
-            private Action? _unsubscribe;
-
-            public bool Running { get; private set; }
-            public bool Failed { get; private set; }
-
-            public int Start()
-            {
-                Stop();
-                Running = true;
-                return _ticket;
-            }
-
-            public bool Is(int ticket) => Running && ticket == _ticket;
-
-            public void Attach(int ticket, Action unsubscribe)
-            {
-                if (Is(ticket)) _unsubscribe = unsubscribe;
-                else unsubscribe();
-            }
-
-            public bool Fail(int ticket)
-            {
-                if (!Is(ticket)) return false;
-                Running = false;
-                Failed = true;
-                return true;
-            }
-
-            public void Stop()
-            {
-                _ticket++;
-                Running = false;
-                Failed = false;
-                var unsubscribe = _unsubscribe;
-                _unsubscribe = null;
-                unsubscribe?.Invoke();
-            }
-        }
+                : ShowroomPlayerTag.Of(targetId);
 
         // ------------------------------------------------------------------
         // Building blocks
@@ -802,6 +645,7 @@ namespace GS2Studio.Showroom.Demo
             return label;
         }
 
+        /// <summary>A button of the panel's fixed part, which never moves.</summary>
         private void Press(RectTransform parent, string text, Action onClick)
         {
             var button = Instantiate(_buttonTemplate!, parent);
@@ -834,19 +678,6 @@ namespace GS2Studio.Showroom.Demo
             var child = new GameObject(name, typeof(RectTransform)).GetComponent<RectTransform>();
             child.SetParent(parent, false);
             return child;
-        }
-
-        private static void Clear(RectTransform parent)
-        {
-            for (var index = parent.childCount - 1; index >= 0; index--)
-            {
-                // Destroy waits for the end of the frame, and until then a
-                // layout group still counts the child; an inactive one it
-                // skips.
-                var child = parent.GetChild(index).gameObject;
-                child.SetActive(false);
-                Destroy(child);
-            }
         }
     }
 }

@@ -1,13 +1,13 @@
-// What the friend page's hand-written parts share: reaching the signed-in
-// player, running one press at a time, saying why GS2 refused, and the short
-// name a player goes by until they choose one.
+// What the friend page's hand-written parts share beyond the showroom runtime:
+// the friend namespace, how a press reaches GS2 as the visitor, explaining
+// GS2's refusals in the press's terms, and the name a player goes by. Reaching
+// the player, running presses, logging, player tags and the settle pause are
+// the runtime's (`ShowroomRuntime`, `ShowroomPress`, `ShowroomLog`,
+// `ShowroomPlayerTag`, `ShowroomSettle`).
 #nullable enable
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-
-using UnityEngine;
 
 using Gs2.Core.Exception;
 using Gs2.Unity.Core;
@@ -30,91 +30,34 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         public const bool WithProfile = true;
 
-        private static bool _busy;
-        private static ShowroomPage? _page;
-
-        /// <summary>The signed-in player's SDK handles, once signed in.</summary>
-        public static bool TryRuntime(out Gs2Domain? gs2, out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = UnityEngine.Object.FindAnyObjectByType<GS2Studio.Generated.Runtime.Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
-        }
-
         /// <summary>The SDK's domain for the signed-in player in the friend namespace.</summary>
         public static VisitorDomain Visitor(Gs2Domain gs2, IGameSession session) =>
             gs2.Super.Friend.Namespace(Namespace).AccessToken(session.AccessToken);
 
         /// <summary>
-        /// How long after a list on the page changed a press is refused: a
-        /// row that just appeared or vanished moves every button below it,
-        /// and a press in that moment may land on a different button than
-        /// the visitor aimed at.
+        /// Runs one press as the visitor through the page's press runner, and
+        /// explains a refusal in the press's terms. What it changed reaches
+        /// every reader through the SDK's cache, so nothing is read again
+        /// here, except: <paramref name="whenGone"/> runs when GS2 says what
+        /// was pressed on no longer exists and the SDK does not correct its
+        /// cache itself. <paramref name="pressed"/> is false for what the page
+        /// does on its own. Returns whether the press started.
         /// </summary>
-        private const float SettleSeconds = 0.6f;
-
-        private static float _lastChange = float.NegativeInfinity;
-
-        /// <summary>Says that a list on the page just changed what it shows.</summary>
-        public static void MarkChanged() => _lastChange = Time.realtimeSinceStartup;
-
-        /// <summary>
-        /// Runs one press, one at a time across the whole page, and says the
-        /// outcome in the page's log. What it changed reaches every reader
-        /// through the SDK's cache, so nothing is read again here, except:
-        /// <paramref name="whenGone"/> runs when GS2 says what was pressed on
-        /// no longer exists and the SDK does not correct its cache itself.
-        /// Returns whether the press started. <paramref name="pressed"/> is
-        /// false for what the page does on its own, which no moving button
-        /// can have misdirected.
-        /// </summary>
-        public static bool Run(FriendPress press, Func<VisitorDomain, Task<string>> action, Action? afterward = null, Action<VisitorDomain>? whenGone = null, bool pressed = true)
+        public static bool Run(
+            FriendPress press,
+            UnityEngine.Object owner,
+            Func<VisitorDomain, Task<string>> action,
+            Action? whenGone = null,
+            bool pressed = true)
         {
-            // What the page does on its own says nothing when it cannot start:
-            // the visitor did not ask for it, and it is tried again later.
-            if (_busy)
+            return ShowroomPress.Run(new ShowroomPressOptions
             {
-                if (pressed) Log("One moment: the last press is still going.");
-                return false;
-            }
-            if (pressed && Time.realtimeSinceStartup - _lastChange < SettleSeconds)
-            {
-                Log("The list just changed; press again.");
-                return false;
-            }
-            if (!TryRuntime(out var gs2, out var session))
-            {
-                if (pressed) Log("Not signed in yet.");
-                return false;
-            }
-            _busy = true;
-            Execute(press, Visitor(gs2!, session!), action, afterward, whenGone);
-            return true;
-        }
-
-        private static async void Execute(FriendPress press, VisitorDomain visitor, Func<VisitorDomain, Task<string>> action, Action? afterward, Action<VisitorDomain>? whenGone)
-        {
-            try
-            {
-                Log(await action(visitor));
-            }
-            catch (Gs2Exception error)
-            {
-                Debug.LogWarning($"{nameof(FriendDemo)}: {press} refused: {error}");
-                Log(Explain(press, error));
-                if (error is NotFoundException) whenGone?.Invoke(visitor);
-            }
-            catch (Exception error)
-            {
-                Debug.LogError($"{nameof(FriendDemo)}: {press} failed: {error}");
-                Log($"Failed: {error.Message}");
-            }
-            finally
-            {
-                _busy = false;
-            }
-            afterward?.Invoke();
+                Name = $"Friend {press}",
+                Pressed = pressed,
+                Owner = owner,
+                Explain = error => Explain(press, error),
+                WhenGone = whenGone,
+            }, (gs2, session) => action(Visitor(gs2, session)));
         }
 
         /// <summary>
@@ -123,10 +66,16 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         public static void ForgetFollows(VisitorDomain visitor) => visitor.Follow(WithProfile).InvalidateFollows();
 
-        /// <summary>Says why GS2 refused, for the refusals a visitor can meet.</summary>
-        public static string Explain(FriendPress press, Gs2Exception error)
+        /// <summary>
+        /// Says why GS2 refused, for the refusals a visitor can meet; null
+        /// leaves any other refusal to the press runner.
+        ///
+        /// GS2-Friend's SDK has no exception types for these refusals, so they
+        /// are matched by message; switch to the error code once the SDK
+        /// carries one.
+        /// </summary>
+        public static string? Explain(FriendPress press, Gs2Exception error)
         {
-            var text = string.Join(" ", error.Errors?.Select(detail => detail.message) ?? Array.Empty<string>()) + " " + error.Message;
             if (error is NotFoundException)
             {
                 return press switch
@@ -140,8 +89,8 @@ namespace GS2Studio.Showroom.Demo
             }
             // A full outbox drops its oldest request instead; this refusal means
             // the visitor already has as many friends as GS2 allows.
-            if (text.Contains("capacity.error.full")) return "You already have as many friends as GS2 allows (1000); remove one first.";
-            if (text.Contains("error.duplicate"))
+            if (ShowroomRefusal.Has(error, "capacity.error.full")) return "You already have as many friends as GS2 allows (1000); remove one first.";
+            if (ShowroomRefusal.Has(error, "targetUserId.error.duplicate"))
             {
                 return press switch
                 {
@@ -152,37 +101,16 @@ namespace GS2Studio.Showroom.Demo
                     _ => "That was already done.",
                 };
             }
-            if (text.Contains("targetUserId.error.invalid")) return "That id is not another player's: you cannot do this to yourself.";
-            if (text.Contains("Profile.error.tooLong")) return "That profile text is too long.";
-            return $"GS2 refused: {error.Message}";
-        }
-
-        /// <summary>
-        /// A short, stable name for a player who has not chosen one: the same
-        /// id always reads the same.
-        /// </summary>
-        public static string Tag(string? userId)
-        {
-            unchecked
+            if (ShowroomRefusal.Has(error, "targetUserId.error.invalid")) return "That id is not another player's: you cannot do this to yourself.";
+            if (ShowroomRefusal.HasAny(error, "publicProfile.error.tooLong", "followerProfile.error.tooLong", "friendProfile.error.tooLong"))
             {
-                var hash = 2166136261u;
-                foreach (var character in userId ?? "")
-                {
-                    hash = (hash ^ character) * 16777619u;
-                }
-                return $"Player {hash & 0xFFFF:X4}";
+                return "That profile text is too long.";
             }
+            return null;
         }
 
         /// <summary>The name a player goes by: what they chose, or their tag.</summary>
         public static string NameOf(string userId, string? publicProfile) =>
-            string.IsNullOrWhiteSpace(publicProfile) ? Tag(userId) : publicProfile!.Trim();
-
-        public static void Log(string message)
-        {
-            if (_page == null) _page = UnityEngine.Object.FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-            else Debug.LogWarning($"{nameof(FriendDemo)}: {message}");
-        }
+            string.IsNullOrWhiteSpace(publicProfile) ? ShowroomPlayerTag.Of(userId) : publicProfile!.Trim();
     }
 }

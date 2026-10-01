@@ -17,7 +17,7 @@ namespace GS2Studio.Showroom.Demo
     [AddComponentMenu("GS2 Studio/Showroom/Unfollow This Player")]
     public sealed class FollowUnfollowButton : FriendRowButton
     {
-        protected override FriendPress Press => FriendPress.Unfollow;
+        protected override FriendPress Kind => FriendPress.Unfollow;
 
         protected override string? RowUserId() => GetComponentInParent<FollowHandlerBase>()?.Model?.Id.Value;
 

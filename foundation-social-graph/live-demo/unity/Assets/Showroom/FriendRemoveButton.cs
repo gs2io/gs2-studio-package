@@ -17,7 +17,7 @@ namespace GS2Studio.Showroom.Demo
     [AddComponentMenu("GS2 Studio/Showroom/Remove This Friend")]
     public sealed class FriendRemoveButton : FriendRowButton
     {
-        protected override FriendPress Press => FriendPress.Remove;
+        protected override FriendPress Kind => FriendPress.Remove;
 
         protected override string? RowUserId() => GetComponentInParent<FriendHandlerBase>()?.Model?.Id.Value;
 
