@@ -19,7 +19,9 @@
 // slot names are master data and are read once.
 //
 // Nothing here reloads or invalidates anything. A write puts its result in the
-// SDK cache, and these subscriptions hear it from there.
+// SDK cache, and these subscriptions hear it from there. What they hear is
+// handed to the main thread through a `ShowroomInbox` and drawn in `Update`;
+// presses run through `ShowroomPress`, one at a time across the page.
 #nullable enable
 
 using System;
@@ -100,15 +102,14 @@ namespace GS2Studio.Showroom.Demo
         private int _charactersRead;
         private int _piecesRead;
 
-        private bool _busy;
+        private readonly ShowroomInbox _inbox = new ShowroomInbox();
         private Coroutine? _waiting;
-        private ShowroomPage? _page;
 
         private void OnEnable()
         {
             if (_panel == null || _buttonTemplate == null || _font == null)
             {
-                Log("The loadout board was baked without its region, button or font.");
+                ShowroomLog.Say("The loadout board was baked without its region, button or font.");
                 return;
             }
             if (_tabs == null) Build();
@@ -123,8 +124,14 @@ namespace GS2Studio.Showroom.Demo
             _loadoutSubscriptions.Clear();
             foreach (var unsubscribe in _unsubscribes) unsubscribe();
             _unsubscribes.Clear();
+            _inbox.Clear();
             _gs2 = null;
             _session = null;
+        }
+
+        private void Update()
+        {
+            _inbox.Drain();
         }
 
         /// <summary>
@@ -135,7 +142,7 @@ namespace GS2Studio.Showroom.Demo
         {
             Gs2Domain? gs2;
             IGameSession? session;
-            while (!LoadoutCommands.TryRuntime(out gs2, out session))
+            while (!ShowroomRuntime.TryGet(out gs2, out session))
             {
                 yield return new WaitForSeconds(0.25f);
             }
@@ -155,8 +162,11 @@ namespace GS2Studio.Showroom.Demo
             var characters = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader(CharacterNamespace, CharacterInventory);
             _unsubscribes.Add(characters.Subscribe(gs2, session, (_, _, value) =>
             {
-                _charactersRead++;
-                OnCharacters(value);
+                _inbox.Post(() =>
+                {
+                    _charactersRead++;
+                    OnCharacters(value);
+                });
                 return Task.CompletedTask;
             }, () => { }));
             ReadCharacters(characters);
@@ -164,8 +174,11 @@ namespace GS2Studio.Showroom.Demo
             var pieces = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader(EquipmentNamespace, EquipmentInventory);
             _unsubscribes.Add(pieces.Subscribe(gs2, session, (_, _, value) =>
             {
-                _piecesRead++;
-                OnPieces(value);
+                _inbox.Post(() =>
+                {
+                    _piecesRead++;
+                    OnPieces(value);
+                });
                 return Task.CompletedTask;
             }, () => { }));
             ReadPieces(pieces);
@@ -183,7 +196,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Log($"The characters could not be read: {error.Message}");
+                if (this != null) ShowroomLog.Failure("The characters could not be read", error);
             }
         }
 
@@ -197,7 +210,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Log($"The equipment could not be read: {error.Message}");
+                if (this != null) ShowroomLog.Failure("The equipment could not be read", error);
             }
         }
 
@@ -213,7 +226,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Log($"The loadout shape could not be read: {error.Message}");
+                if (this != null) ShowroomLog.Failure("The loadout shape could not be read", error);
             }
         }
 
@@ -258,8 +271,13 @@ namespace GS2Studio.Showroom.Demo
                     LoadoutCommands.Namespace, LoadoutCommands.FormModel, id);
                 _loadoutSubscriptions[id] = loadout.Subscribe(_gs2, _session, (_, _, value) =>
                 {
-                    _loadoutReads[id] = _loadoutReads.TryGetValue(id, out var count) ? count + 1 : 1;
-                    OnLoadout(id, value);
+                    _inbox.Post(() =>
+                    {
+                        // Dropped once the character is no longer followed.
+                        if (!_loadoutSubscriptions.ContainsKey(id)) return;
+                        _loadoutReads[id] = _loadoutReads.TryGetValue(id, out var count) ? count + 1 : 1;
+                        OnLoadout(id, value);
+                    });
                     return Task.CompletedTask;
                 }, () => { });
                 ReadLoadout(loadout, id);
@@ -293,7 +311,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Log($"A loadout could not be read: {error.Message}");
+                if (this != null) ShowroomLog.Failure("A loadout could not be read", error);
             }
         }
 
@@ -313,28 +331,15 @@ namespace GS2Studio.Showroom.Demo
             Draw();
         }
 
-        private async void Press(Func<Task<string?>> write)
+        /// <summary>Runs one change to a loadout, one press at a time across the page.</summary>
+        private void Press(Func<Gs2Domain, IGameSession, Task<string>> write)
         {
-            if (_busy)
+            ShowroomPress.Run(new ShowroomPressOptions
             {
-                Log("Still saving the last change.");
-                return;
-            }
-            _busy = true;
-            try
-            {
-                var note = await write();
-                if (note != null) Log(note);
-            }
-            catch (Exception error)
-            {
-                Log($"The loadout could not be saved: {error.Message}");
-                Debug.LogError($"EquipmentLoadoutBoardPanel: failed: {error}", this);
-            }
-            finally
-            {
-                _busy = false;
-            }
+                Name = "saving the loadout",
+                Owner = this,
+                Explain = error => $"The loadout could not be saved: {ShowroomErrors.Describe(error)}",
+            }, write);
         }
 
         private void Choose(string character)
@@ -355,17 +360,17 @@ namespace GS2Studio.Showroom.Demo
         {
             if (_character == null)
             {
-                Log("Recruit a character above first.");
+                ShowroomLog.Say("Recruit a character above first.");
                 return;
             }
             if (_slot == null)
             {
-                Log("The slots are still loading.");
+                ShowroomLog.Say("The slots are still loading.");
                 return;
             }
             var character = _character;
             var slot = _slot;
-            Press(() => LoadoutCommands.Equip(character, slot, piece));
+            Press((gs2, session) => LoadoutCommands.Equip(gs2, session, character, slot, piece));
         }
 
         private void TakeOff()
@@ -373,7 +378,7 @@ namespace GS2Studio.Showroom.Demo
             if (_character == null || _slot == null) return;
             var character = _character;
             var slot = _slot;
-            Press(() => LoadoutCommands.Unequip(character, slot));
+            Press((gs2, session) => LoadoutCommands.Unequip(gs2, session, character, slot));
         }
 
         private Dictionary<string, string> LoadoutOf(string? character)
@@ -565,6 +570,9 @@ namespace GS2Studio.Showroom.Demo
             var label = button.GetComponentInChildren<Text>();
             if (label != null)
             {
+                // Rich text for the smaller second line only. The names put in
+                // it are GS2 resource names, made of letters, digits, '-', '_'
+                // and '.' only, so none of them can form a tag.
                 label.supportRichText = true;
                 label.color = textColor;
                 label.text = text;
@@ -591,13 +599,6 @@ namespace GS2Studio.Showroom.Demo
                 child.SetActive(false);
                 Destroy(child);
             }
-        }
-
-        private void Log(string message)
-        {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-            else Debug.LogWarning($"EquipmentLoadoutBoardPanel: {message}", this);
         }
     }
 }

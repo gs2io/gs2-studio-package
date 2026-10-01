@@ -18,21 +18,20 @@
 // they are, a named slot is replaced, and a named slot with no body is
 // emptied. So both presses send exactly one slot.
 //
+// The board runs each press through `ShowroomPress`, which keeps two presses
+// from racing to the same form, and hands in the signed-in client.
+//
 // Nothing here reloads or invalidates anything. Setting a form puts the new
 // form into the SDK cache, and the loadout board subscribes to it.
 #nullable enable
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 using Gs2.Core.Exception;
 using Gs2.Unity.Core;
 using Gs2.Unity.Gs2Formation.Model;
 using Gs2.Unity.Util;
-
-using GS2Studio.Generated.Runtime;
 
 using InventoryItemSet = Gs2.Gs2Inventory.Model.ItemSet;
 
@@ -57,73 +56,59 @@ namespace GS2Studio.Showroom.Demo
         private const string PropertyType = "gs2_inventory";
 
         /// <summary>
-        /// Whether a press is still on its way to GS2. A second press in that
-        /// window would race the first to the same form.
-        /// </summary>
-        private static bool _inFlight;
-
-        /// <summary>
         /// Puts the equipment in the character's slot, replacing whatever was
-        /// there. Returns a note for the page when GS2 refused it or a press
-        /// is still saving, or null when the slot was set.
+        /// there. Returns the page's line when GS2 refused it for a reason
+        /// the demo shows, or "" when the slot was set.
         /// </summary>
-        public static async Task<string?> Equip(string characterPropertyId, string slotName, string equipmentPropertyId)
+        public static async Task<string> Equip(
+            Gs2Domain gs2, IGameSession session, string characterPropertyId, string slotName, string equipmentPropertyId)
         {
-            if (_inFlight) return "Still saving the last change.";
-            _inFlight = true;
+            var signed = await gs2.Inventory
+                .Namespace(InventoryItemSet.GetNamespaceNameFromGrn(equipmentPropertyId))
+                .Me(session)
+                .Inventory(InventoryItemSet.GetInventoryNameFromGrn(equipmentPropertyId))
+                // The item set is named on purpose: every take is a set of
+                // its own, and without the name the signature covers every
+                // set of the item and GS2 takes the first of them.
+                .ItemSet(
+                    InventoryItemSet.GetItemNameFromGrn(equipmentPropertyId),
+                    InventoryItemSet.GetItemSetNameFromGrn(equipmentPropertyId))
+                .GetItemWithSignatureAsync();
+
             try
             {
-                var (gs2, session) = Runtime();
-                var signed = await gs2.Inventory
-                    .Namespace(InventoryItemSet.GetNamespaceNameFromGrn(equipmentPropertyId))
-                    .Me(session)
-                    .Inventory(InventoryItemSet.GetInventoryNameFromGrn(equipmentPropertyId))
-                    // The item set is named on purpose: every take is a set of
-                    // its own, and without the name the signature covers every
-                    // set of the item and GS2 takes the first of them.
-                    .ItemSet(
-                        InventoryItemSet.GetItemNameFromGrn(equipmentPropertyId),
-                        InventoryItemSet.GetItemSetNameFromGrn(equipmentPropertyId))
-                    .GetItemWithSignatureAsync();
-
-                try
-                {
-                    await new Gs2Bind.Gs2Formation.PropertyFormLoader(Namespace, FormModel, characterPropertyId)
-                        .SetPropertyForm(
-                            gs2, session,
-                            new[]
+                await new Gs2Bind.Gs2Formation.PropertyFormLoader(Namespace, FormModel, characterPropertyId)
+                    .SetPropertyForm(
+                        gs2, session,
+                        new[]
+                        {
+                            new EzSlotWithSignature
                             {
-                                new EzSlotWithSignature
-                                {
-                                    Name = slotName,
-                                    PropertyType = PropertyType,
-                                    Body = signed.Body,
-                                    Signature = signed.Signature,
-                                },
-                            });
-                }
-                catch (BadRequestException error) when (RefusedByPattern(error))
-                {
-                    return $"GS2 refused: {ItemName(equipmentPropertyId)} does not fit the {slotName} slot.";
-                }
-                catch (Gs2Exception error) when (RefusedByScript(error, "alreadyEquipped"))
-                {
-                    return $"GS2 refused: {ItemName(equipmentPropertyId)} is worn by another character. Take it off there first.";
-                }
-                catch (Gs2Exception error) when (RefusedByScript(error, "sameItemTwice"))
-                {
-                    return $"GS2 refused: take off the {ItemName(equipmentPropertyId)} in this slot first, then put this one on.";
-                }
-                catch (Gs2Exception error) when (RefusedByScript(error, "wornTwice"))
-                {
-                    return $"GS2 refused: {ItemName(equipmentPropertyId)} is already in another slot of this character.";
-                }
-                return null;
+                                Name = slotName,
+                                PropertyType = PropertyType,
+                                Body = signed.Body,
+                                Signature = signed.Signature,
+                            },
+                        });
             }
-            finally
+            catch (BadRequestException error) when (RefusedByPattern(error))
             {
-                _inFlight = false;
+                return $"GS2 refused: {ItemName(equipmentPropertyId)} does not fit the {slotName} slot.";
             }
+            catch (Gs2Exception error) when (RefusedByScript(error, "alreadyEquipped"))
+            {
+                return $"GS2 refused: {ItemName(equipmentPropertyId)} is worn by another character. Take it off there first.";
+            }
+            catch (Gs2Exception error) when (RefusedByScript(error, "sameItemTwice"))
+            {
+                return $"GS2 refused: take off the {ItemName(equipmentPropertyId)} in this slot first, then put this one on.";
+            }
+            catch (Gs2Exception error) when (RefusedByScript(error, "wornTwice"))
+            {
+                return $"GS2 refused: {ItemName(equipmentPropertyId)} is already in another slot of this character.";
+            }
+            // The board shows the change; the page has nothing to add.
+            return "";
         }
 
         /// <summary>
@@ -158,35 +143,26 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Empties the character's slot. Returns a note for the page when a
-        /// press is still saving, or null when the slot was emptied.
+        /// Empties the character's slot. Returns "" for the page, since the
+        /// board shows the change.
         /// </summary>
-        public static async Task<string?> Unequip(string characterPropertyId, string slotName)
+        public static async Task<string> Unequip(
+            Gs2Domain gs2, IGameSession session, string characterPropertyId, string slotName)
         {
-            if (_inFlight) return "Still saving the last change.";
-            _inFlight = true;
-            try
-            {
-                var (gs2, session) = Runtime();
-                await new Gs2Bind.Gs2Formation.PropertyFormLoader(Namespace, FormModel, characterPropertyId)
-                    .SetPropertyForm(
-                        gs2, session,
-                        new[]
+            await new Gs2Bind.Gs2Formation.PropertyFormLoader(Namespace, FormModel, characterPropertyId)
+                .SetPropertyForm(
+                    gs2, session,
+                    new[]
+                    {
+                        new EzSlotWithSignature
                         {
-                            new EzSlotWithSignature
-                            {
-                                Name = slotName,
-                                PropertyType = PropertyType,
-                                Body = null,
-                                Signature = null,
-                            },
-                        });
-                return null;
-            }
-            finally
-            {
-                _inFlight = false;
-            }
+                            Name = slotName,
+                            PropertyType = PropertyType,
+                            Body = null,
+                            Signature = null,
+                        },
+                    });
+            return "";
         }
 
         /// <summary>
@@ -214,26 +190,6 @@ namespace GS2Studio.Showroom.Demo
         {
             var name = InventoryItemSet.GetItemNameFromGrn(propertyId);
             return string.IsNullOrEmpty(name) ? propertyId : name;
-        }
-
-        /// <summary>
-        /// The signed-in session, or false while the page is still signing in.
-        /// </summary>
-        public static bool TryRuntime(
-            [NotNullWhen(true)] out Gs2Domain? gs2, [NotNullWhen(true)] out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = UnityEngine.Object.FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
-        }
-
-        /// <summary>The signed-in session these calls travel on.</summary>
-        public static (Gs2Domain Gs2, IGameSession Session) Runtime()
-        {
-            if (!TryRuntime(out var gs2, out var session))
-                throw new InvalidOperationException("The GS2 runtime context is not available.");
-            return (gs2, session);
         }
     }
 }
