@@ -22,19 +22,14 @@
 // one visitor gets.
 #nullable enable
 
-using System;
 using System.Threading.Tasks;
 
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 using Gs2.Core.Exception;
 using Gs2.Unity.Gs2Showcase.Model;
-using Gs2.Unity.Util;
 
 using GS2Studio.Generated.CurrencyType;
-using GS2Studio.Generated.Runtime;
 using GS2Studio.Generated.StorePrice;
 using GS2Studio.Generated.StoreProduct;
 
@@ -44,12 +39,13 @@ namespace GS2Studio.Showroom.Demo
     /// Buys the product this row shows, in the demo's currency, into the demo's
     /// wallet, with a test receipt.
     ///
-    /// Shaped like a generated action button on purpose — a `Button` to wire
-    /// and an `OnCompleted` to raise — because that is what the page knows how
-    /// to draw, and this is a row like any other once it is drawn.
+    /// A press like any other on the page (`ShowroomPressButton`): it waits its
+    /// turn with every other press, and the button stays off while a purchase
+    /// is out, so one click buys once. Nothing is read again afterwards; the
+    /// wallet's generated labels follow the SDK's cache and move by themselves.
     /// </summary>
     [AddComponentMenu("GS2 Studio/Showroom/Buy This Product")]
-    public sealed class StoreProductBuyButton : MonoBehaviour
+    public sealed class StoreProductBuyButton : ShowroomPressButton
     {
         /// <summary>
         /// The currency the demo prices everything in. The shop sells in three;
@@ -69,88 +65,35 @@ namespace GS2Studio.Showroom.Demo
         private static string PlatformProduct(string product) => $"io.gs2.demo.shop.{product}";
 
         [SerializeField] private StoreProductHandlerBase? _handler;
-        [SerializeField] private Button? _button;
 
-        /// <summary>
-        /// Raised once the purchase has committed. The wallet reads its balance
-        /// through its own handler, which has no way to know an unrelated
-        /// component just moved it.
-        /// </summary>
-        [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
+        protected override string PressName => "purchase";
 
-        /// <summary>
-        /// Raised when the purchase fails with a GS2 error, which is what the
-        /// page knows how to show. Anything else goes to the page as text —
-        /// see <see cref="Report"/>, and why it has to.
-        /// </summary>
-        [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
-
-        public UnityEvent OnCompleted => _onCompleted;
-        public ErrorEvent OnFailed => _onFailed;
-
-        private bool _wired;
-        private IGs2RuntimeContextProvider? _runtime;
-        private ShowroomPage? _page;
-
-        private void OnEnable()
+        protected override void OnEnable()
         {
             if (_handler == null) _handler = GetComponentInParent<StoreProductHandlerBase>();
-            if (_button == null || _wired) return;
-            _button.onClick.AddListener(OnClicked);
-            _wired = true;
+            base.OnEnable();
         }
 
-        private void OnDisable()
-        {
-            if (_button == null || !_wired) return;
-            _button.onClick.RemoveListener(OnClicked);
-            _wired = false;
-        }
+        /// <summary>
+        /// Every refusal is said here, in the purchase's terms. This row lives
+        /// in a list item prefab, where the `OnFailed` listener the page
+        /// builder bakes has no page to call, so a refusal handed to it would
+        /// be said nowhere.
+        /// </summary>
+        protected override string? Explain(Gs2Exception error) =>
+            $"Purchase refused: {ShowroomErrors.Describe(error)}";
 
-        private async void OnClicked()
-        {
-            try
-            {
-                await Buy();
-            }
-            catch (Gs2Exception error)
-            {
-                // A click has nothing to resume from, so no retry is offered.
-                _onFailed.Invoke(error, null);
-                Debug.LogError($"StoreProductBuyButton: purchase failed: {error}", this);
-                return;
-            }
-            catch (Exception error)
-            {
-                Report($"Purchase failed: {error.Message}");
-                Debug.LogError($"StoreProductBuyButton: purchase failed: {error}", this);
-                return;
-            }
-            _onCompleted.Invoke();
-        }
-
-        private async Task Buy()
+        protected override async Task<string> Press()
         {
             var product = _handler?.Binder?.Id;
-            if (product == null)
-            {
-                // The row has no product yet, which is not a failure to report:
-                // the handler raises `Bound` when it has one, and a click that
-                // early is a click on a row that is still arriving.
-                return;
-            }
-
-            _runtime ??= FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
-            if (_runtime == null || !_runtime.TryGet(out var gs2, out var session) ||
-                gs2 == null || session == null)
-            {
-                Report("The GS2 runtime context is not available.");
-                return;
-            }
+            // The handler raises `Bound` when it has a product; a click before
+            // that is a click on a row that is still arriving.
+            if (product == null) return "This product is still loading; try again in a moment.";
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
 
             // The price is the product paired with a currency, and the shop has
-            // no list of prices to have drawn a row from — its display items
-            // hang off the showcase rather than off a model that enumerates —
+            // no list of prices to have drawn a row from (its display items
+            // hang off the showcase rather than off a model that enumerates),
             // so the row's product and the demo's currency name one here. The
             // binder is what knows the id that pair composes to.
             var price = await StorePriceBinder.CreateAsync(
@@ -161,20 +104,7 @@ namespace GS2Studio.Showroom.Demo
                     PlatformProduct(product.Value.ToString()),
                     new[] { new EzConfig { Key = "slot", Value = WalletSlot.ToString() } });
             }
-        }
-
-        /// <summary>
-        /// Put a failure where a visitor can see it.
-        ///
-        /// The page's error channel carries a `Gs2Exception`, so a failure of
-        /// any other kind cannot travel it — and a browser hides the console,
-        /// which is where it would otherwise be the only record. The very
-        /// failure this demo hit first was one of those.
-        /// </summary>
-        private void Report(string message)
-        {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
+            return "Purchased.";
         }
     }
 }
