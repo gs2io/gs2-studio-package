@@ -80,10 +80,26 @@ namespace GS2Studio.Showroom.Demo
         /// by its client error code, which the SDK has no exception type for.
         /// </summary>
         public static bool IsAlreadyRegistered(Gs2Exception error) =>
-            error is ConflictException || ShowroomRefusal.HasCode(error, TakeOverAlreadyExistsCode);
+            ShowroomRefusal.HasCode(error, TakeOverAlreadyExistsCode);
+
+        /// <summary>
+        /// Whether GS2 refused the transfer code ID because another player
+        /// already holds it. GS2 codes the refusal; a server without that code,
+        /// and two players racing for one ID, end at the database's create
+        /// guard instead, a 409 with no code raised at the "create" component.
+        /// </summary>
+        public static bool IsIdentifierTaken(Gs2Exception error) =>
+            ShowroomRefusal.HasCode(error, TakeOverIdentifierTakenCode)
+            || (error is ConflictException && ShowroomRefusal.IsComponent(error, CreateGuardComponent));
 
         /// <summary>GS2's code for a transfer code the player already has.</summary>
         private const string TakeOverAlreadyExistsCode = "account.takeOver.alreadyExists";
+
+        /// <summary>GS2's code for a transfer code ID another player already holds.</summary>
+        private const string TakeOverIdentifierTakenCode = "account.takeOver.userIdentifier.duplicate";
+
+        /// <summary>The component of GS2's uncoded duplicate refusal from the database's create guard.</summary>
+        private const string CreateGuardComponent = "create";
 
         /// <summary>
         /// Says why GS2 refused, for the refusals a visitor can meet; null
@@ -97,8 +113,7 @@ namespace GS2Studio.Showroom.Demo
                 case IdentityPress.Issue:
                 case IdentityPress.Reissue:
                     if (IsAlreadyRegistered(error)) return "You already have a transfer code. Press \"Delete and reissue\" to replace it.";
-                    // GS2 answers 500 when the ID is already another player's.
-                    if (error is InternalServerErrorException) return "GS2 could not register the code (the ID may have been taken). Press again for a new one.";
+                    if (IsIdentifierTaken(error)) return "Another player already holds the new transfer code ID. Press again for a new one.";
                     break;
                 case IdentityPress.TakeOver:
                     if (error is BannedInfinityException) return "That account is banned, so it cannot be taken over.";

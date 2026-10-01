@@ -277,7 +277,7 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>
         /// Registers a new random code. An ID another player already holds is
-        /// refused with a 500, so a refused ID is replaced by a new one once.
+        /// refused, so a refused ID is replaced by a new one once.
         /// </summary>
         private static async Task<(string Identifier, string Password)> Register(TakeOverDomain code)
         {
@@ -290,7 +290,7 @@ namespace GS2Studio.Showroom.Demo
                     await code.AddTakeOverSettingAsync(identifier, password);
                     return (identifier, password);
                 }
-                catch (InternalServerErrorException error) when (attempt == 0)
+                catch (Gs2Exception error) when (attempt == 0 && IdentityDemo.IsIdentifierTaken(error))
                 {
                     Debug.LogWarning($"{nameof(TransferCodePanel)}: a new transfer ID was refused ({ShowroomErrors.Summary(error)}); trying another.");
                 }
