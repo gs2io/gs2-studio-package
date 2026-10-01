@@ -84,7 +84,7 @@ namespace GS2Studio.Showroom
                 // Persistent listeners are what the page builder bakes; a
                 // listener added at run time is not counted, and such a
                 // refusal is said by the runner instead.
-                Unexplained = _onFailed.GetPersistentEventCount() > 0
+                Unexplained = HasLiveFailureListener()
                     // A click has nothing to resume from, so no retry is offered.
                     ? error => _onFailed.Invoke(error, null)
                     : null,
@@ -100,6 +100,19 @@ namespace GS2Studio.Showroom
                 return line;
             });
             if (!started && _button != null) _button.interactable = true;
+        }
+
+        // A baked listener whose target did not survive (a list-item prefab
+        // bakes the page's log with no object behind it) would swallow the
+        // refusal, so only listeners with a live target count.
+        private bool HasLiveFailureListener()
+        {
+            var count = _onFailed.GetPersistentEventCount();
+            for (var i = 0; i < count; i++)
+            {
+                if (_onFailed.GetPersistentTarget(i) != null) return true;
+            }
+            return false;
         }
     }
 }
