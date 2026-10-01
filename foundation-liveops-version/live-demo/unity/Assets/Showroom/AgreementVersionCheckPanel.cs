@@ -6,6 +6,8 @@
 // Answering and checking are not actions a package can host, so every press
 // goes straight to GS2 through the REST client, and so do the reads of what
 // the visitor has answered. Nothing here reloads or invalidates anything.
+// Every press runs through `ShowroomPress`, so it waits its turn with every
+// other press on the page and says its outcome in one line.
 //
 // The check sends the app and asset versions together every time: GS2 refuses
 // a check that leaves out any version the client is meant to report.
@@ -24,8 +26,6 @@ using Gs2.Core.Exception;
 using Gs2.Gs2Version;
 using Gs2.Gs2Version.Model;
 using Gs2.Gs2Version.Request;
-using Gs2.Unity.Core;
-using Gs2.Unity.Util;
 
 using VersionStatus = Gs2.Gs2Version.Model.Status;
 
@@ -73,15 +73,13 @@ namespace GS2Studio.Showroom.Demo
         private int _answersGeneration;
         private int _app;
         private int _asset;
-        private bool _busy;
         private Coroutine? _waiting;
-        private ShowroomPage? _page;
 
         private void OnEnable()
         {
             if (_panel == null || _buttonTemplate == null || _font == null)
             {
-                Log("The version check was baked without its region, button or font.");
+                ShowroomLog.Say("The version check was baked without its region, button or font.");
                 return;
             }
             if (_answers == null) Build();
@@ -100,7 +98,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private IEnumerator WaitForSignIn()
         {
-            while (!TryRuntime(out _, out _))
+            while (!ShowroomRuntime.TryGet(out _, out _))
             {
                 yield return new WaitForSeconds(0.25f);
             }
@@ -155,7 +153,7 @@ namespace GS2Studio.Showroom.Demo
                     .WithVersion(target)
                     .WithAccessToken(token));
                 return $"Rejected {agreement}.";
-            }, readAfter: true);
+            }, "answering an agreement", readAfter: true);
 
         /// <summary>Deletes both answers, so the visitor starts over unanswered.</summary>
         private void Clear() =>
@@ -176,7 +174,7 @@ namespace GS2Studio.Showroom.Demo
                     }
                 }
                 return "Cleared your answers.";
-            }, readAfter: true);
+            }, "clearing your answers", readAfter: true);
 
         /// <summary>
         /// Checks every version at once and shows the verdict for each. GS2
@@ -184,8 +182,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private void Check()
         {
-            if (_verdict != null && !_busy) _verdict.text = "Checking...";
-            Run(async (client, token) =>
+            var started = Run(async (client, token) =>
             {
                 var result = await client.CheckVersionAsync(new CheckVersionRequest()
                     .WithNamespaceName(VersionNamespace)
@@ -207,10 +204,11 @@ namespace GS2Studio.Showroom.Demo
                         : "Not passed: no project token.");
                 }
                 return passed ? "The version check passed." : "The version check did not pass.";
-            }, readAfter: false, onFailed: () =>
+            }, "the version check", readAfter: false, onFailed: () =>
             {
                 if (_verdict != null) _verdict.text = "The check failed; see the log below.";
             });
+            if (started && _verdict != null) _verdict.text = "Checking...";
         }
 
         private static HashSet<string> Names(VersionStatus[]? statuses) =>
@@ -221,20 +219,20 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>Reads what the visitor has answered, for the answers line.</summary>
         private async void ReadAnswers()
         {
-            if (!TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             var generation = ++_answersGeneration;
             AcceptVersion[] items;
             try
             {
-                var result = await new Gs2VersionRestClient(gs2!.Super.RestSession).DescribeAcceptVersionsAsync(
+                var result = await new Gs2VersionRestClient(gs2.Super.RestSession).DescribeAcceptVersionsAsync(
                     new DescribeAcceptVersionsRequest()
                         .WithNamespaceName(VersionNamespace)
-                        .WithAccessToken(session!.AccessToken.Token));
+                        .WithAccessToken(session.AccessToken.Token));
                 items = result?.Items ?? Array.Empty<AcceptVersion>();
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(AgreementVersionCheckPanel)}: your answers could not be read: {error}");
+                if (this != null && generation == _answersGeneration) ShowroomLog.Failure("Your answers could not be read", error);
                 return;
             }
             if (this == null || _answers == null || generation != _answersGeneration) return;
@@ -247,45 +245,40 @@ namespace GS2Studio.Showroom.Demo
             }));
         }
 
-        /// <summary>Runs one press, one at a time, and puts what it says on the page.</summary>
-        private async void Run(
+        /// <summary>
+        /// Runs one press through `ShowroomPress`, with the page's buttons off
+        /// while it is out. <paramref name="onFailed"/> runs when the press
+        /// threw; <paramref name="readAfter"/> reads the answers again once it
+        /// is over (a REST read, which no SDK cache holds). Returns whether the
+        /// press started.
+        /// </summary>
+        private bool Run(
             Func<Gs2VersionRestClient, string, Task<string>> press,
+            string name,
             bool readAfter,
             Action? onFailed = null)
         {
-            if (_busy) return;
-            if (!TryRuntime(out var gs2, out var session))
-            {
-                Log("Not signed in yet.");
-                return;
-            }
-            _busy = true;
+            var succeeded = false;
             SetInteractable(false);
-            try
+            var started = ShowroomPress.Run(new ShowroomPressOptions
             {
-                var message = await press(
-                    new Gs2VersionRestClient(gs2!.Super.RestSession),
-                    session!.AccessToken.Token);
-                if (this != null) Log(message);
-            }
-            catch (Gs2Exception error)
+                Name = name,
+                Owner = this,
+                Explain = error => $"GS2 refused {name}: {ShowroomErrors.Describe(error)}",
+                Afterward = () =>
+                {
+                    SetInteractable(true);
+                    if (!succeeded) onFailed?.Invoke();
+                    if (readAfter) ReadAnswers();
+                },
+            }, async (gs2, session) =>
             {
-                if (this == null) return;
-                Log($"GS2 refused: {error.Message}");
-                onFailed?.Invoke();
-            }
-            catch (Exception error)
-            {
-                if (this == null) return;
-                Log($"Failed: {error.Message}");
-                onFailed?.Invoke();
-            }
-            finally
-            {
-                _busy = false;
-                if (this != null) SetInteractable(true);
-            }
-            if (readAfter) ReadAnswers();
+                var message = await press(new Gs2VersionRestClient(gs2.Super.RestSession), session.AccessToken.Token);
+                succeeded = true;
+                return message;
+            });
+            if (!started) SetInteractable(true);
+            return started;
         }
 
         private static Version_ ToVersion((int, int, int) value) =>
@@ -330,21 +323,6 @@ namespace GS2Studio.Showroom.Demo
             caption.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             caption.gameObject.AddComponent<LayoutElement>().minHeight = 24;
             return label;
-        }
-
-        private void Log(string message)
-        {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-            else Debug.LogWarning($"AgreementVersionCheckPanel: {message}", this);
-        }
-
-        private static bool TryRuntime(out Gs2Domain? gs2, out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = FindAnyObjectByType<GS2Studio.Generated.Runtime.Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
         }
     }
 }
