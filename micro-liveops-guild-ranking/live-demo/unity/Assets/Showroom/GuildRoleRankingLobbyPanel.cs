@@ -39,17 +39,22 @@
 // guild, and GS2 lets the guild token do only what the master role's policy
 // allows.
 //
-// The lobby grows and shrinks as the visitor's state changes, and every row
-// of the page below it moves; a press that lands in that moment is refused and
-// the visitor is asked to press again.
+// Each read is a `ShowroomWatch` that hands what the SDK reports to the
+// panel's `ShowroomInbox`, drained in `Update`; a read again that fails only
+// warns, and the subscription stays. The region is a `ShowroomRegion`: it is
+// rebuilt only when what it shows changed, and every press on the page waits
+// a moment after it moved, since the lobby grows and shrinks and every row of
+// the page below it moves. Presses run through `ShowroomPress`, one at a time
+// across the page.
+//
+// The structure follows the guild demo's lobby (`GuildRoleLobbyPanel`) part
+// for part; what differs is this page's: open guilds only, no join requests,
+// and joining by a copied id.
 #nullable enable
 
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using UnityEngine;
@@ -60,6 +65,7 @@ using Cysharp.Threading.Tasks.Linq;
 
 using Gs2.Core.Exception;
 using Gs2.Gs2Guild;
+using Gs2.Gs2Guild.Exception;
 using Gs2.Gs2Guild.Model;
 using Gs2.Gs2Guild.Request;
 using Gs2.Unity.Core;
@@ -68,7 +74,6 @@ using Gs2.Unity.Util;
 using GuildModel = Gs2.Gs2Guild.Model.Guild;
 using AuthAccessToken = Gs2.Gs2Auth.Model.AccessToken;
 using VisitorDomain = Gs2.Gs2Guild.Domain.Model.UserAccessTokenDomain;
-using GuildDomain = Gs2.Gs2Guild.Domain.Model.GuildDomain;
 using GuildAccessTokenDomain = Gs2.Gs2Guild.Domain.Model.GuildAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
@@ -94,15 +99,15 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>A guild id is GS2's name for the guild; a full id ends with it.</summary>
         private const int GuildIdLimit = 256;
 
-        /// <summary>
-        /// How long the clipboard may take to answer. A browser can leave a
-        /// permission prompt open, or never settle, and the buttons would
-        /// otherwise wait for it forever.
-        /// </summary>
-        private const float ClipboardSeconds = 10f;
-
         /// <summary>How long before it runs out the guild token is renewed.</summary>
         private const long GuildTokenMarginMs = 60_000;
+
+        /// <summary>
+        /// GS2's code for a player who already belongs to as many guilds as
+        /// the kind allows. Founding a guild refuses with it, and the SDK has
+        /// no exception type for that call.
+        /// </summary>
+        private const string MaximumJoinedCode = "user.joinedGuild.tooMany";
 
         private static readonly Color RowColor = new Color(0.16f, 0.15f, 0.22f, 1f);
         private static readonly Color LightText = new Color(0.922f, 0.91f, 0.949f, 1f);
@@ -112,26 +117,14 @@ namespace GS2Studio.Showroom.Demo
         [SerializeField] private Button? _buttonTemplate;
         [SerializeField] private Font? _font;
 
-        private RectTransform? _body;
+        private ShowroomRegion? _region;
         private InputField? _nameField;
         private RectTransform? _joinRegion;
         private InputField? _joinField;
-
-        /// <summary>What the clipboard is being asked to do, until it answers.</summary>
-        private enum Clipboard
-        {
-            Idle,
-            Copying,
-            Pasting,
-        }
-
-        private Clipboard _clipboard;
-        private float _clipboardDeadline;
-
-        /// <summary>What the region was last drawn from; null before the first draw.</summary>
-        private string? _shown;
-        private StringBuilder? _drawing;
         private Coroutine? _signingIn;
+
+        /// <summary>The panel's Copy or Paste, until the browser answers.</summary>
+        private readonly ShowroomClipboardRequest _clipboard = new ShowroomClipboardRequest();
 
         /// <summary>The visitor, set once they are signed in.</summary>
         private Gs2Domain? _gs2;
@@ -145,12 +138,12 @@ namespace GS2Studio.Showroom.Demo
         /// so a list the SDK reports empty while it is still reading it again
         /// is replaced by the full list before anything is drawn.
         /// </summary>
-        private readonly ConcurrentQueue<Action> _inbox = new ConcurrentQueue<Action>();
+        private readonly ShowroomInbox _inbox = new ShowroomInbox();
         private float _nextTick;
 
-        private readonly Watch _joinedWatch = new Watch();
-        private readonly Watch _guildWatch = new Watch();
-        private readonly Watch _search = new Watch();
+        private readonly ShowroomWatch _joinedWatch;
+        private readonly ShowroomWatch _guildWatch;
+        private readonly ShowroomWatch _search;
 
         /// <summary>The guild the joined list names, once it has been read.</summary>
         private bool _membershipKnown;
@@ -172,6 +165,16 @@ namespace GS2Studio.Showroom.Demo
         private AuthAccessToken? _guildToken;
         private string? _readFailure;
 
+        public GuildRoleRankingLobbyPanel()
+        {
+            // A read again that fails keeps the subscription, which still
+            // hears every change; the tick reads again.
+            ShowroomWatch Watch(string what) => new ShowroomWatch(_inbox, ShowroomWatch.RereadFailure.Keep, what);
+            _joinedWatch = Watch("the guilds");
+            _guildWatch = Watch("your guild");
+            _search = Watch("the guild search");
+        }
+
         private void OnEnable()
         {
             if (_panel == null || _buttonTemplate == null || _font == null)
@@ -179,7 +182,7 @@ namespace GS2Studio.Showroom.Demo
                 ShowroomLog.Say("The guild lobby was baked without its region, button or font.");
                 return;
             }
-            if (_body == null) Build();
+            if (_region == null) Build();
             _signingIn = StartCoroutine(WaitForSignIn());
         }
 
@@ -188,6 +191,7 @@ namespace GS2Studio.Showroom.Demo
             if (_signingIn != null) StopCoroutine(_signingIn);
             _signingIn = null;
             StopWatching();
+            _clipboard.Abandon();
         }
 
         private IEnumerator WaitForSignIn()
@@ -202,23 +206,11 @@ namespace GS2Studio.Showroom.Demo
 
         private void Build()
         {
-            _nameField = NameField();
-            _body = Child("Body", _panel!);
-            var layout = _body.gameObject.AddComponent<VerticalLayoutGroup>();
-            layout.spacing = 8;
-            layout.childControlWidth = true;
-            layout.childControlHeight = true;
-            layout.childForceExpandWidth = true;
-            layout.childForceExpandHeight = false;
-            Caption(_body, "Reading the guilds...", 15, MutedText);
+            _nameField = Field(_panel!, "NameField", "Name your guild", NameLimit);
+            _region = new ShowroomRegion(Region(_panel!, "Body"), _buttonTemplate!, _font!);
+            _region.Draw(region => region.Caption("Reading the guilds...", 15, MutedText));
 
-            _joinRegion = Child("JoinById", _panel!);
-            var join = _joinRegion.gameObject.AddComponent<VerticalLayoutGroup>();
-            join.spacing = 8;
-            join.childControlWidth = true;
-            join.childControlHeight = true;
-            join.childForceExpandWidth = true;
-            join.childForceExpandHeight = false;
+            _joinRegion = Region(_panel!, "JoinById");
             Caption(_joinRegion, "Or join a guild by its id. A member copies it from their guild here; a new guild can take a minute or two to show up in the list above.", 15, MutedText);
             _joinField = Field(_joinRegion, "GuildId", "Paste or type a guild id", GuildIdLimit);
             Press(_joinRegion, "Paste a guild id", Paste);
@@ -249,7 +241,7 @@ namespace GS2Studio.Showroom.Demo
             _joinedWatch.Stop();
             _guildWatch.Stop();
             _search.Stop();
-            while (_inbox.TryDequeue(out _)) { }
+            _inbox.Clear();
             _gs2 = null;
             _session = null;
             _visitor = null;
@@ -262,20 +254,13 @@ namespace GS2Studio.Showroom.Demo
             _found = Array.Empty<GuildModel>();
             _foundKnown = false;
             _guildToken = null;
-            _shown = null;
         }
 
         private void Update()
         {
-            PollClipboard();
+            _clipboard.Poll();
             if (_visitor == null) return;
-            var arrived = false;
-            while (_inbox.TryDequeue(out var apply))
-            {
-                apply();
-                arrived = true;
-            }
-            if (arrived) Settle();
+            if (_inbox.Drain()) Reconcile();
             if (Time.realtimeSinceStartup >= _nextTick) Tick();
         }
 
@@ -283,7 +268,7 @@ namespace GS2Studio.Showroom.Demo
         /// Follows the joined list: enters the guild it names, or the lobby.
         /// Then draws what is known.
         /// </summary>
-        private void Settle()
+        private void Reconcile()
         {
             if (!_membershipKnown) return;
             if (!_entered || _membership != _guildName) Enter(_membership);
@@ -339,80 +324,43 @@ namespace GS2Studio.Showroom.Demo
             else _guildWatch.Reread();
         }
 
-        /// <summary>Hands an SDK callback to the main thread, for as long as its watch lasts.</summary>
-        private void Post(Watch watch, int ticket, Action apply) =>
-            _inbox.Enqueue(() =>
-            {
-                if (watch.Is(ticket)) apply();
-            });
-
-        /// <summary>
-        /// Reads a watched list again through the domain and hands what it
-        /// read to <paramref name="apply"/>. The domain answers from the cache
-        /// while the cache holds the list, and otherwise reads it from GS2 and
-        /// caches it, which also tells every watcher. A list being read by the
-        /// SDK at the same time is waited for, not read twice. A failure only
-        /// logs: the next tick tries again.
-        /// </summary>
-        private async void Reread<T>(Watch watch, int ticket, Func<IUniTaskAsyncEnumerable<T>> read, Action<T[]> apply, string what)
-        {
-            try
-            {
-                var items = await read().ToArrayAsync();
-                if (watch.Is(ticket)) apply(items);
-            }
-            catch (Exception error)
-            {
-                if (watch.Is(ticket)) Debug.LogWarning($"{nameof(GuildRoleRankingLobbyPanel)}: {what} could not be read again: {error}");
-            }
-        }
-
         /// <summary>The guilds the visitor joined; the SDK reads them again on join and leave.</summary>
-        private async void WatchJoined()
+        private void WatchJoined()
         {
             var visitor = _visitor;
             if (visitor == null) return;
-            var ticket = _joinedWatch.Start();
-            void Apply(JoinedGuild[]? joined) => Post(_joinedWatch, ticket, () =>
-            {
-                // The SDK hands over the whole list, of every kind.
-                _membership = joined?.FirstOrDefault(entry => entry?.GuildModelName == GuildKind)?.GuildName;
-                _membershipKnown = true;
-                _readFailure = null;
-            });
-            void Reread() => this.Reread(_joinedWatch, ticket, () => visitor.JoinedGuildsAsync(GuildKind), Apply, "the guilds");
-            try
-            {
-                var id = await visitor.SubscribeJoinedGuildsWithInitialCallAsync(joined =>
+            _joinedWatch.SubscribeList<JoinedGuild>(
+                callback => visitor.SubscribeJoinedGuildsWithInitialCallAsync(callback, GuildKind),
+                id => visitor.UnsubscribeJoinedGuilds(id, GuildKind),
+                () => visitor.JoinedGuildsAsync(GuildKind),
+                joined =>
                 {
-                    // An empty list may only mean the cache no longer holds it.
-                    if (joined == null || joined.Length == 0) Reread();
-                    else Apply(joined);
-                }, GuildKind);
-                _joinedWatch.Attach(ticket, () => visitor.UnsubscribeJoinedGuilds(id, GuildKind), Reread);
-            }
-            catch (Exception error)
-            {
-                if (!_joinedWatch.Fail(ticket)) return;
-                Debug.LogWarning($"{nameof(GuildRoleRankingLobbyPanel)}: the guilds could not be read: {error}");
-                ReadFailed($"The guilds could not be read: {ShowroomErrors.Describe(error)}");
-            }
+                    // The SDK hands over the whole list, of every kind.
+                    _membership = joined.FirstOrDefault(entry => entry?.GuildModelName == GuildKind)?.GuildName;
+                    _membershipKnown = true;
+                    _readFailure = null;
+                },
+                error => ReadFailed("The guilds", error));
         }
 
         /// <summary>
         /// The visitor's guild; the SDK reads it again when a player joins or
-        /// leaves, and a press updates it with what GS2 returned.
+        /// leaves, and a press updates it with what GS2 returned. Reading it
+        /// again goes through the domain, which answers from the cache while
+        /// the cache holds the guild (even when what it holds is that the
+        /// guild is gone), so it asks GS2 only after the cache lost it; the
+        /// watch then hears what GS2 returned.
         /// </summary>
-        private async void WatchGuild(string guildName)
+        private void WatchGuild(string guildName)
         {
             var gs2 = _gs2;
             var session = _session;
             if (gs2 == null || session == null) return;
             var guild = gs2.Super.Guild.Namespace(GuildNamespace).Guild(GuildKind, guildName);
-            var ticket = _guildWatch.Start();
-            try
-            {
-                var id = await guild.SubscribeWithInitialCallAsync(session.AccessToken, model => Post(_guildWatch, ticket, () =>
+            _guildWatch.Subscribe<GuildModel>(
+                callback => guild.SubscribeWithInitialCallAsync(session.AccessToken, callback),
+                guild.Unsubscribe,
+                model =>
                 {
                     _guild = model;
                     _guildGone = model == null;
@@ -424,34 +372,9 @@ namespace GS2Studio.Showroom.Demo
                     // GS2 says the guild does not exist, yet the joined list
                     // named it, and no notification will correct that list.
                     _visitor?.InvalidateJoinedGuilds(GuildKind);
-                }));
-                _guildWatch.Attach(ticket, () => guild.Unsubscribe(id), () => RereadGuild(guild, session, ticket));
-            }
-            catch (Exception error)
-            {
-                if (!_guildWatch.Fail(ticket)) return;
-                Debug.LogWarning($"{nameof(GuildRoleRankingLobbyPanel)}: the guild could not be read: {error}");
-                ReadFailed($"The guilds could not be read: {ShowroomErrors.Describe(error)}");
-            }
-        }
-
-        /// <summary>
-        /// Reads the guild again through the domain. The domain answers from
-        /// the cache while the cache holds the guild, even when what it holds
-        /// is that the guild is gone, so this asks GS2 only after the cache
-        /// lost it; the SDK then caches what GS2 returned and the watch hears
-        /// it, so nothing is applied here.
-        /// </summary>
-        private async void RereadGuild(GuildDomain guild, IGameSession session, int ticket)
-        {
-            try
-            {
-                await guild.ModelAsync(session.AccessToken);
-            }
-            catch (Exception error)
-            {
-                if (_guildWatch.Is(ticket)) Debug.LogWarning($"{nameof(GuildRoleRankingLobbyPanel)}: the guild could not be read again: {error}");
-            }
+                },
+                async () => await guild.ModelAsync(session.AccessToken),
+                error => ReadFailed("Your guild", error));
         }
 
         /// <summary>
@@ -475,7 +398,7 @@ namespace GS2Studio.Showroom.Demo
                         orderBy: "last_updated")
                     .Take(SearchLimit)
                     .ToArrayAsync();
-                Post(_search, ticket, () =>
+                _search.Post(ticket, () =>
                 {
                     _found = found;
                     _foundKnown = true;
@@ -484,16 +407,22 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                if (!_search.Is(ticket)) return;
-                Debug.LogWarning($"{nameof(GuildRoleRankingLobbyPanel)}: the guilds could not be searched: {error}");
-                ReadFailed($"The guilds could not be read: {ShowroomErrors.Describe(error)}");
+                // The next tick searches again.
+                if (!_search.Fail(ticket)) return;
+                _inbox.Post(() => ReadFailed("The guilds", error));
             }
         }
 
         /// <summary>
         /// Says a failed read on the page once; the same failure again stays
-        /// quiet until a read succeeds.
+        /// quiet until a read succeeds. The console keeps the detail.
         /// </summary>
+        private void ReadFailed(string what, Exception error)
+        {
+            Debug.LogWarning($"[showroom] {nameof(GuildRoleRankingLobbyPanel)}: {what} could not be read: {error}");
+            ReadFailed($"{what} could not be read: {ShowroomErrors.Describe(error)}");
+        }
+
         private void ReadFailed(string message)
         {
             if (this == null || message == _readFailure) return;
@@ -528,115 +457,45 @@ namespace GS2Studio.Showroom.Demo
         private static string? RoleOf(GuildModel guild, string userId) =>
             guild.Members?.FirstOrDefault(member => member.UserId == userId)?.RoleName;
 
-        /// <summary>
-        /// One subscription, or one search. Stopping it, or starting it
-        /// again, retires its ticket: whatever the SDK reports under an old
-        /// ticket is dropped, and a subscription that finishes starting after
-        /// that is dropped at once. Once started, it can be read again.
-        /// </summary>
-        private sealed class Watch
-        {
-            private int _ticket;
-            private Action? _unsubscribe;
-            private Action? _reread;
-
-            public bool Running { get; private set; }
-            public bool Failed { get; private set; }
-
-            public int Start()
-            {
-                Stop();
-                Running = true;
-                return _ticket;
-            }
-
-            public bool Is(int ticket) => Running && ticket == _ticket;
-
-            public void Attach(int ticket, Action unsubscribe, Action reread)
-            {
-                if (Is(ticket))
-                {
-                    _unsubscribe = unsubscribe;
-                    _reread = reread;
-                }
-                else
-                {
-                    unsubscribe();
-                }
-            }
-
-            /// <summary>Reads again what the watch follows; nothing until it has started.</summary>
-            public void Reread() => _reread?.Invoke();
-
-            public bool Fail(int ticket)
-            {
-                if (!Is(ticket)) return false;
-                Running = false;
-                Failed = true;
-                return true;
-            }
-
-            public void Stop()
-            {
-                _ticket++;
-                Running = false;
-                Failed = false;
-                _reread = null;
-                var unsubscribe = _unsubscribe;
-                _unsubscribe = null;
-                unsubscribe?.Invoke();
-            }
-        }
-
         // ------------------------------------------------------------------
         // Drawing
 
         /// <summary>
-        /// Redraws the region whole, once the state being entered has been
-        /// read; until then what was drawn before stays.
+        /// Draws the region once the state being entered has been read; until
+        /// then what was drawn before stays.
         /// </summary>
         private void Draw()
         {
-            if (_body == null || _nameField == null || _joinRegion == null || !_entered) return;
-            var drawing = new StringBuilder();
+            if (_region == null || _nameField == null || _joinRegion == null || !_entered) return;
             if (_guildName != null)
             {
-                if (_guild == null) return;
-                Clear(_body);
+                var guild = _guild;
+                if (guild == null) return;
                 _nameField.gameObject.SetActive(false);
                 _joinRegion.gameObject.SetActive(false);
-                _drawing = drawing.Append("guild|");
-                DrawGuild(_guild);
+                _region.Draw(region => DescribeGuild(region, guild));
             }
             else
             {
                 if (!_foundKnown) return;
-                Clear(_body);
                 _nameField.gameObject.SetActive(true);
                 _joinRegion.gameObject.SetActive(true);
-                _drawing = drawing.Append("lobby|");
-                DrawLobby();
+                _region.Draw(DescribeLobby);
             }
-            _drawing = null;
-            // Presses wait only when what is shown changed: redrawing the
-            // same rows moves nothing.
-            var shown = drawing.ToString();
-            if (shown != _shown) ShowroomSettle.MarkChanged();
-            _shown = shown;
         }
 
-        private void DrawGuild(GuildModel guild)
+        private void DescribeGuild(ShowroomRegion.Description region, GuildModel guild)
         {
             var members = guild.Members ?? Array.Empty<Member>();
             var master = RoleOf(guild, _userId) == MasterRole;
-            Caption(_body!, $"{guild.DisplayName}  ({members.Length}/{guild.CurrentMaximumMemberCount ?? 0})", 18, LightText);
-            Caption(_body!, $"Guild id: {guild.Name}", 15, MutedText);
+            region.Caption($"{guild.DisplayName}  ({members.Length}/{guild.CurrentMaximumMemberCount ?? 0})", 18, LightText);
+            region.Caption($"Guild id: {guild.Name}", 15, MutedText);
             var id = guild.Name;
-            Press(_body!, "Copy the guild id, for another visitor to join by", () => Copy(id));
+            region.Press("Copy the guild id, for another visitor to join by", () => Copy(id));
             foreach (var member in members.OrderBy(member => member.JoinedAt ?? 0))
             {
                 var you = member.UserId == _userId ? "  (you)" : "";
-                Caption(_body!, $"{ShowroomPlayerTag.Of(member.UserId)}  {member.RoleName}{you}", 16, member.UserId == _userId ? LightText : MutedText);
+                region.Caption($"{ShowroomPlayerTag.Of(member.UserId)}  {member.RoleName}{you}", 16, member.UserId == _userId ? LightText : MutedText);
             }
 
             if (master)
@@ -645,29 +504,29 @@ namespace GS2Studio.Showroom.Demo
                 if (others.Length > 0)
                 {
                     var heir = others[0].UserId;
-                    Press(_body!, $"Hand over to {ShowroomPlayerTag.Of(heir)} and leave", () => HandOver(guild.Name, heir));
+                    region.Press($"Hand over to {ShowroomPlayerTag.Of(heir)} and leave", () => HandOver(guild.Name, heir));
                 }
                 else
                 {
-                    Press(_body!, "Disband the guild", () => Disband(guild.Name));
+                    region.Press("Disband the guild", () => Disband(guild.Name));
                 }
             }
             else
             {
-                Press(_body!, "Leave the guild", () => Leave(guild.Name));
+                region.Press("Leave the guild", () => Leave(guild.Name));
             }
         }
 
-        private void DrawLobby()
+        private void DescribeLobby(ShowroomRegion.Description region)
         {
-            Press(_body!, "Create a guild with this name", Create);
+            region.Press("Create a guild with this name", Create);
 
-            Caption(_body!, "Guilds you can join", 15, MutedText);
-            if (_found.Length == 0) Caption(_body!, "No guild has room right now. Create one.", 15, MutedText);
+            region.Caption("Guilds you can join", 15, MutedText);
+            if (_found.Length == 0) region.Caption("No guild has room right now. Create one.", 15, MutedText);
             foreach (var guild in _found)
             {
                 var name = guild.Name;
-                Press(_body!, $"Join {guild.DisplayName}  ({guild.Members?.Length ?? 0}/{guild.CurrentMaximumMemberCount ?? 0})", () => Join(name));
+                region.Press($"Join {guild.DisplayName}  ({guild.Members?.Length ?? 0}/{guild.CurrentMaximumMemberCount ?? 0})", () => Join(name));
             }
         }
 
@@ -751,54 +610,32 @@ namespace GS2Studio.Showroom.Demo
                 return "Disbanded the guild.";
             }, whenGone: ReadJoinedAgain);
 
+        // A clipboard refusal is not a failure of the page: the browser
+        // decides, so the visitor is told how to do it by hand.
+
         private void Copy(string guildName)
         {
-            if (_clipboard != Clipboard.Idle) return;
-            _clipboard = Clipboard.Copying;
-            _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
-            ShowroomClipboard.Copy(guildName);
+            if (_clipboard.Pending) return;
+            if (!_clipboard.Copy(guildName,
+                    () => ShowroomLog.Say("Copied the guild id. Send it to the visitor who should join."),
+                    reason => ShowroomLog.Say($"The browser did not let the page copy ({reason}). Select the guild id above and copy it, or read it out.")))
+            {
+                ShowroomLog.Say("One moment: the browser is still answering the last copy or paste.");
+            }
         }
 
         private void Paste()
         {
-            if (_clipboard != Clipboard.Idle) return;
-            _clipboard = Clipboard.Pasting;
-            _clipboardDeadline = Time.realtimeSinceStartup + ClipboardSeconds;
-            ShowroomClipboard.Paste();
-        }
-
-        /// <summary>
-        /// Hands over what the clipboard answered. A refusal is not a failure
-        /// of the page: the browser decides, so the visitor is told how to do
-        /// it by hand.
-        /// </summary>
-        private void PollClipboard()
-        {
-            if (_clipboard == Clipboard.Idle) return;
-            var outcome = ShowroomClipboard.Poll(out var text);
-            if (outcome == ShowroomClipboard.Outcome.Waiting)
+            if (_clipboard.Pending) return;
+            if (!_clipboard.Paste(
+                    text =>
+                    {
+                        if (_joinField != null) _joinField.text = text.Trim();
+                    },
+                    reason => ShowroomLog.Say($"The browser did not let the page paste ({reason}). Type the guild id into the field instead.")))
             {
-                if (Time.realtimeSinceStartup < _clipboardDeadline) return;
-                // The browser has not answered; a late answer is dropped.
-                ShowroomClipboard.Abandon();
-                outcome = ShowroomClipboard.Outcome.Refused;
-                text = "no answer";
+                ShowroomLog.Say("One moment: the browser is still answering the last copy or paste.");
             }
-            var doing = _clipboard;
-            _clipboard = Clipboard.Idle;
-            if (doing == Clipboard.Copying)
-            {
-                ShowroomLog.Say(outcome == ShowroomClipboard.Outcome.Done
-                    ? "Copied the guild id. Send it to the visitor who should join."
-                    : $"The browser did not let the page copy ({text}). Select the guild id above and copy it, or read it out.");
-                return;
-            }
-            if (outcome != ShowroomClipboard.Outcome.Done)
-            {
-                ShowroomLog.Say($"The browser did not let the page paste ({text}). Type the guild id into the field instead.");
-                return;
-            }
-            if (_joinField != null) _joinField.text = text.Trim();
         }
 
         /// <summary>
@@ -878,23 +715,37 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Says why GS2 refused, for the refusals a visitor can meet; null
-        /// leaves any other refusal to the runner's reading of it.
+        /// Says why GS2 refused, for the refusals a visitor can meet, by the
+        /// SDK's exception type or GS2's error code; null leaves any other
+        /// refusal to the runner's reading of it.
         /// </summary>
         private static string? Explain(Gs2Exception error)
         {
-            var text = string.Join(" ", error.Errors?.Select(detail => detail.message) ?? Array.Empty<string>()) + " " + error.Message;
-            if (text.Contains("maximumJoinedGathering")) return "That player already belongs to a guild.";
-            if (text.Contains("members.error.tooMany")) return "That guild is full.";
-            if (text.Contains("master.error.require")) return "A guild cannot be left without a master; hand it over or disband it.";
+            if (error is MaximumJoinedGuildsReachedException || HasCode(error, MaximumJoinedCode)) return "That player already belongs to a guild.";
+            if (error is MaximumMembersReachedException) return "That guild is full.";
+            if (error is GuildMasterRequiredException) return "A guild cannot be left without a master; hand it over or disband it.";
             if (error is NotFoundException) return "That guild is gone.";
             return null;
         }
 
+        private static bool HasCode(Gs2Exception error, string code) =>
+            error.Errors?.Any(detail => detail != null && detail.Code == code) == true;
+
         // ------------------------------------------------------------------
         // Building blocks
 
-        private InputField NameField() => Field(_panel!, "NameField", "Name your guild", NameLimit);
+        /// <summary>A region under <paramref name="parent"/> that stacks what is drawn into it.</summary>
+        private static RectTransform Region(RectTransform parent, string name)
+        {
+            var region = Child(name, parent);
+            var layout = region.gameObject.AddComponent<VerticalLayoutGroup>();
+            layout.spacing = 8;
+            layout.childControlWidth = true;
+            layout.childControlHeight = true;
+            layout.childForceExpandWidth = true;
+            layout.childForceExpandHeight = false;
+            return region;
+        }
 
         private InputField Field(RectTransform parent, string name, string placeholderText, int limit)
         {
@@ -929,9 +780,12 @@ namespace GS2Studio.Showroom.Demo
             return label;
         }
 
+        /// <summary>
+        /// A button of the fixed join region. It sits below the lobby, which
+        /// moves it, so a press waits for the page to settle.
+        /// </summary>
         private void Press(RectTransform parent, string text, Action onClick)
         {
-            if (parent == _body) _drawing?.Append("press:").Append(text).Append('|');
             var button = Instantiate(_buttonTemplate!, parent);
             button.name = "Press";
             var label = button.GetComponentInChildren<Text>();
@@ -949,7 +803,6 @@ namespace GS2Studio.Showroom.Demo
 
         private void Caption(RectTransform parent, string text, int size, Color color)
         {
-            if (parent == _body) _drawing?.Append("caption:").Append(text).Append('|');
             var caption = Child("Caption", parent);
             var label = caption.gameObject.AddComponent<Text>();
             label.font = _font;
@@ -966,19 +819,6 @@ namespace GS2Studio.Showroom.Demo
             var child = new GameObject(name, typeof(RectTransform)).GetComponent<RectTransform>();
             child.SetParent(parent, false);
             return child;
-        }
-
-        private static void Clear(RectTransform parent)
-        {
-            for (var index = parent.childCount - 1; index >= 0; index--)
-            {
-                // Destroy waits for the end of the frame, and until then a
-                // layout group still counts the child; an inactive one it
-                // skips.
-                var child = parent.GetChild(index).gameObject;
-                child.SetActive(false);
-                Destroy(child);
-            }
         }
     }
 }
