@@ -21,6 +21,10 @@
 // GS2 scales the rewards the prediction reports by it, so the stack goes with
 // every read, and a new one (a buff applied or dropped) is read again.
 //
+// The status subscription only posts to an inbox, drained in `Update`: an SDK
+// callback never touches Unity. A read that keeps failing is said on the page
+// once (`ShowroomLatch`) until one succeeds again.
+//
 // Nothing here reloads or invalidates anything.
 #nullable enable
 
@@ -178,6 +182,15 @@ namespace GS2Studio.Showroom.Demo
         private bool _readAgain;
         private Action? _unsubscribe;
 
+        /// <summary>Work the status subscription hands over to the main thread.</summary>
+        private readonly ShowroomInbox _inbox = new ShowroomInbox();
+
+        /// <summary>Says a failing prediction read once until a read succeeds.</summary>
+        private readonly ShowroomLatch _readFailures = new ShowroomLatch();
+
+        /// <summary>Says a failing category read once until a read succeeds.</summary>
+        private readonly ShowroomLatch _intervalFailures = new ShowroomLatch();
+
         private void OnEnable()
         {
             DemoTimeOffset.Applied += OnClockApplied;
@@ -189,20 +202,27 @@ namespace GS2Studio.Showroom.Demo
             DemoTimeOffset.Applied -= OnClockApplied;
             _unsubscribe?.Invoke();
             _unsubscribe = null;
+            _inbox.Clear();
+        }
+
+        private void Update()
+        {
+            _inbox.Drain();
         }
 
         private IEnumerator Run()
         {
             Gs2Domain? gs2;
             IGameSession? session;
-            while (!TryRuntime(out gs2, out session))
+            while (!ShowroomRuntime.TryGet(out gs2, out session))
             {
                 yield return new WaitForSeconds(0.25f);
             }
 
-            // Receive changes the stored status, and the SDK hears that.
+            // Receive changes the stored status, and the SDK hears that. The
+            // callback may run off the main thread, so it only posts.
             _unsubscribe = new Gs2Bind.Gs2Idle.StatusLoader(Namespace, Category).Subscribe(
-                gs2!, session!, (_, _, _) => Task.CompletedTask, () => Read());
+                gs2, session, (_, _, _) => Task.CompletedTask, () => _inbox.Post(Read));
             ReadInterval();
             Read();
 
@@ -247,19 +267,20 @@ namespace GS2Studio.Showroom.Demo
 
         private async void ReadInterval()
         {
-            if (!TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             _intervalAttemptedAt = Time.realtimeSinceStartup;
             try
             {
                 var category = await new Gs2Bind.Gs2Idle.CategoryModelLoader(Namespace, Category)
-                    .Load(gs2!, session!);
+                    .Load(gs2, session);
                 if (this == null || category == null) return;
+                _intervalFailures.Succeeded();
                 RewardIntervalMinutes = category.RewardIntervalMinutes;
                 Updated?.Invoke();
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(IdlePrediction)}: the idle category could not be read: {error}");
+                if (this != null) _intervalFailures.Fail("The idle category could not be read", error);
             }
         }
 
@@ -270,7 +291,7 @@ namespace GS2Studio.Showroom.Demo
         private async void Read()
         {
             // Resolved on every read: the session is the one signed in now.
-            if (!TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             if (_reading)
             {
                 _readAgain = true;
@@ -278,22 +299,23 @@ namespace GS2Studio.Showroom.Demo
             }
             _reading = true;
             _attemptedAt = Time.realtimeSinceStartup;
-            var contextStack = gs2!.Super.DefaultContextStack;
+            var contextStack = gs2.Super.DefaultContextStack;
             try
             {
-                var result = await new Gs2IdleRestClient(gs2!.Super.RestSession).PredictionAsync(
+                var result = await new Gs2IdleRestClient(gs2.Super.RestSession).PredictionAsync(
                     new PredictionRequest()
                         .WithNamespaceName(Namespace)
                         .WithCategoryName(Category)
-                        .WithAccessToken(session!.AccessToken.Token)
+                        .WithAccessToken(session.AccessToken.Token)
                         .WithContextStack(contextStack));
                 if (this == null) return;
+                _readFailures.Succeeded();
                 _readIdleMinutes = result?.Status?.IdleMinutes ?? 0;
                 _readNextRewardsAt = result?.Status?.NextRewardsAt ?? 0;
                 // The server's times are on the demo clock. They are moved onto
                 // this device's clock with the player's current offset, read
                 // each time it is needed, so a change shows before the next read.
-                _userId = session!.UserId;
+                _userId = session.UserId;
                 // Remembered once the read has come back: a read that failed
                 // leaves the change to be noticed again.
                 _readContextStack = contextStack;
@@ -305,7 +327,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(IdlePrediction)}: the idle prediction failed: {error}");
+                if (this != null) _readFailures.Fail("The idle prediction could not be read", error);
             }
             finally
             {
@@ -348,15 +370,7 @@ namespace GS2Studio.Showroom.Demo
 
         private bool ContextStackChanged()
         {
-            return TryRuntime(out var gs2, out _) && gs2!.Super.DefaultContextStack != _readContextStack;
-        }
-
-        private static bool TryRuntime(out Gs2Domain? gs2, out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = FindAnyObjectByType<GS2Studio.Generated.Runtime.Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
+            return ShowroomRuntime.TryGet(out var gs2, out _) && gs2.Super.DefaultContextStack != _readContextStack;
         }
     }
 }

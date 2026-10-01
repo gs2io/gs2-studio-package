@@ -137,9 +137,9 @@ namespace GS2Studio.Showroom.Demo
 
         private float _nextExpiredApply;
 
-        /// <summary>Set while a failure has been logged, so a lasting one is logged once.</summary>
-        private bool _triggerFailureLogged;
-        private bool _applyFailureLogged;
+        /// <summary>Say a lasting failure once, until a read or apply succeeds again.</summary>
+        private readonly ShowroomLatch _triggerFailures = new ShowroomLatch();
+        private readonly ShowroomLatch _applyFailures = new ShowroomLatch();
 
         private readonly List<UnityEngine.Events.UnityEvent> _pressEvents = new List<UnityEngine.Events.UnityEvent>();
 
@@ -161,11 +161,11 @@ namespace GS2Studio.Showroom.Demo
         private IEnumerator Run()
         {
             IGameSession? session;
-            while (!TryRuntime(out _, out session))
+            while (!ShowroomRuntime.TryGet(out _, out session))
             {
                 yield return new WaitForSeconds(0.25f);
             }
-            _userId = session!.UserId;
+            _userId = session.UserId;
             ListenToPresses();
             DemoTimeOffset.TryGet(_userId, out _);
             ReadTrigger();
@@ -242,7 +242,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private async void ReadTrigger()
         {
-            if (!TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             if (_readingTrigger)
             {
                 _readTriggerAgain = true;
@@ -251,7 +251,7 @@ namespace GS2Studio.Showroom.Demo
             _readingTrigger = true;
             try
             {
-                await ReadTriggerOnce(gs2!, session!);
+                await ReadTriggerOnce(gs2, session);
             }
             finally
             {
@@ -294,15 +294,11 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                if (!_triggerFailureLogged)
-                {
-                    _triggerFailureLogged = true;
-                    Debug.LogError($"{nameof(BuffCampaignState)}: the campaign trigger could not be read: {error}");
-                }
+                if (this != null) _triggerFailures.Fail("The campaign trigger could not be read", error);
                 return;
             }
             if (this == null) return;
-            _triggerFailureLogged = false;
+            _triggerFailures.Succeeded();
             _userId = session.UserId;
             if (expiresAt == _triggerExpiresAt) return;
             _triggerExpiresAt = expiresAt;
@@ -321,7 +317,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private async void Apply()
         {
-            if (!TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             if (_applying)
             {
                 _applyAgain = true;
@@ -330,24 +326,20 @@ namespace GS2Studio.Showroom.Demo
             _applying = true;
             try
             {
-                var result = await new Gs2BuffRestClient(gs2!.Super.RestSession).ApplyBuffAsync(
+                var result = await new Gs2BuffRestClient(gs2.Super.RestSession).ApplyBuffAsync(
                     new ApplyBuffRequest()
                         .WithNamespaceName(BuffNamespace)
-                        .WithAccessToken(session!.AccessToken.Token));
+                        .WithAccessToken(session.AccessToken.Token));
                 if (this == null) return;
                 gs2.Super.DefaultContextStack = result?.NewContextStack;
                 Active = result?.Items != null && result.Items.Length > 0;
                 HasValue = true;
-                _applyFailureLogged = false;
+                _applyFailures.Succeeded();
                 Updated?.Invoke();
             }
             catch (Exception error)
             {
-                if (!_applyFailureLogged)
-                {
-                    _applyFailureLogged = true;
-                    Debug.LogError($"{nameof(BuffCampaignState)}: the buff could not be applied: {error}");
-                }
+                if (this != null) _applyFailures.Fail("The buff could not be applied", error);
             }
             finally
             {
@@ -358,14 +350,6 @@ namespace GS2Studio.Showroom.Demo
                     Apply();
                 }
             }
-        }
-
-        private static bool TryRuntime(out Gs2Domain? gs2, out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = FindAnyObjectByType<GS2Studio.Generated.Runtime.Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
         }
     }
 }
