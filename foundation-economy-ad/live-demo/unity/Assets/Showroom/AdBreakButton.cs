@@ -92,7 +92,6 @@ namespace GS2Studio.Showroom.Demo
 
         private AdViewPointWatchButton? _watch;
         private AdBreakOverlay? _overlay;
-        private ShowroomPage? _page;
 
         private bool _granting;
 
@@ -197,21 +196,10 @@ namespace GS2Studio.Showroom.Demo
 
         /// <summary>
         /// Puts a wiring failure where both a developer and a visitor can see
-        /// it. Reflection and a baked reference both fail by being absent, and
-        /// a browser hides the console, so neither record is enough on its own.
-        ///
-        /// The page now mirrors what Unity logs as an error, so the first line
-        /// here reaches it on its own and the second is a duplicate — kept on
-        /// purpose, because the mirror cuts a message to its first 200
-        /// characters and these are repair instructions that name a file and a
-        /// field. The one message on this page that must arrive whole is this
-        /// one, so it is also sent the way that does not shorten it.
+        /// it, whole: these are repair instructions that name a file and a
+        /// field, and the page's mirror of a console error would cut them
+        /// short (`ShowroomLog.SayWhole`).
         /// </summary>
-        private void Report(string message)
-        {
-            Debug.LogError($"{nameof(AdBreakButton)} on '{name}': {message}", this);
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-        }
+        private void Report(string message) => ShowroomLog.SayWhole(message, this);
     }
 }
