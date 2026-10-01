@@ -97,7 +97,7 @@ namespace GS2Studio.Showroom
                 if (line == null)
                 {
                     if (options.Unexplained != null) unexplained = error;
-                    else line = options.Redact ? $"GS2 refused: {ShowroomErrors.Summary(error)}" : ShowroomErrors.Describe(error);
+                    else line = Unexplainable(options, error);
                 }
             }
             catch (Exception error)
@@ -112,14 +112,24 @@ namespace GS2Studio.Showroom
                 _busy = false;
             }
 
-            ShowroomLog.Say(line);
             // An owner that was given and has since been destroyed compares
             // equal to null by Unity's rules while the reference is not null.
-            if (!ReferenceEquals(options.Owner, null) && options.Owner == null) return;
+            var ownerGone = !ReferenceEquals(options.Owner, null) && options.Owner == null;
+            // A refusal meant for the owner's `Unexplained` is said here
+            // instead once the owner is gone, so it is still said once.
+            if (ownerGone && unexplained != null) line = Unexplainable(options, unexplained);
+            // Guarded like the callbacks: a line that fails to draw must not
+            // keep `Afterward` from turning the buttons back on.
+            Guarded(options, () => ShowroomLog.Say(line));
+            if (ownerGone) return;
             if (unexplained != null) Guarded(options, () => options.Unexplained!(unexplained));
             if (gone && options.WhenGone != null) Guarded(options, options.WhenGone);
             if (options.Afterward != null) Guarded(options, options.Afterward);
         }
+
+        /// <summary>The runner's own reading of a refusal nothing explained.</summary>
+        private static string Unexplainable(ShowroomPressOptions options, Gs2Exception error) =>
+            options.Redact ? $"GS2 refused: {ShowroomErrors.Summary(error)}" : ShowroomErrors.Describe(error);
 
         /// <summary>The press's own line for a refusal, or null; an Explain that throws explains nothing.</summary>
         private static string? Explained(ShowroomPressOptions options, Gs2Exception error)
@@ -148,7 +158,15 @@ namespace GS2Studio.Showroom
             }
             catch (Exception failure)
             {
-                ShowroomLog.Failure($"After {options.Name}, the page could not update", failure);
+                try
+                {
+                    ShowroomLog.Failure($"After {options.Name}, the page could not update", failure);
+                }
+                catch (Exception)
+                {
+                    // The page's log is what failed; the console still has the warning.
+                    Debug.LogWarning($"[showroom] After {options.Name}, the page could not update: {failure}");
+                }
             }
         }
 

@@ -76,14 +76,14 @@ namespace GS2Studio.Showroom.Demo
             ReadRemembered(RememberedUserIdKey) == userId && ReadRemembered(RememberedPasswordKey) == password;
 
         /// <summary>
-        /// Whether GS2 refused because the player already has a transfer code.
-        ///
-        /// The SDK has no exception type for this refusal, so its message is
-        /// matched (`account.takeOver.takeOver.error.alreadyExists`); switch
-        /// to the error code once the SDK carries one.
+        /// Whether GS2 refused because the player already has a transfer code:
+        /// by its client error code, which the SDK has no exception type for.
         /// </summary>
         public static bool IsAlreadyRegistered(Gs2Exception error) =>
-            error is ConflictException || ShowroomRefusal.Has(error, "takeOver.error.alreadyExists");
+            error is ConflictException || ShowroomRefusal.HasCode(error, TakeOverAlreadyExistsCode);
+
+        /// <summary>GS2's code for a transfer code the player already has.</summary>
+        private const string TakeOverAlreadyExistsCode = "account.takeOver.alreadyExists";
 
         /// <summary>
         /// Says why GS2 refused, for the refusals a visitor can meet; null

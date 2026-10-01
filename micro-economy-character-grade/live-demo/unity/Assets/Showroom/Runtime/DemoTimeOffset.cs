@@ -42,7 +42,7 @@ namespace GS2Studio.Showroom
     /// <summary>
     /// The time offset, in seconds, the signed-in player's account has on GS2.
     /// </summary>
-    public static class DemoTimeOffset
+    internal static class DemoTimeOffset
     {
         /// <summary>
         /// The largest offset GS2 accepts: ten years, in seconds.
@@ -170,7 +170,9 @@ namespace GS2Studio.Showroom
             }
             catch (Exception error)
             {
-                return Failed($"{error.GetType().Name}: {error.Message}");
+                // By kind and code only: the request carried the password,
+                // and GS2's messages or an exception's text may echo it.
+                return Failed(ShowroomErrors.Summary(error));
             }
 
             _retryAt = float.NegativeInfinity;
@@ -180,6 +182,20 @@ namespace GS2Studio.Showroom
             _seconds = seconds;
             if (changed) Loaded?.Invoke(userId);
             return true;
+        }
+
+        /// <summary>Starts every play session knowing nothing, with domain reload off or on.</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetOnPlay()
+        {
+            Changed = null;
+            Applied = null;
+            Loaded = null;
+            _userId = null;
+            _seconds = 0;
+            _reading = null;
+            _retryAt = float.NegativeInfinity;
+            _failureLogged = false;
         }
 
         private static bool Failed(string reason)

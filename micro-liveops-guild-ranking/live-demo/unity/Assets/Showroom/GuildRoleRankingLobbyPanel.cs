@@ -721,15 +721,12 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private static string? Explain(Gs2Exception error)
         {
-            if (error is MaximumJoinedGuildsReachedException || HasCode(error, MaximumJoinedCode)) return "That player already belongs to a guild.";
+            if (error is MaximumJoinedGuildsReachedException || ShowroomRefusal.HasCode(error, MaximumJoinedCode)) return "That player already belongs to a guild.";
             if (error is MaximumMembersReachedException) return "That guild is full.";
             if (error is GuildMasterRequiredException) return "A guild cannot be left without a master; hand it over or disband it.";
             if (error is NotFoundException) return "That guild is gone.";
             return null;
         }
-
-        private static bool HasCode(Gs2Exception error, string code) =>
-            error.Errors?.Any(detail => detail != null && detail.Code == code) == true;
 
         // ------------------------------------------------------------------
         // Building blocks

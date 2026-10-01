@@ -71,8 +71,9 @@ namespace GS2Studio.Showroom.Demo
         /// leaves any other refusal to the press runner.
         ///
         /// GS2-Friend's SDK has no exception types for these refusals, so they
-        /// are matched by message; switch to the error code once the SDK
-        /// carries one.
+        /// are recognised by GS2's client error codes. A profile text that is
+        /// too long is a request validation GS2 gives no code, so it is
+        /// recognised by its kind and the field GS2 names.
         /// </summary>
         public static string? Explain(FriendPress press, Gs2Exception error)
         {
@@ -89,8 +90,13 @@ namespace GS2Studio.Showroom.Demo
             }
             // A full outbox drops its oldest request instead; this refusal means
             // the visitor already has as many friends as GS2 allows.
-            if (ShowroomRefusal.Has(error, "capacity.error.full")) return "You already have as many friends as GS2 allows (1000); remove one first.";
-            if (ShowroomRefusal.Has(error, "targetUserId.error.duplicate"))
+            if (ShowroomRefusal.HasCode(error, "friend.sendFriendRequest.capacity.full")) return "You already have as many friends as GS2 allows (1000); remove one first.";
+            if (ShowroomRefusal.HasAnyCode(
+                    error,
+                    "friend.sendFriendRequest.targetUserId.duplicate",
+                    "friend.friend.targetUserId.duplicate",
+                    "friend.followUser.targetUserId.duplicate",
+                    "friend.blackList.targetUserId.duplicate"))
             {
                 return press switch
                 {
@@ -101,8 +107,9 @@ namespace GS2Studio.Showroom.Demo
                     _ => "That was already done.",
                 };
             }
-            if (ShowroomRefusal.Has(error, "targetUserId.error.invalid")) return "That id is not another player's: you cannot do this to yourself.";
-            if (ShowroomRefusal.HasAny(error, "publicProfile.error.tooLong", "followerProfile.error.tooLong", "friendProfile.error.tooLong"))
+            if (ShowroomRefusal.HasCode(error, "friend.sendFriendRequest.targetUserId.self")) return "That id is not another player's: you cannot do this to yourself.";
+            if (error is BadRequestException &&
+                ShowroomRefusal.IsAnyComponent(error, "publicProfile", "followerProfile", "friendProfile"))
             {
                 return "That profile text is too long.";
             }

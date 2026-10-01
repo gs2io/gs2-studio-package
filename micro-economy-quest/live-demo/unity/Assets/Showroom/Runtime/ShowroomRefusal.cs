@@ -1,18 +1,20 @@
 // Whether GS2 refused for a given reason.
 //
-// GS2 names a refusal with a dotted message such as
-// `rankingModel.ranking.error.alreadyReceived`, whose leading parts name where
-// it was raised and may differ between the paths that raise the same reason.
-// A reason is therefore matched as the message itself or as its dotted tail:
-// `alreadyReceived` and `error.alreadyReceived` both match the example, while
-// `Received` does not.
+// A reason is recognised by GS2's client error code (`errors[].code`, such as
+// `limit.counter.overflow`), never by its message: the message is wording
+// that GS2 may change, and a page that matched it would stop recognising the
+// refusal in silence. Where the SDK raises a typed exception for the reason,
+// the caller's `catch` or `is` on that type comes first; the code is what
+// stands in where the SDK has no type for it yet.
 //
-// The messages read are the ones `ShowroomErrors` reads: the list the SDK
-// parsed, and the messages inside a body it left unparsed, which is how a
+// The entries read are the ones `ShowroomErrors` reads: the list the SDK
+// parsed, and the entries inside a body it left unparsed, which is how a
 // refusal from inside an atomically committed transaction arrives.
 //
-// What only the exception's type says (`NotFoundException`, a conflict) is
-// left to the caller's `catch` or `is`; this answers only about messages.
+// A few refusals carry no code at all: a request field's validation (a
+// profile text that is too long) and a handful GS2 has not coded yet. Those
+// are recognised by the exception's type and the entry's component, the field
+// or model GS2 names (`IsComponent`), which is structure rather than wording.
 #nullable enable
 
 using System;
@@ -21,39 +23,61 @@ using Gs2.Core.Exception;
 
 namespace GS2Studio.Showroom
 {
-    /// <summary>Recognises a GS2 refusal by its reason.</summary>
+    /// <summary>Recognises a GS2 refusal by its code, or by its component where it has none.</summary>
     public static class ShowroomRefusal
     {
-        /// <summary>
-        /// Whether one of GS2's messages for <paramref name="error"/> is
-        /// <paramref name="reason"/>, or ends with "." and then it.
-        /// </summary>
-        public static bool Has(Gs2Exception? error, string reason)
+        /// <summary>Whether one of GS2's entries for <paramref name="error"/> carries <paramref name="code"/>.</summary>
+        public static bool HasCode(Gs2Exception? error, string code)
         {
-            if (error == null || string.IsNullOrEmpty(reason)) return false;
-            foreach (var message in ShowroomErrors.Messages(error))
+            if (error == null || string.IsNullOrEmpty(code)) return false;
+            foreach (var detail in ShowroomErrors.Details(error))
             {
-                if (Matches(message, reason)) return true;
+                if (string.Equals(detail.Code, code, StringComparison.Ordinal)) return true;
             }
             return false;
         }
 
-        /// <summary>Whether GS2 refused for any of <paramref name="reasons"/>.</summary>
-        public static bool HasAny(Gs2Exception? error, params string[] reasons)
+        /// <summary>Whether one of GS2's entries for <paramref name="error"/> carries any of <paramref name="codes"/>.</summary>
+        public static bool HasAnyCode(Gs2Exception? error, params string[] codes)
         {
-            if (error == null || reasons == null || reasons.Length == 0) return false;
-            foreach (var message in ShowroomErrors.Messages(error))
+            if (error == null || codes == null || codes.Length == 0) return false;
+            foreach (var detail in ShowroomErrors.Details(error))
             {
-                foreach (var reason in reasons)
+                if (detail.Code.Length == 0) continue;
+                foreach (var code in codes)
                 {
-                    if (!string.IsNullOrEmpty(reason) && Matches(message, reason)) return true;
+                    if (string.Equals(detail.Code, code, StringComparison.Ordinal)) return true;
                 }
             }
             return false;
         }
 
-        private static bool Matches(string message, string reason) =>
-            string.Equals(message, reason, StringComparison.Ordinal) ||
-            message.EndsWith("." + reason, StringComparison.Ordinal);
+        /// <summary>
+        /// Whether one of GS2's entries for <paramref name="error"/> was raised
+        /// at <paramref name="component"/> (the field or model GS2 names).
+        ///
+        /// Only for a refusal GS2 gives no code, and only together with the
+        /// exception's type: a component says where, not why.
+        /// </summary>
+        public static bool IsComponent(Gs2Exception? error, string component)
+        {
+            if (error == null || string.IsNullOrEmpty(component)) return false;
+            foreach (var detail in ShowroomErrors.Details(error))
+            {
+                if (string.Equals(detail.Component, component, StringComparison.Ordinal)) return true;
+            }
+            return false;
+        }
+
+        /// <summary>Whether one of GS2's entries for <paramref name="error"/> was raised at any of <paramref name="components"/>.</summary>
+        public static bool IsAnyComponent(Gs2Exception? error, params string[] components)
+        {
+            if (error == null || components == null || components.Length == 0) return false;
+            foreach (var component in components)
+            {
+                if (IsComponent(error, component)) return true;
+            }
+            return false;
+        }
     }
 }

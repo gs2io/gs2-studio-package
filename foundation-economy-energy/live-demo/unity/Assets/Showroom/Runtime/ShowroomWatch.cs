@@ -270,13 +270,28 @@ namespace GS2Studio.Showroom
         private void StartFailed(int ticket, Exception error, Action<Exception>? failed)
         {
             if (!Fail(ticket)) return;
+            // Checked again when the inbox is drained: a watch restarted (or
+            // stopped) in the meantime has retired this ticket, and its
+            // failure is no longer news.
             if (failed != null)
             {
-                _inbox.Post(() => failed(error));
+                _inbox.Post(() =>
+                {
+                    if (FailedAt(ticket)) failed(error);
+                });
                 return;
             }
             var what = What.Length == 0 ? "What this page watches" : char.ToUpperInvariant(What[0]) + What.Substring(1);
-            _inbox.Post(() => ShowroomLog.Failure($"{what} could not be read", error));
+            _inbox.Post(() =>
+            {
+                if (FailedAt(ticket)) ShowroomLog.Failure($"{what} could not be read", error);
+            });
+        }
+
+        /// <summary>Whether <paramref name="ticket"/> is the one that failed last and nothing has started since.</summary>
+        private bool FailedAt(int ticket)
+        {
+            lock (_gate) return _failed && !_running && ticket == _ticket;
         }
     }
 }

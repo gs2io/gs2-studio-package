@@ -91,7 +91,7 @@ namespace GS2Studio.Showroom.Demo
                             },
                         });
             }
-            catch (BadRequestException error) when (RefusedByPattern(error))
+            catch (BadRequestException error) when (ShowroomRefusal.HasCode(error, NotMatchRegexCode))
             {
                 return $"GS2 refused: {ItemName(equipmentPropertyId)} does not fit the {slotName} slot.";
             }
@@ -112,25 +112,23 @@ namespace GS2Studio.Showroom.Demo
         }
 
         /// <summary>
-        /// Whether GS2 refused the slot because the equipment is not one the
-        /// slot's pattern names: `formation.slot.propertyId.error.notMatchRegex`.
+        /// GS2's code for equipment that is not one the slot's pattern names.
         /// </summary>
-        private static bool RefusedByPattern(Gs2Exception error)
-        {
-            if (error.Errors == null) return false;
-            foreach (var detail in error.Errors)
-            {
-                if (detail.Message == "formation.slot.propertyId.error.notMatchRegex") return true;
-            }
-            return false;
-        }
+        private const string NotMatchRegexCode = "formation.slot.propertyId.notMatchRegex";
 
         /// <summary>
         /// Whether the loadout script refused the save for the named reason.
-        /// The script's own message reaches the client embedded in the error
-        /// GS2-Script reports, so it is looked for inside rather than matched,
-        /// and GS2-Formation passes the refusal on as a bad gateway rather than
-        /// a bad request, so the check is made on any Gs2Exception.
+        ///
+        /// The one refusal on the showroom recognised by its message, and on
+        /// purpose: the message is this package's own
+        /// (`dsl/scripts/update-property-form.lua`), not GS2's wording, and
+        /// GS2-Script's `fail(status, message)` cannot attach a client error
+        /// code, so the message is all the script can say. It reaches the
+        /// client embedded in the error GS2-Script reports, so it is looked
+        /// for inside rather than matched, and GS2-Formation passes the
+        /// refusal on as a bad gateway rather than a bad request, so the check
+        /// is made on any Gs2Exception. Listed in check-demo-written-code's
+        /// message-match allowlist.
         /// </summary>
         private static bool RefusedByScript(Gs2Exception error, string reason)
         {

@@ -325,14 +325,14 @@ namespace GS2Studio.Showroom.Demo
                     .ReceiveGlobalRankingRewardAsync(speculativeExecute: false);
                 if (transaction != null) await transaction.WaitAsync(true);
             }
-            catch (BadRequestException error) when (ShowroomRefusal.Has(error, "alreadyReceived"))
+            catch (BadRequestException error) when (ShowroomRefusal.HasCode(error, "ranking2.rankingReward.alreadyReceived"))
             {
                 _standingGeneration++;
                 Received = true;
                 Updated?.Invoke();
                 return "You have already received this contest's reward.";
             }
-            catch (BadRequestException error) when (ShowroomRefusal.Has(error, "inSchedule"))
+            catch (BadRequestException error) when (ShowroomRefusal.HasCode(error, "ranking2.rankingReward.inSchedule"))
             {
                 // This device's clock can run ahead of GS2's by a moment.
                 ReadTrigger();

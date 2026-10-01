@@ -20,7 +20,6 @@
 
 using System;
 using System.Collections;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -223,25 +222,22 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private static string Explain(Gs2Exception error, string code)
         {
-            if (Refused(error, "limit.counter.count.error.overflow"))
+            if (ShowroomRefusal.HasCode(error, CounterOverflowCode))
             {
                 return "You have already redeemed a code; each visitor can redeem once.";
             }
-            if (error is NotFoundException || Refused(error, "serialKey.serialKey.serialKey.error.notFound"))
+            if (error is NotFoundException || ShowroomRefusal.HasCode(error, CodeNotFoundCode))
             {
                 return $"{code} is not a code GS2 knows. Codes are case sensitive.";
             }
             return $"Redeeming {code} failed: {ShowroomErrors.Describe(error)}";
         }
 
-        /// <summary>
-        /// Whether GS2 refused with the given message. A refusal from inside
-        /// the exchange's transaction arrives with its body unparsed, so the
-        /// message is also looked for, quoted, in the body itself.
-        /// </summary>
-        private static bool Refused(Gs2Exception error, string message) =>
-            error.Errors?.Any(detail => detail.message == message) == true
-            || (error.Message?.Contains($"\"{message}\"") ?? false);
+        /// <summary>GS2's code for a usage counter already at its limit: the visitor redeemed already.</summary>
+        private const string CounterOverflowCode = "limit.counter.overflow";
+
+        /// <summary>GS2's code for a serial code it does not know.</summary>
+        private const string CodeNotFoundCode = "code.code.notFound";
 
         /// <summary>Reads whether the visitor has redeemed, off the usage counter.</summary>
         private async void ReadRedeemed()

@@ -18,6 +18,11 @@
 // `TimeOffset` is left alone: the SDK reads it as part of the session's
 // identity, and the account sign-in never fills it, so it stays null and the
 // page's subscriptions keep their key.
+//
+// An advance runs as a press (`DemoClockAdvanceButton` hands it to
+// `ShowroomPress`), so it waits its turn with every other press on the page:
+// two advances at once would both read the same offset and move the clock
+// once, not twice, and a press racing an advance would go out on either clock.
 #nullable enable
 
 using System;
@@ -25,8 +30,8 @@ using System.Threading.Tasks;
 
 using UnityEngine;
 
-using Gs2.Core.Exception;
 using Gs2.Gs2Account.Request;
+using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using Gs2Bind.Gs2Account;
 
@@ -37,51 +42,34 @@ namespace GS2Studio.Showroom
     /// </summary>
     internal static class DemoClockAdvance
     {
-        /// <summary>
-        /// Whether one advance is already on its way. Two at once would both
-        /// read the same offset and move the clock once, not twice.
-        /// </summary>
-        private static bool _running;
+        /// <summary>What one advance did.</summary>
+        internal readonly struct Outcome
+        {
+            public Outcome(bool applied, string line)
+            {
+                Applied = applied;
+                Line = line;
+            }
+
+            /// <summary>Whether the account has the new offset and the session signed in with it.</summary>
+            public bool Applied { get; }
+
+            /// <summary>What the page should say ("" for nothing).</summary>
+            public string Line { get; }
+        }
 
         /// <summary>
         /// Moves the signed-in player's clock forward by the seconds given and
-        /// signs the session in again with it. Returns whether both happened;
-        /// a refusal from GS2 goes to <paramref name="failed"/> and anything
-        /// else to <paramref name="report"/>.
+        /// signs the session in again with it. A refusal from GS2 to move the
+        /// clock is thrown, for the press runner to report; anything that
+        /// stops the advance short is in the outcome's line.
         /// </summary>
-        public static async Task<bool> Advance(
-            int seconds, Action<string> report, Action<Gs2Exception> failed)
+        public static async Task<Outcome> Advance(Gs2Domain gs2, IGameSession session, int seconds)
         {
-            if (_running)
-            {
-                report("The clock is still moving.");
-                return false;
-            }
-            _running = true;
-            try
-            {
-                return await AdvanceOnce(seconds, report, failed);
-            }
-            finally
-            {
-                _running = false;
-            }
-        }
-
-        private static async Task<bool> AdvanceOnce(
-            int seconds, Action<string> report, Action<Gs2Exception> failed)
-        {
-            if (!ShowroomRuntime.TryGet(out var gs2, out var session))
-            {
-                report("Not signed in yet.");
-                return false;
-            }
-
             var login = UnityEngine.Object.FindAnyObjectByType<Gs2AutoLoginAction>();
             if (login == null || string.IsNullOrEmpty(login.accountNamespace))
             {
-                report("The scene names no account namespace to advance the clock in.");
-                return false;
+                return new Outcome(false, "The scene names no account namespace to advance the clock in.");
             }
 
             // Read afresh: another demo on the same account may have moved the
@@ -90,35 +78,18 @@ namespace GS2Studio.Showroom
             var userId = session.UserId;
             if (!await DemoTimeOffset.Read())
             {
-                report("The demo clock could not be read from GS2, so it was not moved. Try again in a moment.");
-                return false;
+                return new Outcome(false, "The demo clock could not be read from GS2, so it was not moved. Try again in a moment.");
             }
             var next = (long)DemoTimeOffset.Get(userId) + seconds;
             if (next > DemoTimeOffset.MaxSeconds)
             {
-                report("The demo clock is already as far ahead as GS2 allows (ten years).");
-                return false;
+                return new Outcome(false, "The demo clock is already as far ahead as GS2 allows (ten years).");
             }
 
-            try
-            {
-                await gs2.Super.Account
-                    .Namespace(login.accountNamespace)
-                    .Account(userId)
-                    .UpdateTimeOffsetAsync(new UpdateTimeOffsetRequest().WithTimeOffset((int)next));
-            }
-            catch (Gs2Exception error)
-            {
-                failed(error);
-                Debug.LogError($"{nameof(DemoClockAdvance)}: advancing failed: {error}");
-                return false;
-            }
-            catch (Exception error)
-            {
-                report($"Advancing the clock failed: {error.Message}");
-                Debug.LogError($"{nameof(DemoClockAdvance)}: advancing failed: {error}");
-                return false;
-            }
+            await gs2.Super.Account
+                .Namespace(login.accountNamespace)
+                .Account(userId)
+                .UpdateTimeOffsetAsync(new UpdateTimeOffsetRequest().WithTimeOffset((int)next));
 
             // The account has the new offset whatever happens next, so it is
             // stored before the session is refreshed.
@@ -130,14 +101,14 @@ namespace GS2Studio.Showroom
             }
             catch (Exception error)
             {
-                report(
+                Debug.LogWarning($"[showroom] {nameof(DemoClockAdvance)}: refreshing the session failed: {error}");
+                return new Outcome(
+                    false,
                     "The clock moved forward, but signing in again failed, so this page still " +
                     "runs on the old time. Reload the page: the next sign-in carries the new offset.");
-                Debug.LogError($"{nameof(DemoClockAdvance)}: refreshing the session failed: {error}");
-                return false;
             }
             DemoTimeOffset.NotifyApplied(userId);
-            return true;
+            return new Outcome(true, "");
         }
     }
 }
