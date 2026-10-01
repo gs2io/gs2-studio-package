@@ -14,7 +14,9 @@
 // names are master data and are read once.
 //
 // Nothing here reloads or invalidates anything. A write puts its result in the
-// SDK cache, and these subscriptions hear it from there.
+// SDK cache, and these subscriptions hear it from there. What they hear is
+// handed to the main thread through a `ShowroomInbox` and drawn in `Update`;
+// presses run through `ShowroomPress`, one at a time across the page.
 #nullable enable
 
 using System;
@@ -83,15 +85,14 @@ namespace GS2Studio.Showroom.Demo
         private int _formRead;
         private int _charactersRead;
 
-        private bool _busy;
+        private readonly ShowroomInbox _inbox = new ShowroomInbox();
         private Coroutine? _waiting;
-        private ShowroomPage? _page;
 
         private void OnEnable()
         {
             if (_panel == null || _buttonTemplate == null || _font == null)
             {
-                Log("The party board was baked without its region, button or font.");
+                ShowroomLog.Say("The party board was baked without its region, button or font.");
                 return;
             }
             if (_tabs == null) Build();
@@ -106,8 +107,14 @@ namespace GS2Studio.Showroom.Demo
             _unsubscribeForm = null;
             foreach (var unsubscribe in _unsubscribes) unsubscribe();
             _unsubscribes.Clear();
+            _inbox.Clear();
             _gs2 = null;
             _session = null;
+        }
+
+        private void Update()
+        {
+            _inbox.Drain();
         }
 
         /// <summary>
@@ -118,7 +125,7 @@ namespace GS2Studio.Showroom.Demo
         {
             Gs2Domain? gs2;
             IGameSession? session;
-            while (!FormationCommands.TryRuntime(out gs2, out session))
+            while (!ShowroomRuntime.TryGet(out gs2, out session))
             {
                 yield return new WaitForSeconds(0.25f);
             }
@@ -141,8 +148,11 @@ namespace GS2Studio.Showroom.Demo
             var mold = new Gs2Bind.Gs2Formation.MoldLoader(FormationCommands.Namespace, FormationCommands.MoldModel);
             _unsubscribes.Add(mold.Subscribe(gs2, session, (_, _, value) =>
             {
-                _moldRead++;
-                OnCapacity(value?.Capacity);
+                _inbox.Post(() =>
+                {
+                    _moldRead++;
+                    OnCapacity(value?.Capacity);
+                });
                 return Task.CompletedTask;
             }, () => { }));
             ReadCapacity(mold);
@@ -150,8 +160,11 @@ namespace GS2Studio.Showroom.Demo
             var characters = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader(CharacterNamespace, CharacterInventory);
             _unsubscribes.Add(characters.Subscribe(gs2, session, (_, _, value) =>
             {
-                _charactersRead++;
-                OnCharacters(value);
+                _inbox.Post(() =>
+                {
+                    _charactersRead++;
+                    OnCharacters(value);
+                });
                 return Task.CompletedTask;
             }, () => { }));
             ReadCharacters(characters);
@@ -169,7 +182,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Log($"The parties could not be read: {error.Message}");
+                if (this != null) ShowroomLog.Failure("The parties could not be read", error);
             }
         }
 
@@ -183,7 +196,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Log($"The characters could not be read: {error.Message}");
+                if (this != null) ShowroomLog.Failure("The characters could not be read", error);
             }
         }
 
@@ -198,7 +211,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Log($"The party shape could not be read: {error.Message}");
+                if (this != null) ShowroomLog.Failure("The party shape could not be read", error);
             }
         }
 
@@ -236,8 +249,11 @@ namespace GS2Studio.Showroom.Demo
             var form = new Gs2Bind.Gs2Formation.FormLoader(FormationCommands.Namespace, FormationCommands.MoldModel, index);
             _unsubscribeForm = form.Subscribe(_gs2, _session, (_, _, value) =>
             {
-                _formRead++;
-                OnForm(index, value);
+                _inbox.Post(() =>
+                {
+                    _formRead++;
+                    OnForm(index, value);
+                });
                 return Task.CompletedTask;
             }, () => { });
             ReadForm(form, index);
@@ -256,7 +272,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Log($"Party {index + 1} could not be read: {error.Message}");
+                if (this != null) ShowroomLog.Failure($"Party {index + 1} could not be read", error);
             }
         }
 
@@ -277,28 +293,15 @@ namespace GS2Studio.Showroom.Demo
             DrawRoster();
         }
 
-        private async void Press(Func<Task<string?>> write)
+        /// <summary>Runs one change to a party, one press at a time across the page.</summary>
+        private void Press(Func<Gs2Domain, IGameSession, Task<string>> write)
         {
-            if (_busy)
+            ShowroomPress.Run(new ShowroomPressOptions
             {
-                Log("Still saving the last change.");
-                return;
-            }
-            _busy = true;
-            try
-            {
-                var note = await write();
-                if (note != null) Log(note);
-            }
-            catch (Exception error)
-            {
-                Log($"The party could not be saved: {error.Message}");
-                Debug.LogError($"CharacterFormationBoardPanel: failed: {error}", this);
-            }
-            finally
-            {
-                _busy = false;
-            }
+                Name = "saving the party",
+                Owner = this,
+                Explain = error => $"The party could not be saved: {ShowroomErrors.Describe(error)}",
+            }, write);
         }
 
         private bool IsMember(string characterId)
@@ -349,12 +352,12 @@ namespace GS2Studio.Showroom.Demo
                     var index = _editing;
                     Card(_slots, $"{FormationCommands.CharacterName(member)}\n<size=13>{name}</size>",
                         MemberCardColor, DarkText,
-                        () => Press(() => FormationCommands.TakeOut(member, index)));
+                        () => Press((gs2, session) => FormationCommands.TakeOut(gs2, session, member, index)));
                 }
                 else
                 {
                     Card(_slots, $"Empty\n<size=13>{name}</size>", EmptyCardColor, MutedText,
-                        () => Log("Tap a character below to put it in this party."));
+                        () => ShowroomLog.Say("Tap a character below to put it in this party."));
                 }
             }
         }
@@ -373,9 +376,9 @@ namespace GS2Studio.Showroom.Demo
                 Card(_roster,
                     member ? $"{character.ItemName}\n<size=13>In party {index + 1}</size>" : character.ItemName,
                     member ? MemberCardColor : RosterCardColor, member ? DarkText : LightText,
-                    () => Press(() => member
-                        ? FormationCommands.TakeOut(id, index)
-                        : FormationCommands.PutIn(id, index)));
+                    () => Press((gs2, session) => member
+                        ? FormationCommands.TakeOut(gs2, session, id, index)
+                        : FormationCommands.PutIn(gs2, session, id, index)));
             }
         }
 
@@ -432,6 +435,9 @@ namespace GS2Studio.Showroom.Demo
             var label = button.GetComponentInChildren<Text>();
             if (label != null)
             {
+                // Rich text for the smaller second line only. The names put in
+                // it are GS2 resource names, made of letters, digits, '-', '_'
+                // and '.' only, so none of them can form a tag.
                 label.supportRichText = true;
                 label.color = textColor;
                 label.text = text;
@@ -458,13 +464,6 @@ namespace GS2Studio.Showroom.Demo
                 child.SetActive(false);
                 Destroy(child);
             }
-        }
-
-        private void Log(string message)
-        {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-            else Debug.LogWarning($"CharacterFormationBoardPanel: {message}", this);
         }
     }
 }

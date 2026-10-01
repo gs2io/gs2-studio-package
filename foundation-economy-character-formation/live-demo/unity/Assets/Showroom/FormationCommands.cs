@@ -13,22 +13,20 @@
 // emptied. So both presses send exactly one slot.
 //
 // Which party a press acts on is the board's to say: it is the page's own
-// state rather than GS2's, so it is passed in.
+// state rather than GS2's, so it is passed in, and so is the signed-in client:
+// the board runs each press through `ShowroomPress`, which also keeps two
+// presses from reading the same empty slot and overwriting each other.
 //
 // Nothing here reloads or invalidates anything. Setting a form puts the new
 // form into the SDK cache, and the party board subscribes to it.
 #nullable enable
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Gs2Formation.Model;
 using Gs2.Unity.Util;
-
-using GS2Studio.Generated.Runtime;
 
 using InventoryItemSet = Gs2.Gs2Inventory.Model.ItemSet;
 
@@ -53,120 +51,94 @@ namespace GS2Studio.Showroom.Demo
         private const string PropertyType = "gs2_inventory";
 
         /// <summary>
-        /// Whether a press is between reading the party and writing it. Two
-        /// presses in that window would both see the same empty slot, and the
-        /// second write would replace the first.
-        /// </summary>
-        private static bool _inFlight;
-
-        /// <summary>
         /// Puts the character in the first empty slot of the party at the
-        /// index, counted from 0. Returns a note for the page when there was
-        /// nothing to do, or null when the slot was set.
+        /// index, counted from 0. Returns the line the page says, "" when the slot was set.
         ///
         /// A character already in this party stays where it is. The same
         /// character in another party is allowed, as GS2 allows it.
         /// </summary>
-        public static async Task<string?> PutIn(string characterPropertyId, int index)
+        public static async Task<string> PutIn(
+            Gs2Domain gs2, IGameSession session, string characterPropertyId, int index)
         {
-            if (_inFlight) return "Still saving the last change.";
-            _inFlight = true;
-            try
+            var party = $"party {index + 1}";
+            var occupied = await Occupied(gs2, session, index);
+            foreach (var slot in occupied)
             {
-                var (gs2, session) = Runtime();
-                var party = $"party {index + 1}";
-                var occupied = await Occupied(gs2, session, index);
-                foreach (var slot in occupied)
-                {
-                    if (slot.Value == characterPropertyId)
-                        return $"{CharacterName(characterPropertyId)} is already in {party}.";
-                }
-
-                string? empty = null;
-                foreach (var name in await SlotNames(gs2, session))
-                {
-                    if (!occupied.ContainsKey(name))
-                    {
-                        empty = name;
-                        break;
-                    }
-                }
-                if (empty == null) return $"The {party} is full.";
-
-                var signed = await gs2.Inventory
-                    .Namespace(InventoryItemSet.GetNamespaceNameFromGrn(characterPropertyId))
-                    .Me(session)
-                    .Inventory(InventoryItemSet.GetInventoryNameFromGrn(characterPropertyId))
-                    // The item set is named on purpose: a character is one item
-                    // set per recruit, and without the name the signature covers
-                    // every set of the item and GS2 takes the first of them.
-                    .ItemSet(
-                        InventoryItemSet.GetItemNameFromGrn(characterPropertyId),
-                        InventoryItemSet.GetItemSetNameFromGrn(characterPropertyId))
-                    .GetItemWithSignatureAsync();
-
-                await new Gs2Bind.Gs2Formation.FormLoader(Namespace, MoldModel, index).SetForm(
-                    gs2, session,
-                    new[]
-                    {
-                        new EzSlotWithSignature
-                        {
-                            Name = empty,
-                            PropertyType = PropertyType,
-                            Body = signed.Body,
-                            Signature = signed.Signature,
-                        },
-                    });
-                return null;
+                if (slot.Value == characterPropertyId)
+                    return $"{CharacterName(characterPropertyId)} is already in {party}.";
             }
-            finally
+
+            string? empty = null;
+            foreach (var name in await SlotNames(gs2, session))
             {
-                _inFlight = false;
+                if (!occupied.ContainsKey(name))
+                {
+                    empty = name;
+                    break;
+                }
             }
+            if (empty == null) return $"The {party} is full.";
+
+            var signed = await gs2.Inventory
+                .Namespace(InventoryItemSet.GetNamespaceNameFromGrn(characterPropertyId))
+                .Me(session)
+                .Inventory(InventoryItemSet.GetInventoryNameFromGrn(characterPropertyId))
+                // The item set is named on purpose: a character is one item
+                // set per recruit, and without the name the signature covers
+                // every set of the item and GS2 takes the first of them.
+                .ItemSet(
+                    InventoryItemSet.GetItemNameFromGrn(characterPropertyId),
+                    InventoryItemSet.GetItemSetNameFromGrn(characterPropertyId))
+                .GetItemWithSignatureAsync();
+
+            await new Gs2Bind.Gs2Formation.FormLoader(Namespace, MoldModel, index).SetForm(
+                gs2, session,
+                new[]
+                {
+                    new EzSlotWithSignature
+                    {
+                        Name = empty,
+                        PropertyType = PropertyType,
+                        Body = signed.Body,
+                        Signature = signed.Signature,
+                    },
+                });
+            // The board shows the change; the page has nothing to add.
+            return "";
         }
 
         /// <summary>
         /// Empties the slot of the party at the index that holds the character.
-        /// Returns a note for the page when the character is not in it, or null
-        /// when the slot was emptied.
+        /// Returns the line the page says, "" when the slot was emptied.
         /// </summary>
-        public static async Task<string?> TakeOut(string characterPropertyId, int index)
+        public static async Task<string> TakeOut(
+            Gs2Domain gs2, IGameSession session, string characterPropertyId, int index)
         {
-            if (_inFlight) return "Still saving the last change.";
-            _inFlight = true;
-            try
+            string? held = null;
+            foreach (var slot in await Occupied(gs2, session, index))
             {
-                var (gs2, session) = Runtime();
-                string? held = null;
-                foreach (var slot in await Occupied(gs2, session, index))
+                if (slot.Value == characterPropertyId)
                 {
-                    if (slot.Value == characterPropertyId)
-                    {
-                        held = slot.Key;
-                        break;
-                    }
+                    held = slot.Key;
+                    break;
                 }
-                if (held == null)
-                    return $"{CharacterName(characterPropertyId)} is not in party {index + 1}.";
+            }
+            if (held == null)
+                return $"{CharacterName(characterPropertyId)} is not in party {index + 1}.";
 
-                await new Gs2Bind.Gs2Formation.FormLoader(Namespace, MoldModel, index).SetForm(
-                    gs2, session,
-                    new[]
+            await new Gs2Bind.Gs2Formation.FormLoader(Namespace, MoldModel, index).SetForm(
+                gs2, session,
+                new[]
+                {
+                    new EzSlotWithSignature
                     {
-                        new EzSlotWithSignature
-                        {
-                            Name = held,
-                            PropertyType = PropertyType,
-                            Body = null,
-                            Signature = null,
-                        },
-                    });
-                return null;
-            }
-            finally
-            {
-                _inFlight = false;
-            }
+                        Name = held,
+                        PropertyType = PropertyType,
+                        Body = null,
+                        Signature = null,
+                    },
+                });
+            return "";
         }
 
         /// <summary>
@@ -194,26 +166,6 @@ namespace GS2Studio.Showroom.Demo
         {
             var name = InventoryItemSet.GetItemNameFromGrn(propertyId);
             return string.IsNullOrEmpty(name) ? propertyId : name;
-        }
-
-        /// <summary>
-        /// The signed-in session, or false while the page is still signing in.
-        /// </summary>
-        public static bool TryRuntime(
-            [NotNullWhen(true)] out Gs2Domain? gs2, [NotNullWhen(true)] out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = UnityEngine.Object.FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
-        }
-
-        /// <summary>The signed-in session these calls travel on.</summary>
-        public static (Gs2Domain Gs2, IGameSession Session) Runtime()
-        {
-            if (!TryRuntime(out var gs2, out var session))
-                throw new InvalidOperationException("The GS2 runtime context is not available.");
-            return (gs2, session);
         }
 
         /// <summary>The filled slots of one party, by slot name.</summary>
