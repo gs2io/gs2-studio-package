@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#2.5.10",
     "com.unity.modules.imgui": "1.0.0",
     "com.unity.modules.jsonserialize": "1.0.0",
     "com.unity.modules.ui": "1.0.0",
@@ -10,8 +10,8 @@
     "com.unity.purchasing": "5.4.3",
     "com.unity.ugui": "2.0.0",
     "io.gs2.bind": "2026.9.11",
-    "io.gs2.csharp.sdk": "2026.9.15",
-    "io.gs2.unity.sdk": "2026.9.11"
+    "io.gs2.csharp.sdk": "2026.9.21",
+    "io.gs2.unity.sdk": "2026.9.15"
   },
   "scopedRegistries": [
     {
