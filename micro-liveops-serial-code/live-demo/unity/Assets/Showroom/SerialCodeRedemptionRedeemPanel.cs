@@ -14,7 +14,8 @@
 // on, read from the REST client: it is shown as it is and never written back
 // into the SDK cache, so nothing here reloads or invalidates anything. The
 // exchange itself goes through the SDK, so the wallet the page shows hears the
-// coins land.
+// coins land. Both presses run through `ShowroomPress`, so they wait their
+// turn with every other press on the page and say their outcome in one line.
 #nullable enable
 
 using System;
@@ -73,15 +74,13 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>Whether the visitor has redeemed, as last read; null before the first read.</summary>
         private bool? _redeemed;
         private Text? _status;
-        private bool _busy;
         private Coroutine? _waiting;
-        private ShowroomPage? _page;
 
         private void OnEnable()
         {
             if (_panel == null || _buttonTemplate == null || _font == null)
             {
-                Log("The code panel was baked without its region, button or font.");
+                ShowroomLog.Say("The code panel was baked without its region, button or font.");
                 return;
             }
             if (_field == null) Build();
@@ -100,7 +99,7 @@ namespace GS2Studio.Showroom.Demo
         /// </summary>
         private IEnumerator WaitForSignIn()
         {
-            while (!TryRuntime(out _, out _))
+            while (!ShowroomRuntime.TryGet(out _, out _))
             {
                 yield return new WaitForSeconds(0.25f);
             }
@@ -143,101 +142,77 @@ namespace GS2Studio.Showroom.Demo
         /// Clears the visitor's redemption through the start-over exchange,
         /// since a client may not delete its counter itself.
         /// </summary>
-        private async void StartOver()
+        private void StartOver()
         {
-            if (_busy) return;
-            if (!TryRuntime(out var gs2, out var session))
-            {
-                Log("Not signed in yet.");
-                return;
-            }
             // GS2 refuses to delete a counter that was never counted.
             if (_redeemed == false)
             {
-                Log("You have not redeemed yet, so there is nothing to clear.");
+                ShowroomLog.Say("You have not redeemed yet, so there is nothing to clear.");
                 return;
             }
-            _busy = true;
-            SetInteractable(false);
-            try
+            Run("starting over", async (gs2, session) =>
             {
-                var transaction = await gs2!.Exchange.Namespace(StartOverNamespace).Me(session!).Exchange()
+                var transaction = await gs2.Exchange.Namespace(StartOverNamespace).Me(session).Exchange()
                     .ExchangeAsync(RedeemRate, 1, speculativeExecute: false);
                 if (transaction != null) await transaction.WaitAsync(true);
-                if (this == null) return;
-                Log("Your redemption is cleared; you can redeem again.");
-            }
-            catch (Exception error)
-            {
-                if (this == null) return;
-                Log($"Starting over failed: {error.Message}");
-            }
-            finally
-            {
-                _busy = false;
-                if (this != null) SetInteractable(true);
-            }
-            ReadRedeemed();
+                return "Your redemption is cleared; you can redeem again.";
+            }, error => $"Starting over failed: {ShowroomErrors.Describe(error)}");
         }
 
-        private void SetInteractable(bool interactable)
+        private void Redeem()
         {
-            if (_redeem != null) _redeem.interactable = interactable;
-            if (_startOver != null) _startOver.interactable = interactable;
-        }
-
-        private async void Redeem()
-        {
-            if (_busy || _field == null) return;
+            if (_field == null) return;
             var code = _field.text.Trim();
             if (code.Length == 0)
             {
-                Log("Type a code first.");
+                ShowroomLog.Say("Type a code first.");
                 return;
             }
             if (!CodePattern.IsMatch(code))
             {
-                Log("Codes use letters, digits, '.', '_' and '-'.");
+                ShowroomLog.Say("Codes use letters, digits, '.', '_' and '-'.");
                 return;
             }
-            if (!TryRuntime(out var gs2, out var session))
+            Run("redeeming a code", async (gs2, session) =>
             {
-                Log("Not signed in yet.");
-                return;
-            }
-            _busy = true;
-            SetInteractable(false);
-            try
-            {
-                var transaction = await gs2!.Exchange.Namespace(ExchangeNamespace).Me(session!).Exchange()
+                var transaction = await gs2.Exchange.Namespace(ExchangeNamespace).Me(session).Exchange()
                     .ExchangeAsync(
                         RedeemRate,
                         1,
                         new[] { new EzConfig { Key = CodeConfigKey, Value = code } },
                         speculativeExecute: false);
                 if (transaction != null) await transaction.WaitAsync(true);
-                if (this == null) return;
-                Log($"Redeemed {code}.");
-                _field.text = "";
-            }
-            catch (Gs2Exception error)
+                if (_field != null) _field.text = "";
+                return $"Redeemed {code}.";
+            }, error => Explain(error, code));
+        }
+
+        /// <summary>
+        /// Runs one press with both buttons off while it is out, and reads the
+        /// usage counter once it is over: waiting on a transaction can time out
+        /// while GS2 still commits it, and the counter says which.
+        /// </summary>
+        private void Run(string name, Func<Gs2Domain, IGameSession, Task<string>> press, Func<Gs2Exception, string?> explain)
+        {
+            SetInteractable(false);
+            var started = ShowroomPress.Run(new ShowroomPressOptions
             {
-                if (this == null) return;
-                Log(Explain(error, code));
-            }
-            catch (Exception error)
-            {
-                // Waiting on the transaction can time out while GS2 still
-                // commits it later; the counter read below says which.
-                if (this == null) return;
-                Log($"Redeeming {code} failed: {error.Message}");
-            }
-            finally
-            {
-                _busy = false;
-                if (this != null) SetInteractable(true);
-            }
-            ReadRedeemed();
+                Name = name,
+                Owner = this,
+                Explain = explain,
+                Afterward = () =>
+                {
+                    SetInteractable(true);
+                    ReadRedeemed();
+                },
+            }, press);
+            if (!started) SetInteractable(true);
+        }
+
+        private void SetInteractable(bool interactable)
+        {
+            if (_redeem != null) _redeem.interactable = interactable;
+            if (_startOver != null) _startOver.interactable = interactable;
         }
 
         /// <summary>
@@ -256,7 +231,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 return $"{code} is not a code GS2 knows. Codes are case sensitive.";
             }
-            return $"Redeeming {code} failed: {error.Message}";
+            return $"Redeeming {code} failed: {ShowroomErrors.Describe(error)}";
         }
 
         /// <summary>
@@ -271,16 +246,16 @@ namespace GS2Studio.Showroom.Demo
         /// <summary>Reads whether the visitor has redeemed, off the usage counter.</summary>
         private async void ReadRedeemed()
         {
-            if (!TryRuntime(out var gs2, out var session)) return;
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             bool redeemed;
             try
             {
-                var result = await new Gs2LimitRestClient(gs2!.Super.RestSession).GetCounterAsync(
+                var result = await new Gs2LimitRestClient(gs2.Super.RestSession).GetCounterAsync(
                     new GetCounterRequest()
                         .WithNamespaceName(LimitNamespace)
                         .WithLimitName(LimitName)
                         .WithCounterName(CounterName)
-                        .WithAccessToken(session!.AccessToken.Token));
+                        .WithAccessToken(session.AccessToken.Token));
                 redeemed = (result?.Item?.Count ?? 0) > 0;
             }
             catch (NotFoundException)
@@ -289,7 +264,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(SerialCodeRedemptionRedeemPanel)}: the redemption could not be read: {error}");
+                if (this != null) ShowroomLog.Failure("Whether you have redeemed could not be read", error);
                 return;
             }
             if (this == null || _status == null) return;
@@ -333,21 +308,6 @@ namespace GS2Studio.Showroom.Demo
             var child = new GameObject(name, typeof(RectTransform)).GetComponent<RectTransform>();
             child.SetParent(parent, false);
             return child;
-        }
-
-        private void Log(string message)
-        {
-            _page ??= FindAnyObjectByType<ShowroomPage>();
-            if (_page != null) _page.Log(message);
-            else Debug.LogWarning($"SerialCodeRedemptionRedeemPanel: {message}", this);
-        }
-
-        private static bool TryRuntime(out Gs2Domain? gs2, out IGameSession? session)
-        {
-            gs2 = null;
-            session = null;
-            var runtime = FindAnyObjectByType<GS2Studio.Generated.Runtime.Gs2HolderRuntimeContextProvider>();
-            return runtime != null && runtime.TryGet(out gs2, out session) && gs2 != null && session != null;
         }
     }
 }
