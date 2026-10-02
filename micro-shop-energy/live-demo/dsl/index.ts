@@ -157,10 +157,15 @@ const BuyRateModel = defineMasterDataResource(resource =>
         .mountLocal(EnergyProduct)
         .bindings({
           action: Bind.transform(energy.packageId, "RecoveryEnergy", [
-            Arg.static("energy", STAMINA),
-            // The refill amount is the feature package's property, so it is
-            // addressed by id: an overlay's inherited property has no name of
-            // its own here.
+            // The stamina and the refill amount are the feature package's
+            // properties, so they are addressed by id: an overlay's inherited
+            // property has no name of its own here.
+            Arg.domainProperty(
+              "energy",
+              Source.parent(
+                Source.direct(EnergyProduct.typeName, shop.propertyId("EnergyProduct", "energy"))
+              )
+            ),
             Arg.domainProperty(
               "value",
               Source.parent(
@@ -221,14 +226,17 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
   // New rows use the source type's identity, with values added by this overlay.
   // The name-based overload resolves local property names and inherited ids together.
   .instance(EnergyProduct.typeName, PRODUCTS[0].id, {
+    [shop.propertyId("EnergyProduct", "energy")]: STAMINA,
     [shop.propertyId("EnergyProduct", "recoveryValue")]: PRODUCTS[0].recovery,
     cost: PRODUCTS[0].cost,
   })
   .instance(EnergyProduct.typeName, PRODUCTS[1].id, {
+    [shop.propertyId("EnergyProduct", "energy")]: STAMINA,
     [shop.propertyId("EnergyProduct", "recoveryValue")]: PRODUCTS[1].recovery,
     cost: PRODUCTS[1].cost,
   })
   .instance(EnergyProduct.typeName, PRODUCTS[2].id, {
+    [shop.propertyId("EnergyProduct", "energy")]: STAMINA,
     [shop.propertyId("EnergyProduct", "recoveryValue")]: PRODUCTS[2].recovery,
     cost: PRODUCTS[2].cost,
   })

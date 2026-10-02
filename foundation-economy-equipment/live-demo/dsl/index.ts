@@ -110,12 +110,12 @@ const DiscardRateModel = defineMasterDataResource(resource =>
         .bindings({
           action: Bind.transform(equipment.packageId, "DeleteEquipment", [
             Arg.domainProperty("equipment", Source.direct(Equipment, "id")),
-            // Which of the player's copies to throw away is not something a
-            // rate model can know: it is master data, fixed at deploy time,
-            // and the instance only exists once a player owns it. Left unset,
-            // GS2 takes one from whichever stack it likes — which is the whole
-            // of "discard one" as far as the demo is concerned.
-            Arg.static("equipmentPropertyId", null),
+            // `equipmentPropertyId` is left out on purpose. Which of the
+            // player's copies to throw away is not something a rate model can
+            // know: it is master data, fixed at deploy time, and the instance
+            // only exists once a player owns it. Left unset, GS2 takes one from
+            // whichever stack it likes — which is the whole of "discard one" as
+            // far as the demo is concerned.
           ]),
         });
     })

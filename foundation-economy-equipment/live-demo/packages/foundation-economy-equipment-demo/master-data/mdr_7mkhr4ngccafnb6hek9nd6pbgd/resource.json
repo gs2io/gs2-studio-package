@@ -17,13 +17,6 @@
                 "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
               }
             }
-          },
-          {
-            "parameterName": "equipmentPropertyId",
-            "source": {
-              "kind": "static",
-              "value": null
-            }
           }
         ],
         "kind": "transform",
