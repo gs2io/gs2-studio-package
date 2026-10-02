@@ -1,0 +1,44 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "trigger",
+            "source": {
+              "kind": "static",
+              "value": "happy-hour"
+            }
+          },
+          {
+            "parameterName": "ttlSeconds",
+            "source": {
+              "kind": "static",
+              "value": 86400
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "PullTrigger",
+        "transformPackageId": "foundation-economy-schedule"
+      }
+    ]
+  },
+  "id": "714d89bd-1654-598d-940c-79535050a36f",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M3H94DYC2ZVBKF19PYBEWMYF",
+    "typeName": "BuffCampaign"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "d9dbce3f-b3ae-53b9-87b0-d82cb831c997"
+  }
+}

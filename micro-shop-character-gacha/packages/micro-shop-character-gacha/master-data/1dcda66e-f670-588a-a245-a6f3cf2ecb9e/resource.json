@@ -1,0 +1,56 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "character",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+                    "typeName": "CharacterRate"
+                  },
+                  "propertyId": "prop_AATTCTRXX4J382EEVEGE9ZYV6W"
+                },
+                "kind": "parent",
+                "parentResourceId": "628e1d99-0a72-5bf0-8df3-17c7ffba06ac"
+              }
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AcquireCharacter",
+        "transformPackageId": "foundation-economy-character"
+      }
+    ]
+  },
+  "id": "1dcda66e-f670-588a-a245-a6f3cf2ecb9e",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+    "typeName": "CharacterRate"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "628e1d99-0a72-5bf0-8df3-17c7ffba06ac"
+  }
+}

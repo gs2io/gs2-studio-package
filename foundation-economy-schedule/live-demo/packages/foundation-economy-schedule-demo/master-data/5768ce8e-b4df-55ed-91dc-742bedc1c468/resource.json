@@ -1,0 +1,52 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "trigger",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M2K159BPQJXG6NHERRE6QEGG",
+                  "typeName": "Trigger"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          },
+          {
+            "parameterName": "extendSeconds",
+            "source": {
+              "kind": "static",
+              "value": 60
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "TriggerSchedule",
+        "transformPackageId": "foundation-economy-schedule"
+      }
+    ]
+  },
+  "id": "5768ce8e-b4df-55ed-91dc-742bedc1c468",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2K159BPQJXG6NHERRE6QEGG",
+    "typeName": "Trigger"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "83556a93-8a8f-5de2-aec2-c4645f36d453"
+  }
+}

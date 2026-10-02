@@ -1,0 +1,53 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "prizeId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+            "typeName": "CharacterRate"
+          },
+          "propertyId": "prop_reserved_id"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "type",
+        "value": "action"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "weight",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+            "typeName": "CharacterRate"
+          },
+          "propertyId": "prop_2YWD79NQ991RBGDCA3HEZHGDT8"
+        }
+      }
+    ]
+  },
+  "id": "628e1d99-0a72-5bf0-8df3-17c7ffba06ac",
+  "location": {
+    "modelName": "Prize",
+    "service": "lottery"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+    "typeName": "CharacterRate"
+  },
+  "parent": {
+    "arrayProperty": "prizes",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "e3c41bc1-9791-5f59-87a0-39ca2bf20d42"
+  }
+}

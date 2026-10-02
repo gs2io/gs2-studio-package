@@ -1,0 +1,45 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "trigger",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_01M2K159BPQJXG6NHERRE6QEGG",
+                  "typeName": "Trigger"
+                },
+                "propertyId": "prop_reserved_id"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ClearTrigger",
+        "transformPackageId": "foundation-economy-schedule"
+      }
+    ]
+  },
+  "id": "67c7ff8e-c6b3-5f48-81c0-635ebe785354",
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M2K159BPQJXG6NHERRE6QEGG",
+    "typeName": "Trigger"
+  },
+  "parent": {
+    "arrayProperty": "consumeActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "0ee053d5-dd24-50ac-b01f-082f3e9d3851"
+  }
+}

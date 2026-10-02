@@ -1,0 +1,44 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "propertyId",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{propertyId}:level"
+            }
+          },
+          {
+            "parameterName": "value",
+            "source": {
+              "kind": "static",
+              "value": 1000
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AcquireCharacterExperience",
+        "transformPackageId": "foundation-economy-character"
+      }
+    ]
+  },
+  "id": "90be0fda-a8dc-5ef1-b08c-44770cab21e0",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M38CEKHN1M3R6WEAD3SMXVX3",
+    "typeName": "Character"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "d5fea068-1de8-5319-869a-af533fe6b6d1"
+  }
+}

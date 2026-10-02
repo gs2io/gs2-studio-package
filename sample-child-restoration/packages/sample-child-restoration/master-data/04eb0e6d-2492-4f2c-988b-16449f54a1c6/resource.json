@@ -1,0 +1,20 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Item"
+      }
+    ]
+  },
+  "id": "04eb0e6d-2492-4f2c-988b-16449f54a1c6",
+  "location": {
+    "modelName": "SimpleInventoryModel",
+    "service": "inventory"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "6be9ee5f-63ea-4819-91f1-6d4d2a015c61"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "enhance",
+            "source": {
+              "kind": "static",
+              "value": "Basic"
+            }
+          },
+          {
+            "parameterName": "targetItemSetId",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{propertyId}"
+            }
+          },
+          {
+            "parameterName": "materialItemSetId",
+            "source": {
+              "kind": "static",
+              "value": "grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir"
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "EnhanceCharacter",
+        "transformPackageId": "micro-economy-character-enhance"
+      }
+    ]
+  },
+  "id": "6517ae26-aa13-5a2a-9541-dfe5188ea0e3",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_01M39DVMXDJTJD6NZRHVPPXP7V",
+    "typeName": "Character"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "c056571c-7e21-5067-bf8c-d67b88315bfd"
+  }
+}
