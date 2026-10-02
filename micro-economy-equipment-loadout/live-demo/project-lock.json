@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "4ba817237887237ecb8d948fc9f0f55bac775b73",
-      "integrity": "sha256-zY9/otfEzxOgsJcneYA4AHpQ1Kf5N0gKKD/bEWRbmOA=",
+      "commitSha": "0c5221998e6682e3b03003362c3ad5a278072d7d",
+      "integrity": "sha256-L/5GIhJ3+LtPaDeckl+WkxmGdtqJ3CmiJAQTClkIxKU=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character",
       "repo": "gs2-studio-package",
@@ -11,8 +11,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "4ba817237887237ecb8d948fc9f0f55bac775b73",
-      "integrity": "sha256-zY9/otfEzxOgsJcneYA4AHpQ1Kf5N0gKKD/bEWRbmOA=",
+      "commitSha": "0c5221998e6682e3b03003362c3ad5a278072d7d",
+      "integrity": "sha256-L/5GIhJ3+LtPaDeckl+WkxmGdtqJ3CmiJAQTClkIxKU=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character-demo",
       "repo": "gs2-studio-package",
@@ -21,8 +21,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "4ba817237887237ecb8d948fc9f0f55bac775b73",
-      "integrity": "sha256-zY9/otfEzxOgsJcneYA4AHpQ1Kf5N0gKKD/bEWRbmOA=",
+      "commitSha": "0c5221998e6682e3b03003362c3ad5a278072d7d",
+      "integrity": "sha256-L/5GIhJ3+LtPaDeckl+WkxmGdtqJ3CmiJAQTClkIxKU=",
       "owner": "gs2io",
       "packageId": "foundation-economy-equipment",
       "repo": "gs2-studio-package",
@@ -31,8 +31,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "4ba817237887237ecb8d948fc9f0f55bac775b73",
-      "integrity": "sha256-zY9/otfEzxOgsJcneYA4AHpQ1Kf5N0gKKD/bEWRbmOA=",
+      "commitSha": "0c5221998e6682e3b03003362c3ad5a278072d7d",
+      "integrity": "sha256-L/5GIhJ3+LtPaDeckl+WkxmGdtqJ3CmiJAQTClkIxKU=",
       "owner": "gs2io",
       "packageId": "foundation-economy-equipment-demo",
       "repo": "gs2-studio-package",
@@ -41,8 +41,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "4ba817237887237ecb8d948fc9f0f55bac775b73",
-      "integrity": "sha256-zY9/otfEzxOgsJcneYA4AHpQ1Kf5N0gKKD/bEWRbmOA=",
+      "commitSha": "0c5221998e6682e3b03003362c3ad5a278072d7d",
+      "integrity": "sha256-L/5GIhJ3+LtPaDeckl+WkxmGdtqJ3CmiJAQTClkIxKU=",
       "owner": "gs2io",
       "packageId": "micro-economy-equipment-loadout",
       "repo": "gs2-studio-package",

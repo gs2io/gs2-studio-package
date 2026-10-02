@@ -49,8 +49,13 @@ describe("materialized instance payload shape", () => {
           if (actualKind !== expectedKind) {
             failures.push(`${filePath}: ${actualKind} payload in ${expectedKind} directory`);
           }
-          const identity = actualKind === "overlay" ? result.data.sourceInstanceId : result.data.id;
-          const expectedFileName = `${toSafeFileName(identity)}.json`;
+          const expectedFileName =
+            "sourceInstanceId" in result.data
+              ? `${toSafeFileName(result.data.sourceInstanceId)}.json`
+              : `${result.data.rowKey}.json`;
+          if (basename(dirname(filePath)) !== result.data.typeId) {
+            failures.push(`${filePath}: expected full type ID directory ${result.data.typeId}`);
+          }
           if (basename(filePath) !== expectedFileName) {
             failures.push(`${filePath}: expected canonical filename ${expectedFileName}`);
           }
