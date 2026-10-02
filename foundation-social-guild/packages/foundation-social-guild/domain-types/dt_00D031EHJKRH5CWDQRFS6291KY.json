@@ -245,6 +245,16 @@
   "delegatedActions": [],
   "id": "dt_00D031EHJKRH5CWDQRFS6291KY",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures a guild kind's capacity, master succession, rejoin wait and roles. A row is a guild of that kind the player belongs to.",
+      "label": "Guild kind"
+    },
+    "ja": {
+      "description": "ギルドの種類ごとに、定員・マスターの交代・再参加の待機・権限ロールを設定します。1 行は、プレイヤーが所属しているその種類のギルドを表します。",
+      "label": "ギルド種別"
+    }
+  },
   "name": "Guild",
   "singleEntry": false
 }

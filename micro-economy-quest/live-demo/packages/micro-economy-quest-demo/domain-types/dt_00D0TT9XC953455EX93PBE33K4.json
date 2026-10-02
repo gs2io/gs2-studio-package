@@ -186,6 +186,16 @@
   "delegatedActions": [],
   "id": "dt_00D0TT9XC953455EX93PBE33K4",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Adds a display name, stamina cost, clear reward and first-clear bonus to a demo quest.",
+      "label": "Quest"
+    },
+    "ja": {
+      "description": "デモのクエストに、表示名・消費スタミナ・クリア報酬・初回クリアボーナスを足します。",
+      "label": "クエスト"
+    }
+  },
   "name": "Quest",
   "renamedInheritedProperties": {},
   "singleEntry": false,

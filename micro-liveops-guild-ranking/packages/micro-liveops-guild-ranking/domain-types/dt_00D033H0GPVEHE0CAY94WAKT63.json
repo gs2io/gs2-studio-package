@@ -104,6 +104,16 @@
   "delegatedActions": [],
   "id": "dt_00D033H0GPVEHE0CAY94WAKT63",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines rewards distributed for each guild-ranking placement range.",
+      "label": "Ranking reward"
+    },
+    "ja": {
+      "description": "ギルドランキングの順位範囲ごとに配布する報酬を設定します。",
+      "label": "ランキング報酬"
+    }
+  },
   "name": "GuildRankingReward",
   "singleEntry": false
 }

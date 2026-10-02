@@ -54,6 +54,16 @@
   "delegatedActions": [],
   "id": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks the current number of ad-view points available to a player.",
+      "label": "Ad view point"
+    },
+    "ja": {
+      "description": "プレイヤーが利用できる広告視聴ポイントの現在値を管理します。",
+      "label": "広告視聴枠"
+    }
+  },
   "name": "AdViewPoint",
   "singleEntry": true
 }

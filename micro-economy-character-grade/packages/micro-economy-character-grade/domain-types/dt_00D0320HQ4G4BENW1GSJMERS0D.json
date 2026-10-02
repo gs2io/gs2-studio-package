@@ -35,6 +35,16 @@
   "delegatedActions": [],
   "id": "dt_00D0320HQ4G4BENW1GSJMERS0D",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks the current grade of each character owned by a player.",
+      "label": "Character"
+    },
+    "ja": {
+      "description": "プレイヤーが所持するキャラクターごとの現在グレードを管理します。",
+      "label": "キャラクター"
+    }
+  },
   "name": "Character",
   "renamedInheritedProperties": {},
   "singleEntry": false,

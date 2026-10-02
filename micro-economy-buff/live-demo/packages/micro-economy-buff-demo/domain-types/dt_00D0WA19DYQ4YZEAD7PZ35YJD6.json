@@ -9,6 +9,16 @@
   "delegatedActions": [],
   "id": "dt_00D0WA19DYQ4YZEAD7PZ35YJD6",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "The demo buff, which doubles idle rewards during the campaign.",
+      "label": "Buff"
+    },
+    "ja": {
+      "description": "デモのバフです。キャンペーン中の放置報酬を 2 倍にします。",
+      "label": "バフ"
+    }
+  },
   "name": "Buff",
   "renamedInheritedProperties": {},
   "singleEntry": false,

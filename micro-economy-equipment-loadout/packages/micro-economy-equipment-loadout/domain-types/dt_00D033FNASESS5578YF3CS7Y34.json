@@ -35,6 +35,16 @@
   "delegatedActions": [],
   "id": "dt_00D033FNASESS5578YF3CS7Y34",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Manages each character's equipment slot layout and current loadout.",
+      "label": "Character"
+    },
+    "ja": {
+      "description": "キャラクターごとの装備スロット構成と装着状態を管理します。",
+      "label": "キャラクター"
+    }
+  },
   "name": "Character",
   "renamedInheritedProperties": {},
   "singleEntry": false,

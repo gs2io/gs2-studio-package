@@ -93,6 +93,16 @@
   ],
   "id": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "A demo exchange that grants one character for nothing.",
+      "label": "Recruit"
+    },
+    "ja": {
+      "description": "無償でキャラクターを1体入手できるデモ用の交換です。",
+      "label": "勧誘"
+    }
+  },
   "name": "CharacterRecruit",
   "singleEntry": false
 }

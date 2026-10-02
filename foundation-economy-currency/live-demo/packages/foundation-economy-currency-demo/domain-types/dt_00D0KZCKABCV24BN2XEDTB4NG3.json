@@ -61,6 +61,16 @@
   ],
   "id": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "A demo deposit that lands in the paid balance.",
+      "label": "Paid deposit"
+    },
+    "ja": {
+      "description": "有償残高に加算されるデモ用の入金です。",
+      "label": "有償付与"
+    }
+  },
   "name": "PaidDeposit",
   "singleEntry": true
 }

@@ -100,6 +100,16 @@
   "delegatedActions": [],
   "id": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines a stamina product's recovery amount, price, and purchase limits.",
+      "label": "Stamina product"
+    },
+    "ja": {
+      "description": "購入時に回復するスタミナ量、価格、購入制限を設定します。",
+      "label": "スタミナ商品"
+    }
+  },
   "name": "EnergyProduct",
   "singleEntry": false
 }

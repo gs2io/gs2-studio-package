@@ -9,6 +9,16 @@
   "delegatedActions": [],
   "id": "dt_51N1KRW6N6Q3BEP1VCG5A15M74",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "References the period during which a login reward campaign is available.",
+      "label": "Schedule"
+    },
+    "ja": {
+      "description": "ログインボーナスを利用できる開催期間を参照します。",
+      "label": "スケジュール"
+    }
+  },
   "name": "Schedule",
   "renamedInheritedProperties": {},
   "singleEntry": false,

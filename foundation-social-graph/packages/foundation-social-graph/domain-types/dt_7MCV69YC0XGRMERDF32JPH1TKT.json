@@ -96,6 +96,16 @@
   "delegatedActions": [],
   "id": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Manages the profile information a player shares with others.",
+      "label": "Profile"
+    },
+    "ja": {
+      "description": "プレイヤーが公開するプロフィール情報を管理します。",
+      "label": "プロフィール"
+    }
+  },
   "name": "Profile",
   "singleEntry": false
 }

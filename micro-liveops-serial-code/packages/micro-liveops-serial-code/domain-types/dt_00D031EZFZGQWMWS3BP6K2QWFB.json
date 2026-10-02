@@ -53,6 +53,16 @@
   "delegatedActions": [],
   "id": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures whether campaign-code redemption is enabled.",
+      "label": "Code campaign"
+    },
+    "ja": {
+      "description": "キャンペーンコード方式を利用するかどうかを設定します。",
+      "label": "コードキャンペーン"
+    }
+  },
   "name": "SerialCodeCampaign",
   "singleEntry": false
 }

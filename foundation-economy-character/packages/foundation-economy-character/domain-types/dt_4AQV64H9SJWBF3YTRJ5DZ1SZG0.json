@@ -105,6 +105,16 @@
   "delegatedActions": [],
   "id": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Sets level-up experience thresholds and the initial and maximum level caps.",
+      "label": "Character experience"
+    },
+    "ja": {
+      "description": "レベルアップに必要な経験値と、初期・最大レベル上限を設定します。",
+      "label": "キャラクター経験値"
+    }
+  },
   "name": "CharacterExperience",
   "singleEntry": true
 }

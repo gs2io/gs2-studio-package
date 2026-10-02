@@ -53,6 +53,16 @@
   "delegatedActions": [],
   "id": "dt_00D033FNASFTV29D7YF0NEPDQD",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks the equipment currently assigned to each loadout slot.",
+      "label": "Worn equipment"
+    },
+    "ja": {
+      "description": "各装備スロットに現在装着されている装備を管理します。",
+      "label": "装着中の装備"
+    }
+  },
   "name": "EquipmentSlotAssignment",
   "singleEntry": false
 }

@@ -138,6 +138,16 @@
   ],
   "id": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks the quest a player has in progress and the rewards completing it grants.",
+      "label": "Quest progress"
+    },
+    "ja": {
+      "description": "プレイヤーが進行中のクエストと、クリア時に付与される報酬を管理します。",
+      "label": "クエスト進行"
+    }
+  },
   "name": "Progress",
   "singleEntry": true
 }

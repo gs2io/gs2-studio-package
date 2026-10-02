@@ -104,6 +104,16 @@
   "delegatedActions": [],
   "id": "dt_00D031DYK08MQ218VMWRT5X90Q",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines rewards distributed for each ranking placement range.",
+      "label": "Ranking reward"
+    },
+    "ja": {
+      "description": "ランキングの順位範囲ごとに配布する報酬を設定します。",
+      "label": "ランキング報酬"
+    }
+  },
   "name": "RankingReward",
   "singleEntry": false
 }

@@ -126,6 +126,16 @@
   "delegatedActions": [],
   "id": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Sets the maximum and initial number of characters a player can own.",
+      "label": "Character slots"
+    },
+    "ja": {
+      "description": "プレイヤーが所持できるキャラクター数の上限と初期値を設定します。",
+      "label": "キャラクター所持枠"
+    }
+  },
   "name": "CharacterCollection",
   "singleEntry": true
 }

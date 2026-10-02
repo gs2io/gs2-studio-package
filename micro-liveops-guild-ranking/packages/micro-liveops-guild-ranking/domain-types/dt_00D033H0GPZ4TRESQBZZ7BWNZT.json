@@ -172,6 +172,16 @@
   "delegatedActions": [],
   "id": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures scoring, availability, and participation rules for a ranking of members within each guild.",
+      "label": "Guild ranking"
+    },
+    "ja": {
+      "description": "ギルドごとにメンバー同士で競うランキングの集計方法、開催期間、参加条件を設定します。",
+      "label": "ギルドランキング"
+    }
+  },
   "name": "GuildRanking",
   "singleEntry": false
 }

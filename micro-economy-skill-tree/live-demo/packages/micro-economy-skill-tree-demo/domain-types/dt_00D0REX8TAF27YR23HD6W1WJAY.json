@@ -68,6 +68,16 @@
   "delegatedActions": [],
   "id": "dt_00D0REX8TAF27YR23HD6W1WJAY",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Adds the coins a demo skill node charges when it is released.",
+      "label": "Skill node"
+    },
+    "ja": {
+      "description": "デモのスキルノードに、解放時へ消費するコインの額を足します。",
+      "label": "スキルノード"
+    }
+  },
   "name": "SkillNode",
   "renamedInheritedProperties": {},
   "singleEntry": false,

@@ -34,6 +34,16 @@
   "delegatedActions": [],
   "id": "dt_130FYGH3W86EG2FK06VGEJSYCT",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines the contents and presentation of a product sold in the store.",
+      "label": "Store product"
+    },
+    "ja": {
+      "description": "ストアで販売する商品内容と表示情報を設定します。",
+      "label": "ストア商品"
+    }
+  },
   "name": "StoreProduct",
   "renamedInheritedProperties": {},
   "singleEntry": false,

@@ -116,6 +116,16 @@
   ],
   "id": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures a product's currency, price, and purchase limits.",
+      "label": "Store price"
+    },
+    "ja": {
+      "description": "商品ごとに販売通貨、価格、購入回数制限を設定します。",
+      "label": "販売価格"
+    }
+  },
   "name": "StorePrice",
   "singleEntry": false
 }

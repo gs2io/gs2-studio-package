@@ -100,6 +100,16 @@
   "delegatedActions": [],
   "id": "dt_00D031YG89PEGW8QTF8JNDY638",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures the probability and experience multiplier for each enhancement result.",
+      "label": "Bonus rate"
+    },
+    "ja": {
+      "description": "キャラクター強化の成功種別ごとの発生率と経験値倍率を設定します。",
+      "label": "大成功倍率"
+    }
+  },
   "name": "CharacterEnhanceBonus",
   "singleEntry": false
 }

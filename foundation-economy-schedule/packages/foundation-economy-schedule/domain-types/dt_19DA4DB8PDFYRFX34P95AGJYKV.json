@@ -465,6 +465,16 @@
   "delegatedActions": [],
   "id": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines start and end times and recurrence rules for events or features.",
+      "label": "Schedule"
+    },
+    "ja": {
+      "description": "イベントや機能を有効にする開始・終了日時と繰り返し条件を設定します。",
+      "label": "スケジュール"
+    }
+  },
   "name": "Schedule",
   "singleEntry": false
 }

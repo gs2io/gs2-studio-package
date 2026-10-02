@@ -51,6 +51,16 @@
   "delegatedActions": [],
   "id": "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Adds the coins a demo mission pays when its reward is received.",
+      "label": "Mission"
+    },
+    "ja": {
+      "description": "デモのミッションに、報酬の受け取り時に付与するコインの額を足します。",
+      "label": "ミッション"
+    }
+  },
   "name": "Mission",
   "renamedInheritedProperties": {},
   "singleEntry": false,

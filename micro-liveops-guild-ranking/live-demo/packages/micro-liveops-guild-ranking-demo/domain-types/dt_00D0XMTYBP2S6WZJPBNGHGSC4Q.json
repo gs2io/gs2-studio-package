@@ -63,6 +63,16 @@
   "delegatedActions": [],
   "id": "dt_00D0XMTYBP2S6WZJPBNGHGSC4Q",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Adds the coins it pays to a demo guild ranking reward tier.",
+      "label": "Guild ranking reward"
+    },
+    "ja": {
+      "description": "デモのギルドランキング報酬に、報酬コインを足します。",
+      "label": "ギルドランキング報酬"
+    }
+  },
   "name": "GuildRankingReward",
   "renamedInheritedProperties": {},
   "singleEntry": false,

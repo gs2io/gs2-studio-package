@@ -30,6 +30,16 @@
   "delegatedActions": [],
   "id": "dt_00D031YG89PXH0J9RYZKY8NP6R",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Registers a character enhancement recipe; an enhancement names the recipe by this ID.",
+      "label": "Enhancement recipe"
+    },
+    "ja": {
+      "description": "キャラクター強化のレシピを登録します。強化を実行するときはこの ID で指定します。",
+      "label": "強化レシピ"
+    }
+  },
   "name": "CharacterEnhance",
   "singleEntry": false
 }

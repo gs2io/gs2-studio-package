@@ -10,28 +10,6 @@
       "en": "Promotes a character through grades, each raising its level cap, with per-step caps and eligibility.",
       "ja": "キャラクターのグレードを上げてレベル上限を引き上げます。段階ごとに上限値と対象キャラクターを設定できます。"
     },
-    "domainTypes": {
-      "dt_00D0320HQ4G4BENW1GSJMERS0D": {
-        "description": {
-          "en": "Tracks the current grade of each character owned by a player.",
-          "ja": "プレイヤーが所持するキャラクターごとの現在グレードを管理します。"
-        },
-        "label": {
-          "en": "Character",
-          "ja": "キャラクター"
-        }
-      },
-      "dt_00D0320HQ4JPTS5BMVDRD7QZH7": {
-        "description": {
-          "en": "Defines eligible characters, the grade-up target, and rank cap for a grade step.",
-          "ja": "対象キャラクターの条件、グレードアップ先、ランク上限を設定します。"
-        },
-        "label": {
-          "en": "Grade step",
-          "ja": "グレード段階"
-        }
-      }
-    },
     "label": {
       "en": "Character Grades",
       "ja": "キャラクター限界突破"

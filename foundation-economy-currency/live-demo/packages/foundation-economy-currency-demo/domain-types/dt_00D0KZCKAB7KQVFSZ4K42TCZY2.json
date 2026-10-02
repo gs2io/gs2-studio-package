@@ -61,6 +61,16 @@
   ],
   "id": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "A demo deposit that lands in the free balance.",
+      "label": "Free deposit"
+    },
+    "ja": {
+      "description": "無償残高に加算されるデモ用の入金です。",
+      "label": "無償付与"
+    }
+  },
   "name": "FreeDeposit",
   "singleEntry": true
 }

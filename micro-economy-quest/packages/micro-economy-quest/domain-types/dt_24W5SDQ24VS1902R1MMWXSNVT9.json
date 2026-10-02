@@ -52,6 +52,16 @@
   "delegatedActions": [],
   "id": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Groups related quests and sets the schedule they are available on.",
+      "label": "Quest group"
+    },
+    "ja": {
+      "description": "関連するクエストをまとめ、開催スケジュールを設定します。",
+      "label": "クエストグループ"
+    }
+  },
   "name": "QuestCollection",
   "singleEntry": false
 }

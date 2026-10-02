@@ -30,6 +30,16 @@
   "delegatedActions": [],
   "id": "dt_5X0WV26CPKD17193EPDQD24EP3",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines a type of in-game currency that can be used to purchase products.",
+      "label": "Currency type"
+    },
+    "ja": {
+      "description": "商品の購入に利用できるゲーム内通貨の種類を設定します。",
+      "label": "通貨種別"
+    }
+  },
   "name": "CurrencyType",
   "singleEntry": false
 }

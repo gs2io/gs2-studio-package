@@ -77,6 +77,16 @@
   "delegatedActions": [],
   "id": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures the material items used to enhance characters and the experience each one grants.",
+      "label": "Enhancement material"
+    },
+    "ja": {
+      "description": "キャラクター強化に使う素材アイテムと、1 個あたりの経験値を設定します。",
+      "label": "強化素材"
+    }
+  },
   "name": "CharacterEnhanceMaterial",
   "singleEntry": false
 }

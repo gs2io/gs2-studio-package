@@ -15,28 +15,6 @@
       "en": "Supplies the live demo's seven-day login bonus, the coins each day pays, and the press that starts the track over. The rewards land in the currency package's wallet.",
       "ja": "ライブデモ用の 7 日間のログインボーナスと、各日の報酬コイン・やり直しの操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
-    "domainTypes": {
-      "dt_00D0VGDFNZ1P9DR7YQFQC90N00": {
-        "description": {
-          "en": "Gives a demo login reward group its receive and start-over presses and its labels.",
-          "ja": "デモのログインボーナスグループに、受け取り・やり直しの操作と表示を付けます。"
-        },
-        "label": {
-          "en": "Login reward group",
-          "ja": "ログインボーナスグループ"
-        }
-      },
-      "dt_00D0VGDFNZ677FVDGPR399YJ1P": {
-        "description": {
-          "en": "Adds a display name and the coins it pays to a demo login reward.",
-          "ja": "デモのログインボーナスに、表示名と報酬コインを足します。"
-        },
-        "label": {
-          "en": "Login reward",
-          "ja": "ログインボーナス"
-        }
-      }
-    },
     "label": {
       "en": "Login Rewards (demo data)",
       "ja": "ログインボーナス（デモデータ）"

@@ -218,6 +218,16 @@
   "delegatedActions": [],
   "id": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Manages stamina defaults, capacity, recovery interval, and each player's current value.",
+      "label": "Stamina"
+    },
+    "ja": {
+      "description": "スタミナの初期値・上限・回復間隔とプレイヤーの現在値を管理します。",
+      "label": "スタミナ"
+    }
+  },
   "name": "Energy",
   "singleEntry": false
 }

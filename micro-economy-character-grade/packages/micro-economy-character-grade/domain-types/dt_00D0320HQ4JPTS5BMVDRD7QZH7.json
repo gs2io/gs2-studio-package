@@ -101,6 +101,16 @@
   "delegatedActions": [],
   "id": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines eligible characters, the grade-up target, and rank cap for a grade step.",
+      "label": "Grade step"
+    },
+    "ja": {
+      "description": "対象キャラクターの条件、グレードアップ先、ランク上限を設定します。",
+      "label": "グレード段階"
+    }
+  },
   "name": "CharacterGradeStep",
   "singleEntry": false
 }

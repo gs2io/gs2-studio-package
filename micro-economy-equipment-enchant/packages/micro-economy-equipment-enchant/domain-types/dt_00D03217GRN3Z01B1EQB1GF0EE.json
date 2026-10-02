@@ -100,6 +100,16 @@
   "delegatedActions": [],
   "id": "dt_00D03217GRN3Z01B1EQB1GF0EE",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures the probability of each effect-slot count during enchantment.",
+      "label": "Slot chance"
+    },
+    "ja": {
+      "description": "エンチャント時に付与される効果スロット数と確率を設定します。",
+      "label": "スロット数抽選"
+    }
+  },
   "name": "EquipmentEnchantSlotChance",
   "singleEntry": false
 }

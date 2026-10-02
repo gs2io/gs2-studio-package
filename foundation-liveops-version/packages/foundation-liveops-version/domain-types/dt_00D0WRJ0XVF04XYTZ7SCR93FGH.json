@@ -53,6 +53,16 @@
   "delegatedActions": [],
   "id": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures which user a player who passes the version check is signed in as. Without this row, the version namespace and its version models are not deployed.",
+      "label": "Version gate"
+    },
+    "ja": {
+      "description": "バージョン確認を通過したプレイヤーをどのユーザーとして扱うかを設定します。この行が無いと、バージョン管理の名前空間とバージョンモデルはデプロイされません。",
+      "label": "バージョン確認"
+    }
+  },
   "name": "VersionGate",
   "singleEntry": true
 }

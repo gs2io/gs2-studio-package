@@ -74,6 +74,16 @@
   "delegatedActions": [],
   "id": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks confirmed friendship relationships between players. Profiles come from the friend list.",
+      "label": "Friend"
+    },
+    "ja": {
+      "description": "承認済みのフレンド関係を管理します。プロフィールはフレンド一覧から取得します。",
+      "label": "フレンド"
+    }
+  },
   "name": "Friend",
   "singleEntry": false
 }

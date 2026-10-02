@@ -36,6 +36,16 @@
   "delegatedActions": [],
   "id": "dt_00D0RCHP2Q2DTSP41SVC7C111T",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks unlocked skill nodes per character.",
+      "label": "Character"
+    },
+    "ja": {
+      "description": "キャラクターごとに解放済みスキルノードを管理します。",
+      "label": "キャラクター"
+    }
+  },
   "name": "Character",
   "renamedInheritedProperties": {},
   "singleEntry": false,

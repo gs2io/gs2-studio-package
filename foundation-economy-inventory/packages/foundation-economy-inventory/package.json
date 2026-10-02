@@ -7,18 +7,6 @@
       "en": "Basic inventory management for items the player owns.",
       "ja": "プレイヤーが所持するアイテムの在庫を管理します。"
     },
-    "domainTypes": {
-      "dt_47E751540GQRMAWTXYFT9376WH": {
-        "description": {
-          "en": "Tracks the quantity of each item owned by a player.",
-          "ja": "プレイヤーが所持する各アイテムの数量を管理します。"
-        },
-        "label": {
-          "en": "Item",
-          "ja": "アイテム"
-        }
-      }
-    },
     "label": {
       "en": "Items",
       "ja": "アイテム"

@@ -10,38 +10,6 @@
       "en": "Grants rewards for daily or consecutive-day logins.",
       "ja": "毎日・連続ログインなどに応じて報酬を配布します。"
     },
-    "domainTypes": {
-      "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y": {
-        "description": {
-          "en": "Defines the rewards granted for each login day.",
-          "ja": "ログイン日数ごとに付与する報酬内容を設定します。"
-        },
-        "label": {
-          "en": "Login reward",
-          "ja": "ログインボーナス"
-        }
-      },
-      "dt_51N1KRW6N6Q3BEP1VCG5A15M74": {
-        "description": {
-          "en": "References the period during which a login reward campaign is available.",
-          "ja": "ログインボーナスを利用できる開催期間を参照します。"
-        },
-        "label": {
-          "en": "Schedule",
-          "ja": "スケジュール"
-        }
-      },
-      "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D": {
-        "description": {
-          "en": "Groups login rewards and associates them with an availability schedule.",
-          "ja": "ログインボーナスをまとめるグループと開催スケジュールを設定します。"
-        },
-        "label": {
-          "en": "Login reward group",
-          "ja": "ログインボーナスグループ"
-        }
-      }
-    },
     "label": {
       "en": "Login Rewards",
       "ja": "ログインボーナス"

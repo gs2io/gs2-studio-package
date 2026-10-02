@@ -76,6 +76,16 @@
   "delegatedActions": [],
   "id": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines the rewards granted for each login day.",
+      "label": "Login reward"
+    },
+    "ja": {
+      "description": "ログイン日数ごとに付与する報酬内容を設定します。",
+      "label": "ログインボーナス"
+    }
+  },
   "name": "LoginReward",
   "singleEntry": false
 }

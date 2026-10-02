@@ -129,6 +129,16 @@
   ],
   "id": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks individual inbox messages delivered to a player and their claim state.",
+      "label": "Message"
+    },
+    "ja": {
+      "description": "プレイヤーの受信箱に届く個別メッセージと受取状態を管理します。",
+      "label": "メッセージ"
+    }
+  },
   "name": "Message",
   "singleEntry": false
 }

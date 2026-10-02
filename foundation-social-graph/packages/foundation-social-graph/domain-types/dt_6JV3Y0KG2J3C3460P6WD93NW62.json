@@ -30,6 +30,16 @@
   "delegatedActions": [],
   "id": "dt_6JV3Y0KG2J3C3460P6WD93NW62",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks friend requests sent to other players. Requests carry no recipient profile.",
+      "label": "Outgoing friend request"
+    },
+    "ja": {
+      "description": "他のプレイヤーへ送信したフレンド申請を管理します。申請先のプロフィールは含みません。",
+      "label": "フレンド申請（送信）"
+    }
+  },
   "name": "SendFriendRequest",
   "singleEntry": false
 }

@@ -175,6 +175,16 @@
   ],
   "id": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines a mission's counter, target value, completion rewards, and claim state.",
+      "label": "Mission"
+    },
+    "ja": {
+      "description": "達成カウンター、目標値、完了報酬と受取状態を設定・管理します。",
+      "label": "ミッション"
+    }
+  },
   "name": "Mission",
   "singleEntry": false
 }

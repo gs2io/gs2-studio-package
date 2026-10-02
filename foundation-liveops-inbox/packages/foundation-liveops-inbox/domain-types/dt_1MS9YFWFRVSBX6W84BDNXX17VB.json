@@ -96,6 +96,16 @@
   "delegatedActions": [],
   "id": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines a message sent to all players, its claim period, and attached rewards.",
+      "label": "Global message"
+    },
+    "ja": {
+      "description": "全プレイヤーへ配信するメッセージ、受取期間、添付報酬を設定します。",
+      "label": "全体メッセージ"
+    }
+  },
   "name": "GlobalMessage",
   "singleEntry": false
 }

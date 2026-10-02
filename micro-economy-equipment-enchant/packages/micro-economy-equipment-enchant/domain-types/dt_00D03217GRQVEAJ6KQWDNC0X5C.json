@@ -121,6 +121,16 @@
   "delegatedActions": [],
   "id": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines an enchantment effect that can be rolled and the fixed value it grants.",
+      "label": "Enchant option"
+    },
+    "ja": {
+      "description": "抽選対象となるエンチャント効果と、付与されたときの固定の効果値を設定します。",
+      "label": "エンチャント効果"
+    }
+  },
   "name": "EquipmentEnchantOption",
   "singleEntry": false
 }

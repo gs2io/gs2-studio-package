@@ -30,6 +30,16 @@
   "delegatedActions": [],
   "id": "dt_5XY098JXVWPEN0Q0F7QY165JJA",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Registers categories used to classify equipment.",
+      "label": "Equipment category"
+    },
+    "ja": {
+      "description": "装備を分類するカテゴリを登録します。",
+      "label": "装備カテゴリ"
+    }
+  },
   "name": "EquipmentCategory",
   "singleEntry": false
 }

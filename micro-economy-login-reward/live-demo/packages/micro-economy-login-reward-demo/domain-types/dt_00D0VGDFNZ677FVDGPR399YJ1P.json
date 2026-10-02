@@ -85,6 +85,16 @@
   "delegatedActions": [],
   "id": "dt_00D0VGDFNZ677FVDGPR399YJ1P",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Adds a display name and the coins it pays to a demo login reward.",
+      "label": "Login reward"
+    },
+    "ja": {
+      "description": "デモのログインボーナスに、表示名と報酬コインを足します。",
+      "label": "ログインボーナス"
+    }
+  },
   "name": "LoginReward",
   "renamedInheritedProperties": {},
   "singleEntry": false,

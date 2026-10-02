@@ -102,6 +102,16 @@
   "delegatedActions": [],
   "id": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks a player's paid and free currency balances.",
+      "label": "Wallet"
+    },
+    "ja": {
+      "description": "プレイヤーが保有する有償・無償通貨の残高を管理します。",
+      "label": "ウォレット"
+    }
+  },
   "name": "Wallet",
   "singleEntry": false
 }

@@ -13,28 +13,6 @@
       "en": "Supplies the live demo's idle reward: a few coins every five minutes away and a bigger drop every hour, up to eight hours. The rewards land in the currency package's wallet.",
       "ja": "ライブデモ用の放置報酬（5 分ごとに少し、1 時間ごとに多めのコイン、上限 8 時間）を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
-    "domainTypes": {
-      "dt_00D0W2TXV2P9NTD0GZY11BN5M7": {
-        "description": {
-          "en": "Adds the coins it pays to a demo idle reward.",
-          "ja": "デモの放置報酬に、報酬コインを足します。"
-        },
-        "label": {
-          "en": "Idle reward",
-          "ja": "放置報酬"
-        }
-      },
-      "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA": {
-        "description": {
-          "en": "Gives the demo idle status its receive press and its rule.",
-          "ja": "デモの放置状況に、受け取りの操作と説明を付けます。"
-        },
-        "label": {
-          "en": "Idle status",
-          "ja": "放置状況"
-        }
-      }
-    },
     "label": {
       "en": "Idle Rewards (demo data)",
       "ja": "放置報酬（デモデータ）"

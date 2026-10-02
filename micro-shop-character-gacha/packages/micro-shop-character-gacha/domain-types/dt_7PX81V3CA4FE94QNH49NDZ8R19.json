@@ -99,6 +99,16 @@
   "delegatedActions": [],
   "id": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures each character's draw weight within a rarity tier.",
+      "label": "Character rate"
+    },
+    "ja": {
+      "description": "レアリティ内で各キャラクターが排出される比率を設定します。",
+      "label": "キャラクター排出率"
+    }
+  },
   "name": "CharacterRate",
   "singleEntry": false
 }

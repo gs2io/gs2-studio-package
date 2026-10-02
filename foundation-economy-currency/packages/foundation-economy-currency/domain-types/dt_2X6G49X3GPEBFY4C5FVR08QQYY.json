@@ -55,6 +55,16 @@
   "delegatedActions": [],
   "id": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures receipt validation and test-purchase behavior for the currency store.",
+      "label": "Currency store"
+    },
+    "ja": {
+      "description": "レシート検証とテスト購入に関する通貨ストア設定を管理します。",
+      "label": "通貨ストア"
+    }
+  },
   "name": "CurrencyStore",
   "singleEntry": true
 }

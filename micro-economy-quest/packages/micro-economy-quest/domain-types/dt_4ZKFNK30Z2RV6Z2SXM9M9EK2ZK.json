@@ -187,6 +187,16 @@
   ],
   "id": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines start costs, first-clear and repeat-clear rewards, and failure actions.",
+      "label": "Quest"
+    },
+    "ja": {
+      "description": "開始時の消費、初回・通常クリア報酬、失敗時アクションを設定します。",
+      "label": "クエスト"
+    }
+  },
   "name": "Quest",
   "singleEntry": false
 }

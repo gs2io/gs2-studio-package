@@ -54,6 +54,16 @@
   "delegatedActions": [],
   "id": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines reward actions granted for accumulated idle time.",
+      "label": "Idle reward"
+    },
+    "ja": {
+      "description": "放置時間に応じて付与する報酬アクションを設定します。",
+      "label": "放置報酬"
+    }
+  },
   "name": "IdleReward",
   "singleEntry": false
 }

@@ -74,6 +74,16 @@
   "delegatedActions": [],
   "id": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks the players followed by a player. Profiles come from the follow list. There is no follower list.",
+      "label": "Follow"
+    },
+    "ja": {
+      "description": "プレイヤーがフォローしている相手との関係を管理します。プロフィールはフォロー一覧から取得します。フォロワー一覧はありません。",
+      "label": "フォロー"
+    }
+  },
   "name": "Follow",
   "singleEntry": false
 }

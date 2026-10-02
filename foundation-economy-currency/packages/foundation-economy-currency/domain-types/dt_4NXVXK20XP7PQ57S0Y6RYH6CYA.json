@@ -74,6 +74,16 @@
   "delegatedActions": [],
   "id": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Maps a store product to its App Store and Google Play product identifiers.",
+      "label": "Store product"
+    },
+    "ja": {
+      "description": "ストア商品とApp Store・Google Playの商品IDの対応を設定します。",
+      "label": "ストア商品"
+    }
+  },
   "name": "StoreProduct",
   "singleEntry": false
 }

@@ -63,6 +63,16 @@
   ],
   "id": "dt_00D0WDGSP50X984BNS0PWV22MG",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "The contest's start and finish presses and its rule.",
+      "label": "Contest"
+    },
+    "ja": {
+      "description": "コンテストの開始・終了の操作と説明です。",
+      "label": "コンテスト"
+    }
+  },
   "name": "RankingContest",
   "singleEntry": true
 }

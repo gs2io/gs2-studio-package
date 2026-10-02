@@ -237,6 +237,16 @@
   "delegatedActions": [],
   "id": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures the OIDC connection and authentication settings used for account transfer.",
+      "label": "Take-over setting"
+    },
+    "ja": {
+      "description": "アカウント引き継ぎに使用するOIDC接続情報と認証設定を登録します。",
+      "label": "引き継ぎ設定"
+    }
+  },
   "name": "TakeOverSetting",
   "singleEntry": false
 }

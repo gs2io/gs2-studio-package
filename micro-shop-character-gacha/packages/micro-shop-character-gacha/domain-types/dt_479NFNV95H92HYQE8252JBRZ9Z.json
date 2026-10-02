@@ -30,6 +30,16 @@
   "delegatedActions": [],
   "id": "dt_479NFNV95H92HYQE8252JBRZ9Z",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines a gacha rarity tier and the characters assigned to it.",
+      "label": "Rarity"
+    },
+    "ja": {
+      "description": "ガチャのレアリティ区分と対象キャラクターを設定します。",
+      "label": "レアリティ"
+    }
+  },
   "name": "GachaRarity",
   "singleEntry": false
 }

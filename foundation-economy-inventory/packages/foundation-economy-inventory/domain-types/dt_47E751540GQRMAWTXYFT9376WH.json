@@ -54,6 +54,16 @@
   "delegatedActions": [],
   "id": "dt_47E751540GQRMAWTXYFT9376WH",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks the quantity of each item owned by a player.",
+      "label": "Item"
+    },
+    "ja": {
+      "description": "プレイヤーが所持する各アイテムの数量を管理します。",
+      "label": "アイテム"
+    }
+  },
   "name": "Item",
   "singleEntry": false
 }

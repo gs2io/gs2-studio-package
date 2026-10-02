@@ -159,6 +159,16 @@
   ],
   "id": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks when a player's idle period began and the associated claim state.",
+      "label": "Idle status"
+    },
+    "ja": {
+      "description": "プレイヤーの放置開始時刻と受け取り状況を管理します。",
+      "label": "放置状況"
+    }
+  },
   "name": "IdleStatus",
   "singleEntry": true
 }

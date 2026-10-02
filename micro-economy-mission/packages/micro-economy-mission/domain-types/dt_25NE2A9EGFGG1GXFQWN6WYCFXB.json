@@ -118,6 +118,16 @@
   "delegatedActions": [],
   "id": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks per-player progress values used by mission completion conditions.",
+      "label": "Mission counter"
+    },
+    "ja": {
+      "description": "ミッション達成条件に使用するプレイヤーごとの進捗値を管理します。",
+      "label": "ミッションカウンター"
+    }
+  },
   "name": "MissionCounter",
   "singleEntry": false
 }

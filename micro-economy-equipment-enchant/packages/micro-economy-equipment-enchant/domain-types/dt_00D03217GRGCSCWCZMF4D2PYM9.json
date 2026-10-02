@@ -57,6 +57,16 @@
   "delegatedActions": [],
   "id": "dt_00D03217GRGCSCWCZMF4D2PYM9",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Associates equipment with its enchantment configuration and rolled effects.",
+      "label": "Equipment"
+    },
+    "ja": {
+      "description": "装備ごとのエンチャント設定と付与済み効果を管理します。",
+      "label": "装備"
+    }
+  },
   "name": "Equipment",
   "renamedInheritedProperties": {},
   "singleEntry": false,

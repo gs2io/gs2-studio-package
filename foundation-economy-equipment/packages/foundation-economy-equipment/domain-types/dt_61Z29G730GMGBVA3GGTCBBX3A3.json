@@ -96,6 +96,16 @@
   "delegatedActions": [],
   "id": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Registers equipment available in the game, its category, and display order.",
+      "label": "Equipment"
+    },
+    "ja": {
+      "description": "ゲームに登場する装備、カテゴリ、表示順を登録します。",
+      "label": "装備"
+    }
+  },
   "name": "Equipment",
   "singleEntry": false
 }

@@ -90,6 +90,16 @@
   ],
   "id": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Groups missions by scope and availability schedule.",
+      "label": "Mission group"
+    },
+    "ja": {
+      "description": "ミッションの公開範囲と開催スケジュールをまとめて設定します。",
+      "label": "ミッショングループ"
+    }
+  },
   "name": "MissionCollection",
   "singleEntry": false
 }

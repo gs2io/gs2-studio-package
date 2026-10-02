@@ -87,6 +87,16 @@
   ],
   "id": "dt_00D0S4EG72DAP5YJTQFA6F363W",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "A stamina product the live demo sells, with what it refills and what it charges.",
+      "label": "Stamina product"
+    },
+    "ja": {
+      "description": "ライブデモで販売するスタミナ商品と、その回復量・価格です。",
+      "label": "スタミナ商品"
+    }
+  },
   "name": "EnergyProduct",
   "renamedInheritedProperties": {},
   "singleEntry": false,

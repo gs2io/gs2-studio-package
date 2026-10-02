@@ -366,6 +366,16 @@
   "delegatedActions": [],
   "id": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Manages published versions of agreements such as terms of service and privacy policies.",
+      "label": "Agreement version"
+    },
+    "ja": {
+      "description": "利用規約やプライバシーポリシーの公開バージョンを管理します。",
+      "label": "規約バージョン"
+    }
+  },
   "name": "AgreementVersion",
   "singleEntry": false
 }

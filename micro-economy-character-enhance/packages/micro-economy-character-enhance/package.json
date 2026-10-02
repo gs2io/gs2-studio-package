@@ -10,38 +10,6 @@
       "en": "Enhances a character with material items, turning them into experience, with configurable bonus multipliers.",
       "ja": "強化素材アイテムを消費してキャラクターに経験値を与えます。大成功の倍率も設定できます。"
     },
-    "domainTypes": {
-      "dt_00D031YG89PEGW8QTF8JNDY638": {
-        "description": {
-          "en": "Configures the probability and experience multiplier for each enhancement result.",
-          "ja": "キャラクター強化の成功種別ごとの発生率と経験値倍率を設定します。"
-        },
-        "label": {
-          "en": "Bonus rate",
-          "ja": "大成功倍率"
-        }
-      },
-      "dt_00D031YG89PXH0J9RYZKY8NP6R": {
-        "description": {
-          "en": "Registers a character enhancement recipe; an enhancement names the recipe by this ID.",
-          "ja": "キャラクター強化のレシピを登録します。強化を実行するときはこの ID で指定します。"
-        },
-        "label": {
-          "en": "Enhancement recipe",
-          "ja": "強化レシピ"
-        }
-      },
-      "dt_00D0TAXWR8T7NFF54JJJA7XJJ6": {
-        "description": {
-          "en": "Configures the material items used to enhance characters and the experience each one grants.",
-          "ja": "キャラクター強化に使う素材アイテムと、1 個あたりの経験値を設定します。"
-        },
-        "label": {
-          "en": "Enhancement material",
-          "ja": "強化素材"
-        }
-      }
-    },
     "label": {
       "en": "Character Enhancement",
       "ja": "キャラクター強化"

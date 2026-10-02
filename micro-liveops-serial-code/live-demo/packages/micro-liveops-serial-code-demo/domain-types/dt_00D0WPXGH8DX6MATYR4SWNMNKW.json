@@ -30,6 +30,16 @@
   "delegatedActions": [],
   "id": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Redeeming a serial code, and the limit on how often.",
+      "label": "Code redemption"
+    },
+    "ja": {
+      "description": "シリアルコードの引き換えと、その回数制限です。",
+      "label": "コードの引き換え"
+    }
+  },
   "name": "SerialCodeRedemption",
   "singleEntry": true
 }

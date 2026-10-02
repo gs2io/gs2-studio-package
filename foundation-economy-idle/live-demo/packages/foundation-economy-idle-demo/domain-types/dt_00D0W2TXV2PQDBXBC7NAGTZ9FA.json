@@ -9,6 +9,16 @@
   "delegatedActions": [],
   "id": "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Gives the demo idle status its receive press and its rule.",
+      "label": "Idle status"
+    },
+    "ja": {
+      "description": "デモの放置状況に、受け取りの操作と説明を付けます。",
+      "label": "放置状況"
+    }
+  },
   "name": "IdleStatus",
   "renamedInheritedProperties": {},
   "singleEntry": true,

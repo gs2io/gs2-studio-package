@@ -7,28 +7,6 @@
       "en": "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
       "ja": "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。"
     },
-    "domainTypes": {
-      "dt_00D0XSWNPHPAJEJYNYDWVGREE5": {
-        "description": {
-          "en": "The ID-and-password transfer code a player has registered.",
-          "ja": "プレイヤーが登録した、IDとパスワードによる引き継ぎコードです。"
-        },
-        "label": {
-          "en": "Transfer code",
-          "ja": "引き継ぎコード"
-        }
-      },
-      "dt_0EKVVXM5E9CF5NK45FPRJVPXD4": {
-        "description": {
-          "en": "Configures the OIDC connection and authentication settings used for account transfer.",
-          "ja": "アカウント引き継ぎに使用するOIDC接続情報と認証設定を登録します。"
-        },
-        "label": {
-          "en": "Take-over setting",
-          "ja": "引き継ぎ設定"
-        }
-      }
-    },
     "label": {
       "en": "Account Transfer",
       "ja": "引き継ぎ設定"

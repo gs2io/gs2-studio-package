@@ -63,6 +63,16 @@
   ],
   "id": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "The campaign's start and end presses and its rule.",
+      "label": "Campaign"
+    },
+    "ja": {
+      "description": "キャンペーンの開始・終了の操作と説明です。",
+      "label": "キャンペーン"
+    }
+  },
   "name": "BuffCampaign",
   "singleEntry": true
 }

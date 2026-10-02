@@ -74,6 +74,16 @@
   "delegatedActions": [],
   "id": "dt_00D03217GRGZC79DA19NWHFSGD",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks the enchantment effects rolled onto a player's equipment.",
+      "label": "Rolled bonus"
+    },
+    "ja": {
+      "description": "プレイヤーの装備に実際に付与されたエンチャント効果を管理します。",
+      "label": "付与済み効果"
+    }
+  },
   "name": "EquipmentEnchantment",
   "singleEntry": false
 }

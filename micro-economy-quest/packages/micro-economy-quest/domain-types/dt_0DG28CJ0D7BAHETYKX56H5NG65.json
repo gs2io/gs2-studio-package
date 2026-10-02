@@ -76,6 +76,16 @@
   "delegatedActions": [],
   "id": "dt_0DG28CJ0D7BAHETYKX56H5NG65",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "A reward the quest in progress grants when it is completed.",
+      "label": "Quest reward"
+    },
+    "ja": {
+      "description": "進行中のクエストをクリアしたときに付与される報酬です。",
+      "label": "クエスト報酬"
+    }
+  },
   "name": "ProgressReward",
   "singleEntry": false
 }

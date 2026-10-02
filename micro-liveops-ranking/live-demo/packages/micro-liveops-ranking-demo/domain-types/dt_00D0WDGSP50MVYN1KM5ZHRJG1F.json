@@ -63,6 +63,16 @@
   "delegatedActions": [],
   "id": "dt_00D0WDGSP50MVYN1KM5ZHRJG1F",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Adds the coins it pays to a demo ranking reward tier.",
+      "label": "Ranking reward"
+    },
+    "ja": {
+      "description": "デモのランキング報酬に、報酬コインを足します。",
+      "label": "ランキング報酬"
+    }
+  },
   "name": "RankingReward",
   "renamedInheritedProperties": {},
   "singleEntry": false,

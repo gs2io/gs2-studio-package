@@ -249,6 +249,16 @@
   ],
   "id": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Groups login rewards and associates them with an availability schedule.",
+      "label": "Login reward group"
+    },
+    "ja": {
+      "description": "ログインボーナスをまとめるグループと開催スケジュールを設定します。",
+      "label": "ログインボーナスグループ"
+    }
+  },
   "name": "LoginRewardCollection",
   "singleEntry": false
 }

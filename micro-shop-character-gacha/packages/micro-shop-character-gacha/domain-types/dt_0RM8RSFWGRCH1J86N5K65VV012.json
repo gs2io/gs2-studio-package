@@ -99,6 +99,16 @@
   "delegatedActions": [],
   "id": "dt_0RM8RSFWGRCH1J86N5K65VV012",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures the draw rate for each rarity tier in a gacha.",
+      "label": "Rarity rate"
+    },
+    "ja": {
+      "description": "ガチャで各レアリティが選ばれる排出率を設定します。",
+      "label": "レアリティ排出率"
+    }
+  },
   "name": "GachaRarityRate",
   "singleEntry": false
 }

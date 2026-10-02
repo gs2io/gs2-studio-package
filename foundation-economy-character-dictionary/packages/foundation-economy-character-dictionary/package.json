@@ -10,18 +10,6 @@
       "en": "Keeps a dex of every character species the player has ever obtained.",
       "ja": "これまでに入手したキャラクターの種類を図鑑に記録します。"
     },
-    "domainTypes": {
-      "dt_294B3NDY2CSVYZCGPT9QXRYRDP": {
-        "description": {
-          "en": "Manages the characters shown in the character encyclopedia and their view state.",
-          "ja": "キャラクター図鑑に表示するキャラクターと閲覧状態を管理します。"
-        },
-        "label": {
-          "en": "Character",
-          "ja": "キャラクター"
-        }
-      }
-    },
     "label": {
       "en": "Character Dex",
       "ja": "キャラクター図鑑"

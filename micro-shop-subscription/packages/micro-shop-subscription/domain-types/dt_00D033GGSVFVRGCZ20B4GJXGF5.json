@@ -224,6 +224,16 @@
   "delegatedActions": [],
   "id": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures store product identifiers and renewal triggers, and tracks subscription status and expiration.",
+      "label": "Subscription"
+    },
+    "ja": {
+      "description": "App Store・Google Playの商品識別子、更新トリガー、有効期限を設定・管理します。",
+      "label": "サブスク商品"
+    }
+  },
   "name": "StoreSubscription",
   "singleEntry": false
 }

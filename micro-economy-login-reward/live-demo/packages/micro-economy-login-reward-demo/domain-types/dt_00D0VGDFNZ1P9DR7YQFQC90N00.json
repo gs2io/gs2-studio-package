@@ -26,6 +26,16 @@
   ],
   "id": "dt_00D0VGDFNZ1P9DR7YQFQC90N00",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Gives a demo login reward group its receive and start-over presses and its labels.",
+      "label": "Login reward group"
+    },
+    "ja": {
+      "description": "デモのログインボーナスグループに、受け取り・やり直しの操作と表示を付けます。",
+      "label": "ログインボーナスグループ"
+    }
+  },
   "name": "LoginRewardCollection",
   "renamedInheritedProperties": {},
   "singleEntry": false,

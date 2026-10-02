@@ -15,18 +15,6 @@
       "en": "Supplies the live demo's four skill nodes and the coins their unlock costs are paid from. What is unlocked is tracked per character.",
       "ja": "ライブデモ用の 4 つのスキルノードと、その解放コストを支払うコインを提供します。ノードの解放状況はキャラクターごとに記録されます。"
     },
-    "domainTypes": {
-      "dt_00D0REX8TAF27YR23HD6W1WJAY": {
-        "description": {
-          "en": "Adds the coins a demo skill node charges when it is released.",
-          "ja": "デモのスキルノードに、解放時へ消費するコインの額を足します。"
-        },
-        "label": {
-          "en": "Skill node",
-          "ja": "スキルノード"
-        }
-      }
-    },
     "label": {
       "en": "Skill Tree (demo data)",
       "ja": "スキルツリー（デモデータ）"

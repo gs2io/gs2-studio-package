@@ -108,6 +108,16 @@
   "delegatedActions": [],
   "id": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures counter reset rules and shared mission behavior.",
+      "label": "Mission setting"
+    },
+    "ja": {
+      "description": "ミッションカウンターのリセット方法や共通動作を設定します。",
+      "label": "ミッション設定"
+    }
+  },
   "name": "MissionSetting",
   "singleEntry": true
 }

@@ -80,6 +80,16 @@
   "delegatedActions": [],
   "id": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures the ad units and game keys used by AdMob and Unity Ads.",
+      "label": "Ad platform"
+    },
+    "ja": {
+      "description": "AdMobとUnity Adsで利用する広告ユニットやゲームキーを設定します。",
+      "label": "広告プラットフォーム"
+    }
+  },
   "name": "AdPlatform",
   "singleEntry": true
 }

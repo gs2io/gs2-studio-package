@@ -55,6 +55,16 @@
   "delegatedActions": [],
   "id": "dt_00D03217GRKX0AV27J248EX89N",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines the pool of effects and roll rules available when enchanting equipment.",
+      "label": "Enchantment pool"
+    },
+    "ja": {
+      "description": "装備に付与できる効果候補と抽選ルールをまとめて設定します。",
+      "label": "エンチャント設定"
+    }
+  },
   "name": "EquipmentEnchant",
   "singleEntry": false
 }

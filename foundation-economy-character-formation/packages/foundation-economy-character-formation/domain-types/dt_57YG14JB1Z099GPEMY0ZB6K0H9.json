@@ -52,6 +52,16 @@
   "delegatedActions": [],
   "id": "dt_57YG14JB1Z099GPEMY0ZB6K0H9",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks the character assigned to each slot in a saved formation.",
+      "label": "Form slot"
+    },
+    "ja": {
+      "description": "保存した編成の各スロットに配置されているキャラクターを管理します。",
+      "label": "フォームスロット"
+    }
+  },
   "name": "CharacterFormationFormSlot",
   "singleEntry": false
 }

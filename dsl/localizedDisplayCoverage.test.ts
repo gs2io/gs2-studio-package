@@ -3,25 +3,31 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
+type MaterializedLocalizedDisplay = Readonly<
+  Record<string, { readonly label?: string; readonly description?: string; readonly unit?: string }>
+>;
+
 interface MaterializedProperty {
   readonly name: string;
-  readonly localizedDisplay?: Readonly<
-    Record<
-      string,
-      { readonly label?: string; readonly description?: string; readonly unit?: string }
-    >
-  >;
+  readonly localizedDisplay?: MaterializedLocalizedDisplay;
 }
 
 interface MaterializedDomainType {
   readonly name: string;
+  readonly localizedDisplay?: MaterializedLocalizedDisplay;
   readonly declared?: { readonly properties?: readonly MaterializedProperty[] };
+}
+
+function hasJaEnLabelAndDescription(display: MaterializedLocalizedDisplay | undefined): boolean {
+  const ja = display?.ja;
+  const en = display?.en;
+  return Boolean(ja?.label && ja.description && en?.label && en.description);
 }
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 describe("materialized package localized display coverage", () => {
-  it("provides Japanese and English labels and descriptions for every authored field", () => {
+  it("provides Japanese and English labels and descriptions for every authored type and field", () => {
     const packageNames = readdirSync(packageRoot).filter(packageName =>
       existsSync(resolve(packageRoot, packageName, "dsl", "index.ts"))
     );
@@ -44,11 +50,12 @@ describe("materialized package localized display coverage", () => {
         const domainType = JSON.parse(
           readFileSync(resolve(domainTypesDir, fileName), "utf8")
         ) as MaterializedDomainType;
+        if (!hasJaEnLabelAndDescription(domainType.localizedDisplay)) {
+          missing.push(`${packageName}:${domainType.name}`);
+        }
         for (const property of domainType.declared?.properties ?? []) {
           propertyCount += 1;
-          const ja = property.localizedDisplay?.ja;
-          const en = property.localizedDisplay?.en;
-          if (!ja?.label || !ja.description || !en?.label || !en.description) {
+          if (!hasJaEnLabelAndDescription(property.localizedDisplay)) {
             missing.push(`${packageName}:${domainType.name}.${property.name}`);
           }
         }

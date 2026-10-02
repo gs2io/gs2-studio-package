@@ -13,18 +13,6 @@
       "en": "Supplies the live demo's one campaign code and the redemption that pays coins for it, once per visitor. The coins land in the currency package's wallet.",
       "ja": "ライブデモ用に、キャンペーンコード 1 つと、それを 1 人 1 回だけ引き換えてコインを受け取る操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
-    "domainTypes": {
-      "dt_00D0WPXGH8DX6MATYR4SWNMNKW": {
-        "description": {
-          "en": "Redeeming a serial code, and the limit on how often.",
-          "ja": "シリアルコードの引き換えと、その回数制限です。"
-        },
-        "label": {
-          "en": "Code redemption",
-          "ja": "コードの引き換え"
-        }
-      }
-    },
     "label": {
       "en": "Serial Codes (demo data)",
       "ja": "シリアルコード（デモデータ）"

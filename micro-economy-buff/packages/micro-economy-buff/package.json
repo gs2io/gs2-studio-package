@@ -10,18 +10,6 @@
       "en": "Temporarily scales what a service hands out, targeted by action or model and limited to a period.",
       "ja": "報酬の獲得量などを一時的に倍率で増減させます。対象のアクションまたはモデルと期間を指定できます。"
     },
-    "domainTypes": {
-      "dt_00D0322BN7GCTNB9EDAVY1X845": {
-        "description": {
-          "en": "Defines a temporary stat modifier's effect, duration, and stacking rules.",
-          "ja": "一時的な能力補正の効果量、有効期間、重複ルールを設定します。"
-        },
-        "label": {
-          "en": "Buff",
-          "ja": "バフ"
-        }
-      }
-    },
     "label": {
       "en": "Buffs",
       "ja": "バフ"

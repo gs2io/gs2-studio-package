@@ -126,6 +126,16 @@
   "delegatedActions": [],
   "id": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Manages the initial, maximum, and current number of equipment slots a player owns.",
+      "label": "Equipment slots"
+    },
+    "ja": {
+      "description": "プレイヤーが所持できる装備数の初期値・上限・現在値を管理します。",
+      "label": "装備所持枠"
+    }
+  },
   "name": "EquipmentCollection",
   "singleEntry": true
 }

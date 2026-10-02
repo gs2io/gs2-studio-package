@@ -54,6 +54,16 @@
   "delegatedActions": [],
   "id": "dt_294B3NDY2CSVYZCGPT9QXRYRDP",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Manages the characters shown in the character encyclopedia and their view state.",
+      "label": "Character"
+    },
+    "ja": {
+      "description": "キャラクター図鑑に表示するキャラクターと閲覧状態を管理します。",
+      "label": "キャラクター"
+    }
+  },
   "name": "Character",
   "renamedInheritedProperties": {},
   "singleEntry": false,

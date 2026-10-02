@@ -55,6 +55,16 @@
   "delegatedActions": [],
   "id": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Stores one player formation together with its slot assignments.",
+      "label": "Formation form"
+    },
+    "ja": {
+      "description": "プレイヤーが保存した1つの編成と、そのスロット構成を管理します。",
+      "label": "編成フォーム"
+    }
+  },
   "name": "CharacterFormationForm",
   "singleEntry": false
 }

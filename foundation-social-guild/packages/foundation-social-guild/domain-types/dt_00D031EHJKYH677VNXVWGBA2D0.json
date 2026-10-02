@@ -53,6 +53,16 @@
   "delegatedActions": [],
   "id": "dt_00D031EHJKYH677VNXVWGBA2D0",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures guild member roles and their permissions.",
+      "label": "Guild role"
+    },
+    "ja": {
+      "description": "ギルドメンバーに割り当てる役職と操作権限を設定します。",
+      "label": "ギルド権限"
+    }
+  },
   "name": "GuildRole",
   "singleEntry": false
 }

@@ -96,6 +96,16 @@
   "delegatedActions": [],
   "id": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks each player's trigger state, trigger time, and expiration.",
+      "label": "Trigger"
+    },
+    "ja": {
+      "description": "プレイヤーごとのトリガー発火状態と有効期限を管理します。",
+      "label": "トリガー"
+    }
+  },
   "name": "Trigger",
   "singleEntry": false
 }

@@ -170,6 +170,16 @@
   "delegatedActions": [],
   "id": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Registers the characters available in the game and their display order.",
+      "label": "Character"
+    },
+    "ja": {
+      "description": "ゲームに登場するキャラクターと表示順を登録します。",
+      "label": "キャラクター"
+    }
+  },
   "name": "Character",
   "singleEntry": false
 }

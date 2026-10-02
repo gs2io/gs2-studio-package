@@ -102,6 +102,16 @@
   "delegatedActions": [],
   "id": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Manages the initial, maximum, and current number of saved formation slots.",
+      "label": "Formation"
+    },
+    "ja": {
+      "description": "編成の初期保存枠数、最大枠数、現在の枠数を管理します。",
+      "label": "編成"
+    }
+  },
   "name": "CharacterFormation",
   "singleEntry": true
 }

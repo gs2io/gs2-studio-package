@@ -87,6 +87,16 @@
   ],
   "id": "dt_1G91WTZCFR536CEWSHPAK07H4R",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Defines a gacha's availability, draw count, currency cost, and prize table.",
+      "label": "Gacha"
+    },
+    "ja": {
+      "description": "ガチャの開催内容、抽選回数、消費通貨、排出テーブルを設定します。",
+      "label": "ガチャ"
+    }
+  },
   "name": "Gacha",
   "singleEntry": false
 }

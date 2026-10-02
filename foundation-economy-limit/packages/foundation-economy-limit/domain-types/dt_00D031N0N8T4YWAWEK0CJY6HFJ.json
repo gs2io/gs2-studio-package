@@ -101,6 +101,16 @@
   "delegatedActions": [],
   "id": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Tracks each player's usage count and its limit.",
+      "label": "Usage counter"
+    },
+    "ja": {
+      "description": "プレイヤーごとの利用回数と上限を管理します。",
+      "label": "回数カウンター"
+    }
+  },
   "name": "UsageLimitCounter",
   "singleEntry": false
 }

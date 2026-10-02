@@ -15,28 +15,6 @@
       "en": "Supplies the live demo's shared ranking, the coins each reward tier pays, and the presses that start and finish a contest. The rewards land in the currency package's wallet.",
       "ja": "ライブデモ用に、全員で共有するランキングと順位帯ごとの報酬コイン、コンテストの開始・終了の操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
-    "domainTypes": {
-      "dt_00D0WDGSP50MVYN1KM5ZHRJG1F": {
-        "description": {
-          "en": "Adds the coins it pays to a demo ranking reward tier.",
-          "ja": "デモのランキング報酬に、報酬コインを足します。"
-        },
-        "label": {
-          "en": "Ranking reward",
-          "ja": "ランキング報酬"
-        }
-      },
-      "dt_00D0WDGSP50X984BNS0PWV22MG": {
-        "description": {
-          "en": "The contest's start and finish presses and its rule.",
-          "ja": "コンテストの開始・終了の操作と説明です。"
-        },
-        "label": {
-          "en": "Contest",
-          "ja": "コンテスト"
-        }
-      }
-    },
     "label": {
       "en": "Rankings (demo data)",
       "ja": "ランキング（デモデータ）"

@@ -17,18 +17,6 @@
       "en": "Supplies the live demo's quest group and three quests, with the stamina each costs, the reward each pays, and a first-clear bonus.",
       "ja": "ライブデモ用のクエストグループと 3 つのクエスト、その消費スタミナ・クリア報酬・初回クリアボーナスを提供します。"
     },
-    "domainTypes": {
-      "dt_00D0TT9XC953455EX93PBE33K4": {
-        "description": {
-          "en": "Adds a display name, stamina cost, clear reward and first-clear bonus to a demo quest.",
-          "ja": "デモのクエストに、表示名・消費スタミナ・クリア報酬・初回クリアボーナスを足します。"
-        },
-        "label": {
-          "en": "Quest",
-          "ja": "クエスト"
-        }
-      }
-    },
     "label": {
       "en": "Quests (demo data)",
       "ja": "クエスト（デモデータ）"

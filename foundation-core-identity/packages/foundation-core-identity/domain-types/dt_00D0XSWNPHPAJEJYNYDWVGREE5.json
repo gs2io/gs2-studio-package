@@ -74,6 +74,16 @@
   "delegatedActions": [],
   "id": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "The ID-and-password transfer code a player has registered.",
+      "label": "Transfer code"
+    },
+    "ja": {
+      "description": "プレイヤーが登録した、IDとパスワードによる引き継ぎコードです。",
+      "label": "引き継ぎコード"
+    }
+  },
   "name": "TransferCode",
   "singleEntry": false
 }

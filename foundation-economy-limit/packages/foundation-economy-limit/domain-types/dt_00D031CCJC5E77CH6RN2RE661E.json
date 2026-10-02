@@ -188,6 +188,16 @@
   "delegatedActions": [],
   "id": "dt_00D031CCJC5E77CH6RN2RE661E",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Configures how and when a usage counter is reset.",
+      "label": "Reset schedule"
+    },
+    "ja": {
+      "description": "利用回数カウンターのリセット方法と周期を設定します。",
+      "label": "リセット設定"
+    }
+  },
   "name": "UsageLimit",
   "singleEntry": false
 }

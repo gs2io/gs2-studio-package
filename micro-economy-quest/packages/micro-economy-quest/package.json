@@ -10,48 +10,6 @@
       "en": "Manages quests players take on, their progress and their clear rewards.",
       "ja": "プレイヤーが進めるクエストと、その進行状況・クリア報酬を管理します。"
     },
-    "domainTypes": {
-      "dt_0DG28CJ0D7BAHETYKX56H5NG65": {
-        "description": {
-          "en": "A reward the quest in progress grants when it is completed.",
-          "ja": "進行中のクエストをクリアしたときに付与される報酬です。"
-        },
-        "label": {
-          "en": "Quest reward",
-          "ja": "クエスト報酬"
-        }
-      },
-      "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61": {
-        "description": {
-          "en": "Tracks the quest a player has in progress and the rewards completing it grants.",
-          "ja": "プレイヤーが進行中のクエストと、クリア時に付与される報酬を管理します。"
-        },
-        "label": {
-          "en": "Quest progress",
-          "ja": "クエスト進行"
-        }
-      },
-      "dt_24W5SDQ24VS1902R1MMWXSNVT9": {
-        "description": {
-          "en": "Groups related quests and sets the schedule they are available on.",
-          "ja": "関連するクエストをまとめ、開催スケジュールを設定します。"
-        },
-        "label": {
-          "en": "Quest group",
-          "ja": "クエストグループ"
-        }
-      },
-      "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK": {
-        "description": {
-          "en": "Defines start costs, first-clear and repeat-clear rewards, and failure actions.",
-          "ja": "開始時の消費、初回・通常クリア報酬、失敗時アクションを設定します。"
-        },
-        "label": {
-          "en": "Quest",
-          "ja": "クエスト"
-        }
-      }
-    },
     "label": {
       "en": "Quests",
       "ja": "クエスト"

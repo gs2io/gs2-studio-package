@@ -63,6 +63,16 @@
   "delegatedActions": [],
   "id": "dt_00D0W2TXV2P9NTD0GZY11BN5M7",
   "kind": "overlay",
+  "localizedDisplay": {
+    "en": {
+      "description": "Adds the coins it pays to a demo idle reward.",
+      "label": "Idle reward"
+    },
+    "ja": {
+      "description": "デモの放置報酬に、報酬コインを足します。",
+      "label": "放置報酬"
+    }
+  },
   "name": "IdleReward",
   "renamedInheritedProperties": {},
   "singleEntry": false,

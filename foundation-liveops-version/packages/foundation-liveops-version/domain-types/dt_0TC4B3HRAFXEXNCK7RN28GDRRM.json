@@ -162,6 +162,16 @@
   "delegatedActions": [],
   "id": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
   "kind": "local",
+  "localizedDisplay": {
+    "en": {
+      "description": "Something the client reports its own version of, such as the app or its assets, and the versions at or below which that version warns or is refused.",
+      "label": "Reported version"
+    },
+    "ja": {
+      "description": "アプリやアセットのように、クライアントが自分のバージョンを申告して確認を受けるものです。警告と利用拒否になるバージョンを設定します。",
+      "label": "申告バージョン"
+    }
+  },
   "name": "EmbeddedVersion",
   "singleEntry": false
 }

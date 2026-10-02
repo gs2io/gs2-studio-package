@@ -7,28 +7,6 @@
       "en": "Delivers announcements and item-attached messages from the operator to players.",
       "ja": "運営からのお知らせや、アイテム付きメッセージをプレイヤーに届けます。"
     },
-    "domainTypes": {
-      "dt_1MS9YFWFRVSBX6W84BDNXX17VB": {
-        "description": {
-          "en": "Defines a message sent to all players, its claim period, and attached rewards.",
-          "ja": "全プレイヤーへ配信するメッセージ、受取期間、添付報酬を設定します。"
-        },
-        "label": {
-          "en": "Global message",
-          "ja": "全体メッセージ"
-        }
-      },
-      "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT": {
-        "description": {
-          "en": "Tracks individual inbox messages delivered to a player and their claim state.",
-          "ja": "プレイヤーの受信箱に届く個別メッセージと受取状態を管理します。"
-        },
-        "label": {
-          "en": "Message",
-          "ja": "メッセージ"
-        }
-      }
-    },
     "label": {
       "en": "Inbox",
       "ja": "お知らせ・受信箱"
