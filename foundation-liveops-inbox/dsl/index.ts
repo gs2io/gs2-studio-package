@@ -173,7 +173,9 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
             ),
             absoluteEnd: Bind.domainProperty(Source.parent(Source.direct(GlobalMessage, "end"))),
             scheduleType: Bind.static("absolute"),
-            repeatSetting: Bind.null(),
+            // GS2-Schedule requires a repeat setting; `always` keeps the
+            // message receivable for the whole of its period.
+            repeatSetting: { repeatType: Bind.static("always") },
           });
       });
   })

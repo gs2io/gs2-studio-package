@@ -64,7 +64,7 @@
     {
       "id": "param_01KJSZCDH2E1VKT8CVBJRJJAH4",
       "name": "equipmentPropertyId",
-      "required": true,
+      "required": false,
       "type": {
         "kind": "primitive",
         "primitiveType": "string"

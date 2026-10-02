@@ -4,6 +4,25 @@
       {
         "arguments": [
           {
+            "parameterName": "energy",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
+                    "typeName": "EnergyProduct"
+                  },
+                  "propertyId": "prop_01M3YJ1DNJ3MS5AZDA6EMDZJTA"
+                },
+                "kind": "parent",
+                "parentResourceId": "mdr_25CQKDMHCC8HNA1RJYJ3PVGC8B"
+              }
+            }
+          },
+          {
             "parameterName": "value",
             "source": {
               "kind": "domainProperty",

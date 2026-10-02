@@ -4,6 +4,7 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  dependencyPackage,
   PT,
   Source,
   transactionSetting,
@@ -12,12 +13,31 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
+import energySurface from "../../foundation-economy-energy/dsl/dependency-surface.json";
+
+// Addressed by name against the identities the dependency publishes, so a
+// mistake is a compile error rather than an id that resolves to nothing.
+const energy = dependencyPackage(energySurface);
+
 const EnergyProduct = defineDomainType("EnergyProduct", dt =>
   dt
+    // Which stamina a product refills. A title may run more than one meter,
+    // and the refill transform has to be told which one this product is for.
+    .property(
+      PT.prop("energy", PT.ref(energy.typeId("Energy")))
+        .masterData()
+        .required()
+    )
     .property(PT.int32("recoveryValue").masterData().required())
     .property(PT.prop("consumeActions", PT.listOf(PT.consumeAction())).masterData().required())
     .localizedProperties({
       id: jaEnId("スタミナ商品", "stamina product"),
+      energy: jaEnField(
+        "回復対象",
+        "Refilled stamina",
+        "購入時に回復するスタミナです。",
+        "The stamina this product refills when it is bought."
+      ),
       recoveryValue: jaEnField(
         "回復量",
         "Recovery amount",
@@ -46,9 +66,10 @@ const RateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EnergyProduct)
         .bindings({
-          // The recovery amount is authored on the product and handed to the
-          // energy package's own RecoveryEnergy transform.
-          action: Bind.transform("foundation-economy-energy", "RecoveryEnergy", [
+          // The stamina and the recovery amount are authored on the product
+          // and handed to the energy package's own RecoveryEnergy transform.
+          action: Bind.transform(energy.packageId, "RecoveryEnergy", [
+            Arg.domainProperty("energy", Source.parent(Source.direct(EnergyProduct, "energy"))),
             Arg.domainProperty(
               "value",
               Source.parent(Source.direct(EnergyProduct, "recoveryValue"))
@@ -83,7 +104,7 @@ export const microShopEnergy = definePackage("micro-shop-energy", "0.0.0")
       en: "Defines a stamina product's recovery amount, price, and purchase limits.",
     },
   })
-  .dependency("foundation-economy-energy", "github:gs2io/gs2-studio-package")
+  .dependency(energy.packageId, "github:gs2io/gs2-studio-package")
   .domainType(EnergyProduct)
   .masterDataResource(r =>
     r

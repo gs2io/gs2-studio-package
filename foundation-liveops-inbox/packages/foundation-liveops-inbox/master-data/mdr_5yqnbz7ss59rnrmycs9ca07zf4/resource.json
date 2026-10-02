@@ -50,8 +50,8 @@
       },
       {
         "kind": "static",
-        "parameterName": "repeatSetting",
-        "value": null
+        "parameterName": "repeatSetting.repeatType",
+        "value": "always"
       },
       {
         "kind": "static",

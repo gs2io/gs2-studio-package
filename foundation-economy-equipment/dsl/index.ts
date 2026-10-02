@@ -266,7 +266,10 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
     at
       .category("consume")
       .parameter("equipment", { type: PT.ref("Equipment") })
-      .parameter("equipmentPropertyId", { type: PT.string() })
+      // Which of the player's copies to consume. Optional: GS2-Inventory takes
+      // one from whichever stack it likes when no item set is named, and a rate
+      // model fixed at deploy time has no instance to name.
+      .parameter("equipmentPropertyId", { type: PT.string(), required: false })
       .output("Gs2Inventory:ConsumeItemSetByUserId", o =>
         o
           .resourceRef(() => InventoryModel)
