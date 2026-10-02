@@ -1,8 +1,0 @@
-{
-  "id": "versiongate",
-  "rowKey": "row_01M3K2ERGH0P39H858ZSBJNWKP",
-  "typeId": "dt_01M3K283QDW0KQVBWZ5K14DY27",
-  "values": {
-    "prop_01M3K283QDFDN94YEKNGWVCN1J": "grn:gs2::{ownerId}:identifier:user:demo-version-passed"
-  }
-}

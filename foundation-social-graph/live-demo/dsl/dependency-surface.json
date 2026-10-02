@@ -3,34 +3,34 @@
   "packageId": "foundation-social-graph-demo",
   "types": {
     "Follow": {
-      "id": "dt_01M3P3R0RFXB09VNVX08VVP71B",
+      "id": "dt_00D0XGY063ZAR2EXEZ826YXHRA",
       "singleEntry": false,
       "canonicalPackageId": "foundation-social-graph",
-      "canonicalTypeId": "dt_12CDXGXXRQVPJVMA9VGATG195G"
+      "canonicalTypeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C"
     },
     "Friend": {
-      "id": "dt_01M3P3R0RF3CJ781SN1811WM1K",
+      "id": "dt_00D0XGY063RV4HT0ED8A08F50C",
       "singleEntry": false,
       "canonicalPackageId": "foundation-social-graph",
-      "canonicalTypeId": "dt_2NM467EMK37WAPSYGR7JJGVY8W"
+      "canonicalTypeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
     },
     "Profile": {
-      "id": "dt_01M3P3R0RF3XJ96HGBX4XN2R60",
+      "id": "dt_00D0XGY063RZCJ9MC2Z97D8P1G",
       "singleEntry": false,
       "canonicalPackageId": "foundation-social-graph",
-      "canonicalTypeId": "dt_YHKCS7SG3P32HV1NWCAAT47AFB"
+      "canonicalTypeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
     },
     "ReceiveFriendRequest": {
-      "id": "dt_01M3P3R0RF8FYC7FDBGGZZ5RTE",
+      "id": "dt_00D0XGY063T3ZK1VVAW47ZSE6K",
       "singleEntry": false,
       "canonicalPackageId": "foundation-social-graph",
-      "canonicalTypeId": "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C"
+      "canonicalTypeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK"
     },
     "SendFriendRequest": {
-      "id": "dt_01M3P3R0RFM28TAKNKBXE8TAEF",
+      "id": "dt_00D0XGY063X0J6JMXCTZBJ6JKK",
       "singleEntry": false,
       "canonicalPackageId": "foundation-social-graph",
-      "canonicalTypeId": "dt_TBCFR2E0A8DGCGR2RVHN4EQGR8"
+      "canonicalTypeId": "dt_6JV3Y0KG2J3C3460P6WD93NW62"
     }
   },
   "masterDataResources": {},

@@ -3,39 +3,39 @@
   "packageId": "foundation-liveops-inbox",
   "types": {
     "GlobalMessage": {
-      "id": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+      "id": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
       "singleEntry": false,
       "canonicalPackageId": "foundation-liveops-inbox",
-      "canonicalTypeId": "dt_6K57SZHZ3F5FMVH0HDPQQM4ZDD",
+      "canonicalTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
       "properties": {
-        "begin": "prop_HPG95V898A9A7JCSM2KEV88PVG",
-        "end": "prop_925R3E1XPBXGDG9D4H5MZBXMBK",
-        "id": "prop_reserved_id",
-        "payload": "prop_57TKVNCPPA7DHSTZRX4QJ4W45K"
+        "begin": "prop_4DM29ET2A2JAHWK6D0MVPT25PW",
+        "end": "prop_28HE0VGFDJZC3C2B949D7TZD2W",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "payload": "prop_19YMYXB5NJHVCEEQY795WH711C"
       }
     },
     "Message": {
-      "id": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+      "id": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
       "singleEntry": false,
       "delegatedActions": {
-        "Read": "resource:foundation-liveops-inbox:userData:ab1356e1-d8f4-49cf-aeb3-2ef2f0649c75::Gs2Inbox:Message.ReadMessage"
+        "Read": "resource:foundation-liveops-inbox:userData:udr_5B2DBE3P7M977TXCSEYBR6973N::Gs2Inbox:Message.ReadMessage"
       },
       "canonicalPackageId": "foundation-liveops-inbox",
-      "canonicalTypeId": "dt_GVTDXY1KW1X831ABJENERKSHZA",
+      "canonicalTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
       "properties": {
-        "expiresAt": "prop_WF69EWKXA0B3G4XTZ5KG7CBB62",
-        "id": "prop_reserved_id",
-        "isRead": "prop_EBMPTGK9PGCVVK6XYH81KPEDFK",
-        "payload": "prop_ZKT412G1WTM0BJ5XF28KBQMQDP",
-        "receivedAt": "prop_1BC9A22CA5YCR027Q5HP2R1JNG"
+        "expiresAt": "prop_73SJBQ4ZAG2RW17EQSCW1V2TSG",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "isRead": "prop_3JX5PM4TDM36YWSQFMA0CXKKBW",
+        "payload": "prop_7WYH08M0F6N02WHFBRJ4TXX5VD",
+        "receivedAt": "prop_0AV2AGGK2HFK600HXSCDGP0CNC"
       }
     }
   },
   "masterDataResources": {
-    "inbox.GlobalMessage": "a3e75ae6-808d-40e9-a7a7-e404a28653b1",
-    "inbox.Namespace": "babfdf44-2b23-460c-97c6-8389cdef0430",
-    "schedule.Event": "bebd57f3-e725-4e2b-8a79-994b1403fde4",
-    "schedule.Namespace": "24e0afbb-a250-4a3f-ab0c-92598ecbd50b"
+    "inbox.GlobalMessage": "mdr_53WXDED04D83MTF9Z40JH8CMXH",
+    "inbox.Namespace": "mdr_5TQZFM8AS38R69FHM3H76YY11G",
+    "schedule.Event": "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4",
+    "schedule.Namespace": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B"
   },
   "transforms": {
     "SendMessage": [

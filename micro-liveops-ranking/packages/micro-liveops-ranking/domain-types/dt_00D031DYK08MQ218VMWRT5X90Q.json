@@ -1,0 +1,109 @@
+{
+  "compositeKey": [
+    "prop_00D031DYK0DPGPB0KD153VWA20",
+    "prop_00D031DYK0BEEZ9PX7AGRDHYGE"
+  ],
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the ranking reward.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ランキング報酬を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_00D031DYK0DPGPB0KD153VWA20",
+        "localizedDisplay": {
+          "en": {
+            "description": "Ranking that distributes this reward.",
+            "label": "Ranking"
+          },
+          "ja": {
+            "description": "この報酬を配布するランキングです。",
+            "label": "対象ランキング"
+          }
+        },
+        "name": "ranking",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Lowest placement this reward tier pays; 1001 pays those ranked below the top 1000",
+        "id": "prop_00D031DYK0BEEZ9PX7AGRDHYGE",
+        "localizedDisplay": {
+          "en": {
+            "description": "Lowest placement eligible for this reward. 1001 is for players outside the top 1000.",
+            "label": "Rank threshold",
+            "unit": "place"
+          },
+          "ja": {
+            "description": "この報酬を受け取れる最下位の順位です。1001 は上位 1000 位に入らなかったプレイヤー向けです。",
+            "label": "順位しきい値",
+            "unit": "位"
+          }
+        },
+        "name": "thresholdRank",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00D031DYK0FBDNV00N30XJMEBY",
+        "localizedDisplay": {
+          "en": {
+            "description": "Reward actions executed for players who meet the placement threshold.",
+            "label": "Acquire actions"
+          },
+          "ja": {
+            "description": "順位条件を満たしたプレイヤーへ実行する報酬アクションです。",
+            "label": "獲得アクション"
+          }
+        },
+        "name": "acquireActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D031DYK08MQ218VMWRT5X90Q",
+  "kind": "local",
+  "name": "RankingReward",
+  "singleEntry": false
+}

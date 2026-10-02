@@ -1,0 +1,40 @@
+{
+  "id": "characterexperience",
+  "rowKey": "row_01M2FZNNF21Y85M0JDZM88818A",
+  "typeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
+  "values": {
+    "prop_224DYPA75PEZKHXJMGJZP3G393": 30,
+    "prop_2RQX4HDJCJDYTZYM4B9J09JZ9Z": 10,
+    "prop_35HPHKJZ5BQQ2PBY7EX482J65K": [
+      1,
+      100,
+      250,
+      450,
+      700,
+      1000,
+      1400,
+      1900,
+      2500,
+      3200,
+      3800,
+      4400,
+      5000,
+      5600,
+      6200,
+      6800,
+      7400,
+      8000,
+      8600,
+      9200,
+      9800,
+      10400,
+      11000,
+      11600,
+      12200,
+      12800,
+      13400,
+      14000,
+      14600
+    ]
+  }
+}

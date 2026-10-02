@@ -1,0 +1,16 @@
+{
+  "id": "uic_1B2H0SGWRBBG2T8S4YG59ZD38D",
+  "items": [
+    {
+      "componentClassName": "RuleLabel",
+      "id": "uii_63KH6EETS2B4CRNH26MYH383YX",
+      "kind": "templateLabel",
+      "name": "AgreementVersion",
+      "sources": [],
+      "template": "You pass when nothing is an error. Accept the terms at 2.0.0 (1.0.0 only warns), and answer marketing either way. The app is refused at 1.0.0 and below and warned up to 1.1.0; the assets are refused at 1.0.0 and below and warned up to 2.0.0."
+    }
+  ],
+  "name": "AgreementVersion",
+  "targetDomainType": "AgreementVersion",
+  "targetDomainTypeId": "dt_00D0WRKP44B54ADDE2H5EFVYZW"
+}

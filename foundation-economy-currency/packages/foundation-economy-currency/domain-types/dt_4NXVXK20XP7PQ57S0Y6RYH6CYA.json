@@ -1,0 +1,79 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the store product.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ストア商品を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
+        "localizedDisplay": {
+          "en": {
+            "description": "Product identifier registered in App Store Connect.",
+            "label": "App Store product ID"
+          },
+          "ja": {
+            "description": "App Store Connectで登録した商品の識別子です。",
+            "label": "App Store商品ID"
+          }
+        },
+        "name": "appleAppStoreProductId",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_7TADZ4DEA40BBKZ46GN2R05E4J",
+        "localizedDisplay": {
+          "en": {
+            "description": "Product identifier registered in Google Play Console.",
+            "label": "Google Play product ID"
+          },
+          "ja": {
+            "description": "Google Play Consoleで登録した商品の識別子です。",
+            "label": "Google Play商品ID"
+          }
+        },
+        "name": "googlePlayProductId",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
+  "kind": "local",
+  "name": "StoreProduct",
+  "singleEntry": false
+}

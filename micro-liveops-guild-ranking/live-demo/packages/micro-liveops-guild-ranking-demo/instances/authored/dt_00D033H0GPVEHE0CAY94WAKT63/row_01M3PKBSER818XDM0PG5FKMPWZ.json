@@ -1,0 +1,11 @@
+{
+  "id": "1.guild",
+  "rowKey": "row_01M3PKBSER818XDM0PG5FKMPWZ",
+  "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+  "values": {
+    "prop_00D033H0GPSX5TQB69ST80YSQG": [],
+    "prop_00D033H0GPTR5V04T6YPBYCG0Q": 1,
+    "prop_00D033H0GPW6DTTEFEGK4CXBVX": "guild",
+    "prop_00D0XMTYBP6TACW7H1W4YC1SET": 300
+  }
+}

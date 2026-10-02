@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "property:GuildRanking.maximumValue": "prop_01M0CE422VYRN7SXXKDDE3ET2G",
-    "property:GuildRanking.minimumValue": "prop_01M0CE422VR4DWYG9WPJ57GAVK",
-    "property:GuildRanking.orderDirection": "prop_01M0CE422VHSW4QC9AHYXV815S",
-    "property:GuildRanking.schedule": "prop_01M0CE422VC02GDNEZDYXGVD89",
-    "property:GuildRanking.score": "prop_01M0CE422VSC746FPJK5JNQ11R",
-    "property:GuildRanking.sum": "prop_01M0CE422VX2GRKKR10S2S34BA",
-    "property:GuildRankingReward.acquireActions": "prop_01M0CE422V7MQAXCS77903V6Y2",
-    "property:GuildRankingReward.ranking": "prop_01M0CE422VGSQB9SXT2CHKNFFP",
-    "property:GuildRankingReward.thresholdRank": "prop_01M0CE422VB0QC0K8VTSFSJ02Z",
+    "property:GuildRanking.maximumValue": "prop_00D033H0GPZP59YFFCVBBGVPGM",
+    "property:GuildRanking.minimumValue": "prop_00D033H0GPY13F7M2F5MH9W2PW",
+    "property:GuildRanking.orderDirection": "prop_00D033H0GPWEF15V2AMFQET09E",
+    "property:GuildRanking.schedule": "prop_00D033H0GPV00M3DBQVFQC6VA2",
+    "property:GuildRanking.score": "prop_00D033H0GPYB1S1KXMMSCNDR8E",
+    "property:GuildRanking.sum": "prop_00D033H0GPZ8M64WY0868P8S2T",
+    "property:GuildRankingReward.acquireActions": "prop_00D033H0GPSX5TQB69ST80YSQG",
+    "property:GuildRankingReward.ranking": "prop_00D033H0GPW6DTTEFEGK4CXBVX",
+    "property:GuildRankingReward.thresholdRank": "prop_00D033H0GPTR5V04T6YPBYCG0Q",
     "transform:ReceiveGuildRankingReward:output:direct:Gs2Ranking2:CreateClusterRankingReceivedRewardByUserId#0": "out_01M0CE422WXYQJ4D1CMW6JRQY8",
     "transform:ReceiveGuildRankingReward:parameter:guildName": "param_01M0CE422WAGJJR5V40NM0X7YB",
     "transform:ReceiveGuildRankingReward:parameter:ranking": "param_01M0CE422W1R1N3ABSV7GRKZ8A",
@@ -20,8 +20,10 @@
     "transform:VerifyGuildRankingScoreReached:parameter:ranking": "param_01M0CE422WM05J955JF4Z6GSDJ",
     "transform:VerifyGuildRankingScoreReached:parameter:score": "param_01M0CE422WZKT7TF9QJMPMGN0B",
     "transform:VerifyGuildRankingScoreReached:parameter:season": "param_01M0CE422WS766NQRQRGCS82P0",
-    "type:GuildRanking": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
-    "type:GuildRankingReward": "dt_01M0CE422VDT5R1HBS4KHAF8RE"
+    "type:GuildRanking": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
+    "type:GuildRankingReward": "dt_00D033H0GPVEHE0CAY94WAKT63"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "user/ranking2:ClusterRankingScore:GuildRanking:#0": "udr_27MST1Z5CYB3WRC556BBMJZJD1"
+  }
 }

@@ -1,0 +1,177 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the ranking.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ランキングを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_00D031DYK085H3KN6JQ04P6PST",
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which scores may be submitted.",
+            "label": "Entry schedule"
+          },
+          "ja": {
+            "description": "ランキングへスコアを登録できる開催スケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
+        "name": "schedule",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Whether a higher or a lower score ranks first",
+        "id": "prop_00D031DYK0BV4VMYQ95YNG6TSF",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether higher or lower scores rank first.",
+            "label": "Ranking order"
+          },
+          "ja": {
+            "description": "高いスコアと低いスコアのどちらを上位にするかを設定します。",
+            "label": "順位方向"
+          }
+        },
+        "name": "orderDirection",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "asc",
+            "desc"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Add each submitted score to the last instead of replacing it",
+        "id": "prop_00D031DYK09YX8Q1K3QBKCFV3Q",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether submitted scores are added up. Otherwise the last score submitted replaces the one before.",
+            "label": "Sum scores"
+          },
+          "ja": {
+            "description": "複数回送信したスコアを合算するかを設定します。合算しない場合は、最後に送信したスコアで上書きされます。",
+            "label": "スコアを合算"
+          }
+        },
+        "name": "sum",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Lowest score accepted",
+        "id": "prop_00D031DYK08ZD8FNSCWTGZTDNB",
+        "localizedDisplay": {
+          "en": {
+            "description": "Lowest score accepted by the ranking.",
+            "label": "Minimum score"
+          },
+          "ja": {
+            "description": "受け付けるスコアの最小値です。",
+            "label": "最小スコア"
+          }
+        },
+        "name": "minimumValue",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Highest score accepted",
+        "id": "prop_00D031DYK0FVN99WA1Y6MF05YM",
+        "localizedDisplay": {
+          "en": {
+            "description": "Highest score accepted by the ranking.",
+            "label": "Maximum score"
+          },
+          "ja": {
+            "description": "受け付けるスコアの最大値です。",
+            "label": "最大スコア"
+          }
+        },
+        "name": "maximumValue",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "The player's own score",
+        "id": "prop_00D031DYK0992AG7MFZHFPE8KQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Player's current score in this ranking.",
+            "label": "Player score",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "このランキングにおけるプレイヤーの現在スコアです。",
+            "label": "プレイヤースコア",
+            "unit": "点"
+          }
+        },
+        "name": "score",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D031DYK0AVE6F96GF6BCQBDY",
+  "kind": "local",
+  "name": "Ranking",
+  "singleEntry": false
+}

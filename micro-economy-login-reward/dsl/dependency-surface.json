@@ -3,50 +3,50 @@
   "packageId": "micro-economy-login-reward",
   "types": {
     "LoginReward": {
-      "id": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+      "id": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-login-reward",
-      "canonicalTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+      "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
       "properties": {
-        "acquireActions": "prop_JPGJM6CM0TRQGXTAVJBYATVNCG",
-        "id": "prop_reserved_id",
-        "loginRewardCollection": "prop_0N4V6CN66SVVQH7S0S3Z909D1A"
+        "acquireActions": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "loginRewardCollection": "prop_0596SK59HPEYXW9Y868ZT82B8A"
       }
     },
     "LoginRewardCollection": {
-      "id": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+      "id": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
       "singleEntry": false,
       "delegatedActions": {
-        "MissedReceive": "resource:micro-economy-login-reward:userData:36085262-1664-4dfe-a472-c1f8a886ec52::Gs2LoginReward:ReceiveStatus.MissedReceive",
-        "Receive": "resource:micro-economy-login-reward:userData:36085262-1664-4dfe-a472-c1f8a886ec52::Gs2LoginReward:ReceiveStatus.Receive"
+        "MissedReceive": "resource:micro-economy-login-reward:userData:udr_1P119645K49QZA8WP1Z2M8DV2J::Gs2LoginReward:ReceiveStatus.MissedReceive",
+        "Receive": "resource:micro-economy-login-reward:userData:udr_1P119645K49QZA8WP1Z2M8DV2J::Gs2LoginReward:ReceiveStatus.Receive"
       },
       "canonicalPackageId": "micro-economy-login-reward",
-      "canonicalTypeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P",
+      "canonicalTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
       "properties": {
-        "id": "prop_reserved_id",
-        "lastReceivedAt": "prop_01M3CDS3307PAW74XKV4GXD6HK",
-        "missedReceiveRelief": "prop_01M3CDS330QE86VNCF2B97886B",
-        "missedReceiveReliefConsumeActions": "prop_01M3CDS330A2F2YQMY9FNA3T7M",
-        "mode": "prop_01M3CDS330CMZX53TRZEHQPTRX",
-        "receivedSteps": "prop_01M3CDS33034EBKHQWCY415F48",
-        "repeat": "prop_01M3CDS330E35JNBG69ADAZ31P",
-        "resetHour": "prop_NFHPA3CG7FM9RX44J7NAWPT1ET",
-        "schedule": "prop_A2TYYY7WW1Z4306M5CGDJRBEKJ"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "lastReceivedAt": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC",
+        "missedReceiveRelief": "prop_00D0V3E8RR5VJ1PXB3RJT9T21J",
+        "missedReceiveReliefConsumeActions": "prop_00D0V3E8RR2GKRQNX7JBXAGYHX",
+        "mode": "prop_00D0V3E8RR357Z98YP7VMDXPP7",
+        "receivedSteps": "prop_00D0V3E8RR0S3JWWDZ37H09BS2",
+        "repeat": "prop_00D0V3E8RR3GSCNAW1JAKAQRRD",
+        "resetHour": "prop_5BWDJGV41VX2E7914HXAQ5PGBP",
+        "schedule": "prop_2GPQQQHZ70FS0R1N1B43CP2VMW"
       }
     },
     "Schedule": {
-      "id": "dt_M6M6F3GTMTWDDTR7DJ0N84PGWJ",
+      "id": "dt_51N1KRW6N6Q3BEP1VCG5A15M74",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-schedule",
-      "canonicalTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+      "canonicalTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
     }
   },
   "masterDataResources": {
-    "loginReward.BonusModel": "3bdf98b6-23a1-57f3-9e76-518e6a1eb187",
-    "loginReward.Namespace": "005a38f8-e72e-5acb-a7cb-2f713b3671c8",
-    "loginReward.Reward": "de30e83f-37c0-579a-a4dc-b3918862a28d",
-    "transaction.AcquireAction": "3ca17687-f805-5398-b07f-e277edc45611",
-    "transaction.ConsumeAction": "04fb6d0e-58e0-5766-80ee-31812ef2306f"
+    "loginReward.BonusModel": "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7",
+    "loginReward.Namespace": "mdr_00B8WFHSSEBB5TFJSFE4XKCWE8",
+    "loginReward.Reward": "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD",
+    "transaction.AcquireAction": "mdr_1WM5V8FY05AECB0ZZ2EZPW8NGH",
+    "transaction.ConsumeAction": "mdr_04ZDPGWP70AXK81VHHG4QF4C3F"
   },
   "transforms": {
     "ResetReceiveStatus": [

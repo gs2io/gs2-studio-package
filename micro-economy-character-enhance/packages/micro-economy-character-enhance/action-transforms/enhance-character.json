@@ -3,7 +3,7 @@
   "importedResourceRefs": [
     {
       "kind": "local",
-      "resourceId": "67f01129-1964-5f51-812f-3f1380fcd228",
+      "resourceId": "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8",
       "resourceKind": "masterData"
     }
   ],
@@ -52,7 +52,7 @@
       ],
       "resourceRef": {
         "kind": "local",
-        "resourceId": "67f01129-1964-5f51-812f-3f1380fcd228",
+        "resourceId": "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8",
         "resourceKind": "masterData"
       }
     }
@@ -64,7 +64,7 @@
       "required": true,
       "type": {
         "kind": "ref",
-        "targetTypeId": "dt_01M0C7T116VP42973VYFS2PRV0"
+        "targetTypeId": "dt_00D031YG89PXH0J9RYZKY8NP6R"
       }
     },
     {

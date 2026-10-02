@@ -3,36 +3,36 @@
   "packageId": "foundation-economy-limit",
   "types": {
     "UsageLimit": {
-      "id": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+      "id": "dt_00D031CCJC5E77CH6RN2RE661E",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-limit",
-      "canonicalTypeId": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
+      "canonicalTypeId": "dt_00D031CCJC5E77CH6RN2RE661E",
       "properties": {
-        "anchorTimestamp": "prop_01M0C5HJ9H18WFD7HQJ6BVRQ54",
-        "days": "prop_01M0C5HJ9HN7J7K686N7G6PM4E",
-        "id": "prop_reserved_id",
-        "resetDayOfMonth": "prop_01M0C5HJ9HCVBQ4JVCH9JKNY9H",
-        "resetDayOfWeek": "prop_01M0C5HJ9H8A68TH51QQXSQAFS",
-        "resetHour": "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3",
-        "resetType": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1"
+        "anchorTimestamp": "prop_00D031CCJC8A73V9WDWHJYY5S9",
+        "days": "prop_00D031CCJCD9WHWSJ1N9W1NN13",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "resetDayOfMonth": "prop_00D031CCJCB6TXS4PV4ACMXFJC",
+        "resetDayOfWeek": "prop_00D031CCJCA2HJ6M98DXZEDTKY",
+        "resetHour": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0",
+        "resetType": "prop_00D031CCJC935P6N8JH9QZET3R"
       }
     },
     "UsageLimitCounter": {
-      "id": "dt_01M0C6M2N38KVHBHTC1JBRT5YA",
+      "id": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-limit",
-      "canonicalTypeId": "dt_01M0C6M2N38KVHBHTC1JBRT5YA",
+      "canonicalTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
       "properties": {
-        "count": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3",
-        "id": "prop_reserved_id",
-        "limit": "prop_01M0C6M2N3NJ15T88Q5QET2KVA",
-        "nextResetAt": "prop_01M0C6M2N34YDGP2NCGNER2T39"
+        "count": "prop_00D031N0N8XZTBTN84BCXGFHMR",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "limit": "prop_00D031N0N8XCG9EJ25SDVPGMYT",
+        "nextResetAt": "prop_00D031N0N8S7KC5GNB45BP0PGT"
       }
     }
   },
   "masterDataResources": {
-    "limit.LimitModel": "7f43c37d-e124-5bd2-84ff-dd9866eeca50",
-    "limit.Namespace": "890b5ae2-8e40-5ace-a2b3-155463e3e8fa"
+    "limit.LimitModel": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+    "limit.Namespace": "mdr_491DDE53J0BB7A5CRNAHHY7T7T"
   },
   "transforms": {
     "CountDownUsageLimit": [

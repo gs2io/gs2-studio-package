@@ -1,0 +1,58 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the version gate.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "バージョン確認を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "GRN of the GS2-Identifier user a player who passes the check is signed in as: grn:gs2::{ownerId}:identifier:user:<name>",
+        "id": "prop_00D0WRJ0XVBVDA97KMXC76V58C",
+        "localizedDisplay": {
+          "en": {
+            "description": "GS2-Identifier user whose project token a player receives on passing the version check, as grn:gs2::{ownerId}:identifier:user:<name>.",
+            "label": "User after passing"
+          },
+          "ja": {
+            "description": "バージョン確認を通過したプレイヤーに発行するプロジェクトトークンの GS2-Identifier ユーザーです。grn:gs2::{ownerId}:identifier:user:<名前> の形式で指定します。",
+            "label": "通過後のユーザー"
+          }
+        },
+        "name": "assumeUserId",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
+  "kind": "local",
+  "name": "VersionGate",
+  "singleEntry": true
+}

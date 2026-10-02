@@ -1,0 +1,10 @@
+{
+  "id": "coin_medium.USD",
+  "rowKey": "row_01M3796AJK6A4V8SNBGMNZ6PBH",
+  "typeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
+  "values": {
+    "prop_15W8DS91Q2205EVC4P45EV76R1": "coin_medium",
+    "prop_4F7GJCACK2YK78HYH2XVEEMN6R": "USD",
+    "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K": 2
+  }
+}

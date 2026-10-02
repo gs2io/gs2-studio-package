@@ -1,0 +1,143 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the quest progress.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "クエスト進行を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has a quest in progress.",
+            "label": "In progress"
+          },
+          "ja": {
+            "description": "プレイヤーが進行中のクエストを持っているかを示します。",
+            "label": "進行中"
+          }
+        },
+        "name": "inProgress",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_1VVD0ASXTKMHVXA7F1P0R3QC86",
+        "localizedDisplay": {
+          "en": {
+            "description": "Quest currently in progress for the player.",
+            "label": "Active quest"
+          },
+          "ja": {
+            "description": "プレイヤーが現在進行しているクエストです。",
+            "label": "進行中のクエスト"
+          }
+        },
+        "name": "quest",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_00D0TSH4BEJSJYX1BYEN7N5QWK",
+        "localizedDisplay": {
+          "en": {
+            "description": "Quest group of the quest currently in progress.",
+            "label": "Active quest group"
+          },
+          "ja": {
+            "description": "進行中のクエストが属するクエストグループです。",
+            "label": "進行中のクエストグループ"
+          }
+        },
+        "name": "questCollection",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_5CJ0VWR32T9SD0RSQSYMEXF3HX",
+        "localizedDisplay": {
+          "en": {
+            "description": "Rewards granted when the quest in progress is completed; decided when it starts.",
+            "label": "Completion rewards"
+          },
+          "ja": {
+            "description": "進行中のクエストをクリアしたときに付与される報酬の一覧です。開始時に決まります。",
+            "label": "クリア報酬"
+          }
+        },
+        "name": "rewards",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "elementType": {
+            "kind": "inline",
+            "targetTypeId": "dt_0DG28CJ0D7BAHETYKX56H5NG65"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Complete",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "isComplete",
+          "value": true
+        }
+      ],
+      "targetActionKey": "Gs2Quest:Progress.End",
+      "targetResource": {
+        "resourceId": "udr_4TR60HC6M28STTKPCST9SRAVZA",
+        "resourceKind": "userData",
+        "sourcePackageId": "micro-economy-quest"
+      }
+    }
+  ],
+  "id": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
+  "kind": "local",
+  "name": "Progress",
+  "singleEntry": true
+}

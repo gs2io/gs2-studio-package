@@ -1,0 +1,220 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "absoluteBegin",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_7FMECH33GC393EZ4PGCPR1QCSE"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "absoluteEnd",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_1SGTZ9B0RDMXXPWHJ8K4W032AA"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "relativeTriggerName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_4T7XKM1CTQ7X9D94DB6868ZXR3"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.activeDays",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_68GYGX3DAVXDYMJDJG8HKE0AET"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.anchorTimestamp",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_0WCCMQS198YK06YPJ16TKT4VSS"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.beginDayOfMonth",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_6QC4XV87VJBMWPHSXRHCCF5HPD"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.beginDayOfWeek",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_4XH65E0SZT63G39F6JJHCB0QZM"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.beginHour",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_5YGE7Q35M5VSYQ82A2NQ670JK6"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.endDayOfMonth",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_0P1QWDN8641827F5CQAK4BNXMQ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.endDayOfWeek",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_77V0M2ZWPGV3Q5HSXX4T5N09JC"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.endHour",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_38P73QVFM50Y6J21VG3JGA0KV0"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.inactiveDays",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_1XTRCGKTRZCMM3A06B1BAZ9824"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeatSetting.repeatType",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_7EEM05TPX8JKCME8DS85QCDFJ2"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "scheduleType",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+            "typeName": "Schedule"
+          },
+          "propertyId": "prop_787C2RE8TDR45Z47ER9FNGNTBH"
+        }
+      }
+    ]
+  },
+  "id": "mdr_44PB7J1MKEA3HB951V9904EYQW",
+  "location": {
+    "modelName": "Event",
+    "service": "schedule"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+    "typeName": "Schedule"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX"
+  }
+}

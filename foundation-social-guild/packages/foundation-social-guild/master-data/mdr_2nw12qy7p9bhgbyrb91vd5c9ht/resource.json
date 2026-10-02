@@ -1,0 +1,186 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "changeMemberNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "changeMemberNotificationIgnoreChangeMetadata",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "changeNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "changeRoleScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "createGuildScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "deleteGuildScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinGuildScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "joinNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveGuildScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "leaveNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Guild"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveJoinRequestScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "receiveRequestNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "removeRequestNotification.enable",
+        "value": "Enabled"
+      },
+      {
+        "kind": "static",
+        "parameterName": "removeRequestNotification.enableTransferMobileNotification",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "removeRequestNotification.gatewayNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:gateway:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "removeRequestNotification.sound",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "updateGuildScript",
+        "value": null
+      }
+    ]
+  },
+  "id": "mdr_2NW12QY7P9BHGBYRB91VD5C9HT",
+  "location": {
+    "modelName": "Namespace",
+    "service": "guild"
+  }
+}

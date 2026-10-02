@@ -1,0 +1,104 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "EnhanceWithPotion",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        },
+        {
+          "entries": [
+            {
+              "fields": [
+                {
+                  "name": "key",
+                  "source": {
+                    "kind": "static",
+                    "value": "propertyId"
+                  }
+                },
+                {
+                  "name": "value",
+                  "source": {
+                    "kind": "domainProperty",
+                    "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                  }
+                }
+              ],
+              "kind": "fields"
+            }
+          ],
+          "kind": "listEntries",
+          "parameterName": "config"
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_5AWR0ERPJFBV383B9RDMGW53W0",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-character-enhance-demo"
+      }
+    },
+    {
+      "methodName": "EnhanceWithElixir",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        },
+        {
+          "entries": [
+            {
+              "fields": [
+                {
+                  "name": "key",
+                  "source": {
+                    "kind": "static",
+                    "value": "propertyId"
+                  }
+                },
+                {
+                  "name": "value",
+                  "source": {
+                    "kind": "domainProperty",
+                    "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                  }
+                }
+              ],
+              "kind": "fields"
+            }
+          ],
+          "kind": "listEntries",
+          "parameterName": "config"
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_60ASBHRZH1A1KVZ36PFE432PZX",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-character-enhance-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY",
+  "kind": "overlay",
+  "name": "Character",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-character",
+    "directSourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+  }
+}

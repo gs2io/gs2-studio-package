@@ -3,20 +3,20 @@
   "packageId": "foundation-economy-inventory",
   "types": {
     "Item": {
-      "id": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6",
+      "id": "dt_47E751540GQRMAWTXYFT9376WH",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-inventory",
-      "canonicalTypeId": "dt_GXRWM4MG22Z2HBKBQSZ94CWVJ6",
+      "canonicalTypeId": "dt_47E751540GQRMAWTXYFT9376WH",
       "properties": {
-        "count": "prop_K2G6TEKHV8KKTXDBG04DK9X3SM",
-        "id": "prop_reserved_id"
+        "count": "prop_4RM1PKMWET4WYQBAW013CTF8YD",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     }
   },
   "masterDataResources": {
-    "inventory.Namespace": "09e163b0-1495-4088-90c6-268a8ccc8a57",
-    "inventory.SimpleInventoryModel": "afdb24fa-c015-4d1f-acd4-44b973213010",
-    "inventory.SimpleItemModel": "54fbf22f-18c1-458c-8bde-2d2f651dbf65"
+    "inventory.Namespace": "mdr_09W5HV054N82491HH6HA6CS2JQ",
+    "inventory.SimpleInventoryModel": "mdr_5FVCJFNG0N9MFTSN24Q5SJ2C0G",
+    "inventory.SimpleItemModel": "mdr_2MZFS2Y6618P68QQHD5XJHVFV5"
   },
   "transforms": {
     "AcquireItem": [

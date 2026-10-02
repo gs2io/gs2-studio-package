@@ -1,0 +1,24 @@
+{
+  "id": "uic_2SRK8JGS1XB83AG99DAAGXYSKQ",
+  "items": [
+    {
+      "componentClassName": "IdLabel",
+      "id": "uii_5DX74SV61ABH1BK5ZD93BP6XTY",
+      "kind": "templateLabel",
+      "name": "SendFriendRequest",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
+        }
+      ],
+      "template": "{id}"
+    }
+  ],
+  "name": "SendFriendRequest",
+  "targetDomainType": "SendFriendRequest",
+  "targetDomainTypeId": "dt_00D0XGY063X0J6JMXCTZBJ6JKK"
+}

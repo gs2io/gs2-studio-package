@@ -1,0 +1,38 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Recruit",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_4AGHB6Q7XM9449CE6A6SQB4263",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-character-dictionary-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0SX0W1BFSBBNRP4K43HVTJM",
+  "kind": "overlay",
+  "name": "Character",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-character-dictionary",
+    "directSourceTypeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "StartOver",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_764ATR9HCQB89B3EVDJZ7D08VS",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-login-reward-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0VGDFNZ1P9DR7YQFQC90N00",
+  "kind": "overlay",
+  "name": "LoginRewardCollection",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-login-reward",
+    "directSourceTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+    "sourcePackageId": "micro-economy-login-reward",
+    "sourceTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+  }
+}

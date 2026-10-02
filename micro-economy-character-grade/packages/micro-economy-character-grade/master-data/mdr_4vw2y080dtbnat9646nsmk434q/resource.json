@@ -1,0 +1,43 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterGrade"
+      }
+    ]
+  },
+  "id": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
+  "location": {
+    "modelName": "GradeModel",
+    "service": "grade"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_6HEASWW74XBBWBSC4X7S8CRBJ6"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          },
+          {
+            "grnKeyName": "experienceName",
+            "sourceKeyName": "experienceName"
+          }
+        ],
+        "mountedResourceId": "mdr_4D3TBCYQKS94GAV9WSFVNJEXQY",
+        "parameterName": "experienceModelId"
+      }
+    ]
+  }
+}

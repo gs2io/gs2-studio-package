@@ -3,38 +3,38 @@
   "packageId": "foundation-social-guild",
   "types": {
     "Guild": {
-      "id": "dt_01M0C5T6AF24NKHPZ1Z4R946FT",
+      "id": "dt_00D031EHJKRH5CWDQRFS6291KY",
       "singleEntry": false,
       "canonicalPackageId": "foundation-social-guild",
-      "canonicalTypeId": "dt_01M0C5T6AF24NKHPZ1Z4R946FT",
+      "canonicalTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
       "properties": {
-        "defaultMaximumMemberCount": "prop_01M0C5T6AF4Q3NKD9YJQ8F6119",
-        "guildMasterRole": "prop_01M0C5T6AFTPHZP6VRDZBYPK8F",
-        "guildMemberDefaultRole": "prop_01M0C5T6AFMZ7YHRK3TF8G9T6F",
-        "id": "prop_reserved_id",
-        "inactivityPeriodDays": "prop_01M0C5T6AFE1EJ9CXYGJSJMT8Y",
-        "joinedGuildName": "prop_01M0C5T6AFPW7S477FQF46NT07",
-        "maxConcurrentGuildMasterCount": "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
-        "maxConcurrentJoinGuilds": "prop_01M0C5T6AFC4H9ESF7ZV7XRVXK",
-        "maximumMemberCount": "prop_01M0C5T6AFQRJ8K9V4AY6N1X1S",
-        "rejoinCoolTimeMinutes": "prop_01M0C5T6AF1GMQB80XDAVM0NJ2"
+        "defaultMaximumMemberCount": "prop_00D031EHJKS5RXCVAFMNT3SG8A",
+        "guildMasterRole": "prop_00D031EHJKYNMFXHPY3FTZNMT3",
+        "guildMemberDefaultRole": "prop_00D031EHJKX7SZME4RYKT42EHK",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "inactivityPeriodDays": "prop_00D031EHJKVGBMJB7FM4PCN6J7",
+        "joinedGuildName": "prop_00D031EHJKXQ1Y91SVXVS1NEG1",
+        "maxConcurrentGuildMasterCount": "prop_00D031EHJKZX0Z07JXP9EBMZE2",
+        "maxConcurrentJoinGuilds": "prop_00D031EHJKV14ABPBSZYSZE6ZC",
+        "maximumMemberCount": "prop_00D031EHJKXY4J4TES2QHN8F8E",
+        "rejoinCoolTimeMinutes": "prop_00D031EHJKRC55TT07BAPX05CG"
       }
     },
     "GuildRole": {
-      "id": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0",
+      "id": "dt_00D031EHJKYH677VNXVWGBA2D0",
       "singleEntry": false,
       "canonicalPackageId": "foundation-social-guild",
-      "canonicalTypeId": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0",
+      "canonicalTypeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
       "properties": {
-        "id": "prop_reserved_id",
-        "policyDocument": "prop_01M0C5T6AF0SDEH7DPDWXDST0T"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "policyDocument": "prop_00D031EHJKR6BBM9VDKF7BEEG6"
       }
     }
   },
   "masterDataResources": {
-    "guild.GuildModel": "7f36043b-36db-539a-b84d-d7b5c3930169",
-    "guild.Namespace": "55e0457f-1ec9-5c60-bf61-690eda56263a",
-    "guild.RoleModel": "da1b038b-6a0b-55c6-8406-d95a8b34d663"
+    "guild.GuildModel": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
+    "guild.Namespace": "mdr_2NW12QY7P9BHGBYRB91VD5C9HT",
+    "guild.RoleModel": "mdr_6T3C1RPTGBAQ3881PSBA5K9NK3"
   },
   "transforms": {
     "IncreaseGuildCapacity": [

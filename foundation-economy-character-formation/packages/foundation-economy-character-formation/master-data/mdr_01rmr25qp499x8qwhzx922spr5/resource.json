@@ -1,0 +1,27 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterFormation"
+      }
+    ]
+  },
+  "id": "mdr_01RMR25QP499X8QWHZX922SPR5",
+  "location": {
+    "modelName": "FormModel",
+    "service": "formation"
+  },
+  "parent": {
+    "arrayProperty": "formModel",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_1Q71ZNDPVH9ZBAEG3V0XNEYS9E"
+  }
+}

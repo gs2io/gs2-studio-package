@@ -1,0 +1,59 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the ad view point.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "広告視聴枠を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK",
+        "localizedDisplay": {
+          "en": {
+            "description": "Current number of ad-view points available to the player.",
+            "label": "Available views",
+            "unit": "views"
+          },
+          "ja": {
+            "description": "プレイヤーが利用できる広告視聴ポイントの現在値です。",
+            "label": "視聴可能回数",
+            "unit": "回"
+          }
+        },
+        "name": "value",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
+  "kind": "local",
+  "name": "AdViewPoint",
+  "singleEntry": true
+}

@@ -3,38 +3,38 @@
   "packageId": "micro-liveops-ranking",
   "types": {
     "Ranking": {
-      "id": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV",
+      "id": "dt_00D031DYK0AVE6F96GF6BCQBDY",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-ranking",
-      "canonicalTypeId": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV",
+      "canonicalTypeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
       "properties": {
-        "id": "prop_reserved_id",
-        "maximumValue": "prop_01M0C5QTC1ZEN57H87RTHW0QTH",
-        "minimumValue": "prop_01M0C5QTC13XN1YQ5KKA3Z9PND",
-        "orderDirection": "prop_01M0C5QTC1FCKEKTX4QTP0VB5X",
-        "schedule": "prop_01M0C5QTC10P4EEMTAW0JRTV79",
-        "score": "prop_01M0C5QTC1549A0YHZY5YSS2EZ",
-        "sum": "prop_01M0C5QTC17VN2W6CEXEDHZCEW"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "maximumValue": "prop_00D031DYK0FVN99WA1Y6MF05YM",
+        "minimumValue": "prop_00D031DYK08ZD8FNSCWTGZTDNB",
+        "orderDirection": "prop_00D031DYK0BV4VMYQ95YNG6TSF",
+        "schedule": "prop_00D031DYK085H3KN6JQ04P6PST",
+        "score": "prop_00D031DYK0992AG7MFZHFPE8KQ",
+        "sum": "prop_00D031DYK09YX8Q1K3QBKCFV3Q"
       }
     },
     "RankingReward": {
-      "id": "dt_01M0C5QTC12JW853EKK38QN42Z",
+      "id": "dt_00D031DYK08MQ218VMWRT5X90Q",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-ranking",
-      "canonicalTypeId": "dt_01M0C5QTC12JW853EKK38QN42Z",
+      "canonicalTypeId": "dt_00D031DYK08MQ218VMWRT5X90Q",
       "properties": {
-        "acquireActions": "prop_01M0C5QTC1XDPQC02MC3PAHSFT",
-        "id": "prop_reserved_id",
-        "ranking": "prop_01M0C5QTC1PT2SC2DM4MFFH880",
-        "thresholdRank": "prop_01M0C5QTC1DSVX6VMXA31P7T1R"
+        "acquireActions": "prop_00D031DYK0FBDNV00N30XJMEBY",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "ranking": "prop_00D031DYK0DPGPB0KD153VWA20",
+        "thresholdRank": "prop_00D031DYK0BEEZ9PX7AGRDHYGE"
       }
     }
   },
   "masterDataResources": {
-    "ranking2.GlobalRankingModel": "009c7ff2-77d5-5cd1-9241-e153a51d9718",
-    "ranking2.Namespace": "4cd8c885-926f-5e69-bd85-8bdc65d5a652",
-    "ranking2.RankingReward": "1d822046-5e84-5c66-ae51-15eab81b933a",
-    "transaction.AcquireAction": "39230804-a66f-5f50-a0c2-3bf22cda877c"
+    "ranking2.GlobalRankingModel": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR",
+    "ranking2.Namespace": "mdr_2CV348B4KFBSMVV1CBVHJXB9JJ",
+    "ranking2.RankingReward": "mdr_0XG8G4CQM4BHKAWM8NXAW1Q4ST",
+    "transaction.AcquireAction": "mdr_1S4C4099KFBX8A1GHVY8PDN1VW"
   },
   "transforms": {
     "ReceiveRankingReward": [

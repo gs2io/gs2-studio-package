@@ -1,0 +1,53 @@
+{
+  "id": "uic_5F6JQ951DGAGVT9B0KPP3C1SPC",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "CompleteButton",
+      "delegatedActionKey": "resource:micro-economy-quest:userData:udr_4TR60HC6M28STTKPCST9SRAVZA::Gs2Quest:Progress.End",
+      "id": "uii_2C16SWBEJABR18Z1H226VJW8QZ",
+      "kind": "buttonAction",
+      "name": "Progress"
+    },
+    {
+      "componentClassName": "IdleLabel",
+      "id": "uii_77EX8RHZWPA4D8WH5GVWGBA7ED",
+      "kind": "templateLabel",
+      "name": "Progress",
+      "sources": [],
+      "template": "No quest in progress"
+    },
+    {
+      "componentClassName": "IdleActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_3TEPW0W879A78SVZD8MXXHVWQA",
+      "kind": "activeToggle",
+      "name": "Progress"
+    },
+    {
+      "componentClassName": "RunningActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW"
+        }
+      },
+      "id": "uii_2E54W00AKYAZ4BA35CYJ85BAV3",
+      "kind": "activeToggle",
+      "name": "Progress"
+    }
+  ],
+  "name": "Progress",
+  "targetDomainType": "Progress",
+  "targetDomainTypeId": "dt_00D0TT9XC903SNVA7P9GFM98G3"
+}

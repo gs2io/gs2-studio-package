@@ -1,0 +1,99 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "static",
+                "value": 0
+              }
+            },
+            {
+              "parameterName": "paidOnly",
+              "source": {
+                "kind": "static",
+                "value": false
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_00D0S4EG729BGHQ7R4RK1959TA"
+              }
+            }
+          ],
+          "transformName": "WithdrawCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "replace",
+      "targetPropertyId": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "Free currency this product charges when it is bought",
+        "id": "prop_00D0S4EG729BGHQ7R4RK1959TA",
+        "localizedDisplay": {
+          "en": {
+            "description": "Free currency spent to buy this product.",
+            "label": "Price",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "この商品を購入するときに消費する無償通貨の量です。",
+            "label": "価格",
+            "unit": "通貨"
+          }
+        },
+        "name": "cost",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Buy",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-shop-energy-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0S4EG72DAP5YJTQFA6F363W",
+  "kind": "overlay",
+  "name": "EnergyProduct",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-shop-energy",
+    "directSourceTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
+    "sourcePackageId": "micro-shop-energy",
+    "sourceTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE"
+  }
+}

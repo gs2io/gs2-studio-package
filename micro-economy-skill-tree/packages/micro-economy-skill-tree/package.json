@@ -11,7 +11,7 @@
       "ja": "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはキャラクターごとに記録されます。"
     },
     "domainTypes": {
-      "dt_01M0C87BJCRTK0Y3JKH8EHKAR6": {
+      "dt_00D0321TWK66MR7GWMWA3MCTP1": {
         "description": {
           "en": "Defines an ability node, its unlock cost, and prerequisite nodes in a skill tree.",
           "ja": "スキルツリー上の能力、解放条件、前提ノードを設定します。"
@@ -21,7 +21,7 @@
           "ja": "スキルノード"
         }
       },
-      "dt_01M31J6RAW9QB6RG77DGXG447A": {
+      "dt_00D0RCHP2Q2DTSP41SVC7C111T": {
         "description": {
           "en": "Tracks unlocked skill nodes per character.",
           "ja": "キャラクターごとに解放済みスキルノードを管理します。"

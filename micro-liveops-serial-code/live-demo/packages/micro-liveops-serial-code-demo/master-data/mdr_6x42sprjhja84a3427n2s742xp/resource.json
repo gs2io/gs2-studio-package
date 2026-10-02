@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ClearRedemption",
+        "transformPackageId": "micro-liveops-serial-code-demo"
+      }
+    ]
+  },
+  "id": "mdr_6X42SPRJHJA84A3427N2S742XP",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
+    "typeName": "SerialCodeRedemption"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_1DCY7WQV0KBE4VYR435W20PVD0"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the grade step.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "グレード段階を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Level cap this grade raises the character to",
+        "id": "prop_00D0320HQ4H7XNC4RCNDDV9W35",
+        "localizedDisplay": {
+          "en": {
+            "description": "Level cap unlocked by this grade.",
+            "label": "Level cap",
+            "unit": "levels"
+          },
+          "ja": {
+            "description": "このグレードで到達可能になるレベル上限です。",
+            "label": "レベル上限",
+            "unit": "レベル"
+          }
+        },
+        "name": "rankCapValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Which characters this step applies to",
+        "id": "prop_00D0320HQ4HKJ6EW5M3Z8QS8PG",
+        "localizedDisplay": {
+          "en": {
+            "description": "Regular expression matching characters eligible for this grade. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended.",
+            "label": "Target character pattern"
+          },
+          "ja": {
+            "description": "このグレード段階を適用できるキャラクターの正規表現です。照合対象はキャラクター個体ID（アイテムセットの GRN）にレベル用の接尾辞 `:level` を付けた値です。",
+            "label": "対象キャラクター条件"
+          }
+        },
+        "name": "propertyIdRegex",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Which characters may be spent to reach it",
+        "id": "prop_00D0320HQ4N8QC4SDN75PFNFSF",
+        "localizedDisplay": {
+          "en": {
+            "description": "Regular expression matching characters that may be consumed for grade-up. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended.",
+            "label": "Material character pattern"
+          },
+          "ja": {
+            "description": "グレードアップ素材として消費できるキャラクターの正規表現です。照合対象はキャラクター個体ID（アイテムセットの GRN）にレベル用の接尾辞 `:level` を付けた値です。",
+            "label": "素材キャラクター条件"
+          }
+        },
+        "name": "gradeUpPropertyIdRegex",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
+  "kind": "local",
+  "name": "CharacterGradeStep",
+  "singleEntry": false
+}

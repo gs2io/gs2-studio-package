@@ -1,0 +1,46 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "createdAt"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "guildModelName"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "guildName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_00D031EHJKXQ1Y91SVXVS1NEG1"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "joinedGuildId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+      "typeName": "Guild"
+    }
+  },
+  "id": "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ",
+  "location": {
+    "modelName": "JoinedGuild",
+    "service": "guild"
+  }
+}

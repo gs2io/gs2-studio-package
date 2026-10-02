@@ -3,7 +3,7 @@
   "importedResourceRefs": [
     {
       "kind": "local",
-      "resourceId": "04eb0e6d-2492-4f2c-988b-16449f54a1c6",
+      "resourceId": "mdr_04XC76T94J9WP9H2RP8JFN98E6",
       "resourceKind": "masterData"
     }
   ],
@@ -41,7 +41,7 @@
       ],
       "resourceRef": {
         "kind": "local",
-        "resourceId": "04eb0e6d-2492-4f2c-988b-16449f54a1c6",
+        "resourceId": "mdr_04XC76T94J9WP9H2RP8JFN98E6",
         "resourceKind": "masterData"
       }
     }

@@ -1,0 +1,34 @@
+{
+  "id": "uic_3WKMJK52P59T49EWB84NS2Y2E2",
+  "items": [
+    {
+      "componentClassName": "CompletedActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_08ZS1KJ683EXX3ADZAVHK3E833"
+        }
+      },
+      "id": "uii_4QD0SB9MKV9WNBRMZKPV2REJ88",
+      "kind": "activeToggle",
+      "name": "Mission"
+    },
+    {
+      "componentClassName": "ReceivedActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB"
+        }
+      },
+      "id": "uii_7N399MGTQP9T4RK5F1ATYWS6WW",
+      "kind": "activeToggle",
+      "name": "Mission"
+    }
+  ],
+  "name": "Mission",
+  "targetDomainType": "Mission",
+  "targetDomainTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
+}

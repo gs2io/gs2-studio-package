@@ -8,7 +8,7 @@
       "ja": "時間経過で回復するスタミナ（行動力）を管理します。"
     },
     "domainTypes": {
-      "dt_TX5D50PD77NCTNGR3SKBGETDFY": {
+      "dt_6Q9B985K9SXB6NC60YCTW3PKBZ": {
         "description": {
           "en": "Manages stamina defaults, capacity, recovery interval, and each player's current value.",
           "ja": "スタミナの初期値・上限・回復間隔とプレイヤーの現在値を管理します。"

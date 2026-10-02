@@ -3,41 +3,41 @@
   "packageId": "micro-economy-equipment-loadout",
   "types": {
     "Character": {
-      "id": "dt_01M0CDYNB5V74MMX3SWDK4ZRCH",
+      "id": "dt_00D033FNASESS5578YF3CS7Y34",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
       "addedProperties": {
-        "equipmentSlots": "prop_01M0CDYNB5CJAAH5YPRR6FNRXF"
+        "equipmentSlots": "prop_00D033FNASB4JJM9FNP61KXE7B"
       }
     },
     "EquipmentSlot": {
-      "id": "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ",
+      "id": "dt_00D033FNASFGZWK2X333SXXRXM",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-equipment-loadout",
-      "canonicalTypeId": "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ",
+      "canonicalTypeId": "dt_00D033FNASFGZWK2X333SXXRXM",
       "properties": {
-        "id": "prop_reserved_id",
-        "propertyRegex": "prop_01M0CDYNB5E7VX7G7ED1SRD7JR"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "propertyRegex": "prop_00D033FNASBHYZ9W1VK8EE39WP"
       }
     },
     "EquipmentSlotAssignment": {
-      "id": "dt_01M0CDYNB5ZBC95MZSW2NTSPXM",
+      "id": "dt_00D033FNASFTV29D7YF0NEPDQD",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-equipment-loadout",
-      "canonicalTypeId": "dt_01M0CDYNB5ZBC95MZSW2NTSPXM",
+      "canonicalTypeId": "dt_00D033FNASFTV29D7YF0NEPDQD",
       "properties": {
-        "equipment": "prop_01M0CDYNB51PQJVBAQC87617NY",
-        "id": "prop_reserved_id"
+        "equipment": "prop_00D033FNAS8DNWPTTNV21SG9XF",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     }
   },
   "masterDataResources": {
-    "formation.Namespace": "6a3916fa-763d-5473-9cce-e43dfe130772",
-    "formation.PropertyFormModel": "ecd79306-b165-53b0-8b2c-5baf0db143a8",
-    "formation.SlotModel": "8116533b-568e-598e-86a8-0d5dec3e7baf",
-    "script.Namespace": "f291f9e2-d1b4-51ee-9d9f-f078e8b76cdb",
-    "script.Script": "7a32e876-196a-5d46-914f-2504f6359564"
+    "formation.Namespace": "mdr_3A74BFMXHXAHSSSKQ47QZ161VJ",
+    "formation.PropertyFormModel": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8",
+    "formation.SlotModel": "mdr_412S9KPNMEB678DA0DBQP3WYXF",
+    "script.Namespace": "mdr_7JJ7WY5MDMA7Q9V7ZGF3MBEV6V",
+    "script.Script": "mdr_3T6BM7C6BABN392KS50KV3B5B4"
   },
   "transforms": {}
 }

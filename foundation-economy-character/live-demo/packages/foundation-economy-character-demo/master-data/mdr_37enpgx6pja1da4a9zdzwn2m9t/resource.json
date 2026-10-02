@@ -1,0 +1,39 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "action",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
+              "typeName": "CharacterRecruit"
+            },
+            "propertyId": "prop_00D0NTAZ7QKXA6Q5H5NDGEFQ2V"
+          },
+          "kind": "parent",
+          "parentResourceId": "mdr_6C5BXK4CX6AGWT3V20TH8ECYYP"
+        }
+      }
+    ]
+  },
+  "id": "mdr_37ENPGX6PJA1DA4A9ZDZWN2M9T",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
+    "typeName": "CharacterRecruit"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 1,
+    "kind": "arrayElement",
+    "parentId": "mdr_6C5BXK4CX6AGWT3V20TH8ECYYP"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
+            "typeName": "BuffCampaign"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    ]
+  },
+  "id": "mdr_62ZMGKX8TQAHBTQAR56TDCXS7E",
+  "location": {
+    "modelName": "RateModel",
+    "service": "exchange"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
+    "typeName": "BuffCampaign"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_490ZPQ8DD0B8HRBR00TY7784NN"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "id": "uic_2C711KB153BVHAZFF289AXBHGF",
+  "items": [
+    {
+      "componentClassName": "BriefLabel",
+      "id": "uii_2KDNMCCY5TB58B060KWFWKEY93",
+      "kind": "templateLabel",
+      "name": "Mission",
+      "sources": [
+        {
+          "key": "target",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_4Q0FZ49AS61KZCN0Z8MS0DE7SN"
+          }
+        },
+        {
+          "key": "reward",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0QVYTV99Q49SBAE7J7GC9EG"
+          }
+        }
+      ],
+      "template": "Wants {target} on the counter. Pays {reward} coins."
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ReceiveButton",
+      "delegatedActionKey": "resource:micro-economy-mission:masterData:mdr_4QWBNQ5KM59ZERS381QKYXGJCB::Gs2Mission:MissionTaskModel.Complete",
+      "id": "uii_47AEFA8X40B3BSN00PKHPYX2ZZ",
+      "kind": "buttonAction",
+      "name": "Mission"
+    },
+    {
+      "componentClassName": "ReceivedLabel",
+      "id": "uii_5XXW58G7Z8A47SJK80BDF54WB1",
+      "kind": "templateLabel",
+      "name": "Mission",
+      "sources": [
+        {
+          "key": "reward",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0QVYTV99Q49SBAE7J7GC9EG"
+          }
+        }
+      ],
+      "template": "Received {reward} coins."
+    },
+    {
+      "componentClassName": "ReceiveUnavailableActiveToggle",
+      "condition": {
+        "children": [
+          {
+            "child": {
+              "kind": "truthy",
+              "source": {
+                "kind": "property",
+                "propertyId": "prop_08ZS1KJ683EXX3ADZAVHK3E833"
+              }
+            },
+            "kind": "not"
+          },
+          {
+            "kind": "truthy",
+            "source": {
+              "kind": "property",
+              "propertyId": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB"
+            }
+          }
+        ],
+        "kind": "or"
+      },
+      "id": "uii_2CYH82D6Q5A7AS7AZE2CQB84TZ",
+      "kind": "activeToggle",
+      "name": "Mission"
+    },
+    {
+      "componentClassName": "NotReceivedActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_43YMVPGY0ABTWBVMAK7KTQPKXG",
+      "kind": "activeToggle",
+      "name": "Mission"
+    }
+  ],
+  "name": "Mission",
+  "targetDomainType": "Mission",
+  "targetDomainTypeId": "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8"
+}

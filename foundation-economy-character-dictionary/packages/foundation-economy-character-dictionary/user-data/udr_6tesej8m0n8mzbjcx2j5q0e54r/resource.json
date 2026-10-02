@@ -1,0 +1,40 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "existence",
+        "parameterName": "$existence",
+        "propertyId": "prop_6K2DAV9HFZF5PG2DKYE78E3MDK"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "acquiredAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP",
+              "typeName": "Character"
+            },
+            "propertyId": "prop_2SMS2KDR27EFR2G4DEY7VYXJF1"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "entryId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "name"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_50VBE9ASKA930RKYC6YDCG9E49"
+  },
+  "id": "udr_6TESEJ8M0N8MZBJCX2J5Q0E54R",
+  "location": {
+    "modelName": "Entry",
+    "service": "dictionary"
+  }
+}

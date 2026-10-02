@@ -1,0 +1,54 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Extend",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_43ANN972MFBQHAXGP4CHFKDN2K",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-schedule-demo"
+      }
+    },
+    {
+      "methodName": "Clear",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_0EW19XBQ94A2PB07R85WZ9TE2H",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-schedule-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0MR9AAXNWQC1NCBP63HNVM4",
+  "kind": "overlay",
+  "name": "Trigger",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-schedule",
+    "directSourceTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+    "sourcePackageId": "foundation-economy-schedule",
+    "sourceTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
+  }
+}

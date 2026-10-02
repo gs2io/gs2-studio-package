@@ -1,0 +1,16 @@
+{
+  "id": "uic_33TXKEKSZKB5C92ZZ936TGD5AG",
+  "items": [
+    {
+      "componentClassName": "RuleLabel",
+      "id": "uii_65971STQ19BHYVSDVV84Q1Q47G",
+      "kind": "templateLabel",
+      "name": "SerialCodeRedemption",
+      "sources": [],
+      "template": "Type the campaign code WELCOME2026 and redeem it for 100 coins. Each visitor can redeem it once; Start over clears your redemption so you can try again. Codes are case sensitive, and a wrong one is refused."
+    }
+  ],
+  "name": "SerialCodeRedemption",
+  "targetDomainType": "SerialCodeRedemption",
+  "targetDomainTypeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW"
+}

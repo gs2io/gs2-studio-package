@@ -1,0 +1,47 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "userData",
+        "description": "Grades promoted so far",
+        "id": "prop_00D0320HQ4G51XW7JS84YZ2VAA",
+        "localizedDisplay": {
+          "en": {
+            "description": "Current grade reached by the character.",
+            "label": "Current grade",
+            "unit": "grades"
+          },
+          "ja": {
+            "description": "キャラクターが現在到達しているグレードです。",
+            "label": "現在グレード",
+            "unit": "段階"
+          }
+        },
+        "name": "grade",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0320HQ4G4BENW1GSJMERS0D",
+  "kind": "overlay",
+  "name": "Character",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-character",
+    "directSourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+  }
+}

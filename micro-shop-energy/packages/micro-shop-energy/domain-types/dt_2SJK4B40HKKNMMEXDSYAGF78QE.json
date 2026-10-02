@@ -1,0 +1,83 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the stamina product.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "スタミナ商品を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_11FCJPVBK2AQFDD6DXHKWSV827",
+        "localizedDisplay": {
+          "en": {
+            "description": "Amount of stamina restored by purchasing this product.",
+            "label": "Recovery amount",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "購入時に回復するスタミナ量です。",
+            "label": "回復量",
+            "unit": "ポイント"
+          }
+        },
+        "name": "recoveryValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6",
+        "localizedDisplay": {
+          "en": {
+            "description": "Consume actions executed to purchase the product.",
+            "label": "Purchase costs"
+          },
+          "ja": {
+            "description": "商品購入時に実行する消費アクションです。",
+            "label": "購入コスト"
+          }
+        },
+        "name": "consumeActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "consumeAction"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
+  "kind": "local",
+  "name": "EnergyProduct",
+  "singleEntry": false
+}

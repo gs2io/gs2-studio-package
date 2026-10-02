@@ -2,16 +2,16 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "property:Guild.defaultMaximumMemberCount": "prop_01M0C5T6AF4Q3NKD9YJQ8F6119",
-    "property:Guild.guildMasterRole": "prop_01M0C5T6AFTPHZP6VRDZBYPK8F",
-    "property:Guild.guildMemberDefaultRole": "prop_01M0C5T6AFMZ7YHRK3TF8G9T6F",
-    "property:Guild.inactivityPeriodDays": "prop_01M0C5T6AFE1EJ9CXYGJSJMT8Y",
-    "property:Guild.joinedGuildName": "prop_01M0C5T6AFPW7S477FQF46NT07",
-    "property:Guild.maxConcurrentGuildMasterCount": "prop_01M0C5T6AFZM3W0YBPS5SEKXR9",
-    "property:Guild.maxConcurrentJoinGuilds": "prop_01M0C5T6AFC4H9ESF7ZV7XRVXK",
-    "property:Guild.maximumMemberCount": "prop_01M0C5T6AFQRJ8K9V4AY6N1X1S",
-    "property:Guild.rejoinCoolTimeMinutes": "prop_01M0C5T6AF1GMQB80XDAVM0NJ2",
-    "property:GuildRole.policyDocument": "prop_01M0C5T6AF0SDEH7DPDWXDST0T",
+    "property:Guild.defaultMaximumMemberCount": "prop_00D031EHJKS5RXCVAFMNT3SG8A",
+    "property:Guild.guildMasterRole": "prop_00D031EHJKYNMFXHPY3FTZNMT3",
+    "property:Guild.guildMemberDefaultRole": "prop_00D031EHJKX7SZME4RYKT42EHK",
+    "property:Guild.inactivityPeriodDays": "prop_00D031EHJKVGBMJB7FM4PCN6J7",
+    "property:Guild.joinedGuildName": "prop_00D031EHJKXQ1Y91SVXVS1NEG1",
+    "property:Guild.maxConcurrentGuildMasterCount": "prop_00D031EHJKZX0Z07JXP9EBMZE2",
+    "property:Guild.maxConcurrentJoinGuilds": "prop_00D031EHJKV14ABPBSZYSZE6ZC",
+    "property:Guild.maximumMemberCount": "prop_00D031EHJKXY4J4TES2QHN8F8E",
+    "property:Guild.rejoinCoolTimeMinutes": "prop_00D031EHJKRC55TT07BAPX05CG",
+    "property:GuildRole.policyDocument": "prop_00D031EHJKR6BBM9VDKF7BEEG6",
     "transform:IncreaseGuildCapacity:output:direct:Gs2Guild:IncreaseMaximumCurrentMaximumMemberCountByGuildName#0": "out_01M0C5T6AFNVEXRKYKWK10RY99",
     "transform:IncreaseGuildCapacity:parameter:guild": "param_01M0C5T6AF54RS0MNKJ4Q5787T",
     "transform:IncreaseGuildCapacity:parameter:guildName": "param_01M0C5T6AF94DSN4Y3VHEKZB8Q",
@@ -19,8 +19,10 @@
     "transform:VerifyGuildMembership:output:direct:Gs2Guild:VerifyIncludeMemberByUserId#0": "out_01M0C5T6AF1KMP4KM24KXMB22X",
     "transform:VerifyGuildMembership:parameter:guild": "param_01M0C5T6AFCYS4FBFX9XAT61Z7",
     "transform:VerifyGuildMembership:parameter:guildName": "param_01M0C5T6AF2RFWEBWB4XC0B5J9",
-    "type:Guild": "dt_01M0C5T6AF24NKHPZ1Z4R946FT",
-    "type:GuildRole": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0"
+    "type:Guild": "dt_00D031EHJKRH5CWDQRFS6291KY",
+    "type:GuildRole": "dt_00D031EHJKYH677VNXVWGBA2D0"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "user/guild:JoinedGuild:Guild:#0": "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ"
+  }
 }

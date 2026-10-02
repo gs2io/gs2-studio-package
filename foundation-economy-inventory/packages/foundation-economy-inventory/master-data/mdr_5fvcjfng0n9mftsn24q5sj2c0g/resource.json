@@ -1,0 +1,20 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Inventory"
+      }
+    ]
+  },
+  "id": "mdr_5FVCJFNG0N9MFTSN24Q5SJ2C0G",
+  "location": {
+    "modelName": "SimpleInventoryModel",
+    "service": "inventory"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_09W5HV054N82491HH6HA6CS2JQ"
+  }
+}

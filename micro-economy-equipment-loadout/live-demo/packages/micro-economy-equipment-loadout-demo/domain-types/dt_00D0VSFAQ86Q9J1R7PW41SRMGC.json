@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0VSFAQ86Q9J1R7PW41SRMGC",
+  "kind": "overlay",
+  "name": "EquipmentSlot",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-equipment-loadout",
+    "directSourceTypeId": "dt_00D033FNASFGZWK2X333SXXRXM",
+    "sourcePackageId": "micro-economy-equipment-loadout",
+    "sourceTypeId": "dt_00D033FNASFGZWK2X333SXXRXM"
+  }
+}

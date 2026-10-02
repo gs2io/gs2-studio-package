@@ -1,0 +1,10 @@
+{
+  "id": "happy-hour",
+  "rowKey": "row_01M2K159BPGQNYQWAEPN8TM8QP",
+  "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+  "values": {
+    "prop_4T7XKM1CTQ7X9D94DB6868ZXR3": "happy-hour",
+    "prop_787C2RE8TDR45Z47ER9FNGNTBH": "relative",
+    "prop_7EEM05TPX8JKCME8DS85QCDFJ2": "always"
+  }
+}

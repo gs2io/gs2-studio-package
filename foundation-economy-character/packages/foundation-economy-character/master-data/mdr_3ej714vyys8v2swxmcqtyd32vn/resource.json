@@ -1,0 +1,58 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "allowMultipleStacks",
+        "value": true
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+            "typeName": "Character"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "sortValue",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+            "typeName": "Character"
+          },
+          "propertyId": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "stackingLimit",
+        "value": 1
+      }
+    ]
+  },
+  "id": "mdr_3EJ714VYYS8V2SWXMCQTYD32VN",
+  "location": {
+    "modelName": "ItemModel",
+    "service": "inventory"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+    "typeName": "Character"
+  },
+  "parent": {
+    "arrayProperty": "itemModels",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_32G1EVGBJ098PA3H1RW307TJFR"
+  }
+}

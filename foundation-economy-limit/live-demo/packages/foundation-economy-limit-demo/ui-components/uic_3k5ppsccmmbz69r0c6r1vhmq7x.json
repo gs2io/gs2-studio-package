@@ -1,0 +1,58 @@
+{
+  "id": "uic_3K5PPSCCMMBZ69R0C6R1VHMQ7X",
+  "items": [
+    {
+      "componentClassName": "ScheduleLabel",
+      "id": "uii_1VRYCX7ZWDARDBPD2GD3ZMTXYP",
+      "kind": "templateLabel",
+      "name": "UsageLimit",
+      "sources": [],
+      "template": "Resets every day at 00:00 UTC"
+    },
+    {
+      "componentClassName": "WeeklyScheduleLabel",
+      "id": "uii_6W2GASSKWGA0PAD6V8PPAQ6YNA",
+      "kind": "templateLabel",
+      "name": "UsageLimit",
+      "sources": [],
+      "template": "Resets every Monday at 00:00 UTC"
+    },
+    {
+      "componentClassName": "WeeklyActiveToggle",
+      "condition": {
+        "kind": "eq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_00D031CCJC935P6N8JH9QZET3R"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": "weekly"
+        }
+      },
+      "id": "uii_1BR6G75XNKBPMTX6FNR1YTM5KY",
+      "kind": "activeToggle",
+      "name": "UsageLimit"
+    },
+    {
+      "componentClassName": "NotWeeklyActiveToggle",
+      "condition": {
+        "kind": "neq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_00D031CCJC935P6N8JH9QZET3R"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": "weekly"
+        }
+      },
+      "id": "uii_62F5K8HNEMA9NRNAM4PKEZXMD5",
+      "kind": "activeToggle",
+      "name": "UsageLimit"
+    }
+  ],
+  "name": "UsageLimit",
+  "targetDomainType": "UsageLimit",
+  "targetDomainTypeId": "dt_00D0PP9ZFNCD6RFTHR08Z8NVF9"
+}

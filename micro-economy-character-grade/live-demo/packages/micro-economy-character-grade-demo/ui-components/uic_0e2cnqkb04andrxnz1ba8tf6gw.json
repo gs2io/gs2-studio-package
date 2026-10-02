@@ -1,0 +1,73 @@
+{
+  "id": "uic_0E2CNQKB04ANDRXNZ1BA8TF6GW",
+  "items": [
+    {
+      "componentClassName": "GradeLabel",
+      "id": "uii_0YH3H85HCGB3J9A2A173TKPTR2",
+      "kind": "templateLabel",
+      "name": "Character",
+      "sources": [
+        {
+          "key": "grade",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0320HQ4G51XW7JS84YZ2VAA"
+          }
+        }
+      ],
+      "template": "Grade {grade}"
+    },
+    {
+      "componentClassName": "LimitBreakInteractable",
+      "condition": {
+        "children": [
+          {
+            "kind": "eq",
+            "lhs": {
+              "kind": "property",
+              "propertyId": "prop_04HMA7F4M0F29E8P9WE3E5YF3R"
+            },
+            "rhs": {
+              "kind": "property",
+              "propertyId": "prop_6GPQDNYV0YP90F0V7GY2S79423"
+            }
+          },
+          {
+            "kind": "lt",
+            "lhs": {
+              "kind": "property",
+              "propertyId": "prop_00D0320HQ4G51XW7JS84YZ2VAA"
+            },
+            "rhs": {
+              "kind": "literal",
+              "value": 3
+            }
+          }
+        ],
+        "kind": "and"
+      },
+      "id": "uii_1H3PMRBH7NB8SVQ9S89GFXHQGY",
+      "kind": "interactable",
+      "name": "Character"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "LimitBreakButton",
+      "delegatedActionKey": "resource:micro-economy-character-grade-demo:masterData:mdr_1NXX629711BHJBYFNF7Q2QG8D9::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_6010XKWSYVBYFTJ3F5RQ7B6F3V",
+      "kind": "buttonAction",
+      "name": "Character"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "TrainHardButton",
+      "delegatedActionKey": "resource:micro-economy-character-grade-demo:masterData:mdr_6NZTG6G7F8ACCRD6NFACZYDDPH::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_5KKE85WDNAAC7RJ0XG557Z3K4H",
+      "kind": "buttonAction",
+      "name": "Character"
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_00D0T33MWD8D0Y1Q3JK8YD7EZ8"
+}

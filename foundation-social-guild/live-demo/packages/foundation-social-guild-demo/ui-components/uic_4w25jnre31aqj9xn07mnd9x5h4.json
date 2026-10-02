@@ -1,0 +1,39 @@
+{
+  "id": "uic_4W25JNRE31AQJ9XN07MND9X5H4",
+  "items": [
+    {
+      "componentClassName": "MembershipLabel",
+      "id": "uii_11ZT8KV2WDB88BFJX5JREJ456R",
+      "kind": "templateLabel",
+      "name": "Guild",
+      "sources": [],
+      "template": "You are a member. The lobby above shows which guild."
+    },
+    {
+      "componentClassName": "CapacityLabel",
+      "id": "uii_2QB7A9VFDVB8TS9N10N6WJCPMA",
+      "kind": "templateLabel",
+      "name": "Guild",
+      "sources": [
+        {
+          "key": "defaultMaximumMemberCount",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D031EHJKS5RXCVAFMNT3SG8A"
+          }
+        },
+        {
+          "key": "maximumMemberCount",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D031EHJKXY4J4TES2QHN8F8E"
+          }
+        }
+      ],
+      "template": "Room for {defaultMaximumMemberCount}, up to {maximumMemberCount}"
+    }
+  ],
+  "name": "Guild",
+  "targetDomainType": "Guild",
+  "targetDomainTypeId": "dt_00D0WZ24SMWZ7S3MC3VY8EJ6KG"
+}

@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0XMTYBP5KNZJFD93BWF6SFG",
+  "kind": "overlay",
+  "name": "GuildRanking",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-liveops-guild-ranking",
+    "directSourceTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
+    "sourcePackageId": "micro-liveops-guild-ranking",
+    "sourceTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+  }
+}

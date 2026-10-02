@@ -3,38 +3,38 @@
   "packageId": "foundation-core-identity",
   "types": {
     "TakeOverSetting": {
-      "id": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+      "id": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
       "singleEntry": false,
       "canonicalPackageId": "foundation-core-identity",
-      "canonicalTypeId": "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ",
+      "canonicalTypeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
       "properties": {
-        "appleKeyId": "prop_V75V0JS2DKK9J1HT58G6EHB6VF",
-        "applePrivateKeyPem": "prop_6HQHD05HT2SH78G79FXNV4WJVT",
-        "appleTeamId": "prop_2EJBCGDAH1TVRBGY75S05SJ801",
-        "clientId": "prop_01B0AANDTTY7MQTFTBP6WQK6CD",
-        "clientSecret": "prop_CAMZZS3CCJ4K9MSA217ARZ7K6Z",
-        "configurationPath": "prop_A2D1ZJ9DZ5AMTXXE3XHZGGR0AJ",
-        "doneEndpointUrl": "prop_XDRZ798BRBRW9W35MRHXEXCAAX",
-        "hasTakeOver": "prop_5Z93QPG4VQED3EX517PW0H7BWA",
-        "id": "prop_reserved_id",
-        "type": "prop_JXHFG6A90WH8TQJAD96FQC1S5M"
+        "appleKeyId": "prop_6SSER4P8KCWTCGCEHA41KMASPV",
+        "applePrivateKeyPem": "prop_1MDWB81CEGPC9T41TBZDES74PY",
+        "appleTeamId": "prop_0KMJV43AM8EPY2W7HSE81ECJ00",
+        "clientId": "prop_00AR2JNBEPQHX5YKYJXHQ5WSK3",
+        "clientSecret": "prop_32N7ZY8V34H4TD6AGG9TP7SWSQ",
+        "configurationPath": "prop_2GK8FWJBFSAN6QFBGZCFW4602M",
+        "doneEndpointUrl": "prop_7BE7STA2Y2Y72F0SD64FBQB2JQ",
+        "hasTakeOver": "prop_1FT8XXM16XVK8VQ989XQ049TZ2",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "type": "prop_4QCBW1JJ874A6NWJKA9KXV0E9D"
       }
     },
     "TransferCode": {
-      "id": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ",
+      "id": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
       "singleEntry": false,
       "canonicalPackageId": "foundation-core-identity",
-      "canonicalTypeId": "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ",
+      "canonicalTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
       "properties": {
-        "id": "prop_reserved_id",
-        "registered": "prop_01M3Q7JPT6CWGBF5DTQE7JZM8M",
-        "userIdentifier": "prop_01M3Q7JPT619NTVBDVGNB7M08F"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "registered": "prop_00D0XSWNPHK742VSBENVHWQX25",
+        "userIdentifier": "prop_00D0XSWNPHGADEPTVEW5ASX023"
       }
     }
   },
   "masterDataResources": {
-    "account.Namespace": "678d5a28-b9c6-4225-baee-d4a6d0d95b4b",
-    "account.TakeOverTypeModel": "912e8c6f-d936-4253-a13e-69a3b57fc821"
+    "account.Namespace": "mdr_37HND2HEE688JVNVPMMV8DJPTB",
+    "account.TakeOverTypeModel": "mdr_4H5T66ZP9P899T2FK9METQZJ11"
   },
   "transforms": {}
 }

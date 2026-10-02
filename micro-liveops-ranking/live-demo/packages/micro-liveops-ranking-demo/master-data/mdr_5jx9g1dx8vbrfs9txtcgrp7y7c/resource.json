@@ -1,0 +1,44 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "trigger",
+            "source": {
+              "kind": "static",
+              "value": "ranking-contest"
+            }
+          },
+          {
+            "parameterName": "ttlSeconds",
+            "source": {
+              "kind": "static",
+              "value": 180
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "PullTrigger",
+        "transformPackageId": "foundation-economy-schedule"
+      }
+    ]
+  },
+  "id": "mdr_5JX9G1DX8VBRFS9TXTCGRP7Y7C",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0WDGSP50X984BNS0PWV22MG",
+    "typeName": "RankingContest"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_63W68202TEBA2RK172FRMJ5JWG"
+  }
+}

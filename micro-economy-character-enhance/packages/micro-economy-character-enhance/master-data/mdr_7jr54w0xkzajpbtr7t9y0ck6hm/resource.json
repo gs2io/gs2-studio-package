@@ -1,0 +1,20 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Material"
+      }
+    ]
+  },
+  "id": "mdr_7JR54W0XKZAJPBTR7T9Y0CK6HM",
+  "location": {
+    "modelName": "SimpleInventoryModel",
+    "service": "inventory"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_0X3VFV84CTB6EATPT0SP3AV0G9"
+  }
+}

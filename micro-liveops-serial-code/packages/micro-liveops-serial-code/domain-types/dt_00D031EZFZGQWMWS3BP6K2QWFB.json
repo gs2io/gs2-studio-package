@@ -1,0 +1,58 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the serial-code campaign.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "コードキャンペーンを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Mark the campaign id as a shared code; GS2 currently accepts the id whether or not this is set",
+        "id": "prop_00D031EZFZM4YG8CZFHGS7HMHD",
+        "localizedDisplay": {
+          "en": {
+            "description": "Marks the campaign id as a code shared by every player. GS2 currently accepts the id whatever this says, any number of times.",
+            "label": "Shared campaign code"
+          },
+          "ja": {
+            "description": "キャンペーン ID を全員共通のコードとして扱うことを示します。現在の GS2 はこの設定に関係なくキャンペーン ID を受け付け、何度でも使えます。",
+            "label": "共通キャンペーンコード"
+          }
+        },
+        "name": "enableCampaignCode",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
+  "kind": "local",
+  "name": "SerialCodeCampaign",
+  "singleEntry": false
+}

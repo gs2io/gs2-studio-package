@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0VNJHFYZZTYQ060GTK8JCDR",
+  "kind": "overlay",
+  "name": "EquipmentEnchantSlotChance",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-equipment-enchant",
+    "directSourceTypeId": "dt_00D03217GRN3Z01B1EQB1GF0EE",
+    "sourcePackageId": "micro-economy-equipment-enchant",
+    "sourceTypeId": "dt_00D03217GRN3Z01B1EQB1GF0EE"
+  }
+}

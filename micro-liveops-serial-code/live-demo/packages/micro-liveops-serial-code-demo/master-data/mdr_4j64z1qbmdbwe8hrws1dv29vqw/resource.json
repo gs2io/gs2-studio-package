@@ -1,0 +1,44 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 100
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "DepositFreeCurrency",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    ]
+  },
+  "id": "mdr_4J64Z1QBMDBWE8HRWS1DV29VQW",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
+    "typeName": "SerialCodeRedemption"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_4SZKQB6AQYA56908CGSCK2E08X"
+  }
+}

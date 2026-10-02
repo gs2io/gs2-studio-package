@@ -1,0 +1,157 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the skill node.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "スキルノードを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "What unlocking this node costs",
+        "id": "prop_00D05R0KFCTFK6442MMAKE56Y9",
+        "localizedDisplay": {
+          "en": {
+            "description": "Consume actions executed to unlock this node.",
+            "label": "Unlock costs"
+          },
+          "ja": {
+            "description": "このノードを解放するときに実行する消費アクションです。",
+            "label": "解放コスト"
+          }
+        },
+        "name": "releaseConsumeActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "consumeAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Nodes that must be released first",
+        "id": "prop_00D0321TWK1SPCKRNJJDG1CSDW",
+        "localizedDisplay": {
+          "en": {
+            "description": "Nodes that must be unlocked before this node.",
+            "label": "Prerequisite nodes"
+          },
+          "ja": {
+            "description": "先に解放しておく必要があるノードの一覧です。",
+            "label": "前提ノード"
+          }
+        },
+        "name": "premiseNodes",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "elementType": {
+            "kind": "primitive",
+            "primitiveType": "string"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Share of the cost refunded when the node is reset",
+        "id": "prop_00D0321TWK5R5K4W0KWNR49SHT",
+        "localizedDisplay": {
+          "en": {
+            "description": "Share of the unlock cost refunded when the node is reset.",
+            "label": "Reset refund rate",
+            "unit": "ratio"
+          },
+          "ja": {
+            "description": "ノードをリセットしたときに解放コストを返却する割合です。",
+            "label": "リセット返却率",
+            "unit": "倍"
+          }
+        },
+        "name": "restrainReturnRate",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "float32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Unlocked by this player",
+        "id": "prop_00D0321TWK6CDMBJRD83E6G2K2",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has unlocked this node.",
+            "label": "Unlocked"
+          },
+          "ja": {
+            "description": "プレイヤーがこのノードを解放済みかを示します。",
+            "label": "解放済み"
+          }
+        },
+        "name": "released",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "none",
+        "description": "Whose tree these flags are read for",
+        "id": "prop_00D0RCHP2Q26RVYQM9TZ89PN0E",
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier of the character whose unlock state these flags are read for.",
+            "label": "Owning character"
+          },
+          "ja": {
+            "description": "解放状況を読み出す対象のキャラクターを指す識別子です。",
+            "label": "対象キャラクター"
+          }
+        },
+        "name": "owner",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+  "kind": "local",
+  "name": "SkillNode",
+  "singleEntry": false
+}

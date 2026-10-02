@@ -1,0 +1,35 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "count",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_47E751540GQRMAWTXYFT9376WH",
+              "typeName": "Item"
+            },
+            "propertyId": "prop_4RM1PKMWET4WYQBAW013CTF8YD"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "itemName"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_2MZFS2Y6618P68QQHD5XJHVFV5"
+  },
+  "id": "udr_7HSSTMTZH09CRA81A2KHRBV7RJ",
+  "location": {
+    "modelName": "SimpleItem",
+    "service": "inventory"
+  }
+}

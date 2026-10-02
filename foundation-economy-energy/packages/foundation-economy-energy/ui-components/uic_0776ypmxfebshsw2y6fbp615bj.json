@@ -1,0 +1,73 @@
+{
+  "id": "uic_0776YPMXFEBSHSW2Y6FBP615BJ",
+  "items": [
+    {
+      "clamp": true,
+      "componentClassName": "StaminaGauge",
+      "current": {
+        "kind": "property",
+        "propertyId": "prop_7BX7N28W6KRGHGC40MXEWB2ESC"
+      },
+      "id": "uii_58A169ZXNQBKTA5X236KKZ0Z59",
+      "kind": "gauge",
+      "max": {
+        "kind": "property",
+        "propertyId": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56"
+      },
+      "name": "Energy"
+    },
+    {
+      "componentClassName": "StaminaLabel",
+      "id": "uii_2GR98W5SK2APQ9VC0PCQ25YS70",
+      "kind": "templateLabel",
+      "name": "Energy",
+      "sources": [
+        {
+          "key": "currentValue",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7BX7N28W6KRGHGC40MXEWB2ESC"
+          }
+        },
+        {
+          "key": "currentMaximumValue",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56"
+          }
+        }
+      ],
+      "template": "{currentValue}/{currentMaximumValue}"
+    },
+    {
+      "componentClassName": "NextRecoveryValue",
+      "id": "uii_6MCW3HYG84AMTT7145KZDGVE1N",
+      "kind": "value",
+      "name": "Energy",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_39T9A7P2NH6PNT4W12H0FZX9WW"
+      }
+    },
+    {
+      "componentClassName": "FullActiveToggle",
+      "condition": {
+        "kind": "gte",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_7BX7N28W6KRGHGC40MXEWB2ESC"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56"
+        }
+      },
+      "id": "uii_1RMA1JK4EFBMG904TJXTZ1KMD7",
+      "kind": "activeToggle",
+      "name": "Energy"
+    }
+  ],
+  "name": "Energy",
+  "targetDomainType": "Energy",
+  "targetDomainTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+}

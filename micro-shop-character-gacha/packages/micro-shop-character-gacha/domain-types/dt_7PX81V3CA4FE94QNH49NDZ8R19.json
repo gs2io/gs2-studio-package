@@ -1,0 +1,104 @@
+{
+  "compositeKey": [
+    "prop_1N7H0DM41KAPYE0ZPFH7KEQPDQ",
+    "prop_2JPPK6P7F94GT0KKPVM3JFZPSQ"
+  ],
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the character draw rate.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "キャラクター排出率を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_1N7H0DM41KAPYE0ZPFH7KEQPDQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Gacha rarity this character belongs to.",
+            "label": "Rarity"
+          },
+          "ja": {
+            "description": "このキャラクターが属するガチャレアリティです。",
+            "label": "レアリティ"
+          }
+        },
+        "name": "rarity",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_479NFNV95H92HYQE8252JBRZ9Z"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_2JPPK6P7F94GT0KKPVM3JFZPSQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Character included in the draw pool.",
+            "label": "Character"
+          },
+          "ja": {
+            "description": "排出対象にするキャラクターです。",
+            "label": "キャラクター"
+          }
+        },
+        "name": "character",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_0QQ39TDDTA8E2W3B2GWBQWC3EJ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Relative weight used to draw this character within its rarity.",
+            "label": "Draw weight"
+          },
+          "ja": {
+            "description": "同じレアリティ内でこのキャラクターが選ばれる相対的な重みです。",
+            "label": "抽選重み"
+          }
+        },
+        "name": "weight",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
+  "kind": "local",
+  "name": "CharacterRate",
+  "singleEntry": false
+}

@@ -1,0 +1,51 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "paidOnly",
+            "source": {
+              "kind": "static",
+              "value": false
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 10
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "WithdrawCurrency",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    ]
+  },
+  "id": "mdr_3QTN74ZEG7AV8VTJBNZP5ZK328",
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0VNJHFYSPVEE231WA4Z2Q47",
+    "typeName": "Equipment"
+  },
+  "parent": {
+    "arrayProperty": "consumeActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_7B5FM276ZTBNSAQYJ948JES7GM"
+  }
+}

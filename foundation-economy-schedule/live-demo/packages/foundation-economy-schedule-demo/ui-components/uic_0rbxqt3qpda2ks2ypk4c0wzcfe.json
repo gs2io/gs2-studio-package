@@ -1,0 +1,51 @@
+{
+  "id": "uic_0RBXQT3QPDA2KS2YPK4C0WZCFE",
+  "items": [
+    {
+      "componentClassName": "WindowLabel",
+      "id": "uii_5ADSH0KPHBB8QTWA1S648RR581",
+      "kind": "templateLabel",
+      "name": "Schedule",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
+        },
+        {
+          "key": "scheduleType",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_787C2RE8TDR45Z47ER9FNGNTBH"
+          }
+        }
+      ],
+      "template": "{id} ({scheduleType})"
+    },
+    {
+      "componentClassName": "EndsInValue",
+      "id": "uii_6KZFSH9K4HA5AVCCBY1TAAW903",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_1SGTZ9B0RDMXXPWHJ8K4W032AA"
+      }
+    },
+    {
+      "componentClassName": "ClosesInValue",
+      "id": "uii_3XX913TG27AVVRRKSESXYY19CE",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_00D0N014B0BQ0XD43PAXV22PHQ"
+      }
+    }
+  ],
+  "name": "Schedule",
+  "targetDomainType": "Schedule",
+  "targetDomainTypeId": "dt_00D0MR9AAXN3Q2ZQHZ1QPHTRFX"
+}

@@ -3,19 +3,19 @@
   "packageId": "micro-liveops-serial-code",
   "types": {
     "SerialCodeCampaign": {
-      "id": "dt_01M0C5VXZY2ZJKK4DERTCAZHXD",
+      "id": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-serial-code",
-      "canonicalTypeId": "dt_01M0C5VXZY2ZJKK4DERTCAZHXD",
+      "canonicalTypeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
       "properties": {
-        "enableCampaignCode": "prop_01M0C5VXZYGKT11KXY634Y6J5N",
-        "id": "prop_reserved_id"
+        "enableCampaignCode": "prop_00D031EZFZM4YG8CZFHGS7HMHD",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     }
   },
   "masterDataResources": {
-    "serialKey.CampaignModel": "a87d46cf-c8fd-58d7-8a96-8cb2419a3f32",
-    "serialKey.Namespace": "6350256a-7b90-5a4d-a046-ffb4d6501764"
+    "serialKey.CampaignModel": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",
+    "serialKey.Namespace": "mdr_33A0JPMYWGB96T0HQZPKB505V4"
   },
   "transforms": {
     "RevertSerialCodeUse": [

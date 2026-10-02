@@ -8,7 +8,7 @@
       "ja": "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。"
     },
     "domainTypes": {
-      "dt_01M3Q7JPT6SA9TBTQSQKE31SRQ": {
+      "dt_00D0XSWNPHPAJEJYNYDWVGREE5": {
         "description": {
           "en": "The ID-and-password transfer code a player has registered.",
           "ja": "プレイヤーが登録した、IDとパスワードによる引き継ぎコードです。"
@@ -18,7 +18,7 @@
           "ja": "引き継ぎコード"
         }
       },
-      "dt_1TFFFPGNS5HWPPCGNYV2BEVNMJ": {
+      "dt_0EKVVXM5E9CF5NK45FPRJVPXD4": {
         "description": {
           "en": "Configures the OIDC connection and authentication settings used for account transfer.",
           "ja": "アカウント引き継ぎに使用するOIDC接続情報と認証設定を登録します。"

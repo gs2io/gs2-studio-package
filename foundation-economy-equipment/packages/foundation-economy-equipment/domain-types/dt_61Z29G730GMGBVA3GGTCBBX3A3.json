@@ -1,0 +1,101 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the equipment item.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "装備を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_0K0GFBH6B7DRCKC1VP8N5BXAGP",
+        "localizedDisplay": {
+          "en": {
+            "description": "Category this equipment belongs to.",
+            "label": "Equipment category"
+          },
+          "ja": {
+            "description": "この装備が属するカテゴリです。",
+            "label": "装備カテゴリ"
+          }
+        },
+        "name": "category",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_5XY098JXVWPEN0Q0F7QY165JJA"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_494Q17EMVWXF1PQJW4HZ1K09SD",
+        "localizedDisplay": {
+          "en": {
+            "description": "Value used to order equipment in lists.",
+            "label": "Sort order"
+          },
+          "ja": {
+            "description": "装備一覧で使用する並び順の値です。",
+            "label": "表示順"
+          }
+        },
+        "name": "sortValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_699T9K7XAW73CF6ECCEGBK006H",
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier of the equipment instance owned by the player.",
+            "label": "Equipment instance ID"
+          },
+          "ja": {
+            "description": "プレイヤーが所持する装備個体の識別子です。",
+            "label": "装備個体ID"
+          }
+        },
+        "name": "propertyId",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+  "kind": "local",
+  "name": "Equipment",
+  "singleEntry": false
+}

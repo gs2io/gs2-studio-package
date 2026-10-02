@@ -1,0 +1,32 @@
+{
+  "id": "uic_7EE45CY7JWAE1RS1SNG3203GNZ",
+  "items": [
+    {
+      "componentClassName": "CountLabel",
+      "id": "uii_4CNXDKJSQ2A75TDQV59RK0JGGS",
+      "kind": "templateLabel",
+      "name": "FreeDeposit",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0KZCKABE9VVHET0Z8R3QD2M"
+          }
+        }
+      ],
+      "template": "Deposit {count} free coins"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "DepositButton",
+      "delegatedActionKey": "resource:foundation-economy-currency-demo:masterData:mdr_0WQYMCRMNHA27R3GC0HP8TDAM1::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_19EGYBKPA1BDJVCNAK5FN5BQT4",
+      "kind": "buttonAction",
+      "name": "FreeDeposit"
+    }
+  ],
+  "name": "FreeDeposit",
+  "targetDomainType": "FreeDeposit",
+  "targetDomainTypeId": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2"
+}

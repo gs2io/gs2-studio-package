@@ -1,0 +1,34 @@
+{
+  "id": "uic_2VV7EPTHHAA34R6F4PM55KET69",
+  "items": [
+    {
+      "componentClassName": "ExpiresInValue",
+      "id": "uii_3A1JK1MQZRAW9TWQBX5NKXEFK5",
+      "kind": "value",
+      "name": "Trigger",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_7GBQSK2XRE2JNP4FBPTB9K8BDK"
+      }
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ExtendButton",
+      "delegatedActionKey": "resource:foundation-economy-schedule-demo:masterData:mdr_43ANN972MFBQHAXGP4CHFKDN2K::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_2EQAMNN34ZAEF9D72YMDC8YJJ4",
+      "kind": "buttonAction",
+      "name": "Trigger"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ClearButton",
+      "delegatedActionKey": "resource:foundation-economy-schedule-demo:masterData:mdr_0EW19XBQ94A2PB07R85WZ9TE2H::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_4YVDW9FMKEA5W8AJA0MSMK3QBF",
+      "kind": "buttonAction",
+      "name": "Trigger"
+    }
+  ],
+  "name": "Trigger",
+  "targetDomainType": "Trigger",
+  "targetDomainTypeId": "dt_00D0MR9AAXNWQC1NCBP63HNVM4"
+}

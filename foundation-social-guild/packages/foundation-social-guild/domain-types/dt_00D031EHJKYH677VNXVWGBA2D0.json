@@ -1,0 +1,58 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the guild role.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ギルド権限を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "GS2 policy document for acting as the guild; deny everything explicitly rather than leaving it empty",
+        "id": "prop_00D031EHJKR6BBM9VDKF7BEEG6",
+        "localizedDisplay": {
+          "en": {
+            "description": "GS2 policy document describing what a member with this role may do while acting as the guild (Assume). For a role that may do nothing, do not leave it empty: write a policy that denies everything, with one statement whose Effect is Deny and whose Actions and Resources are *. Some GS2 versions treat an empty policy as allowing everything.",
+            "label": "Permission policy"
+          },
+          "ja": {
+            "description": "このロールのメンバーがギルドとして振る舞うとき（Assume）に許可する操作を記述した GS2 ポリシーです。何も許可しないロールは、空にせず、Effect を Deny、Actions と Resources を * にした文で、すべてを拒否するポリシーを明示してください。空のポリシーは、GS2 の版によっては全許可として扱われます。",
+            "label": "権限ポリシー"
+          }
+        },
+        "name": "policyDocument",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D031EHJKYH677VNXVWGBA2D0",
+  "kind": "local",
+  "name": "GuildRole",
+  "singleEntry": false
+}

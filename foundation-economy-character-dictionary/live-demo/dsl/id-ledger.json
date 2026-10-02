@@ -1,33 +1,33 @@
 {
   "schemaVersion": 1,
   "retired": {
-    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0": "4aa78e66-92f3-548f-954b-5d92c466c1e9",
-    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0": "eb8a3f55-48d0-5182-acce-e60cffd98363",
-    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[0]#0": "0c7be9f9-71fd-5772-b063-71d573763e63",
-    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[1]#0": "0cfc3c6b-8256-5f8a-970f-706866a81e74",
-    "row:dt_HAZCRJ576BHDWFVB28NQW77Y01.characterexperience": "row_01M2M8WDV04QFWGCKY73VKW2TY",
-    "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.archer": "row_01M2M8WDV0K8EJ37SYKR0DZDS2",
-    "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.healer": "row_01M2M8WDV00PZ23PG931C5HQNZ",
-    "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.knight": "row_01M2M8WDV02NGNVYAZDDRBV16X",
-    "row:dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5.mage": "row_01M2M8WDV02TPCSFY7PJVAQHSP",
-    "row:dt_ZR7PA0W682HX7ZFXGBE4BRF37K.charactercollection": "row_01M2M8WDV0H54GN9W1SB4BGTA1",
-    "type:Character": "dt_01M2M8WDV0M1NN3AYHYAHFNAWK",
-    "type:CharacterCollection": "dt_01M2M8WDV0F55Q58Q0NNCB9NX2",
-    "type:CharacterExperience": "dt_01M2M8WDV0928KH4E55R7CQM0D",
-    "type:CharacterRecruit": "dt_01M2Q9FEF57E7NB4TFVDZ3VC74",
-    "ui:Character:Character:definition": "55242a3f-ca3f-503a-b6c8-a33fb4dc18a0",
-    "ui:Character:Character:item:MarkButton": "64a37c55-36b1-5b89-af42-daf9fe47ae20",
-    "ui:Character:Character:item:RecruitButton": "6b9ed8e9-84b3-5dd7-ba00-4e4a1f3646b7"
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0": "mdr_2AMY76D4QKAJ7SAJTXJB26DGF9",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0": "mdr_7BH8ZNAJ6GA61ASKQ61KZXK0V3",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[0]#0": "mdr_0CFFMZJWFXAXSB0RVHTNSQCFK3",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[1]#0": "mdr_0CZGY6Q0JPBY59E3VGD1KAG7KM",
+    "row:dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0.characterexperience": "row_01M2M8WDV04QFWGCKY73VKW2TY",
+    "row:dt_64PCJ4KXWQBQ45VF7D5MTQ017H.archer": "row_01M2M8WDV0K8EJ37SYKR0DZDS2",
+    "row:dt_64PCJ4KXWQBQ45VF7D5MTQ017H.healer": "row_01M2M8WDV00PZ23PG931C5HQNZ",
+    "row:dt_64PCJ4KXWQBQ45VF7D5MTQ017H.knight": "row_01M2M8WDV02NGNVYAZDDRBV16X",
+    "row:dt_64PCJ4KXWQBQ45VF7D5MTQ017H.mage": "row_01M2M8WDV02TPCSFY7PJVAQHSP",
+    "row:dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW.charactercollection": "row_01M2M8WDV0H54GN9W1SB4BGTA1",
+    "type:Character": "dt_00D0N273ER50DD8TQMFJMBXAQ4",
+    "type:CharacterCollection": "dt_00D0N273ER3S9DSA5R5DB2TDF8",
+    "type:CharacterExperience": "dt_00D0N273ER28J4W93H9E1V5X03",
+    "type:CharacterRecruit": "dt_00D0NTBVKS9VHXAS6KYVFRYV1S",
+    "ui:Character:Character:definition": "uic_2N4GN3ZJHZA0XBDJ537YTDR650",
+    "ui:Character:Character:item:MarkButton": "uii_34MDY5ADNHBE4TYGPTZ7Z4FBH0",
+    "ui:Character:Character:item:RecruitButton": "uii_3BKVCEK15KBQBVM02E98FKCHNQ"
   },
   "random": {
-    "type:Character": "dt_01M37M3G5DZ5DEQ2RJCGE7FAAG"
+    "type:Character": "dt_00D0SX0W1BFSBBNRP4K43HVTJM"
   },
   "deterministicOverrides": {
-    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0": "b4a90983-cdd1-4c22-899d-5940e978a43d",
-    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0": "8a84566b-9fb4-4908-9638-ca366eb208c3",
-    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[0]#0": "54ae441f-61c1-4129-9200-17dd443d91c2",
-    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[1]#0": "54c22496-58b2-4381-9a45-eeb674077ae6",
-    "ui:Character:Character:definition": "469623b6-c047-44f6-9f6c-36e9c81dea9a",
-    "ui:Character:Character:item:RecruitButton": "76547ed6-37ba-428f-bcdd-6ff813b5f954"
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0": "mdr_5MN44R7KEH9GH8K7AS83MQH91X",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0": "mdr_4AGHB6Q7XM9449CE6A6SQB4263",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[0]#0": "mdr_2MNS21YRE184MS400QVN23V4E2",
+    "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[1]#0": "mdr_2MR8J9CP5J8E0SMHFEPST0EYQ6",
+    "ui:Character:Character:definition": "uic_26JRHVDG278KV9YV1PX741VTMT",
+    "ui:Character:Character:item:RecruitButton": "uii_3PAHZDCDXT8A7VSQBFZ09VBYAM"
   }
 }

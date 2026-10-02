@@ -1,0 +1,37 @@
+{
+  "id": "uic_4SZASABN4HBG083GAPTDP5D53B",
+  "items": [
+    {
+      "componentClassName": "ReleasedActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_00D0321TWK6CDMBJRD83E6G2K2"
+        }
+      },
+      "id": "uii_6KNSRM8V3XBDF99Z0VK8QPSJQ6",
+      "kind": "activeToggle",
+      "name": "SkillNode"
+    },
+    {
+      "componentClassName": "UnreleasedActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0321TWK6CDMBJRD83E6G2K2"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_5ZQ4DY67XZBBM8DWVR1RT82668",
+      "kind": "activeToggle",
+      "name": "SkillNode"
+    }
+  ],
+  "name": "SkillNode",
+  "targetDomainType": "SkillNode",
+  "targetDomainTypeId": "dt_00D0REX8TAF27YR23HD6W1WJAY"
+}

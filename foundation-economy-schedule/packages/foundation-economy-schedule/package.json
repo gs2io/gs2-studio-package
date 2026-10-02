@@ -8,7 +8,7 @@
       "ja": "期間限定イベントなど、他の機能が使う日程とトリガーを共通基盤として提供します。"
     },
     "domainTypes": {
-      "dt_55N8HND2SNZV1ZMCJS4NA2BTFD": {
+      "dt_19DA4DB8PDFYRFX34P95AGJYKV": {
         "description": {
           "en": "Defines start and end times and recurrence rules for events or features.",
           "ja": "イベントや機能を有効にする開始・終了日時と繰り返し条件を設定します。"
@@ -18,7 +18,7 @@
           "ja": "スケジュール"
         }
       },
-      "dt_Y9Y1H4ZR4MS74D3YME76CEGJST": {
+      "dt_7JFGC97Y1569S38ZN3HSK3M4PE": {
         "description": {
           "en": "Tracks each player's trigger state, trigger time, and expiration.",
           "ja": "プレイヤーごとのトリガー発火状態と有効期限を管理します。"

@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0TT9XC972WK8F5RYPDYZSY1",
+  "kind": "overlay",
+  "name": "QuestCollection",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-quest",
+    "directSourceTypeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
+    "sourcePackageId": "micro-economy-quest",
+    "sourceTypeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
+  }
+}

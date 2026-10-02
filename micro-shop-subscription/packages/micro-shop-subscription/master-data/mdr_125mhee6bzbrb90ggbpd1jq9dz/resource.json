@@ -1,0 +1,130 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "appleAppStore.subscriptionGroupIdentifier",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+            "typeName": "StoreSubscription"
+          },
+          "propertyId": "prop_00D033GGSV9BP263BX1BS3S5V5"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "googlePlay.productId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+            "typeName": "StoreSubscription"
+          },
+          "propertyId": "prop_00D033GGSVBJV6PEPCZPBM8TXN"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+            "typeName": "StoreSubscription"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "reallocateSpanDays",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+            "typeName": "StoreSubscription"
+          },
+          "propertyId": "prop_00D033GGSV8TB8N1514TR504V6"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "rollupHour",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+            "typeName": "StoreSubscription"
+          },
+          "propertyId": "prop_00D033GGSVBD5YJ273A72E5PQ1"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "triggerExtendMode",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+            "typeName": "StoreSubscription"
+          },
+          "propertyId": "prop_00D033GGSVFR969HA1TD6S77GD"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "triggerName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+            "typeName": "StoreSubscription"
+          },
+          "propertyId": "prop_00D033GGSV8NSDWPFJV4KGVFKB"
+        }
+      }
+    ]
+  },
+  "id": "mdr_125MHEE6BZBRB90GGBPD1JQ9DZ",
+  "location": {
+    "modelName": "StoreSubscriptionContentModel",
+    "service": "money2"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+    "typeName": "StoreSubscription"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_1EWQQMHD9XBEFTRKZV5TGG814D"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          }
+        ],
+        "mountedResourceId": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX",
+        "parameterName": "scheduleNamespaceId"
+      }
+    ]
+  }
+}

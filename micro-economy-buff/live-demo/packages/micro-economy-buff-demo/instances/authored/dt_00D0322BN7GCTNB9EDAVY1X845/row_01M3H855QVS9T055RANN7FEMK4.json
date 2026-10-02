@@ -1,0 +1,16 @@
+{
+  "id": "double-idle",
+  "rowKey": "row_01M3H855QVS9T055RANN7FEMK4",
+  "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+  "values": {
+    "prop_00D0322BN7G543V28MFV62QC0X": "mul",
+    "prop_00D0322BN7WAGFGTFPNZT8GHVP": 0,
+    "prop_00D0322BN7XACWKGN03JMSRA8H": 2,
+    "prop_00D0322BN7Y0A6WHYB9YCFZQQ4": "happy-hour",
+    "prop_00D0322BN7Z2CA8G16H48JGTJ5": "acquireActions",
+    "prop_00D0W9XTYQ1A7B8FZE88WBY1R0": "model",
+    "prop_00D0W9XTYQ1EVCPWBQX16G20VV": "Gs2Idle:CategoryModel",
+    "prop_00D0W9XTYQ1GVDAJ4E8ZM4TA8A": "Gs2Idle:CategoryModel",
+    "prop_00D0W9XTYQ31RW0YT593HMCK8H": "grn:gs2:{region}:{ownerId}:idle:Idle:model:Idle"
+  }
+}

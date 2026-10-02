@@ -1,0 +1,56 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "defaultExperience",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "defaultRankCap",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
+            "typeName": "CharacterExperience"
+          },
+          "propertyId": "prop_2RQX4HDJCJDYTZYM4B9J09JZ9Z"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maxRankCap",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
+            "typeName": "CharacterExperience"
+          },
+          "propertyId": "prop_224DYPA75PEZKHXJMGJZP3G393"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Experience"
+      }
+    ]
+  },
+  "id": "mdr_4D3TBCYQKS94GAV9WSFVNJEXQY",
+  "location": {
+    "modelName": "ExperienceModel",
+    "service": "experience"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
+    "typeName": "CharacterExperience"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_12FS7YFDS18QSA0SDVHKX1C20K"
+  }
+}

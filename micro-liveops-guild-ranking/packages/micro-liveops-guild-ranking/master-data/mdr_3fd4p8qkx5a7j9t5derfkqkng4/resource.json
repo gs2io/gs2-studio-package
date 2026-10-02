@@ -1,0 +1,40 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "thresholdRank",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+            "typeName": "GuildRankingReward"
+          },
+          "propertyId": "prop_00D033H0GPTR5V04T6YPBYCG0Q"
+        }
+      }
+    ]
+  },
+  "id": "mdr_3FD4P8QKX5A7J9T5DERFKQKNG4",
+  "location": {
+    "modelName": "RankingReward",
+    "service": "ranking2"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+    "typeName": "GuildRankingReward"
+  },
+  "parent": {
+    "arrayProperty": "rankingRewards",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ"
+  }
+}

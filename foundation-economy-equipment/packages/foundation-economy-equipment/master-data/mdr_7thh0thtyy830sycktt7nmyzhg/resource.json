@@ -1,0 +1,56 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "initialCapacity",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
+            "typeName": "EquipmentCollection"
+          },
+          "propertyId": "prop_071QWPTV93WY3RCTPXN9CBG00F"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maxCapacity",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
+            "typeName": "EquipmentCollection"
+          },
+          "propertyId": "prop_4J8TTATGZND7RB0CSEKFY3AG9Z"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Equipment"
+      },
+      {
+        "kind": "static",
+        "parameterName": "protectReferencedItem",
+        "value": true
+      }
+    ]
+  },
+  "id": "mdr_7THH0THTYY830SYCKTT7NMYZHG",
+  "location": {
+    "modelName": "InventoryModel",
+    "service": "inventory"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
+    "typeName": "EquipmentCollection"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_0HAS2H6Z4F9ZXA940FE5S3KSCS"
+  }
+}

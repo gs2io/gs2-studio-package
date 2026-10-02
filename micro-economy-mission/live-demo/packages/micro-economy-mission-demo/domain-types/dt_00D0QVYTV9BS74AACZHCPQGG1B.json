@@ -1,0 +1,38 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Advance",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_21DB51BXCRBDQBFYF1JB1TQQ8M",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-mission-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0QVYTV9BS74AACZHCPQGG1B",
+  "kind": "overlay",
+  "name": "MissionCounter",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-mission",
+    "directSourceTypeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
+    "sourcePackageId": "micro-economy-mission",
+    "sourceTypeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB"
+  }
+}

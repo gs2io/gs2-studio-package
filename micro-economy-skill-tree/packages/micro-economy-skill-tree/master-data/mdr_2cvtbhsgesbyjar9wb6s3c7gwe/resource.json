@@ -1,0 +1,39 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "action",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+              "typeName": "SkillNode"
+            },
+            "propertyId": "prop_00D05R0KFCTFK6442MMAKE56Y9"
+          },
+          "kind": "parent",
+          "parentResourceId": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD"
+        }
+      }
+    ]
+  },
+  "id": "mdr_2CVTBHSGESBYJAR9WB6S3C7GWE",
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+    "typeName": "SkillNode"
+  },
+  "parent": {
+    "arrayProperty": "releaseConsumeActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD"
+  }
+}

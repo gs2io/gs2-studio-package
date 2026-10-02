@@ -1,0 +1,54 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "count"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "inventoryName"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "itemName"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "itemSetId"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+            "typeName": "Equipment"
+          },
+          "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "sortValue"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+      "typeName": "Equipment"
+    }
+  },
+  "id": "udr_6RWZH5HSNCACRV1YWW9AG4J6A4",
+  "location": {
+    "modelName": "ItemSet",
+    "service": "inventory"
+  }
+}

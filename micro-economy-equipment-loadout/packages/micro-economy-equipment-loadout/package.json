@@ -11,7 +11,7 @@
       "ja": "キャラクターごとの装備スロットを扱います。スロットごとに装着できる装備を制限できます。"
     },
     "domainTypes": {
-      "dt_01M0CDYNB5V74MMX3SWDK4ZRCH": {
+      "dt_00D033FNASESS5578YF3CS7Y34": {
         "description": {
           "en": "Manages each character's equipment slot layout and current loadout.",
           "ja": "キャラクターごとの装備スロット構成と装着状態を管理します。"
@@ -21,7 +21,7 @@
           "ja": "キャラクター"
         }
       },
-      "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ": {
+      "dt_00D033FNASFGZWK2X333SXXRXM": {
         "description": {
           "en": "Defines a character equipment slot and the equipment categories it accepts.",
           "ja": "キャラクターの装備部位と装着できる装備カテゴリを設定します。"
@@ -31,7 +31,7 @@
           "ja": "装備スロット"
         }
       },
-      "dt_01M0CDYNB5ZBC95MZSW2NTSPXM": {
+      "dt_00D033FNASFTV29D7YF0NEPDQD": {
         "description": {
           "en": "Tracks the equipment currently assigned to each loadout slot.",
           "ja": "各装備スロットに現在装着されている装備を管理します。"

@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "retired": {
-    "property:CharacterEnhance.acquireExperienceSuffix": "prop_01M0C7T1166P354AK6Q48J86RN"
+    "property:CharacterEnhance.acquireExperienceSuffix": "prop_00D031YG89HNGS92MSNS24J1P5"
   },
   "random": {
-    "property:CharacterEnhanceBonus.enhance": "prop_01M0C7T116EE8PEHMGMD3AWB3N",
-    "property:CharacterEnhanceBonus.rate": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
-    "property:CharacterEnhanceBonus.weight": "prop_01M0C7T11668CNMKJ4725QV6M0",
-    "property:CharacterEnhanceMaterial.count": "prop_01M39BQK13M2QDCA75568952FF",
-    "property:CharacterEnhanceMaterial.metadata": "prop_01M39BQK13YNDJTRM83252F25Q",
+    "property:CharacterEnhanceBonus.enhance": "prop_00D031YG89KKJ5KMD4538TQ2RX",
+    "property:CharacterEnhanceBonus.rate": "prop_00D031YG89J65RAXGD0XK0JGDC",
+    "property:CharacterEnhanceBonus.weight": "prop_00D031YG89HJ35D4WH1RHDYSN0",
+    "property:CharacterEnhanceMaterial.count": "prop_00D0TAXWR8X0NVB2HS99J298KV",
+    "property:CharacterEnhanceMaterial.metadata": "prop_00D0TAXWR8ZNBCPP520RH8KRHD",
     "transform:AcquireCharacterEnhanceMaterial:output:direct:Gs2Inventory:AcquireSimpleItemsByUserId#0": "out_01M39BQK14QTSJD3QMADQN3Z3B",
     "transform:AcquireCharacterEnhanceMaterial:parameter:count": "param_01M39BQK140QVJZMC9N07PN3VN",
     "transform:AcquireCharacterEnhanceMaterial:parameter:material": "param_01M39BQK14QM78XBKXKPMVF6AG",
@@ -17,9 +17,11 @@
     "transform:EnhanceCharacter:parameter:enhance": "param_01M39BQK14G1G4DVYFP94HWVVS",
     "transform:EnhanceCharacter:parameter:materialItemSetId": "param_01M39BQK14ZMK698839JZT83Y2",
     "transform:EnhanceCharacter:parameter:targetItemSetId": "param_01M39BQK14WQWBYGJH66CW6T3Z",
-    "type:CharacterEnhance": "dt_01M0C7T116VP42973VYFS2PRV0",
-    "type:CharacterEnhanceBonus": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
-    "type:CharacterEnhanceMaterial": "dt_01M39BQK138YNXWMJAA98ZPA8R"
+    "type:CharacterEnhance": "dt_00D031YG89PXH0J9RYZKY8NP6R",
+    "type:CharacterEnhanceBonus": "dt_00D031YG89PEGW8QTF8JNDY638",
+    "type:CharacterEnhanceMaterial": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "user/inventory:SimpleItem:unmounted:#0": "udr_363K170NVHBVJASSCHEFC31QD9"
+  }
 }

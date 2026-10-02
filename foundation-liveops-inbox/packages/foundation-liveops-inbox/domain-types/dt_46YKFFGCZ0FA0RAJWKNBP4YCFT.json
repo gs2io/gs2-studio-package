@@ -1,0 +1,134 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the message.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "メッセージを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_7WYH08M0F6N02WHFBRJ4TXX5VD",
+        "localizedDisplay": {
+          "en": {
+            "description": "Content of the message delivered to the player's inbox.",
+            "label": "Message payload"
+          },
+          "ja": {
+            "description": "プレイヤーの受信箱へ届いたメッセージの内容です。",
+            "label": "メッセージ内容"
+          }
+        },
+        "name": "payload",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_3JX5PM4TDM36YWSQFMA0CXKKBW",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has opened this message.",
+            "label": "Read"
+          },
+          "ja": {
+            "description": "プレイヤーがこのメッセージを開いたかを示します。",
+            "label": "既読"
+          }
+        },
+        "name": "isRead",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_0AV2AGGK2HFK600HXSCDGP0CNC",
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the message was received.",
+            "label": "Received at"
+          },
+          "ja": {
+            "description": "メッセージを受信した日時です。",
+            "label": "受信日時"
+          }
+        },
+        "name": "receivedAt",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_73SJBQ4ZAG2RW17EQSCW1V2TSG",
+        "localizedDisplay": {
+          "en": {
+            "description": "Time until which the message remains available.",
+            "label": "Expiration time"
+          },
+          "ja": {
+            "description": "メッセージを保持する期限です。",
+            "label": "有効期限"
+          }
+        },
+        "name": "expiresAt",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Read",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2Inbox:Message.ReadMessage",
+      "targetResource": {
+        "resourceId": "udr_5B2DBE3P7M977TXCSEYBR6973N",
+        "resourceKind": "userData",
+        "sourcePackageId": "foundation-liveops-inbox"
+      }
+    }
+  ],
+  "id": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
+  "kind": "local",
+  "name": "Message",
+  "singleEntry": false
+}

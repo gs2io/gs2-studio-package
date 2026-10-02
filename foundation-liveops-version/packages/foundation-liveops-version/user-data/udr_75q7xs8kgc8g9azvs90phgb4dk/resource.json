@@ -1,0 +1,84 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "existence",
+        "parameterName": "$existence",
+        "propertyId": "prop_476CQNTX4ZK67EJZTF4JRWNVG1"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "status",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+              "typeName": "AgreementVersion"
+            },
+            "propertyId": "prop_2Q40AJMB9QV5RFRKE25RKH3S3E"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "version.major",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_00D05Q8M1NSNSYDW517S8FBNB3"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "version.micro",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_00D05Q8M1NWSDJEXKMV352NRG6"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "version.minor",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+            "typeName": "AgreementVersion"
+          },
+          "propertyId": "prop_00D05Q8M1NWQBSABFCZBY6BMP6"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "versionName"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_319778V7S98XR8N360KTTD5ZS2",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+      "typeName": "AgreementVersion"
+    }
+  },
+  "id": "udr_75Q7XS8KGC8G9AZVS90PHGB4DK",
+  "location": {
+    "modelName": "AcceptVersion",
+    "service": "version"
+  }
+}

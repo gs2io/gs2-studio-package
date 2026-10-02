@@ -1,0 +1,63 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "contentName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+            "typeName": "StoreSubscription"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "expiresAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+              "typeName": "StoreSubscription"
+            },
+            "propertyId": "prop_00D033GGSV8N0RCPVPPVQ5F484"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "status",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+              "typeName": "StoreSubscription"
+            },
+            "propertyId": "prop_00D033GGSVBDYMEZGHGPV44S50"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+      "typeName": "StoreSubscription"
+    }
+  },
+  "id": "udr_4NXPTMBAEMAJAA663MW7WBS4BW",
+  "location": {
+    "modelName": "SubscriptionStatus",
+    "service": "money2"
+  }
+}

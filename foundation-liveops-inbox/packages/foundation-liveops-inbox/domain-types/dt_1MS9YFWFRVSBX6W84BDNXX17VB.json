@@ -1,0 +1,101 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the global message.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "全体メッセージを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_19YMYXB5NJHVCEEQY795WH711C",
+        "localizedDisplay": {
+          "en": {
+            "description": "Content delivered to all players.",
+            "label": "Message payload"
+          },
+          "ja": {
+            "description": "全プレイヤーへ配信するメッセージの内容です。",
+            "label": "メッセージ内容"
+          }
+        },
+        "name": "payload",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_4DM29ET2A2JAHWK6D0MVPT25PW",
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the message becomes available.",
+            "label": "Delivery start"
+          },
+          "ja": {
+            "description": "メッセージの受け取りを開始する日時です。",
+            "label": "配信開始日時"
+          }
+        },
+        "name": "begin",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_28HE0VGFDJZC3C2B949D7TZD2W",
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the message stops being available.",
+            "label": "Delivery end"
+          },
+          "ja": {
+            "description": "メッセージの受け取りを終了する日時です。",
+            "label": "配信終了日時"
+          }
+        },
+        "name": "end",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
+  "kind": "local",
+  "name": "GlobalMessage",
+  "singleEntry": false
+}

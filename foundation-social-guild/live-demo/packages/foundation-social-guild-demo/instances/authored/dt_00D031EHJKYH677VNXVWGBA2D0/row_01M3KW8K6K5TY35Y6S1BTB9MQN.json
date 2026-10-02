@@ -1,0 +1,8 @@
+{
+  "id": "member",
+  "rowKey": "row_01M3KW8K6K5TY35Y6S1BTB9MQN",
+  "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
+  "values": {
+    "prop_00D031EHJKR6BBM9VDKF7BEEG6": "{\"Version\":\"2016-04-01\",\"Statements\":[{\"Effect\":\"Deny\",\"Actions\":[\"*\"],\"Resources\":[\"*\"]}]}"
+  }
+}

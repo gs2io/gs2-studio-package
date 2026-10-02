@@ -1,0 +1,39 @@
+{
+  "id": "uic_2DRM6XHK8BAYAAMAF9HX3ZAP4T",
+  "items": [
+    {
+      "componentClassName": "StockLabel",
+      "id": "uii_4Y2XYZNVX4AX3TREQ7EYT0GDAG",
+      "kind": "templateLabel",
+      "name": "CharacterEnhanceMaterial",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
+        },
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0TAXWR8X0NVB2HS99J298KV"
+          }
+        }
+      ],
+      "template": "{id} x{count}"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "GetButton",
+      "delegatedActionKey": "resource:micro-economy-character-enhance-demo:masterData:mdr_5MBDT874NCB50AGHC6NS8XH9NP::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_0EVAZ6XV15A1RBJ7BN5TP9WK87",
+      "kind": "buttonAction",
+      "name": "CharacterEnhanceMaterial"
+    }
+  ],
+  "name": "CharacterEnhanceMaterial",
+  "targetDomainType": "CharacterEnhanceMaterial",
+  "targetDomainTypeId": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR"
+}

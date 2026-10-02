@@ -1,0 +1,39 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "action",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
+              "typeName": "Quest"
+            },
+            "propertyId": "prop_6KRKPN3YWC7M677JZT7MQZFW16"
+          },
+          "kind": "parent",
+          "parentResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
+        }
+      }
+    ]
+  },
+  "id": "mdr_2N7EFZKQCZ95N8859GX0EG32TM",
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
+    "typeName": "Quest"
+  },
+  "parent": {
+    "arrayProperty": "consumeActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
+  }
+}

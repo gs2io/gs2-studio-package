@@ -3,45 +3,45 @@
   "packageId": "micro-economy-character-enhance",
   "types": {
     "CharacterEnhance": {
-      "id": "dt_01M0C7T116VP42973VYFS2PRV0",
+      "id": "dt_00D031YG89PXH0J9RYZKY8NP6R",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-character-enhance",
-      "canonicalTypeId": "dt_01M0C7T116VP42973VYFS2PRV0",
+      "canonicalTypeId": "dt_00D031YG89PXH0J9RYZKY8NP6R",
       "properties": {
-        "id": "prop_reserved_id"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     },
     "CharacterEnhanceBonus": {
-      "id": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+      "id": "dt_00D031YG89PEGW8QTF8JNDY638",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-character-enhance",
-      "canonicalTypeId": "dt_01M0C7T116ST3H2Z9X2ANQRRD2",
+      "canonicalTypeId": "dt_00D031YG89PEGW8QTF8JNDY638",
       "properties": {
-        "enhance": "prop_01M0C7T116EE8PEHMGMD3AWB3N",
-        "id": "prop_reserved_id",
-        "rate": "prop_01M0C7T1168RQ1BP1M3PC2A1NJ",
-        "weight": "prop_01M0C7T11668CNMKJ4725QV6M0"
+        "enhance": "prop_00D031YG89KKJ5KMD4538TQ2RX",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "rate": "prop_00D031YG89J65RAXGD0XK0JGDC",
+        "weight": "prop_00D031YG89HJ35D4WH1RHDYSN0"
       }
     },
     "CharacterEnhanceMaterial": {
-      "id": "dt_01M39BQK138YNXWMJAA98ZPA8R",
+      "id": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-character-enhance",
-      "canonicalTypeId": "dt_01M39BQK138YNXWMJAA98ZPA8R",
+      "canonicalTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
       "properties": {
-        "count": "prop_01M39BQK13M2QDCA75568952FF",
-        "id": "prop_reserved_id",
-        "metadata": "prop_01M39BQK13YNDJTRM83252F25Q"
+        "count": "prop_00D0TAXWR8X0NVB2HS99J298KV",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "metadata": "prop_00D0TAXWR8ZNBCPP520RH8KRHD"
       }
     }
   },
   "masterDataResources": {
-    "enhance.BonusRate": "bf692436-39c5-5a66-94a0-2bd70058df41",
-    "enhance.Namespace": "d1ee4673-0bbc-50e8-a408-1529bb46dbc7",
-    "enhance.RateModel": "67f01129-1964-5f51-812f-3f1380fcd228",
-    "inventory.Namespace": "1d1edfb4-119a-599c-ad5b-40cd86ad8209",
-    "inventory.SimpleInventoryModel": "f2c149c0-767f-54ac-bd60-fa4f80c99a34",
-    "inventory.SimpleItemModel": "5672918b-8690-504d-b2c6-1d5fd42440a7"
+    "enhance.BonusRate": "mdr_5ZD4J3CEE5B9K9981BTW05HQT1",
+    "enhance.Namespace": "mdr_6HXS3762XWA3MA820N56XMDPY7",
+    "enhance.RateModel": "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8",
+    "inventory.Namespace": "mdr_0X3VFV84CTB6EATPT0SP3AV0G9",
+    "inventory.SimpleInventoryModel": "mdr_7JR54W0XKZAJPBTR7T9Y0CK6HM",
+    "inventory.SimpleItemModel": "mdr_2PEA8RQ1MGA16V5HGXBZA28G57"
   },
   "transforms": {
     "AcquireCharacterEnhanceMaterial": [

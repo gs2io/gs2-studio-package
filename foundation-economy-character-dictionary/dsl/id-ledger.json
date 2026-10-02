@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "property:Character.acquired": "prop_TC9NBD65ZXWPT09PFSRX1REHPF",
-    "property:Character.acquiredAt": "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6",
+    "property:Character.acquired": "prop_6K2DAV9HFZF5PG2DKYE78E3MDK",
+    "property:Character.acquiredAt": "prop_2SMS2KDR27EFR2G4DEY7VYXJF1",
     "transform:MarkCharacterDictionary:output:direct:Gs2Dictionary:AddEntriesByUserId#0": "out_01KJSXGHQ3BS3ZQE4PN91NDXRN",
     "transform:MarkCharacterDictionary:parameter:character": "param_01KJSXGRRE22TW05FN18FWA8Q4",
-    "type:Character": "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV"
+    "type:Character": "dt_294B3NDY2CSVYZCGPT9QXRYRDP"
   },
   "deterministicOverrides": {
-    "master/dictionary:Namespace:unmounted:CharacterDictionary#0": "ab0e71bd-4fdf-43ce-9bd1-ddadad459872",
-    "master/dictionary:Namespace:unmounted:CharacterDictionary#0/dictionary:EntryModel:Character:#0": "a0dadc95-666a-48c1-89f9-86f35904b889",
-    "user/dictionary:Entry:unmounted:#0": "da765d24-5015-453e-b933-a2916e071498"
+    "master/dictionary:Namespace:unmounted:CharacterDictionary#0": "mdr_5B1SRVTKYZ8F79QMEXNPPMB63J",
+    "master/dictionary:Namespace:unmounted:CharacterDictionary#0/dictionary:EntryModel:Character:#0": "mdr_50VBE9ASKA930RKYC6YDCG9E49",
+    "user/dictionary:Entry:unmounted:#0": "udr_6TESEJ8M0N8MZBJCX2J5Q0E54R"
   }
 }

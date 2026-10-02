@@ -8,7 +8,7 @@
       "ja": "利用規約の同意バージョンと、アプリやアセットのようにクライアントが申告するバージョンを確認します。"
     },
     "domainTypes": {
-      "dt_01M3K283QDW0KQVBWZ5K14DY27": {
+      "dt_00D0WRJ0XVF04XYTZ7SCR93FGH": {
         "description": {
           "en": "Configures which user a player who passes the version check is signed in as. Without this row, the version namespace and its version models are not deployed.",
           "ja": "バージョン確認を通過したプレイヤーをどのユーザーとして扱うかを設定します。この行が無いと、バージョン管理の名前空間とバージョンモデルはデプロイされません。"
@@ -18,7 +18,7 @@
           "ja": "バージョン確認"
         }
       },
-      "dt_39GHCE719ZNVPNJCZ2M921Q32H": {
+      "dt_0TC4B3HRAFXEXNCK7RN28GDRRM": {
         "description": {
           "en": "Something the client reports its own version of, such as the app or its assets, and the versions at or below which that version warns or is refused.",
           "ja": "アプリやアセットのように、クライアントが自分のバージョンを申告して確認を受けるものです。警告と利用拒否になるバージョンを設定します。"
@@ -28,7 +28,7 @@
           "ja": "申告バージョン"
         }
       },
-      "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4": {
+      "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9": {
         "description": {
           "en": "Manages published versions of agreements such as terms of service and privacy policies.",
           "ja": "利用規約やプライバシーポリシーの公開バージョンを管理します。"

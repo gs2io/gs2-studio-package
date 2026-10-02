@@ -1,0 +1,38 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Deliver",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-liveops-inbox-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0SFSEJN1BET2KCMVWSZX3F8",
+  "kind": "overlay",
+  "name": "GlobalMessage",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-liveops-inbox",
+    "directSourceTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
+    "sourcePackageId": "foundation-liveops-inbox",
+    "sourceTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
+  }
+}

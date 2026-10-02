@@ -1,0 +1,58 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the equipment slot assignment.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "装着スロットを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Property id of the equipment worn here, empty when the slot is free",
+        "id": "prop_00D033FNAS8DNWPTTNV21SG9XF",
+        "localizedDisplay": {
+          "en": {
+            "description": "Equipment instance ID assigned to this slot; empty when the slot is free.",
+            "label": "Equipped item"
+          },
+          "ja": {
+            "description": "このスロットに装着されている装備個体IDです。空の場合は未装着です。",
+            "label": "装着中の装備"
+          }
+        },
+        "name": "equipment",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D033FNASFTV29D7YF0NEPDQD",
+  "kind": "local",
+  "name": "EquipmentSlotAssignment",
+  "singleEntry": false
+}

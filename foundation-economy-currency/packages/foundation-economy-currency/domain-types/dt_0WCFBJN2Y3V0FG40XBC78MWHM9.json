@@ -1,0 +1,107 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the wallet.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ウォレットを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_1MXFHCN7EY8JQ8GF8CAMDGTH78",
+        "localizedDisplay": {
+          "en": {
+            "description": "Current free-currency balance.",
+            "label": "Free balance",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "無償通貨の現在残高です。",
+            "label": "無償残高",
+            "unit": "通貨"
+          }
+        },
+        "name": "free",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_6R2VWF0VG1FFZD7G3F2NB0W132",
+        "localizedDisplay": {
+          "en": {
+            "description": "Current paid-currency balance.",
+            "label": "Paid balance",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "有償通貨の現在残高です。",
+            "label": "有償残高",
+            "unit": "通貨"
+          }
+        },
+        "name": "paid",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_3VQCQ7RXRT5DS14GV01R3MRB4J",
+        "localizedDisplay": {
+          "en": {
+            "description": "Current combined paid and free currency balance.",
+            "label": "Total balance",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "有償・無償通貨を合わせた現在残高です。",
+            "label": "合計残高",
+            "unit": "通貨"
+          }
+        },
+        "name": "total",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
+  "kind": "local",
+  "name": "Wallet",
+  "singleEntry": false
+}

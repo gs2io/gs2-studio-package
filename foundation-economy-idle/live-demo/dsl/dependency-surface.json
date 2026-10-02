@@ -3,19 +3,19 @@
   "packageId": "foundation-economy-idle-demo",
   "types": {
     "IdleReward": {
-      "id": "dt_01M3GBBQCAS6Q9M23ZR45EMPGY",
+      "id": "dt_00D0W2TXV2P9NTD0GZY11BN5M7",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-idle",
-      "canonicalTypeId": "dt_4201EMDQW9HN9AMKXT0WQHMKJY",
+      "canonicalTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
       "addedProperties": {
-        "coins": "prop_01M3GBBQCA52T922M9XCBSVBWX"
+        "coins": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7"
       }
     },
     "IdleStatus": {
-      "id": "dt_01M3GBBQCATXNFNDGYNA3BX5XA",
+      "id": "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA",
       "singleEntry": true,
       "canonicalPackageId": "foundation-economy-idle",
-      "canonicalTypeId": "dt_Z6SXCQEAXBV8T2DND6NY7ASEYY"
+      "canonicalTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
     }
   },
   "masterDataResources": {},

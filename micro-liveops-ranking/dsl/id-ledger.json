@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "property:Ranking.maximumValue": "prop_01M0C5QTC1ZEN57H87RTHW0QTH",
-    "property:Ranking.minimumValue": "prop_01M0C5QTC13XN1YQ5KKA3Z9PND",
-    "property:Ranking.orderDirection": "prop_01M0C5QTC1FCKEKTX4QTP0VB5X",
-    "property:Ranking.schedule": "prop_01M0C5QTC10P4EEMTAW0JRTV79",
-    "property:Ranking.score": "prop_01M0C5QTC1549A0YHZY5YSS2EZ",
-    "property:Ranking.sum": "prop_01M0C5QTC17VN2W6CEXEDHZCEW",
-    "property:RankingReward.acquireActions": "prop_01M0C5QTC1XDPQC02MC3PAHSFT",
-    "property:RankingReward.ranking": "prop_01M0C5QTC1PT2SC2DM4MFFH880",
-    "property:RankingReward.thresholdRank": "prop_01M0C5QTC1DSVX6VMXA31P7T1R",
+    "property:Ranking.maximumValue": "prop_00D031DYK0FVN99WA1Y6MF05YM",
+    "property:Ranking.minimumValue": "prop_00D031DYK08ZD8FNSCWTGZTDNB",
+    "property:Ranking.orderDirection": "prop_00D031DYK0BV4VMYQ95YNG6TSF",
+    "property:Ranking.schedule": "prop_00D031DYK085H3KN6JQ04P6PST",
+    "property:Ranking.score": "prop_00D031DYK0992AG7MFZHFPE8KQ",
+    "property:Ranking.sum": "prop_00D031DYK09YX8Q1K3QBKCFV3Q",
+    "property:RankingReward.acquireActions": "prop_00D031DYK0FBDNV00N30XJMEBY",
+    "property:RankingReward.ranking": "prop_00D031DYK0DPGPB0KD153VWA20",
+    "property:RankingReward.thresholdRank": "prop_00D031DYK0BEEZ9PX7AGRDHYGE",
     "transform:ReceiveRankingReward:output:direct:Gs2Ranking2:CreateGlobalRankingReceivedRewardByUserId#0": "out_01M0C5QTC15JHVCRXMYWHE2W8C",
     "transform:ReceiveRankingReward:parameter:ranking": "param_01M0C5QTC16ZPQ4V2FAZRQPQ0V",
     "transform:ReceiveRankingReward:parameter:season": "param_01M0C5QTC1ASM3KAQKX2Y0R4KA",
@@ -18,8 +18,10 @@
     "transform:VerifyRankingScoreReached:parameter:ranking": "param_01M0C5QTC1EM8RWNPAVJT2T9BV",
     "transform:VerifyRankingScoreReached:parameter:score": "param_01M0C5QTC1BS2R2J6CGS7M64AZ",
     "transform:VerifyRankingScoreReached:parameter:season": "param_01M0C5QTC1903Z6A3Y1KRK4F79",
-    "type:Ranking": "dt_01M0C5QTC1BDRSX4T1WSDJXDQV",
-    "type:RankingReward": "dt_01M0C5QTC12JW853EKK38QN42Z"
+    "type:Ranking": "dt_00D031DYK0AVE6F96GF6BCQBDY",
+    "type:RankingReward": "dt_00D031DYK08MQ218VMWRT5X90Q"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "user/ranking2:GlobalRankingScore:Ranking:#0": "udr_0QH9M765VTAMT9HARN0A6QATBT"
+  }
 }

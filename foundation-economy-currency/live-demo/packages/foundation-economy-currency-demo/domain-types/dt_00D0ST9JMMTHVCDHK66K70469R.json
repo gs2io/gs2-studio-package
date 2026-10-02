@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0ST9JMMTHVCDHK66K70469R",
+  "kind": "overlay",
+  "name": "StorePrice",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-shop-currency",
+    "directSourceTypeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
+    "sourcePackageId": "micro-shop-currency",
+    "sourceTypeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD"
+  }
+}

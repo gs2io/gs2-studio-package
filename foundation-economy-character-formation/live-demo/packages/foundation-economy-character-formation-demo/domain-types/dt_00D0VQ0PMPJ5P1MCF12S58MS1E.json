@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0VQ0PMPJ5P1MCF12S58MS1E",
+  "kind": "overlay",
+  "name": "CharacterFormationSlot",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-character-formation",
+    "directSourceTypeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
+    "sourcePackageId": "foundation-economy-character-formation",
+    "sourceTypeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG"
+  }
+}

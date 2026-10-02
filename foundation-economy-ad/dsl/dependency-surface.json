@@ -3,29 +3,29 @@
   "packageId": "foundation-economy-ad",
   "types": {
     "AdPlatform": {
-      "id": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
+      "id": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
       "singleEntry": true,
       "canonicalPackageId": "foundation-economy-ad",
-      "canonicalTypeId": "dt_AFCBM1Z879DZAF9085SFW63Z5S",
+      "canonicalTypeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
       "properties": {
-        "adMobAdUnitIds": "prop_9R4GKC9MHQ0RWWG542MD6RRBQ9",
-        "id": "prop_reserved_id",
-        "unityAdKeys": "prop_8GAGKPX7FHKJSQQCWN9J6ZE9M5"
+        "adMobAdUnitIds": "prop_2E144V2D4DR6774190N39P62XT",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "unityAdKeys": "prop_242M4XQ9VWCWPDXV75ACHQVJD1"
       }
     },
     "AdViewPoint": {
-      "id": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
+      "id": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
       "singleEntry": true,
       "canonicalPackageId": "foundation-economy-ad",
-      "canonicalTypeId": "dt_RTQJBJN6VK3VTEX3WKNGGK17JW",
+      "canonicalTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
       "properties": {
-        "id": "prop_reserved_id",
-        "value": "prop_A5PTNHJYSCXW55G2TW376GP36E"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "value": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK"
       }
     }
   },
   "masterDataResources": {
-    "adReward.Namespace": "e51dce21-c96b-4ab8-b30e-78b7bea37fb5"
+    "adReward.Namespace": "mdr_753Q723JBB9AWB63KRPYZA6ZXN"
   },
   "transforms": {
     "ConsumeAdViewPoint": []

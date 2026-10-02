@@ -1,0 +1,126 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the enchantment option.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "エンチャント候補を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_00D03217GRGMDSEFAQS5E3A4B2",
+        "localizedDisplay": {
+          "en": {
+            "description": "Enchantment configuration this option belongs to.",
+            "label": "Enchantment configuration"
+          },
+          "ja": {
+            "description": "この候補が属するエンチャント設定です。",
+            "label": "エンチャント設定"
+          }
+        },
+        "name": "enchant",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_00D03217GRKX0AV27J248EX89N"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Stat this bonus applies to",
+        "id": "prop_00D03217GRGMXYDWA00MEVCB01",
+        "localizedDisplay": {
+          "en": {
+            "description": "Name of the stat or resource modified by this effect.",
+            "label": "Effect target"
+          },
+          "ja": {
+            "description": "追加効果を適用する能力値やリソースの名前です。",
+            "label": "効果対象"
+          }
+        },
+        "name": "resourceName",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "How much it applies",
+        "id": "prop_00D03217GRQTVSP4FQ10EXQ3TG",
+        "localizedDisplay": {
+          "en": {
+            "description": "Value applied to the target by this bonus.",
+            "label": "Effect value"
+          },
+          "ja": {
+            "description": "対象へ加算する追加効果の値です。",
+            "label": "効果値"
+          }
+        },
+        "name": "resourceValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Relative draw weight",
+        "id": "prop_00D03217GRKQF9AK7J19KVJDGJ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Relative weight used to draw this effect.",
+            "label": "Draw weight"
+          },
+          "ja": {
+            "description": "この追加効果が選ばれる相対的な重みです。",
+            "label": "抽選重み"
+          }
+        },
+        "name": "weight",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+  "kind": "local",
+  "name": "EquipmentEnchantOption",
+  "singleEntry": false
+}

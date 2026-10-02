@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0PP9ZFNCD6RFTHR08Z8NVF9",
+  "kind": "overlay",
+  "name": "UsageLimit",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-limit",
+    "directSourceTypeId": "dt_00D031CCJC5E77CH6RN2RE661E",
+    "sourcePackageId": "foundation-economy-limit",
+    "sourceTypeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+  }
+}

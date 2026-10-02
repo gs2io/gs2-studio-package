@@ -1,0 +1,113 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "initialCapacity",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+            "typeName": "Energy"
+          },
+          "propertyId": "prop_0VK8BTK0YT0KW0ZS5VN7E3RAWK"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "isOverflow",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+            "typeName": "Energy"
+          },
+          "propertyId": "prop_0DZD8RYHVEY4B0DGB0K83K7DNX"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maxCapacity",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+            "typeName": "Energy"
+          },
+          "propertyId": "prop_1H7FG0XTK823H3XX35XW00TCFT"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "maxStaminaTable",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+            "typeName": "Energy"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "recoverIntervalMinutes",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+            "typeName": "Energy"
+          },
+          "propertyId": "prop_7B2HB91QDWZK8SXNC6ZJGCCAEA"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "recoverIntervalTable",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "recoverValue",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+            "typeName": "Energy"
+          },
+          "propertyId": "prop_5DW145AF8E14EQ3GHSC94QCMBW"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "recoverValueTable",
+        "value": null
+      }
+    ]
+  },
+  "id": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5",
+  "location": {
+    "modelName": "StaminaModel",
+    "service": "stamina"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+    "typeName": "Energy"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_77M6CM017083FAVC4NT6STKDZD"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "itemName",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0MNDT9MDX92JSEWTBM568ZP",
+                  "typeName": "Item"
+                },
+                "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+              }
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ConsumeItem",
+        "transformPackageId": "foundation-economy-inventory"
+      }
+    ]
+  },
+  "id": "mdr_6JJ4125ACZB15R6FRY606PP89G",
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0MNDT9MDX92JSEWTBM568ZP",
+    "typeName": "Item"
+  },
+  "parent": {
+    "arrayProperty": "consumeActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB"
+  }
+}

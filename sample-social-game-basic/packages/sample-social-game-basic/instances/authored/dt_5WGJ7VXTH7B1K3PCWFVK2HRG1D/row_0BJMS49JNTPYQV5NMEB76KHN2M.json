@@ -1,0 +1,10 @@
+{
+  "id": "always",
+  "rowKey": "row_0BJMS49JNTPYQV5NMEB76KHN2M",
+  "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+  "values": {
+    "prop_00D0V3E8RR357Z98YP7VMDXPP7": "schedule",
+    "prop_2GPQQQHZ70FS0R1N1B43CP2VMW": "login-bonus-event",
+    "prop_5BWDJGV41VX2E7914HXAQ5PGBP": 9
+  }
+}

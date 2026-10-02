@@ -12,7 +12,7 @@
       "ja": "ライブデモ用の設定上書き、無償付与、全デモ共通の商品棚と価格を提供します。"
     },
     "domainTypes": {
-      "dt_01M2FXJD9CYEZDZ7WJCGB9KZRB": {
+      "dt_00D0KZCKAB7KQVFSZ4K42TCZY2": {
         "description": {
           "en": "A demo deposit that lands in the free balance.",
           "ja": "無償残高に加算されるデモ用の入金です。"
@@ -22,7 +22,7 @@
           "ja": "無償付与"
         }
       },
-      "dt_01M2FXJD9DKC8HEMBNSQ9CJP0F": {
+      "dt_00D0KZCKABCV24BN2XEDTB4NG3": {
         "description": {
           "en": "A demo deposit that lands in the paid balance.",
           "ja": "有償残高に加算されるデモ用の入金です。"

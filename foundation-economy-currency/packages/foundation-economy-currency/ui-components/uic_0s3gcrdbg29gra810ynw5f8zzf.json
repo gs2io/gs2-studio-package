@@ -1,0 +1,38 @@
+{
+  "id": "uic_0S3GCRDBG29GRA810YNW5F8ZZF",
+  "items": [
+    {
+      "componentClassName": "FreeBalanceLabel",
+      "id": "uii_61Z6Z202DS98CRDCCRC6WPKH3J",
+      "kind": "label",
+      "name": "FreeBalance",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_1MXFHCN7EY8JQ8GF8CAMDGTH78"
+      }
+    },
+    {
+      "componentClassName": "PaidBalanceLabel",
+      "id": "uii_5MVWS6P35W942RKQQB6KJR83CG",
+      "kind": "label",
+      "name": "PaidBalance",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_6R2VWF0VG1FFZD7G3F2NB0W132"
+      }
+    },
+    {
+      "componentClassName": "TotalBalanceLabel",
+      "id": "uii_0J5VV2JWE99MQVQSAKQF6TH40W",
+      "kind": "label",
+      "name": "TotalBalance",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_3VQCQ7RXRT5DS14GV01R3MRB4J"
+      }
+    }
+  ],
+  "name": "Wallet",
+  "targetDomainType": "Wallet",
+  "targetDomainTypeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9"
+}

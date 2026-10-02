@@ -1,0 +1,92 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "acquireExperienceHierarchy",
+        "value": [
+          "experience"
+        ]
+      },
+      {
+        "kind": "static",
+        "parameterName": "acquireExperienceSuffix",
+        "value": ":level"
+      },
+      {
+        "kind": "static",
+        "parameterName": "description",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "materialInventoryModelId",
+        "value": "grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:simple:model:Material"
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031YG89PXH0J9RYZKY8NP6R",
+            "typeName": "CharacterEnhance"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    ]
+  },
+  "id": "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8",
+  "location": {
+    "modelName": "RateModel",
+    "service": "enhance"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D031YG89PXH0J9RYZKY8NP6R",
+    "typeName": "CharacterEnhance"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_6HXS3762XWA3MA820N56XMDPY7"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          },
+          {
+            "grnKeyName": "inventoryName",
+            "sourceKeyName": "inventoryName"
+          }
+        ],
+        "mountedResourceId": "mdr_32G1EVGBJ098PA3H1RW307TJFR",
+        "parameterName": "targetInventoryModelId"
+      },
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          },
+          {
+            "grnKeyName": "experienceName",
+            "sourceKeyName": "experienceName"
+          }
+        ],
+        "mountedResourceId": "mdr_4D3TBCYQKS94GAV9WSFVNJEXQY",
+        "parameterName": "experienceModelId"
+      }
+    ]
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "id": "uic_1S0WXK0Y5BAT0BM8A265XSP4VB",
+  "items": [
+    {
+      "componentClassName": "PeriodLabel",
+      "id": "uii_1MD6V5M418AN5AY26VRX4DRQ1T",
+      "kind": "templateLabel",
+      "name": "Schedule",
+      "sources": [
+        {
+          "key": "startAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7FMECH33GC393EZ4PGCPR1QCSE"
+          }
+        },
+        {
+          "key": "endAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_1SGTZ9B0RDMXXPWHJ8K4W032AA"
+          }
+        }
+      ],
+      "template": "{startAt} - {endAt}"
+    },
+    {
+      "componentClassName": "EndAtValue",
+      "id": "uii_7MEPW30C74BQZVSN7NZS7GCNVC",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_1SGTZ9B0RDMXXPWHJ8K4W032AA"
+      }
+    },
+    {
+      "componentClassName": "StartAtValue",
+      "id": "uii_5X3S5EDY87BXAAPQH4FTST77XZ",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_7FMECH33GC393EZ4PGCPR1QCSE"
+      }
+    },
+    {
+      "componentClassName": "RelativeWindowLabel",
+      "id": "uii_1B5PKBCY2XB30ARQVBMBQA7D97",
+      "kind": "templateLabel",
+      "name": "Schedule",
+      "sources": [
+        {
+          "key": "relativeStartAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0N014B0BF291EZZKRYPBJND"
+          }
+        },
+        {
+          "key": "relativeEndAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0N014B0BQ0XD43PAXV22PHQ"
+          }
+        }
+      ],
+      "template": "{relativeStartAt} - {relativeEndAt}"
+    },
+    {
+      "componentClassName": "RelativeEndAtValue",
+      "id": "uii_5F9001FT1XBMH9F9W4GKTCCC7G",
+      "kind": "value",
+      "name": "Schedule",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_00D0N014B0BQ0XD43PAXV22PHQ"
+      }
+    },
+    {
+      "componentClassName": "RelativeActiveToggle",
+      "condition": {
+        "kind": "eq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_787C2RE8TDR45Z47ER9FNGNTBH"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": "relative"
+        }
+      },
+      "id": "uii_6XEX3CY1VYAW2B8H2AC5HSWV9G",
+      "kind": "activeToggle",
+      "name": "Schedule"
+    },
+    {
+      "componentClassName": "AbsoluteActiveToggle",
+      "condition": {
+        "kind": "eq",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_787C2RE8TDR45Z47ER9FNGNTBH"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": "absolute"
+        }
+      },
+      "id": "uii_3N7KWAD6VNB7597Q5HF4MEVBBG",
+      "kind": "activeToggle",
+      "name": "Schedule"
+    }
+  ],
+  "name": "Schedule",
+  "targetDomainType": "Schedule",
+  "targetDomainTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+}

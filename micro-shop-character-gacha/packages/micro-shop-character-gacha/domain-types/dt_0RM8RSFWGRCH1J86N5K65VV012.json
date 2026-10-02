@@ -1,0 +1,104 @@
+{
+  "compositeKey": [
+    "prop_0FB9QM529M8HJWECVFGHK5ETSP",
+    "prop_61V2Q6GDX782JAG5F3ZJQNRFHY"
+  ],
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the rarity draw rate.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "レアリティ排出率を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_0FB9QM529M8HJWECVFGHK5ETSP",
+        "localizedDisplay": {
+          "en": {
+            "description": "Gacha to which this rarity rate applies.",
+            "label": "Gacha"
+          },
+          "ja": {
+            "description": "この排出率を適用するガチャです。",
+            "label": "対象ガチャ"
+          }
+        },
+        "name": "gacha",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_61V2Q6GDX782JAG5F3ZJQNRFHY",
+        "localizedDisplay": {
+          "en": {
+            "description": "Gacha rarity whose rate is configured.",
+            "label": "Rarity"
+          },
+          "ja": {
+            "description": "排出率を設定するガチャレアリティです。",
+            "label": "レアリティ"
+          }
+        },
+        "name": "rarity",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_479NFNV95H92HYQE8252JBRZ9Z"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_4FZRY1TPG3AT3E8S78CR5XY0XT",
+        "localizedDisplay": {
+          "en": {
+            "description": "Relative weight used to draw this rarity.",
+            "label": "Draw weight"
+          },
+          "ja": {
+            "description": "このレアリティが選ばれる相対的な重みです。",
+            "label": "抽選重み"
+          }
+        },
+        "name": "weight",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_0RM8RSFWGRCH1J86N5K65VV012",
+  "kind": "local",
+  "name": "GachaRarityRate",
+  "singleEntry": false
+}

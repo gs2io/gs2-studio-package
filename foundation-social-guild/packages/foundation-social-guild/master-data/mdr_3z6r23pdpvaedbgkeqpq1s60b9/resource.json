@@ -1,0 +1,142 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "defaultMaximumMemberCount",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_00D031EHJKS5RXCVAFMNT3SG8A"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "guildMasterRole",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_00D031EHJKYNMFXHPY3FTZNMT3"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "guildMemberDefaultRole",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_00D031EHJKX7SZME4RYKT42EHK"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "inactivityPeriodDays",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_00D031EHJKVGBMJB7FM4PCN6J7"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maxConcurrentGuildMasterCount",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_00D031EHJKZX0Z07JXP9EBMZE2"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maxConcurrentJoinGuilds",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_00D031EHJKV14ABPBSZYSZE6ZC"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "maximumMemberCount",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_00D031EHJKXY4J4TES2QHN8F8E"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "rejoinCoolTimeMinutes",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+            "typeName": "Guild"
+          },
+          "propertyId": "prop_00D031EHJKRC55TT07BAPX05CG"
+        }
+      }
+    ]
+  },
+  "id": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
+  "location": {
+    "modelName": "GuildModel",
+    "service": "guild"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+    "typeName": "Guild"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_2NW12QY7P9BHGBYRB91VD5C9HT"
+  }
+}

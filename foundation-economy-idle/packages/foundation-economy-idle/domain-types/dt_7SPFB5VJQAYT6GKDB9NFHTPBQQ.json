@@ -1,0 +1,164 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the idle status.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "放置状況を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_343KJVJCADHD7053A0N9JQ0M7W",
+        "localizedDisplay": {
+          "en": {
+            "description": "Interval at which idle rewards accumulate.",
+            "label": "Reward interval",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "放置報酬を積み上げる間隔です。",
+            "label": "報酬間隔",
+            "unit": "分"
+          }
+        },
+        "name": "rewardIntervalMinutes",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_7J143G8X27HCRCYX69FABGPKKT",
+        "localizedDisplay": {
+          "en": {
+            "description": "Initial maximum idle duration for a new player.",
+            "label": "Initial idle limit",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "新規プレイヤーに適用する放置時間の上限です。",
+            "label": "初期放置上限",
+            "unit": "分"
+          }
+        },
+        "name": "defaultMaximumIdleMinutes",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_1M9DWWCBBYBQ9HF2CEHRBVTQG5",
+        "localizedDisplay": {
+          "en": {
+            "description": "Idle duration accumulated so far.",
+            "label": "Current idle duration",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "現在までに蓄積した放置時間です。",
+            "label": "現在の放置時間",
+            "unit": "分"
+          }
+        },
+        "name": "currentIdleMinutes",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_5651SXBQZ535SAK2H3JZBTZ5XS",
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when the next idle reward becomes available.",
+            "label": "Next reward time"
+          },
+          "ja": {
+            "description": "次の放置報酬が確定する日時です。",
+            "label": "次回報酬日時"
+          }
+        },
+        "name": "nextRewardsAt",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_4RV2VH9G7RME7HVFFF1KSCK60P",
+        "localizedDisplay": {
+          "en": {
+            "description": "Current maximum idle duration applied to the player.",
+            "label": "Current idle limit",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "プレイヤーに適用されている放置時間の上限です。",
+            "label": "現在の放置上限",
+            "unit": "分"
+          }
+        },
+        "name": "maximumIdleMinutes",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Receive",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2Idle:CategoryModel.Receive",
+      "targetResource": {
+        "resourceId": "mdr_720YFK0MG497KRH6159H7NKWHY",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-idle"
+      }
+    }
+  ],
+  "id": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
+  "kind": "local",
+  "name": "IdleStatus",
+  "singleEntry": true
+}

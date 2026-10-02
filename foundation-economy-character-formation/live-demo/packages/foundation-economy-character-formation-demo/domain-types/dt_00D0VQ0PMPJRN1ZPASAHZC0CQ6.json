@@ -1,0 +1,38 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Expand",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_0XW8Q5N7XHAKQ9NSP0GVBBFFWQ",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-character-formation-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6",
+  "kind": "overlay",
+  "name": "CharacterFormation",
+  "renamedInheritedProperties": {},
+  "singleEntry": true,
+  "source": {
+    "directSourcePackageId": "foundation-economy-character-formation",
+    "directSourceTypeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
+    "sourcePackageId": "foundation-economy-character-formation",
+    "sourceTypeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
+  }
+}

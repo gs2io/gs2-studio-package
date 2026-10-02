@@ -1,0 +1,104 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Reroll",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        },
+        {
+          "entries": [
+            {
+              "fields": [
+                {
+                  "name": "key",
+                  "source": {
+                    "kind": "static",
+                    "value": "propertyId"
+                  }
+                },
+                {
+                  "name": "value",
+                  "source": {
+                    "kind": "domainProperty",
+                    "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+                  }
+                }
+              ],
+              "kind": "fields"
+            }
+          ],
+          "kind": "listEntries",
+          "parameterName": "config"
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_7B5FM276ZTBNSAQYJ948JES7GM",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-equipment-enchant-demo"
+      }
+    },
+    {
+      "methodName": "AddBonus",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        },
+        {
+          "entries": [
+            {
+              "fields": [
+                {
+                  "name": "key",
+                  "source": {
+                    "kind": "static",
+                    "value": "propertyId"
+                  }
+                },
+                {
+                  "name": "value",
+                  "source": {
+                    "kind": "domainProperty",
+                    "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+                  }
+                }
+              ],
+              "kind": "fields"
+            }
+          ],
+          "kind": "listEntries",
+          "parameterName": "config"
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_1GGPJSBVVQB1MAWJR3VTQ9Y7QK",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-equipment-enchant-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0VNJHFYSPVEE231WA4Z2Q47",
+  "kind": "overlay",
+  "name": "Equipment",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-equipment",
+    "directSourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+    "sourcePackageId": "foundation-economy-equipment",
+    "sourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+  }
+}

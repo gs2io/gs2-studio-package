@@ -1,0 +1,16 @@
+{
+  "id": "uic_2K78W4BGV5AVTRX53ATFZY1CW2",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "AdvanceButton",
+      "delegatedActionKey": "resource:micro-economy-mission-demo:masterData:mdr_21DB51BXCRBDQBFYF1JB1TQQ8M::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_2YBWFD2142ATGA9PBPGH06MKW1",
+      "kind": "buttonAction",
+      "name": "MissionCounter"
+    }
+  ],
+  "name": "MissionCounter",
+  "targetDomainType": "MissionCounter",
+  "targetDomainTypeId": "dt_00D0QVYTV9BS74AACZHCPQGG1B"
+}

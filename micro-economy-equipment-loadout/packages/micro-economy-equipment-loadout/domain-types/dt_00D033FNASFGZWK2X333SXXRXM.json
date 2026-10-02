@@ -1,0 +1,58 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the equipment slot.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "装備スロットを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Which equipment this slot accepts, matched on its property id",
+        "id": "prop_00D033FNASBHYZ9W1VK8EE39WP",
+        "localizedDisplay": {
+          "en": {
+            "description": "Regular expression matching equipment instance IDs accepted by this slot.",
+            "label": "Equipment pattern"
+          },
+          "ja": {
+            "description": "このスロットへ装着できる装備個体IDの正規表現です。",
+            "label": "装着条件"
+          }
+        },
+        "name": "propertyRegex",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D033FNASFGZWK2X333SXXRXM",
+  "kind": "local",
+  "name": "EquipmentSlot",
+  "singleEntry": false
+}

@@ -1,0 +1,35 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "description",
+        "value": "Keeps one piece of equipment on one character at a time."
+      },
+      {
+        "kind": "static",
+        "parameterName": "disableStringNumberToNumber",
+        "value": true
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "UpdatePropertyForm"
+      },
+      {
+        "file": "script.lua",
+        "kind": "staticFile",
+        "parameterName": "script"
+      }
+    ]
+  },
+  "id": "mdr_3T6BM7C6BABN392KS50KV3B5B4",
+  "location": {
+    "modelName": "Script",
+    "service": "script"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_7JJ7WY5MDMA7Q9V7ZGF3MBEV6V"
+  }
+}

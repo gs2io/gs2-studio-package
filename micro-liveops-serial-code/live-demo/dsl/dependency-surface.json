@@ -3,24 +3,24 @@
   "packageId": "micro-liveops-serial-code-demo",
   "types": {
     "SerialCodeCampaign": {
-      "id": "dt_01M3JVP25225RMKS765NA4MYT1",
+      "id": "dt_00D0WPXGH8GHE54Y9SHDAH57PG",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-serial-code",
-      "canonicalTypeId": "dt_01M0C5VXZY2ZJKK4DERTCAZHXD"
+      "canonicalTypeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
     },
     "SerialCodeRedemption": {
-      "id": "dt_01M3JVP251QMTHBBV0K7JPJPFH",
+      "id": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
       "singleEntry": true,
       "canonicalPackageId": "micro-liveops-serial-code-demo",
-      "canonicalTypeId": "dt_01M3JVP251QMTHBBV0K7JPJPFH",
+      "canonicalTypeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
       "properties": {
-        "id": "prop_reserved_id"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     }
   },
   "masterDataResources": {
-    "limit.LimitModel": "f9a7032e-fff6-59c8-8cc9-60d46fc4f661",
-    "limit.Namespace": "9b32057e-8b3f-5920-b401-32cbf939933d"
+    "limit.LimitModel": "mdr_7SMW1JXZZPB748SJB0THQW9XK1",
+    "limit.Namespace": "mdr_4V682QX2SZB4GB809JSFWKK4SX"
   },
   "transforms": {
     "ClearRedemption": [],

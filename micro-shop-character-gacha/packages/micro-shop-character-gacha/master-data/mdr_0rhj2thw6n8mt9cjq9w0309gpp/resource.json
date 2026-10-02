@@ -1,0 +1,56 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "method",
+        "value": "prize_table"
+      },
+      {
+        "kind": "static",
+        "parameterName": "mode",
+        "value": "normal"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+            "typeName": "Gacha"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "prizeTableName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+            "typeName": "Gacha"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    ]
+  },
+  "id": "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP",
+  "location": {
+    "modelName": "LotteryModel",
+    "service": "lottery"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+    "typeName": "Gacha"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_5TKE5CS1CT9B6VNQNSBWPWVDNJ"
+  }
+}

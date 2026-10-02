@@ -1,0 +1,58 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "enhance",
+            "source": {
+              "kind": "static",
+              "value": "Basic"
+            }
+          },
+          {
+            "parameterName": "targetItemSetId",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{propertyId}"
+            }
+          },
+          {
+            "parameterName": "materialItemSetId",
+            "source": {
+              "kind": "static",
+              "value": "grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir"
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "EnhanceCharacter",
+        "transformPackageId": "micro-economy-character-enhance"
+      }
+    ]
+  },
+  "id": "mdr_352YQ2DAGKB8N9AGEZWMC8X873",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY",
+    "typeName": "Character"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_60ASBHRZH1A1KVZ36PFE432PZX"
+  }
+}

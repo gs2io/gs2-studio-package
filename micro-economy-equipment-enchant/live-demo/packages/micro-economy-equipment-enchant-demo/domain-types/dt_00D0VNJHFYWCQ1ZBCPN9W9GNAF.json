@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0VNJHFYWCQ1ZBCPN9W9GNAF",
+  "kind": "overlay",
+  "name": "EquipmentEnchant",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-equipment-enchant",
+    "directSourceTypeId": "dt_00D03217GRKX0AV27J248EX89N",
+    "sourcePackageId": "micro-economy-equipment-enchant",
+    "sourceTypeId": "dt_00D03217GRKX0AV27J248EX89N"
+  }
+}

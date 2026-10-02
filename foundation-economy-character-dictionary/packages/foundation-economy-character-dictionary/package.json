@@ -11,7 +11,7 @@
       "ja": "これまでに入手したキャラクターの種類を図鑑に記録します。"
     },
     "domainTypes": {
-      "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV": {
+      "dt_294B3NDY2CSVYZCGPT9QXRYRDP": {
         "description": {
           "en": "Manages the characters shown in the character encyclopedia and their view state.",
           "ja": "キャラクター図鑑に表示するキャラクターと閲覧状態を管理します。"

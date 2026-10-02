@@ -1,0 +1,85 @@
+{
+  "id": "uic_79AG10Y2JMAQFRHM1A1MCNZVDA",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "ReceiveButton",
+      "delegatedActionKey": "resource:micro-economy-login-reward:userData:udr_1P119645K49QZA8WP1Z2M8DV2J::Gs2LoginReward:ReceiveStatus.Receive",
+      "id": "uii_2ZTVMMWPMTA219EG17Q4VY9RZS",
+      "kind": "buttonAction",
+      "name": "LoginRewardCollection"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "StartOverButton",
+      "delegatedActionKey": "resource:micro-economy-login-reward-demo:masterData:mdr_764ATR9HCQB89B3EVDJZ7D08VS::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_7GVR1GBB5XAEVATS7FN8VZA2MQ",
+      "kind": "buttonAction",
+      "name": "LoginRewardCollection"
+    },
+    {
+      "componentClassName": "LastReceivedLabel",
+      "id": "uii_70KV0DW8K8BBVBSPSD0TRD353T",
+      "kind": "templateLabel",
+      "name": "LoginRewardCollection",
+      "sources": [
+        {
+          "key": "lastReceivedAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC"
+          }
+        }
+      ],
+      "template": "Last received: {lastReceivedAt} (UTC)"
+    },
+    {
+      "componentClassName": "NeverReceivedLabel",
+      "id": "uii_7X73YYT833AZM88Z5Y4MH855EA",
+      "kind": "templateLabel",
+      "name": "LoginRewardCollection",
+      "sources": [],
+      "template": "Last received: not yet"
+    },
+    {
+      "componentClassName": "NeverReceivedActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_5VZAGW8PGJAG6S350RTDAXQF4J",
+      "kind": "activeToggle",
+      "name": "LoginRewardCollection"
+    },
+    {
+      "componentClassName": "ReceivedOnceActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC"
+        }
+      },
+      "id": "uii_3W61NJMVTSBT9T86H0KEBSK6DT",
+      "kind": "activeToggle",
+      "name": "LoginRewardCollection"
+    },
+    {
+      "componentClassName": "RuleLabel",
+      "id": "uii_5PTW9EHF0EBGWTHY7J5K784C30",
+      "kind": "templateLabel",
+      "name": "LoginRewardCollection",
+      "sources": [],
+      "template": "A new day starts at 15:00 UTC (midnight in Japan). Advance one day moves your clock forward 24 hours, so the next day can be received now."
+    }
+  ],
+  "name": "LoginRewardCollection",
+  "targetDomainType": "LoginRewardCollection",
+  "targetDomainTypeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00"
+}

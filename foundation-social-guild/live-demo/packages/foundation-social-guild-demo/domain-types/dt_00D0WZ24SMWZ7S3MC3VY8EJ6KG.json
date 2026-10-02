@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0WZ24SMWZ7S3MC3VY8EJ6KG",
+  "kind": "overlay",
+  "name": "Guild",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-social-guild",
+    "directSourceTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+    "sourcePackageId": "foundation-social-guild",
+    "sourceTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
+  }
+}

@@ -3,46 +3,46 @@
   "packageId": "micro-shop-currency",
   "types": {
     "CurrencyType": {
-      "id": "dt_QM3KC8SJTDM4W54DTSPXM8HTRD",
+      "id": "dt_5X0WV26CPKD17193EPDQD24EP3",
       "singleEntry": false,
       "canonicalPackageId": "micro-shop-currency",
-      "canonicalTypeId": "dt_QM3KC8SJTDM4W54DTSPXM8HTRD",
+      "canonicalTypeId": "dt_5X0WV26CPKD17193EPDQD24EP3",
       "properties": {
-        "id": "prop_reserved_id"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     },
     "StorePrice": {
-      "id": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
+      "id": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
       "singleEntry": false,
       "delegatedActions": {
-        "Buy": "resource:micro-shop-currency:masterData:b01aba03-98e5-4073-859a-f6e0df8eb578::Gs2Showcase:DisplayItem.Buy"
+        "Buy": "resource:micro-shop-currency:masterData:mdr_5G3AX0767581SRB6QPW3FRXDBR::Gs2Showcase:DisplayItem.Buy"
       },
       "canonicalPackageId": "micro-shop-currency",
-      "canonicalTypeId": "dt_NRHGV2T8Z964H3HMPZ454WEZ9M",
+      "canonicalTypeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
       "properties": {
-        "currencyType": "prop_HWY29H9JCBTCX27T4BQDSTJMV0",
-        "id": "prop_reserved_id",
-        "price": "prop_NW3JXP6ZEQE4DP99TJHZEB68AD",
-        "product": "prop_4QH1Q546W880NVDGJRGNVCWV07"
+        "currencyType": "prop_4F7GJCACK2YK78HYH2XVEEMN6R",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "price": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K",
+        "product": "prop_15W8DS91Q2205EVC4P45EV76R1"
       }
     },
     "StoreProduct": {
-      "id": "dt_4C1ZT24FH0ST09YC0VE1TB7SK8",
+      "id": "dt_130FYGH3W86EG2FK06VGEJSYCT",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-currency",
-      "canonicalTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+      "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
       "addedProperties": {
-        "count": "prop_Y3XKHV0N1XTC7S3AXE7YTG24V7"
+        "count": "prop_7GZCWER58FEK1Y8TQBHZPM0H6S"
       }
     }
   },
   "masterDataResources": {
-    "showcase.DisplayItem": "b01aba03-98e5-4073-859a-f6e0df8eb578",
-    "showcase.Namespace": "833ae3fd-0c5d-4054-8283-9140055aa176",
-    "showcase.SalesItem": "a334d8c8-682a-5d74-9602-97234e98a60e",
-    "showcase.Showcase": "a273b663-be19-4ac3-b03c-8f6e9580fbc2",
-    "transaction.AcquireAction": "f04e2fcb-629b-5d9f-86c8-c5486c0ce0a4",
-    "transaction.ConsumeAction": "26b9eab3-68dc-5123-abd0-8c374f62969c"
+    "showcase.DisplayItem": "mdr_5G3AX0767581SRB6QPW3FRXDBR",
+    "showcase.Namespace": "mdr_437BHZT32X81A850WH802NN8BP",
+    "showcase.SalesItem": "mdr_536KCCGT1ABNT9C0MQ4D79H9GE",
+    "showcase.Showcase": "mdr_52EEV67FGS9B1V0F4FDTAR1YY2",
+    "transaction.AcquireAction": "mdr_7G9RQWPRMVBPFRDJ6591P0SR54",
+    "transaction.ConsumeAction": "mdr_16Q7NB6T6WA4HTQM4C6X7P55MW"
   },
   "transforms": {}
 }

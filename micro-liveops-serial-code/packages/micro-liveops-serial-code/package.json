@@ -8,7 +8,7 @@
       "ja": "配布したシリアルコードを引き換えます。コードはキャンペーン単位でまとめます。"
     },
     "domainTypes": {
-      "dt_01M0C5VXZY2ZJKK4DERTCAZHXD": {
+      "dt_00D031EZFZGQWMWS3BP6K2QWFB": {
         "description": {
           "en": "Configures whether campaign-code redemption is enabled.",
           "ja": "キャンペーンコード方式を利用するかどうかを設定します。"

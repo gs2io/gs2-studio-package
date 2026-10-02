@@ -1,0 +1,38 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3",
+            "typeName": "CurrencyType"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "salesPeriodEventId",
+        "value": null
+      }
+    ]
+  },
+  "id": "mdr_52EEV67FGS9B1V0F4FDTAR1YY2",
+  "location": {
+    "modelName": "Showcase",
+    "service": "showcase"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3",
+    "typeName": "CurrencyType"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_437BHZT32X81A850WH802NN8BP"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Spend",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_57KN8WGDJJBYHAZR30EV6G0H9R",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-energy-demo"
+      }
+    },
+    {
+      "methodName": "Recover",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-energy-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0MM25SM55BXJGSRRQEWD359",
+  "kind": "overlay",
+  "name": "Energy",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-energy",
+    "directSourceTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+    "sourcePackageId": "foundation-economy-energy",
+    "sourceTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+  }
+}

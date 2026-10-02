@@ -1,0 +1,25 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterEquipment"
+      }
+    ]
+  },
+  "id": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8",
+  "location": {
+    "modelName": "PropertyFormModel",
+    "service": "formation"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_3A74BFMXHXAHSSSKQ47QZ161VJ"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0WRKP44B4PTG8ZVAERANV1W",
+  "kind": "overlay",
+  "name": "VersionGate",
+  "renamedInheritedProperties": {},
+  "singleEntry": true,
+  "source": {
+    "directSourcePackageId": "foundation-liveops-version",
+    "directSourceTypeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
+    "sourcePackageId": "foundation-liveops-version",
+    "sourceTypeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH"
+  }
+}

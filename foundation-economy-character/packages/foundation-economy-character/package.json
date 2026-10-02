@@ -8,7 +8,7 @@
       "ja": "キャラクターの所持・レベル・経験値を扱います。"
     },
     "domainTypes": {
-      "dt_HAZCRJ576BHDWFVB28NQW77Y01": {
+      "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0": {
         "description": {
           "en": "Sets level-up experience thresholds and the initial and maximum level caps.",
           "ja": "レベルアップに必要な経験値と、初期・最大レベル上限を設定します。"
@@ -18,7 +18,7 @@
           "ja": "キャラクター経験値"
         }
       },
-      "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5": {
+      "dt_64PCJ4KXWQBQ45VF7D5MTQ017H": {
         "description": {
           "en": "Registers the characters available in the game and their display order.",
           "ja": "ゲームに登場するキャラクターと表示順を登録します。"
@@ -28,7 +28,7 @@
           "ja": "キャラクター"
         }
       },
-      "dt_ZR7PA0W682HX7ZFXGBE4BRF37K": {
+      "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW": {
         "description": {
           "en": "Sets the maximum and initial number of characters a player can own.",
           "ja": "プレイヤーが所持できるキャラクター数の上限と初期値を設定します。"

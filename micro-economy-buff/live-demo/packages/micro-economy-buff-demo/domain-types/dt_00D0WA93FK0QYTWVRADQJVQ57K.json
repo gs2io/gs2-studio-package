@@ -1,0 +1,68 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "The double idle rewards campaign.",
+            "label": "Campaign"
+          },
+          "ja": {
+            "description": "放置報酬 2 倍のキャンペーンです。",
+            "label": "キャンペーン"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "StartCampaign",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_6SVF73ZCXEAEWRFC6R5JW33JCQ",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-buff-demo"
+      }
+    },
+    {
+      "methodName": "EndCampaign",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_62ZMGKX8TQAHBTQAR56TDCXS7E",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-buff-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
+  "kind": "local",
+  "name": "BuffCampaign",
+  "singleEntry": true
+}

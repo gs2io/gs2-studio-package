@@ -1,0 +1,97 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "Ceiling the free press names; recovered from its count-up action",
+        "id": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D",
+        "name": "freeMax",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Ceiling the ad-backed press names; recovered from its count-up action",
+        "id": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE",
+        "name": "adMax",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "UseFree",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_3QQV27BR5AA419F2032R6T95RZ",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-limit-demo"
+      }
+    },
+    {
+      "methodName": "UseWithAd",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-limit-demo"
+      }
+    },
+    {
+      "methodName": "ResetEveryAllowance",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_2B66P1TX2CA2EV81HAS32228JF",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-limit-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0PP9ZFNBBW6QXYE041ZSN01",
+  "kind": "overlay",
+  "name": "UsageLimitCounter",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-limit",
+    "directSourceTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+    "sourcePackageId": "foundation-economy-limit",
+    "sourceTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
+  }
+}

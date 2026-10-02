@@ -1,8 +1,0 @@
-{
-  "id": "master",
-  "rowKey": "row_01M3KW8K6K2KE44YG0MA9PR2T6",
-  "typeId": "dt_01M0C5T6AFT4RWZEQQFJ1D89M0",
-  "values": {
-    "prop_01M0C5T6AF0SDEH7DPDWXDST0T": "{\"Version\":\"2016-04-01\",\"Statements\":[{\"Effect\":\"Allow\",\"Actions\":[\"Gs2Guild:DescribeReceiveRequests\",\"Gs2Guild:AcceptRequest\",\"Gs2Guild:RejectRequest\",\"Gs2Guild:UpdateMemberRole\",\"Gs2Guild:DeleteGuild\"],\"Resources\":[\"*\"]}]}"
-  }
-}

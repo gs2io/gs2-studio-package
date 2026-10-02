@@ -8,7 +8,7 @@
       "ja": "フレンド申請・フォロー・プロフィールなど、プレイヤー同士のつながりを扱います。"
     },
     "domainTypes": {
-      "dt_12CDXGXXRQVPJVMA9VGATG195G": {
+      "dt_08K3FC7FE5YXMPX2JEW2PM0A9C": {
         "description": {
           "en": "Tracks the players followed by a player. Profiles come from the follow list. There is no follower list.",
           "ja": "プレイヤーがフォローしている相手との関係を管理します。プロフィールはフォロー一覧から取得します。フォロワー一覧はありません。"
@@ -18,7 +18,7 @@
           "ja": "フォロー"
         }
       },
-      "dt_2E9NC00TQRA2ZBPKV9J8FPDV2C": {
+      "dt_0KJDB006NY2GQTXMYTCJ3XKERK": {
         "description": {
           "en": "Tracks friend requests received from other players. Requests carry no sender profile.",
           "ja": "他のプレイヤーから受け取ったフレンド申請を管理します。申請元のプロフィールは含みません。"
@@ -28,7 +28,7 @@
           "ja": "フレンド申請（受信）"
         }
       },
-      "dt_2NM467EMK37WAPSYGR7JJGVY8W": {
+      "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7": {
         "description": {
           "en": "Tracks confirmed friendship relationships between players. Profiles come from the friend list.",
           "ja": "承認済みのフレンド関係を管理します。プロフィールはフレンド一覧から取得します。"
@@ -38,7 +38,7 @@
           "ja": "フレンド"
         }
       },
-      "dt_TBCFR2E0A8DGCGR2RVHN4EQGR8": {
+      "dt_6JV3Y0KG2J3C3460P6WD93NW62": {
         "description": {
           "en": "Tracks friend requests sent to other players. Requests carry no recipient profile.",
           "ja": "他のプレイヤーへ送信したフレンド申請を管理します。申請先のプロフィールは含みません。"
@@ -48,7 +48,7 @@
           "ja": "フレンド申請（送信）"
         }
       },
-      "dt_YHKCS7SG3P32HV1NWCAAT47AFB": {
+      "dt_7MCV69YC0XGRMERDF32JPH1TKT": {
         "description": {
           "en": "Manages the profile information a player shares with others.",
           "ja": "プレイヤーが公開するプロフィール情報を管理します。"

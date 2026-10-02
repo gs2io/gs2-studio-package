@@ -3,38 +3,38 @@
   "packageId": "micro-liveops-guild-ranking",
   "types": {
     "GuildRanking": {
-      "id": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+      "id": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-guild-ranking",
-      "canonicalTypeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9",
+      "canonicalTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
       "properties": {
-        "id": "prop_reserved_id",
-        "maximumValue": "prop_01M0CE422VYRN7SXXKDDE3ET2G",
-        "minimumValue": "prop_01M0CE422VR4DWYG9WPJ57GAVK",
-        "orderDirection": "prop_01M0CE422VHSW4QC9AHYXV815S",
-        "schedule": "prop_01M0CE422VC02GDNEZDYXGVD89",
-        "score": "prop_01M0CE422VSC746FPJK5JNQ11R",
-        "sum": "prop_01M0CE422VX2GRKKR10S2S34BA"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "maximumValue": "prop_00D033H0GPZP59YFFCVBBGVPGM",
+        "minimumValue": "prop_00D033H0GPY13F7M2F5MH9W2PW",
+        "orderDirection": "prop_00D033H0GPWEF15V2AMFQET09E",
+        "schedule": "prop_00D033H0GPV00M3DBQVFQC6VA2",
+        "score": "prop_00D033H0GPYB1S1KXMMSCNDR8E",
+        "sum": "prop_00D033H0GPZ8M64WY0868P8S2T"
       }
     },
     "GuildRankingReward": {
-      "id": "dt_01M0CE422VDT5R1HBS4KHAF8RE",
+      "id": "dt_00D033H0GPVEHE0CAY94WAKT63",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-guild-ranking",
-      "canonicalTypeId": "dt_01M0CE422VDT5R1HBS4KHAF8RE",
+      "canonicalTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
       "properties": {
-        "acquireActions": "prop_01M0CE422V7MQAXCS77903V6Y2",
-        "id": "prop_reserved_id",
-        "ranking": "prop_01M0CE422VGSQB9SXT2CHKNFFP",
-        "thresholdRank": "prop_01M0CE422VB0QC0K8VTSFSJ02Z"
+        "acquireActions": "prop_00D033H0GPSX5TQB69ST80YSQG",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "ranking": "prop_00D033H0GPW6DTTEFEGK4CXBVX",
+        "thresholdRank": "prop_00D033H0GPTR5V04T6YPBYCG0Q"
       }
     }
   },
   "masterDataResources": {
-    "ranking2.ClusterRankingModel": "f7557773-8f8f-58cb-b0b9-2f178f988a1f",
-    "ranking2.Namespace": "e4c4ec76-6d26-5cf0-b603-be8298e427f6",
-    "ranking2.RankingReward": "6f692c8b-cfa5-51e4-9d15-aec3e779d604",
-    "transaction.AcquireAction": "6bafd96f-bfe1-5402-886d-cd1385be406d"
+    "ranking2.ClusterRankingModel": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ",
+    "ranking2.Namespace": "mdr_74RKP7CV96BKRBC0XYGACE89ZP",
+    "ranking2.RankingReward": "mdr_3FD4P8QKX5A7J9T5DERFKQKNG4",
+    "transaction.AcquireAction": "mdr_3BNZCPZFZ1AG18GVED2E2VWG3D"
   },
   "transforms": {
     "ReceiveGuildRankingReward": [

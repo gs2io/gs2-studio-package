@@ -3,40 +3,40 @@
   "packageId": "micro-economy-mission-demo",
   "types": {
     "Mission": {
-      "id": "dt_01M2ZFVBD5YJVNDAMVXVY17FN0",
+      "id": "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-mission",
-      "canonicalTypeId": "dt_P8YA8929576H08C2Q4YBE5KJXT",
+      "canonicalTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
       "addedProperties": {
-        "rewardAmount": "prop_01M2ZFVBD56WH75D9RY8Y1H5T0"
+        "rewardAmount": "prop_00D0QVYTV99Q49SBAE7J7GC9EG"
       }
     },
     "MissionCollection": {
-      "id": "dt_01M2ZFVBD53M112JMGZPCW4JG8",
+      "id": "dt_00D0QVYTV98X088MN47XK714M2",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-mission",
-      "canonicalTypeId": "dt_ZXWN4GKT975S371YFYF3E1DRZ0"
+      "canonicalTypeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R"
     },
     "MissionCounter": {
-      "id": "dt_01M2ZFVBD5F4WH99KY5JTY205D",
+      "id": "dt_00D0QVYTV9BS74AACZHCPQGG1B",
       "singleEntry": false,
       "delegatedActions": {
-        "Advance": "resource:micro-economy-mission-demo:masterData:416aca15-f598-5b6e-b7f9-e192c3abdd14::Gs2Exchange:RateModel.Exchange"
+        "Advance": "resource:micro-economy-mission-demo:masterData:mdr_21DB51BXCRBDQBFYF1JB1TQQ8M::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "micro-economy-mission",
-      "canonicalTypeId": "dt_8PNR995T1Y2063NYZJMVKSHZNE"
+      "canonicalTypeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB"
     },
     "MissionSetting": {
-      "id": "dt_01M2ZFVBD52YMSZTJ1FXDPZMZ8",
+      "id": "dt_00D0QVYTV98QN6FYMGBZBDQX7T",
       "singleEntry": true,
       "canonicalPackageId": "micro-economy-mission",
-      "canonicalTypeId": "dt_DW6Y7CDDGF0QNJ01W11BZ928XV"
+      "canonicalTypeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E"
     }
   },
   "masterDataResources": {
-    "exchange.Namespace": "b7c66c9c-661c-51ff-a362-5256de55f7da",
-    "exchange.RateModel": "416aca15-f598-5b6e-b7f9-e192c3abdd14",
-    "transaction.AcquireAction": "38a345d7-aa68-5058-a594-c6bec112e7ca"
+    "exchange.Namespace": "mdr_5QRSP9RSGWA7ZT6RJJAVF5BXYT",
+    "exchange.RateModel": "mdr_21DB51BXCRBDQBFYF1JB1TQQ8M",
+    "transaction.AcquireAction": "mdr_1RMD2XFAK8A1CAB566QV0H5SYA"
   },
   "transforms": {}
 }

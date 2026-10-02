@@ -1,0 +1,63 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "formId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "name"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "propertyId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033FNASESS5578YF3CS7Y34",
+            "typeName": "Character"
+          },
+          "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "slots"
+      },
+      {
+        "fieldMappings": [
+          {
+            "fieldName": "propertyId",
+            "targetPropertyId": "prop_00D033FNAS8DNWPTTNV21SG9XF"
+          }
+        ],
+        "idSourceField": "name",
+        "kind": "modelArrayDecode",
+        "parameterName": "slots",
+        "targetMountPath": {
+          "kind": "local",
+          "typeId": "dt_00D033FNASESS5578YF3CS7Y34",
+          "typeName": "Character"
+        },
+        "targetPropertyId": "prop_00D033FNASB4JJM9FNP61KXE7B"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_00D033FNASESS5578YF3CS7Y34",
+      "typeName": "Character"
+    }
+  },
+  "id": "udr_523882ZPX6BCCR6V97KZH6CTNE",
+  "location": {
+    "modelName": "PropertyForm",
+    "service": "formation"
+  }
+}

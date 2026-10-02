@@ -1,0 +1,242 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the take-over setting.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "引き継ぎ設定を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Setting Type Number",
+        "id": "prop_4QCBW1JJ874A6NWJKA9KXV0E9D",
+        "localizedDisplay": {
+          "en": {
+            "description": "Numeric type of authentication used for account transfer.",
+            "label": "Authentication type"
+          },
+          "ja": {
+            "description": "引き継ぎに使用する認証方式の種別番号です。",
+            "label": "認証種別"
+          }
+        },
+        "name": "type",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "OIDC Configuration URL",
+        "id": "prop_2GK8FWJBFSAN6QFBGZCFW4602M",
+        "localizedDisplay": {
+          "en": {
+            "description": "URL of the OpenID Connect configuration document.",
+            "label": "OIDC configuration URL"
+          },
+          "ja": {
+            "description": "OpenID Connect設定ドキュメントのURLです。",
+            "label": "OIDC設定URL"
+          }
+        },
+        "name": "configurationPath",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "OIDC Client ID",
+        "id": "prop_00AR2JNBEPQHX5YKYJXHQ5WSK3",
+        "localizedDisplay": {
+          "en": {
+            "description": "OIDC client identifier.",
+            "label": "Client ID"
+          },
+          "ja": {
+            "description": "OIDCクライアントIDです。",
+            "label": "クライアントID"
+          }
+        },
+        "name": "clientId",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "OIDC Secret",
+        "id": "prop_32N7ZY8V34H4TD6AGG9TP7SWSQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Client secret used for OIDC authentication.",
+            "label": "Client secret"
+          },
+          "ja": {
+            "description": "OIDC認証に使用するクライアントシークレットです。",
+            "label": "クライアントシークレット"
+          }
+        },
+        "name": "clientSecret",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Redirect URL when login completed",
+        "id": "prop_7BE7STA2Y2Y72F0SD64FBQB2JQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "URL opened after login completes.",
+            "label": "Completion URL"
+          },
+          "ja": {
+            "description": "ログイン完了後に遷移するURLです。",
+            "label": "完了後URL"
+          }
+        },
+        "name": "doneEndpointUrl",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Apple Team ID(if Sign-in Apple Account)",
+        "id": "prop_0KMJV43AM8EPY2W7HSE81ECJ00",
+        "localizedDisplay": {
+          "en": {
+            "description": "Apple Team ID used for Sign in with Apple.",
+            "label": "Apple Team ID"
+          },
+          "ja": {
+            "description": "Sign in with Appleで使用するTeam IDです。",
+            "label": "Apple Team ID"
+          }
+        },
+        "name": "appleTeamId",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Apple Key ID(if Sign-in Apple Account)",
+        "id": "prop_6SSER4P8KCWTCGCEHA41KMASPV",
+        "localizedDisplay": {
+          "en": {
+            "description": "Apple Key ID used for Sign in with Apple.",
+            "label": "Apple Key ID"
+          },
+          "ja": {
+            "description": "Sign in with Appleで使用するKey IDです。",
+            "label": "Apple Key ID"
+          }
+        },
+        "name": "appleKeyId",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Apple Private Key PEM(if Sign-in Apple Account)",
+        "id": "prop_1MDWB81CEGPC9T41TBZDES74PY",
+        "localizedDisplay": {
+          "en": {
+            "description": "PEM private key used for Sign in with Apple.",
+            "label": "Apple private key"
+          },
+          "ja": {
+            "description": "Sign in with Appleで使用するPEM形式の秘密鍵です。",
+            "label": "Apple秘密鍵"
+          }
+        },
+        "name": "applePrivateKeyPem",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Whether the user has TakeOver data",
+        "id": "prop_1FT8XXM16XVK8VQ989XQ049TZ2",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether take-over data is registered for the player.",
+            "label": "Has take-over data"
+          },
+          "ja": {
+            "description": "プレイヤーに引き継ぎデータが登録されているかを示します。",
+            "label": "引き継ぎデータあり"
+          }
+        },
+        "name": "hasTakeOver",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
+  "kind": "local",
+  "name": "TakeOverSetting",
+  "singleEntry": false
+}

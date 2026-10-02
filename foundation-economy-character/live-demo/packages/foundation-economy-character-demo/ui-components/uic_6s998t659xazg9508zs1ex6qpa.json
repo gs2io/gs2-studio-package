@@ -1,0 +1,16 @@
+{
+  "id": "uic_6S998T659XAZG9508ZS1EX6QPA",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "TrainButton",
+      "delegatedActionKey": "resource:foundation-economy-character-demo:masterData:mdr_610EXTERWVB0FRCTCXD30A4ZX6::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_6Q7KC4M407B80AT6WPH1G97SKR",
+      "kind": "buttonAction",
+      "name": "Character"
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_00D0KZXDBRG616WVXR4N5FCYH2"
+}

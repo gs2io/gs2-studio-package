@@ -1,0 +1,143 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "changeSubscriptionStatusNotification",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "currencyUsagePriority",
+        "value": "PrioritizeFree"
+      },
+      {
+        "kind": "static",
+        "parameterName": "depositBalanceScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Currency"
+      },
+      {
+        "kind": "static",
+        "parameterName": "platformSetting.appleAppStore",
+        "value": {
+          "bundleId": null,
+          "issuerId": null,
+          "keyId": null,
+          "privateKeyPem": null,
+          "sharedSecretKey": null
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "platformSetting.fake.acceptFakeReceipt",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
+            "typeName": "CurrencyStore"
+          },
+          "propertyId": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "platformSetting.googlePlay",
+        "value": {
+          "packageName": null,
+          "publicKey": null
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "renewScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "sharedFreeCurrency",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "subscribeScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "takeOverScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "unsubscribeScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "verifyReceiptScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "withdrawBalanceScript",
+        "value": null
+      }
+    ]
+  },
+  "id": "mdr_2E7WSMWGBTATQSVTMCW3T2R2AJ",
+  "location": {
+    "modelName": "Namespace",
+    "service": "money2"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
+    "typeName": "CurrencyStore"
+  }
+}

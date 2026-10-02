@@ -3,61 +3,61 @@
   "packageId": "micro-shop-character-gacha",
   "types": {
     "CharacterRate": {
-      "id": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+      "id": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
       "singleEntry": false,
       "canonicalPackageId": "micro-shop-character-gacha",
-      "canonicalTypeId": "dt_YVN07CDH8HXS4JYP4H6NQX3054",
+      "canonicalTypeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
       "properties": {
-        "character": "prop_AATTCTRXX4J382EEVEGE9ZYV6W",
-        "id": "prop_reserved_id",
-        "rarity": "prop_6MY41PGG6DAVSR3YSY4YDTYSPX",
-        "weight": "prop_2YWD79NQ991RBGDCA3HEZHGDT8"
+        "character": "prop_2JPPK6P7F94GT0KKPVM3JFZPSQ",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "rarity": "prop_1N7H0DM41KAPYE0ZPFH7KEQPDQ",
+        "weight": "prop_0QQ39TDDTA8E2W3B2GWBQWC3EJ"
       }
     },
     "Gacha": {
-      "id": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+      "id": "dt_1G91WTZCFR536CEWSHPAK07H4R",
       "singleEntry": false,
       "delegatedActions": {
-        "Buy": "resource:micro-shop-character-gacha:masterData:b6c5895e-3066-423a-9090-04d803ad89e9::Gs2Showcase:DisplayItem.Buy"
+        "Buy": "resource:micro-shop-character-gacha:masterData:mdr_5PRP4NWC3688X91404V01TV2F9::Gs2Showcase:DisplayItem.Buy"
       },
       "canonicalPackageId": "micro-shop-character-gacha",
-      "canonicalTypeId": "dt_6147KBXHZ0MCSHVK66SAC0Y4K3",
+      "canonicalTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
       "properties": {
-        "consumeActions": "prop_RG77EYB1G23KWGEYNTSCG96JNN",
-        "id": "prop_reserved_id",
-        "schedule": "prop_G9FT5R5K079VNPHKK15D46TRPC"
+        "consumeActions": "prop_641SVQJRC0GWZ43QNEPB429MND",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "schedule": "prop_42BYHE1CR1TEXDMCWR9B91PP5K"
       }
     },
     "GachaRarity": {
-      "id": "dt_GX6NYQD4P54A7TXS08MA9F3X7Z",
+      "id": "dt_479NFNV95H92HYQE8252JBRZ9Z",
       "singleEntry": false,
       "canonicalPackageId": "micro-shop-character-gacha",
-      "canonicalTypeId": "dt_GX6NYQD4P54A7TXS08MA9F3X7Z",
+      "canonicalTypeId": "dt_479NFNV95H92HYQE8252JBRZ9Z",
       "properties": {
-        "id": "prop_reserved_id"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     },
     "GachaRarityRate": {
-      "id": "dt_32H335ZJ31J4690TMPCRQFC04B",
+      "id": "dt_0RM8RSFWGRCH1J86N5K65VV012",
       "singleEntry": false,
       "canonicalPackageId": "micro-shop-character-gacha",
-      "canonicalTypeId": "dt_32H335ZJ31J4690TMPCRQFC04B",
+      "canonicalTypeId": "dt_0RM8RSFWGRCH1J86N5K65VV012",
       "properties": {
-        "gacha": "prop_1XD6YGM96H26BHSKDY26CNVB6R",
-        "id": "prop_reserved_id",
-        "rarity": "prop_R7CAWT1QMX0A9A0NWFYAYQ1Y7S",
-        "weight": "prop_HZZ3R7AT0DB8DS34X1K0QQR3Q8"
+        "gacha": "prop_0FB9QM529M8HJWECVFGHK5ETSP",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "rarity": "prop_61V2Q6GDX782JAG5F3ZJQNRFHY",
+        "weight": "prop_4FZRY1TPG3AT3E8S78CR5XY0XT"
       }
     }
   },
   "masterDataResources": {
-    "lottery.LotteryModel": "188c85a8-f0d5-4534-964a-e9e00604c2d6",
-    "lottery.Namespace": "ba9b8acc-859a-4acd-bade-b95f2dcdb6b2",
-    "showcase.DisplayItem": "b6c5895e-3066-423a-9090-04d803ad89e9",
-    "showcase.Namespace": "de811537-ebb8-4f28-9c50-d64484af063e",
-    "showcase.SalesItem": "0247d4b6-2edd-5cbd-b4f7-673903721915",
-    "showcase.Showcase": "6f1847c6-698c-4a93-af7b-f0ece2c3cd68",
-    "transaction.ConsumeAction": "a0e5b492-134a-5c5c-886e-773664d0f084"
+    "lottery.LotteryModel": "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP",
+    "lottery.Namespace": "mdr_5TKE5CS1CT9B6VNQNSBWPWVDNJ",
+    "showcase.DisplayItem": "mdr_5PRP4NWC3688X91404V01TV2F9",
+    "showcase.Namespace": "mdr_6YG4AKFTXR9WM9RM6P8J2AY1HY",
+    "showcase.SalesItem": "mdr_028ZABCBPXBJYV9XV7741Q468N",
+    "showcase.Showcase": "mdr_3F313WCTCC9A9TYYZGXKHC7KB8",
+    "transaction.ConsumeAction": "mdr_50WPT944TABHE8GVKQ6SJD1W44"
   },
   "transforms": {}
 }

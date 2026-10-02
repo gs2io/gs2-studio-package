@@ -1,0 +1,68 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "anchorTimestamp",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "days",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
+            "typeName": "SerialCodeRedemption"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "resetDayOfMonth",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "resetDayOfWeek",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "resetHour",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "resetType",
+        "value": "notReset"
+      }
+    ]
+  },
+  "id": "mdr_7SMW1JXZZPB748SJB0THQW9XK1",
+  "location": {
+    "modelName": "LimitModel",
+    "service": "limit"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
+    "typeName": "SerialCodeRedemption"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_4V682QX2SZB4GB809JSFWKK4SX"
+  }
+}

@@ -11,7 +11,7 @@
       "ja": "装備にランダムな追加効果を付与します。抽選されるスロット数と効果の種類・重みを設定できます。"
     },
     "domainTypes": {
-      "dt_01M0C84Y321K5KHKYHWHMAVTH5": {
+      "dt_00D03217GRGCSCWCZMF4D2PYM9": {
         "description": {
           "en": "Associates equipment with its enchantment configuration and rolled effects.",
           "ja": "装備ごとのエンチャント設定と付与済み効果を管理します。"
@@ -21,7 +21,7 @@
           "ja": "装備"
         }
       },
-      "dt_01M0C84Y323XGX5N856QJ5Z61Q": {
+      "dt_00D03217GRGZC79DA19NWHFSGD": {
         "description": {
           "en": "Tracks the enchantment effects rolled onto a player's equipment.",
           "ja": "プレイヤーの装備に実際に付与されたエンチャント効果を管理します。"
@@ -31,7 +31,7 @@
           "ja": "付与済み効果"
         }
       },
-      "dt_01M0C84Y32FM1BC8Y88H1VN16Q": {
+      "dt_00D03217GRKX0AV27J248EX89N": {
         "description": {
           "en": "Defines the pool of effects and roll rules available when enchanting equipment.",
           "ja": "装備に付与できる効果候補と抽選ルールをまとめて設定します。"
@@ -41,7 +41,7 @@
           "ja": "エンチャント設定"
         }
       },
-      "dt_01M0C84Y32MFW05C5TXC61W1SR": {
+      "dt_00D03217GRN3Z01B1EQB1GF0EE": {
         "description": {
           "en": "Configures the probability of each effect-slot count during enchantment.",
           "ja": "エンチャント時に付与される効果スロット数と確率を設定します。"
@@ -51,7 +51,7 @@
           "ja": "スロット数抽選"
         }
       },
-      "dt_01M0C84Y32ZDSA8TEZHPNG3MNK": {
+      "dt_00D03217GRQVEAJ6KQWDNC0X5C": {
         "description": {
           "en": "Defines an enchantment effect that can be rolled and the fixed value it grants.",
           "ja": "抽選対象となるエンチャント効果と、付与されたときの固定の効果値を設定します。"

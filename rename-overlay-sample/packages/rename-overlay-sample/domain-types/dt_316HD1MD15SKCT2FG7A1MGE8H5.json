@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_316HD1MD15SKCT2FG7A1MGE8H5",
+  "kind": "overlay",
+  "name": "CharmCollection",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-character",
+    "directSourceTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
+  }
+}

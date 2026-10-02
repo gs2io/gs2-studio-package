@@ -1,0 +1,72 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "existence",
+        "parameterName": "$existence",
+        "propertyId": "prop_1N32JT4VHQX89BMMSNSA8QE1W2"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "expiresAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+              "typeName": "Trigger"
+            },
+            "propertyId": "prop_7GBQSK2XRE2JNP4FBPTB9K8BDK"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+            "typeName": "Trigger"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "triggerId"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "triggeredAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+              "typeName": "Trigger"
+            },
+            "propertyId": "prop_3TE65WFVTTMBGJ8C08F2PMTGQJ"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+      "typeName": "Trigger"
+    }
+  },
+  "id": "udr_0BRD4DM0YFABGS80VXGWB73KQP",
+  "location": {
+    "modelName": "Trigger",
+    "service": "schedule"
+  }
+}

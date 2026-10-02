@@ -1,0 +1,11 @@
+{
+  "id": "daily",
+  "rowKey": "row_01M3E1NYQW3RZXCK2CXVH2PHM2",
+  "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+  "values": {
+    "prop_00D0V3E8RR357Z98YP7VMDXPP7": "streaming",
+    "prop_00D0V3E8RR3GSCNAW1JAKAQRRD": "disabled",
+    "prop_00D0V3E8RR5VJ1PXB3RJT9T21J": "disabled",
+    "prop_5BWDJGV41VX2E7914HXAQ5PGBP": 15
+  }
+}

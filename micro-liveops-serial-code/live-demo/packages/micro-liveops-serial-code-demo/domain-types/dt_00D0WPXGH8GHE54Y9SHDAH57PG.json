@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0WPXGH8GHE54Y9SHDAH57PG",
+  "kind": "overlay",
+  "name": "SerialCodeCampaign",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-liveops-serial-code",
+    "directSourceTypeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
+    "sourcePackageId": "micro-liveops-serial-code",
+    "sourceTypeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
+  }
+}

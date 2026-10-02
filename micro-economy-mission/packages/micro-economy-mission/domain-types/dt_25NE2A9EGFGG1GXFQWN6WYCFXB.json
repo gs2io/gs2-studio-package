@@ -1,0 +1,123 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the mission counter.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ミッションカウンターを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_3C8D5YDPFSJ3QVC205RWZ7XDZ2",
+        "localizedDisplay": {
+          "en": {
+            "description": "Progress accumulated in the current daily reset period.",
+            "label": "Daily value"
+          },
+          "ja": {
+            "description": "当日のリセット期間で蓄積した進捗値です。",
+            "label": "本日の値"
+          }
+        },
+        "name": "todayValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_5917YYM3N8ZDDKYH7PDDHE20GG",
+        "localizedDisplay": {
+          "en": {
+            "description": "Progress accumulated in the current weekly reset period.",
+            "label": "Weekly value"
+          },
+          "ja": {
+            "description": "当週のリセット期間で蓄積した進捗値です。",
+            "label": "今週の値"
+          }
+        },
+        "name": "weeklyValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_65GPGCJD76DD7BQCNVR9BHSP10",
+        "localizedDisplay": {
+          "en": {
+            "description": "Progress accumulated in the current monthly reset period.",
+            "label": "Monthly value"
+          },
+          "ja": {
+            "description": "当月のリセット期間で蓄積した進捗値です。",
+            "label": "今月の値"
+          }
+        },
+        "name": "monthlyValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_3HTNC82KPKW5J7DFN98H4PPGCW",
+        "localizedDisplay": {
+          "en": {
+            "description": "All-time progress value that is not reset.",
+            "label": "Total value"
+          },
+          "ja": {
+            "description": "リセットされない累計の進捗値です。",
+            "label": "累計値"
+          }
+        },
+        "name": "totalValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
+  "kind": "local",
+  "name": "MissionCounter",
+  "singleEntry": false
+}

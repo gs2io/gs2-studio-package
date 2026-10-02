@@ -1,0 +1,32 @@
+{
+  "id": "uic_060TP74HR9A6YRSP6VNZFE4PMV",
+  "items": [
+    {
+      "componentClassName": "CountLabel",
+      "id": "uii_6TKZBGJJF3BW68K4MAF90JAC2B",
+      "kind": "templateLabel",
+      "name": "PaidDeposit",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0KZCKAB8JMZWPNE82NRXE0W"
+          }
+        }
+      ],
+      "template": "Deposit {count} paid coins"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "DepositButton",
+      "delegatedActionKey": "resource:foundation-economy-currency-demo:masterData:mdr_6JVGGGN9A9AB9TWSKZS4RDACTQ::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_27VAG5TB7YAHMRQV2F76V45ZWA",
+      "kind": "buttonAction",
+      "name": "PaidDeposit"
+    }
+  ],
+  "name": "PaidDeposit",
+  "targetDomainType": "PaidDeposit",
+  "targetDomainTypeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3"
+}

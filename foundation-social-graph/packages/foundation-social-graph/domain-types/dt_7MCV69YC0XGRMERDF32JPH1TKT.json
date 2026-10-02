@@ -1,0 +1,101 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the profile.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "プロフィールを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_1MYTKGMH9W77112THJZ3HSMDF9",
+        "localizedDisplay": {
+          "en": {
+            "description": "Profile information visible to every player.",
+            "label": "Public profile"
+          },
+          "ja": {
+            "description": "すべてのプレイヤーへ公開するプロフィール情報です。",
+            "label": "公開プロフィール"
+          }
+        },
+        "name": "publicProfile",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_759K6DP8VBDS06P0YW25QNEN5N",
+        "localizedDisplay": {
+          "en": {
+            "description": "Profile information visible to followers.",
+            "label": "Follower profile"
+          },
+          "ja": {
+            "description": "フォロワーへ公開するプロフィール情報です。",
+            "label": "フォロワー向けプロフィール"
+          }
+        },
+        "name": "followerProfile",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_1D82CH5SP6SD8KM3DMX71SZ738",
+        "localizedDisplay": {
+          "en": {
+            "description": "Profile information visible to friends.",
+            "label": "Friend profile"
+          },
+          "ja": {
+            "description": "フレンドへ公開するプロフィール情報です。",
+            "label": "フレンド向けプロフィール"
+          }
+        },
+        "name": "friendProfile",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
+  "kind": "local",
+  "name": "Profile",
+  "singleEntry": false
+}

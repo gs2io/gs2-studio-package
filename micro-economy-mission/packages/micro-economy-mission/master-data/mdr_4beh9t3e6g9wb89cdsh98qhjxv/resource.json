@@ -1,0 +1,32 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "resetType",
+        "value": "notReset"
+      },
+      {
+        "kind": "static",
+        "parameterName": "scopeType",
+        "value": "resetTiming"
+      }
+    ]
+  },
+  "id": "mdr_4BEH9T3E6G9WB89CDSH98QHJXV",
+  "location": {
+    "modelName": "CounterScopeModel",
+    "service": "mission"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
+    "typeName": "MissionCounter"
+  },
+  "parent": {
+    "arrayProperty": "scopes",
+    "index": 3,
+    "kind": "arrayElement",
+    "parentId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
+  }
+}

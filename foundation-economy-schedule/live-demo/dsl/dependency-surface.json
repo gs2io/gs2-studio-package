@@ -3,37 +3,37 @@
   "packageId": "foundation-economy-schedule-demo",
   "types": {
     "Schedule": {
-      "id": "dt_01M2K159BPMEWBYY7W6YT7B1ZP",
+      "id": "dt_00D0MR9AAXN3Q2ZQHZ1QPHTRFX",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-schedule",
-      "canonicalTypeId": "dt_55N8HND2SNZV1ZMCJS4NA2BTFD"
+      "canonicalTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
     },
     "Trigger": {
-      "id": "dt_01M2K159BPQJXG6NHERRE6QEGG",
+      "id": "dt_00D0MR9AAXNWQC1NCBP63HNVM4",
       "singleEntry": false,
       "delegatedActions": {
-        "Clear": "resource:foundation-economy-schedule-demo:masterData:0ee053d5-dd24-50ac-b01f-082f3e9d3851::Gs2Exchange:RateModel.Exchange",
-        "Extend": "resource:foundation-economy-schedule-demo:masterData:83556a93-8a8f-5de2-aec2-c4645f36d453::Gs2Exchange:RateModel.Exchange"
+        "Clear": "resource:foundation-economy-schedule-demo:masterData:mdr_0EW19XBQ94A2PB07R85WZ9TE2H::Gs2Exchange:RateModel.Exchange",
+        "Extend": "resource:foundation-economy-schedule-demo:masterData:mdr_43ANN972MFBQHAXGP4CHFKDN2K::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "foundation-economy-schedule",
-      "canonicalTypeId": "dt_Y9Y1H4ZR4MS74D3YME76CEGJST"
+      "canonicalTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
     },
     "TriggerPull": {
-      "id": "dt_01M2K1JA50RTYBQZD91E00DJTF",
+      "id": "dt_00D0MRCJH866QJXZVA8BG03CPK",
       "singleEntry": false,
       "delegatedActions": {
-        "Pull": "resource:foundation-economy-schedule-demo:masterData:7b636bc8-d99d-50fd-96ab-4281a0fdf96c::Gs2Exchange:RateModel.Exchange"
+        "Pull": "resource:foundation-economy-schedule-demo:masterData:mdr_3VCDNWHPCXA3YSDAT2G6GFVYBC::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "foundation-economy-schedule-demo",
-      "canonicalTypeId": "dt_01M2K1JA50RTYBQZD91E00DJTF",
+      "canonicalTypeId": "dt_00D0MRCJH866QJXZVA8BG03CPK",
       "properties": {
-        "id": "prop_reserved_id",
-        "trigger": "prop_01M2K1JA50HQ4YC5CVCFWZ9DJ7"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "trigger": "prop_00D0MRCJH84DS7K1B6V3Z7TBCH"
       }
     }
   },
   "masterDataResources": {
-    "transaction.ConsumeAction": "67c7ff8e-c6b3-5f48-81c0-635ebe785354"
+    "transaction.ConsumeAction": "mdr_37RZZRXHNKBX483G33BTZ7GMTM"
   },
   "transforms": {}
 }

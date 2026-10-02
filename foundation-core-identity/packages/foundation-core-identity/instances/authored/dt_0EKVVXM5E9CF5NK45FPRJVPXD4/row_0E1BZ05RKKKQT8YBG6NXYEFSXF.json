@@ -1,0 +1,12 @@
+{
+  "id": "google",
+  "rowKey": "row_0E1BZ05RKKKQT8YBG6NXYEFSXF",
+  "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
+  "values": {
+    "prop_00AR2JNBEPQHX5YKYJXHQ5WSK3": "dummy",
+    "prop_2GK8FWJBFSAN6QFBGZCFW4602M": "https://accounts.google.com/.well-known/openid-configuration",
+    "prop_32N7ZY8V34H4TD6AGG9TP7SWSQ": "dummy",
+    "prop_4QCBW1JJ874A6NWJKA9KXV0E9D": 1,
+    "prop_7BE7STA2Y2Y72F0SD64FBQB2JQ": "dummy"
+  }
+}

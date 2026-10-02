@@ -1,0 +1,24 @@
+{
+  "id": "uic_0V6B6B7MREAJ3BYHRGSD6AMT2D",
+  "items": [
+    {
+      "componentClassName": "RuleLabel",
+      "id": "uii_2ZWHE77FSXAG2BCZ4N4S537552",
+      "kind": "templateLabel",
+      "name": "IdleStatus",
+      "sources": [],
+      "template": "Every 5 minutes away pays 5 coins, and every 12th interval pays 50 instead, for up to 8 hours. Receive pays what has built up and starts the count again; minutes short of a full 5 are dropped."
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ReceiveButton",
+      "delegatedActionKey": "resource:foundation-economy-idle:masterData:mdr_720YFK0MG497KRH6159H7NKWHY::Gs2Idle:CategoryModel.Receive",
+      "id": "uii_65BAXJF97WB6HBNT0S6RF4J8FW",
+      "kind": "buttonAction",
+      "name": "IdleStatus"
+    }
+  ],
+  "name": "IdleStatus",
+  "targetDomainType": "IdleStatus",
+  "targetDomainTypeId": "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "uic_61Q8DEH9J28Z6S53FT8XV4KMK8",
+  "items": [
+    {
+      "componentClassName": "PriceValue",
+      "id": "uii_35VSZWBCP39NVSBP3ERQPMJCRW",
+      "kind": "value",
+      "name": "StorePrice",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K"
+      }
+    },
+    {
+      "componentClassName": "PriceLabel",
+      "id": "uii_5VGTE4HTM99SGS3RRP3R90H8Q2",
+      "kind": "label",
+      "name": "StorePrice",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K"
+      }
+    }
+  ],
+  "name": "StorePrice",
+  "targetDomainType": "StorePrice",
+  "targetDomainTypeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD"
+}

@@ -1,0 +1,105 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the enchantment slot chance.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "効果数抽選を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_00D03217GRGSNN857DXEA47C4Y",
+        "localizedDisplay": {
+          "en": {
+            "description": "Enchantment configuration this slot-count chance belongs to.",
+            "label": "Enchantment configuration"
+          },
+          "ja": {
+            "description": "この効果数抽選が属するエンチャント設定です。",
+            "label": "エンチャント設定"
+          }
+        },
+        "name": "enchant",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_00D03217GRKX0AV27J248EX89N"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Number of bonuses rolled",
+        "id": "prop_00D03217GRPNY6G1Z1K6JD36ZX",
+        "localizedDisplay": {
+          "en": {
+            "description": "Number of effects added when this result is drawn.",
+            "label": "Effect count",
+            "unit": "effects"
+          },
+          "ja": {
+            "description": "抽選された場合に装備へ付与する効果数です。",
+            "label": "付与効果数",
+            "unit": "個"
+          }
+        },
+        "name": "count",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Relative draw weight",
+        "id": "prop_00D03217GRMT119DB6K6XQAWV0",
+        "localizedDisplay": {
+          "en": {
+            "description": "Relative weight used to draw this effect count.",
+            "label": "Draw weight"
+          },
+          "ja": {
+            "description": "この効果数が選ばれる相対的な重みです。",
+            "label": "抽選重み"
+          }
+        },
+        "name": "weight",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D03217GRN3Z01B1EQB1GF0EE",
+  "kind": "local",
+  "name": "EquipmentEnchantSlotChance",
+  "singleEntry": false
+}

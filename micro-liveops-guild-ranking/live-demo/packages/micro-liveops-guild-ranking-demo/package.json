@@ -18,7 +18,7 @@
       "ja": "ライブデモ用に、ギルドごとのランキングと順位帯ごとの報酬コイン、毎日切り替わるシーズンの説明を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
     "domainTypes": {
-      "dt_01M3PKBSERB4VKYASEP2635GJZ": {
+      "dt_00D0XMTYBP2S6WZJPBNGHGSC4Q": {
         "description": {
           "en": "Adds the coins it pays to a demo guild ranking reward tier.",
           "ja": "デモのギルドランキング報酬に、報酬コインを足します。"

@@ -1,0 +1,25 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Showcase"
+      },
+      {
+        "kind": "static",
+        "parameterName": "salesPeriodEventId",
+        "value": null
+      }
+    ]
+  },
+  "id": "mdr_3F313WCTCC9A9TYYZGXKHC7KB8",
+  "location": {
+    "modelName": "Showcase",
+    "service": "showcase"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_6YG4AKFTXR9WM9RM6P8J2AY1HY"
+  }
+}

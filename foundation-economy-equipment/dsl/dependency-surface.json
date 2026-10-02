@@ -3,44 +3,44 @@
   "packageId": "foundation-economy-equipment",
   "types": {
     "Equipment": {
-      "id": "dt_R7W960WC22J1FD8E239HDFMD8D",
+      "id": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-equipment",
-      "canonicalTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D",
+      "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
       "properties": {
-        "category": "prop_2C21XE4SCXQ1JDG7ES2MNFNA2R",
-        "id": "prop_reserved_id",
-        "propertyId": "prop_S5796CZNBGWDHWSSHHT1EC00T6",
-        "sortValue": "prop_H4JW4XTKFKNW6TYBGJ7W6C175M"
+        "category": "prop_0K0GFBH6B7DRCKC1VP8N5BXAGP",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H",
+        "sortValue": "prop_494Q17EMVWXF1PQJW4HZ1K09SD"
       }
     },
     "EquipmentCategory": {
-      "id": "dt_QQR152BQFJSTM2W1WYZR4RPA98",
+      "id": "dt_5XY098JXVWPEN0Q0F7QY165JJA",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-equipment",
-      "canonicalTypeId": "dt_QQR152BQFJSTM2W1WYZR4RPA98",
+      "canonicalTypeId": "dt_5XY098JXVWPEN0Q0F7QY165JJA",
       "properties": {
-        "id": "prop_reserved_id"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     },
     "EquipmentCollection": {
-      "id": "dt_FANPG561806ENHYPWV5YRDSHC7",
+      "id": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
       "singleEntry": true,
       "canonicalPackageId": "foundation-economy-equipment",
-      "canonicalTypeId": "dt_FANPG561806ENHYPWV5YRDSHC7",
+      "canonicalTypeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
       "properties": {
-        "currentCapacityUsage": "prop_NA9PEMACBTKGX9JJZW6JBB2FZ4",
-        "currentMaximumCapacity": "prop_SNZ882933CSX0MRPEPQ1VVE4EQ",
-        "defaultCapacity": "prop_0W6ZJVBD4FKRF1KAVPN5HE001Y",
-        "id": "prop_reserved_id",
-        "maximumCapacity": "prop_J93B9BA3YNMZ1C1K5TDZRDA17W"
+        "currentCapacityUsage": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS",
+        "currentMaximumCapacity": "prop_6DFT20J8RV6F8565KNNREYVH3N",
+        "defaultCapacity": "prop_071QWPTV93WY3RCTPXN9CBG00F",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "maximumCapacity": "prop_4J8TTATGZND7RB0CSEKFY3AG9Z"
       }
     }
   },
   "masterDataResources": {
-    "inventory.InventoryModel": "fa8c41a8-ebde-40c1-9f32-7ad1eb4f7e30",
-    "inventory.ItemModel": "e4638944-74f6-4475-baa9-e9a6c0b8e607",
-    "inventory.Namespace": "11564513-7c8f-4ffa-a490-0f717239e599"
+    "inventory.InventoryModel": "mdr_7THH0THTYY830SYCKTT7NMYZHG",
+    "inventory.ItemModel": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7",
+    "inventory.Namespace": "mdr_0HAS2H6Z4F9ZXA940FE5S3KSCS"
   },
   "transforms": {
     "AcquireEquipment": [

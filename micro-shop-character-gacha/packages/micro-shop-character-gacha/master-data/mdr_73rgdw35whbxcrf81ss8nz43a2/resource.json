@@ -1,0 +1,33 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_479NFNV95H92HYQE8252JBRZ9Z",
+            "typeName": "GachaRarity"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    ]
+  },
+  "id": "mdr_73RGDW35WHBXCRF81SS8NZ43A2",
+  "location": {
+    "modelName": "PrizeTable",
+    "service": "lottery"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_479NFNV95H92HYQE8252JBRZ9Z",
+    "typeName": "GachaRarity"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_5TKE5CS1CT9B6VNQNSBWPWVDNJ"
+  }
+}

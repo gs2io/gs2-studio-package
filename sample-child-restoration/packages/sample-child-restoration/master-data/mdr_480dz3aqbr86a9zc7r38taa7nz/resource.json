@@ -1,0 +1,75 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "resourceType",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG",
+                  "typeName": "QuestMaterial"
+                },
+                "propertyId": "prop_00CYQANBEMD1KZZ3KNW41Q5E1N"
+              }
+            }
+          },
+          {
+            "parameterName": "resourceId",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG",
+                  "typeName": "QuestMaterial"
+                },
+                "propertyId": "prop_00CYQANBEME0HWT60VTZGNMGZJ"
+              }
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG",
+                  "typeName": "QuestMaterial"
+                },
+                "propertyId": "prop_00CYQANBEME23TGTQKPJD745ET"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ConsumeResource",
+        "transformPackageId": "sample-child-restoration"
+      }
+    ]
+  },
+  "id": "mdr_480DZ3AQBR86A9ZC7R38TAA7NZ",
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG",
+    "typeName": "QuestMaterial"
+  },
+  "parent": {
+    "arrayProperty": "consumeActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
+  }
+}

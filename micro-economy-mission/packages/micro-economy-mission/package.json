@@ -11,7 +11,7 @@
       "ja": "日次・週次・月次・リセットなしのミッションと、その達成条件・報酬を管理します。"
     },
     "domainTypes": {
-      "dt_8PNR995T1Y2063NYZJMVKSHZNE": {
+      "dt_25NE2A9EGFGG1GXFQWN6WYCFXB": {
         "description": {
           "en": "Tracks per-player progress values used by mission completion conditions.",
           "ja": "ミッション達成条件に使用するプレイヤーごとの進捗値を管理します。"
@@ -21,7 +21,7 @@
           "ja": "ミッションカウンター"
         }
       },
-      "dt_DW6Y7CDDGF0QNJ01W11BZ928XV": {
+      "dt_3F1QHV3BC3R5XCG0F08AZT8J7E": {
         "description": {
           "en": "Configures counter reset rules and shared mission behavior.",
           "ja": "ミッションカウンターのリセット方法や共通動作を設定します。"
@@ -31,7 +31,7 @@
           "ja": "ミッション設定"
         }
       },
-      "dt_P8YA8929576H08C2Q4YBE5KJXT": {
+      "dt_5J7JJ28J99SM8230NS7JVHCWQE": {
         "description": {
           "en": "Defines a mission's counter, target value, completion rewards, and claim state.",
           "ja": "達成カウンター、目標値、完了報酬と受取状態を設定・管理します。"
@@ -41,7 +41,7 @@
           "ja": "ミッション"
         }
       },
-      "dt_ZXWN4GKT975S371YFYF3E1DRZ0": {
+      "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R": {
         "description": {
           "en": "Groups missions by scope and availability schedule.",
           "ja": "ミッションの公開範囲と開催スケジュールをまとめて設定します。"

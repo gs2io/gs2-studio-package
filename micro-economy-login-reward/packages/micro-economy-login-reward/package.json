@@ -11,7 +11,7 @@
       "ja": "毎日・連続ログインなどに応じて報酬を配布します。"
     },
     "domainTypes": {
-      "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV": {
+      "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y": {
         "description": {
           "en": "Defines the rewards granted for each login day.",
           "ja": "ログイン日数ごとに付与する報酬内容を設定します。"
@@ -21,7 +21,7 @@
           "ja": "ログインボーナス"
         }
       },
-      "dt_M6M6F3GTMTWDDTR7DJ0N84PGWJ": {
+      "dt_51N1KRW6N6Q3BEP1VCG5A15M74": {
         "description": {
           "en": "References the period during which a login reward campaign is available.",
           "ja": "ログインボーナスを利用できる開催期間を参照します。"
@@ -31,7 +31,7 @@
           "ja": "スケジュール"
         }
       },
-      "dt_QJ28ZFQA4XC6CESKHZECA7205P": {
+      "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D": {
         "description": {
           "en": "Groups login rewards and associates them with an availability schedule.",
           "ja": "ログインボーナスをまとめるグループと開催スケジュールを設定します。"

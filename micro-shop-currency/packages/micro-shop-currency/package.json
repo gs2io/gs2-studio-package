@@ -11,7 +11,7 @@
       "ja": "通貨を購入できる商品と価格を扱います。"
     },
     "domainTypes": {
-      "dt_4C1ZT24FH0ST09YC0VE1TB7SK8": {
+      "dt_130FYGH3W86EG2FK06VGEJSYCT": {
         "description": {
           "en": "Defines the contents and presentation of a product sold in the store.",
           "ja": "ストアで販売する商品内容と表示情報を設定します。"
@@ -21,7 +21,7 @@
           "ja": "ストア商品"
         }
       },
-      "dt_NRHGV2T8Z964H3HMPZ454WEZ9M": {
+      "dt_5E4C6RPJ7T9H48WD5QS1973QTD": {
         "description": {
           "en": "Configures a product's currency, price, and purchase limits.",
           "ja": "商品ごとに販売通貨、価格、購入回数制限を設定します。"
@@ -31,7 +31,7 @@
           "ja": "販売価格"
         }
       },
-      "dt_QM3KC8SJTDM4W54DTSPXM8HTRD": {
+      "dt_5X0WV26CPKD17193EPDQD24EP3": {
         "description": {
           "en": "Defines a type of in-game currency that can be used to purchase products.",
           "ja": "商品の購入に利用できるゲーム内通貨の種類を設定します。"

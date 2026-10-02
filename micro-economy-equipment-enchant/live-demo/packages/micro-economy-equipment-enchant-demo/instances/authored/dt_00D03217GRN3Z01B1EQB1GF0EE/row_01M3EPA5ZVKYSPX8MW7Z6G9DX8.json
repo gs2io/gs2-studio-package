@@ -1,0 +1,10 @@
+{
+  "id": "two",
+  "rowKey": "row_01M3EPA5ZVKYSPX8MW7Z6G9DX8",
+  "typeId": "dt_00D03217GRN3Z01B1EQB1GF0EE",
+  "values": {
+    "prop_00D03217GRGSNN857DXEA47C4Y": "standard",
+    "prop_00D03217GRMT119DB6K6XQAWV0": 35,
+    "prop_00D03217GRPNY6G1Z1K6JD36ZX": 2
+  }
+}

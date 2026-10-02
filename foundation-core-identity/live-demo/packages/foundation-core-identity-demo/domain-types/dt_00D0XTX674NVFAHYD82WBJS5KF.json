@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0XTX674NVFAHYD82WBJS5KF",
+  "kind": "overlay",
+  "name": "TransferCode",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-core-identity",
+    "directSourceTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
+    "sourcePackageId": "foundation-core-identity",
+    "sourceTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
+  }
+}

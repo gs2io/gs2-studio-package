@@ -1,0 +1,98 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the gift.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "贈り物を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00D0SHMWJ1KSSS1CYCFS0AHJBT",
+        "localizedDisplay": {
+          "en": {
+            "description": "Content of the message the gift arrives with.",
+            "label": "Message payload"
+          },
+          "ja": {
+            "description": "贈り物と一緒に届くメッセージの内容です。",
+            "label": "メッセージ内容"
+          }
+        },
+        "name": "payload",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00D0SHMWJ1Q1KCCFKR0J26GETW",
+        "localizedDisplay": {
+          "en": {
+            "description": "Coins received when the message is opened.",
+            "label": "Coins",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "メッセージを開いたときに受け取るコインの量です。",
+            "label": "コイン",
+            "unit": "通貨"
+          }
+        },
+        "name": "amount",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Deliver",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-liveops-inbox-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0SHMWJ1K42G74YQPF2DJNV6",
+  "kind": "local",
+  "name": "Gift",
+  "singleEntry": true
+}

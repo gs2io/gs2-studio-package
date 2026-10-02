@@ -66,9 +66,9 @@ describe("StoreProduct overlay edit regression (sample-social-game-basic)", () =
       targetId = `regression-target-${suffix}`;
     }
 
-    // appleAppStoreProductId property: prop_A26C5NBX039V9DNV0ERPSWVPD8
+    // appleAppStoreProductId property: prop_2GHK1DAZ80TETBDER3P5PF6XKA
     // (from foundation-economy-currency/domain-types/store-product.json)
-    const appleProductIdPropId = PropertyId.trusted("prop_A26C5NBX039V9DNV0ERPSWVPD8");
+    const appleProductIdPropId = PropertyId.trusted("prop_2GHK1DAZ80TETBDER3P5PF6XKA");
 
     const result = PackageInstances.setOverlayOverride(
       samplePkg,

@@ -1,0 +1,79 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the rolled enchantment.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "付与済み効果を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_00D03217GRKK3MAVRY7VKHB9GK",
+        "localizedDisplay": {
+          "en": {
+            "description": "Name of the target modified by the rolled effect.",
+            "label": "Effect target"
+          },
+          "ja": {
+            "description": "装備に付与された効果の対象名です。",
+            "label": "効果対象"
+          }
+        },
+        "name": "resourceName",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_00D03217GRMPQHMB5B4QST8GM4",
+        "localizedDisplay": {
+          "en": {
+            "description": "Value of the rolled effect applied to the equipment.",
+            "label": "Effect value"
+          },
+          "ja": {
+            "description": "装備に付与された追加効果の値です。",
+            "label": "効果値"
+          }
+        },
+        "name": "resourceValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D03217GRGZC79DA19NWHFSGD",
+  "kind": "local",
+  "name": "EquipmentEnchantment",
+  "singleEntry": false
+}

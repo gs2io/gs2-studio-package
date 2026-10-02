@@ -1,0 +1,80 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "static",
+                "value": 0
+              }
+            },
+            {
+              "parameterName": "paidOnly",
+              "source": {
+                "kind": "static",
+                "value": false
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ"
+              }
+            }
+          ],
+          "transformName": "WithdrawCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "append",
+      "targetPropertyId": "prop_00D05R0KFCTFK6442MMAKE56Y9"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "Coins this node charges when it is released",
+        "id": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Coins spent to unlock this node.",
+            "label": "Unlock cost"
+          },
+          "ja": {
+            "description": "このノードを解放するときに消費するコインの額です。",
+            "label": "解放コスト"
+          }
+        },
+        "name": "cost",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0REX8TAF27YR23HD6W1WJAY",
+  "kind": "overlay",
+  "name": "SkillNode",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-skill-tree",
+    "directSourceTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+    "sourcePackageId": "micro-economy-skill-tree",
+    "sourceTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
+  }
+}

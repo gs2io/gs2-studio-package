@@ -1,0 +1,34 @@
+{
+  "id": "uic_7CPHWPH6QQB128JGFBXDCPA3T6",
+  "items": [
+    {
+      "componentClassName": "DrawLabel",
+      "id": "uii_4YSV3FZT2FBNF8XDDQKWR62YNB",
+      "kind": "label",
+      "name": "Gacha",
+      "source": {
+        "kind": "literal",
+        "value": "Draw a character for 10 coins"
+      }
+    },
+    {
+      "arguments": [
+        {
+          "parameterName": "quantity",
+          "source": {
+            "kind": "literal",
+            "value": 1
+          }
+        }
+      ],
+      "componentClassName": "BuyButton",
+      "delegatedActionKey": "resource:micro-shop-character-gacha:masterData:mdr_5PRP4NWC3688X91404V01TV2F9::Gs2Showcase:DisplayItem.Buy",
+      "id": "uii_10KGDX96WTAC991BGF5HBHZY69",
+      "kind": "buttonAction",
+      "name": "Gacha"
+    }
+  ],
+  "name": "Gacha",
+  "targetDomainType": "Gacha",
+  "targetDomainTypeId": "dt_00D0PAZ47BTJ1GZ2K5QP5DPDJ9"
+}

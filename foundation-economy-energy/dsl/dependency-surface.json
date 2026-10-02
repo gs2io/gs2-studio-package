@@ -3,26 +3,26 @@
   "packageId": "foundation-economy-energy",
   "types": {
     "Energy": {
-      "id": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
+      "id": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-energy",
-      "canonicalTypeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY",
+      "canonicalTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
       "properties": {
-        "currentMaximumValue": "prop_DXPJ5GFZ6VPMZQKHGKBKNDQCMR",
-        "currentValue": "prop_XFMYM93GTF2261GG2KNVHC9V5K",
-        "defaultMaximum": "prop_3ED1FAC3V82FG3Z4QEMXRF1BJE",
-        "id": "prop_reserved_id",
-        "nextRecoverdAt": "prop_D7958YRAP4TTQ8KG4A41ZZN7KJ",
-        "overflowedMaximum": "prop_64XY03QAD08E4FQMCQQG039HZ9",
-        "recoveryIntervalMinutes": "prop_XCA5D46XQKYD37PNGVYA1HH9S9",
-        "recoveryValue": "prop_NQG4GN9X1R4HTWE275H4JXJHFK",
-        "useOverflow": "prop_1QXN33T7DVRHC1P1C2D0ECXPQP"
+        "currentMaximumValue": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56",
+        "currentValue": "prop_7BX7N28W6KRGHGC40MXEWB2ESC",
+        "defaultMaximum": "prop_0VK8BTK0YT0KW0ZS5VN7E3RAWK",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "nextRecoverdAt": "prop_39T9A7P2NH6PNT4W12H0FZX9WW",
+        "overflowedMaximum": "prop_1H7FG0XTK823H3XX35XW00TCFT",
+        "recoveryIntervalMinutes": "prop_7B2HB91QDWZK8SXNC6ZJGCCAEA",
+        "recoveryValue": "prop_5DW145AF8E14EQ3GHSC94QCMBW",
+        "useOverflow": "prop_0DZD8RYHVEY4B0DGB0K83K7DNX"
       }
     }
   },
   "masterDataResources": {
-    "stamina.Namespace": "e7a19940-04e0-40de-adb0-95d1b3a9b7ed",
-    "stamina.StaminaModel": "a0e059f6-3e69-4083-8dd4-dbfc9161cbe5"
+    "stamina.Namespace": "mdr_77M6CM017083FAVC4NT6STKDZD",
+    "stamina.StaminaModel": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5"
   },
   "transforms": {
     "ConsumeEnergy": [

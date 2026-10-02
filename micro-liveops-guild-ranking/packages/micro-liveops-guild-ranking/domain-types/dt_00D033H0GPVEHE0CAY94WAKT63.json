@@ -1,0 +1,109 @@
+{
+  "compositeKey": [
+    "prop_00D033H0GPW6DTTEFEGK4CXBVX",
+    "prop_00D033H0GPTR5V04T6YPBYCG0Q"
+  ],
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the guild ranking reward.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ギルドランキング報酬を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_00D033H0GPW6DTTEFEGK4CXBVX",
+        "localizedDisplay": {
+          "en": {
+            "description": "Guild ranking that distributes this reward.",
+            "label": "Guild ranking"
+          },
+          "ja": {
+            "description": "この報酬を配布するギルドランキングです。",
+            "label": "対象ランキング"
+          }
+        },
+        "name": "ranking",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "description": "Lowest placement within the guild this reward tier pays",
+        "id": "prop_00D033H0GPTR5V04T6YPBYCG0Q",
+        "localizedDisplay": {
+          "en": {
+            "description": "Lowest placement eligible for this reward.",
+            "label": "Rank threshold",
+            "unit": "place"
+          },
+          "ja": {
+            "description": "この報酬を受け取れる最下位の順位です。",
+            "label": "順位しきい値",
+            "unit": "位"
+          }
+        },
+        "name": "thresholdRank",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00D033H0GPSX5TQB69ST80YSQG",
+        "localizedDisplay": {
+          "en": {
+            "description": "Reward actions executed for members who meet the placement threshold.",
+            "label": "Acquire actions"
+          },
+          "ja": {
+            "description": "順位条件を満たしたメンバーへ実行する報酬アクションです。",
+            "label": "獲得アクション"
+          }
+        },
+        "name": "acquireActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D033H0GPVEHE0CAY94WAKT63",
+  "kind": "local",
+  "name": "GuildRankingReward",
+  "singleEntry": false
+}

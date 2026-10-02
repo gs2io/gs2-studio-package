@@ -1,0 +1,35 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the enhancement recipe.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "強化レシピを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D031YG89PXH0J9RYZKY8NP6R",
+  "kind": "local",
+  "name": "CharacterEnhance",
+  "singleEntry": false
+}

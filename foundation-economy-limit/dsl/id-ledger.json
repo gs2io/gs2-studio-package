@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "property:UsageLimit.anchorTimestamp": "prop_01M0C5HJ9H18WFD7HQJ6BVRQ54",
-    "property:UsageLimit.days": "prop_01M0C5HJ9HN7J7K686N7G6PM4E",
-    "property:UsageLimit.resetDayOfMonth": "prop_01M0C5HJ9HCVBQ4JVCH9JKNY9H",
-    "property:UsageLimit.resetDayOfWeek": "prop_01M0C5HJ9H8A68TH51QQXSQAFS",
-    "property:UsageLimit.resetHour": "prop_01M0C5HJ9HJ8NZAFDXZ35YAZW3",
-    "property:UsageLimit.resetType": "prop_01M0C5HJ9H4CPRTN2A56ZXV8F1",
-    "property:UsageLimitCounter.count": "prop_01M0C6M2N3QZ9FAN0HDKP1Y6K3",
-    "property:UsageLimitCounter.limit": "prop_01M0C6M2N3NJ15T88Q5QET2KVA",
-    "property:UsageLimitCounter.nextResetAt": "prop_01M0C6M2N34YDGP2NCGNER2T39",
+    "property:UsageLimit.anchorTimestamp": "prop_00D031CCJC8A73V9WDWHJYY5S9",
+    "property:UsageLimit.days": "prop_00D031CCJCD9WHWSJ1N9W1NN13",
+    "property:UsageLimit.resetDayOfMonth": "prop_00D031CCJCB6TXS4PV4ACMXFJC",
+    "property:UsageLimit.resetDayOfWeek": "prop_00D031CCJCA2HJ6M98DXZEDTKY",
+    "property:UsageLimit.resetHour": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0",
+    "property:UsageLimit.resetType": "prop_00D031CCJC935P6N8JH9QZET3R",
+    "property:UsageLimitCounter.count": "prop_00D031N0N8XZTBTN84BCXGFHMR",
+    "property:UsageLimitCounter.limit": "prop_00D031N0N8XCG9EJ25SDVPGMYT",
+    "property:UsageLimitCounter.nextResetAt": "prop_00D031N0N8S7KC5GNB45BP0PGT",
     "transform:CountDownUsageLimit:output:direct:Gs2Limit:CountDownByUserId#0": "out_01M0C5HJ9HYE63F6J76WX9B46N",
     "transform:CountDownUsageLimit:parameter:countDownValue": "param_01M0C6M2N3ABZKZYQ192V6GV64",
     "transform:CountDownUsageLimit:parameter:counter": "param_01M0C6M2N3F5P8VN7BW32S9QEV",
@@ -27,8 +27,10 @@
     "transform:VerifyUsageLimitNotReached:parameter:counter": "param_01M0C6M2N3B54A28K6TV5GV3H0",
     "transform:VerifyUsageLimitNotReached:parameter:limit": "param_01M0C5HJ9HYWQN9BMX8ZWQ0HAK",
     "transform:VerifyUsageLimitNotReached:parameter:maxValue": "param_01M0C6M2N3MJZKVTNG3507QQJ6",
-    "type:UsageLimit": "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R",
-    "type:UsageLimitCounter": "dt_01M0C6M2N38KVHBHTC1JBRT5YA"
+    "type:UsageLimit": "dt_00D031CCJC5E77CH6RN2RE661E",
+    "type:UsageLimitCounter": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "user/limit:Counter:UsageLimitCounter:#0": "udr_6QV98XRJE8B8R8TDT3FYN967PS"
+  }
 }

@@ -11,7 +11,7 @@
       "ja": "キャラクターのグレードを上げてレベル上限を引き上げます。段階ごとに上限値と対象キャラクターを設定できます。"
     },
     "domainTypes": {
-      "dt_01M0C826WJ0HDTQG636AHV341M": {
+      "dt_00D0320HQ4G4BENW1GSJMERS0D": {
         "description": {
           "en": "Tracks the current grade of each character owned by a player.",
           "ja": "プレイヤーが所持するキャラクターごとの現在グレードを管理します。"
@@ -21,7 +21,7 @@
           "ja": "キャラクター"
         }
       },
-      "dt_01M0C826WJAVB4NEKDQ1MYZY4X": {
+      "dt_00D0320HQ4JPTS5BMVDRD7QZH7": {
         "description": {
           "en": "Defines eligible characters, the grade-up target, and rank cap for a grade step.",
           "ja": "対象キャラクターの条件、グレードアップ先、ランク上限を設定します。"

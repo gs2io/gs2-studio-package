@@ -1,0 +1,80 @@
+{
+  "compositeKey": [
+    "prop_00CYQANBEM911F4ZNFK72S754R",
+    "prop_00CYQANBEMD1KZZ3KNW41Q5E1N",
+    "prop_00CYQANBEME0HWT60VTZGNMGZJ"
+  ],
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_00CYQANBEM911F4ZNFK72S754R",
+        "name": "quest",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_7BY7J77ZQ1JAJPJGC4PSYAHC6N"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00CYQANBEMD1KZZ3KNW41Q5E1N",
+        "name": "resourceType",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "material",
+            "item"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00CYQANBEME0HWT60VTZGNMGZJ",
+        "name": "resourceId",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00CYQANBEME23TGTQKPJD745ET",
+        "name": "count",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG",
+  "kind": "local",
+  "name": "QuestMaterial",
+  "singleEntry": false
+}

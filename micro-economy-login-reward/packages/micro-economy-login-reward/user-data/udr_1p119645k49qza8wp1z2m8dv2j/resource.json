@@ -1,0 +1,66 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "bonusModelName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "lastReceivedAt",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "receiveStatusId"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "receivedSteps",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+              "typeName": "LoginRewardCollection"
+            },
+            "propertyId": "prop_00D0V3E8RR0S3JWWDZ37H09BS2"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+      "typeName": "LoginRewardCollection"
+    }
+  },
+  "id": "udr_1P119645K49QZA8WP1Z2M8DV2J",
+  "location": {
+    "modelName": "ReceiveStatus",
+    "service": "loginReward"
+  }
+}

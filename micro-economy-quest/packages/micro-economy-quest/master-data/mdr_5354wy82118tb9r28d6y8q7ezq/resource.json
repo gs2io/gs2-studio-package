@@ -1,0 +1,16 @@
+{
+  "authored": {
+    "declaredBindings": []
+  },
+  "id": "mdr_5354WY82118TB9R28D6Y8Q7EZQ",
+  "location": {
+    "modelName": "Contents",
+    "service": "quest"
+  },
+  "parent": {
+    "arrayProperty": "contents",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
+  }
+}

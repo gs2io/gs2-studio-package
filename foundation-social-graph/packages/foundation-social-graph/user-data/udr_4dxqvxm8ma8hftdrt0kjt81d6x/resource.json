@@ -1,0 +1,64 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "followerProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+              "typeName": "Follow"
+            },
+            "propertyId": "prop_73QSS5XZ6NRSZZM9W4XV4JB0F2"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "publicProfile",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+              "typeName": "Follow"
+            },
+            "propertyId": "prop_0037P8GKD1Y37HERP8N6DHZM9F"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "userId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+            "typeName": "Follow"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "withProfile",
+        "value": true
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+      "typeName": "Follow"
+    }
+  },
+  "id": "udr_4DXQVXM8MA8HFTDRT0KJT81D6X",
+  "location": {
+    "modelName": "FollowUser",
+    "service": "friend"
+  }
+}

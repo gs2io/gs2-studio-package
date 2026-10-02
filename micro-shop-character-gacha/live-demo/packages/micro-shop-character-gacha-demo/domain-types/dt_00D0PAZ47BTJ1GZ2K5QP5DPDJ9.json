@@ -1,0 +1,56 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "static",
+                "value": 0
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "static",
+                "value": 10
+              }
+            },
+            {
+              "parameterName": "paidOnly",
+              "source": {
+                "kind": "static",
+                "value": false
+              }
+            }
+          ],
+          "transformName": "WithdrawCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "replace",
+      "targetPropertyId": "prop_641SVQJRC0GWZ43QNEPB429MND"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0PAZ47BTJ1GZ2K5QP5DPDJ9",
+  "kind": "overlay",
+  "name": "Gacha",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-shop-character-gacha",
+    "directSourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+    "sourcePackageId": "micro-shop-character-gacha",
+    "sourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+  }
+}

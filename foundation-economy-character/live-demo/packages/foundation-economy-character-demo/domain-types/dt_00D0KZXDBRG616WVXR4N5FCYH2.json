@@ -1,0 +1,63 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Train",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        },
+        {
+          "entries": [
+            {
+              "fields": [
+                {
+                  "name": "key",
+                  "source": {
+                    "kind": "static",
+                    "value": "propertyId"
+                  }
+                },
+                {
+                  "name": "value",
+                  "source": {
+                    "kind": "domainProperty",
+                    "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                  }
+                }
+              ],
+              "kind": "fields"
+            }
+          ],
+          "kind": "listEntries",
+          "parameterName": "config"
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_610EXTERWVB0FRCTCXD30A4ZX6",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-character-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0KZXDBRG616WVXR4N5FCYH2",
+  "kind": "overlay",
+  "name": "Character",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-character",
+    "directSourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+  }
+}

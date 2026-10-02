@@ -3,31 +3,31 @@
   "packageId": "micro-economy-character-grade",
   "types": {
     "Character": {
-      "id": "dt_01M0C826WJ0HDTQG636AHV341M",
+      "id": "dt_00D0320HQ4G4BENW1GSJMERS0D",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
       "addedProperties": {
-        "grade": "prop_01M0C826WJ0M7QGYB50KVWBD98"
+        "grade": "prop_00D0320HQ4G51XW7JS84YZ2VAA"
       }
     },
     "CharacterGradeStep": {
-      "id": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+      "id": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-character-grade",
-      "canonicalTypeId": "dt_01M0C826WJAVB4NEKDQ1MYZY4X",
+      "canonicalTypeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
       "properties": {
-        "gradeUpPropertyIdRegex": "prop_01M0C826WJN2XGK5PMWPSYNZ5W",
-        "id": "prop_reserved_id",
-        "propertyIdRegex": "prop_01M0C826WJ6E8SVGPGFX2Z52T3",
-        "rankCapValue": "prop_01M0C826WJ4ZPNGK1JNNQD7GCM"
+        "gradeUpPropertyIdRegex": "prop_00D0320HQ4N8QC4SDN75PFNFSF",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "propertyIdRegex": "prop_00D0320HQ4HKJ6EW5M3Z8QS8PG",
+        "rankCapValue": "prop_00D0320HQ4H7XNC4RCNDDV9W35"
       }
     }
   },
   "masterDataResources": {
-    "grade.GradeEntryModel": "cfa7aebb-248f-55f1-8bd5-8b8b7986a2b4",
-    "grade.GradeModel": "9be0bc04-01ba-5d55-a498-86ae69320c97",
-    "grade.Namespace": "d172b3ce-1c9d-5af8-bcb0-9d3e50cc2e46"
+    "grade.GradeEntryModel": "mdr_6FMYQBP94FAQRRQNCBHDWRD8NM",
+    "grade.GradeModel": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
+    "grade.Namespace": "mdr_6HEASWW74XBBWBSC4X7S8CRBJ6"
   },
   "transforms": {
     "ApplyCharacterGradeRankCap": [

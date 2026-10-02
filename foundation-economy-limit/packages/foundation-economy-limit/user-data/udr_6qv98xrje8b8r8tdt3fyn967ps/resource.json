@@ -1,0 +1,68 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "count",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+              "typeName": "UsageLimitCounter"
+            },
+            "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "counterId"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+            "typeName": "UsageLimitCounter"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "nextResetAt",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+              "typeName": "UsageLimitCounter"
+            },
+            "propertyId": "prop_00D031N0N8S7KC5GNB45BP0PGT"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+      "typeName": "UsageLimitCounter"
+    }
+  },
+  "id": "udr_6QV98XRJE8B8R8TDT3FYN967PS",
+  "location": {
+    "modelName": "Counter",
+    "service": "limit"
+  }
+}

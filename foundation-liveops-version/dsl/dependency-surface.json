@@ -3,57 +3,57 @@
   "packageId": "foundation-liveops-version",
   "types": {
     "AgreementVersion": {
-      "id": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+      "id": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
       "singleEntry": false,
       "canonicalPackageId": "foundation-liveops-version",
-      "canonicalTypeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4",
+      "canonicalTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
       "properties": {
-        "acceptedMajor": "prop_01M0PX2G6Q6Q7SQGM4Z51XENCC",
-        "acceptedMicro": "prop_01M0PX2G6QK5P9VPEKCCMAQ20R",
-        "acceptedMinor": "prop_01M0PX2G6QJXF59DXKXFRSEJRT",
-        "currentMajor": "prop_D6BXRZGRA97SHWEH9KKJNK8F18",
-        "currentMicro": "prop_2K3FPSX7JS2XSAEGTR89RCDBNX",
-        "currentMinor": "prop_0Q39Q60DC894H8BTR4B3C7WDHE",
-        "errorMajor": "prop_01M0PWK4QG0W3BR71K2BSE1A8S",
-        "errorMicro": "prop_01M0PWK4QGZBDE3TA5C6D6G07J",
-        "errorMinor": "prop_01M0PWK4QGQ6V970FH4XQPDM3D",
-        "exists": "prop_GWSJYQBMKYCRXTBZ9WJB3JQE04",
-        "id": "prop_reserved_id",
-        "required": "prop_GMMBV2TGK8XPGGR6QZA7CB0F1Y",
-        "status": "prop_AWG1AAHD6ZCQ1Z2DR8Q2E4F4DT",
-        "warningMajor": "prop_01M0PWK4QGM5B5CWGZE3GAZ3PC",
-        "warningMicro": "prop_01M0PWK4QGB6FARGAKYTJCE3GD",
-        "warningMinor": "prop_01M0PWK4QG52B50F2Q3HMPJDQS"
+        "acceptedMajor": "prop_00D05Q8M1NSNSYDW517S8FBNB3",
+        "acceptedMicro": "prop_00D05Q8M1NWSDJEXKMV352NRG6",
+        "acceptedMinor": "prop_00D05Q8M1NWQBSABFCZBY6BMP6",
+        "currentMajor": "prop_39JZE7W62J9YCF3MACWWNCT3RA",
+        "currentMicro": "prop_0MRVXPF9WP8QEAKM6P22E33AXF",
+        "currentMinor": "prop_05RTDSG3B2294A2YP12RV1Z3CB",
+        "errorMajor": "prop_00D05Q4S5W070TY1RCRJYBGAJ6",
+        "errorMicro": "prop_00D05Q4S5W7TVBGYJHB1K9M01W",
+        "errorMinor": "prop_00D05Q4S5W5SPT9R3W97DXKD0V",
+        "exists": "prop_476CQNTX4ZK67EJZTF4JRWNVG1",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "required": "prop_4552YRPM4T7DM461NZTHV2R3RF",
+        "status": "prop_2Q40AJMB9QV5RFRKE25RKH3S3E",
+        "warningMajor": "prop_00D05Q4S5W51ASB747VGW2QRXK",
+        "warningMicro": "prop_00D05Q4S5W2SKTP42MZPMK3GW3",
+        "warningMinor": "prop_00D05Q4S5W18JS83RNRWD5MKDY"
       }
     },
     "EmbeddedVersion": {
-      "id": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+      "id": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
       "singleEntry": false,
       "canonicalPackageId": "foundation-liveops-version",
-      "canonicalTypeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H",
+      "canonicalTypeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
       "properties": {
-        "errorMajor": "prop_3YR1D04DTCR3QXF2102W5Z73PM",
-        "errorMicro": "prop_E9DY9TY2D9Y1CY09MT7Z6DEYYF",
-        "errorMinor": "prop_BMCEB6H2XZYTXR2M1MCXV4M605",
-        "id": "prop_reserved_id",
-        "warningMajor": "prop_JV8X380AFH866SVX2HJR3FMP4V",
-        "warningMicro": "prop_JNSG2T4XZEK7T0RFFT4FHYS77N",
-        "warningMinor": "prop_Q1QVGEVNDQ31WXBSQ3CTK8PEYS"
+        "errorMajor": "prop_0ZP0B813EK60XZBRG80Q1FSRXN",
+        "errorMicro": "prop_3JBFJEQGKAFGB7G2D6HZSKBQQK",
+        "errorMinor": "prop_2X33JSM8QFZPQE0N0D37ES51G1",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "warningMajor": "prop_4PT78T02KWA1HPEZ8MCP0VX5H6",
+        "warningMicro": "prop_4NEC0PH7FVMSYG63VYH3WFP9SX",
+        "warningMinor": "prop_5RDYW3PXBDRRF7AYDRV6MT5KQP"
       }
     },
     "VersionGate": {
-      "id": "dt_01M3K283QDW0KQVBWZ5K14DY27",
+      "id": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
       "singleEntry": true,
       "canonicalPackageId": "foundation-liveops-version",
-      "canonicalTypeId": "dt_01M3K283QDW0KQVBWZ5K14DY27",
+      "canonicalTypeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
       "properties": {
-        "assumeUserId": "prop_01M3K283QDFDN94YEKNGWVCN1J",
-        "id": "prop_reserved_id"
+        "assumeUserId": "prop_00D0WRJ0XVBVDA97KMXC76V58C",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     }
   },
   "masterDataResources": {
-    "version.Namespace": "95af84e6-cd24-4944-8bed-f69cde2524c5"
+    "version.Namespace": "mdr_4NNY2EDK949528QVFPKKF2A965"
   },
   "transforms": {}
 }

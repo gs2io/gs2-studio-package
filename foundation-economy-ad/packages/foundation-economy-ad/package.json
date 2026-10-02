@@ -8,7 +8,7 @@
       "ja": "広告視聴の実績を記録し、広告経由の報酬付与に使えるポイントを管理します。"
     },
     "domainTypes": {
-      "dt_AFCBM1Z879DZAF9085SFW63Z5S": {
+      "dt_2KV2X0FT1TBFTKT821EBZ1GZSE": {
         "description": {
           "en": "Configures the ad units and game keys used by AdMob and Unity Ads.",
           "ja": "AdMobとUnity Adsで利用する広告ユニットやゲームキーを設定します。"
@@ -18,7 +18,7 @@
           "ja": "広告プラットフォーム"
         }
       },
-      "dt_RTQJBJN6VK3VTEX3WKNGGK17JW": {
+      "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ": {
         "description": {
           "en": "Tracks the current number of ad-view points available to a player.",
           "ja": "プレイヤーが利用できる広告視聴ポイントの現在値を管理します。"

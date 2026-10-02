@@ -1,0 +1,52 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "action",
+        "value": "Gs2Lottery:DrawByUserId"
+      },
+      {
+        "kind": "static",
+        "parameterName": "request.config",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "request.count",
+        "value": 1
+      },
+      {
+        "kind": "resourceKey",
+        "parameterName": "request.lotteryName"
+      },
+      {
+        "kind": "resourceKey",
+        "parameterName": "request.namespaceName"
+      },
+      {
+        "kind": "placeholder",
+        "parameterName": "request.userId",
+        "value": "#{userId}"
+      }
+    ]
+  },
+  "id": "mdr_73WZ8JESEKA1QSJV4RECZHB7H1",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_028ZABCBPXBJYV9XV7741Q468N"
+  },
+  "resourceLinks": {
+    "resourceRef": {
+      "kind": "local",
+      "resourceId": "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP",
+      "resourceKind": "masterData"
+    }
+  }
+}

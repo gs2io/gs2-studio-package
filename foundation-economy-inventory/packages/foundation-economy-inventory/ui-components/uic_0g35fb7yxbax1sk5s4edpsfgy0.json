@@ -1,0 +1,58 @@
+{
+  "id": "uic_0G35FB7YXBAX1SK5S4EDPSFGY0",
+  "items": [
+    {
+      "componentClassName": "StockLabel",
+      "id": "uii_2YSSS3EXQ7AHHBFFFEJR4Q2QXF",
+      "kind": "templateLabel",
+      "name": "Item",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
+        },
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_4RM1PKMWET4WYQBAW013CTF8YD"
+          }
+        }
+      ],
+      "template": "{id} x{count}"
+    },
+    {
+      "componentClassName": "CountValue",
+      "id": "uii_1JHGCKACH5AT3VCT1FSBEJWC5Y",
+      "kind": "value",
+      "name": "Item",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_4RM1PKMWET4WYQBAW013CTF8YD"
+      }
+    },
+    {
+      "componentClassName": "OwnedInteractable",
+      "condition": {
+        "kind": "gt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_4RM1PKMWET4WYQBAW013CTF8YD"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": 0
+        }
+      },
+      "id": "uii_3JMSAN2PP3B9Y86B5ZG50GYMKS",
+      "kind": "interactable",
+      "name": "Item"
+    }
+  ],
+  "name": "Item",
+  "targetDomainType": "Item",
+  "targetDomainTypeId": "dt_47E751540GQRMAWTXYFT9376WH"
+}

@@ -1,0 +1,35 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the outgoing friend request.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "送信フレンド申請を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_6JV3Y0KG2J3C3460P6WD93NW62",
+  "kind": "local",
+  "name": "SendFriendRequest",
+  "singleEntry": false
+}

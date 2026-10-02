@@ -1,0 +1,21 @@
+{
+  "authored": {
+    "declaredBindings": []
+  },
+  "id": "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD",
+  "location": {
+    "modelName": "Reward",
+    "service": "loginReward"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
+    "typeName": "LoginReward"
+  },
+  "parent": {
+    "arrayProperty": "rewards",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7"
+  }
+}

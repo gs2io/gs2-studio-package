@@ -1,0 +1,79 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+            "typeName": "EquipmentEnchantOption"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resourceName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+            "typeName": "EquipmentEnchantOption"
+          },
+          "propertyId": "prop_00D03217GRGMXYDWA00MEVCB01"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resourceValue",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+            "typeName": "EquipmentEnchantOption"
+          },
+          "propertyId": "prop_00D03217GRQTVSP4FQ10EXQ3TG"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "weight",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+            "typeName": "EquipmentEnchantOption"
+          },
+          "propertyId": "prop_00D03217GRKQF9AK7J19KVJDGJ"
+        }
+      }
+    ]
+  },
+  "id": "mdr_7DT40A06FQBG4RFWTC4P142307",
+  "location": {
+    "modelName": "RarityParameterValueModel",
+    "service": "enchant"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+    "typeName": "EquipmentEnchantOption"
+  },
+  "parent": {
+    "arrayProperty": "parameters",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2"
+  }
+}

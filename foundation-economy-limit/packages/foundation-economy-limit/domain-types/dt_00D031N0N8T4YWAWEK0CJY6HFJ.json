@@ -1,0 +1,106 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the usage counter.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "回数カウンターを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "description": "The reset cadence this counter follows",
+        "id": "prop_00D031N0N8XCG9EJ25SDVPGMYT",
+        "localizedDisplay": {
+          "en": {
+            "description": "Reset schedule followed by this counter.",
+            "label": "Reset schedule"
+          },
+          "ja": {
+            "description": "このカウンターが従うリセット設定です。",
+            "label": "リセット設定"
+          }
+        },
+        "name": "limit",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Times used since the last reset",
+        "id": "prop_00D031N0N8XZTBTN84BCXGFHMR",
+        "localizedDisplay": {
+          "en": {
+            "description": "Number of uses since the previous reset.",
+            "label": "Usage count",
+            "unit": "uses"
+          },
+          "ja": {
+            "description": "前回のリセット以降に利用した回数です。",
+            "label": "利用回数",
+            "unit": "回"
+          }
+        },
+        "name": "count",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "description": "Next reset time",
+        "id": "prop_00D031N0N8S7KC5GNB45BP0PGT",
+        "localizedDisplay": {
+          "en": {
+            "description": "Time when this counter will next be reset.",
+            "label": "Next reset time"
+          },
+          "ja": {
+            "description": "このカウンターを次にリセットする日時です。",
+            "label": "次回リセット日時"
+          }
+        },
+        "name": "nextResetAt",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+  "kind": "local",
+  "name": "UsageLimitCounter",
+  "singleEntry": false
+}

@@ -1,0 +1,61 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "rate",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_00D0322BN7XACWKGN03JMSRA8H"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "targetActionName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_00D0322BN7XPKZEYZ4G0MDYS0P"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "targetFieldName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+            "typeName": "Buff"
+          },
+          "propertyId": "prop_00D0322BN7Z2CA8G16H48JGTJ5"
+        }
+      }
+    ]
+  },
+  "id": "mdr_5WZ0BQ95THBHMT5YJD62QKH4T4",
+  "location": {
+    "modelName": "BuffTargetAction",
+    "service": "buff"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+    "typeName": "Buff"
+  },
+  "parent": {
+    "arrayProperty": "targetAction",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_403PNWNXHGAHNVCTWXXVQPXKY1"
+  }
+}

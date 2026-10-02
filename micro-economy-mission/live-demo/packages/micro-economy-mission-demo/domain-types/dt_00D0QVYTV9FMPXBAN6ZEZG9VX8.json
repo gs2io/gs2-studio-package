@@ -1,0 +1,63 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "static",
+                "value": 0
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_00D0QVYTV99Q49SBAE7J7GC9EG"
+              }
+            }
+          ],
+          "transformName": "DepositFreeCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "append",
+      "targetPropertyId": "prop_00D060QP7EZPDKKKFPE3HYE2C5"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "Coins this mission pays when its reward is received",
+        "id": "prop_00D0QVYTV99Q49SBAE7J7GC9EG",
+        "name": "rewardAmount",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8",
+  "kind": "overlay",
+  "name": "Mission",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-mission",
+    "directSourceTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
+    "sourcePackageId": "micro-economy-mission",
+    "sourceTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
+  }
+}

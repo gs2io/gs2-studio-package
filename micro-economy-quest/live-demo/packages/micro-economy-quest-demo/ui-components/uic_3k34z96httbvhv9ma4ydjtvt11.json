@@ -1,0 +1,109 @@
+{
+  "id": "uic_3K34Z96HTTBVHV9MA4YDJTVT11",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "uii_3SYAVPHMMHBD1STWB702V3NR99",
+      "kind": "templateLabel",
+      "name": "Quest",
+      "sources": [
+        {
+          "key": "displayName",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0TT9XC95AYPDS0FTC5G8GTG"
+          }
+        }
+      ],
+      "template": "{displayName}"
+    },
+    {
+      "componentClassName": "BriefLabel",
+      "id": "uii_283H0T6S5HA8D8WPNMEA472Y0Q",
+      "kind": "templateLabel",
+      "name": "Quest",
+      "sources": [
+        {
+          "key": "staminaCost",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
+          }
+        },
+        {
+          "key": "reward",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR"
+          }
+        },
+        {
+          "key": "firstClearReward",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0TT9XC90NGHJ1JGHG67DHY2"
+          }
+        }
+      ],
+      "template": "Costs {staminaCost} stamina. Pays {reward} coins, plus {firstClearReward} on the first clear."
+    },
+    {
+      "componentClassName": "RunningLabel",
+      "id": "uii_6NT3FWMGZSAQZBF3T0Z6V3JBNW",
+      "kind": "templateLabel",
+      "name": "Quest",
+      "sources": [
+        {
+          "key": "displayName",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0TT9XC95AYPDS0FTC5G8GTG"
+          }
+        },
+        {
+          "key": "staminaCost",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
+          }
+        }
+      ],
+      "template": "Running: {displayName} ({staminaCost} stamina spent)"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "StartButton",
+      "delegatedActionKey": "resource:micro-economy-quest:masterData:mdr_1E79KV3GSN9K19S1G9P9PRYHEE::Gs2Quest:QuestModel.Start",
+      "id": "uii_7MPDEPYA3YAEG8WMC5HTW5EGWY",
+      "kind": "buttonAction",
+      "name": "Quest"
+    },
+    {
+      "componentClassName": "ClearedLabel",
+      "id": "uii_321VVA5XN9AJWSYCCEV3QDDW8A",
+      "kind": "templateLabel",
+      "name": "Quest",
+      "sources": [],
+      "template": "Cleared"
+    },
+    {
+      "componentClassName": "UnclearedActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_6VDGEC28BS22A8B64VXJQP14VQ"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_3RCVQN0824BJCT3RF3ZKNKZNF5",
+      "kind": "activeToggle",
+      "name": "Quest"
+    }
+  ],
+  "name": "Quest",
+  "targetDomainType": "Quest",
+  "targetDomainTypeId": "dt_00D0TT9XC953455EX93PBE33K4"
+}

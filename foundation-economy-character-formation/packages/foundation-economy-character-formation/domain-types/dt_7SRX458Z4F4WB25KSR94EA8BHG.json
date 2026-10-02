@@ -1,0 +1,57 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the formation slot.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "編成スロットを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_1KTAJF5QGZJNR6EA3HVSC8QQBT",
+        "localizedDisplay": {
+          "en": {
+            "description": "Regular expression matching character instance IDs eligible for this slot.",
+            "label": "Eligibility pattern"
+          },
+          "ja": {
+            "description": "このスロットへ配置できるキャラクター個体IDの正規表現です。",
+            "label": "配置条件"
+          }
+        },
+        "name": "propertyRegex",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
+  "kind": "local",
+  "name": "CharacterFormationSlot",
+  "singleEntry": false
+}

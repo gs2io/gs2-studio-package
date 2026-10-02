@@ -1,0 +1,167 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the reported version.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "申告バージョンを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_4PT78T02KWA1HPEZ8MCP0VX5H6",
+        "localizedDisplay": {
+          "en": {
+            "description": "Major component of the version at or below which a reported version triggers an update warning.",
+            "label": "Warning major version"
+          },
+          "ja": {
+            "description": "申告されたバージョンがこれ以下のとき更新を促す警告になるバージョンのメジャー値です。",
+            "label": "警告メジャーバージョン"
+          }
+        },
+        "name": "warningMajor",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_5RDYW3PXBDRRF7AYDRV6MT5KQP",
+        "localizedDisplay": {
+          "en": {
+            "description": "Minor component of the version at or below which a reported version triggers an update warning.",
+            "label": "Warning minor version"
+          },
+          "ja": {
+            "description": "申告されたバージョンがこれ以下のとき更新を促す警告になるバージョンのマイナー値です。",
+            "label": "警告マイナーバージョン"
+          }
+        },
+        "name": "warningMinor",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_4NEC0PH7FVMSYG63VYH3WFP9SX",
+        "localizedDisplay": {
+          "en": {
+            "description": "Micro component of the version at or below which a reported version triggers an update warning.",
+            "label": "Warning micro version"
+          },
+          "ja": {
+            "description": "申告されたバージョンがこれ以下のとき更新を促す警告になるバージョンのマイクロ値です。",
+            "label": "警告マイクロバージョン"
+          }
+        },
+        "name": "warningMicro",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_0ZP0B813EK60XZBRG80Q1FSRXN",
+        "localizedDisplay": {
+          "en": {
+            "description": "Major component of the version at or below which a reported version is refused.",
+            "label": "Required major version"
+          },
+          "ja": {
+            "description": "申告されたバージョンがこれ以下のとき利用を拒否するバージョンのメジャー値です。",
+            "label": "必須更新メジャーバージョン"
+          }
+        },
+        "name": "errorMajor",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_2X33JSM8QFZPQE0N0D37ES51G1",
+        "localizedDisplay": {
+          "en": {
+            "description": "Minor component of the version at or below which a reported version is refused.",
+            "label": "Required minor version"
+          },
+          "ja": {
+            "description": "申告されたバージョンがこれ以下のとき利用を拒否するバージョンのマイナー値です。",
+            "label": "必須更新マイナーバージョン"
+          }
+        },
+        "name": "errorMinor",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_3JBFJEQGKAFGB7G2D6HZSKBQQK",
+        "localizedDisplay": {
+          "en": {
+            "description": "Micro component of the version at or below which a reported version is refused.",
+            "label": "Required micro version"
+          },
+          "ja": {
+            "description": "申告されたバージョンがこれ以下のとき利用を拒否するバージョンのマイクロ値です。",
+            "label": "必須更新マイクロバージョン"
+          }
+        },
+        "name": "errorMicro",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
+  "kind": "local",
+  "name": "EmbeddedVersion",
+  "singleEntry": false
+}

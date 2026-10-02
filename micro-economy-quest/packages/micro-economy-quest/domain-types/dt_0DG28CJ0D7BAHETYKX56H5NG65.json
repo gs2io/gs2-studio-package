@@ -1,0 +1,81 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the quest reward.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "クエスト報酬を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_1Y4C4J39XVY8GXQ1SCV6N3TZHT",
+        "localizedDisplay": {
+          "en": {
+            "description": "GRN of the resource granted as a reward when the quest is completed.",
+            "label": "Reward item ID"
+          },
+          "ja": {
+            "description": "クリア時に付与される報酬リソースの GRN です。",
+            "label": "報酬アイテムID"
+          }
+        },
+        "name": "itemId",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_67KF4GJSKA9NANA1AKT6BFB88K",
+        "localizedDisplay": {
+          "en": {
+            "description": "Quantity of the reward granted when the quest is completed.",
+            "label": "Reward quantity",
+            "unit": "items"
+          },
+          "ja": {
+            "description": "クリア時に付与される報酬の数量です。",
+            "label": "報酬数",
+            "unit": "個"
+          }
+        },
+        "name": "value",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_0DG28CJ0D7BAHETYKX56H5NG65",
+  "kind": "local",
+  "name": "ProgressReward",
+  "singleEntry": false
+}

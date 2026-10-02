@@ -1,0 +1,40 @@
+{
+  "id": "uic_4JG1GJZKDWB7YAJTTGBS5NC6YW",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "uii_73RMYXKKQ9BZ9TM33A3WT77RYJ",
+      "kind": "templateLabel",
+      "name": "Follow",
+      "sources": [
+        {
+          "key": "publicProfile",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_0037P8GKD1Y37HERP8N6DHZM9F"
+          }
+        }
+      ],
+      "template": "{publicProfile}"
+    },
+    {
+      "componentClassName": "FollowerProfileLabel",
+      "id": "uii_752N78K0A6B6XSK3G4X9YJEQP8",
+      "kind": "templateLabel",
+      "name": "Follow",
+      "sources": [
+        {
+          "key": "followerProfile",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_73QSS5XZ6NRSZZM9W4XV4JB0F2"
+          }
+        }
+      ],
+      "template": "{followerProfile}"
+    }
+  ],
+  "name": "Follow",
+  "targetDomainType": "Follow",
+  "targetDomainTypeId": "dt_00D0XGY063ZAR2EXEZ826YXHRA"
+}

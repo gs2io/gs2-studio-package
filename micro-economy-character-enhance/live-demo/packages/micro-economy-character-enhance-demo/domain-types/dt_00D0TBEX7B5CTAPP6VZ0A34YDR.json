@@ -1,0 +1,38 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Get",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_5MBDT874NCB50AGHC6NS8XH9NP",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-character-enhance-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR",
+  "kind": "overlay",
+  "name": "CharacterEnhanceMaterial",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-character-enhance",
+    "directSourceTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
+    "sourcePackageId": "micro-economy-character-enhance",
+    "sourceTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
+  }
+}

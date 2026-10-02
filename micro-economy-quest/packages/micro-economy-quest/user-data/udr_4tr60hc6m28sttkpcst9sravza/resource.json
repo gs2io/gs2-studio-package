@@ -1,0 +1,87 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "existence",
+        "parameterName": "$existence",
+        "propertyId": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "progressId"
+      },
+      {
+        "grnFormat": "grn:gs2:{region}:{ownerId}:quest:{namespaceName}:group:{questGroupName}:quest:{questName}",
+        "keyMappings": [
+          {
+            "extractedKeyName": "questGroupName",
+            "targetKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+            "targetMountPath": {
+              "kind": "local",
+              "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
+              "typeName": "QuestCollection"
+            }
+          },
+          {
+            "extractedKeyName": "questName",
+            "targetKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+            "targetMountPath": {
+              "kind": "local",
+              "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
+              "typeName": "Quest"
+            }
+          }
+        ],
+        "kind": "grnRef",
+        "parameterName": "questModelId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "randomSeed"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "rewards"
+      },
+      {
+        "fieldMappings": [
+          {
+            "fieldName": "itemId",
+            "targetPropertyId": "prop_1Y4C4J39XVY8GXQ1SCV6N3TZHT"
+          },
+          {
+            "fieldName": "value",
+            "targetPropertyId": "prop_67KF4GJSKA9NANA1AKT6BFB88K"
+          }
+        ],
+        "kind": "modelArrayDecode",
+        "parameterName": "rewards",
+        "targetMountPath": {
+          "kind": "local",
+          "typeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
+          "typeName": "Progress"
+        },
+        "targetPropertyId": "prop_5CJ0VWR32T9SD0RSQSYMEXF3HX"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "transactionId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
+      "typeName": "Progress"
+    }
+  },
+  "id": "udr_4TR60HC6M28STTKPCST9SRAVZA",
+  "location": {
+    "modelName": "Progress",
+    "service": "quest"
+  }
+}

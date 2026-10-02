@@ -3,19 +3,19 @@
   "packageId": "foundation-economy-character-dictionary",
   "types": {
     "Character": {
-      "id": "dt_94HCENQR9K7FVXJ2V96ZQ3V1PV",
+      "id": "dt_294B3NDY2CSVYZCGPT9QXRYRDP",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5",
+      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
       "addedProperties": {
-        "acquired": "prop_TC9NBD65ZXWPT09PFSRX1REHPF",
-        "acquiredAt": "prop_B6K4ADQ08XSZ0A0HNVRZFVP9W6"
+        "acquired": "prop_6K2DAV9HFZF5PG2DKYE78E3MDK",
+        "acquiredAt": "prop_2SMS2KDR27EFR2G4DEY7VYXJF1"
       }
     }
   },
   "masterDataResources": {
-    "dictionary.EntryModel": "a0dadc95-666a-48c1-89f9-86f35904b889",
-    "dictionary.Namespace": "ab0e71bd-4fdf-43ce-9bd1-ddadad459872"
+    "dictionary.EntryModel": "mdr_50VBE9ASKA930RKYC6YDCG9E49",
+    "dictionary.Namespace": "mdr_5B1SRVTKYZ8F79QMEXNPPMB63J"
   },
   "transforms": {
     "MarkCharacterDictionary": [

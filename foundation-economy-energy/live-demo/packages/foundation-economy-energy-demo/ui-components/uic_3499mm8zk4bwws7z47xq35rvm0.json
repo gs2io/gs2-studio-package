@@ -1,0 +1,24 @@
+{
+  "id": "uic_3499MM8ZK4BWWS7Z47XQ35RVM0",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "SpendButton",
+      "delegatedActionKey": "resource:foundation-economy-energy-demo:masterData:mdr_57KN8WGDJJBYHAZR30EV6G0H9R::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_7YQXS5DM6KBSTAJMSR5YB20DC8",
+      "kind": "buttonAction",
+      "name": "Energy"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "RecoverButton",
+      "delegatedActionKey": "resource:foundation-economy-energy-demo:masterData:mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_4HQ21MKDA5BN5BNZW4AC8S46CW",
+      "kind": "buttonAction",
+      "name": "Energy"
+    }
+  ],
+  "name": "Energy",
+  "targetDomainType": "Energy",
+  "targetDomainTypeId": "dt_00D0MM25SM55BXJGSRRQEWD359"
+}

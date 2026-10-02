@@ -3,35 +3,35 @@
   "packageId": "micro-economy-character-enhance-demo",
   "types": {
     "Character": {
-      "id": "dt_01M39DVMXDJTJD6NZRHVPPXP7V",
+      "id": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY",
       "singleEntry": false,
       "delegatedActions": {
-        "EnhanceWithElixir": "resource:micro-economy-character-enhance-demo:masterData:c056571c-7e21-5067-bf8c-d67b88315bfd::Gs2Exchange:RateModel.Exchange",
-        "EnhanceWithPotion": "resource:micro-economy-character-enhance-demo:masterData:aae600ec-5a4f-5ec6-81ad-386d21c28f80::Gs2Exchange:RateModel.Exchange"
+        "EnhanceWithElixir": "resource:micro-economy-character-enhance-demo:masterData:mdr_60ASBHRZH1A1KVZ36PFE432PZX::Gs2Exchange:RateModel.Exchange",
+        "EnhanceWithPotion": "resource:micro-economy-character-enhance-demo:masterData:mdr_5AWR0ERPJFBV383B9RDMGW53W0::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
     },
     "CharacterEnhance": {
-      "id": "dt_01M39DVMXC4GXXNE4SS8WFA40G",
+      "id": "dt_00D0TBEX7B147FDBH6EA73TH04",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-character-enhance",
-      "canonicalTypeId": "dt_01M0C7T116VP42973VYFS2PRV0"
+      "canonicalTypeId": "dt_00D031YG89PXH0J9RYZKY8NP6R"
     },
     "CharacterEnhanceBonus": {
-      "id": "dt_01M39DVMXC05DECAVR5BXWRYX9",
+      "id": "dt_00D0TBEX7B01BBK2PY1AZF67QA",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-character-enhance",
-      "canonicalTypeId": "dt_01M0C7T116ST3H2Z9X2ANQRRD2"
+      "canonicalTypeId": "dt_00D031YG89PEGW8QTF8JNDY638"
     },
     "CharacterEnhanceMaterial": {
-      "id": "dt_01M39DVMXCNK9ATRVFW18CKSQ1",
+      "id": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR",
       "singleEntry": false,
       "delegatedActions": {
-        "Get": "resource:micro-economy-character-enhance-demo:masterData:b45b7483-92ac-5940-a845-86ae51d8a6b6::Gs2Exchange:RateModel.Exchange"
+        "Get": "resource:micro-economy-character-enhance-demo:masterData:mdr_5MBDT874NCB50AGHC6NS8XH9NP::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "micro-economy-character-enhance",
-      "canonicalTypeId": "dt_01M39BQK138YNXWMJAA98ZPA8R"
+      "canonicalTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
     }
   },
   "masterDataResources": {},

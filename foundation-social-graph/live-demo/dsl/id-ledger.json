@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "type:Follow": "dt_01M3P3R0RFXB09VNVX08VVP71B",
-    "type:Friend": "dt_01M3P3R0RF3CJ781SN1811WM1K",
-    "type:Profile": "dt_01M3P3R0RF3XJ96HGBX4XN2R60",
-    "type:ReceiveFriendRequest": "dt_01M3P3R0RF8FYC7FDBGGZZ5RTE",
-    "type:SendFriendRequest": "dt_01M3P3R0RFM28TAKNKBXE8TAEF"
+    "type:Follow": "dt_00D0XGY063ZAR2EXEZ826YXHRA",
+    "type:Friend": "dt_00D0XGY063RV4HT0ED8A08F50C",
+    "type:Profile": "dt_00D0XGY063RZCJ9MC2Z97D8P1G",
+    "type:ReceiveFriendRequest": "dt_00D0XGY063T3ZK1VVAW47ZSE6K",
+    "type:SendFriendRequest": "dt_00D0XGY063X0J6JMXCTZBJ6JKK"
   },
   "deterministicOverrides": {}
 }

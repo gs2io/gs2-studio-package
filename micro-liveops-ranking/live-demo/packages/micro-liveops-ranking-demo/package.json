@@ -16,7 +16,7 @@
       "ja": "ライブデモ用に、全員で共有するランキングと順位帯ごとの報酬コイン、コンテストの開始・終了の操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
     "domainTypes": {
-      "dt_01M3HP36RM2KFTM6EGQY72A05W": {
+      "dt_00D0WDGSP50MVYN1KM5ZHRJG1F": {
         "description": {
           "en": "Adds the coins it pays to a demo ranking reward tier.",
           "ja": "デモのランキング報酬に、報酬コインを足します。"
@@ -26,7 +26,7 @@
           "ja": "ランキング報酬"
         }
       },
-      "dt_01M3HP36RM3N50HEQ42VKC8AJ1": {
+      "dt_00D0WDGSP50X984BNS0PWV22MG": {
         "description": {
           "en": "The contest's start and finish presses and its rule.",
           "ja": "コンテストの開始・終了の操作と説明です。"

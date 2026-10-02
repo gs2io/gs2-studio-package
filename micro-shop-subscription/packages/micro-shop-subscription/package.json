@@ -11,7 +11,7 @@
       "ja": "月額パスなどの継続課金を扱います。更新のたびにスケジュールのトリガーが引かれ、加入状況と有効期限を保持します。"
     },
     "domainTypes": {
-      "dt_01M0CE237DZF21KW81CJ2BP1WN": {
+      "dt_00D033GGSVFVRGCZ20B4GJXGF5": {
         "description": {
           "en": "Configures store product identifiers and renewal triggers, and tracks subscription status and expiration.",
           "ja": "App Store・Google Playの商品識別子、更新トリガー、有効期限を設定・管理します。"

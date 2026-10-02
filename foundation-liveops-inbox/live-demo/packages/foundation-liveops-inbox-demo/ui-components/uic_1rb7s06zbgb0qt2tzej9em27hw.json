@@ -1,0 +1,16 @@
+{
+  "id": "uic_1RB7S06ZBGB0QT2TZEJ9EM27HW",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "DeliverButton",
+      "delegatedActionKey": "resource:foundation-liveops-inbox-demo:masterData:mdr_3V90RSG8MJB8BVY29ZQGS45EZZ::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_50523NKZFXBP6A9TXZ25C0BSNS",
+      "kind": "buttonAction",
+      "name": "GlobalMessage"
+    }
+  ],
+  "name": "GlobalMessage",
+  "targetDomainType": "GlobalMessage",
+  "targetDomainTypeId": "dt_00D0SFSEJN1BET2KCMVWSZX3F8"
+}

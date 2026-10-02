@@ -14,7 +14,7 @@
       "ja": "ライブデモ用に、キャンペーンコード 1 つと、それを 1 人 1 回だけ引き換えてコインを受け取る操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
     "domainTypes": {
-      "dt_01M3JVP251QMTHBBV0K7JPJPFH": {
+      "dt_00D0WPXGH8DX6MATYR4SWNMNKW": {
         "description": {
           "en": "Redeeming a serial code, and the limit on how often.",
           "ja": "シリアルコードの引き換えと、その回数制限です。"

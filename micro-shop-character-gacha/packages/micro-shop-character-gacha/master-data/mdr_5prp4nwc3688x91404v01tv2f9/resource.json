@@ -1,0 +1,67 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "displayItemId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+            "typeName": "Gacha"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "salesPeriodEventId.grnKey.eventName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+            "typeName": "Gacha"
+          },
+          "propertyId": "prop_42BYHE1CR1TEXDMCWR9B91PP5K"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "type",
+        "value": "salesItem"
+      }
+    ]
+  },
+  "id": "mdr_5PRP4NWC3688X91404V01TV2F9",
+  "location": {
+    "modelName": "DisplayItem",
+    "service": "showcase"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+    "typeName": "Gacha"
+  },
+  "parent": {
+    "arrayProperty": "displayItems",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_3F313WCTCC9A9TYYZGXKHC7KB8"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          }
+        ],
+        "mountedResourceId": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX",
+        "parameterName": "salesPeriodEventId"
+      }
+    ]
+  }
+}

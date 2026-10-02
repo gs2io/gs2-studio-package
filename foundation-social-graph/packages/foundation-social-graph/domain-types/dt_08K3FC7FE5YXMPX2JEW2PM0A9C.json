@@ -1,0 +1,79 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the follow relationship.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "フォロー関係を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_0037P8GKD1Y37HERP8N6DHZM9F",
+        "localizedDisplay": {
+          "en": {
+            "description": "Public profile information of the followed player.",
+            "label": "Public profile"
+          },
+          "ja": {
+            "description": "フォロー相手の公開プロフィール情報です。",
+            "label": "公開プロフィール"
+          }
+        },
+        "name": "publicProfile",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_73QSS5XZ6NRSZZM9W4XV4JB0F2",
+        "localizedDisplay": {
+          "en": {
+            "description": "Profile information visible because the player is a follower.",
+            "label": "Follower profile"
+          },
+          "ja": {
+            "description": "フォロワーとして閲覧できるプロフィール情報です。",
+            "label": "フォロワー向けプロフィール"
+          }
+        },
+        "name": "followerProfile",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+  "kind": "local",
+  "name": "Follow",
+  "singleEntry": false
+}

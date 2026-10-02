@@ -3,38 +3,38 @@
   "packageId": "foundation-economy-character-demo",
   "types": {
     "Character": {
-      "id": "dt_01M2FZNNF20R4VKFQ0JMNXKT4B",
+      "id": "dt_00D0KZXDBRG616WVXR4N5FCYH2",
       "singleEntry": false,
       "delegatedActions": {
-        "Train": "resource:foundation-economy-character-demo:masterData:c103bba7-639b-581f-8669-9d68c0a27fa6::Gs2Exchange:RateModel.Exchange"
+        "Train": "resource:foundation-economy-character-demo:masterData:mdr_610EXTERWVB0FRCTCXD30A4ZX6::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
     },
     "CharacterCollection": {
-      "id": "dt_01M2FZNNF238EP6W1N0VCR6GCP",
+      "id": "dt_00D0KZXDBRGT3NHQ0D86V61M35",
       "singleEntry": true,
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_ZR7PA0W682HX7ZFXGBE4BRF37K"
+      "canonicalTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
     },
     "CharacterExperience": {
-      "id": "dt_01M2FZNNF26XCS5BNGCW5YSBA2",
+      "id": "dt_00D0KZXDBRHQB69AXC371FPATG",
       "singleEntry": true,
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_HAZCRJ576BHDWFVB28NQW77Y01"
+      "canonicalTypeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0"
     },
     "CharacterRecruit": {
-      "id": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J",
+      "id": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
       "singleEntry": false,
       "delegatedActions": {
-        "Recruit": "resource:foundation-economy-character-demo:masterData:cc2afb32-33a6-5439-a1ec-40d450e67bd6::Gs2Exchange:RateModel.Exchange"
+        "Recruit": "resource:foundation-economy-character-demo:masterData:mdr_6C5BXK4CX6AGWT3V20TH8ECYYP::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "foundation-economy-character-demo",
-      "canonicalTypeId": "dt_01M2GJ5HFJSXWK43SFCMXFZA3J",
+      "canonicalTypeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
       "properties": {
-        "character": "prop_01M2GJ5HFJCH04MAQB4D9DQYKY",
-        "extraActions": "prop_01M2Q9BWYYFN8TWP4PNP1SYWBF",
-        "id": "prop_reserved_id"
+        "character": "prop_00D0M4HCBWK48152NTS3ABDZMZ",
+        "extraActions": "prop_00D0NTAZ7QKXA6Q5H5NDGEFQ2V",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     }
   },

@@ -1,0 +1,39 @@
+{
+  "id": "uic_2F87GXBNEYAN5B13DYGYMCMF3M",
+  "items": [
+    {
+      "componentClassName": "OfferLabel",
+      "id": "uii_431JA2VKHHATSTDVRJCV7HA1A4",
+      "kind": "templateLabel",
+      "name": "EnergyProduct",
+      "sources": [
+        {
+          "key": "recovery",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_11FCJPVBK2AQFDD6DXHKWSV827"
+          }
+        },
+        {
+          "key": "cost",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0S4EG729BGHQ7R4RK1959TA"
+          }
+        }
+      ],
+      "template": "+{recovery} stamina for {cost} coins"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "BuyButton",
+      "delegatedActionKey": "resource:micro-shop-energy-demo:masterData:mdr_316T157DF8AHNBQJVWHABKV8MZ::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_432ZG9G0QNBTTABMTFFQXFM5ED",
+      "kind": "buttonAction",
+      "name": "EnergyProduct"
+    }
+  ],
+  "name": "EnergyProduct",
+  "targetDomainType": "EnergyProduct",
+  "targetDomainTypeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
+}

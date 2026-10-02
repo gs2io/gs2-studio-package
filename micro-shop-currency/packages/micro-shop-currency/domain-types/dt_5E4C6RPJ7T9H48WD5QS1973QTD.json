@@ -1,0 +1,121 @@
+{
+  "compositeKey": [
+    "prop_15W8DS91Q2205EVC4P45EV76R1",
+    "prop_4F7GJCACK2YK78HYH2XVEEMN6R"
+  ],
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the store price.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "販売価格を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_15W8DS91Q2205EVC4P45EV76R1",
+        "localizedDisplay": {
+          "en": {
+            "description": "Store product whose price is configured.",
+            "label": "Store product"
+          },
+          "ja": {
+            "description": "価格を設定するストア商品です。",
+            "label": "ストア商品"
+          }
+        },
+        "name": "product",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_4F7GJCACK2YK78HYH2XVEEMN6R",
+        "localizedDisplay": {
+          "en": {
+            "description": "Currency type used to price the product.",
+            "label": "Price currency"
+          },
+          "ja": {
+            "description": "商品の価格を表す通貨種別です。",
+            "label": "販売通貨"
+          }
+        },
+        "name": "currencyType",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_5X0WV26CPKD17193EPDQD24EP3"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K",
+        "localizedDisplay": {
+          "en": {
+            "description": "Product price in the selected currency.",
+            "label": "Price"
+          },
+          "ja": {
+            "description": "指定した通貨での商品価格です。",
+            "label": "価格"
+          }
+        },
+        "name": "price",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "float64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Buy",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "quantity",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
+      "targetResource": {
+        "resourceId": "mdr_5G3AX0767581SRB6QPW3FRXDBR",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-shop-currency"
+      }
+    }
+  ],
+  "id": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
+  "kind": "local",
+  "name": "StorePrice",
+  "singleEntry": false
+}

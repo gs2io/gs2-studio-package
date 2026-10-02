@@ -3,28 +3,28 @@
   "packageId": "micro-economy-buff-demo",
   "types": {
     "Buff": {
-      "id": "dt_01M3H855QTWKVXS9MYVWCQT9MR",
+      "id": "dt_00D0WA19DYQ4YZEAD7PZ35YJD6",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-buff",
-      "canonicalTypeId": "dt_01M0C89EMY1KAND5SNBFR7N0GQ"
+      "canonicalTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
     },
     "BuffCampaign": {
-      "id": "dt_01M3H94DYC2ZVBKF19PYBEWMYF",
+      "id": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
       "singleEntry": true,
       "delegatedActions": {
-        "EndCampaign": "resource:micro-economy-buff-demo:masterData:c2fd213e-a357-5457-abab-05369acee4ee::Gs2Exchange:RateModel.Exchange",
-        "StartCampaign": "resource:micro-economy-buff-demo:masterData:d9dbce3f-b3ae-53b9-87b0-d82cb831c997::Gs2Exchange:RateModel.Exchange"
+        "EndCampaign": "resource:micro-economy-buff-demo:masterData:mdr_62ZMGKX8TQAHBTQAR56TDCXS7E::Gs2Exchange:RateModel.Exchange",
+        "StartCampaign": "resource:micro-economy-buff-demo:masterData:mdr_6SVF73ZCXEAEWRFC6R5JW33JCQ::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "micro-economy-buff-demo",
-      "canonicalTypeId": "dt_01M3H94DYC2ZVBKF19PYBEWMYF",
+      "canonicalTypeId": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
       "properties": {
-        "id": "prop_reserved_id"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     }
   },
   "masterDataResources": {
-    "transaction.AcquireAction": "714d89bd-1654-598d-940c-79535050a36f",
-    "transaction.ConsumeAction": "9a9251c6-ac63-5f5f-bb37-54533d467091"
+    "transaction.AcquireAction": "mdr_3H9P4VT5JMB66S833SAD8518VF",
+    "transaction.ConsumeAction": "mdr_4TJ98WDB33BXFVPDTMACYMCW4H"
   },
   "transforms": {}
 }

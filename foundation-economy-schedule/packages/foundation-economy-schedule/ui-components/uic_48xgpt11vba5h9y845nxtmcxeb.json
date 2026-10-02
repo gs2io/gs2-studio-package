@@ -1,0 +1,83 @@
+{
+  "id": "uic_48XGPT11VBA5H9Y845NXTMCXEB",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "uii_2675N170VFA99REWHFRQA7Z9AX",
+      "kind": "templateLabel",
+      "name": "Trigger",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
+        }
+      ],
+      "template": "{id}"
+    },
+    {
+      "componentClassName": "WindowLabel",
+      "id": "uii_2X3FN815QHBKC9GSEEQ5JAD3N2",
+      "kind": "templateLabel",
+      "name": "Trigger",
+      "sources": [
+        {
+          "key": "triggeredAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_3TE65WFVTTMBGJ8C08F2PMTGQJ"
+          }
+        },
+        {
+          "key": "expiresAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7GBQSK2XRE2JNP4FBPTB9K8BDK"
+          }
+        }
+      ],
+      "template": "{triggeredAt} - {expiresAt}"
+    },
+    {
+      "componentClassName": "ExpiresAtValue",
+      "id": "uii_3F3CGAZQ0ABP3RBFKHB5NX12F2",
+      "kind": "value",
+      "name": "Trigger",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_7GBQSK2XRE2JNP4FBPTB9K8BDK"
+      }
+    },
+    {
+      "componentClassName": "TriggeredActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_1N32JT4VHQX89BMMSNSA8QE1W2"
+        }
+      },
+      "id": "uii_1DDFP4NJXXA8NATPEMCF6MGC55",
+      "kind": "activeToggle",
+      "name": "Trigger"
+    },
+    {
+      "componentClassName": "TriggeredInteractable",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_1N32JT4VHQX89BMMSNSA8QE1W2"
+        }
+      },
+      "id": "uii_625D1A2XV5A60RCYQX9NDKGVKA",
+      "kind": "interactable",
+      "name": "Trigger"
+    }
+  ],
+  "name": "Trigger",
+  "targetDomainType": "Trigger",
+  "targetDomainTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
+}

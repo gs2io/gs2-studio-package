@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA",
+  "kind": "overlay",
+  "name": "IdleStatus",
+  "renamedInheritedProperties": {},
+  "singleEntry": true,
+  "source": {
+    "directSourcePackageId": "foundation-economy-idle",
+    "directSourceTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
+    "sourcePackageId": "foundation-economy-idle",
+    "sourceTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+  }
+}

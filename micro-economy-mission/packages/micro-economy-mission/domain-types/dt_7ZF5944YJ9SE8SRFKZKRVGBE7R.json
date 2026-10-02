@@ -1,0 +1,95 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the mission group.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ミッショングループを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_4SWXMEBZDC8Y2G8NHXBQSMNEXJ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which this mission group is available.",
+            "label": "Availability schedule"
+          },
+          "ja": {
+            "description": "このミッショングループを開催するスケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
+        "name": "schedule",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_56NPGQ1SCN4Y44TB7EE3JSQZ12",
+        "localizedDisplay": {
+          "en": {
+            "description": "Reset cadence used by missions in this group.",
+            "label": "Reset scope"
+          },
+          "ja": {
+            "description": "グループ内ミッションの進捗をリセットする単位です。",
+            "label": "リセット単位"
+          }
+        },
+        "name": "scope",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "daily",
+            "weekly",
+            "monthly",
+            "notReset"
+          ]
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Receive",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2Mission:MissionGroupModel.BatchComplete",
+      "targetResource": {
+        "resourceId": "mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-mission"
+      }
+    }
+  ],
+  "id": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
+  "kind": "local",
+  "name": "MissionCollection",
+  "singleEntry": false
+}

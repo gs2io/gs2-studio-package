@@ -1,0 +1,39 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "action",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+              "typeName": "GuildRankingReward"
+            },
+            "propertyId": "prop_00D033H0GPSX5TQB69ST80YSQG"
+          },
+          "kind": "parent",
+          "parentResourceId": "mdr_3FD4P8QKX5A7J9T5DERFKQKNG4"
+        }
+      }
+    ]
+  },
+  "id": "mdr_3BNZCPZFZ1AG18GVED2E2VWG3D",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+    "typeName": "GuildRankingReward"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_3FD4P8QKX5A7J9T5DERFKQKNG4"
+  }
+}

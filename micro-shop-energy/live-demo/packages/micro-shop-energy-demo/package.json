@@ -16,7 +16,7 @@
       "ja": "ライブデモ用に、スタミナ商品の品揃えと価格、購入の操作を揃えます。"
     },
     "domainTypes": {
-      "dt_01M34HT0W9NARQTBAXX8SWCRFG": {
+      "dt_00D0S4EG72DAP5YJTQFA6F363W": {
         "description": {
           "en": "A stamina product the live demo sells, with what it refills and what it charges.",
           "ja": "ライブデモで販売するスタミナ商品と、その回復量・価格です。"

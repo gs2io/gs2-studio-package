@@ -18,7 +18,7 @@
       "ja": "ライブデモ用に、キャンペーン中は放置報酬を 2 倍にするバフと、キャンペーンの開始・終了の操作を提供します。"
     },
     "domainTypes": {
-      "dt_01M3H855QTWKVXS9MYVWCQT9MR": {
+      "dt_00D0WA19DYQ4YZEAD7PZ35YJD6": {
         "description": {
           "en": "The demo buff, which doubles idle rewards during the campaign.",
           "ja": "デモのバフです。キャンペーン中の放置報酬を 2 倍にします。"
@@ -28,7 +28,7 @@
           "ja": "バフ"
         }
       },
-      "dt_01M3H94DYC2ZVBKF19PYBEWMYF": {
+      "dt_00D0WA93FK0QYTWVRADQJVQ57K": {
         "description": {
           "en": "The campaign's start and end presses and its rule.",
           "ja": "キャンペーンの開始・終了の操作と説明です。"

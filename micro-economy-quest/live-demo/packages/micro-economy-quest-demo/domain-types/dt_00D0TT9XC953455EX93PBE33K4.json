@@ -1,0 +1,198 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "energy",
+              "source": {
+                "kind": "static",
+                "value": "stamina"
+              }
+            },
+            {
+              "parameterName": "value",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
+              }
+            }
+          ],
+          "transformName": "ConsumeEnergy",
+          "transformPackageId": "foundation-economy-energy"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "append",
+      "targetPropertyId": "prop_6KRKPN3YWC7M677JZT7MQZFW16"
+    },
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "static",
+                "value": 0
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR"
+              }
+            }
+          ],
+          "transformName": "DepositFreeCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "append",
+      "targetPropertyId": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8"
+    },
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "static",
+                "value": 0
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_00D0TT9XC90NGHJ1JGHG67DHY2"
+              }
+            }
+          ],
+          "transformName": "DepositFreeCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "append",
+      "targetPropertyId": "prop_49CWPE451G4S2NWECN50J39WNY"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_00D0TT9XC95AYPDS0FTC5G8GTG",
+        "localizedDisplay": {
+          "en": {
+            "description": "Name shown in the quest list and the running panel.",
+            "label": "Display name"
+          },
+          "ja": {
+            "description": "クエスト一覧と進行中パネルに表示する名前です。",
+            "label": "表示名"
+          }
+        },
+        "name": "displayName",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00D0TT9XC92MQXXRTF4D7JBY0V",
+        "localizedDisplay": {
+          "en": {
+            "description": "Stamina spent when the quest starts.",
+            "label": "Stamina cost",
+            "unit": "stamina"
+          },
+          "ja": {
+            "description": "クエスト開始時に消費するスタミナです。",
+            "label": "消費スタミナ",
+            "unit": "スタミナ"
+          }
+        },
+        "name": "staminaCost",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR",
+        "localizedDisplay": {
+          "en": {
+            "description": "Free currency paid on every clear.",
+            "label": "Clear reward",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "クリアするたびに付与する無償通貨です。",
+            "label": "クリア報酬",
+            "unit": "通貨"
+          }
+        },
+        "name": "reward",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00D0TT9XC90NGHJ1JGHG67DHY2",
+        "localizedDisplay": {
+          "en": {
+            "description": "Free currency paid on top of the reward on the first clear only.",
+            "label": "First-clear bonus",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "初回クリア時だけ追加で付与する無償通貨です。",
+            "label": "初回クリアボーナス",
+            "unit": "通貨"
+          }
+        },
+        "name": "firstClearReward",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0TT9XC953455EX93PBE33K4",
+  "kind": "overlay",
+  "name": "Quest",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-quest",
+    "directSourceTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
+    "sourcePackageId": "micro-economy-quest",
+    "sourceTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
+  }
+}

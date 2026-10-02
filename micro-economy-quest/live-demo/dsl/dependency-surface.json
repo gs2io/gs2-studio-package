@@ -3,28 +3,28 @@
   "packageId": "micro-economy-quest-demo",
   "types": {
     "Progress": {
-      "id": "dt_01M3B97NH40F6QD8YS61YH520C",
+      "id": "dt_00D0TT9XC903SNVA7P9GFM98G3",
       "singleEntry": true,
       "canonicalPackageId": "micro-economy-quest",
-      "canonicalTypeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4"
+      "canonicalTypeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61"
     },
     "Quest": {
-      "id": "dt_01M3B97NH4MCGMNVN4ESDRCECG",
+      "id": "dt_00D0TT9XC953455EX93PBE33K4",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-quest",
-      "canonicalTypeId": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+      "canonicalTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
       "addedProperties": {
-        "displayName": "prop_01M3B97NH4NBTSQ41Z9GP123A3",
-        "firstClearReward": "prop_01M3B97NH42P2686A260RXP7RB",
-        "reward": "prop_01M3B97NH43YNX2NJ26RQ26NF0",
-        "staminaCost": "prop_01M3B97NH4AJZQQ39WHMY9FR3E"
+        "displayName": "prop_00D0TT9XC95AYPDS0FTC5G8GTG",
+        "firstClearReward": "prop_00D0TT9XC90NGHJ1JGHG67DHY2",
+        "reward": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR",
+        "staminaCost": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
       }
     },
     "QuestCollection": {
-      "id": "dt_01M3B97NH4WBJD1WQ3TSQVZ7R5",
+      "id": "dt_00D0TT9XC972WK8F5RYPDYZSY1",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-quest",
-      "canonicalTypeId": "dt_8KGQ5PW8KF4540B06JKKQ6QF96"
+      "canonicalTypeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
     }
   },
   "masterDataResources": {},

@@ -1,0 +1,58 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "allowMultipleStacks",
+        "value": true
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+            "typeName": "Equipment"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "sortValue",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+            "typeName": "Equipment"
+          },
+          "propertyId": "prop_494Q17EMVWXF1PQJW4HZ1K09SD"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "stackingLimit",
+        "value": 1
+      }
+    ]
+  },
+  "id": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7",
+  "location": {
+    "modelName": "ItemModel",
+    "service": "inventory"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+    "typeName": "Equipment"
+  },
+  "parent": {
+    "arrayProperty": "itemModels",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_7THH0THTYY830SYCKTT7NMYZHG"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the formation configuration.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "編成を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_0F9XHSDTRNNY0TGSAM1K2Q5QFS",
+        "localizedDisplay": {
+          "en": {
+            "description": "Formation save slots granted to a new player.",
+            "label": "Initial save slots",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "新規プレイヤーに付与する編成保存枠です。",
+            "label": "初期保存枠",
+            "unit": "枠"
+          }
+        },
+        "name": "initialSaveArea",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_2PBKJC9BR7P00EG4DQYQGAFFGP",
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum number of formation save slots.",
+            "label": "Maximum save slots",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "拡張できる編成保存枠の最大値です。",
+            "label": "最大保存枠",
+            "unit": "枠"
+          }
+        },
+        "name": "maximumSaveArea",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_7HNF20BCN1PY27WR4A2XSHQFB1",
+        "localizedDisplay": {
+          "en": {
+            "description": "Formation save slots currently available to the player.",
+            "label": "Current save slots",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "プレイヤーが現在利用できる編成保存枠です。",
+            "label": "現在の保存枠",
+            "unit": "枠"
+          }
+        },
+        "name": "currentSaveArea",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
+  "kind": "local",
+  "name": "CharacterFormation",
+  "singleEntry": true
+}

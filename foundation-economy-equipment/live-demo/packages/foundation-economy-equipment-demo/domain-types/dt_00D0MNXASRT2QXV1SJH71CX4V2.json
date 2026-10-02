@@ -1,0 +1,38 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Discard",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-equipment-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0MNXASRT2QXV1SJH71CX4V2",
+  "kind": "overlay",
+  "name": "Equipment",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-equipment",
+    "directSourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+    "sourcePackageId": "foundation-economy-equipment",
+    "sourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+  }
+}

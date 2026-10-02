@@ -1,0 +1,53 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
+            "typeName": "GuildRole"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "policyDocument",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
+            "typeName": "GuildRole"
+          },
+          "propertyId": "prop_00D031EHJKR6BBM9VDKF7BEEG6"
+        }
+      }
+    ]
+  },
+  "id": "mdr_6T3C1RPTGBAQ3881PSBA5K9NK3",
+  "location": {
+    "modelName": "RoleModel",
+    "service": "guild"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
+    "typeName": "GuildRole"
+  },
+  "parent": {
+    "arrayProperty": "roles",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9"
+  }
+}

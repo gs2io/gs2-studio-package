@@ -1,0 +1,175 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the character.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "キャラクターを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03",
+        "localizedDisplay": {
+          "en": {
+            "description": "Value used to order characters in lists.",
+            "label": "Sort order"
+          },
+          "ja": {
+            "description": "キャラクター一覧で使用する並び順の値です。",
+            "label": "表示順"
+          }
+        },
+        "name": "sort",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
+        "localizedDisplay": {
+          "en": {
+            "description": "Identifier of the character instance owned by the player.",
+            "label": "Character instance ID"
+          },
+          "ja": {
+            "description": "プレイヤーが所持するキャラクター個体の識別子です。",
+            "label": "キャラクター個体ID"
+          }
+        },
+        "name": "propertyId",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_04HMA7F4M0F29E8P9WE3E5YF3R",
+        "localizedDisplay": {
+          "en": {
+            "description": "Current level of the character.",
+            "label": "Current level",
+            "unit": "levels"
+          },
+          "ja": {
+            "description": "キャラクターの現在レベルです。",
+            "label": "現在レベル",
+            "unit": "レベル"
+          }
+        },
+        "name": "level",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_6GPQDNYV0YP90F0V7GY2S79423",
+        "localizedDisplay": {
+          "en": {
+            "description": "Level cap currently applied to the character.",
+            "label": "Current level cap",
+            "unit": "levels"
+          },
+          "ja": {
+            "description": "キャラクターに現在適用されているレベル上限です。",
+            "label": "現在のレベル上限",
+            "unit": "レベル"
+          }
+        },
+        "name": "levelCap",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_75G83NYX56T0KCQB3N92MQPVMT",
+        "localizedDisplay": {
+          "en": {
+            "description": "Cumulative experience currently earned by the character.",
+            "label": "Current experience",
+            "unit": "experience"
+          },
+          "ja": {
+            "description": "キャラクターが現在獲得している累積経験値です。",
+            "label": "現在経験値",
+            "unit": "経験値"
+          }
+        },
+        "name": "experience",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77",
+        "localizedDisplay": {
+          "en": {
+            "description": "Cumulative experience needed to reach the next level; 0 once the level cap is reached.",
+            "label": "Experience for the next level",
+            "unit": "experience"
+          },
+          "ja": {
+            "description": "次のレベルに到達するために必要な累積経験値です。レベル上限に達している場合は 0 です。",
+            "label": "次レベルまでの必要経験値",
+            "unit": "経験値"
+          }
+        },
+        "name": "nextLevelExperience",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+  "kind": "local",
+  "name": "Character",
+  "singleEntry": false
+}

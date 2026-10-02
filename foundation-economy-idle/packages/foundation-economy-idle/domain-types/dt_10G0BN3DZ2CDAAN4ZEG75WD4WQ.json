@@ -1,0 +1,59 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the idle reward.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "放置報酬を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00D05P2SE3WMNG5C27EG74BM38",
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions executed as idle rewards.",
+            "label": "Acquire actions"
+          },
+          "ja": {
+            "description": "放置報酬として実行する獲得アクションです。",
+            "label": "獲得アクション"
+          }
+        },
+        "name": "acquireActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
+  "kind": "local",
+  "name": "IdleReward",
+  "singleEntry": false
+}

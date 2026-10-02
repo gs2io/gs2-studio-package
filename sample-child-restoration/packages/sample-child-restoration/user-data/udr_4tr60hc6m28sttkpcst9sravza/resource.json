@@ -1,0 +1,79 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperties",
+        "parameterName": "progressId",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
+              "typeName": "Progress"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
+        ]
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "questModelId",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
+              "typeName": "Progress"
+            },
+            "propertyId": "prop_1VVD0ASXTKMHVXA7F1P0R3QC86"
+          }
+        ]
+      },
+      {
+        "kind": "skip",
+        "parameterName": "randomSeed"
+      },
+      {
+        "fieldMappings": [
+          {
+            "fieldName": "itemId",
+            "targetPropertyId": "prop_1Y4C4J39XVY8GXQ1SCV6N3TZHT"
+          },
+          {
+            "fieldName": "value",
+            "targetPropertyId": "prop_67KF4GJSKA9NANA1AKT6BFB88K"
+          }
+        ],
+        "kind": "modelArrayDecode",
+        "parameterName": "rewards",
+        "targetMountPath": {
+          "kind": "local",
+          "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
+          "typeName": "Progress"
+        },
+        "targetPropertyId": "prop_13P7PMR0A3DBCG13JCB54KM0HP"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "transactionId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
+      "typeName": "Progress"
+    }
+  },
+  "id": "udr_4TR60HC6M28STTKPCST9SRAVZA",
+  "location": {
+    "modelName": "Progress",
+    "service": "quest"
+  }
+}

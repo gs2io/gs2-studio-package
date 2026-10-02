@@ -1,0 +1,49 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "equipment",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
+                    "typeName": "EquipmentCatalog"
+                  },
+                  "propertyId": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA"
+                },
+                "kind": "parent",
+                "parentResourceId": "mdr_1SXTWJSMJ6A05BST0S7A467E70"
+              }
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AcquireEquipment",
+        "transformPackageId": "foundation-economy-equipment"
+      }
+    ]
+  },
+  "id": "mdr_7CXEZXFTK6ACWBFJ8CPM6Y9X5K",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
+    "typeName": "EquipmentCatalog"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_1SXTWJSMJ6A05BST0S7A467E70"
+  }
+}

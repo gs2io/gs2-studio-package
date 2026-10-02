@@ -1,0 +1,104 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [
+    {
+      "methodName": "LimitBreak",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        },
+        {
+          "entries": [
+            {
+              "fields": [
+                {
+                  "name": "key",
+                  "source": {
+                    "kind": "static",
+                    "value": "propertyId"
+                  }
+                },
+                {
+                  "name": "value",
+                  "source": {
+                    "kind": "domainProperty",
+                    "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                  }
+                }
+              ],
+              "kind": "fields"
+            }
+          ],
+          "kind": "listEntries",
+          "parameterName": "config"
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_1NXX629711BHJBYFNF7Q2QG8D9",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-character-grade-demo"
+      }
+    },
+    {
+      "methodName": "TrainHard",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        },
+        {
+          "entries": [
+            {
+              "fields": [
+                {
+                  "name": "key",
+                  "source": {
+                    "kind": "static",
+                    "value": "propertyId"
+                  }
+                },
+                {
+                  "name": "value",
+                  "source": {
+                    "kind": "domainProperty",
+                    "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                  }
+                }
+              ],
+              "kind": "fields"
+            }
+          ],
+          "kind": "listEntries",
+          "parameterName": "config"
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_6NZTG6G7F8ACCRD6NFACZYDDPH",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-character-grade-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0T33MWD8D0Y1Q3JK8YD7EZ8",
+  "kind": "overlay",
+  "name": "Character",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-character-grade",
+    "directSourceTypeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
+    "sourcePackageId": "foundation-economy-character",
+    "sourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+  }
+}

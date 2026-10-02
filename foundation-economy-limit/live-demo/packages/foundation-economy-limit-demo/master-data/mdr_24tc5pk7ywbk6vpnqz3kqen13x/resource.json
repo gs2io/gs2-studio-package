@@ -1,0 +1,29 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ConsumeAdViewPoint",
+        "transformPackageId": "foundation-economy-ad"
+      }
+    ]
+  },
+  "id": "mdr_24TC5PK7YWBK6VPNQZ3KQEN13X",
+  "location": {
+    "modelName": "ConsumeAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01",
+    "typeName": "UsageLimitCounter"
+  },
+  "parent": {
+    "arrayProperty": "consumeActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0"
+  }
+}

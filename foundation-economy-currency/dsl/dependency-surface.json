@@ -3,42 +3,42 @@
   "packageId": "foundation-economy-currency",
   "types": {
     "CurrencyStore": {
-      "id": "dt_BMT0H7ME2SSDZRHGNZF012YZVR",
+      "id": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
       "singleEntry": true,
       "canonicalPackageId": "foundation-economy-currency",
-      "canonicalTypeId": "dt_BMT0H7ME2SSDZRHGNZF012YZVR",
+      "canonicalTypeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
       "properties": {
-        "enableFakeReceipt": "prop_F0JZV41MJ57SFQPQ6BMB80HDAZ",
-        "id": "prop_reserved_id"
+        "enableFakeReceipt": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     },
     "StoreProduct": {
-      "id": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+      "id": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-currency",
-      "canonicalTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB",
+      "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
       "properties": {
-        "appleAppStoreProductId": "prop_A26C5NBX039V9DNV0ERPSWVPD8",
-        "googlePlayProductId": "prop_Z99QWHNS8G1DEFWGT2MB00NRJA",
-        "id": "prop_reserved_id"
+        "appleAppStoreProductId": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
+        "googlePlayProductId": "prop_7TADZ4DEA40BBKZ46GN2R05E4J",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     },
     "Wallet": {
-      "id": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
+      "id": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-currency",
-      "canonicalTypeId": "dt_3HHXEAMBRFC1Y0G3NDGX2KJ6H5",
+      "canonicalTypeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
       "properties": {
-        "free": "prop_6KNY5JMXVS2AX21X1HAHP3A4X0",
-        "id": "prop_reserved_id",
-        "paid": "prop_V0BFHW3E05XZXMY0DWANC3G4C9",
-        "total": "prop_FEXJWZ3Q38NQ44J3C070EK1CJ8"
+        "free": "prop_1MXFHCN7EY8JQ8GF8CAMDGTH78",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "paid": "prop_6R2VWF0VG1FFZD7G3F2NB0W132",
+        "total": "prop_3VQCQ7RXRT5DS14GV01R3MRB4J"
       }
     }
   },
   "masterDataResources": {
-    "money2.Namespace": "4e3f334e-417a-56af-9dea-8ce0f42c0952",
-    "money2.StoreContentModel": "47f7c9c1-5a84-5ecf-b541-ed6a3e451d5d"
+    "money2.Namespace": "mdr_2E7WSMWGBTATQSVTMCW3T2R2AJ",
+    "money2.StoreContentModel": "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX"
   },
   "transforms": {
     "DepositCurrency": [

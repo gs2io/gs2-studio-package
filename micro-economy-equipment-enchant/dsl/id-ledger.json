@@ -2,18 +2,18 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "property:Equipment.enchant": "prop_01M3EGWJ3JWTJ1S2A79EMTPARQ",
-    "property:Equipment.enchantments": "prop_01M0C84Y32CKRCM57ZVFNSN5KJ",
-    "property:EquipmentEnchant.maximumParameterCount": "prop_01M0C84Y32NTFEV004CWFSAF5R",
-    "property:EquipmentEnchantOption.enchant": "prop_01M0C84Y322HQ5SXAZ4NRD8HCB",
-    "property:EquipmentEnchantOption.resourceName": "prop_01M0C84Y322KQSQH802HVDHC06",
-    "property:EquipmentEnchantOption.resourceValue": "prop_01M0C84Y32ZBF6RHYW41VPWFA2",
-    "property:EquipmentEnchantOption.weight": "prop_01M0C84Y32EXX5ACY856FE9P29",
-    "property:EquipmentEnchantSlotChance.count": "prop_01M0C84Y32TQRT07W6CT9MCVZM",
-    "property:EquipmentEnchantSlotChance.enchant": "prop_01M0C84Y3236PN0MXQNS8GXGKR",
-    "property:EquipmentEnchantSlotChance.weight": "prop_01M0C84Y32K8455NCTCVPXBKC0",
-    "property:EquipmentEnchantment.resourceName": "prop_01M0C84Y32ECEHBF3RZEE5D62D",
-    "property:EquipmentEnchantment.resourceValue": "prop_01M0C84Y32JTY6HCNCJZ7922GH",
+    "property:Equipment.enchant": "prop_00D0VM74GWQ6MGE8JHTBN6NJP5",
+    "property:Equipment.enchantments": "prop_00D03217GRK4Y3519ZYVXED9CW",
+    "property:EquipmentEnchant.maximumParameterCount": "prop_00D03217GRNEKVPR01373YAKSE",
+    "property:EquipmentEnchantOption.enchant": "prop_00D03217GRGMDSEFAQS5E3A4B2",
+    "property:EquipmentEnchantOption.resourceName": "prop_00D03217GRGMXYDWA00MEVCB01",
+    "property:EquipmentEnchantOption.resourceValue": "prop_00D03217GRQTVSP4FQ10EXQ3TG",
+    "property:EquipmentEnchantOption.weight": "prop_00D03217GRKQF9AK7J19KVJDGJ",
+    "property:EquipmentEnchantSlotChance.count": "prop_00D03217GRPNY6G1Z1K6JD36ZX",
+    "property:EquipmentEnchantSlotChance.enchant": "prop_00D03217GRGSNN857DXEA47C4Y",
+    "property:EquipmentEnchantSlotChance.weight": "prop_00D03217GRMT119DB6K6XQAWV0",
+    "property:EquipmentEnchantment.resourceName": "prop_00D03217GRKK3MAVRY7VKHB9GK",
+    "property:EquipmentEnchantment.resourceValue": "prop_00D03217GRMPQHMB5B4QST8GM4",
     "transform:AddEquipmentEnchantmentSlot:output:direct:Gs2Enchant:AddRarityParameterStatusByUserId#0": "out_01M0C84Y33DKHG5VKCKR8YEW75",
     "transform:AddEquipmentEnchantmentSlot:parameter:count": "param_01M0C84Y33FJ9PH4GFDP6W0RZB",
     "transform:AddEquipmentEnchantmentSlot:parameter:enchant": "param_01M0C84Y33FKGWAV7D0CWY5AY0",
@@ -25,11 +25,13 @@
     "transform:VerifyEquipmentEnchantment:parameter:enchant": "param_01M0C84Y333S5PZQXN5JE5HMZH",
     "transform:VerifyEquipmentEnchantment:parameter:option": "param_01M0C84Y33MABXN8CQ0CYS9NP1",
     "transform:VerifyEquipmentEnchantment:parameter:propertyId": "param_01M0C84Y33M0X2SZE99QB3PGKG",
-    "type:Equipment": "dt_01M0C84Y321K5KHKYHWHMAVTH5",
-    "type:EquipmentEnchant": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
-    "type:EquipmentEnchantOption": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
-    "type:EquipmentEnchantSlotChance": "dt_01M0C84Y32MFW05C5TXC61W1SR",
-    "type:EquipmentEnchantment": "dt_01M0C84Y323XGX5N856QJ5Z61Q"
+    "type:Equipment": "dt_00D03217GRGCSCWCZMF4D2PYM9",
+    "type:EquipmentEnchant": "dt_00D03217GRKX0AV27J248EX89N",
+    "type:EquipmentEnchantOption": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+    "type:EquipmentEnchantSlotChance": "dt_00D03217GRN3Z01B1EQB1GF0EE",
+    "type:EquipmentEnchantment": "dt_00D03217GRGZC79DA19NWHFSGD"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "user/enchant:RarityParameterStatus:Equipment:#0": "udr_51ERW9BBHEA23VY012ZSBXNAAJ"
+  }
 }

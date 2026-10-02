@@ -3,7 +3,7 @@
   "importedResourceRefs": [
     {
       "kind": "local",
-      "resourceId": "babfdf44-2b23-460c-97c6-8389cdef0430",
+      "resourceId": "mdr_5TQZFM8AS38R69FHM3H76YY11G",
       "resourceKind": "masterData"
     }
   ],
@@ -52,7 +52,7 @@
       ],
       "resourceRef": {
         "kind": "local",
-        "resourceId": "babfdf44-2b23-460c-97c6-8389cdef0430",
+        "resourceId": "mdr_5TQZFM8AS38R69FHM3H76YY11G",
         "resourceKind": "masterData"
       }
     }

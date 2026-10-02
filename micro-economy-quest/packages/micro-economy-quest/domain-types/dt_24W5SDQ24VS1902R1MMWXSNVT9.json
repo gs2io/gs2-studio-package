@@ -1,0 +1,57 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the quest group.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "クエストグループを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN",
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which this quest group is available.",
+            "label": "Availability schedule"
+          },
+          "ja": {
+            "description": "このクエストグループを開催するスケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
+        "name": "schedule",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
+  "kind": "local",
+  "name": "QuestCollection",
+  "singleEntry": false
+}

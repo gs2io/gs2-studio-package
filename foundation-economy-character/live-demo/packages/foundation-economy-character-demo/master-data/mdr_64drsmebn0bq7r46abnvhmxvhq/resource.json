@@ -1,0 +1,56 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "character",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "innerSource": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
+                    "typeName": "CharacterRecruit"
+                  },
+                  "propertyId": "prop_00D0M4HCBWK48152NTS3ABDZMZ"
+                },
+                "kind": "parent",
+                "parentResourceId": "mdr_6C5BXK4CX6AGWT3V20TH8ECYYP"
+              }
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 1
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "AcquireCharacter",
+        "transformPackageId": "foundation-economy-character"
+      }
+    ]
+  },
+  "id": "mdr_64DRSMEBN0BQ7R46ABNVHMXVHQ",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
+    "typeName": "CharacterRecruit"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_6C5BXK4CX6AGWT3V20TH8ECYYP"
+  }
+}

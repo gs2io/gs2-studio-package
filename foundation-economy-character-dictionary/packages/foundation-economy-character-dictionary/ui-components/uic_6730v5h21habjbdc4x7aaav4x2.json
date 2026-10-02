@@ -1,0 +1,105 @@
+{
+  "id": "uic_6730V5H21HABJBDC4X7AAAV4X2",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "uii_6MXQM79ETQAWZAXM43139TC92X",
+      "kind": "templateLabel",
+      "name": "Character",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
+        }
+      ],
+      "template": "{id}"
+    },
+    {
+      "componentClassName": "AcquiredAtLabel",
+      "id": "uii_7TPXVGR7RFA7VBQZHFPE0FX4MW",
+      "kind": "templateLabel",
+      "name": "Character",
+      "sources": [
+        {
+          "key": "acquiredAt",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_2SMS2KDR27EFR2G4DEY7VYXJF1"
+          }
+        }
+      ],
+      "template": "{acquiredAt}"
+    },
+    {
+      "componentClassName": "AcquiredAtValue",
+      "id": "uii_7DYFKQVHRVB6Q8A2G76G09XKNA",
+      "kind": "value",
+      "name": "Character",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_2SMS2KDR27EFR2G4DEY7VYXJF1"
+      }
+    },
+    {
+      "componentClassName": "UnregisteredInteractable",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_6K2DAV9HFZF5PG2DKYE78E3MDK"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_6B8ZEK9W4MAMWS23SD8VVFJZEM",
+      "kind": "interactable",
+      "name": "Character"
+    },
+    {
+      "componentClassName": "AcquiredLabel",
+      "id": "uii_2Z05MV6C11AJF9GKBG66HV5KDQ",
+      "kind": "label",
+      "name": "Character",
+      "source": {
+        "kind": "literal",
+        "value": "Not yet"
+      }
+    },
+    {
+      "componentClassName": "UnacquiredActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_6K2DAV9HFZF5PG2DKYE78E3MDK"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_2NB1S9S2ASBCA8DFS9BRAAN0QP",
+      "kind": "activeToggle",
+      "name": "Character"
+    },
+    {
+      "componentClassName": "AcquiredActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_6K2DAV9HFZF5PG2DKYE78E3MDK"
+        }
+      },
+      "id": "uii_6YXTN2NHHSBTA8VK6X20WJEAJP",
+      "kind": "activeToggle",
+      "name": "Character"
+    }
+  ],
+  "name": "Character",
+  "targetDomainType": "Character",
+  "targetDomainTypeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP"
+}

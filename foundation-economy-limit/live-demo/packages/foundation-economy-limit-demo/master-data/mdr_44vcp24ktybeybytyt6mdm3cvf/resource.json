@@ -1,0 +1,44 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "limit",
+            "source": {
+              "kind": "static",
+              "value": "daily"
+            }
+          },
+          {
+            "parameterName": "counter",
+            "source": {
+              "kind": "static",
+              "value": "counter3"
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "ResetUsageLimitCounter",
+        "transformPackageId": "foundation-economy-limit"
+      }
+    ]
+  },
+  "id": "mdr_44VCP24KTYBEYBYTYT6MDM3CVF",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01",
+    "typeName": "UsageLimitCounter"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 2,
+    "kind": "arrayElement",
+    "parentId": "mdr_2B66P1TX2CA2EV81HAS32228JF"
+  }
+}

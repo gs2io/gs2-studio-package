@@ -1,0 +1,60 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "challengePeriodEventId.grnKey.eventName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
+            "typeName": "QuestCollection"
+          },
+          "propertyId": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
+            "typeName": "QuestCollection"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    ]
+  },
+  "id": "mdr_51ABASNT7P8KMR2GCA3GN5685F",
+  "location": {
+    "modelName": "QuestGroupModel",
+    "service": "quest"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
+    "typeName": "QuestCollection"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_1F06WG3VDZ9AB9A5ZHKG7WWP95"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          }
+        ],
+        "mountedResourceId": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX",
+        "parameterName": "challengePeriodEventId"
+      }
+    ]
+  }
+}

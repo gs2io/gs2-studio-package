@@ -1,0 +1,59 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "formId"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "index",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
+            "typeName": "CharacterFormationForm"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterFormation"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "slots"
+      },
+      {
+        "fieldMappings": [
+          {
+            "fieldName": "propertyId",
+            "targetPropertyId": "prop_5YCV8XNQCMSWBB0KJEHTTDMTTQ"
+          }
+        ],
+        "idSourceField": "name",
+        "kind": "modelArrayDecode",
+        "parameterName": "slots",
+        "targetMountPath": {
+          "kind": "local",
+          "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
+          "typeName": "CharacterFormationForm"
+        },
+        "targetPropertyId": "prop_0B395S1GETW77ZBQ7FK8Z7TPGS"
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
+      "typeName": "CharacterFormationForm"
+    }
+  },
+  "id": "udr_2SQ6KKX9J79N6T007TNJZ17ZTM",
+  "location": {
+    "modelName": "Form",
+    "service": "formation"
+  }
+}

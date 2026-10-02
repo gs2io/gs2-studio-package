@@ -1,0 +1,9 @@
+{
+  "id": "currency",
+  "rowKey": "row_04A8G3Z5FNFCRF2FYG7RCZ1RC3",
+  "typeId": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE",
+  "values": {
+    "prop_0K2GDNB2Z9R2MAY48RXEE0ZJQN": "icon/currency.asset",
+    "prop_408774GV3NAG937A3CXGK2YRBJ": "reward.currency"
+  }
+}

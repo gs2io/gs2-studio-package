@@ -3,22 +3,22 @@
   "packageId": "foundation-liveops-version-demo",
   "types": {
     "AgreementVersion": {
-      "id": "dt_01M3K2ERGHCMH9NNRA4NSZFVZK",
+      "id": "dt_00D0WRKP44B54ADDE2H5EFVYZW",
       "singleEntry": false,
       "canonicalPackageId": "foundation-liveops-version",
-      "canonicalTypeId": "dt_JJ5KD5PAXEYNEJ0JYCVWVPB3H4"
+      "canonicalTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
     },
     "EmbeddedVersion": {
-      "id": "dt_01M3K2ERGHMAX7N6ERZPZC5NRB",
+      "id": "dt_00D0WRKP44D2Q9X9KP7XQV1DE2",
       "singleEntry": false,
       "canonicalPackageId": "foundation-liveops-version",
-      "canonicalTypeId": "dt_39GHCE719ZNVPNJCZ2M921Q32H"
+      "canonicalTypeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
     },
     "VersionGate": {
-      "id": "dt_01M3K2ERGHCJVA13ZD9V1AQC7H",
+      "id": "dt_00D0WRKP44B4PTG8ZVAERANV1W",
       "singleEntry": true,
       "canonicalPackageId": "foundation-liveops-version",
-      "canonicalTypeId": "dt_01M3K283QDW0KQVBWZ5K14DY27"
+      "canonicalTypeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH"
     }
   },
   "masterDataResources": {},

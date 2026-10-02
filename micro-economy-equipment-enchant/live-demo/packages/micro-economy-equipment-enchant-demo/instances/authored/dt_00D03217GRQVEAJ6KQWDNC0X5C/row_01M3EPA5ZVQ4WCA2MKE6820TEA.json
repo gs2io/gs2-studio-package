@@ -1,0 +1,11 @@
+{
+  "id": "hp",
+  "rowKey": "row_01M3EPA5ZVQ4WCA2MKE6820TEA",
+  "typeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+  "values": {
+    "prop_00D03217GRGMDSEFAQS5E3A4B2": "standard",
+    "prop_00D03217GRGMXYDWA00MEVCB01": "hp",
+    "prop_00D03217GRKQF9AK7J19KVJDGJ": 20,
+    "prop_00D03217GRQTVSP4FQ10EXQ3TG": 50
+  }
+}

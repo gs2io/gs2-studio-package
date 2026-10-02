@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0YBGPEWKKCZX2GA5X9E0PDC",
+  "kind": "overlay",
+  "name": "StoreProduct",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-shop-currency",
+    "directSourceTypeId": "dt_130FYGH3W86EG2FK06VGEJSYCT",
+    "sourcePackageId": "foundation-economy-currency",
+    "sourceTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
+  }
+}

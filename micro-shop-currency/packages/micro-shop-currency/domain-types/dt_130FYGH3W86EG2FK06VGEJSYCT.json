@@ -1,0 +1,46 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "id": "prop_7GZCWER58FEK1Y8TQBHZPM0H6S",
+        "localizedDisplay": {
+          "en": {
+            "description": "Amount of currency granted when this store product is purchased.",
+            "label": "Currency amount",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "このストア商品を購入したときに付与する通貨量です。",
+            "label": "付与通貨量",
+            "unit": "通貨"
+          }
+        },
+        "name": "count",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_130FYGH3W86EG2FK06VGEJSYCT",
+  "kind": "overlay",
+  "name": "StoreProduct",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-currency",
+    "directSourceTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
+    "sourcePackageId": "foundation-economy-currency",
+    "sourceTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
+  }
+}

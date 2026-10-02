@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0WDGSP5434S78KXZEEJ3C67",
+  "kind": "overlay",
+  "name": "Ranking",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-liveops-ranking",
+    "directSourceTypeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
+    "sourcePackageId": "micro-liveops-ranking",
+    "sourceTypeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
+  }
+}

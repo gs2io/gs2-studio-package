@@ -1,0 +1,225 @@
+{
+  "id": "uic_4RP75HN84YAVEVX1HEKXS9PN2J",
+  "items": [
+    {
+      "componentClassName": "UsageLabel",
+      "id": "uii_7YGWDRGYADASV8M7VRDSMXJGB3",
+      "kind": "templateLabel",
+      "name": "UsageLimitCounter",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+          }
+        },
+        {
+          "key": "free",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
+          }
+        },
+        {
+          "key": "adBacked",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE"
+          }
+        }
+      ],
+      "template": "{count} used. Free uses stop at {free}, ad-backed uses at {adBacked}."
+    },
+    {
+      "componentClassName": "AllowanceLabel",
+      "id": "uii_5G4EY7E0DQBWKRQXZJBV1GC3SK",
+      "kind": "templateLabel",
+      "name": "UsageLimitCounter",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+          }
+        },
+        {
+          "key": "free",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
+          }
+        }
+      ],
+      "template": "{count} of {free} used"
+    },
+    {
+      "componentClassName": "NoFreeUsesLeftLabel",
+      "id": "uii_11RWTPD3Y3A2C93AHFPA1DBK2C",
+      "kind": "templateLabel",
+      "name": "UsageLimitCounter",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+          }
+        },
+        {
+          "key": "free",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
+          }
+        }
+      ],
+      "template": "{count} of {free} free uses are spent. Free uses come back at the next reset."
+    },
+    {
+      "componentClassName": "NothingLeftLabel",
+      "id": "uii_4AS1987Y9FBSCV4YM334JAANTE",
+      "kind": "templateLabel",
+      "name": "UsageLimitCounter",
+      "sources": [
+        {
+          "key": "count",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+          }
+        },
+        {
+          "key": "adBacked",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE"
+          }
+        }
+      ],
+      "template": "{count} of {adBacked} uses are spent. Nothing more until the next reset."
+    },
+    {
+      "componentClassName": "FreeUsesSpentActiveToggle",
+      "condition": {
+        "kind": "gte",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
+        }
+      },
+      "id": "uii_4T4TMX27EMBQ8B7NNYANP8EW4N",
+      "kind": "activeToggle",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "componentClassName": "FreeUsesLeftActiveToggle",
+      "condition": {
+        "kind": "lt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
+        }
+      },
+      "id": "uii_2C5Z0QYW4KBB9VE1ZNMSXX49NW",
+      "kind": "activeToggle",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "componentClassName": "AdUsesUnavailableActiveToggle",
+      "condition": {
+        "children": [
+          {
+            "kind": "lt",
+            "lhs": {
+              "kind": "property",
+              "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+            },
+            "rhs": {
+              "kind": "property",
+              "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
+            }
+          },
+          {
+            "kind": "gte",
+            "lhs": {
+              "kind": "property",
+              "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+            },
+            "rhs": {
+              "kind": "property",
+              "propertyId": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE"
+            }
+          }
+        ],
+        "kind": "or"
+      },
+      "id": "uii_3G781JCKX4A2Z93RQNBK5KCTE7",
+      "kind": "activeToggle",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "componentClassName": "AnyUseLeftActiveToggle",
+      "condition": {
+        "kind": "lt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
+        },
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE"
+        }
+      },
+      "id": "uii_3JQ9EJQS23AC3R9NJ0A9EYEVQT",
+      "kind": "activeToggle",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "componentClassName": "NextResetInValue",
+      "id": "uii_5YGA6A1Z86A33T5Q5WVF14VMWN",
+      "kind": "value",
+      "name": "UsageLimitCounter",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_00D031N0N8S7KC5GNB45BP0PGT"
+      }
+    },
+    {
+      "arguments": [],
+      "componentClassName": "UseFreeButton",
+      "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:mdr_3QQV27BR5AA419F2032R6T95RZ::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_67NWFF07T4BJAV6WVF92Q4X8V0",
+      "kind": "buttonAction",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "UseWithAdButton",
+      "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:mdr_6TC5FMVGD2AE0BT03QA7GCXZS0::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_3QWMQDCT8KAP6BF0F3KYVYFSZE",
+      "kind": "buttonAction",
+      "name": "UsageLimitCounter"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "ResetEveryAllowanceButton",
+      "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:mdr_2B66P1TX2CA2EV81HAS32228JF::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_71CMYTD760BME93XMH90Q1RG6T",
+      "kind": "buttonAction",
+      "name": "UsageLimitCounter"
+    }
+  ],
+  "name": "UsageLimitCounter",
+  "targetDomainType": "UsageLimitCounter",
+  "targetDomainTypeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
+}

@@ -1,0 +1,131 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the character inventory.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "キャラクター所持枠を一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_0YMDYAY5JDK7N10HPS96137T2V",
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum character capacity a player can reach.",
+            "label": "Maximum capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "拡張できるキャラクター所持枠の最大値です。",
+            "label": "最大所持枠",
+            "unit": "枠"
+          }
+        },
+        "name": "maximumCapacity",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_2GW5Y3B5C72XV6HSRV8R9RZX58",
+        "localizedDisplay": {
+          "en": {
+            "description": "Character capacity granted to a new player.",
+            "label": "Initial capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "新規プレイヤーに付与するキャラクター所持枠です。",
+            "label": "初期所持枠",
+            "unit": "枠"
+          }
+        },
+        "name": "defaultCapacity",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_0X7QN1KKKCJZMK5N4S6E4KX1A5",
+        "localizedDisplay": {
+          "en": {
+            "description": "Character capacity currently in use.",
+            "label": "Used capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "現在キャラクターが使用している所持枠数です。",
+            "label": "使用中の所持枠",
+            "unit": "枠"
+          }
+        },
+        "name": "currentCpacityUsage",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_74G2303CD8WVN5H4711968MX05",
+        "localizedDisplay": {
+          "en": {
+            "description": "Character capacity currently available to the player.",
+            "label": "Current capacity",
+            "unit": "slots"
+          },
+          "ja": {
+            "description": "プレイヤーが現在利用できるキャラクター所持枠です。",
+            "label": "現在の所持枠",
+            "unit": "枠"
+          }
+        },
+        "name": "currentCpacity",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
+  "kind": "local",
+  "name": "CharacterCollection",
+  "singleEntry": true
+}

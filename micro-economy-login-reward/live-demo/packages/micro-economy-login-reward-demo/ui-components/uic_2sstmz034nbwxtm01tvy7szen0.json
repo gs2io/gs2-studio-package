@@ -1,0 +1,70 @@
+{
+  "id": "uic_2SSTMZ034NBWXTM01TVY7SZEN0",
+  "items": [
+    {
+      "componentClassName": "DayLabel",
+      "id": "uii_67DN9NYDBDA58RDAG1KTTMQ8J0",
+      "kind": "templateLabel",
+      "name": "LoginReward",
+      "sources": [
+        {
+          "key": "displayName",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ"
+          }
+        },
+        {
+          "key": "coins",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0VGDFNZ5T15JHGFR00Y73HS"
+          }
+        }
+      ],
+      "template": "{displayName}: {coins} coins"
+    },
+    {
+      "componentClassName": "ReceivedLabel",
+      "id": "uii_7T0YVKWD12AE3TQ318CKZBVS60",
+      "kind": "templateLabel",
+      "name": "LoginReward",
+      "sources": [],
+      "template": "Received"
+    },
+    {
+      "componentClassName": "ReceivedActiveToggle",
+      "condition": {
+        "kind": "rowElement",
+        "list": {
+          "kind": "property",
+          "propertyId": "prop_00D0V3E8RR0S3JWWDZ37H09BS2"
+        },
+        "sourceDomainTypeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00"
+      },
+      "id": "uii_31Y2485DHQAW2A6AWN8XTGB95E",
+      "kind": "activeToggle",
+      "name": "LoginReward"
+    },
+    {
+      "componentClassName": "UnreceivedActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "rowElement",
+          "list": {
+            "kind": "property",
+            "propertyId": "prop_00D0V3E8RR0S3JWWDZ37H09BS2"
+          },
+          "sourceDomainTypeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00"
+        },
+        "kind": "not"
+      },
+      "id": "uii_5029EZ620RBPJTP2YEK2TVE1A4",
+      "kind": "activeToggle",
+      "name": "LoginReward"
+    }
+  ],
+  "name": "LoginReward",
+  "targetDomainType": "LoginReward",
+  "targetDomainTypeId": "dt_00D0VGDFNZ677FVDGPR399YJ1P"
+}

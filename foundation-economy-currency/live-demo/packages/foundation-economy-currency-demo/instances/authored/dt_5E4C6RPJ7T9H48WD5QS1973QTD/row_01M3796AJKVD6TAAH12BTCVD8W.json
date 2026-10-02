@@ -1,0 +1,10 @@
+{
+  "id": "coin_small.JPY",
+  "rowKey": "row_01M3796AJKVD6TAAH12BTCVD8W",
+  "typeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
+  "values": {
+    "prop_15W8DS91Q2205EVC4P45EV76R1": "coin_small",
+    "prop_4F7GJCACK2YK78HYH2XVEEMN6R": "JPY",
+    "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K": 100
+  }
+}

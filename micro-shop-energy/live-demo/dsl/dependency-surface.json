@@ -3,23 +3,23 @@
   "packageId": "micro-shop-energy-demo",
   "types": {
     "EnergyProduct": {
-      "id": "dt_01M34HT0W9NARQTBAXX8SWCRFG",
+      "id": "dt_00D0S4EG72DAP5YJTQFA6F363W",
       "singleEntry": false,
       "delegatedActions": {
-        "Buy": "resource:micro-shop-energy-demo:masterData:61368253-b5e8-546a-bbcb-7c8a973da29f::Gs2Exchange:RateModel.Exchange"
+        "Buy": "resource:micro-shop-energy-demo:masterData:mdr_316T157DF8AHNBQJVWHABKV8MZ::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "micro-shop-energy",
-      "canonicalTypeId": "dt_B6ACHCG26EEPJHVNQ7SA1WX2XS",
+      "canonicalTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
       "addedProperties": {
-        "cost": "prop_01M34HT0W95E26WZ0K2C54N79A"
+        "cost": "prop_00D0S4EG729BGHQ7R4RK1959TA"
       }
     }
   },
   "masterDataResources": {
-    "exchange.Namespace": "f3c67ff4-315a-57eb-8780-34dc42db538c",
-    "exchange.RateModel": "61368253-b5e8-546a-bbcb-7c8a973da29f",
-    "transaction.AcquireAction": "a8c36a51-2eb9-52a8-8968-db3f8f1d80ed",
-    "transaction.ConsumeAction": "65f80124-d687-5757-a5fe-838bea239a06"
+    "exchange.Namespace": "mdr_7KRSZZ8CATAZNRF01MVH1DPMWC",
+    "exchange.RateModel": "mdr_316T157DF8AHNBQJVWHABKV8MZ",
+    "transaction.AcquireAction": "mdr_58RDN52BNSAAM8JT6V7Y7HV07D",
+    "transaction.ConsumeAction": "mdr_35Z00J9NM7AXBTBZM3HFN276G6"
   },
   "transforms": {}
 }

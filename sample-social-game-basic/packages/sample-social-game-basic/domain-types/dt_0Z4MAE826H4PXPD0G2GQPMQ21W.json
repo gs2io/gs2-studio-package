@@ -1,0 +1,109 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ"
+              }
+            },
+            {
+              "parameterName": "paidOnly",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04"
+              }
+            },
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "placeholder",
+                "value": "#{slot}"
+              }
+            }
+          ],
+          "transformName": "WithdrawCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "replace",
+      "targetPropertyId": "prop_641SVQJRC0GWZ43QNEPB429MND"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "override",
+    "members": [
+      "prop_3Q5WE2KYP6JTQHWZQN7E8DW12Y",
+      "prop_44GS4TR0HRE4SQCJEV2G7VDG1C"
+    ]
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "id": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04",
+        "name": "paidOnly",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ",
+        "name": "price",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_3Q5WE2KYP6JTQHWZQN7E8DW12Y",
+        "name": "series",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_44GS4TR0HRE4SQCJEV2G7VDG1C",
+        "name": "drawCount",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_0Z4MAE826H4PXPD0G2GQPMQ21W",
+  "kind": "overlay",
+  "name": "Gacha",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-shop-character-gacha",
+    "directSourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+    "sourcePackageId": "micro-shop-character-gacha",
+    "sourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+  }
+}

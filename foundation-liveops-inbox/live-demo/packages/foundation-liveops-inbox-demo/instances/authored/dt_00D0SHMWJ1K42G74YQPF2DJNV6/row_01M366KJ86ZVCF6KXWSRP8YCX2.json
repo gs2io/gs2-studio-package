@@ -1,0 +1,9 @@
+{
+  "id": "gift",
+  "rowKey": "row_01M366KJ86ZVCF6KXWSRP8YCX2",
+  "typeId": "dt_00D0SHMWJ1K42G74YQPF2DJNV6",
+  "values": {
+    "prop_00D0SHMWJ1KSSS1CYCFS0AHJBT": "A gift from the operator: 100 coins.",
+    "prop_00D0SHMWJ1Q1KCCFKR0J26GETW": 100
+  }
+}

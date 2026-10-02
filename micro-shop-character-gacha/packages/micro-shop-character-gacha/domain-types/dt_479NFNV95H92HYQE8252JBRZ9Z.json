@@ -1,0 +1,35 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the gacha rarity.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ガチャレアリティを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_479NFNV95H92HYQE8252JBRZ9Z",
+  "kind": "local",
+  "name": "GachaRarity",
+  "singleEntry": false
+}

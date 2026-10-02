@@ -1,0 +1,39 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "action",
+        "source": {
+          "innerSource": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
+              "typeName": "Mission"
+            },
+            "propertyId": "prop_00D060QP7EZPDKKKFPE3HYE2C5"
+          },
+          "kind": "parent",
+          "parentResourceId": "mdr_4QWBNQ5KM59ZERS381QKYXGJCB"
+        }
+      }
+    ]
+  },
+  "id": "mdr_05BAPFNKQ49J2AQXN7YNH1A006",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
+    "typeName": "Mission"
+  },
+  "parent": {
+    "arrayProperty": "completeAcquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_4QWBNQ5KM59ZERS381QKYXGJCB"
+  }
+}

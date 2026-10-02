@@ -1,0 +1,80 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "sharedFreeCurrency"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "slot",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
+            "typeName": "Wallet"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "summary.free",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
+            "typeName": "Wallet"
+          },
+          "propertyId": "prop_1MXFHCN7EY8JQ8GF8CAMDGTH78"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "summary.paid",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
+            "typeName": "Wallet"
+          },
+          "propertyId": "prop_6R2VWF0VG1FFZD7G3F2NB0W132"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "summary.total",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
+            "typeName": "Wallet"
+          },
+          "propertyId": "prop_3VQCQ7RXRT5DS14GV01R3MRB4J"
+        }
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "walletId"
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
+      "typeName": "Wallet"
+    }
+  },
+  "id": "udr_71QJPZGC8NACMTMVNEB8M5CP80",
+  "location": {
+    "modelName": "Wallet",
+    "service": "money2"
+  }
+}

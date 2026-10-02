@@ -8,7 +8,7 @@
       "ja": "「1日3回まで」のような回数制限を扱います。リセットのタイミングを共有しつつ、数える対象ごとにカウンターを分けられます。上限は使う側が指定します。"
     },
     "domainTypes": {
-      "dt_01M0C5HJ9GNRWXJ4V2MB1RRR5R": {
+      "dt_00D031CCJC5E77CH6RN2RE661E": {
         "description": {
           "en": "Configures how and when a usage counter is reset.",
           "ja": "利用回数カウンターのリセット方法と周期を設定します。"
@@ -18,7 +18,7 @@
           "ja": "リセット設定"
         }
       },
-      "dt_01M0C6M2N38KVHBHTC1JBRT5YA": {
+      "dt_00D031N0N8T4YWAWEK0CJY6HFJ": {
         "description": {
           "en": "Tracks each player's usage count and its limit.",
           "ja": "プレイヤーごとの利用回数と上限を管理します。"

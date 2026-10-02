@@ -1,0 +1,74 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Pulls one trigger in the demo.",
+            "label": "Pull"
+          },
+          "ja": {
+            "description": "デモでトリガーを 1 つ引きます。",
+            "label": "トリガー発火"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_00D0MRCJH84DS7K1B6V3Z7TBCH",
+        "localizedDisplay": {
+          "en": {
+            "description": "The trigger this row pulls.",
+            "label": "Trigger"
+          },
+          "ja": {
+            "description": "この行が引くトリガーです。",
+            "label": "トリガー"
+          }
+        },
+        "name": "trigger",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Pull",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "count",
+          "value": 1
+        }
+      ],
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_3VCDNWHPCXA3YSDAT2G6GFVYBC",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-schedule-demo"
+      }
+    }
+  ],
+  "id": "dt_00D0MRCJH866QJXZVA8BG03CPK",
+  "kind": "local",
+  "name": "TriggerPull",
+  "singleEntry": false
+}

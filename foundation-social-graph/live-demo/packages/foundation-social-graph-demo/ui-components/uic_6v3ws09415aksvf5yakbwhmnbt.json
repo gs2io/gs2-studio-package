@@ -1,0 +1,40 @@
+{
+  "id": "uic_6V3WS09415AKSVF5YAKBWHMNBT",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "uii_7FC2M12D99A2ZAWGZ7S6YF4S3W",
+      "kind": "templateLabel",
+      "name": "Friend",
+      "sources": [
+        {
+          "key": "publicProfile",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_2W4YWVQAX34Q9GNRA5PBY282CF"
+          }
+        }
+      ],
+      "template": "{publicProfile}"
+    },
+    {
+      "componentClassName": "FriendProfileLabel",
+      "id": "uii_2MHPEAC8XDBCT8NT5T0P321XCZ",
+      "kind": "templateLabel",
+      "name": "Friend",
+      "sources": [
+        {
+          "key": "friendProfile",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_24MC6NM8NQ2X1W8TPT2T1V69RK"
+          }
+        }
+      ],
+      "template": "{friendProfile}"
+    }
+  ],
+  "name": "Friend",
+  "targetDomainType": "Friend",
+  "targetDomainTypeId": "dt_00D0XGY063RV4HT0ED8A08F50C"
+}

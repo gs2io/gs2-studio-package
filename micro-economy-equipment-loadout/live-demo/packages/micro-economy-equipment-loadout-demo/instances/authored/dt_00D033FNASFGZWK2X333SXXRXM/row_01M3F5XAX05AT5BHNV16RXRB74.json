@@ -1,0 +1,8 @@
+{
+  "id": "weapon",
+  "rowKey": "row_01M3F5XAX05AT5BHNV16RXRB74",
+  "typeId": "dt_00D033FNASFGZWK2X333SXXRXM",
+  "values": {
+    "prop_00D033FNASBHYZ9W1VK8EE39WP": "^grn:gs2:{region}:{ownerId}:inventory:Equipment:user:{userId}:inventory:Equipment:item:(iron-sword|oak-staff):itemSet:[^:]+$"
+  }
+}

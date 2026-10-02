@@ -3,67 +3,67 @@
   "packageId": "micro-economy-quest",
   "types": {
     "Progress": {
-      "id": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+      "id": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
       "singleEntry": true,
       "delegatedActions": {
-        "Complete": "resource:micro-economy-quest:userData:9ac18116-1a82-4675-a9d9-99d273856fea::Gs2Quest:Progress.End"
+        "Complete": "resource:micro-economy-quest:userData:udr_4TR60HC6M28STTKPCST9SRAVZA::Gs2Quest:Progress.End"
       },
       "canonicalPackageId": "micro-economy-quest",
-      "canonicalTypeId": "dt_3XCXSFWVA0TPMDABMY3MVKJ0R4",
+      "canonicalTypeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
       "properties": {
-        "id": "prop_reserved_id",
-        "inProgress": "prop_01M3B64HDT3QJP9Q43RA6FDABJ",
-        "quest": "prop_7FDM1B7QAEJ7FN8XW6R30EXH0T",
-        "questCollection": "prop_01M3B64HDTB6BVM5FSTMYMPZJF",
-        "rewards": "prop_NJ83FK0CB975M336Z7THVNWE7P"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "inProgress": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW",
+        "quest": "prop_1VVD0ASXTKMHVXA7F1P0R3QC86",
+        "questCollection": "prop_00D0TSH4BEJSJYX1BYEN7N5QWK",
+        "rewards": "prop_5CJ0VWR32T9SD0RSQSYMEXF3HX"
       }
     },
     "ProgressReward": {
-      "id": "dt_1P091J81MXDA5VBTFMMT4PP0RQ",
+      "id": "dt_0DG28CJ0D7BAHETYKX56H5NG65",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-quest",
-      "canonicalTypeId": "dt_1P091J81MXDA5VBTFMMT4PP0RQ",
+      "canonicalTypeId": "dt_0DG28CJ0D7BAHETYKX56H5NG65",
       "properties": {
-        "id": "prop_reserved_id",
-        "itemId": "prop_7RHGJ8D7QFS23PW75KCTMFBY7B",
-        "value": "prop_RYDWJ2B6D96NAN85AF8SDXD12F"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "itemId": "prop_1Y4C4J39XVY8GXQ1SCV6N3TZHT",
+        "value": "prop_67KF4GJSKA9NANA1AKT6BFB88K"
       }
     },
     "Quest": {
-      "id": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+      "id": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
       "singleEntry": false,
       "delegatedActions": {
-        "Start": "resource:micro-economy-quest:masterData:2e3a67b1-c335-4cc2-9c86-09b26d8f45ce::Gs2Quest:QuestModel.Start"
+        "Start": "resource:micro-economy-quest:masterData:mdr_1E79KV3GSN9K19S1G9P9PRYHEE::Gs2Quest:QuestModel.Start"
       },
       "canonicalPackageId": "micro-economy-quest",
-      "canonicalTypeId": "dt_KYDYPCC3WB3CVWB7PH6H5TCBYC",
+      "canonicalTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
       "properties": {
-        "collection": "prop_PFYYCZ2ZB3XBM0A06C1VSTJWCP",
-        "completeAcquireActions": "prop_WAYKZ6HMTNGKPMNBTAZHR37SH3",
-        "completed": "prop_VDP1SG91F48991CRKFPAYR4KEZ",
-        "consumeActions": "prop_TF2ETMFVHGYGRWYBZ8YJZXZG4S",
-        "failedAcquireActions": "prop_NYZ7PF2EANTJ3R35DJQX6XWXHG",
-        "firstCompleteAcquireActions": "prop_H5KJSRGM60K4AQHSJMM28D7JQV",
-        "id": "prop_reserved_id"
+        "collection": "prop_5KZQK7RQTRZAX02G1K0EYEMQ35",
+        "completeAcquireActions": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8",
+        "completed": "prop_6VDGEC28BS22A8B64VXJQP14VQ",
+        "consumeActions": "prop_6KRKPN3YWC7M677JZT7MQZFW16",
+        "failedAcquireActions": "prop_5FQSXKRKJNEMGY0SBCNZ9QF7CC",
+        "firstCompleteAcquireActions": "prop_49CWPE451G4S2NWECN50J39WNY",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     },
     "QuestCollection": {
-      "id": "dt_8KGQ5PW8KF4540B06JKKQ6QF96",
+      "id": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-quest",
-      "canonicalTypeId": "dt_8KGQ5PW8KF4540B06JKKQ6QF96",
+      "canonicalTypeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
       "properties": {
-        "id": "prop_reserved_id",
-        "schedule": "prop_7F9CHVJ7B0ZZFTT0QMW72ZDHPP"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "schedule": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN"
       }
     }
   },
   "masterDataResources": {
-    "quest.Contents": "a32939e4-0821-4696-9c09-0d379173bbf7",
-    "quest.Namespace": "2f01b901-edbf-4a96-9517-f19c0fce5925",
-    "quest.QuestGroupModel": "a152d59a-e8f6-44e9-8141-8a1c2a5320af",
-    "quest.QuestModel": "2e3a67b1-c335-4cc2-9c86-09b26d8f45ce",
-    "transaction.ConsumeAction": "553b9ff9-dd9f-496a-8415-30e81d018b54"
+    "quest.Contents": "mdr_5354WY82118TB9R28D6Y8Q7EZQ",
+    "quest.Namespace": "mdr_1F06WG3VDZ9AB9A5ZHKG7WWP95",
+    "quest.QuestGroupModel": "mdr_51ABASNT7P8KMR2GCA3GN5685F",
+    "quest.QuestModel": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
+    "transaction.ConsumeAction": "mdr_2N7EFZKQCZ95N8859GX0EG32TM"
   },
   "transforms": {}
 }

@@ -1,0 +1,10 @@
+{
+  "id": "ranking-contest",
+  "rowKey": "row_01M3HNGK2R4RPXSN1A8WEDDZH6",
+  "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+  "values": {
+    "prop_4T7XKM1CTQ7X9D94DB6868ZXR3": "ranking-contest",
+    "prop_787C2RE8TDR45Z47ER9FNGNTBH": "relative",
+    "prop_7EEM05TPX8JKCME8DS85QCDFJ2": "always"
+  }
+}

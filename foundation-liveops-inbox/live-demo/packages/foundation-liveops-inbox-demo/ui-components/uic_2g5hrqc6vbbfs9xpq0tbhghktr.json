@@ -1,0 +1,40 @@
+{
+  "id": "uic_2G5HRQC6VBBFS9XPQ0TBHGHKTR",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "OpenButton",
+      "delegatedActionKey": "resource:foundation-liveops-inbox:userData:udr_5B2DBE3P7M977TXCSEYBR6973N::Gs2Inbox:Message.ReadMessage",
+      "id": "uii_4VXRB3HT8FBC2BBZST0FVRQVKR",
+      "kind": "buttonAction",
+      "name": "Message"
+    },
+    {
+      "componentClassName": "OpenedLabel",
+      "id": "uii_0QDBE8GXB6B1YSATGX9SHJSRN0",
+      "kind": "templateLabel",
+      "name": "Message",
+      "sources": [],
+      "template": "Opened."
+    },
+    {
+      "componentClassName": "UnreadActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_3JX5PM4TDM36YWSQFMA0CXKKBW"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_1NFZY63FKCBWZ8FW378AWJ9EC5",
+      "kind": "activeToggle",
+      "name": "Message"
+    }
+  ],
+  "name": "Message",
+  "targetDomainType": "Message",
+  "targetDomainTypeId": "dt_00D0SFSEJN3BMDPZZXX51XNVPW"
+}

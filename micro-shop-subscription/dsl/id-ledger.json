@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "property:StoreSubscription.appleSubscriptionGroupIdentifier": "prop_01M0CE237D5ER8RDFM5F4F4QCQ",
-    "property:StoreSubscription.expiresAt": "prop_01M0CE237D2M31JVETVEWNWH0G",
-    "property:StoreSubscription.googlePlayProductId": "prop_01M0CE237DEBCTSTSKYSEH3BPN",
-    "property:StoreSubscription.reallocateSpanDays": "prop_01M0CE237D39D2M4M4KB0M0KCV",
-    "property:StoreSubscription.renewalTrigger": "prop_01M0CE237D2Q5QJSYBCJE3DYDF",
-    "property:StoreSubscription.rollupHour": "prop_01M0CE237DDMQT88WD8W9RPTW6",
-    "property:StoreSubscription.status": "prop_01M0CE237DDQTHVY262VCGK4M1",
-    "property:StoreSubscription.triggerExtendMode": "prop_01M0CE237DZ14S65879MV4WY1P",
-    "type:StoreSubscription": "dt_01M0CE237DZF21KW81CJ2BP1WN"
+    "property:StoreSubscription.appleSubscriptionGroupIdentifier": "prop_00D033GGSV9BP263BX1BS3S5V5",
+    "property:StoreSubscription.expiresAt": "prop_00D033GGSV8N0RCPVPPVQ5F484",
+    "property:StoreSubscription.googlePlayProductId": "prop_00D033GGSVBJV6PEPCZPBM8TXN",
+    "property:StoreSubscription.reallocateSpanDays": "prop_00D033GGSV8TB8N1514TR504V6",
+    "property:StoreSubscription.renewalTrigger": "prop_00D033GGSV8NSDWPFJV4KGVFKB",
+    "property:StoreSubscription.rollupHour": "prop_00D033GGSVBD5YJ273A72E5PQ1",
+    "property:StoreSubscription.status": "prop_00D033GGSVBDYMEZGHGPV44S50",
+    "property:StoreSubscription.triggerExtendMode": "prop_00D033GGSVFR969HA1TD6S77GD",
+    "type:StoreSubscription": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
   },
   "deterministicOverrides": {
-    "user/money2:SubscriptionStatus:StoreSubscription:#0": "95edb545-a9d4-5494-a318-74e1f8bc917c"
+    "user/money2:SubscriptionStatus:StoreSubscription:#0": "udr_4NXPTMBAEMAJAA663MW7WBS4BW"
   }
 }

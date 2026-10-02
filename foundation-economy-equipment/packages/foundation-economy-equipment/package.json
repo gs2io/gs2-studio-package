@@ -8,7 +8,7 @@
       "ja": "プレイヤーが所持する武器や防具を、カテゴリごとに管理します。"
     },
     "domainTypes": {
-      "dt_FANPG561806ENHYPWV5YRDSHC7": {
+      "dt_3TNDM19GA01KNCFNQ6SFP3ECB1": {
         "description": {
           "en": "Manages the initial, maximum, and current number of equipment slots a player owns.",
           "ja": "プレイヤーが所持できる装備数の初期値・上限・現在値を管理します。"
@@ -18,7 +18,7 @@
           "ja": "装備所持枠"
         }
       },
-      "dt_QQR152BQFJSTM2W1WYZR4RPA98": {
+      "dt_5XY098JXVWPEN0Q0F7QY165JJA": {
         "description": {
           "en": "Registers categories used to classify equipment.",
           "ja": "装備を分類するカテゴリを登録します。"
@@ -28,7 +28,7 @@
           "ja": "装備カテゴリ"
         }
       },
-      "dt_R7W960WC22J1FD8E239HDFMD8D": {
+      "dt_61Z29G730GMGBVA3GGTCBBX3A3": {
         "description": {
           "en": "Registers equipment available in the game, its category, and display order.",
           "ja": "ゲームに登場する装備、カテゴリ、表示順を登録します。"

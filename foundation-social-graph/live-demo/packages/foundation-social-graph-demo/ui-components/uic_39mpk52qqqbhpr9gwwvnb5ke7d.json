@@ -1,0 +1,56 @@
+{
+  "id": "uic_39MPK52QQQBHPR9GWWVNB5KE7D",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "uii_2CTVZWCFRJACCSZ0W304E543QP",
+      "kind": "templateLabel",
+      "name": "Profile",
+      "sources": [
+        {
+          "key": "publicProfile",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_1MYTKGMH9W77112THJZ3HSMDF9"
+          }
+        }
+      ],
+      "template": "{publicProfile}"
+    },
+    {
+      "componentClassName": "FriendProfileLabel",
+      "id": "uii_3ZHR5T222AABN8NBBC9E6CD2JS",
+      "kind": "templateLabel",
+      "name": "Profile",
+      "sources": [
+        {
+          "key": "friendProfile",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_1D82CH5SP6SD8KM3DMX71SZ738"
+          }
+        }
+      ],
+      "template": "{friendProfile}"
+    },
+    {
+      "componentClassName": "FollowerProfileLabel",
+      "id": "uii_4ER4YQFVQEBG0S7Y0W7WCJRKCA",
+      "kind": "templateLabel",
+      "name": "Profile",
+      "sources": [
+        {
+          "key": "followerProfile",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_759K6DP8VBDS06P0YW25QNEN5N"
+          }
+        }
+      ],
+      "template": "{followerProfile}"
+    }
+  ],
+  "name": "Profile",
+  "targetDomainType": "Profile",
+  "targetDomainTypeId": "dt_00D0XGY063RZCJ9MC2Z97D8P1G"
+}

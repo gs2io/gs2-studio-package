@@ -1,0 +1,223 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the stamina model.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "スタミナを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_0VK8BTK0YT0KW0ZS5VN7E3RAWK",
+        "localizedDisplay": {
+          "en": {
+            "description": "Initial stamina capacity available to a player.",
+            "label": "Initial maximum",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "プレイヤーが最初に持つスタミナ上限です。",
+            "label": "初期上限",
+            "unit": "ポイント"
+          }
+        },
+        "name": "defaultMaximum",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_0DZD8RYHVEY4B0DGB0K83K7DNX",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether recovered stamina may exceed the normal capacity.",
+            "label": "Allow overflow"
+          },
+          "ja": {
+            "description": "回復時にスタミナ上限を超えて保持できるかを設定します。",
+            "label": "上限超過を許可"
+          }
+        },
+        "name": "useOverflow",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_1H7FG0XTK823H3XX35XW00TCFT",
+        "localizedDisplay": {
+          "en": {
+            "description": "Maximum stamina retained when overflow is allowed.",
+            "label": "Overflow maximum",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "上限超過を許可した場合に保持できる最大値です。",
+            "label": "超過時上限",
+            "unit": "ポイント"
+          }
+        },
+        "name": "overflowedMaximum",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_7B2HB91QDWZK8SXNC6ZJGCCAEA",
+        "localizedDisplay": {
+          "en": {
+            "description": "Interval between automatic stamina recoveries.",
+            "label": "Recovery interval",
+            "unit": "minutes"
+          },
+          "ja": {
+            "description": "スタミナを自動回復する間隔です。",
+            "label": "回復間隔",
+            "unit": "分"
+          }
+        },
+        "name": "recoveryIntervalMinutes",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_5DW145AF8E14EQ3GHSC94QCMBW",
+        "localizedDisplay": {
+          "en": {
+            "description": "Amount of stamina restored at each recovery interval.",
+            "label": "Recovery amount",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "回復間隔ごとに加算するスタミナ量です。",
+            "label": "1回の回復量",
+            "unit": "ポイント"
+          }
+        },
+        "name": "recoveryValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_7BX7N28W6KRGHGC40MXEWB2ESC",
+        "localizedDisplay": {
+          "en": {
+            "description": "Current stamina held by the player.",
+            "label": "Current value",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "プレイヤーが現在持っているスタミナです。",
+            "label": "現在値",
+            "unit": "ポイント"
+          }
+        },
+        "name": "currentValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56",
+        "localizedDisplay": {
+          "en": {
+            "description": "Current stamina capacity applied to the player.",
+            "label": "Current maximum",
+            "unit": "points"
+          },
+          "ja": {
+            "description": "プレイヤーに適用されている現在のスタミナ上限です。",
+            "label": "現在の上限",
+            "unit": "ポイント"
+          }
+        },
+        "name": "currentMaximumValue",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_39T9A7P2NH6PNT4W12H0FZX9WW",
+        "localizedDisplay": {
+          "en": {
+            "description": "Time of the next automatic stamina recovery.",
+            "label": "Next recovery time"
+          },
+          "ja": {
+            "description": "次にスタミナが自動回復する日時です。",
+            "label": "次回回復日時"
+          }
+        },
+        "name": "nextRecoverdAt",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+  "kind": "local",
+  "name": "Energy",
+  "singleEntry": false
+}

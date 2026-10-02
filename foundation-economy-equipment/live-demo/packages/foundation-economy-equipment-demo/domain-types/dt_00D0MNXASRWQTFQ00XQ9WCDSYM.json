@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0MNXASRWQTFQ00XQ9WCDSYM",
+  "kind": "overlay",
+  "name": "EquipmentCategory",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-equipment",
+    "directSourceTypeId": "dt_5XY098JXVWPEN0Q0F7QY165JJA",
+    "sourcePackageId": "foundation-economy-equipment",
+    "sourceTypeId": "dt_5XY098JXVWPEN0Q0F7QY165JJA"
+  }
+}

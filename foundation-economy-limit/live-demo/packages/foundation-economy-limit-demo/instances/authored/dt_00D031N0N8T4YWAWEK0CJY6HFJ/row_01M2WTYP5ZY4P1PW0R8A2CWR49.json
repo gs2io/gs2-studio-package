@@ -1,0 +1,10 @@
+{
+  "id": "counter4",
+  "rowKey": "row_01M2WTYP5ZY4P1PW0R8A2CWR49",
+  "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+  "values": {
+    "prop_00D031N0N8XCG9EJ25SDVPGMYT": "weekly",
+    "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D": 1,
+    "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE": 1
+  }
+}

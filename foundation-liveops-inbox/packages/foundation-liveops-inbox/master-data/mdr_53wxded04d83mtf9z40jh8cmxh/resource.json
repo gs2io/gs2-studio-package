@@ -1,0 +1,69 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "expiresTimeSpan",
+        "value": null
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "messageReceptionPeriodEventId.grnKey.eventName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
+            "typeName": "GlobalMessage"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "messageReceptionPeriodEventId.grnKey.namespaceName",
+        "value": "InboxSchedule"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "metadata",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
+            "typeName": "GlobalMessage"
+          },
+          "propertyId": "prop_19YMYXB5NJHVCEEQY795WH711C"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
+            "typeName": "GlobalMessage"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    ]
+  },
+  "id": "mdr_53WXDED04D83MTF9Z40JH8CMXH",
+  "location": {
+    "modelName": "GlobalMessage",
+    "service": "inbox"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
+    "typeName": "GlobalMessage"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_5TQZFM8AS38R69FHM3H76YY11G"
+  }
+}

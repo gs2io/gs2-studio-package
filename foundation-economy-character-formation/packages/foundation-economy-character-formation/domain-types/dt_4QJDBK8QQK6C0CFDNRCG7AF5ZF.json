@@ -1,0 +1,60 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the formation form.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "編成フォームを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_0B395S1GETW77ZBQ7FK8Z7TPGS",
+        "localizedDisplay": {
+          "en": {
+            "description": "Character assignments contained in the saved formation.",
+            "label": "Assigned slots"
+          },
+          "ja": {
+            "description": "保存した編成に含まれるキャラクター配置です。",
+            "label": "配置スロット"
+          }
+        },
+        "name": "slots",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "elementType": {
+            "kind": "inline",
+            "targetTypeId": "dt_57YG14JB1Z099GPEMY0ZB6K0H9"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
+  "kind": "local",
+  "name": "CharacterFormationForm",
+  "singleEntry": false
+}

@@ -1,0 +1,74 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetDayOfMonth",
+        "source": {
+          "innerSource": {
+            "innerSource": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E",
+                "typeName": "MissionSetting"
+              },
+              "propertyId": "prop_00D060QP7EVETDNC4SPNMZG6RB"
+            },
+            "kind": "parent",
+            "parentResourceId": "mdr_6V258ETJSN87BA3ZBJ1P2ZA3AM"
+          },
+          "kind": "parent",
+          "parentResourceId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetHour",
+        "source": {
+          "innerSource": {
+            "innerSource": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E",
+                "typeName": "MissionSetting"
+              },
+              "propertyId": "prop_05MKE4B6YY206260EBQGMX43NW"
+            },
+            "kind": "parent",
+            "parentResourceId": "mdr_6V258ETJSN87BA3ZBJ1P2ZA3AM"
+          },
+          "kind": "parent",
+          "parentResourceId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "resetType",
+        "value": "monthly"
+      },
+      {
+        "kind": "static",
+        "parameterName": "scopeType",
+        "value": "resetTiming"
+      }
+    ]
+  },
+  "id": "mdr_7TXS5N95K68SX86XFA4SZPYVXY",
+  "location": {
+    "modelName": "CounterScopeModel",
+    "service": "mission"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
+    "typeName": "MissionCounter"
+  },
+  "parent": {
+    "arrayProperty": "scopes",
+    "index": 2,
+    "kind": "arrayElement",
+    "parentId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
+  }
+}

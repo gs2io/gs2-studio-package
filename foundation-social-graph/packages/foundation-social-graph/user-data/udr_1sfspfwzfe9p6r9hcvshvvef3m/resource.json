@@ -1,0 +1,37 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "publicProfile"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "targetUserId"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "userId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK",
+            "typeName": "ReceiveFriendRequest"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    ],
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK",
+      "typeName": "ReceiveFriendRequest"
+    }
+  },
+  "id": "udr_1SFSPFWZFE9P6R9HCVSHVVEF3M",
+  "location": {
+    "modelName": "ReceiveFriendRequest",
+    "service": "friend"
+  }
+}

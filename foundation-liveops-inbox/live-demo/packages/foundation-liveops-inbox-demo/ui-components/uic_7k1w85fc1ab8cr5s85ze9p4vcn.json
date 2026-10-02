@@ -1,0 +1,32 @@
+{
+  "id": "uic_7K1W85FC1AB8CR5S85ZE9P4VCN",
+  "items": [
+    {
+      "componentClassName": "AmountLabel",
+      "id": "uii_2VFYE3J7QDBS8V4STBJPBRJ98V",
+      "kind": "templateLabel",
+      "name": "Gift",
+      "sources": [
+        {
+          "key": "amount",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0SHMWJ1Q1KCCFKR0J26GETW"
+          }
+        }
+      ],
+      "template": "Carries {amount} coins."
+    },
+    {
+      "arguments": [],
+      "componentClassName": "DeliverButton",
+      "delegatedActionKey": "resource:foundation-liveops-inbox-demo:masterData:mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_2D8E7ANET0BQD9J3GKY1ZXK50K",
+      "kind": "buttonAction",
+      "name": "Gift"
+    }
+  ],
+  "name": "Gift",
+  "targetDomainType": "Gift",
+  "targetDomainTypeId": "dt_00D0SHMWJ1K42G74YQPF2DJNV6"
+}

@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "retired": {
-    "row:dt_BMT0H7ME2SSDZRHGNZF012YZVR.currencystore": "row_01M2QRTVNC7JK5251ZKV4W39AT",
-    "type:CurrencyStore": "dt_01M2QRVJ72GRV2TF11KC9T8ZWW"
+    "row:dt_2X6G49X3GPEBFY4C5FVR08QQYY.currencystore": "row_01M2QRTVNC7JK5251ZKV4W39AT",
+    "type:CurrencyStore": "dt_00D0NY6WHRM66RPKR8CV2EJ7Z7"
   },
   "random": {
-    "type:StoreProduct": "dt_01M3SE2SVJEDKZMA18QN5R2SNH"
+    "type:StoreProduct": "dt_00D0YBGPEWKKCZX2GA5X9E0PDC"
   },
   "deterministicOverrides": {}
 }

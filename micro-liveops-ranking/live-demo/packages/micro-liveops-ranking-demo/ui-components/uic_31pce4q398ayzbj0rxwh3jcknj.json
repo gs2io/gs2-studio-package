@@ -1,0 +1,32 @@
+{
+  "id": "uic_31PCE4Q398AYZBJ0RXWH3JCKNJ",
+  "items": [
+    {
+      "componentClassName": "RuleLabel",
+      "id": "uii_1J82GNYYRGB5HVMN94RR74RWCM",
+      "kind": "templateLabel",
+      "name": "RankingContest",
+      "sources": [],
+      "template": "Start a contest to get 3 minutes to play. Each play scores 1 to 1000, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: 1st 300, 2nd-3rd 150, 4th-10th 80, anyone else who played 30. You receive once, for the rank you hold at that moment."
+    },
+    {
+      "arguments": [],
+      "componentClassName": "StartContestButton",
+      "delegatedActionKey": "resource:micro-liveops-ranking-demo:masterData:mdr_63W68202TEBA2RK172FRMJ5JWG::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_7JWPVM4BS6AR18AVDYY7KZMB4W",
+      "kind": "buttonAction",
+      "name": "RankingContest"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "FinishContestButton",
+      "delegatedActionKey": "resource:micro-liveops-ranking-demo:masterData:mdr_5PGH31GRPRBZESSV5XFZQWJ4KS::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_08SAH87PZ6AZB8NPG6EQPFM1WJ",
+      "kind": "buttonAction",
+      "name": "RankingContest"
+    }
+  ],
+  "name": "RankingContest",
+  "targetDomainType": "RankingContest",
+  "targetDomainTypeId": "dt_00D0WDGSP50X984BNS0PWV22MG"
+}

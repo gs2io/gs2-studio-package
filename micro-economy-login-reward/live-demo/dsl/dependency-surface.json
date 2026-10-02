@@ -3,29 +3,29 @@
   "packageId": "micro-economy-login-reward-demo",
   "types": {
     "LoginReward": {
-      "id": "dt_01M3E1NYQWRWXZDP2V0D57T86S",
+      "id": "dt_00D0VGDFNZ677FVDGPR399YJ1P",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-login-reward",
-      "canonicalTypeId": "dt_3Q3E84TDR2F8CXSJ5Q53YSWMZV",
+      "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
       "addedProperties": {
-        "coins": "prop_01M3E1NYQWQ84PA61Z003RWE77",
-        "displayName": "prop_01M3E1NYQWW3EF79PFBVF6R6P8"
+        "coins": "prop_00D0VGDFNZ5T15JHGFR00Y73HS",
+        "displayName": "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ"
       }
     },
     "LoginRewardCollection": {
-      "id": "dt_01M3E1NYQW6S5Q0ZTXYXH42M01",
+      "id": "dt_00D0VGDFNZ1P9DR7YQFQC90N00",
       "singleEntry": false,
       "delegatedActions": {
-        "StartOver": "resource:micro-economy-login-reward-demo:masterData:e622b584-c597-5a12-b1bb-6d97ced02379::Gs2Exchange:RateModel.Exchange"
+        "StartOver": "resource:micro-economy-login-reward-demo:masterData:mdr_764ATR9HCQB89B3EVDJZ7D08VS::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "micro-economy-login-reward",
-      "canonicalTypeId": "dt_QJ28ZFQA4XC6CESKHZECA7205P"
+      "canonicalTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
     }
   },
   "masterDataResources": {
-    "exchange.Namespace": "7be699b7-2d68-5d81-83f4-f6abdf4093d2",
-    "exchange.RateModel": "e622b584-c597-5a12-b1bb-6d97ced02379",
-    "transaction.AcquireAction": "6de5a894-3c55-5133-91ab-5b04702c6c01"
+    "exchange.Namespace": "mdr_3VWTCVEBB8BP0R7X7PNFFM14YJ",
+    "exchange.RateModel": "mdr_764ATR9HCQB89B3EVDJZ7D08VS",
+    "transaction.AcquireAction": "mdr_3DWPM98F2NA4SS3ATV0HR2RV01"
   },
   "transforms": {}
 }

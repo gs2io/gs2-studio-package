@@ -1,0 +1,43 @@
+{
+  "id": "uic_25M63WR56ABPSV2EYFRQZ2KA6X",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "ExpandButton",
+      "delegatedActionKey": "resource:foundation-economy-equipment-demo:masterData:mdr_482VNSNE5TBE7AD7V9S49PCJC0::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_7ZF6Q1NABGAP7V1AMTW85J8Z6M",
+      "kind": "buttonAction",
+      "name": "EquipmentCollection"
+    },
+    {
+      "componentClassName": "NoneYetLabel",
+      "id": "uii_5F7B28KKM0BQHVZXZRC2EMC8RN",
+      "kind": "label",
+      "name": "EquipmentCollection",
+      "source": {
+        "kind": "literal",
+        "value": "Take a piece of equipment above to start."
+      }
+    },
+    {
+      "componentClassName": "HoldsAnyActiveToggle",
+      "condition": {
+        "kind": "gt",
+        "lhs": {
+          "kind": "property",
+          "propertyId": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS"
+        },
+        "rhs": {
+          "kind": "literal",
+          "value": 0
+        }
+      },
+      "id": "uii_4MV0PRT5WPA7B8JCARXDG3GNG6",
+      "kind": "activeToggle",
+      "name": "EquipmentCollection"
+    }
+  ],
+  "name": "EquipmentCollection",
+  "targetDomainType": "EquipmentCollection",
+  "targetDomainTypeId": "dt_00D0MNXASRRPHW8RV3NXTHX8AY"
+}

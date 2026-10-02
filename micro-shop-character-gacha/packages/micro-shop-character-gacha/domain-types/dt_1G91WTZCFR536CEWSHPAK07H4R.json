@@ -1,0 +1,92 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the gacha.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "ガチャを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_42BYHE1CR1TEXDMCWR9B91PP5K",
+        "localizedDisplay": {
+          "en": {
+            "description": "Schedule during which this gacha is available.",
+            "label": "Availability schedule"
+          },
+          "ja": {
+            "description": "このガチャを開催するスケジュールです。",
+            "label": "開催スケジュール"
+          }
+        },
+        "name": "schedule",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_641SVQJRC0GWZ43QNEPB429MND",
+        "localizedDisplay": {
+          "en": {
+            "description": "Consume actions executed for one gacha draw.",
+            "label": "Draw costs"
+          },
+          "ja": {
+            "description": "ガチャを1回実行するときの消費アクションです。",
+            "label": "1回の抽選コスト"
+          }
+        },
+        "name": "consumeActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "consumeAction"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Buy",
+      "parameterOverrides": [],
+      "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
+      "targetResource": {
+        "resourceId": "mdr_5PRP4NWC3688X91404V01TV2F9",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-shop-character-gacha"
+      }
+    }
+  ],
+  "id": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+  "kind": "local",
+  "name": "Gacha",
+  "singleEntry": false
+}

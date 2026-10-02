@@ -1,0 +1,75 @@
+{
+  "actionPropertyTransforms": [
+    {
+      "entries": [
+        {
+          "arguments": [
+            {
+              "parameterName": "slot",
+              "source": {
+                "kind": "static",
+                "value": 0
+              }
+            },
+            {
+              "parameterName": "count",
+              "source": {
+                "kind": "domainProperty",
+                "propertyId": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7"
+              }
+            }
+          ],
+          "transformName": "DepositFreeCurrency",
+          "transformPackageId": "foundation-economy-currency"
+        }
+      ],
+      "kind": "transformEntries",
+      "mode": "append",
+      "targetPropertyId": "prop_00D05P2SE3WMNG5C27EG74BM38"
+    }
+  ],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "masterData",
+        "description": "Coins one interval away deposits",
+        "id": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7",
+        "localizedDisplay": {
+          "en": {
+            "description": "Coins paid for each interval away.",
+            "label": "Reward coins",
+            "unit": "currency"
+          },
+          "ja": {
+            "description": "放置 1 区間ごとに付与するコインの額です。",
+            "label": "報酬コイン",
+            "unit": "通貨"
+          }
+        },
+        "name": "coins",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0W2TXV2P9NTD0GZY11BN5M7",
+  "kind": "overlay",
+  "name": "IdleReward",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "foundation-economy-idle",
+    "directSourceTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
+    "sourcePackageId": "foundation-economy-idle",
+    "sourceTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ"
+  }
+}

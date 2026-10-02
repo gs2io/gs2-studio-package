@@ -1,0 +1,51 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "enableCampaignCode",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
+            "typeName": "SerialCodeCampaign"
+          },
+          "propertyId": "prop_00D031EZFZM4YG8CZFHGS7HMHD"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "metadata",
+        "value": ""
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
+            "typeName": "SerialCodeCampaign"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    ]
+  },
+  "id": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",
+  "location": {
+    "modelName": "CampaignModel",
+    "service": "serialKey"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
+    "typeName": "SerialCodeCampaign"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_33A0JPMYWGB96T0HQZPKB505V4"
+  }
+}

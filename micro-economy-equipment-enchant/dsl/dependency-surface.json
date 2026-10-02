@@ -3,67 +3,67 @@
   "packageId": "micro-economy-equipment-enchant",
   "types": {
     "Equipment": {
-      "id": "dt_01M0C84Y321K5KHKYHWHMAVTH5",
+      "id": "dt_00D03217GRGCSCWCZMF4D2PYM9",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-equipment",
-      "canonicalTypeId": "dt_R7W960WC22J1FD8E239HDFMD8D",
+      "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
       "addedProperties": {
-        "enchant": "prop_01M3EGWJ3JWTJ1S2A79EMTPARQ",
-        "enchantments": "prop_01M0C84Y32CKRCM57ZVFNSN5KJ"
+        "enchant": "prop_00D0VM74GWQ6MGE8JHTBN6NJP5",
+        "enchantments": "prop_00D03217GRK4Y3519ZYVXED9CW"
       }
     },
     "EquipmentEnchant": {
-      "id": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
+      "id": "dt_00D03217GRKX0AV27J248EX89N",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-equipment-enchant",
-      "canonicalTypeId": "dt_01M0C84Y32FM1BC8Y88H1VN16Q",
+      "canonicalTypeId": "dt_00D03217GRKX0AV27J248EX89N",
       "properties": {
-        "id": "prop_reserved_id",
-        "maximumParameterCount": "prop_01M0C84Y32NTFEV004CWFSAF5R"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "maximumParameterCount": "prop_00D03217GRNEKVPR01373YAKSE"
       }
     },
     "EquipmentEnchantOption": {
-      "id": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+      "id": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-equipment-enchant",
-      "canonicalTypeId": "dt_01M0C84Y32ZDSA8TEZHPNG3MNK",
+      "canonicalTypeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
       "properties": {
-        "enchant": "prop_01M0C84Y322HQ5SXAZ4NRD8HCB",
-        "id": "prop_reserved_id",
-        "resourceName": "prop_01M0C84Y322KQSQH802HVDHC06",
-        "resourceValue": "prop_01M0C84Y32ZBF6RHYW41VPWFA2",
-        "weight": "prop_01M0C84Y32EXX5ACY856FE9P29"
+        "enchant": "prop_00D03217GRGMDSEFAQS5E3A4B2",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "resourceName": "prop_00D03217GRGMXYDWA00MEVCB01",
+        "resourceValue": "prop_00D03217GRQTVSP4FQ10EXQ3TG",
+        "weight": "prop_00D03217GRKQF9AK7J19KVJDGJ"
       }
     },
     "EquipmentEnchantSlotChance": {
-      "id": "dt_01M0C84Y32MFW05C5TXC61W1SR",
+      "id": "dt_00D03217GRN3Z01B1EQB1GF0EE",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-equipment-enchant",
-      "canonicalTypeId": "dt_01M0C84Y32MFW05C5TXC61W1SR",
+      "canonicalTypeId": "dt_00D03217GRN3Z01B1EQB1GF0EE",
       "properties": {
-        "count": "prop_01M0C84Y32TQRT07W6CT9MCVZM",
-        "enchant": "prop_01M0C84Y3236PN0MXQNS8GXGKR",
-        "id": "prop_reserved_id",
-        "weight": "prop_01M0C84Y32K8455NCTCVPXBKC0"
+        "count": "prop_00D03217GRPNY6G1Z1K6JD36ZX",
+        "enchant": "prop_00D03217GRGSNN857DXEA47C4Y",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "weight": "prop_00D03217GRMT119DB6K6XQAWV0"
       }
     },
     "EquipmentEnchantment": {
-      "id": "dt_01M0C84Y323XGX5N856QJ5Z61Q",
+      "id": "dt_00D03217GRGZC79DA19NWHFSGD",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-equipment-enchant",
-      "canonicalTypeId": "dt_01M0C84Y323XGX5N856QJ5Z61Q",
+      "canonicalTypeId": "dt_00D03217GRGZC79DA19NWHFSGD",
       "properties": {
-        "id": "prop_reserved_id",
-        "resourceName": "prop_01M0C84Y32ECEHBF3RZEE5D62D",
-        "resourceValue": "prop_01M0C84Y32JTY6HCNCJZ7922GH"
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "resourceName": "prop_00D03217GRKK3MAVRY7VKHB9GK",
+        "resourceValue": "prop_00D03217GRMPQHMB5B4QST8GM4"
       }
     }
   },
   "masterDataResources": {
-    "enchant.Namespace": "e60a0969-0300-5c40-8568-9d4b38a8141c",
-    "enchant.RarityParameterCountModel": "76098694-c7cb-579c-bbec-3cf89285ba4f",
-    "enchant.RarityParameterModel": "996567a7-c9e0-5629-89e1-2979a6dd9bc2",
-    "enchant.RarityParameterValueModel": "edd100a0-19f7-5c09-87f3-4c2582410c07"
+    "enchant.Namespace": "mdr_76184PJ0R0BH08AT4X9CWAG50W",
+    "enchant.RarityParameterCountModel": "mdr_3P16399HYBAYEBQV1WZ298BEJF",
+    "enchant.RarityParameterModel": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
+    "enchant.RarityParameterValueModel": "mdr_7DT40A06FQBG4RFWTC4P142307"
   },
   "transforms": {
     "AddEquipmentEnchantmentSlot": [

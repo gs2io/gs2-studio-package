@@ -1,0 +1,11 @@
+{
+  "id": "critical",
+  "rowKey": "row_01M3EPA5ZVP7JV0QCNQ4NA4FVH",
+  "typeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+  "values": {
+    "prop_00D03217GRGMDSEFAQS5E3A4B2": "standard",
+    "prop_00D03217GRGMXYDWA00MEVCB01": "critical",
+    "prop_00D03217GRKQF9AK7J19KVJDGJ": 10,
+    "prop_00D03217GRQTVSP4FQ10EXQ3TG": 5
+  }
+}

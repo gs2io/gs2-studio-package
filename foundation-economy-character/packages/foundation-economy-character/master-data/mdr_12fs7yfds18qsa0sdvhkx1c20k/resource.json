@@ -1,0 +1,81 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "changeExperienceScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "changeRankCapScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "changeRankScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "CharacterExperience"
+      },
+      {
+        "kind": "static",
+        "parameterName": "overflowExperienceScript",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "rankCapScriptId",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      }
+    ]
+  },
+  "id": "mdr_12FS7YFDS18QSA0SDVHKX1C20K",
+  "location": {
+    "modelName": "Namespace",
+    "service": "experience"
+  }
+}

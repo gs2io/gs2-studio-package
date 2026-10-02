@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0WA19DYQ4YZEAD7PZ35YJD6",
+  "kind": "overlay",
+  "name": "Buff",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "directSourcePackageId": "micro-economy-buff",
+    "directSourceTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+    "sourcePackageId": "micro-economy-buff",
+    "sourceTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
+  }
+}

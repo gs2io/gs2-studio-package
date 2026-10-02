@@ -1,0 +1,16 @@
+{
+  "id": "uic_4VRGX0T7ZZADFTDC8PA1140H23",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "DiscardButton",
+      "delegatedActionKey": "resource:foundation-economy-equipment-demo:masterData:mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB::Gs2Exchange:RateModel.Exchange",
+      "id": "uii_5JGH7ZSMEWBCEAK62CPAQV70RA",
+      "kind": "buttonAction",
+      "name": "Equipment"
+    }
+  ],
+  "name": "Equipment",
+  "targetDomainType": "Equipment",
+  "targetDomainTypeId": "dt_00D0MNXASRT2QXV1SJH71CX4V2"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "uic_1KYWDEFN3XAZHSC741HNQQSTWY",
+  "items": [
+    {
+      "componentClassName": "PayloadLabel",
+      "id": "uii_0SHYNK3RTEBR0TB2FC0XVJ756B",
+      "kind": "label",
+      "name": "Message",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_7WYH08M0F6N02WHFBRJ4TXX5VD"
+      }
+    },
+    {
+      "componentClassName": "ReadActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_3JX5PM4TDM36YWSQFMA0CXKKBW"
+        }
+      },
+      "id": "uii_0Z4M79SYE2BY5SFV6HGJ77DR2M",
+      "kind": "activeToggle",
+      "name": "Message"
+    }
+  ],
+  "name": "Message",
+  "targetDomainType": "Message",
+  "targetDomainTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
+}

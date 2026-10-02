@@ -1,0 +1,33 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
+            "typeName": "EquipmentCatalog"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    ]
+  },
+  "id": "mdr_1SXTWJSMJ6A05BST0S7A467E70",
+  "location": {
+    "modelName": "RateModel",
+    "service": "exchange"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
+    "typeName": "EquipmentCatalog"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_1E69FYQZ2TAZXV14RBJ9AF9590"
+  }
+}

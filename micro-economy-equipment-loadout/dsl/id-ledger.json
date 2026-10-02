@@ -2,12 +2,14 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "property:Character.equipmentSlots": "prop_01M0CDYNB5CJAAH5YPRR6FNRXF",
-    "property:EquipmentSlot.propertyRegex": "prop_01M0CDYNB5E7VX7G7ED1SRD7JR",
-    "property:EquipmentSlotAssignment.equipment": "prop_01M0CDYNB51PQJVBAQC87617NY",
-    "type:Character": "dt_01M0CDYNB5V74MMX3SWDK4ZRCH",
-    "type:EquipmentSlot": "dt_01M0CDYNB5Y3ZJCBMCCF7QQ3PJ",
-    "type:EquipmentSlotAssignment": "dt_01M0CDYNB5ZBC95MZSW2NTSPXM"
+    "property:Character.equipmentSlots": "prop_00D033FNASB4JJM9FNP61KXE7B",
+    "property:EquipmentSlot.propertyRegex": "prop_00D033FNASBHYZ9W1VK8EE39WP",
+    "property:EquipmentSlotAssignment.equipment": "prop_00D033FNAS8DNWPTTNV21SG9XF",
+    "type:Character": "dt_00D033FNASESS5578YF3CS7Y34",
+    "type:EquipmentSlot": "dt_00D033FNASFGZWK2X333SXXRXM",
+    "type:EquipmentSlotAssignment": "dt_00D033FNASFTV29D7YF0NEPDQD"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "user/formation:PropertyForm:Character:#0": "udr_523882ZPX6BCCR6V97KZH6CTNE"
+  }
 }

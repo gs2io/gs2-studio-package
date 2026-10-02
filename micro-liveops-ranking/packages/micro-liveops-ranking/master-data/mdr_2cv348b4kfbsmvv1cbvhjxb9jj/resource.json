@@ -1,0 +1,56 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "static",
+        "parameterName": "logSetting",
+        "value": null
+      },
+      {
+        "kind": "static",
+        "parameterName": "name",
+        "value": "Ranking"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.acquireActionUseJobQueue",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.commitScriptResultInUseDistributor",
+        "value": false
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.distributorNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:distributor:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAtomicCommit",
+        "value": true
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.enableAutoRun",
+        "value": true
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.queueNamespaceId",
+        "value": "grn:gs2:{region}:{ownerId}:queue:default"
+      },
+      {
+        "kind": "static",
+        "parameterName": "transactionSetting.transactionUseDistributor",
+        "value": false
+      }
+    ]
+  },
+  "id": "mdr_2CV348B4KFBSMVV1CBVHJXB9JJ",
+  "location": {
+    "modelName": "Namespace",
+    "service": "ranking2"
+  }
+}

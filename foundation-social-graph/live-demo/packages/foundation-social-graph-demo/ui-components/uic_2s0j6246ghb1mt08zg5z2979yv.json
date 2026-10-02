@@ -1,0 +1,24 @@
+{
+  "id": "uic_2S0J6246GHB1MT08ZG5Z2979YV",
+  "items": [
+    {
+      "componentClassName": "IdLabel",
+      "id": "uii_1F020Q74BVBA5SFMV047VFDP9G",
+      "kind": "templateLabel",
+      "name": "ReceiveFriendRequest",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
+        }
+      ],
+      "template": "{id}"
+    }
+  ],
+  "name": "ReceiveFriendRequest",
+  "targetDomainType": "ReceiveFriendRequest",
+  "targetDomainTypeId": "dt_00D0XGY063T3ZK1VVAW47ZSE6K"
+}

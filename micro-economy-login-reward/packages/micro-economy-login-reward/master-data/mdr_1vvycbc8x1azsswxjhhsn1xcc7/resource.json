@@ -1,0 +1,103 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "domainProperty",
+        "parameterName": "missedReceiveRelief",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_00D0V3E8RR5VJ1PXB3RJT9T21J"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "mode",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_00D0V3E8RR357Z98YP7VMDXPP7"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "name",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "periodEventId.grnKey.eventName",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_2GPQQQHZ70FS0R1N1B43CP2VMW"
+        }
+      },
+      {
+        "kind": "static",
+        "parameterName": "periodEventId.grnKey.namespaceName",
+        "value": "Schedule"
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "repeat",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_00D0V3E8RR3GSCNAW1JAKAQRRD"
+        }
+      },
+      {
+        "kind": "domainProperty",
+        "parameterName": "resetHour",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+            "typeName": "LoginRewardCollection"
+          },
+          "propertyId": "prop_5BWDJGV41VX2E7914HXAQ5PGBP"
+        }
+      }
+    ]
+  },
+  "id": "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7",
+  "location": {
+    "modelName": "BonusModel",
+    "service": "loginReward"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+    "typeName": "LoginRewardCollection"
+  },
+  "parent": {
+    "kind": "direct",
+    "parentId": "mdr_00B8WFHSSEBB5TFJSFE4XKCWE8"
+  }
+}

@@ -3,18 +3,18 @@
   "packageId": "micro-liveops-guild-ranking-demo",
   "types": {
     "GuildRanking": {
-      "id": "dt_01M3PKBSERPEQY9XN4DFHWV5Y1",
+      "id": "dt_00D0XMTYBP5KNZJFD93BWF6SFG",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-guild-ranking",
-      "canonicalTypeId": "dt_01M0CE422VWKB1V6XFZWXFJQZ9"
+      "canonicalTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
     },
     "GuildRankingReward": {
-      "id": "dt_01M3PKBSERB4VKYASEP2635GJZ",
+      "id": "dt_00D0XMTYBP2S6WZJPBNGHGSC4Q",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-guild-ranking",
-      "canonicalTypeId": "dt_01M0CE422VDT5R1HBS4KHAF8RE",
+      "canonicalTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
       "addedProperties": {
-        "coins": "prop_01M3PKBSERV99KGY47GKSG75VA"
+        "coins": "prop_00D0XMTYBP6TACW7H1W4YC1SET"
       }
     }
   },

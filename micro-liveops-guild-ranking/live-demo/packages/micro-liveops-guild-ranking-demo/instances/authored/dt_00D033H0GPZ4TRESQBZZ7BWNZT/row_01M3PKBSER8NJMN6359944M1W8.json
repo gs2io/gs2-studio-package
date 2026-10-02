@@ -1,0 +1,12 @@
+{
+  "id": "guild",
+  "rowKey": "row_01M3PKBSER8NJMN6359944M1W8",
+  "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
+  "values": {
+    "prop_00D033H0GPV00M3DBQVFQC6VA2": "guild-season",
+    "prop_00D033H0GPWEF15V2AMFQET09E": "desc",
+    "prop_00D033H0GPY13F7M2F5MH9W2PW": 1,
+    "prop_00D033H0GPZ8M64WY0868P8S2T": true,
+    "prop_00D033H0GPZP59YFFCVBBGVPGM": 100
+  }
+}

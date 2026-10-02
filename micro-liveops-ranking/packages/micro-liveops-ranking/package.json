@@ -11,7 +11,7 @@
       "ja": "全プレイヤーを対象としたランキングです。開催期間をスケジュールで指定し、順位に応じた報酬を配れます。"
     },
     "domainTypes": {
-      "dt_01M0C5QTC12JW853EKK38QN42Z": {
+      "dt_00D031DYK08MQ218VMWRT5X90Q": {
         "description": {
           "en": "Defines rewards distributed for each ranking placement range.",
           "ja": "ランキングの順位範囲ごとに配布する報酬を設定します。"
@@ -21,7 +21,7 @@
           "ja": "ランキング報酬"
         }
       },
-      "dt_01M0C5QTC1BDRSX4T1WSDJXDQV": {
+      "dt_00D031DYK0AVE6F96GF6BCQBDY": {
         "description": {
           "en": "Configures scoring, availability, and participation rules for a player ranking.",
           "ja": "プレイヤーランキングの集計方法、開催期間、参加条件を設定します。"

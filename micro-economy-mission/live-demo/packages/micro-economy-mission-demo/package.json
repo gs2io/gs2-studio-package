@@ -16,7 +16,7 @@
       "ja": "ライブデモ用のリセット設定、1 つのカウンター、それを見る 4 つのミッションと 2 つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
     },
     "domainTypes": {
-      "dt_01M2ZFVBD5YJVNDAMVXVY17FN0": {
+      "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8": {
         "description": {
           "en": "Adds the coins a demo mission pays when its reward is received.",
           "ja": "デモのミッションに、報酬の受け取り時に付与するコインの額を足します。"

@@ -1,0 +1,58 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "gradeName"
+      },
+      {
+        "kind": "domainProperties",
+        "parameterName": "gradeValue",
+        "sources": [
+          {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
+              "typeName": "Character"
+            },
+            "propertyId": "prop_00D0320HQ4G51XW7JS84YZ2VAA"
+          }
+        ]
+      },
+      {
+        "kind": "domainPropertyKey",
+        "parameterName": "propertyId",
+        "source": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
+            "typeName": "Character"
+          },
+          "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+        },
+        "suffix": ":level"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "statusId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "declaredMasterLinkId": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
+    "declaredTypeMount": {
+      "kind": "local",
+      "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
+      "typeName": "Character"
+    }
+  },
+  "id": "udr_0EP0WR54F6ARWSAEPYGH6188N5",
+  "location": {
+    "modelName": "Status",
+    "service": "grade"
+  }
+}

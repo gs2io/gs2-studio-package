@@ -1,0 +1,52 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_1VVD0ASXTKMHVXA7F1P0R3QC86",
+        "name": "quest",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_7BY7J77ZQ1JAJPJGC4PSYAHC6N"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_13P7PMR0A3DBCG13JCB54KM0HP",
+        "name": "rewards",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "elementType": {
+            "kind": "inline",
+            "targetTypeId": "dt_0YSV97DT9NZTEKYEATS961RXY4"
+          },
+          "kind": "list"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_2RBV8SPG989F1J35N35XH96PTP",
+  "kind": "local",
+  "name": "Progress",
+  "singleEntry": false
+}

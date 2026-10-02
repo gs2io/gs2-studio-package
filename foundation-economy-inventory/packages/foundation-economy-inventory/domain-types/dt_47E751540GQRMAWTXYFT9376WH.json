@@ -1,0 +1,59 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the item.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "アイテムを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_4RM1PKMWET4WYQBAW013CTF8YD",
+        "localizedDisplay": {
+          "en": {
+            "description": "Quantity of the item owned by the player.",
+            "label": "Owned quantity",
+            "unit": "items"
+          },
+          "ja": {
+            "description": "プレイヤーが所持しているアイテムの数量です。",
+            "label": "所持数",
+            "unit": "個"
+          }
+        },
+        "name": "count",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int64"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_47E751540GQRMAWTXYFT9376WH",
+  "kind": "local",
+  "name": "Item",
+  "singleEntry": false
+}

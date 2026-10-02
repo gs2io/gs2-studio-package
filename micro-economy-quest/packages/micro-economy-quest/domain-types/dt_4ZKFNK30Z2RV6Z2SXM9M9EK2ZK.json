@@ -1,0 +1,192 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the quest.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "クエストを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_5KZQK7RQTRZAX02G1K0EYEMQ35",
+        "localizedDisplay": {
+          "en": {
+            "description": "Quest group this quest belongs to.",
+            "label": "Quest group"
+          },
+          "ja": {
+            "description": "このクエストが属するグループです。",
+            "label": "クエストグループ"
+          }
+        },
+        "name": "collection",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "ref",
+          "targetTypeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_6KRKPN3YWC7M677JZT7MQZFW16",
+        "localizedDisplay": {
+          "en": {
+            "description": "Consume actions executed when the quest starts.",
+            "label": "Start costs"
+          },
+          "ja": {
+            "description": "クエスト開始時に実行する消費アクションです。",
+            "label": "開始時消費"
+          }
+        },
+        "name": "consumeActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "consumeAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_49CWPE451G4S2NWECN50J39WNY",
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions executed on the first completion.",
+            "label": "First-clear rewards"
+          },
+          "ja": {
+            "description": "初回クリア時に実行する獲得アクションです。",
+            "label": "初回クリア報酬"
+          }
+        },
+        "name": "firstCompleteAcquireActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8",
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions executed on each completion.",
+            "label": "Completion rewards"
+          },
+          "ja": {
+            "description": "クリア時に毎回実行する獲得アクションです。",
+            "label": "通常クリア報酬"
+          }
+        },
+        "name": "completeAcquireActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_5FQSXKRKJNEMGY0SBCNZ9QF7CC",
+        "localizedDisplay": {
+          "en": {
+            "description": "Acquire actions executed when the quest fails.",
+            "label": "Failure actions"
+          },
+          "ja": {
+            "description": "クエスト失敗時に実行する獲得アクションです。",
+            "label": "失敗時アクション"
+          }
+        },
+        "name": "failedAcquireActions",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "elementType": {
+            "kind": "acquireAction"
+          },
+          "kind": "list"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_6VDGEC28BS22A8B64VXJQP14VQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the player has completed this quest.",
+            "label": "Completed"
+          },
+          "ja": {
+            "description": "プレイヤーがこのクエストをクリア済みかを示します。",
+            "label": "クリア済み"
+          }
+        },
+        "name": "completed",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [
+    {
+      "methodName": "Start",
+      "parameterOverrides": [
+        {
+          "kind": "static",
+          "parameterName": "force",
+          "value": false
+        }
+      ],
+      "targetActionKey": "Gs2Quest:QuestModel.Start",
+      "targetResource": {
+        "resourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-quest"
+      }
+    }
+  ],
+  "id": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
+  "kind": "local",
+  "name": "Quest",
+  "singleEntry": false
+}

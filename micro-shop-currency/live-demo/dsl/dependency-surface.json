@@ -3,10 +3,10 @@
   "packageId": "micro-shop-currency-demo",
   "types": {
     "StoreProduct": {
-      "id": "dt_01M3SE2SVJEDKZMA18QN5R2SNH",
+      "id": "dt_00D0YBGPEWKKCZX2GA5X9E0PDC",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-currency",
-      "canonicalTypeId": "dt_JQQFPC83PRYTWMZ43RV3T4SKSB"
+      "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
     }
   },
   "masterDataResources": {},

@@ -3,19 +3,19 @@
   "packageId": "foundation-economy-energy-demo",
   "types": {
     "Energy": {
-      "id": "dt_01M2JG8Q6GMNFPA3732XVHMCN5",
+      "id": "dt_00D0MM25SM55BXJGSRRQEWD359",
       "singleEntry": false,
       "delegatedActions": {
-        "Recover": "resource:foundation-economy-energy-demo:masterData:3d74622a-fa25-5f3d-a62b-e0cbed4f4788::Gs2Exchange:RateModel.Exchange",
-        "Spend": "resource:foundation-economy-energy-demo:masterData:a79d51c8-3652-5fa2-afe0-6076cd004538::Gs2Exchange:RateModel.Exchange"
+        "Recover": "resource:foundation-economy-energy-demo:masterData:mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8::Gs2Exchange:RateModel.Exchange",
+        "Spend": "resource:foundation-economy-energy-demo:masterData:mdr_57KN8WGDJJBYHAZR30EV6G0H9R::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "foundation-economy-energy",
-      "canonicalTypeId": "dt_TX5D50PD77NCTNGR3SKBGETDFY"
+      "canonicalTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
     }
   },
   "masterDataResources": {
-    "transaction.AcquireAction": "91d2481b-a3cc-557f-bff7-ba4838fea35b",
-    "transaction.ConsumeAction": "e24a590c-f83a-5560-981f-b9b7199f0402"
+    "transaction.AcquireAction": "mdr_4HT941Q8YCANZVZXXT90WFX8TV",
+    "transaction.ConsumeAction": "mdr_7299CGSY1TANG9G7XSPWCSY102"
   },
   "transforms": {}
 }

@@ -1,0 +1,44 @@
+{
+  "authored": {
+    "declaredBindings": [
+      {
+        "arguments": [
+          {
+            "parameterName": "enchant",
+            "source": {
+              "kind": "static",
+              "value": "standard"
+            }
+          },
+          {
+            "parameterName": "propertyId",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{propertyId}"
+            }
+          }
+        ],
+        "kind": "transform",
+        "parameterName": "action",
+        "transformName": "RerollEquipmentEnchantment",
+        "transformPackageId": "micro-economy-equipment-enchant"
+      }
+    ]
+  },
+  "id": "mdr_5B6M1FD1EKA7V8SWHKTMT23KRW",
+  "location": {
+    "modelName": "AcquireAction",
+    "service": "transaction"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0VNJHFYSPVEE231WA4Z2Q47",
+    "typeName": "Equipment"
+  },
+  "parent": {
+    "arrayProperty": "acquireActions",
+    "index": 0,
+    "kind": "arrayElement",
+    "parentId": "mdr_7B5FM276ZTBNSAQYJ948JES7GM"
+  }
+}

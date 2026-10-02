@@ -1,0 +1,470 @@
+{
+  "compositeKey": null,
+  "declared": {
+    "properties": [
+      {
+        "bindingHint": "none",
+        "description": "Unique identifier",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Uniquely identifies the schedule.",
+            "label": "ID"
+          },
+          "ja": {
+            "description": "スケジュールを一意に識別します。",
+            "label": "ID"
+          }
+        },
+        "name": "id",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_787C2RE8TDR45Z47ER9FNGNTBH",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the schedule uses absolute times or times relative to a trigger.",
+            "label": "Schedule type"
+          },
+          "ja": {
+            "description": "絶対日時またはトリガー基準の相対日時を選択します。",
+            "label": "スケジュール方式"
+          }
+        },
+        "name": "scheduleType",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "absolute",
+            "relative"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_7FMECH33GC393EZ4PGCPR1QCSE",
+        "localizedDisplay": {
+          "en": {
+            "description": "Start time for an absolute schedule.",
+            "label": "Start time"
+          },
+          "ja": {
+            "description": "絶対日時方式で機能を開始する日時です。",
+            "label": "開始日時"
+          }
+        },
+        "name": "startAt",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"absolute\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_1SGTZ9B0RDMXXPWHJ8K4W032AA",
+        "localizedDisplay": {
+          "en": {
+            "description": "End time for an absolute schedule.",
+            "label": "End time"
+          },
+          "ja": {
+            "description": "絶対日時方式で機能を終了する日時です。",
+            "label": "終了日時"
+          }
+        },
+        "name": "endAt",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"absolute\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "assetDelivery",
+        "id": "prop_4T7XKM1CTQ7X9D94DB6868ZXR3",
+        "localizedDisplay": {
+          "en": {
+            "description": "Trigger used as the reference for a relative schedule.",
+            "label": "Reference trigger"
+          },
+          "ja": {
+            "description": "相対日時方式の基準にするトリガーです。",
+            "label": "基準トリガー"
+          }
+        },
+        "name": "trigger",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"relative\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_00D0N014B09H9M51PEBHNW82F9",
+        "localizedDisplay": {
+          "en": {
+            "description": "Whether the reference trigger has fired for this player.",
+            "label": "Trigger fired"
+          },
+          "ja": {
+            "description": "このプレイヤーに対して基準トリガーが発火済みかを示します。",
+            "label": "トリガー発火済み"
+          }
+        },
+        "name": "triggerFired",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "bool"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_00D0N014B0BF291EZZKRYPBJND",
+        "localizedDisplay": {
+          "en": {
+            "description": "When this player's relative schedule opened. Equals the reference trigger's fire time.",
+            "label": "Relative start time"
+          },
+          "ja": {
+            "description": "相対日時方式で、このプレイヤーの開催期間が始まった日時です。基準トリガーの発火日時と一致します。",
+            "label": "相対開始日時"
+          }
+        },
+        "name": "relativeStartAt",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "userData",
+        "id": "prop_00D0N014B0BQ0XD43PAXV22PHQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "When this player's relative schedule closes. Equals the reference trigger's expiration.",
+            "label": "Relative end time"
+          },
+          "ja": {
+            "description": "相対日時方式で、このプレイヤーの開催期間が終わる日時です。基準トリガーの有効期限と一致します。",
+            "label": "相対終了日時"
+          }
+        },
+        "name": "relativeEndAt",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_7EEM05TPX8JKCME8DS85QCDFJ2",
+        "localizedDisplay": {
+          "en": {
+            "description": "Cadence used to repeat the schedule.",
+            "label": "Repeat type"
+          },
+          "ja": {
+            "description": "スケジュールを繰り返す周期の種類です。",
+            "label": "繰り返し方式"
+          }
+        },
+        "name": "repeatType",
+        "requirement": {
+          "kind": "always"
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "always",
+            "daily",
+            "weekly",
+            "monthly",
+            "custom"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_5YGE7Q35M5VSYQ82A2NQ670JK6",
+        "localizedDisplay": {
+          "en": {
+            "description": "Hour when the active period begins for daily, weekly, or monthly repetition.",
+            "label": "Start hour",
+            "unit": "hour"
+          },
+          "ja": {
+            "description": "日次・週次・月次の有効時間帯が始まる時刻です。",
+            "label": "開始時刻",
+            "unit": "時"
+          }
+        },
+        "name": "beginHour",
+        "requirement": {
+          "condition": "{\"kind\":\"or\",\"conditions\":[{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"daily\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}]}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_38P73QVFM50Y6J21VG3JGA0KV0",
+        "localizedDisplay": {
+          "en": {
+            "description": "Hour when the active period ends for daily, weekly, or monthly repetition.",
+            "label": "End hour",
+            "unit": "hour"
+          },
+          "ja": {
+            "description": "日次・週次・月次の有効時間帯が終わる時刻です。",
+            "label": "終了時刻",
+            "unit": "時"
+          }
+        },
+        "name": "endHour",
+        "requirement": {
+          "condition": "{\"kind\":\"or\",\"conditions\":[{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"daily\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}]}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_4XH65E0SZT63G39F6JJHCB0QZM",
+        "localizedDisplay": {
+          "en": {
+            "description": "Weekday when a weekly active period begins.",
+            "label": "Start weekday"
+          },
+          "ja": {
+            "description": "週次スケジュールの有効期間が始まる曜日です。",
+            "label": "開始曜日"
+          }
+        },
+        "name": "beginDayOfWeek",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "sunday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_77V0M2ZWPGV3Q5HSXX4T5N09JC",
+        "localizedDisplay": {
+          "en": {
+            "description": "Weekday when a weekly active period ends.",
+            "label": "End weekday"
+          },
+          "ja": {
+            "description": "週次スケジュールの有効期間が終わる曜日です。",
+            "label": "終了曜日"
+          }
+        },
+        "name": "endDayOfWeek",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "enum",
+          "values": [
+            "sunday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ]
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_6QC4XV87VJBMWPHSXRHCCF5HPD",
+        "localizedDisplay": {
+          "en": {
+            "description": "Day of the month when a monthly active period begins.",
+            "label": "Start day of month",
+            "unit": "day"
+          },
+          "ja": {
+            "description": "月次スケジュールの有効期間が始まる日です。",
+            "label": "開始日",
+            "unit": "日"
+          }
+        },
+        "name": "beginDayOfMonth",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_0P1QWDN8641827F5CQAK4BNXMQ",
+        "localizedDisplay": {
+          "en": {
+            "description": "Day of the month when a monthly active period ends.",
+            "label": "End day of month",
+            "unit": "day"
+          },
+          "ja": {
+            "description": "月次スケジュールの有効期間が終わる日です。",
+            "label": "終了日",
+            "unit": "日"
+          }
+        },
+        "name": "endDayOfMonth",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_0WCCMQS198YK06YPJ16TKT4VSS",
+        "localizedDisplay": {
+          "en": {
+            "description": "Reference time used to calculate a custom cycle.",
+            "label": "Anchor time"
+          },
+          "ja": {
+            "description": "カスタム周期を数える基準日時です。",
+            "label": "基準日時"
+          }
+        },
+        "name": "anchorTimestamp",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "timestamp"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_68GYGX3DAVXDYMJDJG8HKE0AET",
+        "localizedDisplay": {
+          "en": {
+            "description": "Number of active days in a custom cycle.",
+            "label": "Active days",
+            "unit": "days"
+          },
+          "ja": {
+            "description": "カスタム周期で機能を有効にする日数です。",
+            "label": "有効日数",
+            "unit": "日"
+          }
+        },
+        "name": "activeDays",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_1XTRCGKTRZCMM3A06B1BAZ9824",
+        "localizedDisplay": {
+          "en": {
+            "description": "Number of inactive days in a custom cycle.",
+            "label": "Inactive days",
+            "unit": "days"
+          },
+          "ja": {
+            "description": "カスタム周期で機能を無効にする日数です。",
+            "label": "無効日数",
+            "unit": "日"
+          }
+        },
+        "name": "inactiveDays",
+        "requirement": {
+          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
+          "kind": "conditional",
+          "requiredWhenMet": true
+        },
+        "type": {
+          "kind": "primitive",
+          "primitiveType": "int32"
+        }
+      }
+    ]
+  },
+  "delegatedActions": [],
+  "id": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+  "kind": "local",
+  "name": "Schedule",
+  "singleEntry": false
+}

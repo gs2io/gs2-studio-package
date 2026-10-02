@@ -3,18 +3,18 @@
   "packageId": "foundation-economy-character-dictionary-demo",
   "types": {
     "Character": {
-      "id": "dt_01M37M3G5DZ5DEQ2RJCGE7FAAG",
+      "id": "dt_00D0SX0W1BFSBBNRP4K43HVTJM",
       "singleEntry": false,
       "delegatedActions": {
-        "Recruit": "resource:foundation-economy-character-dictionary-demo:masterData:8a84566b-9fb4-4908-9638-ca366eb208c3::Gs2Exchange:RateModel.Exchange"
+        "Recruit": "resource:foundation-economy-character-dictionary-demo:masterData:mdr_4AGHB6Q7XM9449CE6A6SQB4263::Gs2Exchange:RateModel.Exchange"
       },
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_RJSJ8JFQJXEWGQDWXMPKAW04Y5"
+      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
     }
   },
   "masterDataResources": {
-    "exchange.Namespace": "b4a90983-cdd1-4c22-899d-5940e978a43d",
-    "exchange.RateModel": "8a84566b-9fb4-4908-9638-ca366eb208c3"
+    "exchange.Namespace": "mdr_5MN44R7KEH9GH8K7AS83MQH91X",
+    "exchange.RateModel": "mdr_4AGHB6Q7XM9449CE6A6SQB4263"
   },
   "transforms": {}
 }

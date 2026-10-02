@@ -1,0 +1,21 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": {
+    "properties": []
+  },
+  "delegatedActions": [],
+  "id": "dt_00D0PPMGBSR1W1QNA9B4FHCVGJ",
+  "kind": "overlay",
+  "name": "AdPlatform",
+  "renamedInheritedProperties": {},
+  "singleEntry": true,
+  "source": {
+    "directSourcePackageId": "foundation-economy-ad",
+    "directSourceTypeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
+    "sourcePackageId": "foundation-economy-ad",
+    "sourceTypeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE"
+  }
+}

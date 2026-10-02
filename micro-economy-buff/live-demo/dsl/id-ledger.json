@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "row:dt_01M0C89EMY1KAND5SNBFR7N0GQ.double-idle": "row_01M3H855QVS9T055RANN7FEMK4",
+    "row:dt_00D0322BN7GCTNB9EDAVY1X845.double-idle": "row_01M3H855QVS9T055RANN7FEMK4",
     "row:type:BuffCampaign.buffcampaign": "row_01M3H94DYCZYHTM3M2Q8KRENKA",
-    "type:Buff": "dt_01M3H855QTWKVXS9MYVWCQT9MR",
-    "type:BuffCampaign": "dt_01M3H94DYC2ZVBKF19PYBEWMYF"
+    "type:Buff": "dt_00D0WA19DYQ4YZEAD7PZ35YJD6",
+    "type:BuffCampaign": "dt_00D0WA93FK0QYTWVRADQJVQ57K"
   },
   "deterministicOverrides": {}
 }
