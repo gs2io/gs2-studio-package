@@ -22,17 +22,20 @@
       "properties": {
         "currencyType": "prop_4F7GJCACK2YK78HYH2XVEEMN6R",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "price": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K",
-        "product": "prop_15W8DS91Q2205EVC4P45EV76R1"
+        "price": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K"
       }
     },
     "StoreProduct": {
       "id": "dt_130FYGH3W86EG2FK06VGEJSYCT",
       "singleEntry": false,
+      "inlineLists": {
+        "prices": "StorePrice"
+      },
       "canonicalPackageId": "foundation-economy-currency",
       "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
       "addedProperties": {
-        "count": "prop_7GZCWER58FEK1Y8TQBHZPM0H6S"
+        "count": "prop_7GZCWER58FEK1Y8TQBHZPM0H6S",
+        "prices": "prop_01M40RS7N08DEDFYE3YFC4TRYV"
       }
     }
   },

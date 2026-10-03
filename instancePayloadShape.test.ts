@@ -63,7 +63,7 @@ describe("materialized instance payload shape", () => {
       }
     }
 
-    expect(instanceCount).toBe(60);
+    expect(instanceCount).toBe(45);
     expect(failures).toEqual([]);
   });
 

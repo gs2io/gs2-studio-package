@@ -3,6 +3,20 @@
   "rowKey": "row_0PTPDRPRQP37PGJG68MF9WGJH4",
   "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
   "values": {
+    "prop_01M40RS7N08DEDFYE3YFC4TRYV": [
+      {
+        "prop_4F7GJCACK2YK78HYH2XVEEMN6R": "JPY",
+        "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K": 500
+      },
+      {
+        "prop_4F7GJCACK2YK78HYH2XVEEMN6R": "USD",
+        "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K": 5
+      },
+      {
+        "prop_4F7GJCACK2YK78HYH2XVEEMN6R": "XXX",
+        "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K": 5
+      }
+    ],
     "prop_2GHK1DAZ80TETBDER3P5PF6XKA": "io.gs2.sample",
     "prop_7GZCWER58FEK1Y8TQBHZPM0H6S": 6000,
     "prop_7TADZ4DEA40BBKZ46GN2R05E4J": "io.gs2.sample"

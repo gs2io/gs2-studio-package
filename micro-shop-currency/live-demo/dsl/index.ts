@@ -48,8 +48,8 @@ export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
 
   // What a product row says: the pack in coins rather than a bare number.
-  // The product has no display name of its own, and its price lives on a
-  // different row per store currency.
+  // The product has no display name of its own, and it carries one price per
+  // store currency in its `prices` rather than a single one to show.
   .uiComponent(StoreProduct, ui =>
     ui.templateLabel(
       "CoinsLabel",

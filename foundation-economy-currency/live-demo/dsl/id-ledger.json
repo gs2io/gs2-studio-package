@@ -1,13 +1,6 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "property:FreeDeposit.count": "prop_00D0KZCKABE9VVHET0Z8R3QD2M",
-    "property:PaidDeposit.count": "prop_00D0KZCKAB8JMZWPNE82NRXE0W",
-    "row:dt_2X6G49X3GPEBFY4C5FVR08QQYY.currencystore": "row_01M2FXJD9ET9260GXCN4G9F628",
-    "row:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA.coin_large": "row_01M2FXJD9EEB4XCJK7PMFGYS5E",
-    "row:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA.coin_medium": "row_01M2FXJD9EGE1V5V5EV9DDVATJ",
-    "row:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA.coin_small": "row_01M2FXJD9ER9BTZ7FPY37EFS9B",
+  "retired": {
     "row:dt_5E4C6RPJ7T9H48WD5QS1973QTD.coin_large.JPY": "row_01M3796AJKEPNJWMJ7FTPQ5VD5",
     "row:dt_5E4C6RPJ7T9H48WD5QS1973QTD.coin_large.USD": "row_01M3796AJKBW01WXY2ESHKH0YK",
     "row:dt_5E4C6RPJ7T9H48WD5QS1973QTD.coin_large.XXX": "row_01M3796AJKK65XBGNWJCXZ0JK0",
@@ -17,12 +10,20 @@
     "row:dt_5E4C6RPJ7T9H48WD5QS1973QTD.coin_small.JPY": "row_01M3796AJKVD6TAAH12BTCVD8W",
     "row:dt_5E4C6RPJ7T9H48WD5QS1973QTD.coin_small.USD": "row_01M3796AJKBSM8HD58XCAA67FZ",
     "row:dt_5E4C6RPJ7T9H48WD5QS1973QTD.coin_small.XXX": "row_01M3796AJKTDP7KBSS8K3TK5YG",
+    "type:StorePrice": "dt_00D0ST9JMMTHVCDHK66K70469R"
+  },
+  "random": {
+    "property:FreeDeposit.count": "prop_00D0KZCKABE9VVHET0Z8R3QD2M",
+    "property:PaidDeposit.count": "prop_00D0KZCKAB8JMZWPNE82NRXE0W",
+    "row:dt_2X6G49X3GPEBFY4C5FVR08QQYY.currencystore": "row_01M2FXJD9ET9260GXCN4G9F628",
+    "row:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA.coin_large": "row_01M2FXJD9EEB4XCJK7PMFGYS5E",
+    "row:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA.coin_medium": "row_01M2FXJD9EGE1V5V5EV9DDVATJ",
+    "row:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA.coin_small": "row_01M2FXJD9ER9BTZ7FPY37EFS9B",
     "row:type:FreeDeposit.freedeposit": "row_01M2FXJD9ECG5NMD2NFYFAH931",
     "row:type:PaidDeposit.paiddeposit": "row_01M2FXJD9EMN834NJGBHH9A534",
     "type:CurrencyStore": "dt_00D0KZCKAB1QWPJM14EC98CKVY",
     "type:FreeDeposit": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
     "type:PaidDeposit": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
-    "type:StorePrice": "dt_00D0ST9JMMTHVCDHK66K70469R",
     "type:StoreProduct": "dt_00D0KZCKAB2YFFQMKWWH6HQRZP"
   },
   "deterministicOverrides": {}

@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "retired": {
+    "property:StorePrice.product": "prop_15W8DS91Q2205EVC4P45EV76R1",
     "row:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA.tier1": "row_03004QH4P2DKK8G66XDH9YRMSJ",
     "row:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA.tier2": "row_03ZAZTE6MEYDDVZWXSBB859FAX",
     "row:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA.tier3": "row_032H7FR570VHH00ZR3BRG10T7Z",
@@ -25,8 +26,8 @@
   "random": {
     "property:StorePrice.currencyType": "prop_4F7GJCACK2YK78HYH2XVEEMN6R",
     "property:StorePrice.price": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K",
-    "property:StorePrice.product": "prop_15W8DS91Q2205EVC4P45EV76R1",
     "property:StoreProduct.count": "prop_7GZCWER58FEK1Y8TQBHZPM0H6S",
+    "property:StoreProduct.prices": "prop_01M40RS7N08DEDFYE3YFC4TRYV",
     "row:type:CurrencyType.JPY": "row_0FJ2D55WWP0KY6J214TVG3WHZQ",
     "row:type:CurrencyType.USD": "row_0W247SMA6R3HXCV2W1T1X9MYKV",
     "row:type:CurrencyType.XXX": "row_0HJRNVQAXAA3XQGB9B79HY2WFC",

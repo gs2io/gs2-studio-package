@@ -28,38 +28,43 @@ const CurrencyType = defineDomainType("CurrencyType", dt =>
 
 /**
  * The currency package's StoreProduct, extended here with the amount of
- * currency each product grants.
+ * currency each product grants and the price it sells for in each currency.
  */
 const StoreProduct = defineOverlayDomainType(
   "StoreProduct",
   currency.overlay("StoreProduct"),
   domainType =>
-    domainType.property(PT.int32("count").masterData().required()).localizedProperties({
-      count: jaEnField(
-        "付与通貨量",
-        "Currency amount",
-        "このストア商品を購入したときに付与する通貨量です。",
-        "Amount of currency granted when this store product is purchased.",
-        { ja: "通貨", en: "currency" }
-      ),
-    })
+    domainType
+      .property(PT.int32("count").masterData().required())
+      .property(PT.prop("prices", PT.listOf(PT.inline("StorePrice"))).masterData())
+      .localizedProperties({
+        count: jaEnField(
+          "付与通貨量",
+          "Currency amount",
+          "このストア商品を購入したときに付与する通貨量です。",
+          "Amount of currency granted when this store product is purchased.",
+          { ja: "通貨", en: "currency" }
+        ),
+        prices: jaEnField(
+          "販売価格",
+          "Prices",
+          "販売通貨ごとのこのストア商品の価格です。",
+          "Prices of this store product, one per currency it sells for."
+        ),
+      })
 );
 
-/** One product priced in one currency; the pair is the row identity. */
+/**
+ * One price of a store product, in one currency. Authored as an element of
+ * its product's `prices`; the product and the currency together identify it.
+ */
 const StorePrice = defineDomainType("StorePrice", dt =>
   dt
-    .property(PT.prop("product", PT.ref("StoreProduct")).assetDelivery().required())
-    .property(PT.prop("currencyType", PT.ref("CurrencyType")).assetDelivery().required())
+    .property(PT.prop("currencyType", PT.ref("CurrencyType")).masterData().required())
     .property(PT.float64("price").masterData().required())
-    .compositeKey("product", "currencyType")
+    .elementKey("currencyType")
     .localizedProperties({
       id: jaEnId("販売価格", "store price"),
-      product: jaEnField(
-        "ストア商品",
-        "Store product",
-        "価格を設定するストア商品です。",
-        "Store product whose price is configured."
-      ),
       currencyType: jaEnField(
         "販売通貨",
         "Price currency",
@@ -156,8 +161,8 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
   .displayType(StorePrice, {
     label: { ja: "販売価格", en: "Store price" },
     description: {
-      ja: "商品ごとに販売通貨、価格、購入回数制限を設定します。",
-      en: "Configures a product's currency, price, and purchase limits.",
+      ja: "ストア商品を1つの販売通貨で売るときの価格です。ストア商品の販売価格の要素として設定します。",
+      en: "A store product's price in one currency, set as an element of the product's prices.",
     },
   })
   .displayType(StoreProduct, {

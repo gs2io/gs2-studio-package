@@ -1,8 +1,5 @@
 {
-  "compositeKey": [
-    "prop_15W8DS91Q2205EVC4P45EV76R1",
-    "prop_4F7GJCACK2YK78HYH2XVEEMN6R"
-  ],
+  "compositeKey": null,
   "declared": {
     "properties": [
       {
@@ -29,29 +26,7 @@
         }
       },
       {
-        "bindingHint": "assetDelivery",
-        "id": "prop_15W8DS91Q2205EVC4P45EV76R1",
-        "localizedDisplay": {
-          "en": {
-            "description": "Store product whose price is configured.",
-            "label": "Store product"
-          },
-          "ja": {
-            "description": "価格を設定するストア商品です。",
-            "label": "ストア商品"
-          }
-        },
-        "name": "product",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
-        }
-      },
-      {
-        "bindingHint": "assetDelivery",
+        "bindingHint": "masterData",
         "id": "prop_4F7GJCACK2YK78HYH2XVEEMN6R",
         "localizedDisplay": {
           "en": {
@@ -114,15 +89,18 @@
       }
     }
   ],
+  "elementKey": [
+    "prop_4F7GJCACK2YK78HYH2XVEEMN6R"
+  ],
   "id": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
   "kind": "local",
   "localizedDisplay": {
     "en": {
-      "description": "Configures a product's currency, price, and purchase limits.",
+      "description": "A store product's price in one currency, set as an element of the product's prices.",
       "label": "Store price"
     },
     "ja": {
-      "description": "商品ごとに販売通貨、価格、購入回数制限を設定します。",
+      "description": "ストア商品を1つの販売通貨で売るときの価格です。ストア商品の販売価格の要素として設定します。",
       "label": "販売価格"
     }
   },

@@ -28,6 +28,31 @@
           "kind": "primitive",
           "primitiveType": "int32"
         }
+      },
+      {
+        "bindingHint": "masterData",
+        "id": "prop_01M40RS7N08DEDFYE3YFC4TRYV",
+        "localizedDisplay": {
+          "en": {
+            "description": "Prices of this store product, one per currency it sells for.",
+            "label": "Prices"
+          },
+          "ja": {
+            "description": "販売通貨ごとのこのストア商品の価格です。",
+            "label": "販売価格"
+          }
+        },
+        "name": "prices",
+        "requirement": {
+          "kind": "never"
+        },
+        "type": {
+          "elementType": {
+            "kind": "inline",
+            "targetTypeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD"
+          },
+          "kind": "list"
+        }
       }
     ]
   },

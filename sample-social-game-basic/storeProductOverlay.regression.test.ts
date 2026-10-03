@@ -95,4 +95,38 @@ describe("StoreProduct overlay edit regression (sample-social-game-basic)", () =
     expect(newOverlay).toBeDefined();
     expect(newOverlay!.overrides.get(appleProductIdPropId)).toBe("com.example.regression");
   });
+
+  it("authors each store product's prices as elements on the product's own row", async () => {
+    const packagesDir = resolve(currentDir, "packages");
+    const pkgs = unwrapLoaderResult(await loadPackages(packagesDir, Catalog.empty())).packages!;
+    const samplePkg = pkgs.find(p => p.name === "sample-social-game-basic")!;
+    const storeProductType = pkgs
+      .find(p => p.name === "foundation-economy-currency")!
+      .domainTypes.getByName(DomainTypeName.trusted("StoreProduct"))!;
+    const storePriceType = pkgs
+      .find(p => p.name === "micro-shop-currency")!
+      .domainTypes.getByName(DomainTypeName.trusted("StorePrice"))!;
+
+    // micro-shop-currency's StoreProduct.prices, and its StorePrice element's
+    // currencyType and price.
+    const pricesPropId = PropertyId.trusted("prop_01M40RS7N08DEDFYE3YFC4TRYV");
+    const currencyTypePropId = "prop_4F7GJCACK2YK78HYH2XVEEMN6R";
+    const pricePropId = "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K";
+
+    expect(samplePkg.instances.getAuthoredValueInstancesByTypeId(storePriceType.id)).toEqual([]);
+    const pricesById = new Map(
+      samplePkg.instances
+        .getAuthoredValueInstancesByTypeId(storeProductType.id)
+        .map(instance => [String(instance.id), instance.values.get(pricesPropId)])
+    );
+    expect(pricesById.get("tier1")).toEqual([
+      { [currencyTypePropId]: "JPY", [pricePropId]: 100 },
+      { [currencyTypePropId]: "USD", [pricePropId]: 1 },
+      { [currencyTypePropId]: "XXX", [pricePropId]: 1 },
+    ]);
+    expect([...pricesById.keys()].sort()).toEqual(["tier1", "tier2", "tier3", "tier4", "tier5"]);
+    for (const prices of pricesById.values()) {
+      expect(prices).toHaveLength(3);
+    }
+  });
 });

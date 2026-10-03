@@ -1,9 +1,10 @@
 // Buying, as these demos do it.
 //
 // The shop's purchase is a delegated action on a store price, and a store
-// price is a product paired with a currency. The page lists products, because
-// that is what the shop has a list of; which currency a visitor is buying in
-// is the demo's choice, not the shop's, so the row does not carry it.
+// price is one element of a product's prices: the product's price in one
+// currency. The page lists products, because that is what the shop has a list
+// of; which currency a visitor is buying in is the demo's choice, not the
+// shop's, so the row does not carry it.
 //
 // The shipped purchase is an in-app one, and the demo makes it the way it is
 // made: the generated `Buy` buys through the platform's store and hands GS2
@@ -91,11 +92,11 @@ namespace GS2Studio.Showroom.Demo
             if (product == null) return "This product is still loading; try again in a moment.";
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
 
-            // The price is the product paired with a currency, and the shop has
-            // no list of prices to have drawn a row from (its display items
-            // hang off the showcase rather than off a model that enumerates),
-            // so the row's product and the demo's currency name one here. The
-            // binder is what knows the id that pair composes to.
+            // The price is the product's element for one currency, and the
+            // shop has no list of prices to have drawn a row from (its display
+            // items hang off the showcase rather than off a model that
+            // enumerates), so the row's product and the demo's currency name
+            // one here. The binder is what knows the id that pair composes to.
             var price = await StorePriceBinder.CreateAsync(
                 product.Value, new CurrencyTypeId(DemoCurrency), gs2, session);
             using (price)
