@@ -33,7 +33,7 @@ namespace GS2Studio.Generated.StorePrice
     [AddComponentMenu("GS2 Studio/DomainType/StorePrice/StorePrice Handler")]
     public sealed class StorePriceHandler : StorePriceHandlerBase
     {
-        [SerializeField] private string? _product;
+        [SerializeField] private string? _storeProduct;
         [SerializeField] private string? _currencyType;
         // Hidden from the Inspector and not serialized. Resolved lazily by
         // searching the entire active scene so the Handler does not have to
@@ -101,10 +101,10 @@ namespace GS2Studio.Generated.StorePrice
         /// event + <c>Debug.LogException</c>); await <see cref="ReloadAsync"/>
         /// directly when completion must be observed.
         /// </summary>
-        public void SetKeys(StoreProductId product, CurrencyTypeId currencyType)
+        public void SetKeys(StoreProductId storeProduct, CurrencyTypeId currencyType)
         {
             InvalidateBindingIntent();
-            _product = product.Value;
+            _storeProduct = storeProduct.Value;
             _currencyType = currencyType.Value;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
@@ -115,10 +115,10 @@ namespace GS2Studio.Generated.StorePrice
         /// composite-key scalars directly instead of their branded part structs.
         /// Same reload-on-ready behaviour as the branded overload.
         /// </summary>
-        public void SetKeys(string product, string currencyType)
+        public void SetKeys(string storeProduct, string currencyType)
         {
             InvalidateBindingIntent();
-            _product = product;
+            _storeProduct = storeProduct;
             _currencyType = currencyType;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
@@ -168,11 +168,11 @@ namespace GS2Studio.Generated.StorePrice
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
-                if (string.IsNullOrEmpty(_product))
-                    throw new InvalidOperationException("Composite key part '_product' is not set.");
+                if (string.IsNullOrEmpty(_storeProduct))
+                    throw new InvalidOperationException("Composite key part '_storeProduct' is not set.");
                 if (string.IsNullOrEmpty(_currencyType))
                     throw new InvalidOperationException("Composite key part '_currencyType' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new StoreProductId(_product ?? string.Empty), new CurrencyTypeId(_currencyType ?? string.Empty), gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new StoreProductId(_storeProduct ?? string.Empty), new CurrencyTypeId(_currencyType ?? string.Empty), gs2, session, cancellationToken);
                 // Another binding intent took over while CreateAsync was in
                 // flight. Discard the now-stale binder so we never attach an
                 // out-of-date binder.
@@ -293,7 +293,7 @@ namespace GS2Studio.Generated.StorePrice
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
-            if (string.IsNullOrEmpty(_product)) return false;
+            if (string.IsNullOrEmpty(_storeProduct)) return false;
             if (string.IsNullOrEmpty(_currencyType)) return false;
             return true;
         }

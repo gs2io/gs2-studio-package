@@ -85,8 +85,8 @@ namespace GS2Studio.Generated.StorePrice
         internal MutableStorePrice MutableModel => _model;
         /// <inheritdoc cref="StorePrice.Id" />
         public StorePriceId Id => _model.Id;
-        /// <inheritdoc cref="StorePrice.Product" />
-        public StoreProductId Product => _model.Product;
+        /// <inheritdoc cref="StorePrice.StoreProduct" />
+        public StoreProductId StoreProduct => _model.StoreProduct;
         /// <inheritdoc cref="StorePrice.CurrencyType" />
         public CurrencyTypeId CurrencyType => _model.CurrencyType;
         /// <inheritdoc cref="StorePrice.Price" />
@@ -147,11 +147,11 @@ namespace GS2Studio.Generated.StorePrice
         /// returned model carries the identity state required by loaders
         /// (`_model.Id` and any `_model.{Prop}` references in loader constructors).
         /// </summary>
-        internal static MutableStorePrice CreateModel(StorePriceId id, StoreProductId product, CurrencyTypeId currencyType)
+        internal static MutableStorePrice CreateModel(StorePriceId id, StoreProductId storeProduct, CurrencyTypeId currencyType)
         {
             var model = new MutableStorePrice();
             model.Id = id;
-            model.Product = product;
+            model.StoreProduct = storeProduct;
             model.CurrencyType = currencyType;
             return model;
         }
@@ -161,13 +161,13 @@ namespace GS2Studio.Generated.StorePrice
         /// This is the only external construction path for mount-based usage.
         /// </summary>
         public static async Task<StorePriceBinder> CreateAsync(
-            StoreProductId product, CurrencyTypeId currencyType,
+            StoreProductId storeProduct, CurrencyTypeId currencyType,
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default)
         {
-            var id = new StorePriceId($"{product.ToString()}.{currencyType.ToString()}");
-            var model = CreateModel(id, product, currencyType);
+            var id = new StorePriceId($"{storeProduct.ToString()}.{currencyType.ToString()}");
+            var model = CreateModel(id, storeProduct, currencyType);
             var binder = new StorePriceBinder(model, gs2, session);
             await binder.MountAsync(cancellationToken);
             return binder;
@@ -186,7 +186,6 @@ namespace GS2Studio.Generated.StorePrice
             if (_showcaseShopCurrencyNamespaceShowcaseDisplayItem != null)
             {
             }
-            StorePriceOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
             _model.Price = default;
             var __RestorePrice__showcaseShopCurrencyNamespaceShowcaseDisplayItemSalesItemAcquireActionsSource = _showcaseShopCurrencyNamespaceShowcaseDisplayItem?.SalesItem?.AcquireActions;
             if (__RestorePrice__showcaseShopCurrencyNamespaceShowcaseDisplayItemSalesItemAcquireActionsSource != null)
@@ -224,7 +223,6 @@ namespace GS2Studio.Generated.StorePrice
                             if (__action != null && RestorePrice(_model, __action.Action, __action.Request)) break;
                         }
                     }
-                    StorePriceOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
                     return Task.CompletedTask;
                 },
                 () => onChange?.Invoke()

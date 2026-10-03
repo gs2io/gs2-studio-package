@@ -14,6 +14,7 @@ using Cysharp.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+using GS2Studio.Generated.Energy;
 using Gs2.Unity.Core.Model;
 using Gs2.Unity.Gs2Exchange.Model;
 using Gs2Bind.Gs2Exchange;
@@ -84,6 +85,8 @@ namespace GS2Studio.Generated.EnergyProduct
         internal MutableEnergyProduct MutableModel => _model;
         /// <inheritdoc cref="EnergyProduct.Id" />
         public EnergyProductId Id => _model.Id;
+        /// <inheritdoc cref="EnergyProduct.Energy" />
+        public EnergyId Energy => _model.Energy;
         /// <inheritdoc cref="EnergyProduct.RecoveryValue" />
         public int RecoveryValue => _model.RecoveryValue;
         /// <inheritdoc cref="EnergyProduct.Cost" />
@@ -225,6 +228,9 @@ namespace GS2Studio.Generated.EnergyProduct
                 }
             }
             RestoreCostFromSources();
+            if (_transactionAcquireAction == null) _RestoreEnergy__transactionAcquireActionCache = null; else _RestoreEnergy__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            if (_transactionAcquireAction2 == null) _RestoreEnergy__transactionAcquireAction2Cache = null; else _RestoreEnergy__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
+            RestoreEnergyFromSources();
             if (_transactionAcquireAction == null) _RestoreRecoveryValue__transactionAcquireActionCache = null; else _RestoreRecoveryValue__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
             if (_transactionAcquireAction2 == null) _RestoreRecoveryValue__transactionAcquireAction2Cache = null; else _RestoreRecoveryValue__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
             RestoreRecoveryValueFromSources();
@@ -275,6 +281,8 @@ namespace GS2Studio.Generated.EnergyProduct
                     if (value != null)
                     {
                     }
+                    if (value == null) _RestoreEnergy__transactionAcquireActionCache = null; else _RestoreEnergy__transactionAcquireActionCache = (value.Action, value.Request);
+                    RestoreEnergyFromSources();
                     if (value == null) _RestoreRecoveryValue__transactionAcquireActionCache = null; else _RestoreRecoveryValue__transactionAcquireActionCache = (value.Action, value.Request);
                     RestoreRecoveryValueFromSources();
                     return Task.CompletedTask;
@@ -290,6 +298,8 @@ namespace GS2Studio.Generated.EnergyProduct
                     if (value != null)
                     {
                     }
+                    if (value == null) _RestoreEnergy__transactionAcquireAction2Cache = null; else _RestoreEnergy__transactionAcquireAction2Cache = (value.Action, value.Request);
+                    RestoreEnergyFromSources();
                     if (value == null) _RestoreRecoveryValue__transactionAcquireAction2Cache = null; else _RestoreRecoveryValue__transactionAcquireAction2Cache = (value.Action, value.Request);
                     RestoreRecoveryValueFromSources();
                     return Task.CompletedTask;
@@ -438,6 +448,32 @@ namespace GS2Studio.Generated.EnergyProduct
             var __matched = false;
             if (!__matched && _RestoreCost__transactionConsumeActionCache.HasValue && RestoreCost(_model, _RestoreCost__transactionConsumeActionCache.Value.Action, _RestoreCost__transactionConsumeActionCache.Value.Request)) __matched = true;
             foreach (var __action in _RestoreCost__transactionConsumeAction2Cache) { if (!__matched && RestoreCost(_model, __action.Action, __action.Request)) { __matched = true; break; } }
+        }
+
+        private (string Action, string Request)? _RestoreEnergy__transactionAcquireActionCache;
+        private (string Action, string Request)? _RestoreEnergy__transactionAcquireAction2Cache;
+        public static bool RestoreEnergy(IMutableEnergyProduct model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Stamina:RecoverStaminaByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Energy")
+            {
+                var __value = ReadRequestValue(request, new string[] { "staminaName" });
+                if (__value != null)
+                {
+                    model.Energy = (EnergyId)__value;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void RestoreEnergyFromSources()
+        {
+            _model.Energy = new EnergyId(string.Empty);
+            var __matched = false;
+            if (!__matched && _RestoreEnergy__transactionAcquireActionCache.HasValue && RestoreEnergy(_model, _RestoreEnergy__transactionAcquireActionCache.Value.Action, _RestoreEnergy__transactionAcquireActionCache.Value.Request)) __matched = true;
+            if (!__matched && _RestoreEnergy__transactionAcquireAction2Cache.HasValue && RestoreEnergy(_model, _RestoreEnergy__transactionAcquireAction2Cache.Value.Action, _RestoreEnergy__transactionAcquireAction2Cache.Value.Request)) __matched = true;
         }
 
         private (string Action, string Request)? _RestoreRecoveryValue__transactionAcquireActionCache;

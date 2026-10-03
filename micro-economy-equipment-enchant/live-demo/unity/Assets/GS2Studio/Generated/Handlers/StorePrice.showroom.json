@@ -8,8 +8,8 @@
   "keyed": true,
   "identityKeys": [
     {
-      "name": "product",
-      "fieldName": "_product",
+      "name": "storeProduct",
+      "fieldName": "_storeProduct",
       "serializedType": "string"
     },
     {

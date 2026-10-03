@@ -32,6 +32,8 @@ Resources:
           - absoluteBegin: 1789064562011
             absoluteEnd: 1924992000000
             name: "welcome"
+            repeatSetting:
+              repeatType: "always"
             scheduleType: "absolute"
       Mode: "direct"
     DependsOn:

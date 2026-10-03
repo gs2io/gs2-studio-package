@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using GS2Studio.Generated.Energy;
 using Gs2.Unity.Core.Model;
 using Gs2.Unity.Gs2Exchange.Model;
 using Gs2Bind.Gs2Exchange;

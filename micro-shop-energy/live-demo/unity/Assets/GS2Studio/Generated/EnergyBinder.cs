@@ -57,6 +57,7 @@ namespace GS2Studio.Generated.Energy
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
+        Task<GS2Studio.Generated.EnergyProduct.IReadOnlyEnergyProductBinderCollection> GetEnergyProducts(CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -138,6 +139,8 @@ namespace GS2Studio.Generated.Energy
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
+        private GS2Studio.Generated.EnergyProduct.EnergyProductBinderCollection? _energyProductsRoot;
+        private Task<GS2Studio.Generated.EnergyProduct.EnergyProductBinderCollection>? _energyProductsRootTask;
 
         private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeEnergyRecoverNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
@@ -387,6 +390,7 @@ namespace GS2Studio.Generated.Energy
             }
 
             _unsubscribers.Clear();
+            _energyProductsRoot?.Dispose();
 
             GC.SuppressFinalize(this);
         }
@@ -402,6 +406,48 @@ namespace GS2Studio.Generated.Energy
         {
             EnsureActionContext();
             await new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyRecover", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
+        }
+        #endregion
+
+        #region Reference navigation
+        public async Task<GS2Studio.Generated.EnergyProduct.IReadOnlyEnergyProductBinderCollection> GetEnergyProducts(CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+            var root = await EnsureEnergyProductsRootAsync(cancellationToken);
+            return root.WhereEnergy(_model.Id);
+        }
+        #endregion
+
+        #region Reference navigation roots
+        private async Task<GS2Studio.Generated.EnergyProduct.EnergyProductBinderCollection> EnsureEnergyProductsRootAsync(CancellationToken cancellationToken)
+        {
+            if (_energyProductsRootTask == null)
+            {
+                _energyProductsRootTask = BuildEnergyProductsRootAsync(cancellationToken);
+            }
+            var task = _energyProductsRootTask;
+            GS2Studio.Generated.EnergyProduct.EnergyProductBinderCollection root;
+            try
+            {
+                root = await task;
+            }
+            catch
+            {
+                if (ReferenceEquals(_energyProductsRootTask, task)) _energyProductsRootTask = null;
+                throw;
+            }
+
+            if (_disposed) { root.Dispose(); ThrowIfDisposed(); }
+            _energyProductsRoot = root;
+            return _energyProductsRoot;
+        }
+
+        private async Task<GS2Studio.Generated.EnergyProduct.EnergyProductBinderCollection> BuildEnergyProductsRootAsync(CancellationToken cancellationToken)
+        {
+            var root = await GS2Studio.Generated.EnergyProduct.EnergyProductBinderCollection.CreateFromExchangeEnergyShopMasterDataAsync(_gs2, _session, cancellationToken);
+            try { root.SubscribeFromExchangeEnergyShopMasterData(); }
+            catch { root.Dispose(); throw; }
+            return root;
         }
         #endregion
 

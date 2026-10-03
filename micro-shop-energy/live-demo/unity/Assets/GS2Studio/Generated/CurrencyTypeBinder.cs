@@ -30,7 +30,7 @@ namespace GS2Studio.Generated.CurrencyType
     /// </summary>
     public interface IReadOnlyCurrencyTypeBinder : CurrencyType
     {
-        Task<IStorePriceBinder> GetStorePrice(StoreProductId product, CancellationToken cancellationToken = default);
+        Task<IStorePriceBinder> GetStorePrice(StoreProductId storeProduct, CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -110,10 +110,10 @@ namespace GS2Studio.Generated.CurrencyType
         protected virtual void ThrowIfDisposedForNavigation() { }
 
         #region Single-fetch navigation
-        public async Task<IStorePriceBinder> GetStorePrice(StoreProductId product, CancellationToken cancellationToken = default)
+        public async Task<IStorePriceBinder> GetStorePrice(StoreProductId storeProduct, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposedForNavigation();
-            return await StorePriceBinder.CreateAsync(product, _model.Id, _gs2, _session, cancellationToken);
+            return await StorePriceBinder.CreateAsync(storeProduct, _model.Id, _gs2, _session, cancellationToken);
         }
         #endregion
     }

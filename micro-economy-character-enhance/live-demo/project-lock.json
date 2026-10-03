@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "4ba06b89a250c47247e3ee274e4319afcb353b36",
-      "integrity": "sha256-QEoN8P++VWVD5sJoWgq+QWXR3Ofmw9mTvAKOqYeR6QE=",
+      "commitSha": "5c263953ea04f28508983b13368cf172a5bb8b86",
+      "integrity": "sha256-cKZwIDTMwDNry9b+v9IhngbQXD34pZPgJxfggwIAbJg=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character",
       "repo": "gs2-studio-package",
@@ -11,8 +11,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "4ba06b89a250c47247e3ee274e4319afcb353b36",
-      "integrity": "sha256-QEoN8P++VWVD5sJoWgq+QWXR3Ofmw9mTvAKOqYeR6QE=",
+      "commitSha": "5c263953ea04f28508983b13368cf172a5bb8b86",
+      "integrity": "sha256-cKZwIDTMwDNry9b+v9IhngbQXD34pZPgJxfggwIAbJg=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character-demo",
       "repo": "gs2-studio-package",
@@ -21,8 +21,8 @@
       "version": "0.0.0"
     },
     {
-      "commitSha": "4ba06b89a250c47247e3ee274e4319afcb353b36",
-      "integrity": "sha256-QEoN8P++VWVD5sJoWgq+QWXR3Ofmw9mTvAKOqYeR6QE=",
+      "commitSha": "5c263953ea04f28508983b13368cf172a5bb8b86",
+      "integrity": "sha256-cKZwIDTMwDNry9b+v9IhngbQXD34pZPgJxfggwIAbJg=",
       "owner": "gs2io",
       "packageId": "micro-economy-character-enhance",
       "repo": "gs2-studio-package",

@@ -6,6 +6,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using GS2Studio.Generated.Energy;
 
 namespace GS2Studio.Generated.EnergyProduct
 {
@@ -22,6 +23,8 @@ namespace GS2Studio.Generated.EnergyProduct
         /// Unique identifier
         /// </summary>
         EnergyProductId Id { get; }
+
+        EnergyId Energy { get; }
 
         int RecoveryValue { get; }
 
@@ -43,6 +46,7 @@ namespace GS2Studio.Generated.EnergyProduct
     public interface IMutableEnergyProduct : EnergyProduct
     {
         new EnergyProductId Id { get; set; }
+        new EnergyId Energy { get; set; }
         new int RecoveryValue { get; set; }
         new int Cost { get; set; }
     }
@@ -55,6 +59,8 @@ namespace GS2Studio.Generated.EnergyProduct
     internal sealed class MutableEnergyProduct : IMutableEnergyProduct
     {
         public EnergyProductId Id { get; set; }
+
+        public EnergyId Energy { get; set; }
 
         public int RecoveryValue { get; set; }
 

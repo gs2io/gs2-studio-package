@@ -25,7 +25,7 @@ namespace GS2Studio.Generated.StorePrice
         /// </summary>
         StorePriceId Id { get; }
 
-        StoreProductId Product { get; }
+        StoreProductId StoreProduct { get; }
 
         CurrencyTypeId CurrencyType { get; }
 
@@ -44,7 +44,7 @@ namespace GS2Studio.Generated.StorePrice
     public interface IMutableStorePrice : StorePrice
     {
         new StorePriceId Id { get; set; }
-        new StoreProductId Product { get; set; }
+        new StoreProductId StoreProduct { get; set; }
         new CurrencyTypeId CurrencyType { get; set; }
         new double Price { get; set; }
     }
@@ -58,7 +58,7 @@ namespace GS2Studio.Generated.StorePrice
     {
         public StorePriceId Id { get; set; }
 
-        public StoreProductId Product { get; set; }
+        public StoreProductId StoreProduct { get; set; }
 
         public CurrencyTypeId CurrencyType { get; set; }
 

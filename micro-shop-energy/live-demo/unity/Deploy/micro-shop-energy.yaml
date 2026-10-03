@@ -12,19 +12,25 @@ Resources:
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
                 request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":100,\"paidOnly\":false}"
-            acquireActions: []
+            acquireActions:
+              - action: "Gs2Stamina:RecoverStaminaByUserId"
+                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":40}"
           - name: "refill_medium"
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
                 request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":70,\"paidOnly\":false}"
-            acquireActions: []
+            acquireActions:
+              - action: "Gs2Stamina:RecoverStaminaByUserId"
+                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":15}"
           - name: "refill_small"
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
                 request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":30,\"paidOnly\":false}"
-            acquireActions: []
+            acquireActions:
+              - action: "Gs2Stamina:RecoverStaminaByUserId"
+                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":5}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

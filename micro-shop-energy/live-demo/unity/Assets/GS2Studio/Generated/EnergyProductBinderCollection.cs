@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+using GS2Studio.Generated.Energy;
 using Gs2.Unity.Core.Model;
 using Gs2.Unity.Gs2Exchange.Model;
 using Gs2Bind.Gs2Exchange;
@@ -30,6 +31,7 @@ namespace GS2Studio.Generated.EnergyProduct
     /// </summary>
     public interface IReadOnlyEnergyProductBinderCollection : IReadOnlyList<IActionableEnergyProductBinder>
     {
+        IReadOnlyEnergyProductBinderCollection WhereEnergy(EnergyId energy);
     }
 
     /// <summary>
@@ -155,6 +157,24 @@ namespace GS2Studio.Generated.EnergyProduct
             _cache?.Clear();
         }
 
+
+        #region Reference navigation
+        public IReadOnlyEnergyProductBinderCollection WhereEnergy(EnergyId energy)
+        {
+            ThrowIfDisposedForNavigation();
+            if (_dead) return Empty;
+            if (EqualityComparer<EnergyId>.Default.Equals(energy, default)) return Empty;
+            var root = GetRootSource();
+            if (root == null) return Empty;
+            var existing = _predicate;
+            Predicate<IReadOnlyEnergyProductBinder> composed = existing == null
+                ? (Predicate<IReadOnlyEnergyProductBinder>)(b => MatchEnergy(b, energy))
+                : b => existing(b) && MatchEnergy(b, energy);
+            return new ReadOnlyEnergyProductBinderCollection(root, composed);
+        }
+        private static bool MatchEnergy(IReadOnlyEnergyProductBinder b, EnergyId energy)
+            => EqualityComparer<EnergyId>.Default.Equals(b.Energy, energy);
+        #endregion
 
     }
 

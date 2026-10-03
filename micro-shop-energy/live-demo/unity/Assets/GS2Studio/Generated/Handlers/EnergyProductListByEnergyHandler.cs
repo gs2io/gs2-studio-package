@@ -24,25 +24,35 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.EnergyProduct
 {
     /// <summary>
-    /// MonoBehaviour list handler for EnergyProduct. Owns a
-    /// EnergyProductBinderCollection, instantiates a child EnergyProductListItemHandler
-    /// per item, and keeps the GameObject sibling order and each item's slot
-    /// index in sync with the collection's binder order. Implements
+    /// MonoBehaviour list handler for EnergyProduct scoped by the
+    /// Energy reference. Auto-resolves a parent
+    /// EnergyHandlerBase from the GameObject hierarchy, owns a
+    /// EnergyProductBinderCollection, and instantiates a child
+    /// EnergyProductListItemHandler only for the binders whose
+    /// Energy equals the parent's id. Implements
     /// IEnergyProductBinderListSource so items read Binders[Index] through the
     /// shared parent-list surface.
     /// </summary>
-    [AddComponentMenu("GS2 Studio/DomainType/EnergyProduct/EnergyProduct List Handler")]
-    public sealed class EnergyProductListHandler : MonoBehaviour, IEnergyProductBinderListSource, IGs2ListState
+    [AddComponentMenu("GS2 Studio/DomainType/EnergyProduct/EnergyProduct List By Energy Handler")]
+    public sealed class EnergyProductListByEnergyHandler : MonoBehaviour, IEnergyProductBinderListSource, IGs2ListState
     {
         // Which of EnergyProductBinderCollection's mount axes this list reads
         // through. The enum is a sibling type rather than a member of this
-        // class so the ListBy*Handlers name the same axes, not copies of them.
+        // class so the plain ListHandler names the same axes, not copies of
+        // them.
         [SerializeField] private EnergyProductListAxis _axis;
+        // Parent handler reference. Auto-only: resolved via
+        // GetComponentInParent at reload time (same pattern as the generated
+        // UI components); the [Gs2AutoResolvedHandler] drawer shows the
+        // resolved reference read-only, so the serialized value is never
+        // user-assigned. Manual override would need an editable drawer mode.
+        [Gs2AutoResolvedHandler]
+        [SerializeField] private EnergyHandlerBase? _parentHandler;
         [SerializeField] private EnergyProductListItemHandler? _itemPrefab;
         [SerializeField] private Transform? _contentParent;
         [SerializeField] private bool _autoSubscribe = true;
         // Hidden from the Inspector and not serialized. Resolved lazily by
-        // searching the entire active scene so the ListHandler does not have
+        // searching the entire active scene so the handler does not have
         // to sit under a Gs2HolderRuntimeContextProvider parent.
         private Gs2HolderRuntimeContextProvider? _runtime;
 
@@ -67,11 +77,34 @@ namespace GS2Studio.Generated.EnergyProduct
         private Action<IEnergyProductBinder>? _collectionItemAddedCallback;
         private Action<IEnergyProductBinder>? _collectionItemRemovedCallback;
         private bool _isDestroyed;
+        // The parent handler whose Bound event is currently subscribed. The
+        // subscription lifecycle is deliberately decoupled from Cleanup():
+        // ReloadAsync calls Cleanup() on entry, and dropping the subscription
+        // there would stop tracking parent rebinds after the first reload.
+        // Released only in OnDestroy / when the parent reference changes.
+        private EnergyHandlerBase? _subscribedParent;
+        // Last known parent id. Updated on reload and on each parent Bound
+        // event; there is no Unbound event, so the last known id persists
+        // until the parent rebinds.
+        private EnergyId _parentId;
         // Keyed by the non-owning binder view (the same instance the collection
-        // yields when iterated / via SyncSiblingOrder); owning binders arrive
-        // through the internal ItemAdded/ItemRemoved wiring events.
+        // yields when iterated); owning binders arrive through the internal
+        // ItemAdded/ItemRemoved wiring events. Holds only visible (matching)
+        // binders' handlers.
         private readonly Dictionary<IActionableEnergyProductBinder, EnergyProductListItemHandler> _handlers =
             new Dictionary<IActionableEnergyProductBinder, EnergyProductListItemHandler>();
+        // Every binder in the collection — matching or not — keyed by its
+        // non-owning view. RefreshMembership needs the binder to create the
+        // child item when a previously non-matching binder starts matching
+        // (ref value change / parent rebind), so non-matching binders are
+        // retained here. View and owning binder are the same instance.
+        private readonly Dictionary<IActionableEnergyProductBinder, IEnergyProductBinder> _binderByView =
+            new Dictionary<IActionableEnergyProductBinder, IEnergyProductBinder>();
+        // Visible (= parent-matching) binders in collection order. Single
+        // source of truth for the public Binders view; the underlying
+        // collection also holds non-matching binders and must not leak.
+        private readonly List<IActionableEnergyProductBinder> _visibleBinders =
+            new List<IActionableEnergyProductBinder>();
         // Persisted across Reload cycles: Comparer set before the first Reload,
         // or set while the previous collection existed, is reapplied to every
         // freshly-built collection. The Inspector cannot serialize IComparer, so
@@ -82,13 +115,13 @@ namespace GS2Studio.Generated.EnergyProduct
         // OnCollectionChanged. Without this guard, Resort would recurse.
         private bool _suppressOnChange;
 
-        /// <summary>Stable index/enumeration view of the current non-owning
-        /// binder set. Model.Id is not unique across rows; the collection
-        /// itself is the IReadOnlyList&lt;IActionableEnergyProductBinder&gt;.</summary>
-        public IReadOnlyList<IActionableEnergyProductBinder> Binders =>
-            (IReadOnlyList<IActionableEnergyProductBinder>?)_collection ?? Array.Empty<IActionableEnergyProductBinder>();
+        /// <summary>Stable index/enumeration view of the visible
+        /// (parent-matching) non-owning binder set, in collection order.
+        /// Model.Id is not unique across rows. The underlying collection also
+        /// holds non-matching binders; they are not exposed.</summary>
+        public IReadOnlyList<IActionableEnergyProductBinder> Binders => _visibleBinders;
 
-        /// <summary>Fires after Reload completes and on each subsequent membership change.</summary>
+        /// <summary>Fires after Reload completes and on each subsequent visible-membership change.</summary>
         public event Action? ListChanged;
 
         /// <summary>Whether the current collection has finished its initial mount.
@@ -98,10 +131,12 @@ namespace GS2Studio.Generated.EnergyProduct
         /// <summary>How many rows <see cref="Binders"/> holds.</summary>
         public int Count => Binders.Count;
 
-        /// <summary>Fires once for each binder added (initial mount + subsequent additions).</summary>
+        /// <summary>Fires once for each binder that becomes visible (initial mount,
+        /// subsequent additions, and non-match → match transitions on ref or parent changes).</summary>
         public event Action<IActionableEnergyProductBinder>? ItemAdded;
 
-        /// <summary>Fires once for each binder removed.</summary>
+        /// <summary>Fires once for each binder that stops being visible (removal from
+        /// the collection, and match → non-match transitions on ref or parent changes).</summary>
         public event Action<IActionableEnergyProductBinder>? ItemRemoved;
 
         /// <summary>Fires when Reload or item-instantiation encounters an exception.</summary>
@@ -211,9 +246,10 @@ namespace GS2Studio.Generated.EnergyProduct
         }
 
         /// <summary>
-        /// Tears down any prior collection, builds a fresh one, subscribes to add/remove
-        /// events <em>before</em> mounting (so the initial reconcile populates child handlers
-        /// through ItemAdded), then optionally subscribes for ongoing updates.
+        /// Tears down any prior collection, resolves the parent handler and its
+        /// bound binder's id, builds a fresh collection, subscribes to add/remove
+        /// events <em>before</em> mounting (so the initial reconcile populates child
+        /// handlers through ItemAdded), then optionally subscribes for ongoing updates.
         /// </summary>
         public async Task ReloadAsync(CancellationToken cancellationToken = default)
         {
@@ -236,6 +272,14 @@ namespace GS2Studio.Generated.EnergyProduct
                 var unusableAxisReason = UnusableAxisReason();
                 if (unusableAxisReason != null)
                     throw new InvalidOperationException(unusableAxisReason);
+                ResolveParentHandler();
+                if (_parentHandler == null)
+                    throw new InvalidOperationException("Parent EnergyHandlerBase is not assigned and none was found in the parent hierarchy.");
+                SubscribeParent();
+                var parentBinder = _parentHandler.Binder;
+                if (parentBinder == null)
+                    throw new InvalidOperationException("Parent EnergyHandlerBase has no bound binder yet.");
+                _parentId = parentBinder.Id;
 
                 var collection = ResolveBinderFactory().CreateCollection(gs2, session);
                 operationCollection = collection;
@@ -363,12 +407,61 @@ namespace GS2Studio.Generated.EnergyProduct
             return _runtime;
         }
 
+        private void ResolveParentHandler()
+        {
+            // Auto-only: the parent chain is the single resolution source
+            // (the Inspector field is read-only — see the field comment), so
+            // the component works without wiring when placed under (or on) a
+            // EnergyHandlerBase GameObject.
+            if (_parentHandler == null)
+            {
+                _parentHandler = GetComponentInParent<EnergyHandlerBase>();
+            }
+        }
+
+        private void SubscribeParent()
+        {
+            if (ReferenceEquals(_subscribedParent, _parentHandler)) return;
+            UnsubscribeParent();
+            if (_parentHandler == null) return;
+            _parentHandler.Bound += OnParentBound;
+            _subscribedParent = _parentHandler;
+        }
+
+        private void UnsubscribeParent()
+        {
+            if (_subscribedParent != null)
+            {
+                _subscribedParent.Bound -= OnParentBound;
+                _subscribedParent = null;
+            }
+        }
+
         /// <summary>
-        /// Unity lifecycle: when this ListHandler is placed in a scene, wait for
-        /// the runtime holders to finish initializing and for the
-        /// Inspector-assigned identity / mount keys to be populated, then
-        /// trigger <see cref="ReloadAsync"/>. Skipped when a collection has
-        /// already been built (i.e. <c>ReloadAsync</c> was invoked manually).
+        /// Parent rebind: adopt the new parent id and re-evaluate which binders
+        /// are visible. Visible transitions fire ItemAdded / ItemRemoved through
+        /// RefreshMembership, mirroring an actual collection add/remove.
+        /// </summary>
+        private void OnParentBound(IActionableEnergyBinder binder)
+        {
+            _parentId = binder.Id;
+            var collection = _collection;
+            if (collection == null) return;
+            var operationGeneration = _reloadGeneration;
+            RefreshMembership(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            SyncSiblingOrder(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            ListChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Unity lifecycle: when this handler is placed in a scene, wait for
+        /// the runtime holders to finish initializing, for the parent handler
+        /// to resolve and bind, and for the Inspector-assigned mount keys to be
+        /// populated, then trigger <see cref="ReloadAsync"/>. Skipped when a
+        /// collection has already been built (i.e. <c>ReloadAsync</c> was
+        /// invoked manually).
         /// </summary>
         private async void Start()
         {
@@ -419,6 +512,9 @@ namespace GS2Studio.Generated.EnergyProduct
         private bool IsReadyForReload()
         {
             if (_isDestroyed) return false;
+            ResolveParentHandler();
+            if (_parentHandler == null) return false;
+            if (!_parentHandler.HasValue) return false;
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
@@ -444,6 +540,11 @@ namespace GS2Studio.Generated.EnergyProduct
             }
             return true;
         }
+
+        // This expression uses the same equality renderer/lowering as the
+        // WhereEnergy match helper on the Collection.
+        private bool MatchesParent(IReadOnlyEnergyProductBinder binder)
+            => EqualityComparer<EnergyId>.Default.Equals(binder.Energy, _parentId);
 
         private bool IsCurrentOperation(long operationGeneration, IEnergyProductBinderCollection? operationCollection)
             => !_isDestroyed
@@ -472,6 +573,12 @@ namespace GS2Studio.Generated.EnergyProduct
             IEnergyProductBinder binder)
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
+            // Retain every binder — matching or not — so a later ref-value or
+            // parent change can promote it to visible with its owning binder.
+            _binderByView[binder] = binder;
+            if (!MatchesParent(binder)) return;
+            if (_visibleBinders.Contains(binder)) return;
+            _visibleBinders.Add(binder);
             CreateItem(operationGeneration, collection, binder);
             if (!IsCurrentOperation(operationGeneration, collection)) return;
             SyncSiblingOrder(operationGeneration, collection);
@@ -487,22 +594,11 @@ namespace GS2Studio.Generated.EnergyProduct
             IEnergyProductBinder binder)
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
-            if (_handlers.TryGetValue(binder, out var handler))
-            {
-                _handlers.Remove(binder);
-                if (handler != null)
-                {
-                    // Detach BEFORE Destroy: Destroy is deferred to end of
-                    // frame, so a still-subscribed item would re-evaluate
-                    // against the shifted Binders[index] (a different binder)
-                    // on the ListChanged below. Deactivate the root as well —
-                    // `_content` is optional for instantiated items, so hiding
-                    // must not depend on it.
-                    handler.Detach();
-                    handler.gameObject.SetActive(false);
-                    Destroy(handler.gameObject);
-                }
-            }
+            // Always drop the owning-binder retention — even for binders that
+            // were never visible — so no disposed binder reference lingers.
+            _binderByView.Remove(binder);
+            if (!_visibleBinders.Remove(binder)) return;
+            DestroyItem(binder);
             // Compact the surviving items' slot indices (and sibling order)
             // before notifying, so ListChanged observers see a consistent list.
             if (!IsCurrentOperation(operationGeneration, collection)) return;
@@ -517,9 +613,57 @@ namespace GS2Studio.Generated.EnergyProduct
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
             if (_suppressOnChange) return;
+            // A reconcile may have changed per-binder ref values (user data):
+            // re-evaluate visible membership before re-syncing order.
+            RefreshMembership(operationGeneration, collection);
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
             SyncSiblingOrder(operationGeneration, collection);
             if (!IsCurrentOperation(operationGeneration, collection)) return;
             ListChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Re-evaluates which binders match the current parent id. Each
+        /// match → non-match transition destroys the child handler and fires
+        /// <see cref="ItemRemoved"/>; each non-match → match transition creates
+        /// the child handler and fires <see cref="ItemAdded"/> — the visible
+        /// list behaves exactly like an add/remove on a plain list handler.
+        /// Ordering is realigned by the SyncSiblingOrder call that always
+        /// follows this method.
+        /// </summary>
+        private void RefreshMembership(
+            long operationGeneration,
+            IEnergyProductBinderCollection collection)
+        {
+            if (!IsCurrentOperation(operationGeneration, collection)) return;
+            // match -> non-match: walk backwards so RemoveAt stays stable.
+            for (var i = _visibleBinders.Count - 1; i >= 0; i--)
+            {
+                var binder = _visibleBinders[i];
+                if (MatchesParent(binder)) continue;
+                _visibleBinders.RemoveAt(i);
+                DestroyItem(binder);
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+                ItemRemoved?.Invoke(binder);
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+            }
+            // non-match -> match: walk the collection so additions follow its
+            // (comparer-applied) order.
+            for (var i = 0; i < collection.Count; i++)
+            {
+                var view = collection[i];
+                if (!MatchesParent(view)) continue;
+                if (_visibleBinders.Contains(view)) continue;
+                _visibleBinders.Add(view);
+                if (_binderByView.TryGetValue(view, out var owning))
+                {
+                    CreateItem(operationGeneration, collection, owning);
+                    if (!IsCurrentOperation(operationGeneration, collection)) return;
+                }
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+                ItemAdded?.Invoke(view);
+                if (!IsCurrentOperation(operationGeneration, collection)) return;
+            }
         }
 
         /// <summary>
@@ -577,12 +721,31 @@ namespace GS2Studio.Generated.EnergyProduct
 
         private int IndexOf(IActionableEnergyProductBinder binder)
         {
-            var binders = Binders;
-            for (var i = 0; i < binders.Count; i++)
+            for (var i = 0; i < _visibleBinders.Count; i++)
             {
-                if (ReferenceEquals(binders[i], binder)) return i;
+                if (ReferenceEquals(_visibleBinders[i], binder)) return i;
             }
             return -1;
+        }
+
+        private void DestroyItem(IActionableEnergyProductBinder binder)
+        {
+            if (_handlers.TryGetValue(binder, out var handler))
+            {
+                _handlers.Remove(binder);
+                if (handler != null)
+                {
+                    // Detach BEFORE Destroy: Destroy is deferred to end of
+                    // frame, so a still-subscribed item would re-evaluate
+                    // against the shifted Binders[index] (a different binder)
+                    // on the next ListChanged. Deactivate the root as well —
+                    // `_content` is optional for instantiated items, so hiding
+                    // must not depend on it.
+                    handler.Detach();
+                    handler.gameObject.SetActive(false);
+                    Destroy(handler.gameObject);
+                }
+            }
         }
 
         private void SyncSiblingOrder(
@@ -590,19 +753,33 @@ namespace GS2Studio.Generated.EnergyProduct
             IEnergyProductBinderCollection collection)
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
-            // The collection is the IReadOnlyList<IActionableEnergyProductBinder>; index it
-            // directly. `_handlers` is keyed by the same non-owning view.
+            // Realign the visible list to the collection's (comparer-applied)
+            // order — membership is unchanged, only the order is rebuilt — and
+            // assign contiguous sibling indices to the visible handlers. The
+            // collection index cannot be used directly: non-matching binders
+            // occupy collection slots but no GameObject.
+            var visibleSet = new HashSet<IActionableEnergyProductBinder>(_visibleBinders);
+            _visibleBinders.Clear();
+            var slot = 0;
             for (var i = 0; i < collection.Count; i++)
             {
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
                 var binder = collection[i];
+                if (!visibleSet.Contains(binder)) continue;
+                _visibleBinders.Add(binder);
+                // The item's slot index is its position in the visible list
+                // (the Binders view) — distinct from the GameObject sibling
+                // slot, which only counts handler-bearing entries.
+                var visibleIndex = _visibleBinders.Count - 1;
                 if (_handlers.TryGetValue(binder, out var handler) && handler != null)
                 {
-                    handler.transform.SetSiblingIndex(i);
+                    handler.transform.SetSiblingIndex(slot);
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
+                    slot++;
                     // The Index setter re-evaluates immediately; assign only on
-                    // change to avoid redundant re-binds.
-                    if (handler.Index != i) handler.Index = i;
+                    // change to avoid redundant re-binds. Safe mid-rebuild:
+                    // _visibleBinders[visibleIndex] is already this binder.
+                    if (handler.Index != visibleIndex) handler.Index = visibleIndex;
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
                 }
             }
@@ -622,6 +799,8 @@ namespace GS2Studio.Generated.EnergyProduct
             _collectionItemAddedCallback = null;
             _collectionItemRemovedCallback = null;
             _handlers.Clear();
+            _binderByView.Clear();
+            _visibleBinders.Clear();
 
             if (collection != null)
             {
@@ -635,12 +814,15 @@ namespace GS2Studio.Generated.EnergyProduct
             {
                 if (handler != null)
                 {
-                    // Same deferred-destroy hardening as OnItemRemoved.
+                    // Same deferred-destroy hardening as DestroyItem.
                     handler.Detach();
                     handler.gameObject.SetActive(false);
                     Destroy(handler.gameObject);
                 }
             }
+            // The parent Bound subscription is intentionally NOT released here:
+            // ReloadAsync calls Cleanup() on entry, and dropping it would stop
+            // tracking parent rebinds after the first reload. See OnDestroy.
         }
 
         private void OnDestroy()
@@ -648,6 +830,7 @@ namespace GS2Studio.Generated.EnergyProduct
             _isDestroyed = true;
             _reloadGeneration++;
             Cleanup();
+            UnsubscribeParent();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace GS2Studio.Generated.StorePrice
     public interface IStorePriceBinderFactory
     {
         Task<IStorePriceBinder> CreateAsync(
-            StoreProductId product, CurrencyTypeId currencyType,
+            StoreProductId storeProduct, CurrencyTypeId currencyType,
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default);
@@ -45,12 +45,12 @@ namespace GS2Studio.Generated.StorePrice
         public static readonly DefaultStorePriceBinderFactory Instance = new DefaultStorePriceBinderFactory();
 
         public async Task<IStorePriceBinder> CreateAsync(
-            StoreProductId product, CurrencyTypeId currencyType,
+            StoreProductId storeProduct, CurrencyTypeId currencyType,
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default)
         {
-            return await StorePriceBinder.CreateAsync(product, currencyType, gs2, session, cancellationToken);
+            return await StorePriceBinder.CreateAsync(storeProduct, currencyType, gs2, session, cancellationToken);
         }
     }
 }
