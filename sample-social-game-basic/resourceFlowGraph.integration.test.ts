@@ -165,7 +165,7 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
     // 切り分けるための probe。local mount している各 resource について、resolved
     // view の effective properties / action property transforms を実際に列挙する。
     const [project, catalog] = await Promise.all([loadSampleProject(), loadRealCatalog()]);
-    const { getDomainTypeViewReader } = await import("~/application/domainType");
+    const { getDomainTypeViewReader } = await import("~/application/domainType/composition");
     const reader = getDomainTypeViewReader({ project, actionCatalog: catalog });
 
     interface ResourceViewSnapshot {
