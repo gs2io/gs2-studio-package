@@ -33,27 +33,5 @@
   "masterDataResources": {
     "limit.LimitModel": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
     "limit.Namespace": "mdr_491DDE53J0BB7A5CRNAHHY7T7T"
-  },
-  "transforms": {
-    "CountDownUsageLimit": [
-      "limit",
-      "counter",
-      "countDownValue"
-    ],
-    "CountUpUsageLimit": [
-      "limit",
-      "counter",
-      "countUpValue",
-      "maxValue"
-    ],
-    "ResetUsageLimitCounter": [
-      "limit",
-      "counter"
-    ],
-    "VerifyUsageLimitNotReached": [
-      "limit",
-      "counter",
-      "maxValue"
-    ]
   }
 }

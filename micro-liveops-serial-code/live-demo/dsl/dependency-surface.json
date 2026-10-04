@@ -21,9 +21,5 @@
   "masterDataResources": {
     "limit.LimitModel": "mdr_7SMW1JXZZPB748SJB0THQW9XK1",
     "limit.Namespace": "mdr_4V682QX2SZB4GB809JSFWKK4SX"
-  },
-  "transforms": {
-    "ClearRedemption": [],
-    "CountRedemption": []
   }
 }

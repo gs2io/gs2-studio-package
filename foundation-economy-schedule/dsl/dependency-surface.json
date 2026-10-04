@@ -44,18 +44,5 @@
   "masterDataResources": {
     "schedule.Event": "mdr_44PB7J1MKEA3HB951V9904EYQW",
     "schedule.Namespace": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX"
-  },
-  "transforms": {
-    "ClearTrigger": [
-      "trigger"
-    ],
-    "PullTrigger": [
-      "trigger",
-      "ttlSeconds"
-    ],
-    "TriggerSchedule": [
-      "trigger",
-      "extendSeconds"
-    ]
   }
 }

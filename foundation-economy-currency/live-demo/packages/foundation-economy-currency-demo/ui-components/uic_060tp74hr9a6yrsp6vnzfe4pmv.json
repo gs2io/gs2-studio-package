@@ -27,6 +27,5 @@
     }
   ],
   "name": "PaidDeposit",
-  "targetDomainType": "PaidDeposit",
   "targetDomainTypeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3"
 }

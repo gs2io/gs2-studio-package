@@ -41,17 +41,5 @@
     "inventory.InventoryModel": "mdr_7THH0THTYY830SYCKTT7NMYZHG",
     "inventory.ItemModel": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7",
     "inventory.Namespace": "mdr_0HAS2H6Z4F9ZXA940FE5S3KSCS"
-  },
-  "transforms": {
-    "AcquireEquipment": [
-      "equipment"
-    ],
-    "AddEquipmentCapacity": [
-      "value"
-    ],
-    "DeleteEquipment": [
-      "equipment",
-      "equipmentPropertyId"
-    ]
   }
 }

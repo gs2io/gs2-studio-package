@@ -50,13 +50,5 @@
     "formation.MoldModel": "mdr_1Q71ZNDPVH9ZBAEG3V0XNEYS9E",
     "formation.Namespace": "mdr_2K0E06BZ6R9W1TT4WDRKC8NWT1",
     "formation.SlotModel": "mdr_0MW6G95BZD9V8BG908K55KD1DV"
-  },
-  "transforms": {
-    "AcquireToCharacterFormation": [
-      "index"
-    ],
-    "IncreaseSaveArea": [
-      "value"
-    ]
   }
 }

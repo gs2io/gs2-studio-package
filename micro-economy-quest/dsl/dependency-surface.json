@@ -64,6 +64,5 @@
     "quest.QuestGroupModel": "mdr_51ABASNT7P8KMR2GCA3GN5685F",
     "quest.QuestModel": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
     "transaction.ConsumeAction": "mdr_2N7EFZKQCZ95N8859GX0EG32TM"
-  },
-  "transforms": {}
+  }
 }

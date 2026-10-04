@@ -34,6 +34,5 @@
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_5JX9G1DX8VBRFS9TXTCGRP7Y7C",
     "transaction.ConsumeAction": "mdr_47ZSCBNGYQA8WV5CPB3EFQNE5N"
-  },
-  "transforms": {}
+  }
 }

@@ -35,18 +35,5 @@
     "ranking2.Namespace": "mdr_74RKP7CV96BKRBC0XYGACE89ZP",
     "ranking2.RankingReward": "mdr_3FD4P8QKX5A7J9T5DERFKQKNG4",
     "transaction.AcquireAction": "mdr_3BNZCPZFZ1AG18GVED2E2VWG3D"
-  },
-  "transforms": {
-    "ReceiveGuildRankingReward": [
-      "ranking",
-      "guildName",
-      "season"
-    ],
-    "VerifyGuildRankingScoreReached": [
-      "ranking",
-      "guildName",
-      "season",
-      "score"
-    ]
   }
 }

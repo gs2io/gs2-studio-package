@@ -36,16 +36,5 @@
     "inbox.Namespace": "mdr_5TQZFM8AS38R69FHM3H76YY11G",
     "schedule.Event": "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4",
     "schedule.Namespace": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B"
-  },
-  "transforms": {
-    "SendMessage": [
-      "metadata",
-      "expireDays"
-    ],
-    "SendMessageWithReward": [
-      "metadata",
-      "expireDays",
-      "rewards"
-    ]
   }
 }

@@ -23,15 +23,5 @@
   "masterDataResources": {
     "stamina.Namespace": "mdr_77M6CM017083FAVC4NT6STKDZD",
     "stamina.StaminaModel": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5"
-  },
-  "transforms": {
-    "ConsumeEnergy": [
-      "energy",
-      "value"
-    ],
-    "RecoveryEnergy": [
-      "energy",
-      "value"
-    ]
   }
 }

@@ -66,11 +66,5 @@
     "mission.MissionTaskModel": "mdr_4QWBNQ5KM59ZERS381QKYXGJCB",
     "mission.Namespace": "mdr_6V258ETJSN87BA3ZBJ1P2ZA3AM",
     "transaction.AcquireAction": "mdr_05BAPFNKQ49J2AQXN7YNH1A006"
-  },
-  "transforms": {
-    "IncreaseMissionCounter": [
-      "counter",
-      "value"
-    ]
   }
 }

@@ -30,15 +30,5 @@
     "skillTree.Namespace": "mdr_5GN698F83ABYK82ZGJ8SXHSGYF",
     "skillTree.NodeModel": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD",
     "transaction.ConsumeAction": "mdr_2CVTBHSGESBYJAR9WB6S3C7GWE"
-  },
-  "transforms": {
-    "ReleaseSkillNode": [
-      "propertyId",
-      "node"
-    ],
-    "RestrainSkillNode": [
-      "propertyId",
-      "node"
-    ]
   }
 }

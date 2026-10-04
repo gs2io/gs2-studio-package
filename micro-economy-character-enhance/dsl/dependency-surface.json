@@ -42,17 +42,5 @@
     "inventory.Namespace": "mdr_0X3VFV84CTB6EATPT0SP3AV0G9",
     "inventory.SimpleInventoryModel": "mdr_7JR54W0XKZAJPBTR7T9Y0CK6HM",
     "inventory.SimpleItemModel": "mdr_2PEA8RQ1MGA16V5HGXBZA28G57"
-  },
-  "transforms": {
-    "AcquireCharacterEnhanceMaterial": [
-      "material",
-      "count"
-    ],
-    "EnhanceCharacter": [
-      "enhance",
-      "targetItemSetId",
-      "materialItemSetId",
-      "count"
-    ]
   }
 }

@@ -47,10 +47,5 @@
     "loginReward.Reward": "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD",
     "transaction.AcquireAction": "mdr_1WM5V8FY05AECB0ZZ2EZPW8NGH",
     "transaction.ConsumeAction": "mdr_04ZDPGWP70AXK81VHHG4QF4C3F"
-  },
-  "transforms": {
-    "ResetReceiveStatus": [
-      "loginRewardCollection"
-    ]
   }
 }

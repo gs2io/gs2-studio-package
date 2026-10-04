@@ -220,6 +220,5 @@
     }
   ],
   "name": "UsageLimitCounter",
-  "targetDomainType": "UsageLimitCounter",
   "targetDomainTypeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
 }

@@ -64,21 +64,5 @@
     "enchant.RarityParameterCountModel": "mdr_3P16399HYBAYEBQV1WZ298BEJF",
     "enchant.RarityParameterModel": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
     "enchant.RarityParameterValueModel": "mdr_7DT40A06FQBG4RFWTC4P142307"
-  },
-  "transforms": {
-    "AddEquipmentEnchantmentSlot": [
-      "enchant",
-      "propertyId",
-      "count"
-    ],
-    "RerollEquipmentEnchantment": [
-      "enchant",
-      "propertyId"
-    ],
-    "VerifyEquipmentEnchantment": [
-      "enchant",
-      "propertyId",
-      "option"
-    ]
   }
 }

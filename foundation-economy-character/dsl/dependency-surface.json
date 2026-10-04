@@ -50,22 +50,5 @@
     "inventory.InventoryModel": "mdr_32G1EVGBJ098PA3H1RW307TJFR",
     "inventory.ItemModel": "mdr_3EJ714VYYS8V2SWXMCQTYD32VN",
     "inventory.Namespace": "mdr_1K6CM9FDV3904TQB03FFV2PS17"
-  },
-  "transforms": {
-    "AcquireCharacter": [
-      "character",
-      "count"
-    ],
-    "AcquireCharacterExperience": [
-      "propertyId",
-      "value"
-    ],
-    "AddCharacterCapacity": [
-      "value"
-    ],
-    "IncreaseCharacterLevelCap": [
-      "propertyId",
-      "value"
-    ]
   }
 }

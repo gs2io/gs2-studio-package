@@ -39,29 +39,5 @@
   "masterDataResources": {
     "money2.Namespace": "mdr_2E7WSMWGBTATQSVTMCW3T2R2AJ",
     "money2.StoreContentModel": "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX"
-  },
-  "transforms": {
-    "DepositCurrency": [
-      "slot",
-      "count",
-      "currencyType",
-      "price"
-    ],
-    "DepositFreeCurrency": [
-      "slot",
-      "count"
-    ],
-    "VerifyReceipt": [
-      "contentName"
-    ],
-    "WithdrawCurrency": [
-      "slot",
-      "paidOnly",
-      "count"
-    ],
-    "WithdrawPaidCurrency": [
-      "slot",
-      "count"
-    ]
   }
 }

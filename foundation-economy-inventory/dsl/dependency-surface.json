@@ -17,15 +17,5 @@
     "inventory.Namespace": "mdr_09W5HV054N82491HH6HA6CS2JQ",
     "inventory.SimpleInventoryModel": "mdr_5FVCJFNG0N9MFTSN24Q5SJ2C0G",
     "inventory.SimpleItemModel": "mdr_2MZFS2Y6618P68QQHD5XJHVFV5"
-  },
-  "transforms": {
-    "AcquireItem": [
-      "itemName",
-      "count"
-    ],
-    "ConsumeItem": [
-      "itemName",
-      "count"
-    ]
   }
 }

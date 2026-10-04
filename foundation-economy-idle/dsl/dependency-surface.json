@@ -35,6 +35,5 @@
     "idle.CategoryModel": "mdr_720YFK0MG497KRH6159H7NKWHY",
     "idle.Namespace": "mdr_06EWGY2ESB93N8EK9NH0X3RVD3",
     "transaction.AcquireAction": "mdr_0PDNGBDJH48T1T077HQGKJC6YA"
-  },
-  "transforms": {}
+  }
 }

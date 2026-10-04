@@ -16,17 +16,5 @@
   "masterDataResources": {
     "serialKey.CampaignModel": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",
     "serialKey.Namespace": "mdr_33A0JPMYWGB96T0HQZPKB505V4"
-  },
-  "transforms": {
-    "RevertSerialCodeUse": [
-      "code"
-    ],
-    "UseSerialCode": [
-      "code"
-    ],
-    "VerifySerialCodeActive": [
-      "campaign",
-      "code"
-    ]
   }
 }

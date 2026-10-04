@@ -46,6 +46,5 @@
     "showcase.Showcase": "mdr_52EEV67FGS9B1V0F4FDTAR1YY2",
     "transaction.AcquireAction": "mdr_7G9RQWPRMVBPFRDJ6591P0SR54",
     "transaction.ConsumeAction": "mdr_16Q7NB6T6WA4HTQM4C6X7P55MW"
-  },
-  "transforms": {}
+  }
 }

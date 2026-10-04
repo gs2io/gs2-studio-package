@@ -15,6 +15,5 @@
   "masterDataResources": {
     "exchange.Namespace": "mdr_5MN44R7KEH9GH8K7AS83MQH91X",
     "exchange.RateModel": "mdr_4AGHB6Q7XM9449CE6A6SQB4263"
-  },
-  "transforms": {}
+  }
 }

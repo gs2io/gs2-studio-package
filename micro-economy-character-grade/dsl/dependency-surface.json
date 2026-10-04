@@ -28,18 +28,5 @@
     "grade.GradeEntryModel": "mdr_6FMYQBP94FAQRRQNCBHDWRD8NM",
     "grade.GradeModel": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
     "grade.Namespace": "mdr_6HEASWW74XBBWBSC4X7S8CRBJ6"
-  },
-  "transforms": {
-    "ApplyCharacterGradeRankCap": [
-      "propertyId"
-    ],
-    "PromoteCharacterGrade": [
-      "propertyId",
-      "gradeValue"
-    ],
-    "VerifyCharacterGradeReached": [
-      "propertyId",
-      "gradeValue"
-    ]
   }
 }

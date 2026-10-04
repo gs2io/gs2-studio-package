@@ -35,16 +35,5 @@
     "ranking2.Namespace": "mdr_2CV348B4KFBSMVV1CBVHJXB9JJ",
     "ranking2.RankingReward": "mdr_0XG8G4CQM4BHKAWM8NXAW1Q4ST",
     "transaction.AcquireAction": "mdr_1S4C4099KFBX8A1GHVY8PDN1VW"
-  },
-  "transforms": {
-    "ReceiveRankingReward": [
-      "ranking",
-      "season"
-    ],
-    "VerifyRankingScoreReached": [
-      "ranking",
-      "season",
-      "score"
-    ]
   }
 }

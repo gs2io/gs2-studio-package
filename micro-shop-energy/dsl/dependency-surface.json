@@ -20,6 +20,5 @@
     "exchange.RateModel": "mdr_25CQKDMHCC8HNA1RJYJ3PVGC8B",
     "transaction.AcquireAction": "mdr_062JQMMH7R8WD9JCTBTFANJ7NV",
     "transaction.ConsumeAction": "mdr_3Z0XQX69768KHAMF86H3KJB4MV"
-  },
-  "transforms": {}
+  }
 }

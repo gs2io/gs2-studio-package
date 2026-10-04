@@ -22,8 +22,5 @@
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_3ESNRVY21ZAPJS612007NXVYD0",
     "transaction.ConsumeAction": "mdr_0ED15EEZCPBNM9CH1VBZCNK4J6"
-  },
-  "transforms": {
-    "AcquireAdViewPoint": []
   }
 }

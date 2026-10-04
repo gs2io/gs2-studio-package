@@ -1,1 +1,6 @@
+* text=auto eol=lf
 *.lua text eol=lf
+
+*.png binary
+
+*/live-demo/unity/Assets/GS2Studio/Generated/** linguist-generated=true

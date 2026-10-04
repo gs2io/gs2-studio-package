@@ -35,16 +35,5 @@
     "guild.GuildModel": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
     "guild.Namespace": "mdr_2NW12QY7P9BHGBYRB91VD5C9HT",
     "guild.RoleModel": "mdr_6T3C1RPTGBAQ3881PSBA5K9NK3"
-  },
-  "transforms": {
-    "IncreaseGuildCapacity": [
-      "guild",
-      "guildName",
-      "value"
-    ],
-    "VerifyGuildMembership": [
-      "guild",
-      "guildName"
-    ]
   }
 }

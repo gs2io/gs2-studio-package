@@ -26,8 +26,5 @@
   },
   "masterDataResources": {
     "adReward.Namespace": "mdr_753Q723JBB9AWB63KRPYZA6ZXN"
-  },
-  "transforms": {
-    "ConsumeAdViewPoint": []
   }
 }

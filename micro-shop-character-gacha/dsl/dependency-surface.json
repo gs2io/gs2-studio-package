@@ -58,6 +58,5 @@
     "showcase.SalesItem": "mdr_028ZABCBPXBJYV9XV7741Q468N",
     "showcase.Showcase": "mdr_3F313WCTCC9A9TYYZGXKHC7KB8",
     "transaction.ConsumeAction": "mdr_50WPT944TABHE8GVKQ6SJD1W44"
-  },
-  "transforms": {}
+  }
 }

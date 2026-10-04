@@ -26,6 +26,5 @@
     "exchange.Namespace": "mdr_3VWTCVEBB8BP0R7X7PNFFM14YJ",
     "exchange.RateModel": "mdr_764ATR9HCQB89B3EVDJZ7D08VS",
     "transaction.AcquireAction": "mdr_3DWPM98F2NA4SS3ATV0HR2RV01"
-  },
-  "transforms": {}
+  }
 }
