@@ -4,3 +4,5 @@
 *.png binary
 
 */live-demo/unity/Assets/GS2Studio/Generated/** linguist-generated=true
+*/live-demo/unity/Assets/Scenes/*.unity linguist-generated=true
+*/live-demo/unity/Assets/Showroom/Generated/*.prefab linguist-generated=true
