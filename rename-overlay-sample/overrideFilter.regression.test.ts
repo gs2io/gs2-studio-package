@@ -70,10 +70,10 @@ describe("rename overlay → source type override registration", () => {
       expect(sourcePkg, `${sourcePkgName} should be loaded`).toBeDefined();
       if (!sourcePkg) continue;
 
-      const target = {
-        packageId: sourcePkg.id,
-        typeName: DomainTypeName.trusted(source),
-      };
+      const sourceTypeId = sourcePkg.domainTypes.idForName(DomainTypeName.trusted(source));
+      expect(sourceTypeId, `${source} should be declared in ${sourcePkgName}`).toBeDefined();
+      if (!sourceTypeId) continue;
+      const target = { packageId: sourcePkg.id, domainTypeId: sourceTypeId };
       const overridden = isOverridden({
         overriddenKeys,
         target,
