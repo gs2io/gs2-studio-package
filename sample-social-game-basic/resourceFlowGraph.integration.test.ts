@@ -181,7 +181,7 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
       for (const resource of pkg.masterDataResources.values()) {
         const mp = resource.ownMountPath;
         if (mp === undefined || !MountPath.isLocal(mp)) continue;
-        const view = reader.getResolvedView(pkg, mp.typeName);
+        const view = reader.getResolvedViewById(pkg, mp.typeId);
         if (!view) continue;
         const propertyKindCounts: Record<string, number> = {};
         const transformTargets = new Set<string>();
@@ -233,7 +233,9 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
     );
     if (hostPkg) {
       const { DomainTypeName } = await import("~/domain/core");
-      const hostView = reader.getResolvedView(hostPkg, DomainTypeName.trusted("Gacha"));
+      const gachaTypeId = hostPkg.domainTypes.idForName(DomainTypeName.trusted("Gacha"));
+      const hostView =
+        gachaTypeId === undefined ? undefined : reader.getResolvedViewById(hostPkg, gachaTypeId);
       console.log(
         "[view probe] host-scope Gacha view exists:",
         hostView !== undefined,
