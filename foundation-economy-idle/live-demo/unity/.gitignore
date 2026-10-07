@@ -1,4 +1,3 @@
-# Unity
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -8,15 +7,12 @@
 *.csproj
 *.sln
 
-# Unity rewrites this from manifest.json on open, recording whatever the last
-# resolve saw. It adds nothing the manifest does not already pin, and it is
-# regenerated on the next open.
+# Keep Unity's local resolution output separate from the authored dependency manifest.
 Packages/packages-lock.json
 
-# Written by Unity Purchasing the first time the editor opens the project, and
-# reproduced from the package rather than authored here.
+# Unity Purchasing regenerates this configuration from the installed package.
 Assets/Resources/BillingMode.json
 Assets/Resources/BillingMode.json.meta
 
-# A local editor preference, not part of the demo.
+# Keep machine-local Package Manager preferences out of the shared demo.
 ProjectSettings/PackageManagerSettings.asset

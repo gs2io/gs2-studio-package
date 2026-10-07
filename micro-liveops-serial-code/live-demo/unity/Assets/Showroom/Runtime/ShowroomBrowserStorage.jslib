@@ -1,15 +1,6 @@
-// The browser's localStorage, for the showroom's saved account.
-//
-// Unity's PlayerPrefs on WebGL live in IndexedDB under a directory named after
-// the page's own URL, so two demos served from sibling directories of one
-// origin never see each other's values. localStorage belongs to the origin,
-// which is what lets every demo on it sign in as the same visitor. Its writes
-// are synchronous as well, so a value written just before the page reloads is
-// already there when the next page reads it.
-//
-// Every entry point swallows the storage's own failures (a private window, a
-// browser set to block site data) and reports them through its return value:
-// null for a read, 0 for a write.
+// Use origin-scoped storage so sibling demos can share the visitor account.
+// Synchronous writes must complete before an account-change reload.
+// Report storage failures through the native return contract so browser exceptions do not escape into the player.
 mergeInto(LibraryManager.library, {
   ShowroomBrowserStorage_Get: function (keyPointer) {
     var value;

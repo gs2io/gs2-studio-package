@@ -1,24 +1,6 @@
-// Running one press at a time, for the whole page.
-//
-// A press is an action a visitor asked for, that talks to GS2 and answers in
-// words. Every hand-written press goes through `Run`, so they all behave
-// alike:
-//
-// - One at a time across the page. A second press while one is out is
-//   refused with "One moment..." rather than queued or silently dropped:
-//   two presses at once would race on the same state, and a press that does
-//   nothing visible reads as a broken button.
-// - Held for a moment after the page moved (`ShowroomSettle`).
-// - The outcome is said in the page's log: the line the action returns, or
-//   the refusal in the press's own terms (`Explain`), or GS2's reading of it
-//   (`ShowroomErrors.Describe`). One line per press.
-// - Nothing is read again afterwards. What a press changed reaches every
-//   reader through the SDK's cache, which the generated binders and the
-//   hand-written watches subscribe to; reading again only throws that cache
-//   away (and duplicates list rows).
-//
-// Main thread only. The action's continuations return to the main thread
-// through Unity's synchronization context, so callbacks run there too.
+// Concurrent presses race on shared state; reject overlap visibly instead of silently losing clicks.
+// Existing SDK subscriptions deliver state changes, so press completion must not trigger another read.
+// Invoke from the main thread so awaited continuations and callbacks return to Unity's context.
 #nullable enable
 
 using System;
@@ -32,29 +14,16 @@ using Gs2.Unity.Util;
 
 namespace GS2Studio.Showroom
 {
-    /// <summary>Runs presses one at a time and says their outcome.</summary>
     public static class ShowroomPress
     {
         private static bool _busy;
         private static bool _frozen;
 
-        /// <summary>Whether a press is out now.</summary>
         public static bool Busy => _busy;
 
-        /// <summary>
-        /// Refuses every press from now on: the page is about to reload (for
-        /// example as another account), and a press now would act for the
-        /// account it is leaving.
-        /// </summary>
+        // A press during account replacement would still act as the account being left.
         public static void Freeze() => _frozen = true;
 
-        /// <summary>
-        /// Starts <paramref name="action"/> with the signed-in player's SDK
-        /// handles, unless a press is already out, the page just changed, or
-        /// nobody is signed in yet; each of those is said on the page when a
-        /// visitor pressed. The action returns the line the page says ("" for
-        /// none). Returns whether the press started.
-        /// </summary>
         public static bool Run(ShowroomPressOptions options, Func<Gs2Domain, IGameSession, Task<string>> action)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
@@ -102,8 +71,7 @@ namespace GS2Studio.Showroom
             }
             catch (Exception error)
             {
-                // The type only when redacted: the message of an unexpected
-                // failure may carry what the request carried.
+                // Unexpected exception messages can echo request secrets too.
                 Debug.LogWarning($"[showroom] {options.Name} failed: {(options.Redact ? error.GetType().Name : error.ToString())}");
                 line = options.Redact ? $"Failed: {error.GetType().Name}" : $"Failed: {ShowroomErrors.Describe(error)}";
             }
@@ -112,14 +80,11 @@ namespace GS2Studio.Showroom
                 _busy = false;
             }
 
-            // An owner that was given and has since been destroyed compares
-            // equal to null by Unity's rules while the reference is not null.
+            // Unity considers a destroyed owner null while its managed reference still exists.
             var ownerGone = !ReferenceEquals(options.Owner, null) && options.Owner == null;
-            // A refusal meant for the owner's `Unexplained` is said here
-            // instead once the owner is gone, so it is still said once.
+            // The vanished owner cannot report its refusal, so preserve that message here.
             if (ownerGone && unexplained != null) line = Unexplainable(options, unexplained);
-            // Guarded like the callbacks: a line that fails to draw must not
-            // keep `Afterward` from turning the buttons back on.
+            // A failed log redraw must not prevent Afterward from re-enabling controls.
             Guarded(options, () => ShowroomLog.Say(line));
             if (ownerGone) return;
             if (unexplained != null) Guarded(options, () => options.Unexplained!(unexplained));
@@ -127,11 +92,9 @@ namespace GS2Studio.Showroom
             if (options.Afterward != null) Guarded(options, options.Afterward);
         }
 
-        /// <summary>The runner's own reading of a refusal nothing explained.</summary>
         private static string Unexplainable(ShowroomPressOptions options, Gs2Exception error) =>
             options.Redact ? $"GS2 refused: {ShowroomErrors.Summary(error)}" : ShowroomErrors.Describe(error);
 
-        /// <summary>The press's own line for a refusal, or null; an Explain that throws explains nothing.</summary>
         private static string? Explained(ShowroomPressOptions options, Gs2Exception error)
         {
             if (options.Explain == null) return null;
@@ -146,10 +109,7 @@ namespace GS2Studio.Showroom
             }
         }
 
-        /// <summary>
-        /// Runs one callback so that a throw in it neither skips the next one
-        /// nor leaves an `async void` with an unobserved exception.
-        /// </summary>
+        // Isolate callbacks so one failure cannot skip cleanup or escape through async void.
         private static void Guarded(ShowroomPressOptions options, Action callback)
         {
             try
@@ -164,13 +124,13 @@ namespace GS2Studio.Showroom
                 }
                 catch (Exception)
                 {
-                    // The page's log is what failed; the console still has the warning.
+                    // Reporting to the page failed; keep the console warning as the remaining diagnostic.
                     Debug.LogWarning($"[showroom] After {options.Name}, the page could not update: {failure}");
                 }
             }
         }
 
-        /// <summary>Starts every play session idle, with domain reload off or on.</summary>
+        // Static state otherwise survives entering Play Mode with domain reload disabled.
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetOnPlay()
         {

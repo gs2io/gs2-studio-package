@@ -1,30 +1,5 @@
-// How far the demos have moved a player's clock.
-//
-// Shared by every demo that shows GS2 time on a moved clock: the label
-// (`ShowroomDemoClockLabel`), the advance (`DemoClockAdvance`) and whatever
-// a demo times against GS2 (a countdown, a season's end).
-//
-// GS2 keeps the offset on the account and carries it into every access token
-// the account signs in with, so the server needs nothing from here. The page
-// does: advancing adds to what the account already has, and every time the
-// page shows (a clock, a countdown to something GS2 timed) is GS2's time less
-// the offset.
-//
-// The account is shared by every demo served from the same origin, and any of
-// them may have moved its clock, so the offset is read from the account itself
-// rather than remembered by the page. No read-only call returns the account to
-// a client, so it is read by signing in to the account service once more with
-// the credentials the page signed in with: `Authentication` answers with the
-// account, offset included. That also stamps the account's last sign-in time,
-// which the demos do not use. It is read once per page, and again right before
-// the clock is advanced, so an advance always adds to the account's latest
-// offset.
-//
-// The page's own session carries the offset the account had when it signed
-// in. Another page that advances the clock afterwards changes the account but
-// not this page's token, so for a while the offset read here can be ahead of
-// the one this page's requests carry. Advancing from this page signs it in
-// again, which settles that.
+// Other pages share this account, so a cached offset may be stale. Authentication returns
+// the current account offset without replacing this page's session token.
 #nullable enable
 
 using System;
@@ -39,40 +14,19 @@ using Gs2Bind.Gs2Account;
 
 namespace GS2Studio.Showroom
 {
-    /// <summary>
-    /// The time offset, in seconds, the signed-in player's account has on GS2.
-    /// </summary>
     internal static class DemoTimeOffset
     {
-        /// <summary>
-        /// The largest offset GS2 accepts: ten years, in seconds.
-        /// </summary>
         public const int MaxSeconds = 315360000;
 
-        /// <summary>How long to wait before reading the account again after a read failed.</summary>
         private const float RetrySeconds = 30f;
 
-        /// <summary>
-        /// Raised after <see cref="Set"/> stores a new offset, with the player
-        /// it belongs to. The session signs in with it next; see
-        /// <see cref="Applied"/>.
-        /// </summary>
+        // Server reads must wait for Applied to use the new clock.
         public static event Action<string>? Changed;
 
-        /// <summary>
-        /// Raised once the session has signed in again with the new offset,
-        /// with the player it belongs to. What the server reports from here on
-        /// is on the new clock; before it, reads still go out on the old one.
-        /// </summary>
+        // Requests use the old token until refresh succeeds, even after Changed fires.
         public static event Action<string>? Applied;
 
-        /// <summary>
-        /// Raised when the offset was read from the account and differs from
-        /// what was known (including when nothing was), with the player it
-        /// belongs to. The session already signed in with it, so nothing needs
-        /// to be read again for it; only what is shown on this device's clock
-        /// moves.
-        /// </summary>
+        // Loading an account offset does not refresh this page's token; do not treat it as Applied.
         public static event Action<string>? Loaded;
 
         private static string? _userId;
@@ -81,20 +35,11 @@ namespace GS2Studio.Showroom
         private static float _retryAt = float.NegativeInfinity;
         private static bool _failureLogged;
 
-        /// <summary>Whether the player's offset is known yet.</summary>
         public static bool Has(string userId) => userId.Length > 0 && _userId == userId;
 
-        /// <summary>
-        /// The player's offset, or 0 while it is not known yet. Use
-        /// <see cref="TryGet"/> where 0 would be taken for the answer.
-        /// </summary>
+        // Call TryGet when an unknown offset must not be mistaken for a confirmed zero.
         public static int Get(string userId) => Has(userId) ? _seconds : 0;
 
-        /// <summary>
-        /// The player's offset, when it is known. When it is not, a read from
-        /// the account is started (at most one at a time, and not again soon
-        /// after a failure) and <see cref="Loaded"/> is raised once it lands.
-        /// </summary>
         public static bool TryGet(string userId, out int seconds)
         {
             if (Has(userId))
@@ -107,10 +52,6 @@ namespace GS2Studio.Showroom
             return false;
         }
 
-        /// <summary>
-        /// Store the offset the player's account now has, and tell whoever
-        /// shows it. Called once the account has taken it.
-        /// </summary>
         public static void Set(string userId, int seconds)
         {
             _userId = userId;
@@ -118,20 +59,11 @@ namespace GS2Studio.Showroom
             Changed?.Invoke(userId);
         }
 
-        /// <summary>
-        /// Tell whoever reads the server that the session now carries the
-        /// player's stored offset.
-        /// </summary>
         public static void NotifyApplied(string userId)
         {
             Applied?.Invoke(userId);
         }
 
-        /// <summary>
-        /// Reads the signed-in player's offset from their account on GS2.
-        /// Returns whether it was read; a read already out is joined rather
-        /// than repeated. A failure is logged once until a read succeeds again.
-        /// </summary>
         public static async Task<bool> Read()
         {
             if (_reading != null) return await _reading;
@@ -170,8 +102,7 @@ namespace GS2Studio.Showroom
             }
             catch (Exception error)
             {
-                // By kind and code only: the request carried the password,
-                // and GS2's messages or an exception's text may echo it.
+                // The request carried a password, so log codes and types without echoed text.
                 return Failed(ShowroomErrors.Summary(error));
             }
 
@@ -184,7 +115,7 @@ namespace GS2Studio.Showroom
             return true;
         }
 
-        /// <summary>Starts every play session knowing nothing, with domain reload off or on.</summary>
+        // Static state otherwise survives entering Play Mode with domain reload disabled.
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetOnPlay()
         {

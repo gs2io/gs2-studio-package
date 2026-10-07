@@ -1,11 +1,4 @@
-// The browser clipboard, for a page's Copy and Paste buttons.
-//
-// Only a WebGL player has a browser to ask (`ShowroomClipboard.jslib`).
-// Anywhere else (the Editor's Play Mode) Unity's own clipboard stands in, so
-// the buttons still do something.
-//
-// This is the raw request. A panel uses `ShowroomClipboardRequest`, which
-// adds the deadline, the one-request-at-a-time rule and the callbacks.
+// Use ShowroomClipboardRequest for ownership and timeout: the browser bridge has only one slot.
 #nullable enable
 
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -16,11 +9,6 @@ using UnityEngine;
 
 namespace GS2Studio.Showroom
 {
-    /// <summary>
-    /// One clipboard request at a time. <see cref="Copy"/> and
-    /// <see cref="Paste"/> start one; <see cref="Poll"/> reports it once it is
-    /// settled.
-    /// </summary>
     public static class ShowroomClipboard
     {
         public enum Outcome
@@ -37,17 +25,13 @@ namespace GS2Studio.Showroom
         [DllImport("__Internal")] private static extern string ShowroomClipboardTake();
         [DllImport("__Internal")] private static extern void ShowroomClipboardAbandon();
 
-        /// <summary>Gives up on the request in flight; a late answer to it is dropped.</summary>
+        // Invalidate the bridge request so late promises cannot overwrite a newer request.
         public static void Abandon() => ShowroomClipboardAbandon();
 
         public static void Copy(string text) => ShowroomClipboardCopy(text);
 
         public static void Paste() => ShowroomClipboardPaste();
 
-        /// <summary>
-        /// The outcome, with the pasted text or the browser's reason for
-        /// refusing; <see cref="Outcome.Waiting"/> until then.
-        /// </summary>
         public static Outcome Poll(out string text)
         {
             text = "";

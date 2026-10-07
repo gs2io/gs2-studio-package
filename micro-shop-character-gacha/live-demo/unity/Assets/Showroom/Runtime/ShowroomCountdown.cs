@@ -1,17 +1,3 @@
-// A deadline, read as time left.
-//
-// A generated `value` component hands the page a `DateTime` rather than a
-// string, precisely so the page can decide how a deadline reads. This is how
-// the showroom reads every one of them: as the time remaining until it, in
-// days when there are days, ticking down while the page is open, and as the
-// two words that are not a time — "not set" before a deadline has been given
-// and "ended" once it has passed.
-//
-// A demo that needs a deadline to do something writes a behaviour of its own
-// taking `SetDeadline(DateTime)`, and the page builder wires the same reading
-// into it beside this one. A value that time changes on the server, such as
-// a stamina recovering, is not one of those: its loader already re-emits it
-// when it changes. This behaviour draws; it does not decide.
 #nullable disable
 using System;
 using UnityEngine;
@@ -22,11 +8,7 @@ namespace GS2Studio.Showroom
     [AddComponentMenu("GS2 Studio/Showroom/Showroom Countdown")]
     public sealed class ShowroomCountdown : MonoBehaviour
     {
-        /// <summary>
-        /// The earliest deadline that means anything. GS2 hands back the epoch
-        /// or a zero timestamp for a deadline nobody has set, and neither is a
-        /// moment a visitor is waiting for.
-        /// </summary>
+        // Epoch and zero timestamps mean no deadline, not a countdown that already ended.
         private static readonly DateTime Unset = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         [SerializeField] private Text _label;

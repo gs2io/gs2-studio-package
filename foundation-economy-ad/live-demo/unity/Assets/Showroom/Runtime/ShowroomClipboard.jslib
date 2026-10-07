@@ -1,17 +1,7 @@
-// The browser clipboard for a showroom page's Copy and Paste buttons
-// (`ShowroomClipboard.cs`).
-//
-// The clipboard API is asynchronous and may ask the visitor for permission,
-// so a call only starts the request; the page asks for the outcome each frame
-// until it is settled. Status: 0 idle, 1 waiting, 2 done, 3 refused.
-//
-// Each request carries an id. The page may give up on one that takes too
-// long and start another; a promise that settles after that belongs to a
-// request nobody is waiting for, and is dropped.
+// Poll the asynchronous clipboard result because browser permission prompts may outlive a Unity frame.
 var ShowroomClipboard = {
   $ShowroomClipboardState: { status: 0, text: "", request: 0 },
 
-  // Starts a request and returns its id.
   $ShowroomClipboardBegin: function () {
     var state = ShowroomClipboardState;
     state.request += 1;
@@ -20,7 +10,7 @@ var ShowroomClipboard = {
     return state.request;
   },
 
-  // Settles a request, unless a newer one has started since.
+  // Ignore late promises after abandonment or replacement so they cannot overwrite the active request.
   $ShowroomClipboardSettle: function (request, status, text) {
     var state = ShowroomClipboardState;
     if (request !== state.request) return;
@@ -65,7 +55,6 @@ var ShowroomClipboard = {
     return ShowroomClipboardState.status;
   },
 
-  // Hands over the pasted text or the refusal, and settles the request.
   ShowroomClipboardTake: function () {
     var state = ShowroomClipboardState;
     var text = state.text;
@@ -74,7 +63,6 @@ var ShowroomClipboard = {
     return stringToNewUTF8(text);
   },
 
-  // Gives up on the request in flight: whatever it settles to is dropped.
   ShowroomClipboardAbandon: function () {
     var state = ShowroomClipboardState;
     state.request += 1;

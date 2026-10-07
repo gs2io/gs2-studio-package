@@ -1,15 +1,5 @@
-// The time GS2 sees for this player, once a demo has moved their clock.
-//
-// A visitor who advances the clock (`DemoClockAdvanceButton`) needs to see
-// that it moved, and which side of a daily reset they are on. The label is
-// text rather than a `DateTime`: the page draws a `DateTime` row as a
-// countdown to it, and this is a clock, not a deadline. So it keeps itself
-// current, once a second and whenever the offset changes.
-//
-// A demo names its row by subclassing this with the name `page.json` asks for
-// (and nothing else); the page builder finds the subclass by name and wires
-// `_onUpdate`. Abstract, and must stay so: the page builder offers every
-// non-abstract demo-written `MonoBehaviour` as a row.
+// Publish text because the page builder renders DateTime rows as countdowns.
+// Keep the base abstract so discovery offers only the demo's named subclasses.
 #nullable enable
 
 using System;
@@ -21,10 +11,6 @@ using UnityEngine.Events;
 
 namespace GS2Studio.Showroom
 {
-    /// <summary>
-    /// Publishes the signed-in player's clock on GS2 (now, plus the offset
-    /// their account has) as text.
-    /// </summary>
     public abstract class ShowroomDemoClockLabel : MonoBehaviour
     {
         [SerializeField] private UnityEvent<string> _onUpdate = new UnityEvent<string>();
@@ -63,11 +49,7 @@ namespace GS2Studio.Showroom
             Publish();
         }
 
-        /// <summary>
-        /// Nothing is shown until a player has signed in and their account's
-        /// offset has been read: the time without it would be a clock the
-        /// server does not use.
-        /// </summary>
+        // Showing a clock before its offset is known would imply an unverified server time.
         private void Publish()
         {
             if (!ShowroomRuntime.TryGet(out _, out var session)) return;

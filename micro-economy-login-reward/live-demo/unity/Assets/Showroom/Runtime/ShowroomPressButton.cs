@@ -1,20 +1,4 @@
-// A hand-written button that runs one press and answers in words.
-//
-// Shaped like a generated action button on purpose (a `Button` to wire, an
-// `OnCompleted` to raise and an `OnFailed` to report through) because that is
-// what the page builder knows how to draw: a demo's concrete subclass becomes
-// an action row by name, and the builder wires `_button`, and `OnFailed` to the
-// page's log. A subclass says only what the press does.
-//
-// The press runs through `ShowroomPress`, so it waits its turn with every
-// other press on the page and for the page to settle, and the button is not
-// interactable while it is out. A refusal the subclass explains
-// (`Explain`) is said in those words; any other refusal goes to `OnFailed`
-// when something is wired to it, and is said by the runner otherwise, so it
-// is said once either way.
-//
-// Abstract, and must stay so: the page builder offers every non-abstract
-// demo-written `MonoBehaviour` as a row, and this one is not a row on its own.
+// The page builder discovers concrete behaviours as rows, so this base must stay abstract.
 #nullable enable
 
 using System.Threading.Tasks;
@@ -28,15 +12,12 @@ using Gs2.Unity.Util;
 
 namespace GS2Studio.Showroom
 {
-    /// <summary>Runs one press when its button is clicked, and puts its answer on the page.</summary>
     public abstract class ShowroomPressButton : MonoBehaviour
     {
         [SerializeField] private Button? _button;
 
-        /// <summary>Raised once the press has been answered.</summary>
         [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
 
-        /// <summary>Raised when GS2 refuses the press in a way the press does not explain.</summary>
         [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
 
         public UnityEvent OnCompleted => _onCompleted;
@@ -44,16 +25,10 @@ namespace GS2Studio.Showroom
 
         private bool _wired;
 
-        /// <summary>The press itself; returns what the page should say ("" for nothing).</summary>
         protected abstract Task<string> Press();
 
-        /// <summary>
-        /// The page's line for a refusal this press can explain in its own
-        /// terms, or null for one it cannot.
-        /// </summary>
         protected virtual string? Explain(Gs2Exception error) => null;
 
-        /// <summary>What the press is, for the console line about a failure.</summary>
         protected virtual string PressName => GetType().Name;
 
         protected virtual void OnEnable()
@@ -73,19 +48,16 @@ namespace GS2Studio.Showroom
         private void OnClicked()
         {
             var completed = false;
-            // Off before the run, not after: a press that finishes without
-            // waiting runs `Afterward` (which turns it back on) inside `Run`.
+            // Run may finish synchronously and re-enable the button through Afterward.
             if (_button != null) _button.interactable = false;
             var started = ShowroomPress.Run(new ShowroomPressOptions
             {
                 Name = PressName,
                 Owner = this,
                 Explain = Explain,
-                // Persistent listeners are what the page builder bakes; a
-                // listener added at run time is not counted, and such a
-                // refusal is said by the runner instead.
+                // Only baked listeners count; otherwise the runner reports the refusal itself.
                 Unexplained = HasLiveListener(_onFailed)
-                    // A click has nothing to resume from, so no retry is offered.
+                    // A click has no continuation for an error handler to retry.
                     ? error => _onFailed.Invoke(error, null)
                     : null,
                 Afterward = () =>
@@ -102,12 +74,8 @@ namespace GS2Studio.Showroom
             if (!started && _button != null) _button.interactable = true;
         }
 
-        /// <summary>
-        /// Whether a refusal handed to <paramref name="onFailed"/> reaches
-        /// anyone. A baked listener whose target did not survive (a list-item
-        /// prefab bakes the page's log with no object behind it) would swallow
-        /// the refusal, so only listeners with a live target count.
-        /// </summary>
+        // A prefab can retain a baked listener whose scene target no longer exists;
+        // delegating the error to it would silently discard the refusal.
         internal static bool HasLiveListener(ErrorEvent onFailed)
         {
             var count = onFailed.GetPersistentEventCount();

@@ -1,23 +1,4 @@
-// Where the showroom keeps the visitor's anonymous GS2 account.
-//
-// `Gs2AutoLoginAction` asks for a saved account through `OnRestoreAccount` and
-// hands a new one out through `OnAccountCreated`; this answers both. It stands
-// in for the package's `Gs2PlayerPrefsAccountStore` for one reason: on WebGL,
-// PlayerPrefs are stored under a directory named after the page's URL, so
-// every demo (each served from its own directory) would make an account of its
-// own. The browser's localStorage belongs to the whole origin, so every demo
-// served from it signs in as the same visitor, and data one demo changes shows
-// up in the next. Outside a WebGL player there is no browser, and PlayerPrefs
-// are used as before.
-//
-// It also owns what happens when the account it handed over is refused. A
-// namespace that was recreated no longer knows the accounts saved against the
-// old one, and `Gs2AutoLoginAction` would restore the same credentials on
-// every retry, so the page would stay on "Sign-in failed" for good. A refused
-// saved account is therefore forgotten and a new one made in its place. Only
-// a refusal of the credentials themselves does that: a network failure says
-// nothing about the account, and wiping it then would lose a visitor's data to
-// a flaky connection.
+// WebGL PlayerPrefs separates page paths; origin-wide localStorage lets demos share one account.
 #nullable disable
 using System;
 using System.Collections;
@@ -37,39 +18,18 @@ namespace GS2Studio.Showroom
     [AddComponentMenu("GS2 Studio/Showroom/Showroom Account Store")]
     public sealed class ShowroomAccountStore : MonoBehaviour
     {
-        /// <summary>
-        /// Prefix of the two keys this reads and writes. Every demo uses the
-        /// same one, which is what makes them share the account.
-        /// </summary>
+        // Changing this prefix in one demo separates its saved account from the other demos.
         [SerializeField] private string _keyPrefix = "gs2.showroom.account";
 
-        /// <summary>
-        /// Raised with a line for the page's log when a refused saved account is
-        /// forgotten and a new one is being made.
-        /// </summary>
         [SerializeField] private UnityEvent<string> _onReplacingAccount = new UnityEvent<string>();
 
-        /// <summary>
-        /// Raised with every sign-in failure this did not recover from, in the
-        /// shape `Gs2AutoLoginAction.onError` raised it.
-        /// </summary>
         [SerializeField] private ErrorEvent _onSignInFailed = new ErrorEvent();
 
-        /// <summary>
-        /// Whether the account being signed in with came from this store, so a
-        /// refusal is a refusal of what was saved rather than of an account
-        /// that was only just created.
-        /// </summary>
         private bool _restored;
 
         private string UserIdKey => _keyPrefix + ".userId";
         private string PasswordKey => _keyPrefix + ".password";
 
-        /// <summary>
-        /// Wire to `Gs2AutoLoginAction.OnAccountCreated`. Also the call a demo
-        /// makes when it switches the visitor to another account, before it
-        /// reloads the page with <see cref="ShowroomReload.Reload"/>.
-        /// </summary>
         public void Remember(string userId, string password)
         {
             Write(UserIdKey, userId);
@@ -77,10 +37,7 @@ namespace GS2Studio.Showroom
             _restored = false;
         }
 
-        /// <summary>
-        /// Wire to `Gs2AutoLoginAction.OnRestoreAccount`. Leaving the fields
-        /// alone means "no saved account", and a new one is created.
-        /// </summary>
+        // Partial credentials must not suppress creation of a new account.
         public void Restore(Gs2AutoLoginAction login)
         {
             var userId = Read(UserIdKey);
@@ -91,7 +48,6 @@ namespace GS2Studio.Showroom
             _restored = true;
         }
 
-        /// <summary>Drops the saved account, so the next sign-in creates a new one.</summary>
         public void Forget()
         {
             Remove(UserIdKey);
@@ -99,16 +55,7 @@ namespace GS2Studio.Showroom
             _restored = false;
         }
 
-        /// <summary>
-        /// Wire to `Gs2AutoLoginAction.onError`, and wire
-        /// `_onSignInFailed` on to the page.
-        ///
-        /// A refused saved account is forgotten and the sign-in run again, which
-        /// finds nothing to restore and creates an account. That happens at most
-        /// once per saved account: after `Forget` nothing is restored, so a
-        /// second failure is never a refusal of saved credentials and goes on to
-        /// the page like any other.
-        /// </summary>
+        // Forget clears the restored flag before retry, preventing repeated replacement attempts.
         public void OnSignInFailed(Gs2Exception error, Func<IEnumerator> retry)
         {
             if (_restored && retry != null && IsCredentialRefusal(error))
@@ -122,23 +69,8 @@ namespace GS2Studio.Showroom
             _onSignInFailed.Invoke(error, retry);
         }
 
-        /// <summary>
-        /// Whether the server refused the saved credentials themselves, which
-        /// is exactly two answers from the account service's `Authentication`:
-        ///
-        /// - a wrong password. The SDK raises `PasswordIncorrectException` for
-        ///   the error code `account.password.invalid`; the code is matched as
-        ///   well, so the answer is still recognised if a caller in between
-        ///   hands the plain exception on.
-        /// - a user id the namespace does not know: a `NotFoundException` about
-        ///   the `account` component, as opposed to a missing namespace.
-        ///
-        /// Every other `UnauthorizedException` is deliberately not a refusal of
-        /// the saved account: a banned account (`BannedInfinityException`), a
-        /// rejected auth signature or gateway session, or an expired project
-        /// token all fail again for a new account, or say nothing about this
-        /// one. Neither is a timeout or an unreachable server.
-        /// </summary>
+        // Missing namespaces, network failures and unrelated authorization errors do not invalidate
+        // saved credentials; replacing the account on those failures would lose the visitor's data.
         private static bool IsCredentialRefusal(Gs2Exception error)
         {
             if (error is PasswordIncorrectException) return true;
@@ -155,7 +87,6 @@ namespace GS2Studio.Showroom
             return false;
         }
 
-        /// <summary>The account service's error code for a wrong password.</summary>
         private const string PasswordInvalidCode = "account.password.invalid";
 
         private static string Summarize(Gs2Exception error)

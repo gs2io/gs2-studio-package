@@ -1,8 +1,3 @@
-// Batch-mode WebGL build entry point for a showroom demo.
-//
-//   Unity -batchmode -quit -projectPath <project> \
-//     -executeMethod GS2Studio.Showroom.EditorTools.ShowroomBuilder.BuildWebGL \
-//     -showroomOutput <directory> [-showroomCompression Brotli|Gzip|Disabled]
 #nullable disable
 using System;
 using System.IO;
@@ -67,27 +62,16 @@ namespace GS2Studio.Showroom.EditorTools
         private static void ConfigurePlayer(string compression, bool diagnostics)
         {
             PlayerSettings.companyName = "Game Server Services";
-            // The demo's own name, taken from the project rather than a
-            // generated constant: the title a visitor reads is a Text in the
-            // scene, and the player name follows the project directory.
             PlayerSettings.productName = new DirectoryInfo(
                 Path.GetDirectoryName(Application.dataPath) ?? "Showroom"
             ).Parent?.Name ?? "Showroom";
             PlayerSettings.WebGL.compressionFormat = ParseCompression(compression);
-            // Off on purpose: with the fallback on, Unity names the payloads
-            // `.unityweb` and expects the browser to decompress them in
-            // JavaScript. Off, they are named `.br` / `.gz`, which is what
-            // `publish.mjs` matches when it sets `Content-Encoding` on the
-            // bucket — the browser then decompresses natively.
+            // Leave fallback off so publishing can infer Content-Encoding from .br/.gz filenames.
             PlayerSettings.WebGL.decompressionFallback = false;
             PlayerSettings.WebGL.dataCaching = true;
-            // Payloads named by their content hash: `publish.mjs` serves them
-            // with a long immutable cache and refuses a build named otherwise.
-            // Set here so a freshly scaffolded demo, whose ProjectSettings
-            // default to plain names, builds the same way as the rest.
+            // Immutable browser caching is safe only when payload URLs change with their content.
             PlayerSettings.WebGL.nameFilesAsHashes = true;
-            // A diagnostic build keeps managed symbols so a stack trace names the
-            // method that threw; the shipping build stays lean.
+            // Diagnostic builds retain stacks and symbols needed to locate failures.
             PlayerSettings.WebGL.exceptionSupport = diagnostics
                 ? WebGLExceptionSupport.FullWithStacktrace
                 : WebGLExceptionSupport.ExplicitlyThrownExceptionsOnly;
@@ -95,8 +79,7 @@ namespace GS2Studio.Showroom.EditorTools
                 ? WebGLDebugSymbolMode.Embedded
                 : WebGLDebugSymbolMode.Off;
             PlayerSettings.WebGL.linkerTarget = WebGLLinkerTarget.Wasm;
-            // A project template without the Unity footer bar: the demo is embedded in
-            // a page of its own, so the player fills the frame.
+            // The demo is embedded in its own page, so the player template omits Unity's footer.
             PlayerSettings.WebGL.template = "PROJECT:Showroom";
             PlayerSettings.stripEngineCode = !diagnostics;
             PlayerSettings.SetManagedStrippingLevel(
@@ -108,9 +91,7 @@ namespace GS2Studio.Showroom.EditorTools
             PlayerSettings.runInBackground = true;
             PlayerSettings.SplashScreen.show = false;
             PlayerSettings.SplashScreen.showUnityLogo = false;
-            // Keep the define set empty and reproducible. UNITY_INCLUDE_TESTS in
-            // particular must stay undefined: it pulls editor-only AssetDatabase
-            // calls in the GS2 Unity SDK into the player build.
+            // Test-only SDK paths reference editor APIs and must stay outside the WebGL player.
             PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.WebGL, new string[0]);
         }
 
@@ -127,7 +108,6 @@ namespace GS2Studio.Showroom.EditorTools
             }
         }
 
-        /// <summary>The demo builds its own interface, so the scene only has to exist.</summary>
         private static void EnsureScene()
         {
             if (File.Exists(ScenePath)) return;
