@@ -1,11 +1,3 @@
-/**
- * Loadability + overlay-basics fixture for the DomainType overlay rename
- * effort.
- *
- * Brings the Solitaire Charm <- Character 4-overlay shape into studio2 as a
- * minimal synthetic project so the rename root-cause work has a regression
- * surface that lives inside this repo.
- */
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -40,8 +32,6 @@ describe("rename-overlay-sample loadability + overlay basics", () => {
       if (!dt) continue;
       expect(dt.kind).toBe("overlay");
       if (dt.kind !== "overlay") continue;
-      // Identity is the canonical sourceTypeId — the display name is
-      // resolved through the project graph by callers that need it.
       expect(typeof dt.source.sourceTypeId).toBe("string");
       void source;
     }

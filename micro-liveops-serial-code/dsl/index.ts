@@ -11,16 +11,6 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-/**
- * A batch of redeemable codes — a launch giveaway, an apology gift, a code
- * printed on a physical item. Per-player codes are issued at runtime and are
- * not authored here; what a project authors is the campaign they belong to,
- * and the reward is whatever transaction the redeeming flow runs.
- *
- * The campaign's own id is also a code: GS2 accepts it from every player, any
- * number of times, and records nothing when it is used. A title that wants it
- * once per player counts the uses itself.
- */
 const SerialCodeCampaign = defineDomainType("SerialCodeCampaign", dt =>
   dt
     .property(

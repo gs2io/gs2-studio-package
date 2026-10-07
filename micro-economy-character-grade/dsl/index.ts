@@ -16,19 +16,11 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const character = dependencyPackage(characterSurface);
 
-/** Resources and properties this package points at inside `foundation-economy-character`. */
 const CHARACTER_PROPERTY_ID = character.propertyId("Character", "propertyId");
 const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = character.resourceId("experience.ExperienceModel");
 
-/**
- * A grade a character can be promoted to, and the level cap that promotion
- * buys. Grades are what "limit break" screens move through: each step raises
- * the cap the experience package will then let the character level towards.
- */
 const CharacterGradeStep = defineDomainType("CharacterGradeStep", dt =>
   dt
     .property(
@@ -73,7 +65,6 @@ const CharacterGradeStep = defineDomainType("CharacterGradeStep", dt =>
     })
 );
 
-/** The character's current grade, added to the character package's own type. */
 const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>
   domainType
     .property(PT.int64("grade").userData().required().description("Grades promoted so far"))
@@ -160,9 +151,7 @@ export const microEconomyCharacterGrade = definePackage("micro-economy-character
       .linkedMasterResourceId(GradeModel)
       .bindings({
         gradeValue: Bind.domainProperties([Source.direct(Character, "grade")]),
-        // An overlay's inherited properties have no local name, so the source
-        // PropertyId is written directly. GS2-Grade applies a rank cap to the
-        // experience status with this same key, so it carries the level suffix.
+        // Preserve the inherited PropertyId and level suffix so grade updates and character experience reads use the same status key.
         propertyId: Bind.domainPropertyKey(
           Source.direct("Character", CHARACTER_PROPERTY_ID),
           CHARACTER_LEVEL_KEY_SUFFIX
@@ -173,9 +162,7 @@ export const microEconomyCharacterGrade = definePackage("micro-economy-character
       })
   )
 
-  // Every grade transform takes the grade status key, which is the level
-  // status key (the character's `propertyId` plus the level suffix): GS2-Grade
-  // hands it unchanged to the experience status when it applies a rank cap.
+  // Callers must pass the suffixed level-status key so promotion changes the cap on the status being read.
   .actionTransform("PromoteCharacterGrade", at =>
     at
       .category("acquire")

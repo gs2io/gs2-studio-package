@@ -1,29 +1,3 @@
-/**
- * Live demo content for `micro-economy-equipment-enchant`.
- *
- * A piece of equipment rolls a handful of random bonuses the first time it is
- * read, and keeps them. What is worth watching is the list under each piece:
- * Reroll draws the same number of bonuses again, Add bonus draws one more, and
- * both take coins from the wallet on the same press.
- *
- * The feature package is the enchantment pool and the presses GS2 offers; it
- * ships no pool and nothing a player presses. This package adds one pool
- * ("standard": at most three bonuses, six options to draw from) and two
- * presses on every piece of equipment. GS2-Enchant has no client action that
- * rerolls or adds, so each press is an exchange whose only acquire action is
- * the package's own transform, run and committed server-side. The piece is
- * named by its item set (`propertyId`), which the press passes as the rate's
- * `#{propertyId}` config.
- *
- * The equipment list takes the pool as a scope: the list of pieces and the
- * bonuses under them are read against one pool, so the page names "standard".
- *
- * The equipment catalog, the wallet and its deposits are other packages' and
- * are installed beside this one rather than written out again: their rows
- * live in stacks every demo holding them deploys, and a second author of them
- * would be a second version, and the last deploy would win.
- */
-
 import {
   Arg,
   Bind,
@@ -51,14 +25,11 @@ const EquipmentEnchantOption = enchant.type("EquipmentEnchantOption");
 const PROPERTY_ID = equipment.propertyId("Equipment", "propertyId");
 const MAXIMUM_PARAMETER_COUNT = enchant.propertyId("EquipmentEnchant", "maximumParameterCount");
 
-/** The one pool the page reads and the presses draw from. */
 const STANDARD = "standard";
-/** The demo shows one player with one wallet. */
 const WALLET_SLOT = 0;
 const REROLL_COST = 10;
 const ADD_BONUS_COST = 30;
 
-/** How likely a fresh piece is to roll exactly `count` bonuses. */
 function slotChance(count: number, weight: number) {
   return {
     [enchant.propertyId("EquipmentEnchantSlotChance", "enchant")]: STANDARD,
@@ -67,11 +38,6 @@ function slotChance(count: number, weight: number) {
   };
 }
 
-/**
- * One bonus the pool can roll. Every option names a different stat, so a
- * piece never shows the same stat twice: GS2 draws distinct options, not
- * distinct stats.
- */
 function option(resourceName: string, resourceValue: number, weight: number) {
   return {
     [enchant.propertyId("EquipmentEnchantOption", "enchant")]: STANDARD,
@@ -81,14 +47,7 @@ function option(resourceName: string, resourceValue: number, weight: number) {
   };
 }
 
-/**
- * Runs `transformName` on the piece it is mounted on, for `cost` coins. Named
- * after the piece, because a delegated action on `Equipment` must target a
- * resource that mounts it. The piece's item set is only known at press time,
- * so the rate carries a `#{propertyId}` placeholder and the press fills it.
- * One bonus per press: GS2 refuses a second change to the same status in one
- * transaction.
- */
+/** Supply the owned item-set id at click time because it does not exist when the rate is deployed. */
 function enchantRateModel(
   transformName: "RerollEquipmentEnchantment" | "AddEquipmentEnchantmentSlot",
   cost: number
@@ -129,13 +88,7 @@ function enchantRateModel(
 const RerollRateModel = enchantRateModel("RerollEquipmentEnchantment", REROLL_COST);
 const AddBonusRateModel = enchantRateModel("AddEquipmentEnchantmentSlot", ADD_BONUS_COST);
 
-/**
- * An exchange namespace that runs and commits server-side, like every demo
- * press. Atomic, so a refused bonus (the piece already holds the most it can)
- * takes no coins. Each rate gets its own: both rates are named after the
- * pieces, and sharing a namespace collides the `rateModels` array on its
- * primary key.
- */
+/** Separate namespaces to avoid duplicate equipment-derived rate names. Commit each purchase atomically so a refused enchantment cannot spend coins alone. */
 function exchangeNamespaceBindings(name: string) {
   return {
     name: Bind.static(name),
@@ -152,7 +105,6 @@ function exchangeNamespaceBindings(name: string) {
   };
 }
 
-/** Fills a rate's `#{propertyId}` placeholder with the pressed piece's. */
 const PROPERTY_ID_CONFIG = {
   kind: "listEntries",
   parameterName: "config",
@@ -179,19 +131,15 @@ export const microEconomyEquipmentEnchantDemo = definePackage(
     },
   })
   .dependency(enchant.packageId, "github:gs2io/gs2-studio-package")
-  // The bonuses sit on a type the equipment package owns, and an install does
-  // not walk a package's own dependencies, so the base package is named too.
   .dependency(equipment.packageId, "github:gs2io/gs2-studio-package")
-  // The catalog a visitor takes pieces from.
+  // Reuse the shared equipment catalog so demos cannot deploy different versions of the same stack.
   .dependency("foundation-economy-equipment-demo", "github:gs2io/gs2-studio-package")
-  // The wallet the presses spend from, and the deposit that fills it.
+  // Reuse the currency demo content so the wallet, deposits and store products stay identical across demos.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  // The currency demo depends on the shop; installed so its stack matches.
   .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   .instance(EquipmentEnchant, STANDARD, { [MAXIMUM_PARAMETER_COUNT]: 3 })
-  // Mostly one bonus, sometimes two, rarely three.
   .instance(EquipmentEnchantSlotChance, "one", slotChance(1, 50))
   .instance(EquipmentEnchantSlotChance, "two", slotChance(2, 35))
   .instance(EquipmentEnchantSlotChance, "three", slotChance(3, 15))
@@ -223,9 +171,7 @@ export const microEconomyEquipmentEnchantDemo = definePackage(
       { name: "EquipmentEnchant" }
     )
   )
-  // Add bonus is not greyed out at the maximum: the count lives in the rolled
-  // list, which a condition cannot count. GS2 refuses the press and, the
-  // namespace being atomic, takes no coins.
+  // The bonus count lives in a nested list that this row condition cannot count; let the atomic exchange reject an invalid purchase.
   .uiComponent(Equipment, ui =>
     ui
       .buttonAction("RerollButton", "Reroll", undefined, { name: "Equipment" })

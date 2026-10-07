@@ -14,18 +14,10 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const schedule = dependencyPackage(scheduleSurface);
 
 const SCHEDULE_NAMESPACE_RESOURCE_ID = schedule.resourceId("schedule.Namespace");
 
-/**
- * A leaderboard scoped to a cluster rather than the whole player base. GS2
- * knows three cluster kinds; this package uses guilds, so each guild keeps its
- * own board and ranks its members against each other without the project
- * having to partition scores itself. There is no ranking between guilds.
- */
 const GuildRanking = defineDomainType("GuildRanking", dt =>
   dt
     .property(PT.string("schedule").assetDelivery().required())
@@ -87,7 +79,6 @@ const GuildRanking = defineDomainType("GuildRanking", dt =>
     })
 );
 
-/** What the members down to `thresholdRank` receive when the season ends. */
 const GuildRankingReward = defineDomainType("GuildRankingReward", dt =>
   dt
     .property(PT.prop("ranking", PT.ref("GuildRanking")).assetDelivery().required())
@@ -136,8 +127,7 @@ const ClusterRankingModel = defineMasterDataResource(resource =>
       minimumValue: Bind.domainProperty(Source.direct(GuildRanking, "minimumValue")),
       maximumValue: Bind.domainProperty(Source.direct(GuildRanking, "maximumValue")),
       accessPeriodEventId: Bind.null(),
-      // Tiers are matched against the member's rank, as `thresholdRank` says;
-      // tied members share a placement.
+      // Match reward thresholds to placement so tied members receive the same tier.
       rewardCalculationIndex: Bind.static("rank"),
     })
     .grnFieldMount("entryPeriodEventId", SCHEDULE_NAMESPACE_RESOURCE_ID, [
@@ -202,10 +192,7 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
       .bindings({
         name: Bind.static("GuildRanking"),
         logSetting: Bind.null(),
-        // Receiving a reward pays out through a transaction. Without auto-run
-        // GS2 hands back a stamp sheet the client has to run, and with no key
-        // to sign it the receipt fails; atomic keeps the receipt record and
-        // the payout together.
+        // Auto-run executes the reward transaction; atomic commit keeps the receipt record and payout together.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),

@@ -1,24 +1,4 @@
-/**
- * Fan-out identity regression test for the foundation-economy-character
- * fixture (the Solitaire Character/Charm shape).
- *
- * `Character:id` is authored-bound to `ItemModel:name`; per-user Character
- * rows come from the inventory `ItemSet` axis where stacked ItemSets share an
- * `itemName`. The generated Collection must FAN those rows OUT — same
- * CharacterId, distinct rows — which requires the identity split this test
- * pins end-to-end on the emitted C#:
- *
- *  - domain id: derived from the authored reserved-id binding per axis
- *    (`item.ItemName` on the ItemSet axis via the linked-master correlation,
- *    `item.Name` on the revived ItemModel master axis) — non-unique allowed;
- *  - row key: the backing per-item own-key tuple (`{item.ItemName}.{item.Name}`),
- *    internal to the reconcile dictionary, never on the model or public API;
- *  - PropertyId: per-row server truth — `item.ItemSetId` on the user axis
- *    (the authored `itemSetId → propertyId` binding read back off the loop
- *    item), `string.Empty` seed on the master axis where it cannot resolve;
- *  - CharacterExperience/Status data joins per item (each row binder mounts
- *    its own StatusLoader) — Status never becomes a Character list axis.
- */
+/** Stacked ItemSets can share itemName, so this fixture separates domain identity from backing-row identity and reads propertyId per item. */
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -111,7 +91,6 @@ describe("foundation-economy-character fan-out identity (generated C#)", () => {
   it("derives the axis ids from the authored reserved-id binding and reconciles on the row key", async () => {
     const { content, warnings } = await generateCharacterCollection();
 
-    // User axis: id = itemName (ItemSet.itemName = ItemModel.name = Character:id).
     expect(content).toContain(
       "private CharacterId ExtractInventoryCharacterUserIdentity(Gs2.Unity.Gs2Inventory.Model.EzItemSet item)"
     );
@@ -119,8 +98,6 @@ describe("foundation-economy-character fan-out identity (generated C#)", () => {
       "(string.IsNullOrEmpty(item.ItemName) ? default(CharacterId) : new CharacterId(item.ItemName))"
     );
 
-    // Row key: per-item own-key tuple — distinct per stacked ItemSet even when
-    // the id repeats. String parts guard with IsNullOrEmpty and skip via null.
     expect(content).toContain(
       "private string? ExtractInventoryCharacterUserRowKey(Gs2.Unity.Gs2Inventory.Model.EzItemSet item)"
     );
@@ -129,7 +106,6 @@ describe("foundation-economy-character fan-out identity (generated C#)", () => {
     );
     expect(content).toContain('return $"{item.ItemName}.{item.Name}";');
 
-    // Master axis revived: same authored binding, per-item `item.Name`.
     expect(content).toContain(
       "private CharacterId ExtractInventoryCharacterMasterIdentity(Gs2.Unity.Gs2Inventory.Model.EzItemModel item)"
     );
@@ -138,22 +114,13 @@ describe("foundation-economy-character fan-out identity (generated C#)", () => {
     );
     expect(content).toContain("MountFromInventoryCharacterMasterDataAsync");
 
-    // Reconcile dictionary keys rows by the row key, not the (non-unique) id.
     expect(content).toContain("_bindersByRowKey");
 
-    // PropertyId: per-row `item.ItemSetId` on the user axis; string.Empty seed
-    // on the master axis (no derivation possible from master data alone).
     expect(content).toContain("item.ItemSetId)");
     expect(content).toContain("string.Empty)");
 
-    // No collection-wide propertyId ctor arg: the value is per-item server
-    // truth (per-row on the user axis, join-resolved per binder).
     expect(content).not.toContain("string propertyId");
 
-    // Status never becomes a Character list axis (its data joins per item),
-    // and the Character axes are complete — no omission warning for Character
-    // itself. (CharacterCollection / CharacterExperience omissions are
-    // separate types and expected.)
     expect(content).not.toContain("MountFromExperience");
     expect(warnings.some(w => /for Character (not generated|omitted)/.test(w))).toBe(false);
   });

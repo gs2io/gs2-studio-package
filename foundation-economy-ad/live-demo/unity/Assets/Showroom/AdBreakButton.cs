@@ -1,27 +1,4 @@
-// The row that banks a view: an ad break, and the grant on the far side of it.
-//
-// The break itself is `AdBreakOverlay` — the panel, the wait, and the press
-// that stands for an ad network's completion callback. What is here is the
-// other half, which is GS2's: `Gs2AdReward:AcquirePointByUserId` takes a
-// namespace, a user and a number of points, and verifies nothing. Deciding
-// that a view really happened belongs to the title, between the two, and this
-// row is that decision spelled out — because a visitor who cannot tell a mock
-// from the real thing has been misled rather than shown something.
-//
-// How it is built matters as much as what it says. The page's rows live under
-// the content mount, and a re-bake clears that mount and re-creates every
-// generated component on it — so anything placed outside the mount that holds
-// an Inspector reference to a generated component goes null the next time the
-// page is baked, silently. This row therefore owns the whole break: it adds
-// the generated `AdViewPointWatchButton` to its own GameObject at run time,
-// where the generated component finds the handler by walking up to the mount
-// on its own, and the panel is built in code. Nothing of either is written to
-// the scene or to a prefab, so a re-bake has nothing to break.
-//
-// Shaped like a generated action button on purpose — a `Button` to wire and
-// an `OnCompleted` to raise, plus the `OnFailed` the page shows failures
-// through — because that is what the page knows how to draw, and this is a
-// row like any other once it is drawn.
+// Create the generated button at runtime under the content mount; rebaking destroys authored references into that mount.
 #nullable enable
 
 using System;
@@ -39,10 +16,6 @@ using GS2Studio.Generated.AdViewPoint.UI;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// Opens a panel that stands in for a rewarded placement, and grants the
-    /// view point when the visitor says the placement finished.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/Showroom/Ad Break")]
     public sealed class AdBreakButton : MonoBehaviour
     {
@@ -54,37 +27,16 @@ namespace GS2Studio.Showroom.Demo
         private const string ReadyStatus = "The placement has finished.";
         private const string GrantingStatus = "Asking GS2 for the point...";
 
-        /// <summary>
-        /// The field the generated button takes its press from, named by the
-        /// package's own component manifest — `AdViewPoint.showroom.json`
-        /// publishes it as the `button` role of `AdViewPointWatchButton`, and
-        /// the page builder writes the same field from the same manifest when
-        /// it bakes a generated row. Assigning it is using the published
-        /// contract, not reaching into the component; what is missing is only
-        /// a setter, because a baked row has no need of one.
-        ///
-        /// Reflection fails silently by nature, so <see cref="Start"/> refuses
-        /// loudly when the field is not there rather than leaving a press that
-        /// does nothing.
-        /// </summary>
+        /// <summary>Runtime rows must wire the generated serialized button field; report a missing field instead of leaving an inert press.</summary>
         private static readonly FieldInfo? GeneratedButtonField =
             typeof(AdViewPointWatchButton).GetField(
                 "_button", BindingFlags.Instance | BindingFlags.NonPublic);
 
         [SerializeField] private Button? _button;
 
-        /// <summary>
-        /// Raised once the point has been granted, for a page that wants to
-        /// hang something off it. What the grant changed does not need it: the
-        /// balance row reads through its own binder's subscription.
-        /// </summary>
         [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
 
-        /// <summary>
-        /// Raised when the grant fails, which is how the page shows it. A
-        /// browser hides the console, so a failure a visitor cannot see reads
-        /// as nothing having happened.
-        /// </summary>
+        /// <summary>Forward failures to the page so visitors can see refusals without opening the browser console.</summary>
         [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
 
         public UnityEvent OnCompleted => _onCompleted;
@@ -114,15 +66,11 @@ namespace GS2Studio.Showroom.Demo
 
             _overlay = new AdBreakOverlay(_button, Body, ReadyStatus);
 
-            // The generated component goes on this row's own GameObject, which
-            // is under the content mount, so it resolves the handler by
-            // walking up to it — the same way a baked row's button does.
+            // Keep the component below the content mount so its parent lookup finds the handler.
             _watch = gameObject.AddComponent<AdViewPointWatchButton>();
             GeneratedButtonField.SetValue(_watch, _overlay.ConfirmButton);
 
-            // `AddComponent` already ran the component's `OnEnable`, when it
-            // had no button to subscribe to. It only subscribes there, so the
-            // press it was just given reaches it on the next enable.
+            // Re-enable after assigning the button because AddComponent already called OnEnable before it was wired.
             _watch.enabled = false;
             _watch.enabled = true;
 
@@ -158,23 +106,13 @@ namespace GS2Studio.Showroom.Demo
             _overlay.Open();
         }
 
-        /// <summary>
-        /// Puts the panel away without granting anything.
-        ///
-        /// The grant only ever happens on the generated component's own press,
-        /// so no way out of this panel can pay: closing it is closing it.
-        /// </summary>
+        /// <summary>Closing the panel must not invoke the grant button.</summary>
         private void Close()
         {
             _granting = false;
             _overlay?.Close();
         }
 
-        /// <summary>
-        /// Runs beside the generated component's own listener on the same
-        /// press: that one asks GS2 for the point, this one says so and stops
-        /// a second press landing while the first is still out.
-        /// </summary>
         private void OnConfirmed()
         {
             if (_granting) return;
@@ -194,12 +132,7 @@ namespace GS2Studio.Showroom.Demo
             _onFailed.Invoke(error, retry);
         }
 
-        /// <summary>
-        /// Puts a wiring failure where both a developer and a visitor can see
-        /// it, whole: these are repair instructions that name a file and a
-        /// field, and the page's mirror of a console error would cut them
-        /// short (`ShowroomLog.SayWhole`).
-        /// </summary>
+        /// <summary>Keep wiring instructions intact; the ordinary console mirror truncates them.</summary>
         private void Report(string message) => ShowroomLog.SayWhole(message, this);
     }
 }

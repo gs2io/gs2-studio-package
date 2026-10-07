@@ -15,18 +15,10 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import equipmentSurface from "../../foundation-economy-equipment/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const equipment = dependencyPackage(equipmentSurface);
 
-/** Types and properties this package points at inside `foundation-economy-equipment`. */
 const EQUIPMENT_PROPERTY_ID = equipment.propertyId("Equipment", "propertyId");
 
-/**
- * A pool of random bonuses a piece of equipment can roll, and how many it
- * rolls. Rarity parameters are the "affix" flavour of GS2-Enchant: a weighted
- * draw of distinct options, rather than a fixed budget split across stats.
- */
 const EquipmentEnchant = defineDomainType("EquipmentEnchant", dt =>
   dt
     .property(
@@ -47,7 +39,6 @@ const EquipmentEnchant = defineDomainType("EquipmentEnchant", dt =>
     })
 );
 
-/** How likely it is to roll exactly this many bonuses. */
 const EquipmentEnchantSlotChance = defineDomainType("EquipmentEnchantSlotChance", dt =>
   dt
     .property(PT.prop("enchant", PT.ref("EquipmentEnchant")).assetDelivery().required())
@@ -77,7 +68,6 @@ const EquipmentEnchantSlotChance = defineDomainType("EquipmentEnchantSlotChance"
     })
 );
 
-/** One bonus the pool can produce. */
 const EquipmentEnchantOption = defineDomainType("EquipmentEnchantOption", dt =>
   dt
     .property(PT.prop("enchant", PT.ref("EquipmentEnchant")).assetDelivery().required())
@@ -115,7 +105,6 @@ const EquipmentEnchantOption = defineDomainType("EquipmentEnchantOption", dt =>
     })
 );
 
-/** One bonus actually rolled onto one player's piece of equipment. */
 const EquipmentEnchantment = defineDomainType("EquipmentEnchantment", dt =>
   dt
     .property(PT.string("resourceName").userData().required())
@@ -137,10 +126,9 @@ const EquipmentEnchantment = defineDomainType("EquipmentEnchantment", dt =>
     })
 );
 
-/** The rolled bonuses, added to the equipment package's own type. */
 const Equipment = defineOverlayDomainType("Equipment", equipment.overlay("Equipment"), domainType =>
   domainType
-    // No storage: the equipment list takes it as a runtime scope argument.
+    // Leave storage unset so the equipment list receives this as a runtime scope argument.
     .property(PT.prop("enchant", PT.ref("EquipmentEnchant")))
     .property(PT.prop("enchantments", PT.listOf(PT.inline("EquipmentEnchantment"))).userData())
     .localizedProperties({
@@ -265,8 +253,7 @@ export const microEconomyEquipmentEnchant = definePackage(
       .mountLocal(Equipment)
       .linkedMasterResourceId(RarityParameterModel)
       .bindings({
-        // An overlay's inherited properties have no local name, so the source
-        // PropertyId is written directly.
+        // Use the dependency's PropertyId to preserve inherited identity in this overlay.
         propertyId: Bind.domainProperty(Source.direct("Equipment", EQUIPMENT_PROPERTY_ID)),
         rarityParameterStatusId: Bind.skip(),
         parameterName: Bind.skip(),

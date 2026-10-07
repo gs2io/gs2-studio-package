@@ -1,27 +1,4 @@
-/**
- * Live demo content for `foundation-economy-character-formation`.
- *
- * A party is a named set of slots, and the player keeps several parties side
- * by side. What is worth watching is the party list: putting a recruited
- * character in fills the first empty slot of the party being edited, taking
- * it out empties that slot again, and Expand adds one more party.
- *
- * The feature package is the formation model and the presses GS2 offers; it
- * ships no party shape and nothing a player presses. This package adds one
- * shape ("characterformation": three slots, two parties to start with, at most
- * four) and the Expand press. GS2-Formation has no client action that grows
- * the number of parties, so Expand is an exchange whose only acquire action is
- * the package's own transform, run and committed server-side.
- *
- * Putting a character in is not a delegated action: the slot value has to be
- * signed by the inventory that holds the character, so the page asks the
- * inventory for a signed item set and hands it to the formation itself.
- *
- * The characters and the recruit press are other packages' and are installed
- * beside this one rather than written out again: their rows live in stacks
- * every demo holding them deploys, and a second author of them would be a
- * second version, and the last deploy would win.
- */
+/** Reuse the shared character demo content so formation does not deploy a second version of its roster and recruit rates. */
 
 import {
   Arg,
@@ -49,12 +26,13 @@ const CharacterFormationSlot = formation.type("CharacterFormationSlot");
 const CURRENT_SAVE_AREA = formation.propertyId("CharacterFormation", "currentSaveArea");
 const MAXIMUM_SAVE_AREA = formation.propertyId("CharacterFormation", "maximumSaveArea");
 
-/** Any character item set the player holds in the character inventory. */
 const CHARACTER_ITEM_SET_REGEX =
   "grn:gs2:{region}:{ownerId}:inventory:Character:user:{userId}:inventory:Character:item:.*";
 
 function slot() {
-  return { [formation.propertyId("CharacterFormationSlot", "propertyRegex")]: CHARACTER_ITEM_SET_REGEX };
+  return {
+    [formation.propertyId("CharacterFormationSlot", "propertyRegex")]: CHARACTER_ITEM_SET_REGEX,
+  };
 }
 
 const ExpandRateModel = defineMasterDataResource(resource =>
@@ -125,8 +103,6 @@ export const foundationEconomyCharacterFormationDemo = definePackage(
         },
         { name: "CharacterFormation" }
       )
-      // Past the most parties the title allows, there is nothing left to
-      // expand, and a button that fails is worse than one plainly unavailable.
       .interactable(
         "ExpandInteractable",
         UiCond.lt(ui.inheritedProp(CURRENT_SAVE_AREA), ui.inheritedProp(MAXIMUM_SAVE_AREA)),

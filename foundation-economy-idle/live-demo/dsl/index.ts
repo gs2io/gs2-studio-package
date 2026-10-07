@@ -1,36 +1,4 @@
-/**
- * Live demo content for `foundation-economy-idle`.
- *
- * Idle rewards build up while the player is away: every full interval pays
- * once, up to a cap, and Receive pays everything built up and starts the count
- * again. The feature package is the idle category and the Receive press; what
- * an interval pays and how long the player may stay away are the title's
- * decision, so this package supplies them: every five minutes away pays a few
- * coins, every twelfth interval (an hour away, counted from the last Receive)
- * pays a bigger drop instead, and the count stops at eight hours.
- *
- * GS2 pays the i-th interval from the i-th reward, round and round, so the
- * hourly drop is simply the twelfth of twelve rewards. The rewards are laid
- * out in the order of their ids, which {@link REWARDS} keeps.
- *
- * **Hours pass on a button.** Waiting an hour is no demo, so the page carries
- * Advance one hour and Advance eight hours, which move the visitor's clock on
- * GS2 forward. They set the account's time offset, which no package action
- * does, so they are hand-written Unity components (`Assets/Showroom/`), and
- * they sign in with the demo's own client (`live-demo/client-stack.yaml`),
- * whose policy allows the call. The category itself is untouched: it is the
- * same one a title would ship, seen on a faster clock.
- *
- * **What has built up is read, not bound.** GS2 derives the idle minutes from
- * the clock each time the status is read, so the stored status never changes
- * while time passes and a bound label would stay at its first value. The idle
- * time and the coins waiting are read by hand from GS2's prediction.
- *
- * The wallet is another package's and is installed beside this one rather
- * than written out again: its rows live in stacks every demo holding it
- * deploys, and a second author of them would be a second version, and the
- * last deploy would win.
- */
+/** The page refreshes idle predictions separately because elapsed time alone does not change the stored status. */
 
 import { defineOverlayDomainType, definePackage, dependencyPackage, PT } from "~/dsl";
 
@@ -41,39 +9,22 @@ import currencySurface from "../../../foundation-economy-currency/dsl/dependency
 const idle = dependencyPackage(idleSurface);
 const currency = dependencyPackage(currencySurface);
 
-/** The wallet the page shows and every reward lands in. */
 const WALLET_SLOT = 0;
 
-/** How often being away pays, and for how long it keeps counting. */
 const REWARD_INTERVAL_MINUTES = 5;
 const MAXIMUM_IDLE_MINUTES = 8 * 60;
 
-/** What an ordinary interval pays, and what the hourly one does. */
 const COINS_PER_INTERVAL = 5;
 const COINS_PER_HOUR_DROP = 50;
 
-/**
- * One reward per interval of an hour, in the order GS2 pays them. The ids
- * sort in this order, which is the order the deployed rewards are laid out
- * in; the last is the hourly drop.
- */
+/** Pad ids so lexical row ordering preserves interval order and leaves the hourly drop last. */
 const REWARDS = Array.from({ length: 60 / REWARD_INTERVAL_MINUTES }, (_, index) => ({
   id: `interval${String(index + 1).padStart(2, "0")}`,
   coins: index === 60 / REWARD_INTERVAL_MINUTES - 1 ? COINS_PER_HOUR_DROP : COINS_PER_INTERVAL,
 }));
 
-/**
- * The category, overlaid so the page's press and rule have a type of this
- * package's to hang from.
- */
 const IdleStatus = defineOverlayDomainType("IdleStatus", idle.overlay("IdleStatus"));
 
-/**
- * The reward, overlaid so it can say what it pays.
- *
- * `acquireActions` is the slot the feature package leaves open; one deposit is
- * appended to it and `coins` decides how big it is.
- */
 const IdleReward = defineOverlayDomainType(
   "IdleReward",
   {
@@ -102,10 +53,7 @@ const IdleReward = defineOverlayDomainType(
   domainType =>
     domainType
       .property(
-        PT.int32("coins")
-          .masterData()
-          .required()
-          .description("Coins one interval away deposits")
+        PT.int32("coins").masterData().required().description("Coins one interval away deposits")
       )
       .localizedProperties({
         coins: jaEnField(
@@ -141,11 +89,9 @@ const withStatus = definePackage("foundation-economy-idle-demo", "0.0.0")
     },
   })
   .dependency(idle.packageId, "github:gs2io/gs2-studio-package")
-  // Where an interval pays.
+  // Reuse the currency demo content so this demo cannot deploy a conflicting version of the shared wallet stack.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  // The currency demo stocks the currency shop's price table, and an install
-  // does not walk a package's own dependencies, so the shop is named too.
   .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   .domainType(IdleStatus)
@@ -156,9 +102,7 @@ const withStatus = definePackage("foundation-economy-idle-demo", "0.0.0")
     [idle.propertyId("IdleStatus", "defaultMaximumIdleMinutes")]: MAXIMUM_IDLE_MINUTES,
   });
 
-// Authored by type name so the rows reach the overlay this package declares,
-// and its property with them. The acquire slot is authored empty because the
-// feature package requires it and the deposit is appended.
+// Address the local overlay by name so its coins property is available; keep the required acquire slot empty for the appended deposit.
 const withRewards = REWARDS.reduce(
   (builder, { id, coins }) =>
     builder.instance(IdleReward.typeName, id, {
@@ -170,8 +114,6 @@ const withRewards = REWARDS.reduce(
 
 export const foundationEconomyIdleDemo = withRewards
 
-  // The feature package ships the press but no components: what a title
-  // shows of an idle reward is the title's decision.
   .uiComponent(IdleStatus, ui =>
     ui
       .templateLabel(
@@ -180,8 +122,6 @@ export const foundationEconomyIdleDemo = withRewards
         {},
         { name: "IdleStatus" }
       )
-      // `Receive` is the feature package's own press; GS2 works out what has
-      // built up, so it takes no argument.
       .buttonAction("ReceiveButton", "Receive", undefined, { name: "IdleStatus" })
   )
   .build();

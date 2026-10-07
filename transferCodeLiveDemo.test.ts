@@ -18,9 +18,7 @@ interface PageDeclaration {
 }
 
 describe("transfer code live demo", () => {
-  // The generated TransferCode handler's `_type` defaults to 0, which is the
-  // apple OIDC setting: a page that keyed the slot by anything but the
-  // transfer code type would silently read another take-over.
+  // An unconfigured handler uses type 0; pin the transfer type so the scene cannot read another take-over slot.
   it("keys the page's TransferCode section by the transfer code take-over type", () => {
     const page = JSON.parse(
       readFileSync(resolve(liveDemoRoot, "page.json"), "utf8")
@@ -31,11 +29,9 @@ describe("transfer code live demo", () => {
 
     expect(transferCodeSections).toHaveLength(1);
     const [, section] = transferCodeSections[0];
-    // A single keyed read: the take-over list would carry the OIDC types too.
     expect(section.key).toEqual({ type: TRANSFER_CODE_TAKE_OVER_TYPE });
   });
 
-  // The hand-written panel issues and uses codes under its own constant.
   it("issues and takes over transfer codes under the same take-over type", () => {
     const source = readFileSync(
       resolve(liveDemoRoot, "unity/Assets/Showroom/IdentityDemo.cs"),
@@ -47,8 +43,6 @@ describe("transfer code live demo", () => {
     expect(Number(declared![1])).toBe(TRANSFER_CODE_TAKE_OVER_TYPE);
   });
 
-  // The panel reads the remembered account back before it reloads, under the
-  // keys the scene's account store writes.
   it("reads the remembered account back under the scene's account store keys", () => {
     const source = readFileSync(
       resolve(liveDemoRoot, "unity/Assets/Showroom/IdentityDemo.cs"),

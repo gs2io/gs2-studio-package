@@ -15,66 +15,32 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const character = dependencyPackage(characterSurface);
 
-/** Resources this package points at inside `foundation-economy-character`. */
 const CHARACTER_INVENTORY_MODEL_RESOURCE_ID = character.resourceId("inventory.InventoryModel");
 const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = character.resourceId("experience.ExperienceModel");
 
-/** The GS2-Inventory namespace and simple inventory holding enhancement materials. */
 const MATERIAL_NAMESPACE_NAME = "CharacterEnhanceMaterial";
 const MATERIAL_INVENTORY_NAME = "Material";
 
-/**
- * The material inventory as the RateModel names it. GS2-Enhance tells a simple
- * inventory from a standard one by this GRN's form, and the catalog only knows
- * the standard `:model:` form, so it is written out here rather than mounted.
- */
+/** Write the simple-inventory GRN explicitly because the catalog mount uses the standard inventory form. */
 const MATERIAL_INVENTORY_MODEL_ID = `grn:gs2:{region}:{ownerId}:inventory:${MATERIAL_NAMESPACE_NAME}:simple:model:${MATERIAL_INVENTORY_NAME}`;
 
-/**
- * GRN of one material, as `EnhanceCharacter` takes it.
- *
- * The user segment is a literal `{userId}`, not the `#{userId}` placeholder.
- * GS2-Enhance never reads it for a simple material: the material is consumed
- * from the user running the enhancement, and its worth is looked up by
- * namespace, inventory and item alone. A placeholder would only be a hazard —
- * passed through a transaction config value it is left unreplaced, and the
- * `#` fails the simple item GRN pattern. GS2-Enhance normalizes `{region}` /
- * `{ownerId}` itself.
- */
+/** Keep the literal {userId} segment: an unreplaced #{userId} in transaction config would not match the simple-item GRN pattern. */
 export function characterEnhanceMaterialItemId(materialName: string): string {
   return `grn:gs2:{region}:{ownerId}:inventory:${MATERIAL_NAMESPACE_NAME}:user:{userId}:simple:inventory:${MATERIAL_INVENTORY_NAME}:item:${materialName}`;
 }
 
-/** Where in a material's metadata GS2-Enhance reads the experience it is worth. */
 const MATERIAL_EXPERIENCE_HIERARCHY = ["experience"];
 
-/**
- * A recipe for enhancing a character with material items: the materials are
- * consumed and the experience they are worth is added to the character's
- * level. Its id is the name of the GS2-Enhance RateModel, which is what an
- * enhancement names when it runs.
- *
- * Everything else about a recipe is fixed by the packages it joins: the target
- * is a character from `foundation-economy-character`, the materials are this
- * package's own items, and the experience lands on the character's level
- * status. So the type holds nothing but its id; the bonus draws a recipe
- * offers are `CharacterEnhanceBonus` rows that reference it.
- */
+/** Target inventory, materials and experience destination are fixed by this package, so recipes need only identity; bonus rows reference that identity. */
 const CharacterEnhance = defineDomainType("CharacterEnhance", dt =>
   dt.localizedProperties({
     id: jaEnId("強化レシピ", "enhancement recipe"),
   })
 );
 
-/**
- * An item spent to enhance a character, and the stock a player holds of it.
- * GS2-Enhance reads a material's worth from the item's metadata JSON, at
- * `MATERIAL_EXPERIENCE_HIERARCHY`, so `metadata` has to carry it there.
- */
+/** Store material experience at MATERIAL_EXPERIENCE_HIERARCHY so the rate model can read it from metadata. */
 const CharacterEnhanceMaterial = defineDomainType("CharacterEnhanceMaterial", dt =>
   dt
     .property(
@@ -104,10 +70,6 @@ const CharacterEnhanceMaterial = defineDomainType("CharacterEnhanceMaterial", dt
     })
 );
 
-/**
- * A chance for the enhancement to pay out more than it should — the "great
- * success" every upgrade screen wants. Weights are drawn against each other.
- */
 const CharacterEnhanceBonus = defineDomainType("CharacterEnhanceBonus", dt =>
   dt
     .property(PT.prop("enhance", PT.ref("CharacterEnhance")).assetDelivery().required())
@@ -147,8 +109,7 @@ const RateModel = defineMasterDataResource(resource =>
       name: Bind.domainProperty(Source.direct(CharacterEnhance, "id")),
       description: Bind.static(""),
       metadata: Bind.static(""),
-      // GS2-Enhance adds the experience to `targetItemSetId + suffix`, which is
-      // the key the character package gives the level status.
+      // Share the suffix with character status reads so enhancement updates the displayed level.
       acquireExperienceSuffix: Bind.static(CHARACTER_LEVEL_KEY_SUFFIX),
       acquireExperienceHierarchy: Bind.static(MATERIAL_EXPERIENCE_HIERARCHY),
       materialInventoryModelId: Bind.static(MATERIAL_INVENTORY_MODEL_ID),
@@ -271,12 +232,7 @@ export const microEconomyCharacterEnhance = definePackage(
           .mapParameter("acquireCounts[0].count", "count")
       )
   )
-  // `targetItemSetId` is the character's bare `propertyId` (its item set GRN):
-  // GS2-Enhance appends the recipe's suffix itself. `materialItemSetId` is the
-  // GRN of the player's stock of one material — build it with
-  // `characterEnhanceMaterialItemId`. The recipe is a transform parameter
-  // because the RateModel's name is per recipe, which a resource key cannot
-  // resolve.
+  // Pass the bare target item-set GRN because enhancement appends the recipe suffix; the recipe name remains a caller parameter because it varies per row.
   .actionTransform("EnhanceCharacter", at =>
     at
       .category("acquire")

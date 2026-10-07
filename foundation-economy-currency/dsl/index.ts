@@ -166,12 +166,7 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
     r.model(GS2.money2.Wallet)
       .mountLocal(Wallet)
       .bindings({
-        // `slot` (int32) is the only Money2 Wallet own-key exposed by the Ez
-        // SDK (`walletId`/`userId` are not — see `walletId: Bind.skip()`
-        // below), so it drives the reserved id directly rather than a
-        // separate `Wallet.slot` property (removed; the id is already a
-        // string-wrapped `WalletId`, so a redundant int32 property added
-        // nothing).
+        // Use the exposed wallet slot as identity; a separate slot property would duplicate the reserved id.
         slot: Bind.domainProperty(Source.direct(Wallet, "id")),
         summary: {
           free: Bind.domainProperty(Source.direct(Wallet, "free")),

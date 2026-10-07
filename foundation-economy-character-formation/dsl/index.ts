@@ -11,7 +11,6 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-/** One occupied slot of a saved formation; the row carries the held character. */
 const CharacterFormationFormSlot = defineDomainType("CharacterFormationFormSlot", dt =>
   dt.property(PT.string("propertyId").userData().required()).localizedProperties({
     id: jaEnId("フォームスロット", "formation form slot"),
@@ -24,7 +23,6 @@ const CharacterFormationFormSlot = defineDomainType("CharacterFormationFormSlot"
   })
 );
 
-/** One saved formation (a "form"), holding its slots inline. */
 const CharacterFormationForm = defineDomainType("CharacterFormationForm", dt =>
   dt
     .property(PT.prop("slots", PT.listOf(PT.inline("CharacterFormationFormSlot"))).userData())
@@ -39,7 +37,6 @@ const CharacterFormationForm = defineDomainType("CharacterFormationForm", dt =>
     })
 );
 
-/** Slot definition: which characters a slot accepts. */
 const CharacterFormationSlot = defineDomainType("CharacterFormationSlot", dt =>
   dt.property(PT.string("propertyRegex").masterData()).localizedProperties({
     id: jaEnId("編成スロット", "formation slot"),
@@ -52,7 +49,6 @@ const CharacterFormationSlot = defineDomainType("CharacterFormationSlot", dt =>
   })
 );
 
-/** The formation feature itself: how many save areas a player has. */
 const CharacterFormation = defineDomainType("CharacterFormation", dt =>
   dt
     .singleEntry()

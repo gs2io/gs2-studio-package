@@ -1,19 +1,3 @@
-/**
- * Live demo content for `foundation-economy-equipment`.
- *
- * The feature package models a bag and the equipment that goes in it, but
- * ships neither — what a title sells and how big a bag it gives are a title's
- * decisions. This package supplies a small catalog, a bag to put it in, and
- * the three presses that move them: take one, throw one away, and buy room
- * for more.
- *
- * The catalog and the bag are the same model read from two places, so they
- * are two overlays of it: one listed from the master data a title authored,
- * one from what a player actually holds. Seeing both at once is the point —
- * one sword in the catalog becomes as many rows in the bag as the player
- * has taken.
- */
-
 import {
   Arg,
   Bind,
@@ -32,21 +16,13 @@ import equipmentSurface from "../../dsl/dependency-surface.json";
 
 const equipment = dependencyPackage(equipmentSurface);
 
-/** The bag: how many slots are in use, and how many there are. */
 const EquipmentCollection = equipment.type("EquipmentCollection");
 
 const EquipmentCategory = equipment.type("EquipmentCategory");
 
-/** What a player holds: one row per piece, listed from their own data. */
 const Equipment = equipment.type("Equipment");
 
-/**
- * One piece of equipment a visitor can take. The catalog is not a second
- * overlay of `Equipment`: a page draws one section per model and generates one
- * set of classes per model, so two views of one model collide. A row that
- * names the equipment it grants is a model of its own, and it is also what the
- * exchange hands to `AcquireEquipment`.
- */
+/** Give the catalog a separate model so its section and generated classes do not collide with the owned-equipment view. */
 const EquipmentCatalog = defineDomainType("EquipmentCatalog", domainType =>
   domainType
     .property(
@@ -66,14 +42,11 @@ const EquipmentCatalog = defineDomainType("EquipmentCatalog", domainType =>
     })
 );
 
-/** Four slots to start with, ten once a player has paid for the room. */
 const DEFAULT_CAPACITY = 4;
 const MAXIMUM_CAPACITY = 10;
 
-/** One press buys two slots, so the ceiling is three presses away. */
 const CAPACITY_STEP = 2;
 
-/** Taking a piece of equipment: an exchange that costs nothing. */
 const TakeRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -94,10 +67,6 @@ const TakeRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/**
- * Throwing one away. It names the instance as well as the equipment, because
- * two of the same sword are two rows and a player means the one they pressed.
- */
 const DiscardRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -110,18 +79,12 @@ const DiscardRateModel = defineMasterDataResource(resource =>
         .bindings({
           action: Bind.transform(equipment.packageId, "DeleteEquipment", [
             Arg.domainProperty("equipment", Source.direct(Equipment, "id")),
-            // `equipmentPropertyId` is left out on purpose. Which of the
-            // player's copies to throw away is not something a rate model can
-            // know: it is master data, fixed at deploy time, and the instance
-            // only exists once a player owns it. Left unset, GS2 takes one from
-            // whichever stack it likes — which is the whole of "discard one" as
-            // far as the demo is concerned.
+            // Omit instance selection because the deployed rate cannot name a future owned item set; discard consumes by equipment type.
           ]),
         });
     })
 );
 
-/** Buying room for more. */
 const ExpandRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -156,21 +119,12 @@ export const foundationEconomyEquipmentDemo = definePackage(
   .instance(EquipmentCategory, "weapon", {})
   .instance(EquipmentCategory, "armor", {})
 
-  // A single-entry type's row id is not free: the generated handler mounts it
-  // as the lowercased type name, so anything built from the row's `id` — the
-  // expand rate is named that way — has to agree or the runtime asks for a
-  // name that was never deployed.
+  // Match the fixed single-entry identity so the generated handler requests the expand rate that was deployed.
   .instance(EquipmentCollection, "equipmentcollection", {
     [equipment.propertyId("EquipmentCollection", "defaultCapacity")]: DEFAULT_CAPACITY,
     [equipment.propertyId("EquipmentCollection", "maximumCapacity")]: MAXIMUM_CAPACITY,
   })
 
-  // Three pieces rather than one: a catalog is a list, and the bag beside it
-  // only reads as a bag when it holds more than one kind of thing. Sort values
-  // are spaced so a title could slot something between them.
-  // The equipment itself, which the feature package's `ItemModel` turns into
-  // the catalog GS2 holds. Sort values are spaced so a title could slot
-  // something between them.
   .instance(Equipment, "iron-sword", {
     [equipment.propertyId("Equipment", "category")]: "weapon",
     [equipment.propertyId("Equipment", "sortValue")]: 100,
@@ -184,7 +138,6 @@ export const foundationEconomyEquipmentDemo = definePackage(
     [equipment.propertyId("Equipment", "sortValue")]: 300,
   })
 
-  // One catalog row per piece: what a visitor presses to take it.
   .instance("EquipmentCatalog", "iron-sword", { equipment: "iron-sword" })
   .instance("EquipmentCatalog", "oak-staff", { equipment: "oak-staff" })
   .instance("EquipmentCatalog", "steel-shield", { equipment: "steel-shield" })
@@ -200,11 +153,7 @@ export const foundationEconomyEquipmentDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // The demo runs the transaction server-side and commits it atomically.
-        // With auto-run off, `Exchange` only hands back a stamp sheet the
-        // client has to execute through the distributor — an extra round trip
-        // that can leave a slot spent but not filled if the page is closed
-        // mid-way.
+        // Auto-run executes the grant without requiring a second client request after the exchange.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
@@ -251,8 +200,6 @@ export const foundationEconomyEquipmentDemo = definePackage(
       .addChild(ExpandRateModel)
   )
 
-  // The catalog is its own model, so it needs its own name to show; the bag
-  // and the readings on it come from the feature package.
   .uiComponent(EquipmentCatalog, ui =>
     ui
       .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "EquipmentCatalog" })
@@ -263,19 +210,16 @@ export const foundationEconomyEquipmentDemo = definePackage(
     ui.buttonAction("DiscardButton", "Discard", undefined, { name: "Equipment" })
   )
 
-  // The hint is what an empty bag reads: a list with no rows draws nothing,
-  // so without it a first visit shows a heading over a blank.
+  // Keep the empty-state hint on the collection because an empty bag has no row on which to display it.
   .uiComponent(EquipmentCollection, ui =>
     ui
       .buttonAction("ExpandButton", "Expand", undefined, { name: "EquipmentCollection" })
       .label("NoneYetLabel", ui.lit("Take a piece of equipment above to start."), {
         name: "EquipmentCollection",
       })
-      .activeToggle(
-        "HoldsAnyActiveToggle",
-        UiCond.gt(ui.prop("currentCapacityUsage"), ui.lit(0)),
-        { name: "EquipmentCollection" }
-      )
+      .activeToggle("HoldsAnyActiveToggle", UiCond.gt(ui.prop("currentCapacityUsage"), ui.lit(0)), {
+        name: "EquipmentCollection",
+      })
   )
 
   .delegatedAction(EquipmentCatalog, "Take", {

@@ -1,4 +1,3 @@
-// Cancels the friend request this row shows.
 #nullable enable
 
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ using VisitorDomain = Gs2.Gs2Friend.Domain.Model.UserAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Cancels the friend request this row shows.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Cancel This Friend Request")]
     public sealed class SendFriendRequestCancelButton : FriendRowButton
     {
@@ -21,7 +19,7 @@ namespace GS2Studio.Showroom.Demo
 
         protected override string? RowUserId() => GetComponentInParent<SendFriendRequestHandlerBase>()?.Model?.Id.Value;
 
-        /// <summary>A request carries no profile; the row's name label read it.</summary>
+        /// <summary>Reuse the row's resolved name so action feedback matches its visible label.</summary>
         protected override string RowName(string userId) =>
             GetComponentInParent<SendFriendRequestHandlerBase>()?.GetComponentInChildren<SendFriendRequestNameLabel>()?.Shown ?? ShowroomPlayerTag.Of(userId);
 

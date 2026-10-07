@@ -11,11 +11,7 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-/**
- * What a member of a guild is allowed to do. Roles are defined per guild type;
- * the policy document is the GS2 permission grammar, so it is authored as text
- * rather than modelled here.
- */
+/** Keep policy text in GS2 grammar rather than introducing a second permission model here. */
 const GuildRole = defineDomainType("GuildRole", dt =>
   dt
     .property(
@@ -37,11 +33,6 @@ const GuildRole = defineDomainType("GuildRole", dt =>
     })
 );
 
-/**
- * A kind of guild — its size limits and its roles. A project usually ships one
- * of these; the guilds players actually create are runtime data, and what this
- * package tracks per player is which one they joined.
- */
 const Guild = defineDomainType("Guild", dt =>
   dt
     .property(
@@ -207,9 +198,7 @@ export const foundationSocialGuild = definePackage("foundation-social-guild", "0
       .model(GS2.guild.Namespace)
       .bindings({
         name: Bind.static("Guild"),
-        // Membership changes reach the players they concern through the
-        // gateway, which is how a client's list of joined guilds, and a
-        // master's list of join requests, stay current.
+        // Notify affected clients so joined-guild and join-request views can refresh after membership changes.
         joinNotification: notificationConfig,
         leaveNotification: notificationConfig,
         receiveRequestNotification: notificationConfig,

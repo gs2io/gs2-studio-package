@@ -1,34 +1,3 @@
-/**
- * Live demo content for `micro-liveops-ranking`.
- *
- * A global leaderboard every visitor shares. A visitor opens a contest, plays
- * for a few minutes, and once their contest is over receives coins by the rank
- * they finished at on the shared board.
- *
- * The feature package is the ranking and its reward tiers. This package adds
- * the one ranking, what each tier pays, the contest window and the presses that
- * open and close it.
- *
- * **The window is a trigger.** The ranking takes scores while the schedule
- * demo's relative event `ranking-contest` is open, and that event opens when
- * the visitor pulls its trigger, so every visitor has a window of their own on
- * the one board: the season never moves on, and every visitor's scores meet in
- * it. A client may not pull a trigger itself, so Start contest is a free
- * exchange whose only acquire action pulls it; Finish contest is another whose
- * only consume action clears it. GS2 pays a season's rewards only once the
- * player's own window has closed, so Finish contest is also how a visitor gets
- * to their rewards without waiting.
- *
- * **Playing and the board are the page's.** Submitting a score and reading the
- * board are not actions a package can host, so they are hand-written Unity
- * components.
- *
- * The wallet and the schedule are other packages' and are installed beside
- * this one rather than written out again: their rows live in stacks every demo
- * holding them deploys, and a second author of them would be a second version,
- * and the last deploy would win.
- */
-
 import {
   Arg,
   Bind,
@@ -56,26 +25,16 @@ const currency = dependencyPackage(currencySurface);
 
 const Ranking = ranking.type("Ranking");
 
-/** The one ranking on the page. */
 const CONTEST = "contest";
 
-/** The schedule demo's relative event and the trigger that opens it. */
 const CONTEST_TRIGGER = "ranking-contest";
 
-/** How long one press of Start contest keeps the window open. */
 const CONTEST_SECONDS = 3 * 60;
 
-/** The highest score a play can make, and the highest the ranking accepts. */
 const MAXIMUM_SCORE = 1000;
 
-/** The wallet the page shows and every reward lands in. */
 const WALLET_SLOT = 0;
 
-/**
- * The reward tiers, best first. A player receives the tier with the smallest
- * threshold at or below their rank; 1001 is GS2's tier for those who scored
- * but finished outside the top 1000.
- */
 const TIERS = [
   { thresholdRank: 1, coins: 300 },
   { thresholdRank: 3, coins: 150 },
@@ -83,11 +42,7 @@ const TIERS = [
   { thresholdRank: 1001, coins: 30 },
 ] as const;
 
-/**
- * What the rule says each tier pays, read off {@link TIERS}. The tiers are not
- * listed from GS2: the coins sit inside the deposit appended to each tier, and
- * nothing reads them back out of it.
- */
+/** Derive the rule and deployed rewards from the same tier table so their numbers cannot drift. */
 const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }, index) => {
   if (thresholdRank === 1001) return `anyone else who played ${coins}`;
   const from = index === 0 ? 1 : TIERS[index - 1].thresholdRank + 1;
@@ -96,7 +51,6 @@ const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }, index) => {
   return `${ranks} ${coins}`;
 }).join(", ");
 
-/** `1` -> `1st`, `3` -> `3rd`, `12` -> `12th`, for the rule a visitor reads. */
 function ordinal(rank: number): string {
   const lastTwo = rank % 100;
   if (lastTwo >= 11 && lastTwo <= 13) return `${rank}th`;
@@ -112,12 +66,6 @@ function ordinal(rank: number): string {
   }
 }
 
-/**
- * The reward tier, overlaid so it can carry what it pays.
- *
- * `acquireActions` is the slot the feature package leaves open; one deposit is
- * appended to it and `coins` decides how big it is for each tier.
- */
 const RankingReward = defineOverlayDomainType(
   "RankingReward",
   {
@@ -162,11 +110,7 @@ const RankingReward = defineOverlayDomainType(
       })
 );
 
-/**
- * The contest: what the page's presses and rule hang from, and what the
- * contest rates are mounted on. It is a type of its own rather than the
- * ranking because a window belongs to a visitor, and the ranking to everyone.
- */
+/** Separate the visitor-owned contest window from the ranking shared by all visitors. */
 const RankingContest = defineDomainType("RankingContest", dt =>
   dt.singleEntry().localizedProperties({
     id: {
@@ -176,12 +120,6 @@ const RankingContest = defineDomainType("RankingContest", dt =>
   })
 );
 
-/**
- * Starting the contest, modelled as an exchange that costs nothing: the
- * acquire action pulls the trigger. The rate is named after the contest and
- * mounted on it, because a delegated action on the contest must target a
- * resource that mounts it.
- */
 const StartRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -200,7 +138,6 @@ const StartRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/** Finishing the contest early: the consume action clears the trigger. */
 const FinishRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -218,10 +155,7 @@ const FinishRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/**
- * One exchange namespace per press: both rates are named after the contest,
- * and sharing a namespace would collide them on their primary key.
- */
+/** Separate namespaces because both contest operations derive the same rate name. */
 function contestExchange(name: string) {
   return {
     name: Bind.static(name),
@@ -231,8 +165,7 @@ function contestExchange(name: string) {
       "incrementalExchangeScript",
       "logSetting"
     ),
-    // Run and committed server-side: with auto-run off, `Exchange` only hands
-    // back a stamp sheet the client has to execute through the distributor.
+    // Auto-run executes the transaction without a second client request after the exchange.
     transactionSetting: transactionSetting({
       enableAtomicCommit: Bind.static(true),
       enableAutoRun: Bind.static(true),
@@ -240,10 +173,6 @@ function contestExchange(name: string) {
   };
 }
 
-/**
- * The package up to the ranking. Split here because a builder chain has no
- * room for a loop and the tiers are folded in from {@link TIERS}.
- */
 const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.0")
   .display({
     label: { ja: "ランキング（デモデータ）", en: "Rankings (demo data)" },
@@ -268,21 +197,16 @@ const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.0")
   })
   .dependency(ranking.packageId, "github:gs2io/gs2-studio-package")
   .dependency(schedule.packageId, "github:gs2io/gs2-studio-package")
-  // The contest's event lives in the schedule stack this demo deploys too;
-  // deployed from here without it, that stack would lose it.
+  // Reuse the shared schedule content so the contest event stays identical across demo deployments.
   .dependency(scheduleDemo.packageId, "github:gs2io/gs2-studio-package")
-  // Where the rewards pay.
+  // Reuse the currency demo content so the wallet and store products stay identical across demos.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  // The currency demo stocks the currency shop's price table, and an install
-  // does not walk a package's own dependencies, so the shop is named too.
   .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   .domainType(RankingReward)
   .domainType(RankingContest)
 
-  // Higher is better, and a new score replaces the last: the page submits a
-  // play only when it beats the visitor's standing score.
   .instance(Ranking, CONTEST, {
     [ranking.propertyId("Ranking", "orderDirection")]: "desc",
     [ranking.propertyId("Ranking", "sum")]: false,
@@ -292,13 +216,10 @@ const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.0")
   })
   .instance(RankingContest, "rankingcontest", {});
 
-// Authored by type name so the rows reach the overlay this package declares,
-// and its properties with it. The acquire slot is authored empty because the
-// feature package requires it and the deposit is appended.
+// Use the local overlay name for its coins property; keep the required acquire slot empty for the appended deposit.
 const withTiers = TIERS.reduce(
   (builder, { thresholdRank, coins }) =>
-    // A reward tier is keyed by its ranking and threshold, and its id is
-    // those values as the package orders them.
+    // Match the composite key order expected by the reward model so these authored ids identify the same tiers.
     builder.instance(RankingReward.typeName, `${thresholdRank}.${CONTEST}`, {
       [ranking.propertyId("RankingReward", "ranking")]: CONTEST,
       [ranking.propertyId("RankingReward", "thresholdRank")]: thresholdRank,
@@ -322,8 +243,6 @@ export const microLiveopsRankingDemo = withTiers
       .addChild(FinishRateModel)
   )
 
-  // The feature package ships no components: what a title shows of a ranking
-  // is the title's decision.
   .uiComponent(RankingContest, ui =>
     ui
       .templateLabel(

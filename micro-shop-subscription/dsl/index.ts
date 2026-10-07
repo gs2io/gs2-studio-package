@@ -14,23 +14,11 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const schedule = dependencyPackage(scheduleSurface);
 
-/** The schedule namespace whose triggers drive a subscription's renewal. */
 const SCHEDULE_NAMESPACE_RESOURCE_ID = schedule.resourceId("schedule.Namespace");
 
-/**
- * A recurring store purchase — a monthly pass, a season pass. GS2-Money2
- * verifies the store receipt and keeps the subscription alive; a schedule
- * trigger marks each period so the rest of the game can hang daily grants off
- * it.
- *
- * This is a store subscription, not a wallet purchase: it lives in its own
- * money2 namespace so a project's currency balance stays where the currency
- * package puts it.
- */
+/** Use a separate Money2 namespace so subscription setup does not replace the currency package's wallet configuration. */
 const StoreSubscription = defineDomainType("StoreSubscription", dt =>
   dt
     .property(

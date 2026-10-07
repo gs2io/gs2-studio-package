@@ -172,12 +172,7 @@ const EmbeddedVersion = defineDomainType("EmbeddedVersion", dt =>
     })
 );
 
-/**
- * The version gate itself. When a player's check finds no errors, GS2 signs
- * them in as `assumeUserId` and hands back that user's project token, so the
- * gate is where a title names that user. The namespace is mounted on it, so
- * a project that authors no gate deploys no namespace: GS2 requires the user.
- */
+/** Mount the namespace on this gate so its assumeUserId comes from the authored configuration. */
 const VersionGate = defineDomainType("VersionGate", dt =>
   dt
     .singleEntry()

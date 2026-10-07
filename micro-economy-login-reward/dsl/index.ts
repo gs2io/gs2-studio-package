@@ -17,14 +17,9 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const schedule = dependencyPackage(scheduleSurface);
 
-// GS2 keeps one receive status per bonus model and decides the step itself,
-// so the status and both presses live on the group, not on a reward row.
-// "schedule" counts days from the schedule's start; "streaming" counts the
-// days the player has claimed, advancing at resetHour (UTC).
+// Receive status belongs to the bonus group, so claim actions must not be attached to individual reward rows.
 const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
   dt
     .property(PT.prop("mode", PT.enum("schedule", "streaming")).masterData().required())
@@ -40,8 +35,7 @@ const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
         .requiredWhen(Cond.eq("mode", "streaming"))
     )
     .property(PT.prop("missedReceiveRelief", PT.enum("enabled", "disabled")).masterData())
-    // Not tied to missedReceiveRelief: an empty list is a valid free relief, and
-    // GS2 drops the list from the deployed model while relief is disabled.
+    // Do not require consumption actions when relief is enabled: an empty list represents free relief.
     .property(
       PT.prop("missedReceiveReliefConsumeActions", PT.listOf(PT.consumeAction())).masterData()
     )
@@ -244,8 +238,7 @@ export const microEconomyLoginReward = definePackage("micro-economy-login-reward
     targetActionKey: "Gs2LoginReward:ReceiveStatus.MissedReceive",
     targetResource: ReceiveStatus,
   })
-  // Deleting the status starts the player over from the first step. The group
-  // arrives as a reference so each group's own status is the one removed.
+  // Take the group as a parameter so reset removes its own receive status.
   .actionTransform("ResetReceiveStatus", at =>
     at
       .category("acquire")

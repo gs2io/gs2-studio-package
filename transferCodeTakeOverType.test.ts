@@ -19,8 +19,7 @@ const surface = JSON.parse(
 ) as DependencySurface;
 const takeOverSetting = surface.types.TakeOverSetting;
 
-// Unity projects and installed dependencies never hold project instances and
-// dominate the tree, so they are not walked.
+// Unity and installed dependencies dominate the tree but contain no authored project instances.
 const SKIPPED_DIRECTORIES = new Set(["node_modules", "unity"]);
 
 function instanceFilesBelow(directoryPath: string, insideInstances: boolean): readonly string[] {
@@ -36,9 +35,7 @@ function instanceFilesBelow(directoryPath: string, insideInstances: boolean): re
 }
 
 describe("transfer code take-over type", () => {
-  // GS2-Account refuses password take-over for any type that has a
-  // TakeOverTypeModel. A TakeOverSetting row (authored or overlaid) on the
-  // transfer code's type would silently break issuing and using transfer codes.
+  // Keep the transfer-code slot separate from OIDC settings; both otherwise share the same type key.
   it("is never used by a TakeOverSetting instance in any project", () => {
     expect(takeOverSetting).toBeDefined();
     const typePropertyId = takeOverSetting.properties.type;

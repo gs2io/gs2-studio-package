@@ -1,11 +1,9 @@
-// How long the player has been away, against the cap.
 #nullable enable
 
 using UnityEngine;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>"Away 3 h 20 min of 8 h", and "(full)" once the cap is reached.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Idle Time")]
     public sealed class IdleStatusIdleTimeLabel : IdlePredictionLabel
     {

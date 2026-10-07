@@ -15,14 +15,10 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const schedule = dependencyPackage(scheduleSurface);
 
-/** The schedule type this package points its mission groups at. */
 const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
 
-/** Package-wide reset timing; one row per project. */
 const MissionSetting = defineDomainType("MissionSetting", dt =>
   dt
     .singleEntry()
@@ -61,7 +57,6 @@ const MissionSetting = defineDomainType("MissionSetting", dt =>
     })
 );
 
-/** A counter a mission can watch, tracked per reset window. */
 const MissionCounter = defineDomainType("MissionCounter", dt =>
   dt
     .property(PT.int64("todayValue").userData().required())
@@ -97,7 +92,6 @@ const MissionCounter = defineDomainType("MissionCounter", dt =>
     })
 );
 
-/** A group of missions sharing one reset cadence. */
 const MissionCollection = defineDomainType("MissionCollection", dt =>
   dt
     .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).assetDelivery())

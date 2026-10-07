@@ -1,36 +1,3 @@
-/**
- * Live demo content for `micro-economy-character-grade`.
- *
- * A limit break raises how far a character can level. What is worth watching
- * is the cap moving: a character trained to 10/10 stops gaining levels, one
- * press later it reads 10/20, and training carries it past 10.
- *
- * The feature package is the grade table and the grade a character holds; it
- * ships no steps and nothing a player presses. GS2 raises the grade through
- * `AddGradeByUserId`, which also applies the step's cap to the character's
- * experience status, so the press here is an exchange whose only acquire
- * action is that promotion. `Gs2Enhance:Unleash`, the operation a game would
- * normally call, is not reachable from a client (no Ez action, no Bind loader,
- * not in the application policy), so the exchange is the whole mechanism.
- *
- * GS2 reads grade N from the table's entry N-1, and a character's grade status
- * starts at 1 when it is first read. So the first entry is the cap a character
- * starts with — the experience model's default of 10 — and each press moves
- * one entry down the table. The button stops being pressable at the last
- * grade: a further promotion would still raise the grade number, but not the
- * cap, because the last entry keeps applying.
- *
- * The roster, the recruit and the level curve are
- * `foundation-economy-character-demo`'s, installed beside this package rather
- * than written out again: they live in stacks every demo holding a roster
- * deploys, and a second author of them would be a second version, and the
- * last deploy would win. That demo's curve is long enough for a cap of 30 for
- * this reason. What this demo authors lands in stacks only it deploys: the
- * grade steps, the limit break, and a training press that grants enough
- * experience to reach each cap in a few presses — the character demo's own
- * training takes about sixty to the first cap and over a hundred to each after.
- */
-
 import {
   Arg,
   Bind,
@@ -60,28 +27,15 @@ const LEVEL = character.propertyId("Character", "level");
 const LEVEL_CAP = character.propertyId("Character", "levelCap");
 const PROPERTY_ID = character.propertyId("Character", "propertyId");
 
-/**
- * The cap each grade applies, grade 1 first. The first has to match the
- * character demo's default level cap and the last its maximum, which that
- * demo's curve is sized for.
- */
+/** Keep the grade caps within the shared character curve, starting at its default cap. */
 const GRADE_CAPS = [10, 20, 30] as const;
 
-/** The highest grade the table holds; a promotion past it moves no cap. */
 const MAX_GRADE = GRADE_CAPS.length;
 
-/** Enough experience per press to reach the next cap in a handful of presses. */
+/** Keep the experience grant large enough to demonstrate successive caps in a few presses. */
 const TRAIN_HARD_EXPERIENCE = 1000;
 
-/**
- * Promotes the character it is mounted on by one grade. Named after the
- * character, like the character demo's training: a delegated action on
- * `Character` must target a resource that mounts `Character`, which is how the
- * generated loader learns which rate a row's button trades. The target is the
- * character's grade status, keyed like its level status by the `propertyId`
- * GS2 mints at recruit time plus the level suffix, so the row carries a
- * `#{propertyId}` placeholder and the click fills it.
- */
+/** Supply the instance id at click time because the owned character does not exist at deployment; grade and experience address the same suffixed status key. */
 const LimitBreakRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -100,7 +54,6 @@ const LimitBreakRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/** The character demo's training, with enough experience to be worth a demo. */
 const TrainHardRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -119,12 +72,10 @@ const TrainHardRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/** One grade step: its cap, applying to every character. */
 function gradeStep(rankCapValue: number) {
   return { rankCapValue, propertyIdRegex: ".*", gradeUpPropertyIdRegex: ".*" };
 }
 
-/** Fills a rate's `#{propertyId}` placeholder with the pressed character's. */
 const PROPERTY_ID_CONFIG = {
   kind: "listEntries",
   parameterName: "config",
@@ -151,15 +102,12 @@ export const microEconomyCharacterGradeDemo = definePackage(
     },
   })
   .dependency(grade.packageId, "github:gs2io/gs2-studio-package")
-  // The grade overlays a type the character package owns, and an install does
-  // not walk a package's own dependencies, so the base package is named too.
-  // It also owns `AcquireCharacterExperience`, which the training trades for.
+  // Declare the character package because training directly calls its AcquireCharacterExperience transform.
   .dependency(character.packageId, "github:gs2io/gs2-studio-package")
-  // The roster, the recruit and the level curve.
+  // Reuse the shared roster and level curve so this demo cannot deploy conflicting character content.
   .dependency(characterDemo.packageId, "github:gs2io/gs2-studio-package")
 
-  // Rows are laid out in lexical id order, which is the grade order here as
-  // long as there are fewer than ten; zero-pad the ids before adding a tenth.
+  // Grade rows use lexical id order; pad ids before a tenth grade would sort ahead of grade2.
   .instance(CharacterGradeStep, "grade1", gradeStep(GRADE_CAPS[0]))
   .instance(CharacterGradeStep, "grade2", gradeStep(GRADE_CAPS[1]))
   .instance(CharacterGradeStep, "grade3", gradeStep(GRADE_CAPS[2]))
@@ -175,7 +123,7 @@ export const microEconomyCharacterGradeDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // Run and commit server-side, like the character demo's exchanges.
+        // Auto-run executes the transaction without a second client request after the exchange.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
@@ -194,7 +142,6 @@ export const microEconomyCharacterGradeDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // Run and commit server-side, like the character demo's exchanges.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
@@ -211,9 +158,7 @@ export const microEconomyCharacterGradeDemo = definePackage(
         { grade: ui.inheritedProp(GRADE) },
         { name: "Character" }
       )
-      // Pressable only at the cap and while a step is left. The character
-      // package's own `LevelInteractable` is not wired to this button as well:
-      // two interactables on one button fight over the same flag.
+      // Combine cap and remaining-grade checks in one interactable because two components would overwrite the same button flag.
       .interactable(
         "LimitBreakInteractable",
         UiCond.and(

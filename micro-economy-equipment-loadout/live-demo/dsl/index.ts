@@ -1,22 +1,4 @@
-/**
- * Live demo content for `micro-economy-equipment-loadout`.
- *
- * Each character keeps its own equipment slots, and a slot only takes the
- * equipment its pattern matches. What is worth watching is that refusal: a
- * sword goes in the weapon slot, and a shield sent to the same slot comes back
- * refused by GS2 itself, because the slot's pattern names the weapons.
- *
- * The feature package is the property form and nothing a player presses. This
- * package adds the two slots. Putting a piece on is not a delegated action:
- * the slot value has to be signed by the inventory that holds the equipment,
- * so the page asks the inventory for a signed item set and hands it to the
- * formation itself.
- *
- * The characters, the equipment and the presses that hand them out are other
- * packages' and are installed beside this one rather than written out again:
- * their rows live in stacks every demo holding them deploys, and a second
- * author of them would be a second version, and the last deploy would win.
- */
+/** Reuse the shared character and equipment demos so this demo cannot replace their catalogs with different stack content. */
 
 import { definePackage, dependencyPackage } from "~/dsl";
 
@@ -34,11 +16,7 @@ const equipmentDemo = dependencyPackage(equipmentDemoSurface);
 
 const EquipmentSlot = loadout.type("EquipmentSlot");
 
-/**
- * An equipment item set the player holds, of one of the named items. GS2
- * matches the pattern anywhere in the property id, so it is anchored at both
- * ends, and the item set name is left open: every take is a set of its own.
- */
+/** Anchor the whole item-set GRN to reject partial matches while leaving the future owned instance name unconstrained. */
 function equipmentOf(...itemNames: readonly string[]): string {
   return (
     "^grn:gs2:{region}:{ownerId}:inventory:Equipment:user:{userId}:inventory:Equipment:" +

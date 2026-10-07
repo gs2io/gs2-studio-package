@@ -16,8 +16,6 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import currencySurface from "../../foundation-economy-currency/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const currency = dependencyPackage(currencySurface);
 
 const CurrencyType = defineDomainType("CurrencyType", dt =>
@@ -26,10 +24,6 @@ const CurrencyType = defineDomainType("CurrencyType", dt =>
   })
 );
 
-/**
- * The currency package's StoreProduct, extended here with the amount of
- * currency each product grants and the price it sells for in each currency.
- */
 const StoreProduct = defineOverlayDomainType(
   "StoreProduct",
   currency.overlay("StoreProduct"),
@@ -54,10 +48,6 @@ const StoreProduct = defineOverlayDomainType(
       })
 );
 
-/**
- * One price of a store product, in one currency. Authored as an element of
- * its product's `prices`; the product and the currency together identify it.
- */
 const StorePrice = defineDomainType("StorePrice", dt =>
   dt
     .property(PT.prop("currencyType", PT.ref("CurrencyType")).masterData().required())
@@ -103,9 +93,7 @@ const DisplayItem = defineMasterDataResource(resource =>
             .mountLocal(StoreProduct)
             .bindings({
               action: Bind.transform("foundation-economy-currency", "DepositCurrency", [
-                // A store sells to whichever wallet the buyer names, so the
-                // slot stays a stamp-sheet placeholder the client fills in
-                // through the purchase's config.
+                // Leave wallet selection to purchase config because the buyer's slot is unknown at deploy time.
                 Arg.placeholder("slot", "#{slot}"),
                 Arg.domainProperty("count", Source.direct(StoreProduct, "count")),
                 Arg.domainProperty(
@@ -181,17 +169,13 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
   .instance("CurrencyType", "USD", {})
   .instance("CurrencyType", "XXX", {})
 
-  // No products or prices ship here: what a store sells, and for how much, is
-  // the title's business. The currency types are what the price table is laid
-  // out by, so they do.
+  // Ship currency axes only; consuming projects author their own products and prices.
 
   .uiComponent(StoreProduct, ui =>
     ui
       .label("CountLabel", ui.prop("count"), { name: "StoreProduct" })
       .value("CountValue", ui.prop("count"), { name: "StoreProduct" })
       .value("IdValue", ui.prop("id"), { name: "StoreProduct" })
-      // Declared by the currency package rather than here, and named by the
-      // name it publishes: this overlay declares only `count`.
       .value("AppleAppStoreProductIdValue", ui.prop("appleAppStoreProductId"), {
         name: "StoreProduct",
       })

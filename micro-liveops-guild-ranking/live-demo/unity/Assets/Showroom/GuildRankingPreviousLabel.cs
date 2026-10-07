@@ -1,4 +1,3 @@
-// What an earlier season still pays the visitor, as one line.
 #nullable enable
 
 using UnityEngine;
@@ -6,7 +5,6 @@ using UnityEngine.Events;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>The latest season that is over and not yet received, or that none waits.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Guild Season Previous")]
     public sealed class GuildRankingPreviousLabel : MonoBehaviour
     {
@@ -45,8 +43,7 @@ namespace GS2Studio.Showroom.Demo
                 return;
             }
             var where = next.GuildDisplayName ?? "a guild that is gone";
-            // The rank is as GS2 has it now: guildmates who did not advance their
-            // clock may still be playing this season.
+            // Other accounts may still be playing that season; present its last-read rank as provisional.
             var rank = next.Rank != null ? $"rank {next.Rank} for now" : "unranked";
             var more = _season.MoreWaiting > 0 ? $" ({_season.MoreWaiting} earlier season(s) wait too)" : "";
             _onUpdate.Invoke($"Season {next.Season} in {where}: {rank} with {next.Score} points, ready to receive{more}");

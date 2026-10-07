@@ -77,13 +77,8 @@ export const foundationEconomyInventory = definePackage("foundation-economy-inve
       })
   )
 
-  // An item is read as what it is and how many are held, and spending it is
-  // only offered while there is any. None of that is a decision a title makes,
-  // so it ships with the model rather than being rebuilt per screen.
   .uiComponent(Item, ui =>
     ui
-      // The item names itself: a simple item has no display name of its own,
-      // and its id is what a player would call it.
       .templateLabel(
         "StockLabel",
         "{id} x{count}",
@@ -91,8 +86,6 @@ export const foundationEconomyInventory = definePackage("foundation-economy-inve
         { name: "Item" }
       )
       .value("CountValue", ui.prop("count"), { name: "Item" })
-      // Spending nothing is not an action a player should be able to take, and
-      // a button that fails is worse than one that is plainly unavailable.
       .interactable("OwnedInteractable", UiCond.gt(ui.prop("count"), ui.lit(0)), { name: "Item" })
   )
 

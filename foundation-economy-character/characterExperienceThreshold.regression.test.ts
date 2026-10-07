@@ -1,16 +1,3 @@
-/**
- * Regression test for the `Unsupported type conversion: long → List<long>`
- * bug (reported against Solitaire's `CharmExperience.threshold`, which
- * overlays this package's `CharacterExperience.threshold`).
- *
- * `CharacterExperience.threshold` (`list<int64>`) is bound to
- * `experience::Threshold.values` (catalog type `[]int64`) through a nested
- * `rankThreshold` value-model promotion
- * (`master-data/experience-namespace--.../_array_rank-threshold/...`). The
- * Ez SDK already exposes `EzThreshold.Values` as `List<long>`, so this must
- * resolve to a direct (null-guarded) copy — not a skipped/unsupported
- * assignment.
- */
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";

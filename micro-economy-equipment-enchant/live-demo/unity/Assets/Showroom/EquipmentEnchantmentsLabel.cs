@@ -1,10 +1,4 @@
-// The bonuses rolled onto one piece of equipment, as one line of text.
-//
-// The bonuses are a list inside the piece's row, and the page draws a row's
-// values one per line, not a list within a row. So this reads the list off the
-// row's handler and publishes it as text: "attack +12 / critical +5". A piece
-// with nothing rolled yet shows nothing, rather than a placeholder that would
-// read like a bonus.
+// Render the nested bonus list as one row value; keep an empty list blank so it cannot look like an awarded bonus.
 #nullable enable
 
 using System.Collections.Generic;
@@ -18,10 +12,6 @@ using GS2Studio.Generated.Equipment;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// Publishes the bonuses of the equipment row it sits in, whenever the row
-    /// updates.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/Showroom/Equipment Enchantments")]
     public sealed class EquipmentEnchantmentsLabel : MonoBehaviour
     {

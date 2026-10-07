@@ -1,27 +1,4 @@
-// The campaign's state, and the buff it grants applied to the page's session.
-//
-// GS2 hands a player the buffs active now as a signed context stack; the
-// client sends it with later requests and the services scale what they pay by
-// it. The SDK's own apply builds a whole new GS2 domain around the stack, so
-// the stack is asked for straight from the REST client and set as the default
-// on the page's one domain, where every call, the generated Receive included,
-// picks it up.
-//
-// A buff is judged active when it is applied, and it stays in the stack until
-// the moment it was active until. So the buff is applied again whenever that
-// can have changed: at sign-in, when the campaign trigger starts or ends, when
-// its window runs out, and when the demo clock has moved.
-//
-// Start and End campaign are exchanges run on the server, and nothing tells
-// the page, so the trigger is read from the REST client. A trigger that is not
-// pulled answers NotFound, which is the settled "no campaign" rather than a
-// failure: nothing but a press changes it. So it is read when the page starts,
-// in the moments after this page's own Start or End press, after the clock
-// moved, and otherwise only now and then, for a press on another page signed
-// in to the same account. The window running out needs no read: its end is
-// known and checked against the clock every second.
-//
-// Nothing here reloads or invalidates anything.
+// Apply the returned context stack to the shared domain so generated actions and manual predictions use the same buffs.
 #nullable enable
 
 using System;
@@ -43,44 +20,24 @@ using GS2Studio.Generated.BuffCampaign.UI;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// Whether the campaign runs and when it ends, kept current for the page's
-    /// labels, with the buff applied to match. One per page, made by the first
-    /// label that asks.
-    /// </summary>
     internal sealed class BuffCampaignState : MonoBehaviour
     {
-        /// <summary>The buff namespace the feature package deploys.</summary>
         private const string BuffNamespace = "Buff";
 
-        /// <summary>The schedule namespace and the trigger that opens the campaign.</summary>
         private const string ScheduleNamespace = "Schedule";
         private const string Trigger = "happy-hour";
 
-        /// <summary>
-        /// How often the trigger is read when nothing on this page can have
-        /// changed it: a press on another page signed in to the same account.
-        /// </summary>
+        /// <summary>Poll occasionally to observe campaign changes made from another page for the same account.</summary>
         private const float BackstopSeconds = 60f;
 
-        /// <summary>
-        /// A press is read at once and then <see cref="PressReads"/> more
-        /// times, <see cref="PressReadSeconds"/> apart. The exchange behind a
-        /// press finishes on the server, so the first read after it can come
-        /// too early; the reads stop once one sees the trigger move.
-        /// </summary>
+        /// <summary>Poll briefly after a press because its trigger change may not be visible on the first read.</summary>
         private const float PressReadSeconds = 2f;
         private const int PressReads = 2;
 
-        /// <summary>
-        /// How often the buff is applied again while the window has run out on
-        /// this device's clock but GS2 still finds the buff active.
-        /// </summary>
         private const float ExpiredApplySeconds = 3f;
 
         private static BuffCampaignState? _instance;
 
-        /// <summary>The page's campaign, made on first use.</summary>
         public static BuffCampaignState Shared
         {
             get
@@ -95,19 +52,12 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>Raised whenever what the labels show may have changed.</summary>
         public event Action? Updated;
 
-        /// <summary>Whether the buff has been applied once yet.</summary>
         public bool HasValue { get; private set; }
 
-        /// <summary>Whether the buff is in the page's session now.</summary>
         public bool Active { get; private set; }
 
-        /// <summary>
-        /// When the campaign ends, on this device's clock, or null while none
-        /// runs or the account's clock offset is not read yet.
-        /// </summary>
         public DateTime? EndsAt
         {
             get
@@ -120,7 +70,7 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>The trigger's end on the demo clock, in milliseconds, or 0 without one.</summary>
+        /// <summary>Keep the server timestamp so a changed account offset can move the displayed deadline without another trigger read.</summary>
         private long _triggerExpiresAt;
 
         private string _userId = "";
@@ -129,15 +79,12 @@ namespace GS2Studio.Showroom.Demo
         private bool _readingTrigger;
         private bool _readTriggerAgain;
 
-        /// <summary>When the trigger is read next, on the realtime clock.</summary>
         private float _nextTriggerRead;
 
-        /// <summary>How many of the reads that follow a press are still to come.</summary>
         private int _pressReadsLeft;
 
         private float _nextExpiredApply;
 
-        /// <summary>Say a lasting failure once, until a read or apply succeeds again.</summary>
         private readonly ShowroomLatch _triggerFailures = new ShowroomLatch();
         private readonly ShowroomLatch _applyFailures = new ShowroomLatch();
 
@@ -178,10 +125,7 @@ namespace GS2Studio.Showroom.Demo
                 yield return tick;
                 var now = Time.realtimeSinceStartup;
                 if (now >= _nextTriggerRead) ReadTrigger();
-                // The window ran out on its own: the stack still carries the
-                // buff until it is applied again. This device's clock may run
-                // ahead of the server's, so GS2 can still find the buff active;
-                // it is asked again every few seconds until it says otherwise.
+                // Reapply while no future deadline is visible but the last result remains active; space retries to tolerate clock skew.
                 if (_triggerExpiresAt > 0 && EndsAt == null && Active && now >= _nextExpiredApply)
                 {
                     _nextExpiredApply = now + ExpiredApplySeconds;
@@ -193,10 +137,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// Hears the page's Start and End campaign buttons, which are the
-        /// presses on this page that move the trigger.
-        /// </summary>
         private void ListenToPresses()
         {
             foreach (var button in FindObjectsByType<BuffCampaignStartCampaignButton>(
@@ -229,17 +169,12 @@ namespace GS2Studio.Showroom.Demo
             Apply();
         }
 
-        /// <summary>The account's clock offset was read: the window's end on this device moved.</summary>
         private void OnOffsetLoaded(string userId)
         {
             if (userId == _userId) Updated?.Invoke();
         }
 
-        /// <summary>
-        /// Reads the campaign trigger, and applies the buff again when it has
-        /// started, ended or moved. One read is out at a time; asking during it
-        /// makes one more when it returns, so an older answer cannot land last.
-        /// </summary>
+        /// <summary>Serialize reads and retain one follow-up so a request during an older read is not lost or completed out of order.</summary>
         private async void ReadTrigger()
         {
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
@@ -266,8 +201,7 @@ namespace GS2Studio.Showroom.Demo
 
         private async Task ReadTriggerOnce(Gs2Domain gs2, IGameSession session)
         {
-            // The next read is due on the backstop, or sooner while a press
-            // is settling; a read that fails waits for the backstop too.
+            // Schedule before awaiting so failures retain the remaining press retries or the normal polling delay.
             if (_pressReadsLeft > 0)
             {
                 _pressReadsLeft--;
@@ -289,7 +223,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (NotFoundException)
             {
-                // Not pulled: no campaign, until a press pulls it.
+                // A missing trigger means no campaign; it is not a failed read to retry immediately.
                 expiresAt = 0;
             }
             catch (Exception error)
@@ -302,19 +236,14 @@ namespace GS2Studio.Showroom.Demo
             _userId = session.UserId;
             if (expiresAt == _triggerExpiresAt) return;
             _triggerExpiresAt = expiresAt;
-            // The press has landed; the rest of its reads are not needed.
+            // A changed trigger satisfies the settling probe, so discard the remaining rapid reads.
             _pressReadsLeft = 0;
             _nextTriggerRead = Time.realtimeSinceStartup + BackstopSeconds;
             Apply();
             Updated?.Invoke();
         }
 
-        /// <summary>
-        /// Asks GS2 for the buffs active now and sets them as the page's
-        /// default context stack. One apply is out at a time; asking during it
-        /// makes one more when it returns, since the first may predate the
-        /// change that asked.
-        /// </summary>
+        /// <summary>Retain one follow-up apply because an in-flight result can predate the change that requested it.</summary>
         private async void Apply()
         {
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;

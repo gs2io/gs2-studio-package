@@ -1,27 +1,4 @@
-// The panel an ad break puts on the screen, and the wait in front of it.
-//
-// A rewarded view is two halves. One is the placement: an ad SDK fills the
-// screen, plays something, and calls back when the view completed. The other
-// is whatever the title does with that callback — grant a point, hand out a
-// continue, lift a limit for one more try.
-//
-// A demo in a browser has only the second half and cannot have the first: the
-// ad networks GS2 accepts do not reach one. Unity Ads supports iOS and Android
-// only, as does the LevelPlay mediation that replaced it, and AdMob is
-// mobile-only too. So this stands where the placement would be and says so —
-// the shape of an ad break with the ad missing, and a press that stands for
-// the network's completion callback.
-//
-// It is here rather than in the row that opens it because more than one row
-// wants it: one banks a view, another spends one, and a panel that said
-// different things in two copies would be two demos of the same thing. What
-// differs between them is the prose and what the confirming press is wired to,
-// so that is all a caller passes.
-//
-// Built in code and never written to the scene. The page's rows live under the
-// content mount and a re-bake clears that mount, so anything authored outside
-// it that referenced a generated component would go null the next time the
-// page was baked, silently.
+// Build the overlay at runtime so rebaking page content cannot leave serialized references to destroyed rows.
 #nullable enable
 
 using UnityEngine;
@@ -29,47 +6,20 @@ using UnityEngine.UI;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// A full-screen ad break: a backdrop that swallows the page beneath it, a
-    /// card that explains why nothing is playing, a wait, and a press that says
-    /// the placement finished.
-    ///
-    /// Plain rather than a <see cref="MonoBehaviour"/>: the page draws rows
-    /// from the behaviours a demo wrote, and this is not a row. The row that
-    /// owns one drives it — <see cref="Tick"/> from its `Update`,
-    /// <see cref="Destroy"/> from its `OnDestroy`.
-    /// </summary>
+    /// <summary>Keep this outside MonoBehaviour row discovery; the owning row drives its lifetime and updates.</summary>
     internal sealed class AdBreakOverlay
     {
-        /// <summary>
-        /// How long the panel stays before it can be dismissed for its reward.
-        ///
-        /// A real placement is not skippable until its reward point, and the
-        /// wait is the part of the experience that survives having no ad to
-        /// play. Short, because nobody came here to watch a rectangle.
-        /// </summary>
         private const float DwellSeconds = 5f;
 
-        /// <summary>
-        /// Above the page's own canvas, which sits at zero.
-        /// </summary>
         private const int OverlaySortingOrder = 100;
 
         private const float CardWidth = 940f;
 
-        /// <summary>
-        /// Short enough to survive a browser window that is wider than it is
-        /// tall. The canvas scales against 1080x1920 at a match of 0.5, so a
-        /// 1920x700 viewport — a laptop with a bookmarks bar — leaves only 870
-        /// of these units of height, and a card taller than that loses its
-        /// heading and its button off-screen with no way to scroll to them.
-        /// </summary>
+        /// <summary>Leave enough vertical room for the heading and controls in short, wide browser viewports.</summary>
         private const float CardHeight = 724f;
 
         private const float CardPadding = 56f;
 
-        // The page's palette, so the break reads as part of the page rather
-        // than as something that landed on top of it.
         private static readonly Color PageBackdrop = new Color(0.071f, 0.063f, 0.098f, 0.93f);
         private static readonly Color CardBackground = new Color(0.102f, 0.09f, 0.145f, 1f);
         private static readonly Color Accent = new Color(0.643f, 0.549f, 1f, 1f);
@@ -81,11 +31,6 @@ namespace GS2Studio.Showroom.Demo
         private const string ConfirmLabel = "I finished watching";
         private const string CloseLabel = "Close";
 
-        /// <summary>
-        /// What every break says about why nothing is playing. The caller adds
-        /// what its own press then does, because that is the half the demo is
-        /// actually about and it differs from row to row.
-        /// </summary>
         public const string MissingPlacementBody =
             "Nothing plays here: GS2's ad SDKs (Unity Ads, LevelPlay, AdMob) are mobile-only, " +
             "and this page runs in a browser.";
@@ -99,21 +44,9 @@ namespace GS2Studio.Showroom.Demo
         private bool _open;
         private bool _ready;
 
-        /// <summary>
-        /// When the wait is up, on the clock that measures seconds rather than
-        /// frames. A browser stops drawing a tab it is not showing, and
-        /// `Time.deltaTime` is clamped to `Time.maximumDeltaTime`, so counting
-        /// frames down would leave a visitor who looked away still waiting for
-        /// a wait that had already passed.
-        /// </summary>
+        /// <summary>Use an absolute realtime deadline so a background tab does not extend the wait through missed frames.</summary>
         private float _readyAt;
 
-        /// <param name="row">
-        /// The button that opens this break. Read for the page's font, so the
-        /// panel cannot drift from the text around it.
-        /// </param>
-        /// <param name="body">What the card says, above the wait.</param>
-        /// <param name="readyStatus">What it says once the wait is up.</param>
         public AdBreakOverlay(Button row, string body, string readyStatus)
         {
             _readyStatus = readyStatus;
@@ -126,8 +59,7 @@ namespace GS2Studio.Showroom.Demo
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = OverlaySortingOrder;
 
-            // The page's own canvas scales against this, so the break is the
-            // same size on a phone as the rows behind it.
+            // Match the page canvas scale so overlay controls retain the same visual size.
             var scaler = _root.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1080f, 1920f);
@@ -137,8 +69,7 @@ namespace GS2Studio.Showroom.Demo
             Stretch(backdrop);
             var backdropImage = backdrop.gameObject.AddComponent<Image>();
             backdropImage.color = PageBackdrop;
-            // Presses meant for the page are the whole point of a placement
-            // that covers it, so the backdrop takes them and does nothing.
+            // Block clicks from reaching the page beneath the overlay.
             backdropImage.raycastTarget = true;
 
             var card = NewRect("Card", backdrop);
@@ -158,9 +89,7 @@ namespace GS2Studio.Showroom.Demo
             ruleImage.color = new Color(MutedText.r, MutedText.g, MutedText.b, 0.3f);
             ruleImage.raycastTarget = false;
 
-            // The band is 360, well over what the longest body needs at this
-            // size, so a font whose metrics differ from the editor's has spare
-            // lines before it would spill over the status line.
+            // Leave spare text height for fonts whose metrics differ from the editor font.
             var bodyText = AddText(card, "Body", font, body, 24, PrimaryText, TextAnchor.UpperLeft);
             Band((RectTransform)bodyText.transform, 140f, 360f);
 
@@ -171,9 +100,7 @@ namespace GS2Studio.Showroom.Demo
             Band((RectTransform)_confirmButton.transform, 580f, 100f);
             _confirmButton.interactable = false;
 
-            // A way out that pays nothing. The panel needs one: a press that
-            // fails for a reason the page cannot show would otherwise leave a
-            // visitor looking at a panel that never closes.
+            // Provide an exit independent of the confirming action so a failed action cannot trap the visitor.
             _closeButton = AddButton(card, "Close", font, CloseLabel, CardBackground, MutedText, 26);
             var closeRect = (RectTransform)_closeButton.transform;
             closeRect.anchorMin = new Vector2(1f, 1f);
@@ -186,16 +113,11 @@ namespace GS2Studio.Showroom.Demo
             _root.SetActive(false);
         }
 
-        /// <summary>
-        /// The press that means the placement finished. Whatever a row does
-        /// with a completed view hangs off this one, so the break itself never
-        /// pays and no other way out of the panel can.
-        /// </summary>
+        /// <summary>Expose only the confirmation trigger; the owning row decides what a completed view grants.</summary>
         public Button ConfirmButton => _confirmButton;
 
         public bool IsOpen => _open;
 
-        /// <summary>Starts the break, and the wait in front of its reward.</summary>
         public void Open()
         {
             if (_open) return;
@@ -207,18 +129,13 @@ namespace GS2Studio.Showroom.Demo
             _root.SetActive(true);
         }
 
-        /// <summary>Puts the panel away. Closing it is only closing it.</summary>
         public void Close()
         {
             _open = false;
             _root.SetActive(false);
         }
 
-        /// <summary>
-        /// Counts the wait down. Called from the owning row's `Update`; does
-        /// nothing once the wait is up, so a status the row writes afterwards
-        /// stays written.
-        /// </summary>
+        /// <summary>Stop updating once ready so the owning row's later status message is not overwritten.</summary>
         public void Tick()
         {
             if (!_open || _ready) return;
@@ -233,7 +150,6 @@ namespace GS2Studio.Showroom.Demo
             SetStatus(_readyStatus);
         }
 
-        /// <summary>Holds the confirming press while what it asked for is out.</summary>
         public void SetBusy(string status)
         {
             _confirmButton.interactable = false;
@@ -251,11 +167,7 @@ namespace GS2Studio.Showroom.Demo
             UnityEngine.Object.Destroy(_root);
         }
 
-        /// <summary>
-        /// The page's font, taken from the row's own button rather than named.
-        /// Every piece of text on the page is authored in the template, so
-        /// there is one to copy and no way for the panel to drift from it.
-        /// </summary>
+        /// <summary>Prefer the row's font so overlay text matches the surrounding page.</summary>
         private static Font PageFont(Button row)
         {
             var label = row.GetComponentInChildren<Text>(true);
@@ -279,10 +191,6 @@ namespace GS2Studio.Showroom.Demo
             rect.offsetMax = Vector2.zero;
         }
 
-        /// <summary>
-        /// One band across the card: the card's width less its padding,
-        /// `height` tall, `top` below the card's top edge.
-        /// </summary>
         private static void Band(
             RectTransform rect, float top, float height, float rightPadding = CardPadding)
         {

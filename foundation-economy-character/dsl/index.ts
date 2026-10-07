@@ -260,8 +260,7 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
       .linkedMasterResourceId(ExperienceModel)
       .mountLocal(Character)
       .bindings({
-        // Keyed by the item set GRN plus a suffix, which is where enhancement
-        // adds experience; the item set is what writes `propertyId`.
+        // Match the suffixed key used by enhancement so reads and experience grants address the same status.
         propertyId: Bind.domainPropertyKey(
           Source.direct(Character, "propertyId"),
           CHARACTER_LEVEL_KEY_SUFFIX
@@ -269,8 +268,6 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
         rankValue: Bind.domainProperties([Source.direct(Character, "level")]),
         rankCapValue: Bind.domainProperties([Source.direct(Character, "levelCap")]),
         experienceValue: Bind.domainProperties([Source.direct(Character, "experience")]),
-        // The server computes it, and a level bar has no denominator without
-        // it: the catalog names displaying progress as what it is for.
         nextRankUpExperienceValue: Bind.domainProperties([
           Source.direct(Character, "nextLevelExperience"),
         ]),
@@ -343,9 +340,7 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           .mapParameter("addCapacityValue", "value")
       )
   )
-  // `propertyId` here is the level status key — the character's `propertyId`
-  // plus the level suffix — not the bare item set GRN; a caller that passes
-  // the GRN writes to a status nothing reads.
+  // Callers must pass the suffixed level-status key; the bare item-set GRN would update a different status.
   .actionTransform("AcquireCharacterExperience", at =>
     at
       .category("acquire")
@@ -362,7 +357,7 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           .mapStatic("truncateExperienceWhenRankUp", null)
       )
   )
-  // Keyed like `AcquireCharacterExperience`: the level status key, suffix and all.
+  // Use the same suffixed status key as experience grants so the cap applies to the status being read.
   .actionTransform("IncreaseCharacterLevelCap", at =>
     at
       .category("acquire")
@@ -380,22 +375,13 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
   )
   .uiComponent(Character, ui =>
     ui
-      // A level and its cap are read together, and experience only means
-      // something against the next level, so each is one component rather
-      // than a number a screen has to pair up for itself.
       .templateLabel(
         "LevelLabel",
         "{level}/{levelCap}",
         { level: ui.prop("level"), levelCap: ui.prop("levelCap") },
         { name: "Character" }
       )
-      // Experience is cumulative, so the bar has to span the level the
-      // character is in rather than start at zero — otherwise every level-up
-      // shifts the origin further right and the bar stops reading as progress.
-      // Both ends come off the same threshold table, keyed by the experience
-      // value itself: the stored `nextLevelExperience` is the same number the
-      // upper edge resolves to, but it goes stale during a client-side
-      // simulation, and the table does not.
+      // Derive both bounds from cumulative experience so simulated progress cannot use a stale server-reported next threshold.
       .gauge(
         "ExperienceGauge",
         ui.prop("experience"),

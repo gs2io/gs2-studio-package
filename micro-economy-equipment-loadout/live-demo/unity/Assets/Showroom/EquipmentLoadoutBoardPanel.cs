@@ -1,27 +1,4 @@
-// The loadout board: whose loadout is being edited, what each slot holds, and
-// what could go in.
-//
-// A row of the page reads one value or makes one press, and a loadout screen
-// is neither, so this draws its own region. Tabs pick a character; the slot
-// cards show what it wears and pick the slot a tap on equipment fills; the
-// equipment cards show everything the player holds and who is wearing it.
-//
-// A slot only takes the equipment its pattern names, and the board does not
-// check that itself. A shield sent to the weapon slot goes to GS2, and GS2
-// refuses it: that refusal is what the demo is for.
-//
-// What changes comes from subscriptions: the characters (a recruit lands), the
-// equipment (a take lands), and one loadout per character (a press writes it).
-// Every character's loadout is followed, not just the one shown, because one
-// piece of equipment can be worn by several characters at once and each card
-// says by whom. Each is subscribed before it is read, so a change between the
-// two is not lost, and a read that finishes after a newer one is dropped. The
-// slot names are master data and are read once.
-//
-// Nothing here reloads or invalidates anything. A write puts its result in the
-// SDK cache, and these subscriptions hear it from there. What they hear is
-// handed to the main thread through a `ShowroomInbox` and drawn in `Update`;
-// presses run through `ShowroomPress`, one at a time across the page.
+// Subscribe before initial reads so intervening updates are not missed; hand callbacks to Update before touching Unity objects.
 #nullable enable
 
 using System;
@@ -40,17 +17,12 @@ using Gs2.Unity.Util;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// Draws the loadout board into the region the page gives it.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/Showroom/Loadout Board")]
     public sealed class EquipmentLoadoutBoardPanel : MonoBehaviour
     {
-        /// <summary>The inventory the demo's characters are recruited into.</summary>
         private const string CharacterNamespace = "Character";
         private const string CharacterInventory = "Character";
 
-        /// <summary>The inventory the demo's equipment is taken into.</summary>
         private const string EquipmentNamespace = "Equipment";
         private const string EquipmentInventory = "Equipment";
 
@@ -79,24 +51,20 @@ namespace GS2Studio.Showroom.Demo
         private IGameSession? _session;
         private readonly List<Action> _unsubscribes = new List<Action>();
 
-        /// <summary>Each followed character's loadout subscription, by the character's item set id.</summary>
         private readonly Dictionary<string, Action> _loadoutSubscriptions = new Dictionary<string, Action>();
 
-        /// <summary>Each character's filled slots, slot name to equipment item set id.</summary>
         private readonly Dictionary<string, Dictionary<string, string>> _loadouts =
             new Dictionary<string, Dictionary<string, string>>();
 
-        /// <summary>Reads started per character's loadout, so a stale one is dropped.</summary>
+        /// <summary>Track reads and subscription updates per character so an older loadout cannot overwrite newer state.</summary>
         private readonly Dictionary<string, int> _loadoutReads = new Dictionary<string, int>();
 
         private IReadOnlyList<string>? _slotNames;
         private EzItemSet[] _characters = Array.Empty<EzItemSet>();
         private EzItemSet[] _pieces = Array.Empty<EzItemSet>();
 
-        /// <summary>The character being edited, by item set id, or null before there is one.</summary>
         private string? _character;
 
-        /// <summary>The slot a tap on equipment fills.</summary>
         private string? _slot;
 
         private int _charactersRead;
@@ -134,10 +102,7 @@ namespace GS2Studio.Showroom.Demo
             _inbox.Drain();
         }
 
-        /// <summary>
-        /// The page signs in after it starts, and nothing announces it, so the
-        /// board asks until the session is there.
-        /// </summary>
+        /// <summary>The board can enable before sign-in finishes, so its first reads must wait for a session.</summary>
         private IEnumerator WaitForSignIn()
         {
             Gs2Domain? gs2;
@@ -154,8 +119,7 @@ namespace GS2Studio.Showroom.Demo
 
         private void Begin(Gs2Domain gs2, IGameSession session)
         {
-            // Enabled again after a disable, the board starts over: what it
-            // held was last heard through subscriptions it has since dropped.
+            // Discard snapshots on re-enable because their subscriptions stopped while the board was disabled.
             _loadouts.Clear();
             _character = null;
 
@@ -249,10 +213,7 @@ namespace GS2Studio.Showroom.Demo
             Draw();
         }
 
-        /// <summary>
-        /// Follows the loadout of every character the player holds, and stops
-        /// following those they no longer do.
-        /// </summary>
+        /// <summary>Watch every owned character so equipment cards can name the wearer even when another character is selected.</summary>
         private void FollowLoadouts()
         {
             if (_gs2 == null || _session == null) return;
@@ -264,16 +225,14 @@ namespace GS2Studio.Showroom.Demo
                 held.Add(id);
                 if (_loadoutSubscriptions.ContainsKey(id)) continue;
 
-                // The id is passed exactly as the inventory spelled it: the SDK
-                // caches the form under the property id GS2 returns, and a
-                // subscription keyed by any other spelling would never hear it.
+                // Preserve the inventory's exact property id so the read and subscription share the same cache identity.
                 var loadout = new Gs2Bind.Gs2Formation.PropertyFormLoader(
                     LoadoutCommands.Namespace, LoadoutCommands.FormModel, id);
                 _loadoutSubscriptions[id] = loadout.Subscribe(_gs2, _session, (_, _, value) =>
                 {
                     _inbox.Post(() =>
                     {
-                        // Dropped once the character is no longer followed.
+                        // Ignore queued callbacks for characters whose subscriptions were removed.
                         if (!_loadoutSubscriptions.ContainsKey(id)) return;
                         _loadoutReads[id] = _loadoutReads.TryGetValue(id, out var count) ? count + 1 : 1;
                         OnLoadout(id, value);
@@ -302,9 +261,6 @@ namespace GS2Studio.Showroom.Demo
             var read = _loadoutReads[character] = _loadoutReads.TryGetValue(character, out var count) ? count + 1 : 1;
             try
             {
-                // GS2 makes an empty form the first time one is read, so this
-                // is not expected to come back missing; if it does, the
-                // character simply wears nothing.
                 var value = await loadout.LoadOrNull(_gs2!, _session!);
                 if (this == null) return;
                 if (_loadoutReads.TryGetValue(character, out var latest) && latest == read) OnLoadout(character, value);
@@ -331,7 +287,6 @@ namespace GS2Studio.Showroom.Demo
             Draw();
         }
 
-        /// <summary>Runs one change to a loadout, one press at a time across the page.</summary>
         private void Press(Func<Gs2Domain, IGameSession, Task<string>> write)
         {
             ShowroomPress.Run(new ShowroomPressOptions
@@ -388,8 +343,6 @@ namespace GS2Studio.Showroom.Demo
                 : new Dictionary<string, string>();
         }
 
-        // Drawing. Each part is cleared and drawn again from the state above;
-        // there are a handful of cards, so nothing is worth diffing.
 
         private void Build()
         {
@@ -402,8 +355,7 @@ namespace GS2Studio.Showroom.Demo
             Caption("Equipment  (tap to put it in the chosen slot)");
             _equipment = Grid("Equipment");
             _equipmentHint = Caption("Take a piece of equipment above to start.");
-            // Rows with nothing in them yet still keep their height, so they
-            // start hidden and Draw shows them once they have cards.
+            // Hide empty rows because their layout elements otherwise reserve space without cards.
             _tabs.gameObject.SetActive(false);
             _takeOff.gameObject.SetActive(false);
         }
@@ -420,7 +372,7 @@ namespace GS2Studio.Showroom.Demo
             if (_tabs == null || _tabsHint == null) return;
             Clear(_tabs);
             _tabsHint.gameObject.SetActive(_characters.Length == 0);
-            // An empty row still keeps its height, so it goes with its cards.
+            // Hide the row with its last card so an empty layout does not leave a gap.
             _tabs.gameObject.SetActive(_characters.Length > 0);
             var names = Distinguished(_characters);
             for (var index = 0; index < _characters.Length; index++)
@@ -481,7 +433,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>"Worn by knight (weapon), mage (weapon)", or empty when no one wears it.</summary>
         private string Wearers(string piece, IReadOnlyList<string> characterNames)
         {
             var text = new StringBuilder();
@@ -499,11 +450,7 @@ namespace GS2Studio.Showroom.Demo
             return text.ToString();
         }
 
-        /// <summary>
-        /// Each item set's item name, with "#2", "#3" on the second and later
-        /// sets of the same item, so two recruits of one character can be told
-        /// apart.
-        /// </summary>
+        /// <summary>Distinguish multiple item sets of the same item so separate recruits are not shown with identical names.</summary>
         private static IReadOnlyList<string> Distinguished(EzItemSet[] itemSets)
         {
             var seen = new Dictionary<string, int>();
@@ -557,8 +504,7 @@ namespace GS2Studio.Showroom.Demo
         {
             var button = Instantiate(_buttonTemplate!, parent);
             button.name = "Card";
-            // The template is sized for a row's single button; in a board the
-            // layout above decides the size instead.
+            // Release the row template's fixed width so the board layout can size this card.
             var element = button.GetComponent<LayoutElement>();
             if (element != null)
             {
@@ -570,9 +516,6 @@ namespace GS2Studio.Showroom.Demo
             var label = button.GetComponentInChildren<Text>();
             if (label != null)
             {
-                // Rich text for the smaller second line only. The names put in
-                // it are GS2 resource names, made of letters, digits, '-', '_'
-                // and '.' only, so none of them can form a tag.
                 label.supportRichText = true;
                 label.color = textColor;
                 label.text = text;
@@ -592,9 +535,7 @@ namespace GS2Studio.Showroom.Demo
         {
             for (var index = parent.childCount - 1; index >= 0; index--)
             {
-                // Destroy waits for the end of the frame, and until then a
-                // layout group still counts the child; an inactive one it
-                // skips.
+                // Deactivate before deferred destruction so the layout stops reserving space for the old card.
                 var child = parent.GetChild(index).gameObject;
                 child.SetActive(false);
                 Destroy(child);

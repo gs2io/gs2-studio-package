@@ -173,8 +173,7 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
             ),
             absoluteEnd: Bind.domainProperty(Source.parent(Source.direct(GlobalMessage, "end"))),
             scheduleType: Bind.static("absolute"),
-            // GS2-Schedule requires a repeat setting; `always` keeps the
-            // message receivable for the whole of its period.
+            // Keep messages receivable throughout their absolute period without an additional repeat window.
             repeatSetting: { repeatType: Bind.static("always") },
           });
       });
@@ -182,12 +181,8 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
 
   .userDataResource(InboxMessage)
 
-  // Reading the payload and whether it has been opened is the same job in
-  // every title, so the labels live here; where a title puts the Read press is
-  // its own design.
   .uiComponent(Message, ui =>
     ui
-      // The payload is the message's GS2 `metadata`, shown as written.
       .label("PayloadLabel", ui.prop("payload"), { name: "Message" })
       .activeToggle("ReadActiveToggle", UiCond.truthy(ui.prop("isRead")), { name: "Message" })
   )
@@ -209,12 +204,7 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
           .mapStatic("expiresTimeSpan.minutes", null)
       )
   )
-  // The rewards run when the player opens the message. With this namespace's
-  // transaction setting (no atomic commit), GS2 passes a single reward through
-  // as it is and folds two or more into a Gs2JobQueue push to `queue:default`,
-  // so that job queue namespace must exist (Studio has no JobQueue catalog to
-  // provision it) and its jobs must be run, by the namespace's auto-run or by
-  // the client.
+  // Keep reward actions on the message so opening it owns their execution.
   .actionTransform("SendMessageWithReward", at =>
     at
       .category("acquire")
@@ -235,9 +225,6 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
       )
   )
 
-  // Opening a message is the Message loader's `Read`: Gs2Bind hosts it there,
-  // keyed by the message's own name. It marks the message read and runs the
-  // rewards the message carries; a message with none is simply marked read.
   .delegatedAction(Message, "Read", {
     targetActionKey: "Gs2Inbox:Message.ReadMessage",
     targetResource: InboxMessage,

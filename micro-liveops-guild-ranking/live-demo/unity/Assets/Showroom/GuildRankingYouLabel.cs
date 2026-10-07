@@ -1,4 +1,3 @@
-// The visitor's total and place in their guild this season, as one line.
 #nullable enable
 
 using UnityEngine;
@@ -6,7 +5,6 @@ using UnityEngine.Events;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>The visitor's rank in their guild and total, or that they have not played.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Guild Season You")]
     public sealed class GuildRankingYouLabel : MonoBehaviour
     {
@@ -51,8 +49,7 @@ namespace GS2Studio.Showroom.Demo
                 _onUpdate.Invoke("Reading your guild's board...");
                 return;
             }
-            // The board is read only down to its last shown place, and members
-            // who left keep theirs, so past that it can only say "more".
+            // A truncated board cannot provide a total player count; show a lower bound while another page exists.
             var scored = _season.BoardHasMore
                 ? $"more than {GuildRankingSeasonState.BoardSize}"
                 : _season.Board.Length.ToString();

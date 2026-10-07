@@ -15,14 +15,11 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import energySurface from "../../foundation-economy-energy/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const energy = dependencyPackage(energySurface);
 
 const EnergyProduct = defineDomainType("EnergyProduct", dt =>
   dt
-    // Which stamina a product refills. A title may run more than one meter,
-    // and the refill transform has to be told which one this product is for.
+    // Keep the target meter on the product because a project can offer refills for more than one stamina.
     .property(
       PT.prop("energy", PT.ref(energy.typeId("Energy")))
         .masterData()
@@ -66,8 +63,6 @@ const RateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EnergyProduct)
         .bindings({
-          // The stamina and the recovery amount are authored on the product
-          // and handed to the energy package's own RecoveryEnergy transform.
           action: Bind.transform(energy.packageId, "RecoveryEnergy", [
             Arg.domainProperty("energy", Source.parent(Source.direct(EnergyProduct, "energy"))),
             Arg.domainProperty(

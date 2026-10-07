@@ -1,17 +1,4 @@
-/**
- * Regression test for: "Schedule: assetDelivery properties declared but no
- * instances found — entry class emitted with no .asset payloads" warning
- * when generating C# code for foundation-economy-schedule.
- *
- * Schedule is declared in `foundation-economy-schedule` with the `trigger`
- * property bound through `assetDelivery`. The single Schedule instance
- * (`login-bonus-event`) is authored against an explicit Schedule overlay in
- * the consumer package `sample-social-game-basic`. The owning package emits
- * the overlay entry, so reverse-dependent collection must follow that
- * overlay's canonical source and find the consumer instance. Otherwise the
- * entry class is emitted with no `.asset` payloads and a spurious warning
- * fires.
- */
+/** The Schedule instance belongs to a downstream consumer overlay; generation must follow canonical identity to include its asset in the owning package. */
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -40,11 +27,6 @@ describe("Schedule assetDelivery codegen regression (foundation-economy-schedule
 
     const project = new Project(PackageCollection.fromTrusted(pkgs));
 
-    // Production path: generateAllPackagesCSharp builds the project-wide canonical
-    // registry. Single-package generatePackageCSharp includes direct reverse dependents
-    // as additional hosts for dependency-target resolution, so host-authored
-    // instances are reachable via identityByPackageDependencyTarget without
-    // affecting canonical-emitter selection.
     const genResult = generateAllPackagesCSharp({ project, catalog });
     expect(Result.isSuccess(genResult)).toBe(true);
     if (!Result.isSuccess(genResult)) return;
@@ -54,8 +36,6 @@ describe("Schedule assetDelivery codegen regression (foundation-economy-schedule
     expect(entry, "foundation-economy-schedule codegen entry").toBeDefined();
     if (!entry) return;
 
-    // The "no instances found" diagnostic must NOT be reported: the consumer
-    // instance `login-bonus-event` should satisfy the entry class.
     const noInstancesWarning = entry.artifacts.warnings.find(
       w =>
         w.code === "codegen.scriptableObject" &&
@@ -64,12 +44,10 @@ describe("Schedule assetDelivery codegen regression (foundation-economy-schedule
     );
     expect(noInstancesWarning, "scriptableObject no-instances warning").toBeUndefined();
 
-    // The Schedule overlay entry must be emitted in the owning package output.
     const scheduleEntry = entry.artifacts.files.find(f => f.fileName === "ScheduleOverlayEntry.cs");
     expect(scheduleEntry, "ScheduleOverlayEntry.cs").toBeDefined();
 
-    // The per-instance .asset payload must be emitted under the type folder,
-    // inside a Resources folder so the player-time Resources loader finds it.
+    // Resources must contain the payload so the player-time overlay loader can find it.
     const asset = entry.artifacts.files.find(
       f => f.fileName === "Resources/Overlays/Schedule/login-bonus-event.asset"
     );

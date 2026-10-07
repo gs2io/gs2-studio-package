@@ -1,20 +1,3 @@
-/**
- * Regression test for: "Failed to set overlay: overlayHostingDeclarationNotFound"
- * when editing StoreProduct.appleAppStoreProductId in sample-social-game-basic.
- * The sample now authors its store products rather than overriding the shop's,
- * so it holds no StoreProduct overlay on disk; the edit below is what still
- * pins overriding a dependency's row without declaring its type.
- *
- * Pins declaration-free dependency authoring:
- *
- * - `sample-social-game-basic` reaches StoreProduct through its existing
- *   `micro-shop-currency` dependency without declaring a DomainType overlay.
- * - Instance overlays are keyed by the canonical
- *   `foundation-economy-currency` type id.
- *
- * - Editing adds only the requested overlay instance; it does not materialize
- *   another DomainType or direct dependency.
- */
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -40,8 +23,6 @@ describe("StoreProduct overlay edit regression (sample-social-game-basic)", () =
 
     expect(samplePkg.domainTypes.getByName(DomainTypeName.trusted("StoreProduct"))).toBeUndefined();
 
-    // StoreProduct is canonically owned by foundation-economy-currency and is
-    // reached through micro-shop-currency.
     const foundationCurrencyPkg = pkgs.find(p => p.name === "foundation-economy-currency")!;
     const storeProductType = foundationCurrencyPkg.domainTypes.getByName(
       DomainTypeName.trusted("StoreProduct")
@@ -55,9 +36,7 @@ describe("StoreProduct overlay edit regression (sample-social-game-basic)", () =
     expect(depsBefore.has("micro-shop-currency")).toBe(true);
     expect(depsBefore.has("foundation-economy-currency")).toBe(false);
 
-    // Use a synthetic sourceInstanceId that does not collide with any overlay
-    // authored on disk; this keeps the regression idempotent if the fixture
-    // ever gains a StoreProduct overlay on disk again.
+    // Choose an unused source ID so fixture-authored overlays cannot affect the mutation under test.
     const existingOverlayIds = new Set(overlaysBefore.map(o => o.sourceInstanceId as string));
     let targetId = "regression-target";
     let suffix = 0;
@@ -66,8 +45,6 @@ describe("StoreProduct overlay edit regression (sample-social-game-basic)", () =
       targetId = `regression-target-${suffix}`;
     }
 
-    // appleAppStoreProductId property: prop_2GHK1DAZ80TETBDER3P5PF6XKA
-    // (from foundation-economy-currency/domain-types/store-product.json)
     const appleProductIdPropId = PropertyId.trusted("prop_2GHK1DAZ80TETBDER3P5PF6XKA");
 
     const result = PackageInstances.setOverlayOverride(
@@ -107,8 +84,6 @@ describe("StoreProduct overlay edit regression (sample-social-game-basic)", () =
       .find(p => p.name === "micro-shop-currency")!
       .domainTypes.getByName(DomainTypeName.trusted("StorePrice"))!;
 
-    // micro-shop-currency's StoreProduct.prices, and its StorePrice element's
-    // currencyType and price.
     const pricesPropId = PropertyId.trusted("prop_01M40RS7N08DEDFYE3YFC4TRYV");
     const currencyTypePropId = "prop_4F7GJCACK2YK78HYH2XVEEMN6R";
     const pricePropId = "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K";

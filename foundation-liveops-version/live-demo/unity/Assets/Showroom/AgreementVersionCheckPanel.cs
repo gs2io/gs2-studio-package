@@ -1,16 +1,3 @@
-// The version check, pressed by hand: answering the agreements, picking the
-// versions the client reports, and checking.
-//
-// A row of the page reads one value or makes one press, and a version check
-// is several presses and a verdict per version, so this draws its own region.
-// Answering and checking are not actions a package can host, so every press
-// goes straight to GS2 through the REST client, and so do the reads of what
-// the visitor has answered. Nothing here reloads or invalidates anything.
-// Every press runs through `ShowroomPress`, so it waits its turn with every
-// other press on the page and says its outcome in one line.
-//
-// The check sends the app and asset versions together every time: GS2 refuses
-// a check that leaves out any version the client is meant to report.
 #nullable enable
 
 using System;
@@ -31,29 +18,21 @@ using VersionStatus = Gs2.Gs2Version.Model.Status;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Draws the version check into the region the page gives it.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Version Check")]
     public sealed class AgreementVersionCheckPanel : MonoBehaviour
     {
-        /// <summary>The version namespace the feature package deploys.</summary>
         private const string VersionNamespace = "Version";
 
-        /// <summary>The agreements, as the demo package names them.</summary>
         private const string Terms = "terms";
         private const string Marketing = "marketing";
 
-        /// <summary>The versions the client reports, as the demo package names them.</summary>
         private const string App = "app";
         private const string Asset = "asset";
 
-        /// <summary>
-        /// The versions a visitor can claim for each, one below the refusal,
-        /// one at the warning and one above it.
-        /// </summary>
+        /// <summary>Offer error, warning and passing examples for each version; the two warning thresholds differ.</summary>
         private static readonly (int, int, int)[] AppChoices = { (1, 0, 0), (1, 1, 0), (1, 2, 0) };
         private static readonly (int, int, int)[] AssetChoices = { (0, 9, 0), (1, 5, 0), (2, 1, 0) };
 
-        /// <summary>The terms versions a visitor can accept: an old one, and the latest.</summary>
         private static readonly (int, int, int) OldTerms = (1, 0, 0);
         private static readonly (int, int, int) LatestTerms = (2, 0, 0);
 
@@ -69,7 +48,7 @@ namespace GS2Studio.Showroom.Demo
         private Button? _appButton;
         private Button? _assetButton;
         private readonly List<Button> _buttons = new List<Button>();
-        /// <summary>Bumped by every read of the answers as it starts; only the latest one to start is shown.</summary>
+        /// <summary>Reject older read completions so they cannot overwrite answers from a newer request.</summary>
         private int _answersGeneration;
         private int _app;
         private int _asset;
@@ -92,10 +71,7 @@ namespace GS2Studio.Showroom.Demo
             _waiting = null;
         }
 
-        /// <summary>
-        /// The page signs in after it starts, and nothing announces it, so the
-        /// panel asks until the session is there.
-        /// </summary>
+        /// <summary>The panel can enable before sign-in finishes, so its first read must wait for a session.</summary>
         private IEnumerator WaitForSignIn()
         {
             while (!ShowroomRuntime.TryGet(out _, out _))
@@ -131,7 +107,6 @@ namespace GS2Studio.Showroom.Demo
             SetLabel(_assetButton, $"Asset version {Format(AssetChoices[_asset])} (press to change)");
         }
 
-        /// <summary>Accepts or rejects one agreement; a null version means the latest.</summary>
         private void Answer(string agreement, bool accept, (int, int, int)? version) =>
             Run(async (client, token) =>
             {
@@ -155,7 +130,6 @@ namespace GS2Studio.Showroom.Demo
                 return $"Rejected {agreement}.";
             }, "answering an agreement", readAfter: true);
 
-        /// <summary>Deletes both answers, so the visitor starts over unanswered.</summary>
         private void Clear() =>
             Run(async (client, token) =>
             {
@@ -170,16 +144,12 @@ namespace GS2Studio.Showroom.Demo
                     }
                     catch (NotFoundException)
                     {
-                        // Never answered: nothing to clear.
+                        // An absent answer already satisfies clearing, regardless of whether it existed earlier.
                     }
                 }
                 return "Cleared your answers.";
             }, "clearing your answers", readAfter: true);
 
-        /// <summary>
-        /// Checks every version at once and shows the verdict for each. GS2
-        /// issues a project token only when nothing is an error.
-        /// </summary>
         private void Check()
         {
             var started = Run(async (client, token) =>
@@ -216,7 +186,6 @@ namespace GS2Studio.Showroom.Demo
                 .Select(status => status.VersionModel?.Name ?? "")
                 .Where(name => name.Length > 0));
 
-        /// <summary>Reads what the visitor has answered, for the answers line.</summary>
         private async void ReadAnswers()
         {
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
@@ -245,13 +214,7 @@ namespace GS2Studio.Showroom.Demo
             }));
         }
 
-        /// <summary>
-        /// Runs one press through `ShowroomPress`, with the page's buttons off
-        /// while it is out. <paramref name="onFailed"/> runs when the press
-        /// threw; <paramref name="readAfter"/> reads the answers again once it
-        /// is over (a REST read, which no SDK cache holds). Returns whether the
-        /// press started.
-        /// </summary>
+        /// <summary>Refresh answers explicitly after agreement writes because these REST reads have no subscription to update the panel.</summary>
         private bool Run(
             Func<Gs2VersionRestClient, string, Task<string>> press,
             string name,

@@ -1,9 +1,3 @@
-// What the friend page's hand-written parts share beyond the showroom runtime:
-// the friend namespace, how a press reaches GS2 as the visitor, explaining
-// GS2's refusals in the press's terms, and the name a player goes by. Reaching
-// the player, running presses, logging, player tags and the settle pause are
-// the runtime's (`ShowroomRuntime`, `ShowroomPress`, `ShowroomLog`,
-// `ShowroomPlayerTag`, `ShowroomSettle`).
 #nullable enable
 
 using System;
@@ -18,32 +12,16 @@ using VisitorDomain = Gs2.Gs2Friend.Domain.Model.UserAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>The friend page's shared helpers.</summary>
     public static class FriendDemo
     {
-        /// <summary>The friend namespace the feature package deploys.</summary>
         public const string Namespace = "Friend";
 
-        /// <summary>
-        /// Friends and follows are always read with profiles. The SDK keys its
-        /// cache by this flag, so every reader and writer on the page uses the
-        /// same value, including the generated rows.
-        /// </summary>
+        /// <summary>Keep the profile flag consistent with generated readers because it participates in SDK cache identity.</summary>
         public const bool WithProfile = true;
 
-        /// <summary>The SDK's domain for the signed-in player in the friend namespace.</summary>
         public static VisitorDomain Visitor(Gs2Domain gs2, IGameSession session) =>
             gs2.Super.Friend.Namespace(Namespace).AccessToken(session.AccessToken);
 
-        /// <summary>
-        /// Runs one press as the visitor through the page's press runner, and
-        /// explains a refusal in the press's terms. What it changed reaches
-        /// every reader through the SDK's cache, so nothing is read again
-        /// here, except: <paramref name="whenGone"/> runs when GS2 says what
-        /// was pressed on no longer exists and the SDK does not correct its
-        /// cache itself. <paramref name="pressed"/> is false for what the page
-        /// does on its own. Returns whether the press started.
-        /// </summary>
         public static bool Run(
             FriendPress press,
             UnityEngine.Object owner,
@@ -61,21 +39,10 @@ namespace GS2Studio.Showroom.Demo
             }, (gs2, session) => action(Visitor(gs2, session)));
         }
 
-        /// <summary>
-        /// The Unfollow SDK call leaves a follow GS2 no longer has in its
-        /// cache, and no notification corrects it, so the list is read again.
-        /// </summary>
+        /// <summary>Invalidate the profile-bearing follow list after a stale-row refusal so readers stop offering the removed row.</summary>
         public static void ForgetFollows(VisitorDomain visitor) => visitor.Follow(WithProfile).InvalidateFollows();
 
-        /// <summary>
-        /// Says why GS2 refused, for the refusals a visitor can meet; null
-        /// leaves any other refusal to the press runner.
-        ///
-        /// These refusals are recognised by the SDK's exception types. A
-        /// profile text that is too long is a request validation GS2 gives no
-        /// code or type, so it is recognised by its kind and the field GS2
-        /// names.
-        /// </summary>
+        /// <summary>Match profile validation by error kind and field so unrelated bad requests retain the default report.</summary>
         public static string? Explain(FriendPress press, Gs2Exception error)
         {
             if (error is NotFoundException)
@@ -89,8 +56,6 @@ namespace GS2Studio.Showroom.Demo
                     _ => "That is gone.",
                 };
             }
-            // A full outbox drops its oldest request instead; this refusal means
-            // the visitor already has as many friends as GS2 allows.
             if (error is SendRequestCapacityFullException) return "You already have as many friends as GS2 allows (1000); remove one first.";
             if (error is DuplicateFriendRequestException ||
                 error is AlreadyFriendException ||
@@ -115,7 +80,6 @@ namespace GS2Studio.Showroom.Demo
             return null;
         }
 
-        /// <summary>The name a player goes by: what they chose, or their tag.</summary>
         public static string NameOf(string userId, string? publicProfile) =>
             string.IsNullOrWhiteSpace(publicProfile) ? ShowroomPlayerTag.Of(userId) : publicProfile!.Trim();
     }

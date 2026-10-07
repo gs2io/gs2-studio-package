@@ -1,8 +1,3 @@
-// What the transfer page's hand-written parts share beyond the showroom
-// runtime: the account namespace and take-over type, making and reading
-// transfer codes, and explaining GS2's refusals of them. Reaching the player,
-// running presses, logging and player tags are the runtime's
-// (`ShowroomRuntime`, `ShowroomPress`, `ShowroomLog`, `ShowroomPlayerTag`).
 #nullable enable
 
 using System;
@@ -21,40 +16,24 @@ using AccountNamespaceDomain = Gs2.Unity.Gs2Account.Domain.Model.EzNamespaceDoma
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>The transfer page's shared helpers.</summary>
     public static class IdentityDemo
     {
-        /// <summary>The account namespace every showroom demo signs in to.</summary>
         public const string Namespace = "Account";
 
-        /// <summary>
-        /// The take-over type a transfer code is registered under: the feature
-        /// package's <c>TRANSFER_CODE_TAKE_OVER_TYPE</c>. No OIDC type may use
-        /// it, because GS2 refuses a password take-over for a type that has a
-        /// take-over type model.
-        /// </summary>
+        /// <summary>Match the feature package's reserved transfer-code type so these requests cannot address an OIDC setting.</summary>
         public const int TakeOverType = 1024;
 
-        /// <summary>Where every transfer code ID starts, so it cannot be mistaken for an email address.</summary>
+        /// <summary>Keep transfer identifiers distinguishable from email addresses when pasting.</summary>
         public const string IdentifierPrefix = "demo-";
 
-        /// <summary>
-        /// Crockford's base32: no I, L, O or U, so a code read aloud or copied
-        /// by hand has no look-alike letters.
-        /// </summary>
+        /// <summary>Use a restricted alphabet to reduce mistakes when codes are read or typed by hand.</summary>
         private const string Alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 
-        /// <summary>The SDK's account namespace, for what runs without a session.</summary>
         public static AccountNamespaceDomain Accounts(Gs2Domain gs2) => gs2.Account.Namespace(Namespace);
 
-        /// <summary>The SDK's domain for the signed-in player's account.</summary>
         public static AccountDomain Me(Gs2Domain gs2, IGameSession session) => Accounts(gs2).Me(session);
 
-        /// <summary>
-        /// The keys <c>ShowroomAccountStore</c> keeps the account under: its
-        /// <c>_keyPrefix</c> as every showroom scene sets it, plus the suffixes
-        /// it appends.
-        /// </summary>
+        /// <summary>Match the scene account store keys so read-back checks the credentials that the next page will use.</summary>
         private const string RememberedUserIdKey = "gs2.showroom.account.userId";
         private const string RememberedPasswordKey = "gs2.showroom.account.password";
 
@@ -67,37 +46,20 @@ namespace GS2Studio.Showroom.Demo
         private static string? ReadRemembered(string key) => PlayerPrefs.GetString(key, null);
 #endif
 
-        /// <summary>
-        /// Whether the store now holds exactly this account, read back from
-        /// where the next page reads it. A browser that blocks site data
-        /// accepts the write and keeps nothing.
-        /// </summary>
+        /// <summary>Read storage back before reloading because a write can fail without retaining the account.</summary>
         public static bool IsRemembered(string userId, string password) =>
             ReadRemembered(RememberedUserIdKey) == userId && ReadRemembered(RememberedPasswordKey) == password;
 
-        /// <summary>Whether GS2 refused because the player already has a transfer code.</summary>
         public static bool IsAlreadyRegistered(Gs2Exception error) => error is TakeOverAlreadyExistsException;
 
-        /// <summary>
-        /// Whether GS2 refused the transfer code ID because another player
-        /// already holds it. GS2 checks the ID before it commits and answers
-        /// with the SDK's TakeOverIdentifierAlreadyUsedException, a 409 it
-        /// does not retry. Two players racing for one ID both pass that check,
-        /// and the later commit ends at the database's create guard instead: a
-        /// 409 with no code, raised at the "create" component.
-        /// </summary>
+        /// <summary>Recognize the typed duplicate refusal and the create-guard conflict without treating unrelated conflicts as taken identifiers.</summary>
         public static bool IsIdentifierTaken(Gs2Exception error) =>
             error is TakeOverIdentifierAlreadyUsedException
             || (error is ConflictException && ShowroomRefusal.IsComponent(error, CreateGuardComponent));
 
-        /// <summary>The component of GS2's uncoded duplicate refusal from the database's create guard.</summary>
         private const string CreateGuardComponent = "create";
 
-        /// <summary>
-        /// Says why GS2 refused, for the refusals a visitor can meet; null
-        /// leaves any other refusal to the press runner, which reports it by
-        /// kind and code only, since these requests carry a password.
-        /// </summary>
+        /// <summary>Leave unknown refusals to the redacted press runner because these requests carry passwords.</summary>
         public static string? Explain(IdentityPress press, Gs2Exception error)
         {
             switch (press)
@@ -116,16 +78,11 @@ namespace GS2Studio.Showroom.Demo
             return null;
         }
 
-        /// <summary>
-        /// A new transfer code ID, <c>demo-XXXX-XXXX</c>. GS2 keeps each ID
-        /// unique across the namespace, so it is random rather than chosen.
-        /// </summary>
+        /// <summary>Random identifiers reduce collisions with transfer codes belonging to other accounts.</summary>
         public static string NewIdentifier() => IdentifierPrefix + Groups(2);
 
-        /// <summary>A new password, <c>XXXX-XXXX-XXXX-XXXX</c>: 16 random symbols, 80 bits.</summary>
         public static string NewPassword() => Groups(4);
 
-        /// <summary>Groups of four random symbols from the cryptographic generator.</summary>
         private static string Groups(int count)
         {
             var bytes = new byte[count * 4];
@@ -143,12 +100,7 @@ namespace GS2Studio.Showroom.Demo
             return text.ToString();
         }
 
-        /// <summary>
-        /// A transfer code ID as typed or pasted, in the form it was issued
-        /// in, or null when it is not one. Letters may be in either case, and
-        /// the look-alikes Crockford's base32 leaves out are read as the
-        /// digits they resemble.
-        /// </summary>
+        /// <summary>Normalize common look-alike characters so a code entered by hand resolves to its issued spelling.</summary>
         public static string? ParseIdentifier(string text)
         {
             var trimmed = text.Trim();
@@ -157,7 +109,6 @@ namespace GS2Studio.Showroom.Demo
             return IsGroups(body, 2) ? IdentifierPrefix + body : null;
         }
 
-        /// <summary>A password as typed or pasted, in the form it was issued in, or null when it is not one.</summary>
         public static string? ParsePassword(string text)
         {
             var body = Normalize(text.Trim());

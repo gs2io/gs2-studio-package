@@ -1,4 +1,3 @@
-// Which season it is and which guild the visitor's plays count for, as one line.
 #nullable enable
 
 using UnityEngine;
@@ -6,7 +5,6 @@ using UnityEngine.Events;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>The season and the visitor's guild, or what is missing to play.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Guild Season Guild")]
     public sealed class GuildRankingGuildLabel : MonoBehaviour
     {

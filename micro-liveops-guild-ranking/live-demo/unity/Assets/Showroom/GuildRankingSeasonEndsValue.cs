@@ -1,11 +1,4 @@
-// When the season being played turns over, for the page to count down to.
-//
-// Handed over as a `DateTime`, which the page draws as time left. It is the
-// schedule event's current repeat end, the next 00:00 UTC on GS2's clock for
-// the visitor, moved onto this device's clock, which is the one the page
-// counts down against: after Advance one day it is a day earlier here than
-// the date GS2 reports. Until the event has been read the deadline is left
-// unset.
+// The shared countdown uses the device clock; publish the account-offset-adjusted deadline, or default to clear it.
 #nullable enable
 
 using System;
@@ -15,7 +8,6 @@ using UnityEngine.Events;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Publishes when the season ends, whenever it may have changed.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Guild Season Ends")]
     public sealed class GuildRankingSeasonEndsValue : MonoBehaviour
     {

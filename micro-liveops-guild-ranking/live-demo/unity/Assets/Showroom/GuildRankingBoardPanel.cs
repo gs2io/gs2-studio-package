@@ -1,13 +1,3 @@
-// The visitor's guild's board for the season being played: the top places,
-// best first. Members who left the guild keep their places, so a board can
-// hold more than the ten members a guild has at once.
-//
-// A row of the page reads one value, and a board is a table, so this draws its
-// own region. Every visitor is anonymous, so a place is named by a short tag
-// made from the player's id rather than by anything a player wrote; the
-// visitor's own place reads "You". Members of other guilds are on boards of
-// their own: GS2 ranks the members of one guild against each other, never one
-// guild against another.
 #nullable enable
 
 using System.Linq;
@@ -17,7 +7,6 @@ using UnityEngine.UI;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Draws the guild's board into the region the page gives it.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Guild Season Board")]
     public sealed class GuildRankingBoardPanel : MonoBehaviour
     {
@@ -34,7 +23,6 @@ namespace GS2Studio.Showroom.Demo
         private Text? _hint;
         private GuildRankingSeasonState? _season;
 
-        /// <summary>What the board was last drawn from; null before the first draw.</summary>
         private string? _shown;
 
         private void OnEnable()
@@ -98,10 +86,7 @@ namespace GS2Studio.Showroom.Demo
             }
             else
             {
-                // Only the top places are read, and members who left keep
-                // theirs, so a visitor who scored can be below them; their own
-                // place is added under the board. It also covers a read that
-                // raced a play.
+                // The fetched board is truncated and may lag a play; append the personal standing when its row is absent.
                 if (season.Total != null && places.All(place => !place.own))
                 {
                     places.Add((rank: season.Rank, name: "You", score: season.Total, own: true));
@@ -113,9 +98,7 @@ namespace GS2Studio.Showroom.Demo
                         : "Only your guild's members, and members who left it, are ranked here. The board is read again every few seconds.";
             }
 
-            // Drawn again only when what it shows changed: a row that appears
-            // or vanishes moves every button below the board, and presses wait
-            // for that.
+            // Skip unchanged draws so polling does not repeatedly restart the layout settle guard.
             var shown = hint + "|" + string.Join(";", places.Select(place => $"{place.rank}:{place.name}:{place.score}"));
             if (shown == _shown) return;
             _shown = shown;
@@ -188,9 +171,7 @@ namespace GS2Studio.Showroom.Demo
         {
             for (var index = parent.childCount - 1; index >= 0; index--)
             {
-                // Destroy waits for the end of the frame, and until then a
-                // layout group still counts the child; an inactive one it
-                // skips.
+                // Deactivate before deferred destruction so the layout stops counting rows being replaced.
                 var child = parent.GetChild(index).gameObject;
                 child.SetActive(false);
                 Destroy(child);

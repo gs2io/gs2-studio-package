@@ -1,29 +1,3 @@
-/**
- * Live demo content for `micro-economy-character-enhance`.
- *
- * Enhancing spends material items to level a character up. What is worth
- * watching is both ends of the trade moving on one press: a material's count
- * drops by one, and the character's level bar jumps by what that material is
- * worth.
- *
- * The feature package is the recipe, its bonus draws and the material
- * inventory; it ships no rows and nothing a player presses. This package adds
- * a recipe with its normal and great-success draws, two materials and the
- * presses: one to pick up a material, and one per material to spend it on a
- * character. Each press is an exchange whose
- * only acquire action is the package's own transform, so the enhancement runs
- * server-side like every other demo press.
- *
- * The roster, the recruit and the level curve are
- * `foundation-economy-character-demo`'s, installed beside this package rather
- * than written out again: they live in stacks every demo holding a roster
- * deploys, and a second author of them would be a second version, and the
- * last deploy would win. The material values are sized against that curve so
- * the first press shows: from a fresh character a potion reaches level 4 and
- * an elixir level 7, and a great success (×1.5) lifts either a little more.
- * Later presses move the bar less, as the thresholds widen.
- */
-
 import {
   Arg,
   Bind,
@@ -52,21 +26,18 @@ const CharacterEnhanceMaterial = enhance.type("CharacterEnhanceMaterial");
 const PROPERTY_ID = character.propertyId("Character", "propertyId");
 const MATERIAL_COUNT = enhance.propertyId("CharacterEnhanceMaterial", "count");
 
-/** The one recipe the presses run. */
 const RECIPE = "Basic";
 
-/** The materials, and the experience one of each is worth. */
 const POTION = "potion";
 const ELIXIR = "elixir";
 const POTION_EXPERIENCE = 300;
 const ELIXIR_EXPERIENCE = 1000;
 
-/** A material's metadata, in the shape the recipe's hierarchy reads. */
+/** Match the recipe metadata path so material experience can be read from the deployed item metadata. */
 function materialMetadata(experience: number): string {
   return JSON.stringify({ experience });
 }
 
-/** One bonus draw of the recipe: its multiplier and relative weight. */
 function bonus(rate: number, weight: number) {
   return {
     [enhance.propertyId("CharacterEnhanceBonus", "enhance")]: RECIPE,
@@ -75,12 +46,6 @@ function bonus(rate: number, weight: number) {
   };
 }
 
-/**
- * Picks up one of the material it is mounted on, for nothing. Named after the
- * material because a delegated action on `CharacterEnhanceMaterial` must
- * target a resource that mounts it — that is how the generated loader learns
- * which rate a row's button trades.
- */
 const GetMaterialRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -99,14 +64,7 @@ const GetMaterialRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/**
- * Spends one of `materialName` on the character it is mounted on. Named after
- * the character for the same reason as the material rate. The target is the
- * character's bare `propertyId` — its item set GRN, minted by GS2 at recruit
- * time — so the row carries a `#{propertyId}` placeholder and the click fills
- * it. GS2-Enhance appends the level suffix itself, so this is not the level
- * status key the training presses use.
- */
+/** Supply the owned item-set id at click time because it does not exist when the rate is deployed. Pass the bare id because the recipe supplies the experience suffix. */
 function enhanceRateModel(materialName: string) {
   return defineMasterDataResource(resource =>
     resource
@@ -132,12 +90,7 @@ function enhanceRateModel(materialName: string) {
 const EnhanceWithPotionRateModel = enhanceRateModel(POTION);
 const EnhanceWithElixirRateModel = enhanceRateModel(ELIXIR);
 
-/**
- * An exchange namespace that runs and commits server-side, like every demo
- * press. Each rate gets its own: the character rates are all named after the
- * characters, and sharing a namespace collides the `rateModels` array on its
- * primary key and drops the whole `CurrentRateMaster` from the template.
- */
+/** Separate namespaces because potion and elixir rates derive identical character names; auto-run avoids a second execution request. */
 function exchangeNamespaceBindings(name: string) {
   return {
     name: Bind.static(name),
@@ -154,7 +107,6 @@ function exchangeNamespaceBindings(name: string) {
   };
 }
 
-/** Fills a rate's `#{propertyId}` placeholder with the pressed character's. */
 const PROPERTY_ID_CONFIG = {
   kind: "listEntries",
   parameterName: "config",
@@ -181,14 +133,12 @@ export const microEconomyCharacterEnhanceDemo = definePackage(
     },
   })
   .dependency(enhance.packageId, "github:gs2io/gs2-studio-package")
-  // The enhancement targets a type the character package owns, and an install
-  // does not walk a package's own dependencies, so the base package is named too.
+  // Declare the character package because these rates target its owned instances.
   .dependency(character.packageId, "github:gs2io/gs2-studio-package")
-  // The roster, the recruit and the level curve.
+  // Reuse the shared roster and level curve so this demo cannot deploy conflicting character content.
   .dependency(characterDemo.packageId, "github:gs2io/gs2-studio-package")
 
   .instance(CharacterEnhance, RECIPE, {})
-  // Mostly a plain enhancement, sometimes a great one.
   .instance(CharacterEnhanceBonus, "normal", bonus(1.0, 80))
   .instance(CharacterEnhanceBonus, "great", bonus(1.5, 20))
   .instance(CharacterEnhanceMaterial, POTION, {
@@ -221,8 +171,6 @@ export const microEconomyCharacterEnhanceDemo = definePackage(
 
   .uiComponent(CharacterEnhanceMaterial, ui =>
     ui
-      // A simple item has no display name of its own; its id is what a player
-      // would call it.
       .templateLabel(
         "StockLabel",
         "{id} x{count}",
@@ -231,9 +179,7 @@ export const microEconomyCharacterEnhanceDemo = definePackage(
       )
       .buttonAction("GetButton", "Get", undefined, { name: "CharacterEnhanceMaterial" })
   )
-  // Not greyed out while the material runs out: the count lives on the
-  // material row, and a character row's condition can only read its own
-  // properties. Enhancing with nothing fails server-side and changes nothing.
+  // Material stock belongs to another row, so a character-local condition cannot disable this button when stock is empty.
   .uiComponent(Character, ui =>
     ui
       .buttonAction("EnhanceWithPotionButton", "EnhanceWithPotion", undefined, {

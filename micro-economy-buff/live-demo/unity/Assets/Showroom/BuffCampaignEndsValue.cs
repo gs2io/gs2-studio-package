@@ -1,8 +1,4 @@
-// When the campaign ends, for the page to count down to.
-//
-// Handed over as a `DateTime`, which the page draws as time left. The end is
-// the campaign trigger's, moved from the demo clock onto this device's; with no
-// campaign running the deadline is left unset.
+// Publish the default deadline when no future end is known so the countdown clears its previous value.
 #nullable enable
 
 using System;
@@ -12,7 +8,6 @@ using UnityEngine.Events;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Publishes when the campaign ends, whenever it may have changed.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Campaign Ends")]
     public sealed class BuffCampaignEndsValue : MonoBehaviour
     {

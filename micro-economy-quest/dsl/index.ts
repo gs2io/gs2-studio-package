@@ -15,14 +15,10 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const schedule = dependencyPackage(scheduleSurface);
 
-/** The schedule type this package points its quest groups at. */
 const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
 
-/** One reward the open quest run grants when it is completed. */
 const ProgressReward = defineDomainType("ProgressReward", dt =>
   dt
     .property(PT.string("itemId").userData().required())
@@ -45,14 +41,7 @@ const ProgressReward = defineDomainType("ProgressReward", dt =>
     })
 );
 
-/**
- * The quest run a player currently has open. GS2 keeps at most one per player,
- * so the type is single-entry; `inProgress` is false while there is none.
- *
- * `quest` and `questCollection` are filled from the progress's quest model GRN
- * (see `ProgressResource`), which is what lets a screen show which quest is
- * running.
- */
+/** A player has one current run, so progress uses a single entry and exposes absence separately through inProgress. */
 const Progress = defineDomainType("Progress", dt =>
   dt
     .singleEntry()
@@ -89,7 +78,6 @@ const Progress = defineDomainType("Progress", dt =>
     })
 );
 
-/** A group of quests, optionally limited to a schedule event. */
 const QuestCollection = defineDomainType("QuestCollection", dt =>
   dt
     .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).masterData())
@@ -228,15 +216,10 @@ const QuestGroupModel = defineMasterDataResource(resource =>
     .addArrayChild("quests", QuestModel)
 );
 
-/** GRN format of `Progress.questModelId`, as the catalog declares it. */
 const QUEST_MODEL_GRN_FORMAT =
   "grn:gs2:{region}:{ownerId}:quest:{namespaceName}:group:{questGroupName}:quest:{questName}";
 
-/**
- * The player's open quest run. GS2 answers NotFound when there is none, which
- * `inProgress` reads as absent. The progress's own GRN is not the row's id —
- * the single row is always `progress` — so it is not bound.
- */
+/** Skip the progress GRN because the single-entry row keeps a fixed identity even when the current run changes. */
 const ProgressResource = defineUserDataResource(resource =>
   resource
     .model(GS2.quest.Progress)
@@ -330,17 +313,13 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
 
   .userDataResource(ProgressResource)
 
-  // `force` is pinned to false: a run left open (the app closed mid-quest) is
-  // resumed from the progress panel, whereas `true` would silently discard it
-  // and spend the start cost again.
+  // Keep force false so starting cannot discard an unfinished run and spend its start cost again.
   .delegatedAction(Quest, "Start", {
     targetActionKey: "Gs2Quest:QuestModel.Start",
     targetResource: QuestModel,
     parameterOverrides: [{ kind: "static", parameterName: "force", value: false }],
   })
-  // Rewards are left out, so GS2 grants the ones the run drew at start. A type
-  // takes one delegated action per target action, so there is no separate
-  // give-up (`isComplete: false`) alongside this.
+  // Leave rewards unspecified so completion uses the rewards drawn when the run started.
   .delegatedAction(Progress, "Complete", {
     targetActionKey: "Gs2Quest:Progress.End",
     targetResource: ProgressResource,

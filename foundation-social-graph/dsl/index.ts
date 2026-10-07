@@ -73,8 +73,7 @@ const Friend = defineDomainType("Friend", dt =>
     })
 );
 
-// The SDK never returns a profile on friend requests, so request types carry
-// only the other player's id.
+// Request records expose the other player id without the profile payload, so they use separate types.
 const SendFriendRequest = defineDomainType("SendFriendRequest", dt =>
   dt.localizedProperties({
     id: jaEnId("送信フレンド申請", "outgoing friend request"),
@@ -188,7 +187,7 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
         friendProfile: Bind.domainProperties([Source.direct(Friend, "friendProfile")]),
         publicProfile: Bind.domainProperties([Source.direct(Friend, "publicProfile")]),
         userId: Bind.domainProperty(Source.direct(Friend, "id")),
-        // Load profiles with the friend list and each row.
+        // The bound profile fields require profiles to be included in loader results.
         withProfile: Bind.static(true),
       })
   )
@@ -201,7 +200,7 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
         followerProfile: Bind.domainProperties([Source.direct(Follow, "followerProfile")]),
         publicProfile: Bind.domainProperties([Source.direct(Follow, "publicProfile")]),
         userId: Bind.domainProperty(Source.direct(Follow, "id")),
-        // Load profiles with the follow list and each row.
+        // The bound profile fields require profiles to be included in loader results.
         withProfile: Bind.static(true),
       })
   )

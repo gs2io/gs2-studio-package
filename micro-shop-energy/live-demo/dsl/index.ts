@@ -1,24 +1,3 @@
-/**
- * Live demo content for `micro-shop-energy`.
- *
- * The feature package is a shop with nothing on the shelf and no till. It
- * declares what a stamina product is — how much it refills, and a slot for
- * what it costs — and the exchange rate that performs the refill. What it
- * cannot ship is the products themselves, what each one charges, or the
- * currency it charges in: a title decides all three, and the package would be
- * wrong to guess.
- *
- * So the demo supplies the shelf. Three tiers, priced so the cheapest is worth
- * buying twice and the largest is worth saving for, paid out of the free
- * balance the currency demo's deposit button fills.
- *
- * The meter being refilled is not this package's either. Rather than author a
- * second stamina row — two packages holding rows of one type leaves no answer
- * to which stack they belong in, and the deploy build says so rather than
- * picking — the demo installs the stamina demo beside it and sells into the
- * row that one already authored.
- */
-
 import {
   Arg,
   Bind,
@@ -41,61 +20,29 @@ const shop = dependencyPackage(shopSurface);
 const energy = dependencyPackage(energySurface);
 const currency = dependencyPackage(currencySurface);
 
-/** The wallet the page shows and the one every purchase is drawn from. */
 const WALLET_SLOT = 0;
 
-/**
- * The stamina row the demo sells into.
- *
- * `foundation-economy-energy-demo` authors it under this id, and the generated
- * handler mounts a row by the id the master data was named from — so the name
- * is spelled here rather than derived, and a change on either side has to be
- * made on both.
- */
+/** Match the stamina row owned by the shared energy demo rather than authoring a second meter. */
 const STAMINA = "stamina";
 
-/**
- * Three tiers: what each refills, and what it charges for it.
- *
- * The prices are not proportional on purpose. A visitor who presses the
- * deposit once has 100 free currency, which buys the small pack three times
- * over or the large one once — enough for the shape of a shop to show without
- * needing a second deposit.
- */
+/** Keep both repeated small purchases and one large purchase affordable from a single demo deposit. */
 const PRODUCTS = [
   { id: "refill_small", recovery: 5, cost: 30 },
   { id: "refill_medium", recovery: 15, cost: 70 },
   { id: "refill_large", recovery: 40, cost: 100 },
 ] as const;
 
-/**
- * The product, extended with what it costs.
- *
- * `consumeActions` is the slot the feature package leaves open: its rate model
- * binds an array child to it, and whatever the property resolves to is what
- * GS2 charges. The property is required and the feature package authors no
- * rows, so nothing has ever filled it — this is the first time it carries a
- * value. One withdrawal is written here and `cost` decides how big it is on
- * each tier, which is why the amount comes off the row rather than out of the
- * transform.
- *
- * `cost` is `masterData`: its value is authored here and travels into the
- * deployed consume action, which is where GS2 reads it at purchase time. The
- * page reads it back off the same row the deploy was built from.
- */
+/** Bind each price through its authored property so generated readers recover the charge from deployed actions. */
 const EnergyProduct = defineOverlayDomainType(
   "EnergyProduct",
   {
     ...shop.overlay("EnergyProduct"),
     actionPropertyTransforms: [
       {
-        // Addressed by id because the property belongs to the type this
-        // overlay extends: a single-package build does not load its dependency
-        // closure, so the name would pass through unresolved.
+        // Use the published property id because this DSL evaluation does not resolve the dependency closure.
         targetProperty: shop.propertyId("EnergyProduct", "consumeActions"),
         kind: "transformEntries",
-        // Replace, not append: the slot starts empty, and a tier that charged
-        // twice would be a pricing bug rather than a second cost.
+        // Replace the slot so this demo owns the complete price rather than adding a second charge.
         mode: "replace",
         entries: [
           {
@@ -103,10 +50,7 @@ const EnergyProduct = defineOverlayDomainType(
             transformName: "WithdrawCurrency",
             arguments: [
               { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              // Free currency, which is what the deposit on the page pays in.
-              // The transform leaves this optional, and an output that names it
-              // drops the whole action when it is not supplied, so it is said
-              // here rather than left to a default.
+              // Set the optional payment policy explicitly so purchases accept the free balance without relying on an omitted argument.
               { parameterName: "paidOnly", source: { kind: "static", value: false } },
               {
                 parameterName: "count",
@@ -137,15 +81,6 @@ const EnergyProduct = defineOverlayDomainType(
       })
 );
 
-/**
- * The till.
- *
- * The feature package ships a rate model of its own, but a purchase has to be
- * pressable and a delegated action can only name a resource its own package
- * declares. So the press goes through this one, which charges the same cost
- * the property above carries and hands the refill to the stamina package's
- * `RecoveryEnergy`.
- */
 const BuyRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -157,9 +92,7 @@ const BuyRateModel = defineMasterDataResource(resource =>
         .mountLocal(EnergyProduct)
         .bindings({
           action: Bind.transform(energy.packageId, "RecoveryEnergy", [
-            // The stamina and the refill amount are the feature package's
-            // properties, so they are addressed by id: an overlay's inherited
-            // property has no name of its own here.
+            // Use published ids because these inherited properties are absent from the local overlay declarations.
             Arg.domainProperty(
               "energy",
               Source.parent(
@@ -201,17 +134,11 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
     },
   })
   .dependency(shop.packageId, "github:gs2io/gs2-studio-package")
-  // An install does not walk a package's own dependencies, so the bases are
-  // named here too.
   .dependency(energy.packageId, "github:gs2io/gs2-studio-package")
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-  // The meter to refill, and the balance to spend. Both demos author the rows
-  // this one sells against, which is why they are installed rather than
-  // duplicated here.
+  // Reuse shared meter and wallet content so this demo cannot deploy conflicting versions of their stacks.
   .dependency("foundation-economy-energy-demo", "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  // The currency demo stocks the currency shop's price table, and an install
-  // does not walk a package's own dependencies, so the shop is named too.
   .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   .displayType(EnergyProduct, {
@@ -223,8 +150,7 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
   })
   .domainType(EnergyProduct)
 
-  // New rows use the source type's identity, with values added by this overlay.
-  // The name-based overload resolves local property names and inherited ids together.
+  // Use the local type name so authored rows can combine the overlay cost with inherited property ids.
   .instance(EnergyProduct.typeName, PRODUCTS[0].id, {
     [shop.propertyId("EnergyProduct", "energy")]: STAMINA,
     [shop.propertyId("EnergyProduct", "recoveryValue")]: PRODUCTS[0].recovery,
@@ -252,11 +178,7 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // The demo runs the transaction server-side and commits it atomically.
-        // With auto-run off, `Exchange` only hands back a stamp sheet the
-        // client has to execute through the distributor — an extra round trip
-        // that can leave a visitor charged but not refilled if the page is
-        // closed mid-way.
+        // Auto-run avoids a second client request; atomic commit keeps charging and recovery in the same purchase.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
@@ -265,8 +187,6 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
       .addChild(BuyRateModel)
   )
 
-  // The feature package ships no components: what a title shows of a shop is
-  // the title's decision. So the demo supplies the caption and the press.
   .uiComponent(EnergyProduct, ui =>
     ui
       .templateLabel(

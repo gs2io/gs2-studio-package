@@ -1,4 +1,3 @@
-// Stops following the player this row shows.
 #nullable enable
 
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ using VisitorDomain = Gs2.Gs2Friend.Domain.Model.UserAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Stops following the player this row shows.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Unfollow This Player")]
     public sealed class FollowUnfollowButton : FriendRowButton
     {

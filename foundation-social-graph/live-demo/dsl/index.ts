@@ -1,27 +1,3 @@
-/**
- * Live demo content for `foundation-social-graph`.
- *
- * Players find each other by id: a visitor copies their own id to another
- * player, looks that player up by theirs, sends a friend request, and follows
- * them. The other player accepts or declines; either side can cancel, remove
- * or unfollow.
- *
- * The feature package is the profile, the friend and follow lists, and the
- * friend requests each way. It needs no demo data: GS2 creates a player's
- * profile when it is first read. This package only says what each of those
- * shows on the page.
- *
- * **The lists are generated rows.** Friends and follows carry the other
- * player's profiles, read with the list. A friend request carries only the
- * other player's id, so the name on a request row is hand-written: it reads
- * that player's public profile.
- *
- * **Everything else is the page's.** Showing and copying one's own id,
- * looking a player up, sending a request, following and editing the profile
- * are not actions a package can host, so they are a hand-written Unity panel,
- * and the buttons on each row are hand-written too.
- */
-
 import { definePackage, dependencyPackage } from "~/dsl";
 
 import graphSurface from "../../dsl/dependency-surface.json";
@@ -44,8 +20,6 @@ export const foundationSocialGraphDemo = definePackage("foundation-social-graph-
   })
   .dependency(graph.packageId, "github:gs2io/gs2-studio-package")
 
-  // The feature package ships no components: what a title shows of a player
-  // is the title's decision.
   .uiComponent(Profile, ui =>
     ui
       .templateLabel(
@@ -97,7 +71,6 @@ export const foundationSocialGraphDemo = definePackage("foundation-social-graph-
         { name: "Follow" }
       )
   )
-  // A request is named by the other player's id and nothing else.
   .uiComponent(ReceiveFriendRequest, ui =>
     ui.templateLabel("IdLabel", "{id}", { id: ui.prop("id") }, { name: "ReceiveFriendRequest" })
   )

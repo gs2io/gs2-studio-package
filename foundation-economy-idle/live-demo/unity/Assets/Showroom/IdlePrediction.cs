@@ -1,31 +1,5 @@
-// What the player's idle time has built up to, read from GS2 by hand.
-//
-// GS2-Idle does not store the idle time: it works it out from the clock each
-// time the status is read. So the status the SDK caches never changes while
-// time passes, and a bound label would show its first value for good. GS2's
-// prediction does the working out on the server and returns the idle time and
-// what Receive would pay right now; it is read here straight from the REST
-// client, because the SDK's own prediction keeps only the rewards and does not
-// cache the status either.
-//
-// Between reads the idle time is worked out on the page from when it started,
-// up to the cap. GS2 does not hand that moment back, but its next-reward time
-// is the start, plus the whole minutes idle, plus one interval, so the start
-// follows from it; the demo clock's offset turns it into this device's time.
-// That also gives the moment the next interval pays, which the page counts
-// down to. It is read again when the idle time crosses into a new interval
-// (the rewards change there), when the demo clock has moved and the session
-// carries it, when the status changes (Receive), and once a minute besides.
-//
-// A buff the page has applied travels as the SDK's default context stack, and
-// GS2 scales the rewards the prediction reports by it, so the stack goes with
-// every read, and a new one (a buff applied or dropped) is read again.
-//
-// The status subscription only posts to an inbox, drained in `Update`: an SDK
-// callback never touches Unity. A read that keeps failing is said on the page
-// once (`ShowroomLatch`) until one succeeds again.
-//
-// Nothing here reloads or invalidates anything.
+// Read fresh prediction data because elapsed time can change rewards without a stored-status notification.
+// Send the shared context stack so estimates include the currently applied buff.
 #nullable enable
 
 using System;
@@ -44,29 +18,18 @@ using Gs2.Util.LitJson;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// The player's idle time and what it would pay, kept current for the
-    /// page's labels. One per page, made by the first label that asks.
-    /// </summary>
     internal sealed class IdlePrediction : MonoBehaviour
     {
-        /// <summary>The idle namespace and category the feature package deploys.</summary>
         private const string Namespace = "Idle";
         private const string Category = "Idle";
 
-        /// <summary>How long a read stays trusted before it is made again.</summary>
         private const float RefreshSeconds = 60f;
 
-        /// <summary>
-        /// How soon to try again while nothing has been read yet. A read that
-        /// fails after that waits the full <see cref="RefreshSeconds"/>, so a
-        /// lasting failure is not asked every second.
-        /// </summary>
+        /// <summary>Retry initial reads sooner so labels need not stay empty for the normal refresh interval.</summary>
         private const float FirstReadRetrySeconds = 5f;
 
         private static IdlePrediction? _instance;
 
-        /// <summary>The page's one prediction, made on first use.</summary>
         public static IdlePrediction Shared
         {
             get
@@ -81,26 +44,17 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>Raised whenever what the labels show may have changed, and once a second.</summary>
         public event Action? Updated;
 
-        /// <summary>Whether a read has come back yet.</summary>
         public bool HasValue { get; private set; }
 
-        /// <summary>How long a player may stay away and still be counting.</summary>
         public int MaximumIdleMinutes { get; private set; }
 
-        /// <summary>How often being away pays, or 0 until the category is read.</summary>
         public int RewardIntervalMinutes { get; private set; }
 
-        /// <summary>The free currency Receive would pay at the last read.</summary>
         public long ClaimableCoins { get; private set; }
 
-        /// <summary>
-        /// The idle time now, up to the cap: from when it started when that is
-        /// known, and otherwise the last read carried forward by the minutes
-        /// since.
-        /// </summary>
+        /// <summary>Advance the display between server reads; waiting for status events would freeze elapsed time.</summary>
         public int IdleMinutes
         {
             get
@@ -114,10 +68,7 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// When the next interval pays, on this device's clock, or null while
-        /// that is not known or the cap has stopped the count.
-        /// </summary>
+        /// <summary>Leave the countdown unset when the start is unknown or the cap prevents another reward.</summary>
         public DateTime? NextRewardAt
         {
             get
@@ -131,12 +82,7 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// When the idle time started, on this device's clock. GS2 reports its
-        /// next-reward time as the start plus the whole minutes idle plus one
-        /// interval, which holds only below the cap, where the minutes reported
-        /// are not cut short.
-        /// </summary>
+        /// <summary>Capped elapsed minutes no longer locate the real start, so infer it only below the cap.</summary>
         private DateTime? IdleStartedAt
         {
             get
@@ -144,7 +90,7 @@ namespace GS2Studio.Showroom.Demo
                 var interval = RewardIntervalMinutes;
                 if (_readNextRewardsAt <= 0 || interval <= 0) return null;
                 if (MaximumIdleMinutes > 0 && _readIdleMinutes >= MaximumIdleMinutes) return null;
-                // Until the account's offset is read, the start is not known on this device's clock.
+                // Wait for the account offset before converting the server timestamp to this device's clock.
                 if (!DemoTimeOffset.TryGet(_userId, out var offset)) return null;
                 return DateTimeOffset.FromUnixTimeMilliseconds(_readNextRewardsAt).UtcDateTime
                     .AddMinutes(-(interval + _readIdleMinutes))
@@ -154,41 +100,27 @@ namespace GS2Studio.Showroom.Demo
 
         private int _readIdleMinutes;
         private long _readNextRewardsAt;
-        /// <summary>The player the last read was for, whose demo clock offset applies.</summary>
         private string _userId = "";
 
-        /// <summary>
-        /// When the last read made because the idle time crossed into a new
-        /// interval went out. This device's clock runs a little ahead of or
-        /// behind the server's, so the crossing can be seen here a few seconds
-        /// before GS2 sees it; the reads it asks for are spaced out meanwhile.
-        /// </summary>
+        /// <summary>Space interval-crossing reads because the device can see the boundary before the server does.</summary>
         private float _crossingReadAt = float.NegativeInfinity;
 
         private const float CrossingReadSeconds = 3f;
         private float _readAt;
 
-        /// <summary>The context stack the last read went out with.</summary>
         private string? _readContextStack;
         private float _attemptedAt = float.NegativeInfinity;
         private float _intervalAttemptedAt = float.NegativeInfinity;
         private bool _reading;
 
-        /// <summary>
-        /// Set when a read is asked for while one is out. That read may have
-        /// gone out on the old clock, so another follows it rather than the
-        /// request being dropped.
-        /// </summary>
+        /// <summary>Keep a follow-up request when a read is in flight; its result may predate the clock or context change.</summary>
         private bool _readAgain;
         private Action? _unsubscribe;
 
-        /// <summary>Work the status subscription hands over to the main thread.</summary>
         private readonly ShowroomInbox _inbox = new ShowroomInbox();
 
-        /// <summary>Says a failing prediction read once until a read succeeds.</summary>
         private readonly ShowroomLatch _readFailures = new ShowroomLatch();
 
-        /// <summary>Says a failing category read once until a read succeeds.</summary>
         private readonly ShowroomLatch _intervalFailures = new ShowroomLatch();
 
         private void OnEnable()
@@ -219,8 +151,7 @@ namespace GS2Studio.Showroom.Demo
                 yield return new WaitForSeconds(0.25f);
             }
 
-            // Receive changes the stored status, and the SDK hears that. The
-            // callback may run off the main thread, so it only posts.
+            // Marshal subscription work through Update because the callback may run off the Unity thread.
             _unsubscribe = new Gs2Bind.Gs2Idle.StatusLoader(Namespace, Category).Subscribe(
                 gs2, session, (_, _, _) => Task.CompletedTask, () => _inbox.Post(Read));
             ReadInterval();
@@ -253,9 +184,7 @@ namespace GS2Studio.Showroom.Demo
         private void OnClockApplied(string userId)
         {
             Read();
-            // Signing in again can finish before the new token is the one the
-            // session sends, so the first read may still go out on the old
-            // clock. One more a moment later settles it.
+            // Repeat the prediction after clock refresh to catch a change not visible to the immediate read.
             StartCoroutine(ReadAfter(3f));
         }
 
@@ -284,13 +213,9 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// Asks GS2 for the idle time and the rewards now. One read is out at
-        /// a time; asking during it makes one more when it returns.
-        /// </summary>
         private async void Read()
         {
-            // Resolved on every read: the session is the one signed in now.
+            // Resolve the session again so reads do not keep credentials captured before a clock refresh.
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
             if (_reading)
             {
@@ -312,12 +237,9 @@ namespace GS2Studio.Showroom.Demo
                 _readFailures.Succeeded();
                 _readIdleMinutes = result?.Status?.IdleMinutes ?? 0;
                 _readNextRewardsAt = result?.Status?.NextRewardsAt ?? 0;
-                // The server's times are on the demo clock. They are moved onto
-                // this device's clock with the player's current offset, read
-                // each time it is needed, so a change shows before the next read.
+                // Retain the response owner so later clock conversion uses that player's latest offset.
                 _userId = session.UserId;
-                // Remembered once the read has come back: a read that failed
-                // leaves the change to be noticed again.
+                // Record the context only after success so a failed read leaves its change detectable.
                 _readContextStack = contextStack;
                 MaximumIdleMinutes = result?.Status?.MaximumIdleMinutes ?? 0;
                 ClaimableCoins = CoinsIn(result?.Items);
@@ -340,10 +262,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// The free currency the rewards deposit. GS2 merges the deposits of
-        /// every interval into one, so this is usually one action.
-        /// </summary>
         private static long CoinsIn(AcquireAction[]? actions)
         {
             long coins = 0;
@@ -352,8 +270,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 if (action?.Action != "Gs2Money2:DepositByUserId" || string.IsNullOrEmpty(action.Request)) continue;
                 var request = JsonMapper.ToObject(action.Request);
-                // GS2 sometimes hands a request back encoded once more, as a
-                // JSON string holding the object.
+                // A string-valued request wraps another JSON value; decode it before inspecting deposits.
                 if (request.IsString) request = JsonMapper.ToObject((string)request);
                 if (!request.IsObject || !request.Keys.Contains("depositTransactions")) continue;
                 var deposits = request["depositTransactions"];

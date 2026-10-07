@@ -1,4 +1,3 @@
-// Removes the friend this row shows, for both players.
 #nullable enable
 
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ using VisitorDomain = Gs2.Gs2Friend.Domain.Model.UserAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Removes the friend this row shows, for both players.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Remove This Friend")]
     public sealed class FriendRemoveButton : FriendRowButton
     {

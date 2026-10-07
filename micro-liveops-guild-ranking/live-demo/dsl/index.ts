@@ -1,34 +1,3 @@
-/**
- * Live demo content for `micro-liveops-guild-ranking`.
- *
- * A board per guild, on a season every visitor shares. A visitor founds or
- * joins a guild, plays to add points to their total for the day, and sees
- * where they stand among the members of that guild. Once a season is over they
- * receive coins by the rank they finished at in the guild they played for.
- *
- * GS2 ranks the members of a guild against each other; there is no ranking of
- * one guild against another, and the page says so rather than implying one.
- *
- * The feature package is the guild ranking and its reward tiers. This package
- * adds the one ranking, what each tier pays and the rule the page states.
- *
- * **The season is the schedule demo's.** The ranking takes scores while the
- * schedule demo's event `guild-season` is open, and GS2 numbers a season by how
- * many times that event has repeated. It repeats every day at 00:00 UTC, so a
- * guild's members all score into the same season, and yesterday's season is
- * the one that pays.
- *
- * **Playing, the board and receiving are the page's.** Submitting a score,
- * reading a guild's board and receiving for a past season are not actions a
- * package can host, so they are hand-written Unity components, and so is the
- * lobby that founds and joins guilds.
- *
- * The guild, the wallet and the schedule are other packages' and are installed
- * beside this one rather than written out again: their rows live in stacks
- * every demo holding them deploys, and a second author of them would be a
- * second version, and the last deploy would win.
- */
-
 import { defineOverlayDomainType, definePackage, dependencyPackage, PT } from "~/dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
@@ -48,37 +17,22 @@ const currency = dependencyPackage(currencySurface);
 
 const GuildRanking = guildRanking.type("GuildRanking");
 
-/** The one guild ranking on the page. */
 const RANKING = "guild";
 
-/** The schedule demo's daily event that numbers the seasons. */
 const SEASON_EVENT = "guild-season";
 
-/** The lowest and highest score one play can make, and the ranking accepts. */
 const MINIMUM_SCORE = 1;
 const MAXIMUM_SCORE = 100;
 
-/** The wallet the page shows and every reward lands in. */
 const WALLET_SLOT = 0;
 
-/**
- * The reward tiers, best first. A member receives the tier with the smallest
- * threshold at or below their rank in their guild. A guild holds at most ten
- * members at once, but the scores of members who left stay on its board, so a
- * board can run past ten places, and 11th place or lower receives nothing
- * (GS2 answers noRewards).
- */
 const TIERS = [
   { thresholdRank: 1, coins: 300 },
   { thresholdRank: 3, coins: 150 },
   { thresholdRank: 10, coins: 50 },
 ] as const;
 
-/**
- * What the rule says each tier pays, read off {@link TIERS}. The tiers are not
- * listed from GS2: the coins sit inside the deposit appended to each tier, and
- * nothing reads them back out of it.
- */
+/** Derive the rule and deployed rewards from the same tier table so their numbers cannot drift. */
 const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }, index) => {
   const from = index === 0 ? 1 : TIERS[index - 1].thresholdRank + 1;
   const ranks =
@@ -86,7 +40,6 @@ const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }, index) => {
   return `${ranks} ${coins}`;
 }).join(", ");
 
-/** `1` -> `1st`, `3` -> `3rd`, `12` -> `12th`, for the rule a visitor reads. */
 function ordinal(rank: number): string {
   const lastTwo = rank % 100;
   if (lastTwo >= 11 && lastTwo <= 13) return `${rank}th`;
@@ -102,12 +55,6 @@ function ordinal(rank: number): string {
   }
 }
 
-/**
- * The reward tier, overlaid so it can carry what it pays.
- *
- * `acquireActions` is the slot the feature package leaves open; one deposit is
- * appended to it and `coins` decides how big it is for each tier.
- */
 const GuildRankingReward = defineOverlayDomainType(
   "GuildRankingReward",
   {
@@ -152,10 +99,6 @@ const GuildRankingReward = defineOverlayDomainType(
       })
 );
 
-/**
- * The package up to the ranking. Split here because a builder chain has no
- * room for a loop and the tiers are folded in from {@link TIERS}.
- */
 const withRanking = definePackage("micro-liveops-guild-ranking-demo", "0.0.0")
   .display({
     label: { ja: "ギルドランキング（デモデータ）", en: "Guild Rankings (demo data)" },
@@ -173,23 +116,18 @@ const withRanking = definePackage("micro-liveops-guild-ranking-demo", "0.0.0")
   })
   .dependency(guildRanking.packageId, "github:gs2io/gs2-studio-package")
   .dependency(guild.packageId, "github:gs2io/gs2-studio-package")
-  // The guild kind and its roles live in the guild stack this demo deploys
-  // too; deployed from here without them, that stack would lose them. The
-  // guild demo's rows of the guilds a visitor belongs to come with it.
+  // Reuse the shared guild demo content so this demo cannot replace its kind and roles with a different stack.
   .dependency(guildDemo.packageId, "github:gs2io/gs2-studio-package")
   .dependency(schedule.packageId, "github:gs2io/gs2-studio-package")
-  // The season's event lives in the schedule stack this demo deploys too.
+  // Reuse the shared schedule content so the season event stays identical across demo deployments.
   .dependency(scheduleDemo.packageId, "github:gs2io/gs2-studio-package")
-  // Where the rewards pay.
+  // Reuse the currency demo content so the wallet and store products stay identical across demos.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  // The currency demo stocks the currency shop's price table, and an install
-  // does not walk a package's own dependencies, so the shop is named too.
   .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   .domainType(GuildRankingReward)
 
-  // Higher is better, and each play adds to the member's total for the day.
   .instance(GuildRanking, RANKING, {
     [guildRanking.propertyId("GuildRanking", "orderDirection")]: "desc",
     [guildRanking.propertyId("GuildRanking", "sum")]: true,
@@ -198,13 +136,10 @@ const withRanking = definePackage("micro-liveops-guild-ranking-demo", "0.0.0")
     [guildRanking.propertyId("GuildRanking", "schedule")]: SEASON_EVENT,
   });
 
-// Authored by type name so the rows reach the overlay this package declares,
-// and its properties with it. The acquire slot is authored empty because the
-// feature package requires it and the deposit is appended.
+// Use the local overlay name for its coins property; keep the required acquire slot empty for the appended deposit.
 const withTiers = TIERS.reduce(
   (builder, { thresholdRank, coins }) =>
-    // A reward tier is keyed by its ranking and threshold, and its id is
-    // those values as the package orders them.
+    // Match the composite key order expected by the reward model so these authored ids identify the same tiers.
     builder.instance(GuildRankingReward.typeName, `${thresholdRank}.${RANKING}`, {
       [guildRanking.propertyId("GuildRankingReward", "ranking")]: RANKING,
       [guildRanking.propertyId("GuildRankingReward", "thresholdRank")]: thresholdRank,
@@ -215,10 +150,6 @@ const withTiers = TIERS.reduce(
 );
 
 export const microLiveopsGuildRankingDemo = withTiers
-  // The feature package ships no components: what a title shows of a ranking
-  // is the title's decision. The page's section hangs from the one ranking,
-  // which is the type here that GS2 holds a row of; the season, the visitor's
-  // guild, the presses and the board around the rule are hand-written.
   .uiComponent(GuildRanking, ui =>
     ui.templateLabel(
       "RuleLabel",

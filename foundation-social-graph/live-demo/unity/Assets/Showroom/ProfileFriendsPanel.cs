@@ -1,30 +1,3 @@
-// The friend page's own region: the visitor's id to hand to another player,
-// their profile to edit, and a way to look another player up by id and act on
-// them.
-//
-// GS2-Friend has no search: a player is found by the id GS2 gave them, so the
-// visitor copies their own id to the other player and pastes or types the
-// other player's. None of this is an action a package can host, so it is a
-// hand-written region. The lists below it are the generated rows; each of
-// their rows carries its own hand-written buttons too.
-//
-// Reads go through the SDK's domain and are watched in its cache: the
-// visitor's profile, friends, follows and friend requests each way, and the
-// public profile of the player looked up. GS2's notifications clear or update
-// those caches when the other player sends, cancels, answers or removes, and
-// the SDK's own writes update them after a press, so the panel hears every
-// change without asking GS2 on a timer. GS2 does not announce profile edits,
-// so another player's name is as fresh as the SDK's cache of it.
-//
-// Each read is a `ShowroomWatch`, which hands what the SDK reports to the
-// panel's `ShowroomInbox`, drained in `Update`. The SDK can hand a watcher an
-// empty list while it is still reading the list again, so an empty list is
-// read again through the domain before it is believed; a list that cannot be
-// read again fails its watch. A watch that failed is started again every 30
-// seconds.
-//
-// The result area is a `ShowroomRegion`: rebuilt only when what it shows
-// changed, and the page's presses wait a moment after it moved.
 #nullable enable
 
 using System;
@@ -44,16 +17,13 @@ using PublicProfileDomain = Gs2.Gs2Friend.Domain.Model.PublicProfileDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Draws the visitor's id, profile and player lookup into the region the page gives it.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Profile and Friends")]
     public sealed class ProfileFriendsPanel : MonoBehaviour
     {
-        /// <summary>How often a watch that failed to start is tried again.</summary>
         private const float TickSeconds = 30f;
         private const int NameLimit = 32;
         private const int ProfileLimit = 128;
 
-        /// <summary>The shape of the ids GS2-Account gives players.</summary>
         private static readonly Regex PlayerId = new Regex("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
 
         private static readonly Color RowColor = new Color(0.16f, 0.15f, 0.22f, 1f);
@@ -72,19 +42,14 @@ namespace GS2Studio.Showroom.Demo
         private ShowroomRegion? _result;
         private Coroutine? _signingIn;
 
-        /// <summary>The panel's Copy or Paste, until the browser answers.</summary>
         private readonly ShowroomClipboardRequest _clipboard = new ShowroomClipboardRequest();
 
-        /// <summary>The visitor, set once they are signed in.</summary>
         private Gs2.Unity.Core.Gs2Domain? _gs2;
         private VisitorDomain? _visitor;
         private FollowDomain? _follow;
         private string _userId = "";
 
-        /// <summary>
-        /// What the SDK said, handed over to the main thread. Update applies
-        /// everything that arrived since the last frame and then draws once.
-        /// </summary>
+        /// <summary>Marshal SDK updates through the inbox so callbacks do not mutate Unity objects from worker threads.</summary>
         private readonly ShowroomInbox _inbox = new ShowroomInbox();
         private float _nextTick;
 
@@ -95,26 +60,23 @@ namespace GS2Studio.Showroom.Demo
         private readonly ShowroomWatch _followsWatch;
         private readonly ShowroomWatch _targetWatch;
 
-        /// <summary>What was read; null until it has been.</summary>
         private Profile? _profile;
         private FriendUser[]? _friends;
         private SendFriendRequest[]? _sent;
         private ReceiveFriendRequest[]? _received;
         private FollowUser[]? _follows;
 
-        /// <summary>The player looked up, and their public profile once read.</summary>
         private string? _targetId;
         private PublicProfile? _targetProfile;
         private bool _targetFailed;
 
-        /// <summary>The profile fields are filled from GS2 until the visitor types in them.</summary>
         private bool _profileEdited;
         private bool _filling;
         private bool _defaultNameTried;
 
         public ProfileFriendsPanel()
         {
-            // A list that cannot be read again is subscribed afresh by the tick.
+            // Restart failed rereads on the periodic tick so a failed watch does not stay permanently stale.
             ShowroomWatch Watch(string what) => new ShowroomWatch(_inbox, ShowroomWatch.RereadFailure.Restart, what);
             _profileWatch = Watch("your profile");
             _friendsWatch = Watch("your friends");
@@ -193,8 +155,6 @@ namespace GS2Studio.Showroom.Demo
                 "once your lists are read again (at most 15 minutes, or on reload).", 13, MutedText);
         }
 
-        // ------------------------------------------------------------------
-        // Watching
 
         private void StartWatching()
         {
@@ -215,10 +175,7 @@ namespace GS2Studio.Showroom.Demo
             Draw();
         }
 
-        /// <summary>
-        /// Drops every subscription, so the SDK holds no callback into a
-        /// disabled or destroyed panel, and forgets what was read.
-        /// </summary>
+        /// <summary>Release subscriptions and queued results so disabled panels cannot receive stale SDK updates.</summary>
         private void StopWatching()
         {
             _profileWatch.Stop();
@@ -248,15 +205,11 @@ namespace GS2Studio.Showroom.Demo
             if (Time.realtimeSinceStartup >= _nextTick) Tick();
         }
 
-        /// <summary>
-        /// Every 30 seconds, tries again a watch that failed to start, and
-        /// naming a visitor whose naming could not start.
-        /// </summary>
         private void Tick()
         {
             _nextTick = Time.realtimeSinceStartup + TickSeconds;
             if (_profileWatch.Failed) WatchProfile();
-            // Naming waits for any press that was running when the profile arrived.
+            // Retry default naming after a busy page press may have prevented it from starting.
             if (_profile != null) NameIfUnnamed(_profile);
             if (_friendsWatch.Failed) WatchFriends();
             if (_sentWatch.Failed) WatchSent();
@@ -265,10 +218,6 @@ namespace GS2Studio.Showroom.Demo
             if (_targetWatch.Failed && _targetId != null) WatchTarget(_targetId);
         }
 
-        /// <summary>
-        /// Says a watch that could not start, once per start; the tick starts
-        /// it again.
-        /// </summary>
         private static void WatchFailed(ShowroomWatch watch, Exception error)
         {
             var what = char.ToUpperInvariant(watch.What[0]) + watch.What.Substring(1);
@@ -319,21 +268,13 @@ namespace GS2Studio.Showroom.Demo
                 error => WatchFailed(_followsWatch, error));
         }
 
-        /// <summary>
-        /// Keeps what a list now holds, and tells the page when the players
-        /// on it changed: rows appear or vanish then, and presses wait a
-        /// moment for the buttons to settle.
-        /// </summary>
+        /// <summary>Delay subsequent presses when list membership or ordering changes because row buttons may move.</summary>
         private static T[] Store<T>(T[]? before, T[] after, Func<T, string?> key)
         {
             if (before == null || !before.Select(key).SequenceEqual(after.Select(key))) ShowroomSettle.MarkChanged();
             return after;
         }
 
-        /// <summary>
-        /// The visitor's own profile. GS2 creates it on the first read; a
-        /// visitor who has no name yet is given their tag, once.
-        /// </summary>
         private void WatchProfile()
         {
             var visitor = _visitor;
@@ -352,7 +293,6 @@ namespace GS2Studio.Showroom.Demo
                 failed: error => WatchFailed(_profileWatch, error));
         }
 
-        /// <summary>The public profile of the player looked up.</summary>
         private void WatchTarget(string userId)
         {
             var gs2 = _gs2;
@@ -369,17 +309,14 @@ namespace GS2Studio.Showroom.Demo
                 },
                 failed: error =>
                 {
-                    // Said in the result area rather than the log.
+                    // Keep lookup failure beside the affected result so it cannot be confused with another page action.
                     Debug.LogWarning($"[showroom] {nameof(ProfileFriendsPanel)}: the profile of {userId} could not be read: {error}");
                     _targetFailed = true;
                     Draw();
                 });
         }
 
-        /// <summary>
-        /// Puts GS2's profile into the fields, unless the visitor has typed
-        /// in them since: their edit is not overwritten before they save.
-        /// </summary>
+        /// <summary>Do not overwrite unsaved visitor edits when a profile update arrives.</summary>
         private void FillProfileFields(Profile profile)
         {
             if (_profileEdited || _publicField == null || _friendField == null || _followerField == null) return;
@@ -390,15 +327,12 @@ namespace GS2Studio.Showroom.Demo
             _filling = false;
         }
 
-        /// <summary>
-        /// A visitor starts with no name, which another player would see as a
-        /// bare id, so the first read names them after their tag.
-        /// </summary>
+        /// <summary>Persist a player tag for unnamed profiles so other readers see a recognizable default name.</summary>
         private void NameIfUnnamed(Profile profile)
         {
             if (_defaultNameTried || !string.IsNullOrWhiteSpace(profile.PublicProfile)) return;
             var name = ShowroomPlayerTag.Of(_userId);
-            // Tried again on the next profile read when the press could not start.
+            // Leave retry enabled if the naming press could not start.
             _defaultNameTried = FriendDemo.Run(FriendPress.SaveProfile, this, async visitor =>
             {
                 await visitor.Profile().UpdateAsync(new UpdateProfileRequest()
@@ -409,14 +343,8 @@ namespace GS2Studio.Showroom.Demo
             }, pressed: false);
         }
 
-        // ------------------------------------------------------------------
-        // Drawing
 
-        /// <summary>
-        /// What the visitor and the player looked up are to each other. The
-        /// region is rebuilt only when that changed, so a button is not
-        /// replaced under the cursor by an identical one.
-        /// </summary>
+        /// <summary>Reuse an unchanged region so identical updates do not replace a button under the cursor.</summary>
         private void Draw()
         {
             _result?.Draw(Describe);
@@ -437,8 +365,7 @@ namespace GS2Studio.Showroom.Demo
             region.Caption(name, 18, LightText);
             if (_targetProfile != null && string.IsNullOrWhiteSpace(_targetProfile.Value))
             {
-                // GS2 creates a profile on the first read, so an id nobody
-                // uses reads as a player without a name.
+                // An empty public profile does not confirm that the typed id identifies the intended player.
                 region.Caption("This player has no name yet. Check the id if you expected one.", 14, MutedText);
             }
             if (_friends == null || _sent == null || _received == null || _follows == null)
@@ -478,11 +405,8 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        // ------------------------------------------------------------------
-        // Pressing
 
-        // A clipboard refusal is not a failure of the page: the browser
-        // decides, so the visitor is told how to do it by hand.
+        // Offer manual copying when the browser refuses clipboard access.
 
         private void Copy()
         {
@@ -609,8 +533,6 @@ namespace GS2Studio.Showroom.Demo
                 ? FriendDemo.NameOf(targetId, _targetProfile.Value)
                 : ShowroomPlayerTag.Of(targetId);
 
-        // ------------------------------------------------------------------
-        // Building blocks
 
         private InputField Field(RectTransform parent, string name, string placeholderText, int limit)
         {
@@ -645,7 +567,6 @@ namespace GS2Studio.Showroom.Demo
             return label;
         }
 
-        /// <summary>A button of the panel's fixed part, which never moves.</summary>
         private void Press(RectTransform parent, string text, Action onClick)
         {
             var button = Instantiate(_buttonTemplate!, parent);

@@ -1,26 +1,3 @@
-// The transfer page's own region: which account this browser is, issuing a
-// transfer code for it, and taking over another browser's account with that
-// browser's code.
-//
-// A transfer code is an ID and a password registered under the take-over type
-// the feature package reserves for it. The page makes both at random: GS2
-// keeps an ID unique across the namespace (another player's ID is refused),
-// and it stores only a hash of the password, so the password is shown once,
-// right after issuing, and never again. It is never logged or saved.
-//
-// Taking over asks GS2 for the account the code belongs to. It needs no
-// session: it is how a browser that is not that account yet signs in as it.
-// The account is then remembered where every showroom demo on this site reads
-// it, and the page reloads, so every binder starts over signed in as that
-// account. The other demos opened in this browser sign in as it too.
-//
-// Whether this account has a code is watched in the SDK's cache, which the
-// SDK's own writes update, so the panel hears an issue or a delete without
-// asking GS2 again. What the SDK reports reaches the panel through its
-// `ShowroomInbox`, drained in `Update`.
-//
-// Every press here carries a password or its result, so its failures are
-// reported by kind and GS2's codes only (`ShowroomPressOptions.Redact`).
 #nullable enable
 
 using System;
@@ -39,14 +16,11 @@ using EzTakeOver = Gs2.Unity.Gs2Account.Model.EzTakeOver;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Draws the account tag, transfer code issuing and taking over into the region the page gives it.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Transfer Code")]
     public sealed class TransferCodePanel : MonoBehaviour
     {
-        /// <summary>How often a watch that failed to start is tried again.</summary>
         private const float TickSeconds = 30f;
 
-        /// <summary>How long the page shows the outcome of a take-over before it reloads.</summary>
         private const float ReloadDelaySeconds = 1.5f;
 
         private static readonly Color RowColor = new Color(0.16f, 0.15f, 0.22f, 1f);
@@ -65,20 +39,14 @@ namespace GS2Studio.Showroom.Demo
         private InputField? _takePasswordField;
         private Coroutine? _signingIn;
 
-        /// <summary>The panel's Copy or Paste, until the browser answers.</summary>
         private readonly ShowroomClipboardRequest _clipboard = new ShowroomClipboardRequest();
 
-        /// <summary>The signed-in account, set once signed in.</summary>
         private string _userId = "";
         private TakeOverDomain? _code;
 
-        /// <summary>
-        /// Whether this account has a transfer code; null until the SDK has
-        /// said. The one button issues or replaces by it.
-        /// </summary>
+        /// <summary>Reset to null on disconnect so the next answer refreshes the label even if its value matches the previous account.</summary>
         private bool? _registered;
 
-        /// <summary>What the SDK said, handed over to the main thread.</summary>
         private readonly ShowroomInbox _inbox = new ShowroomInbox();
         private readonly ShowroomWatch _watch;
         private float _nextTick;
@@ -150,8 +118,6 @@ namespace GS2Studio.Showroom.Demo
                 "The other showroom demos opened in this browser then sign in as that account too.", 13, MutedText);
         }
 
-        // ------------------------------------------------------------------
-        // Watching
 
         private void StartWatching()
         {
@@ -175,10 +141,7 @@ namespace GS2Studio.Showroom.Demo
                 failed: WatchFailed);
         }
 
-        /// <summary>
-        /// Says a failed start by kind and code only: what the SDK read is
-        /// this account's transfer code. The tick tries again.
-        /// </summary>
+        /// <summary>Report only kind and code because failures can contain transfer credentials.</summary>
         private static void WatchFailed(Exception error)
         {
             var summary = error is Gs2Exception gs2Error ? ShowroomErrors.Summary(gs2Error) : error.GetType().Name;
@@ -186,10 +149,7 @@ namespace GS2Studio.Showroom.Demo
             ShowroomLog.Say($"Your transfer code could not be read ({summary}); trying again shortly.");
         }
 
-        /// <summary>
-        /// Drops the subscription, so the SDK holds no callback into a
-        /// disabled or destroyed panel, and forgets what was read.
-        /// </summary>
+        /// <summary>Release callbacks and queued results so a disabled panel cannot receive account updates.</summary>
         private void StopWatching()
         {
             _watch.Stop();
@@ -209,10 +169,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// Keeps whether a code is registered, and turns the one issuing
-        /// button into what it now does.
-        /// </summary>
         private void SetRegistered(EzTakeOver? model) => SetRegistered(model != null);
 
         private void SetRegistered(bool registered)
@@ -223,8 +179,6 @@ namespace GS2Studio.Showroom.Demo
             if (_issueLabel != null) _issueLabel.text = registered ? "Delete and reissue" : "Issue a transfer code";
         }
 
-        // ------------------------------------------------------------------
-        // Issuing
 
         private void IssueOrReissue()
         {
@@ -242,11 +196,7 @@ namespace GS2Studio.Showroom.Demo
                 }
                 catch (Gs2Exception error) when (!replacing && IdentityDemo.IsAlreadyRegistered(error))
                 {
-                    // GS2 sends no notification when a code is added elsewhere,
-                    // e.g. by the browser this account was taken over from, so
-                    // the SDK's cache can say "none" while GS2 has one. The
-                    // visitor asked for a working code, so the one GS2 has is
-                    // replaced in the same press.
+                    // Another browser may have registered a code since the cached read; replace it to fulfill this press.
                     replacing = true;
                     await Delete(gs2, session);
                     registered = await Register(code);
@@ -262,7 +212,6 @@ namespace GS2Studio.Showroom.Demo
             });
         }
 
-        /// <summary>Deletes the account's transfer code; one already gone is what was asked for.</summary>
         private static async Task Delete(Gs2Domain gs2, IGameSession session)
         {
             try
@@ -271,14 +220,11 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (NotFoundException)
             {
-                // Deleted from another tab or browser.
+                // An already absent code satisfies deletion, including removal from another browser.
             }
         }
 
-        /// <summary>
-        /// Registers a new random code. An ID another player already holds is
-        /// refused, so a refused ID is replaced by a new one once.
-        /// </summary>
+        /// <summary>Retry a rejected random identifier once; unrelated failures must reach the press runner.</summary>
         private static async Task<(string Identifier, string Password)> Register(TakeOverDomain code)
         {
             for (var attempt = 0; ; attempt++)
@@ -303,15 +249,13 @@ namespace GS2Studio.Showroom.Demo
             if (_issuedPasswordField != null) _issuedPasswordField.text = password;
         }
 
-        /// <summary>The password leaves the page with the panel; nothing keeps it.</summary>
+        /// <summary>Clear issued credentials when the panel is disabled so they do not remain displayed on reopening.</summary>
         private void ForgetIssued()
         {
             if (_issuedIdField != null) _issuedIdField.text = "";
             if (_issuedPasswordField != null) _issuedPasswordField.text = "";
         }
 
-        // ------------------------------------------------------------------
-        // Taking over
 
         private void TakeOver()
         {
@@ -362,8 +306,7 @@ namespace GS2Studio.Showroom.Demo
                 takenPassword = model.Password;
                 if (model.UserId == session.UserId)
                 {
-                    // Remembered all the same, so the saved password is the
-                    // one GS2 now holds for this account.
+                    // Refresh saved credentials even for the current account because the returned password may differ.
                     own = true;
                     return $"That code is this browser's own: it is already signed in as {ShowroomPlayerTag.Of(model.UserId)}.";
                 }
@@ -371,7 +314,7 @@ namespace GS2Studio.Showroom.Demo
             }, () =>
             {
                 if (takenUserId == null || takenPassword == null) return;
-                // localStorage writes are synchronous, so the reloaded page reads this.
+                // Verify persistence before reloading so a failed write cannot silently restore the old account.
                 store.Remember(takenUserId, takenPassword);
                 var stuck = IdentityDemo.IsRemembered(takenUserId, takenPassword);
                 takenPassword = null;
@@ -390,12 +333,7 @@ namespace GS2Studio.Showroom.Demo
             });
         }
 
-        /// <summary>
-        /// Runs one press through the page's press runner, redacted, with the
-        /// refusals a visitor can meet explained in its terms.
-        /// <paramref name="afterward"/> runs once the press is over, whether
-        /// it worked or not.
-        /// </summary>
+        /// <summary>Redact failures because issuing and taking over both carry credentials; cleanup must run on success or failure.</summary>
         private void Run(IdentityPress press, Func<Gs2Domain, IGameSession, Task<string>> action, Action afterward)
         {
             ShowroomPress.Run(new ShowroomPressOptions
@@ -414,8 +352,6 @@ namespace GS2Studio.Showroom.Demo
             ShowroomReload.Reload();
         }
 
-        // ------------------------------------------------------------------
-        // Clipboard
 
         private void CopyCode()
         {
@@ -429,8 +365,7 @@ namespace GS2Studio.Showroom.Demo
                     : "Issue a transfer code first.");
                 return;
             }
-            // A refusal is not a failure of the page: the browser decides, so
-            // the visitor is told how to do it by hand.
+            // Offer manual copying when the browser refuses clipboard access.
             if (!_clipboard.Copy($"{identifier} {password}",
                     () => ShowroomLog.Say("Copied the ID and password. Paste them into this page in the other browser."),
                     reason => ShowroomLog.Say($"The browser did not let the page copy ({reason}). Select the ID and password above and copy them.")))
@@ -450,11 +385,7 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// Puts a pasted code into the fields: the ID and the password as the
-        /// other browser copied them, or either one alone. Nothing pasted is
-        /// logged, because it may hold a password.
-        /// </summary>
+        /// <summary>Never log pasted text because it can contain the transfer password.</summary>
         private void FillFromPaste(string text)
         {
             if (text.Contains('@'))
@@ -484,8 +415,6 @@ namespace GS2Studio.Showroom.Demo
                 : "What was pasted is not a transfer code. Copy the ID and password from the other browser's page.");
         }
 
-        // ------------------------------------------------------------------
-        // Building blocks
 
         private InputField Field(RectTransform parent, string name, string placeholderText, int limit)
         {
@@ -520,7 +449,6 @@ namespace GS2Studio.Showroom.Demo
             return label;
         }
 
-        /// <summary>Adds a button and returns its label, for a button whose meaning changes.</summary>
         private Text? Press(RectTransform parent, string text, Action onClick)
         {
             var button = Instantiate(_buttonTemplate!, parent);

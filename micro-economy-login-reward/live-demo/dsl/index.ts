@@ -1,45 +1,3 @@
-/**
- * Live demo content for `micro-economy-login-reward`.
- *
- * The feature package is a login bonus with no bonus in it: it declares the
- * group a player claims against, the reward rows mounted on that group's
- * `rewards[]`, and the presses GS2 offers — `Receive` and `MissedReceive`. What
- * a title ships as its bonus — how many days and what each pays — is not the
- * package's to guess, so this package supplies one seven-day track.
- *
- * A visitor presses Receive and watches the first day's coins land in the
- * wallet and the first row of the track turn to "Received". A second Receive
- * the same day is refused (`alreadyReceived`): the track advances once a day,
- * at 15:00 UTC, which is midnight in Japan. So the page carries Advance one
- * day, which moves the visitor's clock on GS2 forward 24 hours so the next day
- * can be received now, and Start over, which deletes the receive status so the
- * track begins again.
- *
- * **Advance one day is the demo's own.** It sets the account's time offset,
- * which no package action does, so it is a hand-written Unity component
- * (`Assets/Showroom/`) rather than a press declared here, and it signs in with
- * the demo's own client (`live-demo/client-stack.yaml`), whose policy allows
- * the call. The track itself is untouched: it is the same bonus a title
- * would ship, seen on a faster clock.
- *
- * **Streaming, not scheduled.** The group counts the days the player has
- * claimed rather than the days since an event opened, so a visitor always
- * starts from day one and there is no event window that has to be open. Repeat
- * is off: past day seven Receive is refused rather than the track wrapping
- * round. Relief is off too, because a missed day is reached by advancing the
- * clock rather than by paying for it.
- *
- * **Start over is an exchange.** GS2 has no client action that deletes a
- * receive status; the feature package ships the deletion as an acquire
- * transform, and a free exchange rate on the group is the smallest thing that
- * runs one on a press.
- *
- * The wallet and the schedule are other packages' and are installed beside
- * this one rather than written out again: their rows live in stacks every demo
- * holding them deploys, and a second author of them would be a second
- * version, and the last deploy would win.
- */
-
 import {
   Arg,
   Bind,
@@ -61,37 +19,21 @@ import currencySurface from "../../../foundation-economy-currency/dsl/dependency
 const loginReward = dependencyPackage(loginRewardSurface);
 const currency = dependencyPackage(currencySurface);
 
-/**
- * The group, as the dependency publishes it. The toggle below reads the
- * group's `receivedSteps` at the row's element index, and names the group
- * through the dependency so the list resolves against what it publishes.
- */
+/** Use the published collection handle so the row-element condition resolves the inherited receivedSteps list. */
 const PublishedLoginRewardCollection = loginReward.type("LoginRewardCollection");
 
-/** The wallet the page shows and every reward lands in. */
 const WALLET_SLOT = 0;
 
-/** The one track on the page. */
 const DAILY = "daily";
 
-/**
- * The hour, in UTC, at which the track moves on to the next day: 15:00 UTC is
- * midnight in Japan.
- */
 const RESET_HOUR = 15;
 
-/** {@link RESET_HOUR} as the rule prints it, and the same moment in Japan. */
 const RESET_TIME = `${String(RESET_HOUR).padStart(2, "0")}:00 UTC`;
 const RESET_HOUR_IN_JAPAN = (RESET_HOUR + 9) % 24;
 const RESET_TIME_IN_JAPAN =
   RESET_HOUR_IN_JAPAN === 0 ? "midnight in Japan" : `${RESET_HOUR_IN_JAPAN}:00 in Japan`;
 
-/**
- * The seven days, in the order they are claimed. The ids sort in this order,
- * which is the order the deployed `rewards[]` is laid out in and so the step
- * each row stands for. The last day pays more, so finishing the track is
- * worth something of its own.
- */
+/** Preserve lexical id order because it determines the reward array index used by each day row. */
 const DAYS = [
   { id: "day1", displayName: "Day 1", coins: 10 },
   { id: "day2", displayName: "Day 2", coins: 20 },
@@ -102,21 +44,11 @@ const DAYS = [
   { id: "day7", displayName: "Day 7", coins: 100 },
 ] as const;
 
-/**
- * The group, overlaid so the page's presses and labels, and the start-over
- * rate mounted on it, have a type of this package's to hang from.
- */
 const LoginRewardCollection = defineOverlayDomainType(
   "LoginRewardCollection",
   loginReward.overlay("LoginRewardCollection")
 );
 
-/**
- * The reward row, overlaid so it can carry a name and what it pays.
- *
- * `acquireActions` is the slot the feature package leaves open; one deposit is
- * appended to it and `coins` decides how big it is on each day.
- */
 const LoginReward = defineOverlayDomainType(
   "LoginReward",
   {
@@ -168,15 +100,6 @@ const LoginReward = defineOverlayDomainType(
       })
 );
 
-/**
- * Starting over, modelled as an exchange that costs nothing: the acquire
- * action is the whole of the press.
- *
- * The rate is named after the group and mounted on it, because a delegated
- * action on the group must target a resource that mounts it — that is how the
- * generated loader learns which rate to exchange. The group arrives at the
- * transform as a reference, so the status it deletes is this group's own.
- */
 const StartOverRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -194,10 +117,6 @@ const StartOverRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/**
- * The package up to its group. Split here because a builder chain has no room
- * for a loop and the days are folded in from {@link DAYS}.
- */
 const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
   .display({
     label: { ja: "ログインボーナス（デモデータ）", en: "Login Rewards (demo data)" },
@@ -221,25 +140,18 @@ const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
     },
   })
   .dependency(loginReward.packageId, "github:gs2io/gs2-studio-package")
-  // The login reward package can point a group at a schedule type, and an
-  // install does not walk a package's own dependencies, so the package that
-  // owns that type is named here too.
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  // Its event windows live in the schedule stack this demo deploys too;
-  // deployed from here without them, that stack would lose them.
+  // Reuse the shared schedule content so this demo cannot remove event windows from that stack.
   .dependency("foundation-economy-schedule-demo", "github:gs2io/gs2-studio-package")
-  // Where a day pays.
+  // Reuse the currency demo content so the wallet and store products stay identical across demos.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  // The currency demo stocks the currency shop's price table, and an install
-  // does not walk a package's own dependencies, so the shop is named too.
   .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   .domainType(LoginRewardCollection)
   .domainType(LoginReward)
 
-  // Streaming with repeat and relief off: the track counts claimed days and
-  // stops after day seven, and the next day is reached by advancing the clock.
+  // Use streaming mode so a fresh visitor starts at day one without requiring an open event window.
   .instance(LoginRewardCollection.typeName, DAILY, {
     [loginReward.propertyId("LoginRewardCollection", "mode")]: "streaming",
     [loginReward.propertyId("LoginRewardCollection", "repeat")]: "disabled",
@@ -247,9 +159,7 @@ const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
     [loginReward.propertyId("LoginRewardCollection", "resetHour")]: RESET_HOUR,
   });
 
-// Authored by type name so the rows reach the overlay this package declares,
-// and its properties with it. The acquire slot is authored empty because the
-// feature package requires it and the deposit is appended.
+// Use the local overlay name for its added properties; keep the required acquire slot empty for the appended deposit.
 const withDays = DAYS.reduce(
   (builder, { id, displayName, coins }) =>
     builder.instance(LoginReward.typeName, id, {
@@ -273,9 +183,7 @@ export const microEconomyLoginRewardDemo = withDays
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // The demo runs the transaction server-side and commits it atomically.
-        // With auto-run off, `Exchange` only hands back a stamp sheet the
-        // client has to execute through the distributor.
+        // Auto-run executes the reset without a second client request after the exchange.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
@@ -284,16 +192,11 @@ export const microEconomyLoginRewardDemo = withDays
       .addChild(StartOverRateModel)
   )
 
-  // The feature package ships the presses but no components: what a title
-  // shows of a login bonus is the title's decision.
   .uiComponent(LoginRewardCollection, ui =>
     ui
-      // `Receive` is the feature package's own press; GS2 picks the step, so
-      // it takes no argument.
       .buttonAction("ReceiveButton", "Receive", undefined, { name: "LoginRewardCollection" })
       .buttonAction("StartOverButton", "StartOver", undefined, { name: "LoginRewardCollection" })
-      // A label rather than a value: a timestamp value is drawn as a
-      // countdown, and this is a moment in the past. GS2 stores it in UTC.
+      // Use a label because the page renders timestamp values as countdowns, while this reading is a past instant.
       .templateLabel(
         "LastReceivedLabel",
         "Last received: {lastReceivedAt} (UTC)",
@@ -304,16 +207,13 @@ export const microEconomyLoginRewardDemo = withDays
         },
         { name: "LoginRewardCollection" }
       )
-      // Before the first Receive GS2 has no moment to report, and the label
-      // above would read "Last received:  (UTC)"; this sentence stands in.
+      // Provide an explicit never-received label so the first visit does not show an empty timestamp.
       .templateLabel(
         "NeverReceivedLabel",
         "Last received: not yet",
         {},
         { name: "LoginRewardCollection" }
       )
-      // An active toggle carries the rows its condition empties: the moment
-      // is hidden while there is none, the stand-in once there is.
       .activeToggle(
         "NeverReceivedActiveToggle",
         UiCond.not(
@@ -347,17 +247,13 @@ export const microEconomyLoginRewardDemo = withDays
         { name: "LoginReward" }
       )
       .templateLabel("ReceivedLabel", "Received", {}, { name: "LoginReward" })
-      // Whether this row's step has been claimed: the group's `receivedSteps`
-      // at the row's element index, which is the row's place in `rewards[]`.
+      // Use the row element index to match receivedSteps to the deployed reward order.
       .activeToggle(
         "ReceivedActiveToggle",
         UiCond.rowElement(PublishedLoginRewardCollection, "receivedSteps"),
         { name: "LoginReward" }
       )
-      // An active toggle carries the rows its condition empties, so the mark
-      // is governed by the negation. Written as `not(...)` rather than through
-      // `invert`, because the generated `<summary>` is built from the
-      // condition and would otherwise describe the opposite of what it does.
+      // Negate the condition because page toggle bindings hide their target rows while true.
       .activeToggle(
         "UnreceivedActiveToggle",
         UiCond.not(UiCond.rowElement(PublishedLoginRewardCollection, "receivedSteps")),

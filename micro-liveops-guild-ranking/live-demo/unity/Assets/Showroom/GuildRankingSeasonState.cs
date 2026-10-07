@@ -1,43 +1,5 @@
-// The guild ranking as the page shows it: which season it is and when it
-// ends, which guild the visitor plays for, where they stand on that guild's
-// board, and what earlier season they can still receive for.
-//
-// Nothing here is a generated binding. A guild's board is not user data a
-// package can list, and submitting a score or receiving for a past season is
-// not an action a package can host, so both go straight to GS2.
-//
-// GS2 numbers a season by how many times the schedule demo's daily event
-// `guild-season` has repeated, so the season and the moment it turns over are
-// read from that event, once, and again only when the season is over.
-//
-// The visitor's guild is followed through the SDK, the same way the lobby
-// follows it: a subscription to the joined guilds, which the SDK reads again
-// when GS2 says the visitor joined or left, and the guild itself read once per
-// guild through the domain for its full id, which the scores are filed under,
-// and its name. Nothing here reloads or invalidates the SDK's cache; the
-// lobby and this share what it holds.
-//
-// GS2 does not announce a new score, so the board is read through the REST
-// client every few seconds; it has no cache in the way, so what another member
-// scored shows at the next read. Which past seasons wait is read when the page
-// starts, when the season turns over and after a receipt, since nothing else
-// changes that; a season known to be received or to pay nothing is not asked
-// about again. The rank in the season that waits is read with every board
-// read, though: after the visitor advanced their clock, that season is still
-// being played by guildmates who did not. Playing and receiving go through
-// the SDK, so the wallet the page shows hears the reward land.
-//
-// The visitor can move their own clock a day forward (Advance one day). GS2
-// then reads the season, the board and the past seasons on that clock, so
-// every "now" here is this device's time plus the offset the demo gave the
-// account, and once the session has signed in again with the new offset
-// everything is read afresh: the season the visitor played is over for them,
-// and shows under what they can receive for.
-//
-// A read answers for the moment it started. One that started before a play or
-// a receipt, before the guild or the season changed, or before a newer read of
-// the same thing, is dropped when it lands, so it cannot put back what the
-// press just changed.
+// Ranking reads use REST so polling does not reuse the SDK domain cache.
+// Read generations guard ranking and season display updates after plays, receipts or clock changes.
 #nullable enable
 
 using System;
@@ -69,53 +31,33 @@ using VisitorDomain = Gs2.Gs2Guild.Domain.Model.UserAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// The season, the visitor's guild and their standing, kept current for
-    /// the page's rows. One per page, made by the first row that asks.
-    /// </summary>
     internal sealed class GuildRankingSeasonState : MonoBehaviour
     {
-        /// <summary>The ranking namespace the feature package deploys, and the demo's one ranking.</summary>
         private const string RankingNamespace = "GuildRanking";
         private const string RankingName = "guild";
 
-        /// <summary>The schedule namespace and the daily event that numbers the seasons.</summary>
         private const string ScheduleNamespace = "Schedule";
         private const string SeasonEvent = "guild-season";
 
-        /// <summary>What one play can score, which is the ranking's own range.</summary>
         public const int MinimumScore = 1;
         public const int MaximumScore = 100;
 
-        /// <summary>
-        /// How many places the board shows. A guild holds at most ten members
-        /// at once, but members who left keep their places, so a board can
-        /// hold more.
-        /// </summary>
         public const int BoardSize = 10;
 
         private const float TickSeconds = 1f;
         private const float StandingPollSeconds = 6f;
 
-        /// <summary>How long to wait before reading the event again after it could not be read.</summary>
         private const float SeasonRetrySeconds = 30f;
 
-        /// <summary>How long to wait before following the joined guilds again after it failed to start.</summary>
         private const float MembershipRetrySeconds = 5f;
 
-        /// <summary>How long to wait before reading the past seasons again after they could not be read.</summary>
         private const float PastRetrySeconds = 30f;
 
-        /// <summary>
-        /// How long after the clock moved everything is read once more:
-        /// signing in again can finish before the new token is the one the
-        /// session sends, so the first reads may still go out on the old clock.
-        /// </summary>
+        // Keep one delayed refresh after a clock change instead of assuming the first refresh has settled.
         private const float ClockSettleSeconds = 3f;
 
         private const int PageSize = 100;
 
-        /// <summary>The reads whose failures are logged once until they work again; see <see cref="LogFailure"/>.</summary>
         private const string SeasonFailure = "The season could not be read";
         private const string FollowFailure = "The guilds could not be followed";
         private const string RereadFailure = "The guilds could not be read again";
@@ -125,7 +67,6 @@ namespace GS2Studio.Showroom.Demo
 
         private static GuildRankingSeasonState? _instance;
 
-        /// <summary>The page's season, made on first use.</summary>
         public static GuildRankingSeasonState Shared
         {
             get
@@ -140,7 +81,7 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>A season the visitor scored in that is over and not yet received.</summary>
+        // A past score is a reward candidate; Receive still handles missing tiers and server rejections.
         public sealed class PastSeason
         {
             public long Season;
@@ -150,123 +91,88 @@ namespace GS2Studio.Showroom.Demo
             public int? Rank;
         }
 
-        /// <summary>Raised whenever what the rows show may have changed.</summary>
         public event Action? Updated;
 
-        /// <summary>The signed-in visitor.</summary>
         public string UserId { get; private set; } = "";
 
-        /// <summary>The season being played, once the event has been read.</summary>
         public long? Season { get; private set; }
 
-        /// <summary>When the season turns over on GS2's clock, once the event has been read.</summary>
         public DateTime? SeasonEndsAt { get; private set; }
 
-        /// <summary>
-        /// When the season turns over on this device's clock, which is what
-        /// the page counts down against: GS2's time less the offset the
-        /// visitor's account has. Null until that offset has been read.
-        /// </summary>
+        // The countdown uses the device clock; an unknown account offset must not be treated as zero.
         public DateTime? SeasonEndsOnDevice =>
             DemoTimeOffset.TryGet(UserId, out var offset) ? SeasonEndsAt?.AddSeconds(-offset) : null;
 
-        /// <summary>Why the season could not be read, or null.</summary>
         public string? SeasonProblem { get; private set; }
 
-        /// <summary>Whether the visitor's guild has been read once.</summary>
         public bool GuildKnown { get; private set; }
 
-        /// <summary>The full id of the visitor's guild, which the scores are filed under; null without one.</summary>
+        // Ranking cluster keys use the full guild ID, not its display name.
         public string? GuildId { get; private set; }
 
-        /// <summary>The name the guild's founder gave it.</summary>
         public string? GuildDisplayName { get; private set; }
 
-        /// <summary>Whether the board has been read for the current guild and season.</summary>
         public bool StandingKnown { get; private set; }
 
-        /// <summary>The visitor's total this season in their guild, or null before their first play.</summary>
         public long? Total { get; private set; }
 
-        /// <summary>The visitor's rank in their guild this season, or null before their first play.</summary>
         public int? Rank { get; private set; }
 
-        /// <summary>The top of the guild's board this season, best first, at most <see cref="BoardSize"/> places.</summary>
         public ClusterRankingData[] Board { get; private set; } = Array.Empty<ClusterRankingData>();
 
-        /// <summary>Whether the guild's board holds more places than <see cref="Board"/> shows.</summary>
         public bool BoardHasMore { get; private set; }
 
-        /// <summary>Whether the past seasons have been read once.</summary>
         public bool PastKnown { get; private set; }
 
-        /// <summary>The latest season the visitor can still receive for, or null.</summary>
         public PastSeason? Next { get; private set; }
 
-        /// <summary>How many more earlier seasons wait besides <see cref="Next"/>.</summary>
         public int MoreWaiting { get; private set; }
 
-        /// <summary>Why the past seasons could not be read, or null.</summary>
         public string? PastProblem { get; private set; }
 
         private bool _readingSeason;
 
-        /// <summary>Set when the season must be read again although it is not over, as after the clock moved.</summary>
         private bool _seasonStale;
 
-        /// <summary>Bumped by every season read as it starts, and whenever the clock moved.</summary>
         private int _seasonGeneration;
 
-        /// <summary>
-        /// Set when the visitor's clock moved and the session has not signed in
-        /// on it yet; it stays set when signing in again failed.
-        /// </summary>
+        // Storing a new offset does not mean the session has applied it; keep the warning until Applied arrives.
         private bool _clockNotApplied;
         private bool _readingStanding;
         private bool _readStandingAgain;
         private bool _readingPast;
         private bool _readPastAgain;
 
-        /// <summary>Bumped by every standing read as it starts, and by every play and change of guild or season.</summary>
         private int _standingGeneration;
 
-        /// <summary>Bumped by every past read as it starts, and by every receipt.</summary>
         private int _pastGeneration;
 
-        /// <summary>Seasons the visitor received for, keyed by guild and season; a receipt is final.</summary>
+        // A visitor can score for different guilds in one season, so receipt identity needs both keys.
         private readonly HashSet<(string, long)> _received = new HashSet<(string, long)>();
 
-        /// <summary>Seasons GS2 said pay nothing for the visitor, keyed by guild and season.</summary>
+        // Remember rejected reward candidates so later reads do not keep offering them.
         private readonly HashSet<(string, long)> _paysNothing = new HashSet<(string, long)>();
 
-        /// <summary>The names of guilds the visitor scored in, keyed by full id; null once the guild is gone.</summary>
         private readonly Dictionary<string, string?> _guildNames = new Dictionary<string, string?>();
 
-        /// <summary>What the SDK reported, waiting for the main thread.</summary>
         private readonly ShowroomInbox _inbox = new ShowroomInbox();
 
-        /// <summary>The signed-in visitor's guild domain, while the joined guilds are followed.</summary>
         private VisitorDomain? _visitor;
 
-        /// <summary>The subscription to the joined guilds, once it started.</summary>
         private ulong? _joinedSubscription;
 
-        /// <summary>Bumped whenever the joined guilds stop being followed; a callback under an older one is dropped.</summary>
         private int _joinedTicket;
 
-        /// <summary>Bumped whenever the joined list names a guild to read; a read under an older one is dropped.</summary>
         private int _guildReadTicket;
 
-        /// <summary>The guild name the joined list last named, or null.</summary>
         private string? _joinedGuildName;
 
         private bool _followingJoined;
 
-        /// <summary>The SDK handles the joined guilds are followed with, captured on the main thread.</summary>
+        // Capture these on the main thread so callback-driven retries do not query Unity state.
         private Gs2Domain? _followDomain;
         private IGameSession? _followSession;
 
-        /// <summary>Set when reading the joined guilds or the guild they name failed, so the tick tries again.</summary>
         private bool _membershipFailed;
 
         private float _nextSeasonRead;
@@ -274,11 +180,8 @@ namespace GS2Studio.Showroom.Demo
         private float _nextStandingRead;
         private float _nextPastRead;
 
-        /// <summary>
-        /// One latch per read. A read that keeps failing is tried again every
-        /// few seconds, and saying each try would fill the page's log, so it
-        /// is said once until it works again. Main thread only.
-        /// </summary>
+        // Repeated polling failures would flood the log; keep a separate latch per read so recovery is independent.
+        // The latch dictionary is confined to the main thread.
         private readonly Dictionary<string, ShowroomLatch> _failures = new Dictionary<string, ShowroomLatch>();
 
         private void OnEnable()
@@ -297,13 +200,11 @@ namespace GS2Studio.Showroom.Demo
             StopFollowingJoined();
         }
 
-        /// <summary>Says a failed read, unless the same read failed last time too. Main thread only.</summary>
         private void LogFailure(string what, Exception error)
         {
             Latch(what).Fail(what, error);
         }
 
-        /// <summary>The read worked, so its next failure is said again. Main thread only.</summary>
         private void Recovered(string what)
         {
             Latch(what).Succeeded();
@@ -331,16 +232,13 @@ namespace GS2Studio.Showroom.Demo
             {
                 yield return new WaitForSeconds(0.25f);
             }
-            // Known before the first read, so that read is on the visitor's clock.
             UserId = session.UserId;
             DemoTimeOffset.TryGet(UserId, out _);
             var tick = new WaitForSecondsRealtime(TickSeconds);
             while (true)
             {
                 var now = Time.realtimeSinceStartup;
-                // The season is read again once it is over, or once the clock
-                // moved; until then the event answers the same. Whether it is
-                // over waits for the account's offset.
+                // Do not decide rollover from the device clock before the account offset is known.
                 var over = SeasonEndsAt != null && DemoTimeOffset.TryGet(UserId, out _) &&
                     ServerNow() >= SeasonEndsAt;
                 if (now >= _nextSeasonRead && (Season == null || over || _seasonStale)) ReadSeason();
@@ -353,8 +251,7 @@ namespace GS2Studio.Showroom.Demo
                     }
                     else if (_joinedSubscription != null && (!GuildKnown || _membershipFailed))
                     {
-                        // A read of the list or of its guild failed, and the
-                        // SDK hands over the list again only when it changes.
+                        // Retry failed membership reads without depending on another subscription notification.
                         _nextMembershipWatch = now + MembershipRetrySeconds;
                         _membershipFailed = false;
                         _joinedGuildName = null;
@@ -368,8 +265,6 @@ namespace GS2Studio.Showroom.Demo
                 }
                 if (now >= _nextPastRead)
                 {
-                    // Read on start and when the season turns over; a receipt
-                    // reads again itself, and a failed read sets a retry.
                     _nextPastRead = float.PositiveInfinity;
                     ReadPast();
                 }
@@ -377,14 +272,7 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        // ------------------------------------------------------------------
-        // Presses
 
-        /// <summary>
-        /// Plays once: adds a score from <see cref="MinimumScore"/> to
-        /// <see cref="MaximumScore"/> to the visitor's total for the season, in
-        /// the guild they belong to. Returns what the page should say.
-        /// </summary>
         public async Task<string> Play()
         {
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
@@ -413,12 +301,10 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (NotIncludedInClusterException)
             {
-                // The visitor left, or was removed, and the SDK has not heard yet.
                 return "GS2 refused the score (notInclude): you are not a member of that guild any more. Scores count only for the guild you belong to.";
             }
             catch (NotFoundException)
             {
-                // GS2 takes scores only while the season's event is open.
                 _nextSeasonRead = 0;
                 SeasonEndsAt = null;
                 Season = null;
@@ -428,8 +314,7 @@ namespace GS2Studio.Showroom.Demo
             if (this == null) return "";
             if (season != Season)
             {
-                // The season turned over while the score was on its way; the
-                // season it went to is over now, so it may pay.
+                // The displayed season changed while the score was submitted; revisit its possible reward.
                 _nextPastRead = 0;
                 return $"You scored {score}.";
             }
@@ -441,11 +326,6 @@ namespace GS2Studio.Showroom.Demo
             return $"You scored {score}. Your total this season is {Total}.";
         }
 
-        /// <summary>
-        /// Receives the reward for the latest season the visitor has not
-        /// received for, by the rank they finished at in the guild they played
-        /// for. Returns what the page should say.
-        /// </summary>
         public async Task<string> Receive()
         {
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
@@ -458,8 +338,7 @@ namespace GS2Studio.Showroom.Demo
             var where = target.GuildDisplayName ?? "your guild";
             try
             {
-                // The season is named: left out, GS2 would take the season
-                // being played, which is still open and cannot pay.
+                // Target the selected past season explicitly; the currently displayed season may be different.
                 var transaction = await gs2.Ranking2.Namespace(RankingNamespace).ClusterRankingModel(RankingName)
                     .ClusterRankingSeason(target.GuildId, target.Season, session)
                     .ClusterRankingReceivedReward()
@@ -474,7 +353,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (BadRequestException error) when (error is SeasonNotEndedException || error is SeasonNotStartedException)
             {
-                // This device's clock can run ahead of GS2's by a moment.
+                // Local eligibility did not match the server response; refresh the season before another attempt.
                 _seasonStale = true;
                 _nextSeasonRead = 0;
                 return $"GS2 says season {target.Season} is still being played (inSchedule); it pays once it is over.";
@@ -487,8 +366,7 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (NotFoundException)
             {
-                // Asking again would get the same answer, so the season is
-                // put with those that pay nothing.
+                // Treat a missing score as settled locally so it is not offered again by subsequent history reads.
                 _paysNothing.Add((target.GuildId, target.Season));
                 ForgetNext(target);
                 return $"GS2 has no score of yours for season {target.Season} (notFound).";
@@ -500,7 +378,6 @@ namespace GS2Studio.Showroom.Demo
             return $"Received the reward for season {target.Season}: {rank} in {where}.";
         }
 
-        /// <summary>Takes a season off what waits, and reads the rest again.</summary>
         private void ForgetNext(PastSeason target)
         {
             if (this == null) return;
@@ -514,21 +391,9 @@ namespace GS2Studio.Showroom.Demo
             ReadPast();
         }
 
-        // ------------------------------------------------------------------
-        // The demo clock
 
-        /// <summary>
-        /// Now on GS2's clock for the visitor: this device's time plus the
-        /// offset their account has (none while it is not read yet).
-        /// </summary>
         private DateTime ServerNow() => DateTime.UtcNow.AddSeconds(DemoTimeOffset.Get(UserId));
 
-        /// <summary>
-        /// The session signed in again on the visitor's new clock: the season,
-        /// the board and the past seasons are read afresh on it, and once more
-        /// a moment later.
-        /// </summary>
-        /// <summary>The offset is stored; the session signs in on it next.</summary>
         private void OnClockChanged(string userId)
         {
             if (userId == UserId) _clockNotApplied = true;
@@ -542,10 +407,7 @@ namespace GS2Studio.Showroom.Demo
             StartCoroutine(ReadAllAfter(ClockSettleSeconds));
         }
 
-        /// <summary>
-        /// The account's offset was read. The session signed in with it
-        /// already, so nothing is read again; only the countdown moves.
-        /// </summary>
+        // An offset read only corrects local time conversion; it must not initiate a session refresh.
         private void OnOffsetLoaded(string userId)
         {
             if (userId == UserId && this != null) Updated?.Invoke();
@@ -557,10 +419,7 @@ namespace GS2Studio.Showroom.Demo
             ReadAllAgain();
         }
 
-        /// <summary>
-        /// Drops what reads already out will answer, and has the next tick read
-        /// everything again. A season that changed starts its board afresh.
-        /// </summary>
+        // Old in-flight reads must not overwrite newer state after the account clock changes.
         private void ReadAllAgain()
         {
             _seasonGeneration++;
@@ -573,13 +432,7 @@ namespace GS2Studio.Showroom.Demo
             Updated?.Invoke();
         }
 
-        // ------------------------------------------------------------------
-        // Reads
 
-        /// <summary>
-        /// Reads the season's event: which repeat it is on, and when that
-        /// repeat ends. One read is out at a time.
-        /// </summary>
         private async void ReadSeason()
         {
             if (_readingSeason || !ShowroomRuntime.TryGet(out var gs2, out var session)) return;
@@ -597,7 +450,7 @@ namespace GS2Studio.Showroom.Demo
                         .WithIsInSchedule(false));
                 if (this == null) return;
                 Recovered(SeasonFailure);
-                // A read that went out before the clock moved answers for the old clock.
+                // A clock refresh invalidates this result even if its request completed successfully.
                 if (generation != _seasonGeneration) return;
                 var repeat = result?.RepeatSchedule;
                 var endsAt = repeat?.CurrentRepeatEndAt;
@@ -615,8 +468,7 @@ namespace GS2Studio.Showroom.Demo
                     var changed = season != Season;
                     Season = season;
                     SeasonEndsAt = ends;
-                    // A season that GS2 still calls current although this
-                    // device's clock says it is over is read again shortly.
+                    // The local deadline may already have passed while GS2 still reports this repeat; retry sooner.
                     _nextSeasonRead = Time.realtimeSinceStartup + (ends > ServerNow() ? SeasonRetrySeconds : 5f);
                     if (changed)
                     {
@@ -652,11 +504,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// Follows the guilds the visitor joined, as the lobby does: the SDK
-        /// hands over the list on subscribing and again whenever GS2 says the
-        /// visitor joined or left. A failure to start is tried again shortly.
-        /// </summary>
         private async void FollowJoined()
         {
             if (_followingJoined || !ShowroomRuntime.TryGet(out var gs2, out var session)) return;
@@ -673,7 +520,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 var id = await visitor.SubscribeJoinedGuildsWithInitialCallAsync(joined =>
                 {
-                    // An empty list may only mean the cache no longer holds it.
+                    // An empty cache notification does not prove the visitor left; reread before clearing membership.
                     if (joined == null || joined.Length == 0) RereadJoined(visitor, ticket, domain, player);
                     else Post(ticket, () => ApplyJoined(joined, domain, player));
                 }, GuildRankingDemo.GuildKind);
@@ -695,7 +542,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>Stops following the joined guilds and drops what the SDK still has to report.</summary>
         private void StopFollowingJoined()
         {
             _joinedTicket++;
@@ -712,19 +558,14 @@ namespace GS2Studio.Showroom.Demo
             _inbox.Clear();
         }
 
-        /// <summary>Hands an SDK callback to the main thread, unless the guilds stopped being followed first.</summary>
+        // Queued subscription callbacks may outlive unsubscribe; check the ticket when the main thread drains them.
         private void Post(int ticket, Action apply) =>
             _inbox.Post(() =>
             {
                 if (ticket == _joinedTicket && this != null) apply();
             });
 
-        /// <summary>
-        /// Reads the joined guilds again through the domain, which answers
-        /// from the cache while the cache holds them and otherwise reads them
-        /// from GS2. It may run on the SDK's thread, so it touches nothing of
-        /// Unity's and hands what it read to the main thread.
-        /// </summary>
+        // SDK callbacks may run off-thread; defer membership and Unity-facing updates through Post.
         private async void RereadJoined(VisitorDomain visitor, int ticket, Gs2Domain domain, IGameSession player)
         {
             try
@@ -746,13 +587,9 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// Takes in which guild the joined list names. A guild it did not name
-        /// before is read through the domain for its full id and name.
-        /// </summary>
         private void ApplyJoined(JoinedGuild[]? joined, Gs2Domain gs2, IGameSession session)
         {
-            // The SDK hands over the whole list, of every kind.
+            // The subscription cache key is shared across guild kinds; filter before choosing this demo's guild.
             var name = joined?.FirstOrDefault(entry => entry?.GuildModelName == GuildRankingDemo.GuildKind)?.GuildName;
             if (name == null)
             {
@@ -766,7 +603,7 @@ namespace GS2Studio.Showroom.Demo
             ReadGuild(gs2, session, name);
         }
 
-        /// <summary>Reads the named guild through the domain; a newer name, or leaving, drops what it read.</summary>
+        // A newer membership result must win even if an older guild request finishes later.
         private async void ReadGuild(Gs2Domain gs2, IGameSession session, string name)
         {
             var ticket = ++_guildReadTicket;
@@ -779,15 +616,13 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (NotFoundException)
             {
-                // Disbanded after the list was read; the SDK hears the visitor
-                // left and hands over the list again.
+                // A stale joined list may still name a missing guild; let the null result clear the displayed membership.
             }
             catch (Exception error)
             {
                 if (ticket != _guildReadTicket || this == null) return;
                 LogFailure(GuildFailure, error);
-                // Read again on the next list the SDK hands over, or at the
-                // next retry.
+                // Clear the remembered name so a retry is not skipped as an unchanged membership.
                 _joinedGuildName = null;
                 _membershipFailed = true;
                 return;
@@ -796,8 +631,6 @@ namespace GS2Studio.Showroom.Demo
             Recovered(GuildFailure);
             if (guild?.GuildId == null)
             {
-                // The guild is gone although the list still names it; until
-                // the list catches up the visitor has no guild to play for.
                 _joinedGuildName = null;
                 SetGuild(null, null);
                 return;
@@ -805,7 +638,6 @@ namespace GS2Studio.Showroom.Demo
             SetGuild(guild.GuildId, guild.DisplayName);
         }
 
-        /// <summary>Records the visitor's guild, and starts its board afresh when it changed.</summary>
         private void SetGuild(string? guildId, string? displayName)
         {
             if (guildId != GuildId)
@@ -824,11 +656,7 @@ namespace GS2Studio.Showroom.Demo
             Updated?.Invoke();
         }
 
-        /// <summary>
-        /// Reads the visitor's total and rank, and the top of their guild's
-        /// board, for the season being played. One read is out at a time;
-        /// asking during it makes one more when it returns.
-        /// </summary>
+        // Coalesce overlapping requests into one follow-up read so a play during polling still gets a refresh.
         private async void ReadStanding()
         {
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
@@ -867,8 +695,6 @@ namespace GS2Studio.Showroom.Demo
             var client = new Gs2Ranking2RestClient(gs2.Super.RestSession);
             var token = session.AccessToken.Token;
 
-            // GS2 answers for a visitor who has not played too, with neither a
-            // score nor a rank.
             var own = await client.GetClusterRankingAsync(
                 new GetClusterRankingRequest()
                     .WithNamespaceName(RankingNamespace)
@@ -886,9 +712,7 @@ namespace GS2Studio.Showroom.Demo
                     .WithLimit(BoardSize)
                     .WithAccessToken(token));
 
-            // The season waiting to be received is read along with the board,
-            // since its rank moves while guildmates who did not advance their
-            // clock still play it.
+            // Guildmates may still be playing this earlier season on their own clocks, so its displayed rank remains provisional.
             var waiting = Next;
             var pastGeneration = _pastGeneration;
             (int? rank, long? score)? waitingStanding = null;
@@ -916,14 +740,7 @@ namespace GS2Studio.Showroom.Demo
             Updated?.Invoke();
         }
 
-        /// <summary>
-        /// Reads every score the visitor made in this ranking and every reward
-        /// they received, and finds the latest season that is over and still
-        /// pays. A visitor who changed guilds has one score per guild in a
-        /// season, and each is received on its own. Called on start, when the
-        /// season turns over and after a receipt; a failed read is tried again
-        /// shortly.
-        /// </summary>
+        // Search across guilds: receiving for the current guild must not hide rewards from a previous guild.
         private async void ReadPast()
         {
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
@@ -990,8 +807,7 @@ namespace GS2Studio.Showroom.Demo
                 .Where(score => score?.ClusterName != null && score.Season != null && score.Season < current)
                 .ToArray();
 
-            // The receipts are read only while a season that is over is not
-            // yet known to be received or to pay nothing.
+            // Skip receipt pagination once every past score is already settled locally.
             if (over.Any(score => !Settled(score)))
             {
                 pageToken = null;
@@ -1022,10 +838,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 var latest = waiting[0];
                 var key = (latest.ClusterName, latest.Season!.Value);
-                // The rank is read every time: a season that is over for the
-                // visitor, who advanced their clock, is still being played by
-                // guildmates who did not, so their scores can still pass it.
-                // A guild keeps its name until it is gone, so that is asked once.
+                // Reread the candidate rank because other accounts may still be playing that season.
                 var standing = await ReadStandingIn(client, token, latest.ClusterName, key.Item2);
                 standing.score ??= latest.Score;
                 if (!_guildNames.TryGetValue(latest.ClusterName, out var displayName))
@@ -1051,7 +864,6 @@ namespace GS2Studio.Showroom.Demo
             Updated?.Invoke();
         }
 
-        /// <summary>The visitor's rank and score in a guild's board for a season, as GS2 has them now.</summary>
         private static async Task<(int? rank, long? score)> ReadStandingIn(
             Gs2Ranking2RestClient client, string token, string guildId, long season)
         {
@@ -1065,10 +877,7 @@ namespace GS2Studio.Showroom.Demo
             return (result?.Item?.Rank, result?.Item?.Score);
         }
 
-        /// <summary>
-        /// The name the guild's founder gave it; null once the guild is gone,
-        /// since a disbanded guild's season still pays.
-        /// </summary>
+        // A missing guild name must not prevent a past score from being offered as a reward candidate.
         private static async Task<string?> DisplayNameOf(Gs2Domain gs2, IGameSession session, string guildId)
         {
             try

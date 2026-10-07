@@ -1,32 +1,4 @@
-/**
- * Live demo content for `foundation-economy-character-dictionary`.
- *
- * A dex answers one question per character: has this player ever had one.
- * What is worth watching is that the answer is permanent — a character enters
- * the dex once, keeps the moment it first arrived, and its button stops being
- * offered, because there is no second first time.
- *
- * Filing a character into the dex is not something a player does afterwards:
- * it is part of acquiring the character. So the press below recruits and
- * files in one transaction, by carrying both acquire actions on a single rate
- * of this package's own.
- *
- * The rate is this package's rather than an addition to the recruit in
- * `foundation-economy-character-demo`, because that recruit lives in the
- * character demo's stack, which every demo holding a roster deploys. Appending
- * the dex entry to it made that stack read differently depending on whether
- * the deploying demo installed this one, and the last deploy decided whether
- * recruiting filled the dex at all. A rate here lands in this package's own
- * stack and changes nothing another demo deploys. The cost is that the recruit
- * rate is written twice — here and in the character demo — so a change to one
- * (another action, a different count) does not reach the other.
- *
- * The roster itself comes from `foundation-economy-character-demo`, installed
- * beside this package rather than written out again here. A row filed against
- * a dependency's type lands in that dependency's stack, and every demo that
- * pulls the same package shares it — so a second author of the same roster is
- * a second version of it, and whichever demo deployed last would win.
- */
+/** Own the combined recruit rate here so enabling dex registration cannot change the shared character demo stack. */
 
 import {
   Arg,
@@ -47,20 +19,9 @@ const characterDemo = dependencyPackage(characterDemoSurface);
 
 const Character = dictionary.type("Character");
 
-/** The package owning `AcquireCharacter`, addressed by name like any dependency. */
 const CHARACTER_PACKAGE_ID = "foundation-economy-character";
 
-/**
- * Recruiting a character, modelled as an exchange that costs nothing.
- *
- * The rate is mounted on `Character` so that each row carries its own: a
- * delegated action on a type must target a resource that mounts that type,
- * which is how the generated loader learns which rate a row's button trades.
- *
- * Both acquire actions ride the same rate, so a recruit and its dex entry
- * commit together or not at all. The acquire comes first, matching the order
- * the transaction reads in.
- */
+/** Keep recruitment and dex registration in one atomic exchange so neither can commit alone. */
 const DexRecruitRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -101,15 +62,9 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage(
     },
   })
   .dependency(dictionary.packageId, "github:gs2io/gs2-studio-package")
-  // The roster, the level curve and the capacity come from the character
-  // package's own demo rather than being written out again here. Rows filed
-  // against a dependency's types land in that dependency's stack, which every
-  // demo pulling the same package shares, so a second author of the same
-  // content is a second version of it and the last deploy wins.
+  // Reuse the shared roster and level curve so demos cannot deploy conflicting versions of the same dependency stack.
   .dependency(characterDemo.packageId, "github:gs2io/gs2-studio-package")
-  // The dex overlays a type the character package owns, and an install does not
-  // walk a package's own dependencies, so the base package is named here too.
-  // It also owns `AcquireCharacter`, which the rate above trades for.
+  // Declare the base package because this rate directly calls its AcquireCharacter transform.
   .dependency(CHARACTER_PACKAGE_ID, "github:gs2io/gs2-studio-package")
 
   .masterDataResource(resource =>
@@ -123,10 +78,7 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // Run and commit server-side: with auto-run off, `Exchange` hands back
-        // a stamp sheet the client still has to execute, which can leave the
-        // character granted but the dex entry unwritten if the page is closed
-        // mid-way.
+        // Auto-run executes the combined transaction without a second request from the page.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),

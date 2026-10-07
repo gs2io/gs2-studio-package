@@ -1,14 +1,9 @@
-// What Receive would pay right now.
 #nullable enable
 
 using UnityEngine;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// "30 coins", or that nothing has built up yet. Receive drops the minutes
-    /// short of a full interval, so those are named too.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/Showroom/Idle Rewards Ready")]
     public sealed class IdleStatusToReceiveLabel : IdlePredictionLabel
     {

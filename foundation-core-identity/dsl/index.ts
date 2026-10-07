@@ -96,18 +96,9 @@ const TakeOverSetting = defineDomainType("TakeOverSetting", dt =>
     })
 );
 
-/**
- * The take-over type number a transfer code (identifier + password) is
- * registered under. GS2-Account refuses password take-over for any type that
- * has a TakeOverTypeModel, and OIDC types are numbered upward from 0, so the
- * password slot sits at the upper bound of the allowed range (0..1024) where
- * no TakeOverSetting row may ever land.
- */
+/** Reserve a separate take-over type so transfer codes cannot share an OIDC configuration slot. */
 export const TRANSFER_CODE_TAKE_OVER_TYPE = 1024;
 
-// A player's password take-over slot. It has no master: the reserved id is the
-// take-over type number (`TRANSFER_CODE_TAKE_OVER_TYPE`), and GS2 only stores
-// the identifier and a password hash, so the identifier is all there is to read.
 const TransferCode = defineDomainType("TransferCode", dt =>
   dt
     .property(PT.string("userIdentifier").userData().required())
@@ -197,9 +188,7 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
       .model(GS2.account.Namespace)
       .bindings({
         name: Bind.static("Account"),
-        // Taking over with a transfer code must not rotate the source
-        // account's password, or the device that issued the code could no
-        // longer log in.
+        // Keep the issuing device's credentials valid after a transfer-code takeover.
         changePasswordIfTakeOver: Bind.static(false),
         ...Bind.nulls(
           "authenticationScript",
@@ -226,8 +215,6 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
       })
   )
 
-  // The same GS2 record, read as the player's transfer code. The reserved id
-  // is the take-over type, so each row keys the record by its own type.
   .userDataResource(r =>
     r
       .model(GS2.account.TakeOver)

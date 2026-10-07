@@ -1,29 +1,4 @@
-/**
- * Regression test: the generated C# names the Ez types the Bind loaders really
- * return.
- *
- * `SendFriendRequestLoader` / `ReceiveFriendRequestLoader` and their array
- * loaders all yield `EzFriendRequest`; there is no `EzSendFriendRequest` or
- * `EzReceiveFriendRequest` in the Ez SDK. Codegen used to spell the type as
- * `Ez` + the catalog model name, which generated C# that does not compile in
- * Unity while every TypeScript gate stayed green. It now reads the type the
- * Bind surface records for each loader.
- *
- * The collection's per-item apply is matched on the same recorded type, so a
- * one-sided switch would silently turn `ApplyFriendFriendUserItemTo` into a
- * no-op. The request types now bind no property from the item, so the apply
- * call is pinned on the Friend and Follow collections instead.
- *
- * The Friend collection exists because `friend::FriendUser` is listable. The
- * package binds `withProfile` to the typed static literal `true` on the
- * Friend and Follow resources, so every loader built for them (the array
- * loader of the collection and the element loader of each row) passes the
- * same C# `bool` named argument and shares one SDK cache parent key.
- *
- * Friend requests carry no profile: the SDK drops `withProfile` on the
- * request lists and never fills `PublicProfile`, so the request types bind
- * only the other player's id and their binders never read `PublicProfile`.
- */
+/** Catalog model names can differ from SDK Ez types; use the shipped Bind surface so fixtures reflect actual loader results. */
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";

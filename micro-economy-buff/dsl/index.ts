@@ -15,28 +15,11 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const schedule = dependencyPackage(scheduleSurface);
 
-/** The schedule namespace a buff's active period is read from. */
 const SCHEDULE_NAMESPACE_RESOURCE_ID = schedule.resourceId("schedule.Namespace");
 const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
 
-/**
- * A multiplier applied to what a service hands out: a double-drop campaign, a
- * first-week experience boost. The buff names what it scales and the field it
- * scales, so nothing that grants rewards has to know a buff exists.
- *
- * A buff scales either the request of an action (`action`) or a field of a
- * model as the service reads it (`model`). Which one a service offers is
- * GS2's to say: an idle category's rewards, for instance, are scaled as a
- * model, and there is no action to target for them.
- *
- * GS2 applies a buff only where its condition matches, and every buff has one:
- * the model the condition names and the GRN it must match, such as the one
- * idle category or the one wallet the buff is for.
- */
 const Buff = defineDomainType("Buff", dt =>
   dt
     .property(
@@ -169,8 +152,6 @@ const BuffEntryModel = defineMasterDataResource(resource =>
       targetType: Bind.domainProperty(Source.direct(Buff, "targetType")),
       priority: Bind.domainProperty(Source.direct(Buff, "priority")),
     })
-    // Only the side the target type names is written: GS2 requires that one
-    // and ignores the other.
     .addArrayChild("targetAction", targetAction => {
       targetAction
         .model(GS2.buff.BuffTargetAction)

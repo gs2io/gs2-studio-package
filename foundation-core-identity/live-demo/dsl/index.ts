@@ -1,23 +1,4 @@
-/**
- * Live demo content for `foundation-core-identity`.
- *
- * A visitor issues a transfer code (an ID and a password) in one browser and
- * uses it in another: the second browser then signs in as the first one's
- * account. Every showroom demo served from the same site keeps the account in
- * the site's browser storage, so the other demos opened in the second browser
- * show the first browser's data too.
- *
- * The feature package is the take-over namespace and the player's transfer
- * code slot (`TransferCode`, keyed by the take-over type number). The page
- * reads that one slot: the take-over list would also carry the OIDC types.
- * This package only says what the slot shows: the ID registered in it. GS2
- * keeps only a hash of the password, so nothing can show it after issuing.
- *
- * **Everything else is the page's.** Issuing a code, deleting and reissuing
- * it, and taking another browser's account over are not actions a package can
- * host (the ID and password are made by the page, and taking over runs before
- * any session exists), so they are a hand-written Unity panel.
- */
+/** The page owns credential entry and takeover before login; this package supplies the transfer-slot read view. */
 
 import { definePackage, dependencyPackage } from "~/dsl";
 
@@ -37,7 +18,6 @@ export const foundationCoreIdentityDemo = definePackage("foundation-core-identit
   })
   .dependency(identity.packageId, "github:gs2io/gs2-studio-package")
 
-  // The ID is the one part of a transfer code GS2 can give back.
   .uiComponent(TransferCode, ui =>
     ui.templateLabel(
       "IdentifierLabel",

@@ -1,28 +1,3 @@
-/**
- * Canonical emitter regression test for the rename-overlay-sample fixture.
- *
- * `buildCanonicalTypeRegistry` selects the canonical package for batch C#
- * generation, and each per-package emit is gated by
- * `shouldEmitForCanonicalGate`. This test verifies the end-to-end behaviour
- * for the Solitaire-shape rename chain (Character -> Charm):
- *
- *   - For the three unambiguous identity chains (CharacterCollection,
- *     CharacterExperience, CharacterRate) the consumer pkg
- *     `rename-overlay-sample` is the canonical emitter; it emits
- *     `CharmCollection.cs` / `CharmExperience.cs` / `CharmRate.cs` and the
- *     upstream foundation/gacha pkgs' `Character*.cs` artifacts are
- *     suppressed.
- *   - `ref` targets inside the canonical artifacts resolve through
- *     `resolveCanonicalTypeName` so that, e.g., a property
- *     pointing at the CharacterCollection identity is rewritten to
- *     `CharmCollectionId`.
- *   - The Character identity itself is ambiguous in this fixture (two
- *     overlay pkgs rename it). The registry emits a
- *     `codegen.canonicalAmbiguity` warning and disables canonical
- *     selection for that identity — both upstream and overlay pkgs fall
- *     back to legacy per-pkg gating + the existing cross-pkg overlay
- *     dedup. The ambiguity warning is the observable registry signal.
- */
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -111,7 +86,6 @@ describe("rename-overlay-sample canonical emitter selection", () => {
     const foundationFiles = new Set(foundation.artifacts.files.map(f => f.fileName));
     const gachaFiles = new Set(gacha.artifacts.files.map(f => f.fileName));
 
-    // ----- Unambiguous chains: canonical emission lands on the consumer pkg.
     for (const name of [
       "CharmCollection.cs",
       "CharmCollectionId.cs",
@@ -123,8 +97,6 @@ describe("rename-overlay-sample canonical emitter selection", () => {
       expect(consumerFiles.has(name), `consumer emits ${name}`).toBe(true);
     }
 
-    // ----- Upstream pkgs do not emit their Character* artifacts for the
-    // canonicalized identities (the canonical-emitter gate returns "skip").
     for (const name of [
       "CharacterCollection.cs",
       "CharacterCollectionId.cs",
@@ -137,10 +109,6 @@ describe("rename-overlay-sample canonical emitter selection", () => {
       expect(gachaFiles.has(name), `gacha suppresses ${name}`).toBe(false);
     }
 
-    // ----- Canonical ref rewrite: id-typed properties inside the canonical
-    // artifacts resolve through `resolveCanonicalTypeName`, so the upstream
-    // local name (CharacterCollectionId etc.) must not leak into the
-    // consumer-side output.
     const charmCollectionCs = consumer.artifacts.files.find(
       f => f.fileName === "CharmCollection.cs"
     );
@@ -149,12 +117,7 @@ describe("rename-overlay-sample canonical emitter selection", () => {
       expect(charmCollectionCs.content).not.toMatch(/CharacterCollectionId/);
     }
 
-    // ----- Dependency-target fallback regression: CharmRate inherits a
-    // `character` ref whose declarationContext is (micro-shop-character-gacha,
-    // CharacterRate). The ref target `Character` is not local to gacha — it
-    // lives in foundation. `resolveCanonicalTypeName` must consult the
-    // alias-collapsed identityByPackageDependencyTypeName map and rewrite
-    // `CharacterId` -> `CharmId` plus the `using` namespace.
+    // This reference is declared in a dependency, so canonical resolution must also traverse its dependency alias.
     const charmRateCs = consumer.artifacts.files.find(f => f.fileName === "CharmRate.cs");
     expect(charmRateCs, "CharmRate.cs present").toBeDefined();
     if (charmRateCs) {
@@ -175,12 +138,6 @@ describe("rename-overlay-sample canonical emitter selection", () => {
       expect(charmRateOverlayEntryCs.content).toMatch(/GS2Studio\.Generated\.Charm\b/);
     }
 
-    // ----- Tie-breaker: the `Character` identity has two overlay candidates
-    // at the same lineage depth (rename-overlay-sample::Charm rename +
-    // foundation-economy-character-dictionary::Character non-rename additions).
-    // The rename overlay wins per the canonical-registry tie-breaker, so
-    // there must be NO `codegen.canonicalAmbiguity` warning for Character and
-    // the dictionary's Character.cs must be suppressed alongside the root.
     const allWarnings = result.succeeded.flatMap(o => o.artifacts.warnings);
     const ambiguityWarning = allWarnings.find(
       w => w.code === "codegen.canonicalAmbiguity" && w.message.includes("Character")
@@ -201,17 +158,11 @@ describe("rename-overlay-sample canonical emitter selection", () => {
       ).toBe(false);
     }
 
-    // Top-level Charm.cs (the rename winner for the Character identity) must
-    // be emitted by the consumer package.
     expect(consumerFiles.has("Charm.cs"), "consumer emits Charm.cs from the rename overlay").toBe(
       true
     );
 
-    // ----- UI components are authoring content owned by foundation, but the
-    // rename overlay shifts the canonical type emission downstream. The
-    // generator must still emit the UI files at the authoring pkg
-    // (foundation) and rewrite the C# surface to the canonical Charm names
-    // so the generated MonoBehaviours reference the actual Handler/Model.
+    // UI stays with its authoring package even when canonical model emission moves downstream.
     for (const name of [
       "Handlers/UI/CharmLevelLabel.cs",
       "Handlers/UI/CharmExperienceGauge.cs",

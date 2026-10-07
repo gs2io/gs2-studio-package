@@ -1,55 +1,5 @@
-// The guild lobby: founding, finding and joining a guild, and leaving,
-// handing over or disbanding. Copied from the guild demo and cut down for the
-// guild ranking page: every guild founded here lets anybody join, and only
-// such guilds are offered or joined, so nobody waits on a master's approval.
-// The guild namespace is shared with the guild demo, whose guilds may ask for
-// approval; those are left out of the list and refused when joined by id.
-// A member can copy their guild's id, and a visitor can paste one and join
-// that guild at once. The search lists a new guild only after a minute or
-// two, and two visitors who want to rank against each other should not have
-// to wait for it.
-//
-// A row of the page reads one value or makes one press, and a lobby is a
-// search, a form and a guild's worth of members, so this draws its own region.
-// None of it is an action a package can host.
-//
-// Reads go through the SDK's domain and are watched in its cache: the guilds
-// the visitor joined, then their guild. GS2's notifications clear those
-// caches when another player joins or leaves, and the SDK's
-// own writes update them after a press, so the SDK reads them again and the
-// panel hears the result. Nothing is asked of GS2 on a timer except the guild
-// search, which the cache cannot hold: it is asked again every 30 seconds
-// while the visitor has no guild (GS2 keeps a search for a minute anyway), on
-// entering the lobby, and after a press that changes it.
-//
-// The SDK swallows a failed read after a notification, and hands a watcher an
-// empty list whenever something touches a list it no longer holds (after its
-// 15 minutes run out, or while it is still reading every page). So every 30
-// seconds, and whenever a watch reports an empty list, the panel reads the
-// watched value again through the domain. The domain answers from the cache
-// without asking GS2 while it holds the value, so this costs nothing while all
-// is well, and reads it from GS2 only when the cache lost it.
-//
-// Writes go through the same domain, so the generated rows of the guilds the
-// visitor belongs to update from there too. A list is invalidated here only
-// when GS2 answers that the visitor's guild no longer exists, since no
-// notification would correct it.
-//
-// Handing over and disbanding are done as the guild: the master assumes the
-// guild, and GS2 lets the guild token do only what the master role's policy
-// allows.
-//
-// Each read is a `ShowroomWatch` that hands what the SDK reports to the
-// panel's `ShowroomInbox`, drained in `Update`; a read again that fails only
-// warns, and the subscription stays. The region is a `ShowroomRegion`: it is
-// rebuilt only when what it shows changed, and every press on the page waits
-// a moment after it moved, since the lobby grows and shrinks and every row of
-// the page below it moves. Presses run through `ShowroomPress`, one at a time
-// across the page.
-//
-// The structure follows the guild demo's lobby (`GuildRoleLobbyPanel`) part
-// for part; what differs is this page's: open guilds only, no join requests,
-// and joining by a copied id.
+// This ranking demo offers open guilds so visitors do not need master approval before playing.
+// Joining by copied id avoids waiting for a newly created guild to appear in search.
 #nullable enable
 
 using System;
@@ -78,28 +28,20 @@ using GuildAccessTokenDomain = Gs2.Gs2Guild.Domain.Model.GuildAccessTokenDomain;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Draws the guild lobby into the region the page gives it.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Guild Ranking Lobby")]
     public sealed class GuildRoleRankingLobbyPanel : MonoBehaviour
     {
-        /// <summary>The guild namespace and kind the packages deploy.</summary>
         private const string GuildNamespace = "Guild";
         private const string GuildKind = "adventurers";
         private const string MasterRole = "master";
         private const string OpenPolicy = "anybody";
 
-        /// <summary>
-        /// How often the lobby searches again, and how often a watch that
-        /// failed to start is tried again. GS2 keeps a search for a minute.
-        /// </summary>
         private const float TickSeconds = 30f;
         private const int SearchLimit = 10;
         private const int NameLimit = 64;
 
-        /// <summary>A guild id is GS2's name for the guild; a full id ends with it.</summary>
         private const int GuildIdLimit = 256;
 
-        /// <summary>How long before it runs out the guild token is renewed.</summary>
         private const long GuildTokenMarginMs = 60_000;
 
         private static readonly Color RowColor = new Color(0.16f, 0.15f, 0.22f, 1f);
@@ -116,21 +58,14 @@ namespace GS2Studio.Showroom.Demo
         private InputField? _joinField;
         private Coroutine? _signingIn;
 
-        /// <summary>The panel's Copy or Paste, until the browser answers.</summary>
         private readonly ShowroomClipboardRequest _clipboard = new ShowroomClipboardRequest();
 
-        /// <summary>The visitor, set once they are signed in.</summary>
         private Gs2Domain? _gs2;
         private IGameSession? _session;
         private VisitorDomain? _visitor;
         private string _userId = "";
 
-        /// <summary>
-        /// What the SDK said, handed over to the main thread. Update applies
-        /// everything that arrived since the last frame and then draws once,
-        /// so a list the SDK reports empty while it is still reading it again
-        /// is replaced by the full list before anything is drawn.
-        /// </summary>
+        // Apply SDK callbacks on the Unity thread and reconcile after draining the batch, instead of redrawing inside each callback.
         private readonly ShowroomInbox _inbox = new ShowroomInbox();
         private float _nextTick;
 
@@ -138,15 +73,10 @@ namespace GS2Studio.Showroom.Demo
         private readonly ShowroomWatch _guildWatch;
         private readonly ShowroomWatch _search;
 
-        /// <summary>The guild the joined list names, once it has been read.</summary>
+        // Keep unread membership distinct from a confirmed empty joined list.
         private bool _membershipKnown;
         private string? _membership;
 
-        /// <summary>
-        /// The guild the panel is watching; null while in the lobby, once
-        /// entered. Whatever is read below belongs to this guild, or to the
-        /// lobby.
-        /// </summary>
         private bool _entered;
         private string? _guildName;
         private GuildModel? _guild;
@@ -154,14 +84,12 @@ namespace GS2Studio.Showroom.Demo
         private GuildModel[] _found = Array.Empty<GuildModel>();
         private bool _foundKnown;
 
-        /// <summary>The guild token, kept until it runs out or the guild changes.</summary>
         private AuthAccessToken? _guildToken;
         private string? _readFailure;
 
         public GuildRoleRankingLobbyPanel()
         {
-            // A read again that fails keeps the subscription, which still
-            // hears every change; the tick reads again.
+            // A transient reread failure must not discard the live subscription; Tick can retry the read.
             ShowroomWatch Watch(string what) => new ShowroomWatch(_inbox, ShowroomWatch.RereadFailure.Keep, what);
             _joinedWatch = Watch("the guilds");
             _guildWatch = Watch("your guild");
@@ -211,8 +139,6 @@ namespace GS2Studio.Showroom.Demo
             _joinRegion.gameObject.SetActive(false);
         }
 
-        // ------------------------------------------------------------------
-        // Watching
 
         private void StartWatching()
         {
@@ -225,10 +151,7 @@ namespace GS2Studio.Showroom.Demo
             WatchJoined();
         }
 
-        /// <summary>
-        /// Drops every subscription, so the SDK holds no callback into a
-        /// disabled or destroyed panel, and forgets what was read.
-        /// </summary>
+        // Stop subscriptions and discard queued notifications so the disabled panel stops rendering their results.
         private void StopWatching()
         {
             _joinedWatch.Stop();
@@ -257,30 +180,20 @@ namespace GS2Studio.Showroom.Demo
             if (Time.realtimeSinceStartup >= _nextTick) Tick();
         }
 
-        /// <summary>
-        /// Follows the joined list: enters the guild it names, or the lobby.
-        /// Then draws what is known.
-        /// </summary>
         private void Reconcile()
         {
             if (!_membershipKnown) return;
             if (!_entered || _membership != _guildName) Enter(_membership);
             if (_guildName != null && _guildGone)
             {
-                // Drawing the lobby here would invite a member to found or
-                // join another guild.
+                // A missing guild model does not prove membership is cleared; do not offer create/join controls yet.
                 ReadFailed("Your guild could not be read.");
                 return;
             }
             Draw();
         }
 
-        /// <summary>
-        /// Stops watching what belonged to the guild or lobby being left and
-        /// starts on the one being entered. Anything the old watches still
-        /// report is dropped, so a late answer for an old guild is not drawn
-        /// over the new state.
-        /// </summary>
+        // Stop old watches before switching state so their ticket checks reject late results for the previous guild.
         private void Enter(string? guildName)
         {
             _guildWatch.Stop();
@@ -291,17 +204,13 @@ namespace GS2Studio.Showroom.Demo
             _guildGone = false;
             _found = Array.Empty<GuildModel>();
             _foundKnown = false;
-            // A guild token must not outlive the guild it acts as.
+            // A cached token for the previous guild must not authorize actions on the newly selected one.
             _guildToken = null;
             if (guildName != null) WatchGuild(guildName);
             else Search();
         }
 
-        /// <summary>
-        /// Every 30 seconds: searches again while in the lobby, tries again a
-        /// watch that failed to start, and reads again what a running watch
-        /// follows (from the cache, unless the cache lost it).
-        /// </summary>
+        // Retry domain reads alongside subscriptions so a failed refresh does not leave this panel waiting only for another notification.
         private void Tick()
         {
             _nextTick = Time.realtimeSinceStartup + TickSeconds;
@@ -317,7 +226,6 @@ namespace GS2Studio.Showroom.Demo
             else _guildWatch.Reread();
         }
 
-        /// <summary>The guilds the visitor joined; the SDK reads them again on join and leave.</summary>
         private void WatchJoined()
         {
             var visitor = _visitor;
@@ -328,7 +236,7 @@ namespace GS2Studio.Showroom.Demo
                 () => visitor.JoinedGuildsAsync(GuildKind),
                 joined =>
                 {
-                    // The SDK hands over the whole list, of every kind.
+                    // The cache subscription is shared across guild kinds; filter before selecting this panel's membership.
                     _membership = joined.FirstOrDefault(entry => entry?.GuildModelName == GuildKind)?.GuildName;
                     _membershipKnown = true;
                     _readFailure = null;
@@ -336,14 +244,6 @@ namespace GS2Studio.Showroom.Demo
                 error => ReadFailed("The guilds", error));
         }
 
-        /// <summary>
-        /// The visitor's guild; the SDK reads it again when a player joins or
-        /// leaves, and a press updates it with what GS2 returned. Reading it
-        /// again goes through the domain, which answers from the cache while
-        /// the cache holds the guild (even when what it holds is that the
-        /// guild is gone), so it asks GS2 only after the cache lost it; the
-        /// watch then hears what GS2 returned.
-        /// </summary>
         private void WatchGuild(string guildName)
         {
             var gs2 = _gs2;
@@ -362,20 +262,14 @@ namespace GS2Studio.Showroom.Demo
                         _readFailure = null;
                         return;
                     }
-                    // GS2 says the guild does not exist, yet the joined list
-                    // named it, and no notification will correct that list.
+                    // A missing guild contradicts the cached membership; invalidate that list so membership can be reevaluated.
                     _visitor?.InvalidateJoinedGuilds(GuildKind);
                 },
                 async () => await guild.ModelAsync(session.AccessToken),
                 error => ReadFailed("Your guild", error));
         }
 
-        /// <summary>
-        /// Searches for guilds with room that anybody may join. A search is
-        /// not kept in the cache, so this asks GS2 each time; only the latest
-        /// search to start is drawn, and only while the visitor is still in
-        /// the lobby.
-        /// </summary>
+        // A response may arrive after another search or guild switch; accept it only through the current watch ticket.
         private async void Search()
         {
             var visitor = _visitor;
@@ -400,16 +294,12 @@ namespace GS2Studio.Showroom.Demo
             }
             catch (Exception error)
             {
-                // The next tick searches again.
                 if (!_search.Fail(ticket)) return;
                 _inbox.Post(() => ReadFailed("The guilds", error));
             }
         }
 
-        /// <summary>
-        /// Says a failed read on the page once; the same failure again stays
-        /// quiet until a read succeeds. The console keeps the detail.
-        /// </summary>
+        // Periodic retries can repeat one failure; deduplicate page messages while preserving console diagnostics.
         private void ReadFailed(string what, Exception error)
         {
             Debug.LogWarning($"[showroom] {nameof(GuildRoleRankingLobbyPanel)}: {what} could not be read: {error}");
@@ -423,10 +313,7 @@ namespace GS2Studio.Showroom.Demo
             ShowroomLog.Say(message);
         }
 
-        /// <summary>
-        /// The token to act as the guild, assumed again when it runs out
-        /// within a minute or belongs to another guild.
-        /// </summary>
+        // Reuse only a token for this guild with an expiry margin; a cached token for another guild cannot authorize its actions.
         private async Task<AuthAccessToken> GuildToken(Gs2GuildRestClient client, string token, string guildName)
         {
             var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -450,13 +337,8 @@ namespace GS2Studio.Showroom.Demo
         private static string? RoleOf(GuildModel guild, string userId) =>
             guild.Members?.FirstOrDefault(member => member.UserId == userId)?.RoleName;
 
-        // ------------------------------------------------------------------
-        // Drawing
 
-        /// <summary>
-        /// Draws the region once the state being entered has been read; until
-        /// then what was drawn before stays.
-        /// </summary>
+        // Keep the previous region until the new state is readable, rather than rendering unread lists as empty.
         private void Draw()
         {
             if (_region == null || _nameField == null || _joinRegion == null || !_entered) return;
@@ -523,8 +405,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        // ------------------------------------------------------------------
-        // Pressing
 
         private void Create()
         {
@@ -546,10 +426,7 @@ namespace GS2Studio.Showroom.Demo
             });
         }
 
-        /// <summary>
-        /// Joins at once. A guild joined leaves the lobby, so the search is
-        /// asked again only when the join failed.
-        /// </summary>
+        // After an immediate join, membership updates replace the lobby; only a failed join needs another search.
         private void Join(string guildName)
         {
             var joined = false;
@@ -576,10 +453,7 @@ namespace GS2Studio.Showroom.Demo
                 return "Left the guild.";
             }, whenGone: ReadJoinedAgain);
 
-        /// <summary>
-        /// Promotes the longest-standing other member to master, then leaves.
-        /// A guild may not be left without a master, so the order matters.
-        /// </summary>
+        // Promote the successor before leaving so the guild is not left without a master.
         private void HandOver(string guildName, string heir) =>
             Run(async (gs2, session) =>
             {
@@ -603,8 +477,7 @@ namespace GS2Studio.Showroom.Demo
                 return "Disbanded the guild.";
             }, whenGone: ReadJoinedAgain);
 
-        // A clipboard refusal is not a failure of the page: the browser
-        // decides, so the visitor is told how to do it by hand.
+        // Clipboard access can be refused by the browser; show a manual copy or paste path instead of treating it as a guild failure.
 
         private void Copy(string guildName)
         {
@@ -631,12 +504,7 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>
-        /// Joins the guild whose id is in the field, when anybody may join
-        /// it. A guild whose master approves members is not asked: this demo
-        /// joins only open guilds. A full id is accepted too: the guild's name
-        /// is its last part.
-        /// </summary>
+        // Check open membership for pasted ids too, so bypassing search cannot enter the approval-only flow.
         private void JoinById()
         {
             var id = GuildRankingDemo.GuildNameOf((_joinField?.text ?? "").Trim());
@@ -673,13 +541,9 @@ namespace GS2Studio.Showroom.Demo
             }, afterward: Search);
         }
 
-        /// <summary>
-        /// GS2 says the visitor's guild is gone, and no notification will
-        /// tell the joined list, so the SDK reads it again.
-        /// </summary>
+        // An action against a missing guild can leave membership stale; reread it instead of assuming a leave succeeded.
         private void ReadJoinedAgain() => _visitor?.InvalidateJoinedGuilds(GuildKind);
 
-        /// <summary>The SDK's domain for acting as the visitor's guild.</summary>
         private async Task<GuildAccessTokenDomain> AsGuild(Gs2Domain gs2, IGameSession session, string? guildName)
         {
             if (guildName == null) throw new InvalidOperationException("Not in a guild.");
@@ -687,14 +551,6 @@ namespace GS2Studio.Showroom.Demo
             return gs2.Super.Guild.Namespace(GuildNamespace).GuildAccessToken(GuildKind, token);
         }
 
-        /// <summary>
-        /// Runs one press through the page's press runner, so it waits its
-        /// turn with every other press on the page. What it changed reaches
-        /// the panel through the SDK's cache, so nothing is read again here,
-        /// except: <paramref name="afterward"/> runs once the press is over,
-        /// whether it worked or not, and <paramref name="whenGone"/> runs when
-        /// GS2 says what was pressed on no longer exists.
-        /// </summary>
         private void Run(Func<Gs2Domain, IGameSession, Task<string>> press, Action? afterward = null, Action? whenGone = null)
         {
             ShowroomPress.Run(new ShowroomPressOptions
@@ -707,11 +563,6 @@ namespace GS2Studio.Showroom.Demo
             }, press);
         }
 
-        /// <summary>
-        /// Says why GS2 refused, for the refusals a visitor can meet, by the
-        /// SDK's exception type; null leaves any other refusal to the runner's
-        /// reading of it.
-        /// </summary>
         private static string? Explain(Gs2Exception error)
         {
             if (error is MaximumJoinedGuildsReachedException) return "That player already belongs to a guild.";
@@ -721,10 +572,7 @@ namespace GS2Studio.Showroom.Demo
             return null;
         }
 
-        // ------------------------------------------------------------------
-        // Building blocks
 
-        /// <summary>A region under <paramref name="parent"/> that stacks what is drawn into it.</summary>
         private static RectTransform Region(RectTransform parent, string name)
         {
             var region = Child(name, parent);
@@ -770,10 +618,7 @@ namespace GS2Studio.Showroom.Demo
             return label;
         }
 
-        /// <summary>
-        /// A button of the fixed join region. It sits below the lobby, which
-        /// moves it, so a press waits for the page to settle.
-        /// </summary>
+        // Reject clicks while layout is settling because the lobby can move these buttons under the pointer.
         private void Press(RectTransform parent, string text, Action onClick)
         {
             var button = Instantiate(_buttonTemplate!, parent);

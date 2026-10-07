@@ -1,46 +1,5 @@
-// The row that earns a view and spends it: an ad break with both halves of an
-// ad-backed use behind it.
-//
-// The break itself is `AdBreakOverlay` — the panel, the wait, and the press
-// that stands for an ad network's completion callback. What is here is the two
-// things that press sets off, and the order they have to go in.
-//
-// **The grant cannot be part of the exchange.** GS2 runs a transaction's
-// verify actions, then its consume actions, then its acquire actions; a stamp
-// sheet's `tasks` are its consumes and its sheet is its acquires, and the SDK
-// executes them in that order (`Core/Domain/ManualStampSheetDomain.cs` runs
-// `verifyTasks`, then `tasks`, then the sheet). So an exchange that both
-// granted a view point and spent one would spend before it granted, and a
-// visitor with nothing banked would be refused at the consume and never reach
-// the count-up. That is what this row used to do, and from the outside it read
-// as watching an ad and having nothing happen.
-//
-// So it is two round trips, and this row is what holds them in order:
-// `AdViewPoint.Watch` grants the point, and only once that has come back does
-// the exchange run — one transaction that consumes the point and counts the
-// allowance up against the higher of its two ceilings, committed atomically so
-// a refused count-up cannot eat the point. The panel stays up across both, so
-// what a visitor sees is one ad break.
-//
-// **The press is only offered where the second half can succeed.** Nothing
-// makes a two-part press atomic once the first part has committed, so the page
-// hides this row outside the band between the two ceilings
-// (`UsageLimitCounterAdUsesUnavailableActiveToggle`). A granted view with
-// nothing left to buy is the one failure the exchange cannot protect against,
-// and not offering the press is what prevents it.
-//
-// Built the way the ad demo's own break is built, and for the same reason: the
-// page's rows live under the content mount, a re-bake clears that mount, and
-// anything authored outside it holding an Inspector reference to a generated
-// component goes null on the next bake, silently. So this row adds both
-// generated components to its own GameObject at run time — where they resolve
-// their handlers by walking up the parent chain, `UsageLimitCounter`'s at the
-// section root above it and `AdViewPoint`'s on the page root above that — and
-// builds the panel in code. None of it is written to the scene.
-//
-// Shaped like a generated action button — a `Button` to wire, an
-// `OnCompleted`, and the `OnFailed` the page shows failures through — so the
-// page draws it as a row like any other.
+// Grant the view before the exchange because the exchange consumes an already-banked point; these calls are not one atomic transaction.
+// Create the generated components under the content mount at runtime so rebaking cannot leave stale Inspector references.
 #nullable enable
 
 using System;
@@ -59,11 +18,6 @@ using GS2Studio.Generated.UsageLimitCounter.UI;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// Opens a panel that stands in for a rewarded placement; when the visitor
-    /// says the placement finished, it banks the view point and then exchanges
-    /// it for one use of this allowance.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/Showroom/Watch An Ad To Use")]
     public sealed class WatchAnAdToUseButton : MonoBehaviour
     {
@@ -77,20 +31,7 @@ namespace GS2Studio.Showroom.Demo
         private const string GrantingStatus = "Asking GS2 for the view...";
         private const string ExchangingStatus = "Spending it on this allowance...";
 
-        /// <summary>
-        /// The fields the two generated buttons take their presses from, named
-        /// by the packages' own component manifests —
-        /// `AdViewPoint.showroom.json` and `UsageLimitCounter.showroom.json`
-        /// each publish `_button` as the `button` role of their action
-        /// components, and the page builder writes the same field from the same
-        /// manifest when it bakes a generated row. Assigning it is using the
-        /// published contract, not reaching into the component; what is missing
-        /// is only a setter, because a baked row has no need of one.
-        ///
-        /// Reflection fails silently by nature, so <see cref="Start"/> refuses
-        /// loudly when a field is not there rather than leaving a press that
-        /// does nothing.
-        /// </summary>
+        /// <summary>Runtime rows must wire both generated serialized button fields; report a missing field instead of leaving an inert press.</summary>
         private static readonly FieldInfo? WatchButtonField =
             typeof(AdViewPointWatchButton).GetField(
                 "_button", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -101,20 +42,9 @@ namespace GS2Studio.Showroom.Demo
 
         [SerializeField] private Button? _button;
 
-        /// <summary>
-        /// Raised once the exchange has gone through. What it changed does not
-        /// need it — the count and the conditions that read it arrive through
-        /// the binder's own subscription — but a page that wants to hang
-        /// something off a completed use has somewhere to hang it.
-        /// </summary>
         [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
 
-        /// <summary>
-        /// Raised when either half fails, which is how the page shows it — and
-        /// on this row that is the subject rather than an accident. A browser
-        /// hides the console, so a refusal a visitor cannot see reads as
-        /// nothing having happened.
-        /// </summary>
+        /// <summary>Forward failures from either call so visitors can see refusals without the browser console.</summary>
         [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
 
         public UnityEvent OnCompleted => _onCompleted;
@@ -123,25 +53,11 @@ namespace GS2Studio.Showroom.Demo
         private AdViewPointWatchButton? _watch;
         private UsageLimitCounterUseWithAdButton? _use;
 
-        /// <summary>
-        /// What the second half listens to.
-        ///
-        /// A generated action component acts on a `Button`'s `onClick` and on
-        /// nothing else, so a press raised from code needs a button to raise it
-        /// from. This one is never shown and never pressed by anyone: it has no
-        /// graphic, no parent — so no layout it could disturb — and exists only
-        /// to carry <see cref="OnGranted"/>'s call through the same contract a
-        /// baked row's button would.
-        /// </summary>
+        /// <summary>Use a hidden trigger to enter the generated action through its button contract without adding another visible row.</summary>
         private Button? _useTrigger;
 
         private AdBreakOverlay? _overlay;
 
-        /// <summary>
-        /// True from the confirming press until one of the two halves has
-        /// answered. Holds the panel's wait off, and stops a second press
-        /// landing on top of a grant that is still out.
-        /// </summary>
         private bool _busy;
 
         private void Start()
@@ -167,18 +83,14 @@ namespace GS2Studio.Showroom.Demo
             trigger.SetActive(false);
             _useTrigger = trigger.AddComponent<Button>();
 
-            // Both generated components go on this row's own GameObject, which
-            // is under the content mount, so each resolves its handler by
-            // walking up to it — the same way a baked row's button does.
+            // Keep both components below their handler mounts so parent lookup resolves each owner.
             _watch = gameObject.AddComponent<AdViewPointWatchButton>();
             WatchButtonField.SetValue(_watch, _overlay.ConfirmButton);
 
             _use = gameObject.AddComponent<UsageLimitCounterUseWithAdButton>();
             UseButtonField.SetValue(_use, _useTrigger);
 
-            // `AddComponent` already ran each component's `OnEnable`, when it
-            // had no button to subscribe to. They only subscribe there, so the
-            // press each was just given reaches it on the next enable.
+            // Re-enable after assigning buttons because AddComponent already called OnEnable before they were wired.
             _watch.enabled = false;
             _watch.enabled = true;
             _use.enabled = false;
@@ -224,22 +136,13 @@ namespace GS2Studio.Showroom.Demo
             _overlay.Open();
         }
 
-        /// <summary>
-        /// Puts the panel away. Neither half ever runs from anything but the
-        /// confirming press, so no other way out of this panel can bank or
-        /// spend a view.
-        /// </summary>
+        /// <summary>Closing the panel must not start either grant or exchange.</summary>
         private void Close()
         {
             _busy = false;
             _overlay?.Close();
         }
 
-        /// <summary>
-        /// Runs beside the generated watch button's own listener on the same
-        /// press: that one asks GS2 for the point, this one says so and stops a
-        /// second press landing while the first is still out.
-        /// </summary>
         private void OnConfirmed()
         {
             if (_busy) return;
@@ -247,12 +150,7 @@ namespace GS2Studio.Showroom.Demo
             _overlay?.SetBusy(GrantingStatus);
         }
 
-        /// <summary>
-        /// The view is banked; now spend it. Raised through the trigger button
-        /// rather than called, so the exchange goes through the generated
-        /// component that owns it — with its own in-flight guard and its own
-        /// failure event — rather than around it.
-        /// </summary>
+        /// <summary>Enter through the generated button so the exchange retains its in-flight guard and failure event.</summary>
         private void OnGranted()
         {
             _overlay?.SetStatus(ExchangingStatus);
@@ -265,23 +163,14 @@ namespace GS2Studio.Showroom.Demo
             _onCompleted.Invoke();
         }
 
-        /// <summary>
-        /// Either half failing ends the press. The break is closed first so the
-        /// page's log — which is where a refusal is legible — is not behind the
-        /// panel that was covering it.
-        /// </summary>
+        /// <summary>Close the overlay before reporting failure so it cannot cover the page log.</summary>
         private void OnFailedHalf(Gs2Exception error, Func<IEnumerator>? retry)
         {
             Close();
             _onFailed.Invoke(error, retry);
         }
 
-        /// <summary>
-        /// Puts a wiring failure where both a developer and a visitor can see
-        /// it, whole: these are repair instructions that name a file and a
-        /// field, and the page's mirror of a console error would cut them
-        /// short (`ShowroomLog.SayWhole`).
-        /// </summary>
+        /// <summary>Keep wiring instructions intact; the ordinary console mirror truncates them.</summary>
         private void Report(string message) => ShowroomLog.SayWhole(message, this);
     }
 }

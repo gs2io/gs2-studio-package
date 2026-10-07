@@ -1,58 +1,4 @@
-// The tree, drawn as a tree.
-//
-// A page is a stack of rows, and a keyed model is a list of them: one row per
-// node, each a line of text and a press. Four nodes drawn that way are four
-// lines about 110 points apart, and the only thing left to say which node
-// follows which is an indent of a few characters — a structure nobody can see
-// at that spacing. A skill tree is a picture, not a list, and the picture is
-// the whole point of the feature: what it costs to go one step deeper, and
-// what you have to have taken before you can.
-//
-// So the page has no `SkillNode` section at all. The tree is a board built in
-// code, a box per node and a line per edge, drawn in a panel over the page
-// ({@link SkillTreeOverlay}) the way the ad demo's break is — opened from the
-// character row whose tree it is, closed when the visitor is done with it.
-//
-// **Why a panel.** A tree is a picture, and a picture on a page of one-line
-// rows is a picture squeezed into a band. It is also read against a balance:
-// every box charges, and what a release left is the next thing a visitor wants
-// to know. A panel can hold both at once, at the size the picture wants, and
-// it is what the visitor asked for by pressing `Open tree` on a character.
-//
-// **Where the nodes come from.** This reads them itself, rather than through
-// the generated `SkillNodeListHandler`. The handler exists to spawn one row
-// per node under a section, and the page builder mounts one only for a section
-// that draws rows — so keeping the nodes coming meant keeping a section whose
-// only job was to be a section. `SkillNodeBinderCollection` takes the owner in
-// its constructor, which is the same thing the handler would have handed it,
-// so the panel builds one directly and the section is gone.
-//
-// **One panel per page.** The collection is built for one character, because
-// the owner is a constructor argument rather than something a live collection
-// can be re-aimed at. So a press on a second character disposes the first
-// collection and builds a second, and a press on the character already on
-// screen reopens the panel over the collection that is already subscribed —
-// no round trip, and no empty board between the press and the answer.
-//
-// **Where the geometry comes from.** Nothing here measures the page. A box
-// sits at a fraction of the board's width — one node in a row is at a half,
-// two are at a quarter and three quarters — so anchors carry the horizontal
-// and the board is correct at any width a browser gives it. The vertical is
-// fixed: a row of boxes every `RowPitch` points, which is what the board's own
-// height is then declared to be, and what the panel is fitted to.
-//
-// **Depth, not descent.** Where a node sits comes from {@link SkillNodeTree}:
-// its depth is one more than the deepest thing it needs. `last` needs both
-// `left` and `right`, so it hangs off neither in particular — it sits one row
-// below both and both lines run into it, which is the join an indent could
-// never draw.
-//
-// **Every box is a press.** Not only the ones a step away: a press carries the
-// whole path up to the node it is on, because GS2 reads a release's premises
-// against the released set plus the request. So the tree is opened by naming
-// what is wanted rather than by climbing to it, and a box's own line says how
-// far the press reaches and what the lot of it costs. What a balance will not
-// cover is the server's to refuse, and it says so on the page's log.
+// Own the collection directly: this board draws nodes without spawning a generated list-handler row for each one.
 #nullable enable
 
 using System;
@@ -67,58 +13,29 @@ using UnityEngine.UI;
 using GS2Studio.Generated.SkillNode;
 using GS2Studio.Generated.Wallet;
 
-// The namespace and the model share a name, so the model is aliased where it
-// is used as a type rather than qualified at each mention.
 using SkillNodeModel = GS2Studio.Generated.SkillNode.SkillNode;
 using WalletModel = GS2Studio.Generated.Wallet.Wallet;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// The skill tree as a visitor reads it: a box per node, laid out by
-    /// depth, with a line from every premise to the node that needs it, drawn
-    /// in a panel over the page.
-    ///
-    /// Lives on an object of its own, made the first time a character row is
-    /// pressed. Nothing the bake writes is involved: the page has no section
-    /// for `SkillNode` to have hung it from, and an object made here survives
-    /// the list rows that opened it — a character row is spawned and destroyed
-    /// as the inventory reconciles, and the panel is not.
-    /// </summary>
     [DisallowMultipleComponent]
     public sealed class SkillNodeTreeCanvas : MonoBehaviour
     {
         private const float BoxWidth = 220f;
         private const float BoxHeight = 116f;
 
-        /// <summary>
-        /// Between one row of boxes and the next. The difference over
-        /// <see cref="BoxHeight"/> is what the connectors are drawn in, and it
-        /// is generous on purpose: an elbow that has to turn twice in a dozen
-        /// points reads as a smudge rather than as a line.
-        /// </summary>
+        // Leave enough space between boxes for the elbow connectors to remain legible.
         private const float RowPitch = 180f;
 
         private const float BoardPadding = 10f;
         private const float BorderWidth = 2f;
         private const float LineWidth = 3f;
 
-        /// <summary>
-        /// What the board is worth with nothing on it, which is what the panel
-        /// holds between the press that opened it and the nodes arriving.
-        /// </summary>
         private const float EmptyHeight = 72f;
 
-        /// <summary>
-        /// What the panel says while the read is out. A press puts the panel up
-        /// straight away — a press that showed nothing until the round trip
-        /// came back would read as a press that did nothing — so the board has
-        /// a moment with nothing on it and this is what it says then.
-        /// </summary>
+        // Show feedback before the asynchronous read finishes so opening the tree does not appear unresponsive.
         private const string ReadingMessage = "Reading this character's tree...";
 
-        // The page's palette, so the board reads as part of the page rather
-        // than as something that landed on top of it.
         private static readonly Color Accent = new Color(0.643f, 0.549f, 1f, 1f);
         private static readonly Color PrimaryText = new Color(0.922f, 0.91f, 0.949f, 1f);
         private static readonly Color MutedText = new Color(0.643f, 0.616f, 0.729f, 1f);
@@ -138,12 +55,7 @@ namespace GS2Studio.Showroom.Demo
         private static readonly Color QuietButton = new Color(0.071f, 0.063f, 0.098f, 1f);
         private static readonly Color DeadButton = new Color(0.13f, 0.122f, 0.161f, 1f);
 
-        /// <summary>
-        /// The one panel on the page. A tree is read one character at a time
-        /// and drawn over everything else, so a second would be a second modal
-        /// on top of the first; the press that opens one for another character
-        /// re-aims this one.
-        /// </summary>
+        // Reuse one modal when switching characters so trees cannot stack over each other.
         private static SkillNodeTreeCanvas? _instance;
 
         private Font? _font;
@@ -152,62 +64,26 @@ namespace GS2Studio.Showroom.Demo
         private RectTransform? _lines;
         private RectTransform? _boxes;
 
-        /// <summary>
-        /// What the collection's subscription reports, handed to the main
-        /// thread and applied in <see cref="LateUpdate"/>.
-        /// </summary>
+        // Subscription callbacks enter through the inbox so board changes run on the Unity thread.
         private readonly ShowroomInbox _inbox = new ShowroomInbox();
 
-        /// <summary>
-        /// The nodes, read for whoever the panel was last opened for. Built
-        /// here rather than taken from a generated list handler — see the
-        /// file's note — and rebuilt whenever the owner changes, because the
-        /// owner is a constructor argument.
-        /// </summary>
+        // The owner is a constructor argument; switching characters requires a new collection.
         private SkillNodeBinderCollection? _collection;
 
-        /// <summary>Whose tree <see cref="_collection"/> was built for.</summary>
         private string? _owner;
 
-        /// <summary>
-        /// Which aiming the collection in hand belongs to. A press on a second
-        /// character while the first character's read is still out would
-        /// otherwise install a collection nobody is looking at any more, over
-        /// the one that is.
-        /// </summary>
+        // Reject an older character's mount result if a later selection has already taken over.
         private long _generation;
 
-        /// <summary>
-        /// The wallet the tree is paid from, so the panel can say what is left
-        /// while a visitor is spending it. Null on a page that draws no wallet,
-        /// which is a page where the panel simply says nothing about balances.
-        /// </summary>
         private WalletHandlerBase? _wallet;
 
         private bool _walletSubscribed;
         private bool _dirty;
 
-        /// <summary>
-        /// The nodes the press still out is about, if there is one — which is
-        /// the whole of what it will move, not just the box that was clicked.
-        /// One press at a time: a release moves a balance every other box's
-        /// cost is read against, so a second press before the first has landed
-        /// would be made against a tree that is already out of date.
-        /// </summary>
+        // Disable overlapping presses on this board because each plan changes the state used to compute the next one.
         private HashSet<string>? _pressing;
 
-        /// <summary>
-        /// The page's panel, made on the first press and kept after it.
-        ///
-        /// On an object of its own: the press comes from a character row, and
-        /// a character row is spawned and destroyed as the inventory list
-        /// reconciles, so a panel hung off one would go with it.
-        /// </summary>
-        /// <param name="font">
-        /// The page's font, so the panel cannot drift from the text around it.
-        /// Taken from the row that pressed, and kept from the first press —
-        /// every row of a page carries the same one.
-        /// </param>
+        // Use a separate object so inventory reconciliation cannot destroy the panel with the character row that opened it.
         public static SkillNodeTreeCanvas Ensure(Font? font)
         {
             if (_instance == null)
@@ -219,17 +95,7 @@ namespace GS2Studio.Showroom.Demo
             return _instance;
         }
 
-        /// <summary>
-        /// Puts the panel up on one character's tree.
-        ///
-        /// Up first and read second: the read is a round trip, and a press that
-        /// showed nothing until it came back would read as a press that did
-        /// nothing. The board says it is reading, which is what is true.
-        ///
-        /// A second press on the character already on screen is a reopen. The
-        /// collection in hand is subscribed and current, so there is nothing to
-        /// read again and nothing to throw away.
-        /// </summary>
+        // Retain the subscribed collection when reopening the same character; another mount would discard its current state.
         public void OpenFor(string owner)
         {
             if (string.IsNullOrEmpty(owner)) throw new ArgumentNullException(nameof(owner));
@@ -241,21 +107,12 @@ namespace GS2Studio.Showroom.Demo
             Reaim(owner);
         }
 
-        /// <summary>
-        /// Builds the collection for one character, and takes down whatever the
-        /// panel was reading before.
-        ///
-        /// The previous one is disposed first rather than after: it holds a
-        /// loader subscription and a binder per node, and two of them alive at
-        /// once would have the board redrawn by a character nobody is looking
-        /// at.
-        /// </summary>
+        // Dispose the previous collection before mounting another so old subscriptions cannot keep updating this board.
         private async void Reaim(string owner)
         {
             var generation = ++_generation;
             DisposeCollection();
             _owner = owner;
-            // Whatever the last character left on the board is not this one's.
             _dirty = true;
 
             if (!ShowroomRuntime.TryGet(out var gs2, out var session))
@@ -276,22 +133,19 @@ namespace GS2Studio.Showroom.Demo
                     return;
                 }
                 _collection = collection;
-                // After the mount, so the first notification the subscription
-                // raises is over a board that already has the nodes on it.
+                // Subscribe after mounting so initial notifications observe mounted node models.
                 collection.SubscribeFromSkillTreeSkillTreeMasterData(
                     OnCollectionChanged, OnCollectionFailed);
                 _dirty = true;
             }
             catch (OperationCanceledException)
             {
-                // The panel went with the page; nothing is left to draw on.
+                // Destruction cancels the mount; release the local collection without reporting that cancellation as a read failure.
                 collection?.Dispose();
             }
             catch (Exception error)
             {
-                // Only when nothing newer has taken over: a later press has
-                // already put its own collection and owner in place, and this
-                // failure is not about them.
+                // An older read failure must not clear the collection installed for a newer selection.
                 if (generation == _generation)
                 {
                     _collection = null;
@@ -313,9 +167,7 @@ namespace GS2Studio.Showroom.Demo
         private void SubscribeToTheWallet()
         {
             if (_walletSubscribed) return;
-            // Found rather than wired: the wallet's handler is baked onto the
-            // page root by the builder, and an Inspector reference to it from
-            // here would go null the next time the page was baked.
+            // Resolve the baked wallet handler at runtime; a stored scene reference would not survive rebaking the page.
             if (_wallet == null) _wallet = FindAnyObjectByType<WalletHandlerBase>();
             if (_wallet == null) return;
             _wallet.Updated += OnWalletUpdated;
@@ -357,12 +209,7 @@ namespace GS2Studio.Showroom.Demo
             _inbox.Post(() => ShowroomLog.Failure("The skill tree could not be read", error));
         }
 
-        /// <summary>
-        /// Redrawn once a frame at most. The subscription notifies for a
-        /// membership reconcile and again for every node whose status moved, so
-        /// a single release can raise it several times in one frame; each one
-        /// only marks the board as out of date.
-        /// </summary>
+        // Coalesce membership and per-node notifications so one update does not rebuild the board repeatedly in a frame.
         private void LateUpdate()
         {
             _inbox.Drain();
@@ -371,16 +218,6 @@ namespace GS2Studio.Showroom.Demo
             Redraw();
         }
 
-        /// <summary>
-        /// The panel and the board inside it.
-        ///
-        /// The board is built here rather than by the panel because the board
-        /// is this component's drawing; the panel only holds it, fits itself to
-        /// it, and scrolls it when it has grown past the screen.
-        ///
-        /// Idempotent: the first press builds it, and every press after that
-        /// finds it already up.
-        /// </summary>
         private void Build()
         {
             if (_board != null) return;
@@ -391,8 +228,7 @@ namespace GS2Studio.Showroom.Demo
             _overlay.Mount(_board);
             _overlay.FitTo(EmptyHeight);
 
-            // Lines under boxes: an elbow runs to the middle of a box's top
-            // edge, and the box is what should cover the last few points of it.
+            // Keep connectors below boxes so their endpoints cannot paint over node content.
             _lines = NewRect("Lines", _board);
             Stretch(_lines);
             _boxes = NewRect("Boxes", _board);
@@ -404,15 +240,6 @@ namespace GS2Studio.Showroom.Demo
             Draw(Nodes());
         }
 
-        /// <summary>
-        /// The whole board, from a set of nodes: where each one sits, what
-        /// joins it to what it needs, and how tall the panel has to be to hold
-        /// the result.
-        ///
-        /// Takes the set rather than reading it, so what is drawn is separable
-        /// from where it came from — the collection is the only source in the
-        /// page, and the drawing has no business knowing that.
-        /// </summary>
         private void Draw(IReadOnlyList<SkillNodeModel> nodes)
         {
             if (_board == null || _lines == null || _boxes == null) return;
@@ -455,7 +282,6 @@ namespace GS2Studio.Showroom.Demo
 
             SetBoardHeight(BoardPadding * 2f + (rows.Count - 1) * RowPitch + BoxHeight);
 
-            // Every edge first, so nothing is drawn over a box.
             foreach (var node in nodes)
             {
                 var name = SkillNodeTree.NameOf(node);
@@ -479,7 +305,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>Where one box sits: across the board, and down it.</summary>
         private struct Placement
         {
             public float Fraction;
@@ -501,13 +326,7 @@ namespace GS2Studio.Showroom.Demo
             return nodes;
         }
 
-        /// <summary>
-        /// The nodes banded by depth, and ordered within a band by name.
-        ///
-        /// Ordinal, like the collection's own default: the order has to be
-        /// total, or two nodes at the same depth would swap places between one
-        /// redraw and the next for no reason a visitor could see.
-        /// </summary>
+        // Use ordinal name order within each depth so redraws keep the same horizontal placement.
         private static IReadOnlyList<IReadOnlyList<SkillNodeModel>> RowsOf(
             IReadOnlyList<SkillNodeModel> nodes,
             IReadOnlyDictionary<string, IReadOnlyList<string>> premises)
@@ -533,15 +352,7 @@ namespace GS2Studio.Showroom.Demo
             return rows;
         }
 
-        /// <summary>
-        /// One edge, as three segments: down out of the premise, across to the
-        /// node that needs it, and down into it.
-        ///
-        /// Three rather than one diagonal because the corners are what carry
-        /// the shape. Two nodes hanging off one premise share the run across,
-        /// so the pair reads as a split; two premises running into one node
-        /// share it the other way, and the pair reads as the join it is.
-        /// </summary>
+        // Elbow segments make shared branches and joins visible; a diagonal would obscure that structure.
         private void DrawEdge(Placement parent, Placement child, Color color)
         {
             if (_lines == null) return;
@@ -578,24 +389,12 @@ namespace GS2Studio.Showroom.Demo
             rect.anchorMin = new Vector2(Mathf.Min(from, to), 1f);
             rect.anchorMax = new Vector2(Mathf.Max(from, to), 1f);
             rect.pivot = new Vector2(0.5f, 1f);
-            // The width the anchors span, plus half a line at each end, so the
-            // run and the two drops it turns into meet at square corners.
+            // Extend by half a line at each end so horizontal and vertical segments meet without gaps.
             rect.sizeDelta = new Vector2(LineWidth, LineWidth);
             rect.anchoredPosition = new Vector2(0f, -top);
             Paint(rect, color);
         }
 
-        /// <summary>
-        /// One node: what it is called, what it charges, what pressing it
-        /// would do, and the press.
-        ///
-        /// Three states, told apart by the border and the fill before any of
-        /// the words are read — released, one step away, and further in. The
-        /// third is not "cannot be pressed": a press carries the path up to
-        /// the node with it, so every box is pressable and the fill says how
-        /// much of the tree the press is about rather than whether there is
-        /// one.
-        /// </summary>
         private void DrawBox(
             SkillNodeModel node,
             string name,
@@ -624,8 +423,7 @@ namespace GS2Studio.Showroom.Demo
             fill.offsetMax = new Vector2(-BorderWidth, -BorderWidth);
             Paint(fill, released ? ReleasedFill : deep ? LockedFill : ReadyFill);
 
-            // Full strength whatever the state: every box is actionable now,
-            // and a greyed name beside a lit button reads as a contradiction.
+            // Deep nodes can be requested together with their prerequisites; depth alone must not look disabled.
             var title = AddText(fill, "Name", name, 20, PrimaryText, TextAnchor.MiddleCenter);
             Band((RectTransform)title.transform, 8f, 26f);
 
@@ -644,11 +442,7 @@ namespace GS2Studio.Showroom.Demo
             var busy = _pressing != null;
             var pressable = !busy && owner.Length > 0 && plan.Count > 0;
 
-            // One of three words, whatever the box is in the middle of: a
-            // press that says how much it does is a press of a different width
-            // on every box, and a row of buttons that are all different widths
-            // is what this board replaced. How much is on the line above,
-            // which is where the press's own reading belongs.
+            // Keep plan details on the status line so action labels fit the same button width.
             var label = working ? "Working" : released ? "Restrain" : "Release";
             var button = AddButton(
                 fill, "Press", label,
@@ -661,23 +455,6 @@ namespace GS2Studio.Showroom.Demo
             button.onClick.AddListener(() => Press(name, plan, owner, release));
         }
 
-        /// <summary>
-        /// What pressing this box would do, in one line.
-        ///
-        /// A press carries its whole plan, so the line is about the plan: how
-        /// many boxes move and what the lot of them costs, or — when the plan
-        /// is the box alone — the one fact that box has left to give, which is
-        /// that it is ready or what putting it back returns.
-        ///
-        /// A premise the page cannot see is the exception, and it comes first:
-        /// the plan cannot name it, so the press will be refused, and saying
-        /// which name is missing is worth more than a count that will not
-        /// happen.
-        ///
-        /// Everything read off the nodes themselves, so a page and a stack
-        /// that have drifted apart say so instead of the page printing a rate
-        /// or a prerequisite nothing enforces.
-        /// </summary>
         private static string Standing(
             SkillNodeModel node,
             IReadOnlyList<string> plan,
@@ -692,9 +469,7 @@ namespace GS2Studio.Showroom.Demo
             }
             if (plan.Count > 1)
             {
-                // The share only when the whole plan agrees on one: a rate is
-                // per node, and one figure standing for several different ones
-                // would be the page inventing arithmetic the stack never did.
+                // Show one return rate only when every planned node supplies approximately the same rate.
                 var shared = SharedReturn(plan, byName);
                 return shared == null
                     ? $"restrains {plan.Count}"
@@ -705,7 +480,6 @@ namespace GS2Studio.Showroom.Demo
             return $"unlocked, {Percent(rate.Value)}% back";
         }
 
-        /// <summary>What the whole plan charges.</summary>
         private static int PlanCost(
             IReadOnlyList<string> plan, IReadOnlyDictionary<string, SkillNodeModel> byName)
         {
@@ -717,10 +491,6 @@ namespace GS2Studio.Showroom.Demo
             return total;
         }
 
-        /// <summary>
-        /// The one return rate the whole plan shares, or null when it does not
-        /// share one.
-        /// </summary>
         private static string? SharedReturn(
             IReadOnlyList<string> plan, IReadOnlyDictionary<string, SkillNodeModel> byName)
         {
@@ -741,29 +511,8 @@ namespace GS2Studio.Showroom.Demo
             return (rate * 100f).ToString("0.#", CultureInfo.InvariantCulture);
         }
 
-        /// <summary>
-        /// A press, and the wait it puts the whole board into.
-        ///
-        /// One call for the whole plan rather than one per node, because the
-        /// plan is one thing a visitor asked for and GS2 takes it as one:
-        /// `nodeModelNames` is a list and the premise check reads the released
-        /// set plus the request, so the path only has to be named, not
-        /// climbed.
-        ///
-        /// It is not one charge, though. The namespace this demo deploys runs
-        /// its transactions with `enableAtomicCommit` off, so the plan's
-        /// consume actions are one per node and run in turn: a plan a balance
-        /// cannot cover spends what it can before it stops, and the release
-        /// never lands. That is the stack's behaviour rather than this page's
-        /// to paper over, and it is why the box says what the whole plan costs
-        /// before it is pressed.
-        ///
-        /// Nothing reloads afterwards. The collection is subscribed to each
-        /// node's status, so the board redraws itself when the release lands;
-        /// the redraw here is only to take the wait back off. The press runs
-        /// through `ShowroomPress`, which waits its turn with every other press
-        /// on the page and says a refusal on the page's log.
-        /// </summary>
+        // The demo disables atomic commit; submitting one plan does not make its per-node consume actions atomic.
+        // Display the full cost before submission, and let collection subscriptions report the resulting node state.
         private void Press(
             string node, IReadOnlyList<string> plan, string owner, bool release)
         {
@@ -774,10 +523,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 Name = $"{(release ? "releasing" : "restraining")} {node}",
                 Owner = this,
-                // What was asked for, then the server's own account of why
-                // not. A refusal names a rule rather than a node, and a plan
-                // of four that comes back "not enough" is a different thing to
-                // read than the same words after a plan of one.
+                // Include the requested plan in failures so the server error can be tied to all affected nodes.
                 Explain = error => $"{Attempt(plan, release)} was refused: {ShowroomErrors.Describe(error)}",
                 Afterward = () =>
                 {
@@ -798,7 +544,6 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>What a press asked for, for the log line that reports it.</summary>
         private static string Attempt(IReadOnlyList<string> plan, bool release)
         {
             var verb = release ? "Releasing" : "Restraining";
@@ -809,9 +554,7 @@ namespace GS2Studio.Showroom.Demo
         {
             for (var index = parent.childCount - 1; index >= 0; index--)
             {
-                // Unparented before it is destroyed: `Destroy` takes effect at
-                // the end of the frame, and a box on its way out would
-                // otherwise still be laid out beside the one replacing it.
+                // Detach first because Destroy is deferred; the old boxes must leave this hierarchy before replacements are added.
                 var child = parent.GetChild(index);
                 child.SetParent(null, false);
                 Destroy(child.gameObject);
@@ -835,7 +578,6 @@ namespace GS2Studio.Showroom.Demo
             rect.offsetMax = Vector2.zero;
         }
 
-        /// <summary>One band across a box: `top` below its top edge, `height` tall.</summary>
         private static void Band(RectTransform rect, float top, float height)
         {
             rect.anchorMin = new Vector2(0f, 1f);
@@ -845,13 +587,6 @@ namespace GS2Studio.Showroom.Demo
             rect.offsetMax = new Vector2(-10f, -top);
         }
 
-        /// <summary>
-        /// How tall the board is, and so how tall the panel wants to be.
-        ///
-        /// The board hangs from the top of the panel's viewport and stretches
-        /// across it, so only the height is its own — which is what lets the
-        /// panel scroll a tree it has run out of screen for.
-        /// </summary>
         private void SetBoardHeight(float height)
         {
             if (_board == null) return;

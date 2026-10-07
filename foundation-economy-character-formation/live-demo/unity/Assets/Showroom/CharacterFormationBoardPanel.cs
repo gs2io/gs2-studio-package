@@ -1,22 +1,4 @@
-// The party board: which party is being edited, who is in it, and who could be.
-//
-// A row of the page reads one value or makes one press, and a party screen is
-// neither, so this draws its own region. Tabs pick a party; the slot cards
-// show its members, and a filled one takes its member out; the character cards
-// show everyone the player has, and a tap puts that character in or takes it
-// out again.
-//
-// What changes comes from three subscriptions: the mold (how many parties the
-// player has) grows when the page's Expand runs, the party being edited
-// changes when a press writes it, and the characters change when a recruit
-// lands. Each is subscribed before it is read, so a change between the two is
-// not lost, and a read that finishes after a newer one is dropped. The slot
-// names are master data and are read once.
-//
-// Nothing here reloads or invalidates anything. A write puts its result in the
-// SDK cache, and these subscriptions hear it from there. What they hear is
-// handed to the main thread through a `ShowroomInbox` and drawn in `Update`;
-// presses run through `ShowroomPress`, one at a time across the page.
+// Subscribe before initial reads so intervening updates are not missed; hand callbacks to Update before touching Unity objects.
 #nullable enable
 
 using System;
@@ -34,13 +16,9 @@ using Gs2.Unity.Util;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// Draws the party board into the region the page gives it.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/Showroom/Party Board")]
     public sealed class CharacterFormationBoardPanel : MonoBehaviour
     {
-        /// <summary>The inventory the demo's characters are recruited into.</summary>
         private const string CharacterNamespace = "Character";
         private const string CharacterInventory = "Character";
 
@@ -69,18 +47,13 @@ namespace GS2Studio.Showroom.Demo
         private readonly List<Action> _unsubscribes = new List<Action>();
         private Action? _unsubscribeForm;
 
-        /// <summary>How many parties the player has, or null until read.</summary>
         private int? _capacity;
-        /// <summary>The party shape's slot names, in its order.</summary>
         private IReadOnlyList<string>? _slotNames;
-        /// <summary>The party being edited, counted from 0.</summary>
         private int _editing;
-        /// <summary>The edited party's filled slots, by slot name.</summary>
         private Dictionary<string, string> _members = new Dictionary<string, string>();
         private EzItemSet[] _characters = Array.Empty<EzItemSet>();
 
-        // Each counts the reads started for its source, so a read that
-        // finishes after a newer one knows it is stale.
+        // Track reads and subscription updates per source so older reads cannot overwrite newer state.
         private int _moldRead;
         private int _formRead;
         private int _charactersRead;
@@ -117,10 +90,7 @@ namespace GS2Studio.Showroom.Demo
             _inbox.Drain();
         }
 
-        /// <summary>
-        /// The page signs in after it starts, and nothing announces it, so the
-        /// board asks until the session is there.
-        /// </summary>
+        /// <summary>The board can enable before sign-in finishes, so its first reads must wait for a session.</summary>
         private IEnumerator WaitForSignIn()
         {
             Gs2Domain? gs2;
@@ -139,8 +109,7 @@ namespace GS2Studio.Showroom.Demo
         {
             var gs2 = _gs2!;
             var session = _session!;
-            // Enabled again after a disable, the board starts over: what it
-            // held was last heard through subscriptions it has since dropped.
+            // Discard snapshots on re-enable because their subscriptions stopped while the board was disabled.
             _capacity = null;
             _editing = 0;
             _members = new Dictionary<string, string>();
@@ -217,14 +186,12 @@ namespace GS2Studio.Showroom.Demo
 
         private void OnCapacity(int? capacity)
         {
-            // No mold says nothing new; keeping what was known keeps the
-            // party being edited where it is.
+            // A missing mold snapshot must not reset known capacity or the party being edited.
             if (capacity == null) return;
             var first = _capacity == null;
             _capacity = capacity;
             DrawTabs();
-            // A party past the capacity is never read: reading one makes a
-            // record GS2 then refuses to use.
+            // Do not load a party before capacity confirms it exists.
             if (first && capacity > 0) Edit(0);
         }
 
@@ -234,13 +201,11 @@ namespace GS2Studio.Showroom.Demo
             DrawRoster();
         }
 
-        /// <summary>Switches the party being edited and follows it.</summary>
         private void Edit(int index)
         {
             if (_gs2 == null || _session == null || _capacity == null) return;
             if (index < 0 || index >= _capacity) return;
-            // The first switch comes from the capacity, with nothing followed
-            // yet; after that, the party already followed needs nothing.
+            // Index zero still needs its first subscription; skip only a party that is already followed.
             if (index == _editing && _unsubscribeForm != null) return;
 
             _editing = index;
@@ -293,7 +258,6 @@ namespace GS2Studio.Showroom.Demo
             DrawRoster();
         }
 
-        /// <summary>Runs one change to a party, one press at a time across the page.</summary>
         private void Press(Func<Gs2Domain, IGameSession, Task<string>> write)
         {
             ShowroomPress.Run(new ShowroomPressOptions
@@ -313,8 +277,6 @@ namespace GS2Studio.Showroom.Demo
             return false;
         }
 
-        // Drawing. Each part is cleared and drawn again from the state above;
-        // there are a handful of cards, so nothing is worth diffing.
 
         private void Build()
         {
@@ -422,8 +384,7 @@ namespace GS2Studio.Showroom.Demo
         {
             var button = Instantiate(_buttonTemplate!, parent);
             button.name = "Card";
-            // The template is sized for a row's single button; in a board the
-            // layout above decides the size instead.
+            // Release the row template's fixed width so the board layout can size this card.
             var element = button.GetComponent<LayoutElement>();
             if (element != null)
             {
@@ -435,9 +396,6 @@ namespace GS2Studio.Showroom.Demo
             var label = button.GetComponentInChildren<Text>();
             if (label != null)
             {
-                // Rich text for the smaller second line only. The names put in
-                // it are GS2 resource names, made of letters, digits, '-', '_'
-                // and '.' only, so none of them can form a tag.
                 label.supportRichText = true;
                 label.color = textColor;
                 label.text = text;
@@ -457,9 +415,7 @@ namespace GS2Studio.Showroom.Demo
         {
             for (var index = parent.childCount - 1; index >= 0; index--)
             {
-                // Destroy waits for the end of the frame, and until then a
-                // layout group still counts the child; an inactive one it
-                // skips.
+                // Deactivate before deferred destruction so the layout stops reserving space for the old card.
                 var child = parent.GetChild(index).gameObject;
                 child.SetActive(false);
                 Destroy(child);

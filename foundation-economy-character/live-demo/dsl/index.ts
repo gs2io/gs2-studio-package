@@ -1,11 +1,4 @@
-/**
- * Live demo content for `foundation-economy-character`.
- *
- * The feature package defines the character model but ships no rows — a title
- * supplies its own roster, level curve and inventory size. This package
- * provides a small roster, and a way to actually get one: a visitor arrives
- * owning nothing, so a page that only lists what they have would be empty.
- */
+/** Supply a free recruit action so a new account can populate the otherwise empty owned-character list. */
 
 import {
   Arg,
@@ -24,26 +17,12 @@ import { GS2 } from "~/dsl/gs2";
 import { CHARACTER_LEVEL_KEY_PLACEHOLDER } from "../../../dsl/characterLevelKey";
 import characterSurface from "../../dsl/dependency-surface.json";
 
-// Materialization publishes the feature package's identities, so everything
-// below is addressed by name; a typo is a compile error rather than an id that
-// resolves to nothing.
 const character = dependencyPackage(characterSurface);
 
 const Character = character.type("Character");
 const CharacterCollection = character.type("CharacterCollection");
 const CharacterExperience = character.type("CharacterExperience");
 
-/**
- * One character a visitor can recruit. The row names the character it grants,
- * which is what the exchange hands to `AcquireCharacter`.
- *
- * `extraActions` is the room a recruit leaves for the packages installed
- * beside it. Nothing authors a value for it — a package that wants recruiting
- * to do something more (file the character into a dex, say) overlays this type
- * and appends its own action to the slot. Left alone the slot carries no
- * action at all and is dropped rather than emitted, so a demo that installs
- * nothing extra exchanges exactly what it did before.
- */
 const CharacterRecruit = defineDomainType("CharacterRecruit", domainType =>
   domainType
     .property(
@@ -76,10 +55,6 @@ const CharacterRecruit = defineDomainType("CharacterRecruit", domainType =>
     })
 );
 
-/**
- * An exchange rate that costs nothing and grants one character, so a visitor
- * has something to look at within a few seconds of arriving.
- */
 const RecruitRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -101,8 +76,7 @@ const RecruitRateModel = defineMasterDataResource(resource =>
           ]),
         });
     })
-    // The slot descendants append into. It is bound to `extraActions`, which
-    // no row fills, so on its own it names no action and is dropped.
+    // Leave this binding empty in demo rows so installing the base demo adds no extra acquisition actions.
     .addArrayChild("acquireActions", extraAction => {
       extraAction
         .model(GS2.transaction.AcquireAction)
@@ -115,21 +89,7 @@ const RecruitRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/**
- * Training grants experience to one character the visitor already owns.
- *
- * The rate is named after the character because a delegated action on
- * `Character` must target a resource that mounts `Character` — that is how the
- * generated loader learns which rate to exchange. The grant's target is the
- * character's level status, keyed by its `propertyId` (an item set GRN GS2
- * mints at recruit time) plus the level suffix, so the row carries a
- * `#{propertyId}` placeholder and the click fills it.
- *
- * It lives under its own exchange namespace because `RecruitRateModel` names
- * its rows after the `CharacterRecruit` rows, and those ids are identical to
- * these; sharing a namespace collides the `rateModels` array on its primary
- * key and drops the whole `CurrentRateMaster` from the template.
- */
+/** Use a separate namespace because training and recruitment derive identical rate names; target the owned instance through click-time config. */
 const TrainRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -148,23 +108,12 @@ const TrainRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/**
- * A gentle curve: ten levels reachable inside a short demo session, with
- * headroom left so the level cap sits visibly below the maximum. GS2 rejects
- * a threshold below 1, so the first entry starts at 1 rather than 0.
- *
- * The number of entries is the highest level GS2 lets a character reach
- * (one more than the count), whatever the cap says. The first ten are what the
- * default cap of 10 plays through; the rest, a flat 600 apart, are the room a
- * limit break opens up to the maximum cap of 30, and change nothing a demo
- * that never raises the cap shows.
- */
+/** Start thresholds at 1 and retain levels above the default cap so grade-up demos can raise the cap without replacing the shared curve. */
 const EXPERIENCE_CURVE = [
   1, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 3800, 4400, 5000, 5600, 6200, 6800, 7400,
   8000, 8600, 9200, 9800, 10400, 11000, 11600, 12200, 12800, 13400, 14000, 14600,
 ];
 
-/** The roster, in the order a visitor reads it. */
 const ROSTER = ["knight", "mage", "archer", "healer"] as const;
 
 export const foundationEconomyCharacterDemo = definePackage(
@@ -219,10 +168,7 @@ export const foundationEconomyCharacterDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // The demo runs the transaction server-side and commits it atomically.
-        // With auto-run off, `Exchange` only hands back a stamp sheet the
-        // client has to execute through the distributor — an extra round trip
-        // that can leave a grant half-applied if the page is closed mid-way.
+        // Auto-run executes the grant without requiring a second client request after the exchange.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
@@ -249,9 +195,6 @@ export const foundationEconomyCharacterDemo = definePackage(
       })
       .addChild(TrainRateModel)
   )
-  // The label says which character; the button recruits it. Both are generated
-  // components a scene wires in the Inspector, which is the point of the demo:
-  // nothing here needs a script of its own.
   .uiComponent(CharacterRecruit, ui =>
     ui
       .templateLabel(
@@ -263,15 +206,11 @@ export const foundationEconomyCharacterDemo = definePackage(
       .buttonAction("RecruitButton", "Recruit", undefined, { name: "CharacterRecruit" })
   )
 
-  // One button on the character itself, beside the experience gauge.
   .uiComponent(Character, ui =>
     ui.buttonAction("TrainButton", "Train", undefined, { name: "Character" })
   )
 
-  // What the roster reads above the list of owned characters: how full it
-  // is, and, while it is empty, where the first one comes from. A list with
-  // no rows draws nothing, so without the hint a first visit shows a heading
-  // over a blank.
+  // Keep the empty-state hint on the collection because an empty owned list has no row on which to display it.
   .uiComponent(CharacterCollection, ui =>
     ui
       .templateLabel(
@@ -283,11 +222,9 @@ export const foundationEconomyCharacterDemo = definePackage(
       .label("NoneYetLabel", ui.lit("Recruit a character above to start."), {
         name: "CharacterCollection",
       })
-      .activeToggle(
-        "OwnsAnyActiveToggle",
-        UiCond.gt(ui.prop("currentCpacityUsage"), ui.lit(0)),
-        { name: "CharacterCollection" }
-      )
+      .activeToggle("OwnsAnyActiveToggle", UiCond.gt(ui.prop("currentCpacityUsage"), ui.lit(0)), {
+        name: "CharacterCollection",
+      })
   )
 
   .delegatedAction(CharacterRecruit, "Recruit", {
@@ -301,9 +238,7 @@ export const foundationEconomyCharacterDemo = definePackage(
     targetResource: TrainRateModel,
     parameterOverrides: [
       { kind: "static", parameterName: "count", value: 1 },
-      // Fills the row's `#{propertyId}` placeholder with the character the
-      // button is mounted on. The value is minted by GS2 at recruit time, so
-      // it can only be read off the model at the moment of the click.
+      // Resolve the instance at click time because its propertyId does not exist when the rate model is deployed.
       {
         kind: "listEntries",
         parameterName: "config",

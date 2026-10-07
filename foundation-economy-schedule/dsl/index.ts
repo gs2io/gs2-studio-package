@@ -23,7 +23,6 @@ const dayOfWeekEnum = PT.enum(
   "saturday"
 );
 
-// Conditions for repeatType-dependent properties
 const isDaily = Cond.eq("repeatType", "daily");
 const isWeekly = Cond.eq("repeatType", "weekly");
 const isMonthly = Cond.eq("repeatType", "monthly");
@@ -32,41 +31,29 @@ const isDailyWeeklyOrMonthly = Cond.or(isDaily, isWeekly, isMonthly);
 
 const Schedule = defineDomainType("Schedule", dt =>
   dt
-    // --- Schedule type discriminator ---
     .property(PT.prop("scheduleType", PT.enum("absolute", "relative")).masterData().required())
-    // --- Absolute schedule properties ---
     .property(
       PT.timestamp("startAt").masterData().requiredWhen(Cond.eq("scheduleType", "absolute"))
     )
     .property(PT.timestamp("endAt").masterData().requiredWhen(Cond.eq("scheduleType", "absolute")))
-    // --- Relative schedule properties ---
     .property(
       PT.string("trigger").assetDelivery().requiredWhen(Cond.eq("scheduleType", "relative"))
     )
-    // A relative schedule has no window until its trigger fires, and then the
-    // window is the trigger's own: it runs from when the trigger fired until
-    // the trigger expires. Reading it per player is the only way the schedule
-    // can say when it closes, because `startAt` / `endAt` above are the
-    // absolute schedule's times and every player shares them.
+    // Relative windows belong to each player's trigger; the shared absolute timestamps cannot represent them.
     .property(PT.bool("triggerFired").userData())
     .property(PT.timestamp("relativeStartAt").userData())
     .property(PT.timestamp("relativeEndAt").userData())
-    // --- Repeat type discriminator ---
     .property(
       PT.prop("repeatType", PT.enum("always", "daily", "weekly", "monthly", "custom"))
         .masterData()
         .required()
     )
-    // --- Daily/Weekly/Monthly: beginHour, endHour ---
     .property(PT.int32("beginHour").masterData().requiredWhen(isDailyWeeklyOrMonthly))
     .property(PT.int32("endHour").masterData().requiredWhen(isDailyWeeklyOrMonthly))
-    // --- Weekly: beginDayOfWeek, endDayOfWeek ---
     .property(PT.prop("beginDayOfWeek", dayOfWeekEnum).masterData().requiredWhen(isWeekly))
     .property(PT.prop("endDayOfWeek", dayOfWeekEnum).masterData().requiredWhen(isWeekly))
-    // --- Monthly: beginDayOfMonth, endDayOfMonth ---
     .property(PT.int32("beginDayOfMonth").masterData().requiredWhen(isMonthly))
     .property(PT.int32("endDayOfMonth").masterData().requiredWhen(isMonthly))
-    // --- Custom: anchorTimestamp, activeDays, inactiveDays ---
     .property(PT.timestamp("anchorTimestamp").masterData().requiredWhen(isCustom))
     .property(PT.int32("activeDays").masterData().requiredWhen(isCustom))
     .property(PT.int32("inactiveDays").masterData().requiredWhen(isCustom))
@@ -287,12 +274,7 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
       })
   )
 
-  // The same GS2 record read from the schedule that names it. Each schedule
-  // row keys this by its own `trigger`, so the window it reports is that
-  // player's window for that schedule — and because the binder subscribes to
-  // the record, pulling, extending or clearing the trigger moves the
-  // schedule's window with it. A schedule whose trigger has never fired has
-  // no record at all, which is what `triggerFired` reports.
+  // Read through the schedule's trigger key so its window follows the same player record as the standalone trigger.
   .userDataResource(r =>
     r
       .model(GS2.schedule.Trigger)
@@ -307,10 +289,6 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
       })
   )
 
-  // Pulling a trigger is what brings it into existence; extending one only
-  // works on a trigger that is already running, and clearing one is how a
-  // player gets back to the state they started in. A package that models the
-  // trigger has to offer all three or the other two are unreachable.
   .actionTransform("PullTrigger", at =>
     at
       .category("acquire")
@@ -322,13 +300,8 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
           .mapResourceKey("namespaceName")
           .mapParameter("triggerName", "trigger")
           .mapPlaceholder("userId", "#{userId}")
-          // Pulling an already-running trigger starts its window over rather
-          // than adding to it: extending is what `TriggerSchedule` is for, and
-          // one press should not quietly do the other one's job.
+          // Renew on pull so repeating this action restarts the window instead of extending it.
           .mapStatic("triggerStrategy", "renew")
-          // GS2 reads `ttl` as seconds, not minutes — a five that meant five
-          // minutes bought five seconds, and the window was over before the
-          // press that opened it had finished redrawing.
           .mapParameter("ttl", "ttlSeconds")
           .mapStatic("eventId", null)
       )
@@ -346,10 +319,6 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
       )
   )
 
-  // When a window opens and closes is the whole of what a schedule says, so
-  // it ships with the model rather than being rebuilt per screen. An absolute
-  // window carries both ends; a relative one carries neither, because its ends
-  // are whenever the player pulled the trigger and whenever that runs out.
   .uiComponent(Schedule, ui =>
     ui
       .templateLabel(
@@ -358,13 +327,8 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
         { startAt: ui.prop("startAt"), endAt: ui.prop("endAt") },
         { name: "Schedule" }
       )
-      // Handed over typed so a screen can count down to it rather than print
-      // it. Which of the two a title shows is a question about the title.
       .value("EndAtValue", ui.prop("endAt"), { name: "Schedule" })
       .value("StartAtValue", ui.prop("startAt"), { name: "Schedule" })
-      // The same two readings for the relative case, where the window is the
-      // one this player's trigger opened. A screen that shows both kinds of
-      // schedule in one list reads whichever pair the row has.
       .templateLabel(
         "RelativeWindowLabel",
         "{relativeStartAt} - {relativeEndAt}",
@@ -375,11 +339,7 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
         { name: "Schedule" }
       )
       .value("RelativeEndAtValue", ui.prop("relativeEndAt"), { name: "Schedule" })
-      // Each kind of schedule carries one of the two windows and nothing for
-      // the other, so a page that shows both readings shows one of them empty
-      // on every row. Each toggle names the kind that makes its rows
-      // meaningless: hang the absolute readings off the relative one, and the
-      // relative readings off the absolute one.
+      // Page hide rules use the opposite kind toggle to suppress fields that do not belong to this schedule kind.
       .activeToggle(
         "RelativeActiveToggle",
         UiCond.eq(ui.prop("scheduleType"), ui.lit("relative")),
@@ -392,14 +352,9 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
       )
   )
 
-  // What a trigger is worth knowing about: whether it is running, and until
-  // when. Both are the same reading in every title that pulls one.
   .uiComponent(Trigger, ui =>
     ui
       .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Trigger" })
-      // When it was pulled and when it runs out, as the server reported them.
-      // A countdown answers "how long left"; this answers "is the server
-      // saying what I think it is", which is the question when it is not.
       .templateLabel(
         "WindowLabel",
         "{triggeredAt} - {expiresAt}",
@@ -407,8 +362,6 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
         { name: "Trigger" }
       )
       .value("ExpiresAtValue", ui.prop("expiresAt"), { name: "Trigger" })
-      // A trigger that has never been pulled has no window to show, and one
-      // that is running has nothing to say about not being pulled.
       .activeToggle("TriggeredActiveToggle", UiCond.truthy(ui.prop("triggered")), {
         name: "Trigger",
       })

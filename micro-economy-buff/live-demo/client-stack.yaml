@@ -1,37 +1,10 @@
-# The buff demo's own client.
-#
-# The demo's "Advance one hour" and "Advance eight hours" buttons call
-# Gs2Account:UpdateTimeOffset from the player, which the shared
-# ApplicationAccess client may not do. This stack declares a separate client
-# with ApplicationAccess plus that one action, so the project's Default stack
-# stays as it is. The showroom pipeline deploys it
-# as demo-micro-economy-buff-client (the `client` stage) and scaffold
-# writes its outputs into ShowroomEnvironment.asset.
-#
-# Read this before widening anything below:
-#
-# - The client secret is public. It is compiled into the WebGL player every
-#   visitor downloads, and ShowroomEnvironment.asset is committed with the
-#   demo, so it is also in this package repository's git history.
-# - Anyone holding the secret who knows a userId in the `Account` namespace can
-#   change that account's timeOffset, and can read its password: the
-#   UpdateTimeOffset response returns the whole Account, password included.
-#   The namespace is the one every showroom demo signs in to, not one of this
-#   demo's own.
-# - userIds do circulate: the ranking demo's board and the guild ranking
-#   demo's guild boards hand every visitor the userIds of the others on them.
-#   So anyone holding this secret can take over another visitor's demo
-#   account. That is accepted: the accounts are anonymous and hold nothing but
-#   demo data. Should that stop being true, move this demo to an account
-#   namespace of its own and narrow the Resources below to it.
-# - Resources is limited to the `Account` namespace; `*` would reach every
-#   account namespace in the project.
-# - The login reward, idle reward and guild ranking demos hold clients with
-#   the same permission. Each is its own stack so any can be withdrawn alone.
-# - Deploying this stack again keeps the secret. Deleting the stack and
-#   creating it anew issues a new one, after which scaffold
-#   (--credentials-only), page, the WebGL build and publishing all have to be
-#   redone.
+# The WebGL player exposes this client credential; it cannot act as a trusted server secret.
+# Clock controls need UpdateTimeOffset, so grant it through a separate revocable client.
+# The action accepts a userId and returns the account, including its password.
+# Keep its resource scope on the shared anonymous demo Account namespace:
+# this permission is unsuitable for real accounts, and a wildcard reaches other namespaces.
+# Replacing this credential requires updating the scaffolded player configuration
+# and rebuilding published players; an already-built player retains the old credential.
 
 GS2TemplateFormatVersion: "2019-05-01"
 

@@ -1,25 +1,3 @@
-/**
- * Live demo content for `foundation-social-guild`.
- *
- * Guilds every visitor shares. A visitor names and founds a guild, or finds one
- * another visitor founded and joins it, straight away or by asking the guild
- * master; the master accepts or declines, hands the guild over, or disbands
- * it.
- *
- * The feature package is the guild kind and a player's membership. This
- * package adds the one kind, its capacity, and the two roles a member can
- * have: a master, who may act as the guild to accept requests, hand over and
- * disband, and a member, who may do nothing as the guild.
- *
- * **The guilds a visitor belongs to are generated rows.** They are the
- * membership the feature package tracks, and they change as the visitor
- * founds, joins, leaves or is accepted.
- *
- * **Everything else is the page's.** Founding, searching, joining, answering
- * requests and acting as the guild are not actions a package can host, so they
- * are a hand-written Unity panel.
- */
-
 import { definePackage, dependencyPackage } from "~/dsl";
 
 import guildSurface from "../../dsl/dependency-surface.json";
@@ -29,17 +7,11 @@ const guild = dependencyPackage(guildSurface);
 const Guild = guild.type("Guild");
 const GuildRole = guild.type("GuildRole");
 
-/** The one guild kind, as the page and GS2 name it. */
 const GUILD_KIND = "adventurers";
 
-/** A guild starts with room for this many, and can be raised to the maximum. */
 const STARTING_CAPACITY = 5;
 const MAXIMUM_CAPACITY = 10;
 
-/**
- * What a master may do as the guild: answer join requests, hand the guild
- * over, and disband it.
- */
 const MASTER_POLICY = JSON.stringify({
   Version: "2016-04-01",
   Statements: [
@@ -57,11 +29,7 @@ const MASTER_POLICY = JSON.stringify({
   ],
 });
 
-/**
- * A member may do nothing as the guild. This denies everything outright
- * rather than being left empty: some GS2 versions treat an empty policy as
- * allowing everything.
- */
+/** Deny guild actions explicitly for ordinary members so the policy does not depend on empty-policy semantics. */
 const MEMBER_POLICY = JSON.stringify({
   Version: "2016-04-01",
   Statements: [{ Effect: "Deny", Actions: ["*"], Resources: ["*"] }],
@@ -84,10 +52,7 @@ export const foundationSocialGuildDemo = definePackage("foundation-social-guild-
     [guild.propertyId("GuildRole", "policyDocument")]: MEMBER_POLICY,
   })
 
-  // One guild each, so joining another means leaving first. No wait before
-  // joining again, so a visitor can try every path in one sitting. The number
-  // of masters is left open: handing the guild over promotes the new master
-  // before the old one leaves.
+  // Allow immediate rejoining for repeated demos; leave master count uncapped because handover promotes the successor before the current master leaves.
   .instance(Guild, GUILD_KIND, {
     [guild.propertyId("Guild", "defaultMaximumMemberCount")]: STARTING_CAPACITY,
     [guild.propertyId("Guild", "maximumMemberCount")]: MAXIMUM_CAPACITY,
@@ -98,11 +63,7 @@ export const foundationSocialGuildDemo = definePackage("foundation-social-guild-
     [guild.propertyId("Guild", "guildMemberDefaultRole")]: "member",
   })
 
-  // The feature package ships no components: what a title shows of a guild is
-  // the title's decision.
-  // A membership carries only the id GS2 gave the guild, not the name its
-  // founder typed. The id means nothing to a visitor, so the row says that the
-  // membership exists and leaves the name to the lobby panel above.
+  // Membership exposes the guild id, so leave name lookup to the lobby panel instead of presenting the id as its name.
   .uiComponent(Guild, ui =>
     ui
       .templateLabel(

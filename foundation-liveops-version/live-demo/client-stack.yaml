@@ -1,17 +1,10 @@
-# The version gate live demo's own client, and the user a player who passes
-# the version check is signed in as.
-#
-# - The client is ApplicationAccess plus reading one's own accepted version
-#   (Gs2Version:GetAcceptVersion), which the demo's generated agreement
-#   loader needs and ApplicationAccess grants only once GS2 rolls the updated
-#   policy out. The extra policy can go when it has.
-# - The passed user carries no policy at all. GS2 hands a player who passes the
-#   check that user's project token, and a demo gives it to anonymous visitors,
-#   so the token must be able to do nothing.
-# - Deploying this stack again keeps the secret. Deleting the stack and
-#   creating it anew issues a new one, after which scaffold
-#   (--credentials-only), page, the WebGL build and publishing all have to be
-#   redone.
+# The agreement loader needs GetAcceptVersion; keep this demo's grant explicit
+# independently of the shared ApplicationAccess policy.
+# A passing check gives anonymous visitors the passed user's project token.
+# Keep that user policy-free so the demo cannot grant project privileges.
+# The WebGL player exposes its client credential, so keep these grants narrowly scoped.
+# Replacing the credential requires refreshing the scaffolded player configuration
+# and rebuilding published players; an already-built player retains the old credential.
 
 GS2TemplateFormatVersion: "2019-05-01"
 

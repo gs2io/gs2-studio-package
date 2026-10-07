@@ -1,41 +1,3 @@
-/**
- * Live demo content for `micro-economy-quest`.
- *
- * The feature package is the quest table and the run a player has open; it
- * ships no quests, and what a quest costs and pays is a title's decision. This
- * package supplies one group of three quests, what each one costs in stamina
- * and pays in free currency, and a bonus the first clear pays on top.
- *
- * A visitor picks a quest, presses Start, and watches stamina drop and a
- * "running" panel appear naming the quest. Complete pays the reward into the
- * wallet, clears the panel, and marks the quest cleared — and the first clear
- * of each quest pays its bonus as well, which a second clear visibly does not.
- *
- * **Both presses are the feature package's.** `Start` and `Complete` are
- * GS2-Quest's own client actions, declared on `Quest` and `Progress` by the
- * feature package; the demo only puts the buttons on the page. They cannot be
- * exchanges: GS2 has no server-side action that ends a quest, and a started
- * progress created through an exchange would skip the quest's own start cost.
- *
- * **One run at a time.** GS2 keeps a single progress per player, and `Start`
- * is pinned to `force: false` so a run left open is kept — it stays in the
- * progress panel until Complete closes it — rather than silently discarded. Pressing Start while a quest is running is therefore
- * refused (`alreadyExists`); the page says so in the quest list's caption,
- * because a quest row cannot read the progress to hide its own button.
- *
- * **What a quest costs and pays is appended, not authored.** The feature
- * package leaves `consumeActions`, `completeAcquireActions` and
- * `firstCompleteAcquireActions` open; this demo overlays `Quest` to append a
- * stamina withdrawal and two free-currency deposits sized from properties the
- * overlay declares, so three quests cost and pay three different amounts from
- * three written-out actions.
- *
- * The stamina meter, the wallet and the schedule are other packages' and are
- * installed beside this one rather than written out again: their rows live in
- * stacks every demo holding them deploys, and a second author of them would be
- * a second version, and the last deploy would win.
- */
-
 import { defineOverlayDomainType, definePackage, dependencyPackage, PT, UiCond } from "~/dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
@@ -50,26 +12,13 @@ const energy = dependencyPackage(energySurface);
 const QuestCollection = quest.type("QuestCollection");
 const Progress = quest.type("Progress");
 
-/** The wallet the page shows and every reward lands in. */
 const WALLET_SLOT = 0;
 
-/**
- * The stamina row every start draws from. `foundation-economy-energy-demo`
- * authors it under this id (with a maximum of 50), so it is spelled here
- * rather than derived.
- */
+/** Match the stamina row owned by the shared energy demo rather than authoring a second meter. */
 const STAMINA = "stamina";
 
-/** The one quest group. It has no schedule, so its quests are always open. */
 const MAIN = "main";
 
-/**
- * The quests, cheapest first. The costs fit the stamina maximum of 50, so the
- * first two can be run back to back and the third needs 30 of it; the
- * rewards and bonuses climb with the cost. The stamina section carries the
- * energy demo's Recover button so a visitor can run a quest twice (the
- * second clear pays no first-clear bonus) without waiting for regeneration.
- */
 const QUESTS = [
   {
     id: "quest1",
@@ -94,7 +43,6 @@ const QUESTS = [
   },
 ] as const;
 
-/** One free-currency deposit into the page's wallet, sized from `propertyName`. */
 function depositEntry(propertyName: string) {
   return {
     transformPackageId: currency.packageId,
@@ -106,16 +54,7 @@ function depositEntry(propertyName: string) {
   } as const;
 }
 
-/**
- * The quest, overlaid so it can carry its name, what it costs and what it
- * pays. Each amount is appended to the slot the feature package leaves open;
- * the target properties are addressed by id because they belong to the type
- * this overlay extends, which a single-package build does not load.
- *
- * `completeAcquireActions` is read through the quest's `contents` entry, which
- * the feature package binds without a mount of its own, so the deposit lands
- * in `contents[0].completeAcquireActions` of the deployed quest model.
- */
+/** Use published ids for inherited action slots because this DSL evaluation does not resolve the dependency closure. The feature binds completion rewards under contents[0]. */
 const Quest = defineOverlayDomainType(
   "Quest",
   {
@@ -192,10 +131,7 @@ const Quest = defineOverlayDomainType(
 
 const withQuests = QUESTS.reduce(
   (builder, { id, displayName, staminaCost, reward, firstClearReward }) =>
-    // Authored by type name so the row reaches the overlay this package
-    // declares, and its properties with it. The list slots are authored empty
-    // because the feature package requires them and the costs and rewards are
-    // appended; a quest here has no failure payout.
+    // Use the local overlay name for its added properties; initialize required action lists before appending costs and rewards. Failure has no payout.
     builder.instance("Quest", id, {
       [quest.propertyId("Quest", "collection")]: MAIN,
       [quest.propertyId("Quest", "consumeActions")]: [],
@@ -223,20 +159,14 @@ const withQuests = QUESTS.reduce(
       },
     })
     .dependency(quest.packageId, "github:gs2io/gs2-studio-package")
-    // The quest package points its groups at a schedule type, and an install
-    // does not walk a package's own dependencies, so that package is named too.
     .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-    // Its event windows live in the schedule stack this demo deploys too;
-    // deployed from here without them, that stack would lose them.
+    // Reuse shared schedule content so this demo cannot remove event windows from that stack.
     .dependency("foundation-economy-schedule-demo", "github:gs2io/gs2-studio-package")
-    // What a start costs: the stamina meter and its row.
+    // Reuse the shared energy and currency demo content so their stacks stay identical across deployments.
     .dependency(energy.packageId, "github:gs2io/gs2-studio-package")
     .dependency("foundation-economy-energy-demo", "github:gs2io/gs2-studio-package")
-    // Where a clear pays: the wallet, and the rows its stack holds.
     .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
     .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-    // The currency demo stocks the currency shop's price table, and an install
-    // does not walk a package's own dependencies, so the shop is named too.
     .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
     .domainType(Quest)
@@ -268,11 +198,9 @@ export const microEconomyQuestDemo = withQuests
         { displayName: ui.prop("displayName"), staminaCost: ui.prop("staminaCost") },
         { name: "Quest" }
       )
-      // `Start` is the feature package's own press.
       .buttonAction("StartButton", "Start", undefined, { name: "Quest" })
       .templateLabel("ClearedLabel", "Cleared", {}, { name: "Quest" })
-      // An active toggle carries the rows its condition empties: the cleared
-      // mark has nothing to say until the quest has been cleared once.
+      // Negate completed because the toggle hides the cleared mark while its condition is true.
       .activeToggle("UnclearedActiveToggle", UiCond.not(UiCond.truthy(ui.prop("completed"))), {
         name: "Quest",
       })
@@ -280,12 +208,9 @@ export const microEconomyQuestDemo = withQuests
 
   .uiComponent(Progress, ui =>
     ui
-      // `Complete` is the feature package's own press; it pays the rewards the
-      // run drew when it started.
       .buttonAction("CompleteButton", "Complete", undefined, { name: "Progress" })
       .templateLabel("IdleLabel", "No quest in progress", {}, { name: "Progress" })
-      // Complete has nothing to finish while no quest is running, and the
-      // idle sentence is wrong while one is.
+      // Hide Complete without an active run and the idle label while one exists.
       .activeToggle("IdleActiveToggle", UiCond.not(UiCond.truthy(ui.prop("inProgress"))), {
         name: "Progress",
       })

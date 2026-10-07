@@ -1,22 +1,3 @@
-/**
- * Reproduces and diagnoses the master-data list residual Character bug:
- * with a viewer package that overlay-renames Character → Charm, the original
- * Character type from the source dependency must be filtered out of the
- * master-data left-pane list via `collectOverriddenDomainTypes` /
- * `isOverridden`.
- *
- * This test exercises the override-collection path on the rename-overlay-sample
- * fixture, asserting:
- *
- *   1. `collectOverriddenDomainTypes` registers `(foundationPkgId, "Character")`
- *      (and the other three Character* identities) in `overriddenKeys`.
- *   2. `isOverridden` returns true for each Character* type using the same
- *      `pkg.id` value that `master-data._index.tsx` consumes.
- *
- * If either assertion fails, the failure mode pinpoints whether the bug is
- * (a) override-key construction (e.g. alias resolution / packageId mismatch),
- * or (b) lookup-key mismatch (e.g. PackageId branded type vs string).
- */
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -79,7 +60,6 @@ describe("rename overlay → source type override registration", () => {
         target,
       });
 
-      // Diagnostic: dump the actual overriddenKeys when an assertion fails.
       if (!overridden) {
         console.warn(
           `[diagnostic] ${source} from ${sourcePkgName} (id=${sourcePkg.id as string}) was NOT in overriddenKeys.\n` +

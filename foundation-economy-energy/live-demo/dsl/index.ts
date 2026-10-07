@@ -1,14 +1,3 @@
-/**
- * Live demo content for `foundation-economy-energy`.
- *
- * The feature package defines the stamina model but ships no rows — a title
- * supplies its own capacity and recovery curve. Stamina is also a meter rather
- * than something a visitor collects, so a page that only read it would sit
- * still for the first minute and then tick once. This package supplies one
- * stamina model to read, and the two presses that move it: spend some, put
- * some back.
- */
-
 import {
   Arg,
   Bind,
@@ -22,62 +11,24 @@ import { GS2 } from "~/dsl/gs2";
 
 import energySurface from "../../dsl/dependency-surface.json";
 
-// Materialization publishes the feature package's identities, so everything
-// below is addressed by name; a typo is a compile error rather than an id that
-// resolves to nothing.
 const energy = dependencyPackage(energySurface);
 
-/**
- * The stamina model, named straight through to the feature package. Nothing
- * here adds a property to it — the demo only hangs rows, two presses and the
- * readings on it — so there is no overlay to write out.
- */
 const Energy = energy.type("Energy");
 
-/** Capacity a visitor starts with, and what the gauge measures against. */
 const DEFAULT_MAXIMUM = 50;
 
-/**
- * Overflow is on, and this is the ceiling it raises the meter to.
- *
- * A refill bought while the meter is already full would otherwise be paid for
- * and thrown away, which is the one thing a stamina shop must not do. With
- * overflow the purchase always lands, and what a visitor sees is the meter
- * going past the capacity it recovers to on its own — which is what overflow
- * is.
- */
+/** Allow purchases above the normal capacity so a refill bought while full is not immediately discarded. */
 const OVERFLOW_MAXIMUM = 100;
 
-/**
- * The shortest interval GS2 accepts. A demo that recovered hourly would look
- * identical to one that recovered never, so the passive tick has to land while
- * the visitor is still on the page.
- */
+/** Use a short recovery interval so visitors can observe passive recovery during a demo session. */
 const RECOVERY_INTERVAL_MINUTES = 1;
 
-/**
- * Stamina restored by one automatic tick, and by one press of Recover — a
- * tenth of the meter, so the bar visibly moves. Pressing the button is
- * therefore exactly "skip the wait", which is the relationship between the two
- * halves of the demo.
- */
+/** Use the same amount for recovery ticks and manual recovery so the button demonstrates skipping one wait. */
 const RECOVERY_VALUE = 5;
 
-/** One press spends a fifth of a full meter: five presses empty it. */
 const CONSUME_VALUE = 10;
 
-/**
- * Spending stamina, modelled as an exchange that grants nothing: the consume
- * action is the whole of the press.
- *
- * The rate is named after the stamina model because a delegated action on
- * `Energy` must target a resource that mounts `Energy` — that is how the
- * generated loader learns which rate to exchange.
- *
- * It lives under its own exchange namespace because `RecoverRateModel` names
- * its rows the same way; sharing a namespace collides the `rateModels` array
- * on its primary key and drops the whole `CurrentRateMaster` from the template.
- */
+/** Keep spend and recovery in separate namespaces because both rates derive the same name from Energy. */
 const ConsumeRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -96,7 +47,6 @@ const ConsumeRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/** The mirror of `ConsumeRateModel`: costs nothing and puts one tick back. */
 const RecoverRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -144,11 +94,7 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // The demo runs the transaction server-side and commits it atomically.
-        // With auto-run off, `Exchange` only hands back a stamp sheet the
-        // client has to execute through the distributor — an extra round trip
-        // that can leave the meter spent but not refilled if the page is
-        // closed mid-way.
+        // Auto-run executes the exchange transaction without a second client request.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
@@ -176,10 +122,6 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
       .addChild(RecoverRateModel)
   )
 
-  // The bar, the numbers beside it and the recovery clock all come from the
-  // feature package: reading a meter is the same job in every title. What the
-  // demo adds is the pair of presses that move it, which is the part a title
-  // designs for itself.
   .uiComponent(Energy, ui =>
     ui
       .buttonAction("SpendButton", "Spend", undefined, { name: "Energy" })

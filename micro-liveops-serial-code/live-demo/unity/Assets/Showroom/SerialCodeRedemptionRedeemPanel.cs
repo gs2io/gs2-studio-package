@@ -1,21 +1,4 @@
-// A code field and its Redeem press, with whether the visitor has redeemed,
-// and a Start over press that clears the redemption so it can be tried again.
-//
-// A row of the page reads one value or makes one press, and typing is
-// neither, so this draws its own region. What the visitor types is handed to
-// the redeem exchange as its `code` config; the exchange's transaction uses
-// the code, counts the redemption and pays, all or nothing, so a wrong code or
-// a second redemption is refused whole and the page says which.
-//
-// A visitor may count up their own counter directly too, since clients are
-// allowed to; that only locks themselves out.
-//
-// Whether the visitor has redeemed is the usage counter the exchange counts
-// on, read from the REST client: it is shown as it is and never written back
-// into the SDK cache, so nothing here reloads or invalidates anything. The
-// exchange itself goes through the SDK, so the wallet the page shows hears the
-// coins land. Both presses run through `ShowroomPress`, so they wait their
-// turn with every other press on the page and say their outcome in one line.
+// Use the configured exchange so code consumption, the redemption limit and the reward share its atomic transaction.
 #nullable enable
 
 using System;
@@ -38,27 +21,20 @@ using CounterOverflowException = Gs2.Gs2Limit.Exception.OverflowException;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Draws the code field and Redeem press into the region the page gives it.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Code Redeem")]
     public sealed class SerialCodeRedemptionRedeemPanel : MonoBehaviour
     {
-        /// <summary>The exchange that redeems, and the config key the code travels under.</summary>
         private const string ExchangeNamespace = "SerialCodeRedeem";
         private const string RedeemRate = "serialcoderedemption";
         private const string CodeConfigKey = "code";
 
-        /// <summary>The exchange that clears the visitor's redemption.</summary>
         private const string StartOverNamespace = "SerialCodeStartOver";
 
-        /// <summary>The usage counter the redemption is counted on.</summary>
         private const string LimitNamespace = "SerialCodeLimit";
         private const string LimitName = "serialcoderedemption";
         private const string CounterName = "redeemed";
 
-        /// <summary>
-        /// What a code can be made of. The code reaches GS2 inside the
-        /// exchange's request as it was typed, so anything else is stopped here.
-        /// </summary>
+        // The code is substituted into exchange actions; reject unsupported characters before sending it.
         private static readonly Regex CodePattern = new Regex("^[A-Za-z0-9_.-]{1,64}$");
 
         private static readonly Color FieldColor = new Color(0.16f, 0.15f, 0.22f, 1f);
@@ -73,7 +49,7 @@ namespace GS2Studio.Showroom.Demo
         private Button? _redeem;
         private Button? _startOver;
 
-        /// <summary>Whether the visitor has redeemed, as last read; null before the first read.</summary>
+        // Unknown until the first successful read; an unread counter must not appear unredeemed.
         private bool? _redeemed;
         private Text? _status;
         private Coroutine? _waiting;
@@ -95,10 +71,7 @@ namespace GS2Studio.Showroom.Demo
             _waiting = null;
         }
 
-        /// <summary>
-        /// The page signs in after it starts, and nothing announces it, so the
-        /// panel asks until the session is there.
-        /// </summary>
+        // Authentication may finish after OnEnable; defer the counter read until a session exists.
         private IEnumerator WaitForSignIn()
         {
             while (!ShowroomRuntime.TryGet(out _, out _))
@@ -140,13 +113,9 @@ namespace GS2Studio.Showroom.Demo
             _startOver.onClick.AddListener(StartOver);
         }
 
-        /// <summary>
-        /// Clears the visitor's redemption through the start-over exchange,
-        /// since a client may not delete its counter itself.
-        /// </summary>
+        // The reset exchange owns privileged counter deletion and can be called with the player session.
         private void StartOver()
         {
-            // GS2 refuses to delete a counter that was never counted.
             if (_redeemed == false)
             {
                 ShowroomLog.Say("You have not redeemed yet, so there is nothing to clear.");
@@ -189,11 +158,7 @@ namespace GS2Studio.Showroom.Demo
             }, error => Explain(error, code));
         }
 
-        /// <summary>
-        /// Runs one press with both buttons off while it is out, and reads the
-        /// usage counter once it is over: waiting on a transaction can time out
-        /// while GS2 still commits it, and the counter says which.
-        /// </summary>
+        // A failed wait does not prove rollback; refresh the actual redemption state after the attempt.
         private void Run(string name, Func<Gs2Domain, IGameSession, Task<string>> press, Func<Gs2Exception, string?> explain)
         {
             SetInteractable(false);
@@ -217,13 +182,7 @@ namespace GS2Studio.Showroom.Demo
             if (_startOver != null) _startOver.interactable = interactable;
         }
 
-        /// <summary>
-        /// Says why GS2 refused. The exchange's actions run together and the
-        /// SDK reports the first one, in the rate's order, that failed, typed
-        /// by that action: the usage counter's overflow when the visitor has
-        /// redeemed already, the serial key's not-found when the code is not
-        /// one GS2 knows.
-        /// </summary>
+        // Failures originate in individual exchange actions; distinguish their service-specific exception types.
         private static string Explain(Gs2Exception error, string code)
         {
             if (error is CounterOverflowException)
@@ -237,7 +196,7 @@ namespace GS2Studio.Showroom.Demo
             return $"Redeeming {code} failed: {ShowroomErrors.Describe(error)}";
         }
 
-        /// <summary>Reads whether the visitor has redeemed, off the usage counter.</summary>
+        // Read the counter directly so post-attempt status does not depend on an older SDK cache entry.
         private async void ReadRedeemed()
         {
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;

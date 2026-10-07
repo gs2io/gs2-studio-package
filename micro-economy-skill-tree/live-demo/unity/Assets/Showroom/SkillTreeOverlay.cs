@@ -1,26 +1,3 @@
-// The panel a skill tree is read in.
-//
-// A tree is a picture, and a picture wants the screen rather than a band of a
-// page that is otherwise a stack of one-line rows. It is also read against a
-// balance — every box charges — so it is something a visitor opens, spends
-// from, and puts away, which is a panel rather than a section.
-//
-// It follows the ad demo's `AdBreakOverlay`: a backdrop that swallows the page
-// beneath it, a card on top of it, and its own screen-space canvas above the
-// page's. Built in code and never written to the scene, for the same reason —
-// the page's rows live under the content mount, a re-bake clears that mount,
-// and anything authored outside it that referenced a generated component would
-// go null the next time the page was baked, silently.
-//
-// What differs from the ad's panel is that this one holds something that
-// changes size. A tree is as tall as it is deep, so the card is fitted to the
-// board it was handed and the board scrolls when the card has run out of
-// screen to grow into.
-//
-// The backdrop is a sibling of the card rather than its parent. It takes a
-// press to dismiss the panel, and a press lands on the nearest handler above
-// what was hit — so a card inside it would hand every press that missed a box
-// to the backdrop, and the panel would close under the visitor's finger.
 #nullable enable
 
 using UnityEngine;
@@ -28,57 +5,25 @@ using UnityEngine.UI;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>
-    /// A full-screen panel holding one skill tree: a heading, the balance the
-    /// tree is bought with, a way out, and the board itself.
-    ///
-    /// Plain rather than a <see cref="MonoBehaviour"/>: the page draws rows
-    /// from the behaviours a demo wrote, and this is not a row. The component
-    /// that owns one drives it.
-    /// </summary>
     internal sealed class SkillTreeOverlay
     {
-        /// <summary>
-        /// Above the page's own canvas, which sits at zero. The same order the
-        /// ad demo's break uses; there is never more than one of either up.
-        /// </summary>
         private const int OverlaySortingOrder = 100;
 
         private const float SideMargin = 36f;
 
-        /// <summary>
-        /// The least screen left above and below the card. What is left over
-        /// after it is the most the card may grow to, so a tree deeper than
-        /// that scrolls rather than running off the top of the window.
-        /// </summary>
+        // Reserve space around the card so deeper trees scroll inside the viewport.
         private const float VerticalMargin = 60f;
 
         private const float CardPadding = 36f;
 
-        /// <summary>
-        /// How far below the card's top edge the board starts: the heading,
-        /// the rule under it, and the balance line, with the padding above the
-        /// heading and below the balance.
-        /// </summary>
         private const float BodyTop = CardPadding + 116f;
 
-        /// <summary>
-        /// Enough for the heading block and a single row of boxes. A card
-        /// shorter than this would be a panel with its own furniture and no
-        /// room for what it was opened for.
-        /// </summary>
+        // Keep room for a node row even when the board is empty.
         private const float MinimumCardHeight = BodyTop + 160f + CardPadding;
 
-        /// <summary>
-        /// What the card is fitted against before the canvas has been laid out
-        /// once — the scaler's own reference height. Only the first frame of
-        /// the first open can read a canvas with no rect yet, and a card that
-        /// was briefly a little too tall is better than one that was zero.
-        /// </summary>
+        // Use the scaler reference height until the canvas has a nonzero layout size.
         private const float AssumedCanvasHeight = 1920f;
 
-        // The page's palette, so the panel reads as part of the page rather
-        // than as something that landed on top of it.
         private static readonly Color PageBackdrop = new Color(0.071f, 0.063f, 0.098f, 0.93f);
         private static readonly Color CardBackground = new Color(0.102f, 0.09f, 0.145f, 1f);
         private static readonly Color Accent = new Color(0.643f, 0.549f, 1f, 1f);
@@ -99,17 +44,9 @@ namespace GS2Studio.Showroom.Demo
 
         private bool _open;
 
-        /// <summary>
-        /// The height of the board this panel was last fitted to, so a balance
-        /// arriving between two redraws does not re-fit the card to nothing.
-        /// </summary>
+        // Retain board height so reopening can refit after a window resize without waiting for another redraw.
         private float _boardHeight;
 
-        /// <param name="font">
-        /// The page's font, so the panel cannot drift from the text around it.
-        /// Null falls back to Unity's built-in, which is what a page with no
-        /// text to copy from would have given anyway.
-        /// </param>
         public SkillTreeOverlay(Font? font)
         {
             _font = font ?? Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
@@ -122,8 +59,7 @@ namespace GS2Studio.Showroom.Demo
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = OverlaySortingOrder;
 
-            // The page's own canvas scales against this, so the panel is the
-            // same size on a phone as the rows behind it.
+            // Match the page scaler so the modal and the rows behind it scale together.
             var scaler = _root.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1080f, 1920f);
@@ -133,17 +69,13 @@ namespace GS2Studio.Showroom.Demo
             Stretch(backdrop);
             var backdropImage = backdrop.gameObject.AddComponent<Image>();
             backdropImage.color = PageBackdrop;
-            // Presses meant for the page are the point of a panel that covers
-            // it, and a press on what the panel is not is a way out of it.
             backdropImage.raycastTarget = true;
             _backdropButton = backdrop.gameObject.AddComponent<Button>();
             _backdropButton.transition = Selectable.Transition.None;
             _backdropButton.targetGraphic = backdropImage;
             _backdropButton.onClick.AddListener(Close);
 
-            // A sibling of the backdrop, drawn after it. See the file's note:
-            // a card inside the backdrop would give it every press that did not
-            // land on a box.
+            // Keep the card beside the backdrop; nesting it would send otherwise unhandled card clicks to the dismiss button.
             _card = NewRect("Card", _root.transform);
             _card.anchorMin = new Vector2(0f, 0.5f);
             _card.anchorMax = new Vector2(1f, 0.5f);
@@ -162,10 +94,7 @@ namespace GS2Studio.Showroom.Demo
             ruleImage.color = new Color(MutedText.r, MutedText.g, MutedText.b, 0.3f);
             ruleImage.raycastTarget = false;
 
-            // What the tree is bought from. It belongs on the panel because the
-            // panel is where it is spent: a visitor who had to close the tree
-            // to find out what a release left them is a visitor reading the
-            // page in the wrong order.
+            // Show the wallet here so checking the balance does not require closing the tree.
             _balanceText = AddText(_card, "Balance", "", 20, MutedText, TextAnchor.UpperLeft);
             Band((RectTransform)_balanceText.transform, CardPadding + 76f, 26f);
 
@@ -178,10 +107,7 @@ namespace GS2Studio.Showroom.Demo
             closeRect.anchoredPosition = new Vector2(-CardPadding, -CardPadding);
             _closeButton.onClick.AddListener(Close);
 
-            // The rest of the card, which is where the board goes. A mask
-            // rather than a shorter card: the tree's own height is what decides
-            // whether there is anything to scroll, and that is not known until
-            // it has been drawn.
+            // Clip and scroll the board because its depth is known only after the nodes arrive.
             _viewport = NewRect("Viewport", _card);
             _viewport.anchorMin = new Vector2(0f, 0f);
             _viewport.anchorMax = new Vector2(1f, 1f);
@@ -202,18 +128,9 @@ namespace GS2Studio.Showroom.Demo
 
         public bool IsOpen => _open;
 
-        /// <summary>
-        /// Puts the board in the panel, as the thing the panel scrolls.
-        ///
-        /// The board keeps its own drawing entirely — this only says where it
-        /// hangs and that its width is the panel's, which is what lets a box
-        /// sit at a fraction of it.
-        /// </summary>
         public void Mount(RectTransform board)
         {
             board.SetParent(_viewport, false);
-            // Across the viewport, and hung from its top edge: the width is
-            // the panel's, and the height is the board's own to declare.
             board.anchorMin = new Vector2(0f, 1f);
             board.anchorMax = new Vector2(1f, 1f);
             board.pivot = new Vector2(0.5f, 1f);
@@ -222,10 +139,6 @@ namespace GS2Studio.Showroom.Demo
             _scroll.content = board;
         }
 
-        /// <summary>
-        /// Sizes the card to the board it holds, up to what the screen leaves.
-        /// Past that the card stops growing and the board scrolls inside it.
-        /// </summary>
         public void FitTo(float boardHeight)
         {
             _boardHeight = boardHeight;
@@ -237,11 +150,7 @@ namespace GS2Studio.Showroom.Demo
                 _card.sizeDelta.x, Mathf.Clamp(wanted, MinimumCardHeight, ceiling));
         }
 
-        /// <summary>
-        /// What the tree is paid from, or nothing when the page has no wallet
-        /// to read. Blank rather than a zero: a balance nobody could read is
-        /// not a balance of none.
-        /// </summary>
+        // An unread balance is unknown, not zero; leave it blank.
         public void SetBalance(string? balance)
         {
             _balanceText.text = balance ?? "";
@@ -252,11 +161,9 @@ namespace GS2Studio.Showroom.Demo
             if (_open) return;
             _open = true;
             _root.SetActive(true);
-            // The card was last fitted against whatever the screen was then,
-            // which a browser window is free to have changed since.
+            // The window may have resized while this panel was closed.
             FitTo(_boardHeight);
-            // Back to the root of the tree. A panel reopened halfway down is a
-            // panel that opened on the middle of something.
+            // Reopen at the tree root rather than retaining a scroll position in the middle.
             if (_scroll.content != null) _scroll.verticalNormalizedPosition = 1f;
         }
 
@@ -289,10 +196,6 @@ namespace GS2Studio.Showroom.Demo
             rect.offsetMax = Vector2.zero;
         }
 
-        /// <summary>
-        /// One band across the card: the card's width less its padding,
-        /// `height` tall, `top` below the card's top edge.
-        /// </summary>
         private static void Band(
             RectTransform rect, float top, float height, float rightPadding = CardPadding)
         {

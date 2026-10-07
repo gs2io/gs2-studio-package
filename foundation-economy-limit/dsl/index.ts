@@ -11,16 +11,7 @@ import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-/**
- * A reset cadence — "daily", "every Monday", "every 7 days". The counters that
- * follow it are separate rows, so one cadence can govern many independent
- * allowances (a daily reset shared by every once-a-day thing in the game).
- *
- * The maximum is deliberately *not* stored here: GS2-Limit takes it at
- * count-up time so the same limit can allow a different number of uses
- * depending on context (a step-up shop offering a cheaper tier below three
- * purchases and a pricier one below five).
- */
+/** Keep maxima on count-up requests so one reset cadence can support different allowances. */
 const UsageLimit = defineDomainType("UsageLimit", dt =>
   dt
     .property(
@@ -87,12 +78,7 @@ const UsageLimit = defineDomainType("UsageLimit", dt =>
     })
 );
 
-/**
- * One counted allowance: how many times this player has done a particular
- * thing since the limit it hangs off last reset. Counters are what a feature
- * actually points at — one per quest, per shop item, per anything that needs
- * its own tally — while the reset schedule stays shared.
- */
+/** Separate counter identity from reset cadence so multiple allowances can reset together without sharing counts. */
 const UsageLimitCounter = defineDomainType("UsageLimitCounter", dt =>
   dt
     .property(
@@ -195,9 +181,7 @@ export const foundationEconomyLimit = definePackage("foundation-economy-limit", 
       })
   )
 
-  // A counter is identified by the pair (limit, counter), so every transform
-  // takes both. Pass the counter's own `limit` ref for the first argument to
-  // keep the pair consistent.
+  // Pass the counter's own limit reference so the two request keys identify the same allowance.
   .actionTransform("CountUpUsageLimit", at =>
     at
       .category("consume")

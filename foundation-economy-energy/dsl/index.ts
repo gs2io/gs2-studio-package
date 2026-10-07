@@ -139,13 +139,7 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
       })
   )
 
-  // `staminaName` names one row of `StaminaModel`, and `StaminaModel.name`
-  // reads that row's own id — so it is a per-row value, not a constant of the
-  // package. A resource key can only be lifted out of a resource the caller is
-  // not itself building when the key is bound statically, which is why
-  // `namespaceName` comes across as a resource key and the stamina does not.
-  // The caller names the meter instead, the same way `AcquireCharacter` takes
-  // the character it grants.
+  // The stamina name varies per row, so callers supply it; only the static namespace can be read as a resource key.
   .actionTransform("ConsumeEnergy", at =>
     at
       .category("consume")
@@ -160,15 +154,9 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
           .mapParameter("consumeValue", "value")
       )
   )
-  // A meter is read against its own ceiling and its own clock, so the parts
-  // any stamina screen needs are supplied here rather than rebuilt per title.
-  // What a title adds on top is what spends and restores it, which is a
-  // different question for every game.
   .uiComponent(Energy, ui =>
     ui
-      // The ceiling is the player's own `currentMaximumValue`, not the
-      // authored default: GS2 can raise a player's capacity, and a bar
-      // measured against the default would then stop short of full.
+      // Use the player's current capacity because it may exceed the authored default.
       .gauge("StaminaGauge", ui.prop("currentValue"), ui.prop("currentMaximumValue"), {
         name: "Energy",
         clamp: true,
@@ -182,13 +170,8 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
         },
         { name: "Energy" }
       )
-      // The recovery clock as a typed `DateTime`, so a screen can count down
-      // to it rather than print it.
       .value("NextRecoveryValue", ui.prop("nextRecoverdAt"), { name: "Energy" })
-      // A full meter has nothing to wait for, and GS2 says so by leaving the
-      // recovery clock unset — which reads as the epoch rather than as
-      // "nothing pending". Being full is the same fact stated directly, so
-      // anything that hides while there is nothing to wait for hangs off this.
+      // Expose full state so pages can hide an unset recovery timestamp instead of showing an epoch date.
       .activeToggle(
         "FullActiveToggle",
         UiCond.gte(ui.prop("currentValue"), ui.prop("currentMaximumValue")),

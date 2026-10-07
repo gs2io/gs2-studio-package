@@ -1,10 +1,3 @@
-// The shared board: the top places, and the visitor's own place below them
-// when it is not among them.
-//
-// A row of the page reads one value, and a board is a table, so this draws its
-// own region. Every visitor is anonymous, so a place is named by the showroom's
-// player tag (`ShowroomPlayerTag`) rather than by anything a player wrote; the
-// visitor's own place reads "You".
 #nullable enable
 
 using System.Linq;
@@ -14,7 +7,6 @@ using UnityEngine.UI;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Draws the top of the shared board into the region the page gives it.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Contest Board")]
     public sealed class RankingContestBoardPanel : MonoBehaviour
     {
@@ -66,12 +58,8 @@ namespace GS2Studio.Showroom.Demo
             if (_rows == null || _hint == null || _contest == null || !_contest.HasValue) return;
             Clear(_rows);
 
-            // The visitor's own score is read fresh, while the board can be a
-            // few minutes old. Their row is taken off the board and put back
-            // where their score now falls, and the places are counted again
-            // from the top, since GS2 never shares a place between two
-            // players. A visitor ranked below the board keeps the rank GS2
-            // gave them, under it.
+            // The personal score and board can describe different moments; merge the personal row for immediate local feedback.
+            // Renumbering this mixed snapshot is a display adjustment, not proof of current server ranks.
             var board = _contest.Board;
             var places = board
                 .Where(place => place.UserId != _contest.UserId)
@@ -82,8 +70,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 var at = places.FindIndex(place => (place.score ?? long.MinValue) < best);
                 places.Insert(at < 0 ? places.Count : at, (rank: null, name: "You", score: best, own: true));
-                // The board is cut back to its size from the bottom, never
-                // dropping the visitor's own row.
+                // Trim another row so immediate feedback never removes the player's own updated score.
                 while (places.Count > RankingContestState.BoardSize)
                 {
                     places.RemoveAt(places.FindLastIndex(place => !place.own));
@@ -163,9 +150,7 @@ namespace GS2Studio.Showroom.Demo
         {
             for (var index = parent.childCount - 1; index >= 0; index--)
             {
-                // Destroy waits for the end of the frame, and until then a
-                // layout group still counts the child; an inactive one it
-                // skips.
+                // Deactivate before deferred destruction so the layout stops counting rows being replaced.
                 var child = parent.GetChild(index).gameObject;
                 child.SetActive(false);
                 Destroy(child);

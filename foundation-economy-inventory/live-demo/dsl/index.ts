@@ -1,12 +1,3 @@
-/**
- * Live demo content for `foundation-economy-inventory`.
- *
- * The feature package models an item and how many are held, but ships no
- * items — which ones a title sells is a title's business. This package
- * supplies three to look at and the two presses that move them: pick one up,
- * and spend one.
- */
-
 import {
   Arg,
   Bind,
@@ -20,28 +11,13 @@ import { GS2 } from "~/dsl/gs2";
 
 import inventorySurface from "../../dsl/dependency-surface.json";
 
-// Materialization publishes the feature package's identities, so everything
-// below is addressed by name; a typo is a compile error rather than an id that
-// resolves to nothing.
 const inventory = dependencyPackage(inventorySurface);
 
 const Item = inventory.type("Item");
 
-/** One press picks up one, and one press spends one. */
 const STEP = 1;
 
-/**
- * Picking an item up, modelled as an exchange that costs nothing: the acquire
- * action is the whole of the press.
- *
- * The rate is named after the item because a delegated action on `Item` must
- * target a resource that mounts `Item` — that is how the generated loader
- * learns which rate to exchange — and each item needs its own rate.
- *
- * It lives under its own exchange namespace because `SpendRateModel` names its
- * rows the same way; sharing a namespace collides the `rateModels` array on
- * its primary key and drops the whole `CurrentRateMaster` from the template.
- */
+/** Keep gain and spend in separate namespaces because both derive rate names from the same item ids. */
 const GainRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -60,7 +36,6 @@ const GainRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/** The mirror of `GainRateModel`: spends one and grants nothing. */
 const SpendRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -92,10 +67,7 @@ export const foundationEconomyInventoryDemo = definePackage(
   })
   .dependency(inventory.packageId, "github:gs2io/gs2-studio-package")
 
-  // Three items rather than one, because the point of an inventory is that it
-  // holds more than one thing and each row counts separately. A player starts
-  // with none of any of them: an empty row is what the disabled spend button
-  // is there to show.
+  // Start with empty stock so visitors can observe the spend control becoming available after a grant.
   .instance(Item, "potion", {})
   .instance(Item, "ether", {})
   .instance(Item, "elixir", {})
@@ -111,11 +83,7 @@ export const foundationEconomyInventoryDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // The demo runs the transaction server-side and commits it atomically.
-        // With auto-run off, `Exchange` only hands back a stamp sheet the
-        // client has to execute through the distributor — an extra round trip
-        // that can leave an item spent but not granted if the page is closed
-        // mid-way.
+        // Auto-run executes the transaction without a second client request after the exchange.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
@@ -143,9 +111,6 @@ export const foundationEconomyInventoryDemo = definePackage(
       .addChild(SpendRateModel)
   )
 
-  // The stock line and the greying-out both come from the feature package:
-  // reading an item is the same job in every title. What the demo adds is the
-  // pair of presses that move it.
   .uiComponent(Item, ui =>
     ui
       .buttonAction("GainButton", "Gain", undefined, { name: "Item" })

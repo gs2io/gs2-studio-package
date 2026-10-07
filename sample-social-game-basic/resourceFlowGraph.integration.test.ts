@@ -1,14 +1,3 @@
-/**
- * sample-social-game-basic resourceFlowGraph integration test
- *
- * Loads the real on-disk sample project and runs
- * `buildInstanceLevelFlowGraph` against it. The goal is to surface what the
- * resource flow graph actually produces for a non-trivial project — node /
- * edge / diagnostic counts — so that "no edges shown in the Economy Viewer"
- * type symptoms can be diagnosed via this test instead of by inspecting the
- * UI manually.
- */
-
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -117,16 +106,10 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
 
     const summary = summarize(graph);
 
-    // 観測ログ: Diagnostics の切り分け用にコンソール出力（テストランナーに残る）
-
     console.log("[resourceFlowGraph summary]", JSON.stringify(summary, null, 2));
 
-    // ---------- 構造的な期待 ----------
-    // 何らかのリソースノードがあること
     expect(summary.resourceNodes, "resource nodes present").toBeGreaterThan(0);
-    // クラスタが生成される
     expect(summary.clusters, "clusters present").toBeGreaterThan(0);
-    // realtime 外部ソースノードは必ず 1 つ生成される
     expect(summary.externalSourceNodes, "external source node").toBe(1);
   });
 
@@ -135,23 +118,12 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
     const graph = buildInstanceLevelFlowGraph({ project, catalog });
     const summary = summarize(graph);
 
-    // この 2 値が 0 か否かで「Economy Viewer にエッジが出ない」根本原因の場所を特定できる:
-    //   instanceNodes > 0 → instance は materialize されている
-    //   edges > 0 → flow も収集されている (UI 側の表示問題に絞り込める)
-    //   instanceNodes === 0 → collectInstanceFlows の gate (mountPath/typeName/actions) で
-    //                          全 resource が早期 return された (実プロジェクトでは想定外)
-    //   instanceNodes > 0 && edges === 0 → action property の materialize で
-    //                                      transform 経由などが失敗 (unresolvedTransform 等)
-    // host overlay 適用後の期待値:
-    // - 依存パッケージに owned された resource でもホストのスコープで view が
-    //   resolve され、action property / transform が見えてフローが収集される
-    // - したがって instance ノードもエッジも 0 にはならない
     expect(summary.instanceNodes, "instance nodes from host-overlay-visible flows").toBeGreaterThan(
       0
     );
     expect(summary.edges, "flow edges collected").toBeGreaterThan(0);
 
-    // テストランナーが落ちなくても、CI ログから生の値を読みたいので残しておく
+    // Keep observed counts in CI logs even when structural assertions pass.
 
     console.log(
       `[flow stats] instances=${summary.instanceNodes} edges=${summary.edges} ` +
@@ -161,9 +133,6 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
   });
 
   it("inspects resolved views for local-mounted resources (action properties + transforms)", async () => {
-    // 「edges 0」が想定外な動きなのか、それともサンプル側の data shape 由来なのかを
-    // 切り分けるための probe。local mount している各 resource について、resolved
-    // view の effective properties / action property transforms を実際に列挙する。
     const [project, catalog] = await Promise.all([loadSampleProject(), loadRealCatalog()]);
     const { getDomainTypeViewReader } = await import("~/application/domainType/composition");
     const reader = getDomainTypeViewReader({ project, actionCatalog: catalog });
@@ -202,7 +171,6 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
       }
     }
 
-    // 集計: kind 別に出現したプロパティ kind の合計
     const aggKinds: Record<string, number> = {};
     let totalSnapshotsWithActionPropertyTransform = 0;
     for (const s of snapshots) {
@@ -216,18 +184,14 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
     console.log(
       `[view probe] resources whose view has actionPropertyTransforms: ${totalSnapshotsWithActionPropertyTransform} / ${snapshots.length}`
     );
-    // サンプル別 (Gacha のような action property transforms を持つ既知型)
     const gachaSnapshots = snapshots.filter(s => s.typeName === "Gacha");
     if (gachaSnapshots.length > 0) {
       console.log("[view probe] Gacha snapshots:", JSON.stringify(gachaSnapshots, null, 2));
     }
 
-    // この test は probe なので fail させない。可視化のためのログ出力のみ。
     expect(snapshots.length).toBeGreaterThan(0);
 
-    // 追加 probe: resource を所有している pkg ではなく、ホスト
-    // (sample-social-game-basic) のスコープで Gacha view を resolve するとどう
-    // 見えるかを確認する。overlay/transform がここで初めて見えるかどうか。
+    // Resolve in host scope because dependency-owned resources can gain action mappings through overlays.
     const hostPkg = [...project.packages.values()].find(
       p => (p.name as string) === "sample-social-game-basic"
     );
@@ -260,8 +224,6 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
     const graph = buildInstanceLevelFlowGraph({ project, catalog });
     const summary = summarize(graph);
 
-    // These diagnostic categories distinguish the main failure sources; values
-    // greater than zero appear in the UI's Diagnostics list.
     const nodeKinds = summary.nodeDiagnosticCountsByKind;
     const edgeKinds = summary.edgeDiagnosticCountsByKind;
 
@@ -269,13 +231,7 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
 
     console.log("[edge diagnostics]", edgeKinds);
 
-    // Check the hypothesis that an unresolved ActionTransform removes the flow:
-    //   - unresolvedTransform > 0 means a transform was not found in a dependency package.
-    //   - unresolvedBindingSource > 0 means a ValueBinding target was not resolved.
-    //   - If edges === 0 and both counts are zero, action-property materialization
-    //     was not invoked and the gate skipped the case.
-    // Do not pin the exact counts because sample updates can change them; the
-    // values remain in CI logs for regression tracing.
+    // Avoid fixed diagnostic counts because sample content changes; keep the observed values in CI logs.
     expect(typeof nodeKinds).toBe("object");
     expect(typeof edgeKinds).toBe("object");
   });

@@ -19,18 +19,10 @@ import characterSurface from "../../foundation-economy-character/dsl/dependency-
 
 import updatePropertyFormLua from "./scripts/update-property-form.lua?raw";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const character = dependencyPackage(characterSurface);
 
-/** The character type and property this loadout hangs off. */
 const CHARACTER_PROPERTY_ID = character.propertyId("Character", "propertyId");
 
-/**
- * A slot on a character — weapon, armour, accessory. `propertyRegex` decides
- * what fits: it is matched against the property id of the thing being put in,
- * so a slot can accept one category of equipment and refuse the rest.
- */
 const EquipmentSlot = defineDomainType("EquipmentSlot", dt =>
   dt
     .property(
@@ -50,7 +42,6 @@ const EquipmentSlot = defineDomainType("EquipmentSlot", dt =>
     })
 );
 
-/** What one character currently has in one slot. */
 const EquipmentSlotAssignment = defineDomainType("EquipmentSlotAssignment", dt =>
   dt
     .property(
@@ -69,11 +60,6 @@ const EquipmentSlotAssignment = defineDomainType("EquipmentSlotAssignment", dt =
     })
 );
 
-/**
- * The character's loadout, added to the character package's own type. This is
- * the edge that was missing between characters and equipment: the equipment
- * package says what a player owns, and this says what a character wears.
- */
 const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>
   domainType
     .property(PT.prop("equipmentSlots", PT.listOf(PT.inline("EquipmentSlotAssignment"))).userData())
@@ -87,11 +73,7 @@ const Character = defineOverlayDomainType("Character", character.overlay("Charac
     })
 );
 
-/**
- * The script that keeps one piece of equipment on one character. GS2-Formation
- * runs it before saving a loadout; it marks what was put on in the equipment's
- * referenceOf and refuses a piece another character already wears.
- */
+/** Validate equipment ownership before saving a loadout so two characters cannot wear the same instance. */
 const SCRIPT_NAMESPACE = "CharacterEquipmentScript";
 const UPDATE_PROPERTY_FORM_SCRIPT = "UpdatePropertyForm";
 
@@ -190,8 +172,7 @@ export const microEconomyEquipmentLoadout = definePackage(
       .mountLocal(Character)
       .linkedMasterResourceId(PropertyFormModel)
       .bindings({
-        // An overlay's inherited properties have no local name, so the source
-        // PropertyId is written directly.
+        // Use the dependency's PropertyId to preserve inherited identity in this overlay.
         propertyId: Bind.domainProperty(Source.direct("Character", CHARACTER_PROPERTY_ID)),
         formId: Bind.skip(),
         name: Bind.skip(),

@@ -14,15 +14,8 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const schedule = dependencyPackage(scheduleSurface);
 
-/**
- * A global leaderboard: every player is ranked against every other. The entry
- * period comes from a schedule event, so a season is opened and closed by
- * moving the event rather than by editing the ranking.
- */
 const Ranking = defineDomainType("Ranking", dt =>
   dt
     .property(PT.string("schedule").assetDelivery())
@@ -82,12 +75,6 @@ const Ranking = defineDomainType("Ranking", dt =>
     })
 );
 
-/**
- * What the players down to `thresholdRank` receive once the season is over.
- * A player receives the tier with the smallest threshold at or below their
- * rank; a player who scored but is outside the top 1000 receives tier 1001.
- * A player who never scored receives nothing.
- */
 const RankingReward = defineDomainType("RankingReward", dt =>
   dt
     .property(PT.prop("ranking", PT.ref("Ranking")).assetDelivery().required())
@@ -136,7 +123,7 @@ const GlobalRankingModel = defineMasterDataResource(resource =>
       sum: Bind.domainProperty(Source.direct(Ranking, "sum")),
       minimumValue: Bind.domainProperty(Source.direct(Ranking, "minimumValue")),
       maximumValue: Bind.domainProperty(Source.direct(Ranking, "maximumValue")),
-      // Tiers are matched against the player's rank, as `thresholdRank` says.
+      // Match reward thresholds to placement rather than score values.
       rewardCalculationIndex: Bind.static("rank"),
       ...Bind.nulls("accessPeriodEventId"),
     })
@@ -201,10 +188,7 @@ export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.0
       .bindings({
         name: Bind.static("Ranking"),
         logSetting: Bind.null(),
-        // Receiving a reward pays out through a transaction. Without auto-run
-        // GS2 hands back a stamp sheet the client has to run, and with no key
-        // to sign it the receipt fails; atomic keeps the receipt record and
-        // the payout together.
+        // Auto-run executes the reward transaction; atomic commit keeps the receipt record and payout together.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),

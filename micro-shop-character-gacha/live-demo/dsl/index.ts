@@ -1,35 +1,3 @@
-/**
- * Live demo content for `micro-shop-character-gacha`.
- *
- * The feature package is the machine: a gacha draws a rarity, the rarity
- * draws a character, and the character lands in the roster and the dex. It
- * ships no gachas, no rarities and no rates, because what a title puts in its
- * gacha is the title's business. A demo of it supplies one gacha worth
- * pulling, and the two things a visitor needs to pull it: characters to win,
- * and currency to spend.
- *
- * The characters are `foundation-economy-character-demo`'s roster, installed
- * beside this package rather than written out again. A row filed against a
- * dependency's type lands in that dependency's stack, and every demo that
- * pulls the same package shares it — so a second author of the same roster
- * would be a second version of it, and the last deploy would win. The recruit
- * that demo also carries is left off this page: a roster a visitor can have
- * for nothing is not one worth drawing for.
- *
- * The currency comes from the shop, which the gacha package depends on and
- * which is how this demo's visitor gets coins. What it sells, what each pack
- * costs, and the store that takes a browser's test receipt are the currency
- * demo's, installed beside this package rather than written out again: they
- * live in stacks every demo holding a wallet or a shop deploys, and a second
- * author of them would be a second version, and the last deploy would win.
- *
- * One draw costs coins from the wallet the shop fills. The cost is the
- * currency package's own withdraw, bound into the gacha's `consumeActions`
- * slot by an overlay of the gacha type — the way a package attaches an action
- * to a slot another package left open, so the currency namespace is resolved
- * by reference rather than spelled out here.
- */
-
 import { definePackage, dependencyPackage } from "~/dsl";
 
 import gachaSurface from "../../dsl/dependency-surface.json";
@@ -38,8 +6,6 @@ import currencySurface from "../../../foundation-economy-currency/dsl/dependency
 import shopSurface from "../../../micro-shop-currency/dsl/dependency-surface.json";
 
 const gacha = dependencyPackage(gachaSurface);
-// A demo installed beside another demo is a dependency like any other: its
-// rows are addressed by name off the surface it publishes.
 const characterDemo = dependencyPackage(characterDemoSurface);
 const currency = dependencyPackage(currencySurface);
 const shop = dependencyPackage(shopSurface);
@@ -50,13 +16,10 @@ const GachaRarityRate = gacha.type("GachaRarityRate");
 const CharacterRate = gacha.type("CharacterRate");
 const StoreProduct = shop.type("StoreProduct");
 
-/** The wallet the shop deposits into and the gacha draws from. */
 const WALLET_SLOT = 0;
 
-/** What one pull costs, in the shop's coins. The small coin pack buys ten. */
 const DRAW_COST = 10;
 
-/** The roster `foundation-economy-character-demo` ships, by rarity. */
 const COMMON = ["knight", "archer"] as const;
 const RARE = ["mage", "healer"] as const;
 
@@ -71,38 +34,24 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
     },
   })
   .dependency(gacha.packageId, "github:gs2io/gs2-studio-package")
-  // The roster comes from the character package's own demo. The dex, the
-  // schedule and the shop are the feature package's dependencies, and an
-  // install does not walk a package's own dependencies, so each is named here.
+  // Reuse the shared roster so this demo cannot deploy conflicting character content.
   .dependency(characterDemo.packageId, "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-character-dictionary", "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  // The schedule's demo adds nothing this page shows. It is installed because
-  // its rows live in a stack this demo deploys too: it authors the event
-  // windows, and deployed from here without it, that stack would lose them.
+  // Reuse shared schedule content even though this page shows no events, because it deploys the same schedule stack.
   .dependency("foundation-economy-schedule-demo", "github:gs2io/gs2-studio-package")
   .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
-  // The coins: the shop sells them, and the currency package is what the
-  // wallet and the store are rows of.
   .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-  // The shelf, the prices and the store's test-receipt setting are authored
-  // once, by the currency demo; this one derives from it.
+  // Reuse the shared currency shelf and test-receipt settings so wallet and shop demos deploy identical content.
   .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
 
-  // Two tiers, so a visitor can see the rates matter: four pulls in five land
-  // a common character.
   .instance(GachaRarity, "common", {})
   .instance(GachaRarity, "rare", {})
 
-  // The one gacha. It runs whenever the page is open: the schedule a gacha
-  // can be pinned to is left off, so the showcase sells it without a window.
-  // Its cost is not authored on the row; the overlay below supplies it.
+  // Leave the schedule unset so drawing remains available throughout a demo visit.
   .instance(Gacha, STANDARD, {})
 
-  // A draw costs coins. The currency package's withdraw is bound into the
-  // slot the feature package left for a draw's cost, with the wallet slot the
-  // page shows and the price of one pull.
   .overlayTypeSpec("Gacha", {
     ...gacha.overlay("Gacha"),
     actionPropertyTransforms: [
@@ -117,9 +66,7 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
             arguments: [
               { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
               { parameterName: "count", source: { kind: "static", value: DRAW_COST } },
-              // Free coins count too. The transform leaves this optional, and
-              // an output that names it drops the whole action when it is not
-              // supplied, so it is said here rather than left to a default.
+              // Set the optional payment policy explicitly so the draw accepts the free balance without relying on an omitted argument.
               { parameterName: "paidOnly", source: { kind: "static", value: false } },
             ],
           },
@@ -139,7 +86,6 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
     [gacha.propertyId("GachaRarityRate", "weight")]: 20,
   })
 
-  // Even odds within a tier; the tier is where the rate lives.
   .instance(CharacterRate, `common.${COMMON[0]}`, {
     [gacha.propertyId("CharacterRate", "rarity")]: "common",
     [gacha.propertyId("CharacterRate", "character")]: COMMON[0],
@@ -161,17 +107,12 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
     [gacha.propertyId("CharacterRate", "weight")]: 1,
   })
 
-  // The row says what a draw costs, and the button draws one. `Buy` is the
-  // feature package's action, named here by the name that package publishes
-  // it under; one draw per press, which is what the showcase sells. The gacha
-  // has no display name of its own, so the row says what it does instead.
   .uiComponent(Gacha, ui =>
     ui
       .label("DrawLabel", ui.lit(`Draw a character for ${DRAW_COST} coins`), { name: "Gacha" })
       .buttonAction("BuyButton", "Buy", { quantity: ui.lit(1) }, { name: "Gacha" })
   )
 
-  // What a coin pack row says: the pack in coins rather than a bare number.
   .uiComponent(StoreProduct, ui =>
     ui.templateLabel(
       "CoinsLabel",

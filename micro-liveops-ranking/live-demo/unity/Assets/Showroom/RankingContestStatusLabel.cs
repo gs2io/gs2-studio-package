@@ -1,4 +1,3 @@
-// Whether the visitor's contest is open, as one line.
 #nullable enable
 
 using UnityEngine;
@@ -6,7 +5,6 @@ using UnityEngine.Events;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>That the contest is open, or what the visitor can do instead.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Contest Status")]
     public sealed class RankingContestStatusLabel : MonoBehaviour
     {

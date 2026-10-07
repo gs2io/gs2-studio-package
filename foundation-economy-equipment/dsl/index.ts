@@ -46,8 +46,7 @@ const Equipment = defineDomainType("Equipment", dt =>
     })
 );
 
-// One bag per player, so one row: the inventory it is backed by is named by a
-// constant, and a type whose identity never varies has no list to mount.
+// A constant inventory name gives each player one bag, so the collection has a single entry.
 const EquipmentCollection = defineDomainType("EquipmentCollection", dt =>
   dt
     .singleEntry()
@@ -108,8 +107,7 @@ const InventoryModel = defineMasterDataResource(resource =>
       name: Bind.static("Equipment"),
       initialCapacity: Bind.domainProperty(Source.direct(EquipmentCollection, "defaultCapacity")),
       maxCapacity: Bind.domainProperty(Source.direct(EquipmentCollection, "maximumCapacity")),
-      // A piece a character wears is referenced by it, and a referenced piece
-      // is not consumed or discarded out from under the character.
+      // Referenced equipment must remain available to the character wearing it.
       protectReferencedItem: Bind.static(true),
     })
     .addArrayChild("itemModels", ItemModel)
@@ -201,13 +199,9 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
       })
   )
 
-  // How full the bag is, and whether there is room to make it bigger, are the
-  // same two readings in every title that has one, so they ship with the model.
   .uiComponent(EquipmentCollection, ui =>
     ui
-      // Against the capacity the player actually has, not the one the title
-      // starts them with: the whole point of an expandable bag is that the
-      // ceiling moves.
+      // Use the player's expanded capacity rather than the authored starting capacity.
       .gauge("CapacityGauge", ui.prop("currentCapacityUsage"), ui.prop("currentMaximumCapacity"), {
         name: "EquipmentCollection",
         clamp: true,
@@ -221,15 +215,11 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
         },
         { name: "EquipmentCollection" }
       )
-      // Past the ceiling the title set, there is nothing left to buy, and a
-      // button that fails is worse than one that is plainly unavailable.
       .interactable(
         "ExpandableInteractable",
         UiCond.lt(ui.prop("currentMaximumCapacity"), ui.prop("maximumCapacity")),
         { name: "EquipmentCollection" }
       )
-      // A bag with no room left is the state the expand button exists for, so
-      // anything that only matters while it is full hangs off this.
       .activeToggle(
         "FullActiveToggle",
         UiCond.gte(ui.prop("currentCapacityUsage"), ui.prop("currentMaximumCapacity")),
@@ -239,8 +229,7 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
 
   .uiComponent(Equipment, ui =>
     ui
-      // A catalogue row names the equipment; an owned row also carries the
-      // instance it is, which is what tells two of the same sword apart.
+      // Include instance identity alongside the equipment name so callers can distinguish two owned copies.
       .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Equipment" })
       .value("PropertyIdValue", ui.prop("propertyId"), { name: "Equipment" })
   )
@@ -266,9 +255,7 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
     at
       .category("consume")
       .parameter("equipment", { type: PT.ref("Equipment") })
-      // Which of the player's copies to consume. Optional: GS2-Inventory takes
-      // one from whichever stack it likes when no item set is named, and a rate
-      // model fixed at deploy time has no instance to name.
+      // Keep instance selection optional because a rate model authored at deploy time cannot name a player-owned item set.
       .parameter("equipmentPropertyId", { type: PT.string(), required: false })
       .output("Gs2Inventory:ConsumeItemSetByUserId", o =>
         o

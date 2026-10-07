@@ -1,16 +1,3 @@
-/**
- * Live demo overrides and content for `foundation-economy-currency`.
- *
- * The feature package ships settings meant for a real title. A public browser
- * demo needs a few of them relaxed, and it needs something a visitor can
- * actually press. Both belong here rather than in the shipped package: this
- * package depends on the feature package and adds only what the demo needs.
- *
- * It is also where every demo's store shelf is authored, each product carrying
- * its prices in the currency shop's currencies — see the note on `demoProduct`
- * below.
- */
-
 import {
   Arg,
   Bind,
@@ -27,46 +14,18 @@ import { GS2 } from "~/dsl/gs2";
 import currencySurface from "../../dsl/dependency-surface.json";
 import shopSurface from "../../../micro-shop-currency/dsl/dependency-surface.json";
 
-// Materialization publishes the feature package's identities, so everything
-// inherited from it is addressed by name; a typo is a compile error rather
-// than an id that resolves to nothing.
 const currency = dependencyPackage(currencySurface);
 const CURRENCY_PACKAGE_ID = currency.packageId;
-// The shop sells the shelf, and what each product grants and costs is the
-// shop's to declare, so the rows name its properties too.
 const shop = dependencyPackage(shopSurface);
 
-/** The demo shows one player with one wallet, slot 0. */
 const WALLET_SLOT = 0;
 
-/**
- * The store's `enableFakeReceipt` drives the Money2 namespace's
- * `platformSetting.fake.acceptFakeReceipt` binding. A browser demo cannot
- * complete a real store purchase, so the demo accepts the fake receipt the
- * client sends; the feature package keeps rejecting it.
- */
+/** Enable fake receipts only in demo content so a browser can exercise purchases without changing the feature defaults. */
 const CurrencyStore = currency.type("CurrencyStore");
 
-/**
- * The feature package defines the store product type but ships no products —
- * a title supplies its own. The demo needs something on the shelf.
- *
- * This is the one place every demo's shelf is authored. A store product lands
- * in the currency stack, and the shop's showcase in the shop's stack, and
- * every demo holding a wallet or a shop deploys both; so the other demos
- * install this package instead of stocking a shelf of their own, and the
- * stacks read the same whichever demo deployed them last. What the shop needs
- * of a product — the amount of currency it grants and its price in each
- * currency, kept in the product's own `prices` — is written on the same rows
- * for the same reason.
- */
+/** Author the shared shelf here so wallet and shop demos deploy identical products and prices into their dependency stacks. */
 const StoreProduct = currency.type("StoreProduct");
 
-/**
- * Money2 keeps two balances: currency granted for free and currency the player
- * paid for. The demo offers one deposit of each so a visitor can see which
- * balance moves.
- */
 function depositType(name: string, label: string, description: string) {
   return defineDomainType(name, domainType =>
     domainType
@@ -91,7 +50,6 @@ const PaidDeposit = depositType(
   "Adds currency to the paid balance, the way a purchase would."
 );
 
-/** An exchange rate that costs nothing and deposits into the free balance. */
 const FreeDepositRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -106,17 +64,13 @@ const FreeDepositRateModel = defineMasterDataResource(resource =>
         .bindings({
           action: Bind.transform(CURRENCY_PACKAGE_ID, "DepositFreeCurrency", [
             Arg.domainProperty("count", Source.parent(Source.direct(FreeDeposit, "count"))),
-            // The demo shows one player with one wallet.
             Arg.static("slot", WALLET_SLOT),
           ]),
         });
     })
 );
 
-/**
- * The same shape, but through `DepositCurrency`: a price and a currency code
- * are what make Money2 record the deposit against the paid balance.
- */
+/** Include price and currency code so this deposit exercises the paid balance separately from the free deposit. */
 const PaidDepositRateModel = defineMasterDataResource(resource =>
   resource
     .model(GS2.exchange.RateModel)
@@ -139,11 +93,6 @@ const PaidDepositRateModel = defineMasterDataResource(resource =>
     })
 );
 
-/**
- * A shelf product: the store-side identifiers, which the fake-receipt demo path
- * never consumes, the amount of currency the shop grants for it, and its price
- * in each of the shop's currencies.
- */
 function demoProduct(
   productId: string,
   count: number,
@@ -191,7 +140,6 @@ export const foundationEconomyCurrencyDemo = definePackage(
   .domainType(FreeDeposit)
   .domainType(PaidDeposit)
 
-  // The store's test-receipt setting is shared the same way as the shelf below.
   .instance(CurrencyStore, "currencystore", {
     [currency.propertyId("CurrencyStore", "enableFakeReceipt")]: "Accept",
   })
@@ -226,10 +174,7 @@ export const foundationEconomyCurrencyDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        // The demo runs transactions server-side and commits them atomically.
-        // With auto-run off, `Exchange` only hands back a stamp sheet that the
-        // client has to execute through the distributor — an extra round trip
-        // that can leave a deposit half-applied if the page is closed mid-way.
+        // Auto-run executes the deposit without requiring a second client request after the exchange.
         transactionSetting: transactionSetting({
           enableAtomicCommit: Bind.static(true),
           enableAutoRun: Bind.static(true),
@@ -239,10 +184,6 @@ export const foundationEconomyCurrencyDemo = definePackage(
       .addChild(PaidDepositRateModel)
   )
 
-  // The caption writes the amount the deployed master data actually holds, and
-  // the button performs the deposit. Both are generated components a scene
-  // wires in the Inspector, which is the whole point of the demo: nothing here
-  // needs a script of its own.
   .uiComponent(FreeDeposit, ui =>
     ui
       .templateLabel(

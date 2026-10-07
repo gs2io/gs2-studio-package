@@ -16,12 +16,9 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
 import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
 
-// Addressed by name against the identities the dependency publishes, so a
-// mistake is a compile error rather than an id that resolves to nothing.
 const character = dependencyPackage(characterSurface);
 const schedule = dependencyPackage(scheduleSurface);
 
-/** Types this package points at but does not overlay. */
 const CHARACTER_TYPE_ID = character.typeId("Character");
 const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
 
@@ -31,7 +28,6 @@ const GachaRarity = defineDomainType("GachaRarity", dt =>
   })
 );
 
-/** How likely one character is, within its rarity. */
 const CharacterRate = defineDomainType("CharacterRate", dt =>
   dt
     .property(PT.prop("rarity", PT.ref("GachaRarity")).assetDelivery().required())
@@ -61,7 +57,6 @@ const CharacterRate = defineDomainType("CharacterRate", dt =>
     })
 );
 
-/** How likely one rarity is, within one gacha. */
 const GachaRarityRate = defineDomainType("GachaRarityRate", dt =>
   dt
     .property(PT.prop("gacha", PT.ref("Gacha")).assetDelivery().required())
@@ -124,12 +119,7 @@ const LotteryModel = defineMasterDataResource(resource =>
     })
 );
 
-/**
- * One prize table per rarity: the characters that tier can hand out, each
- * granting the character itself and recording it in the dex. A character rate
- * names its rarity, and that is what files it under this table rather than
- * another tier's.
- */
+/** Keep one character table per rarity so multiple gachas can reuse the same within-rarity weights. */
 const RarityPrizeTable = defineMasterDataResource(resource =>
   resource
     .model(GS2.lottery.PrizeTable)
@@ -180,11 +170,6 @@ const RarityPrizeTable = defineMasterDataResource(resource =>
     })
 );
 
-/**
- * One prize table per gacha. Each row draws a rarity, and the rarity draws
- * from its own table above; the two tables are named after the gacha and the
- * rarity, so the draw can follow the name from one to the other.
- */
 const PrizeTable = defineMasterDataResource(resource =>
   resource
     .model(GS2.lottery.PrizeTable)
@@ -236,8 +221,7 @@ const DisplayItem = defineMasterDataResource(resource =>
             .bindings({
               action: Bind.static("Gs2Lottery:DrawByUserId"),
             })
-            // `request` is a JSON blob on the catalog model, so its fields are
-            // bound by parameter path rather than through the typed record.
+            // Bind request fields by parameter path because the catalog exposes the request as a JSON blob.
             .domainPropertyBindings({
               request: {
                 namespaceName: Bind.resourceKey(),

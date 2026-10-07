@@ -1,25 +1,6 @@
--- One piece of equipment is worn by one character at a time.
---
--- Runs before GS2-Formation saves a character's loadout. A piece put on is
--- marked with the character in its item set's referenceOf, and a piece taken
--- off has the mark removed. A piece already marked by another character is
--- refused: it has to be taken off that character first.
---
--- The marks are written through the inventory while this script runs, and
--- they are committed together when it ends, even when it then fails. So every
--- check is made before anything is written, and nothing is written for an
--- update that is refused.
---
--- Marking rewrites the whole item-set group of one item (every set the player
--- holds of it), and two writes to one group in a single run can overwrite each
--- other. An update that would touch one group twice, such as swapping one sword
--- for another of the same kind, is refused and has to be made as two presses.
---
--- A slot value that is not an inventory item set is passed through untouched.
---
--- The mark names the character by its item and item set, "<item>.<set>": a
--- referenceOf value is at most 128 characters of [-_.a-zA-Z0-9], which a GRN,
--- with its colons, is not.
+-- Inventory references are shared across loadouts, so a mark for another character must be rejected.
+-- Validate the whole change before mutating references; a later refusal must not leave earlier writes planned.
+-- Reference updates touch an item-set group, so mutations within one group are not independent writes.
 
 local before = args['propertyForm']
 local after = args['afterPropertyForm']
@@ -41,7 +22,6 @@ local function slot_values(form)
     return values
 end
 
--- grn:gs2:{region}:{owner}:inventory:{ns}:user:{user}:inventory:{inventory}:item:{item}:itemSet:{set}
 local function parse_item_set(property_id)
     local parts = {}
     for part in string.gmatch(property_id, '([^:]+)') do
@@ -60,8 +40,7 @@ local function parse_item_set(property_id)
     }
 end
 
--- The character's mark: its item and item set when it is an inventory item
--- set, or its property id as it is when that already fits a referenceOf.
+-- Use item and set identity because full GRNs contain colons excluded from referenceOf.
 local function mark_of(property_id)
     local item_set = parse_item_set(property_id)
     local mark = property_id
@@ -105,7 +84,6 @@ for _, value in ipairs(before_values) do
     end
 end
 
--- Every write this run would make, checked before any is made.
 local writes = {}
 local groups = {}
 local inventory = gs2('inventory')
@@ -150,8 +128,7 @@ for _, property_id in ipairs(added) do
                 end
             end
         end
-        -- A mark this character already holds, left by an earlier run, is
-        -- taken as it is rather than refused.
+        -- Reusing this character's existing mark makes retries idempotent.
         if not mine then
             plan_write(property_id, 'add')
         end
@@ -173,7 +150,7 @@ for _, write in ipairs(writes) do
     else
         response = inventory.delete_reference_of_by_user_id(request)
     end
-    -- A mark already gone is what taking off wanted.
+    -- A missing reference already satisfies removal; retries must not fail just because it is gone.
     if response['isError'] and not (write.kind == 'remove' and response['statusCode'] == 404) then
         fail(response['statusCode'], response['errorMessage'])
     end

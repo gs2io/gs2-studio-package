@@ -1,7 +1,4 @@
-// When the visitor's contest closes, for the page to count down to.
-//
-// Handed over as a `DateTime`, which the page draws as time left; with no
-// contest open the deadline is left unset.
+// Expose DateTime so the page builder uses its shared countdown; default clears the deadline when no contest is open.
 #nullable enable
 
 using System;
@@ -11,7 +8,6 @@ using UnityEngine.Events;
 
 namespace GS2Studio.Showroom.Demo
 {
-    /// <summary>Publishes when the contest closes, whenever it may have changed.</summary>
     [AddComponentMenu("GS2 Studio/Showroom/Contest Ends")]
     public sealed class RankingContestEndsValue : MonoBehaviour
     {
