@@ -15,35 +15,23 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Gift
 {
-    /// <summary>
-    /// Abstract read surface shared by every handler that exposes a single
-    /// GiftBinder: the standalone/list GiftHandler and the
-    /// slot-bound GiftListItemHandler. Concrete handlers supply the
-    /// binder source; the read-only properties and the Updated/Bound/Failed
-    /// events are defined here so consumers can depend on one base type.
-    /// </summary>
+    /// <summary>Shared events and read access let UI consumers use the same type for standalone and list-slot handlers.</summary>
     public abstract class GiftHandlerBase : MonoBehaviour
     {
-        /// <summary>The bound binder (non-owning actionable view), or null when none is attached.</summary>
+        /// <summary>The owning handler or list manages the binder lifecycle; consumers receive a non-owning actionable view.</summary>
         public abstract IActionableGiftBinder? Binder { get; }
 
-        /// <summary>The bound model, or null when no binder is attached.</summary>
         public abstract Gift? Model { get; }
 
-        /// <summary>True when a binder is currently attached.</summary>
         public abstract bool HasValue { get; }
 
-        /// <summary>Fires whenever the bound model changes (initial attach + each binder update).</summary>
         public event Action<Gift>? Updated;
 
-        /// <summary>Fires once each time a binder is attached (non-owning actionable view).</summary>
         public event Action<IActionableGiftBinder>? Bound;
 
-        /// <summary>Fires when the handler encounters an exception.</summary>
         public event Action<Exception>? Failed;
 
-        // C# events can only be raised from the declaring type, so derived
-        // handlers raise through these protected helpers.
+        // C# events can only be raised by their declaring type; derived handlers need these helpers.
         protected void RaiseUpdated(Gift model) => Updated?.Invoke(model);
         protected void RaiseBound(IActionableGiftBinder binder) => Bound?.Invoke(binder);
         protected void RaiseFailed(Exception ex) => Failed?.Invoke(ex);

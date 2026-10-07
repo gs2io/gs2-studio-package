@@ -12,13 +12,7 @@ using Gs2.Unity.Util;
 
 namespace GS2Studio.Generated.Runtime
 {
-    /// <summary>
-    /// Production provider that resolves Gs2Domain and IGameSession from a
-    /// pair of holder MonoBehaviours. Falls back to GetComponentInParent for
-    /// each holder when the corresponding field is unassigned, so the
-    /// provider can be dropped under an existing Gs2ClientHolder/Gs2GameSessionHolder
-    /// hierarchy without explicit wiring.
-    /// </summary>
+    /// <summary>Parent lookup lets existing holder hierarchies supply the runtime without explicit wiring.</summary>
     [AddComponentMenu("GS2 Studio/Runtime/Gs2HolderRuntimeContextProvider")]
     public sealed class Gs2HolderRuntimeContextProvider : MonoBehaviour, IGs2RuntimeContextProvider
     {
@@ -29,10 +23,7 @@ namespace GS2Studio.Generated.Runtime
         {
             if (_clientHolder == null) _clientHolder = GetComponentInParent<Gs2ClientHolder>();
             if (_sessionHolder == null) _sessionHolder = GetComponentInParent<Gs2GameSessionHolder>();
-            // Resolve only when the underlying holders report Initialized: the
-            // generated XxxHandler.Start polls this method via UniTask.WaitUntil
-            // and must observe a "not yet ready" result while the GS2 SDK is
-            // still finishing client setup / access-token acquisition.
+            // Handlers poll TryGet during Start; non-null SDK objects alone do not mean access-token setup has finished.
             gs2 = _clientHolder != null && _clientHolder.Initialized ? _clientHolder.Gs2 : null;
             session = _sessionHolder != null && _sessionHolder.Initialized ? _sessionHolder.GameSession : null;
             return gs2 != null && session != null;

@@ -16,14 +16,7 @@ using Gs2Bind.Gs2Friend;
 
 namespace GS2Studio.Generated.ReceiveFriendRequest
 {
-    /// <summary>
-    /// Construction seam for <see cref="ReceiveFriendRequestBinder"/> and
-    /// <see cref="ReceiveFriendRequestBinderCollection"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder / collection in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IReceiveFriendRequestBinderFactory
     {
         Task<IReceiveFriendRequestBinder> CreateAsync(
@@ -34,11 +27,6 @@ namespace GS2Studio.Generated.ReceiveFriendRequest
         IReceiveFriendRequestBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
-    /// <summary>
-    /// Default <see cref="IReceiveFriendRequestBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultReceiveFriendRequestBinderFactory : IReceiveFriendRequestBinderFactory
     {
         public static readonly DefaultReceiveFriendRequestBinderFactory Instance = new DefaultReceiveFriendRequestBinderFactory();

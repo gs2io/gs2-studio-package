@@ -3,41 +3,9 @@
 //     Do not modify this file directly.
 // </auto-generated>
 
-// Resources-backed default implementation of IOverlayLoader<TEntry>.
-//
-// Placement convention:
-//   Overlay assets must live at
-//     Assets/.../Resources/Overlays/<TypeName>/<safeInstanceId>.asset
-//   Studio codegen emits them at
-//     Assets/GS2Studio/Generated/Resources/Overlays/<TypeName>/<safeInstanceId>.asset
-//   `Resources.Load` only searches folders named `Resources`; an asset
-//   outside one loads in the Editor (AssetDatabase) but is null in a player.
-//   where `<TypeName>` is the model's domain type name (e.g. `StorePrice`)
-//   — NOT the entry class name (`StorePriceOverlayEntry`) — and
-//   `<safeInstanceId>` is the instance id normalized through
-//   `OverlayInstanceIdNormalizer.ToSafeFileName` so composite primary keys
-//   (e.g. `"JPY.tier1"`) match the studio-side asset emission. The model
-//   type name is injected via the constructor `typeName` parameter at
-//   startup.
-//
-// Project-wide uniqueness:
-//   `<TypeName>` x `<instanceId>` must be unique across the entire project.
-//   Re-using the same pair from a different package will collide on the
-//   Resources path.
-//
-// Tradeoffs:
-//   Anything under a `Resources/` folder is unconditionally included in the
-//   build, so this loader does not support dynamic delivery. If you need
-//   AssetDelivery, switch to the Addressables loader by enabling the
-//   `UNITY_ADDRESSABLES` define.
-//
-// Lifecycle:
-//   No per-instance Release API is provided — Unity's `Resources.Load` integrates
-//   with the engine's reference-counting model, and unused assets are reclaimed
-//   via `Resources.UnloadUnusedAssets()` (typically called on scene transitions
-//   or explicitly from your bootstrap code). Contrast with the Addressables
-//   loader, which exposes `Release(instanceId)` / `ReleaseAll()` to manage its
-//   own AsyncOperationHandle cache.
+// Player lookups require Resources/Overlays/<TypeName>/<safeInstanceId>.asset; Editor asset search can hide incorrect placement.
+// TypeName is the model name, not the entry class. The type/instance pair must be project-wide unique because paths omit the package key.
+// Resources assets ship with the player; use a different Active implementation when delivery must be dynamic.
 
 #nullable enable
 
@@ -46,12 +14,6 @@ using UnityEngine;
 
 namespace GS2Studio.Generated
 {
-    /// <summary>
-    /// Plain-Unity default <see cref="IOverlayLoader{TEntry}"/> using
-    /// <see cref="Resources.Load{T}(string)"/>. Always available — no
-    /// additional packages required. The auto-injected <c>Active</c> falls
-    /// back to this when neither Editor nor Addressables defines are active.
-    /// </summary>
     public sealed class ResourcesOverlayLoader<TEntry> : IOverlayLoader<TEntry>
         where TEntry : ScriptableObject
     {

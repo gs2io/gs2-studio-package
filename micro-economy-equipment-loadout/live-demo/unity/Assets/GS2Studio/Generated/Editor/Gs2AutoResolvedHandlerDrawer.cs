@@ -12,15 +12,7 @@ using UnityEngine;
 
 namespace GS2Studio.Generated.Runtime
 {
-    /// <summary>
-    /// PropertyDrawer for every UI component field decorated with
-    /// <c>[Gs2AutoResolvedHandler]</c>. Renders the field as a disabled
-    /// object reference so the Inspector cannot reassign it, and previews
-    /// what <c>GetComponentInParent&lt;T&gt;()</c> would resolve to at
-    /// runtime when the stored reference is null. Registered against the
-    /// attribute (not a type), so the single drawer covers every generated
-    /// UI MonoBehaviour without per-component editor extensions.
-    /// </summary>
+    /// <summary>Attribute registration covers all generated handler fields without per-component editor extensions.</summary>
     [CustomPropertyDrawer(typeof(Gs2AutoResolvedHandlerAttribute))]
     public sealed class Gs2AutoResolvedHandlerDrawer : PropertyDrawer
     {
@@ -30,10 +22,7 @@ namespace GS2Studio.Generated.Runtime
             UnityEngine.Object? resolved = stored;
             bool isAuto = false;
 
-            // When the field has not been assigned in the Inspector, walk
-            // up the GameObject hierarchy from the owning component to
-            // mirror the runtime fallback (`GetComponentInParent<T>()` in
-            // `ResolveHandler`). Includes the owning GameObject itself.
+            // Preview runtime parent resolution without serializing the discovered handler into the field.
             if (resolved == null && fieldInfo != null && property.serializedObject.targetObject is Component owner)
             {
                 Component? found = owner.GetComponentInParent(fieldInfo.FieldType);

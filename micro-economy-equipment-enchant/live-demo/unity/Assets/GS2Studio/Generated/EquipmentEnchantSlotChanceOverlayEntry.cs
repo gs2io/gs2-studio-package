@@ -10,11 +10,6 @@ using GS2Studio.Generated.EquipmentEnchant;
 
 namespace GS2Studio.Generated.EquipmentEnchantSlotChance
 {
-    /// <summary>
-    /// AssetDelivery overlay entry for EquipmentEnchantSlotChance.
-    /// Field values are populated from the studio2-emitted overlay payload
-    /// at AssetBundle build time.
-    /// </summary>
     public class EquipmentEnchantSlotChanceOverlayEntry : ScriptableObject
     {
         [SerializeField] private string _rawInstanceId = default!;
@@ -24,13 +19,7 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
 
         public EquipmentEnchantId Enchant => new EquipmentEnchantId(_enchant);
 
-        /// <summary>
-        /// Copy the overlay-bound values into <paramref name="model"/>. Public
-        /// against the public read-write contract so external stubs can apply
-        /// the overlay to their own <see cref="IMutableEquipmentEnchantSlotChance"/>
-        /// implementation; the generated binder calls this during
-        /// mount/subscribe with its internal mutable model.
-        /// </summary>
+        /// <summary>The public mutable contract lets external models receive overlays without depending on the binder's internal model.</summary>
         public void ApplyTo(IMutableEquipmentEnchantSlotChance model)
         {
             model.Enchant = Enchant;

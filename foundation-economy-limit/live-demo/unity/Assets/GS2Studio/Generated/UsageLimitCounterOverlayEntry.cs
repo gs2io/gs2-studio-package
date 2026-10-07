@@ -10,11 +10,6 @@ using GS2Studio.Generated.UsageLimit;
 
 namespace GS2Studio.Generated.UsageLimitCounter
 {
-    /// <summary>
-    /// AssetDelivery overlay entry for UsageLimitCounter.
-    /// Field values are populated from the studio2-emitted overlay payload
-    /// at AssetBundle build time.
-    /// </summary>
     public class UsageLimitCounterOverlayEntry : ScriptableObject
     {
         [SerializeField] private string _rawInstanceId = default!;
@@ -24,13 +19,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
 
         public UsageLimitId Limit => new UsageLimitId(_limit);
 
-        /// <summary>
-        /// Copy the overlay-bound values into <paramref name="model"/>. Public
-        /// against the public read-write contract so external stubs can apply
-        /// the overlay to their own <see cref="IMutableUsageLimitCounter"/>
-        /// implementation; the generated binder calls this during
-        /// mount/subscribe with its internal mutable model.
-        /// </summary>
+        /// <summary>The public mutable contract lets external models receive overlays without depending on the binder's internal model.</summary>
         public void ApplyTo(IMutableUsageLimitCounter model)
         {
             model.Limit = Limit;

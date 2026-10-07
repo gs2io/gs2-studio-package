@@ -7,40 +7,20 @@
 
 namespace GS2Studio.Generated.Character
 {
-    /// <summary>
-    /// Which mount axis a Character list reads through.
-    /// CharacterBinderCollection exposes one mount method per axis;
-    /// this names them so a scene can pick one instead of taking whichever
-    /// loader the generator elected.
-    /// <para>
-    /// Member values are derived from the member name, not its position, so
-    /// adding or reordering an axis leaves every already-stored value pointing
-    /// at the axis it always pointed at.
-    /// </para>
-    /// <para>
-    /// Where a <c>CharacterMountSurface</c> is also generated, these
-    /// members are one-to-one with its members other than <c>Full</c>: that
-    /// enum says which path built a row, this one says which path to mount.
-    /// </para>
-    /// </summary>
+    /// <summary>Name-derived values preserve authored scene selections when axes are added or reordered.</summary>
     public enum CharacterListAxis
     {
-        /// <summary>No axis was written here. A scene that was never baked reads as this.</summary>
+        /// <summary>Zero keeps an unbaked scene from silently selecting a mount axis.</summary>
         Unset = 0,
 
-        /// <summary>Read from the InventoryCharacter master-data mount axis.</summary>
         InventoryCharacterMaster = 1615793260,
 
-        /// <summary>Read from the ExchangeCharacterEnhanceWithPotion master-data mount axis.</summary>
         ExchangeCharacterEnhanceWithPotionMaster = -964421582,
 
-        /// <summary>Read from the ExchangeCharacterEnhanceWithElixir master-data mount axis.</summary>
         ExchangeCharacterEnhanceWithElixirMaster = 804642170,
 
-        /// <summary>Read from the ExchangeCharacterTrain master-data mount axis.</summary>
         ExchangeCharacterTrainMaster = 649988125,
 
-        /// <summary>Read from the InventoryCharacter user-data mount axis.</summary>
         InventoryCharacterUser = 312520633,
     }
 }

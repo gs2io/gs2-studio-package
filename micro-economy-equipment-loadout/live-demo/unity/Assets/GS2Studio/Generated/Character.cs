@@ -9,13 +9,7 @@ using System.Collections.Generic;
 
 namespace GS2Studio.Generated.Character
 {
-    /// <summary>
-    /// Read-only public contract for the Character model. GS2 is not a
-    /// CRUD service: data flows from GS2 (master/user) into the model and
-    /// consumers only read it. The mutable implementation is the internal
-    /// <see cref="MutableCharacter"/>, reconciled by the binder/collection
-    /// inside the generated assembly.
-    /// </summary>
+    /// <summary>Expose loaded values without setters so consumers cannot bypass binder and collection reconciliation.</summary>
     public interface Character
     {
         /// <summary>
@@ -38,15 +32,7 @@ namespace GS2Studio.Generated.Character
         IReadOnlyList<GS2Studio.Generated.EquipmentSlotAssignment.EquipmentSlotAssignment>? EquipmentSlots { get; }
     }
 
-    /// <summary>
-    /// Read-write public contract for the Character model. Each
-    /// property re-declares its base member with a setter (hence <c>new</c>).
-    /// This is the parameter type of the binder's shared <c>Apply*</c>
-    /// composition methods, so a stub model implementing this interface can
-    /// reuse the generated composition logic. Bound models are never exposed
-    /// through this interface — the binder only implements the read-only
-    /// <see cref="Character"/> surface.
-    /// </summary>
+    /// <summary>Public setters let external stub models reuse generated Apply methods without exposing the bound mutable model.</summary>
     public interface IMutableCharacter : Character
     {
         new CharacterId Id { get; set; }
@@ -59,11 +45,6 @@ namespace GS2Studio.Generated.Character
         new IReadOnlyList<GS2Studio.Generated.EquipmentSlotAssignment.EquipmentSlotAssignment>? EquipmentSlots { get; set; }
     }
 
-    /// <summary>
-    /// Mutable implementation of <see cref="Character"/>. Internal to
-    /// the generated assembly so external code only ever sees the read-only
-    /// interface; the binder/collection reconcile paths write these setters.
-    /// </summary>
     internal sealed class MutableCharacter : IMutableCharacter
     {
         public CharacterId Id { get; set; }

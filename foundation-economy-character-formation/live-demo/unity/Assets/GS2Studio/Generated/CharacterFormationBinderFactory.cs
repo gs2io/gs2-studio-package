@@ -19,13 +19,7 @@ using Gs2Bind.Gs2Formation;
 
 namespace GS2Studio.Generated.CharacterFormation
 {
-    /// <summary>
-    /// Construction seam for <see cref="CharacterFormationBinder"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface ICharacterFormationBinderFactory
     {
         Task<ICharacterFormationBinder> CreateAsync(
@@ -35,11 +29,6 @@ namespace GS2Studio.Generated.CharacterFormation
             CancellationToken cancellationToken = default);
     }
 
-    /// <summary>
-    /// Default <see cref="ICharacterFormationBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultCharacterFormationBinderFactory : ICharacterFormationBinderFactory
     {
         public static readonly DefaultCharacterFormationBinderFactory Instance = new DefaultCharacterFormationBinderFactory();

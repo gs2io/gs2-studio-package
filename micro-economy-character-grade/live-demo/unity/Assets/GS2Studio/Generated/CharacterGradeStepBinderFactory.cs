@@ -15,13 +15,7 @@ using Gs2.Unity.Util;
 
 namespace GS2Studio.Generated.CharacterGradeStep
 {
-    /// <summary>
-    /// Construction seam for <see cref="CharacterGradeStepBinder"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface ICharacterGradeStepBinderFactory
     {
         Task<ICharacterGradeStepBinder> CreateAsync(
@@ -31,11 +25,6 @@ namespace GS2Studio.Generated.CharacterGradeStep
             CancellationToken cancellationToken = default);
     }
 
-    /// <summary>
-    /// Default <see cref="ICharacterGradeStepBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultCharacterGradeStepBinderFactory : ICharacterGradeStepBinderFactory
     {
         public static readonly DefaultCharacterGradeStepBinderFactory Instance = new DefaultCharacterGradeStepBinderFactory();

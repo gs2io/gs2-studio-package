@@ -23,138 +23,65 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Quest
 {
-    /// <summary>
-    /// MonoBehaviour list handler for Quest scoped by the
-    /// Collection reference. Auto-resolves a parent
-    /// QuestCollectionHandlerBase from the GameObject hierarchy, owns a
-    /// QuestBinderCollection, and instantiates a child
-    /// QuestListItemHandler only for the binders whose
-    /// Collection equals the parent's id. Implements
-    /// IQuestBinderListSource so items read Binders[Index] through the
-    /// shared parent-list surface.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Quest/Quest List By Collection Handler")]
     public sealed class QuestListByCollectionHandler : MonoBehaviour, IQuestBinderListSource, IGs2ListState
     {
         [SerializeField] private string? _collection;
-        // Parent handler reference. Auto-only: resolved via
-        // GetComponentInParent at reload time (same pattern as the generated
-        // UI components); the [Gs2AutoResolvedHandler] drawer shows the
-        // resolved reference read-only, so the serialized value is never
-        // user-assigned. Manual override would need an editable drawer mode.
+        // Keep the Inspector reference read-only because the parent hierarchy owns handler selection.
         [Gs2AutoResolvedHandler]
         [SerializeField] private QuestCollectionHandlerBase? _parentHandler;
         [SerializeField] private QuestListItemHandler? _itemPrefab;
         [SerializeField] private Transform? _contentParent;
         [SerializeField] private bool _autoSubscribe = true;
-        // Hidden from the Inspector and not serialized. Resolved lazily by
-        // searching the entire active scene so the handler does not have
-        // to sit under a Gs2HolderRuntimeContextProvider parent.
         private Gs2HolderRuntimeContextProvider? _runtime;
 
-        // Non-serialized override for tests / programmatic wiring. Takes
-        // precedence over `_runtime` when set via SetRuntimeProvider.
         private IGs2RuntimeContextProvider? _runtimeOverride;
 
-        // Construction seam. Defaults to DefaultQuestBinderFactory.Instance;
-        // override via SetBinderFactory to substitute a fake collection.
         private IQuestBinderFactory? _binderFactory;
 
         private IQuestBinderCollection? _collectionInternal;
-        // ReloadAsync binds every collection callback to the operation and
-        // collection that created it. This prevents a stale mount / callback
-        // from mutating the collection installed by a newer reload.
+        // Bind callbacks to their reload generation so a stale operation cannot mutate its replacement.
         private long _reloadGeneration;
-        // True once a reload has mounted its collection, false from the start
-        // of the next reload (Cleanup) until that one mounts. Lets a consumer
-        // tell "still loading" from "loaded and empty" — ListChanged fires in
-        // both states.
         private bool _isLoaded;
         private Action<IQuestBinder>? _collectionItemAddedCallback;
         private Action<IQuestBinder>? _collectionItemRemovedCallback;
         private bool _isDestroyed;
-        // The parent handler whose Bound event is currently subscribed. The
-        // subscription lifecycle is deliberately decoupled from Cleanup():
-        // ReloadAsync calls Cleanup() on entry, and dropping the subscription
-        // there would stop tracking parent rebinds after the first reload.
-        // Released only in OnDestroy / when the parent reference changes.
+        // Keep parent rebind notifications active across collection cleanup; unsubscribe only on parent replacement or destruction.
         private QuestCollectionHandlerBase? _subscribedParent;
-        // Last known parent id. Updated on reload and on each parent Bound
-        // event; there is no Unbound event, so the last known id persists
-        // until the parent rebinds.
+        // There is no Unbound event, so retain the last parent ID until the next binding.
         private QuestCollectionId _parentId;
-        // Keyed by the non-owning binder view (the same instance the collection
-        // yields when iterated); owning binders arrive through the internal
-        // ItemAdded/ItemRemoved wiring events. Holds only visible (matching)
-        // binders' handlers.
         private readonly Dictionary<IActionableQuestBinder, QuestListItemHandler> _handlers =
             new Dictionary<IActionableQuestBinder, QuestListItemHandler>();
-        // Every binder in the collection — matching or not — keyed by its
-        // non-owning view. RefreshMembership needs the binder to create the
-        // child item when a previously non-matching binder starts matching
-        // (ref value change / parent rebind), so non-matching binders are
-        // retained here. View and owning binder are the same instance.
+        // Retain non-matching binders so a later ref or parent change can create their visible handlers.
         private readonly Dictionary<IActionableQuestBinder, IQuestBinder> _binderByView =
             new Dictionary<IActionableQuestBinder, IQuestBinder>();
-        // Visible (= parent-matching) binders in collection order. Single
-        // source of truth for the public Binders view; the underlying
-        // collection also holds non-matching binders and must not leak.
+        // Expose only matching binders; the backing collection also contains rows outside this parent scope.
         private readonly List<IActionableQuestBinder> _visibleBinders =
             new List<IActionableQuestBinder>();
-        // Persisted across Reload cycles: Comparer set before the first Reload,
-        // or set while the previous collection existed, is reapplied to every
-        // freshly-built collection. The Inspector cannot serialize IComparer, so
-        // the only entry point is the public Comparer setter.
         private IComparer<IReadOnlyQuestBinder>? _comparer;
-        // Re-entrancy guard for Resort(): re-assigning Comparer triggers the
-        // collection's _onChange, which (if subscribed) re-enters
-        // OnCollectionChanged. Without this guard, Resort would recurse.
+        // Suppress collection callbacks while sorting explicitly to avoid duplicate synchronization and notifications.
         private bool _suppressOnChange;
 
-        /// <summary>Stable index/enumeration view of the visible
-        /// (parent-matching) non-owning binder set, in collection order.
-        /// Model.Id is not unique across rows. The underlying collection also
-        /// holds non-matching binders; they are not exposed.</summary>
+        /// <summary>Use visible slot order because model IDs may repeat and the backing collection includes other parents.</summary>
         public IReadOnlyList<IActionableQuestBinder> Binders => _visibleBinders;
 
-        /// <summary>Fires after Reload completes and on each subsequent visible-membership change.</summary>
         public event Action? ListChanged;
 
-        /// <summary>Whether the current collection has finished its initial mount.
-        /// False while a reload is in flight and after one failed.</summary>
+        /// <summary>Loading and a mounted empty list both have zero rows; use this state to distinguish them.</summary>
         public bool IsLoaded => _isLoaded;
 
-        /// <summary>How many rows <see cref="Binders"/> holds.</summary>
         public int Count => Binders.Count;
 
-        /// <summary>Fires once for each binder that becomes visible (initial mount,
-        /// subsequent additions, and non-match → match transitions on ref or parent changes).</summary>
+        /// <summary>Visibility transitions use item events even when the backing collection membership is unchanged.</summary>
         public event Action<IActionableQuestBinder>? ItemAdded;
 
-        /// <summary>Fires once for each binder that stops being visible (removal from
-        /// the collection, and match → non-match transitions on ref or parent changes).</summary>
         public event Action<IActionableQuestBinder>? ItemRemoved;
 
-        /// <summary>Fires when Reload or item-instantiation encounters an exception.</summary>
         public event Action<Exception>? Failed;
 
         /// <summary>
-        /// Comparer extension point — the only programmatic hook for the
-        /// underlying collection's sort key (the Inspector cannot serialize
-        /// <see cref="IComparer{T}"/>). Reading returns the value last
-        /// assigned (or null when never set / cleared).
-        ///
-        /// The setter:
-        ///   - persists the comparer so the next ReloadAsync's collection
-        ///     adopts it (set-before-Reload is honoured);
-        ///   - immediately forwards to the live collection's Comparer when
-        ///     one exists, then synchronizes sibling order and fires
-        ///     <see cref="ListChanged"/> (set-after-Reload works even when
-        ///     <c>autoSubscribe</c> is false);
-        ///   - assigning <c>null</c> reverts to the generated default comparer:
-        ///     the persisted comparer is cleared so subsequent Reloads use the
-        ///     default, and the live collection (if any) is re-sorted with
-        ///     the default comparer immediately.
+        /// The Inspector cannot serialize IComparer. Preserve this override across reloads;
+        /// null restores the generated default for the live collection and future reloads.
         /// </summary>
         public IComparer<IReadOnlyQuestBinder>? Comparer
         {
@@ -165,11 +92,7 @@ namespace GS2Studio.Generated.Quest
                 var operationGeneration = _reloadGeneration;
                 var collection = _collectionInternal;
                 if (collection == null) return;
-                // Collection.Comparer rejects null with ArgumentNullException;
-                // substitute the generated default comparer so external callers
-                // can clear via `Comparer = null`. The comparer is a nested
-                // class on the collection, so its fully-qualified name is
-                // QuestBinderCollection.QuestBinderComparer.
+                // Collection.Comparer rejects null; use its default so callers can clear the handler override.
                 var applied = value ?? QuestBinderCollection.QuestBinderComparer.Default;
                 _suppressOnChange = true;
                 try
@@ -188,9 +111,7 @@ namespace GS2Studio.Generated.Quest
         }
 
         /// <summary>
-        /// Overrides the runtime context provider for tests / programmatic wiring.
-        /// Takes precedence over the scene-resolved provider. Pass null to
-        /// revert to the scene-resolved provider. Applies to the next ReloadAsync.
+        /// Overrides apply on the next reload, so an already mounted collection keeps its runtime context.
         /// </summary>
         public void SetRuntimeProvider(IGs2RuntimeContextProvider? provider)
         {
@@ -198,10 +119,7 @@ namespace GS2Studio.Generated.Quest
         }
 
         /// <summary>
-        /// Overrides the binder factory. Use from tests or programmatic wiring
-        /// to substitute a fake QuestBinderCollection; takes precedence over
-        /// the default factory. Pass null to revert to the default. Applies to
-        /// the next ReloadAsync.
+        /// Factory overrides apply on the next reload; they do not replace a live collection.
         /// </summary>
         public void SetBinderFactory(IQuestBinderFactory? factory)
         {
@@ -212,28 +130,12 @@ namespace GS2Studio.Generated.Quest
             => _binderFactory ?? DefaultQuestBinderFactory.Instance;
 
         /// <summary>
-        /// Overwrites the scope this list reads through and, when the runtime
-        /// and the scope are ready, immediately reloads so the collection
-        /// reflects the new target.
-        ///
-        /// The list counterpart of the Handler's <c>SetKeys</c>. The Inspector
-        /// fields behind these parameters are written when the scene is
-        /// authored, so a scope whose value is decided while the game runs has
-        /// no other way in.
-        ///
-        /// The reload is fire-and-forget (failures surface via the
-        /// <see cref="Failed"/> event + <c>Debug.LogException</c>); await
-        /// <see cref="ReloadAsync"/> directly when completion must be observed.
+        /// Scope values discovered at runtime cannot be fixed in the authored scene. Reload is fire-and-forget;
+        /// await <see cref="ReloadAsync"/> directly when completion must be observed.
         /// </summary>
         public void SetScope(string collection)
         {
-            // Retire any reload still in flight BEFORE the scope changes. When
-            // the gate below says this handler is not ready, nothing here
-            // starts a newer operation to supersede that one, and it would go
-            // on to install a collection built for the previous scope.
-            // Bumping the generation is the whole fix: IsCurrentOperation
-            // compares against it at every step of ReloadAsync, so the
-            // in-flight operation drops itself at its next checkpoint.
+            // Invalidate the old scope even if the new scope is not ready to start a replacement reload.
             _reloadGeneration++;
             _collection = collection;
             if (IsReadyForReload())
@@ -241,20 +143,14 @@ namespace GS2Studio.Generated.Quest
         }
 
         /// <summary>
-        /// Re-runs the underlying collection's sort and refreshes sibling order.
-        /// Call this when a sort key driven by per-item user-data changes
-        /// (the QuestBinderCollection only re-sorts on list-membership
-        /// reconciles; per-binder property updates do not currently trigger it).
+        /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>
         public void Resort()
         {
             var operationGeneration = _reloadGeneration;
             var collection = _collectionInternal;
             if (collection == null) return;
-            // Re-assigning the same Comparer is the only public re-sort hook
-            // on the BinderCollection surface. The setter calls SortBinders
-            // and fires _onChange — guard re-entry via _suppressOnChange so
-            // OnCollectionChanged does not recurse into Resort.
+            // Comparer assignment raises OnCollectionChanged; suppress it so this operation synchronizes and notifies once.
             _suppressOnChange = true;
             try
             {
@@ -270,12 +166,6 @@ namespace GS2Studio.Generated.Quest
             ListChanged?.Invoke();
         }
 
-        /// <summary>
-        /// Tears down any prior collection, resolves the parent handler and its
-        /// bound binder's id, builds a fresh collection, subscribes to add/remove
-        /// events <em>before</em> mounting (so the initial reconcile populates child
-        /// handlers through ItemAdded), then optionally subscribes for ongoing updates.
-        /// </summary>
         public async Task ReloadAsync(CancellationToken cancellationToken = default)
         {
             if (_isDestroyed) return;
@@ -285,8 +175,7 @@ namespace GS2Studio.Generated.Quest
             {
                 Cleanup();
                 if (!IsCurrentOperation(operationGeneration, null)) return;
-                // Cleanup torn down any prior collection; notify so out-of-range
-                // list-item handlers clear before the fresh collection rebuilds.
+                // Notify after teardown so fixed-slot items clear before the new collection is mounted.
                 ListChanged?.Invoke();
                 if (operationGeneration != _reloadGeneration) return;
                 var provider = ResolveRuntimeProvider();
@@ -312,17 +201,13 @@ namespace GS2Studio.Generated.Quest
                 }
                 _collectionInternal = collection;
 
-                // Re-apply a comparer that was set before / between Reloads so
-                // the freshly-built collection adopts it. Done before Mount so
-                // the initial reconcile already produces the sorted order.
+                // Apply the saved comparer before Mount so the initial reconcile already uses the requested order.
                 if (_comparer != null)
                 {
                     collection.Comparer = _comparer;
                 }
 
-                // Subscribe BEFORE Mount: the collection's reconcile invokes
-                // ItemAdded for every initial binder, so child handler creation
-                // happens through OnItemAdded rather than a post-mount foreach.
+                // Mount emits ItemAdded for initial binders, so subscribe first to create their child handlers.
                 AttachCollectionCallbacks(operationGeneration, collection);
 
                 await collection.MountFromQuestQuestMasterDataAsync(cancellationToken);
@@ -344,9 +229,7 @@ namespace GS2Studio.Generated.Quest
             }
             catch (OperationCanceledException)
             {
-                // Cancellation (e.g. GameObject destroyed mid-reload): discard the
-                // partially-built collection and notify so list-item handlers fall
-                // back to empty state, then propagate without raising Failed.
+                // Clear current items on cancellation without reporting an expected lifecycle exit as Failed.
                 if (IsCurrentOperation(operationGeneration, operationCollection))
                 {
                     Cleanup();
@@ -356,10 +239,7 @@ namespace GS2Studio.Generated.Quest
             }
             catch (Exception ex)
             {
-                // Discard the partially-built collection, raise Failed for event
-                // subscribers, and notify so list-item handlers fall back to empty
-                // state. Re-check after each callback-bearing step because either
-                // may synchronously start a newer reload.
+                // Cleanup and event callbacks can start another reload; recheck ownership before each notification.
                 if (IsCurrentOperation(operationGeneration, operationCollection))
                 {
                     Cleanup();
@@ -374,12 +254,8 @@ namespace GS2Studio.Generated.Quest
         }
 
         /// <summary>
-        /// Fire-and-forget variant for Unity lifecycle entry points (Start):
-        /// runs <see cref="ReloadAsync"/>, reports any failure via the Failed
-        /// event (raised inside ReloadAsync) plus <c>Debug.LogException</c>, and
-        /// returns <c>false</c> instead of surfacing the exception to an
-        /// <c>async void</c> caller. Cancellation is rethrown so the caller's
-        /// <see cref="OperationCanceledException"/> handling still runs.
+        /// Log failures instead of letting exceptions escape Unity lifecycle async-void entry points.
+        /// Cancellation still propagates to their cancellation handler.
         /// </summary>
         public async Task<bool> TryReloadAsync(CancellationToken cancellationToken = default)
         {
@@ -402,20 +278,13 @@ namespace GS2Studio.Generated.Quest
         private IGs2RuntimeContextProvider? ResolveRuntimeProvider()
         {
             if (_runtimeOverride != null) return _runtimeOverride;
-            // Scan the entire active scene rather than only the parent
-            // chain — placing the holder under an unrelated root keeps
-            // working without explicit wiring. FindAnyObjectByType skips
-            // sort overhead since only one provider is expected per scene.
+            // Search the active scene so a provider under an unrelated root needs no explicit wiring.
             if (_runtime == null) _runtime = FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
             return _runtime;
         }
 
         private void ResolveParentHandler()
         {
-            // Auto-only: the parent chain is the single resolution source
-            // (the Inspector field is read-only — see the field comment), so
-            // the component works without wiring when placed under (or on) a
-            // QuestCollectionHandlerBase GameObject.
             if (_parentHandler == null)
             {
                 _parentHandler = GetComponentInParent<QuestCollectionHandlerBase>();
@@ -440,11 +309,6 @@ namespace GS2Studio.Generated.Quest
             }
         }
 
-        /// <summary>
-        /// Parent rebind: adopt the new parent id and re-evaluate which binders
-        /// are visible. Visible transitions fire ItemAdded / ItemRemoved through
-        /// RefreshMembership, mirroring an actual collection add/remove.
-        /// </summary>
         private void OnParentBound(IActionableQuestCollectionBinder binder)
         {
             _parentId = binder.Id;
@@ -458,14 +322,7 @@ namespace GS2Studio.Generated.Quest
             ListChanged?.Invoke();
         }
 
-        /// <summary>
-        /// Unity lifecycle: when this handler is placed in a scene, wait for
-        /// the runtime holders to finish initializing, for the parent handler
-        /// to resolve and bind, and for the Inspector-assigned mount keys to be
-        /// populated, then trigger <see cref="ReloadAsync"/>. Skipped when a
-        /// collection has already been built (i.e. <c>ReloadAsync</c> was
-        /// invoked manually).
-        /// </summary>
+        /// <summary>Wait for authored dependencies, but preserve a collection already mounted by an explicit reload.</summary>
         private async void Start()
         {
             var cancellationToken = this.GetCancellationTokenOnDestroy();
@@ -478,7 +335,7 @@ namespace GS2Studio.Generated.Quest
             }
             catch (OperationCanceledException)
             {
-                // GameObject destroyed before initialization completed.
+                // Destruction cancels initialization; no live handler remains to report a failure.
             }
         }
 
@@ -495,8 +352,6 @@ namespace GS2Studio.Generated.Quest
             return true;
         }
 
-        // This expression uses the same equality renderer/lowering as the
-        // WhereCollection match helper on the Collection.
         private bool MatchesParent(IReadOnlyQuestBinder binder)
             => EqualityComparer<QuestCollectionId>.Default.Equals(binder.Collection, _parentId);
 
@@ -527,8 +382,6 @@ namespace GS2Studio.Generated.Quest
             IQuestBinder binder)
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
-            // Retain every binder — matching or not — so a later ref-value or
-            // parent change can promote it to visible with its owning binder.
             _binderByView[binder] = binder;
             if (!MatchesParent(binder)) return;
             if (_visibleBinders.Contains(binder)) return;
@@ -548,13 +401,11 @@ namespace GS2Studio.Generated.Quest
             IQuestBinder binder)
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
-            // Always drop the owning-binder retention — even for binders that
-            // were never visible — so no disposed binder reference lingers.
+            // Release even never-visible binders so removed collection entries cannot remain retained.
             _binderByView.Remove(binder);
             if (!_visibleBinders.Remove(binder)) return;
             DestroyItem(binder);
-            // Compact the surviving items' slot indices (and sibling order)
-            // before notifying, so ListChanged observers see a consistent list.
+            // Synchronize surviving slot indices before notifying observers of the removal.
             if (!IsCurrentOperation(operationGeneration, collection)) return;
             SyncSiblingOrder(operationGeneration, collection);
             if (!IsCurrentOperation(operationGeneration, collection)) return;
@@ -567,8 +418,7 @@ namespace GS2Studio.Generated.Quest
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
             if (_suppressOnChange) return;
-            // A reconcile may have changed per-binder ref values (user data):
-            // re-evaluate visible membership before re-syncing order.
+            // Ref values may change without a membership change, so refresh visibility before synchronizing order.
             RefreshMembership(operationGeneration, collection);
             if (!IsCurrentOperation(operationGeneration, collection)) return;
             SyncSiblingOrder(operationGeneration, collection);
@@ -576,21 +426,12 @@ namespace GS2Studio.Generated.Quest
             ListChanged?.Invoke();
         }
 
-        /// <summary>
-        /// Re-evaluates which binders match the current parent id. Each
-        /// match → non-match transition destroys the child handler and fires
-        /// <see cref="ItemRemoved"/>; each non-match → match transition creates
-        /// the child handler and fires <see cref="ItemAdded"/> — the visible
-        /// list behaves exactly like an add/remove on a plain list handler.
-        /// Ordering is realigned by the SyncSiblingOrder call that always
-        /// follows this method.
-        /// </summary>
         private void RefreshMembership(
             long operationGeneration,
             IQuestBinderCollection collection)
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
-            // match -> non-match: walk backwards so RemoveAt stays stable.
+            // Walk backwards so removing an entry cannot skip the following candidate.
             for (var i = _visibleBinders.Count - 1; i >= 0; i--)
             {
                 var binder = _visibleBinders[i];
@@ -601,8 +442,7 @@ namespace GS2Studio.Generated.Quest
                 ItemRemoved?.Invoke(binder);
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
             }
-            // non-match -> match: walk the collection so additions follow its
-            // (comparer-applied) order.
+            // Follow collection order so newly visible items inherit its comparer order.
             for (var i = 0; i < collection.Count; i++)
             {
                 var view = collection[i];
@@ -621,10 +461,7 @@ namespace GS2Studio.Generated.Quest
         }
 
         /// <summary>
-        /// Routes a re-sync error from the collection's subscription back to the
-        /// handler's <see cref="Failed"/> event (and Debug log), so a consumer
-        /// observing the handler sees background reconcile failures instead of
-        /// them being silently swallowed inside the collection's async callback.
+        /// Forward background reconcile failures so handler consumers can observe subscription errors.
         /// </summary>
         private void OnCollectionFailed(
             long operationGeneration,
@@ -648,11 +485,6 @@ namespace GS2Studio.Generated.Quest
                 return;
             }
             var handler = Instantiate(_itemPrefab, _contentParent);
-            // The item reads Binders[Index] from this list; no per-item keys or
-            // binder ownership are forwarded. Per-binder updates reach the item
-            // through the collection subscription → OnCollectionChanged →
-            // ListChanged → item re-evaluation. Note this means every item
-            // re-raises Updated on each membership change as well.
             if (!IsCurrentOperation(operationGeneration, collection))
             {
                 handler.gameObject.SetActive(false);
@@ -662,9 +494,7 @@ namespace GS2Studio.Generated.Quest
             handler.AttachTo(this, IndexOf(binder));
             if (!IsCurrentOperation(operationGeneration, collection))
             {
-                // AttachTo can synchronously invoke generated-handler events.
-                // If one starts a newer reload, this unregistered instance is
-                // still owned by the stale operation and must be discarded here.
+                // AttachTo can start a newer reload through an event; discard the instance still owned by this stale operation.
                 handler.Detach();
                 handler.gameObject.SetActive(false);
                 Destroy(handler.gameObject);
@@ -689,12 +519,7 @@ namespace GS2Studio.Generated.Quest
                 _handlers.Remove(binder);
                 if (handler != null)
                 {
-                    // Detach BEFORE Destroy: Destroy is deferred to end of
-                    // frame, so a still-subscribed item would re-evaluate
-                    // against the shifted Binders[index] (a different binder)
-                    // on the next ListChanged. Deactivate the root as well —
-                    // `_content` is optional for instantiated items, so hiding
-                    // must not depend on it.
+                    // Destroy is deferred; detach before indices shift and hide the root because instantiated items may have no _content.
                     handler.Detach();
                     handler.gameObject.SetActive(false);
                     Destroy(handler.gameObject);
@@ -707,11 +532,7 @@ namespace GS2Studio.Generated.Quest
             IQuestBinderCollection collection)
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
-            // Realign the visible list to the collection's (comparer-applied)
-            // order — membership is unchanged, only the order is rebuilt — and
-            // assign contiguous sibling indices to the visible handlers. The
-            // collection index cannot be used directly: non-matching binders
-            // occupy collection slots but no GameObject.
+            // Non-matching rows have no GameObject, so visible sibling indices cannot use the backing collection index.
             var visibleSet = new HashSet<IActionableQuestBinder>(_visibleBinders);
             _visibleBinders.Clear();
             var slot = 0;
@@ -721,18 +542,14 @@ namespace GS2Studio.Generated.Quest
                 var binder = collection[i];
                 if (!visibleSet.Contains(binder)) continue;
                 _visibleBinders.Add(binder);
-                // The item's slot index is its position in the visible list
-                // (the Binders view) — distinct from the GameObject sibling
-                // slot, which only counts handler-bearing entries.
+                // The Binders slot counts every visible entry; the sibling slot counts only entries with handlers.
                 var visibleIndex = _visibleBinders.Count - 1;
                 if (_handlers.TryGetValue(binder, out var handler) && handler != null)
                 {
                     handler.transform.SetSiblingIndex(slot);
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
                     slot++;
-                    // The Index setter re-evaluates immediately; assign only on
-                    // change to avoid redundant re-binds. Safe mid-rebuild:
-                    // _visibleBinders[visibleIndex] is already this binder.
+                    // Avoid redundant binding events; the visible slot already holds this binder when Index re-evaluates.
                     if (handler.Index != visibleIndex) handler.Index = visibleIndex;
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
                 }
@@ -741,9 +558,7 @@ namespace GS2Studio.Generated.Quest
 
         private void Cleanup()
         {
-            // Detach shared state before any Dispose / Detach call can invoke
-            // user code and synchronously start another reload. The remainder
-            // of this method owns only its local snapshot.
+            // Clear shared state before Dispose or Detach can start another reload; cleanup then owns only its local snapshot.
             _isLoaded = false;
             var collection = _collectionInternal;
             var itemAddedCallback = _collectionItemAddedCallback;
@@ -768,15 +583,12 @@ namespace GS2Studio.Generated.Quest
             {
                 if (handler != null)
                 {
-                    // Same deferred-destroy hardening as DestroyItem.
+                    // Detach and hide now because Destroy runs at the end of the frame.
                     handler.Detach();
                     handler.gameObject.SetActive(false);
                     Destroy(handler.gameObject);
                 }
             }
-            // The parent Bound subscription is intentionally NOT released here:
-            // ReloadAsync calls Cleanup() on entry, and dropping it would stop
-            // tracking parent rebinds after the first reload. See OnDestroy.
         }
 
         private void OnDestroy()

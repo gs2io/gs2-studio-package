@@ -21,14 +21,7 @@ using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.LoginRewardCollection
 {
-    /// <summary>
-    /// Construction seam for <see cref="LoginRewardCollectionBinder"/> and
-    /// <see cref="LoginRewardCollectionBinderCollection"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder / collection in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface ILoginRewardCollectionBinderFactory
     {
         Task<ILoginRewardCollectionBinder> CreateAsync(
@@ -39,11 +32,6 @@ namespace GS2Studio.Generated.LoginRewardCollection
         ILoginRewardCollectionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
-    /// <summary>
-    /// Default <see cref="ILoginRewardCollectionBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultLoginRewardCollectionBinderFactory : ILoginRewardCollectionBinderFactory
     {
         public static readonly DefaultLoginRewardCollectionBinderFactory Instance = new DefaultLoginRewardCollectionBinderFactory();

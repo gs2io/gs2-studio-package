@@ -16,14 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Character.UI
 {
     /// <summary>
-    /// UI label bound to the template
-    /// <c>{level}/{levelCap}</c>. Each <c>{key}</c> placeholder is
-    /// substituted with the resolved value from <c>Character</c>
-    /// on every Handler <c>Updated</c> event and the rendered string is
-    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
-    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
-    /// TextMeshPro, or custom logic — so this component stays agnostic to
-    /// the rendering target.
+    /// UnityEvent output lets formatted templates drive different text-rendering targets without generator-specific adapters.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Character/TemplateLabel/LevelLabel")]
     public sealed class CharacterLevelLabel : MonoBehaviour
@@ -34,13 +27,7 @@ namespace GS2Studio.Generated.Character.UI
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
-        /// <summary>
-        /// Loads this component's readings come from. A row built by a mount
-        /// surface that skips one of these renders those readings as their
-        /// default; the surface says which loaders it skips through
-        /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
-        /// compared before a scene is ever run.
-        /// </summary>
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
         public static readonly string[] RequiredLoaders = { "UserdataExperienceCharacterExperienceExperienceModel" };
 
         private bool _subscribed;
@@ -52,8 +39,6 @@ namespace GS2Studio.Generated.Character.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;
@@ -90,10 +75,7 @@ namespace GS2Studio.Generated.Character.UI
             _onUpdate.Invoke($"{model.Level}/{model.LevelCap}");
         }
 
-        // Warn once and keep drawing. The readings below are at their default
-        // either way, and going silent would blank a label that mixes loaded
-        // and unloaded readings — the point here is to say which of the two it
-        // is, not to change what is drawn.
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
         private void WarnUnloadedLoadersOnce()
         {
             if (_warnedUnloadedLoaders) return;

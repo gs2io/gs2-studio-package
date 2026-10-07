@@ -19,13 +19,7 @@ using Gs2Bind.Gs2Exchange;
 
 namespace GS2Studio.Generated.AdViewPoint
 {
-    /// <summary>
-    /// Construction seam for <see cref="AdViewPointBinder"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IAdViewPointBinderFactory
     {
         Task<IAdViewPointBinder> CreateAsync(
@@ -35,11 +29,6 @@ namespace GS2Studio.Generated.AdViewPoint
             CancellationToken cancellationToken = default);
     }
 
-    /// <summary>
-    /// Default <see cref="IAdViewPointBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultAdViewPointBinderFactory : IAdViewPointBinderFactory
     {
         public static readonly DefaultAdViewPointBinderFactory Instance = new DefaultAdViewPointBinderFactory();

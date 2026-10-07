@@ -16,20 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Character.UI
 {
     /// <summary>
-    /// Drives <c>UnityEngine.UI.Selectable.interactable</c> on two Selectable
-    /// groups based on the condition <c>eq(level, levelCap)</c>
-    /// evaluated against the sibling <c>CharacterHandler.Model</c>:
-    /// <list type="bullet">
-    ///   <item><c>_interactableWhenTrue</c> — enabled when the condition holds, disabled otherwise.</item>
-    ///   <item><c>_interactableWhenFalse</c> — the mirror group; enabled when the condition does not hold.</item>
-    /// </list>
-    /// Either array may be left empty if only one branch needs targets.
-    /// Subscribes to the handler's <c>Updated</c> event so the interactable
-    /// state refreshes on every model change.
-    ///
-    /// Targets must reference Buttons / Toggles / Sliders / etc. in the
-    /// scene. Null entries inside either array are skipped so a partially
-    /// wired Inspector slot does not crash the apply loop.
+    /// Separate target groups allow inverse conditions without changing GameObject lifetime or handler subscriptions.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Character/Interactable/LevelInteractable")]
     public sealed class CharacterLevelInteractable : MonoBehaviour
@@ -39,13 +26,7 @@ namespace GS2Studio.Generated.Character.UI
         [SerializeField] private Selectable[] _interactableWhenTrue = System.Array.Empty<Selectable>();
         [SerializeField] private Selectable[] _interactableWhenFalse = System.Array.Empty<Selectable>();
 
-        /// <summary>
-        /// Loads this component's readings come from. A row built by a mount
-        /// surface that skips one of these renders those readings as their
-        /// default; the surface says which loaders it skips through
-        /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
-        /// compared before a scene is ever run.
-        /// </summary>
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
         public static readonly string[] RequiredLoaders = { "UserdataExperienceCharacterExperienceExperienceModel" };
 
         private bool _subscribed;
@@ -57,8 +38,6 @@ namespace GS2Studio.Generated.Character.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;
@@ -97,10 +76,7 @@ namespace GS2Studio.Generated.Character.UI
             ApplyInteractableState(_interactableWhenFalse, !result);
         }
 
-        // Warn once and keep drawing. The readings below are at their default
-        // either way, and going silent would blank a label that mixes loaded
-        // and unloaded readings — the point here is to say which of the two it
-        // is, not to change what is drawn.
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
         private void WarnUnloadedLoadersOnce()
         {
             if (_warnedUnloadedLoaders) return;

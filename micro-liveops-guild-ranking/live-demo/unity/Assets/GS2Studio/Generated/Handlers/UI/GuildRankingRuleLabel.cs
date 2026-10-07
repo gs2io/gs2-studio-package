@@ -16,14 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.GuildRanking.UI
 {
     /// <summary>
-    /// UI label bound to the template
-    /// <c>You are ranked within your guild, not guild against guild. Each play adds 1 to 100 points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: 1st 300, 2nd-3rd 150, 4th-10th 50. Advance one day ends the season for you right away; guildmates who did not advance are still in it.</c>. Each <c>{key}</c> placeholder is
-    /// substituted with the resolved value from <c>GuildRanking</c>
-    /// on every Handler <c>Updated</c> event and the rendered string is
-    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
-    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
-    /// TextMeshPro, or custom logic — so this component stays agnostic to
-    /// the rendering target.
+    /// UnityEvent output lets formatted templates drive different text-rendering targets without generator-specific adapters.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/GuildRanking/TemplateLabel/RuleLabel")]
     public sealed class GuildRankingRuleLabel : MonoBehaviour
@@ -42,8 +35,6 @@ namespace GS2Studio.Generated.GuildRanking.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

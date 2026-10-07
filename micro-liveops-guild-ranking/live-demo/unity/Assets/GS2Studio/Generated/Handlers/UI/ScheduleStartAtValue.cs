@@ -16,24 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Schedule.UI
 {
     /// <summary>
-    /// UI value bound to <c>Schedule.startAt</c>.
-    /// Subscribes to the sibling <c>ScheduleHandler.Updated</c> event
-    /// and publishes the resolved <c>DateTime</c> value through
-    /// <c>OnUpdate</c> on every model update — unlike a label, the native
-    /// typed value is delivered (not a stringified form), so localization /
-    /// formatting consumers receive the raw value. Wire <c>OnUpdate</c> in
-    /// code to any <c>UnityEvent&lt;DateTime&gt;</c> listener. Add this
-    /// component alongside (or under) a <c>ScheduleHandler</c> or
-    /// <c>ScheduleListItemHandler</c>; the handler is resolved
-    /// automatically via <c>GetComponentInParent&lt;&gt;</c> when no Inspector
-    /// reference is supplied.
-    ///
-    /// The component is also bidirectional: callers invoke <c>Select(value)</c>
-    /// to relay a value out through the write-side <c>OnSelect</c> event,
-    /// the counterpart of the read-side <c>OnUpdate</c> projection. This lets
-    /// an external source (dropdown, input field, custom code) push a selected
-    /// value to any wired consumer; the component itself neither interprets nor
-    /// persists it.
+    /// Native typed events leave formatting and persistence to consumers of the read and selection channels.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Schedule/Value/StartAtValue")]
     public sealed class ScheduleStartAtValue : MonoBehaviour
@@ -54,8 +37,6 @@ namespace GS2Studio.Generated.Schedule.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;
@@ -91,13 +72,7 @@ namespace GS2Studio.Generated.Schedule.UI
             _onUpdate.Invoke(model.StartAt.GetValueOrDefault());
         }
 
-        /// <summary>
-        /// Relays <paramref name="value"/> out to any listener wired to
-        /// <c>OnSelect</c> — the write-side counterpart of the read-side
-        /// <c>OnUpdate</c> projection. The component neither interprets nor
-        /// persists the value; reflecting it to an external source is the
-        /// responsibility of the Inspector / code-wired <c>OnSelect</c> consumer.
-        /// </summary>
+        /// <summary>Selection consumers own persistence; publishing a choice does not mutate the displayed model.</summary>
         public void Select(DateTime value)
         {
             _onSelect.Invoke(value);

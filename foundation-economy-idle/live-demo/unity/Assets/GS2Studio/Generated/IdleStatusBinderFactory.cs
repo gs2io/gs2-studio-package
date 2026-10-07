@@ -16,13 +16,7 @@ using Gs2Bind.Gs2Idle;
 
 namespace GS2Studio.Generated.IdleStatus
 {
-    /// <summary>
-    /// Construction seam for <see cref="IdleStatusBinder"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IIdleStatusBinderFactory
     {
         Task<IIdleStatusBinder> CreateAsync(
@@ -32,11 +26,6 @@ namespace GS2Studio.Generated.IdleStatus
             CancellationToken cancellationToken = default);
     }
 
-    /// <summary>
-    /// Default <see cref="IIdleStatusBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultIdleStatusBinderFactory : IIdleStatusBinderFactory
     {
         public static readonly DefaultIdleStatusBinderFactory Instance = new DefaultIdleStatusBinderFactory();

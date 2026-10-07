@@ -28,108 +28,54 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Character
 {
-    /// <summary>
-    /// MonoBehaviour list handler for Character. Owns a
-    /// CharacterBinderCollection, instantiates a child CharacterListItemHandler
-    /// per item, and keeps the GameObject sibling order and each item's slot
-    /// index in sync with the collection's binder order. Implements
-    /// ICharacterBinderListSource so items read Binders[Index] through the
-    /// shared parent-list surface.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Character/Character List Handler")]
     public sealed class CharacterListHandler : MonoBehaviour, ICharacterBinderListSource, IGs2ListState
     {
-        // Which of CharacterBinderCollection's mount axes this list reads
-        // through. The enum is a sibling type rather than a member of this
-        // class so the ListBy*Handlers name the same axes, not copies of them.
+        // Share the collection axis enum so plain and ref-scoped handlers cannot diverge on axis names.
         [SerializeField] private CharacterListAxis _axis;
         [SerializeField] private string? _propertyId;
         [SerializeField] private CharacterListItemHandler? _itemPrefab;
         [SerializeField] private Transform? _contentParent;
         [SerializeField] private bool _autoSubscribe = true;
-        // Hidden from the Inspector and not serialized. Resolved lazily by
-        // searching the entire active scene so the ListHandler does not have
-        // to sit under a Gs2HolderRuntimeContextProvider parent.
         private Gs2HolderRuntimeContextProvider? _runtime;
 
-        // Non-serialized override for tests / programmatic wiring. Takes
-        // precedence over `_runtime` when set via SetRuntimeProvider.
         private IGs2RuntimeContextProvider? _runtimeOverride;
 
-        // Construction seam. Defaults to DefaultCharacterBinderFactory.Instance;
-        // override via SetBinderFactory to substitute a fake collection.
         private ICharacterBinderFactory? _binderFactory;
 
         private ICharacterBinderCollection? _collection;
-        // ReloadAsync binds every collection callback to the operation and
-        // collection that created it. This prevents a stale mount / callback
-        // from mutating the collection installed by a newer reload.
+        // Bind callbacks to their reload generation so a stale operation cannot mutate its replacement.
         private long _reloadGeneration;
-        // True once a reload has mounted its collection, false from the start
-        // of the next reload (Cleanup) until that one mounts. Lets a consumer
-        // tell "still loading" from "loaded and empty" — ListChanged fires in
-        // both states.
         private bool _isLoaded;
         private Action<ICharacterBinder>? _collectionItemAddedCallback;
         private Action<ICharacterBinder>? _collectionItemRemovedCallback;
         private bool _isDestroyed;
-        // Keyed by the non-owning binder view (the same instance the collection
-        // yields when iterated / via SyncSiblingOrder); owning binders arrive
-        // through the internal ItemAdded/ItemRemoved wiring events.
         private readonly Dictionary<IActionableCharacterBinder, CharacterListItemHandler> _handlers =
             new Dictionary<IActionableCharacterBinder, CharacterListItemHandler>();
-        // Persisted across Reload cycles: Comparer set before the first Reload,
-        // or set while the previous collection existed, is reapplied to every
-        // freshly-built collection. The Inspector cannot serialize IComparer, so
-        // the only entry point is the public Comparer setter.
         private IComparer<IReadOnlyCharacterBinder>? _comparer;
-        // Re-entrancy guard for Resort(): re-assigning Comparer triggers the
-        // collection's _onChange, which (if subscribed) re-enters
-        // OnCollectionChanged. Without this guard, Resort would recurse.
+        // Suppress collection callbacks while sorting explicitly to avoid duplicate synchronization and notifications.
         private bool _suppressOnChange;
 
-        /// <summary>Stable index/enumeration view of the current non-owning
-        /// binder set. Model.Id is not unique across rows; the collection
-        /// itself is the IReadOnlyList&lt;IActionableCharacterBinder&gt;.</summary>
+        /// <summary>Expose ordered binder references because model IDs may repeat across rows.</summary>
         public IReadOnlyList<IActionableCharacterBinder> Binders =>
             (IReadOnlyList<IActionableCharacterBinder>?)_collection ?? Array.Empty<IActionableCharacterBinder>();
 
-        /// <summary>Fires after Reload completes and on each subsequent membership change.</summary>
         public event Action? ListChanged;
 
-        /// <summary>Whether the current collection has finished its initial mount.
-        /// False while a reload is in flight and after one failed.</summary>
+        /// <summary>Loading and a mounted empty list both have zero rows; use this state to distinguish them.</summary>
         public bool IsLoaded => _isLoaded;
 
-        /// <summary>How many rows <see cref="Binders"/> holds.</summary>
         public int Count => Binders.Count;
 
-        /// <summary>Fires once for each binder added (initial mount + subsequent additions).</summary>
         public event Action<IActionableCharacterBinder>? ItemAdded;
 
-        /// <summary>Fires once for each binder removed.</summary>
         public event Action<IActionableCharacterBinder>? ItemRemoved;
 
-        /// <summary>Fires when Reload or item-instantiation encounters an exception.</summary>
         public event Action<Exception>? Failed;
 
         /// <summary>
-        /// Comparer extension point — the only programmatic hook for the
-        /// underlying collection's sort key (the Inspector cannot serialize
-        /// <see cref="IComparer{T}"/>). Reading returns the value last
-        /// assigned (or null when never set / cleared).
-        ///
-        /// The setter:
-        ///   - persists the comparer so the next ReloadAsync's collection
-        ///     adopts it (set-before-Reload is honoured);
-        ///   - immediately forwards to the live collection's Comparer when
-        ///     one exists, then synchronizes sibling order and fires
-        ///     <see cref="ListChanged"/> (set-after-Reload works even when
-        ///     <c>autoSubscribe</c> is false);
-        ///   - assigning <c>null</c> reverts to the generated default comparer:
-        ///     the persisted comparer is cleared so subsequent Reloads use the
-        ///     default, and the live collection (if any) is re-sorted with
-        ///     the default comparer immediately.
+        /// The Inspector cannot serialize IComparer. Preserve this override across reloads;
+        /// null restores the generated default for the live collection and future reloads.
         /// </summary>
         public IComparer<IReadOnlyCharacterBinder>? Comparer
         {
@@ -140,11 +86,7 @@ namespace GS2Studio.Generated.Character
                 var operationGeneration = _reloadGeneration;
                 var collection = _collection;
                 if (collection == null) return;
-                // Collection.Comparer rejects null with ArgumentNullException;
-                // substitute the generated default comparer so external callers
-                // can clear via `Comparer = null`. The comparer is a nested
-                // class on the collection, so its fully-qualified name is
-                // CharacterBinderCollection.CharacterBinderComparer.
+                // Collection.Comparer rejects null; use its default so callers can clear the handler override.
                 var applied = value ?? CharacterBinderCollection.CharacterBinderComparer.Default;
                 _suppressOnChange = true;
                 try
@@ -163,9 +105,7 @@ namespace GS2Studio.Generated.Character
         }
 
         /// <summary>
-        /// Overrides the runtime context provider for tests / programmatic wiring.
-        /// Takes precedence over the scene-resolved provider. Pass null to
-        /// revert to the scene-resolved provider. Applies to the next ReloadAsync.
+        /// Overrides apply on the next reload, so an already mounted collection keeps its runtime context.
         /// </summary>
         public void SetRuntimeProvider(IGs2RuntimeContextProvider? provider)
         {
@@ -173,10 +113,7 @@ namespace GS2Studio.Generated.Character
         }
 
         /// <summary>
-        /// Overrides the binder factory. Use from tests or programmatic wiring
-        /// to substitute a fake CharacterBinderCollection; takes precedence over
-        /// the default factory. Pass null to revert to the default. Applies to
-        /// the next ReloadAsync.
+        /// Factory overrides apply on the next reload; they do not replace a live collection.
         /// </summary>
         public void SetBinderFactory(ICharacterBinderFactory? factory)
         {
@@ -187,28 +124,12 @@ namespace GS2Studio.Generated.Character
             => _binderFactory ?? DefaultCharacterBinderFactory.Instance;
 
         /// <summary>
-        /// Overwrites the scope this list reads through and, when the runtime
-        /// and the scope are ready, immediately reloads so the collection
-        /// reflects the new target.
-        ///
-        /// The list counterpart of the Handler's <c>SetKeys</c>. The Inspector
-        /// fields behind these parameters are written when the scene is
-        /// authored, so a scope whose value is decided while the game runs has
-        /// no other way in.
-        ///
-        /// The reload is fire-and-forget (failures surface via the
-        /// <see cref="Failed"/> event + <c>Debug.LogException</c>); await
-        /// <see cref="ReloadAsync"/> directly when completion must be observed.
+        /// Scope values discovered at runtime cannot be fixed in the authored scene. Reload is fire-and-forget;
+        /// await <see cref="ReloadAsync"/> directly when completion must be observed.
         /// </summary>
         public void SetScope(string propertyId)
         {
-            // Retire any reload still in flight BEFORE the scope changes. When
-            // the gate below says this handler is not ready, nothing here
-            // starts a newer operation to supersede that one, and it would go
-            // on to install a collection built for the previous scope.
-            // Bumping the generation is the whole fix: IsCurrentOperation
-            // compares against it at every step of ReloadAsync, so the
-            // in-flight operation drops itself at its next checkpoint.
+            // Invalidate the old scope even if the new scope is not ready to start a replacement reload.
             _reloadGeneration++;
             _propertyId = propertyId;
             if (IsReadyForReload())
@@ -216,20 +137,14 @@ namespace GS2Studio.Generated.Character
         }
 
         /// <summary>
-        /// Re-runs the underlying collection's sort and refreshes sibling order.
-        /// Call this when a sort key driven by per-item user-data changes
-        /// (the CharacterBinderCollection only re-sorts on list-membership
-        /// reconciles; per-binder property updates do not currently trigger it).
+        /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>
         public void Resort()
         {
             var operationGeneration = _reloadGeneration;
             var collection = _collection;
             if (collection == null) return;
-            // Re-assigning the same Comparer is the only public re-sort hook
-            // on the BinderCollection surface. The setter calls SortBinders
-            // and fires _onChange — guard re-entry via _suppressOnChange so
-            // OnCollectionChanged does not recurse into Resort.
+            // Comparer assignment raises OnCollectionChanged; suppress it so this operation synchronizes and notifies once.
             _suppressOnChange = true;
             try
             {
@@ -245,11 +160,6 @@ namespace GS2Studio.Generated.Character
             ListChanged?.Invoke();
         }
 
-        /// <summary>
-        /// Tears down any prior collection, builds a fresh one, subscribes to add/remove
-        /// events <em>before</em> mounting (so the initial reconcile populates child handlers
-        /// through ItemAdded), then optionally subscribes for ongoing updates.
-        /// </summary>
         public async Task ReloadAsync(CancellationToken cancellationToken = default)
         {
             if (_isDestroyed) return;
@@ -259,8 +169,7 @@ namespace GS2Studio.Generated.Character
             {
                 Cleanup();
                 if (!IsCurrentOperation(operationGeneration, null)) return;
-                // Cleanup torn down any prior collection; notify so out-of-range
-                // list-item handlers clear before the fresh collection rebuilds.
+                // Notify after teardown so fixed-slot items clear before the new collection is mounted.
                 ListChanged?.Invoke();
                 if (operationGeneration != _reloadGeneration) return;
                 var provider = ResolveRuntimeProvider();
@@ -281,22 +190,16 @@ namespace GS2Studio.Generated.Character
                 }
                 _collection = collection;
 
-                // Re-apply a comparer that was set before / between Reloads so
-                // the freshly-built collection adopts it. Done before Mount so
-                // the initial reconcile already produces the sorted order.
+                // Apply the saved comparer before Mount so the initial reconcile already uses the requested order.
                 if (_comparer != null)
                 {
                     collection.Comparer = _comparer;
                 }
 
-                // Subscribe BEFORE Mount: the collection's reconcile invokes
-                // ItemAdded for every initial binder, so child handler creation
-                // happens through OnItemAdded rather than a post-mount foreach.
+                // Mount emits ItemAdded for initial binders, so subscribe first to create their child handlers.
                 AttachCollectionCallbacks(operationGeneration, collection);
 
-                // No default arm: UnusableAxisReason already rejected Unset and
-                // every value this package no longer declares, so one case
-                // matches.
+                // UnusableAxisReason rejects unset and obsolete values before this switch, so no default axis is needed.
                 switch (_axis)
                 {
                     case CharacterListAxis.InventoryCharacterMaster:
@@ -356,9 +259,7 @@ namespace GS2Studio.Generated.Character
             }
             catch (OperationCanceledException)
             {
-                // Cancellation (e.g. GameObject destroyed mid-reload): discard the
-                // partially-built collection and notify so list-item handlers fall
-                // back to empty state, then propagate without raising Failed.
+                // Clear current items on cancellation without reporting an expected lifecycle exit as Failed.
                 if (IsCurrentOperation(operationGeneration, operationCollection))
                 {
                     Cleanup();
@@ -368,10 +269,7 @@ namespace GS2Studio.Generated.Character
             }
             catch (Exception ex)
             {
-                // Discard the partially-built collection, raise Failed for event
-                // subscribers, and notify so list-item handlers fall back to empty
-                // state. Re-check after each callback-bearing step because either
-                // may synchronously start a newer reload.
+                // Cleanup and event callbacks can start another reload; recheck ownership before each notification.
                 if (IsCurrentOperation(operationGeneration, operationCollection))
                 {
                     Cleanup();
@@ -386,12 +284,8 @@ namespace GS2Studio.Generated.Character
         }
 
         /// <summary>
-        /// Fire-and-forget variant for Unity lifecycle entry points (Start):
-        /// runs <see cref="ReloadAsync"/>, reports any failure via the Failed
-        /// event (raised inside ReloadAsync) plus <c>Debug.LogException</c>, and
-        /// returns <c>false</c> instead of surfacing the exception to an
-        /// <c>async void</c> caller. Cancellation is rethrown so the caller's
-        /// <see cref="OperationCanceledException"/> handling still runs.
+        /// Log failures instead of letting exceptions escape Unity lifecycle async-void entry points.
+        /// Cancellation still propagates to their cancellation handler.
         /// </summary>
         public async Task<bool> TryReloadAsync(CancellationToken cancellationToken = default)
         {
@@ -414,21 +308,12 @@ namespace GS2Studio.Generated.Character
         private IGs2RuntimeContextProvider? ResolveRuntimeProvider()
         {
             if (_runtimeOverride != null) return _runtimeOverride;
-            // Scan the entire active scene rather than only the parent
-            // chain — placing the holder under an unrelated root keeps
-            // working without explicit wiring. FindAnyObjectByType skips
-            // sort overhead since only one provider is expected per scene.
+            // Search the active scene so a provider under an unrelated root needs no explicit wiring.
             if (_runtime == null) _runtime = FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
             return _runtime;
         }
 
-        /// <summary>
-        /// Unity lifecycle: when this ListHandler is placed in a scene, wait for
-        /// the runtime holders to finish initializing and for the
-        /// Inspector-assigned identity / mount keys to be populated, then
-        /// trigger <see cref="ReloadAsync"/>. Skipped when a collection has
-        /// already been built (i.e. <c>ReloadAsync</c> was invoked manually).
-        /// </summary>
+        /// <summary>Wait for authored dependencies, but preserve a collection already mounted by an explicit reload.</summary>
         private async void Start()
         {
             var cancellationToken = this.GetCancellationTokenOnDestroy();
@@ -441,24 +326,17 @@ namespace GS2Studio.Generated.Character
             }
             catch (OperationCanceledException)
             {
-                // GameObject destroyed before initialization completed.
+                // Destruction cancels initialization; no live handler remains to report a failure.
             }
         }
 
-        // Every axis this list can be pointed at, for the messages below.
         private const string AxisMemberNames = "InventoryCharacterMaster, ExchangeCharacterTrainMaster, DictionaryCharacterDictionaryMaster, ExchangeCharacterDexRecruitMaster, InventoryCharacterUser, DictionaryCharacterDictionaryUser";
 
-        // Warn-once latch for the axis check in IsReadyForReload. Start polls
-        // that check every frame until it passes, so without the latch the log
-        // would repeat for as long as the scene runs.
+        // Readiness is polled each frame; latch invalid-axis warnings to avoid repeating the same error.
         private bool _warnedAxis;
 
         /// <summary>
-        /// Why <c>_axis</c> is not an axis this list can mount, or null when
-        /// it is one. The readiness gate logs this once and keeps waiting;
-        /// <see cref="ReloadAsync"/> throws it. Neither falls back to an axis of
-        /// its own choosing — a list quietly reading a GS2 model nobody asked
-        /// for is the failure the axis enum exists to remove.
+        /// Reject an unset or obsolete axis rather than silently reading a different GS2 model.
         /// </summary>
         private string? UnusableAxisReason()
         {
@@ -491,9 +369,7 @@ namespace GS2Studio.Generated.Character
                 }
                 return false;
             }
-            // Gate on the selected axis only. The [SerializeField] declarations
-            // are merged across every axis, so gating on all of them would wait
-            // forever on a value the axis this list mounts never reads.
+            // Fields from other axes may never be set; waiting on them would block a valid selected axis.
             switch (_axis)
             {
                 case CharacterListAxis.InventoryCharacterMaster:
@@ -560,19 +436,13 @@ namespace GS2Studio.Generated.Character
                 _handlers.Remove(binder);
                 if (handler != null)
                 {
-                    // Detach BEFORE Destroy: Destroy is deferred to end of
-                    // frame, so a still-subscribed item would re-evaluate
-                    // against the shifted Binders[index] (a different binder)
-                    // on the ListChanged below. Deactivate the root as well —
-                    // `_content` is optional for instantiated items, so hiding
-                    // must not depend on it.
+                    // Destroy is deferred; detach before indices shift and hide the root because instantiated items may have no _content.
                     handler.Detach();
                     handler.gameObject.SetActive(false);
                     Destroy(handler.gameObject);
                 }
             }
-            // Compact the surviving items' slot indices (and sibling order)
-            // before notifying, so ListChanged observers see a consistent list.
+            // Synchronize surviving slot indices before notifying observers of the removal.
             if (!IsCurrentOperation(operationGeneration, collection)) return;
             SyncSiblingOrder(operationGeneration, collection);
             if (!IsCurrentOperation(operationGeneration, collection)) return;
@@ -591,10 +461,7 @@ namespace GS2Studio.Generated.Character
         }
 
         /// <summary>
-        /// Routes a re-sync error from the collection's subscription back to the
-        /// handler's <see cref="Failed"/> event (and Debug log), so a consumer
-        /// observing the handler sees background reconcile failures instead of
-        /// them being silently swallowed inside the collection's async callback.
+        /// Forward background reconcile failures so handler consumers can observe subscription errors.
         /// </summary>
         private void OnCollectionFailed(
             long operationGeneration,
@@ -618,11 +485,6 @@ namespace GS2Studio.Generated.Character
                 return;
             }
             var handler = Instantiate(_itemPrefab, _contentParent);
-            // The item reads Binders[Index] from this list; no per-item keys or
-            // binder ownership are forwarded. Per-binder updates reach the item
-            // through the collection subscription → OnCollectionChanged →
-            // ListChanged → item re-evaluation. Note this means every item
-            // re-raises Updated on each membership change as well.
             if (!IsCurrentOperation(operationGeneration, collection))
             {
                 handler.gameObject.SetActive(false);
@@ -632,9 +494,7 @@ namespace GS2Studio.Generated.Character
             handler.AttachTo(this, IndexOf(binder));
             if (!IsCurrentOperation(operationGeneration, collection))
             {
-                // AttachTo can synchronously invoke generated-handler events.
-                // If one starts a newer reload, this unregistered instance is
-                // still owned by the stale operation and must be discarded here.
+                // AttachTo can start a newer reload through an event; discard the instance still owned by this stale operation.
                 handler.Detach();
                 handler.gameObject.SetActive(false);
                 Destroy(handler.gameObject);
@@ -658,8 +518,6 @@ namespace GS2Studio.Generated.Character
             ICharacterBinderCollection collection)
         {
             if (!IsCurrentOperation(operationGeneration, collection)) return;
-            // The collection is the IReadOnlyList<IActionableCharacterBinder>; index it
-            // directly. `_handlers` is keyed by the same non-owning view.
             for (var i = 0; i < collection.Count; i++)
             {
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
@@ -668,8 +526,7 @@ namespace GS2Studio.Generated.Character
                 {
                     handler.transform.SetSiblingIndex(i);
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
-                    // The Index setter re-evaluates immediately; assign only on
-                    // change to avoid redundant re-binds.
+                    // The Index setter re-evaluates immediately; skip unchanged values to avoid redundant binding events.
                     if (handler.Index != i) handler.Index = i;
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
                 }
@@ -678,9 +535,7 @@ namespace GS2Studio.Generated.Character
 
         private void Cleanup()
         {
-            // Detach shared state before any Dispose / Detach call can invoke
-            // user code and synchronously start another reload. The remainder
-            // of this method owns only its local snapshot.
+            // Clear shared state before Dispose or Detach can start another reload; cleanup then owns only its local snapshot.
             _isLoaded = false;
             var collection = _collection;
             var itemAddedCallback = _collectionItemAddedCallback;
@@ -703,7 +558,7 @@ namespace GS2Studio.Generated.Character
             {
                 if (handler != null)
                 {
-                    // Same deferred-destroy hardening as OnItemRemoved.
+                    // Detach and hide now because Destroy runs at the end of the frame.
                     handler.Detach();
                     handler.gameObject.SetActive(false);
                     Destroy(handler.gameObject);

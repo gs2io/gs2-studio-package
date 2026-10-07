@@ -7,34 +7,16 @@
 
 namespace GS2Studio.Generated.Gacha
 {
-    /// <summary>
-    /// Which mount axis a Gacha list reads through.
-    /// GachaBinderCollection exposes one mount method per axis;
-    /// this names them so a scene can pick one instead of taking whichever
-    /// loader the generator elected.
-    /// <para>
-    /// Member values are derived from the member name, not its position, so
-    /// adding or reordering an axis leaves every already-stored value pointing
-    /// at the axis it always pointed at.
-    /// </para>
-    /// <para>
-    /// Where a <c>GachaMountSurface</c> is also generated, these
-    /// members are one-to-one with its members other than <c>Full</c>: that
-    /// enum says which path built a row, this one says which path to mount.
-    /// </para>
-    /// </summary>
+    /// <summary>Name-derived values preserve authored scene selections when axes are added or reordered.</summary>
     public enum GachaListAxis
     {
-        /// <summary>No axis was written here. A scene that was never baked reads as this.</summary>
+        /// <summary>Zero keeps an unbaked scene from silently selecting a mount axis.</summary>
         Unset = 0,
 
-        /// <summary>Read from the ShowcaseCharacterGacha master-data mount axis.</summary>
         ShowcaseCharacterGachaMaster = -1510273743,
 
-        /// <summary>Read from the LotteryCharacterGacha master-data mount axis.</summary>
         LotteryCharacterGachaMaster = 1593753399,
 
-        /// <summary>Read from the ShowcaseCharacterGacha2 master-data mount axis.</summary>
         ShowcaseCharacterGacha2Master = 1869961521,
     }
 }

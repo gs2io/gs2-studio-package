@@ -9,13 +9,7 @@ using System.Collections.Generic;
 
 namespace GS2Studio.Generated.CharacterGradeStep
 {
-    /// <summary>
-    /// Read-only public contract for the CharacterGradeStep model. GS2 is not a
-    /// CRUD service: data flows from GS2 (master/user) into the model and
-    /// consumers only read it. The mutable implementation is the internal
-    /// <see cref="MutableCharacterGradeStep"/>, reconciled by the binder/collection
-    /// inside the generated assembly.
-    /// </summary>
+    /// <summary>Expose loaded values without setters so consumers cannot bypass binder and collection reconciliation.</summary>
     public interface CharacterGradeStep
     {
         /// <summary>
@@ -39,15 +33,7 @@ namespace GS2Studio.Generated.CharacterGradeStep
         string GradeUpPropertyIdRegex { get; }
     }
 
-    /// <summary>
-    /// Read-write public contract for the CharacterGradeStep model. Each
-    /// property re-declares its base member with a setter (hence <c>new</c>).
-    /// This is the parameter type of the binder's shared <c>Apply*</c>
-    /// composition methods, so a stub model implementing this interface can
-    /// reuse the generated composition logic. Bound models are never exposed
-    /// through this interface — the binder only implements the read-only
-    /// <see cref="CharacterGradeStep"/> surface.
-    /// </summary>
+    /// <summary>Public setters let external stub models reuse generated Apply methods without exposing the bound mutable model.</summary>
     public interface IMutableCharacterGradeStep : CharacterGradeStep
     {
         new CharacterGradeStepId Id { get; set; }
@@ -56,11 +42,6 @@ namespace GS2Studio.Generated.CharacterGradeStep
         new string GradeUpPropertyIdRegex { get; set; }
     }
 
-    /// <summary>
-    /// Mutable implementation of <see cref="CharacterGradeStep"/>. Internal to
-    /// the generated assembly so external code only ever sees the read-only
-    /// interface; the binder/collection reconcile paths write these setters.
-    /// </summary>
     internal sealed class MutableCharacterGradeStep : IMutableCharacterGradeStep
     {
         public CharacterGradeStepId Id { get; set; }

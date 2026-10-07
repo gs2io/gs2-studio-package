@@ -18,13 +18,7 @@ using Gs2Bind.Gs2Quest;
 
 namespace GS2Studio.Generated.Progress
 {
-    /// <summary>
-    /// Construction seam for <see cref="ProgressBinder"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IProgressBinderFactory
     {
         Task<IProgressBinder> CreateAsync(
@@ -34,11 +28,6 @@ namespace GS2Studio.Generated.Progress
             CancellationToken cancellationToken = default);
     }
 
-    /// <summary>
-    /// Default <see cref="IProgressBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultProgressBinderFactory : IProgressBinderFactory
     {
         public static readonly DefaultProgressBinderFactory Instance = new DefaultProgressBinderFactory();

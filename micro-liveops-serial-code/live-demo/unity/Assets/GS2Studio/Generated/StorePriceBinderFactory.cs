@@ -19,13 +19,7 @@ using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.StorePrice
 {
-    /// <summary>
-    /// Construction seam for <see cref="StorePriceBinder"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IStorePriceBinderFactory
     {
         Task<IStorePriceBinder> CreateAsync(
@@ -35,11 +29,6 @@ namespace GS2Studio.Generated.StorePrice
             CancellationToken cancellationToken = default);
     }
 
-    /// <summary>
-    /// Default <see cref="IStorePriceBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultStorePriceBinderFactory : IStorePriceBinderFactory
     {
         public static readonly DefaultStorePriceBinderFactory Instance = new DefaultStorePriceBinderFactory();

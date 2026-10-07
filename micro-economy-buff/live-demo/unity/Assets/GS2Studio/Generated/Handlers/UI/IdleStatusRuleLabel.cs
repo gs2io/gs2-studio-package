@@ -16,14 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.IdleStatus.UI
 {
     /// <summary>
-    /// UI label bound to the template
-    /// <c>Every 5 minutes away pays 5 coins, and every 12th interval pays 50 instead, for up to 8 hours. Receive pays what has built up and starts the count again; minutes short of a full 5 are dropped.</c>. Each <c>{key}</c> placeholder is
-    /// substituted with the resolved value from <c>IdleStatus</c>
-    /// on every Handler <c>Updated</c> event and the rendered string is
-    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
-    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
-    /// TextMeshPro, or custom logic — so this component stays agnostic to
-    /// the rendering target.
+    /// UnityEvent output lets formatted templates drive different text-rendering targets without generator-specific adapters.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/IdleStatus/TemplateLabel/RuleLabel")]
     public sealed class IdleStatusRuleLabel : MonoBehaviour
@@ -42,8 +35,6 @@ namespace GS2Studio.Generated.IdleStatus.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

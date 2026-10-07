@@ -19,14 +19,6 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.TriggerPull.UI
 {
-    /// <summary>
-    /// UI button bound to <c>Pull</c> on the sibling
-    /// <c>TriggerPullHandlerBase</c>. Wires <c>UnityEngine.UI.Button.onClick</c>
-    /// to <c>TriggerPullHandlerBase.Binder.Pull</c> and forwards the
-    /// authored argument list. Add this component alongside (or under) a
-    /// <c>TriggerPullHandlerBase</c>; the handler is resolved automatically via
-    /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is set.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/TriggerPull/ButtonAction/PullButton")]
     public sealed class TriggerPullPullButton : MonoBehaviour
     {
@@ -34,20 +26,10 @@ namespace GS2Studio.Generated.TriggerPull.UI
         [SerializeField] private TriggerPullHandlerBase? _handler;
         [SerializeField] private Button? _button;
 
-        /// <summary>
-        /// Raised once the action has completed on the server. A screen hangs
-        /// its own work off this: a transition, a sound, a reading this model
-        /// does not carry. What the action changed does not need it — a bound
-        /// value arrives through the binder's own subscription.
-        /// </summary>
+        /// <summary>Completion hooks serve screen effects; bound values refresh through binder subscriptions.</summary>
         [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
 
-        /// <summary>
-        /// Raised when the action fails. Carries the SDK's own error-event
-        /// shape, so the failure can be handed straight to
-        /// <c>Gs2ClientHolder.DebugErrorHandler</c> or to any other handler that
-        /// already accepts one.
-        /// </summary>
+        /// <summary>The SDK error-event shape lets existing GS2 error handlers receive failures directly.</summary>
         [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
 
         public UnityEvent OnCompleted => _onCompleted;
@@ -56,14 +38,7 @@ namespace GS2Studio.Generated.TriggerPull.UI
         private bool _wired;
         private bool _warnedMissingHandler;
 
-        /// <summary>
-        /// True from a click until its action has returned. A click that lands
-        /// in that window is dropped, not queued: a second <c>Pull</c>
-        /// issued before the first has finished is the same request twice, and
-        /// for a purchase that is a double charge the server can only refuse
-        /// after the fact. <c>Button.interactable</c> is left alone here since
-        /// an interactable component may own it.
-        /// </summary>
+        // Drop overlapping clicks to avoid duplicate actions; an interactable component may own Button.interactable.
         private bool _inFlight;
 
         private void OnEnable()
@@ -94,8 +69,6 @@ namespace GS2Studio.Generated.TriggerPull.UI
             if (_inFlight) return;
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently swallowing
-                // the click, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;
@@ -104,9 +77,7 @@ namespace GS2Studio.Generated.TriggerPull.UI
                 }
                 return;
             }
-            // Delegated actions live on the binder's actionable contract, which
-            // the handler exposes as `Binder`. That contract also implements the
-            // read model, so the `model.X` argument expressions bind to it.
+            // Authored argument expressions read model.X; the actionable binder also supplies that read contract.
             var model = _handler.Binder;
             if (model == null) return;
             _inFlight = true;
@@ -117,7 +88,7 @@ namespace GS2Studio.Generated.TriggerPull.UI
             catch (Gs2Exception gs2Error)
             {
                 UnityEngine.Debug.LogError($"TriggerPullPullButton: Pull failed: {gs2Error}");
-                // A click has nothing to resume from, so no retry is offered.
+                // A click has no resumable operation to supply as the SDK retry callback.
                 _onFailed.Invoke(gs2Error, null);
                 return;
             }

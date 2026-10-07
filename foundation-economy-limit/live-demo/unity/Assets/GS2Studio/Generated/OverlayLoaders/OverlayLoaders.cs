@@ -3,28 +3,8 @@
 //     Do not modify this file directly.
 // </auto-generated>
 
-// Project-wide bootstrap registry for the overlay loader system.
-//
-// Each `<Type>OverlayLoader.Active` is auto-initialized by `#if`-driven
-// compile-time selection (Editor → Addressables → Resources). Call one of the
-// `Use*()` methods below from your bootstrap code to override the default
-// across every overlay type in *every* studio2 package at runtime — useful
-// when you want to exercise the Addressables flow inside the Unity Editor,
-// or stick with `Resources` even when the Addressables package is referenced.
-//
-// Per-package appliers self-register at module load via the auto-generated
-// `<Package>OverlayLoaderRegistration` types (see other files alongside this
-// one). A single call here fans out across every registered package.
-//
-// Custom loaders (e.g. one that pre-warms entries asynchronously) can still
-// be plugged in per-type via direct assignment of `<Type>OverlayLoader.Active`.
-// Assignment is last-write-wins: each Use* call invokes registered callbacks
-// that replace Active unconditionally, so assign custom loaders after the last
-// Use* call; a later Use* call replaces them again.
-//
-// The `#if` blocks inside the per-package `Apply*` callbacks mirror the gate
-// that protects the underlying loader implementations, so callers compile
-// cleanly in builds that lack the corresponding define.
+// Explicit selection lets Editor sessions exercise player loader paths.
+// Use* calls replace Active unconditionally, so assign per-type custom loaders after the last global selection.
 
 #nullable enable
 using System;
@@ -38,10 +18,6 @@ namespace GS2Studio.Generated
         private static readonly List<Action> _addressablesAppliers = new List<Action>();
         private static readonly List<Action> _resourcesAppliers = new List<Action>();
 
-        /// <summary>
-        /// Called once at module load by each studio2 package's auto-generated
-        /// registration type. Not intended to be invoked from user code.
-        /// </summary>
         public static void RegisterPackage(
             Action applyEditor,
             Action applyAddressables,
@@ -52,37 +28,18 @@ namespace GS2Studio.Generated
             if (applyResources != null) _resourcesAppliers.Add(applyResources);
         }
 
-        /// <summary>
-        /// Replace every `<Type>OverlayLoader.Active` across every registered
-        /// package with an `EditorOverlayLoader` instance. Registered package
-        /// callbacks run in registration order and assign Active unconditionally,
-        /// so this call is one last-write step in the global loader state. No-op
-        /// outside the Unity Editor (each callback is gated by `UNITY_EDITOR`).
-        /// </summary>
+        /// <summary>Callbacks are Editor-gated, so shared bootstrap code can call this outside the Editor without loading Editor types.</summary>
         public static void UseEditor()
         {
             foreach (var apply in _editorAppliers) apply();
         }
 
-        /// <summary>
-        /// Replace every `<Type>OverlayLoader.Active` across every registered
-        /// package with an `AddressablesOverlayLoader` instance. Registered
-        /// callbacks assign Active unconditionally; a later Use* call can
-        /// replace those assignments. No-op when `UNITY_ADDRESSABLES` is not
-        /// defined.
-        /// </summary>
+        /// <summary>Callbacks are Addressables-gated, so shared bootstrap code can call this without the optional dependency.</summary>
         public static void UseAddressables()
         {
             foreach (var apply in _addressablesAppliers) apply();
         }
 
-        /// <summary>
-        /// Replace every `<Type>OverlayLoader.Active` across every registered
-        /// package with a `ResourcesOverlayLoader` instance. Registered
-        /// callbacks assign Active unconditionally; a later Use* call can
-        /// replace those assignments. Always available — `Resources` is part
-        /// of core UnityEngine.
-        /// </summary>
         public static void UseResources()
         {
             foreach (var apply in _resourcesAppliers) apply();

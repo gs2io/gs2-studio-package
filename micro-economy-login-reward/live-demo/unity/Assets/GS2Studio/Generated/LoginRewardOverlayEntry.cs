@@ -10,11 +10,6 @@ using GS2Studio.Generated.LoginRewardCollection;
 
 namespace GS2Studio.Generated.LoginReward
 {
-    /// <summary>
-    /// AssetDelivery overlay entry for LoginReward.
-    /// Field values are populated from the studio2-emitted overlay payload
-    /// at AssetBundle build time.
-    /// </summary>
     public class LoginRewardOverlayEntry : ScriptableObject
     {
         [SerializeField] private string _rawInstanceId = default!;
@@ -25,24 +20,13 @@ namespace GS2Studio.Generated.LoginReward
 
         public string RawInstanceId => _rawInstanceId;
 
-        /// <summary>
-        /// Index of this instance's element in its parent row's embedded
-        /// array, as the deployed master data lays the array out. Null when
-        /// studio2 could not determine it (a codegen warning says why); the
-        /// overlay-only collection then skips the entry.
-        /// </summary>
+        /// <summary>Overlay-only collections skip entries without a known index in the deployed parent array.</summary>
         public int? ElementIndex => _hasElementIndex ? _elementIndex : (int?)null;
 
         public LoginRewardCollectionId LoginRewardCollection => new LoginRewardCollectionId(_loginRewardCollection);
         public string DisplayName => _displayName;
 
-        /// <summary>
-        /// Copy the overlay-bound values into <paramref name="model"/>. Public
-        /// against the public read-write contract so external stubs can apply
-        /// the overlay to their own <see cref="IMutableLoginReward"/>
-        /// implementation; the generated binder calls this during
-        /// mount/subscribe with its internal mutable model.
-        /// </summary>
+        /// <summary>The public mutable contract lets external models receive overlays without depending on the binder's internal model.</summary>
         public void ApplyTo(IMutableLoginReward model)
         {
             model.LoginRewardCollection = LoginRewardCollection;

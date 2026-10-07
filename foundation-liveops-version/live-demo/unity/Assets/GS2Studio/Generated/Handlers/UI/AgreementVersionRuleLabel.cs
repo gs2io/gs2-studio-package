@@ -16,14 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.AgreementVersion.UI
 {
     /// <summary>
-    /// UI label bound to the template
-    /// <c>You pass when nothing is an error. Accept the terms at 2.0.0 (1.0.0 only warns), and answer marketing either way. The app is refused at 1.0.0 and below and warned up to 1.1.0; the assets are refused at 1.0.0 and below and warned up to 2.0.0.</c>. Each <c>{key}</c> placeholder is
-    /// substituted with the resolved value from <c>AgreementVersion</c>
-    /// on every Handler <c>Updated</c> event and the rendered string is
-    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
-    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
-    /// TextMeshPro, or custom logic — so this component stays agnostic to
-    /// the rendering target.
+    /// UnityEvent output lets formatted templates drive different text-rendering targets without generator-specific adapters.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/AgreementVersion/TemplateLabel/RuleLabel")]
     public sealed class AgreementVersionRuleLabel : MonoBehaviour
@@ -42,8 +35,6 @@ namespace GS2Studio.Generated.AgreementVersion.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

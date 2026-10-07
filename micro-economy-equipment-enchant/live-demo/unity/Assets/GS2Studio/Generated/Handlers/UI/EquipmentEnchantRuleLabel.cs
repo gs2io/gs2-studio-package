@@ -16,14 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.EquipmentEnchant.UI
 {
     /// <summary>
-    /// UI label bound to the template
-    /// <c>A piece rolls 1 to {maximum} bonuses when it is first read. Reroll draws the same number again for 10 coins. Add bonus draws one more for 30 coins, up to {maximum}.</c>. Each <c>{key}</c> placeholder is
-    /// substituted with the resolved value from <c>EquipmentEnchant</c>
-    /// on every Handler <c>Updated</c> event and the rendered string is
-    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
-    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
-    /// TextMeshPro, or custom logic — so this component stays agnostic to
-    /// the rendering target.
+    /// UnityEvent output lets formatted templates drive different text-rendering targets without generator-specific adapters.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/EquipmentEnchant/TemplateLabel/RuleLabel")]
     public sealed class EquipmentEnchantRuleLabel : MonoBehaviour
@@ -42,8 +35,6 @@ namespace GS2Studio.Generated.EquipmentEnchant.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

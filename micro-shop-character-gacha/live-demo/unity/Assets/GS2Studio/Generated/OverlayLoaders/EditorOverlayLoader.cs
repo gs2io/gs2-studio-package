@@ -12,23 +12,7 @@ using UnityEngine;
 
 namespace GS2Studio.Generated
 {
-    /// <summary>
-    /// Editor-only default implementation of <see cref="IOverlayLoader{TEntry}"/>.
-    /// Locates overlay <c>.asset</c> files anywhere under the project via
-    /// <see cref="AssetDatabase.FindAssets(string)"/>. This loader is
-    /// <b>location-independent</b> — overlay assets may live at any path under
-    /// <c>Assets/</c>, in contrast with the runtime loaders
-    /// (<c>ResourcesOverlayLoader</c>, <c>AddressablesOverlayLoader</c>) which
-    /// require the asset to live at the fixed
-    /// <c>Overlays/&lt;TypeName&gt;/&lt;safeInstanceId&gt;</c>
-    /// path (under a <c>Resources</c> folder) or address. Because this loader
-    /// finds assets anywhere, Play Mode cannot prove the player-time placement.
-    /// Used as the auto-injected <c>Active</c> when running inside the Unity
-    /// Editor. The incoming <c>instanceId</c> is normalized via
-    /// <see cref="OverlayInstanceIdNormalizer.ToSafeFileName(string)"/> so the
-    /// filter and the <c>asset.name</c> comparison line up with the
-    /// filesystem-safe name the studio-side codegen wrote into <c>m_Name</c>.
-    /// </summary>
+    /// <summary>Project-wide asset search makes Editor loading independent of placement, so Play Mode cannot prove player-time paths.</summary>
     public sealed class EditorOverlayLoader<TEntry> : IOverlayLoader<TEntry>
         where TEntry : ScriptableObject
     {

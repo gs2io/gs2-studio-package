@@ -17,37 +17,20 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Character.UI
 {
     /// <summary>
-    /// UI gauge displaying <c>experience / upper edge of CharacterExperience.threshold around experience</c>
-    /// measured from a floor of <c>lower edge of CharacterExperience.threshold around experience</c>, so the filled
-    /// share is <c>(current - min) / (max - min)</c>,
-    /// on a UnityEngine.UI.Image (filled). Subscribes to the sibling
-    /// <c>CharacterHandler.Updated</c> event so the fill amount stays
-    /// in sync with the model. The gauge clamps the fraction to
-    /// <c>[0, 1]</c> before assigning.
-    /// At least one bound is read off a second handler resolved from the parent
-    /// chain, so the gauge also redraws whenever that handler reports a change.
-    /// Without one in the parent chain the bound reads as zero.
+    /// A non-positive range renders empty rather than dividing by zero.
+    /// Companion bounds can change independently of the primary model, so their updates also redraw the gauge.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Character/Gauge/ExperienceGauge")]
     public sealed class CharacterExperienceGauge : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private CharacterHandlerBase? _handler;
-        // Resolved from the parent chain exactly like the primary handler. A
-        // single-entry handler placed on an ancestor (typically the page root)
-        // is reachable from inside a list row too, which matters because a row
-        // lives in a prefab and a prefab cannot store a scene reference.
+        // Prefab rows cannot store scene references, so companions must be discoverable through their parent chain.
         [Gs2AutoResolvedHandler]
         [SerializeField] private CharacterExperienceHandlerBase? _characterExperienceHandler;
         [SerializeField] private Image? _target;
 
-        /// <summary>
-        /// Loads this component's readings come from. A row built by a mount
-        /// surface that skips one of these renders those readings as their
-        /// default; the surface says which loaders it skips through
-        /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
-        /// compared before a scene is ever run.
-        /// </summary>
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
         public static readonly string[] RequiredLoaders = { "UserdataExperienceCharacterExperienceExperienceModel" };
 
         private bool _subscribed;
@@ -61,8 +44,6 @@ namespace GS2Studio.Generated.Character.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;
@@ -78,10 +59,7 @@ namespace GS2Studio.Generated.Character.UI
             }
             if (_characterExperienceHandler == null)
             {
-                // Not fatal, unlike the primary handler: the component keeps
-                // drawing from whatever the missing companion falls back to.
-                // Say where the handler has to go — "not found" on its own does
-                // not tell anyone what to change.
+                // Missing companions retain their expression defaults; the primary handler can still drive the component.
                 if (!_warnedMissingCharacterExperienceHandler)
                 {
                     _warnedMissingCharacterExperienceHandler = true;
@@ -132,10 +110,7 @@ namespace GS2Studio.Generated.Character.UI
             else if (fraction > 1d) fraction = 1d;            _target.fillAmount = (float)fraction;
         }
 
-        // Warn once and keep drawing. The readings below are at their default
-        // either way, and going silent would blank a label that mixes loaded
-        // and unloaded readings — the point here is to say which of the two it
-        // is, not to change what is drawn.
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
         private void WarnUnloadedLoadersOnce()
         {
             if (_warnedUnloadedLoaders) return;
@@ -147,18 +122,14 @@ namespace GS2Studio.Generated.Character.UI
                 $"{nameof(CharacterExperienceGauge)} on '{name}': this row's mount surface did not run UserdataExperienceCharacterExperienceExperienceModel, which fills what this component reads (Experience); those readings render as their default, not as an absent value.", this);
         }
 
-        // The companion model changed, so anything read from it is stale.
-        // Redraw from the primary model's current value; there is nothing to
-        // draw until the primary handler has one.
+        // Companion values can change independently, but applying them still requires the current primary model.
         private void OnCharacterExperienceUpdated(GS2Studio.Generated.CharacterExperience.CharacterExperience companionModel)
         {
             if (_handler?.Model != null) OnUpdated(_handler.Model);
         }
 
         /// <summary>
-        /// Bound read from the lower edge of CharacterExperience.threshold around experience.
-        /// That is the largest table entry at or below the position; 0 when the
-        /// companion handler, its model, or any such entry is absent.
+        /// Missing bounds yield zero so unavailable companions and out-of-range positions share the range guard.
         /// </summary>
         private double ResolveMinBand(Character model)
         {
@@ -179,10 +150,7 @@ namespace GS2Studio.Generated.Character.UI
         }
 
         /// <summary>
-        /// Bound read from the upper edge of CharacterExperience.threshold around experience.
-        /// That is the smallest table entry strictly above the position; 0 when
-        /// the companion handler, its model, or any such entry is absent — which
-        /// is what the top of the table reads as.
+        /// Missing bounds yield zero so unavailable companions and out-of-range positions share the range guard.
         /// </summary>
         private double ResolveMaxBand(Character model)
         {

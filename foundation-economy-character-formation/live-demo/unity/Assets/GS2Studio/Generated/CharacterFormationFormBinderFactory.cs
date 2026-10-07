@@ -16,14 +16,7 @@ using Gs2Bind.Gs2Formation;
 
 namespace GS2Studio.Generated.CharacterFormationForm
 {
-    /// <summary>
-    /// Construction seam for <see cref="CharacterFormationFormBinder"/> and
-    /// <see cref="CharacterFormationFormBinderCollection"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder / collection in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface ICharacterFormationFormBinderFactory
     {
         Task<ICharacterFormationFormBinder> CreateAsync(
@@ -34,11 +27,6 @@ namespace GS2Studio.Generated.CharacterFormationForm
         ICharacterFormationFormBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string moldModelName);
     }
 
-    /// <summary>
-    /// Default <see cref="ICharacterFormationFormBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultCharacterFormationFormBinderFactory : ICharacterFormationFormBinderFactory
     {
         public static readonly DefaultCharacterFormationFormBinderFactory Instance = new DefaultCharacterFormationFormBinderFactory();

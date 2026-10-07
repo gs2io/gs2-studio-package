@@ -14,54 +14,26 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.EmbeddedVersion
 {
-    /// <summary>
-    /// Mounts onto Binders[index] of a parent IEmbeddedVersionBinderListSource
-    /// (the plain EmbeddedVersionListHandler or any ref-scoped variant) and
-    /// reacts to its ListChanged signal, re-binding to the binder at the current
-    /// slot index. Two wiring modes:
-    ///
-    ///  - List-instantiated: the parent list handler Instantiates the item
-    ///    prefab and calls <see cref="AttachTo"/> with itself and the slot
-    ///    index. <c>_content</c> is optional in this mode.
-    ///  - Fixed-slot: placed by hand under a list handler; Start resolves the
-    ///    parent via GetComponentInParent and <c>_content</c> is required so
-    ///    the cell can show/hide as the list shrinks and grows.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/EmbeddedVersion/EmbeddedVersion List Item Handler")]
     public sealed class EmbeddedVersionListItemHandler : EmbeddedVersionHandlerBase
     {
         [SerializeField] private int _index;
-        // Empty-state toggle target. Required for fixed-slot wiring; optional
-        // when the parent list attaches this item via AttachTo (instantiated
-        // items are destroyed on removal, so there is no empty state to show).
-        // When assigned it MUST be a strict descendant GameObject — never this
-        // handler's own GameObject nor an ancestor (disabling self or an
-        // ancestor stops ListChanged and is unrecoverable).
+        // Empty fixed slots hide descendant content so their handler host stays active. Instantiated items can be removed by the owning list.
         [Tooltip("Fixed-slot wiring: required strict descendant GameObject toggled for empty-state. List-instantiated items may leave this unassigned.")]
         [SerializeField] private GameObject? _content;
 
         private IEmbeddedVersionBinderListSource? _list;
-        // Non-owning view: the list item reads the binder from the parent list and
-        // never owns its lifecycle (no Subscribe/Dispose), so it holds the
-        // non-owning IActionableEmbeddedVersionBinder.
+        // The parent list owns subscription and disposal; a slot must not take over the binder lifecycle.
         private IActionableEmbeddedVersionBinder? _binder;
         private long _reevaluateGeneration;
 
         public override IActionableEmbeddedVersionBinder? Binder => _binder;
-        // The binder implements <see cref="EmbeddedVersion"/>, so it is the model.
         public override EmbeddedVersion? Model => _binder;
         public override bool HasValue => _binder != null;
 
-        /// <summary>Runtime-settable slot index; re-evaluates immediately.</summary>
         public int Index { get => _index; set { _index = value; Reevaluate(); } }
 
-        /// <summary>
-        /// Explicit wiring entry point used by the generated list handlers right
-        /// after Instantiate. When attached this way the GetComponentInParent
-        /// fallback in Start is skipped and <c>_content</c> becomes optional.
-        /// Re-attaching to the same list only moves the slot index; attaching to
-        /// a different list first detaches from the previous one.
-        /// </summary>
+        /// <summary>Explicit attachment permits list-instantiated items without the fixed-slot empty-state target.</summary>
         public void AttachTo(IEmbeddedVersionBinderListSource list, int index)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
@@ -75,13 +47,7 @@ namespace GS2Studio.Generated.EmbeddedVersion
             Reevaluate();
         }
 
-        /// <summary>
-        /// Unsubscribes from the parent list and clears the bound state. The
-        /// owning list handler calls this before Destroy so the deferred-destroy
-        /// window cannot observe a stale ListChanged → re-evaluation against
-        /// shifted indices. Does not deactivate the GameObject (callers that
-        /// pool items decide visibility themselves).
-        /// </summary>
+        /// <summary>Detach before deferred Destroy so shifted indices cannot be observed by a late ListChanged callback.</summary>
         public void Detach()
         {
             _reevaluateGeneration++;
@@ -96,8 +62,6 @@ namespace GS2Studio.Generated.EmbeddedVersion
 
         private void Start()
         {
-            // Attached explicitly by a list handler before the first frame:
-            // parent resolution and the `_content` requirement do not apply.
             if (_list != null) return;
             if (_content == null
                 || ReferenceEquals(_content, gameObject)

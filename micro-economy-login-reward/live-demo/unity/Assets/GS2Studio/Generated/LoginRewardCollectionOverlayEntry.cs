@@ -10,11 +10,6 @@ using GS2Studio.Generated.Schedule;
 
 namespace GS2Studio.Generated.LoginRewardCollection
 {
-    /// <summary>
-    /// AssetDelivery overlay entry for LoginRewardCollection.
-    /// Field values are populated from the studio2-emitted overlay payload
-    /// at AssetBundle build time.
-    /// </summary>
     public class LoginRewardCollectionOverlayEntry : ScriptableObject
     {
         [SerializeField] private string _rawInstanceId = default!;
@@ -26,13 +21,7 @@ namespace GS2Studio.Generated.LoginRewardCollection
         public ScheduleId? Schedule =>
             _hasSchedule ? new ScheduleId(_schedule) : (ScheduleId?)null;
 
-        /// <summary>
-        /// Copy the overlay-bound values into <paramref name="model"/>. Public
-        /// against the public read-write contract so external stubs can apply
-        /// the overlay to their own <see cref="IMutableLoginRewardCollection"/>
-        /// implementation; the generated binder calls this during
-        /// mount/subscribe with its internal mutable model.
-        /// </summary>
+        /// <summary>The public mutable contract lets external models receive overlays without depending on the binder's internal model.</summary>
         public void ApplyTo(IMutableLoginRewardCollection model)
         {
             model.Schedule = Schedule;

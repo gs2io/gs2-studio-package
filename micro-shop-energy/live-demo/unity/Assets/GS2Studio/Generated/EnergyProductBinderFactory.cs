@@ -19,14 +19,7 @@ using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.EnergyProduct
 {
-    /// <summary>
-    /// Construction seam for <see cref="EnergyProductBinder"/> and
-    /// <see cref="EnergyProductBinderCollection"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder / collection in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IEnergyProductBinderFactory
     {
         Task<IEnergyProductBinder> CreateAsync(
@@ -37,11 +30,6 @@ namespace GS2Studio.Generated.EnergyProduct
         IEnergyProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
-    /// <summary>
-    /// Default <see cref="IEnergyProductBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultEnergyProductBinderFactory : IEnergyProductBinderFactory
     {
         public static readonly DefaultEnergyProductBinderFactory Instance = new DefaultEnergyProductBinderFactory();

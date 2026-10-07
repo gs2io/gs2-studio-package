@@ -10,10 +10,7 @@ using Gs2.Unity.Util;
 
 namespace GS2Studio.Generated.Runtime
 {
-    /// <summary>
-    /// Test-friendly abstraction over the GS2 runtime context (Gs2Domain +
-    /// IGameSession) consumed by every generated XxxHandler / XxxListHandler.
-    /// </summary>
+    /// <summary>Allows handlers to receive a runtime without depending on Unity holder components.</summary>
     public interface IGs2RuntimeContextProvider
     {
         bool TryGet(out Gs2Domain? gs2, out IGameSession? session);

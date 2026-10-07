@@ -16,27 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Character.UI
 {
     /// <summary>
-    /// Drives <c>GameObject.SetActive(bool)</c> on two GameObject groups
-    /// based on the condition <c>eq(level, levelCap)</c> evaluated
-    /// against the sibling <c>CharacterHandler.Model</c>:
-    /// <list type="bullet">
-    ///   <item><c>_activeWhenTrue</c> — shown when the condition holds.</item>
-    ///   <item><c>_activeWhenFalse</c> — shown when the condition does not hold.</item>
-    /// </list>
-    /// Either array may be left empty if only one branch needs targets.
-    /// Subscribes to the handler's <c>Updated</c> event so the active state
-    /// refreshes on every model change. Attach to (or under) a
-    /// <c>CharacterHandler</c> or <c>CharacterListItemHandler</c>;
-    /// the handler is resolved via
-    /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is
-    /// supplied.
-    ///
-    /// Targets must reference sibling / child GameObjects — never this
-    /// component's host. Falling back to <c>gameObject</c> would let
-    /// <c>SetActive(false)</c> disable this MonoBehaviour, unsubscribing
-    /// <c>Updated</c> and leaving the toggle stuck. Null entries inside
-    /// either array are skipped so a partially-wired Inspector slot does
-    /// not crash the apply loop.
+    /// Targets must be siblings or children; disabling this host would unsubscribe Updated and leave the toggle unable to reactivate itself.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Character/ActiveToggle/LevelActiveToggle")]
     public sealed class CharacterLevelActiveToggle : MonoBehaviour
@@ -46,13 +26,7 @@ namespace GS2Studio.Generated.Character.UI
         [SerializeField] private GameObject[] _activeWhenTrue = System.Array.Empty<GameObject>();
         [SerializeField] private GameObject[] _activeWhenFalse = System.Array.Empty<GameObject>();
 
-        /// <summary>
-        /// Loads this component's readings come from. A row built by a mount
-        /// surface that skips one of these renders those readings as their
-        /// default; the surface says which loaders it skips through
-        /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
-        /// compared before a scene is ever run.
-        /// </summary>
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
         public static readonly string[] RequiredLoaders = { "UserdataExperienceCharacterExperienceExperienceModel" };
 
         private bool _subscribed;
@@ -64,8 +38,6 @@ namespace GS2Studio.Generated.Character.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;
@@ -104,10 +76,7 @@ namespace GS2Studio.Generated.Character.UI
             ApplyActiveState(_activeWhenFalse, !result);
         }
 
-        // Warn once and keep drawing. The readings below are at their default
-        // either way, and going silent would blank a label that mixes loaded
-        // and unloaded readings — the point here is to say which of the two it
-        // is, not to change what is drawn.
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
         private void WarnUnloadedLoadersOnce()
         {
             if (_warnedUnloadedLoaders) return;

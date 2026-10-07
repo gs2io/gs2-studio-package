@@ -19,14 +19,6 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Character.UI
 {
-    /// <summary>
-    /// UI button bound to <c>Train</c> on the sibling
-    /// <c>CharacterHandlerBase</c>. Wires <c>UnityEngine.UI.Button.onClick</c>
-    /// to <c>CharacterHandlerBase.Binder.Train</c> and forwards the
-    /// authored argument list. Add this component alongside (or under) a
-    /// <c>CharacterHandlerBase</c>; the handler is resolved automatically via
-    /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is set.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Character/ButtonAction/TrainButton")]
     public sealed class CharacterTrainButton : MonoBehaviour
     {
@@ -34,45 +26,22 @@ namespace GS2Studio.Generated.Character.UI
         [SerializeField] private CharacterHandlerBase? _handler;
         [SerializeField] private Button? _button;
 
-        /// <summary>
-        /// Raised once the action has completed on the server. A screen hangs
-        /// its own work off this: a transition, a sound, a reading this model
-        /// does not carry. What the action changed does not need it — a bound
-        /// value arrives through the binder's own subscription.
-        /// </summary>
+        /// <summary>Completion hooks serve screen effects; bound values refresh through binder subscriptions.</summary>
         [SerializeField] private UnityEvent _onCompleted = new UnityEvent();
 
-        /// <summary>
-        /// Raised when the action fails. Carries the SDK's own error-event
-        /// shape, so the failure can be handed straight to
-        /// <c>Gs2ClientHolder.DebugErrorHandler</c> or to any other handler that
-        /// already accepts one.
-        /// </summary>
+        /// <summary>The SDK error-event shape lets existing GS2 error handlers receive failures directly.</summary>
         [SerializeField] private ErrorEvent _onFailed = new ErrorEvent();
 
         public UnityEvent OnCompleted => _onCompleted;
         public ErrorEvent OnFailed => _onFailed;
 
-        /// <summary>
-        /// Loads the arguments of <c>Train</c> are read from. A row
-        /// built by a mount surface that skips one of these sends that
-        /// argument's default; the surface says which loaders it skips through
-        /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
-        /// compared before a scene is ever run.
-        /// </summary>
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before skipped loaders can leave action arguments at their defaults.</summary>
         public static readonly string[] RequiredLoaders = { "UserdataInventoryCharacterItemModel", "UserdataFormationCharacterEquipmentPropertyFormModel" };
 
         private bool _wired;
         private bool _warnedMissingHandler;
 
-        /// <summary>
-        /// True from a click until its action has returned. A click that lands
-        /// in that window is dropped, not queued: a second <c>Train</c>
-        /// issued before the first has finished is the same request twice, and
-        /// for a purchase that is a double charge the server can only refuse
-        /// after the fact. <c>Button.interactable</c> is left alone here since
-        /// an interactable component may own it.
-        /// </summary>
+        // Drop overlapping clicks to avoid duplicate actions; an interactable component may own Button.interactable.
         private bool _inFlight;
         private bool _warnedUnloadedLoaders;
 
@@ -104,8 +73,6 @@ namespace GS2Studio.Generated.Character.UI
             if (_inFlight) return;
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently swallowing
-                // the click, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;
@@ -114,9 +81,7 @@ namespace GS2Studio.Generated.Character.UI
                 }
                 return;
             }
-            // Delegated actions live on the binder's actionable contract, which
-            // the handler exposes as `Binder`. That contract also implements the
-            // read model, so the `model.X` argument expressions bind to it.
+            // Authored argument expressions read model.X; the actionable binder also supplies that read contract.
             var model = _handler.Binder;
             if (model == null) return;
             WarnUnloadedLoadersOnce(model);
@@ -128,7 +93,7 @@ namespace GS2Studio.Generated.Character.UI
             catch (Gs2Exception gs2Error)
             {
                 UnityEngine.Debug.LogError($"CharacterTrainButton: Train failed: {gs2Error}");
-                // A click has nothing to resume from, so no retry is offered.
+                // A click has no resumable operation to supply as the SDK retry callback.
                 _onFailed.Invoke(gs2Error, null);
                 return;
             }
@@ -144,9 +109,7 @@ namespace GS2Studio.Generated.Character.UI
             _onCompleted.Invoke();
         }
 
-        // Warn once and still send the click. The arguments below are at their
-        // default either way, and refusing the click would change what the
-        // button does — the point here is to say which of the two it is.
+        // Missing-loader diagnostics must not change whether an otherwise callable action is sent.
         private void WarnUnloadedLoadersOnce(IActionableCharacterBinder binder)
         {
             if (_warnedUnloadedLoaders) return;

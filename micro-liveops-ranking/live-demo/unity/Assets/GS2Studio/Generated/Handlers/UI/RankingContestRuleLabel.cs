@@ -16,14 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.RankingContest.UI
 {
     /// <summary>
-    /// UI label bound to the template
-    /// <c>Start a contest to get 3 minutes to play. Each play scores 1 to 1000, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: 1st 300, 2nd-3rd 150, 4th-10th 80, anyone else who played 30. You receive once, for the rank you hold at that moment.</c>. Each <c>{key}</c> placeholder is
-    /// substituted with the resolved value from <c>RankingContest</c>
-    /// on every Handler <c>Updated</c> event and the rendered string is
-    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
-    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
-    /// TextMeshPro, or custom logic — so this component stays agnostic to
-    /// the rendering target.
+    /// UnityEvent output lets formatted templates drive different text-rendering targets without generator-specific adapters.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/RankingContest/TemplateLabel/RuleLabel")]
     public sealed class RankingContestRuleLabel : MonoBehaviour
@@ -42,8 +35,6 @@ namespace GS2Studio.Generated.RankingContest.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

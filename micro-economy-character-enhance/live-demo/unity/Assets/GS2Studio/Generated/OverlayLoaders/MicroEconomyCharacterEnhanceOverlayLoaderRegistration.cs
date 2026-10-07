@@ -3,14 +3,7 @@
 //     Do not modify this file directly.
 // </auto-generated>
 
-// Per-package auto-registration into the project-wide `OverlayLoaders`
-// registry (see OverlayLoaders.cs alongside this file).
-//
-// Unity invokes `Register` exactly once per AppDomain via
-// `[RuntimeInitializeOnLoadMethod(SubsystemRegistration)]` (runtime + Play
-// Mode) and `[InitializeOnLoadMethod]` (Editor non-Play Mode, after each
-// domain reload). The `_registered` guard ensures a single registration even
-// when both attributes fire during the same lifecycle.
+// Editor initialization and runtime subsystem initialization can both call Register; the guard prevents duplicate package callbacks.
 
 #nullable enable
 using UnityEngine;

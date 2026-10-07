@@ -9,11 +9,6 @@ using System.Collections.Generic;
 
 namespace GS2Studio.Generated
 {
-    /// <summary>
-    /// Runtime contract used by overlay-loader registries to look up a
-    /// `<TEntry>` for a given instance id. Implementations typically wrap
-    /// an AssetBundle resolved through GS2 AssetDelivery.
-    /// </summary>
     public interface IOverlayLoader<out TEntry> where TEntry : class
     {
         TEntry? Get(string instanceId);

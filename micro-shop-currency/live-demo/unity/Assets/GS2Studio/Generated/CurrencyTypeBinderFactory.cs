@@ -18,13 +18,7 @@ using GS2Studio.Generated.StoreProduct;
 
 namespace GS2Studio.Generated.CurrencyType
 {
-    /// <summary>
-    /// Construction seam for <see cref="CurrencyTypeBinder"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface ICurrencyTypeBinderFactory
     {
         Task<ICurrencyTypeBinder> CreateAsync(
@@ -34,11 +28,6 @@ namespace GS2Studio.Generated.CurrencyType
             CancellationToken cancellationToken = default);
     }
 
-    /// <summary>
-    /// Default <see cref="ICurrencyTypeBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultCurrencyTypeBinderFactory : ICurrencyTypeBinderFactory
     {
         public static readonly DefaultCurrencyTypeBinderFactory Instance = new DefaultCurrencyTypeBinderFactory();

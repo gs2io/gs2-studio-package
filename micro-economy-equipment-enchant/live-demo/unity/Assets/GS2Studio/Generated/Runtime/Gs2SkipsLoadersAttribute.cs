@@ -9,19 +9,7 @@ using System;
 
 namespace GS2Studio.Generated.Runtime
 {
-    /// <summary>
-    /// Placed on a member of a generated <c>{Model}MountSurface</c> enum,
-    /// naming the loaders a row built through that surface does not run
-    /// because it cannot supply their keys.
-    /// <para>
-    /// The binder publishes the same fact at run time as
-    /// <c>Loaded{Loader}</c> on its read contract. This attribute is the
-    /// bake-time half: when a scene is authored there is no binder to read
-    /// those flags off, so the supply has to be readable from the type. A
-    /// component states the other half as its <c>RequiredLoaders</c>, and the
-    /// two are comparable because both use the same loader spelling.
-    /// </para>
-    /// </summary>
+    /// <summary>Scene baking has no binder instance, so skipped loaders must be discoverable from the mount-surface type.</summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public sealed class Gs2SkipsLoadersAttribute : Attribute
     {
@@ -30,7 +18,7 @@ namespace GS2Studio.Generated.Runtime
             LoaderNames = loaderNames ?? Array.Empty<string>();
         }
 
-        /// <summary>Loaders this surface skips, in the binder's loader order.</summary>
+        /// <summary>Uses the same public loader names as component requirements so scene baking can compare them without running a binder.</summary>
         public string[] LoaderNames { get; }
     }
 }

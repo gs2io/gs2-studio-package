@@ -17,35 +17,23 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Item
 {
-    /// <summary>
-    /// Abstract read surface shared by every handler that exposes a single
-    /// ItemBinder: the standalone/list ItemHandler and the
-    /// slot-bound ItemListItemHandler. Concrete handlers supply the
-    /// binder source; the read-only properties and the Updated/Bound/Failed
-    /// events are defined here so consumers can depend on one base type.
-    /// </summary>
+    /// <summary>Shared events and read access let UI consumers use the same type for standalone and list-slot handlers.</summary>
     public abstract class ItemHandlerBase : MonoBehaviour
     {
-        /// <summary>The bound binder (non-owning actionable view), or null when none is attached.</summary>
+        /// <summary>The owning handler or list manages the binder lifecycle; consumers receive a non-owning actionable view.</summary>
         public abstract IActionableItemBinder? Binder { get; }
 
-        /// <summary>The bound model, or null when no binder is attached.</summary>
         public abstract Item? Model { get; }
 
-        /// <summary>True when a binder is currently attached.</summary>
         public abstract bool HasValue { get; }
 
-        /// <summary>Fires whenever the bound model changes (initial attach + each binder update).</summary>
         public event Action<Item>? Updated;
 
-        /// <summary>Fires once each time a binder is attached (non-owning actionable view).</summary>
         public event Action<IActionableItemBinder>? Bound;
 
-        /// <summary>Fires when the handler encounters an exception.</summary>
         public event Action<Exception>? Failed;
 
-        // C# events can only be raised from the declaring type, so derived
-        // handlers raise through these protected helpers.
+        // C# events can only be raised by their declaring type; derived handlers need these helpers.
         protected void RaiseUpdated(Item model) => Updated?.Invoke(model);
         protected void RaiseBound(IActionableItemBinder binder) => Bound?.Invoke(binder);
         protected void RaiseFailed(Exception ex) => Failed?.Invoke(ex);

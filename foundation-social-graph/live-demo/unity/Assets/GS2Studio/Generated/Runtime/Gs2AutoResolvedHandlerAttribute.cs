@@ -9,14 +9,7 @@ using UnityEngine;
 
 namespace GS2Studio.Generated.Runtime
 {
-    /// <summary>
-    /// Marker attribute placed on generated UI components' <c>_handler</c>
-    /// field. The companion <c>Gs2AutoResolvedHandlerDrawer</c> (Editor-only)
-    /// renders the field as a read-only object reference and previews the
-    /// handler that <c>GetComponentInParent&lt;T&gt;()</c> would resolve to
-    /// at runtime, so authors can verify the wiring without touching the
-    /// field directly.
-    /// </summary>
+    /// <summary>Allows authors to inspect runtime parent resolution without overriding the handler field.</summary>
     public sealed class Gs2AutoResolvedHandlerAttribute : PropertyAttribute
     {
     }

@@ -3,52 +3,12 @@
 //     Do not modify this file directly.
 // </auto-generated>
 
-// Addressables-backed default implementation of IOverlayLoader<TEntry>.
-//
-// Activation:
-//   This file is gated by `UNITY_ADDRESSABLES`. To enable it, set the symbol
-//   in your .asmdef Version Defines, mapped to the `com.unity.addressables`
-//   package at version >= 1.0.0. Example .asmdef snippet:
-//     "versionDefines": [
-//       { "name": "com.unity.addressables", "expression": "1.0.0", "define": "UNITY_ADDRESSABLES" }
-//     ]
-//
-// Address convention:
-//   Each overlay asset must be registered in an Addressables Group with the
-//   address `Overlays/<TypeName>/<safeInstanceId>`, where `<TypeName>` is the
-//   model's domain type name (e.g. `StorePrice`) — NOT the entry class name
-//   (`StorePriceOverlayEntry`) — and `<safeInstanceId>` is the instance id
-//   normalized through `OverlayInstanceIdNormalizer.ToSafeFileName` so that
-//   composite primary keys (e.g. `"JPY.tier1"`) yield filesystem-safe paths
-//   that match the studio-side asset emission. The model type name is
-//   injected via the constructor `typeName` parameter at startup.
-//
-// Placement caveat:
-//   Studio codegen emits the assets under
-//   `Assets/GS2Studio/Generated/Resources/Overlays/` for the
-//   Resources loader, and this layout does not fit Addressables cleanly.
-//   Marking one of them addressable makes Unity offer to move it to a
-//   `Resources_moved/` folder:
-//   - If you accept, the next codegen run writes the asset back under
-//     `Resources/` with the same deterministic GUID and the stale-file sweep
-//     deletes the moved copy, so the Addressables entry ends up pointing into
-//     `Resources/` again.
-//   - If you decline, the asset ships twice: once in the Resources build data
-//     and once in the Addressables bundle.
-//   None of the Studio live demos or StudioSample use Addressables.
-//
-// Project-wide uniqueness:
-//   `<TypeName>` x `<instanceId>` must be unique across the entire project.
-//   Re-using the same pair from a different package will collide on the
-//   Addressables address (and on the parallel Resources path).
-//
-// Lifecycle:
-//   `Get` caches the underlying `AsyncOperationHandle` per instance id so
-//   repeated calls from binders do not multiply the Addressables reference
-//   count. Call `Release(instanceId)` or `ReleaseAll()` at appropriate
-//   boundaries (e.g. scene unload). If you need stricter performance than
-//   `WaitForCompletion()` provides, replace `Active` with a pre-warmed
-//   loader during bootstrap.
+// UNITY_ADDRESSABLES must be supplied by the project to opt into the Addressables dependency.
+// Addresses use Overlays/<TypeName>/<safeInstanceId>; TypeName is the model name, not the entry class.
+// The type/instance pair must be project-wide unique because addresses do not include a package key.
+// Generated assets live under Resources; moving them requires coordinating with subsequent asset generation.
+// Cache handles so repeated binder lookups do not acquire additional references.
+// Release cached handles at the owning lifecycle boundary; a pre-warmed custom Active avoids synchronous waiting.
 
 #nullable enable
 
@@ -61,11 +21,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace GS2Studio.Generated
 {
-    /// <summary>
-    /// Addressables-backed default <see cref="IOverlayLoader{TEntry}"/>. The
-    /// auto-injected <c>Active</c> uses this when <c>UNITY_ADDRESSABLES</c>
-    /// is defined and Editor is not active.
-    /// </summary>
     public sealed class AddressablesOverlayLoader<TEntry> : IOverlayLoader<TEntry>
         where TEntry : ScriptableObject
     {
@@ -91,11 +46,7 @@ namespace GS2Studio.Generated
                 {
                     return existing.Result;
                 }
-                // Cached handle was invalidated externally (e.g. scene unload,
-                // Addressables.CleanBundleCache). Drop the dead reference and
-                // fall through to re-issue the load — without this, every
-                // subsequent Get for the same instance would silently return
-                // null even though the resourcePackage is still resolvable.
+                // An externally invalidated handle must not keep later lookups from loading the asset again.
                 _handles.Remove(instanceId);
             }
 
@@ -129,11 +80,7 @@ namespace GS2Studio.Generated
             _handles.Clear();
         }
 
-        /// <summary>
-        /// Addressables does not support label-free bulk enumeration.
-        /// Override <c>Active</c> with a custom loader that queries a
-        /// registered Addressables label to enumerate overlay entries.
-        /// </summary>
+        /// <summary>No enumeration label is configured; collections need a custom Active that can enumerate their overlay entries.</summary>
         public IReadOnlyList<TEntry> GetAll()
         {
             return Array.Empty<TEntry>();

@@ -16,20 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Trigger.UI
 {
     /// <summary>
-    /// Drives <c>UnityEngine.UI.Selectable.interactable</c> on two Selectable
-    /// groups based on the condition <c>truthy(triggered)</c>
-    /// evaluated against the sibling <c>TriggerHandler.Model</c>:
-    /// <list type="bullet">
-    ///   <item><c>_interactableWhenTrue</c> — enabled when the condition holds, disabled otherwise.</item>
-    ///   <item><c>_interactableWhenFalse</c> — the mirror group; enabled when the condition does not hold.</item>
-    /// </list>
-    /// Either array may be left empty if only one branch needs targets.
-    /// Subscribes to the handler's <c>Updated</c> event so the interactable
-    /// state refreshes on every model change.
-    ///
-    /// Targets must reference Buttons / Toggles / Sliders / etc. in the
-    /// scene. Null entries inside either array are skipped so a partially
-    /// wired Inspector slot does not crash the apply loop.
+    /// Separate target groups allow inverse conditions without changing GameObject lifetime or handler subscriptions.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Trigger/Interactable/TriggeredInteractable")]
     public sealed class TriggerTriggeredInteractable : MonoBehaviour
@@ -47,8 +34,6 @@ namespace GS2Studio.Generated.Trigger.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

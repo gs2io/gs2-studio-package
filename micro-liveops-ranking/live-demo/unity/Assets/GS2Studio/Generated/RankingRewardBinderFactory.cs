@@ -16,14 +16,7 @@ using GS2Studio.Generated.RankingReward;
 
 namespace GS2Studio.Generated.RankingReward
 {
-    /// <summary>
-    /// Construction seam for <see cref="RankingRewardBinder"/> and
-    /// <see cref="RankingRewardBinderCollection"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder / collection in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IRankingRewardBinderFactory
     {
         Task<IRankingRewardBinder> CreateAsync(
@@ -34,11 +27,6 @@ namespace GS2Studio.Generated.RankingReward
         IRankingRewardBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
-    /// <summary>
-    /// Default <see cref="IRankingRewardBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultRankingRewardBinderFactory : IRankingRewardBinderFactory
     {
         public static readonly DefaultRankingRewardBinderFactory Instance = new DefaultRankingRewardBinderFactory();

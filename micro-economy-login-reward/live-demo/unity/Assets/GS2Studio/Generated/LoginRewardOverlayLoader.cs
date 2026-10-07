@@ -8,14 +8,7 @@ using GS2Studio.Generated;
 
 namespace GS2Studio.Generated.LoginReward
 {
-    /// <summary>
-    /// Runtime registry for the LoginReward overlay loader. <see cref="Active"/>
-    /// is auto-initialized by build-time `#if` selection: the Editor loader
-    /// when running inside Unity Editor, the Addressables loader when the
-    /// `UNITY_ADDRESSABLES` define is set, and the Resources loader otherwise.
-    /// Bootstrap code may reassign <see cref="Active"/> to plug in a custom
-    /// loader.
-    /// </summary>
+    /// <summary>Bootstrap code can replace Active to use a loader other than the compile-time default.</summary>
     public static class LoginRewardOverlayLoader
     {
         public static IOverlayLoader<LoginRewardOverlayEntry>? Active =

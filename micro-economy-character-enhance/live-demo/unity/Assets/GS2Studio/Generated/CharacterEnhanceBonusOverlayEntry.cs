@@ -10,11 +10,6 @@ using GS2Studio.Generated.CharacterEnhance;
 
 namespace GS2Studio.Generated.CharacterEnhanceBonus
 {
-    /// <summary>
-    /// AssetDelivery overlay entry for CharacterEnhanceBonus.
-    /// Field values are populated from the studio2-emitted overlay payload
-    /// at AssetBundle build time.
-    /// </summary>
     public class CharacterEnhanceBonusOverlayEntry : ScriptableObject
     {
         [SerializeField] private string _rawInstanceId = default!;
@@ -24,13 +19,7 @@ namespace GS2Studio.Generated.CharacterEnhanceBonus
 
         public CharacterEnhanceId Enhance => new CharacterEnhanceId(_enhance);
 
-        /// <summary>
-        /// Copy the overlay-bound values into <paramref name="model"/>. Public
-        /// against the public read-write contract so external stubs can apply
-        /// the overlay to their own <see cref="IMutableCharacterEnhanceBonus"/>
-        /// implementation; the generated binder calls this during
-        /// mount/subscribe with its internal mutable model.
-        /// </summary>
+        /// <summary>The public mutable contract lets external models receive overlays without depending on the binder's internal model.</summary>
         public void ApplyTo(IMutableCharacterEnhanceBonus model)
         {
             model.Enhance = Enhance;

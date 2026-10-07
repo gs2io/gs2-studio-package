@@ -16,13 +16,7 @@ using Gs2Bind.Gs2Experience;
 
 namespace GS2Studio.Generated.CharacterExperience
 {
-    /// <summary>
-    /// Construction seam for <see cref="CharacterExperienceBinder"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface ICharacterExperienceBinderFactory
     {
         Task<ICharacterExperienceBinder> CreateAsync(
@@ -32,11 +26,6 @@ namespace GS2Studio.Generated.CharacterExperience
             CancellationToken cancellationToken = default);
     }
 
-    /// <summary>
-    /// Default <see cref="ICharacterExperienceBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultCharacterExperienceBinderFactory : ICharacterExperienceBinderFactory
     {
         public static readonly DefaultCharacterExperienceBinderFactory Instance = new DefaultCharacterExperienceBinderFactory();

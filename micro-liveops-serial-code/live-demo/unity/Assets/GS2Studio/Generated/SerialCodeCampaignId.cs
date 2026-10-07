@@ -18,9 +18,7 @@ namespace GS2Studio.Generated.SerialCodeCampaign
         public override int GetHashCode() => Value?.GetHashCode() ?? 0;
         public override string ToString() => Value;
 
-        // Ordinal comparison so `Comparer<SerialCodeCampaignId>.Default` produces a
-        // deterministic, culture-invariant order — the BinderCollection sort
-        // tie-break depends on this.
+        // Collection tie-breaks must use the same ID order regardless of the current culture.
         public int CompareTo(SerialCodeCampaignId other) =>
             string.Compare(Value, other.Value, StringComparison.Ordinal);
         public static implicit operator string(SerialCodeCampaignId id) => id.Value;

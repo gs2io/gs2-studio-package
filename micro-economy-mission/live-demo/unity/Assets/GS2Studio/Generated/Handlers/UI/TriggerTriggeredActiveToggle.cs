@@ -16,27 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Trigger.UI
 {
     /// <summary>
-    /// Drives <c>GameObject.SetActive(bool)</c> on two GameObject groups
-    /// based on the condition <c>truthy(triggered)</c> evaluated
-    /// against the sibling <c>TriggerHandler.Model</c>:
-    /// <list type="bullet">
-    ///   <item><c>_activeWhenTrue</c> — shown when the condition holds.</item>
-    ///   <item><c>_activeWhenFalse</c> — shown when the condition does not hold.</item>
-    /// </list>
-    /// Either array may be left empty if only one branch needs targets.
-    /// Subscribes to the handler's <c>Updated</c> event so the active state
-    /// refreshes on every model change. Attach to (or under) a
-    /// <c>TriggerHandler</c> or <c>TriggerListItemHandler</c>;
-    /// the handler is resolved via
-    /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is
-    /// supplied.
-    ///
-    /// Targets must reference sibling / child GameObjects — never this
-    /// component's host. Falling back to <c>gameObject</c> would let
-    /// <c>SetActive(false)</c> disable this MonoBehaviour, unsubscribing
-    /// <c>Updated</c> and leaving the toggle stuck. Null entries inside
-    /// either array are skipped so a partially-wired Inspector slot does
-    /// not crash the apply loop.
+    /// Targets must be siblings or children; disabling this host would unsubscribe Updated and leave the toggle unable to reactivate itself.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Trigger/ActiveToggle/TriggeredActiveToggle")]
     public sealed class TriggerTriggeredActiveToggle : MonoBehaviour
@@ -54,8 +34,6 @@ namespace GS2Studio.Generated.Trigger.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

@@ -15,43 +15,26 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Guild
 {
-    /// <summary>
-    /// Abstract read surface shared by every handler that exposes a single
-    /// GuildBinder: the standalone/list GuildHandler and the
-    /// slot-bound GuildListItemHandler. Concrete handlers supply the
-    /// binder source; the read-only properties and the Updated/Bound/Failed
-    /// events are defined here so consumers can depend on one base type.
-    /// </summary>
+    /// <summary>Shared events and read access let UI consumers use the same type for standalone and list-slot handlers.</summary>
     public abstract class GuildHandlerBase : MonoBehaviour
     {
-        /// <summary>The bound binder (non-owning actionable view), or null when none is attached.</summary>
+        /// <summary>The owning handler or list manages the binder lifecycle; consumers receive a non-owning actionable view.</summary>
         public abstract IActionableGuildBinder? Binder { get; }
 
-        /// <summary>The bound model, or null when no binder is attached.</summary>
         public abstract Guild? Model { get; }
 
-        /// <summary>True when a binder is currently attached.</summary>
         public abstract bool HasValue { get; }
 
-        /// <summary>
-        /// Which axis built the bound row, or null when no binder is attached.
-        /// A row built by an axis that cannot key a loader never ran it, so the
-        /// readings that loader fills are at their default; the binder answers
-        /// that per loader through its <c>Loaded{Loader}</c> flags.
-        /// </summary>
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
         public GuildMountSurface? MountSurface => Binder?.MountSurface;
 
-        /// <summary>Fires whenever the bound model changes (initial attach + each binder update).</summary>
         public event Action<Guild>? Updated;
 
-        /// <summary>Fires once each time a binder is attached (non-owning actionable view).</summary>
         public event Action<IActionableGuildBinder>? Bound;
 
-        /// <summary>Fires when the handler encounters an exception.</summary>
         public event Action<Exception>? Failed;
 
-        // C# events can only be raised from the declaring type, so derived
-        // handlers raise through these protected helpers.
+        // C# events can only be raised by their declaring type; derived handlers need these helpers.
         protected void RaiseUpdated(Guild model) => Updated?.Invoke(model);
         protected void RaiseBound(IActionableGuildBinder binder) => Bound?.Invoke(binder);
         protected void RaiseFailed(Exception ex) => Failed?.Invoke(ex);

@@ -18,9 +18,7 @@ namespace GS2Studio.Generated.ProgressReward
         public override int GetHashCode() => Value?.GetHashCode() ?? 0;
         public override string ToString() => Value;
 
-        // Ordinal comparison so `Comparer<ProgressRewardId>.Default` produces a
-        // deterministic, culture-invariant order — the BinderCollection sort
-        // tie-break depends on this.
+        // Collection tie-breaks must use the same ID order regardless of the current culture.
         public int CompareTo(ProgressRewardId other) =>
             string.Compare(Value, other.Value, StringComparison.Ordinal);
         public static implicit operator string(ProgressRewardId id) => id.Value;

@@ -3,27 +3,8 @@
 //     Do not modify this file directly.
 // </auto-generated>
 
-// Filesystem-safe name normalization shared by every overlay loader.
-//
-// The studio-side codegen writes overlay assets under
-//   Resources/Overlays/<TypeName>/<safeInstanceId>.asset
-// where `<safeInstanceId>` is the original domain-type instance id passed
-// through this normalizer. Composite primary keys (e.g. `"JPY.tier1"`)
-// embed characters outside `[A-Za-z0-9_-]` (`.` in this case) that need
-// escaping for safe filesystem paths, so the studio side normalizes them
-// before writing.
-//
-// At runtime, every loader has only the original instance id in hand (it
-// comes from the binder, which carries the raw domain value). Each loader
-// therefore re-applies the same transform here before resolving a path,
-// keeping the runtime lookup in lockstep with the on-disk file names.
-//
-// The rules mirror studio2's `toSafeFileName` (`safeFileName.ts`):
-//   1. Insert `-` at every `[a-z][A-Z]` boundary (camelCase -> kebab-case).
-//   2. Replace anything outside `[A-Za-z0-9_-]` with `-`.
-//   3. Collapse consecutive `-` into a single `-`.
-//   4. Lowercase the whole string.
-//   5. Strip leading/trailing `-`.
+// Runtime lookups start with raw instance IDs, but assets use filesystem-safe names.
+// Keep this transform identical to studio2's toSafeFileName so both sides address the same asset.
 
 #nullable enable
 
@@ -40,7 +21,6 @@ namespace GS2Studio.Generated
                 return name;
             }
 
-            // Step 1: insert `-` at camelCase boundaries.
             var withBoundaries = new StringBuilder(name.Length + 8);
             for (var i = 0; i < name.Length; i++)
             {
@@ -52,7 +32,6 @@ namespace GS2Studio.Generated
                 withBoundaries.Append(c);
             }
 
-            // Step 2+3: replace invalid characters with `-`, collapse runs.
             var collapsed = new StringBuilder(withBoundaries.Length);
             var lastWasHyphen = false;
             for (var i = 0; i < withBoundaries.Length; i++)
@@ -74,10 +53,8 @@ namespace GS2Studio.Generated
                 collapsed.Append(safe);
             }
 
-            // Step 4: lowercase.
             var lowered = collapsed.ToString().ToLowerInvariant();
 
-            // Step 5: trim leading/trailing `-`.
             var start = 0;
             var end = lowered.Length;
             while (start < end && lowered[start] == '-')

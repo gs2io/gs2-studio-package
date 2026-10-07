@@ -16,24 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Equipment.UI
 {
     /// <summary>
-    /// UI value bound to <c>Equipment.propertyId</c>.
-    /// Subscribes to the sibling <c>EquipmentHandler.Updated</c> event
-    /// and publishes the resolved <c>string</c> value through
-    /// <c>OnUpdate</c> on every model update — unlike a label, the native
-    /// typed value is delivered (not a stringified form), so localization /
-    /// formatting consumers receive the raw value. Wire <c>OnUpdate</c> in
-    /// code to any <c>UnityEvent&lt;string&gt;</c> listener. Add this
-    /// component alongside (or under) a <c>EquipmentHandler</c> or
-    /// <c>EquipmentListItemHandler</c>; the handler is resolved
-    /// automatically via <c>GetComponentInParent&lt;&gt;</c> when no Inspector
-    /// reference is supplied.
-    ///
-    /// The component is also bidirectional: callers invoke <c>Select(value)</c>
-    /// to relay a value out through the write-side <c>OnSelect</c> event,
-    /// the counterpart of the read-side <c>OnUpdate</c> projection. This lets
-    /// an external source (dropdown, input field, custom code) push a selected
-    /// value to any wired consumer; the component itself neither interprets nor
-    /// persists it.
+    /// Native typed events leave formatting and persistence to consumers of the read and selection channels.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Equipment/Value/PropertyIdValue")]
     public sealed class EquipmentPropertyIdValue : MonoBehaviour
@@ -46,13 +29,7 @@ namespace GS2Studio.Generated.Equipment.UI
         public UnityEvent<string> OnUpdate => _onUpdate;
         public UnityEvent<string> OnSelect => _onSelect;
 
-        /// <summary>
-        /// Loads this component's readings come from. A row built by a mount
-        /// surface that skips one of these renders those readings as their
-        /// default; the surface says which loaders it skips through
-        /// <c>Gs2SkipsLoaders</c> on its enum member, so the two can be
-        /// compared before a scene is ever run.
-        /// </summary>
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
         public static readonly string[] RequiredLoaders = { "UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel" };
 
         private bool _subscribed;
@@ -64,8 +41,6 @@ namespace GS2Studio.Generated.Equipment.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;
@@ -102,10 +77,7 @@ namespace GS2Studio.Generated.Equipment.UI
             _onUpdate.Invoke(model.PropertyId);
         }
 
-        // Warn once and keep drawing. The readings below are at their default
-        // either way, and going silent would blank a label that mixes loaded
-        // and unloaded readings — the point here is to say which of the two it
-        // is, not to change what is drawn.
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
         private void WarnUnloadedLoadersOnce()
         {
             if (_warnedUnloadedLoaders) return;
@@ -117,13 +89,7 @@ namespace GS2Studio.Generated.Equipment.UI
                 $"{nameof(EquipmentPropertyIdValue)} on '{name}': this row's mount surface did not run UserdataInventoryEquipmentItemModel, UserdataEnchantEquipmentEnchantRarityParameterModel, which fills what this component reads (PropertyId); those readings render as their default, not as an absent value.", this);
         }
 
-        /// <summary>
-        /// Relays <paramref name="value"/> out to any listener wired to
-        /// <c>OnSelect</c> — the write-side counterpart of the read-side
-        /// <c>OnUpdate</c> projection. The component neither interprets nor
-        /// persists the value; reflecting it to an external source is the
-        /// responsibility of the Inspector / code-wired <c>OnSelect</c> consumer.
-        /// </summary>
+        /// <summary>Selection consumers own persistence; publishing a choice does not mutate the displayed model.</summary>
         public void Select(string value)
         {
             _onSelect.Invoke(value);

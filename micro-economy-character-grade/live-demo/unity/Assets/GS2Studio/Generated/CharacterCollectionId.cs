@@ -18,9 +18,7 @@ namespace GS2Studio.Generated.CharacterCollection
         public override int GetHashCode() => Value?.GetHashCode() ?? 0;
         public override string ToString() => Value;
 
-        // Ordinal comparison so `Comparer<CharacterCollectionId>.Default` produces a
-        // deterministic, culture-invariant order — the BinderCollection sort
-        // tie-break depends on this.
+        // Collection tie-breaks must use the same ID order regardless of the current culture.
         public int CompareTo(CharacterCollectionId other) =>
             string.Compare(Value, other.Value, StringComparison.Ordinal);
         public static implicit operator string(CharacterCollectionId id) => id.Value;

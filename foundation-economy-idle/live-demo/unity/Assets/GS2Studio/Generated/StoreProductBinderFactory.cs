@@ -21,14 +21,7 @@ using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.StoreProduct
 {
-    /// <summary>
-    /// Construction seam for <see cref="StoreProductBinder"/> and
-    /// <see cref="StoreProductBinderCollection"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder / collection in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IStoreProductBinderFactory
     {
         Task<IStoreProductBinder> CreateAsync(
@@ -39,11 +32,6 @@ namespace GS2Studio.Generated.StoreProduct
         IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, CurrencyTypeId currencyType);
     }
 
-    /// <summary>
-    /// Default <see cref="IStoreProductBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultStoreProductBinderFactory : IStoreProductBinderFactory
     {
         public static readonly DefaultStoreProductBinderFactory Instance = new DefaultStoreProductBinderFactory();

@@ -27,70 +27,36 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Equipment
 {
-    /// <summary>
-    /// MonoBehaviour handler for Equipment. Holds one EquipmentBinder,
-    /// re-exposes model updates as a Unity-friendly event, and supports being
-    /// driven either standalone (via Inspector-set identity keys) or by
-    /// programmatic wiring that calls <c>Bind</c>. List items use the separate
-    /// EquipmentListItemHandler, which reads its binder from the
-    /// parent list instead of owning one.
-    /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Equipment/Equipment Handler")]
     public sealed class EquipmentHandler : EquipmentHandlerBase
     {
         [SerializeField] private string? _id;
         [SerializeField] private string? _propertyId;
         [SerializeField] private string? _enchant;
-        // Hidden from the Inspector and not serialized. Resolved lazily by
-        // searching the entire active scene so the Handler does not have to
-        // sit under a Gs2HolderRuntimeContextProvider parent.
         private Gs2HolderRuntimeContextProvider? _runtime;
 
-        // Non-serialized override for tests / programmatic wiring. Takes
-        // precedence over `_runtime` when set via SetRuntimeProvider.
         private IGs2RuntimeContextProvider? _runtimeOverride;
 
-        // Construction seam. Defaults to DefaultEquipmentBinderFactory.Instance;
-        // override via SetBinderFactory to substitute a fake binder.
         private IEquipmentBinderFactory? _binderFactory;
 
         private IEquipmentBinder? _binder;
         private bool _ownsBinder;
         private bool _hasOwnSubscription;
         private bool _isDestroyed;
-        // Monotonic binding-intent generation. Every operation that can change
-        // the desired binder advances it; a slower in-flight reload whose
-        // captured value no longer matches discards its result instead of
-        // attaching a stale binder.
         private int _bindingIntentGeneration;
 
-        /// <summary>The bound binder (non-owning actionable view), or null before <c>ReloadAsync</c>/<c>Bind</c>.
-        /// The owning binder stays in <c>_binder</c> (needed for Subscribe/Dispose).</summary>
         public override IActionableEquipmentBinder? Binder => _binder;
 
-        /// <summary>The bound model, or null when no binder is attached. The
-        /// binder implements <see cref="Equipment"/>, so it is the model.</summary>
         public override Equipment? Model => _binder;
 
-        /// <summary>True when a binder is currently attached.</summary>
         public override bool HasValue => _binder != null;
 
-        /// <summary>
-        /// Overrides the runtime context provider. Use from tests or programmatic
-        /// wiring to swap in a fake provider; takes precedence over the
-        /// scene-resolved <c>Gs2HolderRuntimeContextProvider</c>. Pass null
-        /// to revert to the scene-resolved provider.
-        /// </summary>
+        /// <summary>Runtime injection avoids a serialized scene dependency; null restores scene discovery.</summary>
         public void SetRuntimeProvider(IGs2RuntimeContextProvider? provider)
         {
             _runtimeOverride = provider;
         }
 
-        /// <summary>
-        /// Overrides the binder factory. Use from tests or programmatic wiring
-        /// to substitute a fake EquipmentBinder; takes precedence over the
-        /// default factory. Pass null to revert to the default.
-        /// </summary>
         public void SetBinderFactory(IEquipmentBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -99,14 +65,7 @@ namespace GS2Studio.Generated.Equipment
         private IEquipmentBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultEquipmentBinderFactory.Instance;
 
-        /// <summary>
-        /// Overwrites the identity keys and, when the runtime + keys are ready,
-        /// immediately reloads so the bound model reflects the new target.
-        /// For programmatic wiring that re-targets a standalone handler. The
-        /// reload is fire-and-forget (failures surface via the <see cref="Failed"/>
-        /// event + <c>Debug.LogException</c>); await <see cref="ReloadAsync"/>
-        /// directly when completion must be observed.
-        /// </summary>
+        /// <summary>Await ReloadAsync when completion matters; key-driven reloads report failures through Failed and logging.</summary>
         public void SetKeys(string id, string propertyId, string enchant)
         {
             InvalidateBindingIntent();
@@ -117,40 +76,17 @@ namespace GS2Studio.Generated.Equipment
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
-        /// <summary>
-        /// Re-reads the bound model from the server, keeping the identity keys
-        /// it already has. Parameterless and returning void so it can be wired
-        /// in the Inspector.
-        ///
-        /// A bound value does not need this. The binder subscribes to what it
-        /// reads, so an action that writes through the SDK's cache reaches this
-        /// handler on its own. Reload is for what no subscription sees: a value
-        /// the server moved without the cache being told. It discards the
-        /// binder and builds another, so wiring it to every completed action
-        /// throws away a cache the screen was about to read.
-        ///
-        /// Fire-and-forget, like <see cref="SetKeys"/>: failures surface via
-        /// the <see cref="Failed"/> event + <c>Debug.LogException</c>; await
-        /// <see cref="ReloadAsync"/> when completion must be observed.
-        /// </summary>
+        /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
         {
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
-        /// <summary>
-        /// Creates a EquipmentBinder from the current identity keys, mounts it,
-        /// and starts forwarding its changes via <see cref="Updated"/>.
-        /// Disposes any previously-owned binder before attaching the new one.
-        /// </summary>
         public async Task ReloadAsync(CancellationToken cancellationToken = default)
         {
             if (_isDestroyed) return;
-            // Captured up front (before validation) so the latest binding
-            // intent always wins: SetKeys, Bind, OnDestroy, or another reload
-            // bumps this, and any slower in-flight reload detects the mismatch
-            // below and bails.
+            // Advance before validation so even an unusable new target supersedes an older in-flight reload.
             var generation = InvalidateBindingIntent();
             try
             {
@@ -164,9 +100,7 @@ namespace GS2Studio.Generated.Equipment
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
                 var binder = await ResolveBinderFactory().CreateAsync(new EquipmentId(_id ?? string.Empty), _propertyId, new EquipmentEnchantId(_enchant ?? string.Empty), gs2, session, cancellationToken);
-                // Another binding intent took over while CreateAsync was in
-                // flight. Discard the now-stale binder so we never attach an
-                // out-of-date binder.
+                // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
                     binder.Dispose();
@@ -177,29 +111,20 @@ namespace GS2Studio.Generated.Equipment
             }
             catch (OperationCanceledException)
             {
-                // Cancellation (e.g. GameObject destroyed mid-reload) is not a
-                // failure; propagate without raising Failed.
+                // Cancellation must reach the awaiting caller without being reported as a binding failure.
                 throw;
             }
             catch (Exception ex)
             {
-                // Raise Failed only for the current binding intent, then rethrow
-                // so an awaiting caller also observes the failure. A superseded
-                // reload must not report a failure for an intent that is no
-                // longer active. The fire-and-forget Start path uses
-                // TryReloadAsync, which logs and swallows.
+                // Superseded reloads must not raise Failed for the current target; their awaiting callers still receive the exception.
                 if (generation == _bindingIntentGeneration) RaiseFailed(ex);
                 throw;
             }
         }
 
         /// <summary>
-        /// Fire-and-forget variant for Unity lifecycle entry points (Start):
-        /// runs <see cref="ReloadAsync"/>, reports any failure via the Failed
-        /// event (raised inside ReloadAsync) plus <c>Debug.LogException</c>, and
-        /// returns <c>false</c> instead of surfacing the exception to an
-        /// <c>async void</c> caller. Cancellation is rethrown so the caller's
-        /// <see cref="OperationCanceledException"/> handling still runs.
+        /// Log failures instead of letting exceptions escape Unity lifecycle async-void entry points.
+        /// Cancellation still propagates to their cancellation handler.
         /// </summary>
         public async Task<bool> TryReloadAsync(CancellationToken cancellationToken = default)
         {
@@ -219,20 +144,7 @@ namespace GS2Studio.Generated.Equipment
             }
         }
 
-        /// <summary>
-        /// Attaches an externally-owned EquipmentBinder (lifecycle managed by the
-        /// caller). No-op when the same binder is already attached.
-        ///
-        /// <paramref name="subscribe"/> defaults to true so callers get the
-        /// per-item <see cref="Updated"/> stream. Pass <c>false</c> when an
-        /// external subscription path (e.g. a EquipmentBinderCollection) already
-        /// attaches a binder-level subscription, to avoid double notifications.
-        ///
-        /// Re-calling <c>Bind</c> with the same binder upgrades the subscription
-        /// state: if the previous bind was <c>subscribe: false</c> and the
-        /// caller now passes <c>subscribe: true</c>, a subscription is attached
-        /// without re-firing <see cref="Bound"/> / <see cref="Updated"/>.
-        /// </summary>
+        /// <summary>External owners can disable the extra subscription to avoid duplicate notifications; rebinding the same binder can enable it without repeating Bound.</summary>
         public void Bind(IEquipmentBinder binder, bool subscribe = true)
         {
             if (_isDestroyed) return;
@@ -248,20 +160,11 @@ namespace GS2Studio.Generated.Equipment
             Attach(binder, subscribe, generation);
         }
 
-        /// <summary>Forwards an Invalidate request to the bound binder, if any.</summary>
         public void Invalidate()
         {
             _binder?.Invalidate();
         }
 
-        /// <summary>
-        /// Unity lifecycle: when the handler is placed in a scene standalone
-        /// (no programmatic wiring that calls <c>Bind</c>), wait for the
-        /// runtime holders to finish initializing and for the
-        /// Inspector-assigned identity keys to be populated, then trigger
-        /// <see cref="ReloadAsync"/>. Skipped when a binder has already been
-        /// attached externally.
-        /// </summary>
         private async void Start()
         {
             var cancellationToken = this.GetCancellationTokenOnDestroy();
@@ -274,7 +177,7 @@ namespace GS2Studio.Generated.Equipment
             }
             catch (OperationCanceledException)
             {
-                // GameObject destroyed before initialization completed.
+                // Destruction while waiting for runtime readiness is an expected shutdown path.
             }
         }
 
@@ -293,10 +196,7 @@ namespace GS2Studio.Generated.Equipment
         private IGs2RuntimeContextProvider? ResolveRuntimeProvider()
         {
             if (_runtimeOverride != null) return _runtimeOverride;
-            // Scan the entire active scene rather than only the parent
-            // chain — placing the holder under an unrelated root keeps
-            // working without explicit wiring. FindAnyObjectByType skips
-            // sort overhead since only one provider is expected per scene.
+            // Search the active scene so a provider under an unrelated root needs no explicit wiring.
             if (_runtime == null) _runtime = FindAnyObjectByType<Gs2HolderRuntimeContextProvider>();
             return _runtime;
         }
@@ -321,8 +221,7 @@ namespace GS2Studio.Generated.Equipment
         private void SubscribeToBinder(IEquipmentBinder binder)
         {
             _hasOwnSubscription = true;
-            // Stale-callback guard: if Bind() or Reload() later replaces _binder,
-            // this captured `binder` will no longer match and the callback is a no-op.
+            // External binders can outlive this attachment, so their callbacks must ignore later bindings.
             binder.Subscribe(() =>
             {
                 if (_binder != binder) return;
@@ -332,8 +231,7 @@ namespace GS2Studio.Generated.Equipment
 
         private void DisposeOwnedBinder()
         {
-            // Detach shared state before Dispose can invoke external code and
-            // synchronously establish a newer binding intent.
+            // Dispose may synchronously establish another binding; clear shared state before invoking it.
             var binder = _binder;
             var ownsBinder = _ownsBinder;
             _binder = null;

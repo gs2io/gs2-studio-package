@@ -16,14 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Schedule.UI
 {
     /// <summary>
-    /// UI label bound to the template
-    /// <c>{relativeStartAt} - {relativeEndAt}</c>. Each <c>{key}</c> placeholder is
-    /// substituted with the resolved value from <c>Schedule</c>
-    /// on every Handler <c>Updated</c> event and the rendered string is
-    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
-    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
-    /// TextMeshPro, or custom logic — so this component stays agnostic to
-    /// the rendering target.
+    /// UnityEvent output lets formatted templates drive different text-rendering targets without generator-specific adapters.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Schedule/TemplateLabel/RelativeWindowLabel")]
     public sealed class ScheduleRelativeWindowLabel : MonoBehaviour
@@ -42,8 +35,6 @@ namespace GS2Studio.Generated.Schedule.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

@@ -16,17 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Character.UI
 {
     /// <summary>
-    /// UI label bound to <c>Character.<literal></c>.
-    /// Subscribes to the sibling <c>CharacterHandler.Updated</c> event
-    /// and publishes the resolved string through <c>OnUpdate</c> on every
-    /// model update. Wire <c>OnUpdate</c> in the Inspector to any text
-    /// consumer — <c>UnityEngine.UI.Text</c>, TextMeshPro, or custom logic —
-    /// so this component stays agnostic to the rendering target. Add this
-    /// component alongside (or under) a <c>CharacterHandler</c> or
-    /// <c>CharacterListItemHandler</c>; the
-    /// handler is resolved automatically via
-    /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is
-    /// supplied.
+    /// UnityEvent output keeps the text-rendering target under the consuming project's control.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Character/Label/AcquiredLabel")]
     public sealed class CharacterAcquiredLabel : MonoBehaviour
@@ -45,8 +35,6 @@ namespace GS2Studio.Generated.Character.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

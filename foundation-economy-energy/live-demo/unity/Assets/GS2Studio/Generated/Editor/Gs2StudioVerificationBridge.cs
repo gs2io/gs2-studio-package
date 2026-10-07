@@ -152,9 +152,7 @@ namespace GS2Studio.Generated.Runtime
             WriteReceipt(requestState, VerificationPhase.AwaitingPlayMode, string.Empty);
         }
 
-        // The callback argument is named rather than discarded: a parameter
-        // called `_` is a variable, not a discard, so `out _` below would try
-        // to assign an `object` where a `bool` is wanted and fail to compile.
+        // A parameter named `_` would shadow the bool discard in ReadAndAdoptRequest(out _).
         private static void OnCompilationStarted(object compilationContext)
         {
             VerificationRequestState requestState = ReadAndAdoptRequest(out _);
@@ -163,9 +161,7 @@ namespace GS2Studio.Generated.Runtime
                 return;
             }
 
-            // A compilation-start callback is the boundary that owns this
-            // revision, including when polling observed the request just now.
-            // Later callbacks must use this same state or be discarded.
+            // Later compilation callbacks must use the state owned by this boundary or be discarded.
             requestState.compilationAwaitingBoundary = false;
             requestState.compilationRecompileRequested = false;
             requestState.compilationInProgress = true;
@@ -374,9 +370,7 @@ namespace GS2Studio.Generated.Runtime
             requestState.playModeRestartScheduled = false;
             if (currentState == null || !ReferenceEquals(currentState, requestState))
             {
-                // The callback belongs to an abandoned state. A transferred
-                // scheduled flag is not the callback currently executing, so
-                // always create a fresh reservation for the adopted state.
+                // A transferred scheduled flag belongs to the abandoned callback, so the adopted state needs a fresh reservation.
                 if (currentState != null)
                 {
                     currentState.playModeNeedsRestart = true;

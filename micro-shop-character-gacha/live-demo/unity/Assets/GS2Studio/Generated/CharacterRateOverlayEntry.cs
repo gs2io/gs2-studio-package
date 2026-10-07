@@ -11,11 +11,6 @@ using GS2Studio.Generated.GachaRarity;
 
 namespace GS2Studio.Generated.CharacterRate
 {
-    /// <summary>
-    /// AssetDelivery overlay entry for CharacterRate.
-    /// Field values are populated from the studio2-emitted overlay payload
-    /// at AssetBundle build time.
-    /// </summary>
     public class CharacterRateOverlayEntry : ScriptableObject
     {
         [SerializeField] private string _rawInstanceId = default!;
@@ -27,13 +22,7 @@ namespace GS2Studio.Generated.CharacterRate
         public GachaRarityId Rarity => new GachaRarityId(_rarity);
         public CharacterId Character => new CharacterId(_character);
 
-        /// <summary>
-        /// Copy the overlay-bound values into <paramref name="model"/>. Public
-        /// against the public read-write contract so external stubs can apply
-        /// the overlay to their own <see cref="IMutableCharacterRate"/>
-        /// implementation; the generated binder calls this during
-        /// mount/subscribe with its internal mutable model.
-        /// </summary>
+        /// <summary>The public mutable contract lets external models receive overlays without depending on the binder's internal model.</summary>
         public void ApplyTo(IMutableCharacterRate model)
         {
             model.Rarity = Rarity;

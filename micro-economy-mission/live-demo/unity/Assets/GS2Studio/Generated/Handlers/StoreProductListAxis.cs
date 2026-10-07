@@ -7,31 +7,14 @@
 
 namespace GS2Studio.Generated.StoreProduct
 {
-    /// <summary>
-    /// Which mount axis a StoreProduct list reads through.
-    /// StoreProductBinderCollection exposes one mount method per axis;
-    /// this names them so a scene can pick one instead of taking whichever
-    /// loader the generator elected.
-    /// <para>
-    /// Member values are derived from the member name, not its position, so
-    /// adding or reordering an axis leaves every already-stored value pointing
-    /// at the axis it always pointed at.
-    /// </para>
-    /// <para>
-    /// Where a <c>StoreProductMountSurface</c> is also generated, these
-    /// members are one-to-one with its members other than <c>Full</c>: that
-    /// enum says which path built a row, this one says which path to mount.
-    /// </para>
-    /// </summary>
+    /// <summary>Name-derived values preserve authored scene selections when axes are added or reordered.</summary>
     public enum StoreProductListAxis
     {
-        /// <summary>No axis was written here. A scene that was never baked reads as this.</summary>
+        /// <summary>Zero keeps an unbaked scene from silently selecting a mount axis.</summary>
         Unset = 0,
 
-        /// <summary>Read from the ShowcaseShopCurrency master-data mount axis.</summary>
         ShowcaseShopCurrencyMaster = -136075035,
 
-        /// <summary>Read from the Money2Currency master-data mount axis.</summary>
         Money2CurrencyMaster = -711576390,
     }
 }

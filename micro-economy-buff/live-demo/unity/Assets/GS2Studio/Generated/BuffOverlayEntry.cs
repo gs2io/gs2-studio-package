@@ -10,11 +10,6 @@ using GS2Studio.Generated.Schedule;
 
 namespace GS2Studio.Generated.Buff
 {
-    /// <summary>
-    /// AssetDelivery overlay entry for Buff.
-    /// Field values are populated from the studio2-emitted overlay payload
-    /// at AssetBundle build time.
-    /// </summary>
     public class BuffOverlayEntry : ScriptableObject
     {
         [SerializeField] private string _rawInstanceId = default!;
@@ -26,13 +21,7 @@ namespace GS2Studio.Generated.Buff
         public ScheduleId? Schedule =>
             _hasSchedule ? new ScheduleId(_schedule) : (ScheduleId?)null;
 
-        /// <summary>
-        /// Copy the overlay-bound values into <paramref name="model"/>. Public
-        /// against the public read-write contract so external stubs can apply
-        /// the overlay to their own <see cref="IMutableBuff"/>
-        /// implementation; the generated binder calls this during
-        /// mount/subscribe with its internal mutable model.
-        /// </summary>
+        /// <summary>The public mutable contract lets external models receive overlays without depending on the binder's internal model.</summary>
         public void ApplyTo(IMutableBuff model)
         {
             model.Schedule = Schedule;

@@ -13,18 +13,12 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Schedule
 {
-    /// <summary>
-    /// Read surface shared by ScheduleListHandler and the ref-scoped
-    /// ScheduleListBy*Handler variants. ScheduleListItemHandler
-    /// resolves its parent list through this interface, so one item prefab
-    /// serves every list flavor.
-    /// </summary>
+    /// <summary>A shared source lets one item prefab attach to both ordinary and ref-scoped lists.</summary>
     public interface IScheduleBinderListSource
     {
-        /// <summary>Stable index/enumeration view of the current non-owning binder set; Model.Id is not a unique lookup key.</summary>
+        /// <summary>Model.Id need not be unique, so consumers use a non-owning index view.</summary>
         IReadOnlyList<IActionableScheduleBinder> Binders { get; }
 
-        /// <summary>Fires after reload and on each subsequent membership/order change.</summary>
         event Action? ListChanged;
     }
 }

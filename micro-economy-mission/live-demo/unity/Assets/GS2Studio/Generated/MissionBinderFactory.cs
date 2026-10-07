@@ -20,14 +20,7 @@ using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.Mission
 {
-    /// <summary>
-    /// Construction seam for <see cref="MissionBinder"/> and
-    /// <see cref="MissionBinderCollection"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder / collection in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IMissionBinderFactory
     {
         Task<IMissionBinder> CreateAsync(
@@ -38,11 +31,6 @@ namespace GS2Studio.Generated.Mission
         IMissionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, MissionCollectionId missionCollection);
     }
 
-    /// <summary>
-    /// Default <see cref="IMissionBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultMissionBinderFactory : IMissionBinderFactory
     {
         public static readonly DefaultMissionBinderFactory Instance = new DefaultMissionBinderFactory();

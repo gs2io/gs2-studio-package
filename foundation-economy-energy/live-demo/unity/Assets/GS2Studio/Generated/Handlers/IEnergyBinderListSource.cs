@@ -16,18 +16,12 @@ using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Energy
 {
-    /// <summary>
-    /// Read surface shared by EnergyListHandler and the ref-scoped
-    /// EnergyListBy*Handler variants. EnergyListItemHandler
-    /// resolves its parent list through this interface, so one item prefab
-    /// serves every list flavor.
-    /// </summary>
+    /// <summary>A shared source lets one item prefab attach to both ordinary and ref-scoped lists.</summary>
     public interface IEnergyBinderListSource
     {
-        /// <summary>Stable index/enumeration view of the current non-owning binder set; Model.Id is not a unique lookup key.</summary>
+        /// <summary>Model.Id need not be unique, so consumers use a non-owning index view.</summary>
         IReadOnlyList<IActionableEnergyBinder> Binders { get; }
 
-        /// <summary>Fires after reload and on each subsequent membership/order change.</summary>
         event Action? ListChanged;
     }
 }

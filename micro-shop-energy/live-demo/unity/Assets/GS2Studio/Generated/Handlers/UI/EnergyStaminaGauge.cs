@@ -16,11 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Energy.UI
 {
     /// <summary>
-    /// UI gauge displaying <c>currentValue / currentMaximumValue</c>
-    /// on a UnityEngine.UI.Image (filled). Subscribes to the sibling
-    /// <c>EnergyHandler.Updated</c> event so the fill amount stays
-    /// in sync with the model. The gauge clamps the fraction to
-    /// <c>[0, 1]</c> before assigning.
+    /// A non-positive range renders empty rather than dividing by zero.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Energy/Gauge/StaminaGauge")]
     public sealed class EnergyStaminaGauge : MonoBehaviour
@@ -37,8 +33,6 @@ namespace GS2Studio.Generated.Energy.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

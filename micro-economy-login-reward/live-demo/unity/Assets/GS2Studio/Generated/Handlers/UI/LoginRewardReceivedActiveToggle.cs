@@ -17,37 +17,14 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.LoginReward.UI
 {
     /// <summary>
-    /// Drives <c>GameObject.SetActive(bool)</c> on two GameObject groups
-    /// based on the condition <c>rowElement(LoginRewardCollection.receivedSteps)</c> evaluated
-    /// against the sibling <c>LoginRewardHandler.Model</c>:
-    /// <list type="bullet">
-    ///   <item><c>_activeWhenTrue</c> — shown when the condition holds.</item>
-    ///   <item><c>_activeWhenFalse</c> — shown when the condition does not hold.</item>
-    /// </list>
-    /// Either array may be left empty if only one branch needs targets.
-    /// Subscribes to the handler's <c>Updated</c> event so the active state
-    /// refreshes on every model change. Attach to (or under) a
-    /// <c>LoginRewardHandler</c> or <c>LoginRewardListItemHandler</c>;
-    /// the handler is resolved via
-    /// <c>GetComponentInParent&lt;&gt;</c> when no Inspector reference is
-    /// supplied.
-    ///
-    /// Targets must reference sibling / child GameObjects — never this
-    /// component's host. Falling back to <c>gameObject</c> would let
-    /// <c>SetActive(false)</c> disable this MonoBehaviour, unsubscribing
-    /// <c>Updated</c> and leaving the toggle stuck. Null entries inside
-    /// either array are skipped so a partially-wired Inspector slot does
-    /// not crash the apply loop.
+    /// Targets must be siblings or children; disabling this host would unsubscribe Updated and leave the toggle unable to reactivate itself.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/LoginReward/ActiveToggle/ReceivedActiveToggle")]
     public sealed class LoginRewardReceivedActiveToggle : MonoBehaviour
     {
         [Gs2AutoResolvedHandler]
         [SerializeField] private LoginRewardHandlerBase? _handler;
-        // Resolved from the parent chain exactly like the primary handler. A
-        // single-entry handler placed on an ancestor (typically the page root)
-        // is reachable from inside a list row too, which matters because a row
-        // lives in a prefab and a prefab cannot store a scene reference.
+        // Prefab rows cannot store scene references, so companions must be discoverable through their parent chain.
         [Gs2AutoResolvedHandler]
         [SerializeField] private LoginRewardCollectionHandlerBase? _loginRewardCollectionHandler;
         [SerializeField] private GameObject[] _activeWhenTrue = System.Array.Empty<GameObject>();
@@ -63,8 +40,6 @@ namespace GS2Studio.Generated.LoginReward.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;
@@ -80,10 +55,7 @@ namespace GS2Studio.Generated.LoginReward.UI
             }
             if (_loginRewardCollectionHandler == null)
             {
-                // Not fatal, unlike the primary handler: the component keeps
-                // drawing from whatever the missing companion falls back to.
-                // Say where the handler has to go — "not found" on its own does
-                // not tell anyone what to change.
+                // Missing companions retain their expression defaults; the primary handler can still drive the component.
                 if (!_warnedMissingLoginRewardCollectionHandler)
                 {
                     _warnedMissingLoginRewardCollectionHandler = true;
@@ -129,9 +101,7 @@ namespace GS2Studio.Generated.LoginReward.UI
             ApplyActiveState(_activeWhenFalse, !result);
         }
 
-        // The companion model changed, so anything read from it is stale.
-        // Redraw from the primary model's current value; there is nothing to
-        // draw until the primary handler has one.
+        // Companion values can change independently, but applying them still requires the current primary model.
         private void OnLoginRewardCollectionUpdated(GS2Studio.Generated.LoginRewardCollection.LoginRewardCollection companionModel)
         {
             if (_handler?.Model != null) OnUpdated(_handler.Model);
@@ -149,14 +119,7 @@ namespace GS2Studio.Generated.LoginReward.UI
 
         private bool _warnedLoginRewardCollectionReceivedStepsParentMismatch;
 
-        /// <summary>
-        /// Whether the element at this row's <c>ElementIndex</c> in
-        /// <c>LoginRewardCollection.receivedSteps</c> is true. False while the companion
-        /// handler, its model or this row's binder is missing, and when the index
-        /// falls outside the list. Also false when the companion model is not this
-        /// row's parent row: another row's list would draw the wrong state without
-        /// any error, so that case warns once.
-        /// </summary>
+        /// <summary>Reject another parent's list: a valid element index alone could silently display the wrong row's state.</summary>
         private bool ReadLoginRewardCollectionReceivedStepsAtRow(LoginReward model)
         {
             var companion = _loginRewardCollectionHandler?.Model;

@@ -18,65 +18,32 @@ using GS2Studio.Generated.EquipmentEnchant;
 
 namespace GS2Studio.Generated.EquipmentEnchantSlotChance
 {
-    /// <summary>
-    /// Pure read contract for <see cref="EquipmentEnchantSlotChanceBinder"/>: the read-only
-    /// model surface (<see cref="EquipmentEnchantSlotChance"/>) plus the single-fetch
-    /// read navigation. Substitutable seam — code holding a binder for reads
-    /// can be faked against this interface. No server-side operations and no
-    /// lifecycle (Subscribe/Dispose/Mount).
-    /// </summary>
+    /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyEquipmentEnchantSlotChanceBinder : EquipmentEnchantSlotChance
     {
     }
 
-    /// <summary>
-    /// Actionable contract for <see cref="EquipmentEnchantSlotChanceBinder"/>: the read contract
-    /// plus the delegated-action dispatchers (server-side operations). This is
-    /// the element type yielded by the companion Collection (enumeration /
-    /// <c>Get</c> / <c>Where*</c>), so actions stay callable from collection
-    /// results. Still no lifecycle (Subscribe/Dispose/Mount).
-    /// </summary>
+    /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableEquipmentEnchantSlotChanceBinder : IReadOnlyEquipmentEnchantSlotChanceBinder
     {
     }
 
-    /// <summary>
-    /// Owning contract for <see cref="EquipmentEnchantSlotChanceBinder"/>: adds the lifecycle
-    /// surface (Subscribe / Invalidate / Dispose) over <see cref="IActionableEquipmentEnchantSlotChanceBinder"/>.
-    /// Returned by the binder factory; a fake implementation substitutes the
-    /// whole binder.
-    /// </summary>
+    /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
     public interface IEquipmentEnchantSlotChanceBinder : IActionableEquipmentEnchantSlotChanceBinder, IDisposable
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
     }
 
-    /// <summary>
-    /// Lifecycle-free base for <see cref="EquipmentEnchantSlotChanceBinder"/>.
-    /// Owns <c>_model</c> / <c>_gs2</c> / <c>_session</c> and implements the
-    /// read-only <see cref="EquipmentEnchantSlotChance"/> contract by forwarding each
-    /// model property to <c>_model</c> (so consumers read <c>binder.{Prop}</c>
-    /// directly). This lets binders reached through a non-owning view
-    /// (collection <c>Get</c> / <c>Where*</c> / enumeration) still read their
-    /// model. Never exposes <c>Dispose</c>, <c>Subscribe</c>, or
-    /// <c>MountAsync</c>; the disposed-guard hook is a virtual no-op overridden
-    /// by the owning derived class. Delegated actions live on the owning
-    /// derived class (every binder instance is the owning type).
-    /// </summary>
+    /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
     public class ReadOnlyEquipmentEnchantSlotChanceBinder : IReadOnlyEquipmentEnchantSlotChanceBinder
     {
-        // `private protected` because the mutable model type is internal; only
-        // the same-assembly owning derived binder reads/writes this field.
+        // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableEquipmentEnchantSlotChance _model;
         protected readonly Gs2Domain _gs2;
         protected readonly IGameSession _session;
 
-        /// <summary>
-        /// Internal mutable view of the bound model. Reconcile paths on the
-        /// owning collection write through this; external consumers only see
-        /// the read-only <c>EquipmentEnchantSlotChance</c> surface this binder implements.
-        /// </summary>
+        /// <summary>Collection reconciliation needs mutation access while public model consumers remain read-only.</summary>
         internal MutableEquipmentEnchantSlotChance MutableModel => _model;
         /// <inheritdoc cref="EquipmentEnchantSlotChance.Id" />
         public EquipmentEnchantSlotChanceId Id => _model.Id;
@@ -86,12 +53,7 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
         public int Count => _model.Count;
         /// <inheritdoc cref="EquipmentEnchantSlotChance.Weight" />
         public int Weight => _model.Weight;
-        /// <summary>
-        /// Base constructor. Stores the bound model + service handles on the
-        /// protected fields shared with the owning derived class. `private
-        /// protected` because the mutable model parameter is internal (only the
-        /// same-assembly owning binder constructs through here).
-        /// </summary>
+
         private protected ReadOnlyEquipmentEnchantSlotChanceBinder(MutableEquipmentEnchantSlotChance model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -99,23 +61,10 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
             _session = session ?? throw new ArgumentNullException(nameof(session));
         }
 
-        /// <summary>
-        /// Disposed-guard hook for navigation declared on this read base. The
-        /// single-fetch <c>Get{Child}</c> sugar lives here (so it is callable
-        /// through the read contract <see cref="IReadOnlyEquipmentEnchantSlotChanceBinder"/>) and
-        /// calls this hook. The base is a no-op; the owning derived class
-        /// overrides it to route to <c>ThrowIfDisposed</c>, so a disposed binder
-        /// still throws (every binder instance is the owning derived type).
-        /// Parent-side <c>Get{Child}s</c> sugar stays on the owning class — it
-        /// owns the lazily-built child Collection root it disposes.
-        /// </summary>
+        /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
     }
 
-    /// <summary>
-    /// Binder for EquipmentEnchantSlotChance
-    /// Binds GS2 resource values to the model and automatically reflects server-side changes
-    /// </summary>
     public sealed class EquipmentEnchantSlotChanceBinder : ReadOnlyEquipmentEnchantSlotChanceBinder, IEquipmentEnchantSlotChanceBinder
     {
         private readonly List<Action> _unsubscribers = new List<Action>();
@@ -124,10 +73,7 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
 
 
 
-        /// <summary>
-        /// Internal constructor. External construction must go through <c>CreateAsync</c>
-        /// or one of the list static factories on the companion Collection class.
-        /// </summary>
+        /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal EquipmentEnchantSlotChanceBinder(
             MutableEquipmentEnchantSlotChance model,
             Gs2Domain gs2,
@@ -136,11 +82,7 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
         {
         }
 
-        /// <summary>
-        /// Creates a EquipmentEnchantSlotChance instance from identity parameters. The
-        /// returned model carries the identity state required by loaders
-        /// (`_model.Id` and any `_model.{Prop}` references in loader constructors).
-        /// </summary>
+        /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableEquipmentEnchantSlotChance CreateModel(EquipmentEnchantSlotChanceId id)
         {
             var model = new MutableEquipmentEnchantSlotChance();
@@ -148,10 +90,6 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
             return model;
         }
 
-        /// <summary>
-        /// Creates a EquipmentEnchantSlotChanceBinder and mounts it to GS2 resources.
-        /// This is the only external construction path for mount-based usage.
-        /// </summary>
         public static async Task<EquipmentEnchantSlotChanceBinder> CreateAsync(
             EquipmentEnchantSlotChanceId id,
             Gs2Domain gs2,
@@ -164,10 +102,6 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
             return binder;
         }
 
-        /// <summary>
-        /// Loads GS2 resource values and mounts them to the model
-        /// </summary>
-        /// <param name="cancellationToken">Cancellation token</param>
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -176,28 +110,18 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
             _mounted = true;
         }
 
-        /// <summary>
-        /// Subscribes to GS2 resource changes and automatically updates the model
-        /// </summary>
-        /// <param name="onChange">Callback on change (optional)</param>
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
 
         }
 
-        /// <summary>
-        /// Invalidates cache and triggers a reload
-        /// </summary>
         public void Invalidate()
         {
             ThrowIfDisposed();
 
         }
 
-        /// <summary>
-        /// Throws an exception if already disposed
-        /// </summary>
         private void ThrowIfDisposed()
         {
             if (_disposed)
@@ -206,21 +130,8 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
             }
         }
 
-        /// <summary>
-        /// Routes the navigation-time disposed guard to the owning lifecycle
-        /// check. The read base hosts the single-fetch <c>Get{Child}</c> sugar
-        /// (callable through <see cref="IReadOnlyEquipmentEnchantSlotChanceBinder"/>) and calls
-        /// the base no-op hook; this override makes a disposed binder throw
-        /// <c>ObjectDisposedException</c> from those navigation calls. Parent-side
-        /// <c>Get{Child}s</c> sugar lives on this owning class and calls
-        /// <c>ThrowIfDisposed</c> directly.
-        /// </summary>
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
 
-        /// <summary>
-        /// Validates that the binder is ready to dispatch an action:
-        /// not disposed and has been mounted (either via <c>CreateAsync</c> or a list factory).
-        /// </summary>
         private void EnsureActionContext()
         {
             ThrowIfDisposed();
@@ -231,9 +142,6 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
             }
         }
 
-        /// <summary>
-        /// Releases resources and unsubscribes
-        /// </summary>
         public void Dispose()
         {
             if (_disposed)

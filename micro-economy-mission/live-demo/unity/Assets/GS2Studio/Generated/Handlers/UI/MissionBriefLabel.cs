@@ -16,14 +16,7 @@ using GS2Studio.Generated.Runtime;
 namespace GS2Studio.Generated.Mission.UI
 {
     /// <summary>
-    /// UI label bound to the template
-    /// <c>Wants {target} on the counter. Pays {reward} coins.</c>. Each <c>{key}</c> placeholder is
-    /// substituted with the resolved value from <c>Mission</c>
-    /// on every Handler <c>Updated</c> event and the rendered string is
-    /// published through <c>OnUpdate</c>. Wire <c>OnUpdate</c> in the
-    /// Inspector to any text consumer — <c>UnityEngine.UI.Text</c>,
-    /// TextMeshPro, or custom logic — so this component stays agnostic to
-    /// the rendering target.
+    /// UnityEvent output lets formatted templates drive different text-rendering targets without generator-specific adapters.
     /// </summary>
     [AddComponentMenu("GS2 Studio/DomainType/Mission/TemplateLabel/BriefLabel")]
     public sealed class MissionBriefLabel : MonoBehaviour
@@ -42,8 +35,6 @@ namespace GS2Studio.Generated.Mission.UI
             ResolveHandler();
             if (_handler == null)
             {
-                // Surface the wiring failure once instead of silently doing
-                // nothing, so a missing/misplaced handler is discoverable.
                 if (!_warnedMissingHandler)
                 {
                     _warnedMissingHandler = true;

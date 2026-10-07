@@ -9,22 +9,14 @@ using System;
 
 namespace GS2Studio.Generated.Runtime
 {
-    /// <summary>
-    /// The load state every generated list handler publishes, independent of
-    /// the model it lists. <see cref="ListChanged"/> fires while a reload is
-    /// still in flight as well as once it has mounted, so an empty list is
-    /// only empty when <see cref="IsLoaded"/> holds and <see cref="Count"/>
-    /// is zero.
-    /// </summary>
+    /// <summary>Count can be zero during a reload; empty-state UI must also require IsLoaded.</summary>
     public interface IGs2ListState
     {
-        /// <summary>Whether the current collection has finished its initial mount.</summary>
         bool IsLoaded { get; }
 
-        /// <summary>How many rows the list currently shows.</summary>
         int Count { get; }
 
-        /// <summary>Fires on every load-state or membership change.</summary>
+        /// <summary>Also fires while loading, before membership is mounted.</summary>
         event Action? ListChanged;
     }
 }

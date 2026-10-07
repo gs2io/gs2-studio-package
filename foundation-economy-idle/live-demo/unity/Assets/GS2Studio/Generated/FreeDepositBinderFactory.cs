@@ -18,13 +18,7 @@ using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.FreeDeposit
 {
-    /// <summary>
-    /// Construction seam for <see cref="FreeDepositBinder"/>. Inject a fake via
-    /// <c>SetBinderFactory</c> on the Handler / ListHandler to substitute the
-    /// binder in tests, or wire an alternate
-    /// implementation from a DI container. The runtime context (gs2/session)
-    /// still flows in as call arguments.
-    /// </summary>
+    /// <summary>Handlers accept this factory so tests and alternate runtimes can replace construction without owning the GS2 context.</summary>
     public interface IFreeDepositBinderFactory
     {
         Task<IFreeDepositBinder> CreateAsync(
@@ -34,11 +28,6 @@ namespace GS2Studio.Generated.FreeDeposit
             CancellationToken cancellationToken = default);
     }
 
-    /// <summary>
-    /// Default <see cref="IFreeDepositBinderFactory"/> delegating to the generated
-    /// static construction path. Stateless singleton used as the fallback when
-    /// no factory was injected.
-    /// </summary>
     public sealed class DefaultFreeDepositBinderFactory : IFreeDepositBinderFactory
     {
         public static readonly DefaultFreeDepositBinderFactory Instance = new DefaultFreeDepositBinderFactory();

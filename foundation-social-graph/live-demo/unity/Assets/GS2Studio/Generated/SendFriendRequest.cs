@@ -9,13 +9,7 @@ using System.Collections.Generic;
 
 namespace GS2Studio.Generated.SendFriendRequest
 {
-    /// <summary>
-    /// Read-only public contract for the SendFriendRequest model. GS2 is not a
-    /// CRUD service: data flows from GS2 (master/user) into the model and
-    /// consumers only read it. The mutable implementation is the internal
-    /// <see cref="MutableSendFriendRequest"/>, reconciled by the binder/collection
-    /// inside the generated assembly.
-    /// </summary>
+    /// <summary>Expose loaded values without setters so consumers cannot bypass binder and collection reconciliation.</summary>
     public interface SendFriendRequest
     {
         /// <summary>
@@ -24,25 +18,12 @@ namespace GS2Studio.Generated.SendFriendRequest
         SendFriendRequestId Id { get; }
     }
 
-    /// <summary>
-    /// Read-write public contract for the SendFriendRequest model. Each
-    /// property re-declares its base member with a setter (hence <c>new</c>).
-    /// This is the parameter type of the binder's shared <c>Apply*</c>
-    /// composition methods, so a stub model implementing this interface can
-    /// reuse the generated composition logic. Bound models are never exposed
-    /// through this interface — the binder only implements the read-only
-    /// <see cref="SendFriendRequest"/> surface.
-    /// </summary>
+    /// <summary>Public setters let external stub models reuse generated Apply methods without exposing the bound mutable model.</summary>
     public interface IMutableSendFriendRequest : SendFriendRequest
     {
         new SendFriendRequestId Id { get; set; }
     }
 
-    /// <summary>
-    /// Mutable implementation of <see cref="SendFriendRequest"/>. Internal to
-    /// the generated assembly so external code only ever sees the read-only
-    /// interface; the binder/collection reconcile paths write these setters.
-    /// </summary>
     internal sealed class MutableSendFriendRequest : IMutableSendFriendRequest
     {
         public SendFriendRequestId Id { get; set; }

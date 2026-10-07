@@ -11,11 +11,6 @@ using GS2Studio.Generated.GachaRarity;
 
 namespace GS2Studio.Generated.GachaRarityRate
 {
-    /// <summary>
-    /// AssetDelivery overlay entry for GachaRarityRate.
-    /// Field values are populated from the studio2-emitted overlay payload
-    /// at AssetBundle build time.
-    /// </summary>
     public class GachaRarityRateOverlayEntry : ScriptableObject
     {
         [SerializeField] private string _rawInstanceId = default!;
@@ -27,13 +22,7 @@ namespace GS2Studio.Generated.GachaRarityRate
         public GachaId Gacha => new GachaId(_gacha);
         public GachaRarityId Rarity => new GachaRarityId(_rarity);
 
-        /// <summary>
-        /// Copy the overlay-bound values into <paramref name="model"/>. Public
-        /// against the public read-write contract so external stubs can apply
-        /// the overlay to their own <see cref="IMutableGachaRarityRate"/>
-        /// implementation; the generated binder calls this during
-        /// mount/subscribe with its internal mutable model.
-        /// </summary>
+        /// <summary>The public mutable contract lets external models receive overlays without depending on the binder's internal model.</summary>
         public void ApplyTo(IMutableGachaRarityRate model)
         {
             model.Gacha = Gacha;

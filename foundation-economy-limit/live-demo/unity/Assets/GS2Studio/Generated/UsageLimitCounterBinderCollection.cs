@@ -23,25 +23,13 @@ using Gs2Bind.Gs2Limit;
 
 namespace GS2Studio.Generated.UsageLimitCounter
 {
-    /// <summary>
-    /// Public read contract for the UsageLimitCounter binder collection: the
-    /// stable <see cref="IReadOnlyList{T}"/> over the actionable (non-owning)
-    /// element binders. Access is index/enumeration based — the domain id is
-    /// not unique per row (multiple backing rows may fan out to instances
-    /// sharing one id), so id lookup is a caller-side LINQ concern.
-    /// Substitutable seam for code that only enumerates binders.
-    /// </summary>
+    /// <summary>Use non-owning ordered rows because multiple backing rows may share one domain ID.</summary>
     public interface IReadOnlyUsageLimitCounterBinderCollection : IReadOnlyList<IActionableUsageLimitCounterBinder>
     {
         IReadOnlyUsageLimitCounterBinderCollection WhereLimit(UsageLimitId limit);
     }
 
-    /// <summary>
-    /// Owning contract for the UsageLimitCounter binder collection: adds the
-    /// lifecycle + mount/subscribe surface and the owning-binder wiring events
-    /// over <see cref="IReadOnlyUsageLimitCounterBinderCollection"/>. Returned by the binder
-    /// factory; a fake implementation substitutes the whole collection.
-    /// </summary>
+    /// <summary>Factories return this owning contract so callers can control collection subscriptions and disposal.</summary>
     public interface IUsageLimitCounterBinderCollection : IReadOnlyUsageLimitCounterBinderCollection, IDisposable
     {
         IComparer<IReadOnlyUsageLimitCounterBinder> Comparer { get; set; }
@@ -58,47 +46,23 @@ namespace GS2Studio.Generated.UsageLimitCounter
         void SubscribeFromLimitLimitUserData(Action? onChange = null, Action<Exception>? onError = null);
     }
 
-    /// <summary>
-    /// Lifecycle-free base for <see cref="UsageLimitCounterBinderCollection"/>.
-    /// Exposes the <see cref="IReadOnlyList{T}"/> contract over
-    /// <see cref="IActionableUsageLimitCounterBinder"/> and owns the
-    /// <c>Where{RefProp}</c> reference-navigation filter helpers. Filter view
-    /// instances reach the owning root through the internal ctor + the
-    /// <c>RegisterDerivedView</c> hook. Never exposes <c>Dispose</c>,
-    /// <c>Mount*</c>, or <c>Subscribe*</c>.
-    /// </summary>
+    /// <summary>Filtered views borrow binders from one owning root, so they expose no independent mount or disposal.</summary>
     public class ReadOnlyUsageLimitCounterBinderCollection : IReadOnlyUsageLimitCounterBinderCollection
     {
-        // Filter-view backing state. The owning derived class leaves these
-        // null and overrides every observation member, so the `_cache == null`
-        // / `_dead` branches only kick in for filter views and the static
-        // `Empty` instance.
         private readonly UsageLimitCounterBinderCollection? _rootSource;
         private readonly Predicate<IReadOnlyUsageLimitCounterBinder>? _predicate;
         private readonly List<IActionableUsageLimitCounterBinder>? _cache;
         private bool _dead;
 
-        // Shared sentinel list backing the `_dead` / `Empty` enumeration
-        // paths. Reused so a dead view does not allocate per access.
+        // Reuse the empty list so dead-view enumeration does not allocate a new collection per access.
         private static readonly List<IActionableUsageLimitCounterBinder> EmptyList = new List<IActionableUsageLimitCounterBinder>(0);
 
-        /// <summary>
-        /// Sentinel non-owning empty collection. Returned by <c>Where*</c>
-        /// fast-exit paths (disposed view, dead view, default-id, no root).
-        /// </summary>
         internal static ReadOnlyUsageLimitCounterBinderCollection Empty { get; } = new ReadOnlyUsageLimitCounterBinderCollection();
 
-        /// <summary>
-        /// Parameterless ctor for the owning derived class and the
-        /// <see cref="Empty"/> sentinel. The view state stays null so the
-        /// fallback `_cache == null` branch keeps the sentinel safe.
-        /// </summary>
+        // The owning subclass overrides observations; nullable view state also permits the shared empty sentinel.
         protected ReadOnlyUsageLimitCounterBinderCollection() { }
 
-        /// <summary>
-        /// Filter-view ctor. Registers the view with the owning root so
-        /// subsequent source mutations refresh this view's cache.
-        /// </summary>
+        // Register views so existing consumers observe root mutations without rebuilding their filter.
         internal ReadOnlyUsageLimitCounterBinderCollection(
             UsageLimitCounterBinderCollection rootSource,
             Predicate<IReadOnlyUsageLimitCounterBinder> predicate)
@@ -110,39 +74,21 @@ namespace GS2Studio.Generated.UsageLimitCounter
             RefreshCache();
         }
 
-        /// <summary>Element count. Derived owning collection overrides.</summary>
         public virtual int Count => (_dead || _cache == null) ? 0 : _cache.Count;
 
-        /// <summary>Indexer. Derived owning collection overrides.</summary>
         public virtual IActionableUsageLimitCounterBinder this[int index]
             => (_dead || _cache == null) ? EmptyList[index] : _cache[index];
 
-        /// <summary>Enumerator. Derived owning collection overrides.</summary>
         public virtual IEnumerator<IActionableUsageLimitCounterBinder> GetEnumerator()
             => (_dead || _cache == null) ? EmptyList.GetEnumerator() : _cache.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <summary>
-        /// Returns the owning root collection backing this view. Derived
-        /// owning collection returns itself; filter views return the source
-        /// they were constructed against.
-        /// </summary>
         protected virtual UsageLimitCounterBinderCollection? GetRootSource() => _rootSource;
 
-        /// <summary>
-        /// Disposed-guard hook used by reference-navigation methods. Base
-        /// implementation is a no-op so filter views and the <see cref="Empty"/>
-        /// sentinel do not need to know about lifecycle; the owning derived
-        /// class overrides this to call <c>ThrowIfDisposed</c>.
-        /// </summary>
+        // Views borrow lifetime from the root; only owning collections enforce disposal on navigation.
         protected virtual void ThrowIfDisposedForNavigation() { }
 
-        /// <summary>
-        /// Rebuilds this view's cache from the root collection's currently
-        /// owned binders. No-op when the view is dead, lacks a root source,
-        /// or is the parameterless <see cref="Empty"/> sentinel.
-        /// </summary>
         internal void RefreshCache()
         {
             if (_dead || _rootSource == null || _cache == null || _predicate == null) return;
@@ -153,10 +99,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             }
         }
 
-        /// <summary>
-        /// Marks the view dead. Subsequent observation returns the empty
-        /// sentinel and `Where*` short-circuits to <see cref="Empty"/>.
-        /// </summary>
+        // Clear cached references so dead views do not retain binders after root disposal.
         internal void MarkDead()
         {
             _dead = true;
@@ -184,54 +127,27 @@ namespace GS2Studio.Generated.UsageLimitCounter
 
     }
 
-    /// <summary>
-    /// Collection binder for UsageLimitCounter.
-    /// Wraps a list of UsageLimitCounterBinder elements and reflects list-level
-    /// changes (additions / removals) and per-element changes from the GS2
-    /// data sources, using identity-based reconciliation so element binder
-    /// instances stay stable across list updates.
-    /// </summary>
     public sealed class UsageLimitCounterBinderCollection : ReadOnlyUsageLimitCounterBinderCollection, IUsageLimitCounterBinderCollection
     {
         private readonly Gs2Domain _gs2;
         private readonly IGameSession _session;
         private readonly string _limit;
-        // Owning binders are internal: consumers read the collection as the
-        // non-owning IReadOnlyList<IActionableUsageLimitCounterBinder> contract; only the
-        // collection (and the wiring ItemAdded/ItemRemoved events) touch the
-        // owning UsageLimitCounterBinder so lifecycle (Subscribe/Dispose) never leaks.
         private readonly List<UsageLimitCounterBinder> _binders = new List<UsageLimitCounterBinder>();
-        // Reconcile index keyed by the per-item ROW KEY (backing row identity),
-        // not by Model.Id: the domain id may legitimately repeat across rows
-        // (fan-out), while the row key is unique within one collection.
+        // Reconcile by backing row key because distinct rows may share a domain ID.
         private readonly Dictionary<string, UsageLimitCounterBinder> _bindersByRowKey = new Dictionary<string, UsageLimitCounterBinder>();
         private readonly List<Action> _unsubscribers = new List<Action>();
-        // Weakly-referenced filter views so view-only consumers can be GC'd
-        // without forcing the owning collection to hold them alive. Dead
-        // entries are pruned during `RaiseSourceChanged`.
+        // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyUsageLimitCounterBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyUsageLimitCounterBinderCollection>>();
         private bool _disposed;
         private bool _mounted;
         private bool _subscriptionActive;
         private Action? _onChange;
 
-        // Sort comparers — `_configuredComparer` is what consumers observe via
-        // the `Comparer` getter; `_effectiveComparer` wraps it with an Id
-        // tie-break for distinct IDs. Same-ID rows can still compare equal;
-        // SortBinders uses stable OrderBy to preserve their input order.
         private IComparer<IReadOnlyUsageLimitCounterBinder> _configuredComparer = UsageLimitCounterBinderComparer.Default;
         private IComparer<IReadOnlyUsageLimitCounterBinder> _effectiveComparer =
             new UsageLimitCounterBinderIdTieBreakComparer(UsageLimitCounterBinderComparer.Default);
 
-        /// <summary>
-        /// User-facing comparer driving the binder sort order. Reading returns
-        /// the value last assigned (no wrapper leakage). Setting installs an
-        /// Id-tie-break wrapper internally so distinct Model.Id values have a
-        /// deterministic fallback when the supplied comparer returns 0. Rows
-        /// with the same Id remain equal and rely on SortBinders' stable
-        /// OrderBy. Typed over the non-owning IReadOnlyUsageLimitCounterBinder so
-        /// it never exposes the owning binder.
-        /// </summary>
+        /// <summary>Preserve the assigned comparer identity for callers while adding an internal ID tie-break.</summary>
         public IComparer<IReadOnlyUsageLimitCounterBinder> Comparer
         {
             get => _configuredComparer;
@@ -245,45 +161,20 @@ namespace GS2Studio.Generated.UsageLimitCounter
             }
         }
 
-        /// <summary>Element count over the owning binder list.</summary>
         public override int Count => _binders.Count;
 
-        /// <summary>
-        /// Indexer over the owning binder list. Return type is the non-owning
-        /// IActionableUsageLimitCounterBinder contract — the public surface never exposes
-        /// the owning binder.
-        /// </summary>
         public override IActionableUsageLimitCounterBinder this[int index] => _binders[index];
 
-        /// <summary>
-        /// Enumerator over the owning binder list, yielding the non-owning
-        /// IActionableUsageLimitCounterBinder contract.
-        /// </summary>
         public override IEnumerator<IActionableUsageLimitCounterBinder> GetEnumerator() => _binders.GetEnumerator();
 
-        /// <summary>
-        /// Returns the owning root collection — itself. Filter views call
-        /// this on their source to normalise chained `Where*` invocations
-        /// against the original root regardless of the chain depth.
-        /// </summary>
+        // Normalize chained filters to the original root so chain depth cannot change their source.
         protected override UsageLimitCounterBinderCollection? GetRootSource() => this;
 
-        /// <summary>
-        /// Routes the navigation-time disposed guard to the owning lifecycle
-        /// check so reference navigation on a disposed collection throws
-        /// <see cref="ObjectDisposedException"/>.
-        /// </summary>
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
 
-        // Wiring events carrying the owning binder contract (IUsageLimitCounterBinder).
-        // Public so a fake IUsageLimitCounterBinderCollection can raise them; the ListHandler
-        // subscribes to build/bind child handlers (which need the owning Subscribe),
-        // then re-exposes its own public Action<IActionableUsageLimitCounterBinder> events.
-        /// <summary>Fires when a new element binder is added.</summary>
         public event Action<IUsageLimitCounterBinder>? ItemAdded;
 
-        /// <summary>Fires when an element binder is removed. The binder is
-        /// Disposed after the event handlers return.</summary>
+        /// <summary>Notify before disposal so listeners can detach while the removed binder remains usable.</summary>
         public event Action<IUsageLimitCounterBinder>? ItemRemoved;
 
         public UsageLimitCounterBinderCollection(
@@ -305,14 +196,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             new Gs2Bind.Gs2Limit.CounterArrayLoader("Limit").Invalidate(_gs2, _session);
         }
 
-        /// <summary>
-        /// Sorts the private <c>_binders</c> list into the configured order.
-        /// Called at the tail of every reconcile so consumers see stable
-        /// ordering across mounts and subscription callbacks. The comparer
-        /// supplies the primary key and Id tie-break; LINQ <c>OrderBy</c>
-        /// preserves input order when both return 0. An authoring-declared
-        /// sort key changes the comparer slot, not this shared sort body.
-        /// </summary>
+        // Stable sorting preserves row order when both the sort key and domain ID compare equal.
         private void SortBinders()
         {
             var sorted = _binders.OrderBy(b => b, _effectiveComparer).ToList();
@@ -321,21 +205,12 @@ namespace GS2Studio.Generated.UsageLimitCounter
             RaiseSourceChanged();
         }
 
-        /// <summary>
-        /// Registers a filter view so subsequent source mutations refresh
-        /// the view's cache. The view is held by weak reference; dead
-        /// entries are pruned during <see cref="RaiseSourceChanged"/>.
-        /// </summary>
         internal void RegisterDerivedView(ReadOnlyUsageLimitCounterBinderCollection view)
         {
             _derivedViews.Add(new WeakReference<ReadOnlyUsageLimitCounterBinderCollection>(view));
         }
 
-        /// <summary>
-        /// Fans the source-changed signal out to every live filter view
-        /// (and prunes dead weak references in the same pass). Invoked at
-        /// the tail of every reconcile via <see cref="SortBinders"/>.
-        /// </summary>
+        // Walk backwards so pruning a dead reference cannot skip the next view.
         private void RaiseSourceChanged()
         {
             for (int i = _derivedViews.Count - 1; i >= 0; i--)
@@ -376,7 +251,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             }
         }
 
-        /// <summary>One-shot Create + MountFromExchangeLimitResetMasterDataAsync (no subscription).</summary>
+        /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<UsageLimitCounterBinderCollection> CreateFromExchangeLimitResetMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
@@ -404,9 +279,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
             _subscriptionActive = true;
-            // Consumer-facing notification, wrapped once so a throwing consumer
-            // callback routes to onError (or Debug) instead of escaping the
-            // loader's async-void chain.
+            // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
                 try { onChange?.Invoke(); }
@@ -517,9 +390,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
 
         private static void ApplyExchangeLimitResetMasterItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
-            // This loader carries no master-item field assignments; reconcile manages
-            // membership only (per-element field changes are tracked by each element
-            // binder's own Subscribe).
+            // Per-row binders own field subscriptions; this array loader only supplies membership.
             _ = item;
             _ = model;
         }
@@ -536,7 +407,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (string.IsNullOrEmpty(item.Name)) return null;
             return $"{item.Name}";
         }
-        /// <summary>One-shot Create + MountFromExchangeLimitFreeUseMasterDataAsync (no subscription).</summary>
+        /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<UsageLimitCounterBinderCollection> CreateFromExchangeLimitFreeUseMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
@@ -564,9 +435,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
             _subscriptionActive = true;
-            // Consumer-facing notification, wrapped once so a throwing consumer
-            // callback routes to onError (or Debug) instead of escaping the
-            // loader's async-void chain.
+            // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
                 try { onChange?.Invoke(); }
@@ -677,9 +546,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
 
         private static void ApplyExchangeLimitFreeUseMasterItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
-            // This loader carries no master-item field assignments; reconcile manages
-            // membership only (per-element field changes are tracked by each element
-            // binder's own Subscribe).
+            // Per-row binders own field subscriptions; this array loader only supplies membership.
             _ = item;
             _ = model;
         }
@@ -696,7 +563,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (string.IsNullOrEmpty(item.Name)) return null;
             return $"{item.Name}";
         }
-        /// <summary>One-shot Create + MountFromExchangeLimitAdUseMasterDataAsync (no subscription).</summary>
+        /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<UsageLimitCounterBinderCollection> CreateFromExchangeLimitAdUseMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
@@ -724,9 +591,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
             _subscriptionActive = true;
-            // Consumer-facing notification, wrapped once so a throwing consumer
-            // callback routes to onError (or Debug) instead of escaping the
-            // loader's async-void chain.
+            // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
                 try { onChange?.Invoke(); }
@@ -837,9 +702,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
 
         private static void ApplyExchangeLimitAdUseMasterItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
         {
-            // This loader carries no master-item field assignments; reconcile manages
-            // membership only (per-element field changes are tracked by each element
-            // binder's own Subscribe).
+            // Per-row binders own field subscriptions; this array loader only supplies membership.
             _ = item;
             _ = model;
         }
@@ -856,7 +719,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (string.IsNullOrEmpty(item.Name)) return null;
             return $"{item.Name}";
         }
-        /// <summary>One-shot Create + MountFromLimitLimitUserDataAsync (no subscription).</summary>
+        /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<UsageLimitCounterBinderCollection> CreateFromLimitLimitUserDataAsync(
             Gs2Domain gs2,
             IGameSession session,
@@ -884,9 +747,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
             _subscriptionActive = true;
-            // Consumer-facing notification, wrapped once so a throwing consumer
-            // callback routes to onError (or Debug) instead of escaping the
-            // loader's async-void chain.
+            // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
                 try { onChange?.Invoke(); }
