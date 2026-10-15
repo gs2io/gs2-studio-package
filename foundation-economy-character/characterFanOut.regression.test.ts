@@ -1,71 +1,23 @@
 /** Stacked ItemSets can share itemName, so this fixture separates domain identity from backing-row identity and reads propertyId per item. */
-import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
-import type {
-  RawActionsJson,
-  RawBindJson,
-  RawMasterData,
-  RawModelsJson,
-  RawServicesJson,
-  RawTransactionsJson,
-} from "~/application/catalog";
-import { assembleCatalog } from "~/application/catalog";
 import { generateAllPackagesCSharp } from "~/application/codegen";
-import { Catalog } from "~/domain/catalog";
 import { Result } from "~/domain/core";
 import { PackageCollection } from "~/domain/package";
 import { Project } from "~/domain/project";
+import { loadRealCatalog } from "~/testing/codegen/loadRealCatalog";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
-const repoRoot = resolve(currentDir, "../..");
-const catalogsDir = resolve(repoRoot, "src/catalogs");
-
-function readJsonFile(p: string): unknown {
-  try {
-    return JSON.parse(readFileSync(p, "utf-8"));
-  } catch {
-    return undefined;
-  }
-}
-
-function loadProductionCatalog(): Catalog {
-  const services = JSON.parse(
-    readFileSync(resolve(catalogsDir, "services.json"), "utf-8")
-  ) as RawServicesJson;
-  const r = assembleCatalog({
-    services,
-    resolveServiceData(serviceName) {
-      return {
-        models: (readJsonFile(resolve(catalogsDir, serviceName, "models.json")) ??
-          {}) as RawModelsJson,
-        transactions: (readJsonFile(resolve(catalogsDir, serviceName, "transactions.json")) ??
-          {}) as RawTransactionsJson,
-        actions: JSON.parse(
-          readFileSync(resolve(catalogsDir, serviceName, "actions.json"), "utf-8")
-        ) as RawActionsJson,
-        masterData: (readJsonFile(resolve(catalogsDir, serviceName, "masterData.json")) ?? {
-          hasMasterData: false,
-        }) as RawMasterData,
-        bind: readJsonFile(resolve(catalogsDir, serviceName, "bind.json")) as
-          | RawBindJson
-          | undefined,
-      };
-    },
-  });
-  if (Result.isFailure(r)) throw new Error(r.error.diagnostics.map(d => d.message).join("; "));
-  return r.value.catalog;
-}
 
 async function generateCharacterCollection(): Promise<{
   readonly content: string;
   readonly warnings: readonly string[];
 }> {
   const packagesDir = resolve(currentDir, "packages");
-  const catalog = loadProductionCatalog();
+  const catalog = loadRealCatalog();
   const allResult = await loadPackages(packagesDir, catalog);
   const payload = unwrapLoaderResult(allResult);
   const project = new Project(PackageCollection.fromTrusted(payload.packages!));
