@@ -4,11 +4,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
-import {
-  buildInstanceLevelFlowGraph,
-  type ResourceFlowEdgeDiagnostic,
-  type ResourceFlowGraph,
-} from "~/application/resourceFlowGraph";
+import { ResourceFlowGraphReadModel } from "~/application/resourceFlowGraph";
 import { Catalog } from "~/domain/catalog";
 import { MountPath, Result } from "~/domain/core";
 import { PackageCollection } from "~/domain/package";
@@ -48,7 +44,7 @@ interface GraphSummary {
   readonly edgeDiagnosticCountsByKind: Record<string, number>;
 }
 
-function summarize(graph: ResourceFlowGraph): GraphSummary {
+function summarize(graph: ResourceFlowGraphReadModel["baseGraph"]): GraphSummary {
   let resourceNodes = 0;
   let instanceNodes = 0;
   let externalSourceNodes = 0;
@@ -60,12 +56,12 @@ function summarize(graph: ResourceFlowGraph): GraphSummary {
   for (const node of graph.nodes.values()) {
     if (node.kind === "instance") instanceNodes++;
     else if (node.kind === "externalSource") externalSourceNodes++;
-    else {
+    else if (node.kind === "resource") {
       resourceNodes++;
       if (node.resolution === "concrete") concreteResources++;
       else if (node.resolution === "resourceEntryPlaceholder") resourceEntryPlaceholders++;
       else targetPlaceholders++;
-      for (const d of node.diagnostics as readonly ResourceFlowEdgeDiagnostic[]) {
+      for (const d of node.diagnostics) {
         nodeDiagnosticCountsByKind[d.kind] = (nodeDiagnosticCountsByKind[d.kind] ?? 0) + 1;
       }
     }
@@ -102,7 +98,7 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
   it("builds an instance-level flow graph from the real project + real catalog", async () => {
     const [project, catalog] = await Promise.all([loadSampleProject(), loadRealCatalog()]);
 
-    const graph = buildInstanceLevelFlowGraph({ project, catalog });
+    const graph = ResourceFlowGraphReadModel.fromProject({ project, catalog }).baseGraph;
 
     const summary = summarize(graph);
 
@@ -115,7 +111,7 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
 
   it("reports whether instance flows are collected (instance nodes / edges count)", async () => {
     const [project, catalog] = await Promise.all([loadSampleProject(), loadRealCatalog()]);
-    const graph = buildInstanceLevelFlowGraph({ project, catalog });
+    const graph = ResourceFlowGraphReadModel.fromProject({ project, catalog }).baseGraph;
     const summary = summarize(graph);
 
     expect(summary.instanceNodes, "instance nodes from host-overlay-visible flows").toBeGreaterThan(
@@ -223,7 +219,7 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
 
   it("classifies diagnostics so we can tell placeholder reasons from flow failures", async () => {
     const [project, catalog] = await Promise.all([loadSampleProject(), loadRealCatalog()]);
-    const graph = buildInstanceLevelFlowGraph({ project, catalog });
+    const graph = ResourceFlowGraphReadModel.fromProject({ project, catalog }).baseGraph;
     const summary = summarize(graph);
 
     const nodeKinds = summary.nodeDiagnosticCountsByKind;
