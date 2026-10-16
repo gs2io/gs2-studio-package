@@ -3,7 +3,7 @@ import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-import { collectSaveBlockingIdentityDiagnostics } from "~/application/project";
+import { InstanceIdentityDiagnostic } from "~/application/project";
 import { toSafeFileName } from "~/application/shared";
 import { fileInstanceDtoSchema } from "~/adapters/project/gateway";
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
@@ -82,10 +82,7 @@ describe("materialized instance payload shape", () => {
       const project = new Project(
         Result.unwrapInvariant(PackageCollection.from(payload.packages), "loaded sample packages")
       );
-      const diagnostics = collectSaveBlockingIdentityDiagnostics({
-        project,
-        validationMode: "strict",
-      });
+      const diagnostics = InstanceIdentityDiagnostic.collectSaveBlocking(project);
 
       expect(diagnostics).toEqual([]);
     }
