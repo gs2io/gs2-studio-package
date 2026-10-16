@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { InstanceIdentityDiagnostic } from "~/application/project";
 import { toSafeFileName } from "~/application/shared";
-import { fileInstanceDtoSchema } from "~/adapters/project/gateway";
+import { fileInstanceDtoSchema } from "~/adapters/project/filesystemCodec";
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
 import { Catalog } from "~/domain/catalog";
 import { Result } from "~/domain/core";
