@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
-import { collectOverriddenDomainTypes, isOverridden } from "~/application/package";
+import { OverriddenDomainTypes } from "~/application/package";
 import { Catalog } from "~/domain/catalog";
 import { DomainTypeName, PackageId, Result } from "~/domain/core";
 import { PackageCollection } from "~/domain/package";
@@ -27,7 +27,7 @@ const RENAME_CASES = [
 ] as const;
 
 describe("rename overlay → source type override registration", () => {
-  it("registers each source Character* identity in overriddenKeys and isOverridden(...) returns true", async () => {
+  it("registers each source Character* identity as overridden", async () => {
     const packagesDir = resolve(currentDir, "packages");
     const allResult = await loadPackages(packagesDir, Catalog.empty());
     const payload = unwrapLoaderResult(allResult);
@@ -41,7 +41,7 @@ describe("rename overlay → source type override registration", () => {
       if (pkg.isEditable()) editablePackageIds.add(pkg.id);
     }
 
-    const overriddenKeys = collectOverriddenDomainTypes({
+    const overriddenKeys = OverriddenDomainTypes.collect({
       project,
       editablePackageIds,
     });
@@ -54,16 +54,12 @@ describe("rename overlay → source type override registration", () => {
       const sourceTypeId = sourcePkg.domainTypes.idForName(DomainTypeName.trusted(source));
       expect(sourceTypeId, `${source} should be declared in ${sourcePkgName}`).toBeDefined();
       if (!sourceTypeId) continue;
-      const target = { packageId: sourcePkg.id, domainTypeId: sourceTypeId };
-      const overridden = isOverridden({
-        overriddenKeys,
-        target,
-      });
+      const overridden = overriddenKeys.has(sourcePkg.id, sourceTypeId);
 
       if (!overridden) {
         console.warn(
           `[diagnostic] ${source} from ${sourcePkgName} (id=${sourcePkg.id as string}) was NOT in overriddenKeys.\n` +
-            `overriddenKeys snapshot: ${JSON.stringify([...overriddenKeys])}`
+            `override count: ${overriddenKeys.size}; missing type id: ${sourceTypeId}`
         );
       }
       expect(overridden, `${source} from ${sourcePkgName} must be in overriddenKeys`).toBe(true);
