@@ -3,7 +3,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-import { fileDomainTypeDtoSchema } from "~/adapters/project/gateway";
+import { fileDomainTypeDtoSchema } from "~/adapters/project/filesystemCodec";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)));
 
