@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { collectPackageValidationDetails } from "~/application/integrity";
+import { PackageValidationDetails } from "~/application/integrity";
 import { loadAllPublishedFeatureProjectForTest } from "~/testing/package";
 
 describe("published feature binding integrity", () => {
@@ -9,7 +9,7 @@ describe("published feature binding integrity", () => {
     const unboundProperties: string[] = [];
 
     for (const pkg of project.packages) {
-      const status = collectPackageValidationDetails({
+      const status = PackageValidationDetails.collect({
         pkg,
         catalog,
         project,
