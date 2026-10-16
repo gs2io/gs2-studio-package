@@ -130,8 +130,8 @@ describe("sample-social-game-basic resourceFlowGraph", () => {
 
   it("inspects resolved views for local-mounted resources (action properties + transforms)", async () => {
     const [project, catalog] = await Promise.all([loadSampleProject(), loadRealCatalog()]);
-    const { getDomainTypeSnapshotReader } = await import("~/application/domainType/composition");
-    const reader = getDomainTypeSnapshotReader({ project, actionCatalog: catalog });
+    const { DomainTypeSnapshotReader } = await import("~/application/domainType/composition");
+    const reader = DomainTypeSnapshotReader.forProject(project, catalog);
 
     interface ResourceViewSnapshot {
       readonly pkg: string;
