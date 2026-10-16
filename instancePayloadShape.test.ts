@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import { InstanceIdentityDiagnostic } from "~/application/project";
-import { toSafeFileName } from "~/application/shared";
+import { PersistenceNaming } from "~/application/shared";
 import { fileInstanceDtoSchema } from "~/adapters/project/filesystemCodec";
 import { loadPackages, unwrapLoaderResult } from "~/testing/applicationAdapters/projectFilesystem";
 import { Catalog } from "~/domain/catalog";
@@ -51,7 +51,7 @@ describe("materialized instance payload shape", () => {
           }
           const expectedFileName =
             "sourceInstanceId" in result.data
-              ? `${toSafeFileName(result.data.sourceInstanceId)}.json`
+              ? `${PersistenceNaming.toSafeFileName(result.data.sourceInstanceId)}.json`
               : `${result.data.rowKey}.json`;
           if (basename(dirname(filePath)) !== result.data.typeId) {
             failures.push(`${filePath}: expected full type ID directory ${result.data.typeId}`);
