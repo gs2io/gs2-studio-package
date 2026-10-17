@@ -9,15 +9,14 @@ describe("published feature binding integrity", () => {
     const unboundProperties: string[] = [];
 
     for (const pkg of project.packages) {
-      const status = PackageValidationDetails.collect({
+      const details = PackageValidationDetails.collect({
         pkg,
         catalog,
         project,
-      }).packageIntegrityStatus;
-      for (const [domainTypeId, propertyIds] of status.typeProperties
-        .unboundBindingHintProperties) {
-        for (const propertyId of propertyIds) {
-          unboundProperties.push(`${pkg.id}/${domainTypeId}/${propertyId}`);
+      });
+      for (const domainType of pkg.domainTypes) {
+        for (const propertyId of details.inspectDomainType(domainType.id).unboundPropertyIds) {
+          unboundProperties.push(`${pkg.id}/${domainType.id}/${propertyId}`);
         }
       }
     }
