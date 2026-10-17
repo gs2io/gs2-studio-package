@@ -82,7 +82,7 @@ describe("materialized instance payload shape", () => {
       const project = new Project(
         Result.unwrapInvariant(PackageCollection.from(payload.packages), "loaded sample packages")
       );
-      const diagnostics = InstanceIdentityDiagnostic.collectSaveBlocking(project);
+      const diagnostics = InstanceIdentityDiagnostic.collectSaveBlocking({ project });
 
       expect(diagnostics).toEqual([]);
     }
