@@ -349,7 +349,7 @@ namespace GS2Studio.Generated.CharacterFormationForm
 
         private async Task<CharacterFormationFormBinder> BuildBinderFromFormationCharacterFormationUserItem(Gs2.Unity.Gs2Formation.Model.EzForm item, CancellationToken cancellationToken)
         {
-            var model = CharacterFormationFormBinder.CreateModel(new CharacterFormationFormId(item.Index.ToString()));
+            var model = CharacterFormationFormBinder.CreateModel(new CharacterFormationFormId(item.Index.ToString(global::System.Globalization.CultureInfo.InvariantCulture)));
             ApplyFormationCharacterFormationUserItemTo(model, item);
             var binder = new CharacterFormationFormBinder(model, _gs2, _session, index: item.Index);
             await binder.MountAsync(cancellationToken);
@@ -364,7 +364,7 @@ namespace GS2Studio.Generated.CharacterFormationForm
 
         private CharacterFormationFormId ExtractFormationCharacterFormationUserIdentity(Gs2.Unity.Gs2Formation.Model.EzForm item)
         {
-            return new CharacterFormationFormId(item.Index.ToString());
+            return new CharacterFormationFormId(item.Index.ToString(global::System.Globalization.CultureInfo.InvariantCulture));
         }
 
         private string? ExtractFormationCharacterFormationUserRowKey(Gs2.Unity.Gs2Formation.Model.EzForm item)

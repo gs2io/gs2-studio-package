@@ -49,6 +49,7 @@ namespace GS2Studio.Generated.TransferCode.UI
                 _subscribed = true;
             }
             if (_handler.Model != null) OnUpdated(_handler.Model);
+            else _onUpdate.Invoke("None issued yet");
         }
 
         private void OnDisable()

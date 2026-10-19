@@ -346,7 +346,7 @@ namespace GS2Studio.Generated.TransferCode
 
         private async Task<TransferCodeBinder> BuildBinderFromAccountAccountUserItem(Gs2.Unity.Gs2Account.Model.EzTakeOver item, CancellationToken cancellationToken)
         {
-            var model = TransferCodeBinder.CreateModel(new TransferCodeId(item.Type.ToString()));
+            var model = TransferCodeBinder.CreateModel(new TransferCodeId(item.Type.ToString(global::System.Globalization.CultureInfo.InvariantCulture)));
             ApplyAccountAccountUserItemTo(model, item);
             var binder = new TransferCodeBinder(model, _gs2, _session, type: item.Type);
             await binder.MountAsync(cancellationToken);
@@ -360,7 +360,7 @@ namespace GS2Studio.Generated.TransferCode
 
         private TransferCodeId ExtractAccountAccountUserIdentity(Gs2.Unity.Gs2Account.Model.EzTakeOver item)
         {
-            return new TransferCodeId(item.Type.ToString());
+            return new TransferCodeId(item.Type.ToString(global::System.Globalization.CultureInfo.InvariantCulture));
         }
 
         private string? ExtractAccountAccountUserRowKey(Gs2.Unity.Gs2Account.Model.EzTakeOver item)

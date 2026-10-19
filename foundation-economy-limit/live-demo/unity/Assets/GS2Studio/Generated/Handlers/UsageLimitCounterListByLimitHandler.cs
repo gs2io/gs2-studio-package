@@ -421,10 +421,13 @@ namespace GS2Studio.Generated.UsageLimitCounter
             switch (_axis)
             {
                 case UsageLimitCounterListAxis.ExchangeLimitResetMaster:
+                    if (string.IsNullOrEmpty(_limit)) return false;
                     break;
                 case UsageLimitCounterListAxis.ExchangeLimitFreeUseMaster:
+                    if (string.IsNullOrEmpty(_limit)) return false;
                     break;
                 case UsageLimitCounterListAxis.ExchangeLimitAdUseMaster:
+                    if (string.IsNullOrEmpty(_limit)) return false;
                     break;
                 case UsageLimitCounterListAxis.LimitLimitUser:
                     if (string.IsNullOrEmpty(_limit)) return false;

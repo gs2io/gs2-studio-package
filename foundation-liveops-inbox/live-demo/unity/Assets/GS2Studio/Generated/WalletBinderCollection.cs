@@ -346,7 +346,7 @@ namespace GS2Studio.Generated.Wallet
 
         private async Task<WalletBinder> BuildBinderFromMoney2CurrencyUserItem(Gs2.Unity.Gs2Money2.Model.EzWallet item, CancellationToken cancellationToken)
         {
-            var model = WalletBinder.CreateModel(new WalletId(item.Slot.ToString()));
+            var model = WalletBinder.CreateModel(new WalletId(item.Slot.ToString(global::System.Globalization.CultureInfo.InvariantCulture)));
             ApplyMoney2CurrencyUserItemTo(model, item);
             var binder = new WalletBinder(model, _gs2, _session, slot: item.Slot);
             await binder.MountAsync(cancellationToken);
@@ -360,7 +360,7 @@ namespace GS2Studio.Generated.Wallet
 
         private WalletId ExtractMoney2CurrencyUserIdentity(Gs2.Unity.Gs2Money2.Model.EzWallet item)
         {
-            return new WalletId(item.Slot.ToString());
+            return new WalletId(item.Slot.ToString(global::System.Globalization.CultureInfo.InvariantCulture));
         }
 
         private string? ExtractMoney2CurrencyUserRowKey(Gs2.Unity.Gs2Money2.Model.EzWallet item)

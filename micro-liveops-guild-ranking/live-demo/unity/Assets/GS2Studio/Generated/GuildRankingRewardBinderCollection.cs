@@ -323,20 +323,20 @@ namespace GS2Studio.Generated.GuildRankingReward
         }
         private static bool TryParseCompositeIdentity(string idScalar, out int thresholdRank, out string ranking)
         {
-            thresholdRank = default;
-            ranking = default;
+            thresholdRank = default!;
+            ranking = default!;
             if (string.IsNullOrEmpty(idScalar)) return false;
             var parts = idScalar.Split('.');
             if (parts.Length != 2) return false;
-            if (!int.TryParse(parts[0], out thresholdRank))
+            if (!int.TryParse(parts[0], global::System.Globalization.NumberStyles.AllowLeadingSign, global::System.Globalization.CultureInfo.InvariantCulture, out thresholdRank))
             goto compositeParseFailure;
             if (string.IsNullOrEmpty(parts[1]))
             goto compositeParseFailure;
             ranking = parts[1];
             return true;
         compositeParseFailure:
-            thresholdRank = default;
-            ranking = default;
+            thresholdRank = default!;
+            ranking = default!;
             return false;
         }
 

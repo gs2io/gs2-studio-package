@@ -86,7 +86,7 @@ namespace GS2Studio.Generated.TakeOverSetting
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
-                var binder = await ResolveBinderFactory().CreateAsync(new TakeOverSettingId(_type.ToString()), _type, gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new TakeOverSettingId(_type.ToString(global::System.Globalization.CultureInfo.InvariantCulture)), _type, gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

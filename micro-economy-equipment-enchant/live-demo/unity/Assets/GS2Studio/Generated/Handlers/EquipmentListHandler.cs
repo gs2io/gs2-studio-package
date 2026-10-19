@@ -367,12 +367,16 @@ namespace GS2Studio.Generated.Equipment
             switch (_axis)
             {
                 case EquipmentListAxis.InventoryEquipmentMaster:
+                    if (string.IsNullOrEmpty(_enchant)) return false;
                     break;
                 case EquipmentListAxis.ExchangeEquipmentDiscardMaster:
+                    if (string.IsNullOrEmpty(_enchant)) return false;
                     break;
                 case EquipmentListAxis.ExchangeEquipmentEnchantAddMaster:
+                    if (string.IsNullOrEmpty(_enchant)) return false;
                     break;
                 case EquipmentListAxis.ExchangeEquipmentEnchantRerollMaster:
+                    if (string.IsNullOrEmpty(_enchant)) return false;
                     break;
                 case EquipmentListAxis.InventoryEquipmentUser:
                     if (string.IsNullOrEmpty(_enchant)) return false;
