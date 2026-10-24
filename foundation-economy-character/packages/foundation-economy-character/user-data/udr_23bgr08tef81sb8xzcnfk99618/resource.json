@@ -44,7 +44,7 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_32G1EVGBJ098PA3H1RW307TJFR"
+    "linkedMasterResourceId": "mdr_32G1EVGBJ098PA3H1RW307TJFR"
   },
   "id": "udr_23BGR08TEF81SB8XZCNFK99618",
   "location": {

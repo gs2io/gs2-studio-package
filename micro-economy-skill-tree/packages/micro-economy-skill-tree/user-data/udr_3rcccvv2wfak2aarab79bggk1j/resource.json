@@ -38,16 +38,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D0RCHP2Q2DTSP41SVC7C111T",
-      "typeName": "Character"
-    }
+    "linkedMasterResourceId": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD"
   },
   "id": "udr_3RCCCVV2WFAK2AARAB79BGGK1J",
   "location": {
     "modelName": "Status",
     "service": "skillTree"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0RCHP2Q2DTSP41SVC7C111T",
+    "typeName": "Character"
   }
 }

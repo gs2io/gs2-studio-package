@@ -36,16 +36,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
-      "typeName": "MissionCollection"
-    }
+    "linkedMasterResourceId": "mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM"
   },
   "id": "udr_2TY87RWWCV9KJVRVXSHVSAGBVE",
   "location": {
     "modelName": "Complete",
     "service": "mission"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
+    "typeName": "MissionCollection"
   }
 }

@@ -41,16 +41,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-      "typeName": "GuildRanking"
-    }
+    "linkedMasterResourceId": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ"
   },
   "id": "udr_27MST1Z5CYB3WRC556BBMJZJD1",
   "location": {
     "modelName": "ClusterRankingScore",
     "service": "ranking2"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
+    "typeName": "GuildRanking"
   }
 }

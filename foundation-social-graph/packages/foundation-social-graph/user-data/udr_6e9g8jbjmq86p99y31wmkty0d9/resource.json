@@ -54,16 +54,16 @@
         "kind": "skip",
         "parameterName": "userId"
       }
-    ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
-      "typeName": "Profile"
-    }
+    ]
   },
   "id": "udr_6E9G8JBJMQ86P99Y31WMKTY0D9",
   "location": {
     "modelName": "Profile",
     "service": "friend"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
+    "typeName": "Profile"
   }
 }

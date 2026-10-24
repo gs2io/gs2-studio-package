@@ -37,16 +37,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-      "typeName": "Ranking"
-    }
+    "linkedMasterResourceId": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR"
   },
   "id": "udr_0QH9M765VTAMT9HARN0A6QATBT",
   "location": {
     "modelName": "GlobalRankingScore",
     "service": "ranking2"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
+    "typeName": "Ranking"
   }
 }

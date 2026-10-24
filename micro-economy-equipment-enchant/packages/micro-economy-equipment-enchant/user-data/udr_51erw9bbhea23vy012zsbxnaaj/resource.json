@@ -52,16 +52,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9",
-      "typeName": "Equipment"
-    }
+    "linkedMasterResourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2"
   },
   "id": "udr_51ERW9BBHEA23VY012ZSBXNAAJ",
   "location": {
     "modelName": "RarityParameterStatus",
     "service": "enchant"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9",
+    "typeName": "Equipment"
   }
 }

@@ -35,16 +35,16 @@
         "kind": "skip",
         "parameterName": "userId"
       }
-    ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
-      "typeName": "AdViewPoint"
-    }
+    ]
   },
   "id": "udr_5MX6DNDF019C98H5VF6NKG01NF",
   "location": {
     "modelName": "Point",
     "service": "adReward"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
+    "typeName": "AdViewPoint"
   }
 }

@@ -57,16 +57,16 @@
         "kind": "skip",
         "parameterName": "userId"
       }
-    ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
-      "typeName": "Trigger"
-    }
+    ]
   },
   "id": "udr_0BRD4DM0YFABGS80VXGWB73KQP",
   "location": {
     "modelName": "Trigger",
     "service": "schedule"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+    "typeName": "Trigger"
   }
 }

@@ -43,16 +43,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
-      "typeName": "Character"
-    }
+    "linkedMasterResourceId": "mdr_4VW2Y080DTBNAT9646NSMK434Q"
   },
   "id": "udr_0EP0WR54F6ARWSAEPYGH6188N5",
   "location": {
     "modelName": "Status",
     "service": "grade"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
+    "typeName": "Character"
   }
 }

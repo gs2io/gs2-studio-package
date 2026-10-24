@@ -25,7 +25,7 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_51ABASNT7P8KMR2GCA3GN5685F"
+    "linkedMasterResourceId": "mdr_51ABASNT7P8KMR2GCA3GN5685F"
   },
   "id": "udr_4WA8P7P2679A4AQVAPWQHKN6VN",
   "location": {

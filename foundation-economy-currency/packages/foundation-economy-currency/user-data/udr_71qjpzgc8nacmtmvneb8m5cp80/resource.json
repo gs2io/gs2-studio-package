@@ -65,16 +65,16 @@
         "kind": "skip",
         "parameterName": "walletId"
       }
-    ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
-      "typeName": "Wallet"
-    }
+    ]
   },
   "id": "udr_71QJPZGC8NACMTMVNEB8M5CP80",
   "location": {
     "modelName": "Wallet",
     "service": "money2"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
+    "typeName": "Wallet"
   }
 }

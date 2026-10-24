@@ -48,16 +48,16 @@
         "kind": "skip",
         "parameterName": "userId"
       }
-    ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
-      "typeName": "StoreSubscription"
-    }
+    ]
   },
   "id": "udr_4NXPTMBAEMAJAA663MW7WBS4BW",
   "location": {
     "modelName": "SubscriptionStatus",
     "service": "money2"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+    "typeName": "StoreSubscription"
   }
 }

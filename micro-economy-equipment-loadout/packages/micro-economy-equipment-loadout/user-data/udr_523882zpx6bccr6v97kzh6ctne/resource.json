@@ -48,16 +48,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D033FNASESS5578YF3CS7Y34",
-      "typeName": "Character"
-    }
+    "linkedMasterResourceId": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8"
   },
   "id": "udr_523882ZPX6BCCR6V97KZH6CTNE",
   "location": {
     "modelName": "PropertyForm",
     "service": "formation"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D033FNASESS5578YF3CS7Y34",
+    "typeName": "Character"
   }
 }

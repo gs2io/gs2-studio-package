@@ -31,16 +31,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-      "typeName": "Guild"
-    }
+    "linkedMasterResourceId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9"
   },
   "id": "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ",
   "location": {
     "modelName": "JoinedGuild",
     "service": "guild"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+    "typeName": "Guild"
   }
 }

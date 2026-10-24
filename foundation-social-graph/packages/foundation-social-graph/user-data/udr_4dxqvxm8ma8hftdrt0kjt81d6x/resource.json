@@ -49,16 +49,16 @@
         "parameterName": "withProfile",
         "value": true
       }
-    ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
-      "typeName": "Follow"
-    }
+    ]
   },
   "id": "udr_4DXQVXM8MA8HFTDRT0KJT81D6X",
   "location": {
     "modelName": "FollowUser",
     "service": "friend"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+    "typeName": "Follow"
   }
 }

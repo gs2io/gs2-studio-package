@@ -51,16 +51,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
-      "typeName": "LoginRewardCollection"
-    }
+    "linkedMasterResourceId": "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7"
   },
   "id": "udr_1P119645K49QZA8WP1Z2M8DV2J",
   "location": {
     "modelName": "ReceiveStatus",
     "service": "loginReward"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+    "typeName": "LoginRewardCollection"
   }
 }

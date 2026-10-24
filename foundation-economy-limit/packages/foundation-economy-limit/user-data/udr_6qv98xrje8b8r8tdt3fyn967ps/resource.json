@@ -53,16 +53,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
-      "typeName": "UsageLimitCounter"
-    }
+    "linkedMasterResourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG"
   },
   "id": "udr_6QV98XRJE8B8R8TDT3FYN967PS",
   "location": {
     "modelName": "Counter",
     "service": "limit"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+    "typeName": "UsageLimitCounter"
   }
 }

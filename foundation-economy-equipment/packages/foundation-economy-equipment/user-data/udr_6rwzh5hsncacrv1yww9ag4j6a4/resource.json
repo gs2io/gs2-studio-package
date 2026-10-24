@@ -39,16 +39,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
-      "typeName": "Equipment"
-    }
+    "linkedMasterResourceId": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7"
   },
   "id": "udr_6RWZH5HSNCACRV1YWW9AG4J6A4",
   "location": {
     "modelName": "ItemSet",
     "service": "inventory"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+    "typeName": "Equipment"
   }
 }

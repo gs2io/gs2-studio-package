@@ -64,16 +64,16 @@
         "parameterName": "userId"
       }
     ],
-    "declaredMasterLinkId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
-      "typeName": "Progress"
-    }
+    "linkedMasterResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
   },
   "id": "udr_4TR60HC6M28STTKPCST9SRAVZA",
   "location": {
     "modelName": "Progress",
     "service": "quest"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
+    "typeName": "Progress"
   }
 }

@@ -49,16 +49,16 @@
         "parameterName": "withProfile",
         "value": true
       }
-    ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
-      "typeName": "Friend"
-    }
+    ]
   },
   "id": "udr_7SV5A20HAS8SKRFXZG8T3FXX14",
   "location": {
     "modelName": "FriendUser",
     "service": "friend"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
+    "typeName": "Friend"
   }
 }

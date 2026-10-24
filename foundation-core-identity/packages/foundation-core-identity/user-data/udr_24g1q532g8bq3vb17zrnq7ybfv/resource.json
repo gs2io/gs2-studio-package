@@ -38,16 +38,16 @@
           }
         ]
       }
-    ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
-      "typeName": "TransferCode"
-    }
+    ]
   },
   "id": "udr_24G1Q532G8BQ3VB17ZRNQ7YBFV",
   "location": {
     "modelName": "TakeOver",
     "service": "account"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
+    "typeName": "TransferCode"
   }
 }

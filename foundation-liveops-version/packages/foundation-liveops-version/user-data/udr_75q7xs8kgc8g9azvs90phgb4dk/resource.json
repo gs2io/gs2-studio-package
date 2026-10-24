@@ -69,16 +69,16 @@
         "parameterName": "versionName"
       }
     ],
-    "declaredMasterLinkId": "mdr_319778V7S98XR8N360KTTD5ZS2",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
-      "typeName": "AgreementVersion"
-    }
+    "linkedMasterResourceId": "mdr_319778V7S98XR8N360KTTD5ZS2"
   },
   "id": "udr_75Q7XS8KGC8G9AZVS90PHGB4DK",
   "location": {
     "modelName": "AcceptVersion",
     "service": "version"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+    "typeName": "AgreementVersion"
   }
 }

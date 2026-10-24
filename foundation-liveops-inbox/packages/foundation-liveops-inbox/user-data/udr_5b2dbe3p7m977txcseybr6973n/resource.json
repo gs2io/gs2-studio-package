@@ -82,16 +82,16 @@
         "kind": "skip",
         "parameterName": "userId"
       }
-    ],
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
-      "typeName": "Message"
-    }
+    ]
   },
   "id": "udr_5B2DBE3P7M977TXCSEYBR6973N",
   "location": {
     "modelName": "Message",
     "service": "inbox"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
+    "typeName": "Message"
   }
 }

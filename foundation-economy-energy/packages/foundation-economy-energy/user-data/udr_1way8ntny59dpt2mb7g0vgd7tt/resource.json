@@ -59,16 +59,16 @@
         ]
       }
     ],
-    "declaredMasterLinkId": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5",
-    "declaredTypeMount": {
-      "kind": "local",
-      "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
-      "typeName": "Energy"
-    }
+    "linkedMasterResourceId": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5"
   },
   "id": "udr_1WAY8NTNY59DPT2MB7G0VGD7TT",
   "location": {
     "modelName": "Stamina",
     "service": "stamina"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+    "typeName": "Energy"
   }
 }
