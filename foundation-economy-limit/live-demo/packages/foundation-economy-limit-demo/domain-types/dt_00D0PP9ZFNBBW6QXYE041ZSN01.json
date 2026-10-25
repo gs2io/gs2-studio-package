@@ -38,9 +38,11 @@
       "methodName": "UseFree",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "count",
-          "value": 1
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
@@ -54,9 +56,11 @@
       "methodName": "UseWithAd",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "count",
-          "value": 1
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
@@ -70,9 +74,11 @@
       "methodName": "ResetEveryAllowance",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "count",
-          "value": 1
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",

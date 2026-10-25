@@ -107,9 +107,9 @@ function exchangeNamespaceBindings(name: string) {
   };
 }
 
-const PROPERTY_ID_CONFIG = {
+const PROPERTY_ID_CONFIG = { parameterName: "config", source: {
   kind: "listEntries",
-  parameterName: "config",
+  
   entries: [
     {
       kind: "fields",
@@ -119,7 +119,7 @@ const PROPERTY_ID_CONFIG = {
       ],
     },
   ],
-} as const;
+} } as const;
 
 export const microEconomyCharacterEnhanceDemo = definePackage(
   "micro-economy-character-enhance-demo",
@@ -193,16 +193,16 @@ export const microEconomyCharacterEnhanceDemo = definePackage(
   .delegatedAction(CharacterEnhanceMaterial, "Get", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: GetMaterialRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(Character, "EnhanceWithPotion", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: EnhanceWithPotionRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
   })
   .delegatedAction(Character, "EnhanceWithElixir", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: EnhanceWithElixirRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
   })
   .build();

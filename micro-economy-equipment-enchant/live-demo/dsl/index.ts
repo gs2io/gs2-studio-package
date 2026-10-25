@@ -105,9 +105,9 @@ function exchangeNamespaceBindings(name: string) {
   };
 }
 
-const PROPERTY_ID_CONFIG = {
+const PROPERTY_ID_CONFIG = { parameterName: "config", source: {
   kind: "listEntries",
-  parameterName: "config",
+  
   entries: [
     {
       kind: "fields",
@@ -117,7 +117,7 @@ const PROPERTY_ID_CONFIG = {
       ],
     },
   ],
-} as const;
+} } as const;
 
 export const microEconomyEquipmentEnchantDemo = definePackage(
   "micro-economy-equipment-enchant-demo",
@@ -181,11 +181,11 @@ export const microEconomyEquipmentEnchantDemo = definePackage(
   .delegatedAction(Equipment, "Reroll", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: RerollRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
   })
   .delegatedAction(Equipment, "AddBonus", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: AddBonusRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
   })
   .build();

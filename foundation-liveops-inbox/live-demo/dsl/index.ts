@@ -194,11 +194,11 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
   .delegatedAction(Gift, "Deliver", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: GiftRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(GlobalMessage, "Deliver", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: DeliverRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

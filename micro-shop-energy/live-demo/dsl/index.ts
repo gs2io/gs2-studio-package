@@ -196,6 +196,6 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
   .delegatedAction(EnergyProduct, "Buy", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: BuyRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

@@ -175,11 +175,11 @@ export const microEconomyBuffDemo = definePackage("micro-economy-buff-demo", "0.
   .delegatedAction(BuffCampaign, "StartCampaign", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: StartRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(BuffCampaign, "EndCampaign", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: EndRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

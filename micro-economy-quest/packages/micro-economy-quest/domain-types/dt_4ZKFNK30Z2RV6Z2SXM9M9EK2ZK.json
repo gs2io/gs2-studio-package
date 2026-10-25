@@ -172,9 +172,11 @@
       "methodName": "Start",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "force",
-          "value": false
+          "source": {
+            "kind": "static",
+            "value": false
+          }
         }
       ],
       "targetActionKey": "Gs2Quest:QuestModel.Start",

@@ -203,6 +203,6 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
   .delegatedAction(StorePrice, "Buy", {
     targetActionKey: "Gs2Showcase:DisplayItem.Buy",
     targetResource: DisplayItem,
-    parameterOverrides: [{ kind: "static", parameterName: "quantity", value: 1 }],
+    parameterOverrides: [{ parameterName: "quantity", source: { kind: "static",  value: 1 } }],
   })
   .build();

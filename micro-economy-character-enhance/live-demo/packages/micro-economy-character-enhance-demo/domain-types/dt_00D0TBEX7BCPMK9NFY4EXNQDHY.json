@@ -11,34 +11,38 @@
       "methodName": "EnhanceWithPotion",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "count",
-          "value": 1
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         },
         {
-          "entries": [
-            {
-              "fields": [
-                {
-                  "name": "key",
-                  "source": {
-                    "kind": "static",
-                    "value": "propertyId"
+          "parameterName": "config",
+          "source": {
+            "entries": [
+              {
+                "fields": [
+                  {
+                    "name": "key",
+                    "source": {
+                      "kind": "static",
+                      "value": "propertyId"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "source": {
+                      "kind": "domainProperty",
+                      "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                    }
                   }
-                },
-                {
-                  "name": "value",
-                  "source": {
-                    "kind": "domainProperty",
-                    "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
-                  }
-                }
-              ],
-              "kind": "fields"
-            }
-          ],
-          "kind": "listEntries",
-          "parameterName": "config"
+                ],
+                "kind": "fields"
+              }
+            ],
+            "kind": "listEntries"
+          }
         }
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
@@ -52,34 +56,38 @@
       "methodName": "EnhanceWithElixir",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "count",
-          "value": 1
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         },
         {
-          "entries": [
-            {
-              "fields": [
-                {
-                  "name": "key",
-                  "source": {
-                    "kind": "static",
-                    "value": "propertyId"
+          "parameterName": "config",
+          "source": {
+            "entries": [
+              {
+                "fields": [
+                  {
+                    "name": "key",
+                    "source": {
+                      "kind": "static",
+                      "value": "propertyId"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "source": {
+                      "kind": "domainProperty",
+                      "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                    }
                   }
-                },
-                {
-                  "name": "value",
-                  "source": {
-                    "kind": "domainProperty",
-                    "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
-                  }
-                }
-              ],
-              "kind": "fields"
-            }
-          ],
-          "kind": "listEntries",
-          "parameterName": "config"
+                ],
+                "kind": "fields"
+              }
+            ],
+            "kind": "listEntries"
+          }
         }
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",

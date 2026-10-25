@@ -150,11 +150,11 @@ export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
   .delegatedAction(AdViewPoint, "Watch", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: WatchRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(AdViewPoint, "Spend", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: SpendRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

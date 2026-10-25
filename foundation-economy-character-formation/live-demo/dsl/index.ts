@@ -114,6 +114,6 @@ export const foundationEconomyCharacterFormationDemo = definePackage(
   .delegatedAction(CharacterFormation, "Expand", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ExpandRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

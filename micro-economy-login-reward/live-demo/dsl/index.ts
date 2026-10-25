@@ -259,6 +259,6 @@ export const microEconomyLoginRewardDemo = withDays
   .delegatedAction(LoginRewardCollection, "StartOver", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: StartOverRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

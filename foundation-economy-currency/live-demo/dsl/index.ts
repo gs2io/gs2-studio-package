@@ -208,11 +208,11 @@ export const foundationEconomyCurrencyDemo = definePackage(
   .delegatedAction(FreeDeposit, "Deposit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: FreeDepositRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(PaidDeposit, "Deposit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: PaidDepositRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

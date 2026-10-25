@@ -76,9 +76,11 @@
       "methodName": "Buy",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "quantity",
-          "value": 1
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
       ],
       "targetActionKey": "Gs2Showcase:DisplayItem.Buy",

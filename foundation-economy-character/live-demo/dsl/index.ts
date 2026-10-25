@@ -230,18 +230,18 @@ export const foundationEconomyCharacterDemo = definePackage(
   .delegatedAction(CharacterRecruit, "Recruit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: RecruitRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
 
   .delegatedAction(Character, "Train", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: TrainRateModel,
     parameterOverrides: [
-      { kind: "static", parameterName: "count", value: 1 },
+      { parameterName: "count", source: { kind: "static",  value: 1 } },
       // Resolve the instance at click time because its propertyId does not exist when the rate model is deployed.
-      {
+      { parameterName: "config", source: {
         kind: "listEntries",
-        parameterName: "config",
+        
         entries: [
           {
             kind: "fields",
@@ -257,7 +257,7 @@ export const foundationEconomyCharacterDemo = definePackage(
             ],
           },
         ],
-      },
+      } },
     ],
   })
   .build();

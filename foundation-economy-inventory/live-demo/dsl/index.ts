@@ -120,11 +120,11 @@ export const foundationEconomyInventoryDemo = definePackage(
   .delegatedAction(Item, "Gain", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: GainRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(Item, "Spend", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: SpendRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

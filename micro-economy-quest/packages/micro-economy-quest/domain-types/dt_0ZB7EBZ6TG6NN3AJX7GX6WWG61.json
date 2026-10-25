@@ -123,9 +123,11 @@
       "methodName": "Complete",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "isComplete",
-          "value": true
+          "source": {
+            "kind": "static",
+            "value": true
+          }
         }
       ],
       "targetActionKey": "Gs2Quest:Progress.End",

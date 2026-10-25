@@ -242,16 +242,16 @@ export const foundationEconomyScheduleDemo = definePackage(
   .delegatedAction(TriggerPull, "Pull", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: PullRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(Trigger, "Extend", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ExtendRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(Trigger, "Clear", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ClearRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

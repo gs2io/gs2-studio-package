@@ -76,9 +76,9 @@ function gradeStep(rankCapValue: number) {
   return { rankCapValue, propertyIdRegex: ".*", gradeUpPropertyIdRegex: ".*" };
 }
 
-const PROPERTY_ID_CONFIG = {
+const PROPERTY_ID_CONFIG = { parameterName: "config", source: {
   kind: "listEntries",
-  parameterName: "config",
+  
   entries: [
     {
       kind: "fields",
@@ -88,7 +88,7 @@ const PROPERTY_ID_CONFIG = {
       ],
     },
   ],
-} as const;
+} } as const;
 
 export const microEconomyCharacterGradeDemo = definePackage(
   "micro-economy-character-grade-demo",
@@ -174,11 +174,11 @@ export const microEconomyCharacterGradeDemo = definePackage(
   .delegatedAction(Character, "LimitBreak", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: LimitBreakRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
   })
   .delegatedAction(Character, "TrainHard", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: TrainHardRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
   })
   .build();

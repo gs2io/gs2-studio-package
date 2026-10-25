@@ -317,12 +317,12 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
   .delegatedAction(Quest, "Start", {
     targetActionKey: "Gs2Quest:QuestModel.Start",
     targetResource: QuestModel,
-    parameterOverrides: [{ kind: "static", parameterName: "force", value: false }],
+    parameterOverrides: [{ parameterName: "force", source: { kind: "static",  value: false } }],
   })
   // Leave rewards unspecified so completion uses the rewards drawn when the run started.
   .delegatedAction(Progress, "Complete", {
     targetActionKey: "Gs2Quest:Progress.End",
     targetResource: ProgressResource,
-    parameterOverrides: [{ kind: "static", parameterName: "isComplete", value: true }],
+    parameterOverrides: [{ parameterName: "isComplete", source: { kind: "static",  value: true } }],
   })
   .build();

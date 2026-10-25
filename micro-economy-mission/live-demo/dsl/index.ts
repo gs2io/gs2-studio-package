@@ -213,6 +213,6 @@ export const microEconomyMissionDemo = withMissions
   .delegatedAction(MissionCounter, "Advance", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: AdvanceRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

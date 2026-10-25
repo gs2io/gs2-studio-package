@@ -225,16 +225,16 @@ export const foundationEconomyEquipmentDemo = definePackage(
   .delegatedAction(EquipmentCatalog, "Take", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: TakeRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(Equipment, "Discard", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: DiscardRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(EquipmentCollection, "Expand", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ExpandRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

@@ -11,9 +11,11 @@
       "methodName": "Watch",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "count",
-          "value": 1
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
@@ -27,9 +29,11 @@
       "methodName": "Spend",
       "parameterOverrides": [
         {
-          "kind": "static",
           "parameterName": "count",
-          "value": 1
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",

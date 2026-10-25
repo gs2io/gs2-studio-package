@@ -334,16 +334,16 @@ export const foundationEconomyLimitDemo = withCounters
   .delegatedAction(UsageLimitCounter, "UseFree", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: FreeUseRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(UsageLimitCounter, "UseWithAd", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: AdUseRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(UsageLimitCounter, "ResetEveryAllowance", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ResetEveryAllowanceRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

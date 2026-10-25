@@ -131,11 +131,11 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
   .delegatedAction(Energy, "Spend", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ConsumeRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(Energy, "Recover", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: RecoverRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();

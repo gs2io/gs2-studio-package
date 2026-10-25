@@ -254,11 +254,11 @@ export const microLiveopsRankingDemo = withTiers
   .delegatedAction(RankingContest, "StartContest", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: StartRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .delegatedAction(RankingContest, "FinishContest", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: FinishRateModel,
-    parameterOverrides: [{ kind: "static", parameterName: "count", value: 1 }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
   })
   .build();
