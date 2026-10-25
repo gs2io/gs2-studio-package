@@ -118,8 +118,8 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
   // Keep the required reception window wide enough for long-lived demo deployments.
   .instance(GlobalMessage, "welcome", {
     [inbox.propertyId("GlobalMessage", "payload")]: "Welcome to the GS2 inbox demo!",
-    [inbox.propertyId("GlobalMessage", "begin")]: 1789064562011,
-    [inbox.propertyId("GlobalMessage", "end")]: 1924992000000,
+    [inbox.propertyId("GlobalMessage", "begin")]: "2026-09-10T18:22:42.011Z",
+    [inbox.propertyId("GlobalMessage", "end")]: "2031-01-01T00:00:00.000Z",
   })
 
   .instance("Gift", "gift", {

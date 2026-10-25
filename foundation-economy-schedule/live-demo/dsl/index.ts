@@ -113,14 +113,14 @@ export const foundationEconomyScheduleDemo = definePackage(
   // Keep the open fixture valid for years so routine demo use does not outlive a short event window.
   .instance(Schedule, "open-season", {
     [schedule.propertyId("Schedule", "scheduleType")]: "absolute",
-    [schedule.propertyId("Schedule", "startAt")]: 1789064562011,
-    [schedule.propertyId("Schedule", "endAt")]: 1924992000000,
+    [schedule.propertyId("Schedule", "startAt")]: "2026-09-10T18:22:42.011Z",
+    [schedule.propertyId("Schedule", "endAt")]: "2031-01-01T00:00:00.000Z",
     [schedule.propertyId("Schedule", "repeatType")]: "always",
   })
   .instance(Schedule, "closed-season", {
     [schedule.propertyId("Schedule", "scheduleType")]: "absolute",
-    [schedule.propertyId("Schedule", "startAt")]: 1786904562011,
-    [schedule.propertyId("Schedule", "endAt")]: 1789237362011,
+    [schedule.propertyId("Schedule", "startAt")]: "2026-08-16T18:22:42.011Z",
+    [schedule.propertyId("Schedule", "endAt")]: "2026-09-12T18:22:42.011Z",
     [schedule.propertyId("Schedule", "repeatType")]: "always",
   })
 
@@ -140,8 +140,8 @@ export const foundationEconomyScheduleDemo = definePackage(
   // Share an absolute daily season across guild members; align the start to UTC midnight for its daily boundaries.
   .instance(Schedule, "guild-season", {
     [schedule.propertyId("Schedule", "scheduleType")]: "absolute",
-    [schedule.propertyId("Schedule", "startAt")]: 1788220800000,
-    [schedule.propertyId("Schedule", "endAt")]: 1924992000000,
+    [schedule.propertyId("Schedule", "startAt")]: "2026-09-01T00:00:00.000Z",
+    [schedule.propertyId("Schedule", "endAt")]: "2031-01-01T00:00:00.000Z",
     [schedule.propertyId("Schedule", "repeatType")]: "daily",
     [schedule.propertyId("Schedule", "beginHour")]: 0,
     [schedule.propertyId("Schedule", "endHour")]: 0,
