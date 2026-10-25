@@ -64,11 +64,12 @@
     {
       "componentClassName": "LevelActiveToggle",
       "condition": {
-        "kind": "eq",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_04HMA7F4M0F29E8P9WE3E5YF3R"
         },
+        "operator": "eq",
         "rhs": {
           "kind": "property",
           "propertyId": "prop_6GPQDNYV0YP90F0V7GY2S79423"
@@ -81,11 +82,12 @@
     {
       "componentClassName": "LevelInteractable",
       "condition": {
-        "kind": "eq",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_04HMA7F4M0F29E8P9WE3E5YF3R"
         },
+        "operator": "eq",
         "rhs": {
           "kind": "property",
           "propertyId": "prop_6GPQDNYV0YP90F0V7GY2S79423"

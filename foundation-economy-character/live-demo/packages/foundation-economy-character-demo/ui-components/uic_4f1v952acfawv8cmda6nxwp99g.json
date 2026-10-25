@@ -37,11 +37,12 @@
     {
       "componentClassName": "OwnsAnyActiveToggle",
       "condition": {
-        "kind": "gt",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_0X7QN1KKKCJZMK5N4S6E4KX1A5"
         },
+        "operator": "gt",
         "rhs": {
           "kind": "literal",
           "value": 0

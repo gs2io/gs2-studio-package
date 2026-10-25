@@ -42,11 +42,12 @@
     {
       "componentClassName": "ExpandableInteractable",
       "condition": {
-        "kind": "lt",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_6DFT20J8RV6F8565KNNREYVH3N"
         },
+        "operator": "lt",
         "rhs": {
           "kind": "property",
           "propertyId": "prop_4J8TTATGZND7RB0CSEKFY3AG9Z"
@@ -59,11 +60,12 @@
     {
       "componentClassName": "FullActiveToggle",
       "condition": {
-        "kind": "gte",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS"
         },
+        "operator": "gte",
         "rhs": {
           "kind": "property",
           "propertyId": "prop_6DFT20J8RV6F8565KNNREYVH3N"

@@ -22,11 +22,12 @@
     {
       "componentClassName": "HoldsAnyActiveToggle",
       "condition": {
-        "kind": "gt",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS"
         },
+        "operator": "gt",
         "rhs": {
           "kind": "literal",
           "value": 0

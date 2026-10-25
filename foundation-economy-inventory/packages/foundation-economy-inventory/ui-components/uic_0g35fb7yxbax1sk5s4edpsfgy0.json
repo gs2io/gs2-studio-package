@@ -37,11 +37,12 @@
     {
       "componentClassName": "OwnedInteractable",
       "condition": {
-        "kind": "gt",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_4RM1PKMWET4WYQBAW013CTF8YD"
         },
+        "operator": "gt",
         "rhs": {
           "kind": "literal",
           "value": 0

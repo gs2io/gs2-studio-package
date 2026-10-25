@@ -103,11 +103,12 @@
     {
       "componentClassName": "FreeUsesSpentActiveToggle",
       "condition": {
-        "kind": "gte",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
         },
+        "operator": "gte",
         "rhs": {
           "kind": "property",
           "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
@@ -120,11 +121,12 @@
     {
       "componentClassName": "FreeUsesLeftActiveToggle",
       "condition": {
-        "kind": "lt",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
         },
+        "operator": "lt",
         "rhs": {
           "kind": "property",
           "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
@@ -139,22 +141,24 @@
       "condition": {
         "children": [
           {
-            "kind": "lt",
+            "kind": "comparison",
             "lhs": {
               "kind": "property",
               "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
             },
+            "operator": "lt",
             "rhs": {
               "kind": "property",
               "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
             }
           },
           {
-            "kind": "gte",
+            "kind": "comparison",
             "lhs": {
               "kind": "property",
               "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
             },
+            "operator": "gte",
             "rhs": {
               "kind": "property",
               "propertyId": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE"
@@ -170,11 +174,12 @@
     {
       "componentClassName": "AnyUseLeftActiveToggle",
       "condition": {
-        "kind": "lt",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
         },
+        "operator": "lt",
         "rhs": {
           "kind": "property",
           "propertyId": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE"

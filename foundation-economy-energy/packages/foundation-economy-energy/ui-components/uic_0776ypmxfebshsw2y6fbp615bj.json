@@ -52,11 +52,12 @@
     {
       "componentClassName": "FullActiveToggle",
       "condition": {
-        "kind": "gte",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_7BX7N28W6KRGHGC40MXEWB2ESC"
         },
+        "operator": "gte",
         "rhs": {
           "kind": "property",
           "propertyId": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56"

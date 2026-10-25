@@ -80,11 +80,12 @@
     {
       "componentClassName": "RelativeActiveToggle",
       "condition": {
-        "kind": "eq",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_787C2RE8TDR45Z47ER9FNGNTBH"
         },
+        "operator": "eq",
         "rhs": {
           "kind": "literal",
           "value": "relative"
@@ -97,11 +98,12 @@
     {
       "componentClassName": "AbsoluteActiveToggle",
       "condition": {
-        "kind": "eq",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_787C2RE8TDR45Z47ER9FNGNTBH"
         },
+        "operator": "eq",
         "rhs": {
           "kind": "literal",
           "value": "absolute"

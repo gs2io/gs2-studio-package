@@ -27,11 +27,12 @@
     {
       "componentClassName": "ExpandInteractable",
       "condition": {
-        "kind": "lt",
+        "kind": "comparison",
         "lhs": {
           "kind": "property",
           "propertyId": "prop_7HNF20BCN1PY27WR4A2XSHQFB1"
         },
+        "operator": "lt",
         "rhs": {
           "kind": "property",
           "propertyId": "prop_2PBKJC9BR7P00EG4DQYQGAFFGP"
