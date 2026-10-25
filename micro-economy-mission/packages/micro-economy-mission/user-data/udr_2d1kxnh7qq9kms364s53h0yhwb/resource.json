@@ -16,7 +16,9 @@
       {
         "kind": "skip",
         "parameterName": "values"
-      },
+      }
+    ],
+    "elementProjectionBindings": [
       {
         "entries": [
           {

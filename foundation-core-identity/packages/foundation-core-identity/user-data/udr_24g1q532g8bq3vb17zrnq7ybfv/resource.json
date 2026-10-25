@@ -2,11 +2,6 @@
   "authored": {
     "declaredBindings": [
       {
-        "kind": "existence",
-        "parameterName": "$existence",
-        "propertyId": "prop_00D0XSWNPHK742VSBENVHWQX25"
-      },
-      {
         "kind": "domainProperty",
         "parameterName": "type",
         "source": {
@@ -38,7 +33,8 @@
           }
         ]
       }
-    ]
+    ],
+    "existencePropertyId": "prop_00D0XSWNPHK742VSBENVHWQX25"
   },
   "id": "udr_24G1Q532G8BQ3VB17ZRNQ7YBFV",
   "location": {

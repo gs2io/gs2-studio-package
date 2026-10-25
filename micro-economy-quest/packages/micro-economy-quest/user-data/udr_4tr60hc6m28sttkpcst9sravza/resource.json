@@ -2,11 +2,6 @@
   "authored": {
     "declaredBindings": [
       {
-        "kind": "existence",
-        "parameterName": "$existence",
-        "propertyId": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW"
-      },
-      {
         "kind": "skip",
         "parameterName": "progressId"
       },
@@ -44,6 +39,18 @@
         "parameterName": "rewards"
       },
       {
+        "kind": "skip",
+        "parameterName": "transactionId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "existencePropertyId": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW",
+    "linkedMasterResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
+    "modelArrayDecodeBindings": [
+      {
         "fieldMappings": [
           {
             "fieldName": "itemId",
@@ -62,17 +69,8 @@
           "typeName": "Progress"
         },
         "targetPropertyId": "prop_5CJ0VWR32T9SD0RSQSYMEXF3HX"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "transactionId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
       }
-    ],
-    "linkedMasterResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
+    ]
   },
   "id": "udr_4TR60HC6M28STTKPCST9SRAVZA",
   "location": {

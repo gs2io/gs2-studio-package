@@ -1,6 +1,6 @@
 {
   "authored": {
-    "declaredBindings": [
+    "arrayMembershipBindings": [
       {
         "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "childMountPath": {
@@ -11,7 +11,9 @@
         "childTargetPropertyId": "prop_6VDGEC28BS22A8B64VXJQP14VQ",
         "kind": "arrayMembership",
         "parameterName": "completeQuestNames"
-      },
+      }
+    ],
+    "declaredBindings": [
       {
         "kind": "skip",
         "parameterName": "completedQuestListId"

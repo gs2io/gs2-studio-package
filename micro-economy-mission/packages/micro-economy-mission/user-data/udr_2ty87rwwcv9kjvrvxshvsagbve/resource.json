@@ -1,10 +1,6 @@
 {
   "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "completeId"
-      },
+    "arrayMembershipBindings": [
       {
         "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "childMountPath": {
@@ -17,10 +13,6 @@
         "parameterName": "completedMissionTaskNames"
       },
       {
-        "kind": "skip",
-        "parameterName": "missionGroupName"
-      },
-      {
         "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "childMountPath": {
           "kind": "local",
@@ -30,6 +22,16 @@
         "childTargetPropertyId": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB",
         "kind": "arrayMembership",
         "parameterName": "receivedMissionTaskNames"
+      }
+    ],
+    "declaredBindings": [
+      {
+        "kind": "skip",
+        "parameterName": "completeId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "missionGroupName"
       },
       {
         "kind": "skip",

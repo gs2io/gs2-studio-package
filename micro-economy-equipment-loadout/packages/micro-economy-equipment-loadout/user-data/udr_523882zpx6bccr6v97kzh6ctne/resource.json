@@ -27,6 +27,13 @@
         "parameterName": "slots"
       },
       {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "linkedMasterResourceId": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8",
+    "modelArrayDecodeBindings": [
+      {
         "fieldMappings": [
           {
             "fieldName": "propertyId",
@@ -42,13 +49,8 @@
           "typeName": "Character"
         },
         "targetPropertyId": "prop_00D033FNASB4JJM9FNP61KXE7B"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
       }
-    ],
-    "linkedMasterResourceId": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8"
+    ]
   },
   "id": "udr_523882ZPX6BCCR6V97KZH6CTNE",
   "location": {

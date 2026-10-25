@@ -2,11 +2,6 @@
   "authored": {
     "declaredBindings": [
       {
-        "kind": "existence",
-        "parameterName": "$existence",
-        "propertyId": "prop_00D0N014B09H9M51PEBHNW82F9"
-      },
-      {
         "kind": "domainProperties",
         "parameterName": "expiresAt",
         "sources": [
@@ -57,7 +52,8 @@
         "kind": "skip",
         "parameterName": "userId"
       }
-    ]
+    ],
+    "existencePropertyId": "prop_00D0N014B09H9M51PEBHNW82F9"
   },
   "id": "udr_4A5V227Z8JBZ2SXGBDFSS39GRH",
   "location": {

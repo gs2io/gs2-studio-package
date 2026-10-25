@@ -1,5 +1,18 @@
 {
   "authored": {
+    "arrayMembershipBindings": [
+      {
+        "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "childMountPath": {
+          "kind": "local",
+          "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+          "typeName": "SkillNode"
+        },
+        "childTargetPropertyId": "prop_00D0321TWK6CDMBJRD83E6G2K2",
+        "kind": "arrayMembership",
+        "parameterName": "releasedNodeNames"
+      }
+    ],
     "declaredBindings": [
       {
         "kind": "domainProperty",
@@ -13,17 +26,6 @@
           },
           "propertyId": "prop_00D0RCHP2Q26RVYQM9TZ89PN0E"
         }
-      },
-      {
-        "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "childMountPath": {
-          "kind": "local",
-          "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-          "typeName": "SkillNode"
-        },
-        "childTargetPropertyId": "prop_00D0321TWK6CDMBJRD83E6G2K2",
-        "kind": "arrayMembership",
-        "parameterName": "releasedNodeNames"
       },
       {
         "kind": "skip",

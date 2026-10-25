@@ -36,6 +36,17 @@
         "parameterName": "randomSeed"
       },
       {
+        "kind": "skip",
+        "parameterName": "transactionId"
+      },
+      {
+        "kind": "skip",
+        "parameterName": "userId"
+      }
+    ],
+    "linkedMasterResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
+    "modelArrayDecodeBindings": [
+      {
         "fieldMappings": [
           {
             "fieldName": "itemId",
@@ -54,17 +65,8 @@
           "typeName": "Progress"
         },
         "targetPropertyId": "prop_13P7PMR0A3DBCG13JCB54KM0HP"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "transactionId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
       }
-    ],
-    "linkedMasterResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
+    ]
   },
   "id": "udr_4TR60HC6M28STTKPCST9SRAVZA",
   "location": {

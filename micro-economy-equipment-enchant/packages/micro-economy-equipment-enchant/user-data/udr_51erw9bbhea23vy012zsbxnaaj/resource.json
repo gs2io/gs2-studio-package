@@ -10,27 +10,6 @@
         "parameterName": "parameterValues"
       },
       {
-        "fieldMappings": [
-          {
-            "fieldName": "resourceName",
-            "targetPropertyId": "prop_00D03217GRKK3MAVRY7VKHB9GK"
-          },
-          {
-            "fieldName": "resourceValue",
-            "targetPropertyId": "prop_00D03217GRMPQHMB5B4QST8GM4"
-          }
-        ],
-        "idSourceField": "name",
-        "kind": "modelArrayDecode",
-        "parameterName": "parameterValues",
-        "targetMountPath": {
-          "kind": "local",
-          "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9",
-          "typeName": "Equipment"
-        },
-        "targetPropertyId": "prop_00D03217GRK4Y3519ZYVXED9CW"
-      },
-      {
         "kind": "domainProperty",
         "parameterName": "propertyId",
         "source": {
@@ -52,7 +31,30 @@
         "parameterName": "userId"
       }
     ],
-    "linkedMasterResourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2"
+    "linkedMasterResourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
+    "modelArrayDecodeBindings": [
+      {
+        "fieldMappings": [
+          {
+            "fieldName": "resourceName",
+            "targetPropertyId": "prop_00D03217GRKK3MAVRY7VKHB9GK"
+          },
+          {
+            "fieldName": "resourceValue",
+            "targetPropertyId": "prop_00D03217GRMPQHMB5B4QST8GM4"
+          }
+        ],
+        "idSourceField": "name",
+        "kind": "modelArrayDecode",
+        "parameterName": "parameterValues",
+        "targetMountPath": {
+          "kind": "local",
+          "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9",
+          "typeName": "Equipment"
+        },
+        "targetPropertyId": "prop_00D03217GRK4Y3519ZYVXED9CW"
+      }
+    ]
   },
   "id": "udr_51ERW9BBHEA23VY012ZSBXNAAJ",
   "location": {

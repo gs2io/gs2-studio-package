@@ -2,11 +2,6 @@
   "authored": {
     "declaredBindings": [
       {
-        "kind": "existence",
-        "parameterName": "$existence",
-        "propertyId": "prop_476CQNTX4ZK67EJZTF4JRWNVG1"
-      },
-      {
         "kind": "domainProperties",
         "parameterName": "status",
         "sources": [
@@ -69,6 +64,7 @@
         "parameterName": "versionName"
       }
     ],
+    "existencePropertyId": "prop_476CQNTX4ZK67EJZTF4JRWNVG1",
     "linkedMasterResourceId": "mdr_319778V7S98XR8N360KTTD5ZS2"
   },
   "id": "udr_75Q7XS8KGC8G9AZVS90PHGB4DK",
