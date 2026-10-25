@@ -56,10 +56,7 @@ const LoginReward = defineOverlayDomainType(
     actionPropertyTransforms: [
       {
         targetProperty: loginReward.propertyId("LoginReward", "acquireActions"),
-        kind: "transformEntries",
         mode: "append",
-        entries: [
-          {
             transformPackageId: currency.packageId,
             transformName: "DepositFreeCurrency",
             arguments: [
@@ -70,8 +67,6 @@ const LoginReward = defineOverlayDomainType(
               },
             ],
           },
-        ],
-      },
     ],
   },
   domainType =>

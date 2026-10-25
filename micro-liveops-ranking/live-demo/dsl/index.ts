@@ -73,10 +73,7 @@ const RankingReward = defineOverlayDomainType(
     actionPropertyTransforms: [
       {
         targetProperty: ranking.propertyId("RankingReward", "acquireActions"),
-        kind: "transformEntries",
         mode: "append",
-        entries: [
-          {
             transformPackageId: currency.packageId,
             transformName: "DepositFreeCurrency",
             arguments: [
@@ -87,8 +84,6 @@ const RankingReward = defineOverlayDomainType(
               },
             ],
           },
-        ],
-      },
     ],
   },
   domainType =>

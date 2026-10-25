@@ -1,85 +1,70 @@
 {
   "actionPropertyTransforms": [
     {
-      "entries": [
+      "arguments": [
         {
-          "arguments": [
-            {
-              "parameterName": "energy",
-              "source": {
-                "kind": "static",
-                "value": "stamina"
-              }
-            },
-            {
-              "parameterName": "value",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
-              }
-            }
-          ],
-          "transformName": "ConsumeEnergy",
-          "transformPackageId": "foundation-economy-energy"
+          "parameterName": "energy",
+          "source": {
+            "kind": "static",
+            "value": "stamina"
+          }
+        },
+        {
+          "parameterName": "value",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
+          }
         }
       ],
-      "kind": "transformEntries",
       "mode": "append",
-      "targetPropertyId": "prop_6KRKPN3YWC7M677JZT7MQZFW16"
+      "targetPropertyId": "prop_6KRKPN3YWC7M677JZT7MQZFW16",
+      "transformName": "ConsumeEnergy",
+      "transformPackageId": "foundation-economy-energy"
     },
     {
-      "entries": [
+      "arguments": [
         {
-          "arguments": [
-            {
-              "parameterName": "slot",
-              "source": {
-                "kind": "static",
-                "value": 0
-              }
-            },
-            {
-              "parameterName": "count",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR"
-              }
-            }
-          ],
-          "transformName": "DepositFreeCurrency",
-          "transformPackageId": "foundation-economy-currency"
+          "parameterName": "slot",
+          "source": {
+            "kind": "static",
+            "value": 0
+          }
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR"
+          }
         }
       ],
-      "kind": "transformEntries",
       "mode": "append",
-      "targetPropertyId": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8"
+      "targetPropertyId": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8",
+      "transformName": "DepositFreeCurrency",
+      "transformPackageId": "foundation-economy-currency"
     },
     {
-      "entries": [
+      "arguments": [
         {
-          "arguments": [
-            {
-              "parameterName": "slot",
-              "source": {
-                "kind": "static",
-                "value": 0
-              }
-            },
-            {
-              "parameterName": "count",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_00D0TT9XC90NGHJ1JGHG67DHY2"
-              }
-            }
-          ],
-          "transformName": "DepositFreeCurrency",
-          "transformPackageId": "foundation-economy-currency"
+          "parameterName": "slot",
+          "source": {
+            "kind": "static",
+            "value": 0
+          }
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_00D0TT9XC90NGHJ1JGHG67DHY2"
+          }
         }
       ],
-      "kind": "transformEntries",
       "mode": "append",
-      "targetPropertyId": "prop_49CWPE451G4S2NWECN50J39WNY"
+      "targetPropertyId": "prop_49CWPE451G4S2NWECN50J39WNY",
+      "transformName": "DepositFreeCurrency",
+      "transformPackageId": "foundation-economy-currency"
     }
   ],
   "compositeKeyMode": {

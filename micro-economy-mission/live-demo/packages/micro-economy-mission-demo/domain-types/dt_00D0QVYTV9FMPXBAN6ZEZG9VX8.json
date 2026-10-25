@@ -1,31 +1,26 @@
 {
   "actionPropertyTransforms": [
     {
-      "entries": [
+      "arguments": [
         {
-          "arguments": [
-            {
-              "parameterName": "slot",
-              "source": {
-                "kind": "static",
-                "value": 0
-              }
-            },
-            {
-              "parameterName": "count",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_00D0QVYTV99Q49SBAE7J7GC9EG"
-              }
-            }
-          ],
-          "transformName": "DepositFreeCurrency",
-          "transformPackageId": "foundation-economy-currency"
+          "parameterName": "slot",
+          "source": {
+            "kind": "static",
+            "value": 0
+          }
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_00D0QVYTV99Q49SBAE7J7GC9EG"
+          }
         }
       ],
-      "kind": "transformEntries",
       "mode": "append",
-      "targetPropertyId": "prop_00D060QP7EZPDKKKFPE3HYE2C5"
+      "targetPropertyId": "prop_00D060QP7EZPDKKKFPE3HYE2C5",
+      "transformName": "DepositFreeCurrency",
+      "transformPackageId": "foundation-economy-currency"
     }
   ],
   "compositeKeyMode": {

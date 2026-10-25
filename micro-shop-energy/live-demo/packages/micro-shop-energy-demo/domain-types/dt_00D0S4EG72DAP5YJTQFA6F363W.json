@@ -1,38 +1,33 @@
 {
   "actionPropertyTransforms": [
     {
-      "entries": [
+      "arguments": [
         {
-          "arguments": [
-            {
-              "parameterName": "slot",
-              "source": {
-                "kind": "static",
-                "value": 0
-              }
-            },
-            {
-              "parameterName": "paidOnly",
-              "source": {
-                "kind": "static",
-                "value": false
-              }
-            },
-            {
-              "parameterName": "count",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_00D0S4EG729BGHQ7R4RK1959TA"
-              }
-            }
-          ],
-          "transformName": "WithdrawCurrency",
-          "transformPackageId": "foundation-economy-currency"
+          "parameterName": "slot",
+          "source": {
+            "kind": "static",
+            "value": 0
+          }
+        },
+        {
+          "parameterName": "paidOnly",
+          "source": {
+            "kind": "static",
+            "value": false
+          }
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_00D0S4EG729BGHQ7R4RK1959TA"
+          }
         }
       ],
-      "kind": "transformEntries",
       "mode": "replace",
-      "targetPropertyId": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6"
+      "targetPropertyId": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6",
+      "transformName": "WithdrawCurrency",
+      "transformPackageId": "foundation-economy-currency"
     }
   ],
   "compositeKeyMode": {

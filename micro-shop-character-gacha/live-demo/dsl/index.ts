@@ -57,10 +57,7 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
     actionPropertyTransforms: [
       {
         targetProperty: gacha.propertyId("Gacha", "consumeActions"),
-        kind: "transformEntries",
         mode: "replace",
-        entries: [
-          {
             transformPackageId: currency.packageId,
             transformName: "WithdrawCurrency",
             arguments: [
@@ -70,8 +67,6 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
               { parameterName: "paidOnly", source: { kind: "static", value: false } },
             ],
           },
-        ],
-      },
     ],
   })
 

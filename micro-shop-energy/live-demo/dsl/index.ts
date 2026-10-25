@@ -41,11 +41,8 @@ const EnergyProduct = defineOverlayDomainType(
       {
         // Use the published property id because this DSL evaluation does not resolve the dependency closure.
         targetProperty: shop.propertyId("EnergyProduct", "consumeActions"),
-        kind: "transformEntries",
         // Replace the slot so this demo owns the complete price rather than adding a second charge.
         mode: "replace",
-        entries: [
-          {
             transformPackageId: currency.packageId,
             transformName: "WithdrawCurrency",
             arguments: [
@@ -58,8 +55,6 @@ const EnergyProduct = defineOverlayDomainType(
               },
             ],
           },
-        ],
-      },
     ],
   },
   domainType =>

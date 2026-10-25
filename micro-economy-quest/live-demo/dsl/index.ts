@@ -62,10 +62,7 @@ const Quest = defineOverlayDomainType(
     actionPropertyTransforms: [
       {
         targetProperty: quest.propertyId("Quest", "consumeActions"),
-        kind: "transformEntries",
         mode: "append",
-        entries: [
-          {
             transformPackageId: energy.packageId,
             transformName: "ConsumeEnergy",
             arguments: [
@@ -76,20 +73,12 @@ const Quest = defineOverlayDomainType(
               },
             ],
           },
-        ],
-      },
       {
         targetProperty: quest.propertyId("Quest", "completeAcquireActions"),
-        kind: "transformEntries",
-        mode: "append",
-        entries: [depositEntry("reward")],
-      },
+        mode: "append",...depositEntry("reward")},
       {
         targetProperty: quest.propertyId("Quest", "firstCompleteAcquireActions"),
-        kind: "transformEntries",
-        mode: "append",
-        entries: [depositEntry("firstClearReward")],
-      },
+        mode: "append",...depositEntry("firstClearReward")},
     ],
   },
   domainType =>

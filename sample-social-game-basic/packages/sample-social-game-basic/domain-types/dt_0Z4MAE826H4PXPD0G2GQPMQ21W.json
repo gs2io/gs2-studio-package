@@ -1,38 +1,33 @@
 {
   "actionPropertyTransforms": [
     {
-      "entries": [
+      "arguments": [
         {
-          "arguments": [
-            {
-              "parameterName": "count",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ"
-              }
-            },
-            {
-              "parameterName": "paidOnly",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04"
-              }
-            },
-            {
-              "parameterName": "slot",
-              "source": {
-                "kind": "placeholder",
-                "value": "#{slot}"
-              }
-            }
-          ],
-          "transformName": "WithdrawCurrency",
-          "transformPackageId": "foundation-economy-currency"
+          "parameterName": "count",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ"
+          }
+        },
+        {
+          "parameterName": "paidOnly",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04"
+          }
+        },
+        {
+          "parameterName": "slot",
+          "source": {
+            "kind": "placeholder",
+            "value": "#{slot}"
+          }
         }
       ],
-      "kind": "transformEntries",
       "mode": "replace",
-      "targetPropertyId": "prop_641SVQJRC0GWZ43QNEPB429MND"
+      "targetPropertyId": "prop_641SVQJRC0GWZ43QNEPB429MND",
+      "transformName": "WithdrawCurrency",
+      "transformPackageId": "foundation-economy-currency"
     }
   ],
   "compositeKeyMode": {

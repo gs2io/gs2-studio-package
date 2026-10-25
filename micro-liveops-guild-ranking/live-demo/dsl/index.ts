@@ -62,10 +62,7 @@ const GuildRankingReward = defineOverlayDomainType(
     actionPropertyTransforms: [
       {
         targetProperty: guildRanking.propertyId("GuildRankingReward", "acquireActions"),
-        kind: "transformEntries",
         mode: "append",
-        entries: [
-          {
             transformPackageId: currency.packageId,
             transformName: "DepositFreeCurrency",
             arguments: [
@@ -76,8 +73,6 @@ const GuildRankingReward = defineOverlayDomainType(
               },
             ],
           },
-        ],
-      },
     ],
   },
   domainType =>

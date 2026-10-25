@@ -35,10 +35,7 @@ const Mission = defineOverlayDomainType(
       {
         // Use the published property id because this DSL evaluation does not resolve the dependency closure.
         targetProperty: mission.propertyId("Mission", "completeAcquireActions"),
-        kind: "transformEntries",
         mode: "append",
-        entries: [
-          {
             transformPackageId: currency.packageId,
             transformName: "DepositFreeCurrency",
             arguments: [
@@ -49,8 +46,6 @@ const Mission = defineOverlayDomainType(
               },
             ],
           },
-        ],
-      },
     ],
   },
   domainType =>

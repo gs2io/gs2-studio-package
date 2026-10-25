@@ -1,45 +1,40 @@
 {
   "actionPropertyTransforms": [
     {
-      "entries": [
+      "arguments": [
         {
-          "arguments": [
-            {
-              "parameterName": "rewardType",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_1TXDHTCHQHVT43M06HMWB1T86R"
-              }
-            },
-            {
-              "parameterName": "contentsId",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_635XF953PW3BSYMHYSVYAKEJ0P"
-              }
-            },
-            {
-              "parameterName": "count",
-              "source": {
-                "kind": "domainProperty",
-                "propertyId": "prop_41KFTTF2RYSDR9FFDJ575SQRZV"
-              }
-            },
-            {
-              "parameterName": "slot",
-              "source": {
-                "kind": "placeholder",
-                "value": "#{slot}"
-              }
-            }
-          ],
-          "transformName": "Reward",
-          "transformPackageId": "sample-social-game-basic"
+          "parameterName": "rewardType",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_1TXDHTCHQHVT43M06HMWB1T86R"
+          }
+        },
+        {
+          "parameterName": "contentsId",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_635XF953PW3BSYMHYSVYAKEJ0P"
+          }
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "domainProperty",
+            "propertyId": "prop_41KFTTF2RYSDR9FFDJ575SQRZV"
+          }
+        },
+        {
+          "parameterName": "slot",
+          "source": {
+            "kind": "placeholder",
+            "value": "#{slot}"
+          }
         }
       ],
-      "kind": "transformEntries",
       "mode": "replace",
-      "targetPropertyId": "prop_4NM4N1K506P5W7EJPWJZJPPXB4"
+      "targetPropertyId": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
+      "transformName": "Reward",
+      "transformPackageId": "sample-social-game-basic"
     }
   ],
   "compositeKeyMode": {

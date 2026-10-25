@@ -26,10 +26,7 @@ const SkillNode = defineOverlayDomainType(
     actionPropertyTransforms: [
       {
         targetProperty: RELEASE_CONSUME_ACTIONS,
-        kind: "transformEntries",
         mode: "append",
-        entries: [
-          {
             transformPackageId: currency.packageId,
             transformName: "WithdrawCurrency",
             arguments: [
@@ -42,8 +39,6 @@ const SkillNode = defineOverlayDomainType(
               },
             ],
           },
-        ],
-      },
     ],
   },
   domainType =>

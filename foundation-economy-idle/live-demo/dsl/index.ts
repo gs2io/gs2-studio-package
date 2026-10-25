@@ -32,10 +32,7 @@ const IdleReward = defineOverlayDomainType(
     actionPropertyTransforms: [
       {
         targetProperty: idle.propertyId("IdleReward", "acquireActions"),
-        kind: "transformEntries",
         mode: "append",
-        entries: [
-          {
             transformPackageId: currency.packageId,
             transformName: "DepositFreeCurrency",
             arguments: [
@@ -46,8 +43,6 @@ const IdleReward = defineOverlayDomainType(
               },
             ],
           },
-        ],
-      },
     ],
   },
   domainType =>
