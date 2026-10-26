@@ -94,7 +94,11 @@
         },
         "name": "targetActionName",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"targetType\",\"value\":\"action\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "targetType",
+            "value": "action"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -119,7 +123,11 @@
         },
         "name": "targetModelName",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"targetType\",\"value\":\"model\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "targetType",
+            "value": "model"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },

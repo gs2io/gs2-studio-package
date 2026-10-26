@@ -65,7 +65,11 @@
         },
         "name": "schedule",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"mode\",\"value\":\"schedule\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "mode",
+            "value": "schedule"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -91,7 +95,11 @@
         },
         "name": "resetHour",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"mode\",\"value\":\"streaming\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "mode",
+            "value": "streaming"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -115,7 +123,11 @@
         },
         "name": "repeat",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"mode\",\"value\":\"streaming\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "mode",
+            "value": "streaming"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },

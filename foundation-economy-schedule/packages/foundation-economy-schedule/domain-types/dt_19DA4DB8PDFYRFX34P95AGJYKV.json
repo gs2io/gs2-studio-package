@@ -65,7 +65,11 @@
         },
         "name": "startAt",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"absolute\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "scheduleType",
+            "value": "absolute"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -89,7 +93,11 @@
         },
         "name": "endAt",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"absolute\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "scheduleType",
+            "value": "absolute"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -113,7 +121,11 @@
         },
         "name": "trigger",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"scheduleType\",\"value\":\"relative\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "scheduleType",
+            "value": "relative"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -233,7 +245,26 @@
         },
         "name": "beginHour",
         "requirement": {
-          "condition": "{\"kind\":\"or\",\"conditions\":[{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"daily\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}]}",
+          "condition": {
+            "children": [
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "daily"
+              },
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "weekly"
+              },
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "monthly"
+              }
+            ],
+            "kind": "or"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -259,7 +290,26 @@
         },
         "name": "endHour",
         "requirement": {
-          "condition": "{\"kind\":\"or\",\"conditions\":[{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"daily\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"},{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}]}",
+          "condition": {
+            "children": [
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "daily"
+              },
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "weekly"
+              },
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "monthly"
+              }
+            ],
+            "kind": "or"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -283,7 +333,11 @@
         },
         "name": "beginDayOfWeek",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "weekly"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -315,7 +369,11 @@
         },
         "name": "endDayOfWeek",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"weekly\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "weekly"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -349,7 +407,11 @@
         },
         "name": "beginDayOfMonth",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "monthly"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -375,7 +437,11 @@
         },
         "name": "endDayOfMonth",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"monthly\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "monthly"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -399,7 +465,11 @@
         },
         "name": "anchorTimestamp",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "custom"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -425,7 +495,11 @@
         },
         "name": "activeDays",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "custom"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
@@ -451,7 +525,11 @@
         },
         "name": "inactiveDays",
         "requirement": {
-          "condition": "{\"kind\":\"eq\",\"propertyName\":\"repeatType\",\"value\":\"custom\"}",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "custom"
+          },
           "kind": "conditional",
           "requiredWhenMet": true
         },
