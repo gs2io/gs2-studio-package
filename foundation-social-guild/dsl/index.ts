@@ -153,6 +153,7 @@ const GuildModel = defineMasterDataResource(resource =>
       role
         .model(GS2.guild.RoleModel)
         .mountLocal(GuildRole)
+        .rowScopeAllRows()
         .bindings({
           name: Bind.domainProperty(Source.direct(GuildRole, "id")),
           metadata: Bind.static(""),

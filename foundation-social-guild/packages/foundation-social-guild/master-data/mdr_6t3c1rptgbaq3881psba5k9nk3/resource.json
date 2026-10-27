@@ -32,7 +32,10 @@
           "propertyId": "prop_00D031EHJKR6BBM9VDKF7BEEG6"
         }
       }
-    ]
+    ],
+    "rowScope": {
+      "kind": "allRows"
+    }
   },
   "id": "mdr_6T3C1RPTGBAQ3881PSBA5K9NK3",
   "location": {
