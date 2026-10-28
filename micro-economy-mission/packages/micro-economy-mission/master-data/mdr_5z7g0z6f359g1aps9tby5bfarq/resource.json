@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
-            "typeName": "MissionCounter"
+            "typeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -28,8 +27,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
-    "typeName": "MissionCounter"
+    "typeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB"
   },
   "parent": {
     "kind": "direct",

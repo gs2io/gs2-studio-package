@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E",
-            "typeName": "UsageLimit"
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
           },
           "propertyId": "prop_00D031CCJC8A73V9WDWHJYY5S9"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E",
-            "typeName": "UsageLimit"
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
           },
           "propertyId": "prop_00D031CCJCD9WHWSJ1N9W1NN13"
         }
@@ -39,8 +37,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E",
-            "typeName": "UsageLimit"
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -52,8 +49,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E",
-            "typeName": "UsageLimit"
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
           },
           "propertyId": "prop_00D031CCJCB6TXS4PV4ACMXFJC"
         }
@@ -65,8 +61,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E",
-            "typeName": "UsageLimit"
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
           },
           "propertyId": "prop_00D031CCJCA2HJ6M98DXZEDTKY"
         }
@@ -78,8 +73,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E",
-            "typeName": "UsageLimit"
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
           },
           "propertyId": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0"
         }
@@ -91,8 +85,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E",
-            "typeName": "UsageLimit"
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
           },
           "propertyId": "prop_00D031CCJC935P6N8JH9QZET3R"
         }
@@ -106,8 +99,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031CCJC5E77CH6RN2RE661E",
-    "typeName": "UsageLimit"
+    "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
   },
   "parent": {
     "kind": "direct",

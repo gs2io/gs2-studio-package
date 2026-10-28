@@ -12,8 +12,7 @@
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
-                    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W",
-                    "typeName": "EnergyProduct"
+                    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
                   },
                   "propertyId": "prop_01M3YJ1DNJ3MS5AZDA6EMDZJTA"
                 },
@@ -31,8 +30,7 @@
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
-                    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W",
-                    "typeName": "EnergyProduct"
+                    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
                   },
                   "propertyId": "prop_11FCJPVBK2AQFDD6DXHKWSV827"
                 },
@@ -56,8 +54,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W",
-    "typeName": "EnergyProduct"
+    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
   },
   "parent": {
     "arrayProperty": "acquireActions",

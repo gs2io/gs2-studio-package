@@ -11,8 +11,7 @@
                 "kind": "direct",
                 "mountPath": {
                   "kind": "local",
-                  "typeId": "dt_00D0MM25SM55BXJGSRRQEWD359",
-                  "typeName": "Energy"
+                  "typeId": "dt_00D0MM25SM55BXJGSRRQEWD359"
                 },
                 "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
               }
@@ -40,8 +39,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0MM25SM55BXJGSRRQEWD359",
-    "typeName": "Energy"
+    "typeId": "dt_00D0MM25SM55BXJGSRRQEWD359"
   },
   "parent": {
     "arrayProperty": "acquireActions",

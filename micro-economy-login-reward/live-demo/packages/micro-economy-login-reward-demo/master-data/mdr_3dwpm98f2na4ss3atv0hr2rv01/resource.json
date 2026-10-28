@@ -11,8 +11,7 @@
                 "kind": "direct",
                 "mountPath": {
                   "kind": "local",
-                  "typeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00",
-                  "typeName": "LoginRewardCollection"
+                  "typeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00"
                 },
                 "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
               }
@@ -33,8 +32,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00",
-    "typeName": "LoginRewardCollection"
+    "typeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00"
   },
   "parent": {
     "arrayProperty": "acquireActions",

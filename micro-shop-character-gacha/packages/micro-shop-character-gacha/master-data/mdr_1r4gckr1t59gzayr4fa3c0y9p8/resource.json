@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012",
-            "typeName": "GachaRarityRate"
+            "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012",
-            "typeName": "GachaRarityRate"
+            "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
           },
           "propertyId": "prop_61V2Q6GDX782JAG5F3ZJQNRFHY"
         }
@@ -39,8 +37,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012",
-            "typeName": "GachaRarityRate"
+            "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
           },
           "propertyId": "prop_4FZRY1TPG3AT3E8S78CR5XY0XT"
         }
@@ -54,8 +51,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012",
-    "typeName": "GachaRarityRate"
+    "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
   },
   "parent": {
     "arrayProperty": "prizes",

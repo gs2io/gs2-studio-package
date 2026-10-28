@@ -21,8 +21,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
-              "typeName": "Character"
+              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
             },
             "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
           }

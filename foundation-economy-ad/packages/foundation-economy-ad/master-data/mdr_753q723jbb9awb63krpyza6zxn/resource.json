@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
-            "typeName": "AdPlatform"
+            "typeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE"
           },
           "propertyId": "prop_2E144V2D4DR6774190N39P62XT"
         }
@@ -96,8 +95,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
-            "typeName": "AdPlatform"
+            "typeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE"
           },
           "propertyId": "prop_242M4XQ9VWCWPDXV75ACHQVJD1"
         }
@@ -111,7 +109,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
-    "typeName": "AdPlatform"
+    "typeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE"
   }
 }

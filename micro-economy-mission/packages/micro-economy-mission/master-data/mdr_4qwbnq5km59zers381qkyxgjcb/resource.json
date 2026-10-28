@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
-            "typeName": "Mission"
+            "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -35,8 +34,7 @@
               "refPropertyId": "prop_0MYSS3YYHJEN9ZR5ZT014RB2HK",
               "targetMountPath": {
                 "kind": "local",
-                "typeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
-                "typeName": "MissionCounter"
+                "typeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB"
               }
             }
           ]
@@ -59,8 +57,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
-            "typeName": "Mission"
+            "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
           },
           "propertyId": "prop_4Q0FZ49AS61KZCN0Z8MS0DE7SN"
         }
@@ -79,8 +76,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
-    "typeName": "Mission"
+    "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
   },
   "parent": {
     "arrayProperty": "tasks",

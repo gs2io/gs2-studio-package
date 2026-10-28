@@ -44,8 +44,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
-            "typeName": "CurrencyStore"
+            "typeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY"
           },
           "propertyId": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ"
         }
@@ -137,7 +136,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
-    "typeName": "CurrencyStore"
+    "typeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY"
   }
 }

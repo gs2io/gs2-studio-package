@@ -12,8 +12,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
-            "typeName": "CharacterFormationForm"
+            "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -41,8 +40,7 @@
         "parameterName": "slots",
         "targetMountPath": {
           "kind": "local",
-          "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
-          "typeName": "CharacterFormationForm"
+          "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
         },
         "targetPropertyId": "prop_0B395S1GETW77ZBQ7FK8Z7TPGS"
       }
@@ -55,7 +53,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
-    "typeName": "CharacterFormationForm"
+    "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
   }
 }

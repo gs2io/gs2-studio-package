@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
-              "typeName": "EquipmentCollection"
+              "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
             },
             "propertyId": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS"
           }
@@ -24,8 +23,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
-              "typeName": "EquipmentCollection"
+              "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
             },
             "propertyId": "prop_6DFT20J8RV6F8565KNNREYVH3N"
           }

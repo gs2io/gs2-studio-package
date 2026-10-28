@@ -12,8 +12,7 @@
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
-                    "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
-                    "typeName": "EquipmentCatalog"
+                    "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV"
                   },
                   "propertyId": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA"
                 },
@@ -37,8 +36,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
-    "typeName": "EquipmentCatalog"
+    "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV"
   },
   "parent": {
     "arrayProperty": "acquireActions",

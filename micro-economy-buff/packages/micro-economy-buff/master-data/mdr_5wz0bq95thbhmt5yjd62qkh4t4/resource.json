@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
-            "typeName": "Buff"
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
           },
           "propertyId": "prop_00D0322BN7XACWKGN03JMSRA8H"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
-            "typeName": "Buff"
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
           },
           "propertyId": "prop_00D0322BN7XPKZEYZ4G0MDYS0P"
         }
@@ -34,8 +32,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
-            "typeName": "Buff"
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
           },
           "propertyId": "prop_00D0322BN7Z2CA8G16H48JGTJ5"
         }
@@ -49,8 +46,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
-    "typeName": "Buff"
+    "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
   },
   "parent": {
     "arrayProperty": "targetAction",

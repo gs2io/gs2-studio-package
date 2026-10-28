@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
-            "typeName": "StoreSubscription"
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
           },
           "propertyId": "prop_00D033GGSV9BP263BX1BS3S5V5"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
-            "typeName": "StoreSubscription"
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
           },
           "propertyId": "prop_00D033GGSVBJV6PEPCZPBM8TXN"
         }
@@ -39,8 +37,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
-            "typeName": "StoreSubscription"
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -52,8 +49,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
-            "typeName": "StoreSubscription"
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
           },
           "propertyId": "prop_00D033GGSV8TB8N1514TR504V6"
         }
@@ -65,8 +61,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
-            "typeName": "StoreSubscription"
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
           },
           "propertyId": "prop_00D033GGSVBD5YJ273A72E5PQ1"
         }
@@ -78,8 +73,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
-            "typeName": "StoreSubscription"
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
           },
           "propertyId": "prop_00D033GGSVFR969HA1TD6S77GD"
         }
@@ -91,8 +85,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
-            "typeName": "StoreSubscription"
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
           },
           "propertyId": "prop_00D033GGSV8NSDWPFJV4KGVFKB"
         }
@@ -106,8 +99,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
-    "typeName": "StoreSubscription"
+    "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
   },
   "parent": {
     "kind": "direct",

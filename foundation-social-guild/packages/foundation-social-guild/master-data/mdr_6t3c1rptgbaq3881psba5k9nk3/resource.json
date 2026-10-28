@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
-            "typeName": "GuildRole"
+            "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -26,8 +25,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
-            "typeName": "GuildRole"
+            "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0"
           },
           "propertyId": "prop_00D031EHJKR6BBM9VDKF7BEEG6"
         }
@@ -44,8 +42,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
-    "typeName": "GuildRole"
+    "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0"
   },
   "parent": {
     "arrayProperty": "roles",

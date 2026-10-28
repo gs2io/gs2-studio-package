@@ -12,8 +12,7 @@
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
-                    "typeId": "dt_00D0SFSEJN1BET2KCMVWSZX3F8",
-                    "typeName": "GlobalMessage"
+                    "typeId": "dt_00D0SFSEJN1BET2KCMVWSZX3F8"
                   },
                   "propertyId": "prop_19YMYXB5NJHVCEEQY795WH711C"
                 },
@@ -44,8 +43,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0SFSEJN1BET2KCMVWSZX3F8",
-    "typeName": "GlobalMessage"
+    "typeId": "dt_00D0SFSEJN1BET2KCMVWSZX3F8"
   },
   "parent": {
     "arrayProperty": "acquireActions",

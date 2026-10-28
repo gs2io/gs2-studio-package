@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
-              "typeName": "Mission"
+              "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
             },
             "propertyId": "prop_00D060QP7EZPDKKKFPE3HYE2C5"
           },
@@ -27,8 +26,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
-    "typeName": "Mission"
+    "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
   },
   "parent": {
     "arrayProperty": "completeAcquireActions",

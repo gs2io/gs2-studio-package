@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT",
-            "typeName": "StoreProduct"
+            "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -28,8 +27,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT",
-    "typeName": "StoreProduct"
+    "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
   },
   "parent": {
     "arrayProperty": "salesItem",

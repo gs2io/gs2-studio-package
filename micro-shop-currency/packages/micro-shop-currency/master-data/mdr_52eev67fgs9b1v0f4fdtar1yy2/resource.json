@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3",
-            "typeName": "CurrencyType"
+            "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -28,8 +27,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3",
-    "typeName": "CurrencyType"
+    "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3"
   },
   "parent": {
     "kind": "direct",

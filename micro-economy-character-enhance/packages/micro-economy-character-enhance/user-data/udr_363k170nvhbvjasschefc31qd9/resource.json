@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
-              "typeName": "CharacterEnhanceMaterial"
+              "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
             },
             "propertyId": "prop_00D0TAXWR8X0NVB2HS99J298KV"
           }

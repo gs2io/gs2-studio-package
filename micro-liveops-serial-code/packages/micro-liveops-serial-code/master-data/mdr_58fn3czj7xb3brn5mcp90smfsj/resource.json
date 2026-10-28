@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
-            "typeName": "SerialCodeCampaign"
+            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
           },
           "propertyId": "prop_00D031EZFZM4YG8CZFHGS7HMHD"
         }
@@ -26,8 +25,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
-            "typeName": "SerialCodeCampaign"
+            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -41,8 +39,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
-    "typeName": "SerialCodeCampaign"
+    "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
   },
   "parent": {
     "kind": "direct",

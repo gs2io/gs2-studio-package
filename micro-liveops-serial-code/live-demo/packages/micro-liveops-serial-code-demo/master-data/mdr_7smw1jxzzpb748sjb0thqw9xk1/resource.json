@@ -23,8 +23,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
-            "typeName": "SerialCodeRedemption"
+            "typeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -58,8 +57,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
-    "typeName": "SerialCodeRedemption"
+    "typeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW"
   },
   "parent": {
     "kind": "direct",

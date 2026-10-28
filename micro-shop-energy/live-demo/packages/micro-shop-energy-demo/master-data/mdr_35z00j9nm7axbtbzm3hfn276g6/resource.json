@@ -26,8 +26,7 @@
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
-                    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W",
-                    "typeName": "EnergyProduct"
+                    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
                   },
                   "propertyId": "prop_00D0S4EG729BGHQ7R4RK1959TA"
                 },
@@ -51,8 +50,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W",
-    "typeName": "EnergyProduct"
+    "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
   },
   "parent": {
     "arrayProperty": "consumeActions",

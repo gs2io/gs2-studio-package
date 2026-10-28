@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
-              "typeName": "Progress"
+              "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP"
             },
             "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
           }
@@ -24,8 +23,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
-              "typeName": "Progress"
+              "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP"
             },
             "propertyId": "prop_1VVD0ASXTKMHVXA7F1P0R3QC86"
           }
@@ -61,8 +59,7 @@
         "parameterName": "rewards",
         "targetMountPath": {
           "kind": "local",
-          "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
-          "typeName": "Progress"
+          "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP"
         },
         "targetPropertyId": "prop_13P7PMR0A3DBCG13JCB54KM0HP"
       }
@@ -75,7 +72,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP",
-    "typeName": "Progress"
+    "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP"
   }
 }

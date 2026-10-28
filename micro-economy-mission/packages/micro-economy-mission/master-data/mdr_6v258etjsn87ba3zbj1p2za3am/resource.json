@@ -90,7 +90,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E",
-    "typeName": "MissionSetting"
+    "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E"
   }
 }

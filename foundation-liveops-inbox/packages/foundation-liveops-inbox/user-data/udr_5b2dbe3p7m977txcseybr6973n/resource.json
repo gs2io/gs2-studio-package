@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
-              "typeName": "Message"
+              "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
             },
             "propertyId": "prop_73SJBQ4ZAG2RW17EQSCW1V2TSG"
           }
@@ -24,8 +23,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
-              "typeName": "Message"
+              "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
             },
             "propertyId": "prop_3JX5PM4TDM36YWSQFMA0CXKKBW"
           }
@@ -43,8 +41,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
-              "typeName": "Message"
+              "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
             },
             "propertyId": "prop_7WYH08M0F6N02WHFBRJ4TXX5VD"
           }
@@ -57,8 +54,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
-            "typeName": "Message"
+            "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -71,8 +67,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
-              "typeName": "Message"
+              "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
             },
             "propertyId": "prop_0AV2AGGK2HFK600HXSCDGP0CNC"
           }
@@ -91,7 +86,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
-    "typeName": "Message"
+    "typeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
   }
 }

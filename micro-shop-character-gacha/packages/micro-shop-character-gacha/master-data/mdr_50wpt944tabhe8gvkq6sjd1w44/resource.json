@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-              "typeName": "Gacha"
+              "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
             },
             "propertyId": "prop_641SVQJRC0GWZ43QNEPB429MND"
           },
@@ -27,8 +26,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-    "typeName": "Gacha"
+    "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
   },
   "parent": {
     "arrayProperty": "consumeActions",

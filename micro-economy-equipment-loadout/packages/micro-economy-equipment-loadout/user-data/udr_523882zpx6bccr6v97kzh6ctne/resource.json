@@ -16,8 +16,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033FNASESS5578YF3CS7Y34",
-            "typeName": "Character"
+            "typeId": "dt_00D033FNASESS5578YF3CS7Y34"
           },
           "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
         }
@@ -45,8 +44,7 @@
         "parameterName": "slots",
         "targetMountPath": {
           "kind": "local",
-          "typeId": "dt_00D033FNASESS5578YF3CS7Y34",
-          "typeName": "Character"
+          "typeId": "dt_00D033FNASESS5578YF3CS7Y34"
         },
         "targetPropertyId": "prop_00D033FNASB4JJM9FNP61KXE7B"
       }
@@ -59,7 +57,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D033FNASESS5578YF3CS7Y34",
-    "typeName": "Character"
+    "typeId": "dt_00D033FNASESS5578YF3CS7Y34"
   }
 }

@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-            "typeName": "Gacha"
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-            "typeName": "Gacha"
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
           },
           "propertyId": "prop_42BYHE1CR1TEXDMCWR9B91PP5K"
         }
@@ -41,8 +39,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-    "typeName": "Gacha"
+    "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
   },
   "parent": {
     "arrayProperty": "displayItems",

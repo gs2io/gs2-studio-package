@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
-              "typeName": "GuildRankingReward"
+              "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63"
             },
             "propertyId": "prop_00D033H0GPSX5TQB69ST80YSQG"
           },
@@ -27,8 +26,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
-    "typeName": "GuildRankingReward"
+    "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63"
   },
   "parent": {
     "arrayProperty": "acquireActions",

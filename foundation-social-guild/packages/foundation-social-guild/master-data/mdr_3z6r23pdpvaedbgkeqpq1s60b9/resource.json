@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_00D031EHJKS5RXCVAFMNT3SG8A"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_00D031EHJKYNMFXHPY3FTZNMT3"
         }
@@ -34,8 +32,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_00D031EHJKX7SZME4RYKT42EHK"
         }
@@ -47,8 +44,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_00D031EHJKVGBMJB7FM4PCN6J7"
         }
@@ -60,8 +56,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_00D031EHJKZX0Z07JXP9EBMZE2"
         }
@@ -73,8 +68,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_00D031EHJKV14ABPBSZYSZE6ZC"
         }
@@ -86,8 +80,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_00D031EHJKXY4J4TES2QHN8F8E"
         }
@@ -104,8 +97,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -117,8 +109,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_00D031EHJKRC55TT07BAPX05CG"
         }
@@ -132,8 +123,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-    "typeName": "Guild"
+    "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
   },
   "parent": {
     "kind": "direct",

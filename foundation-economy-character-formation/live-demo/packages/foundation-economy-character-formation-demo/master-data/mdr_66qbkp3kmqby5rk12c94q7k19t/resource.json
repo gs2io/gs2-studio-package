@@ -25,8 +25,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6",
-    "typeName": "CharacterFormation"
+    "typeId": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6"
   },
   "parent": {
     "arrayProperty": "acquireActions",

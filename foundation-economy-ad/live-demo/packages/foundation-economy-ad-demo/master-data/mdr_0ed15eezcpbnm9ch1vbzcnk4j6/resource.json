@@ -17,8 +17,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0PPMGBSSH7R8WYJPE2YJRNB",
-    "typeName": "AdViewPoint"
+    "typeId": "dt_00D0PPMGBSSH7R8WYJPE2YJRNB"
   },
   "parent": {
     "arrayProperty": "consumeActions",

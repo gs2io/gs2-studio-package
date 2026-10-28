@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
-            "typeName": "Quest"
+            "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -28,8 +27,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
-    "typeName": "Quest"
+    "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
   },
   "parent": {
     "arrayProperty": "quests",

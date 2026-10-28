@@ -35,8 +35,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031YG89PXH0J9RYZKY8NP6R",
-            "typeName": "CharacterEnhance"
+            "typeId": "dt_00D031YG89PXH0J9RYZKY8NP6R"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -50,8 +49,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031YG89PXH0J9RYZKY8NP6R",
-    "typeName": "CharacterEnhance"
+    "typeId": "dt_00D031YG89PXH0J9RYZKY8NP6R"
   },
   "parent": {
     "kind": "direct",

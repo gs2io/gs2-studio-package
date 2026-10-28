@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
-            "typeName": "CharacterGradeStep"
+            "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
           },
           "propertyId": "prop_00D0320HQ4N8QC4SDN75PFNFSF"
         }
@@ -26,8 +25,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
-            "typeName": "CharacterGradeStep"
+            "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
           },
           "propertyId": "prop_00D0320HQ4HKJ6EW5M3Z8QS8PG"
         }
@@ -39,8 +37,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
-            "typeName": "CharacterGradeStep"
+            "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
           },
           "propertyId": "prop_00D0320HQ4H7XNC4RCNDDV9W35"
         }
@@ -54,8 +51,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
-    "typeName": "CharacterGradeStep"
+    "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
   },
   "parent": {
     "arrayProperty": "gradeEntries",

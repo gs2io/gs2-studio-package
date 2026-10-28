@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_479NFNV95H92HYQE8252JBRZ9Z",
-            "typeName": "GachaRarity"
+            "typeId": "dt_479NFNV95H92HYQE8252JBRZ9Z"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -23,8 +22,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_479NFNV95H92HYQE8252JBRZ9Z",
-    "typeName": "GachaRarity"
+    "typeId": "dt_479NFNV95H92HYQE8252JBRZ9Z"
   },
   "parent": {
     "kind": "direct",

@@ -55,7 +55,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
-    "typeName": "GlobalMessage"
+    "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
   }
 }

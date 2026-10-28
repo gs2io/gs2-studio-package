@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033FNASFGZWK2X333SXXRXM",
-            "typeName": "EquipmentSlot"
+            "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -26,8 +25,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033FNASFGZWK2X333SXXRXM",
-            "typeName": "EquipmentSlot"
+            "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
           },
           "propertyId": "prop_00D033FNASBHYZ9W1VK8EE39WP"
         }
@@ -41,8 +39,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D033FNASFGZWK2X333SXXRXM",
-    "typeName": "EquipmentSlot"
+    "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
   },
   "parent": {
     "arrayProperty": "slots",

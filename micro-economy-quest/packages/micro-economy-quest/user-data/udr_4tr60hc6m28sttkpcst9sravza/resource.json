@@ -13,8 +13,7 @@
             "targetKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
             "targetMountPath": {
               "kind": "local",
-              "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
-              "typeName": "QuestCollection"
+              "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
             }
           },
           {
@@ -22,8 +21,7 @@
             "targetKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
             "targetMountPath": {
               "kind": "local",
-              "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
-              "typeName": "Quest"
+              "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
             }
           }
         ],
@@ -65,8 +63,7 @@
         "parameterName": "rewards",
         "targetMountPath": {
           "kind": "local",
-          "typeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
-          "typeName": "Progress"
+          "typeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61"
         },
         "targetPropertyId": "prop_5CJ0VWR32T9SD0RSQSYMEXF3HX"
       }
@@ -79,7 +76,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
-    "typeName": "Progress"
+    "typeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61"
   }
 }

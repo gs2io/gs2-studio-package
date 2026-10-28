@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4",
-            "typeName": "QuestCollection"
+            "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4"
           },
           "propertyId": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN"
         }
@@ -26,8 +25,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4",
-            "typeName": "QuestCollection"
+            "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -41,8 +39,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4",
-    "typeName": "QuestCollection"
+    "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4"
   },
   "parent": {
     "kind": "direct",

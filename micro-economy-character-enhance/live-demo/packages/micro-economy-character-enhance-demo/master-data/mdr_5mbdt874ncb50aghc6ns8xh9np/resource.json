@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR",
-            "typeName": "CharacterEnhanceMaterial"
+            "typeId": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -23,8 +22,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR",
-    "typeName": "CharacterEnhanceMaterial"
+    "typeId": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR"
   },
   "parent": {
     "kind": "direct",

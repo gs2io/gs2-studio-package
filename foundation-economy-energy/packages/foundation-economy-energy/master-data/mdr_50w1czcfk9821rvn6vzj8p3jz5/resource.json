@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
-            "typeName": "Energy"
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
           },
           "propertyId": "prop_0VK8BTK0YT0KW0ZS5VN7E3RAWK"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
-            "typeName": "Energy"
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
           },
           "propertyId": "prop_0DZD8RYHVEY4B0DGB0K83K7DNX"
         }
@@ -34,8 +32,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
-            "typeName": "Energy"
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
           },
           "propertyId": "prop_1H7FG0XTK823H3XX35XW00TCFT"
         }
@@ -52,8 +49,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
-            "typeName": "Energy"
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -65,8 +61,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
-            "typeName": "Energy"
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
           },
           "propertyId": "prop_7B2HB91QDWZK8SXNC6ZJGCCAEA"
         }
@@ -83,8 +78,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
-            "typeName": "Energy"
+            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
           },
           "propertyId": "prop_5DW145AF8E14EQ3GHSC94QCMBW"
         }
@@ -103,8 +97,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
-    "typeName": "Energy"
+    "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
   },
   "parent": {
     "kind": "direct",

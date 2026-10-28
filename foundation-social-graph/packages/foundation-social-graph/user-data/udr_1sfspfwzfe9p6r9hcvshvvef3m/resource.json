@@ -16,8 +16,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK",
-            "typeName": "ReceiveFriendRequest"
+            "typeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -31,7 +30,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK",
-    "typeName": "ReceiveFriendRequest"
+    "typeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK"
   }
 }

@@ -18,8 +18,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-            "typeName": "GuildRanking"
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
           },
           "propertyId": "prop_00D033H0GPV00M3DBQVFQC6VA2"
         }
@@ -31,8 +30,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-            "typeName": "GuildRanking"
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
           },
           "propertyId": "prop_00D033H0GPZP59YFFCVBBGVPGM"
         }
@@ -49,8 +47,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-            "typeName": "GuildRanking"
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
           },
           "propertyId": "prop_00D033H0GPY13F7M2F5MH9W2PW"
         }
@@ -62,8 +59,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-            "typeName": "GuildRanking"
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -75,8 +71,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-            "typeName": "GuildRanking"
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
           },
           "propertyId": "prop_00D033H0GPWEF15V2AMFQET09E"
         }
@@ -93,8 +88,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-            "typeName": "GuildRanking"
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
           },
           "propertyId": "prop_00D033H0GPZ8M64WY0868P8S2T"
         }
@@ -108,8 +102,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-    "typeName": "GuildRanking"
+    "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
   },
   "parent": {
     "kind": "direct",

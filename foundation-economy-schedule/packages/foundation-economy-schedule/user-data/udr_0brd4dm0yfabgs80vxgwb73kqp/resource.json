@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
-              "typeName": "Trigger"
+              "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
             },
             "propertyId": "prop_7GBQSK2XRE2JNP4FBPTB9K8BDK"
           }
@@ -23,8 +22,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
-            "typeName": "Trigger"
+            "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -41,8 +39,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
-              "typeName": "Trigger"
+              "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
             },
             "propertyId": "prop_3TE65WFVTTMBGJ8C08F2PMTGQJ"
           }
@@ -62,7 +59,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
-    "typeName": "Trigger"
+    "typeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
   }
 }

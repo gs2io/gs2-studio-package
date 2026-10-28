@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
-            "typeName": "StoreProduct"
+            "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
           },
           "propertyId": "prop_2GHK1DAZ80TETBDER3P5PF6XKA"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
-            "typeName": "StoreProduct"
+            "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
           },
           "propertyId": "prop_7TADZ4DEA40BBKZ46GN2R05E4J"
         }
@@ -34,8 +32,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
-            "typeName": "StoreProduct"
+            "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -49,8 +46,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
-    "typeName": "StoreProduct"
+    "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
   },
   "parent": {
     "kind": "direct",

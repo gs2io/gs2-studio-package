@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031YG89PEGW8QTF8JNDY638",
-            "typeName": "CharacterEnhanceBonus"
+            "typeId": "dt_00D031YG89PEGW8QTF8JNDY638"
           },
           "propertyId": "prop_00D031YG89J65RAXGD0XK0JGDC"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031YG89PEGW8QTF8JNDY638",
-            "typeName": "CharacterEnhanceBonus"
+            "typeId": "dt_00D031YG89PEGW8QTF8JNDY638"
           },
           "propertyId": "prop_00D031YG89HJ35D4WH1RHDYSN0"
         }
@@ -36,8 +34,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031YG89PEGW8QTF8JNDY638",
-    "typeName": "CharacterEnhanceBonus"
+    "typeId": "dt_00D031YG89PEGW8QTF8JNDY638"
   },
   "parent": {
     "arrayProperty": "bonusRates",

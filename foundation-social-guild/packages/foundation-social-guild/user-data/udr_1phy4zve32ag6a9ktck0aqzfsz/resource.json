@@ -16,8 +16,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-            "typeName": "Guild"
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
           },
           "propertyId": "prop_00D031EHJKXQ1Y91SVXVS1NEG1"
         }
@@ -40,7 +39,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-    "typeName": "Guild"
+    "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
   }
 }

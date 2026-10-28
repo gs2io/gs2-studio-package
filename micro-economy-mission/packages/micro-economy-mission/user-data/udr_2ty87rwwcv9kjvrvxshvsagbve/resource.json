@@ -5,8 +5,7 @@
         "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "childMountPath": {
           "kind": "local",
-          "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
-          "typeName": "Mission"
+          "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
         },
         "childTargetPropertyId": "prop_08ZS1KJ683EXX3ADZAVHK3E833",
         "kind": "arrayMembership",
@@ -16,8 +15,7 @@
         "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "childMountPath": {
           "kind": "local",
-          "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
-          "typeName": "Mission"
+          "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
         },
         "childTargetPropertyId": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB",
         "kind": "arrayMembership",
@@ -47,7 +45,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
-    "typeName": "MissionCollection"
+    "typeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R"
   }
 }

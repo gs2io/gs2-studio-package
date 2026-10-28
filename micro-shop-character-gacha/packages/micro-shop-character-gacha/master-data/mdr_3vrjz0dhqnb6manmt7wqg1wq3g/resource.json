@@ -12,8 +12,7 @@
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
-                    "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
-                    "typeName": "CharacterRate"
+                    "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
                   },
                   "propertyId": "prop_2JPPK6P7F94GT0KKPVM3JFZPSQ"
                 },
@@ -37,8 +36,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
-    "typeName": "CharacterRate"
+    "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
   },
   "parent": {
     "arrayProperty": "acquireActions",

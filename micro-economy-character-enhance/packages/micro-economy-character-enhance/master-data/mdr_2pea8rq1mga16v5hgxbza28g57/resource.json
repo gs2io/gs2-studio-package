@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
-            "typeName": "CharacterEnhanceMaterial"
+            "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
           },
           "propertyId": "prop_00D0TAXWR8ZNBCPP520RH8KRHD"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
-            "typeName": "CharacterEnhanceMaterial"
+            "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -36,8 +34,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
-    "typeName": "CharacterEnhanceMaterial"
+    "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
   },
   "parent": {
     "arrayProperty": "simpleItemModels",

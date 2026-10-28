@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
-            "typeName": "VersionGate"
+            "typeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH"
           },
           "propertyId": "prop_00D0WRJ0XVBVDA97KMXC76V58C"
         }
@@ -78,7 +77,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
-    "typeName": "VersionGate"
+    "typeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH"
   }
 }

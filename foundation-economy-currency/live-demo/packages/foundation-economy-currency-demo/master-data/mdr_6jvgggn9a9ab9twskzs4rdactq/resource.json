@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
-            "typeName": "PaidDeposit"
+            "typeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -23,8 +22,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
-    "typeName": "PaidDeposit"
+    "typeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3"
   },
   "parent": {
     "kind": "direct",

@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0MNXASRT2QXV1SJH71CX4V2",
-            "typeName": "Equipment"
+            "typeId": "dt_00D0MNXASRT2QXV1SJH71CX4V2"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -23,8 +22,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0MNXASRT2QXV1SJH71CX4V2",
-    "typeName": "Equipment"
+    "typeId": "dt_00D0MNXASRT2QXV1SJH71CX4V2"
   },
   "parent": {
     "kind": "direct",

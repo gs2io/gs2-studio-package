@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
-            "typeName": "CharacterRate"
+            "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -26,8 +25,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
-            "typeName": "CharacterRate"
+            "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
           },
           "propertyId": "prop_0QQ39TDDTA8E2W3B2GWBQWC3EJ"
         }
@@ -41,8 +39,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
-    "typeName": "CharacterRate"
+    "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
   },
   "parent": {
     "arrayProperty": "prizes",

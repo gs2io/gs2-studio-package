@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-              "typeName": "SkillNode"
+              "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
             },
             "propertyId": "prop_00D05R0KFCTFK6442MMAKE56Y9"
           },
@@ -27,8 +26,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-    "typeName": "SkillNode"
+    "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
   },
   "parent": {
     "arrayProperty": "releaseConsumeActions",

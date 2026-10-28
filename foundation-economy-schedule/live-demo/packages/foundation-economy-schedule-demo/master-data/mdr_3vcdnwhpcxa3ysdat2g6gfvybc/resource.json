@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0MRCJH866QJXZVA8BG03CPK",
-            "typeName": "TriggerPull"
+            "typeId": "dt_00D0MRCJH866QJXZVA8BG03CPK"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -23,8 +22,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0MRCJH866QJXZVA8BG03CPK",
-    "typeName": "TriggerPull"
+    "typeId": "dt_00D0MRCJH866QJXZVA8BG03CPK"
   },
   "parent": {
     "kind": "direct",

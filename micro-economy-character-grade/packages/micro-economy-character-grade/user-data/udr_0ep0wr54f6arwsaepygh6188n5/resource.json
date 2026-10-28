@@ -13,8 +13,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
-              "typeName": "Character"
+              "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D"
             },
             "propertyId": "prop_00D0320HQ4G51XW7JS84YZ2VAA"
           }
@@ -27,8 +26,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
-            "typeName": "Character"
+            "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D"
           },
           "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
         },
@@ -52,7 +50,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
-    "typeName": "Character"
+    "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D"
   }
 }

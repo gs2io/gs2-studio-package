@@ -12,8 +12,7 @@
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
-                    "typeId": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
-                    "typeName": "FreeDeposit"
+                    "typeId": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2"
                   },
                   "propertyId": "prop_00D0KZCKABE9VVHET0Z8R3QD2M"
                 },
@@ -44,8 +43,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
-    "typeName": "FreeDeposit"
+    "typeId": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2"
   },
   "parent": {
     "arrayProperty": "acquireActions",

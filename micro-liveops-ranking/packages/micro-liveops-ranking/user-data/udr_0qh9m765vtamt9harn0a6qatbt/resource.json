@@ -21,8 +21,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-              "typeName": "Ranking"
+              "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
             },
             "propertyId": "prop_00D031DYK0992AG7MFZHFPE8KQ"
           }
@@ -46,7 +45,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-    "typeName": "Ranking"
+    "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
   }
 }

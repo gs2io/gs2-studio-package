@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D03217GRKX0AV27J248EX89N",
-            "typeName": "EquipmentEnchant"
+            "typeId": "dt_00D03217GRKX0AV27J248EX89N"
           },
           "propertyId": "prop_00D03217GRNEKVPR01373YAKSE"
         }
@@ -26,8 +25,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D03217GRKX0AV27J248EX89N",
-            "typeName": "EquipmentEnchant"
+            "typeId": "dt_00D03217GRKX0AV27J248EX89N"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -41,8 +39,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D03217GRKX0AV27J248EX89N",
-    "typeName": "EquipmentEnchant"
+    "typeId": "dt_00D03217GRKX0AV27J248EX89N"
   },
   "parent": {
     "kind": "direct",

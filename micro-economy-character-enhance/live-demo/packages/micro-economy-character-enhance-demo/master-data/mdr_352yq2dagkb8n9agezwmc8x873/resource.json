@@ -46,8 +46,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY",
-    "typeName": "Character"
+    "typeId": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY"
   },
   "parent": {
     "arrayProperty": "acquireActions",

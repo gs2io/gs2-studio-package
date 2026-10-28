@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
-              "typeName": "AdViewPoint"
+              "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
             },
             "propertyId": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK"
           }
@@ -24,8 +23,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
-              "typeName": "AdViewPoint"
+              "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
             },
             "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
           }
@@ -44,7 +42,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
-    "typeName": "AdViewPoint"
+    "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
   }
 }

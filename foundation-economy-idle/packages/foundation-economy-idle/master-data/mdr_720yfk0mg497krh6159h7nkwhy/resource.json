@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
-            "typeName": "IdleStatus"
+            "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
           },
           "propertyId": "prop_7J143G8X27HCRCYX69FABGPKKT"
         }
@@ -36,8 +35,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
-            "typeName": "IdleStatus"
+            "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
           },
           "propertyId": "prop_343KJVJCADHD7053A0N9JQ0M7W"
         }
@@ -51,8 +49,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
-    "typeName": "IdleStatus"
+    "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
   },
   "parent": {
     "kind": "direct",

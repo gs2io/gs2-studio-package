@@ -32,8 +32,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
-    "typeName": "BuffCampaign"
+    "typeId": "dt_00D0WA93FK0QYTWVRADQJVQ57K"
   },
   "parent": {
     "arrayProperty": "acquireActions",

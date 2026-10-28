@@ -13,8 +13,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
-              "typeName": "Character"
+              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
             },
             "propertyId": "prop_75G83NYX56T0KCQB3N92MQPVMT"
           }
@@ -28,8 +27,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
-              "typeName": "Character"
+              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
             },
             "propertyId": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77"
           }
@@ -42,8 +40,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
-            "typeName": "Character"
+            "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
           },
           "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
         },
@@ -57,8 +54,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
-              "typeName": "Character"
+              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
             },
             "propertyId": "prop_6GPQDNYV0YP90F0V7GY2S79423"
           }
@@ -72,8 +68,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
-              "typeName": "Character"
+              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
             },
             "propertyId": "prop_04HMA7F4M0F29E8P9WE3E5YF3R"
           }
@@ -97,7 +92,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
-    "typeName": "Character"
+    "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
   }
 }

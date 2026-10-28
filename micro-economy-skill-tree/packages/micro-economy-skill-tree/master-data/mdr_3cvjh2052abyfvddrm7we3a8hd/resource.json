@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-            "typeName": "SkillNode"
+            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -26,8 +25,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-            "typeName": "SkillNode"
+            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
           },
           "propertyId": "prop_00D0321TWK1SPCKRNJJDG1CSDW"
         }
@@ -39,8 +37,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-            "typeName": "SkillNode"
+            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
           },
           "propertyId": "prop_00D0321TWK5R5K4W0KWNR49SHT"
         }
@@ -54,8 +51,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-    "typeName": "SkillNode"
+    "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
   },
   "parent": {
     "kind": "direct",

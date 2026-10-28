@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
-            "typeName": "EmbeddedVersion"
+            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
           },
           "propertyId": "prop_0ZP0B813EK60XZBRG80Q1FSRXN"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
-            "typeName": "EmbeddedVersion"
+            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
           },
           "propertyId": "prop_3JBFJEQGKAFGB7G2D6HZSKBQQK"
         }
@@ -34,8 +32,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
-            "typeName": "EmbeddedVersion"
+            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
           },
           "propertyId": "prop_2X33JSM8QFZPQE0N0D37ES51G1"
         }
@@ -47,8 +44,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
-            "typeName": "EmbeddedVersion"
+            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -75,8 +71,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
-            "typeName": "EmbeddedVersion"
+            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
           },
           "propertyId": "prop_4PT78T02KWA1HPEZ8MCP0VX5H6"
         }
@@ -88,8 +83,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
-            "typeName": "EmbeddedVersion"
+            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
           },
           "propertyId": "prop_4NEC0PH7FVMSYG63VYH3WFP9SX"
         }
@@ -101,8 +95,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
-            "typeName": "EmbeddedVersion"
+            "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
           },
           "propertyId": "prop_5RDYW3PXBDRRF7AYDRV6MT5KQP"
         }
@@ -116,8 +109,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
-    "typeName": "EmbeddedVersion"
+    "typeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
   },
   "parent": {
     "kind": "direct",

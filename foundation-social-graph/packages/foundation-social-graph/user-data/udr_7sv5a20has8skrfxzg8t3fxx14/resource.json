@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
-              "typeName": "Friend"
+              "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
             },
             "propertyId": "prop_24MC6NM8NQ2X1W8TPT2T1V69RK"
           }
@@ -24,8 +23,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
-              "typeName": "Friend"
+              "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
             },
             "propertyId": "prop_2W4YWVQAX34Q9GNRA5PBY282CF"
           }
@@ -38,8 +36,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
-            "typeName": "Friend"
+            "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -58,7 +55,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
-    "typeName": "Friend"
+    "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
   }
 }

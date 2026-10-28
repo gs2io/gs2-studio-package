@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
-            "typeName": "EnergyProduct"
+            "typeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -23,8 +22,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
-    "typeName": "EnergyProduct"
+    "typeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE"
   },
   "parent": {
     "kind": "direct",

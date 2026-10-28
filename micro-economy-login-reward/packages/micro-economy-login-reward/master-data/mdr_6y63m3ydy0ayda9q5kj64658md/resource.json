@@ -9,8 +9,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
-    "typeName": "LoginReward"
+    "typeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y"
   },
   "parent": {
     "arrayProperty": "rewards",

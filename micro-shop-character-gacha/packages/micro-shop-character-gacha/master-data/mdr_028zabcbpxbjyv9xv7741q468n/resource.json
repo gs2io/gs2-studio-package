@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-            "typeName": "Gacha"
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -28,8 +27,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-    "typeName": "Gacha"
+    "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
   },
   "parent": {
     "arrayProperty": "salesItem",

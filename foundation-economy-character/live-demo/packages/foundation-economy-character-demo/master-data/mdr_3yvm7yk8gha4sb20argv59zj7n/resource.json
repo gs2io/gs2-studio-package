@@ -32,8 +32,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0KZXDBRG616WVXR4N5FCYH2",
-    "typeName": "Character"
+    "typeId": "dt_00D0KZXDBRG616WVXR4N5FCYH2"
   },
   "parent": {
     "arrayProperty": "acquireActions",

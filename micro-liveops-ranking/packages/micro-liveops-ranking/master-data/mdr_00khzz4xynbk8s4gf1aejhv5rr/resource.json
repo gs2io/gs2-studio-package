@@ -13,8 +13,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-            "typeName": "Ranking"
+            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
           },
           "propertyId": "prop_00D031DYK085H3KN6JQ04P6PST"
         }
@@ -26,8 +25,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-            "typeName": "Ranking"
+            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
           },
           "propertyId": "prop_00D031DYK0FVN99WA1Y6MF05YM"
         }
@@ -44,8 +42,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-            "typeName": "Ranking"
+            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
           },
           "propertyId": "prop_00D031DYK08ZD8FNSCWTGZTDNB"
         }
@@ -57,8 +54,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-            "typeName": "Ranking"
+            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -70,8 +66,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-            "typeName": "Ranking"
+            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
           },
           "propertyId": "prop_00D031DYK0BV4VMYQ95YNG6TSF"
         }
@@ -88,8 +83,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-            "typeName": "Ranking"
+            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
           },
           "propertyId": "prop_00D031DYK09YX8Q1K3QBKCFV3Q"
         }
@@ -103,8 +97,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
-    "typeName": "Ranking"
+    "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
   },
   "parent": {
     "kind": "direct",

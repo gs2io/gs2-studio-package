@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
-            "typeName": "CharacterFormationSlot"
+            "typeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -21,8 +20,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
-            "typeName": "CharacterFormationSlot"
+            "typeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG"
           },
           "propertyId": "prop_1KTAJF5QGZJNR6EA3HVSC8QQBT"
         }
@@ -36,8 +34,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
-    "typeName": "CharacterFormationSlot"
+    "typeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG"
   },
   "parent": {
     "arrayProperty": "slots",

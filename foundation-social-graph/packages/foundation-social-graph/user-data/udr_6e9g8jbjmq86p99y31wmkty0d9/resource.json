@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
-              "typeName": "Profile"
+              "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
             },
             "propertyId": "prop_759K6DP8VBDS06P0YW25QNEN5N"
           }
@@ -24,8 +23,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
-              "typeName": "Profile"
+              "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
             },
             "propertyId": "prop_1D82CH5SP6SD8KM3DMX71SZ738"
           }
@@ -43,8 +41,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
-              "typeName": "Profile"
+              "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
             },
             "propertyId": "prop_1MYTKGMH9W77112THJZ3HSMDF9"
           }
@@ -63,7 +60,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
-    "typeName": "Profile"
+    "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
   }
 }

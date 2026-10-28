@@ -8,8 +8,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D0WDGSP50X984BNS0PWV22MG",
-            "typeName": "RankingContest"
+            "typeId": "dt_00D0WDGSP50X984BNS0PWV22MG"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -23,8 +22,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0WDGSP50X984BNS0PWV22MG",
-    "typeName": "RankingContest"
+    "typeId": "dt_00D0WDGSP50X984BNS0PWV22MG"
   },
   "parent": {
     "kind": "direct",

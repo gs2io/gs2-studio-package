@@ -25,8 +25,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0MNXASRRPHW8RV3NXTHX8AY",
-    "typeName": "EquipmentCollection"
+    "typeId": "dt_00D0MNXASRRPHW8RV3NXTHX8AY"
   },
   "parent": {
     "arrayProperty": "acquireActions",

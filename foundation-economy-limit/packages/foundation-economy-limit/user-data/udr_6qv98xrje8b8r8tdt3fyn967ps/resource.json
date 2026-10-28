@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
-              "typeName": "UsageLimitCounter"
+              "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
             },
             "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
           }
@@ -27,8 +26,7 @@
           "kind": "direct",
           "mountPath": {
             "kind": "local",
-            "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
-            "typeName": "UsageLimitCounter"
+            "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -41,8 +39,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
-              "typeName": "UsageLimitCounter"
+              "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
             },
             "propertyId": "prop_00D031N0N8S7KC5GNB45BP0PGT"
           }
@@ -62,7 +59,6 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
-    "typeName": "UsageLimitCounter"
+    "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
   }
 }

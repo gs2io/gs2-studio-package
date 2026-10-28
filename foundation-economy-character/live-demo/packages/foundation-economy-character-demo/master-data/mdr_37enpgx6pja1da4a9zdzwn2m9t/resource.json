@@ -9,8 +9,7 @@
             "kind": "direct",
             "mountPath": {
               "kind": "local",
-              "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
-              "typeName": "CharacterRecruit"
+              "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW"
             },
             "propertyId": "prop_00D0NTAZ7QKXA6Q5H5NDGEFQ2V"
           },
@@ -27,8 +26,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
-    "typeName": "CharacterRecruit"
+    "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW"
   },
   "parent": {
     "arrayProperty": "acquireActions",

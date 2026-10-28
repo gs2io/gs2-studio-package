@@ -5,8 +5,7 @@
         "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "childMountPath": {
           "kind": "local",
-          "typeId": "dt_7BY7J77ZQ1JAJPJGC4PSYAHC6N",
-          "typeName": "Quest"
+          "typeId": "dt_7BY7J77ZQ1JAJPJGC4PSYAHC6N"
         },
         "childTargetPropertyId": "prop_6VDGEC28BS22A8B64VXJQP14VQ",
         "kind": "arrayMembership",

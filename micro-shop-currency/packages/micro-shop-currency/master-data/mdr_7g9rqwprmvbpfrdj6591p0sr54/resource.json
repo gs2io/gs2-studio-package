@@ -18,8 +18,7 @@
                 "kind": "direct",
                 "mountPath": {
                   "kind": "local",
-                  "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT",
-                  "typeName": "StoreProduct"
+                  "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
                 },
                 "propertyId": "prop_7GZCWER58FEK1Y8TQBHZPM0H6S"
               }
@@ -36,8 +35,7 @@
                       "kind": "direct",
                       "mountPath": {
                         "kind": "local",
-                        "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3",
-                        "typeName": "CurrencyType"
+                        "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3"
                       },
                       "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
                     },
@@ -62,8 +60,7 @@
                     "kind": "direct",
                     "mountPath": {
                       "kind": "local",
-                      "typeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
-                      "typeName": "StorePrice"
+                      "typeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD"
                     },
                     "propertyId": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K"
                   },
@@ -90,8 +87,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT",
-    "typeName": "StoreProduct"
+    "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
   },
   "parent": {
     "arrayProperty": "acquireActions",

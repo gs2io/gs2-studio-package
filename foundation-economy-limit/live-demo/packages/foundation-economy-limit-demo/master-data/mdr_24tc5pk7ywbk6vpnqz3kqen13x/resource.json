@@ -17,8 +17,7 @@
   },
   "ownMountPath": {
     "kind": "local",
-    "typeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01",
-    "typeName": "UsageLimitCounter"
+    "typeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
   },
   "parent": {
     "arrayProperty": "consumeActions",
