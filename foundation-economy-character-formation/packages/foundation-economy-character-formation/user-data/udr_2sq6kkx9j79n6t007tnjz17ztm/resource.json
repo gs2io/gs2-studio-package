@@ -27,7 +27,7 @@
         "parameterName": "slots"
       }
     ],
-    "modelArrayDecodeBindings": [
+    "projectionBindings": [
       {
         "fieldMappings": [
           {

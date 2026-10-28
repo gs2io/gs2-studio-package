@@ -1,17 +1,5 @@
 {
   "authored": {
-    "arrayMembershipBindings": [
-      {
-        "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "childMountPath": {
-          "kind": "local",
-          "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
-        },
-        "childTargetPropertyId": "prop_00D0321TWK6CDMBJRD83E6G2K2",
-        "kind": "arrayMembership",
-        "parameterName": "releasedNodeNames"
-      }
-    ],
     "declaredBindings": [
       {
         "kind": "domainProperty",
@@ -34,7 +22,19 @@
         "parameterName": "userId"
       }
     ],
-    "linkedMasterResourceId": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD"
+    "linkedMasterResourceId": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD",
+    "projectionBindings": [
+      {
+        "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "childMountPath": {
+          "kind": "local",
+          "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
+        },
+        "childTargetPropertyId": "prop_00D0321TWK6CDMBJRD83E6G2K2",
+        "kind": "arrayMembership",
+        "parameterName": "releasedNodeNames"
+      }
+    ]
   },
   "id": "udr_7CT2SZ3JE7B13BR3J7XXZE28M0",
   "location": {

@@ -31,7 +31,7 @@
       }
     ],
     "linkedMasterResourceId": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8",
-    "modelArrayDecodeBindings": [
+    "projectionBindings": [
       {
         "fieldMappings": [
           {
