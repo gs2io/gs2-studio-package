@@ -6,12 +6,15 @@
         "parameterName": "followerProfile",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
-            },
-            "propertyId": "prop_759K6DP8VBDS06P0YW25QNEN5N"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
+              },
+              "propertyId": "prop_759K6DP8VBDS06P0YW25QNEN5N"
+            }
           }
         ]
       },
@@ -20,12 +23,15 @@
         "parameterName": "friendProfile",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
-            },
-            "propertyId": "prop_1D82CH5SP6SD8KM3DMX71SZ738"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
+              },
+              "propertyId": "prop_1D82CH5SP6SD8KM3DMX71SZ738"
+            }
           }
         ]
       },
@@ -38,12 +44,15 @@
         "parameterName": "publicProfile",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
-            },
-            "propertyId": "prop_1MYTKGMH9W77112THJZ3HSMDF9"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT"
+              },
+              "propertyId": "prop_1MYTKGMH9W77112THJZ3HSMDF9"
+            }
           }
         ]
       },

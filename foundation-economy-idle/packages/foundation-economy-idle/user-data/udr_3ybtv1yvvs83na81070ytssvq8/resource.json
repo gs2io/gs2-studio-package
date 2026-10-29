@@ -10,12 +10,15 @@
         "parameterName": "idleMinutes",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
-            },
-            "propertyId": "prop_1M9DWWCBBYBQ9HF2CEHRBVTQG5"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+              },
+              "propertyId": "prop_1M9DWWCBBYBQ9HF2CEHRBVTQG5"
+            }
           }
         ]
       },
@@ -24,12 +27,15 @@
         "parameterName": "maximumIdleMinutes",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
-            },
-            "propertyId": "prop_4RV2VH9G7RME7HVFFF1KSCK60P"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+              },
+              "propertyId": "prop_4RV2VH9G7RME7HVFFF1KSCK60P"
+            }
           }
         ]
       },
@@ -38,12 +44,15 @@
         "parameterName": "nextRewardsAt",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
-            },
-            "propertyId": "prop_5651SXBQZ535SAK2H3JZBTZ5XS"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+              },
+              "propertyId": "prop_5651SXBQZ535SAK2H3JZBTZ5XS"
+            }
           }
         ]
       },

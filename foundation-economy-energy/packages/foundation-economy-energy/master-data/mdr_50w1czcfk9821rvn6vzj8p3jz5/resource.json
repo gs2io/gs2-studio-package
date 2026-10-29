@@ -5,36 +5,45 @@
         "kind": "domainProperty",
         "parameterName": "initialCapacity",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
-          },
-          "propertyId": "prop_0VK8BTK0YT0KW0ZS5VN7E3RAWK"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+            },
+            "propertyId": "prop_0VK8BTK0YT0KW0ZS5VN7E3RAWK"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "isOverflow",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
-          },
-          "propertyId": "prop_0DZD8RYHVEY4B0DGB0K83K7DNX"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+            },
+            "propertyId": "prop_0DZD8RYHVEY4B0DGB0K83K7DNX"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "maxCapacity",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
-          },
-          "propertyId": "prop_1H7FG0XTK823H3XX35XW00TCFT"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+            },
+            "propertyId": "prop_1H7FG0XTK823H3XX35XW00TCFT"
+          }
         }
       },
       {
@@ -46,24 +55,30 @@
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "recoverIntervalMinutes",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
-          },
-          "propertyId": "prop_7B2HB91QDWZK8SXNC6ZJGCCAEA"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+            },
+            "propertyId": "prop_7B2HB91QDWZK8SXNC6ZJGCCAEA"
+          }
         }
       },
       {
@@ -75,12 +90,15 @@
         "kind": "domainProperty",
         "parameterName": "recoverValue",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
-          },
-          "propertyId": "prop_5DW145AF8E14EQ3GHSC94QCMBW"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+            },
+            "propertyId": "prop_5DW145AF8E14EQ3GHSC94QCMBW"
+          }
         }
       },
       {

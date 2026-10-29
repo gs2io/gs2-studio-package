@@ -10,24 +10,30 @@
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "propertyRegex",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
-          },
-          "propertyId": "prop_00D033FNASBHYZ9W1VK8EE39WP"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
+            },
+            "propertyId": "prop_00D033FNASBHYZ9W1VK8EE39WP"
+          }
         }
       }
     ]

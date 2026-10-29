@@ -6,12 +6,15 @@
         "parameterName": "capacity",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
-            },
-            "propertyId": "prop_7HNF20BCN1PY27WR4A2XSHQFB1"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
+              },
+              "propertyId": "prop_7HNF20BCN1PY27WR4A2XSHQFB1"
+            }
           }
         ]
       },

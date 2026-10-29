@@ -22,16 +22,20 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "innerSource": {
+                "scopes": [
+                  {
+                    "kind": "parent",
+                    "parentResourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ"
+                  }
+                ],
+                "terminal": {
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
                     "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
                   },
                   "propertyId": "prop_00D0S4EG729BGHQ7R4RK1959TA"
-                },
-                "kind": "parent",
-                "parentResourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ"
+                }
               }
             }
           }

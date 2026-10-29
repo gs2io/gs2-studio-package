@@ -5,12 +5,15 @@
         "kind": "domainProperty",
         "parameterName": "propertyId",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D0RCHP2Q2DTSP41SVC7C111T"
-          },
-          "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0RCHP2Q2DTSP41SVC7C111T"
+            },
+            "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+          }
         }
       },
       {
@@ -18,12 +21,15 @@
         "parameterName": "releasedNodeNames",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0RCHP2Q2DTSP41SVC7C111T"
-            },
-            "propertyId": "prop_00D0RCHP2Q6QHD0C070KPNT284"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_00D0RCHP2Q2DTSP41SVC7C111T"
+              },
+              "propertyId": "prop_00D0RCHP2Q6QHD0C070KPNT284"
+            }
           }
         ]
       },

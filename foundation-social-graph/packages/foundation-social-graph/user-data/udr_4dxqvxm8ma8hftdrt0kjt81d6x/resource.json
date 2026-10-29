@@ -6,12 +6,15 @@
         "parameterName": "followerProfile",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C"
-            },
-            "propertyId": "prop_73QSS5XZ6NRSZZM9W4XV4JB0F2"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C"
+              },
+              "propertyId": "prop_73QSS5XZ6NRSZZM9W4XV4JB0F2"
+            }
           }
         ]
       },
@@ -20,12 +23,15 @@
         "parameterName": "publicProfile",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C"
-            },
-            "propertyId": "prop_0037P8GKD1Y37HERP8N6DHZM9F"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C"
+              },
+              "propertyId": "prop_0037P8GKD1Y37HERP8N6DHZM9F"
+            }
           }
         ]
       },
@@ -33,12 +39,15 @@
         "kind": "domainProperty",
         "parameterName": "userId",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {

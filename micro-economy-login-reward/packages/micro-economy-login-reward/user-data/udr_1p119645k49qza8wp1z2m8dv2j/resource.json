@@ -5,24 +5,30 @@
         "kind": "domainProperty",
         "parameterName": "bonusModelName",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "lastReceivedAt",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
-          },
-          "propertyId": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+            },
+            "propertyId": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC"
+          }
         }
       },
       {
@@ -34,12 +40,15 @@
         "parameterName": "receivedSteps",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
-            },
-            "propertyId": "prop_00D0V3E8RR0S3JWWDZ37H09BS2"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+              },
+              "propertyId": "prop_00D0V3E8RR0S3JWWDZ37H09BS2"
+            }
           }
         ]
       },

@@ -10,24 +10,30 @@
         "kind": "domainProperty",
         "parameterName": "defaultRankCap",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0"
-          },
-          "propertyId": "prop_2RQX4HDJCJDYTZYM4B9J09JZ9Z"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0"
+            },
+            "propertyId": "prop_2RQX4HDJCJDYTZYM4B9J09JZ9Z"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "maxRankCap",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0"
-          },
-          "propertyId": "prop_224DYPA75PEZKHXJMGJZP3G393"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0"
+            },
+            "propertyId": "prop_224DYPA75PEZKHXJMGJZP3G393"
+          }
         }
       },
       {

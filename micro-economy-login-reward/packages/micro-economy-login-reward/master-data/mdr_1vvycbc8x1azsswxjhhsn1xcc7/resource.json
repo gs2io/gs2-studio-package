@@ -5,48 +5,60 @@
         "kind": "domainProperty",
         "parameterName": "missedReceiveRelief",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
-          },
-          "propertyId": "prop_00D0V3E8RR5VJ1PXB3RJT9T21J"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+            },
+            "propertyId": "prop_00D0V3E8RR5VJ1PXB3RJT9T21J"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "mode",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
-          },
-          "propertyId": "prop_00D0V3E8RR357Z98YP7VMDXPP7"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+            },
+            "propertyId": "prop_00D0V3E8RR357Z98YP7VMDXPP7"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "periodEventId.grnKey.eventName",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
-          },
-          "propertyId": "prop_2GPQQQHZ70FS0R1N1B43CP2VMW"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+            },
+            "propertyId": "prop_2GPQQQHZ70FS0R1N1B43CP2VMW"
+          }
         }
       },
       {
@@ -58,24 +70,30 @@
         "kind": "domainProperty",
         "parameterName": "repeat",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
-          },
-          "propertyId": "prop_00D0V3E8RR3GSCNAW1JAKAQRRD"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+            },
+            "propertyId": "prop_00D0V3E8RR3GSCNAW1JAKAQRRD"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "resetHour",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
-          },
-          "propertyId": "prop_5BWDJGV41VX2E7914HXAQ5PGBP"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+            },
+            "propertyId": "prop_5BWDJGV41VX2E7914HXAQ5PGBP"
+          }
         }
       }
     ]

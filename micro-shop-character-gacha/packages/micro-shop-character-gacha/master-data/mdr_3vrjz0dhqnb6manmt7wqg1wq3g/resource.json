@@ -8,16 +8,20 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "innerSource": {
+                "scopes": [
+                  {
+                    "kind": "parent",
+                    "parentResourceId": "mdr_32HRESJ2KJBFR8VWRQRZZVM1NC"
+                  }
+                ],
+                "terminal": {
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
                     "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
                   },
                   "propertyId": "prop_2JPPK6P7F94GT0KKPVM3JFZPSQ"
-                },
-                "kind": "parent",
-                "parentResourceId": "mdr_32HRESJ2KJBFR8VWRQRZZVM1NC"
+                }
               }
             }
           }

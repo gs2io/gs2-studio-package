@@ -21,12 +21,15 @@
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
-          },
-          "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+            },
+            "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+          }
         }
       },
       {

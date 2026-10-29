@@ -5,12 +5,15 @@
         "kind": "domainProperty",
         "parameterName": "type",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {
@@ -22,12 +25,15 @@
         "parameterName": "userIdentifier",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
-            },
-            "propertyId": "prop_00D0XSWNPHGADEPTVEW5ASX023"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
+              },
+              "propertyId": "prop_00D0XSWNPHGADEPTVEW5ASX023"
+            }
           }
         ]
       }

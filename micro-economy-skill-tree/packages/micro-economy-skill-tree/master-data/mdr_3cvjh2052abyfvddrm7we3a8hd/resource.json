@@ -10,36 +10,45 @@
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "premiseNodeNames",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
-          },
-          "propertyId": "prop_00D0321TWK1SPCKRNJJDG1CSDW"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
+            },
+            "propertyId": "prop_00D0321TWK1SPCKRNJJDG1CSDW"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "restrainReturnRate",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
-          },
-          "propertyId": "prop_00D0321TWK5R5K4W0KWNR49SHT"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
+            },
+            "propertyId": "prop_00D0321TWK5R5K4W0KWNR49SHT"
+          }
         }
       }
     ]

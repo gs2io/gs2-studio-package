@@ -13,12 +13,15 @@
         "kind": "domainProperty",
         "parameterName": "propertyId",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9"
-          },
-          "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9"
+            },
+            "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+          }
         }
       },
       {

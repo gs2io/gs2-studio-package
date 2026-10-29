@@ -5,12 +5,15 @@
         "kind": "domainProperty",
         "parameterName": "defaultMaximumIdleMinutes",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
-          },
-          "propertyId": "prop_7J143G8X27HCRCYX69FABGPKKT"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+            },
+            "propertyId": "prop_7J143G8X27HCRCYX69FABGPKKT"
+          }
         }
       },
       {
@@ -32,12 +35,15 @@
         "kind": "domainProperty",
         "parameterName": "rewardIntervalMinutes",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
-          },
-          "propertyId": "prop_343KJVJCADHD7053A0N9JQ0M7W"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+            },
+            "propertyId": "prop_343KJVJCADHD7053A0N9JQ0M7W"
+          }
         }
       }
     ]

@@ -5,24 +5,30 @@
         "kind": "domainProperty",
         "parameterName": "initialMaxCapacity",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
-          },
-          "propertyId": "prop_0F9XHSDTRNNY0TGSAM1K2Q5QFS"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
+            },
+            "propertyId": "prop_0F9XHSDTRNNY0TGSAM1K2Q5QFS"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "maxCapacity",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
-          },
-          "propertyId": "prop_2PBKJC9BR7P00EG4DQYQGAFFGP"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
+            },
+            "propertyId": "prop_2PBKJC9BR7P00EG4DQYQGAFFGP"
+          }
         }
       },
       {

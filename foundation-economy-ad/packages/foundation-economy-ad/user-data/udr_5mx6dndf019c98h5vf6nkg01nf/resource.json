@@ -6,12 +6,15 @@
         "parameterName": "point",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
-            },
-            "propertyId": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
+              },
+              "propertyId": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK"
+            }
           }
         ]
       },
@@ -20,12 +23,15 @@
         "parameterName": "pointId",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
+              },
+              "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+            }
           }
         ]
       },

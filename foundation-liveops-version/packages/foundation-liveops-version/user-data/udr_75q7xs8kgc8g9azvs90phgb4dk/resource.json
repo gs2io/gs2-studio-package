@@ -6,12 +6,15 @@
         "parameterName": "status",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
-            },
-            "propertyId": "prop_2Q40AJMB9QV5RFRKE25RKH3S3E"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
+              },
+              "propertyId": "prop_2Q40AJMB9QV5RFRKE25RKH3S3E"
+            }
           }
         ]
       },
@@ -23,36 +26,45 @@
         "kind": "domainProperty",
         "parameterName": "version.major",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
-          },
-          "propertyId": "prop_00D05Q8M1NSNSYDW517S8FBNB3"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
+            },
+            "propertyId": "prop_00D05Q8M1NSNSYDW517S8FBNB3"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "version.micro",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
-          },
-          "propertyId": "prop_00D05Q8M1NWSDJEXKMV352NRG6"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
+            },
+            "propertyId": "prop_00D05Q8M1NWSDJEXKMV352NRG6"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "version.minor",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
-          },
-          "propertyId": "prop_00D05Q8M1NWQBSABFCZBY6BMP6"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
+            },
+            "propertyId": "prop_00D05Q8M1NWQBSABFCZBY6BMP6"
+          }
         }
       },
       {

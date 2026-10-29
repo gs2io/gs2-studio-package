@@ -10,24 +10,30 @@
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "policyDocument",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0"
-          },
-          "propertyId": "prop_00D031EHJKR6BBM9VDKF7BEEG6"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031EHJKYH677VNXVWGBA2D0"
+            },
+            "propertyId": "prop_00D031EHJKR6BBM9VDKF7BEEG6"
+          }
         }
       }
     ],

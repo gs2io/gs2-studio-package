@@ -5,12 +5,15 @@
         "kind": "domainProperty",
         "parameterName": "propertyId",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
-          },
-          "propertyId": "prop_00D0RCHP2Q26RVYQM9TZ89PN0E"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
+            },
+            "propertyId": "prop_00D0RCHP2Q26RVYQM9TZ89PN0E"
+          }
         }
       },
       {

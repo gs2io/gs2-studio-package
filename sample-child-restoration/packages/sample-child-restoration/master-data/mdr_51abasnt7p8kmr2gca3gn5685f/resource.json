@@ -5,12 +5,15 @@
         "kind": "domainProperty",
         "parameterName": "challengePeriodEventId.grnKey.eventName",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4"
-          },
-          "propertyId": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4"
+            },
+            "propertyId": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN"
+          }
         }
       },
       {
@@ -22,12 +25,15 @@
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_7RV6Y15THE5N4XSFD12BMW3MM4"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       }
     ]

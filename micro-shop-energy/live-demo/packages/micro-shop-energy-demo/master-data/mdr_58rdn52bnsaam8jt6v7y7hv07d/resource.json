@@ -8,16 +8,20 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "innerSource": {
+                "scopes": [
+                  {
+                    "kind": "parent",
+                    "parentResourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ"
+                  }
+                ],
+                "terminal": {
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
                     "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
                   },
                   "propertyId": "prop_01M3YJ1DNJ3MS5AZDA6EMDZJTA"
-                },
-                "kind": "parent",
-                "parentResourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ"
+                }
               }
             }
           },
@@ -26,16 +30,20 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "innerSource": {
+                "scopes": [
+                  {
+                    "kind": "parent",
+                    "parentResourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ"
+                  }
+                ],
+                "terminal": {
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
                     "typeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
                   },
                   "propertyId": "prop_11FCJPVBK2AQFDD6DXHKWSV827"
-                },
-                "kind": "parent",
-                "parentResourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ"
+                }
               }
             }
           }

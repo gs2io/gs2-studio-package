@@ -6,12 +6,15 @@
         "parameterName": "expiresAt",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
-            },
-            "propertyId": "prop_00D0N014B0BQ0XD43PAXV22PHQ"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+              },
+              "propertyId": "prop_00D0N014B0BQ0XD43PAXV22PHQ"
+            }
           }
         ]
       },
@@ -19,12 +22,15 @@
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
-          },
-          "propertyId": "prop_4T7XKM1CTQ7X9D94DB6868ZXR3"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+            },
+            "propertyId": "prop_4T7XKM1CTQ7X9D94DB6868ZXR3"
+          }
         }
       },
       {
@@ -36,12 +42,15 @@
         "parameterName": "triggeredAt",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
-            },
-            "propertyId": "prop_00D0N014B0BF291EZZKRYPBJND"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+              },
+              "propertyId": "prop_00D0N014B0BF291EZZKRYPBJND"
+            }
           }
         ]
       },

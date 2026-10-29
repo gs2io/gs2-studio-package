@@ -5,12 +5,15 @@
         "kind": "domainProperty",
         "parameterName": "enableCampaignCode",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
-          },
-          "propertyId": "prop_00D031EZFZM4YG8CZFHGS7HMHD"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
+            },
+            "propertyId": "prop_00D031EZFZM4YG8CZFHGS7HMHD"
+          }
         }
       },
       {
@@ -22,12 +25,15 @@
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       }
     ]

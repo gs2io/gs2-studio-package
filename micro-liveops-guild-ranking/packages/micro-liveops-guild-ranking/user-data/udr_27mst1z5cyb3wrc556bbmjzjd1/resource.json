@@ -22,12 +22,15 @@
         "parameterName": "score",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
-            },
-            "propertyId": "prop_00D033H0GPYB1S1KXMMSCNDR8E"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+              },
+              "propertyId": "prop_00D033H0GPYB1S1KXMMSCNDR8E"
+            }
           }
         ]
       },

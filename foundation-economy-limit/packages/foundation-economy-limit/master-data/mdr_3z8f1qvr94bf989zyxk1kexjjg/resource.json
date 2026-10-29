@@ -5,24 +5,30 @@
         "kind": "domainProperty",
         "parameterName": "anchorTimestamp",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-          },
-          "propertyId": "prop_00D031CCJC8A73V9WDWHJYY5S9"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+            },
+            "propertyId": "prop_00D031CCJC8A73V9WDWHJYY5S9"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "days",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-          },
-          "propertyId": "prop_00D031CCJCD9WHWSJ1N9W1NN13"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+            },
+            "propertyId": "prop_00D031CCJCD9WHWSJ1N9W1NN13"
+          }
         }
       },
       {
@@ -34,60 +40,75 @@
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "resetDayOfMonth",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-          },
-          "propertyId": "prop_00D031CCJCB6TXS4PV4ACMXFJC"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+            },
+            "propertyId": "prop_00D031CCJCB6TXS4PV4ACMXFJC"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "resetDayOfWeek",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-          },
-          "propertyId": "prop_00D031CCJCA2HJ6M98DXZEDTKY"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+            },
+            "propertyId": "prop_00D031CCJCA2HJ6M98DXZEDTKY"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "resetHour",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-          },
-          "propertyId": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+            },
+            "propertyId": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "resetType",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-          },
-          "propertyId": "prop_00D031CCJC935P6N8JH9QZET3R"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+            },
+            "propertyId": "prop_00D031CCJC935P6N8JH9QZET3R"
+          }
         }
       }
     ]

@@ -5,40 +5,48 @@
         "kind": "domainProperty",
         "parameterName": "resetDayOfWeek",
         "source": {
-          "innerSource": {
-            "innerSource": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E"
-              },
-              "propertyId": "prop_0WRXYNE61HNQT4RJNRZ35FNPGP"
+          "scopes": [
+            {
+              "kind": "parent",
+              "parentResourceId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
             },
-            "kind": "parent",
-            "parentResourceId": "mdr_6V258ETJSN87BA3ZBJ1P2ZA3AM"
-          },
-          "kind": "parent",
-          "parentResourceId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
+            {
+              "kind": "parent",
+              "parentResourceId": "mdr_6V258ETJSN87BA3ZBJ1P2ZA3AM"
+            }
+          ],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E"
+            },
+            "propertyId": "prop_0WRXYNE61HNQT4RJNRZ35FNPGP"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "resetHour",
         "source": {
-          "innerSource": {
-            "innerSource": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E"
-              },
-              "propertyId": "prop_05MKE4B6YY206260EBQGMX43NW"
+          "scopes": [
+            {
+              "kind": "parent",
+              "parentResourceId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
             },
-            "kind": "parent",
-            "parentResourceId": "mdr_6V258ETJSN87BA3ZBJ1P2ZA3AM"
-          },
-          "kind": "parent",
-          "parentResourceId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
+            {
+              "kind": "parent",
+              "parentResourceId": "mdr_6V258ETJSN87BA3ZBJ1P2ZA3AM"
+            }
+          ],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E"
+            },
+            "propertyId": "prop_05MKE4B6YY206260EBQGMX43NW"
+          }
         }
       },
       {

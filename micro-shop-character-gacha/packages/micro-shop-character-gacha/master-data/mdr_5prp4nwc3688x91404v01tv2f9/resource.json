@@ -5,24 +5,30 @@
         "kind": "domainProperty",
         "parameterName": "displayItemId",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "salesPeriodEventId.grnKey.eventName",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
-          },
-          "propertyId": "prop_42BYHE1CR1TEXDMCWR9B91PP5K"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+            },
+            "propertyId": "prop_42BYHE1CR1TEXDMCWR9B91PP5K"
+          }
         }
       },
       {

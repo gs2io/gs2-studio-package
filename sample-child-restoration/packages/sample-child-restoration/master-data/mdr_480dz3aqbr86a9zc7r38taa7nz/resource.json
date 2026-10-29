@@ -8,12 +8,15 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "kind": "direct",
-                "mountPath": {
-                  "kind": "local",
-                  "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
-                },
-                "propertyId": "prop_00CYQANBEMD1KZZ3KNW41Q5E1N"
+                "scopes": [],
+                "terminal": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
+                  },
+                  "propertyId": "prop_00CYQANBEMD1KZZ3KNW41Q5E1N"
+                }
               }
             }
           },
@@ -22,12 +25,15 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "kind": "direct",
-                "mountPath": {
-                  "kind": "local",
-                  "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
-                },
-                "propertyId": "prop_00CYQANBEME0HWT60VTZGNMGZJ"
+                "scopes": [],
+                "terminal": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
+                  },
+                  "propertyId": "prop_00CYQANBEME0HWT60VTZGNMGZJ"
+                }
               }
             }
           },
@@ -36,12 +42,15 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "kind": "direct",
-                "mountPath": {
-                  "kind": "local",
-                  "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
-                },
-                "propertyId": "prop_00CYQANBEME23TGTQKPJD745ET"
+                "scopes": [],
+                "terminal": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
+                  },
+                  "propertyId": "prop_00CYQANBEME23TGTQKPJD745ET"
+                }
               }
             }
           }

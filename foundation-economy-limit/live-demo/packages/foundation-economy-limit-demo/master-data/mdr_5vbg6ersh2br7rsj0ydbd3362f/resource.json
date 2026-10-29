@@ -8,16 +8,20 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "innerSource": {
+                "scopes": [
+                  {
+                    "kind": "parent",
+                    "parentResourceId": "mdr_3QQV27BR5AA419F2032R6T95RZ"
+                  }
+                ],
+                "terminal": {
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
                     "typeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
                   },
                   "propertyId": "prop_00D031N0N8XCG9EJ25SDVPGMYT"
-                },
-                "kind": "parent",
-                "parentResourceId": "mdr_3QQV27BR5AA419F2032R6T95RZ"
+                }
               }
             }
           },
@@ -26,12 +30,15 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "kind": "direct",
-                "mountPath": {
-                  "kind": "local",
-                  "typeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
-                },
-                "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+                "scopes": [],
+                "terminal": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
+                  },
+                  "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+                }
               }
             }
           },
@@ -47,12 +54,15 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "kind": "direct",
-                "mountPath": {
-                  "kind": "local",
-                  "typeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
-                },
-                "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
+                "scopes": [],
+                "terminal": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
+                  },
+                  "propertyId": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
+                }
               }
             }
           }

@@ -5,36 +5,45 @@
         "kind": "domainProperty",
         "parameterName": "appleAppStore.productId",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
-          },
-          "propertyId": "prop_2GHK1DAZ80TETBDER3P5PF6XKA"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
+            },
+            "propertyId": "prop_2GHK1DAZ80TETBDER3P5PF6XKA"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "googlePlay.productId",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
-          },
-          "propertyId": "prop_7TADZ4DEA40BBKZ46GN2R05E4J"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
+            },
+            "propertyId": "prop_7TADZ4DEA40BBKZ46GN2R05E4J"
+          }
         }
       },
       {
         "kind": "domainProperty",
         "parameterName": "name",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
-          },
-          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
         }
       }
     ]

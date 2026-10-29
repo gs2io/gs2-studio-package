@@ -10,12 +10,15 @@
         "kind": "domainProperty",
         "parameterName": "thresholdRank",
         "source": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63"
-          },
-          "propertyId": "prop_00D033H0GPTR5V04T6YPBYCG0Q"
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D033H0GPVEHE0CAY94WAKT63"
+            },
+            "propertyId": "prop_00D033H0GPTR5V04T6YPBYCG0Q"
+          }
         }
       }
     ]

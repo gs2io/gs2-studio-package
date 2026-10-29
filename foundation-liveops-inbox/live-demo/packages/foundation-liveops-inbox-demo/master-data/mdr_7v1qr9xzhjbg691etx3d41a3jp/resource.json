@@ -8,16 +8,20 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "innerSource": {
+                "scopes": [
+                  {
+                    "kind": "parent",
+                    "parentResourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q"
+                  }
+                ],
+                "terminal": {
                   "kind": "direct",
                   "mountPath": {
                     "kind": "local",
                     "typeId": "dt_00D0SHMWJ1K42G74YQPF2DJNV6"
                   },
                   "propertyId": "prop_00D0SHMWJ1KSSS1CYCFS0AHJBT"
-                },
-                "kind": "parent",
-                "parentResourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q"
+                }
               }
             }
           },
@@ -44,16 +48,20 @@
                   "source": {
                     "kind": "domainProperty",
                     "source": {
-                      "innerSource": {
+                      "scopes": [
+                        {
+                          "kind": "parent",
+                          "parentResourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q"
+                        }
+                      ],
+                      "terminal": {
                         "kind": "direct",
                         "mountPath": {
                           "kind": "local",
                           "typeId": "dt_00D0SHMWJ1K42G74YQPF2DJNV6"
                         },
                         "propertyId": "prop_00D0SHMWJ1Q1KCCFKR0J26GETW"
-                      },
-                      "kind": "parent",
-                      "parentResourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q"
+                      }
                     }
                   }
                 }

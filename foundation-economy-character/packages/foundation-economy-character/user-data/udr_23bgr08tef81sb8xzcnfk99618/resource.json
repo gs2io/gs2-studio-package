@@ -6,12 +6,15 @@
         "parameterName": "currentInventoryCapacityUsage",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
-            },
-            "propertyId": "prop_0X7QN1KKKCJZMK5N4S6E4KX1A5"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
+              },
+              "propertyId": "prop_0X7QN1KKKCJZMK5N4S6E4KX1A5"
+            }
           }
         ]
       },
@@ -20,12 +23,15 @@
         "parameterName": "currentInventoryMaxCapacity",
         "sources": [
           {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
-            },
-            "propertyId": "prop_74G2303CD8WVN5H4711968MX05"
+            "scopes": [],
+            "terminal": {
+              "kind": "direct",
+              "mountPath": {
+                "kind": "local",
+                "typeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
+              },
+              "propertyId": "prop_74G2303CD8WVN5H4711968MX05"
+            }
           }
         ]
       },

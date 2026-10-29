@@ -8,12 +8,15 @@
             "source": {
               "kind": "domainProperty",
               "source": {
-                "kind": "direct",
-                "mountPath": {
-                  "kind": "local",
-                  "typeId": "dt_00D0SX0W1BFSBBNRP4K43HVTJM"
-                },
-                "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+                "scopes": [],
+                "terminal": {
+                  "kind": "direct",
+                  "mountPath": {
+                    "kind": "local",
+                    "typeId": "dt_00D0SX0W1BFSBBNRP4K43HVTJM"
+                  },
+                  "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+                }
               }
             }
           },

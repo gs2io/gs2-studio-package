@@ -5,20 +5,24 @@
         "kind": "domainProperty",
         "parameterName": "action",
         "source": {
-          "innerSource": {
-            "innerSource": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
-              },
-              "propertyId": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8"
+          "scopes": [
+            {
+              "kind": "parent",
+              "parentResourceId": "mdr_5354WY82118TB9R28D6Y8Q7EZQ"
             },
-            "kind": "parent",
-            "parentResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
-          },
-          "kind": "parent",
-          "parentResourceId": "mdr_5354WY82118TB9R28D6Y8Q7EZQ"
+            {
+              "kind": "parent",
+              "parentResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
+            }
+          ],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
+            },
+            "propertyId": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8"
+          }
         }
       }
     ]

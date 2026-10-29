@@ -5,16 +5,20 @@
         "kind": "domainProperty",
         "parameterName": "action",
         "source": {
-          "innerSource": {
+          "scopes": [
+            {
+              "kind": "parent",
+              "parentResourceId": "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7"
+            }
+          ],
+          "terminal": {
             "kind": "direct",
             "mountPath": {
               "kind": "local",
               "typeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
             },
             "propertyId": "prop_00D0V3E8RR2GKRQNX7JBXAGYHX"
-          },
-          "kind": "parent",
-          "parentResourceId": "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7"
+          }
         }
       }
     ]
