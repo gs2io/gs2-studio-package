@@ -1,18 +1,16 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "metadata",
-        "value": ""
-      },
-      {
-        "kind": "static",
-        "parameterName": "name",
-        "value": "CharacterGrade"
-      }
-    ]
-  },
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "metadata",
+      "value": ""
+    },
+    {
+      "kind": "static",
+      "parameterName": "name",
+      "value": "CharacterGrade"
+    }
+  ],
   "id": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
   "location": {
     "modelName": "GradeModel",

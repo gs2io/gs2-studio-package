@@ -1,4 +1,4 @@
-import type { LocalizedDisplaySnapshotDto } from "~/contracts/domainType/LocalizedDisplaySnapshotDto";
+import type { LocalizedDisplaySnapshotDto } from "~/contracts/LocalizedDisplaySnapshotDto";
 
 type LocalizedUnit = string | { readonly ja: string; readonly en: string };
 

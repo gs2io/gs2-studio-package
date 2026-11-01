@@ -1,38 +1,36 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "challengePeriodEventId.grnKey.eventName",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
-            },
-            "propertyId": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "challengePeriodEventId.grnKey.eventName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
+          },
+          "propertyId": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    }
+  ],
   "id": "mdr_51ABASNT7P8KMR2GCA3GN5685F",
   "location": {
     "modelName": "QuestGroupModel",

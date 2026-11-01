@@ -17,11 +17,18 @@
     "Message": {
       "id": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
       "singleEntry": false,
-      "delegatedActions": {
-        "Read": "resource:foundation-liveops-inbox:userData:udr_5B2DBE3P7M977TXCSEYBR6973N::Gs2Inbox:Message.ReadMessage"
-      },
       "canonicalPackageId": "foundation-liveops-inbox",
       "canonicalTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
+      "delegatedActions": {
+        "Read": {
+          "targetResource": {
+            "sourcePackageId": "foundation-liveops-inbox",
+            "resourceKind": "userData",
+            "resourceId": "udr_5B2DBE3P7M977TXCSEYBR6973N"
+          },
+          "targetActionKey": "Gs2Inbox:Message.ReadMessage"
+        }
+      },
       "properties": {
         "expiresAt": "prop_73SJBQ4ZAG2RW17EQSCW1V2TSG",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -30,6 +37,10 @@
         "receivedAt": "prop_0AV2AGGK2HFK600HXSCDGP0CNC"
       }
     }
+  },
+  "actionTransforms": {
+    "SendMessage": "at_7DVPXYKCMX8GQ8HZV2NGV1VFXA",
+    "SendMessageWithReward": "at_1RG4YKDR299ERAM1FKTZC304C6"
   },
   "masterDataResources": {
     "inbox.GlobalMessage": "mdr_53WXDED04D83MTF9Z40JH8CMXH",

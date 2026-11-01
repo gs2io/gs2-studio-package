@@ -6,13 +6,13 @@
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Enhances a character with material items, turning them into experience, with configurable bonus multipliers.",
-      "ja": "強化素材アイテムを消費してキャラクターに経験値を与えます。大成功の倍率も設定できます。"
+    "en": {
+      "description": "Enhances a character with material items, turning them into experience, with configurable bonus multipliers.",
+      "label": "Character Enhancement"
     },
-    "label": {
-      "en": "Character Enhancement",
-      "ja": "キャラクター強化"
+    "ja": {
+      "description": "強化素材アイテムを消費してキャラクターに経験値を与えます。大成功の倍率も設定できます。",
+      "label": "キャラクター強化"
     }
   }
 }

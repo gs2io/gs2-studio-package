@@ -6,13 +6,13 @@
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Promotes a character through grades, each raising its level cap, with per-step caps and eligibility.",
-      "ja": "キャラクターのグレードを上げてレベル上限を引き上げます。段階ごとに上限値と対象キャラクターを設定できます。"
+    "en": {
+      "description": "Promotes a character through grades, each raising its level cap, with per-step caps and eligibility.",
+      "label": "Character Grades"
     },
-    "label": {
-      "en": "Character Grades",
-      "ja": "キャラクター限界突破"
+    "ja": {
+      "description": "キャラクターのグレードを上げてレベル上限を引き上げます。段階ごとに上限値と対象キャラクターを設定できます。",
+      "label": "キャラクター限界突破"
     }
   }
 }

@@ -55,20 +55,29 @@
     {
       "arguments": [],
       "componentClassName": "LimitBreakButton",
-      "delegatedActionKey": "resource:micro-economy-character-grade-demo:masterData:mdr_1NXX629711BHJBYFNF7Q2QG8D9::Gs2Exchange:RateModel.Exchange",
       "id": "uii_6010XKWSYVBYFTJ3F5RQ7B6F3V",
       "kind": "buttonAction",
-      "name": "Character"
+      "name": "Character",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_1NXX629711BHJBYFNF7Q2QG8D9",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-character-grade-demo"
+      }
     },
     {
       "arguments": [],
       "componentClassName": "TrainHardButton",
-      "delegatedActionKey": "resource:micro-economy-character-grade-demo:masterData:mdr_6NZTG6G7F8ACCRD6NFACZYDDPH::Gs2Exchange:RateModel.Exchange",
       "id": "uii_5KKE85WDNAAC7RJ0XG557Z3K4H",
       "kind": "buttonAction",
-      "name": "Character"
+      "name": "Character",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_6NZTG6G7F8ACCRD6NFACZYDDPH",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-character-grade-demo"
+      }
     }
   ],
-  "name": "Character",
   "targetDomainTypeId": "dt_00D0T33MWD8D0Y1Q3JK8YD7EZ8"
 }

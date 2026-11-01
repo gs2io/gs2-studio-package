@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "itemName",
@@ -28,13 +28,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "ConsumeItem",
-        "transformPackageId": "foundation-economy-inventory"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-inventory",
+          "transformId": "at_5MZS971WV985R8Q1TP98MGN18Y"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_6JJ4125ACZB15R6FRY606PP89G",
   "location": {
     "modelName": "ConsumeAction",

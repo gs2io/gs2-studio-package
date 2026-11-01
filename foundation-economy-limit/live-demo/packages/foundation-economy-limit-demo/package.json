@@ -8,13 +8,13 @@
     "foundation-economy-limit": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the daily and weekly schedules the live demo shows, the four allowances that follow them, the free and ad-backed presses that use one, and the reset that puts them all back. The view point it spends comes from the ad demo.",
-      "ja": "ライブデモ用の日次・週次のリセット設定と4つの回数カウンター、無料枠と広告枠それぞれの利用操作、全体のリセット操作を提供します。視聴枠は広告デモから借ります。"
+    "en": {
+      "description": "Supplies the daily and weekly schedules the live demo shows, the four allowances that follow them, the free and ad-backed presses that use one, and the reset that puts them all back. The view point it spends comes from the ad demo.",
+      "label": "Usage Limits (demo data)"
     },
-    "label": {
-      "en": "Usage Limits (demo data)",
-      "ja": "回数制限（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用の日次・週次のリセット設定と4つの回数カウンター、無料枠と広告枠それぞれの利用操作、全体のリセット操作を提供します。視聴枠は広告デモから借ります。",
+      "label": "回数制限（デモデータ）"
     }
   }
 }

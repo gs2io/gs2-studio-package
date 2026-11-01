@@ -14,8 +14,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-liveops-version",
-    "directSourceTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
-    "sourcePackageId": "foundation-liveops-version",
-    "sourceTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
+    "directSourceTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
   }
 }

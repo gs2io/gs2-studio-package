@@ -5,14 +5,29 @@
     "Item": {
       "id": "dt_00D0MNDT9MDX92JSEWTBM568ZP",
       "singleEntry": false,
-      "delegatedActions": {
-        "Gain": "resource:foundation-economy-inventory-demo:masterData:mdr_458KCGR65PBYEAQY4PZN1E6X4S::Gs2Exchange:RateModel.Exchange",
-        "Spend": "resource:foundation-economy-inventory-demo:masterData:mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-inventory",
-      "canonicalTypeId": "dt_47E751540GQRMAWTXYFT9376WH"
+      "canonicalTypeId": "dt_47E751540GQRMAWTXYFT9376WH",
+      "delegatedActions": {
+        "Gain": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-inventory-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_458KCGR65PBYEAQY4PZN1E6X4S"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "Spend": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-inventory-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_21Q1YPP3PZAHASAJ6VZZ3VRY34",
     "transaction.ConsumeAction": "mdr_6JJ4125ACZB15R6FRY606PP89G"

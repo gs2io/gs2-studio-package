@@ -5,13 +5,21 @@
     "Character": {
       "id": "dt_00D0SX0W1BFSBBNRP4K43HVTJM",
       "singleEntry": false,
-      "delegatedActions": {
-        "Recruit": "resource:foundation-economy-character-dictionary-demo:masterData:mdr_4AGHB6Q7XM9449CE6A6SQB4263::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "delegatedActions": {
+        "Recruit": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-character-dictionary-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_4AGHB6Q7XM9449CE6A6SQB4263"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_5MN44R7KEH9GH8K7AS83MQH91X",
     "exchange.RateModel": "mdr_4AGHB6Q7XM9449CE6A6SQB4263"

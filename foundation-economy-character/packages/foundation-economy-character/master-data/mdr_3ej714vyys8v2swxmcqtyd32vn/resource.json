@@ -1,48 +1,46 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "allowMultipleStacks",
-        "value": true
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "allowMultipleStacks",
+      "value": true
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "sortValue",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
-            },
-            "propertyId": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "stackingLimit",
-        "value": 1
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "sortValue",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+          },
+          "propertyId": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "stackingLimit",
+      "value": 1
+    }
+  ],
   "id": "mdr_3EJ714VYYS8V2SWXMCQTYD32VN",
   "location": {
     "modelName": "ItemModel",

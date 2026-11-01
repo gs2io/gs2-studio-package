@@ -1,11 +1,13 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "transform:ConsumeAdViewPoint:output:direct:Gs2AdReward:ConsumePointByUserId#0": "out_01KSZ1ND6EV6QATG5YKER8AMQY"
+  },
   "random": {
     "property:AdPlatform.adMobAdUnitIds": "prop_2E144V2D4DR6774190N39P62XT",
     "property:AdPlatform.unityAdKeys": "prop_242M4XQ9VWCWPDXV75ACHQVJD1",
     "property:AdViewPoint.value": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK",
-    "transform:ConsumeAdViewPoint:output:direct:Gs2AdReward:ConsumePointByUserId#0": "out_01KSZ1ND6EV6QATG5YKER8AMQY",
+    "transform:ConsumeAdViewPoint": "at_7K72HBMY1D9CTR7V0JF15PGRS6",
     "type:AdPlatform": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
     "type:AdViewPoint": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
   },

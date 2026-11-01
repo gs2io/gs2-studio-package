@@ -1,23 +1,21 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0T33MWD8D0Y1Q3JK8YD7EZ8"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0T33MWD8D0Y1Q3JK8YD7EZ8"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
       }
-    ]
-  },
+    }
+  ],
   "id": "mdr_6NZTG6G7F8ACCRD6NFACZYDDPH",
   "location": {
     "modelName": "RateModel",

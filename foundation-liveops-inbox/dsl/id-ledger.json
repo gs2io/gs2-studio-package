@@ -1,6 +1,14 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "transform:SendMessage:output:direct:Gs2Inbox:SendMessageByUserId#0": "out_01KJSDEKXP9Y471DTJ6DK3Z64M",
+    "transform:SendMessage:parameter:expireDays": "param_01KJSDG74M7N30Q956691AV1D0",
+    "transform:SendMessage:parameter:metadata": "param_01KJSDEXBM0H8RCVCZQXAG20NZ",
+    "transform:SendMessageWithReward:output:direct:Gs2Inbox:SendMessageByUserId#0": "out_01KJSDKP7X11680BNBAEC8Q1TA",
+    "transform:SendMessageWithReward:parameter:expireDays": "param_01KJSDJVZBTNRQF89XDB4AZTB6",
+    "transform:SendMessageWithReward:parameter:metadata": "param_01KJSDJVENAEK0ZNEMEQECV1RV",
+    "transform:SendMessageWithReward:parameter:rewards": "param_01M365XDJ22GG9D8ND7D1FJBDJ"
+  },
   "random": {
     "property:GlobalMessage.begin": "prop_4DM29ET2A2JAHWK6D0MVPT25PW",
     "property:GlobalMessage.end": "prop_28HE0VGFDJZC3C2B949D7TZD2W",
@@ -9,13 +17,8 @@
     "property:Message.isRead": "prop_3JX5PM4TDM36YWSQFMA0CXKKBW",
     "property:Message.payload": "prop_7WYH08M0F6N02WHFBRJ4TXX5VD",
     "property:Message.receivedAt": "prop_0AV2AGGK2HFK600HXSCDGP0CNC",
-    "transform:SendMessage:output:direct:Gs2Inbox:SendMessageByUserId#0": "out_01KJSDEKXP9Y471DTJ6DK3Z64M",
-    "transform:SendMessage:parameter:expireDays": "param_01KJSDG74M7N30Q956691AV1D0",
-    "transform:SendMessage:parameter:metadata": "param_01KJSDEXBM0H8RCVCZQXAG20NZ",
-    "transform:SendMessageWithReward:output:direct:Gs2Inbox:SendMessageByUserId#0": "out_01KJSDKP7X11680BNBAEC8Q1TA",
-    "transform:SendMessageWithReward:parameter:expireDays": "param_01KJSDJVZBTNRQF89XDB4AZTB6",
-    "transform:SendMessageWithReward:parameter:metadata": "param_01KJSDJVENAEK0ZNEMEQECV1RV",
-    "transform:SendMessageWithReward:parameter:rewards": "param_01M365XDJ22GG9D8ND7D1FJBDJ",
+    "transform:SendMessage": "at_7DVPXYKCMX8GQ8HZV2NGV1VFXA",
+    "transform:SendMessageWithReward": "at_1RG4YKDR299ERAM1FKTZC304C6",
     "type:GlobalMessage": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
     "type:Message": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
   },
@@ -24,6 +27,9 @@
     "master/inbox:Namespace:unmounted:Inbox#0/inbox:GlobalMessage:GlobalMessage:#0": "mdr_53WXDED04D83MTF9Z40JH8CMXH",
     "master/schedule:Namespace:GlobalMessage:InboxSchedule#0": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B",
     "master/schedule:Namespace:GlobalMessage:InboxSchedule#0/schedule:Event:GlobalMessage:#0": "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4",
+    "ui:Message:definition": "uic_1KYWDEFN3XAZHSC741HNQQSTWY",
+    "ui:Message:item:PayloadLabel": "uii_0SHYNK3RTEBR0TB2FC0XVJ756B",
+    "ui:Message:item:ReadActiveToggle": "uii_0Z4M79SYE2BY5SFV6HGJ77DR2M",
     "user/inbox:Message:Message:#0": "udr_5B2DBE3P7M977TXCSEYBR6973N"
   }
 }

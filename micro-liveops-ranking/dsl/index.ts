@@ -158,24 +158,36 @@ const GlobalRankingModel = defineMasterDataResource(resource =>
 
 export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.0")
   .display({
-    label: { ja: "ランキング", en: "Rankings" },
-    description: {
-      ja: "全プレイヤーを対象としたランキングです。開催期間をスケジュールで指定し、順位に応じた報酬を配れます。",
-      en: "A global leaderboard with a scheduled entry period and rewards handed out by rank.",
+    ja: {
+      label: "ランキング",
+      description:
+        "全プレイヤーを対象としたランキングです。開催期間をスケジュールで指定し、順位に応じた報酬を配れます。",
+    },
+    en: {
+      label: "Rankings",
+      description:
+        "A global leaderboard with a scheduled entry period and rewards handed out by rank.",
     },
   })
   .displayType(Ranking, {
-    label: { ja: "ランキング", en: "Ranking" },
-    description: {
-      ja: "プレイヤーランキングの集計方法、開催期間、参加条件を設定します。",
-      en: "Configures scoring, availability, and participation rules for a player ranking.",
+    ja: {
+      label: "ランキング",
+      description: "プレイヤーランキングの集計方法、開催期間、参加条件を設定します。",
+    },
+    en: {
+      label: "Ranking",
+      description:
+        "Configures scoring, availability, and participation rules for a player ranking.",
     },
   })
   .displayType(RankingReward, {
-    label: { ja: "ランキング報酬", en: "Ranking reward" },
-    description: {
-      ja: "ランキングの順位範囲ごとに配布する報酬を設定します。",
-      en: "Defines rewards distributed for each ranking placement range.",
+    ja: {
+      label: "ランキング報酬",
+      description: "ランキングの順位範囲ごとに配布する報酬を設定します。",
+    },
+    en: {
+      label: "Ranking reward",
+      description: "Defines rewards distributed for each ranking placement range.",
     },
   })
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")

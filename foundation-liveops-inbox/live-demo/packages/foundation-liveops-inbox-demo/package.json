@@ -9,13 +9,13 @@
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the announcement used by the live demo, and the press that delivers it to your own inbox.",
-      "ja": "ライブデモ用のお知らせと、それを自分の受信箱へ届ける操作を提供します。"
+    "en": {
+      "description": "Supplies the announcement used by the live demo, and the press that delivers it to your own inbox.",
+      "label": "Inbox (demo data)"
     },
-    "label": {
-      "en": "Inbox (demo data)",
-      "ja": "お知らせ・受信箱（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用のお知らせと、それを自分の受信箱へ届ける操作を提供します。",
+      "label": "お知らせ・受信箱（デモデータ）"
     }
   }
 }

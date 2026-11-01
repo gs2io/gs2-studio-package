@@ -1,42 +1,40 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "resetHour",
-        "source": {
-          "scopes": [
-            {
-              "kind": "parent",
-              "parentResourceId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
-            },
-            {
-              "kind": "parent",
-              "parentResourceId": "mdr_6V258ETJSN87BA3ZBJ1P2ZA3AM"
-            }
-          ],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E"
-            },
-            "propertyId": "prop_05MKE4B6YY206260EBQGMX43NW"
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "resetHour",
+      "source": {
+        "scopes": [
+          {
+            "kind": "parent",
+            "parentResourceId": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ"
+          },
+          {
+            "kind": "parent",
+            "parentResourceId": "mdr_6V258ETJSN87BA3ZBJ1P2ZA3AM"
           }
+        ],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E"
+          },
+          "propertyId": "prop_05MKE4B6YY206260EBQGMX43NW"
         }
-      },
-      {
-        "kind": "static",
-        "parameterName": "resetType",
-        "value": "daily"
-      },
-      {
-        "kind": "static",
-        "parameterName": "scopeType",
-        "value": "resetTiming"
       }
-    ]
-  },
+    },
+    {
+      "kind": "static",
+      "parameterName": "resetType",
+      "value": "daily"
+    },
+    {
+      "kind": "static",
+      "parameterName": "scopeType",
+      "value": "resetTiming"
+    }
+  ],
   "id": "mdr_7CJT5GTHTG86DSF85Z7F5QQ2TR",
   "location": {
     "modelName": "CounterScopeModel",

@@ -1,21 +1,28 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "row:dt_00D03217GRKX0AV27J248EX89N.standard": "row_01M3EPA5ZVSM9NGTGHRKHK16KE",
-    "row:dt_00D03217GRN3Z01B1EQB1GF0EE.one": "row_01M3EPA5ZVHT53P69MW5EX8ZT7",
-    "row:dt_00D03217GRN3Z01B1EQB1GF0EE.three": "row_01M3EPA5ZVZP5AN8RXD95SSRSD",
-    "row:dt_00D03217GRN3Z01B1EQB1GF0EE.two": "row_01M3EPA5ZVKYSPX8MW7Z6G9DX8",
-    "row:dt_00D03217GRQVEAJ6KQWDNC0X5C.attack": "row_01M3EPA5ZVGTYSHCSX2JSJSNBP",
-    "row:dt_00D03217GRQVEAJ6KQWDNC0X5C.critical": "row_01M3EPA5ZVP7JV0QCNQ4NA4FVH",
-    "row:dt_00D03217GRQVEAJ6KQWDNC0X5C.defense": "row_01M3EPA5ZVDRBZ5M76DDR8YCP8",
-    "row:dt_00D03217GRQVEAJ6KQWDNC0X5C.hp": "row_01M3EPA5ZVQ4WCA2MKE6820TEA",
-    "row:dt_00D03217GRQVEAJ6KQWDNC0X5C.luck": "row_01M3EPA5ZVN0G76G9J9HXDYP25",
-    "row:dt_00D03217GRQVEAJ6KQWDNC0X5C.speed": "row_01M3EPA5ZV22W7A1RPA60TGQSP",
-    "type:Equipment": "dt_00D0VNJHFYSPVEE231WA4Z2Q47",
-    "type:EquipmentEnchant": "dt_00D0VNJHFYWCQ1ZBCPN9W9GNAF",
+  "retired": {
     "type:EquipmentEnchantOption": "dt_00D0VNJHFYY09HQMP6Q33P84W7",
     "type:EquipmentEnchantSlotChance": "dt_00D0VNJHFYZZTYQ060GTK8JCDR"
   },
-  "deterministicOverrides": {}
+  "random": {
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRKX0AV27J248EX89N\",\"standard\"]": "row_01M3EPA5ZVSM9NGTGHRKHK16KE",
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRN3Z01B1EQB1GF0EE\",\"one\"]": "row_01M3EPA5ZVHT53P69MW5EX8ZT7",
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRN3Z01B1EQB1GF0EE\",\"three\"]": "row_01M3EPA5ZVZP5AN8RXD95SSRSD",
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRN3Z01B1EQB1GF0EE\",\"two\"]": "row_01M3EPA5ZVKYSPX8MW7Z6G9DX8",
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRQVEAJ6KQWDNC0X5C\",\"attack\"]": "row_01M3EPA5ZVGTYSHCSX2JSJSNBP",
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRQVEAJ6KQWDNC0X5C\",\"critical\"]": "row_01M3EPA5ZVP7JV0QCNQ4NA4FVH",
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRQVEAJ6KQWDNC0X5C\",\"defense\"]": "row_01M3EPA5ZVDRBZ5M76DDR8YCP8",
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRQVEAJ6KQWDNC0X5C\",\"hp\"]": "row_01M3EPA5ZVQ4WCA2MKE6820TEA",
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRQVEAJ6KQWDNC0X5C\",\"luck\"]": "row_01M3EPA5ZVN0G76G9J9HXDYP25",
+    "row:[\"micro-economy-equipment-enchant\",\"dt_00D03217GRQVEAJ6KQWDNC0X5C\",\"speed\"]": "row_01M3EPA5ZV22W7A1RPA60TGQSP",
+    "type:Equipment": "dt_00D0VNJHFYSPVEE231WA4Z2Q47",
+    "type:EquipmentEnchant": "dt_00D0VNJHFYWCQ1ZBCPN9W9GNAF"
+  },
+  "deterministicOverrides": {
+    "ui:Equipment:definition": "uic_2S2ZGEYYGSBZ8VC52ZQXMRD98D",
+    "ui:Equipment:item:AddBonusButton": "uii_691EKKVZ32A52T5BDB368R16YF",
+    "ui:Equipment:item:RerollButton": "uii_1EEX75T7GWAY3TWJ644145G7TN",
+    "ui:EquipmentEnchant:definition": "uic_7XB18GGDA1B0VS071NCQSG5VVZ",
+    "ui:EquipmentEnchant:item:RuleLabel": "uii_7PHCAEN45MAZNT3BQF3YY26T20"
+  }
 }

@@ -1,43 +1,41 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "metadata",
-        "value": ""
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "propertyRegex",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
-            },
-            "propertyId": "prop_00D033FNASBHYZ9W1VK8EE39WP"
-          }
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "metadata",
+      "value": ""
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "propertyRegex",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033FNASFGZWK2X333SXXRXM"
+          },
+          "propertyId": "prop_00D033FNASBHYZ9W1VK8EE39WP"
+        }
+      }
+    }
+  ],
   "id": "mdr_412S9KPNMEB678DA0DBQP3WYXF",
   "location": {
     "modelName": "SlotModel",

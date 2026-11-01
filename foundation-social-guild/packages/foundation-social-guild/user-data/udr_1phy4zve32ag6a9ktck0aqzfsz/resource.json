@@ -1,41 +1,39 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "createdAt"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "guildModelName"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "guildName",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
-            },
-            "propertyId": "prop_00D031EHJKXQ1Y91SVXVS1NEG1"
-          }
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "createdAt"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "guildModelName"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "guildName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
+          },
+          "propertyId": "prop_00D031EHJKXQ1Y91SVXVS1NEG1"
         }
-      },
-      {
-        "kind": "skip",
-        "parameterName": "joinedGuildId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
       }
-    ],
-    "linkedMasterResourceId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9"
-  },
+    },
+    {
+      "kind": "skip",
+      "parameterName": "joinedGuildId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ",
+  "linkedMasterResourceId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
   "location": {
     "modelName": "JoinedGuild",
     "service": "guild"

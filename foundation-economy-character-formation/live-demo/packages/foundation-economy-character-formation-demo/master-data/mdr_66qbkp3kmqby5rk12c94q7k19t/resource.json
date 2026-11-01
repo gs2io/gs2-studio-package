@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "value",
@@ -11,13 +11,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "IncreaseSaveArea",
-        "transformPackageId": "foundation-economy-character-formation"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-character-formation",
+          "transformId": "at_4NRP2334FY75C65TXQZ4PCT9QH"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_66QBKP3KMQBY5RK12C94Q7K19T",
   "location": {
     "modelName": "AcquireAction",

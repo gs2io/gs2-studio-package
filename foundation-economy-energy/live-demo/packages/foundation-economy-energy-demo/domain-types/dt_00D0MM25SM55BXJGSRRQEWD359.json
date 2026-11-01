@@ -51,8 +51,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-energy",
-    "directSourceTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
-    "sourcePackageId": "foundation-economy-energy",
-    "sourceTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+    "directSourceTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
   }
 }

@@ -1,15 +1,17 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "ClearRedemption",
-        "transformPackageId": "micro-liveops-serial-code-demo"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "micro-liveops-serial-code-demo",
+          "transformId": "at_0ANYB1CF038B2RMMTVPA8C9X3B"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_6X42SPRJHJA84A3427N2S742XP",
   "location": {
     "modelName": "AcquireAction",

@@ -27,12 +27,16 @@
     {
       "arguments": [],
       "componentClassName": "BuyButton",
-      "delegatedActionKey": "resource:micro-shop-energy-demo:masterData:mdr_316T157DF8AHNBQJVWHABKV8MZ::Gs2Exchange:RateModel.Exchange",
       "id": "uii_432ZG9G0QNBTTABMTFFQXFM5ED",
       "kind": "buttonAction",
-      "name": "EnergyProduct"
+      "name": "EnergyProduct",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-shop-energy-demo"
+      }
     }
   ],
-  "name": "EnergyProduct",
   "targetDomainTypeId": "dt_00D0S4EG72DAP5YJTQFA6F363W"
 }

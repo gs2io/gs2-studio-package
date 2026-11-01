@@ -1,28 +1,26 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_5X0WV26CPKD17193EPDQD24EP3"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
-      },
-      {
-        "kind": "static",
-        "parameterName": "salesPeriodEventId",
-        "value": null
       }
-    ]
-  },
+    },
+    {
+      "kind": "static",
+      "parameterName": "salesPeriodEventId",
+      "value": null
+    }
+  ],
   "id": "mdr_52EEV67FGS9B1V0F4FDTAR1YY2",
   "location": {
     "modelName": "Showcase",

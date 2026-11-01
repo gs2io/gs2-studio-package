@@ -5,19 +5,28 @@
     "Character": {
       "id": "dt_00D0T33MWD8D0Y1Q3JK8YD7EZ8",
       "singleEntry": false,
-      "delegatedActions": {
-        "LimitBreak": "resource:micro-economy-character-grade-demo:masterData:mdr_1NXX629711BHJBYFNF7Q2QG8D9::Gs2Exchange:RateModel.Exchange",
-        "TrainHard": "resource:micro-economy-character-grade-demo:masterData:mdr_6NZTG6G7F8ACCRD6NFACZYDDPH::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
-    },
-    "CharacterGradeStep": {
-      "id": "dt_00D0T33MWD9JGMTGK4DCNS9HSQ",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-economy-character-grade",
-      "canonicalTypeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
+      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "delegatedActions": {
+        "LimitBreak": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-character-grade-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_1NXX629711BHJBYFNF7Q2QG8D9"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "TrainHard": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-character-grade-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_6NZTG6G7F8ACCRD6NFACZYDDPH"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {}
 }

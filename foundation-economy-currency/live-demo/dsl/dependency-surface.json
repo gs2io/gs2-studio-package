@@ -2,20 +2,21 @@
   "schemaVersion": 1,
   "packageId": "foundation-economy-currency-demo",
   "types": {
-    "CurrencyStore": {
-      "id": "dt_00D0KZCKAB1QWPJM14EC98CKVY",
-      "singleEntry": true,
-      "canonicalPackageId": "foundation-economy-currency",
-      "canonicalTypeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY"
-    },
     "FreeDeposit": {
       "id": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
       "singleEntry": true,
-      "delegatedActions": {
-        "Deposit": "resource:foundation-economy-currency-demo:masterData:mdr_0WQYMCRMNHA27R3GC0HP8TDAM1::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-currency-demo",
       "canonicalTypeId": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
+      "delegatedActions": {
+        "Deposit": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-currency-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_0WQYMCRMNHA27R3GC0HP8TDAM1"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      },
       "properties": {
         "count": "prop_00D0KZCKABE9VVHET0Z8R3QD2M",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -24,23 +25,25 @@
     "PaidDeposit": {
       "id": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
       "singleEntry": true,
-      "delegatedActions": {
-        "Deposit": "resource:foundation-economy-currency-demo:masterData:mdr_6JVGGGN9A9AB9TWSKZS4RDACTQ::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-currency-demo",
       "canonicalTypeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
+      "delegatedActions": {
+        "Deposit": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-currency-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_6JVGGGN9A9AB9TWSKZS4RDACTQ"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      },
       "properties": {
         "count": "prop_00D0KZCKAB8JMZWPNE82NRXE0W",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
-    },
-    "StoreProduct": {
-      "id": "dt_00D0KZCKAB2YFFQMKWWH6HQRZP",
-      "singleEntry": false,
-      "canonicalPackageId": "foundation-economy-currency",
-      "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_6WN3KXB9J0BQJ9FXDG1HFJ09MH"
   }

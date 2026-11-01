@@ -33,8 +33,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-equipment",
-    "directSourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
-    "sourcePackageId": "foundation-economy-equipment",
-    "sourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+    "directSourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
   }
 }

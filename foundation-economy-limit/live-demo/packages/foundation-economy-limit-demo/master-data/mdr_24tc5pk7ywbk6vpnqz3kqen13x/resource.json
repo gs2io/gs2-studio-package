@@ -1,15 +1,17 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "ConsumeAdViewPoint",
-        "transformPackageId": "foundation-economy-ad"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-ad",
+          "transformId": "at_7K72HBMY1D9CTR7V0JF15PGRS6"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_24TC5PK7YWBK6VPNQZ3KQEN13X",
   "location": {
     "modelName": "ConsumeAction",

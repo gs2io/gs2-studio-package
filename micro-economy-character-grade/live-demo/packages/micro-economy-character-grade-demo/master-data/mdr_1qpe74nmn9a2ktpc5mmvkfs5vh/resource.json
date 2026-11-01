@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "propertyId",
@@ -18,13 +18,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "PromoteCharacterGrade",
-        "transformPackageId": "micro-economy-character-grade"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "micro-economy-character-grade",
+          "transformId": "at_0AV65RY3CPHDE6VDR8XQ9MH72H"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_1QPE74NMN9A2KTPC5MMVKFS5VH",
   "location": {
     "modelName": "AcquireAction",

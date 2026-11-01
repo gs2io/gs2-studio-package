@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "metadata",
@@ -35,50 +35,56 @@
           {
             "parameterName": "rewards",
             "source": {
-              "arguments": [
-                {
-                  "parameterName": "slot",
-                  "source": {
-                    "kind": "static",
-                    "value": 0
-                  }
-                },
-                {
-                  "parameterName": "count",
-                  "source": {
-                    "kind": "domainProperty",
+              "invocation": {
+                "arguments": [
+                  {
+                    "parameterName": "slot",
                     "source": {
-                      "scopes": [
-                        {
-                          "kind": "parent",
-                          "parentResourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q"
+                      "kind": "static",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "parameterName": "count",
+                    "source": {
+                      "kind": "domainProperty",
+                      "source": {
+                        "scopes": [
+                          {
+                            "kind": "parent",
+                            "parentResourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q"
+                          }
+                        ],
+                        "terminal": {
+                          "kind": "direct",
+                          "mountPath": {
+                            "kind": "local",
+                            "typeId": "dt_00D0SHMWJ1K42G74YQPF2DJNV6"
+                          },
+                          "propertyId": "prop_00D0SHMWJ1Q1KCCFKR0J26GETW"
                         }
-                      ],
-                      "terminal": {
-                        "kind": "direct",
-                        "mountPath": {
-                          "kind": "local",
-                          "typeId": "dt_00D0SHMWJ1K42G74YQPF2DJNV6"
-                        },
-                        "propertyId": "prop_00D0SHMWJ1Q1KCCFKR0J26GETW"
                       }
                     }
                   }
+                ],
+                "target": {
+                  "packageId": "foundation-economy-currency",
+                  "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
                 }
-              ],
-              "kind": "actionTransformRef",
-              "transformName": "DepositFreeCurrency",
-              "transformPackageId": "foundation-economy-currency"
+              },
+              "kind": "actionTransformRef"
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "SendMessageWithReward",
-        "transformPackageId": "foundation-liveops-inbox"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-liveops-inbox",
+          "transformId": "at_1RG4YKDR299ERAM1FKTZC304C6"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_7V1QR9XZHJBG691ETX3D41A3JP",
   "location": {
     "modelName": "AcquireAction",

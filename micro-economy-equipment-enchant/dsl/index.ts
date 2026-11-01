@@ -188,45 +188,64 @@ export const microEconomyEquipmentEnchant = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "装備エンチャント", en: "Equipment Enchantment" },
-    description: {
-      ja: "装備にランダムな追加効果を付与します。抽選されるスロット数と効果の種類・重みを設定できます。",
-      en: "Rolls random bonuses onto equipment, with configurable slot counts, options and weights.",
+    ja: {
+      label: "装備エンチャント",
+      description:
+        "装備にランダムな追加効果を付与します。抽選されるスロット数と効果の種類・重みを設定できます。",
+    },
+    en: {
+      label: "Equipment Enchantment",
+      description:
+        "Rolls random bonuses onto equipment, with configurable slot counts, options and weights.",
     },
   })
   .displayType(EquipmentEnchant, {
-    label: { ja: "エンチャント設定", en: "Enchantment pool" },
-    description: {
-      ja: "装備に付与できる効果候補と抽選ルールをまとめて設定します。",
-      en: "Defines the pool of effects and roll rules available when enchanting equipment.",
+    ja: {
+      label: "エンチャント設定",
+      description: "装備に付与できる効果候補と抽選ルールをまとめて設定します。",
+    },
+    en: {
+      label: "Enchantment pool",
+      description:
+        "Defines the pool of effects and roll rules available when enchanting equipment.",
     },
   })
   .displayType(EquipmentEnchantSlotChance, {
-    label: { ja: "スロット数抽選", en: "Slot chance" },
-    description: {
-      ja: "エンチャント時に付与される効果スロット数と確率を設定します。",
-      en: "Configures the probability of each effect-slot count during enchantment.",
+    ja: {
+      label: "スロット数抽選",
+      description: "エンチャント時に付与される効果スロット数と確率を設定します。",
+    },
+    en: {
+      label: "Slot chance",
+      description: "Configures the probability of each effect-slot count during enchantment.",
     },
   })
   .displayType(EquipmentEnchantOption, {
-    label: { ja: "エンチャント効果", en: "Enchant option" },
-    description: {
-      ja: "抽選対象となるエンチャント効果と、付与されたときの固定の効果値を設定します。",
-      en: "Defines an enchantment effect that can be rolled and the fixed value it grants.",
+    ja: {
+      label: "エンチャント効果",
+      description: "抽選対象となるエンチャント効果と、付与されたときの固定の効果値を設定します。",
+    },
+    en: {
+      label: "Enchant option",
+      description:
+        "Defines an enchantment effect that can be rolled and the fixed value it grants.",
     },
   })
   .displayType(EquipmentEnchantment, {
-    label: { ja: "付与済み効果", en: "Rolled bonus" },
-    description: {
-      ja: "プレイヤーの装備に実際に付与されたエンチャント効果を管理します。",
-      en: "Tracks the enchantment effects rolled onto a player's equipment.",
+    ja: {
+      label: "付与済み効果",
+      description: "プレイヤーの装備に実際に付与されたエンチャント効果を管理します。",
+    },
+    en: {
+      label: "Rolled bonus",
+      description: "Tracks the enchantment effects rolled onto a player's equipment.",
     },
   })
   .displayType(Equipment, {
-    label: { ja: "装備", en: "Equipment" },
-    description: {
-      ja: "装備ごとのエンチャント設定と付与済み効果を管理します。",
-      en: "Associates equipment with its enchantment configuration and rolled effects.",
+    ja: { label: "装備", description: "装備ごとのエンチャント設定と付与済み効果を管理します。" },
+    en: {
+      label: "Equipment",
+      description: "Associates equipment with its enchantment configuration and rolled effects.",
     },
   })
   .dependency("foundation-economy-equipment", "github:gs2io/gs2-studio-package")

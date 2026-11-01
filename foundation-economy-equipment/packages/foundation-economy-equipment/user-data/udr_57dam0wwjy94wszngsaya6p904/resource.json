@@ -1,56 +1,54 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperties",
-        "parameterName": "currentInventoryCapacityUsage",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
-              },
-              "propertyId": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS"
-            }
+  "declaredBindings": [
+    {
+      "kind": "domainProperties",
+      "parameterName": "currentInventoryCapacityUsage",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
+            },
+            "propertyId": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS"
           }
-        ]
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "currentInventoryMaxCapacity",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
-              },
-              "propertyId": "prop_6DFT20J8RV6F8565KNNREYVH3N"
-            }
+        }
+      ]
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "currentInventoryMaxCapacity",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
+            },
+            "propertyId": "prop_6DFT20J8RV6F8565KNNREYVH3N"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "inventoryId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "inventoryName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_7THH0THTYY830SYCKTT7NMYZHG"
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "inventoryId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "inventoryName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_57DAM0WWJY94WSZNGSAYA6P904",
+  "linkedMasterResourceId": "mdr_7THH0THTYY830SYCKTT7NMYZHG",
   "location": {
     "modelName": "Inventory",
     "service": "inventory"

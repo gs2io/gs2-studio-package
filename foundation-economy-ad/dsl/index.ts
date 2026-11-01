@@ -74,24 +74,34 @@ const Namespace = defineMasterDataResource(resource =>
 
 export const foundationEconomyAd = definePackage("foundation-economy-ad", "0.0.0")
   .display({
-    label: { ja: "広告", en: "Ads" },
-    description: {
-      ja: "広告視聴の実績を記録し、広告経由の報酬付与に使えるポイントを管理します。",
-      en: "Tracks ad views and manages the points you can use to reward players for watching them.",
+    ja: {
+      label: "広告",
+      description: "広告視聴の実績を記録し、広告経由の報酬付与に使えるポイントを管理します。",
+    },
+    en: {
+      label: "Ads",
+      description:
+        "Tracks ad views and manages the points you can use to reward players for watching them.",
     },
   })
   .displayType(AdPlatform, {
-    label: { ja: "広告プラットフォーム", en: "Ad platform" },
-    description: {
-      ja: "AdMobとUnity Adsで利用する広告ユニットやゲームキーを設定します。",
-      en: "Configures the ad units and game keys used by AdMob and Unity Ads.",
+    ja: {
+      label: "広告プラットフォーム",
+      description: "AdMobとUnity Adsで利用する広告ユニットやゲームキーを設定します。",
+    },
+    en: {
+      label: "Ad platform",
+      description: "Configures the ad units and game keys used by AdMob and Unity Ads.",
     },
   })
   .displayType(AdViewPoint, {
-    label: { ja: "広告視聴枠", en: "Ad view point" },
-    description: {
-      ja: "プレイヤーが利用できる広告視聴ポイントの現在値を管理します。",
-      en: "Tracks the current number of ad-view points available to a player.",
+    ja: {
+      label: "広告視聴枠",
+      description: "プレイヤーが利用できる広告視聴ポイントの現在値を管理します。",
+    },
+    en: {
+      label: "Ad view point",
+      description: "Tracks the current number of ad-view points available to a player.",
     },
   })
   .domainType(AdPlatform)

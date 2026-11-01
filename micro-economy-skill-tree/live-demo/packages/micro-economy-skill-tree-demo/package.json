@@ -11,13 +11,13 @@
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the live demo's four skill nodes and the coins their unlock costs are paid from. What is unlocked is tracked per character.",
-      "ja": "ライブデモ用の 4 つのスキルノードと、その解放コストを支払うコインを提供します。ノードの解放状況はキャラクターごとに記録されます。"
+    "en": {
+      "description": "Supplies the live demo's four skill nodes and the coins their unlock costs are paid from. What is unlocked is tracked per character.",
+      "label": "Skill Tree (demo data)"
     },
-    "label": {
-      "en": "Skill Tree (demo data)",
-      "ja": "スキルツリー（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用の 4 つのスキルノードと、その解放コストを支払うコインを提供します。ノードの解放状況はキャラクターごとに記録されます。",
+      "label": "スキルツリー（デモデータ）"
     }
   }
 }

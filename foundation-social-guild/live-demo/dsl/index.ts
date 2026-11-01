@@ -37,10 +37,14 @@ const MEMBER_POLICY = JSON.stringify({
 
 export const foundationSocialGuildDemo = definePackage("foundation-social-guild-demo", "0.0.0")
   .display({
-    label: { ja: "ギルド（デモデータ）", en: "Guilds (demo data)" },
-    description: {
-      ja: "ライブデモ用に、ギルドの種別 1 つと、マスター・一般メンバーの 2 つの役職を提供します。",
-      en: "Supplies the live demo's one guild kind and its two roles, master and member.",
+    ja: {
+      label: "ギルド（デモデータ）",
+      description:
+        "ライブデモ用に、ギルドの種別 1 つと、マスター・一般メンバーの 2 つの役職を提供します。",
+    },
+    en: {
+      label: "Guilds (demo data)",
+      description: "Supplies the live demo's one guild kind and its two roles, master and member.",
     },
   })
   .dependency(guild.packageId, "github:gs2io/gs2-studio-package")

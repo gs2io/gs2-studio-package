@@ -31,6 +31,10 @@
       }
     }
   },
+  "actionTransforms": {
+    "IncreaseGuildCapacity": "at_2CVP0VMSNYSCJY7J93T0091WZ3",
+    "VerifyGuildMembership": "at_0Q6TEZY5S19NY8W9TDYPA66718"
+  },
   "masterDataResources": {
     "guild.GuildModel": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
     "guild.Namespace": "mdr_2NW12QY7P9BHGBYRB91VD5C9HT",

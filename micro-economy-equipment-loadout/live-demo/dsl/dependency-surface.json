@@ -1,13 +1,7 @@
 {
   "schemaVersion": 1,
   "packageId": "micro-economy-equipment-loadout-demo",
-  "types": {
-    "EquipmentSlot": {
-      "id": "dt_00D0VSFAQ86Q9J1R7PW41SRMGC",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-economy-equipment-loadout",
-      "canonicalTypeId": "dt_00D033FNASFGZWK2X333SXXRXM"
-    }
-  },
+  "types": {},
+  "actionTransforms": {},
   "masterDataResources": {}
 }

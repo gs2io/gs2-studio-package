@@ -3,13 +3,13 @@
   "name": "micro-liveops-serial-code",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Redeems serial codes you hand out, organized into campaigns.",
-      "ja": "配布したシリアルコードを引き換えます。コードはキャンペーン単位でまとめます。"
+    "en": {
+      "description": "Redeems serial codes you hand out, organized into campaigns.",
+      "label": "Serial Codes"
     },
-    "label": {
-      "en": "Serial Codes",
-      "ja": "シリアルコード"
+    "ja": {
+      "description": "配布したシリアルコードを引き換えます。コードはキャンペーン単位でまとめます。",
+      "label": "シリアルコード"
     }
   }
 }

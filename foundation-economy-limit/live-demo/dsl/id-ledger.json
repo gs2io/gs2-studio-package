@@ -26,14 +26,33 @@
   "random": {
     "property:UsageLimitCounter.adMax": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE",
     "property:UsageLimitCounter.freeMax": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D",
-    "row:dt_00D031CCJC5E77CH6RN2RE661E.daily": "row_01M2TS7XYN416HZCCFTBN8RW9P",
-    "row:dt_00D031CCJC5E77CH6RN2RE661E.weekly": "row_01M2WP2K9HZVZZGGMWV9EPYF48",
-    "row:dt_00D031N0N8T4YWAWEK0CJY6HFJ.counter1": "row_01M2WTYP5ZFN44989EHERK30FD",
-    "row:dt_00D031N0N8T4YWAWEK0CJY6HFJ.counter2": "row_01M2WTYP5ZYPPR20JDP7JAKERR",
-    "row:dt_00D031N0N8T4YWAWEK0CJY6HFJ.counter3": "row_01M2WTYP5ZQ29CC69NYKVVTN86",
-    "row:dt_00D031N0N8T4YWAWEK0CJY6HFJ.counter4": "row_01M2WTYP5ZY4P1PW0R8A2CWR49",
+    "row:[\"foundation-economy-limit\",\"dt_00D031CCJC5E77CH6RN2RE661E\",\"daily\"]": "row_01M2TS7XYN416HZCCFTBN8RW9P",
+    "row:[\"foundation-economy-limit\",\"dt_00D031CCJC5E77CH6RN2RE661E\",\"weekly\"]": "row_01M2WP2K9HZVZZGGMWV9EPYF48",
+    "row:[\"foundation-economy-limit\",\"dt_00D031N0N8T4YWAWEK0CJY6HFJ\",\"counter1\"]": "row_01M2WTYP5ZFN44989EHERK30FD",
+    "row:[\"foundation-economy-limit\",\"dt_00D031N0N8T4YWAWEK0CJY6HFJ\",\"counter2\"]": "row_01M2WTYP5ZYPPR20JDP7JAKERR",
+    "row:[\"foundation-economy-limit\",\"dt_00D031N0N8T4YWAWEK0CJY6HFJ\",\"counter3\"]": "row_01M2WTYP5ZQ29CC69NYKVVTN86",
+    "row:[\"foundation-economy-limit\",\"dt_00D031N0N8T4YWAWEK0CJY6HFJ\",\"counter4\"]": "row_01M2WTYP5ZY4P1PW0R8A2CWR49",
     "type:UsageLimit": "dt_00D0PP9ZFNCD6RFTHR08Z8NVF9",
     "type:UsageLimitCounter": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:UsageLimit:definition": "uic_3K5PPSCCMMBZ69R0C6R1VHMQ7X",
+    "ui:UsageLimit:item:NotWeeklyActiveToggle": "uii_62F5K8HNEMA9NRNAM4PKEZXMD5",
+    "ui:UsageLimit:item:ScheduleLabel": "uii_1VRYCX7ZWDARDBPD2GD3ZMTXYP",
+    "ui:UsageLimit:item:WeeklyActiveToggle": "uii_1BR6G75XNKBPMTX6FNR1YTM5KY",
+    "ui:UsageLimit:item:WeeklyScheduleLabel": "uii_6W2GASSKWGA0PAD6V8PPAQ6YNA",
+    "ui:UsageLimitCounter:definition": "uic_4RP75HN84YAVEVX1HEKXS9PN2J",
+    "ui:UsageLimitCounter:item:AdUsesUnavailableActiveToggle": "uii_3G781JCKX4A2Z93RQNBK5KCTE7",
+    "ui:UsageLimitCounter:item:AllowanceLabel": "uii_5G4EY7E0DQBWKRQXZJBV1GC3SK",
+    "ui:UsageLimitCounter:item:AnyUseLeftActiveToggle": "uii_3JQ9EJQS23AC3R9NJ0A9EYEVQT",
+    "ui:UsageLimitCounter:item:FreeUsesLeftActiveToggle": "uii_2C5Z0QYW4KBB9VE1ZNMSXX49NW",
+    "ui:UsageLimitCounter:item:FreeUsesSpentActiveToggle": "uii_4T4TMX27EMBQ8B7NNYANP8EW4N",
+    "ui:UsageLimitCounter:item:NextResetInValue": "uii_5YGA6A1Z86A33T5Q5WVF14VMWN",
+    "ui:UsageLimitCounter:item:NoFreeUsesLeftLabel": "uii_11RWTPD3Y3A2C93AHFPA1DBK2C",
+    "ui:UsageLimitCounter:item:NothingLeftLabel": "uii_4AS1987Y9FBSCV4YM334JAANTE",
+    "ui:UsageLimitCounter:item:ResetEveryAllowanceButton": "uii_71CMYTD760BME93XMH90Q1RG6T",
+    "ui:UsageLimitCounter:item:UsageLabel": "uii_7YGWDRGYADASV8M7VRDSMXJGB3",
+    "ui:UsageLimitCounter:item:UseFreeButton": "uii_67NWFF07T4BJAV6WVF92Q4X8V0",
+    "ui:UsageLimitCounter:item:UseWithAdButton": "uii_3QWMQDCT8KAP6BF0F3KYVYFSZE"
+  }
 }

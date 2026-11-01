@@ -11,13 +11,13 @@
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the live demo's reset settings, the one counter it shows, the four missions that read it, the two groups they belong to, and the press that advances the counter. The rewards land in the currency package's wallet.",
-      "ja": "ライブデモ用のリセット設定、1 つのカウンター、それを見る 4 つのミッションと 2 つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。"
+    "en": {
+      "description": "Supplies the live demo's reset settings, the one counter it shows, the four missions that read it, the two groups they belong to, and the press that advances the counter. The rewards land in the currency package's wallet.",
+      "label": "Missions (demo data)"
     },
-    "label": {
-      "en": "Missions (demo data)",
-      "ja": "ミッション（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用のリセット設定、1 つのカウンター、それを見る 4 つのミッションと 2 つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+      "label": "ミッション（デモデータ）"
     }
   }
 }

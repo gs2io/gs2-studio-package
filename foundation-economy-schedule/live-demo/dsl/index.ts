@@ -53,7 +53,7 @@ const PullRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(TriggerPull)
         .bindings({
-          action: Bind.transform(schedule.packageId, "PullTrigger", [
+          action: Bind.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.domainProperty("trigger", Source.parent(Source.direct(TriggerPull, "trigger"))),
             Arg.static("ttlSeconds", TTL_SECONDS),
           ]),
@@ -71,7 +71,7 @@ const ExtendRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Trigger)
         .bindings({
-          action: Bind.transform(schedule.packageId, "TriggerSchedule", [
+          action: Bind.transform(schedule.packageId, schedule.transformId("TriggerSchedule"), [
             Arg.domainProperty("trigger", Source.direct("Trigger", "id")),
             Arg.static("extendSeconds", EXTEND_SECONDS),
           ]),
@@ -89,7 +89,7 @@ const ClearRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Trigger)
         .bindings({
-          action: Bind.transform(schedule.packageId, "ClearTrigger", [
+          action: Bind.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.domainProperty("trigger", Source.direct("Trigger", "id")),
           ]),
         });
@@ -101,10 +101,14 @@ export const foundationEconomyScheduleDemo = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "スケジュール基盤（デモデータ）", en: "Scheduling (demo data)" },
-    description: {
-      ja: "ライブデモ用のイベント日程と、トリガーの発火・延長・解除の操作を提供します。",
-      en: "Supplies the event windows used by the live demo, and the presses that pull, extend and clear a trigger.",
+    ja: {
+      label: "スケジュール基盤（デモデータ）",
+      description: "ライブデモ用のイベント日程と、トリガーの発火・延長・解除の操作を提供します。",
+    },
+    en: {
+      label: "Scheduling (demo data)",
+      description:
+        "Supplies the event windows used by the live demo, and the presses that pull, extend and clear a trigger.",
     },
   })
   .dependency(schedule.packageId, "github:gs2io/gs2-studio-package")
@@ -242,16 +246,16 @@ export const foundationEconomyScheduleDemo = definePackage(
   .delegatedAction(TriggerPull, "Pull", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: PullRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(Trigger, "Extend", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ExtendRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(Trigger, "Clear", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ClearRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

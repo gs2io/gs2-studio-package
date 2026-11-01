@@ -6,13 +6,13 @@
     "foundation-social-graph": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies what the live demo shows of a profile, a friend, a follow and a friend request.",
-      "ja": "ライブデモ用に、プロフィール・フレンド・フォロー・フレンド申請の表示項目を提供します。"
+    "en": {
+      "description": "Supplies what the live demo shows of a profile, a friend, a follow and a friend request.",
+      "label": "Friends & Profile (demo data)"
     },
-    "label": {
-      "en": "Friends & Profile (demo data)",
-      "ja": "フレンド・プロフィール（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用に、プロフィール・フレンド・フォロー・フレンド申請の表示項目を提供します。",
+      "label": "フレンド・プロフィール（デモデータ）"
     }
   }
 }

@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "metadata",
@@ -33,13 +33,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "SendMessage",
-        "transformPackageId": "foundation-liveops-inbox"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-liveops-inbox",
+          "transformId": "at_7DVPXYKCMX8GQ8HZV2NGV1VFXA"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_5DGMCSQKS9AYN9KF0766WJ4BQ5",
   "location": {
     "modelName": "AcquireAction",

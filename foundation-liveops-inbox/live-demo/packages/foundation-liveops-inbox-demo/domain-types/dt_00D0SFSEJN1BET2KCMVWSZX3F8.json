@@ -33,8 +33,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-liveops-inbox",
-    "directSourceTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
-    "sourcePackageId": "foundation-liveops-inbox",
-    "sourceTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
+    "directSourceTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
   }
 }

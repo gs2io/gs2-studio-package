@@ -36,6 +36,13 @@
       }
     }
   },
+  "actionTransforms": {
+    "DepositCurrency": "at_103C3AGDYK65AAVXE24NG965GH",
+    "DepositFreeCurrency": "at_128M69PST19WRR9BGD46M0YWAC",
+    "VerifyReceipt": "at_0K0C5C0TAX954RK77HDAPJWBEG",
+    "WithdrawCurrency": "at_1HH2KQVVENVPN5K0X2W69EB7D5",
+    "WithdrawPaidCurrency": "at_0Q3S8P50EGKX0R74RAS4HWMC6F"
+  },
   "masterDataResources": {
     "money2.Namespace": "mdr_2E7WSMWGBTATQSVTMCW3T2R2AJ",
     "money2.StoreContentModel": "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX"

@@ -13,8 +13,8 @@
     "property:TakeOverSetting.type": "prop_4QCBW1JJ874A6NWJKA9KXV0E9D",
     "property:TransferCode.registered": "prop_00D0XSWNPHK742VSBENVHWQX25",
     "property:TransferCode.userIdentifier": "prop_00D0XSWNPHGADEPTVEW5ASX023",
-    "row:type:TakeOverSetting.apple": "row_00S01SNZHH4M1H63XE12H2G0SP",
-    "row:type:TakeOverSetting.google": "row_0E1BZ05RKKKQT8YBG6NXYEFSXF",
+    "row:[\"foundation-core-identity\",\"type:TakeOverSetting\",\"apple\"]": "row_00S01SNZHH4M1H63XE12H2G0SP",
+    "row:[\"foundation-core-identity\",\"type:TakeOverSetting\",\"google\"]": "row_0E1BZ05RKKKQT8YBG6NXYEFSXF",
     "type:TakeOverSetting": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
     "type:TransferCode": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
   },

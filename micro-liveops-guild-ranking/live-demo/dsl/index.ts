@@ -63,16 +63,16 @@ const GuildRankingReward = defineOverlayDomainType(
       {
         targetProperty: guildRanking.propertyId("GuildRankingReward", "acquireActions"),
         mode: "append",
-            transformPackageId: currency.packageId,
-            transformName: "DepositFreeCurrency",
-            arguments: [
-              { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              {
-                parameterName: "count",
-                source: { kind: "domainProperty", propertyName: "coins" },
-              },
-            ],
+        transformPackageId: currency.packageId,
+        transformId: currency.transformId("DepositFreeCurrency"),
+        arguments: [
+          { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
+          {
+            parameterName: "count",
+            source: { kind: "domainProperty", propertyName: "coins" },
           },
+        ],
+      },
     ],
   },
   domainType =>
@@ -96,17 +96,25 @@ const GuildRankingReward = defineOverlayDomainType(
 
 const withRanking = definePackage("micro-liveops-guild-ranking-demo", "0.0.0")
   .display({
-    label: { ja: "ギルドランキング（デモデータ）", en: "Guild Rankings (demo data)" },
-    description: {
-      ja: "ライブデモ用に、ギルドごとのランキングと順位帯ごとの報酬コイン、毎日切り替わるシーズンの説明を提供します。報酬は通貨パッケージのウォレットへ入ります。",
-      en: "Supplies the live demo's per-guild ranking, the coins each reward tier pays, and the rule of its daily season. The rewards land in the currency package's wallet.",
+    ja: {
+      label: "ギルドランキング（デモデータ）",
+      description:
+        "ライブデモ用に、ギルドごとのランキングと順位帯ごとの報酬コイン、毎日切り替わるシーズンの説明を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+    },
+    en: {
+      label: "Guild Rankings (demo data)",
+      description:
+        "Supplies the live demo's per-guild ranking, the coins each reward tier pays, and the rule of its daily season. The rewards land in the currency package's wallet.",
     },
   })
   .displayType(GuildRankingReward, {
-    label: { ja: "ギルドランキング報酬", en: "Guild ranking reward" },
-    description: {
-      ja: "デモのギルドランキング報酬に、報酬コインを足します。",
-      en: "Adds the coins it pays to a demo guild ranking reward tier.",
+    ja: {
+      label: "ギルドランキング報酬",
+      description: "デモのギルドランキング報酬に、報酬コインを足します。",
+    },
+    en: {
+      label: "Guild ranking reward",
+      description: "Adds the coins it pays to a demo guild ranking reward tier.",
     },
   })
   .dependency(guildRanking.packageId, "github:gs2io/gs2-studio-package")

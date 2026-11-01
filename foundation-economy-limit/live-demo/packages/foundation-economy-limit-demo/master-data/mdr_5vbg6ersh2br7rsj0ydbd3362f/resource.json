@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "limit",
@@ -67,13 +67,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "CountUpUsageLimit",
-        "transformPackageId": "foundation-economy-limit"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-limit",
+          "transformId": "at_3571THGJSH9VVT21JDG4STK77F"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_5VBG6ERSH2BR7RSJ0YDBD3362F",
   "location": {
     "modelName": "ConsumeAction",

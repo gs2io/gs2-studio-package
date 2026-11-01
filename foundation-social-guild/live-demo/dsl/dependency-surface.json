@@ -7,13 +7,8 @@
       "singleEntry": false,
       "canonicalPackageId": "foundation-social-guild",
       "canonicalTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
-    },
-    "GuildRole": {
-      "id": "dt_00D0WZ24SMR2NMFZEB5EXKGEC9",
-      "singleEntry": false,
-      "canonicalPackageId": "foundation-social-guild",
-      "canonicalTypeId": "dt_00D031EHJKYH677VNXVWGBA2D0"
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {}
 }

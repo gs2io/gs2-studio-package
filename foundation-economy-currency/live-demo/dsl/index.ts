@@ -62,7 +62,7 @@ const FreeDepositRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(FreeDeposit)
         .bindings({
-          action: Bind.transform(CURRENCY_PACKAGE_ID, "DepositFreeCurrency", [
+          action: Bind.transform(CURRENCY_PACKAGE_ID, currency.transformId("DepositFreeCurrency"), [
             Arg.domainProperty("count", Source.parent(Source.direct(FreeDeposit, "count"))),
             Arg.static("slot", WALLET_SLOT),
           ]),
@@ -83,7 +83,7 @@ const PaidDepositRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(PaidDeposit)
         .bindings({
-          action: Bind.transform(CURRENCY_PACKAGE_ID, "DepositCurrency", [
+          action: Bind.transform(CURRENCY_PACKAGE_ID, currency.transformId("DepositCurrency"), [
             Arg.domainProperty("count", Source.parent(Source.direct(PaidDeposit, "count"))),
             Arg.static("currencyType", "JPY"),
             Arg.static("price", 120),
@@ -115,25 +115,23 @@ export const foundationEconomyCurrencyDemo = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "通貨（デモデータ）", en: "Currency (demo data)" },
-    description: {
-      ja: "ライブデモ用の設定上書き、無償付与、全デモ共通の商品棚と価格を提供します。",
-      en: "Supplies the live demo's setting overrides, its free currency grants, and the store shelf and prices every demo shares.",
+    ja: {
+      label: "通貨（デモデータ）",
+      description: "ライブデモ用の設定上書き、無償付与、全デモ共通の商品棚と価格を提供します。",
+    },
+    en: {
+      label: "Currency (demo data)",
+      description:
+        "Supplies the live demo's setting overrides, its free currency grants, and the store shelf and prices every demo shares.",
     },
   })
   .displayType(FreeDeposit, {
-    label: { ja: "無償付与", en: "Free deposit" },
-    description: {
-      ja: "無償残高に加算されるデモ用の入金です。",
-      en: "A demo deposit that lands in the free balance.",
-    },
+    ja: { label: "無償付与", description: "無償残高に加算されるデモ用の入金です。" },
+    en: { label: "Free deposit", description: "A demo deposit that lands in the free balance." },
   })
   .displayType(PaidDeposit, {
-    label: { ja: "有償付与", en: "Paid deposit" },
-    description: {
-      ja: "有償残高に加算されるデモ用の入金です。",
-      en: "A demo deposit that lands in the paid balance.",
-    },
+    ja: { label: "有償付与", description: "有償残高に加算されるデモ用の入金です。" },
+    en: { label: "Paid deposit", description: "A demo deposit that lands in the paid balance." },
   })
   .dependency(CURRENCY_PACKAGE_ID, "github:gs2io/gs2-studio-package")
   .dependency(shop.packageId, "github:gs2io/gs2-studio-package")
@@ -208,11 +206,11 @@ export const foundationEconomyCurrencyDemo = definePackage(
   .delegatedAction(FreeDeposit, "Deposit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: FreeDepositRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(PaidDeposit, "Deposit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: PaidDepositRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

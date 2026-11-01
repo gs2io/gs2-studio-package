@@ -1,23 +1,34 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "type:CharacterExperience": "dt_00D0KZXDBRHQB69AXC371FPATG"
+  },
   "random": {
     "property:CharacterRecruit.character": "prop_00D0M4HCBWK48152NTS3ABDZMZ",
     "property:CharacterRecruit.extraActions": "prop_00D0NTAZ7QKXA6Q5H5NDGEFQ2V",
-    "row:dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0.characterexperience": "row_01M2FZNNF21Y85M0JDZM88818A",
-    "row:dt_64PCJ4KXWQBQ45VF7D5MTQ017H.archer": "row_01M2FZNNF2DY4PYP7V7P7FQEJA",
-    "row:dt_64PCJ4KXWQBQ45VF7D5MTQ017H.healer": "row_01M2FZNNF2E89PS7BNWJS7P8JP",
-    "row:dt_64PCJ4KXWQBQ45VF7D5MTQ017H.knight": "row_01M2FZNNF24XNAS9SNKKPW1HHZ",
-    "row:dt_64PCJ4KXWQBQ45VF7D5MTQ017H.mage": "row_01M2FZNNF2C3R4J88CVERVYS7A",
-    "row:dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW.charactercollection": "row_01M2FZNNF2EVGNAT20G9B61C7H",
-    "row:type:CharacterRecruit.archer": "row_01M2GJ5HFJQQSBSGSJ01REDKB8",
-    "row:type:CharacterRecruit.healer": "row_01M2GJ5HFJPVTPBS1Y3XZG1KME",
-    "row:type:CharacterRecruit.knight": "row_01M2GJ5HFJQHA04PSTBGJ1DW54",
-    "row:type:CharacterRecruit.mage": "row_01M2GJ5HFJZVX0NCSKRC7JJSKZ",
+    "row:[\"foundation-economy-character\",\"dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0\",\"characterexperience\"]": "row_01M2FZNNF21Y85M0JDZM88818A",
+    "row:[\"foundation-economy-character\",\"dt_64PCJ4KXWQBQ45VF7D5MTQ017H\",\"archer\"]": "row_01M2FZNNF2DY4PYP7V7P7FQEJA",
+    "row:[\"foundation-economy-character\",\"dt_64PCJ4KXWQBQ45VF7D5MTQ017H\",\"healer\"]": "row_01M2FZNNF2E89PS7BNWJS7P8JP",
+    "row:[\"foundation-economy-character\",\"dt_64PCJ4KXWQBQ45VF7D5MTQ017H\",\"knight\"]": "row_01M2FZNNF24XNAS9SNKKPW1HHZ",
+    "row:[\"foundation-economy-character\",\"dt_64PCJ4KXWQBQ45VF7D5MTQ017H\",\"mage\"]": "row_01M2FZNNF2C3R4J88CVERVYS7A",
+    "row:[\"foundation-economy-character\",\"dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW\",\"charactercollection\"]": "row_01M2FZNNF2EVGNAT20G9B61C7H",
+    "row:[\"foundation-economy-character-demo\",\"type:CharacterRecruit\",\"archer\"]": "row_01M2GJ5HFJQQSBSGSJ01REDKB8",
+    "row:[\"foundation-economy-character-demo\",\"type:CharacterRecruit\",\"healer\"]": "row_01M2GJ5HFJPVTPBS1Y3XZG1KME",
+    "row:[\"foundation-economy-character-demo\",\"type:CharacterRecruit\",\"knight\"]": "row_01M2GJ5HFJQHA04PSTBGJ1DW54",
+    "row:[\"foundation-economy-character-demo\",\"type:CharacterRecruit\",\"mage\"]": "row_01M2GJ5HFJZVX0NCSKRC7JJSKZ",
     "type:Character": "dt_00D0KZXDBRG616WVXR4N5FCYH2",
     "type:CharacterCollection": "dt_00D0KZXDBRGT3NHQ0D86V61M35",
-    "type:CharacterExperience": "dt_00D0KZXDBRHQB69AXC371FPATG",
     "type:CharacterRecruit": "dt_00D0M4HCBWPFF4S0YBV57BZTGW"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:Character:definition": "uic_6S998T659XAZG9508ZS1EX6QPA",
+    "ui:Character:item:TrainButton": "uii_6Q7KC4M407B80AT6WPH1G97SKR",
+    "ui:CharacterCollection:definition": "uic_4F1V952ACFAWV8CMDA6NXWP99G",
+    "ui:CharacterCollection:item:NoneYetLabel": "uii_0KEK2TMWM2AMZBS207R55R3XFN",
+    "ui:CharacterCollection:item:OwnsAnyActiveToggle": "uii_6PPCS7TTK7A5YA69YAD4FRT8WT",
+    "ui:CharacterCollection:item:SlotsLabel": "uii_14WNJQRX35AP9VVT23M404CW7R",
+    "ui:CharacterRecruit:definition": "uic_10Q15BE4EJABMA2CWMAJVSB8PR",
+    "ui:CharacterRecruit:item:CharacterLabel": "uii_141H7JNR9WBZZBJ37RGHJE6AAE",
+    "ui:CharacterRecruit:item:RecruitButton": "uii_5JB5EHEF0HA7CVB86SW3ZAEJZP"
+  }
 }

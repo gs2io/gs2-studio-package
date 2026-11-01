@@ -1,54 +1,34 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "formId"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "index",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "formId"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "index",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
-      },
-      {
-        "kind": "static",
-        "parameterName": "name",
-        "value": "CharacterFormation"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "slots"
       }
-    ],
-    "projectionBindings": [
-      {
-        "fieldMappings": [
-          {
-            "fieldName": "propertyId",
-            "targetPropertyId": "prop_5YCV8XNQCMSWBB0KJEHTTDMTTQ"
-          }
-        ],
-        "idSourceField": "name",
-        "kind": "modelArrayDecode",
-        "parameterName": "slots",
-        "targetMountPath": {
-          "kind": "local",
-          "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
-        },
-        "targetPropertyId": "prop_0B395S1GETW77ZBQ7FK8Z7TPGS"
-      }
-    ]
-  },
+    },
+    {
+      "kind": "static",
+      "parameterName": "name",
+      "value": "CharacterFormation"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "slots"
+    }
+  ],
   "id": "udr_2SQ6KKX9J79N6T007TNJZ17ZTM",
   "location": {
     "modelName": "Form",
@@ -57,5 +37,23 @@
   "ownMountPath": {
     "kind": "local",
     "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
-  }
+  },
+  "projectionBindings": [
+    {
+      "fieldMappings": [
+        {
+          "fieldName": "propertyId",
+          "targetPropertyId": "prop_5YCV8XNQCMSWBB0KJEHTTDMTTQ"
+        }
+      ],
+      "idSourceField": "name",
+      "kind": "modelArrayDecode",
+      "parameterName": "slots",
+      "targetMountPath": {
+        "kind": "local",
+        "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
+      },
+      "targetPropertyId": "prop_0B395S1GETW77ZBQ7FK8Z7TPGS"
+    }
+  ]
 }

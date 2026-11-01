@@ -1,26 +1,32 @@
 {
   "actionPropertyTransforms": [
     {
-      "arguments": [
-        {
-          "parameterName": "slot",
-          "source": {
-            "kind": "static",
-            "value": 0
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "propertyId": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7"
+              }
+            }
           }
-        },
-        {
-          "parameterName": "count",
-          "source": {
-            "kind": "domainProperty",
-            "propertyId": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7"
-          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
         }
-      ],
+      },
       "mode": "append",
-      "targetPropertyId": "prop_00D05P2SE3WMNG5C27EG74BM38",
-      "transformName": "DepositFreeCurrency",
-      "transformPackageId": "foundation-economy-currency"
+      "targetPropertyId": "prop_00D05P2SE3WMNG5C27EG74BM38"
     }
   ],
   "compositeKeyMode": {
@@ -73,8 +79,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-idle",
-    "directSourceTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
-    "sourcePackageId": "foundation-economy-idle",
-    "sourceTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ"
+    "directSourceTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ"
   }
 }

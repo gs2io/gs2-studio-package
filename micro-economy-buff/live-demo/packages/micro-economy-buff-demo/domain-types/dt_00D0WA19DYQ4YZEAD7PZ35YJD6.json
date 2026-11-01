@@ -24,8 +24,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-economy-buff",
-    "directSourceTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
-    "sourcePackageId": "micro-economy-buff",
-    "sourceTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
+    "directSourceTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
   }
 }

@@ -3,13 +3,13 @@
   "name": "foundation-economy-currency",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Manages an in-game currency balance (wallet) and the store products that sell it.",
-      "ja": "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。"
+    "en": {
+      "description": "Manages an in-game currency balance (wallet) and the store products that sell it.",
+      "label": "Currency"
     },
-    "label": {
-      "en": "Currency",
-      "ja": "通貨"
+    "ja": {
+      "description": "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。",
+      "label": "通貨"
     }
   }
 }

@@ -92,19 +92,23 @@ const DisplayItem = defineMasterDataResource(resource =>
             .model(GS2.transaction.AcquireAction)
             .mountLocal(StoreProduct)
             .bindings({
-              action: Bind.transform("foundation-economy-currency", "DepositCurrency", [
-                // Leave wallet selection to purchase config because the buyer's slot is unknown at deploy time.
-                Arg.placeholder("slot", "#{slot}"),
-                Arg.domainProperty("count", Source.direct(StoreProduct, "count")),
-                Arg.domainProperty(
-                  "currencyType",
-                  Source.parent(Source.parent(Source.parent(Source.direct(CurrencyType, "id"))))
-                ),
-                Arg.domainProperty(
-                  "price",
-                  Source.parent(Source.parent(Source.direct(StorePrice, "price")))
-                ),
-              ]),
+              action: Bind.transform(
+                "foundation-economy-currency",
+                currency.transformId("DepositCurrency"),
+                [
+                  // Leave wallet selection to purchase config because the buyer's slot is unknown at deploy time.
+                  Arg.placeholder("slot", "#{slot}"),
+                  Arg.domainProperty("count", Source.direct(StoreProduct, "count")),
+                  Arg.domainProperty(
+                    "currencyType",
+                    Source.parent(Source.parent(Source.parent(Source.direct(CurrencyType, "id"))))
+                  ),
+                  Arg.domainProperty(
+                    "price",
+                    Source.parent(Source.parent(Source.direct(StorePrice, "price")))
+                  ),
+                ]
+              ),
             });
         })
         .addArrayChild("consumeActions", consumeAction => {
@@ -112,9 +116,11 @@ const DisplayItem = defineMasterDataResource(resource =>
             .model(GS2.transaction.ConsumeAction)
             .mountLocal(StoreProduct)
             .bindings({
-              action: Bind.transform("foundation-economy-currency", "VerifyReceipt", [
-                Arg.domainProperty("contentName", Source.direct(StoreProduct, "id")),
-              ]),
+              action: Bind.transform(
+                "foundation-economy-currency",
+                currency.transformId("VerifyReceipt"),
+                [Arg.domainProperty("contentName", Source.direct(StoreProduct, "id"))]
+              ),
             });
         });
     })
@@ -133,31 +139,39 @@ const Showcase = defineMasterDataResource(resource =>
 
 export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
   .display({
-    label: { ja: "通貨ショップ", en: "Currency Shop" },
-    description: {
-      ja: "通貨を購入できる商品と価格を扱います。",
-      en: "A shop for purchasing currency, with configurable products and prices.",
+    ja: { label: "通貨ショップ", description: "通貨を購入できる商品と価格を扱います。" },
+    en: {
+      label: "Currency Shop",
+      description: "A shop for purchasing currency, with configurable products and prices.",
     },
   })
   .displayType(CurrencyType, {
-    label: { ja: "通貨種別", en: "Currency type" },
-    description: {
-      ja: "商品の購入に利用できるゲーム内通貨の種類を設定します。",
-      en: "Defines a type of in-game currency that can be used to purchase products.",
+    ja: {
+      label: "通貨種別",
+      description: "商品の購入に利用できるゲーム内通貨の種類を設定します。",
+    },
+    en: {
+      label: "Currency type",
+      description: "Defines a type of in-game currency that can be used to purchase products.",
     },
   })
   .displayType(StorePrice, {
-    label: { ja: "販売価格", en: "Store price" },
-    description: {
-      ja: "ストア商品を1つの販売通貨で売るときの価格です。ストア商品の販売価格の要素として設定します。",
-      en: "A store product's price in one currency, set as an element of the product's prices.",
+    ja: {
+      label: "販売価格",
+      description:
+        "ストア商品を1つの販売通貨で売るときの価格です。ストア商品の販売価格の要素として設定します。",
+    },
+    en: {
+      label: "Store price",
+      description:
+        "A store product's price in one currency, set as an element of the product's prices.",
     },
   })
   .displayType(StoreProduct, {
-    label: { ja: "ストア商品", en: "Store product" },
-    description: {
-      ja: "ストアで販売する商品内容と表示情報を設定します。",
-      en: "Defines the contents and presentation of a product sold in the store.",
+    ja: { label: "ストア商品", description: "ストアで販売する商品内容と表示情報を設定します。" },
+    en: {
+      label: "Store product",
+      description: "Defines the contents and presentation of a product sold in the store.",
     },
   })
   .dependency("foundation-economy-currency", "github:gs2io/gs2-studio-package")
@@ -203,6 +217,6 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
   .delegatedAction(StorePrice, "Buy", {
     targetActionKey: "Gs2Showcase:DisplayItem.Buy",
     targetResource: DisplayItem,
-    parameterOverrides: [{ parameterName: "quantity", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "quantity", source: { kind: "static", value: 1 } }],
   })
   .build();

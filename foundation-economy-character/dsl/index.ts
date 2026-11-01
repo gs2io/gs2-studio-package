@@ -185,31 +185,37 @@ const InventoryModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyCharacter = definePackage("foundation-economy-character", "0.0.0")
   .display({
-    label: { ja: "キャラクター", en: "Characters" },
-    description: {
-      ja: "キャラクターの所持・レベル・経験値を扱います。",
-      en: "Handles character ownership, level, and experience.",
-    },
+    ja: { label: "キャラクター", description: "キャラクターの所持・レベル・経験値を扱います。" },
+    en: { label: "Characters", description: "Handles character ownership, level, and experience." },
   })
   .displayType(CharacterCollection, {
-    label: { ja: "キャラクター所持枠", en: "Character slots" },
-    description: {
-      ja: "プレイヤーが所持できるキャラクター数の上限と初期値を設定します。",
-      en: "Sets the maximum and initial number of characters a player can own.",
+    ja: {
+      label: "キャラクター所持枠",
+      description: "プレイヤーが所持できるキャラクター数の上限と初期値を設定します。",
+    },
+    en: {
+      label: "Character slots",
+      description: "Sets the maximum and initial number of characters a player can own.",
     },
   })
   .displayType(CharacterExperience, {
-    label: { ja: "キャラクター経験値", en: "Character experience" },
-    description: {
-      ja: "レベルアップに必要な経験値と、初期・最大レベル上限を設定します。",
-      en: "Sets level-up experience thresholds and the initial and maximum level caps.",
+    ja: {
+      label: "キャラクター経験値",
+      description: "レベルアップに必要な経験値と、初期・最大レベル上限を設定します。",
+    },
+    en: {
+      label: "Character experience",
+      description: "Sets level-up experience thresholds and the initial and maximum level caps.",
     },
   })
   .displayType(Character, {
-    label: { ja: "キャラクター", en: "Character" },
-    description: {
-      ja: "ゲームに登場するキャラクターと表示順を登録します。",
-      en: "Registers the characters available in the game and their display order.",
+    ja: {
+      label: "キャラクター",
+      description: "ゲームに登場するキャラクターと表示順を登録します。",
+    },
+    en: {
+      label: "Character",
+      description: "Registers the characters available in the game and their display order.",
     },
   })
   .domainType(CharacterExperience)

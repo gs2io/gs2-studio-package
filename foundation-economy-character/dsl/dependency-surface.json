@@ -43,6 +43,12 @@
       }
     }
   },
+  "actionTransforms": {
+    "AcquireCharacter": "at_5V44WAAQRF94D51FPBFT5Q2DN2",
+    "AcquireCharacterExperience": "at_0TEHD9M5M58SY923NTA3T75DDM",
+    "AddCharacterCapacity": "at_2V8JQ64ZTY8F3AQZFZZWW8E0XR",
+    "IncreaseCharacterLevelCap": "at_5DM9CS976M9NSA3X7BR25NTPR3"
+  },
   "masterDataResources": {
     "experience.ExperienceModel": "mdr_4D3TBCYQKS94GAV9WSFVNJEXQY",
     "experience.Namespace": "mdr_12FS7YFDS18QSA0SDVHKX1C20K",

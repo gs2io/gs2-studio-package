@@ -41,6 +41,11 @@
       }
     }
   },
+  "actionTransforms": {
+    "ClearTrigger": "at_6F6C7GXB118PF9RTSGY69S57DC",
+    "PullTrigger": "at_4FW3DYR9BB85TTH03JVZRFRTV3",
+    "TriggerSchedule": "at_0FN6A3W4MR9VRA2RD233HW6NEV"
+  },
   "masterDataResources": {
     "schedule.Event": "mdr_44PB7J1MKEA3HB951V9904EYQW",
     "schedule.Namespace": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX"

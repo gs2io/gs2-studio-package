@@ -1,70 +1,88 @@
 {
   "actionPropertyTransforms": [
     {
-      "arguments": [
-        {
-          "parameterName": "energy",
-          "source": {
-            "kind": "static",
-            "value": "stamina"
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "energy",
+            "source": {
+              "kind": "static",
+              "value": "stamina"
+            }
+          },
+          {
+            "parameterName": "value",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
+              }
+            }
           }
-        },
-        {
-          "parameterName": "value",
-          "source": {
-            "kind": "domainProperty",
-            "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
-          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-energy",
+          "transformId": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY"
         }
-      ],
+      },
       "mode": "append",
-      "targetPropertyId": "prop_6KRKPN3YWC7M677JZT7MQZFW16",
-      "transformName": "ConsumeEnergy",
-      "transformPackageId": "foundation-economy-energy"
+      "targetPropertyId": "prop_6KRKPN3YWC7M677JZT7MQZFW16"
     },
     {
-      "arguments": [
-        {
-          "parameterName": "slot",
-          "source": {
-            "kind": "static",
-            "value": 0
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "propertyId": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR"
+              }
+            }
           }
-        },
-        {
-          "parameterName": "count",
-          "source": {
-            "kind": "domainProperty",
-            "propertyId": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR"
-          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
         }
-      ],
+      },
       "mode": "append",
-      "targetPropertyId": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8",
-      "transformName": "DepositFreeCurrency",
-      "transformPackageId": "foundation-economy-currency"
+      "targetPropertyId": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8"
     },
     {
-      "arguments": [
-        {
-          "parameterName": "slot",
-          "source": {
-            "kind": "static",
-            "value": 0
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "propertyId": "prop_00D0TT9XC90NGHJ1JGHG67DHY2"
+              }
+            }
           }
-        },
-        {
-          "parameterName": "count",
-          "source": {
-            "kind": "domainProperty",
-            "propertyId": "prop_00D0TT9XC90NGHJ1JGHG67DHY2"
-          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
         }
-      ],
+      },
       "mode": "append",
-      "targetPropertyId": "prop_49CWPE451G4S2NWECN50J39WNY",
-      "transformName": "DepositFreeCurrency",
-      "transformPackageId": "foundation-economy-currency"
+      "targetPropertyId": "prop_49CWPE451G4S2NWECN50J39WNY"
     }
   ],
   "compositeKeyMode": {
@@ -186,8 +204,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-economy-quest",
-    "directSourceTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
-    "sourcePackageId": "micro-economy-quest",
-    "sourceTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
+    "directSourceTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
   }
 }

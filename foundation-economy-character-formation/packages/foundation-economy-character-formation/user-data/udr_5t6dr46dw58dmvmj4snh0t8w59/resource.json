@@ -1,39 +1,37 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperties",
-        "parameterName": "capacity",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
-              },
-              "propertyId": "prop_7HNF20BCN1PY27WR4A2XSHQFB1"
-            }
+  "declaredBindings": [
+    {
+      "kind": "domainProperties",
+      "parameterName": "capacity",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
+            },
+            "propertyId": "prop_7HNF20BCN1PY27WR4A2XSHQFB1"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "moldId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "name"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_1Q71ZNDPVH9ZBAEG3V0XNEYS9E"
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "moldId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "name"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_5T6DR46DW58DMVMJ4SNH0T8W59",
+  "linkedMasterResourceId": "mdr_1Q71ZNDPVH9ZBAEG3V0XNEYS9E",
   "location": {
     "modelName": "Mold",
     "service": "formation"

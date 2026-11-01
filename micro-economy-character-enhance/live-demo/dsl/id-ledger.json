@@ -1,16 +1,24 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "row:dt_00D031YG89PEGW8QTF8JNDY638.great": "row_01M39DVMXCC8XBGT38HJFAA213",
-    "row:dt_00D031YG89PEGW8QTF8JNDY638.normal": "row_01M39DVMXC2AE8FH39VMAAP56B",
-    "row:dt_00D031YG89PXH0J9RYZKY8NP6R.Basic": "row_01M39DVMXCDQ9AS565GEKBC5K5",
-    "row:dt_00D0TAXWR8T7NFF54JJJA7XJJ6.elixir": "row_01M39DVMXCXM7NDQ97RKG8KYES",
-    "row:dt_00D0TAXWR8T7NFF54JJJA7XJJ6.potion": "row_01M39DVMXC5CFXJD39NQ8NPCXT",
-    "type:Character": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY",
+  "retired": {
     "type:CharacterEnhance": "dt_00D0TBEX7B147FDBH6EA73TH04",
-    "type:CharacterEnhanceBonus": "dt_00D0TBEX7B01BBK2PY1AZF67QA",
+    "type:CharacterEnhanceBonus": "dt_00D0TBEX7B01BBK2PY1AZF67QA"
+  },
+  "random": {
+    "row:[\"micro-economy-character-enhance\",\"dt_00D031YG89PEGW8QTF8JNDY638\",\"great\"]": "row_01M39DVMXCC8XBGT38HJFAA213",
+    "row:[\"micro-economy-character-enhance\",\"dt_00D031YG89PEGW8QTF8JNDY638\",\"normal\"]": "row_01M39DVMXC2AE8FH39VMAAP56B",
+    "row:[\"micro-economy-character-enhance\",\"dt_00D031YG89PXH0J9RYZKY8NP6R\",\"Basic\"]": "row_01M39DVMXCDQ9AS565GEKBC5K5",
+    "row:[\"micro-economy-character-enhance\",\"dt_00D0TAXWR8T7NFF54JJJA7XJJ6\",\"elixir\"]": "row_01M39DVMXCXM7NDQ97RKG8KYES",
+    "row:[\"micro-economy-character-enhance\",\"dt_00D0TAXWR8T7NFF54JJJA7XJJ6\",\"potion\"]": "row_01M39DVMXC5CFXJD39NQ8NPCXT",
+    "type:Character": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY",
     "type:CharacterEnhanceMaterial": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:Character:definition": "uic_36YK5S59ZSAY080BJ1G0167NXW",
+    "ui:Character:item:EnhanceWithElixirButton": "uii_2GBMRSM3DNA6MSCT1XDZ3T4RN3",
+    "ui:Character:item:EnhanceWithPotionButton": "uii_1R25VG4MRQAM49JMBX6KCAZP4X",
+    "ui:CharacterEnhanceMaterial:definition": "uic_2DRM6XHK8BAYAAMAF9HX3ZAP4T",
+    "ui:CharacterEnhanceMaterial:item:GetButton": "uii_0EVAZ6XV15A1RBJ7BN5TP9WK87",
+    "ui:CharacterEnhanceMaterial:item:StockLabel": "uii_4Y2XYZNVX4AX3TREQ7EYT0GDAG"
+  }
 }

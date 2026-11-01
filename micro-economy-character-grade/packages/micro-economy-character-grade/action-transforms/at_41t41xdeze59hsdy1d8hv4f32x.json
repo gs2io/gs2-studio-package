@@ -1,0 +1,54 @@
+{
+  "category": "acquire",
+  "id": "at_41T41XDEZE59HSDY1D8HV4F32X",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ApplyCharacterGradeRankCap",
+  "outputs": [
+    {
+      "actionName": "Gs2Grade:ApplyRankCapByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "gradeName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

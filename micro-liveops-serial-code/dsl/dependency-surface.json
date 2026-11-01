@@ -13,6 +13,11 @@
       }
     }
   },
+  "actionTransforms": {
+    "RevertSerialCodeUse": "at_6F1PXD6D4E9918TRGXQHDJHTS9",
+    "UseSerialCode": "at_2AE8RTB8GFNY68C7AYTV813N9B",
+    "VerifySerialCodeActive": "at_7V1ZWZC8KXW0ACRVWSK39HMHNX"
+  },
   "masterDataResources": {
     "serialKey.CampaignModel": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",
     "serialKey.Namespace": "mdr_33A0JPMYWGB96T0HQZPKB505V4"

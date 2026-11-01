@@ -11,13 +11,13 @@
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the enchantment pool the live demo rolls from, and the presses that reroll a piece's bonuses or add one.",
-      "ja": "ライブデモ用のエンチャント設定と、効果の引き直し・追加の操作を提供します。"
+    "en": {
+      "description": "Supplies the enchantment pool the live demo rolls from, and the presses that reroll a piece's bonuses or add one.",
+      "label": "Equipment Enchantment (demo data)"
     },
-    "label": {
-      "en": "Equipment Enchantment (demo data)",
-      "ja": "装備エンチャント（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用のエンチャント設定と、効果の引き直し・追加の操作を提供します。",
+      "label": "装備エンチャント（デモデータ）"
     }
   }
 }

@@ -79,7 +79,7 @@ const RedeemRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(SerialCodeRedemption)
         .bindings({
-          action: Bind.transform(serialCode.packageId, "UseSerialCode", [
+          action: Bind.transform(serialCode.packageId, serialCode.transformId("UseSerialCode"), [
             Arg.placeholder("code", `#{${CODE_CONFIG_KEY}}`),
           ]),
         });
@@ -89,7 +89,7 @@ const RedeemRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(SerialCodeRedemption)
         .bindings({
-          action: Bind.transform(currency.packageId, "DepositFreeCurrency", [
+          action: Bind.transform(currency.packageId, currency.transformId("DepositFreeCurrency"), [
             Arg.static("slot", WALLET_SLOT),
             Arg.static("count", REWARD_COINS),
           ]),
@@ -131,17 +131,25 @@ function redemptionExchange(name: string) {
 
 export const microLiveopsSerialCodeDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
   .display({
-    label: { ja: "シリアルコード（デモデータ）", en: "Serial Codes (demo data)" },
-    description: {
-      ja: "ライブデモ用に、キャンペーンコード 1 つと、それを 1 人 1 回だけ引き換えてコインを受け取る操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
-      en: "Supplies the live demo's one campaign code and the redemption that pays coins for it, once per visitor. The coins land in the currency package's wallet.",
+    ja: {
+      label: "シリアルコード（デモデータ）",
+      description:
+        "ライブデモ用に、キャンペーンコード 1 つと、それを 1 人 1 回だけ引き換えてコインを受け取る操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+    },
+    en: {
+      label: "Serial Codes (demo data)",
+      description:
+        "Supplies the live demo's one campaign code and the redemption that pays coins for it, once per visitor. The coins land in the currency package's wallet.",
     },
   })
   .displayType(SerialCodeRedemption, {
-    label: { ja: "コードの引き換え", en: "Code redemption" },
-    description: {
-      ja: "シリアルコードの引き換えと、その回数制限です。",
-      en: "Redeeming a serial code, and the limit on how often.",
+    ja: {
+      label: "コードの引き換え",
+      description: "シリアルコードの引き換えと、その回数制限です。",
+    },
+    en: {
+      label: "Code redemption",
+      description: "Redeeming a serial code, and the limit on how often.",
     },
   })
   .dependency(serialCode.packageId, "github:gs2io/gs2-studio-package")

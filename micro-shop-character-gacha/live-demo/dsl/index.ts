@@ -27,10 +27,13 @@ const STANDARD = "standard";
 
 export const microShopCharacterGachaDemo = definePackage("micro-shop-character-gacha-demo", "0.0.0")
   .display({
-    label: { ja: "キャラクターガチャ（デモデータ）", en: "Character Gacha (demo data)" },
-    description: {
-      ja: "ライブデモ用に、1 つのガチャとレアリティ別の排出率、抽選コストを揃えます。",
-      en: "Supplies one gacha, its per-rarity rates, and the coins a draw costs.",
+    ja: {
+      label: "キャラクターガチャ（デモデータ）",
+      description: "ライブデモ用に、1 つのガチャとレアリティ別の排出率、抽選コストを揃えます。",
+    },
+    en: {
+      label: "Character Gacha (demo data)",
+      description: "Supplies one gacha, its per-rarity rates, and the coins a draw costs.",
     },
   })
   .dependency(gacha.packageId, "github:gs2io/gs2-studio-package")
@@ -58,15 +61,15 @@ export const microShopCharacterGachaDemo = definePackage("micro-shop-character-g
       {
         targetProperty: gacha.propertyId("Gacha", "consumeActions"),
         mode: "replace",
-            transformPackageId: currency.packageId,
-            transformName: "WithdrawCurrency",
-            arguments: [
-              { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              { parameterName: "count", source: { kind: "static", value: DRAW_COST } },
-              // Set the optional payment policy explicitly so the draw accepts the free balance without relying on an omitted argument.
-              { parameterName: "paidOnly", source: { kind: "static", value: false } },
-            ],
-          },
+        transformPackageId: currency.packageId,
+        transformId: currency.transformId("WithdrawCurrency"),
+        arguments: [
+          { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
+          { parameterName: "count", source: { kind: "static", value: DRAW_COST } },
+          // Set the optional payment policy explicitly so the draw accepts the free balance without relying on an omitted argument.
+          { parameterName: "paidOnly", source: { kind: "static", value: false } },
+        ],
+      },
     ],
   })
 

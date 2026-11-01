@@ -6,13 +6,13 @@
     "foundation-economy-energy": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the stamina settings used by the live demo, and the spend and recover presses.",
-      "ja": "ライブデモ用のスタミナ設定と、消費・回復の操作を提供します。"
+    "en": {
+      "description": "Supplies the stamina settings used by the live demo, and the spend and recover presses.",
+      "label": "Stamina (demo data)"
     },
-    "label": {
-      "en": "Stamina (demo data)",
-      "ja": "スタミナ（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用のスタミナ設定と、消費・回復の操作を提供します。",
+      "label": "スタミナ（デモデータ）"
     }
   }
 }

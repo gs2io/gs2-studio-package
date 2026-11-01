@@ -1,0 +1,77 @@
+{
+  "category": "verify",
+  "id": "at_0ZS4W918W38968ZST9EBSZJWTH",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyCharacterGradeReached",
+  "outputs": [
+    {
+      "actionName": "Gs2Grade:VerifyGradeByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "gradeName"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "greaterEqual"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "gradeValue",
+          "sourceParameter": "gradeValue"
+        },
+        {
+          "kind": "static",
+          "parameterName": "multiplyValueSpecifyingQuantity",
+          "value": false
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "gradeValue",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}

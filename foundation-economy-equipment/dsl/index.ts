@@ -115,31 +115,38 @@ const InventoryModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyEquipment = definePackage("foundation-economy-equipment", "0.0.0")
   .display({
-    label: { ja: "装備", en: "Equipment" },
-    description: {
-      ja: "プレイヤーが所持する武器や防具を、カテゴリごとに管理します。",
-      en: "Manages the weapons and gear a player owns, grouped by category.",
+    ja: {
+      label: "装備",
+      description: "プレイヤーが所持する武器や防具を、カテゴリごとに管理します。",
+    },
+    en: {
+      label: "Equipment",
+      description: "Manages the weapons and gear a player owns, grouped by category.",
     },
   })
   .displayType(EquipmentCategory, {
-    label: { ja: "装備カテゴリ", en: "Equipment category" },
-    description: {
-      ja: "装備を分類するカテゴリを登録します。",
-      en: "Registers categories used to classify equipment.",
+    ja: { label: "装備カテゴリ", description: "装備を分類するカテゴリを登録します。" },
+    en: {
+      label: "Equipment category",
+      description: "Registers categories used to classify equipment.",
     },
   })
   .displayType(EquipmentCollection, {
-    label: { ja: "装備所持枠", en: "Equipment slots" },
-    description: {
-      ja: "プレイヤーが所持できる装備数の初期値・上限・現在値を管理します。",
-      en: "Manages the initial, maximum, and current number of equipment slots a player owns.",
+    ja: {
+      label: "装備所持枠",
+      description: "プレイヤーが所持できる装備数の初期値・上限・現在値を管理します。",
+    },
+    en: {
+      label: "Equipment slots",
+      description:
+        "Manages the initial, maximum, and current number of equipment slots a player owns.",
     },
   })
   .displayType(Equipment, {
-    label: { ja: "装備", en: "Equipment" },
-    description: {
-      ja: "ゲームに登場する装備、カテゴリ、表示順を登録します。",
-      en: "Registers equipment available in the game, its category, and display order.",
+    ja: { label: "装備", description: "ゲームに登場する装備、カテゴリ、表示順を登録します。" },
+    en: {
+      label: "Equipment",
+      description: "Registers equipment available in the game, its category, and display order.",
     },
   })
   .domainType(EquipmentCategory)

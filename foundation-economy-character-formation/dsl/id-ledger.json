@@ -1,6 +1,11 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "transform:AcquireToCharacterFormation:output:direct:Gs2Formation:AcquireActionsToFormProperties#0": "out_01KST7J5EYJ440HZDD2Y8G4200",
+    "transform:AcquireToCharacterFormation:parameter:index": "param_01KST7JJYTQWHF7XYJES9DW54E",
+    "transform:IncreaseSaveArea:output:direct:Gs2Formation:AddMoldCapacityByUserId#0": "out_01KST7F6MY2J8JT67VDSVT2KBN",
+    "transform:IncreaseSaveArea:parameter:value": "param_01KST7FSTSKHJFVK4M5RW3NZMK"
+  },
   "random": {
     "property:CharacterFormation.currentSaveArea": "prop_7HNF20BCN1PY27WR4A2XSHQFB1",
     "property:CharacterFormation.initialSaveArea": "prop_0F9XHSDTRNNY0TGSAM1K2Q5QFS",
@@ -8,10 +13,8 @@
     "property:CharacterFormationForm.slots": "prop_0B395S1GETW77ZBQ7FK8Z7TPGS",
     "property:CharacterFormationFormSlot.propertyId": "prop_5YCV8XNQCMSWBB0KJEHTTDMTTQ",
     "property:CharacterFormationSlot.propertyRegex": "prop_1KTAJF5QGZJNR6EA3HVSC8QQBT",
-    "transform:AcquireToCharacterFormation:output:direct:Gs2Formation:AcquireActionsToFormProperties#0": "out_01KST7J5EYJ440HZDD2Y8G4200",
-    "transform:AcquireToCharacterFormation:parameter:index": "param_01KST7JJYTQWHF7XYJES9DW54E",
-    "transform:IncreaseSaveArea:output:direct:Gs2Formation:AddMoldCapacityByUserId#0": "out_01KST7F6MY2J8JT67VDSVT2KBN",
-    "transform:IncreaseSaveArea:parameter:value": "param_01KST7FSTSKHJFVK4M5RW3NZMK",
+    "transform:AcquireToCharacterFormation": "at_19DKKF7AKA89JB5SY1CDA44B63",
+    "transform:IncreaseSaveArea": "at_4NRP2334FY75C65TXQZ4PCT9QH",
     "type:CharacterFormation": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
     "type:CharacterFormationForm": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
     "type:CharacterFormationFormSlot": "dt_57YG14JB1Z099GPEMY0ZB6K0H9",

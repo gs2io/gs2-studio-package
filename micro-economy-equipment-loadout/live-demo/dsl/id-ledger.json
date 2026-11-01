@@ -1,10 +1,11 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "row:dt_00D033FNASFGZWK2X333SXXRXM.armor": "row_01M3F5XAX07AMG0K0Y3ZK8S0AY",
-    "row:dt_00D033FNASFGZWK2X333SXXRXM.weapon": "row_01M3F5XAX05AT5BHNV16RXRB74",
+  "retired": {
     "type:EquipmentSlot": "dt_00D0VSFAQ86Q9J1R7PW41SRMGC"
+  },
+  "random": {
+    "row:[\"micro-economy-equipment-loadout\",\"dt_00D033FNASFGZWK2X333SXXRXM\",\"armor\"]": "row_01M3F5XAX07AMG0K0Y3ZK8S0AY",
+    "row:[\"micro-economy-equipment-loadout\",\"dt_00D033FNASFGZWK2X333SXXRXM\",\"weapon\"]": "row_01M3F5XAX05AT5BHNV16RXRB74"
   },
   "deterministicOverrides": {}
 }

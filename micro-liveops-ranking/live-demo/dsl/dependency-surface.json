@@ -2,21 +2,29 @@
   "schemaVersion": 1,
   "packageId": "micro-liveops-ranking-demo",
   "types": {
-    "Ranking": {
-      "id": "dt_00D0WDGSP5434S78KXZEEJ3C67",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-liveops-ranking",
-      "canonicalTypeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
-    },
     "RankingContest": {
       "id": "dt_00D0WDGSP50X984BNS0PWV22MG",
       "singleEntry": true,
-      "delegatedActions": {
-        "FinishContest": "resource:micro-liveops-ranking-demo:masterData:mdr_5PGH31GRPRBZESSV5XFZQWJ4KS::Gs2Exchange:RateModel.Exchange",
-        "StartContest": "resource:micro-liveops-ranking-demo:masterData:mdr_63W68202TEBA2RK172FRMJ5JWG::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "micro-liveops-ranking-demo",
       "canonicalTypeId": "dt_00D0WDGSP50X984BNS0PWV22MG",
+      "delegatedActions": {
+        "FinishContest": {
+          "targetResource": {
+            "sourcePackageId": "micro-liveops-ranking-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_5PGH31GRPRBZESSV5XFZQWJ4KS"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "StartContest": {
+          "targetResource": {
+            "sourcePackageId": "micro-liveops-ranking-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_63W68202TEBA2RK172FRMJ5JWG"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
@@ -31,6 +39,7 @@
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_5JX9G1DX8VBRFS9TXTCGRP7Y7C",
     "transaction.ConsumeAction": "mdr_47ZSCBNGYQA8WV5CPB3EFQNE5N"

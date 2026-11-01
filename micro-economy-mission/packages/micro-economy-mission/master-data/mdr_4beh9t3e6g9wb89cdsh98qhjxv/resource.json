@@ -1,18 +1,16 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "resetType",
-        "value": "notReset"
-      },
-      {
-        "kind": "static",
-        "parameterName": "scopeType",
-        "value": "resetTiming"
-      }
-    ]
-  },
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "resetType",
+      "value": "notReset"
+    },
+    {
+      "kind": "static",
+      "parameterName": "scopeType",
+      "value": "resetTiming"
+    }
+  ],
   "id": "mdr_4BEH9T3E6G9WB89CDSH98QHJXV",
   "location": {
     "modelName": "CounterScopeModel",

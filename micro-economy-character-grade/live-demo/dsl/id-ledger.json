@@ -1,12 +1,19 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "row:dt_00D0320HQ4JPTS5BMVDRD7QZH7.grade1": "row_01M38CEKHND0MTHFJCPDBN4GF6",
-    "row:dt_00D0320HQ4JPTS5BMVDRD7QZH7.grade2": "row_01M38CEKHN7ZW0V2CPSFG73K7T",
-    "row:dt_00D0320HQ4JPTS5BMVDRD7QZH7.grade3": "row_01M38E3YJTDQHYWHRFE6WESEM5",
-    "type:Character": "dt_00D0T33MWD8D0Y1Q3JK8YD7EZ8",
+  "retired": {
     "type:CharacterGradeStep": "dt_00D0T33MWD9JGMTGK4DCNS9HSQ"
   },
-  "deterministicOverrides": {}
+  "random": {
+    "row:[\"micro-economy-character-grade\",\"dt_00D0320HQ4JPTS5BMVDRD7QZH7\",\"grade1\"]": "row_01M38CEKHND0MTHFJCPDBN4GF6",
+    "row:[\"micro-economy-character-grade\",\"dt_00D0320HQ4JPTS5BMVDRD7QZH7\",\"grade2\"]": "row_01M38CEKHN7ZW0V2CPSFG73K7T",
+    "row:[\"micro-economy-character-grade\",\"dt_00D0320HQ4JPTS5BMVDRD7QZH7\",\"grade3\"]": "row_01M38E3YJTDQHYWHRFE6WESEM5",
+    "type:Character": "dt_00D0T33MWD8D0Y1Q3JK8YD7EZ8"
+  },
+  "deterministicOverrides": {
+    "ui:Character:definition": "uic_0E2CNQKB04ANDRXNZ1BA8TF6GW",
+    "ui:Character:item:GradeLabel": "uii_0YH3H85HCGB3J9A2A173TKPTR2",
+    "ui:Character:item:LimitBreakButton": "uii_6010XKWSYVBYFTJ3F5RQ7B6F3V",
+    "ui:Character:item:LimitBreakInteractable": "uii_1H3PMRBH7NB8SVQ9S89GFXHQGY",
+    "ui:Character:item:TrainHardButton": "uii_5KKE85WDNAAC7RJ0XG557Z3K4H"
+  }
 }

@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "enhance",
@@ -32,13 +32,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "EnhanceCharacter",
-        "transformPackageId": "micro-economy-character-enhance"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "micro-economy-character-enhance",
+          "transformId": "at_7A632P7NEB88WT2T9JAAWMTK45"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_352YQ2DAGKB8N9AGEZWMC8X873",
   "location": {
     "modelName": "AcquireAction",

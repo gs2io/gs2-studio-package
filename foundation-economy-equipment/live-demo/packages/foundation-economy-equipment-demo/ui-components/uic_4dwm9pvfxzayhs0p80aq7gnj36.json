@@ -20,12 +20,16 @@
     {
       "arguments": [],
       "componentClassName": "TakeButton",
-      "delegatedActionKey": "resource:foundation-economy-equipment-demo:masterData:mdr_1SXTWJSMJ6A05BST0S7A467E70::Gs2Exchange:RateModel.Exchange",
       "id": "uii_7T0JKK8YRAA1NV39GY9Z531AAA",
       "kind": "buttonAction",
-      "name": "EquipmentCatalog"
+      "name": "EquipmentCatalog",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_1SXTWJSMJ6A05BST0S7A467E70",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-equipment-demo"
+      }
     }
   ],
-  "name": "EquipmentCatalog",
   "targetDomainTypeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV"
 }

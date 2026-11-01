@@ -12,9 +12,11 @@ import {
 import { GS2 } from "~/dsl/gs2";
 
 import dictionarySurface from "../../dsl/dependency-surface.json";
+import characterSurface from "../../../foundation-economy-character/dsl/dependency-surface.json";
 import characterDemoSurface from "../../../foundation-economy-character/live-demo/dsl/dependency-surface.json";
 
 const dictionary = dependencyPackage(dictionarySurface);
+const character = dependencyPackage(characterSurface);
 const characterDemo = dependencyPackage(characterDemoSurface);
 
 const Character = dictionary.type("Character");
@@ -32,7 +34,7 @@ const DexRecruitRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
         .bindings({
-          action: Bind.transform(CHARACTER_PACKAGE_ID, "AcquireCharacter", [
+          action: Bind.transform(CHARACTER_PACKAGE_ID, character.transformId("AcquireCharacter"), [
             Arg.domainProperty("character", Source.direct(Character, "id")),
             Arg.static("count", 1),
           ]),
@@ -43,9 +45,11 @@ const DexRecruitRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
         .bindings({
-          action: Bind.transform(dictionary.packageId, "MarkCharacterDictionary", [
-            Arg.domainProperty("character", Source.direct(Character, "id")),
-          ]),
+          action: Bind.transform(
+            dictionary.packageId,
+            dictionary.transformId("MarkCharacterDictionary"),
+            [Arg.domainProperty("character", Source.direct(Character, "id"))]
+          ),
         });
     })
 );
@@ -55,10 +59,14 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "キャラクター図鑑（デモデータ）", en: "Character Dex (demo data)" },
-    description: {
-      ja: "ライブデモ用のキャラクター一覧と、勧誘して図鑑を埋める操作を提供します。",
-      en: "Supplies the roster the live demo shows, and the press that recruits one into the dex.",
+    ja: {
+      label: "キャラクター図鑑（デモデータ）",
+      description: "ライブデモ用のキャラクター一覧と、勧誘して図鑑を埋める操作を提供します。",
+    },
+    en: {
+      label: "Character Dex (demo data)",
+      description:
+        "Supplies the roster the live demo shows, and the press that recruits one into the dex.",
     },
   })
   .dependency(dictionary.packageId, "github:gs2io/gs2-studio-package")
@@ -94,6 +102,6 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage(
   .delegatedAction(Character, "Recruit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: DexRecruitRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

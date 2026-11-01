@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "contentName",
@@ -21,13 +21,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "VerifyReceipt",
-        "transformPackageId": "foundation-economy-currency"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_0K0C5C0TAX954RK77HDAPJWBEG"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_16Q7NB6T6WA4HTQM4C6X7P55MW",
   "location": {
     "modelName": "ConsumeAction",

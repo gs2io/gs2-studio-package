@@ -1,48 +1,46 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "method",
-        "value": "prize_table"
-      },
-      {
-        "kind": "static",
-        "parameterName": "mode",
-        "value": "normal"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "prizeTableName",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "method",
+      "value": "prize_table"
+    },
+    {
+      "kind": "static",
+      "parameterName": "mode",
+      "value": "normal"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "prizeTableName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    }
+  ],
   "id": "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP",
   "location": {
     "modelName": "LotteryModel",

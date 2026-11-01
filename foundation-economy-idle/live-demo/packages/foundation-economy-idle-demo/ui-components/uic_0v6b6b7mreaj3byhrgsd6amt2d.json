@@ -12,12 +12,16 @@
     {
       "arguments": [],
       "componentClassName": "ReceiveButton",
-      "delegatedActionKey": "resource:foundation-economy-idle:masterData:mdr_720YFK0MG497KRH6159H7NKWHY::Gs2Idle:CategoryModel.Receive",
       "id": "uii_65BAXJF97WB6HBNT0S6RF4J8FW",
       "kind": "buttonAction",
-      "name": "IdleStatus"
+      "name": "IdleStatus",
+      "targetActionKey": "Gs2Idle:CategoryModel.Receive",
+      "targetResource": {
+        "resourceId": "mdr_720YFK0MG497KRH6159H7NKWHY",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-idle"
+      }
     }
   ],
-  "name": "IdleStatus",
   "targetDomainTypeId": "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA"
 }

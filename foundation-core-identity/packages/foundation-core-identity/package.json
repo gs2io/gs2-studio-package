@@ -3,13 +3,13 @@
   "name": "foundation-core-identity",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
-      "ja": "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。"
+    "en": {
+      "description": "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
+      "label": "Account Transfer"
     },
-    "label": {
-      "en": "Account Transfer",
-      "ja": "引き継ぎ設定"
+    "ja": {
+      "description": "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。",
+      "label": "引き継ぎ設定"
     }
   }
 }

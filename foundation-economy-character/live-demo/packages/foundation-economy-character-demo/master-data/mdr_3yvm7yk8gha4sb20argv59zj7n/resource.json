@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "propertyId",
@@ -18,13 +18,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "AcquireCharacterExperience",
-        "transformPackageId": "foundation-economy-character"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-character",
+          "transformId": "at_0TEHD9M5M58SY923NTA3T75DDM"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_3YVM7YK8GHA4SB20ARGV59ZJ7N",
   "location": {
     "modelName": "AcquireAction",

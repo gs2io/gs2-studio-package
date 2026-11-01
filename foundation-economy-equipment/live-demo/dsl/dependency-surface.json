@@ -5,41 +5,57 @@
     "Equipment": {
       "id": "dt_00D0MNXASRT2QXV1SJH71CX4V2",
       "singleEntry": false,
-      "delegatedActions": {
-        "Discard": "resource:foundation-economy-equipment-demo:masterData:mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-equipment",
-      "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+      "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+      "delegatedActions": {
+        "Discard": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-equipment-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     },
     "EquipmentCatalog": {
       "id": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
       "singleEntry": false,
-      "delegatedActions": {
-        "Take": "resource:foundation-economy-equipment-demo:masterData:mdr_1SXTWJSMJ6A05BST0S7A467E70::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-equipment-demo",
       "canonicalTypeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
+      "delegatedActions": {
+        "Take": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-equipment-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_1SXTWJSMJ6A05BST0S7A467E70"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      },
       "properties": {
         "equipment": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     },
-    "EquipmentCategory": {
-      "id": "dt_00D0MNXASRWQTFQ00XQ9WCDSYM",
-      "singleEntry": false,
-      "canonicalPackageId": "foundation-economy-equipment",
-      "canonicalTypeId": "dt_5XY098JXVWPEN0Q0F7QY165JJA"
-    },
     "EquipmentCollection": {
       "id": "dt_00D0MNXASRRPHW8RV3NXTHX8AY",
       "singleEntry": true,
-      "delegatedActions": {
-        "Expand": "resource:foundation-economy-equipment-demo:masterData:mdr_482VNSNE5TBE7AD7V9S49PCJC0::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-equipment",
-      "canonicalTypeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
+      "canonicalTypeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
+      "delegatedActions": {
+        "Expand": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-equipment-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_482VNSNE5TBE7AD7V9S49PCJC0"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "transaction.ConsumeAction": "mdr_7MKHR4NGCCAFNB6HEK9ND6PBGD"
   }

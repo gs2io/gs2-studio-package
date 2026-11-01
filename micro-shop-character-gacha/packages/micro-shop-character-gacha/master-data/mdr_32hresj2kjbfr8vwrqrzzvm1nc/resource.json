@@ -1,43 +1,41 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "prizeId",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "type",
-        "value": "action"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "weight",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
-            },
-            "propertyId": "prop_0QQ39TDDTA8E2W3B2GWBQWC3EJ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "prizeId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "static",
+      "parameterName": "type",
+      "value": "action"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "weight",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
+          },
+          "propertyId": "prop_0QQ39TDDTA8E2W3B2GWBQWC3EJ"
+        }
+      }
+    }
+  ],
   "id": "mdr_32HRESJ2KJBFR8VWRQRZZVM1NC",
   "location": {
     "modelName": "Prize",

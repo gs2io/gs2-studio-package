@@ -57,7 +57,7 @@ const TakeRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EquipmentCatalog)
         .bindings({
-          action: Bind.transform(equipment.packageId, "AcquireEquipment", [
+          action: Bind.transform(equipment.packageId, equipment.transformId("AcquireEquipment"), [
             Arg.domainProperty(
               "equipment",
               Source.parent(Source.direct(EquipmentCatalog, "equipment"))
@@ -77,7 +77,7 @@ const DiscardRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Equipment)
         .bindings({
-          action: Bind.transform(equipment.packageId, "DeleteEquipment", [
+          action: Bind.transform(equipment.packageId, equipment.transformId("DeleteEquipment"), [
             Arg.domainProperty("equipment", Source.direct(Equipment, "id")),
             // Omit instance selection because the deployed rate cannot name a future owned item set; discard consumes by equipment type.
           ]),
@@ -95,9 +95,11 @@ const ExpandRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EquipmentCollection)
         .bindings({
-          action: Bind.transform(equipment.packageId, "AddEquipmentCapacity", [
-            Arg.static("value", CAPACITY_STEP),
-          ]),
+          action: Bind.transform(
+            equipment.packageId,
+            equipment.transformId("AddEquipmentCapacity"),
+            [Arg.static("value", CAPACITY_STEP)]
+          ),
         });
     })
 );
@@ -107,10 +109,14 @@ export const foundationEconomyEquipmentDemo = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "装備（デモデータ）", en: "Equipment (demo data)" },
-    description: {
-      ja: "ライブデモ用の装備カタログと所持枠、入手・破棄・拡張の操作を提供します。",
-      en: "Supplies the equipment catalog and bag used by the live demo, and the presses that take, discard and expand.",
+    ja: {
+      label: "装備（デモデータ）",
+      description: "ライブデモ用の装備カタログと所持枠、入手・破棄・拡張の操作を提供します。",
+    },
+    en: {
+      label: "Equipment (demo data)",
+      description:
+        "Supplies the equipment catalog and bag used by the live demo, and the presses that take, discard and expand.",
     },
   })
   .dependency(equipment.packageId, "github:gs2io/gs2-studio-package")
@@ -225,16 +231,16 @@ export const foundationEconomyEquipmentDemo = definePackage(
   .delegatedAction(EquipmentCatalog, "Take", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: TakeRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(Equipment, "Discard", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: DiscardRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(EquipmentCollection, "Expand", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ExpandRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

@@ -1,0 +1,100 @@
+{
+  "category": "verify",
+  "id": "at_0R2C0TCE7E855VHKXTGCZBFTBC",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyGuildRankingScoreReached",
+  "outputs": [
+    {
+      "actionName": "Gs2Ranking2:VerifyClusterRankingScoreByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "rankingName",
+          "sourceParameter": "ranking"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "clusterName",
+          "sourceParameter": "guildName"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "greaterEqual"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "season",
+          "sourceParameter": "season"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "score",
+          "sourceParameter": "score"
+        },
+        {
+          "kind": "static",
+          "parameterName": "multiplyValueSpecifyingQuantity",
+          "value": false
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "ranking",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+      }
+    },
+    {
+      "description": "GRN of the guild whose ranking this is: grn:gs2:{region}:{ownerId}:guild:<namespace>:guild:<guild model>:<guild name>",
+      "name": "guildName",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "season",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    },
+    {
+      "name": "score",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}

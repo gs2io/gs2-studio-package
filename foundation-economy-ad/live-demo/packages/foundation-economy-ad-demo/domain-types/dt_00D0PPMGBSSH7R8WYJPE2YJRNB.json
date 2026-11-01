@@ -51,8 +51,6 @@
   "singleEntry": true,
   "source": {
     "directSourcePackageId": "foundation-economy-ad",
-    "directSourceTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
-    "sourcePackageId": "foundation-economy-ad",
-    "sourceTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
+    "directSourceTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
   }
 }

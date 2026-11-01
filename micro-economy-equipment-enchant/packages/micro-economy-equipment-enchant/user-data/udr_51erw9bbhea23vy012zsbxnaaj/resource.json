@@ -1,63 +1,39 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "parameterName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "parameterValues"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "propertyId",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9"
-            },
-            "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
-          }
-        }
-      },
-      {
-        "kind": "skip",
-        "parameterName": "rarityParameterStatusId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
-    "projectionBindings": [
-      {
-        "fieldMappings": [
-          {
-            "fieldName": "resourceName",
-            "targetPropertyId": "prop_00D03217GRKK3MAVRY7VKHB9GK"
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "parameterName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "parameterValues"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "propertyId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9"
           },
-          {
-            "fieldName": "resourceValue",
-            "targetPropertyId": "prop_00D03217GRMPQHMB5B4QST8GM4"
-          }
-        ],
-        "idSourceField": "name",
-        "kind": "modelArrayDecode",
-        "parameterName": "parameterValues",
-        "targetMountPath": {
-          "kind": "local",
-          "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9"
-        },
-        "targetPropertyId": "prop_00D03217GRK4Y3519ZYVXED9CW"
+          "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+        }
       }
-    ]
-  },
+    },
+    {
+      "kind": "skip",
+      "parameterName": "rarityParameterStatusId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_51ERW9BBHEA23VY012ZSBXNAAJ",
+  "linkedMasterResourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
   "location": {
     "modelName": "RarityParameterStatus",
     "service": "enchant"
@@ -65,5 +41,27 @@
   "ownMountPath": {
     "kind": "local",
     "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9"
-  }
+  },
+  "projectionBindings": [
+    {
+      "fieldMappings": [
+        {
+          "fieldName": "resourceName",
+          "targetPropertyId": "prop_00D03217GRKK3MAVRY7VKHB9GK"
+        },
+        {
+          "fieldName": "resourceValue",
+          "targetPropertyId": "prop_00D03217GRMPQHMB5B4QST8GM4"
+        }
+      ],
+      "idSourceField": "name",
+      "kind": "modelArrayDecode",
+      "parameterName": "parameterValues",
+      "targetMountPath": {
+        "kind": "local",
+        "typeId": "dt_00D03217GRGCSCWCZMF4D2PYM9"
+      },
+      "targetPropertyId": "prop_00D03217GRK4Y3519ZYVXED9CW"
+    }
+  ]
 }

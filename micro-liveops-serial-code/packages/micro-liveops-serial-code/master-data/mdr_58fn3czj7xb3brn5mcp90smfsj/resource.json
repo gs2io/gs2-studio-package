@@ -1,43 +1,41 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "enableCampaignCode",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
-            },
-            "propertyId": "prop_00D031EZFZM4YG8CZFHGS7HMHD"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "metadata",
-        "value": ""
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "enableCampaignCode",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
+          },
+          "propertyId": "prop_00D031EZFZM4YG8CZFHGS7HMHD"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "static",
+      "parameterName": "metadata",
+      "value": ""
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    }
+  ],
   "id": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",
   "location": {
     "modelName": "CampaignModel",

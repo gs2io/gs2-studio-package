@@ -86,7 +86,7 @@ const FreeUseRateModel = defineMasterDataResource(resource =>
         .mountLocal(UsageLimitCounter)
         .bindings({
           // Read the schedule from the counter reference so the two-part identity cannot drift.
-          action: Bind.transform(limit.packageId, "CountUpUsageLimit", [
+          action: Bind.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
             Arg.domainProperty(
               "limit",
               Source.parent(Source.direct(UsageLimitCounterRow, COUNTER_LIMIT))
@@ -111,7 +111,7 @@ const AdUseRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(UsageLimitCounter)
         .bindings({
-          action: Bind.transform(ad.packageId, "ConsumeAdViewPoint", []),
+          action: Bind.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), []),
         });
     })
     .addArrayChild("consumeActions", consumeAction => {
@@ -119,7 +119,7 @@ const AdUseRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(UsageLimitCounter)
         .bindings({
-          action: Bind.transform(limit.packageId, "CountUpUsageLimit", [
+          action: Bind.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
             Arg.domainProperty(
               "limit",
               Source.parent(Source.direct(UsageLimitCounterRow, COUNTER_LIMIT))
@@ -144,7 +144,7 @@ const ResetEveryAllowanceRateModel = defineMasterDataResource(resource => {
         .model(GS2.transaction.AcquireAction)
         .mountLocal(UsageLimitCounter)
         .bindings({
-          action: Bind.transform(limit.packageId, "ResetUsageLimitCounter", [
+          action: Bind.transform(limit.packageId, limit.transformId("ResetUsageLimitCounter"), [
             Arg.static("limit", schedule),
             Arg.static("counter", counter),
           ]),
@@ -155,10 +155,15 @@ const ResetEveryAllowanceRateModel = defineMasterDataResource(resource => {
 
 const withSchedules = definePackage("foundation-economy-limit-demo", "0.0.0")
   .display({
-    label: { ja: "回数制限（デモデータ）", en: "Usage Limits (demo data)" },
-    description: {
-      ja: "ライブデモ用の日次・週次のリセット設定と4つの回数カウンター、無料枠と広告枠それぞれの利用操作、全体のリセット操作を提供します。視聴枠は広告デモから借ります。",
-      en: "Supplies the daily and weekly schedules the live demo shows, the four allowances that follow them, the free and ad-backed presses that use one, and the reset that puts them all back. The view point it spends comes from the ad demo.",
+    ja: {
+      label: "回数制限（デモデータ）",
+      description:
+        "ライブデモ用の日次・週次のリセット設定と4つの回数カウンター、無料枠と広告枠それぞれの利用操作、全体のリセット操作を提供します。視聴枠は広告デモから借ります。",
+    },
+    en: {
+      label: "Usage Limits (demo data)",
+      description:
+        "Supplies the daily and weekly schedules the live demo shows, the four allowances that follow them, the free and ad-backed presses that use one, and the reset that puts them all back. The view point it spends comes from the ad demo.",
     },
   })
   .dependency(limit.packageId, "github:gs2io/gs2-studio-package")
@@ -334,16 +339,16 @@ export const foundationEconomyLimitDemo = withCounters
   .delegatedAction(UsageLimitCounter, "UseFree", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: FreeUseRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(UsageLimitCounter, "UseWithAd", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: AdUseRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(UsageLimitCounter, "ResetEveryAllowance", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ResetEveryAllowanceRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

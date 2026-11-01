@@ -1,73 +1,71 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "categoryName"
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "idleMinutes",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
-              },
-              "propertyId": "prop_1M9DWWCBBYBQ9HF2CEHRBVTQG5"
-            }
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "categoryName"
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "idleMinutes",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+            },
+            "propertyId": "prop_1M9DWWCBBYBQ9HF2CEHRBVTQG5"
           }
-        ]
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "maximumIdleMinutes",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
-              },
-              "propertyId": "prop_4RV2VH9G7RME7HVFFF1KSCK60P"
-            }
+        }
+      ]
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "maximumIdleMinutes",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+            },
+            "propertyId": "prop_4RV2VH9G7RME7HVFFF1KSCK60P"
           }
-        ]
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "nextRewardsAt",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
-              },
-              "propertyId": "prop_5651SXBQZ535SAK2H3JZBTZ5XS"
-            }
+        }
+      ]
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "nextRewardsAt",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+            },
+            "propertyId": "prop_5651SXBQZ535SAK2H3JZBTZ5XS"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "statusId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_720YFK0MG497KRH6159H7NKWHY"
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "statusId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_3YBTV1YVVS83NA81070YTSSVQ8",
+  "linkedMasterResourceId": "mdr_720YFK0MG497KRH6159H7NKWHY",
   "location": {
     "modelName": "Status",
     "service": "idle"

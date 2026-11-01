@@ -1,15 +1,17 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "CountRedemption",
-        "transformPackageId": "micro-liveops-serial-code-demo"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "micro-liveops-serial-code-demo",
+          "transformId": "at_2HMSD4AP729NXVQMK5RM8CRXEQ"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_0PXS555WVZAQGB4ZXP28EZKGZT",
   "location": {
     "modelName": "ConsumeAction",

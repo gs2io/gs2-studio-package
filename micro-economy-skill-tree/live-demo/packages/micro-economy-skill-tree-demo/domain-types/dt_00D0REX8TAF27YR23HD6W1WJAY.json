@@ -1,33 +1,39 @@
 {
   "actionPropertyTransforms": [
     {
-      "arguments": [
-        {
-          "parameterName": "slot",
-          "source": {
-            "kind": "static",
-            "value": 0
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "paidOnly",
+            "source": {
+              "kind": "static",
+              "value": false
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "propertyId": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ"
+              }
+            }
           }
-        },
-        {
-          "parameterName": "paidOnly",
-          "source": {
-            "kind": "static",
-            "value": false
-          }
-        },
-        {
-          "parameterName": "count",
-          "source": {
-            "kind": "domainProperty",
-            "propertyId": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ"
-          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5"
         }
-      ],
+      },
       "mode": "append",
-      "targetPropertyId": "prop_00D05R0KFCTFK6442MMAKE56Y9",
-      "transformName": "WithdrawCurrency",
-      "transformPackageId": "foundation-economy-currency"
+      "targetPropertyId": "prop_00D05R0KFCTFK6442MMAKE56Y9"
     }
   ],
   "compositeKeyMode": {
@@ -78,8 +84,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-economy-skill-tree",
-    "directSourceTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-    "sourcePackageId": "micro-economy-skill-tree",
-    "sourceTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
+    "directSourceTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
   }
 }

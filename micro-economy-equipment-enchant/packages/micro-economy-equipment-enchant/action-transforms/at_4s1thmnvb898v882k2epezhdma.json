@@ -1,0 +1,76 @@
+{
+  "category": "acquire",
+  "id": "at_4S1THMNVB898V882K2EPEZHDMA",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "AddEquipmentEnchantmentSlot",
+  "outputs": [
+    {
+      "actionName": "Gs2Enchant:AddRarityParameterStatusByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "parameterName",
+          "sourceParameter": "enchant"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "count",
+          "sourceParameter": "count"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "enchant",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D03217GRKX0AV27J248EX89N"
+      }
+    },
+    {
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

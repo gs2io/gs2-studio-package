@@ -171,24 +171,36 @@ const notificationConfig = {
 
 export const foundationSocialGuild = definePackage("foundation-social-guild", "0.0.0")
   .display({
-    label: { ja: "ギルド", en: "Guilds" },
-    description: {
-      ja: "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。",
-      en: "Handles player guilds: capacity, permission roles, and which guild a player belongs to.",
+    ja: {
+      label: "ギルド",
+      description: "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。",
+    },
+    en: {
+      label: "Guilds",
+      description:
+        "Handles player guilds: capacity, permission roles, and which guild a player belongs to.",
     },
   })
   .displayType(Guild, {
-    label: { ja: "ギルド種別", en: "Guild kind" },
-    description: {
-      ja: "ギルドの種類ごとに、定員・マスターの交代・再参加の待機・権限ロールを設定します。1 行は、プレイヤーが所属しているその種類のギルドを表します。",
-      en: "Configures a guild kind's capacity, master succession, rejoin wait and roles. A row is a guild of that kind the player belongs to.",
+    ja: {
+      label: "ギルド種別",
+      description:
+        "ギルドの種類ごとに、定員・マスターの交代・再参加の待機・権限ロールを設定します。1 行は、プレイヤーが所属しているその種類のギルドを表します。",
+    },
+    en: {
+      label: "Guild kind",
+      description:
+        "Configures a guild kind's capacity, master succession, rejoin wait and roles. A row is a guild of that kind the player belongs to.",
     },
   })
   .displayType(GuildRole, {
-    label: { ja: "ギルド権限", en: "Guild role" },
-    description: {
-      ja: "ギルドメンバーに割り当てる役職と操作権限を設定します。",
-      en: "Configures guild member roles and their permissions.",
+    ja: {
+      label: "ギルド権限",
+      description: "ギルドメンバーに割り当てる役職と操作権限を設定します。",
+    },
+    en: {
+      label: "Guild role",
+      description: "Configures guild member roles and their permissions.",
     },
   })
   .domainType(Guild)

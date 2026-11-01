@@ -6,13 +6,13 @@
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Lets players build formations by combining characters from their collection.",
-      "ja": "手持ちのキャラクターを組み合わせて編成を作ります。"
+    "en": {
+      "description": "Lets players build formations by combining characters from their collection.",
+      "label": "Party Formation"
     },
-    "label": {
-      "en": "Party Formation",
-      "ja": "パーティ編成"
+    "ja": {
+      "description": "手持ちのキャラクターを組み合わせて編成を作ります。",
+      "label": "パーティ編成"
     }
   }
 }

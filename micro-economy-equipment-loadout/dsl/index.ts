@@ -101,31 +101,45 @@ export const microEconomyEquipmentLoadout = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "装備の装着", en: "Equipment Loadout" },
-    description: {
-      ja: "キャラクターごとの装備スロットを扱います。スロットごとに装着できる装備を制限できます。",
-      en: "Gives each character its own equipment slots, with per-slot restrictions on what fits.",
+    ja: {
+      label: "装備の装着",
+      description:
+        "キャラクターごとの装備スロットを扱います。スロットごとに装着できる装備を制限できます。",
+    },
+    en: {
+      label: "Equipment Loadout",
+      description:
+        "Gives each character its own equipment slots, with per-slot restrictions on what fits.",
     },
   })
   .displayType(EquipmentSlot, {
-    label: { ja: "装備スロット", en: "Equipment slot" },
-    description: {
-      ja: "キャラクターの装備部位と装着できる装備カテゴリを設定します。",
-      en: "Defines a character equipment slot and the equipment categories it accepts.",
+    ja: {
+      label: "装備スロット",
+      description: "キャラクターの装備部位と装着できる装備カテゴリを設定します。",
+    },
+    en: {
+      label: "Equipment slot",
+      description: "Defines a character equipment slot and the equipment categories it accepts.",
     },
   })
   .displayType(EquipmentSlotAssignment, {
-    label: { ja: "装着中の装備", en: "Worn equipment" },
-    description: {
-      ja: "各装備スロットに現在装着されている装備を管理します。",
-      en: "Tracks the equipment currently assigned to each loadout slot.",
+    ja: {
+      label: "装着中の装備",
+      description: "各装備スロットに現在装着されている装備を管理します。",
+    },
+    en: {
+      label: "Worn equipment",
+      description: "Tracks the equipment currently assigned to each loadout slot.",
     },
   })
   .displayType(Character, {
-    label: { ja: "キャラクター", en: "Character" },
-    description: {
-      ja: "キャラクターごとの装備スロット構成と装着状態を管理します。",
-      en: "Manages each character's equipment slot layout and current loadout.",
+    ja: {
+      label: "キャラクター",
+      description: "キャラクターごとの装備スロット構成と装着状態を管理します。",
+    },
+    en: {
+      label: "Character",
+      description: "Manages each character's equipment slot layout and current loadout.",
     },
   })
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")

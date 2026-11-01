@@ -1,0 +1,71 @@
+{
+  "category": "acquire",
+  "id": "at_2CVP0VMSNYSCJY7J93T0091WZ3",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "IncreaseGuildCapacity",
+  "outputs": [
+    {
+      "actionName": "Gs2Guild:IncreaseMaximumCurrentMaximumMemberCountByGuildName",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "guildModelName",
+          "sourceParameter": "guild"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "guildName",
+          "sourceParameter": "guildName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "value",
+          "sourceParameter": "value"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "guild",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
+      }
+    },
+    {
+      "name": "guildName",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "value",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

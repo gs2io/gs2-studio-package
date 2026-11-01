@@ -5,16 +5,24 @@
     "EnergyProduct": {
       "id": "dt_00D0S4EG72DAP5YJTQFA6F363W",
       "singleEntry": false,
-      "delegatedActions": {
-        "Buy": "resource:micro-shop-energy-demo:masterData:mdr_316T157DF8AHNBQJVWHABKV8MZ::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "micro-shop-energy",
       "canonicalTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
+      "delegatedActions": {
+        "Buy": {
+          "targetResource": {
+            "sourcePackageId": "micro-shop-energy-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      },
       "addedProperties": {
         "cost": "prop_00D0S4EG729BGHQ7R4RK1959TA"
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_7KRSZZ8CATAZNRF01MVH1DPMWC",
     "exchange.RateModel": "mdr_316T157DF8AHNBQJVWHABKV8MZ",

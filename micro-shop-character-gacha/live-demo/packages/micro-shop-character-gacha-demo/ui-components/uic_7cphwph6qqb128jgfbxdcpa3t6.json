@@ -22,12 +22,16 @@
         }
       ],
       "componentClassName": "BuyButton",
-      "delegatedActionKey": "resource:micro-shop-character-gacha:masterData:mdr_5PRP4NWC3688X91404V01TV2F9::Gs2Showcase:DisplayItem.Buy",
       "id": "uii_10KGDX96WTAC991BGF5HBHZY69",
       "kind": "buttonAction",
-      "name": "Gacha"
+      "name": "Gacha",
+      "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
+      "targetResource": {
+        "resourceId": "mdr_5PRP4NWC3688X91404V01TV2F9",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-shop-character-gacha"
+      }
     }
   ],
-  "name": "Gacha",
   "targetDomainTypeId": "dt_00D0PAZ47BTJ1GZ2K5QP5DPDJ9"
 }

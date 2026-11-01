@@ -202,28 +202,42 @@
     {
       "arguments": [],
       "componentClassName": "UseFreeButton",
-      "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:mdr_3QQV27BR5AA419F2032R6T95RZ::Gs2Exchange:RateModel.Exchange",
       "id": "uii_67NWFF07T4BJAV6WVF92Q4X8V0",
       "kind": "buttonAction",
-      "name": "UsageLimitCounter"
+      "name": "UsageLimitCounter",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_3QQV27BR5AA419F2032R6T95RZ",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-limit-demo"
+      }
     },
     {
       "arguments": [],
       "componentClassName": "UseWithAdButton",
-      "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:mdr_6TC5FMVGD2AE0BT03QA7GCXZS0::Gs2Exchange:RateModel.Exchange",
       "id": "uii_3QWMQDCT8KAP6BF0F3KYVYFSZE",
       "kind": "buttonAction",
-      "name": "UsageLimitCounter"
+      "name": "UsageLimitCounter",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-limit-demo"
+      }
     },
     {
       "arguments": [],
       "componentClassName": "ResetEveryAllowanceButton",
-      "delegatedActionKey": "resource:foundation-economy-limit-demo:masterData:mdr_2B66P1TX2CA2EV81HAS32228JF::Gs2Exchange:RateModel.Exchange",
       "id": "uii_71CMYTD760BME93XMH90Q1RG6T",
       "kind": "buttonAction",
-      "name": "UsageLimitCounter"
+      "name": "UsageLimitCounter",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_2B66P1TX2CA2EV81HAS32228JF",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-limit-demo"
+      }
     }
   ],
-  "name": "UsageLimitCounter",
   "targetDomainTypeId": "dt_00D0PP9ZFNBBW6QXYE041ZSN01"
 }

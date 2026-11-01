@@ -1,0 +1,63 @@
+{
+  "category": "acquire",
+  "id": "at_1WMTWBNWG4BJ36RG8TCVEP8A3A",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ResetUsageLimitCounter",
+  "outputs": [
+    {
+      "actionName": "Gs2Limit:DeleteCounterByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "limitName",
+          "sourceParameter": "limit"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "counterName",
+          "sourceParameter": "counter"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "limit",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+      }
+    },
+    {
+      "name": "counter",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
+      }
+    }
+  ]
+}

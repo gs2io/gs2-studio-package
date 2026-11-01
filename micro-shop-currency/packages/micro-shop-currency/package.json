@@ -6,13 +6,13 @@
     "foundation-economy-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "A shop for purchasing currency, with configurable products and prices.",
-      "ja": "通貨を購入できる商品と価格を扱います。"
+    "en": {
+      "description": "A shop for purchasing currency, with configurable products and prices.",
+      "label": "Currency Shop"
     },
-    "label": {
-      "en": "Currency Shop",
-      "ja": "通貨ショップ"
+    "ja": {
+      "description": "通貨を購入できる商品と価格を扱います。",
+      "label": "通貨ショップ"
     }
   }
 }

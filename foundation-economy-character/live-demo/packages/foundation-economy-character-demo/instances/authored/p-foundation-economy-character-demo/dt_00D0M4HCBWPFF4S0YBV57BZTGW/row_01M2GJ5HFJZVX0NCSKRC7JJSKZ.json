@@ -1,0 +1,11 @@
+{
+  "id": "mage",
+  "rowKey": "row_01M2GJ5HFJZVX0NCSKRC7JJSKZ",
+  "type": {
+    "domainTypeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
+    "packageId": "foundation-economy-character-demo"
+  },
+  "values": {
+    "prop_00D0M4HCBWK48152NTS3ABDZMZ": "mage"
+  }
+}

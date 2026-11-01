@@ -1,0 +1,119 @@
+{
+  "category": "acquire",
+  "id": "at_0QCVSFSXJRTZ5X1ZF7DCRWSQTE",
+  "name": "Reward",
+  "outputs": [
+    {
+      "conditions": [
+        {
+          "operator": "eq",
+          "sourceParameter": "rewardType",
+          "value": "currency"
+        }
+      ],
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "parameter",
+              "sourceParameter": "count"
+            }
+          },
+          {
+            "parameterName": "currencyType",
+            "source": {
+              "kind": "static",
+              "value": ""
+            }
+          },
+          {
+            "parameterName": "price",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "parameter",
+              "sourceParameter": "slot"
+            }
+          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_103C3AGDYK65AAVXE24NG965GH"
+        }
+      },
+      "kind": "delegation"
+    },
+    {
+      "conditions": [
+        {
+          "operator": "eq",
+          "sourceParameter": "rewardType",
+          "value": "character"
+        }
+      ],
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "character",
+            "source": {
+              "kind": "parameter",
+              "sourceParameter": "contentsId"
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "parameter",
+              "sourceParameter": "count"
+            }
+          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-character",
+          "transformId": "at_5V44WAAQRF94D51FPBFT5Q2DN2"
+        }
+      },
+      "kind": "delegation"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "rewardType",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE"
+      }
+    },
+    {
+      "name": "contentsId",
+      "required": false,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    },
+    {
+      "name": "slot",
+      "required": false,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

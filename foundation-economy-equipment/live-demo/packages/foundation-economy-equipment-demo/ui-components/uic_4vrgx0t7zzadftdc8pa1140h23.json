@@ -4,12 +4,16 @@
     {
       "arguments": [],
       "componentClassName": "DiscardButton",
-      "delegatedActionKey": "resource:foundation-economy-equipment-demo:masterData:mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB::Gs2Exchange:RateModel.Exchange",
       "id": "uii_5JGH7ZSMEWBCEAK62CPAQV70RA",
       "kind": "buttonAction",
-      "name": "Equipment"
+      "name": "Equipment",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-equipment-demo"
+      }
     }
   ],
-  "name": "Equipment",
   "targetDomainTypeId": "dt_00D0MNXASRT2QXV1SJH71CX4V2"
 }

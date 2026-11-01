@@ -14,8 +14,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-liveops-guild-ranking",
-    "directSourceTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-    "sourcePackageId": "micro-liveops-guild-ranking",
-    "sourceTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+    "directSourceTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
   }
 }

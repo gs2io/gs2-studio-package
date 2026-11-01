@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "trigger",
@@ -18,13 +18,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "PullTrigger",
-        "transformPackageId": "foundation-economy-schedule"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-schedule",
+          "transformId": "at_4FW3DYR9BB85TTH03JVZRFRTV3"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_3H9P4VT5JMB66S833SAD8518VF",
   "location": {
     "modelName": "AcquireAction",

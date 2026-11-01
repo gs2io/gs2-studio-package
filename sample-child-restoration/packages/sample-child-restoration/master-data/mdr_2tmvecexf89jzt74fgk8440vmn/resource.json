@@ -1,13 +1,11 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "name",
-        "value": "Material"
-      }
-    ]
-  },
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "name",
+      "value": "Material"
+    }
+  ],
   "id": "mdr_2TMVECEXF89JZT74FGK8440VMN",
   "location": {
     "modelName": "SimpleInventoryModel",

@@ -1,0 +1,13 @@
+{
+  "id": "welcome",
+  "rowKey": "row_01M35Z5TAMBP3TDCQKCR3F6YXG",
+  "type": {
+    "domainTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
+    "packageId": "foundation-liveops-inbox"
+  },
+  "values": {
+    "prop_19YMYXB5NJHVCEEQY795WH711C": "Welcome to the GS2 inbox demo!",
+    "prop_28HE0VGFDJZC3C2B949D7TZD2W": "2031-01-01T00:00:00.000Z",
+    "prop_4DM29ET2A2JAHWK6D0MVPT25PW": "2026-09-10T18:22:42.011Z"
+  }
+}

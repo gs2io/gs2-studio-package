@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "value",
@@ -11,13 +11,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "AddEquipmentCapacity",
-        "transformPackageId": "foundation-economy-equipment"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-equipment",
+          "transformId": "at_3H7989KQGX9SJTTECEYMKHR6TJ"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_3AB9XMQHG9ACP8C665WPSMFK1P",
   "location": {
     "modelName": "AcquireAction",

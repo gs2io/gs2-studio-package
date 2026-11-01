@@ -1,36 +1,34 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "action",
-        "value": "Gs2Lottery:DrawByUserId"
-      },
-      {
-        "kind": "static",
-        "parameterName": "request.config",
-        "value": null
-      },
-      {
-        "kind": "static",
-        "parameterName": "request.count",
-        "value": 1
-      },
-      {
-        "kind": "resourceKey",
-        "parameterName": "request.lotteryName"
-      },
-      {
-        "kind": "resourceKey",
-        "parameterName": "request.namespaceName"
-      },
-      {
-        "kind": "placeholder",
-        "parameterName": "request.userId",
-        "value": "#{userId}"
-      }
-    ]
-  },
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "action",
+      "value": "Gs2Lottery:DrawByUserId"
+    },
+    {
+      "kind": "static",
+      "parameterName": "request.config",
+      "value": null
+    },
+    {
+      "kind": "static",
+      "parameterName": "request.count",
+      "value": 1
+    },
+    {
+      "kind": "resourceKey",
+      "parameterName": "request.lotteryName"
+    },
+    {
+      "kind": "resourceKey",
+      "parameterName": "request.namespaceName"
+    },
+    {
+      "kind": "placeholder",
+      "parameterName": "request.userId",
+      "value": "#{userId}"
+    }
+  ],
   "id": "mdr_73WZ8JESEKA1QSJV4RECZHB7H1",
   "location": {
     "modelName": "AcquireAction",

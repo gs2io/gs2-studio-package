@@ -51,8 +51,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-inventory",
-    "directSourceTypeId": "dt_47E751540GQRMAWTXYFT9376WH",
-    "sourcePackageId": "foundation-economy-inventory",
-    "sourceTypeId": "dt_47E751540GQRMAWTXYFT9376WH"
+    "directSourceTypeId": "dt_47E751540GQRMAWTXYFT9376WH"
   }
 }

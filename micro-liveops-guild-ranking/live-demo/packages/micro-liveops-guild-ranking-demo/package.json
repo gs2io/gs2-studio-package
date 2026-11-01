@@ -13,13 +13,13 @@
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the live demo's per-guild ranking, the coins each reward tier pays, and the rule of its daily season. The rewards land in the currency package's wallet.",
-      "ja": "ライブデモ用に、ギルドごとのランキングと順位帯ごとの報酬コイン、毎日切り替わるシーズンの説明を提供します。報酬は通貨パッケージのウォレットへ入ります。"
+    "en": {
+      "description": "Supplies the live demo's per-guild ranking, the coins each reward tier pays, and the rule of its daily season. The rewards land in the currency package's wallet.",
+      "label": "Guild Rankings (demo data)"
     },
-    "label": {
-      "en": "Guild Rankings (demo data)",
-      "ja": "ギルドランキング（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用に、ギルドごとのランキングと順位帯ごとの報酬コイン、毎日切り替わるシーズンの説明を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+      "label": "ギルドランキング（デモデータ）"
     }
   }
 }

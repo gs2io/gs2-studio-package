@@ -6,13 +6,13 @@
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Grants rewards for daily or consecutive-day logins.",
-      "ja": "毎日・連続ログインなどに応じて報酬を配布します。"
+    "en": {
+      "description": "Grants rewards for daily or consecutive-day logins.",
+      "label": "Login Rewards"
     },
-    "label": {
-      "en": "Login Rewards",
-      "ja": "ログインボーナス"
+    "ja": {
+      "description": "毎日・連続ログインなどに応じて報酬を配布します。",
+      "label": "ログインボーナス"
     }
   }
 }

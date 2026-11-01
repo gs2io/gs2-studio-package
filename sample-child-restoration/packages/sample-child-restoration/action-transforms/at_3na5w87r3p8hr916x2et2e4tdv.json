@@ -1,0 +1,67 @@
+{
+  "category": "consume",
+  "id": "at_3NA5W87R3P8HR916X2ET2E4TDV",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_04XC76T94J9WP9H2RP8JFN98E6",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ConsumeItem",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:ConsumeSimpleItemsByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "consumeCounts[0].itemName",
+          "sourceParameter": "itemName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "consumeCounts[0].count",
+          "sourceParameter": "count"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_04XC76T94J9WP9H2RP8JFN98E6",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "itemName",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

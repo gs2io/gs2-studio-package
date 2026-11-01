@@ -3,12 +3,15 @@
   "retired": {},
   "random": {
     "property:GuildRankingReward.coins": "prop_00D0XMTYBP6TACW7H1W4YC1SET",
-    "row:dt_00D033H0GPVEHE0CAY94WAKT63.1.guild": "row_01M3PKBSER818XDM0PG5FKMPWZ",
-    "row:dt_00D033H0GPVEHE0CAY94WAKT63.10.guild": "row_01M3PKBSERQS79PVEQ0JCMV4QW",
-    "row:dt_00D033H0GPVEHE0CAY94WAKT63.3.guild": "row_01M3PKBSERCXKE1Z1F974HNK1Y",
-    "row:dt_00D033H0GPZ4TRESQBZZ7BWNZT.guild": "row_01M3PKBSER8NJMN6359944M1W8",
+    "row:[\"micro-liveops-guild-ranking\",\"dt_00D033H0GPVEHE0CAY94WAKT63\",\"1.guild\"]": "row_01M3PKBSER818XDM0PG5FKMPWZ",
+    "row:[\"micro-liveops-guild-ranking\",\"dt_00D033H0GPVEHE0CAY94WAKT63\",\"10.guild\"]": "row_01M3PKBSERQS79PVEQ0JCMV4QW",
+    "row:[\"micro-liveops-guild-ranking\",\"dt_00D033H0GPVEHE0CAY94WAKT63\",\"3.guild\"]": "row_01M3PKBSERCXKE1Z1F974HNK1Y",
+    "row:[\"micro-liveops-guild-ranking\",\"dt_00D033H0GPZ4TRESQBZZ7BWNZT\",\"guild\"]": "row_01M3PKBSER8NJMN6359944M1W8",
     "type:GuildRanking": "dt_00D0XMTYBP5KNZJFD93BWF6SFG",
     "type:GuildRankingReward": "dt_00D0XMTYBP2S6WZJPBNGHGSC4Q"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:GuildRanking:definition": "uic_5MK0HEZV7EAD7RT8MQ8NJ2K9BJ",
+    "ui:GuildRanking:item:RuleLabel": "uii_2HJ6X1JE3AA2Q94A7AR6NGFXX2"
+  }
 }

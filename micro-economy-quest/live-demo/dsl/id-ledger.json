@@ -1,18 +1,32 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "type:QuestCollection": "dt_00D0TT9XC972WK8F5RYPDYZSY1"
+  },
   "random": {
     "property:Quest.displayName": "prop_00D0TT9XC95AYPDS0FTC5G8GTG",
     "property:Quest.firstClearReward": "prop_00D0TT9XC90NGHJ1JGHG67DHY2",
     "property:Quest.reward": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR",
     "property:Quest.staminaCost": "prop_00D0TT9XC92MQXXRTF4D7JBY0V",
-    "row:dt_24W5SDQ24VS1902R1MMWXSNVT9.main": "row_01M3B97NH4W0XJ1B004J0ZY2D3",
-    "row:dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK.quest1": "row_01M3B97NH4V71QFPY941J3KBXJ",
-    "row:dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK.quest2": "row_01M3B97NH4JQY0YHANW7B8KC0G",
-    "row:dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK.quest3": "row_01M3B97NH4YW0WZ20M4VWX5K0C",
+    "row:[\"micro-economy-quest\",\"dt_24W5SDQ24VS1902R1MMWXSNVT9\",\"main\"]": "row_01M3B97NH4W0XJ1B004J0ZY2D3",
+    "row:[\"micro-economy-quest\",\"dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK\",\"quest1\"]": "row_01M3B97NH4V71QFPY941J3KBXJ",
+    "row:[\"micro-economy-quest\",\"dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK\",\"quest2\"]": "row_01M3B97NH4JQY0YHANW7B8KC0G",
+    "row:[\"micro-economy-quest\",\"dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK\",\"quest3\"]": "row_01M3B97NH4YW0WZ20M4VWX5K0C",
     "type:Progress": "dt_00D0TT9XC903SNVA7P9GFM98G3",
-    "type:Quest": "dt_00D0TT9XC953455EX93PBE33K4",
-    "type:QuestCollection": "dt_00D0TT9XC972WK8F5RYPDYZSY1"
+    "type:Quest": "dt_00D0TT9XC953455EX93PBE33K4"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:Progress:definition": "uic_5F6JQ951DGAGVT9B0KPP3C1SPC",
+    "ui:Progress:item:CompleteButton": "uii_2C16SWBEJABR18Z1H226VJW8QZ",
+    "ui:Progress:item:IdleActiveToggle": "uii_3TEPW0W879A78SVZD8MXXHVWQA",
+    "ui:Progress:item:IdleLabel": "uii_77EX8RHZWPA4D8WH5GVWGBA7ED",
+    "ui:Progress:item:RunningActiveToggle": "uii_2E54W00AKYAZ4BA35CYJ85BAV3",
+    "ui:Quest:definition": "uic_3K34Z96HTTBVHV9MA4YDJTVT11",
+    "ui:Quest:item:BriefLabel": "uii_283H0T6S5HA8D8WPNMEA472Y0Q",
+    "ui:Quest:item:ClearedLabel": "uii_321VVA5XN9AJWSYCCEV3QDDW8A",
+    "ui:Quest:item:NameLabel": "uii_3SYAVPHMMHBD1STWB702V3NR99",
+    "ui:Quest:item:RunningLabel": "uii_6NT3FWMGZSAQZBF3T0Z6V3JBNW",
+    "ui:Quest:item:StartButton": "uii_7MPDEPYA3YAEG8WMC5HTW5EGWY",
+    "ui:Quest:item:UnclearedActiveToggle": "uii_3RCVQN0824BJCT3RF3ZKNKZNF5"
+  }
 }

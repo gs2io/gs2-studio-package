@@ -11,13 +11,13 @@
     "micro-shop-energy": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the stamina products the live demo sells, what each charges, and the press that buys one.",
-      "ja": "ライブデモ用に、スタミナ商品の品揃えと価格、購入の操作を揃えます。"
+    "en": {
+      "description": "Supplies the stamina products the live demo sells, what each charges, and the press that buys one.",
+      "label": "Stamina Shop (demo data)"
     },
-    "label": {
-      "en": "Stamina Shop (demo data)",
-      "ja": "スタミナショップ（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用に、スタミナ商品の品揃えと価格、購入の操作を揃えます。",
+      "label": "スタミナショップ（デモデータ）"
     }
   }
 }

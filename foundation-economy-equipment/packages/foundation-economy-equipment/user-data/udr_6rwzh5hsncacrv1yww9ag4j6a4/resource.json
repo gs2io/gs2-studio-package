@@ -1,49 +1,47 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "count"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "inventoryName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "itemName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "itemSetId"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
-            },
-            "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
-          }
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "count"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "inventoryName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "itemName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "itemSetId"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+          },
+          "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
         }
-      },
-      {
-        "kind": "skip",
-        "parameterName": "sortValue"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
       }
-    ],
-    "linkedMasterResourceId": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7"
-  },
+    },
+    {
+      "kind": "skip",
+      "parameterName": "sortValue"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_6RWZH5HSNCACRV1YWW9AG4J6A4",
+  "linkedMasterResourceId": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7",
   "location": {
     "modelName": "ItemSet",
     "service": "inventory"

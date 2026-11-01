@@ -1,48 +1,46 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "initialCapacity",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
-            },
-            "propertyId": "prop_071QWPTV93WY3RCTPXN9CBG00F"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "initialCapacity",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
+          },
+          "propertyId": "prop_071QWPTV93WY3RCTPXN9CBG00F"
         }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "maxCapacity",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
-            },
-            "propertyId": "prop_4J8TTATGZND7RB0CSEKFY3AG9Z"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "name",
-        "value": "Equipment"
-      },
-      {
-        "kind": "static",
-        "parameterName": "protectReferencedItem",
-        "value": true
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "maxCapacity",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
+          },
+          "propertyId": "prop_4J8TTATGZND7RB0CSEKFY3AG9Z"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "name",
+      "value": "Equipment"
+    },
+    {
+      "kind": "static",
+      "parameterName": "protectReferencedItem",
+      "value": true
+    }
+  ],
   "id": "mdr_7THH0THTYY830SYCKTT7NMYZHG",
   "location": {
     "modelName": "InventoryModel",

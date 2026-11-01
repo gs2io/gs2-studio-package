@@ -1,0 +1,54 @@
+{
+  "category": "acquire",
+  "id": "at_4NRP2334FY75C65TXQZ4PCT9QH",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_01RMR25QP499X8QWHZX922SPR5",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "IncreaseSaveArea",
+  "outputs": [
+    {
+      "actionName": "Gs2Formation:AddMoldCapacityByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "moldModelName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "capacity",
+          "sourceParameter": "value"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_01RMR25QP499X8QWHZX922SPR5",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "value",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

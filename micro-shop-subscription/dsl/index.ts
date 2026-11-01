@@ -137,17 +137,26 @@ const StoreSubscriptionContentModel = defineMasterDataResource(resource =>
 
 export const microShopSubscription = definePackage("micro-shop-subscription", "0.0.0")
   .display({
-    label: { ja: "サブスクリプション", en: "Subscriptions" },
-    description: {
-      ja: "月額パスなどの継続課金を扱います。更新のたびにスケジュールのトリガーが引かれ、加入状況と有効期限を保持します。",
-      en: "Handles recurring store purchases such as a monthly pass, pulling a schedule trigger on each renewal and tracking who currently holds it.",
+    ja: {
+      label: "サブスクリプション",
+      description:
+        "月額パスなどの継続課金を扱います。更新のたびにスケジュールのトリガーが引かれ、加入状況と有効期限を保持します。",
+    },
+    en: {
+      label: "Subscriptions",
+      description:
+        "Handles recurring store purchases such as a monthly pass, pulling a schedule trigger on each renewal and tracking who currently holds it.",
     },
   })
   .displayType(StoreSubscription, {
-    label: { ja: "サブスク商品", en: "Subscription" },
-    description: {
-      ja: "App Store・Google Playの商品識別子、更新トリガー、有効期限を設定・管理します。",
-      en: "Configures store product identifiers and renewal triggers, and tracks subscription status and expiration.",
+    ja: {
+      label: "サブスク商品",
+      description: "App Store・Google Playの商品識別子、更新トリガー、有効期限を設定・管理します。",
+    },
+    en: {
+      label: "Subscription",
+      description:
+        "Configures store product identifiers and renewal triggers, and tracks subscription status and expiration.",
     },
   })
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")

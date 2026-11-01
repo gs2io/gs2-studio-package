@@ -1,38 +1,36 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "rate",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031YG89PEGW8QTF8JNDY638"
-            },
-            "propertyId": "prop_00D031YG89J65RAXGD0XK0JGDC"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "weight",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031YG89PEGW8QTF8JNDY638"
-            },
-            "propertyId": "prop_00D031YG89HJ35D4WH1RHDYSN0"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "rate",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031YG89PEGW8QTF8JNDY638"
+          },
+          "propertyId": "prop_00D031YG89J65RAXGD0XK0JGDC"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "weight",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031YG89PEGW8QTF8JNDY638"
+          },
+          "propertyId": "prop_00D031YG89HJ35D4WH1RHDYSN0"
+        }
+      }
+    }
+  ],
   "id": "mdr_5ZD4J3CEE5B9K9981BTW05HQT1",
   "location": {
     "modelName": "BonusRate",

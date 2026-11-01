@@ -1,33 +1,41 @@
 {
   "actionPropertyTransforms": [
     {
-      "arguments": [
-        {
-          "parameterName": "count",
-          "source": {
-            "kind": "domainProperty",
-            "propertyId": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ"
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "propertyId": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ"
+              }
+            }
+          },
+          {
+            "parameterName": "paidOnly",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "propertyId": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04"
+              }
+            }
+          },
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "placeholder",
+              "value": "#{slot}"
+            }
           }
-        },
-        {
-          "parameterName": "paidOnly",
-          "source": {
-            "kind": "domainProperty",
-            "propertyId": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04"
-          }
-        },
-        {
-          "parameterName": "slot",
-          "source": {
-            "kind": "placeholder",
-            "value": "#{slot}"
-          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5"
         }
-      ],
+      },
       "mode": "replace",
-      "targetPropertyId": "prop_641SVQJRC0GWZ43QNEPB429MND",
-      "transformName": "WithdrawCurrency",
-      "transformPackageId": "foundation-economy-currency"
+      "targetPropertyId": "prop_641SVQJRC0GWZ43QNEPB429MND"
     }
   ],
   "compositeKeyMode": {
@@ -97,8 +105,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-shop-character-gacha",
-    "directSourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-    "sourcePackageId": "micro-shop-character-gacha",
-    "sourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+    "directSourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
   }
 }

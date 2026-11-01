@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "count",
@@ -33,13 +33,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "DepositFreeCurrency",
-        "transformPackageId": "foundation-economy-currency"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_7D1B71PKTZBZJ9Y9YSA6BRB7W4",
   "location": {
     "modelName": "AcquireAction",

@@ -1,118 +1,116 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "accessPeriodEventId",
-        "value": null
-      },
-      {
-        "kind": "static",
-        "parameterName": "clusterType",
-        "value": "Gs2Guild::Guild"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "entryPeriodEventId.grnKey.eventName",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
-            },
-            "propertyId": "prop_00D033H0GPV00M3DBQVFQC6VA2"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "maximumValue",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
-            },
-            "propertyId": "prop_00D033H0GPZP59YFFCVBBGVPGM"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "metadata",
-        "value": ""
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "minimumValue",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
-            },
-            "propertyId": "prop_00D033H0GPY13F7M2F5MH9W2PW"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "orderDirection",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
-            },
-            "propertyId": "prop_00D033H0GPWEF15V2AMFQET09E"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "rewardCalculationIndex",
-        "value": "rank"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "sum",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
-            },
-            "propertyId": "prop_00D033H0GPZ8M64WY0868P8S2T"
-          }
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "accessPeriodEventId",
+      "value": null
+    },
+    {
+      "kind": "static",
+      "parameterName": "clusterType",
+      "value": "Gs2Guild::Guild"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "entryPeriodEventId.grnKey.eventName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+          },
+          "propertyId": "prop_00D033H0GPV00M3DBQVFQC6VA2"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "maximumValue",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+          },
+          "propertyId": "prop_00D033H0GPZP59YFFCVBBGVPGM"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "metadata",
+      "value": ""
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "minimumValue",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+          },
+          "propertyId": "prop_00D033H0GPY13F7M2F5MH9W2PW"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "orderDirection",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+          },
+          "propertyId": "prop_00D033H0GPWEF15V2AMFQET09E"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "rewardCalculationIndex",
+      "value": "rank"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "sum",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+          },
+          "propertyId": "prop_00D033H0GPZ8M64WY0868P8S2T"
+        }
+      }
+    }
+  ],
   "id": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ",
   "location": {
     "modelName": "ClusterRankingModel",

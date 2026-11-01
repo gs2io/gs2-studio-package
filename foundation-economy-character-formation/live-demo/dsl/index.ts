@@ -45,7 +45,9 @@ const ExpandRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(CharacterFormation)
         .bindings({
-          action: Bind.transform(formation.packageId, "IncreaseSaveArea", [Arg.static("value", 1)]),
+          action: Bind.transform(formation.packageId, formation.transformId("IncreaseSaveArea"), [
+            Arg.static("value", 1),
+          ]),
         });
     })
 );
@@ -55,10 +57,13 @@ export const foundationEconomyCharacterFormationDemo = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "パーティ編成（デモデータ）", en: "Party Formation (demo data)" },
-    description: {
-      ja: "ライブデモ用の編成スロットと枠の拡張を提供します。",
-      en: "Supplies the formation slots and the save-area expansion the live demo uses.",
+    ja: {
+      label: "パーティ編成（デモデータ）",
+      description: "ライブデモ用の編成スロットと枠の拡張を提供します。",
+    },
+    en: {
+      label: "Party Formation (demo data)",
+      description: "Supplies the formation slots and the save-area expansion the live demo uses.",
     },
   })
   .dependency(formation.packageId, "github:gs2io/gs2-studio-package")
@@ -114,6 +119,6 @@ export const foundationEconomyCharacterFormationDemo = definePackage(
   .delegatedAction(CharacterFormation, "Expand", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ExpandRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

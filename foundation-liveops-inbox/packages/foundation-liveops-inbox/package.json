@@ -3,13 +3,13 @@
   "name": "foundation-liveops-inbox",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Delivers announcements and item-attached messages from the operator to players.",
-      "ja": "運営からのお知らせや、アイテム付きメッセージをプレイヤーに届けます。"
+    "en": {
+      "description": "Delivers announcements and item-attached messages from the operator to players.",
+      "label": "Inbox"
     },
-    "label": {
-      "en": "Inbox",
-      "ja": "お知らせ・受信箱"
+    "ja": {
+      "description": "運営からのお知らせや、アイテム付きメッセージをプレイヤーに届けます。",
+      "label": "お知らせ・受信箱"
     }
   }
 }

@@ -6,13 +6,13 @@
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "A global leaderboard with a scheduled entry period and rewards handed out by rank.",
-      "ja": "全プレイヤーを対象としたランキングです。開催期間をスケジュールで指定し、順位に応じた報酬を配れます。"
+    "en": {
+      "description": "A global leaderboard with a scheduled entry period and rewards handed out by rank.",
+      "label": "Rankings"
     },
-    "label": {
-      "en": "Rankings",
-      "ja": "ランキング"
+    "ja": {
+      "description": "全プレイヤーを対象としたランキングです。開催期間をスケジュールで指定し、順位に応じた報酬を配れます。",
+      "label": "ランキング"
     }
   }
 }

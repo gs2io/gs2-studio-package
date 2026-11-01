@@ -6,13 +6,13 @@
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Temporarily scales what a service hands out, targeted by action or model and limited to a period.",
-      "ja": "報酬の獲得量などを一時的に倍率で増減させます。対象のアクションまたはモデルと期間を指定できます。"
+    "en": {
+      "description": "Temporarily scales what a service hands out, targeted by action or model and limited to a period.",
+      "label": "Buffs"
     },
-    "label": {
-      "en": "Buffs",
-      "ja": "バフ"
+    "ja": {
+      "description": "報酬の獲得量などを一時的に倍率で増減させます。対象のアクションまたはモデルと期間を指定できます。",
+      "label": "バフ"
     }
   }
 }

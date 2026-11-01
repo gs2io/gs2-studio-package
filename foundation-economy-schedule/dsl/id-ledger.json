@@ -1,6 +1,15 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "transform:ClearTrigger:output:direct:Gs2Schedule:DeleteTriggerByUserId#0": "out_01M2K0X4KRHYGZYJPWDZGF76VF",
+    "transform:ClearTrigger:parameter:trigger": "param_01M2K0X4KRC2H2P0KF8VVHDRX5",
+    "transform:PullTrigger:output:direct:Gs2Schedule:TriggerByUserId#0": "out_01M2K0X4KRNG36N97VM1PJGPD0",
+    "transform:PullTrigger:parameter:trigger": "param_01M2K0X4KRE1959XVGZ2W6209R",
+    "transform:PullTrigger:parameter:ttlSeconds": "param_01M2K0X4KRKXFX1VR7EQYP7W4M",
+    "transform:TriggerSchedule:output:direct:Gs2Schedule:ExtendTriggerByUserId#0": "out_01KKR3P8NQB54BE66VPKND2ZHS",
+    "transform:TriggerSchedule:parameter:extendSeconds": "param_01KKR3P8NQM08ZGAD9RMXRT5MT",
+    "transform:TriggerSchedule:parameter:trigger": "param_01KKR3P8NPJDAJKYTAF2R1S1G0"
+  },
   "random": {
     "property:Schedule.activeDays": "prop_68GYGX3DAVXDYMJDJG8HKE0AET",
     "property:Schedule.anchorTimestamp": "prop_0WCCMQS198YK06YPJ16TKT4VSS",
@@ -22,20 +31,29 @@
     "property:Trigger.expiresAt": "prop_7GBQSK2XRE2JNP4FBPTB9K8BDK",
     "property:Trigger.triggered": "prop_1N32JT4VHQX89BMMSNSA8QE1W2",
     "property:Trigger.triggeredAt": "prop_3TE65WFVTTMBGJ8C08F2PMTGQJ",
-    "transform:ClearTrigger:output:direct:Gs2Schedule:DeleteTriggerByUserId#0": "out_01M2K0X4KRHYGZYJPWDZGF76VF",
-    "transform:ClearTrigger:parameter:trigger": "param_01M2K0X4KRC2H2P0KF8VVHDRX5",
-    "transform:PullTrigger:output:direct:Gs2Schedule:TriggerByUserId#0": "out_01M2K0X4KRNG36N97VM1PJGPD0",
-    "transform:PullTrigger:parameter:trigger": "param_01M2K0X4KRE1959XVGZ2W6209R",
-    "transform:PullTrigger:parameter:ttlSeconds": "param_01M2K0X4KRKXFX1VR7EQYP7W4M",
-    "transform:TriggerSchedule:output:direct:Gs2Schedule:ExtendTriggerByUserId#0": "out_01KKR3P8NQB54BE66VPKND2ZHS",
-    "transform:TriggerSchedule:parameter:extendSeconds": "param_01KKR3P8NQM08ZGAD9RMXRT5MT",
-    "transform:TriggerSchedule:parameter:trigger": "param_01KKR3P8NPJDAJKYTAF2R1S1G0",
+    "transform:ClearTrigger": "at_6F6C7GXB118PF9RTSGY69S57DC",
+    "transform:PullTrigger": "at_4FW3DYR9BB85TTH03JVZRFRTV3",
+    "transform:TriggerSchedule": "at_0FN6A3W4MR9VRA2RD233HW6NEV",
     "type:Schedule": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
     "type:Trigger": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
   },
   "deterministicOverrides": {
     "master/schedule:Namespace:unmounted:Schedule#0": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX",
     "master/schedule:Namespace:unmounted:Schedule#0/schedule:Event:Schedule:#0": "mdr_44PB7J1MKEA3HB951V9904EYQW",
+    "ui:Schedule:definition": "uic_1S0WXK0Y5BAT0BM8A265XSP4VB",
+    "ui:Schedule:item:AbsoluteActiveToggle": "uii_3N7KWAD6VNB7597Q5HF4MEVBBG",
+    "ui:Schedule:item:EndAtValue": "uii_7MEPW30C74BQZVSN7NZS7GCNVC",
+    "ui:Schedule:item:PeriodLabel": "uii_1MD6V5M418AN5AY26VRX4DRQ1T",
+    "ui:Schedule:item:RelativeActiveToggle": "uii_6XEX3CY1VYAW2B8H2AC5HSWV9G",
+    "ui:Schedule:item:RelativeEndAtValue": "uii_5F9001FT1XBMH9F9W4GKTCCC7G",
+    "ui:Schedule:item:RelativeWindowLabel": "uii_1B5PKBCY2XB30ARQVBMBQA7D97",
+    "ui:Schedule:item:StartAtValue": "uii_5X3S5EDY87BXAAPQH4FTST77XZ",
+    "ui:Trigger:definition": "uic_48XGPT11VBA5H9Y845NXTMCXEB",
+    "ui:Trigger:item:ExpiresAtValue": "uii_3F3CGAZQ0ABP3RBFKHB5NX12F2",
+    "ui:Trigger:item:NameLabel": "uii_2675N170VFA99REWHFRQA7Z9AX",
+    "ui:Trigger:item:TriggeredActiveToggle": "uii_1DDFP4NJXXA8NATPEMCF6MGC55",
+    "ui:Trigger:item:TriggeredInteractable": "uii_625D1A2XV5A60RCYQX9NDKGVKA",
+    "ui:Trigger:item:WindowLabel": "uii_2X3FN815QHBKC9GSEEQ5JAD3N2",
     "user/schedule:Trigger:Trigger:#0": "udr_0BRD4DM0YFABGS80VXGWB73KQP"
   }
 }

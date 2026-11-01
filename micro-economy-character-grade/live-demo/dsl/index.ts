@@ -46,7 +46,7 @@ const LimitBreakRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
         .bindings({
-          action: Bind.transform(grade.packageId, "PromoteCharacterGrade", [
+          action: Bind.transform(grade.packageId, grade.transformId("PromoteCharacterGrade"), [
             Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
             Arg.static("gradeValue", 1),
           ]),
@@ -64,10 +64,14 @@ const TrainHardRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
         .bindings({
-          action: Bind.transform(character.packageId, "AcquireCharacterExperience", [
-            Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
-            Arg.static("value", TRAIN_HARD_EXPERIENCE),
-          ]),
+          action: Bind.transform(
+            character.packageId,
+            character.transformId("AcquireCharacterExperience"),
+            [
+              Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
+              Arg.static("value", TRAIN_HARD_EXPERIENCE),
+            ]
+          ),
         });
     })
 );
@@ -76,29 +80,36 @@ function gradeStep(rankCapValue: number) {
   return { rankCapValue, propertyIdRegex: ".*", gradeUpPropertyIdRegex: ".*" };
 }
 
-const PROPERTY_ID_CONFIG = { parameterName: "config", source: {
-  kind: "listEntries",
-  
-  entries: [
-    {
-      kind: "fields",
-      fields: [
-        { name: "key", source: { kind: "static", value: "propertyId" } },
-        { name: "value", source: { kind: "domainProperty", propertyName: PROPERTY_ID } },
-      ],
-    },
-  ],
-} } as const;
+const PROPERTY_ID_CONFIG = {
+  parameterName: "config",
+  source: {
+    kind: "listEntries",
+
+    entries: [
+      {
+        kind: "fields",
+        fields: [
+          { name: "key", source: { kind: "static", value: "propertyId" } },
+          { name: "value", source: { kind: "domainProperty", propertyName: PROPERTY_ID } },
+        ],
+      },
+    ],
+  },
+} as const;
 
 export const microEconomyCharacterGradeDemo = definePackage(
   "micro-economy-character-grade-demo",
   "0.0.0"
 )
   .display({
-    label: { ja: "キャラクター限界突破（デモデータ）", en: "Character Grades (demo data)" },
-    description: {
-      ja: "ライブデモ用の限界突破の段階表と、限界突破・強い訓練の操作を提供します。",
-      en: "Supplies the grade steps the live demo raises through, and the presses that train and break the limit.",
+    ja: {
+      label: "キャラクター限界突破（デモデータ）",
+      description: "ライブデモ用の限界突破の段階表と、限界突破・強い訓練の操作を提供します。",
+    },
+    en: {
+      label: "Character Grades (demo data)",
+      description:
+        "Supplies the grade steps the live demo raises through, and the presses that train and break the limit.",
     },
   })
   .dependency(grade.packageId, "github:gs2io/gs2-studio-package")
@@ -174,11 +185,17 @@ export const microEconomyCharacterGradeDemo = definePackage(
   .delegatedAction(Character, "LimitBreak", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: LimitBreakRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [
+      { parameterName: "count", source: { kind: "static", value: 1 } },
+      PROPERTY_ID_CONFIG,
+    ],
   })
   .delegatedAction(Character, "TrainHard", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: TrainHardRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [
+      { parameterName: "count", source: { kind: "static", value: 1 } },
+      PROPERTY_ID_CONFIG,
+    ],
   })
   .build();

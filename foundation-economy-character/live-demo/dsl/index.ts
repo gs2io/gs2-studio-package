@@ -67,7 +67,7 @@ const RecruitRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(CharacterRecruit)
         .bindings({
-          action: Bind.transform(character.packageId, "AcquireCharacter", [
+          action: Bind.transform(character.packageId, character.transformId("AcquireCharacter"), [
             Arg.domainProperty(
               "character",
               Source.parent(Source.direct(CharacterRecruit, "character"))
@@ -100,10 +100,14 @@ const TrainRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
         .bindings({
-          action: Bind.transform(character.packageId, "AcquireCharacterExperience", [
-            Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
-            Arg.static("value", 40),
-          ]),
+          action: Bind.transform(
+            character.packageId,
+            character.transformId("AcquireCharacterExperience"),
+            [
+              Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
+              Arg.static("value", 40),
+            ]
+          ),
         });
     })
 );
@@ -121,18 +125,18 @@ export const foundationEconomyCharacterDemo = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "キャラクター（デモデータ）", en: "Characters (demo data)" },
-    description: {
-      ja: "ライブデモ用のキャラクター編成・レベル曲線・所持枠・勧誘を提供します。",
-      en: "Supplies the roster, level curve, capacity and recruits used by the live demo.",
+    ja: {
+      label: "キャラクター（デモデータ）",
+      description: "ライブデモ用のキャラクター編成・レベル曲線・所持枠・勧誘を提供します。",
+    },
+    en: {
+      label: "Characters (demo data)",
+      description: "Supplies the roster, level curve, capacity and recruits used by the live demo.",
     },
   })
   .displayType(CharacterRecruit, {
-    label: { ja: "勧誘", en: "Recruit" },
-    description: {
-      ja: "無償でキャラクターを1体入手できるデモ用の交換です。",
-      en: "A demo exchange that grants one character for nothing.",
-    },
+    ja: { label: "勧誘", description: "無償でキャラクターを1体入手できるデモ用の交換です。" },
+    en: { label: "Recruit", description: "A demo exchange that grants one character for nothing." },
   })
   .dependency(character.packageId, "github:gs2io/gs2-studio-package")
   .domainType(CharacterRecruit)
@@ -230,34 +234,37 @@ export const foundationEconomyCharacterDemo = definePackage(
   .delegatedAction(CharacterRecruit, "Recruit", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: RecruitRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
 
   .delegatedAction(Character, "Train", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: TrainRateModel,
     parameterOverrides: [
-      { parameterName: "count", source: { kind: "static",  value: 1 } },
+      { parameterName: "count", source: { kind: "static", value: 1 } },
       // Resolve the instance at click time because its propertyId does not exist when the rate model is deployed.
-      { parameterName: "config", source: {
-        kind: "listEntries",
-        
-        entries: [
-          {
-            kind: "fields",
-            fields: [
-              { name: "key", source: { kind: "static", value: "propertyId" } },
-              {
-                name: "value",
-                source: {
-                  kind: "domainProperty",
-                  propertyName: character.propertyId("Character", "propertyId"),
+      {
+        parameterName: "config",
+        source: {
+          kind: "listEntries",
+
+          entries: [
+            {
+              kind: "fields",
+              fields: [
+                { name: "key", source: { kind: "static", value: "propertyId" } },
+                {
+                  name: "value",
+                  source: {
+                    kind: "domainProperty",
+                    propertyName: character.propertyId("Character", "propertyId"),
+                  },
                 },
-              },
-            ],
-          },
-        ],
-      } },
+              ],
+            },
+          ],
+        },
+      },
     ],
   })
   .build();

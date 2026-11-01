@@ -224,31 +224,50 @@ const AgreementVersionModel = defineMasterDataResource(resource =>
 
 export const foundationLiveopsVersion = definePackage("foundation-liveops-version", "0.0.0")
   .display({
-    label: { ja: "バージョン管理", en: "Version Gate" },
-    description: {
-      ja: "利用規約の同意バージョンと、アプリやアセットのようにクライアントが申告するバージョンを確認します。",
-      en: "Checks the agreement (terms of service) versions a player accepted, and the versions a client reports, such as its app and asset versions.",
+    ja: {
+      label: "バージョン管理",
+      description:
+        "利用規約の同意バージョンと、アプリやアセットのようにクライアントが申告するバージョンを確認します。",
+    },
+    en: {
+      label: "Version Gate",
+      description:
+        "Checks the agreement (terms of service) versions a player accepted, and the versions a client reports, such as its app and asset versions.",
     },
   })
   .displayType(AgreementVersion, {
-    label: { ja: "規約バージョン", en: "Agreement version" },
-    description: {
-      ja: "利用規約やプライバシーポリシーの公開バージョンを管理します。",
-      en: "Manages published versions of agreements such as terms of service and privacy policies.",
+    ja: {
+      label: "規約バージョン",
+      description: "利用規約やプライバシーポリシーの公開バージョンを管理します。",
+    },
+    en: {
+      label: "Agreement version",
+      description:
+        "Manages published versions of agreements such as terms of service and privacy policies.",
     },
   })
   .displayType(EmbeddedVersion, {
-    label: { ja: "申告バージョン", en: "Reported version" },
-    description: {
-      ja: "アプリやアセットのように、クライアントが自分のバージョンを申告して確認を受けるものです。警告と利用拒否になるバージョンを設定します。",
-      en: "Something the client reports its own version of, such as the app or its assets, and the versions at or below which that version warns or is refused.",
+    ja: {
+      label: "申告バージョン",
+      description:
+        "アプリやアセットのように、クライアントが自分のバージョンを申告して確認を受けるものです。警告と利用拒否になるバージョンを設定します。",
+    },
+    en: {
+      label: "Reported version",
+      description:
+        "Something the client reports its own version of, such as the app or its assets, and the versions at or below which that version warns or is refused.",
     },
   })
   .displayType(VersionGate, {
-    label: { ja: "バージョン確認", en: "Version gate" },
-    description: {
-      ja: "バージョン確認を通過したプレイヤーをどのユーザーとして扱うかを設定します。この行が無いと、バージョン管理の名前空間とバージョンモデルはデプロイされません。",
-      en: "Configures which user a player who passes the version check is signed in as. Without this row, the version namespace and its version models are not deployed.",
+    ja: {
+      label: "バージョン確認",
+      description:
+        "バージョン確認を通過したプレイヤーをどのユーザーとして扱うかを設定します。この行が無いと、バージョン管理の名前空間とバージョンモデルはデプロイされません。",
+    },
+    en: {
+      label: "Version gate",
+      description:
+        "Configures which user a player who passes the version check is signed in as. Without this row, the version namespace and its version models are not deployed.",
     },
   })
   .domainType(VersionGate)

@@ -1,51 +1,49 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "clusterName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "clusterRankingScoreId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "metadata"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "rankingName"
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "score",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
-              },
-              "propertyId": "prop_00D033H0GPYB1S1KXMMSCNDR8E"
-            }
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "clusterName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "clusterRankingScoreId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "metadata"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "rankingName"
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "score",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+            },
+            "propertyId": "prop_00D033H0GPYB1S1KXMMSCNDR8E"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "season"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ"
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "season"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_27MST1Z5CYB3WRC556BBMJZJD1",
+  "linkedMasterResourceId": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ",
   "location": {
     "modelName": "ClusterRankingScore",
     "service": "ranking2"

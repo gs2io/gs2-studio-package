@@ -3,13 +3,13 @@
   "name": "foundation-economy-schedule",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Shared date-range and trigger infrastructure other features build on.",
-      "ja": "期間限定イベントなど、他の機能が使う日程とトリガーを共通基盤として提供します。"
+    "en": {
+      "description": "Shared date-range and trigger infrastructure other features build on.",
+      "label": "Scheduling"
     },
-    "label": {
-      "en": "Scheduling",
-      "ja": "スケジュール基盤"
+    "ja": {
+      "description": "期間限定イベントなど、他の機能が使う日程とトリガーを共通基盤として提供します。",
+      "label": "スケジュール基盤"
     }
   }
 }

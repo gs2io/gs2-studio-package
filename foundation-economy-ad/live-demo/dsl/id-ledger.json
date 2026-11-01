@@ -1,12 +1,19 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "row:dt_2KV2X0FT1TBFTKT821EBZ1GZSE.adplatform": "row_01M2TTJ1F7GMKPZHAM23PWRPGM",
-    "row:dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ.adviewpoint": "row_01M2TTJ1F7BPT31DKMSCA9CQ27",
+  "retired": {
     "transform:AcquireAdViewPoint:output:direct:Gs2AdReward:AcquirePointByUserId#0": "out_01M2TTJ1F7SVHWV5NM267VMPD1",
-    "type:AdPlatform": "dt_00D0PPMGBSR1W1QNA9B4FHCVGJ",
+    "type:AdPlatform": "dt_00D0PPMGBSR1W1QNA9B4FHCVGJ"
+  },
+  "random": {
+    "row:[\"foundation-economy-ad\",\"dt_2KV2X0FT1TBFTKT821EBZ1GZSE\",\"adplatform\"]": "row_01M2TTJ1F7GMKPZHAM23PWRPGM",
+    "row:[\"foundation-economy-ad\",\"dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ\",\"adviewpoint\"]": "row_01M2TTJ1F7BPT31DKMSCA9CQ27",
+    "transform:AcquireAdViewPoint": "at_1BKB0K494K8R6BV7VA50ZJ2T0D",
     "type:AdViewPoint": "dt_00D0PPMGBSSH7R8WYJPE2YJRNB"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:AdViewPoint:definition": "uic_67ZV86CQP2AC0A5K80N9XGNFMG",
+    "ui:AdViewPoint:item:BalanceLabel": "uii_20X34DDQA4BW090A1RKWNW15S2",
+    "ui:AdViewPoint:item:SpendButton": "uii_76KSD51KBDABQB2FCKK4ZWRSBA",
+    "ui:AdViewPoint:item:WatchButton": "uii_5W8B96W2W9BCAT61HJAYMCM7BE"
+  }
 }

@@ -28,9 +28,9 @@
     "property:StorePrice.price": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K",
     "property:StoreProduct.count": "prop_7GZCWER58FEK1Y8TQBHZPM0H6S",
     "property:StoreProduct.prices": "prop_01M40RS7N08DEDFYE3YFC4TRYV",
-    "row:type:CurrencyType.JPY": "row_0FJ2D55WWP0KY6J214TVG3WHZQ",
-    "row:type:CurrencyType.USD": "row_0W247SMA6R3HXCV2W1T1X9MYKV",
-    "row:type:CurrencyType.XXX": "row_0HJRNVQAXAA3XQGB9B79HY2WFC",
+    "row:[\"micro-shop-currency\",\"type:CurrencyType\",\"JPY\"]": "row_0FJ2D55WWP0KY6J214TVG3WHZQ",
+    "row:[\"micro-shop-currency\",\"type:CurrencyType\",\"USD\"]": "row_0W247SMA6R3HXCV2W1T1X9MYKV",
+    "row:[\"micro-shop-currency\",\"type:CurrencyType\",\"XXX\"]": "row_0HJRNVQAXAA3XQGB9B79HY2WFC",
     "type:CurrencyType": "dt_5X0WV26CPKD17193EPDQD24EP3",
     "type:StorePrice": "dt_5E4C6RPJ7T9H48WD5QS1973QTD",
     "type:StoreProduct": "dt_130FYGH3W86EG2FK06VGEJSYCT"
@@ -39,14 +39,14 @@
     "master/showcase:Namespace:unmounted:ShopCurrency#0": "mdr_437BHZT32X81A850WH802NN8BP",
     "master/showcase:Namespace:unmounted:ShopCurrency#0/showcase:Showcase:CurrencyType:#0": "mdr_52EEV67FGS9B1V0F4FDTAR1YY2",
     "master/showcase:Namespace:unmounted:ShopCurrency#0/showcase:Showcase:CurrencyType:#0/showcase:DisplayItem:StorePrice:@displayItems[0]#0": "mdr_5G3AX0767581SRB6QPW3FRXDBR",
-    "ui:StorePrice:StorePrice:definition": "uic_61Q8DEH9J28Z6S53FT8XV4KMK8",
-    "ui:StorePrice:StorePrice:item:PriceLabel": "uii_5VGTE4HTM99SGS3RRP3R90H8Q2",
-    "ui:StorePrice:StorePrice:item:PriceValue": "uii_35VSZWBCP39NVSBP3ERQPMJCRW",
-    "ui:StoreProduct:StoreProduct:definition": "uic_4G3HA96X8487AVM304D2A6EQ57",
-    "ui:StoreProduct:StoreProduct:item:AppleAppStoreProductIdValue": "uii_09BE4FVQDY8TF9R5XS1VW6TM5N",
-    "ui:StoreProduct:StoreProduct:item:CountLabel": "uii_1228MYDK1N8BWV1AVQNQS8R74T",
-    "ui:StoreProduct:StoreProduct:item:CountValue": "uii_3XMV39C0ZN8QYARGPJFMXQJJ0K",
-    "ui:StoreProduct:StoreProduct:item:GooglePlayProductIdValue": "uii_7V1J8W2P268AGA818P33WKTCT1",
-    "ui:StoreProduct:StoreProduct:item:IdValue": "uii_5SQR7KJQ668PNRP6Y8Z0GYGK4S"
+    "ui:StorePrice:definition": "uic_61Q8DEH9J28Z6S53FT8XV4KMK8",
+    "ui:StorePrice:item:PriceLabel": "uii_5VGTE4HTM99SGS3RRP3R90H8Q2",
+    "ui:StorePrice:item:PriceValue": "uii_35VSZWBCP39NVSBP3ERQPMJCRW",
+    "ui:StoreProduct:definition": "uic_4G3HA96X8487AVM304D2A6EQ57",
+    "ui:StoreProduct:item:AppleAppStoreProductIdValue": "uii_09BE4FVQDY8TF9R5XS1VW6TM5N",
+    "ui:StoreProduct:item:CountLabel": "uii_1228MYDK1N8BWV1AVQNQS8R74T",
+    "ui:StoreProduct:item:CountValue": "uii_3XMV39C0ZN8QYARGPJFMXQJJ0K",
+    "ui:StoreProduct:item:GooglePlayProductIdValue": "uii_7V1J8W2P268AGA818P33WKTCT1",
+    "ui:StoreProduct:item:IdValue": "uii_5SQR7KJQ668PNRP6Y8Z0GYGK4S"
   }
 }

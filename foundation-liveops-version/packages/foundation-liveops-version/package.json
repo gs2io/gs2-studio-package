@@ -3,13 +3,13 @@
   "name": "foundation-liveops-version",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Checks the agreement (terms of service) versions a player accepted, and the versions a client reports, such as its app and asset versions.",
-      "ja": "利用規約の同意バージョンと、アプリやアセットのようにクライアントが申告するバージョンを確認します。"
+    "en": {
+      "description": "Checks the agreement (terms of service) versions a player accepted, and the versions a client reports, such as its app and asset versions.",
+      "label": "Version Gate"
     },
-    "label": {
-      "en": "Version Gate",
-      "ja": "バージョン管理"
+    "ja": {
+      "description": "利用規約の同意バージョンと、アプリやアセットのようにクライアントが申告するバージョンを確認します。",
+      "label": "バージョン管理"
     }
   }
 }

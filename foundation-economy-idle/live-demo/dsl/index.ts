@@ -33,16 +33,16 @@ const IdleReward = defineOverlayDomainType(
       {
         targetProperty: idle.propertyId("IdleReward", "acquireActions"),
         mode: "append",
-            transformPackageId: currency.packageId,
-            transformName: "DepositFreeCurrency",
-            arguments: [
-              { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              {
-                parameterName: "count",
-                source: { kind: "domainProperty", propertyName: "coins" },
-              },
-            ],
+        transformPackageId: currency.packageId,
+        transformId: currency.transformId("DepositFreeCurrency"),
+        arguments: [
+          { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
+          {
+            parameterName: "count",
+            source: { kind: "domainProperty", propertyName: "coins" },
           },
+        ],
+      },
     ],
   },
   domainType =>
@@ -63,25 +63,27 @@ const IdleReward = defineOverlayDomainType(
 
 const withStatus = definePackage("foundation-economy-idle-demo", "0.0.0")
   .display({
-    label: { ja: "放置報酬（デモデータ）", en: "Idle Rewards (demo data)" },
-    description: {
-      ja: "ライブデモ用の放置報酬（5 分ごとに少し、1 時間ごとに多めのコイン、上限 8 時間）を提供します。報酬は通貨パッケージのウォレットへ入ります。",
-      en: "Supplies the live demo's idle reward: a few coins every five minutes away and a bigger drop every hour, up to eight hours. The rewards land in the currency package's wallet.",
+    ja: {
+      label: "放置報酬（デモデータ）",
+      description:
+        "ライブデモ用の放置報酬（5 分ごとに少し、1 時間ごとに多めのコイン、上限 8 時間）を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+    },
+    en: {
+      label: "Idle Rewards (demo data)",
+      description:
+        "Supplies the live demo's idle reward: a few coins every five minutes away and a bigger drop every hour, up to eight hours. The rewards land in the currency package's wallet.",
     },
   })
   .displayType(IdleStatus, {
-    label: { ja: "放置状況", en: "Idle status" },
-    description: {
-      ja: "デモの放置状況に、受け取りの操作と説明を付けます。",
-      en: "Gives the demo idle status its receive press and its rule.",
+    ja: { label: "放置状況", description: "デモの放置状況に、受け取りの操作と説明を付けます。" },
+    en: {
+      label: "Idle status",
+      description: "Gives the demo idle status its receive press and its rule.",
     },
   })
   .displayType(IdleReward, {
-    label: { ja: "放置報酬", en: "Idle reward" },
-    description: {
-      ja: "デモの放置報酬に、報酬コインを足します。",
-      en: "Adds the coins it pays to a demo idle reward.",
-    },
+    ja: { label: "放置報酬", description: "デモの放置報酬に、報酬コインを足します。" },
+    en: { label: "Idle reward", description: "Adds the coins it pays to a demo idle reward." },
   })
   .dependency(idle.packageId, "github:gs2io/gs2-studio-package")
   // Reuse the currency demo content so this demo cannot deploy a conflicting version of the shared wallet stack.

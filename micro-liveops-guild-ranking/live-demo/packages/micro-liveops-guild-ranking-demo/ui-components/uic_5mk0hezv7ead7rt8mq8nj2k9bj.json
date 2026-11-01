@@ -10,6 +10,5 @@
       "template": "You are ranked within your guild, not guild against guild. Each play adds 1 to 100 points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: 1st 300, 2nd-3rd 150, 4th-10th 50. Advance one day ends the season for you right away; guildmates who did not advance are still in it."
     }
   ],
-  "name": "GuildRanking",
   "targetDomainTypeId": "dt_00D0XMTYBP5KNZJFD93BWF6SFG"
 }

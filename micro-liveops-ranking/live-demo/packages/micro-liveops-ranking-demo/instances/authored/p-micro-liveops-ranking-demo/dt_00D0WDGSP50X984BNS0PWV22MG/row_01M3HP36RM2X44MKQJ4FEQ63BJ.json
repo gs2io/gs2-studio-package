@@ -1,0 +1,9 @@
+{
+  "id": "rankingcontest",
+  "rowKey": "row_01M3HP36RM2X44MKQJ4FEQ63BJ",
+  "type": {
+    "domainTypeId": "dt_00D0WDGSP50X984BNS0PWV22MG",
+    "packageId": "micro-liveops-ranking-demo"
+  },
+  "values": {}
+}

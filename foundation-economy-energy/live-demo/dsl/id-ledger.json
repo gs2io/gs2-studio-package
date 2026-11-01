@@ -4,8 +4,12 @@
     "ui:Energy:Energy:item:ConsumeButton": "uii_33HJANQD4SA4STSCPE4KBQ4G14"
   },
   "random": {
-    "row:dt_6Q9B985K9SXB6NC60YCTW3PKBZ.stamina": "row_01M2JG8Q6G20BTSYK8ZW3VTA46",
+    "row:[\"foundation-economy-energy\",\"dt_6Q9B985K9SXB6NC60YCTW3PKBZ\",\"stamina\"]": "row_01M2JG8Q6G20BTSYK8ZW3VTA46",
     "type:Energy": "dt_00D0MM25SM55BXJGSRRQEWD359"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:Energy:definition": "uic_3499MM8ZK4BWWS7Z47XQ35RVM0",
+    "ui:Energy:item:RecoverButton": "uii_4HQ21MKDA5BN5BNZW4AC8S46CW",
+    "ui:Energy:item:SpendButton": "uii_7YQXS5DM6KBSTAJMSR5YB20DC8"
+  }
 }

@@ -1,33 +1,37 @@
 {
   "actionPropertyTransforms": [
     {
-      "arguments": [
-        {
-          "parameterName": "slot",
-          "source": {
-            "kind": "static",
-            "value": 0
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "static",
+              "value": 10
+            }
+          },
+          {
+            "parameterName": "paidOnly",
+            "source": {
+              "kind": "static",
+              "value": false
+            }
           }
-        },
-        {
-          "parameterName": "count",
-          "source": {
-            "kind": "static",
-            "value": 10
-          }
-        },
-        {
-          "parameterName": "paidOnly",
-          "source": {
-            "kind": "static",
-            "value": false
-          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5"
         }
-      ],
+      },
       "mode": "replace",
-      "targetPropertyId": "prop_641SVQJRC0GWZ43QNEPB429MND",
-      "transformName": "WithdrawCurrency",
-      "transformPackageId": "foundation-economy-currency"
+      "targetPropertyId": "prop_641SVQJRC0GWZ43QNEPB429MND"
     }
   ],
   "compositeKeyMode": {
@@ -44,8 +48,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-shop-character-gacha",
-    "directSourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-    "sourcePackageId": "micro-shop-character-gacha",
-    "sourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+    "directSourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
   }
 }

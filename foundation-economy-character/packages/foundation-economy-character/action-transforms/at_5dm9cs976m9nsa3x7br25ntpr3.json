@@ -1,0 +1,67 @@
+{
+  "category": "acquire",
+  "id": "at_5DM9CS976M9NSA3X7BR25NTPR3",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_4D3TBCYQKS94GAV9WSFVNJEXQY",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "IncreaseCharacterLevelCap",
+  "outputs": [
+    {
+      "actionName": "Gs2Experience:AddRankCapByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "experienceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "rankCapValue",
+          "sourceParameter": "value"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_4D3TBCYQKS94GAV9WSFVNJEXQY",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+      }
+    },
+    {
+      "name": "value",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}

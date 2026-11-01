@@ -183,31 +183,40 @@ const ReceiveStatus = defineUserDataResource(resource =>
 
 export const microEconomyLoginReward = definePackage("micro-economy-login-reward", "0.0.0")
   .display({
-    label: { ja: "ログインボーナス", en: "Login Rewards" },
-    description: {
-      ja: "毎日・連続ログインなどに応じて報酬を配布します。",
-      en: "Grants rewards for daily or consecutive-day logins.",
+    ja: {
+      label: "ログインボーナス",
+      description: "毎日・連続ログインなどに応じて報酬を配布します。",
+    },
+    en: {
+      label: "Login Rewards",
+      description: "Grants rewards for daily or consecutive-day logins.",
     },
   })
   .displayType(LoginRewardCollection, {
-    label: { ja: "ログインボーナスグループ", en: "Login reward group" },
-    description: {
-      ja: "ログインボーナスをまとめるグループと開催スケジュールを設定します。",
-      en: "Groups login rewards and associates them with an availability schedule.",
+    ja: {
+      label: "ログインボーナスグループ",
+      description: "ログインボーナスをまとめるグループと開催スケジュールを設定します。",
+    },
+    en: {
+      label: "Login reward group",
+      description: "Groups login rewards and associates them with an availability schedule.",
     },
   })
   .displayType(LoginReward, {
-    label: { ja: "ログインボーナス", en: "Login reward" },
-    description: {
-      ja: "ログイン日数ごとに付与する報酬内容を設定します。",
-      en: "Defines the rewards granted for each login day.",
+    ja: {
+      label: "ログインボーナス",
+      description: "ログイン日数ごとに付与する報酬内容を設定します。",
     },
+    en: { label: "Login reward", description: "Defines the rewards granted for each login day." },
   })
   .displayType(Schedule, {
-    label: { ja: "スケジュール", en: "Schedule" },
-    description: {
-      ja: "ログインボーナスを利用できる開催期間を参照します。",
-      en: "References the period during which a login reward campaign is available.",
+    ja: {
+      label: "スケジュール",
+      description: "ログインボーナスを利用できる開催期間を参照します。",
+    },
+    en: {
+      label: "Schedule",
+      description: "References the period during which a login reward campaign is available.",
     },
   })
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")

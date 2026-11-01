@@ -5,11 +5,18 @@
     "Progress": {
       "id": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
       "singleEntry": true,
-      "delegatedActions": {
-        "Complete": "resource:micro-economy-quest:userData:udr_4TR60HC6M28STTKPCST9SRAVZA::Gs2Quest:Progress.End"
-      },
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
+      "delegatedActions": {
+        "Complete": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-quest",
+            "resourceKind": "userData",
+            "resourceId": "udr_4TR60HC6M28STTKPCST9SRAVZA"
+          },
+          "targetActionKey": "Gs2Quest:Progress.End"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "inProgress": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW",
@@ -32,11 +39,18 @@
     "Quest": {
       "id": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
       "singleEntry": false,
-      "delegatedActions": {
-        "Start": "resource:micro-economy-quest:masterData:mdr_1E79KV3GSN9K19S1G9P9PRYHEE::Gs2Quest:QuestModel.Start"
-      },
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
+      "delegatedActions": {
+        "Start": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-quest",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
+          },
+          "targetActionKey": "Gs2Quest:QuestModel.Start"
+        }
+      },
       "properties": {
         "collection": "prop_5KZQK7RQTRZAX02G1K0EYEMQ35",
         "completeAcquireActions": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8",
@@ -58,6 +72,7 @@
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "quest.Contents": "mdr_5354WY82118TB9R28D6Y8Q7EZQ",
     "quest.Namespace": "mdr_1F06WG3VDZ9AB9A5ZHKG7WWP95",

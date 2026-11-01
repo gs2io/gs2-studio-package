@@ -1,0 +1,67 @@
+{
+  "category": "acquire",
+  "id": "at_1N85Q9X5J29M9BXPXJYV8V4Q5Z",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_2PEA8RQ1MGA16V5HGXBZA28G57",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "AcquireCharacterEnhanceMaterial",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:AcquireSimpleItemsByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "acquireCounts[0].itemName",
+          "sourceParameter": "material"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "acquireCounts[0].count",
+          "sourceParameter": "count"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_2PEA8RQ1MGA16V5HGXBZA28G57",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "material",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
+      }
+    },
+    {
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

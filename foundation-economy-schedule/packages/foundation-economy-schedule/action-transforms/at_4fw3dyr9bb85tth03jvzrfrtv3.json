@@ -1,0 +1,73 @@
+{
+  "category": "acquire",
+  "id": "at_4FW3DYR9BB85TTH03JVZRFRTV3",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "PullTrigger",
+  "outputs": [
+    {
+      "actionName": "Gs2Schedule:TriggerByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "triggerName",
+          "sourceParameter": "trigger"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "static",
+          "parameterName": "triggerStrategy",
+          "value": "renew"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "ttl",
+          "sourceParameter": "ttlSeconds"
+        },
+        {
+          "kind": "static",
+          "parameterName": "eventId",
+          "value": null
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "trigger",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
+      }
+    },
+    {
+      "name": "ttlSeconds",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

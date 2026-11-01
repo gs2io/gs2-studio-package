@@ -34,7 +34,9 @@
                     "name": "value",
                     "source": {
                       "kind": "domainProperty",
-                      "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+                      "source": {
+                        "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+                      }
                     }
                   }
                 ],
@@ -79,7 +81,9 @@
                     "name": "value",
                     "source": {
                       "kind": "domainProperty",
-                      "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+                      "source": {
+                        "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
+                      }
                     }
                   }
                 ],
@@ -105,8 +109,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-equipment",
-    "directSourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
-    "sourcePackageId": "foundation-economy-equipment",
-    "sourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+    "directSourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
   }
 }

@@ -1,38 +1,36 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "metadata",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
-            },
-            "propertyId": "prop_00D0TAXWR8ZNBCPP520RH8KRHD"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "metadata",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
+          },
+          "propertyId": "prop_00D0TAXWR8ZNBCPP520RH8KRHD"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    }
+  ],
   "id": "mdr_2PEA8RQ1MGA16V5HGXBZA28G57",
   "location": {
     "modelName": "SimpleItemModel",

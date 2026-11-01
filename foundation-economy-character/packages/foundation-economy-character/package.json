@@ -3,13 +3,13 @@
   "name": "foundation-economy-character",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Handles character ownership, level, and experience.",
-      "ja": "キャラクターの所持・レベル・経験値を扱います。"
+    "en": {
+      "description": "Handles character ownership, level, and experience.",
+      "label": "Characters"
     },
-    "label": {
-      "en": "Characters",
-      "ja": "キャラクター"
+    "ja": {
+      "description": "キャラクターの所持・レベル・経験値を扱います。",
+      "label": "キャラクター"
     }
   }
 }

@@ -1,0 +1,11 @@
+{
+  "id": "paiddeposit",
+  "rowKey": "row_01M2FXJD9EMN834NJGBHH9A534",
+  "type": {
+    "domainTypeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
+    "packageId": "foundation-economy-currency-demo"
+  },
+  "values": {
+    "prop_00D0KZCKAB8JMZWPNE82NRXE0W": 50
+  }
+}

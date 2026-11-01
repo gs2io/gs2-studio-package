@@ -1,7 +1,9 @@
 {
   "schemaVersion": 1,
   "retired": {
-    "property:LoginReward.receivedSteps": "prop_7ZE5DJXXV4N12D8QRHVXVPPE77"
+    "property:LoginReward.receivedSteps": "prop_7ZE5DJXXV4N12D8QRHVXVPPE77",
+    "transform:ResetReceiveStatus:output:direct:Gs2LoginReward:DeleteReceiveStatusByUserId#0": "out_01M3CDS3318BK7B6711P4078WR",
+    "transform:ResetReceiveStatus:parameter:loginRewardCollection": "param_01M3CDS331JEB1CMG0KPTXVWF4"
   },
   "random": {
     "property:LoginReward.acquireActions": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
@@ -14,8 +16,7 @@
     "property:LoginRewardCollection.repeat": "prop_00D0V3E8RR3GSCNAW1JAKAQRRD",
     "property:LoginRewardCollection.resetHour": "prop_5BWDJGV41VX2E7914HXAQ5PGBP",
     "property:LoginRewardCollection.schedule": "prop_2GPQQQHZ70FS0R1N1B43CP2VMW",
-    "transform:ResetReceiveStatus:output:direct:Gs2LoginReward:DeleteReceiveStatusByUserId#0": "out_01M3CDS3318BK7B6711P4078WR",
-    "transform:ResetReceiveStatus:parameter:loginRewardCollection": "param_01M3CDS331JEB1CMG0KPTXVWF4",
+    "transform:ResetReceiveStatus": "at_7HZJD63FEK93PTBTQWK5A3KNT4",
     "type:LoginReward": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
     "type:LoginRewardCollection": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
     "type:Schedule": "dt_51N1KRW6N6Q3BEP1VCG5A15M74"

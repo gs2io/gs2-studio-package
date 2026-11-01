@@ -13,13 +13,13 @@
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the live demo's buff that doubles idle rewards during a campaign, and the presses that start and end the campaign.",
-      "ja": "ライブデモ用に、キャンペーン中は放置報酬を 2 倍にするバフと、キャンペーンの開始・終了の操作を提供します。"
+    "en": {
+      "description": "Supplies the live demo's buff that doubles idle rewards during a campaign, and the presses that start and end the campaign.",
+      "label": "Buffs (demo data)"
     },
-    "label": {
-      "en": "Buffs (demo data)",
-      "ja": "バフ（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用に、キャンペーン中は放置報酬を 2 倍にするバフと、キャンペーンの開始・終了の操作を提供します。",
+      "label": "バフ（デモデータ）"
     }
   }
 }

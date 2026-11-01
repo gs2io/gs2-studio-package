@@ -30,6 +30,10 @@
       }
     }
   },
+  "actionTransforms": {
+    "ReceiveGuildRankingReward": "at_2XGMST1H43X6MHHSJHQHWNG568",
+    "VerifyGuildRankingScoreReached": "at_0R2C0TCE7E855VHKXTGCZBFTBC"
+  },
   "masterDataResources": {
     "ranking2.ClusterRankingModel": "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ",
     "ranking2.Namespace": "mdr_74RKP7CV96BKRBC0XYGACE89ZP",

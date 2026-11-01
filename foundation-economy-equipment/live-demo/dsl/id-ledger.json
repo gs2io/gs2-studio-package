@@ -1,21 +1,32 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "type:EquipmentCategory": "dt_00D0MNXASRWQTFQ00XQ9WCDSYM"
+  },
   "random": {
     "property:EquipmentCatalog.equipment": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA",
-    "row:dt_3TNDM19GA01KNCFNQ6SFP3ECB1.equipmentcollection": "row_01M2JQNB739G31Y0FTNSD3TESF",
-    "row:dt_5XY098JXVWPEN0Q0F7QY165JJA.armor": "row_01M2JQNB73X9JJB3A0FNWPCKBK",
-    "row:dt_5XY098JXVWPEN0Q0F7QY165JJA.weapon": "row_01M2JQNB73G1ZBFZQYMZNJ45VT",
-    "row:dt_61Z29G730GMGBVA3GGTCBBX3A3.iron-sword": "row_01M2JQNB735N28BWNVFH1RXPZ2",
-    "row:dt_61Z29G730GMGBVA3GGTCBBX3A3.oak-staff": "row_01M2JQNB73HGAP3A0QA15JRMC9",
-    "row:dt_61Z29G730GMGBVA3GGTCBBX3A3.steel-shield": "row_01M2JQNB73JPGY358T0M7D4YGX",
-    "row:type:EquipmentCatalog.iron-sword": "row_01M2JQWQ97DBRB9ZWWTSRNANKE",
-    "row:type:EquipmentCatalog.oak-staff": "row_01M2JQWQ97N6YD40FPTR80DGTV",
-    "row:type:EquipmentCatalog.steel-shield": "row_01M2JQWQ979BVEBQS1QWQM3V1E",
+    "row:[\"foundation-economy-equipment\",\"dt_3TNDM19GA01KNCFNQ6SFP3ECB1\",\"equipmentcollection\"]": "row_01M2JQNB739G31Y0FTNSD3TESF",
+    "row:[\"foundation-economy-equipment\",\"dt_5XY098JXVWPEN0Q0F7QY165JJA\",\"armor\"]": "row_01M2JQNB73X9JJB3A0FNWPCKBK",
+    "row:[\"foundation-economy-equipment\",\"dt_5XY098JXVWPEN0Q0F7QY165JJA\",\"weapon\"]": "row_01M2JQNB73G1ZBFZQYMZNJ45VT",
+    "row:[\"foundation-economy-equipment\",\"dt_61Z29G730GMGBVA3GGTCBBX3A3\",\"iron-sword\"]": "row_01M2JQNB735N28BWNVFH1RXPZ2",
+    "row:[\"foundation-economy-equipment\",\"dt_61Z29G730GMGBVA3GGTCBBX3A3\",\"oak-staff\"]": "row_01M2JQNB73HGAP3A0QA15JRMC9",
+    "row:[\"foundation-economy-equipment\",\"dt_61Z29G730GMGBVA3GGTCBBX3A3\",\"steel-shield\"]": "row_01M2JQNB73JPGY358T0M7D4YGX",
+    "row:[\"foundation-economy-equipment-demo\",\"type:EquipmentCatalog\",\"iron-sword\"]": "row_01M2JQWQ97DBRB9ZWWTSRNANKE",
+    "row:[\"foundation-economy-equipment-demo\",\"type:EquipmentCatalog\",\"oak-staff\"]": "row_01M2JQWQ97N6YD40FPTR80DGTV",
+    "row:[\"foundation-economy-equipment-demo\",\"type:EquipmentCatalog\",\"steel-shield\"]": "row_01M2JQWQ979BVEBQS1QWQM3V1E",
     "type:Equipment": "dt_00D0MNXASRT2QXV1SJH71CX4V2",
     "type:EquipmentCatalog": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
-    "type:EquipmentCategory": "dt_00D0MNXASRWQTFQ00XQ9WCDSYM",
     "type:EquipmentCollection": "dt_00D0MNXASRRPHW8RV3NXTHX8AY"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:Equipment:definition": "uic_4VRGX0T7ZZADFTDC8PA1140H23",
+    "ui:Equipment:item:DiscardButton": "uii_5JGH7ZSMEWBCEAK62CPAQV70RA",
+    "ui:EquipmentCatalog:definition": "uic_4DWM9PVFXZAYHS0P80AQ7GNJ36",
+    "ui:EquipmentCatalog:item:NameLabel": "uii_04C1D5QNHYBK4VCBKD1PS3MWGE",
+    "ui:EquipmentCatalog:item:TakeButton": "uii_7T0JKK8YRAA1NV39GY9Z531AAA",
+    "ui:EquipmentCollection:definition": "uic_25M63WR56ABPSV2EYFRQZ2KA6X",
+    "ui:EquipmentCollection:item:ExpandButton": "uii_7ZF6Q1NABGAP7V1AMTW85J8Z6M",
+    "ui:EquipmentCollection:item:HoldsAnyActiveToggle": "uii_4MV0PRT5WPA7B8JCARXDG3GNG6",
+    "ui:EquipmentCollection:item:NoneYetLabel": "uii_5F7B28KKM0BQHVZXZRC2EMC8RN"
+  }
 }

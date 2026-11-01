@@ -1,47 +1,45 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "globalRankingScoreId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "metadata"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "rankingName"
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "score",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
-              },
-              "propertyId": "prop_00D031DYK0992AG7MFZHFPE8KQ"
-            }
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "globalRankingScoreId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "metadata"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "rankingName"
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "score",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
+            },
+            "propertyId": "prop_00D031DYK0992AG7MFZHFPE8KQ"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "season"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR"
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "season"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_0QH9M765VTAMT9HARN0A6QATBT",
+  "linkedMasterResourceId": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR",
   "location": {
     "modelName": "GlobalRankingScore",
     "service": "ranking2"

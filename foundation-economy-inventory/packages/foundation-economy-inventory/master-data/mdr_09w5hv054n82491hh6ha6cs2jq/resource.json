@@ -1,13 +1,11 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "name",
-        "value": "Inventory"
-      }
-    ]
-  },
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "name",
+      "value": "Inventory"
+    }
+  ],
   "id": "mdr_09W5HV054N82491HH6HA6CS2JQ",
   "location": {
     "modelName": "Namespace",

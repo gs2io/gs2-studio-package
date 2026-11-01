@@ -24,8 +24,6 @@
   "singleEntry": true,
   "source": {
     "directSourcePackageId": "foundation-economy-idle",
-    "directSourceTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
-    "sourcePackageId": "foundation-economy-idle",
-    "sourceTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+    "directSourceTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
   }
 }

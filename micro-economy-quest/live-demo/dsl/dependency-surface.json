@@ -19,13 +19,8 @@
         "reward": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR",
         "staminaCost": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
       }
-    },
-    "QuestCollection": {
-      "id": "dt_00D0TT9XC972WK8F5RYPDYZSY1",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-economy-quest",
-      "canonicalTypeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9"
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {}
 }

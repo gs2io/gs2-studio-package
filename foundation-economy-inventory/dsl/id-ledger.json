@@ -1,20 +1,27 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "property:Item.count": "prop_4RM1PKMWET4WYQBAW013CTF8YD",
+  "retired": {
     "transform:AcquireItem:output:direct:Gs2Inventory:AcquireSimpleItemsByUserId#0": "out_01KJSWMP1BBRH5H3BGK1KDPRZ4",
     "transform:AcquireItem:parameter:count": "param_01KJSWNBRK2AXBJ7FYQSRRX8MV",
     "transform:AcquireItem:parameter:itemName": "param_01KJSWNB463T8C7HDTH7HDE9P2",
     "transform:ConsumeItem:output:direct:Gs2Inventory:ConsumeSimpleItemsByUserId#0": "out_01KJSWPR9SXB1WTTF408QJTVY1",
     "transform:ConsumeItem:parameter:count": "param_01KJSWPE639MXSD66G3J0SZWB0",
-    "transform:ConsumeItem:parameter:itemName": "param_01KJSWPCXZ4VAWJEDA4HWHYD9H",
+    "transform:ConsumeItem:parameter:itemName": "param_01KJSWPCXZ4VAWJEDA4HWHYD9H"
+  },
+  "random": {
+    "property:Item.count": "prop_4RM1PKMWET4WYQBAW013CTF8YD",
+    "transform:AcquireItem": "at_4AHYMDX4JN8BHV2Q0MHBGXCA0Z",
+    "transform:ConsumeItem": "at_5MZS971WV985R8Q1TP98MGN18Y",
     "type:Item": "dt_47E751540GQRMAWTXYFT9376WH"
   },
   "deterministicOverrides": {
     "master/inventory:Namespace:unmounted:Inventory#0": "mdr_09W5HV054N82491HH6HA6CS2JQ",
     "master/inventory:Namespace:unmounted:Inventory#0/inventory:SimpleInventoryModel:unmounted:Inventory#0": "mdr_5FVCJFNG0N9MFTSN24Q5SJ2C0G",
     "master/inventory:Namespace:unmounted:Inventory#0/inventory:SimpleInventoryModel:unmounted:Inventory#0/inventory:SimpleItemModel:Item:@simpleItemModels[0]#0": "mdr_2MZFS2Y6618P68QQHD5XJHVFV5",
+    "ui:Item:definition": "uic_0G35FB7YXBAX1SK5S4EDPSFGY0",
+    "ui:Item:item:CountValue": "uii_1JHGCKACH5AT3VCT1FSBEJWC5Y",
+    "ui:Item:item:OwnedInteractable": "uii_3JMSAN2PP3B9Y86B5ZG50GYMKS",
+    "ui:Item:item:StockLabel": "uii_2YSSS3EXQ7AHHBFFFEJR4Q2QXF",
     "user/inventory:SimpleItem:unmounted:#0": "udr_7HSSTMTZH09CRA81A2KHRBV7RJ"
   }
 }

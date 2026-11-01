@@ -1,13 +1,19 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "row:dt_00D031EZFZGQWMWS3BP6K2QWFB.WELCOME2026": "row_01M3JVP252W21HS9J11J5Y2ATC",
-    "row:type:SerialCodeRedemption.serialcoderedemption": "row_01M3JVP252T4PHE01YFB47VMRB",
+  "retired": {
     "transform:ClearRedemption:output:direct:Gs2Limit:DeleteCounterByUserId#0": "out_01M3JZ3MVP1VBN2VEVPFMCMDKX",
     "transform:CountRedemption:output:direct:Gs2Limit:CountUpByUserId#0": "out_01M3JVP25246BB3V2R4C7XQG3Q",
-    "type:SerialCodeCampaign": "dt_00D0WPXGH8GHE54Y9SHDAH57PG",
+    "type:SerialCodeCampaign": "dt_00D0WPXGH8GHE54Y9SHDAH57PG"
+  },
+  "random": {
+    "row:[\"micro-liveops-serial-code\",\"dt_00D031EZFZGQWMWS3BP6K2QWFB\",\"WELCOME2026\"]": "row_01M3JVP252W21HS9J11J5Y2ATC",
+    "row:[\"micro-liveops-serial-code-demo\",\"type:SerialCodeRedemption\",\"serialcoderedemption\"]": "row_01M3JVP252T4PHE01YFB47VMRB",
+    "transform:ClearRedemption": "at_0ANYB1CF038B2RMMTVPA8C9X3B",
+    "transform:CountRedemption": "at_2HMSD4AP729NXVQMK5RM8CRXEQ",
     "type:SerialCodeRedemption": "dt_00D0WPXGH8DX6MATYR4SWNMNKW"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:SerialCodeRedemption:definition": "uic_33TXKEKSZKB5C92ZZ936TGD5AG",
+    "ui:SerialCodeRedemption:item:RuleLabel": "uii_65971STQ19BHYVSDVV84Q1Q47G"
+  }
 }

@@ -1,36 +1,34 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperties",
-        "parameterName": "acquiredAt",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP"
-              },
-              "propertyId": "prop_2SMS2KDR27EFR2G4DEY7VYXJF1"
-            }
+  "declaredBindings": [
+    {
+      "kind": "domainProperties",
+      "parameterName": "acquiredAt",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP"
+            },
+            "propertyId": "prop_2SMS2KDR27EFR2G4DEY7VYXJF1"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "entryId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "name"
-      }
-    ],
-    "existencePropertyId": "prop_6K2DAV9HFZF5PG2DKYE78E3MDK",
-    "linkedMasterResourceId": "mdr_50VBE9ASKA930RKYC6YDCG9E49"
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "entryId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "name"
+    }
+  ],
+  "existencePropertyId": "prop_6K2DAV9HFZF5PG2DKYE78E3MDK",
   "id": "udr_6TESEJ8M0N8MZBJCX2J5Q0E54R",
+  "linkedMasterResourceId": "mdr_50VBE9ASKA930RKYC6YDCG9E49",
   "location": {
     "modelName": "Entry",
     "service": "dictionary"

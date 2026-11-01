@@ -1,88 +1,86 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "applyPeriodScheduleEventId.grnKey.eventName",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
-            },
-            "propertyId": "prop_00D0322BN7Y0A6WHYB9YCFZQQ4"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "expression",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
-            },
-            "propertyId": "prop_00D0322BN7G543V28MFV62QC0X"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "metadata",
-        "value": ""
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "priority",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
-            },
-            "propertyId": "prop_00D0322BN7WAGFGTFPNZT8GHVP"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "targetType",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
-            },
-            "propertyId": "prop_00D0W9XTYQ1A7B8FZE88WBY1R0"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "applyPeriodScheduleEventId.grnKey.eventName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
+          },
+          "propertyId": "prop_00D0322BN7Y0A6WHYB9YCFZQQ4"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "expression",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
+          },
+          "propertyId": "prop_00D0322BN7G543V28MFV62QC0X"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "metadata",
+      "value": ""
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "priority",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
+          },
+          "propertyId": "prop_00D0322BN7WAGFGTFPNZT8GHVP"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "targetType",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
+          },
+          "propertyId": "prop_00D0W9XTYQ1A7B8FZE88WBY1R0"
+        }
+      }
+    }
+  ],
   "id": "mdr_403PNWNXHGAHNVCTWXXVQPXKY1",
   "location": {
     "modelName": "BuffEntryModel",

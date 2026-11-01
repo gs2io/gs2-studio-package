@@ -6,13 +6,13 @@
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Keeps a dex of every character species the player has ever obtained.",
-      "ja": "これまでに入手したキャラクターの種類を図鑑に記録します。"
+    "en": {
+      "description": "Keeps a dex of every character species the player has ever obtained.",
+      "label": "Character Dex"
     },
-    "label": {
-      "en": "Character Dex",
-      "ja": "キャラクター図鑑"
+    "ja": {
+      "description": "これまでに入手したキャラクターの種類を図鑑に記録します。",
+      "label": "キャラクター図鑑"
     }
   }
 }

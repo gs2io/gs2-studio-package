@@ -7,19 +7,8 @@
       "singleEntry": false,
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
-    },
-    "EmbeddedVersion": {
-      "id": "dt_00D0WRKP44D2Q9X9KP7XQV1DE2",
-      "singleEntry": false,
-      "canonicalPackageId": "foundation-liveops-version",
-      "canonicalTypeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM"
-    },
-    "VersionGate": {
-      "id": "dt_00D0WRKP44B4PTG8ZVAERANV1W",
-      "singleEntry": true,
-      "canonicalPackageId": "foundation-liveops-version",
-      "canonicalTypeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH"
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {}
 }

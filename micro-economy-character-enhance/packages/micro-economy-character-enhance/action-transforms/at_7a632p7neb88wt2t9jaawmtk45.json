@@ -1,0 +1,94 @@
+{
+  "category": "acquire",
+  "id": "at_7A632P7NEB88WT2T9JAAWMTK45",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "EnhanceCharacter",
+  "outputs": [
+    {
+      "actionName": "Gs2Enhance:DirectEnhanceByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "rateName",
+          "sourceParameter": "enhance"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "targetItemSetId",
+          "sourceParameter": "targetItemSetId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "materials[0].materialItemSetId",
+          "sourceParameter": "materialItemSetId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "materials[0].count",
+          "sourceParameter": "count"
+        },
+        {
+          "kind": "static",
+          "parameterName": "config",
+          "value": null
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "enhance",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031YG89PXH0J9RYZKY8NP6R"
+      }
+    },
+    {
+      "name": "targetItemSetId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "materialItemSetId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

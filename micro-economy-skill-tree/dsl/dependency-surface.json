@@ -26,6 +26,10 @@
       }
     }
   },
+  "actionTransforms": {
+    "ReleaseSkillNode": "at_5WT3G6Z2TK8KETEF100N0T9FQK",
+    "RestrainSkillNode": "at_0T4E2X5NJ896J92H8ZAD72DD60"
+  },
   "masterDataResources": {
     "skillTree.Namespace": "mdr_5GN698F83ABYK82ZGJ8SXHSGYF",
     "skillTree.NodeModel": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD",

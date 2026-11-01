@@ -1,0 +1,93 @@
+{
+  "category": "acquire",
+  "id": "at_1RG4YKDR299ERAM1FKTZC304C6",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_5TQZFM8AS38R69FHM3H76YY11G",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "SendMessageWithReward",
+  "outputs": [
+    {
+      "actionName": "Gs2Inbox:SendMessageByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "metadata",
+          "sourceParameter": "metadata"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "readAcquireActions",
+          "sourceParameter": "rewards"
+        },
+        {
+          "kind": "static",
+          "parameterName": "expiresAt",
+          "value": null
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "expiresTimeSpan.days",
+          "sourceParameter": "expireDays"
+        },
+        {
+          "kind": "static",
+          "parameterName": "expiresTimeSpan.hours",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "expiresTimeSpan.minutes",
+          "value": null
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_5TQZFM8AS38R69FHM3H76YY11G",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "metadata",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "expireDays",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    },
+    {
+      "name": "rewards",
+      "required": true,
+      "type": {
+        "elementType": {
+          "kind": "acquireAction"
+        },
+        "kind": "list"
+      }
+    }
+  ]
+}

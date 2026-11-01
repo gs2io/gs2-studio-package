@@ -235,24 +235,33 @@ const Namespace = defineMasterDataResource(resource =>
 
 export const foundationEconomySchedule = definePackage("foundation-economy-schedule", "0.0.0")
   .display({
-    label: { ja: "スケジュール基盤", en: "Scheduling" },
-    description: {
-      ja: "期間限定イベントなど、他の機能が使う日程とトリガーを共通基盤として提供します。",
-      en: "Shared date-range and trigger infrastructure other features build on.",
+    ja: {
+      label: "スケジュール基盤",
+      description: "期間限定イベントなど、他の機能が使う日程とトリガーを共通基盤として提供します。",
+    },
+    en: {
+      label: "Scheduling",
+      description: "Shared date-range and trigger infrastructure other features build on.",
     },
   })
   .displayType(Schedule, {
-    label: { ja: "スケジュール", en: "Schedule" },
-    description: {
-      ja: "イベントや機能を有効にする開始・終了日時と繰り返し条件を設定します。",
-      en: "Defines start and end times and recurrence rules for events or features.",
+    ja: {
+      label: "スケジュール",
+      description: "イベントや機能を有効にする開始・終了日時と繰り返し条件を設定します。",
+    },
+    en: {
+      label: "Schedule",
+      description: "Defines start and end times and recurrence rules for events or features.",
     },
   })
   .displayType(Trigger, {
-    label: { ja: "トリガー", en: "Trigger" },
-    description: {
-      ja: "プレイヤーごとのトリガー発火状態と有効期限を管理します。",
-      en: "Tracks each player's trigger state, trigger time, and expiration.",
+    ja: {
+      label: "トリガー",
+      description: "プレイヤーごとのトリガー発火状態と有効期限を管理します。",
+    },
+    en: {
+      label: "Trigger",
+      description: "Tracks each player's trigger state, trigger time, and expiration.",
     },
   })
   .domainType(Schedule)

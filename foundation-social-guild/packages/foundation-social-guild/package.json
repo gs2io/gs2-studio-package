@@ -3,13 +3,13 @@
   "name": "foundation-social-guild",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Handles player guilds: capacity, permission roles, and which guild a player belongs to.",
-      "ja": "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。"
+    "en": {
+      "description": "Handles player guilds: capacity, permission roles, and which guild a player belongs to.",
+      "label": "Guilds"
     },
-    "label": {
-      "en": "Guilds",
-      "ja": "ギルド"
+    "ja": {
+      "description": "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。",
+      "label": "ギルド"
     }
   }
 }

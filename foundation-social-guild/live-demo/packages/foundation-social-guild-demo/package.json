@@ -6,13 +6,13 @@
     "foundation-social-guild": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the live demo's one guild kind and its two roles, master and member.",
-      "ja": "ライブデモ用に、ギルドの種別 1 つと、マスター・一般メンバーの 2 つの役職を提供します。"
+    "en": {
+      "description": "Supplies the live demo's one guild kind and its two roles, master and member.",
+      "label": "Guilds (demo data)"
     },
-    "label": {
-      "en": "Guilds (demo data)",
-      "ja": "ギルド（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用に、ギルドの種別 1 つと、マスター・一般メンバーの 2 つの役職を提供します。",
+      "label": "ギルド（デモデータ）"
     }
   }
 }

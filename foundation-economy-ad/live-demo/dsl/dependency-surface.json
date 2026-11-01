@@ -2,22 +2,33 @@
   "schemaVersion": 1,
   "packageId": "foundation-economy-ad-demo",
   "types": {
-    "AdPlatform": {
-      "id": "dt_00D0PPMGBSR1W1QNA9B4FHCVGJ",
-      "singleEntry": true,
-      "canonicalPackageId": "foundation-economy-ad",
-      "canonicalTypeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE"
-    },
     "AdViewPoint": {
       "id": "dt_00D0PPMGBSSH7R8WYJPE2YJRNB",
       "singleEntry": true,
-      "delegatedActions": {
-        "Spend": "resource:foundation-economy-ad-demo:masterData:mdr_50881G8A8QBAWTRD6J25BKQBE8::Gs2Exchange:RateModel.Exchange",
-        "Watch": "resource:foundation-economy-ad-demo:masterData:mdr_097S3NBVT0AH9A94KKQCBHPNG5::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-ad",
-      "canonicalTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
+      "canonicalTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
+      "delegatedActions": {
+        "Spend": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-ad-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_50881G8A8QBAWTRD6J25BKQBE8"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "Watch": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-ad-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_097S3NBVT0AH9A94KKQCBHPNG5"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     }
+  },
+  "actionTransforms": {
+    "AcquireAdViewPoint": "at_1BKB0K494K8R6BV7VA50ZJ2T0D"
   },
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_3ESNRVY21ZAPJS612007NXVYD0",

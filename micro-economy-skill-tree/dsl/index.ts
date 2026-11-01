@@ -117,25 +117,34 @@ const NodeModel = defineMasterDataResource(resource =>
 
 export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "0.0.0")
   .display({
-    label: { ja: "スキルツリー", en: "Skill Tree" },
-    description: {
-      ja: "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはキャラクターごとに記録されます。",
-      en: "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per character.",
+    ja: {
+      label: "スキルツリー",
+      description:
+        "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはキャラクターごとに記録されます。",
+    },
+    en: {
+      label: "Skill Tree",
+      description:
+        "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per character.",
     },
   })
   .displayType(SkillNode, {
-    label: { ja: "スキルノード", en: "Skill node" },
-    description: {
-      ja: "スキルツリー上の能力、解放条件、前提ノードを設定します。",
-      en: "Defines an ability node, its unlock cost, and prerequisite nodes in a skill tree.",
+    ja: {
+      label: "スキルノード",
+      description: "スキルツリー上の能力、解放条件、前提ノードを設定します。",
+    },
+    en: {
+      label: "Skill node",
+      description:
+        "Defines an ability node, its unlock cost, and prerequisite nodes in a skill tree.",
     },
   })
   .displayType(Character, {
-    label: { ja: "キャラクター", en: "Character" },
-    description: {
-      ja: "キャラクターごとに解放済みスキルノードを管理します。",
-      en: "Tracks unlocked skill nodes per character.",
+    ja: {
+      label: "キャラクター",
+      description: "キャラクターごとに解放済みスキルノードを管理します。",
     },
+    en: { label: "Character", description: "Tracks unlocked skill nodes per character." },
   })
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
   .domainType(SkillNode)

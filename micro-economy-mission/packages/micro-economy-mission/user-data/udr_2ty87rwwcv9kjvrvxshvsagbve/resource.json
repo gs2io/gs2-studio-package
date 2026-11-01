@@ -1,44 +1,20 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "completeId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "missionGroupName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM",
-    "projectionBindings": [
-      {
-        "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "childMountPath": {
-          "kind": "local",
-          "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
-        },
-        "childTargetPropertyId": "prop_08ZS1KJ683EXX3ADZAVHK3E833",
-        "kind": "arrayMembership",
-        "parameterName": "completedMissionTaskNames"
-      },
-      {
-        "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "childMountPath": {
-          "kind": "local",
-          "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
-        },
-        "childTargetPropertyId": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB",
-        "kind": "arrayMembership",
-        "parameterName": "receivedMissionTaskNames"
-      }
-    ]
-  },
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "completeId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "missionGroupName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_2TY87RWWCV9KJVRVXSHVSAGBVE",
+  "linkedMasterResourceId": "mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM",
   "location": {
     "modelName": "Complete",
     "service": "mission"
@@ -46,5 +22,27 @@
   "ownMountPath": {
     "kind": "local",
     "typeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R"
-  }
+  },
+  "projectionBindings": [
+    {
+      "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+      "childMountPath": {
+        "kind": "local",
+        "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
+      },
+      "childTargetPropertyId": "prop_08ZS1KJ683EXX3ADZAVHK3E833",
+      "kind": "arrayMembership",
+      "parameterName": "completedMissionTaskNames"
+    },
+    {
+      "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+      "childMountPath": {
+        "kind": "local",
+        "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
+      },
+      "childTargetPropertyId": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB",
+      "kind": "arrayMembership",
+      "parameterName": "receivedMissionTaskNames"
+    }
+  ]
 }

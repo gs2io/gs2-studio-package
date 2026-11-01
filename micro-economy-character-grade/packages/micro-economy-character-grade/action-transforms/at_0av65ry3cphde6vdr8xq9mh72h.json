@@ -1,0 +1,67 @@
+{
+  "category": "acquire",
+  "id": "at_0AV65RY3CPHDE6VDR8XQ9MH72H",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "PromoteCharacterGrade",
+  "outputs": [
+    {
+      "actionName": "Gs2Grade:AddGradeByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "gradeName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "gradeValue",
+          "sourceParameter": "gradeValue"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "gradeValue",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}

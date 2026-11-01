@@ -20,20 +20,29 @@
     {
       "arguments": [],
       "componentClassName": "WatchButton",
-      "delegatedActionKey": "resource:foundation-economy-ad-demo:masterData:mdr_097S3NBVT0AH9A94KKQCBHPNG5::Gs2Exchange:RateModel.Exchange",
       "id": "uii_5W8B96W2W9BCAT61HJAYMCM7BE",
       "kind": "buttonAction",
-      "name": "AdViewPoint"
+      "name": "AdViewPoint",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_097S3NBVT0AH9A94KKQCBHPNG5",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-ad-demo"
+      }
     },
     {
       "arguments": [],
       "componentClassName": "SpendButton",
-      "delegatedActionKey": "resource:foundation-economy-ad-demo:masterData:mdr_50881G8A8QBAWTRD6J25BKQBE8::Gs2Exchange:RateModel.Exchange",
       "id": "uii_76KSD51KBDABQB2FCKK4ZWRSBA",
       "kind": "buttonAction",
-      "name": "AdViewPoint"
+      "name": "AdViewPoint",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_50881G8A8QBAWTRD6J25BKQBE8",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-ad-demo"
+      }
     }
   ],
-  "name": "AdViewPoint",
   "targetDomainTypeId": "dt_00D0PPMGBSSH7R8WYJPE2YJRNB"
 }

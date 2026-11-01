@@ -64,7 +64,7 @@ const DeliverRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(GlobalMessage)
         .bindings({
-          action: Bind.transform(inbox.packageId, "SendMessage", [
+          action: Bind.transform(inbox.packageId, inbox.transformId("SendMessage"), [
             Arg.domainProperty(
               "metadata",
               Source.parent(
@@ -88,13 +88,18 @@ const GiftRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Gift)
         .bindings({
-          action: Bind.transform(inbox.packageId, "SendMessageWithReward", [
+          action: Bind.transform(inbox.packageId, inbox.transformId("SendMessageWithReward"), [
             Arg.domainProperty("metadata", Source.parent(Source.direct(Gift, "payload"))),
             Arg.static("expireDays", EXPIRE_DAYS),
-            Arg.actionTransformRef("rewards", currency.packageId, "DepositFreeCurrency", [
-              Arg.static("slot", WALLET_SLOT),
-              Arg.domainProperty("count", Source.parent(Source.direct(Gift, "amount"))),
-            ]),
+            Arg.actionTransformRef(
+              "rewards",
+              currency.packageId,
+              currency.transformId("DepositFreeCurrency"),
+              [
+                Arg.static("slot", WALLET_SLOT),
+                Arg.domainProperty("count", Source.parent(Source.direct(Gift, "amount"))),
+              ]
+            ),
           ]),
         });
     })
@@ -102,10 +107,14 @@ const GiftRateModel = defineMasterDataResource(resource =>
 
 export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbox-demo", "0.0.0")
   .display({
-    label: { ja: "お知らせ・受信箱（デモデータ）", en: "Inbox (demo data)" },
-    description: {
-      ja: "ライブデモ用のお知らせと、それを自分の受信箱へ届ける操作を提供します。",
-      en: "Supplies the announcement used by the live demo, and the press that delivers it to your own inbox.",
+    ja: {
+      label: "お知らせ・受信箱（デモデータ）",
+      description: "ライブデモ用のお知らせと、それを自分の受信箱へ届ける操作を提供します。",
+    },
+    en: {
+      label: "Inbox (demo data)",
+      description:
+        "Supplies the announcement used by the live demo, and the press that delivers it to your own inbox.",
     },
   })
   .dependency(inbox.packageId, "github:gs2io/gs2-studio-package")
@@ -194,11 +203,11 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
   .delegatedAction(Gift, "Deliver", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: GiftRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(GlobalMessage, "Deliver", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: DeliverRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

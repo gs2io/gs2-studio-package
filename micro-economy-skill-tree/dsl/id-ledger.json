@@ -2,6 +2,12 @@
   "schemaVersion": 1,
   "retired": {
     "property:SkillTreeOwner.propertyId": "prop_00D0321TWK2VK4DF0JEAF75KQK",
+    "transform:ReleaseSkillNode:output:direct:Gs2SkillTree:MarkReleaseByUserId#0": "out_01M0C87BJCBF8FS8VWRGNWGG6A",
+    "transform:ReleaseSkillNode:parameter:node": "param_01M0C87BJC99C9Z8BB3MCEVSKT",
+    "transform:ReleaseSkillNode:parameter:propertyId": "param_01M0C87BJCT5SCBFGZ8F7EEHCP",
+    "transform:RestrainSkillNode:output:direct:Gs2SkillTree:MarkRestrainByUserId#0": "out_01M0C87BJCHB8J96JT10FE4V4Y",
+    "transform:RestrainSkillNode:parameter:node": "param_01M0C87BJCFCDSK4Z93SPEJ1QG",
+    "transform:RestrainSkillNode:parameter:propertyId": "param_01M0C87BJCMH1N7F9PC0ZDKZMH",
     "type:SkillTreeOwner": "dt_00D0321TWK4C62YHPHX6WVY67K",
     "user/skillTree:Status:SkillTreeOwner:#0": "udr_1KA86HG66RBPSA5Q3P2W23FAG2"
   },
@@ -12,12 +18,8 @@
     "property:SkillNode.releaseConsumeActions": "prop_00D05R0KFCTFK6442MMAKE56Y9",
     "property:SkillNode.released": "prop_00D0321TWK6CDMBJRD83E6G2K2",
     "property:SkillNode.restrainReturnRate": "prop_00D0321TWK5R5K4W0KWNR49SHT",
-    "transform:ReleaseSkillNode:output:direct:Gs2SkillTree:MarkReleaseByUserId#0": "out_01M0C87BJCBF8FS8VWRGNWGG6A",
-    "transform:ReleaseSkillNode:parameter:node": "param_01M0C87BJC99C9Z8BB3MCEVSKT",
-    "transform:ReleaseSkillNode:parameter:propertyId": "param_01M0C87BJCT5SCBFGZ8F7EEHCP",
-    "transform:RestrainSkillNode:output:direct:Gs2SkillTree:MarkRestrainByUserId#0": "out_01M0C87BJCHB8J96JT10FE4V4Y",
-    "transform:RestrainSkillNode:parameter:node": "param_01M0C87BJCFCDSK4Z93SPEJ1QG",
-    "transform:RestrainSkillNode:parameter:propertyId": "param_01M0C87BJCMH1N7F9PC0ZDKZMH",
+    "transform:ReleaseSkillNode": "at_5WT3G6Z2TK8KETEF100N0T9FQK",
+    "transform:RestrainSkillNode": "at_0T4E2X5NJ896J92H8ZAD72DD60",
     "type:Character": "dt_00D0RCHP2Q2DTSP41SVC7C111T",
     "type:SkillNode": "dt_00D0321TWK66MR7GWMWA3MCTP1"
   },

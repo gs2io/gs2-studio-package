@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "energy",
@@ -28,13 +28,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "ConsumeEnergy",
-        "transformPackageId": "foundation-economy-energy"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-energy",
+          "transformId": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_7299CGSY1TANG9G7XSPWCSY102",
   "location": {
     "modelName": "ConsumeAction",

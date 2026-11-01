@@ -34,7 +34,9 @@
                     "name": "value",
                     "source": {
                       "kind": "domainProperty",
-                      "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                      "source": {
+                        "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                      }
                     }
                   }
                 ],
@@ -79,7 +81,9 @@
                     "name": "value",
                     "source": {
                       "kind": "domainProperty",
-                      "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                      "source": {
+                        "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+                      }
                     }
                   }
                 ],
@@ -105,8 +109,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-character",
-    "directSourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
-    "sourcePackageId": "foundation-economy-character",
-    "sourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+    "directSourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
   }
 }

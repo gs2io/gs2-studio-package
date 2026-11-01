@@ -1,26 +1,32 @@
 {
   "actionPropertyTransforms": [
     {
-      "arguments": [
-        {
-          "parameterName": "slot",
-          "source": {
-            "kind": "static",
-            "value": 0
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "propertyId": "prop_00D0XMTYBP6TACW7H1W4YC1SET"
+              }
+            }
           }
-        },
-        {
-          "parameterName": "count",
-          "source": {
-            "kind": "domainProperty",
-            "propertyId": "prop_00D0XMTYBP6TACW7H1W4YC1SET"
-          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
         }
-      ],
+      },
       "mode": "append",
-      "targetPropertyId": "prop_00D033H0GPSX5TQB69ST80YSQG",
-      "transformName": "DepositFreeCurrency",
-      "transformPackageId": "foundation-economy-currency"
+      "targetPropertyId": "prop_00D033H0GPSX5TQB69ST80YSQG"
     }
   ],
   "compositeKeyMode": {
@@ -73,8 +79,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-liveops-guild-ranking",
-    "directSourceTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
-    "sourcePackageId": "micro-liveops-guild-ranking",
-    "sourceTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63"
+    "directSourceTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63"
   }
 }

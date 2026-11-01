@@ -45,6 +45,10 @@
       }
     }
   },
+  "actionTransforms": {
+    "AcquireToCharacterFormation": "at_19DKKF7AKA89JB5SY1CDA44B63",
+    "IncreaseSaveArea": "at_4NRP2334FY75C65TXQZ4PCT9QH"
+  },
   "masterDataResources": {
     "formation.FormModel": "mdr_01RMR25QP499X8QWHZX922SPR5",
     "formation.MoldModel": "mdr_1Q71ZNDPVH9ZBAEG3V0XNEYS9E",

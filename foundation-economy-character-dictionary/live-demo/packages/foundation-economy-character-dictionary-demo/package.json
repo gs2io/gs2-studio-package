@@ -8,13 +8,13 @@
     "foundation-economy-character-dictionary": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the roster the live demo shows, and the press that recruits one into the dex.",
-      "ja": "ライブデモ用のキャラクター一覧と、勧誘して図鑑を埋める操作を提供します。"
+    "en": {
+      "description": "Supplies the roster the live demo shows, and the press that recruits one into the dex.",
+      "label": "Character Dex (demo data)"
     },
-    "label": {
-      "en": "Character Dex (demo data)",
-      "ja": "キャラクター図鑑（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用のキャラクター一覧と、勧誘して図鑑を埋める操作を提供します。",
+      "label": "キャラクター図鑑（デモデータ）"
     }
   }
 }

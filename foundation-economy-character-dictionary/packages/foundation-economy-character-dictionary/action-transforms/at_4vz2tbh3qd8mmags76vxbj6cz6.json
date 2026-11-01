@@ -1,0 +1,50 @@
+{
+  "category": "acquire",
+  "id": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_50VBE9ASKA930RKYC6YDCG9E49",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "MarkCharacterDictionary",
+  "outputs": [
+    {
+      "actionName": "Gs2Dictionary:AddEntriesByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "entryModelNames[0]",
+          "sourceParameter": "character"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_50VBE9ASKA930RKYC6YDCG9E49",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "character",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+      }
+    }
+  ]
+}

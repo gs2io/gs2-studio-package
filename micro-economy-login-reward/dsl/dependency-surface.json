@@ -16,12 +16,26 @@
     "LoginRewardCollection": {
       "id": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
       "singleEntry": false,
-      "delegatedActions": {
-        "MissedReceive": "resource:micro-economy-login-reward:userData:udr_1P119645K49QZA8WP1Z2M8DV2J::Gs2LoginReward:ReceiveStatus.MissedReceive",
-        "Receive": "resource:micro-economy-login-reward:userData:udr_1P119645K49QZA8WP1Z2M8DV2J::Gs2LoginReward:ReceiveStatus.Receive"
-      },
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+      "delegatedActions": {
+        "MissedReceive": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-login-reward",
+            "resourceKind": "userData",
+            "resourceId": "udr_1P119645K49QZA8WP1Z2M8DV2J"
+          },
+          "targetActionKey": "Gs2LoginReward:ReceiveStatus.MissedReceive"
+        },
+        "Receive": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-login-reward",
+            "resourceKind": "userData",
+            "resourceId": "udr_1P119645K49QZA8WP1Z2M8DV2J"
+          },
+          "targetActionKey": "Gs2LoginReward:ReceiveStatus.Receive"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "lastReceivedAt": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC",
@@ -40,6 +54,9 @@
       "canonicalPackageId": "foundation-economy-schedule",
       "canonicalTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
     }
+  },
+  "actionTransforms": {
+    "ResetReceiveStatus": "at_7HZJD63FEK93PTBTQWK5A3KNT4"
   },
   "masterDataResources": {
     "loginReward.BonusModel": "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7",

@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "enchant",
@@ -18,13 +18,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "RerollEquipmentEnchantment",
-        "transformPackageId": "micro-economy-equipment-enchant"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "micro-economy-equipment-enchant",
+          "transformId": "at_0Y1FT4M4JR8WPBYMBJ0PEQKBBM"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_5B6M1FD1EKA7V8SWHKTMT23KRW",
   "location": {
     "modelName": "AcquireAction",

@@ -1,51 +1,49 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "count"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "inventoryName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "itemName"
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "itemSetId",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
-              },
-              "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
-            }
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "count"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "inventoryName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "itemName"
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "itemSetId",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+            },
+            "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "name"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "sortValue"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_3EJ714VYYS8V2SWXMCQTYD32VN"
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "name"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "sortValue"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_0C241F70MA9JYTJQ9V554ZKC5Q",
+  "linkedMasterResourceId": "mdr_3EJ714VYYS8V2SWXMCQTYD32VN",
   "location": {
     "modelName": "ItemSet",
     "service": "inventory"

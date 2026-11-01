@@ -1,10 +1,29 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "type",
-        "source": {
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "type",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "userIdentifier",
+      "sources": [
+        {
           "scopes": [],
           "terminal": {
             "kind": "direct",
@@ -12,34 +31,13 @@
               "kind": "local",
               "typeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
             },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+            "propertyId": "prop_00D0XSWNPHGADEPTVEW5ASX023"
           }
         }
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "userIdentifier",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
-              },
-              "propertyId": "prop_00D0XSWNPHGADEPTVEW5ASX023"
-            }
-          }
-        ]
-      }
-    ],
-    "existencePropertyId": "prop_00D0XSWNPHK742VSBENVHWQX25"
-  },
+      ]
+    }
+  ],
+  "existencePropertyId": "prop_00D0XSWNPHK742VSBENVHWQX25",
   "id": "udr_24G1Q532G8BQ3VB17ZRNQ7YBFV",
   "location": {
     "modelName": "TakeOver",

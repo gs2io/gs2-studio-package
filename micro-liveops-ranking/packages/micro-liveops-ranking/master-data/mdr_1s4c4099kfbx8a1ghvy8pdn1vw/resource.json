@@ -1,28 +1,26 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "action",
-        "source": {
-          "scopes": [
-            {
-              "kind": "parent",
-              "parentResourceId": "mdr_0XG8G4CQM4BHKAWM8NXAW1Q4ST"
-            }
-          ],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031DYK08MQ218VMWRT5X90Q"
-            },
-            "propertyId": "prop_00D031DYK0FBDNV00N30XJMEBY"
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "action",
+      "source": {
+        "scopes": [
+          {
+            "kind": "parent",
+            "parentResourceId": "mdr_0XG8G4CQM4BHKAWM8NXAW1Q4ST"
           }
+        ],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031DYK08MQ218VMWRT5X90Q"
+          },
+          "propertyId": "prop_00D031DYK0FBDNV00N30XJMEBY"
         }
       }
-    ]
-  },
+    }
+  ],
   "id": "mdr_1S4C4099KFBX8A1GHVY8PDN1VW",
   "location": {
     "modelName": "AcquireAction",

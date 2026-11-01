@@ -3,13 +3,13 @@
   "name": "foundation-economy-energy",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Manages a stamina meter that recovers over time.",
-      "ja": "時間経過で回復するスタミナ（行動力）を管理します。"
+    "en": {
+      "description": "Manages a stamina meter that recovers over time.",
+      "label": "Stamina"
     },
-    "label": {
-      "en": "Stamina",
-      "ja": "スタミナ"
+    "ja": {
+      "description": "時間経過で回復するスタミナ（行動力）を管理します。",
+      "label": "スタミナ"
     }
   }
 }

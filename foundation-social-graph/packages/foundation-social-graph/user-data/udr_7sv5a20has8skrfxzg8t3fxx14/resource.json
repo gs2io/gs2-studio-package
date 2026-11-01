@@ -1,44 +1,10 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperties",
-        "parameterName": "friendProfile",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
-              },
-              "propertyId": "prop_24MC6NM8NQ2X1W8TPT2T1V69RK"
-            }
-          }
-        ]
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "publicProfile",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
-              },
-              "propertyId": "prop_2W4YWVQAX34Q9GNRA5PBY282CF"
-            }
-          }
-        ]
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "userId",
-        "source": {
+  "declaredBindings": [
+    {
+      "kind": "domainProperties",
+      "parameterName": "friendProfile",
+      "sources": [
+        {
           "scopes": [],
           "terminal": {
             "kind": "direct",
@@ -46,17 +12,49 @@
               "kind": "local",
               "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
             },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+            "propertyId": "prop_24MC6NM8NQ2X1W8TPT2T1V69RK"
           }
         }
-      },
-      {
-        "kind": "static",
-        "parameterName": "withProfile",
-        "value": true
+      ]
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "publicProfile",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
+            },
+            "propertyId": "prop_2W4YWVQAX34Q9GNRA5PBY282CF"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "userId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
       }
-    ]
-  },
+    },
+    {
+      "kind": "static",
+      "parameterName": "withProfile",
+      "value": true
+    }
+  ],
   "id": "udr_7SV5A20HAS8SKRFXZG8T3FXX14",
   "location": {
     "modelName": "FriendUser",

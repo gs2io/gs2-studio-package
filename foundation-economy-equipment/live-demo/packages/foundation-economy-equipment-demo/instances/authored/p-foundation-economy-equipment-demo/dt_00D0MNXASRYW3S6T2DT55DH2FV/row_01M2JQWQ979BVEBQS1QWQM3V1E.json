@@ -1,0 +1,11 @@
+{
+  "id": "steel-shield",
+  "rowKey": "row_01M2JQWQ979BVEBQS1QWQM3V1E",
+  "type": {
+    "domainTypeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
+    "packageId": "foundation-economy-equipment-demo"
+  },
+  "values": {
+    "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA": "steel-shield"
+  }
+}

@@ -15,8 +15,10 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
 import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-surface.json";
+import dictionarySurface from "../../foundation-economy-character-dictionary/dsl/dependency-surface.json";
 
 const character = dependencyPackage(characterSurface);
+const dictionary = dependencyPackage(dictionarySurface);
 const schedule = dependencyPackage(scheduleSurface);
 
 const CHARACTER_TYPE_ID = character.typeId("Character");
@@ -141,13 +143,17 @@ const RarityPrizeTable = defineMasterDataResource(resource =>
             .model(GS2.transaction.AcquireAction)
             .mountLocal(CharacterRate)
             .bindings({
-              action: Bind.transform("foundation-economy-character", "AcquireCharacter", [
-                Arg.domainProperty(
-                  "character",
-                  Source.parent(Source.direct(CharacterRate, "character"))
-                ),
-                Arg.static("count", 1),
-              ]),
+              action: Bind.transform(
+                "foundation-economy-character",
+                character.transformId("AcquireCharacter"),
+                [
+                  Arg.domainProperty(
+                    "character",
+                    Source.parent(Source.direct(CharacterRate, "character"))
+                  ),
+                  Arg.static("count", 1),
+                ]
+              ),
             });
         })
         .addArrayChild("acquireActions", dictionaryAction => {
@@ -157,7 +163,7 @@ const RarityPrizeTable = defineMasterDataResource(resource =>
             .bindings({
               action: Bind.transform(
                 "foundation-economy-character-dictionary",
-                "MarkCharacterDictionary",
+                dictionary.transformId("MarkCharacterDictionary"),
                 [
                   Arg.domainProperty(
                     "character",
@@ -255,38 +261,54 @@ const Showcase = defineMasterDataResource(resource =>
 
 export const microShopCharacterGacha = definePackage("micro-shop-character-gacha", "0.0.0")
   .display({
-    label: { ja: "キャラクターガチャ", en: "Character Gacha" },
-    description: {
-      ja: "通貨を消費してキャラクターを排出するガチャです。排出率をレアリティごとに設定できます。",
-      en: "A currency-funded gacha that draws characters, with per-rarity drop rates.",
+    ja: {
+      label: "キャラクターガチャ",
+      description:
+        "通貨を消費してキャラクターを排出するガチャです。排出率をレアリティごとに設定できます。",
+    },
+    en: {
+      label: "Character Gacha",
+      description: "A currency-funded gacha that draws characters, with per-rarity drop rates.",
     },
   })
   .displayType(CharacterRate, {
-    label: { ja: "キャラクター排出率", en: "Character rate" },
-    description: {
-      ja: "レアリティ内で各キャラクターが排出される比率を設定します。",
-      en: "Configures each character's draw weight within a rarity tier.",
+    ja: {
+      label: "キャラクター排出率",
+      description: "レアリティ内で各キャラクターが排出される比率を設定します。",
+    },
+    en: {
+      label: "Character rate",
+      description: "Configures each character's draw weight within a rarity tier.",
     },
   })
   .displayType(GachaRarityRate, {
-    label: { ja: "レアリティ排出率", en: "Rarity rate" },
-    description: {
-      ja: "ガチャで各レアリティが選ばれる排出率を設定します。",
-      en: "Configures the draw rate for each rarity tier in a gacha.",
+    ja: {
+      label: "レアリティ排出率",
+      description: "ガチャで各レアリティが選ばれる排出率を設定します。",
+    },
+    en: {
+      label: "Rarity rate",
+      description: "Configures the draw rate for each rarity tier in a gacha.",
     },
   })
   .displayType(GachaRarity, {
-    label: { ja: "レアリティ", en: "Rarity" },
-    description: {
-      ja: "ガチャのレアリティ区分と対象キャラクターを設定します。",
-      en: "Defines a gacha rarity tier and the characters assigned to it.",
+    ja: {
+      label: "レアリティ",
+      description: "ガチャのレアリティ区分と対象キャラクターを設定します。",
+    },
+    en: {
+      label: "Rarity",
+      description: "Defines a gacha rarity tier and the characters assigned to it.",
     },
   })
   .displayType(Gacha, {
-    label: { ja: "ガチャ", en: "Gacha" },
-    description: {
-      ja: "ガチャの開催内容、抽選回数、消費通貨、排出テーブルを設定します。",
-      en: "Defines a gacha's availability, draw count, currency cost, and prize table.",
+    ja: {
+      label: "ガチャ",
+      description: "ガチャの開催内容、抽選回数、消費通貨、排出テーブルを設定します。",
+    },
+    en: {
+      label: "Gacha",
+      description: "Defines a gacha's availability, draw count, currency cost, and prize table.",
     },
   })
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")

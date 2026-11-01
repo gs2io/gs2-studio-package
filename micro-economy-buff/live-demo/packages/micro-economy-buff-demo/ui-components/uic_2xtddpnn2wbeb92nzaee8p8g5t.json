@@ -12,20 +12,29 @@
     {
       "arguments": [],
       "componentClassName": "StartCampaignButton",
-      "delegatedActionKey": "resource:micro-economy-buff-demo:masterData:mdr_6SVF73ZCXEAEWRFC6R5JW33JCQ::Gs2Exchange:RateModel.Exchange",
       "id": "uii_3GNEQ7TZJRAXQTBP1YC5JVTZ39",
       "kind": "buttonAction",
-      "name": "BuffCampaign"
+      "name": "BuffCampaign",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_6SVF73ZCXEAEWRFC6R5JW33JCQ",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-buff-demo"
+      }
     },
     {
       "arguments": [],
       "componentClassName": "EndCampaignButton",
-      "delegatedActionKey": "resource:micro-economy-buff-demo:masterData:mdr_62ZMGKX8TQAHBTQAR56TDCXS7E::Gs2Exchange:RateModel.Exchange",
       "id": "uii_7RW0NMS3WABK096BPWYW5CWZQA",
       "kind": "buttonAction",
-      "name": "BuffCampaign"
+      "name": "BuffCampaign",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_62ZMGKX8TQAHBTQAR56TDCXS7E",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-buff-demo"
+      }
     }
   ],
-  "name": "BuffCampaign",
   "targetDomainTypeId": "dt_00D0WA93FK0QYTWVRADQJVQ57K"
 }

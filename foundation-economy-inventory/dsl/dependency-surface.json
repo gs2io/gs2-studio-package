@@ -13,6 +13,10 @@
       }
     }
   },
+  "actionTransforms": {
+    "AcquireItem": "at_4AHYMDX4JN8BHV2Q0MHBGXCA0Z",
+    "ConsumeItem": "at_5MZS971WV985R8Q1TP98MGN18Y"
+  },
   "masterDataResources": {
     "inventory.Namespace": "mdr_09W5HV054N82491HH6HA6CS2JQ",
     "inventory.SimpleInventoryModel": "mdr_5FVCJFNG0N9MFTSN24Q5SJ2C0G",

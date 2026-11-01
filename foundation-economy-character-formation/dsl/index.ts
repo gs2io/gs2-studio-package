@@ -118,38 +118,50 @@ export const foundationEconomyCharacterFormation = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "パーティ編成", en: "Party Formation" },
-    description: {
-      ja: "手持ちのキャラクターを組み合わせて編成を作ります。",
-      en: "Lets players build formations by combining characters from their collection.",
+    ja: {
+      label: "パーティ編成",
+      description: "手持ちのキャラクターを組み合わせて編成を作ります。",
+    },
+    en: {
+      label: "Party Formation",
+      description: "Lets players build formations by combining characters from their collection.",
     },
   })
   .displayType(CharacterFormationFormSlot, {
-    label: { ja: "フォームスロット", en: "Form slot" },
-    description: {
-      ja: "保存した編成の各スロットに配置されているキャラクターを管理します。",
-      en: "Tracks the character assigned to each slot in a saved formation.",
+    ja: {
+      label: "フォームスロット",
+      description: "保存した編成の各スロットに配置されているキャラクターを管理します。",
+    },
+    en: {
+      label: "Form slot",
+      description: "Tracks the character assigned to each slot in a saved formation.",
     },
   })
   .displayType(CharacterFormationForm, {
-    label: { ja: "編成フォーム", en: "Formation form" },
-    description: {
-      ja: "プレイヤーが保存した1つの編成と、そのスロット構成を管理します。",
-      en: "Stores one player formation together with its slot assignments.",
+    ja: {
+      label: "編成フォーム",
+      description: "プレイヤーが保存した1つの編成と、そのスロット構成を管理します。",
+    },
+    en: {
+      label: "Formation form",
+      description: "Stores one player formation together with its slot assignments.",
     },
   })
   .displayType(CharacterFormationSlot, {
-    label: { ja: "編成スロット", en: "Formation slot" },
-    description: {
-      ja: "編成スロットごとに配置できるキャラクターの条件を設定します。",
-      en: "Defines which characters are eligible for each formation slot.",
+    ja: {
+      label: "編成スロット",
+      description: "編成スロットごとに配置できるキャラクターの条件を設定します。",
+    },
+    en: {
+      label: "Formation slot",
+      description: "Defines which characters are eligible for each formation slot.",
     },
   })
   .displayType(CharacterFormation, {
-    label: { ja: "編成", en: "Formation" },
-    description: {
-      ja: "編成の初期保存枠数、最大枠数、現在の枠数を管理します。",
-      en: "Manages the initial, maximum, and current number of saved formation slots.",
+    ja: { label: "編成", description: "編成の初期保存枠数、最大枠数、現在の枠数を管理します。" },
+    en: {
+      label: "Formation",
+      description: "Manages the initial, maximum, and current number of saved formation slots.",
     },
   })
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")

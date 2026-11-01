@@ -63,7 +63,7 @@ const RateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EnergyProduct)
         .bindings({
-          action: Bind.transform(energy.packageId, "RecoveryEnergy", [
+          action: Bind.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
             Arg.domainProperty("energy", Source.parent(Source.direct(EnergyProduct, "energy"))),
             Arg.domainProperty(
               "value",
@@ -86,17 +86,17 @@ const RateModel = defineMasterDataResource(resource =>
 
 export const microShopEnergy = definePackage("micro-shop-energy", "0.0.0")
   .display({
-    label: { ja: "スタミナショップ", en: "Stamina Shop" },
-    description: {
-      ja: "スタミナを回復する商品を販売します。",
-      en: "A shop that sells products to refill stamina.",
-    },
+    ja: { label: "スタミナショップ", description: "スタミナを回復する商品を販売します。" },
+    en: { label: "Stamina Shop", description: "A shop that sells products to refill stamina." },
   })
   .displayType(EnergyProduct, {
-    label: { ja: "スタミナ商品", en: "Stamina product" },
-    description: {
-      ja: "購入時に回復するスタミナ量、価格、購入制限を設定します。",
-      en: "Defines a stamina product's recovery amount, price, and purchase limits.",
+    ja: {
+      label: "スタミナ商品",
+      description: "購入時に回復するスタミナ量、価格、購入制限を設定します。",
+    },
+    en: {
+      label: "Stamina product",
+      description: "Defines a stamina product's recovery amount, price, and purchase limits.",
     },
   })
   .dependency(energy.packageId, "github:gs2io/gs2-studio-package")

@@ -27,18 +27,18 @@ const SkillNode = defineOverlayDomainType(
       {
         targetProperty: RELEASE_CONSUME_ACTIONS,
         mode: "append",
-            transformPackageId: currency.packageId,
-            transformName: "WithdrawCurrency",
-            arguments: [
-              { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              // Allow the free balance funded by the page deposit instead of requiring paid currency.
-              { parameterName: "paidOnly", source: { kind: "static", value: false } },
-              {
-                parameterName: "count",
-                source: { kind: "domainProperty", propertyName: "cost" },
-              },
-            ],
+        transformPackageId: currency.packageId,
+        transformId: currency.transformId("WithdrawCurrency"),
+        arguments: [
+          { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
+          // Allow the free balance funded by the page deposit instead of requiring paid currency.
+          { parameterName: "paidOnly", source: { kind: "static", value: false } },
+          {
+            parameterName: "count",
+            source: { kind: "domainProperty", propertyName: "cost" },
           },
+        ],
+      },
     ],
   },
   domainType =>
@@ -69,17 +69,25 @@ const NODES = [
 
 const withDependencies = definePackage("micro-economy-skill-tree-demo", "0.0.0")
   .display({
-    label: { ja: "スキルツリー（デモデータ）", en: "Skill Tree (demo data)" },
-    description: {
-      ja: "ライブデモ用の 4 つのスキルノードと、その解放コストを支払うコインを提供します。ノードの解放状況はキャラクターごとに記録されます。",
-      en: "Supplies the live demo's four skill nodes and the coins their unlock costs are paid from. What is unlocked is tracked per character.",
+    ja: {
+      label: "スキルツリー（デモデータ）",
+      description:
+        "ライブデモ用の 4 つのスキルノードと、その解放コストを支払うコインを提供します。ノードの解放状況はキャラクターごとに記録されます。",
+    },
+    en: {
+      label: "Skill Tree (demo data)",
+      description:
+        "Supplies the live demo's four skill nodes and the coins their unlock costs are paid from. What is unlocked is tracked per character.",
     },
   })
   .displayType(SkillNode, {
-    label: { ja: "スキルノード", en: "Skill node" },
-    description: {
-      ja: "デモのスキルノードに、解放時へ消費するコインの額を足します。",
-      en: "Adds the coins a demo skill node charges when it is released.",
+    ja: {
+      label: "スキルノード",
+      description: "デモのスキルノードに、解放時へ消費するコインの額を足します。",
+    },
+    en: {
+      label: "Skill node",
+      description: "Adds the coins a demo skill node charges when it is released.",
     },
   })
   .dependency(skillTree.packageId, "github:gs2io/gs2-studio-package")

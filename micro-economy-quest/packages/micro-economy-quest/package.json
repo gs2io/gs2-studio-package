@@ -6,13 +6,13 @@
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Manages quests players take on, their progress and their clear rewards.",
-      "ja": "プレイヤーが進めるクエストと、その進行状況・クリア報酬を管理します。"
+    "en": {
+      "description": "Manages quests players take on, their progress and their clear rewards.",
+      "label": "Quests"
     },
-    "label": {
-      "en": "Quests",
-      "ja": "クエスト"
+    "ja": {
+      "description": "プレイヤーが進めるクエストと、その進行状況・クリア報酬を管理します。",
+      "label": "クエスト"
     }
   }
 }

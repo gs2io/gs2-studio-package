@@ -6,13 +6,13 @@
     "foundation-core-identity": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies what the live demo shows of a transfer code.",
-      "ja": "ライブデモ用に、引き継ぎコードの表示項目を提供します。"
+    "en": {
+      "description": "Supplies what the live demo shows of a transfer code.",
+      "label": "Account Transfer (demo data)"
     },
-    "label": {
-      "en": "Account Transfer (demo data)",
-      "ja": "引き継ぎ設定（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用に、引き継ぎコードの表示項目を提供します。",
+      "label": "引き継ぎ設定（デモデータ）"
     }
   }
 }

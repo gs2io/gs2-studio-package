@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "character",
@@ -26,13 +26,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "MarkCharacterDictionary",
-        "transformPackageId": "foundation-economy-character-dictionary"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-character-dictionary",
+          "transformId": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_3VRJZ0DHQNB6MANMT7WQG1WQ3G",
   "location": {
     "modelName": "AcquireAction",

@@ -33,8 +33,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-character-dictionary",
-    "directSourceTypeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP",
-    "sourcePackageId": "foundation-economy-character",
-    "sourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+    "directSourceTypeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP"
   }
 }

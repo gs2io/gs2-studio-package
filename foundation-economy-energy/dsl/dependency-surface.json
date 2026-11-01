@@ -20,6 +20,10 @@
       }
     }
   },
+  "actionTransforms": {
+    "ConsumeEnergy": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY",
+    "RecoveryEnergy": "at_36P63PCH949RGSG69SRSAWWKR0"
+  },
   "masterDataResources": {
     "stamina.Namespace": "mdr_77M6CM017083FAVC4NT6STKDZD",
     "stamina.StaminaModel": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5"

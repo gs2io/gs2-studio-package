@@ -2,10 +2,15 @@
   "schemaVersion": 1,
   "retired": {},
   "random": {
-    "row:dt_00D0322BN7GCTNB9EDAVY1X845.double-idle": "row_01M3H855QVS9T055RANN7FEMK4",
-    "row:type:BuffCampaign.buffcampaign": "row_01M3H94DYCZYHTM3M2Q8KRENKA",
+    "row:[\"micro-economy-buff\",\"dt_00D0322BN7GCTNB9EDAVY1X845\",\"double-idle\"]": "row_01M3H855QVS9T055RANN7FEMK4",
+    "row:[\"micro-economy-buff-demo\",\"type:BuffCampaign\",\"buffcampaign\"]": "row_01M3H94DYCZYHTM3M2Q8KRENKA",
     "type:Buff": "dt_00D0WA19DYQ4YZEAD7PZ35YJD6",
     "type:BuffCampaign": "dt_00D0WA93FK0QYTWVRADQJVQ57K"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:BuffCampaign:definition": "uic_2XTDDPNN2WBEB92NZAEE8P8G5T",
+    "ui:BuffCampaign:item:EndCampaignButton": "uii_7RW0NMS3WABK096BPWYW5CWZQA",
+    "ui:BuffCampaign:item:RuleLabel": "uii_0SHK1Y0BJFAP4B4N34KDM99EFG",
+    "ui:BuffCampaign:item:StartCampaignButton": "uii_3GNEQ7TZJRAXQTBP1YC5JVTZ39"
+  }
 }

@@ -13,13 +13,13 @@
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the live demo's quest group and three quests, with the stamina each costs, the reward each pays, and a first-clear bonus.",
-      "ja": "ライブデモ用のクエストグループと 3 つのクエスト、その消費スタミナ・クリア報酬・初回クリアボーナスを提供します。"
+    "en": {
+      "description": "Supplies the live demo's quest group and three quests, with the stamina each costs, the reward each pays, and a first-clear bonus.",
+      "label": "Quests (demo data)"
     },
-    "label": {
-      "en": "Quests (demo data)",
-      "ja": "クエスト（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用のクエストグループと 3 つのクエスト、その消費スタミナ・クリア報酬・初回クリアボーナスを提供します。",
+      "label": "クエスト（デモデータ）"
     }
   }
 }

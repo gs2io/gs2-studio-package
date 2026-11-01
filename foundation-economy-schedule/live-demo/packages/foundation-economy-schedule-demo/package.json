@@ -6,13 +6,13 @@
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the event windows used by the live demo, and the presses that pull, extend and clear a trigger.",
-      "ja": "ライブデモ用のイベント日程と、トリガーの発火・延長・解除の操作を提供します。"
+    "en": {
+      "description": "Supplies the event windows used by the live demo, and the presses that pull, extend and clear a trigger.",
+      "label": "Scheduling (demo data)"
     },
-    "label": {
-      "en": "Scheduling (demo data)",
-      "ja": "スケジュール基盤（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用のイベント日程と、トリガーの発火・延長・解除の操作を提供します。",
+      "label": "スケジュール基盤（デモデータ）"
     }
   }
 }

@@ -6,13 +6,13 @@
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Manages missions that reset daily, weekly, monthly or never, along with their conditions and rewards.",
-      "ja": "日次・週次・月次・リセットなしのミッションと、その達成条件・報酬を管理します。"
+    "en": {
+      "description": "Manages missions that reset daily, weekly, monthly or never, along with their conditions and rewards.",
+      "label": "Missions"
     },
-    "label": {
-      "en": "Missions",
-      "ja": "ミッション"
+    "ja": {
+      "description": "日次・週次・月次・リセットなしのミッションと、その達成条件・報酬を管理します。",
+      "label": "ミッション"
     }
   }
 }

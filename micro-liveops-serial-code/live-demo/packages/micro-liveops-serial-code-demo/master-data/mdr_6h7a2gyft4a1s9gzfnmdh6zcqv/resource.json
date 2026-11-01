@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "code",
@@ -11,13 +11,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "UseSerialCode",
-        "transformPackageId": "micro-liveops-serial-code"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "micro-liveops-serial-code",
+          "transformId": "at_2AE8RTB8GFNY68C7AYTV813N9B"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_6H7A2GYFT4A1S9GZFNMDH6ZCQV",
   "location": {
     "modelName": "ConsumeAction",

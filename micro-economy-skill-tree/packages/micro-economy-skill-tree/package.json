@@ -6,13 +6,13 @@
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per character.",
-      "ja": "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはキャラクターごとに記録されます。"
+    "en": {
+      "description": "Unlocks abilities node by node, each with its own prerequisites and cost, tracked per character.",
+      "label": "Skill Tree"
     },
-    "label": {
-      "en": "Skill Tree",
-      "ja": "スキルツリー"
+    "ja": {
+      "description": "前提条件と解放コストを持つノードを辿って能力を解放します。解放済みノードはキャラクターごとに記録されます。",
+      "label": "スキルツリー"
     }
   }
 }

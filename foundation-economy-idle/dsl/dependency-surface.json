@@ -15,11 +15,18 @@
     "IdleStatus": {
       "id": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
       "singleEntry": true,
-      "delegatedActions": {
-        "Receive": "resource:foundation-economy-idle:masterData:mdr_720YFK0MG497KRH6159H7NKWHY::Gs2Idle:CategoryModel.Receive"
-      },
       "canonicalPackageId": "foundation-economy-idle",
       "canonicalTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
+      "delegatedActions": {
+        "Receive": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-idle",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_720YFK0MG497KRH6159H7NKWHY"
+          },
+          "targetActionKey": "Gs2Idle:CategoryModel.Receive"
+        }
+      },
       "properties": {
         "currentIdleMinutes": "prop_1M9DWWCBBYBQ9HF2CEHRBVTQG5",
         "defaultMaximumIdleMinutes": "prop_7J143G8X27HCRCYX69FABGPKKT",
@@ -30,6 +37,7 @@
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "idle.AcquireActionList": "mdr_75CRRC6C7V83S8R3QPX5T50Q9Z",
     "idle.CategoryModel": "mdr_720YFK0MG497KRH6159H7NKWHY",

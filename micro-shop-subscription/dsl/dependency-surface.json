@@ -20,6 +20,7 @@
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "money2.Namespace": "mdr_1EWQQMHD9XBEFTRKZV5TGG814D",
     "money2.StoreSubscriptionContentModel": "mdr_125MHEE6BZBRB90GGBPD1JQ9DZ"

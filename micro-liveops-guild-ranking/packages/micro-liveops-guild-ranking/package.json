@@ -7,13 +7,13 @@
     "foundation-social-guild": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "A leaderboard partitioned by guild, so members compete inside their own guild, with rewards by rank.",
-      "ja": "ギルド単位で区切られたランキングです。所属ギルド内で競い、順位に応じた報酬を配れます。"
+    "en": {
+      "description": "A leaderboard partitioned by guild, so members compete inside their own guild, with rewards by rank.",
+      "label": "Guild Rankings"
     },
-    "label": {
-      "en": "Guild Rankings",
-      "ja": "ギルドランキング"
+    "ja": {
+      "description": "ギルド単位で区切られたランキングです。所属ギルド内で競い、順位に応じた報酬を配れます。",
+      "label": "ギルドランキング"
     }
   }
 }

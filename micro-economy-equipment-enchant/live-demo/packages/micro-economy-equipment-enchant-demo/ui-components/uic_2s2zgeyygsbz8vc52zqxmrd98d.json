@@ -4,20 +4,29 @@
     {
       "arguments": [],
       "componentClassName": "RerollButton",
-      "delegatedActionKey": "resource:micro-economy-equipment-enchant-demo:masterData:mdr_7B5FM276ZTBNSAQYJ948JES7GM::Gs2Exchange:RateModel.Exchange",
       "id": "uii_1EEX75T7GWAY3TWJ644145G7TN",
       "kind": "buttonAction",
-      "name": "Equipment"
+      "name": "Equipment",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_7B5FM276ZTBNSAQYJ948JES7GM",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-equipment-enchant-demo"
+      }
     },
     {
       "arguments": [],
       "componentClassName": "AddBonusButton",
-      "delegatedActionKey": "resource:micro-economy-equipment-enchant-demo:masterData:mdr_1GGPJSBVVQB1MAWJR3VTQ9Y7QK::Gs2Exchange:RateModel.Exchange",
       "id": "uii_691EKKVZ32A52T5BDB368R16YF",
       "kind": "buttonAction",
-      "name": "Equipment"
+      "name": "Equipment",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_1GGPJSBVVQB1MAWJR3VTQ9Y7QK",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-equipment-enchant-demo"
+      }
     }
   ],
-  "name": "Equipment",
   "targetDomainTypeId": "dt_00D0VNJHFYSPVEE231WA4Z2Q47"
 }

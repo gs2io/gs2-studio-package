@@ -30,6 +30,12 @@
       }
     }
   },
+  "actionTransforms": {
+    "CountDownUsageLimit": "at_7V4HTYWQNV8VHVB64WH0FF3PCN",
+    "CountUpUsageLimit": "at_3571THGJSH9VVT21JDG4STK77F",
+    "ResetUsageLimitCounter": "at_1WMTWBNWG4BJ36RG8TCVEP8A3A",
+    "VerifyUsageLimitNotReached": "at_4V5BAFDCF6T204X57MBR65SE6P"
+  },
   "masterDataResources": {
     "limit.LimitModel": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
     "limit.Namespace": "mdr_491DDE53J0BB7A5CRNAHHY7T7T"

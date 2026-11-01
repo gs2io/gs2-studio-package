@@ -1,31 +1,10 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperties",
-        "parameterName": "count",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
-              },
-              "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
-            }
-          }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "counterId"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
+  "declaredBindings": [
+    {
+      "kind": "domainProperties",
+      "parameterName": "count",
+      "sources": [
+        {
           "scopes": [],
           "terminal": {
             "kind": "direct",
@@ -33,35 +12,54 @@
               "kind": "local",
               "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
             },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+            "propertyId": "prop_00D031N0N8XZTBTN84BCXGFHMR"
           }
         }
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "nextResetAt",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
-              },
-              "propertyId": "prop_00D031N0N8S7KC5GNB45BP0PGT"
-            }
-          }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "counterId"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
       }
-    ],
-    "linkedMasterResourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG"
-  },
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "nextResetAt",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
+            },
+            "propertyId": "prop_00D031N0N8S7KC5GNB45BP0PGT"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_6QV98XRJE8B8R8TDT3FYN967PS",
+  "linkedMasterResourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
   "location": {
     "modelName": "Counter",
     "service": "limit"

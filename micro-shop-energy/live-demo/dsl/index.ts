@@ -43,18 +43,18 @@ const EnergyProduct = defineOverlayDomainType(
         targetProperty: shop.propertyId("EnergyProduct", "consumeActions"),
         // Replace the slot so this demo owns the complete price rather than adding a second charge.
         mode: "replace",
-            transformPackageId: currency.packageId,
-            transformName: "WithdrawCurrency",
-            arguments: [
-              { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              // Set the optional payment policy explicitly so purchases accept the free balance without relying on an omitted argument.
-              { parameterName: "paidOnly", source: { kind: "static", value: false } },
-              {
-                parameterName: "count",
-                source: { kind: "domainProperty", propertyName: "cost" },
-              },
-            ],
+        transformPackageId: currency.packageId,
+        transformId: currency.transformId("WithdrawCurrency"),
+        arguments: [
+          { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
+          // Set the optional payment policy explicitly so purchases accept the free balance without relying on an omitted argument.
+          { parameterName: "paidOnly", source: { kind: "static", value: false } },
+          {
+            parameterName: "count",
+            source: { kind: "domainProperty", propertyName: "cost" },
           },
+        ],
+      },
     ],
   },
   domainType =>
@@ -86,7 +86,7 @@ const BuyRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EnergyProduct)
         .bindings({
-          action: Bind.transform(energy.packageId, "RecoveryEnergy", [
+          action: Bind.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
             // Use published ids because these inherited properties are absent from the local overlay declarations.
             Arg.domainProperty(
               "energy",
@@ -111,7 +111,7 @@ const BuyRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(EnergyProduct)
         .bindings({
-          action: Bind.transform(currency.packageId, "WithdrawCurrency", [
+          action: Bind.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
             Arg.static("slot", WALLET_SLOT),
             Arg.static("paidOnly", false),
             Arg.domainProperty("count", Source.parent(Source.direct(EnergyProduct, "cost"))),
@@ -122,10 +122,14 @@ const BuyRateModel = defineMasterDataResource(resource =>
 
 export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.0")
   .display({
-    label: { ja: "スタミナショップ（デモデータ）", en: "Stamina Shop (demo data)" },
-    description: {
-      ja: "ライブデモ用に、スタミナ商品の品揃えと価格、購入の操作を揃えます。",
-      en: "Supplies the stamina products the live demo sells, what each charges, and the press that buys one.",
+    ja: {
+      label: "スタミナショップ（デモデータ）",
+      description: "ライブデモ用に、スタミナ商品の品揃えと価格、購入の操作を揃えます。",
+    },
+    en: {
+      label: "Stamina Shop (demo data)",
+      description:
+        "Supplies the stamina products the live demo sells, what each charges, and the press that buys one.",
     },
   })
   .dependency(shop.packageId, "github:gs2io/gs2-studio-package")
@@ -137,10 +141,14 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
   .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
 
   .displayType(EnergyProduct, {
-    label: { ja: "スタミナ商品", en: "Stamina product" },
-    description: {
-      ja: "ライブデモで販売するスタミナ商品と、その回復量・価格です。",
-      en: "A stamina product the live demo sells, with what it refills and what it charges.",
+    ja: {
+      label: "スタミナ商品",
+      description: "ライブデモで販売するスタミナ商品と、その回復量・価格です。",
+    },
+    en: {
+      label: "Stamina product",
+      description:
+        "A stamina product the live demo sells, with what it refills and what it charges.",
     },
   })
   .domainType(EnergyProduct)
@@ -196,6 +204,6 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
   .delegatedAction(EnergyProduct, "Buy", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: BuyRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

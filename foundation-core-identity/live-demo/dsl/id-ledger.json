@@ -4,5 +4,8 @@
   "random": {
     "type:TransferCode": "dt_00D0XTX674NVFAHYD82WBJS5KF"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:TransferCode:definition": "uic_1R9N7GV2B7AEPRDCCVZNPWB9SK",
+    "ui:TransferCode:item:IdentifierLabel": "uii_40XCASX3QAAWNAD7SM1YYSNEZ9"
+  }
 }

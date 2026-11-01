@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "counter",
@@ -28,13 +28,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "IncreaseMissionCounter",
-        "transformPackageId": "micro-economy-mission"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "micro-economy-mission",
+          "transformId": "at_683TMFPM3A87S843CGWG5PFWCJ"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_1RMD2XFAK8A1CAB566QV0H5SYA",
   "location": {
     "modelName": "AcquireAction",

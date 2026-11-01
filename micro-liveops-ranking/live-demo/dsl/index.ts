@@ -74,16 +74,16 @@ const RankingReward = defineOverlayDomainType(
       {
         targetProperty: ranking.propertyId("RankingReward", "acquireActions"),
         mode: "append",
-            transformPackageId: currency.packageId,
-            transformName: "DepositFreeCurrency",
-            arguments: [
-              { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              {
-                parameterName: "count",
-                source: { kind: "domainProperty", propertyName: "coins" },
-              },
-            ],
+        transformPackageId: currency.packageId,
+        transformId: currency.transformId("DepositFreeCurrency"),
+        arguments: [
+          { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
+          {
+            parameterName: "count",
+            source: { kind: "domainProperty", propertyName: "coins" },
           },
+        ],
+      },
     ],
   },
   domainType =>
@@ -125,7 +125,7 @@ const StartRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(RankingContest)
         .bindings({
-          action: Bind.transform(schedule.packageId, "PullTrigger", [
+          action: Bind.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.static("trigger", CONTEST_TRIGGER),
             Arg.static("ttlSeconds", CONTEST_SECONDS),
           ]),
@@ -143,7 +143,7 @@ const FinishRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(RankingContest)
         .bindings({
-          action: Bind.transform(schedule.packageId, "ClearTrigger", [
+          action: Bind.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.static("trigger", CONTEST_TRIGGER),
           ]),
         });
@@ -170,25 +170,27 @@ function contestExchange(name: string) {
 
 const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.0")
   .display({
-    label: { ja: "ランキング（デモデータ）", en: "Rankings (demo data)" },
-    description: {
-      ja: "ライブデモ用に、全員で共有するランキングと順位帯ごとの報酬コイン、コンテストの開始・終了の操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
-      en: "Supplies the live demo's shared ranking, the coins each reward tier pays, and the presses that start and finish a contest. The rewards land in the currency package's wallet.",
+    ja: {
+      label: "ランキング（デモデータ）",
+      description:
+        "ライブデモ用に、全員で共有するランキングと順位帯ごとの報酬コイン、コンテストの開始・終了の操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+    },
+    en: {
+      label: "Rankings (demo data)",
+      description:
+        "Supplies the live demo's shared ranking, the coins each reward tier pays, and the presses that start and finish a contest. The rewards land in the currency package's wallet.",
     },
   })
   .displayType(RankingReward, {
-    label: { ja: "ランキング報酬", en: "Ranking reward" },
-    description: {
-      ja: "デモのランキング報酬に、報酬コインを足します。",
-      en: "Adds the coins it pays to a demo ranking reward tier.",
+    ja: { label: "ランキング報酬", description: "デモのランキング報酬に、報酬コインを足します。" },
+    en: {
+      label: "Ranking reward",
+      description: "Adds the coins it pays to a demo ranking reward tier.",
     },
   })
   .displayType(RankingContest, {
-    label: { ja: "コンテスト", en: "Contest" },
-    description: {
-      ja: "コンテストの開始・終了の操作と説明です。",
-      en: "The contest's start and finish presses and its rule.",
-    },
+    ja: { label: "コンテスト", description: "コンテストの開始・終了の操作と説明です。" },
+    en: { label: "Contest", description: "The contest's start and finish presses and its rule." },
   })
   .dependency(ranking.packageId, "github:gs2io/gs2-studio-package")
   .dependency(schedule.packageId, "github:gs2io/gs2-studio-package")
@@ -254,11 +256,11 @@ export const microLiveopsRankingDemo = withTiers
   .delegatedAction(RankingContest, "StartContest", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: StartRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(RankingContest, "FinishContest", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: FinishRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

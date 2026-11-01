@@ -96,8 +96,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-limit",
-    "directSourceTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
-    "sourcePackageId": "foundation-economy-limit",
-    "sourceTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
+    "directSourceTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
   }
 }

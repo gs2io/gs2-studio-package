@@ -4,12 +4,16 @@
     {
       "arguments": [],
       "componentClassName": "TrainButton",
-      "delegatedActionKey": "resource:foundation-economy-character-demo:masterData:mdr_610EXTERWVB0FRCTCXD30A4ZX6::Gs2Exchange:RateModel.Exchange",
       "id": "uii_6Q7KC4M407B80AT6WPH1G97SKR",
       "kind": "buttonAction",
-      "name": "Character"
+      "name": "Character",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_610EXTERWVB0FRCTCXD30A4ZX6",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-character-demo"
+      }
     }
   ],
-  "name": "Character",
   "targetDomainTypeId": "dt_00D0KZXDBRG616WVXR4N5FCYH2"
 }

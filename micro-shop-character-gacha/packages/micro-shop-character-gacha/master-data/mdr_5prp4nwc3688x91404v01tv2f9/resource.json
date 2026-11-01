@@ -1,43 +1,41 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "displayItemId",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "displayItemId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "salesPeriodEventId.grnKey.eventName",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
-            },
-            "propertyId": "prop_42BYHE1CR1TEXDMCWR9B91PP5K"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "type",
-        "value": "salesItem"
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "salesPeriodEventId.grnKey.eventName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+          },
+          "propertyId": "prop_42BYHE1CR1TEXDMCWR9B91PP5K"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "type",
+      "value": "salesItem"
+    }
+  ],
   "id": "mdr_5PRP4NWC3688X91404V01TV2F9",
   "location": {
     "modelName": "DisplayItem",

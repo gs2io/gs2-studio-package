@@ -1,18 +1,16 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "name",
-        "value": "Showcase"
-      },
-      {
-        "kind": "static",
-        "parameterName": "salesPeriodEventId",
-        "value": null
-      }
-    ]
-  },
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "name",
+      "value": "Showcase"
+    },
+    {
+      "kind": "static",
+      "parameterName": "salesPeriodEventId",
+      "value": null
+    }
+  ],
   "id": "mdr_3F313WCTCC9A9TYYZGXKHC7KB8",
   "location": {
     "modelName": "Showcase",

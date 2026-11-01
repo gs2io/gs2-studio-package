@@ -1,31 +1,10 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperties",
-        "parameterName": "status",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
-              },
-              "propertyId": "prop_2Q40AJMB9QV5RFRKE25RKH3S3E"
-            }
-          }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "version.major",
-        "source": {
+  "declaredBindings": [
+    {
+      "kind": "domainProperties",
+      "parameterName": "status",
+      "sources": [
+        {
           "scopes": [],
           "terminal": {
             "kind": "direct",
@@ -33,49 +12,68 @@
               "kind": "local",
               "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
             },
-            "propertyId": "prop_00D05Q8M1NSNSYDW517S8FBNB3"
+            "propertyId": "prop_2Q40AJMB9QV5RFRKE25RKH3S3E"
           }
         }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "version.micro",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
-            },
-            "propertyId": "prop_00D05Q8M1NWSDJEXKMV352NRG6"
-          }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "version.major",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
+          },
+          "propertyId": "prop_00D05Q8M1NSNSYDW517S8FBNB3"
         }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "version.minor",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
-            },
-            "propertyId": "prop_00D05Q8M1NWQBSABFCZBY6BMP6"
-          }
-        }
-      },
-      {
-        "kind": "skip",
-        "parameterName": "versionName"
       }
-    ],
-    "existencePropertyId": "prop_476CQNTX4ZK67EJZTF4JRWNVG1",
-    "linkedMasterResourceId": "mdr_319778V7S98XR8N360KTTD5ZS2"
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "version.micro",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
+          },
+          "propertyId": "prop_00D05Q8M1NWSDJEXKMV352NRG6"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "version.minor",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
+          },
+          "propertyId": "prop_00D05Q8M1NWQBSABFCZBY6BMP6"
+        }
+      }
+    },
+    {
+      "kind": "skip",
+      "parameterName": "versionName"
+    }
+  ],
+  "existencePropertyId": "prop_476CQNTX4ZK67EJZTF4JRWNVG1",
   "id": "udr_75Q7XS8KGC8G9AZVS90PHGB4DK",
+  "linkedMasterResourceId": "mdr_319778V7S98XR8N360KTTD5ZS2",
   "location": {
     "modelName": "AcceptVersion",
     "service": "version"

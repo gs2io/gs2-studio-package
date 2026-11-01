@@ -7,5 +7,8 @@
   "random": {
     "type:StoreProduct": "dt_00D0YBGPEWKKCZX2GA5X9E0PDC"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:StoreProduct:definition": "uic_45598NW13NBDJ9PZ0D2SYMH22G",
+    "ui:StoreProduct:item:CoinsLabel": "uii_1NC5Y9QYHNAZY9GFGK32PD4P3W"
+  }
 }

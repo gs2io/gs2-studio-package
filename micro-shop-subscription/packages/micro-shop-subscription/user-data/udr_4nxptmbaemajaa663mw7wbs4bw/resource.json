@@ -1,10 +1,25 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "contentName",
-        "source": {
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "contentName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "expiresAt",
+      "sources": [
+        {
           "scopes": [],
           "terminal": {
             "kind": "direct",
@@ -12,50 +27,33 @@
               "kind": "local",
               "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
             },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+            "propertyId": "prop_00D033GGSV8N0RCPVPPVQ5F484"
           }
         }
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "expiresAt",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
-              },
-              "propertyId": "prop_00D033GGSV8N0RCPVPPVQ5F484"
-            }
+      ]
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "status",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
+            },
+            "propertyId": "prop_00D033GGSVBDYMEZGHGPV44S50"
           }
-        ]
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "status",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5"
-              },
-              "propertyId": "prop_00D033GGSVBDYMEZGHGPV44S50"
-            }
-          }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ]
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_4NXPTMBAEMAJAA663MW7WBS4BW",
   "location": {
     "modelName": "SubscriptionStatus",

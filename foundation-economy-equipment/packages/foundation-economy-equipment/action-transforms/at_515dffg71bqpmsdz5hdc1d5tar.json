@@ -1,0 +1,72 @@
+{
+  "category": "consume",
+  "id": "at_515DFFG71BQPMSDZ5HDC1D5TAR",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_7THH0THTYY830SYCKTT7NMYZHG",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "DeleteEquipment",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:ConsumeItemSetByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "itemName",
+          "sourceParameter": "equipment"
+        },
+        {
+          "kind": "static",
+          "parameterName": "consumeCount",
+          "value": 1
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "itemSetName",
+          "sourceParameter": "equipmentPropertyId"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_7THH0THTYY830SYCKTT7NMYZHG",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "equipment",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+      }
+    },
+    {
+      "name": "equipmentPropertyId",
+      "required": false,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

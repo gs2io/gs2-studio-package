@@ -32,6 +32,7 @@
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "formation.Namespace": "mdr_3A74BFMXHXAHSSSKQ47QZ161VJ",
     "formation.PropertyFormModel": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8",

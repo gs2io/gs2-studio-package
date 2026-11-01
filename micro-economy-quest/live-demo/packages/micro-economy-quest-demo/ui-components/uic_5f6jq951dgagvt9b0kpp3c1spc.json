@@ -4,10 +4,15 @@
     {
       "arguments": [],
       "componentClassName": "CompleteButton",
-      "delegatedActionKey": "resource:micro-economy-quest:userData:udr_4TR60HC6M28STTKPCST9SRAVZA::Gs2Quest:Progress.End",
       "id": "uii_2C16SWBEJABR18Z1H226VJW8QZ",
       "kind": "buttonAction",
-      "name": "Progress"
+      "name": "Progress",
+      "targetActionKey": "Gs2Quest:Progress.End",
+      "targetResource": {
+        "resourceId": "udr_4TR60HC6M28STTKPCST9SRAVZA",
+        "resourceKind": "userData",
+        "sourcePackageId": "micro-economy-quest"
+      }
     },
     {
       "componentClassName": "IdleLabel",
@@ -47,6 +52,5 @@
       "name": "Progress"
     }
   ],
-  "name": "Progress",
   "targetDomainTypeId": "dt_00D0TT9XC903SNVA7P9GFM98G3"
 }

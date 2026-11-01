@@ -1,0 +1,89 @@
+{
+  "category": "consume",
+  "id": "at_3571THGJSH9VVT21JDG4STK77F",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "CountUpUsageLimit",
+  "outputs": [
+    {
+      "actionName": "Gs2Limit:CountUpByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "limitName",
+          "sourceParameter": "limit"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "counterName",
+          "sourceParameter": "counter"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "countUpValue",
+          "sourceParameter": "countUpValue"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "maxValue",
+          "sourceParameter": "maxValue"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "limit",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+      }
+    },
+    {
+      "name": "counter",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
+      }
+    },
+    {
+      "name": "countUpValue",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    },
+    {
+      "name": "maxValue",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

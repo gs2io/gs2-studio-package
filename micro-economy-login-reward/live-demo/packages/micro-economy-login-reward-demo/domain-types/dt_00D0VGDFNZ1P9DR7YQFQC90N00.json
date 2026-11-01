@@ -43,8 +43,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-economy-login-reward",
-    "directSourceTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
-    "sourcePackageId": "micro-economy-login-reward",
-    "sourceTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+    "directSourceTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
   }
 }

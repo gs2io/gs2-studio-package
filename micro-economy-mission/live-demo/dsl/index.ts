@@ -36,16 +36,16 @@ const Mission = defineOverlayDomainType(
         // Use the published property id because this DSL evaluation does not resolve the dependency closure.
         targetProperty: mission.propertyId("Mission", "completeAcquireActions"),
         mode: "append",
-            transformPackageId: currency.packageId,
-            transformName: "DepositFreeCurrency",
-            arguments: [
-              { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              {
-                parameterName: "count",
-                source: { kind: "domainProperty", propertyName: "rewardAmount" },
-              },
-            ],
+        transformPackageId: currency.packageId,
+        transformId: currency.transformId("DepositFreeCurrency"),
+        arguments: [
+          { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
+          {
+            parameterName: "count",
+            source: { kind: "domainProperty", propertyName: "rewardAmount" },
           },
+        ],
+      },
     ],
   },
   domainType =>
@@ -88,7 +88,7 @@ const AdvanceRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(MissionCounter)
         .bindings({
-          action: Bind.transform(mission.packageId, "IncreaseMissionCounter", [
+          action: Bind.transform(mission.packageId, mission.transformId("IncreaseMissionCounter"), [
             // Bind the counter identity so each authored counter gets its own rate without duplicating this definition.
             Arg.domainProperty("counter", Source.direct(MissionCounter, COUNTER_ID)),
             Arg.static("value", STEP),
@@ -99,17 +99,25 @@ const AdvanceRateModel = defineMasterDataResource(resource =>
 
 const withGroups = definePackage("micro-economy-mission-demo", "0.0.0")
   .display({
-    label: { ja: "ミッション（デモデータ）", en: "Missions (demo data)" },
-    description: {
-      ja: "ライブデモ用のリセット設定、1 つのカウンター、それを見る 4 つのミッションと 2 つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
-      en: "Supplies the live demo's reset settings, the one counter it shows, the four missions that read it, the two groups they belong to, and the press that advances the counter. The rewards land in the currency package's wallet.",
+    ja: {
+      label: "ミッション（デモデータ）",
+      description:
+        "ライブデモ用のリセット設定、1 つのカウンター、それを見る 4 つのミッションと 2 つのグループ、カウンターを進める操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+    },
+    en: {
+      label: "Missions (demo data)",
+      description:
+        "Supplies the live demo's reset settings, the one counter it shows, the four missions that read it, the two groups they belong to, and the press that advances the counter. The rewards land in the currency package's wallet.",
     },
   })
   .displayType(Mission, {
-    label: { ja: "ミッション", en: "Mission" },
-    description: {
-      ja: "デモのミッションに、報酬の受け取り時に付与するコインの額を足します。",
-      en: "Adds the coins a demo mission pays when its reward is received.",
+    ja: {
+      label: "ミッション",
+      description: "デモのミッションに、報酬の受け取り時に付与するコインの額を足します。",
+    },
+    en: {
+      label: "Mission",
+      description: "Adds the coins a demo mission pays when its reward is received.",
     },
   })
   .dependency(mission.packageId, "github:gs2io/gs2-studio-package")
@@ -213,6 +221,6 @@ export const microEconomyMissionDemo = withMissions
   .delegatedAction(MissionCounter, "Advance", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: AdvanceRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

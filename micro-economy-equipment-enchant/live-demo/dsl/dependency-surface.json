@@ -5,31 +5,34 @@
     "Equipment": {
       "id": "dt_00D0VNJHFYSPVEE231WA4Z2Q47",
       "singleEntry": false,
-      "delegatedActions": {
-        "AddBonus": "resource:micro-economy-equipment-enchant-demo:masterData:mdr_1GGPJSBVVQB1MAWJR3VTQ9Y7QK::Gs2Exchange:RateModel.Exchange",
-        "Reroll": "resource:micro-economy-equipment-enchant-demo:masterData:mdr_7B5FM276ZTBNSAQYJ948JES7GM::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-equipment",
-      "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+      "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+      "delegatedActions": {
+        "AddBonus": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-equipment-enchant-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_1GGPJSBVVQB1MAWJR3VTQ9Y7QK"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "Reroll": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-equipment-enchant-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_7B5FM276ZTBNSAQYJ948JES7GM"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     },
     "EquipmentEnchant": {
       "id": "dt_00D0VNJHFYWCQ1ZBCPN9W9GNAF",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRKX0AV27J248EX89N"
-    },
-    "EquipmentEnchantOption": {
-      "id": "dt_00D0VNJHFYY09HQMP6Q33P84W7",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-economy-equipment-enchant",
-      "canonicalTypeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C"
-    },
-    "EquipmentEnchantSlotChance": {
-      "id": "dt_00D0VNJHFYZZTYQ060GTK8JCDR",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-economy-equipment-enchant",
-      "canonicalTypeId": "dt_00D03217GRN3Z01B1EQB1GF0EE"
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {}
 }

@@ -1,0 +1,63 @@
+{
+  "category": "consume",
+  "id": "at_0T4E2X5NJ896J92H8ZAD72DD60",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "RestrainSkillNode",
+  "outputs": [
+    {
+      "actionName": "Gs2SkillTree:MarkRestrainByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "nodeModelNames[0]",
+          "sourceParameter": "node"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_3CVJH2052ABYFVDDRM7WE3A8HD",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "node",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
+      }
+    }
+  ]
+}

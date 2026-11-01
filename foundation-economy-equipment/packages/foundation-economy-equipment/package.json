@@ -3,13 +3,13 @@
   "name": "foundation-economy-equipment",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Manages the weapons and gear a player owns, grouped by category.",
-      "ja": "プレイヤーが所持する武器や防具を、カテゴリごとに管理します。"
+    "en": {
+      "description": "Manages the weapons and gear a player owns, grouped by category.",
+      "label": "Equipment"
     },
-    "label": {
-      "en": "Equipment",
-      "ja": "装備"
+    "ja": {
+      "description": "プレイヤーが所持する武器や防具を、カテゴリごとに管理します。",
+      "label": "装備"
     }
   }
 }

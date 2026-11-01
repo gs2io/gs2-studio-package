@@ -8,5 +8,20 @@
     "type:ReceiveFriendRequest": "dt_00D0XGY063T3ZK1VVAW47ZSE6K",
     "type:SendFriendRequest": "dt_00D0XGY063X0J6JMXCTZBJ6JKK"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:Follow:definition": "uic_4JG1GJZKDWB7YAJTTGBS5NC6YW",
+    "ui:Follow:item:FollowerProfileLabel": "uii_752N78K0A6B6XSK3G4X9YJEQP8",
+    "ui:Follow:item:NameLabel": "uii_73RMYXKKQ9BZ9TM33A3WT77RYJ",
+    "ui:Friend:definition": "uic_6V3WS09415AKSVF5YAKBWHMNBT",
+    "ui:Friend:item:FriendProfileLabel": "uii_2MHPEAC8XDBCT8NT5T0P321XCZ",
+    "ui:Friend:item:NameLabel": "uii_7FC2M12D99A2ZAWGZ7S6YF4S3W",
+    "ui:Profile:definition": "uic_39MPK52QQQBHPR9GWWVNB5KE7D",
+    "ui:Profile:item:FollowerProfileLabel": "uii_4ER4YQFVQEBG0S7Y0W7WCJRKCA",
+    "ui:Profile:item:FriendProfileLabel": "uii_3ZHR5T222AABN8NBBC9E6CD2JS",
+    "ui:Profile:item:NameLabel": "uii_2CTVZWCFRJACCSZ0W304E543QP",
+    "ui:ReceiveFriendRequest:definition": "uic_2S0J6246GHB1MT08ZG5Z2979YV",
+    "ui:ReceiveFriendRequest:item:IdLabel": "uii_1F020Q74BVBA5SFMV047VFDP9G",
+    "ui:SendFriendRequest:definition": "uic_2SRK8JGS1XB83AG99DAAGXYSKQ",
+    "ui:SendFriendRequest:item:IdLabel": "uii_5DX74SV61ABH1BK5ZD93BP6XTY"
+  }
 }

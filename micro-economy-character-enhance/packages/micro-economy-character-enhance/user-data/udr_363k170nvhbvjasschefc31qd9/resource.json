@@ -1,35 +1,33 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperties",
-        "parameterName": "count",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
-              },
-              "propertyId": "prop_00D0TAXWR8X0NVB2HS99J298KV"
-            }
+  "declaredBindings": [
+    {
+      "kind": "domainProperties",
+      "parameterName": "count",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
+            },
+            "propertyId": "prop_00D0TAXWR8X0NVB2HS99J298KV"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "itemName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_2PEA8RQ1MGA16V5HGXBZA28G57"
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "itemName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_363K170NVHBVJASSCHEFC31QD9",
+  "linkedMasterResourceId": "mdr_2PEA8RQ1MGA16V5HGXBZA28G57",
   "location": {
     "modelName": "SimpleItem",
     "service": "inventory"

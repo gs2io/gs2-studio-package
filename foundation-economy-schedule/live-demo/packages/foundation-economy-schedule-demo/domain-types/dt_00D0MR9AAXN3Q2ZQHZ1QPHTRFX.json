@@ -14,8 +14,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-schedule",
-    "directSourceTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
-    "sourcePackageId": "foundation-economy-schedule",
-    "sourceTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+    "directSourceTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
   }
 }

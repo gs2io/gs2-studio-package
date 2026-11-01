@@ -1,28 +1,26 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "metadata",
-        "value": ""
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "thresholdRank",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031DYK08MQ218VMWRT5X90Q"
-            },
-            "propertyId": "prop_00D031DYK0BEEZ9PX7AGRDHYGE"
-          }
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "metadata",
+      "value": ""
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "thresholdRank",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031DYK08MQ218VMWRT5X90Q"
+          },
+          "propertyId": "prop_00D031DYK0BEEZ9PX7AGRDHYGE"
         }
       }
-    ]
-  },
+    }
+  ],
   "id": "mdr_0XG8G4CQM4BHKAWM8NXAW1Q4ST",
   "location": {
     "modelName": "RankingReward",

@@ -59,17 +59,22 @@ const SpendRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(AdViewPoint)
         .bindings({
-          action: Bind.transform(ad.packageId, "ConsumeAdViewPoint", []),
+          action: Bind.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), []),
         });
     })
 );
 
 export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
   .display({
-    label: { ja: "広告（デモデータ）", en: "Ads (demo data)" },
-    description: {
-      ja: "ライブデモ用の広告プラットフォーム設定と、視聴枠を得る・使う操作を提供します。実際の広告は再生しません。",
-      en: "Supplies the ad platform settings used by the live demo, and the presses that earn and spend a view point. No advertisement is actually played.",
+    ja: {
+      label: "広告（デモデータ）",
+      description:
+        "ライブデモ用の広告プラットフォーム設定と、視聴枠を得る・使う操作を提供します。実際の広告は再生しません。",
+    },
+    en: {
+      label: "Ads (demo data)",
+      description:
+        "Supplies the ad platform settings used by the live demo, and the presses that earn and spend a view point. No advertisement is actually played.",
     },
   })
   .dependency(ad.packageId, "github:gs2io/gs2-studio-package")
@@ -150,11 +155,11 @@ export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
   .delegatedAction(AdViewPoint, "Watch", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: WatchRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(AdViewPoint, "Spend", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: SpendRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

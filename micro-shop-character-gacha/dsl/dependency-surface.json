@@ -17,11 +17,18 @@
     "Gacha": {
       "id": "dt_1G91WTZCFR536CEWSHPAK07H4R",
       "singleEntry": false,
-      "delegatedActions": {
-        "Buy": "resource:micro-shop-character-gacha:masterData:mdr_5PRP4NWC3688X91404V01TV2F9::Gs2Showcase:DisplayItem.Buy"
-      },
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+      "delegatedActions": {
+        "Buy": {
+          "targetResource": {
+            "sourcePackageId": "micro-shop-character-gacha",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_5PRP4NWC3688X91404V01TV2F9"
+          },
+          "targetActionKey": "Gs2Showcase:DisplayItem.Buy"
+        }
+      },
       "properties": {
         "consumeActions": "prop_641SVQJRC0GWZ43QNEPB429MND",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -50,6 +57,7 @@
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "lottery.LotteryModel": "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP",
     "lottery.Namespace": "mdr_5TKE5CS1CT9B6VNQNSBWPWVDNJ",

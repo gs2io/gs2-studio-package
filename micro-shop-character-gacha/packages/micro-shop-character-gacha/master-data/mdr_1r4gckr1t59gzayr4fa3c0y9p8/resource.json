@@ -1,58 +1,56 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "prizeId",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "prizeTableName",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
-            },
-            "propertyId": "prop_61V2Q6GDX782JAG5F3ZJQNRFHY"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "type",
-        "value": "prize_table"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "weight",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
-            },
-            "propertyId": "prop_4FZRY1TPG3AT3E8S78CR5XY0XT"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "prizeId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "prizeTableName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
+          },
+          "propertyId": "prop_61V2Q6GDX782JAG5F3ZJQNRFHY"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "type",
+      "value": "prize_table"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "weight",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
+          },
+          "propertyId": "prop_4FZRY1TPG3AT3E8S78CR5XY0XT"
+        }
+      }
+    }
+  ],
   "id": "mdr_1R4GCKR1T59GZAYR4FA3C0Y9P8",
   "location": {
     "modelName": "Prize",

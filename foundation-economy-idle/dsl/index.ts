@@ -108,24 +108,24 @@ const CategoryModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0.0.0")
   .display({
-    label: { ja: "放置報酬", en: "Idle Rewards" },
-    description: {
-      ja: "遊んでいない間にたまる放置報酬を計算・付与します。",
-      en: "Accrues and grants rewards that build up while the player is away.",
+    ja: { label: "放置報酬", description: "遊んでいない間にたまる放置報酬を計算・付与します。" },
+    en: {
+      label: "Idle Rewards",
+      description: "Accrues and grants rewards that build up while the player is away.",
     },
   })
   .displayType(IdleReward, {
-    label: { ja: "放置報酬", en: "Idle reward" },
-    description: {
-      ja: "放置時間に応じて付与する報酬アクションを設定します。",
-      en: "Defines reward actions granted for accumulated idle time.",
+    ja: { label: "放置報酬", description: "放置時間に応じて付与する報酬アクションを設定します。" },
+    en: {
+      label: "Idle reward",
+      description: "Defines reward actions granted for accumulated idle time.",
     },
   })
   .displayType(IdleStatus, {
-    label: { ja: "放置状況", en: "Idle status" },
-    description: {
-      ja: "プレイヤーの放置開始時刻と受け取り状況を管理します。",
-      en: "Tracks when a player's idle period began and the associated claim state.",
+    ja: { label: "放置状況", description: "プレイヤーの放置開始時刻と受け取り状況を管理します。" },
+    en: {
+      label: "Idle status",
+      description: "Tracks when a player's idle period began and the associated claim state.",
     },
   })
   .domainType(IdleReward)

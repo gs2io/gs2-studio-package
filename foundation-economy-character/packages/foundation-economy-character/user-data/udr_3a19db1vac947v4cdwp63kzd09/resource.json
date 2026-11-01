@@ -1,48 +1,14 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "experienceName"
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "experienceValue",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
-              },
-              "propertyId": "prop_75G83NYX56T0KCQB3N92MQPVMT"
-            }
-          }
-        ]
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "nextRankUpExperienceValue",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
-              },
-              "propertyId": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77"
-            }
-          }
-        ]
-      },
-      {
-        "kind": "domainPropertyKey",
-        "parameterName": "propertyId",
-        "source": {
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "experienceName"
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "experienceValue",
+      "sources": [
+        {
           "scopes": [],
           "terminal": {
             "kind": "direct",
@@ -50,57 +16,89 @@
               "kind": "local",
               "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
             },
-            "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+            "propertyId": "prop_75G83NYX56T0KCQB3N92MQPVMT"
           }
-        },
-        "suffix": ":level"
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "rankCapValue",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
-              },
-              "propertyId": "prop_6GPQDNYV0YP90F0V7GY2S79423"
-            }
+        }
+      ]
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "nextRankUpExperienceValue",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+            },
+            "propertyId": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77"
           }
-        ]
+        }
+      ]
+    },
+    {
+      "kind": "domainPropertyKey",
+      "parameterName": "propertyId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+          },
+          "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+        }
       },
-      {
-        "kind": "domainProperties",
-        "parameterName": "rankValue",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
-              },
-              "propertyId": "prop_04HMA7F4M0F29E8P9WE3E5YF3R"
-            }
+      "suffix": ":level"
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "rankCapValue",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+            },
+            "propertyId": "prop_6GPQDNYV0YP90F0V7GY2S79423"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "statusId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_4D3TBCYQKS94GAV9WSFVNJEXQY"
-  },
+        }
+      ]
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "rankValue",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+            },
+            "propertyId": "prop_04HMA7F4M0F29E8P9WE3E5YF3R"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "statusId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_3A19DB1VAC947V4CDWP63KZD09",
+  "linkedMasterResourceId": "mdr_4D3TBCYQKS94GAV9WSFVNJEXQY",
   "location": {
     "modelName": "Status",
     "service": "experience"

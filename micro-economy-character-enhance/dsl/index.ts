@@ -148,31 +148,49 @@ export const microEconomyCharacterEnhance = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "キャラクター強化", en: "Character Enhancement" },
-    description: {
-      ja: "強化素材アイテムを消費してキャラクターに経験値を与えます。大成功の倍率も設定できます。",
-      en: "Enhances a character with material items, turning them into experience, with configurable bonus multipliers.",
+    ja: {
+      label: "キャラクター強化",
+      description:
+        "強化素材アイテムを消費してキャラクターに経験値を与えます。大成功の倍率も設定できます。",
+    },
+    en: {
+      label: "Character Enhancement",
+      description:
+        "Enhances a character with material items, turning them into experience, with configurable bonus multipliers.",
     },
   })
   .displayType(CharacterEnhance, {
-    label: { ja: "強化レシピ", en: "Enhancement recipe" },
-    description: {
-      ja: "キャラクター強化のレシピを登録します。強化を実行するときはこの ID で指定します。",
-      en: "Registers a character enhancement recipe; an enhancement names the recipe by this ID.",
+    ja: {
+      label: "強化レシピ",
+      description:
+        "キャラクター強化のレシピを登録します。強化を実行するときはこの ID で指定します。",
+    },
+    en: {
+      label: "Enhancement recipe",
+      description:
+        "Registers a character enhancement recipe; an enhancement names the recipe by this ID.",
     },
   })
   .displayType(CharacterEnhanceMaterial, {
-    label: { ja: "強化素材", en: "Enhancement material" },
-    description: {
-      ja: "キャラクター強化に使う素材アイテムと、1 個あたりの経験値を設定します。",
-      en: "Configures the material items used to enhance characters and the experience each one grants.",
+    ja: {
+      label: "強化素材",
+      description: "キャラクター強化に使う素材アイテムと、1 個あたりの経験値を設定します。",
+    },
+    en: {
+      label: "Enhancement material",
+      description:
+        "Configures the material items used to enhance characters and the experience each one grants.",
     },
   })
   .displayType(CharacterEnhanceBonus, {
-    label: { ja: "大成功倍率", en: "Bonus rate" },
-    description: {
-      ja: "キャラクター強化の成功種別ごとの発生率と経験値倍率を設定します。",
-      en: "Configures the probability and experience multiplier for each enhancement result.",
+    ja: {
+      label: "大成功倍率",
+      description: "キャラクター強化の成功種別ごとの発生率と経験値倍率を設定します。",
+    },
+    en: {
+      label: "Bonus rate",
+      description:
+        "Configures the probability and experience multiplier for each enhancement result.",
     },
   })
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")

@@ -1,13 +1,19 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "row:dt_0FMV8QX02378K8GPK5KKAA9CRN.characterformation": "row_01M3EW2TJTA3K1VT92QEGE2QA5",
-    "row:dt_7SRX458Z4F4WB25KSR94EA8BHG.slot1": "row_01M3EW2TJT8VX30E4PC8H1JKS3",
-    "row:dt_7SRX458Z4F4WB25KSR94EA8BHG.slot2": "row_01M3EW2TJTH3456JJPAJXE4F5J",
-    "row:dt_7SRX458Z4F4WB25KSR94EA8BHG.slot3": "row_01M3EW2TJTE5G5ARBAFT87BC9E",
-    "type:CharacterFormation": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6",
+  "retired": {
     "type:CharacterFormationSlot": "dt_00D0VQ0PMPJ5P1MCF12S58MS1E"
   },
-  "deterministicOverrides": {}
+  "random": {
+    "row:[\"foundation-economy-character-formation\",\"dt_0FMV8QX02378K8GPK5KKAA9CRN\",\"characterformation\"]": "row_01M3EW2TJTA3K1VT92QEGE2QA5",
+    "row:[\"foundation-economy-character-formation\",\"dt_7SRX458Z4F4WB25KSR94EA8BHG\",\"slot1\"]": "row_01M3EW2TJT8VX30E4PC8H1JKS3",
+    "row:[\"foundation-economy-character-formation\",\"dt_7SRX458Z4F4WB25KSR94EA8BHG\",\"slot2\"]": "row_01M3EW2TJTH3456JJPAJXE4F5J",
+    "row:[\"foundation-economy-character-formation\",\"dt_7SRX458Z4F4WB25KSR94EA8BHG\",\"slot3\"]": "row_01M3EW2TJTE5G5ARBAFT87BC9E",
+    "type:CharacterFormation": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6"
+  },
+  "deterministicOverrides": {
+    "ui:CharacterFormation:definition": "uic_7XW16M45GTATPRNWZCQTPV9YQ9",
+    "ui:CharacterFormation:item:ExpandButton": "uii_5EYNM5TSA3B3HS860MSFZJAR1E",
+    "ui:CharacterFormation:item:ExpandInteractable": "uii_17VE96GGZNA1PTN02YG7FJBPW0",
+    "ui:CharacterFormation:item:SaveAreaLabel": "uii_7T6B4YFH8AAAY95PMD74WSX67S"
+  }
 }

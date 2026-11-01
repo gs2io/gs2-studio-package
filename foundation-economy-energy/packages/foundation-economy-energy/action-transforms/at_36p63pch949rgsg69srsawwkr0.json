@@ -1,0 +1,63 @@
+{
+  "category": "acquire",
+  "id": "at_36P63PCH949RGSG69SRSAWWKR0",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "RecoveryEnergy",
+  "outputs": [
+    {
+      "actionName": "Gs2Stamina:RecoverStaminaByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "staminaName",
+          "sourceParameter": "energy"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "recoverValue",
+          "sourceParameter": "value"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "energy",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+      }
+    },
+    {
+      "name": "value",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

@@ -1,13 +1,11 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "name",
-        "value": "CharacterEnhanceMaterial"
-      }
-    ]
-  },
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "name",
+      "value": "CharacterEnhanceMaterial"
+    }
+  ],
   "id": "mdr_0X3VFV84CTB6EATPT0SP3AV0G9",
   "location": {
     "modelName": "Namespace",

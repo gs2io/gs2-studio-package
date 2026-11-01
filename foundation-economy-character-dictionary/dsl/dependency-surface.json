@@ -13,6 +13,9 @@
       }
     }
   },
+  "actionTransforms": {
+    "MarkCharacterDictionary": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6"
+  },
   "masterDataResources": {
     "dictionary.EntryModel": "mdr_50VBE9ASKA930RKYC6YDCG9E49",
     "dictionary.Namespace": "mdr_5B1SRVTKYZ8F79QMEXNPPMB63J"

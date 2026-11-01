@@ -1,118 +1,116 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "anchorTimestamp",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-            },
-            "propertyId": "prop_00D031CCJC8A73V9WDWHJYY5S9"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "days",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-            },
-            "propertyId": "prop_00D031CCJCD9WHWSJ1N9W1NN13"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "metadata",
-        "value": ""
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "resetDayOfMonth",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-            },
-            "propertyId": "prop_00D031CCJCB6TXS4PV4ACMXFJC"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "resetDayOfWeek",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-            },
-            "propertyId": "prop_00D031CCJCA2HJ6M98DXZEDTKY"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "resetHour",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-            },
-            "propertyId": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "resetType",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
-            },
-            "propertyId": "prop_00D031CCJC935P6N8JH9QZET3R"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "anchorTimestamp",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+          },
+          "propertyId": "prop_00D031CCJC8A73V9WDWHJYY5S9"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "days",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+          },
+          "propertyId": "prop_00D031CCJCD9WHWSJ1N9W1NN13"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "metadata",
+      "value": ""
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "resetDayOfMonth",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+          },
+          "propertyId": "prop_00D031CCJCB6TXS4PV4ACMXFJC"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "resetDayOfWeek",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+          },
+          "propertyId": "prop_00D031CCJCA2HJ6M98DXZEDTKY"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "resetHour",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+          },
+          "propertyId": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "resetType",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+          },
+          "propertyId": "prop_00D031CCJC935P6N8JH9QZET3R"
+        }
+      }
+    }
+  ],
   "id": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
   "location": {
     "modelName": "LimitModel",

@@ -14,8 +14,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-core-identity",
-    "directSourceTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
-    "sourcePackageId": "foundation-core-identity",
-    "sourceTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
+    "directSourceTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
   }
 }

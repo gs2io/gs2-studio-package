@@ -33,8 +33,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-economy-character-enhance",
-    "directSourceTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
-    "sourcePackageId": "micro-economy-character-enhance",
-    "sourceTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
+    "directSourceTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
   }
 }

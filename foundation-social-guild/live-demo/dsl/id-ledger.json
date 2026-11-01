@@ -1,12 +1,17 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "row:dt_00D031EHJKRH5CWDQRFS6291KY.adventurers": "row_01M3KW8K6KD855M2SD98AF303G",
-    "row:dt_00D031EHJKYH677VNXVWGBA2D0.master": "row_01M3KW8K6K2KE44YG0MA9PR2T6",
-    "row:dt_00D031EHJKYH677VNXVWGBA2D0.member": "row_01M3KW8K6K5TY35Y6S1BTB9MQN",
-    "type:Guild": "dt_00D0WZ24SMWZ7S3MC3VY8EJ6KG",
+  "retired": {
     "type:GuildRole": "dt_00D0WZ24SMR2NMFZEB5EXKGEC9"
   },
-  "deterministicOverrides": {}
+  "random": {
+    "row:[\"foundation-social-guild\",\"dt_00D031EHJKRH5CWDQRFS6291KY\",\"adventurers\"]": "row_01M3KW8K6KD855M2SD98AF303G",
+    "row:[\"foundation-social-guild\",\"dt_00D031EHJKYH677VNXVWGBA2D0\",\"master\"]": "row_01M3KW8K6K2KE44YG0MA9PR2T6",
+    "row:[\"foundation-social-guild\",\"dt_00D031EHJKYH677VNXVWGBA2D0\",\"member\"]": "row_01M3KW8K6K5TY35Y6S1BTB9MQN",
+    "type:Guild": "dt_00D0WZ24SMWZ7S3MC3VY8EJ6KG"
+  },
+  "deterministicOverrides": {
+    "ui:Guild:definition": "uic_4W25JNRE31AQJ9XN07MND9X5H4",
+    "ui:Guild:item:CapacityLabel": "uii_2QB7A9VFDVB8TS9N10N6WJCPMA",
+    "ui:Guild:item:MembershipLabel": "uii_11ZT8KV2WDB88BFJX5JREJ456R"
+  }
 }

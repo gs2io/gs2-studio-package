@@ -33,10 +33,13 @@ export const microEconomyEquipmentLoadoutDemo = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "装備の装着（デモデータ）", en: "Equipment Loadout (demo data)" },
-    description: {
-      ja: "ライブデモ用の武器スロットと防具スロットを提供します。",
-      en: "Supplies the weapon and armor slots the live demo uses.",
+    ja: {
+      label: "装備の装着（デモデータ）",
+      description: "ライブデモ用の武器スロットと防具スロットを提供します。",
+    },
+    en: {
+      label: "Equipment Loadout (demo data)",
+      description: "Supplies the weapon and armor slots the live demo uses.",
     },
   })
   .dependency(loadout.packageId, "github:gs2io/gs2-studio-package")

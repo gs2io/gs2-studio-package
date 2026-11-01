@@ -1,0 +1,100 @@
+{
+  "category": "consume",
+  "id": "at_4Q831FZJQJ81P8DAQA1D537QF7",
+  "name": "ConsumeResource",
+  "outputs": [
+    {
+      "conditions": [
+        {
+          "operator": "eq",
+          "sourceParameter": "resourceType",
+          "value": "material"
+        }
+      ],
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "itemName",
+            "source": {
+              "kind": "parameter",
+              "sourceParameter": "resourceId"
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "parameter",
+              "sourceParameter": "count"
+            }
+          }
+        ],
+        "target": {
+          "packageId": "sample-child-restoration",
+          "transformId": "at_0E2GBWX0958CTSSB22YANK1QZM"
+        }
+      },
+      "kind": "delegation"
+    },
+    {
+      "conditions": [
+        {
+          "operator": "eq",
+          "sourceParameter": "resourceType",
+          "value": "item"
+        }
+      ],
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "itemName",
+            "source": {
+              "kind": "parameter",
+              "sourceParameter": "resourceId"
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "parameter",
+              "sourceParameter": "count"
+            }
+          }
+        ],
+        "target": {
+          "packageId": "sample-child-restoration",
+          "transformId": "at_3NA5W87R3P8HR916X2ET2E4TDV"
+        }
+      },
+      "kind": "delegation"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "resourceType",
+      "required": true,
+      "type": {
+        "kind": "enum",
+        "values": [
+          "material",
+          "item"
+        ]
+      }
+    },
+    {
+      "name": "resourceId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

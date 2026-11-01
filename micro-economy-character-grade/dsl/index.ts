@@ -109,24 +109,36 @@ const GradeModel = defineMasterDataResource(resource =>
 
 export const microEconomyCharacterGrade = definePackage("micro-economy-character-grade", "0.0.0")
   .display({
-    label: { ja: "キャラクター限界突破", en: "Character Grades" },
-    description: {
-      ja: "キャラクターのグレードを上げてレベル上限を引き上げます。段階ごとに上限値と対象キャラクターを設定できます。",
-      en: "Promotes a character through grades, each raising its level cap, with per-step caps and eligibility.",
+    ja: {
+      label: "キャラクター限界突破",
+      description:
+        "キャラクターのグレードを上げてレベル上限を引き上げます。段階ごとに上限値と対象キャラクターを設定できます。",
+    },
+    en: {
+      label: "Character Grades",
+      description:
+        "Promotes a character through grades, each raising its level cap, with per-step caps and eligibility.",
     },
   })
   .displayType(CharacterGradeStep, {
-    label: { ja: "グレード段階", en: "Grade step" },
-    description: {
-      ja: "対象キャラクターの条件、グレードアップ先、ランク上限を設定します。",
-      en: "Defines eligible characters, the grade-up target, and rank cap for a grade step.",
+    ja: {
+      label: "グレード段階",
+      description: "対象キャラクターの条件、グレードアップ先、ランク上限を設定します。",
+    },
+    en: {
+      label: "Grade step",
+      description:
+        "Defines eligible characters, the grade-up target, and rank cap for a grade step.",
     },
   })
   .displayType(Character, {
-    label: { ja: "キャラクター", en: "Character" },
-    description: {
-      ja: "プレイヤーが所持するキャラクターごとの現在グレードを管理します。",
-      en: "Tracks the current grade of each character owned by a player.",
+    ja: {
+      label: "キャラクター",
+      description: "プレイヤーが所持するキャラクターごとの現在グレードを管理します。",
+    },
+    en: {
+      label: "Character",
+      description: "Tracks the current grade of each character owned by a player.",
     },
   })
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")

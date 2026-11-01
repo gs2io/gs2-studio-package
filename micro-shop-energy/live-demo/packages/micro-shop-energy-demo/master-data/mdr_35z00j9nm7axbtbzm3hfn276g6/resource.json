@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "slot",
@@ -40,13 +40,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "WithdrawCurrency",
-        "transformPackageId": "foundation-economy-currency"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_35Z00J9NM7AXBTBZM3HFN276G6",
   "location": {
     "modelName": "ConsumeAction",

@@ -14,8 +14,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-character",
-    "directSourceTypeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
-    "sourcePackageId": "foundation-economy-character",
-    "sourceTypeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0"
+    "directSourceTypeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0"
   }
 }

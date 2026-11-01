@@ -6,13 +6,13 @@
     "foundation-economy-equipment": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Rolls random bonuses onto equipment, with configurable slot counts, options and weights.",
-      "ja": "装備にランダムな追加効果を付与します。抽選されるスロット数と効果の種類・重みを設定できます。"
+    "en": {
+      "description": "Rolls random bonuses onto equipment, with configurable slot counts, options and weights.",
+      "label": "Equipment Enchantment"
     },
-    "label": {
-      "en": "Equipment Enchantment",
-      "ja": "装備エンチャント"
+    "ja": {
+      "description": "装備にランダムな追加効果を付与します。抽選されるスロット数と効果の種類・重みを設定できます。",
+      "label": "装備エンチャント"
     }
   }
 }

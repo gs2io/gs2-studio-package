@@ -1,0 +1,67 @@
+{
+  "category": "acquire",
+  "id": "at_4AHYMDX4JN8BHV2Q0MHBGXCA0Z",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_2MZFS2Y6618P68QQHD5XJHVFV5",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "AcquireItem",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:AcquireSimpleItemsByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "acquireCounts[0].itemName",
+          "sourceParameter": "itemName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "acquireCounts[0].count",
+          "sourceParameter": "count"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_2MZFS2Y6618P68QQHD5XJHVFV5",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "itemName",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_47E751540GQRMAWTXYFT9376WH"
+      }
+    },
+    {
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

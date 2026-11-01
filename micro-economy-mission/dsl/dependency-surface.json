@@ -5,11 +5,18 @@
     "Mission": {
       "id": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
       "singleEntry": false,
-      "delegatedActions": {
-        "Receive": "resource:micro-economy-mission:masterData:mdr_4QWBNQ5KM59ZERS381QKYXGJCB::Gs2Mission:MissionTaskModel.Complete"
-      },
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
+      "delegatedActions": {
+        "Receive": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-mission",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_4QWBNQ5KM59ZERS381QKYXGJCB"
+          },
+          "targetActionKey": "Gs2Mission:MissionTaskModel.Complete"
+        }
+      },
       "properties": {
         "completeAcquireActions": "prop_00D060QP7EZPDKKKFPE3HYE2C5",
         "completed": "prop_08ZS1KJ683EXX3ADZAVHK3E833",
@@ -23,11 +30,18 @@
     "MissionCollection": {
       "id": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
       "singleEntry": false,
-      "delegatedActions": {
-        "Receive": "resource:micro-economy-mission:masterData:mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM::Gs2Mission:MissionGroupModel.BatchComplete"
-      },
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
+      "delegatedActions": {
+        "Receive": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-mission",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM"
+          },
+          "targetActionKey": "Gs2Mission:MissionGroupModel.BatchComplete"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "schedule": "prop_4SWXMEBZDC8Y2G8NHXBQSMNEXJ",
@@ -59,6 +73,9 @@
         "resetHour": "prop_05MKE4B6YY206260EBQGMX43NW"
       }
     }
+  },
+  "actionTransforms": {
+    "IncreaseMissionCounter": "at_683TMFPM3A87S843CGWG5PFWCJ"
   },
   "masterDataResources": {
     "mission.CounterModel": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ",

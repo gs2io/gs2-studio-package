@@ -1,0 +1,91 @@
+{
+  "category": "verify",
+  "id": "at_0C84HMM5AM8YMRY4BJH76CPN0A",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyEquipmentEnchantment",
+  "outputs": [
+    {
+      "actionName": "Gs2Enchant:VerifyRarityParameterStatusByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "parameterName",
+          "sourceParameter": "enchant"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "have"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "parameterValueName",
+          "sourceParameter": "option"
+        },
+        {
+          "kind": "static",
+          "parameterName": "parameterCount",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "multiplyValueSpecifyingQuantity",
+          "value": false
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "enchant",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D03217GRKX0AV27J248EX89N"
+      }
+    },
+    {
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "name": "option",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C"
+      }
+    }
+  ]
+}

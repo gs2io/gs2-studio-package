@@ -1,0 +1,86 @@
+{
+  "category": "verify",
+  "id": "at_21RD4Y7BR38AQ9N31TQ5KZ9861",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyRankingScoreReached",
+  "outputs": [
+    {
+      "actionName": "Gs2Ranking2:VerifyGlobalRankingScoreByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "rankingName",
+          "sourceParameter": "ranking"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "greaterEqual"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "season",
+          "sourceParameter": "season"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "score",
+          "sourceParameter": "score"
+        },
+        {
+          "kind": "static",
+          "parameterName": "multiplyValueSpecifyingQuantity",
+          "value": false
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "ranking",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
+      }
+    },
+    {
+      "name": "season",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    },
+    {
+      "name": "score",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}

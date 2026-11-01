@@ -1,15 +1,19 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "row:dt_00D0WRJ0XVF04XYTZ7SCR93FGH.versiongate": "row_01M3K2ERGH0P39H858ZSBJNWKP",
-    "row:dt_0TC4B3HRAFXEXNCK7RN28GDRRM.app": "row_01M3K2ERGHYP9WRMYJD79Y85J9",
-    "row:dt_0TC4B3HRAFXEXNCK7RN28GDRRM.asset": "row_01M3K2ERGHJ1ZSTCYAYA6J206R",
-    "row:dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9.marketing": "row_01M3K2ERGHVX4JBFH7HQXYXEGV",
-    "row:dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9.terms": "row_01M3K2ERGHNJ0DD0S37KANMDDB",
-    "type:AgreementVersion": "dt_00D0WRKP44B54ADDE2H5EFVYZW",
+  "retired": {
     "type:EmbeddedVersion": "dt_00D0WRKP44D2Q9X9KP7XQV1DE2",
     "type:VersionGate": "dt_00D0WRKP44B4PTG8ZVAERANV1W"
   },
-  "deterministicOverrides": {}
+  "random": {
+    "row:[\"foundation-liveops-version\",\"dt_00D0WRJ0XVF04XYTZ7SCR93FGH\",\"versiongate\"]": "row_01M3K2ERGH0P39H858ZSBJNWKP",
+    "row:[\"foundation-liveops-version\",\"dt_0TC4B3HRAFXEXNCK7RN28GDRRM\",\"app\"]": "row_01M3K2ERGHYP9WRMYJD79Y85J9",
+    "row:[\"foundation-liveops-version\",\"dt_0TC4B3HRAFXEXNCK7RN28GDRRM\",\"asset\"]": "row_01M3K2ERGHJ1ZSTCYAYA6J206R",
+    "row:[\"foundation-liveops-version\",\"dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9\",\"marketing\"]": "row_01M3K2ERGHVX4JBFH7HQXYXEGV",
+    "row:[\"foundation-liveops-version\",\"dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9\",\"terms\"]": "row_01M3K2ERGHNJ0DD0S37KANMDDB",
+    "type:AgreementVersion": "dt_00D0WRKP44B54ADDE2H5EFVYZW"
+  },
+  "deterministicOverrides": {
+    "ui:AgreementVersion:definition": "uic_1B2H0SGWRBBG2T8S4YG59ZD38D",
+    "ui:AgreementVersion:item:RuleLabel": "uii_63KH6EETS2B4CRNH26MYH383YX"
+  }
 }

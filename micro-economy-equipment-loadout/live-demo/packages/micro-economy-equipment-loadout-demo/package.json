@@ -10,13 +10,13 @@
     "micro-economy-equipment-loadout": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the weapon and armor slots the live demo uses.",
-      "ja": "ライブデモ用の武器スロットと防具スロットを提供します。"
+    "en": {
+      "description": "Supplies the weapon and armor slots the live demo uses.",
+      "label": "Equipment Loadout (demo data)"
     },
-    "label": {
-      "en": "Equipment Loadout (demo data)",
-      "ja": "装備の装着（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用の武器スロットと防具スロットを提供します。",
+      "label": "装備の装着（デモデータ）"
     }
   }
 }

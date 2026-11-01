@@ -5,21 +5,25 @@
   },
   "random": {
     "property:IdleReward.coins": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval01": "row_01M3GPJF1H118GH9KRZWWQ8HX7",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval02": "row_01M3GPJF1H7X1A18XYGA59VDEG",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval03": "row_01M3GPJF1HX53H548NQKSZDEHV",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval04": "row_01M3GPJF1HAKVZS599Y02X8JHC",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval05": "row_01M3GPJF1HVKFV2KY2Z40H579P",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval06": "row_01M3GPJF1HKN7Q28F2B3QTPDA3",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval07": "row_01M3GPJF1H59NNT73K3QVXM6CG",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval08": "row_01M3GPJF1H4K0N97FJC85WJ9JG",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval09": "row_01M3GPJF1H4QFP53ACQ79F3QVH",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval10": "row_01M3GPJF1HT387RHZMZNXSKZQW",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval11": "row_01M3GPJF1HV5QC0B95W1GSVPCF",
-    "row:dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ.interval12": "row_01M3GPJF1H577KXZGKE8M8ED2C",
-    "row:dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ.idlestatus": "row_01M3GBBQCATYXQ6JC0FZMVS6PF",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval01\"]": "row_01M3GPJF1H118GH9KRZWWQ8HX7",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval02\"]": "row_01M3GPJF1H7X1A18XYGA59VDEG",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval03\"]": "row_01M3GPJF1HX53H548NQKSZDEHV",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval04\"]": "row_01M3GPJF1HAKVZS599Y02X8JHC",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval05\"]": "row_01M3GPJF1HVKFV2KY2Z40H579P",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval06\"]": "row_01M3GPJF1HKN7Q28F2B3QTPDA3",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval07\"]": "row_01M3GPJF1H59NNT73K3QVXM6CG",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval08\"]": "row_01M3GPJF1H4K0N97FJC85WJ9JG",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval09\"]": "row_01M3GPJF1H4QFP53ACQ79F3QVH",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval10\"]": "row_01M3GPJF1HT387RHZMZNXSKZQW",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval11\"]": "row_01M3GPJF1HV5QC0B95W1GSVPCF",
+    "row:[\"foundation-economy-idle\",\"dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ\",\"interval12\"]": "row_01M3GPJF1H577KXZGKE8M8ED2C",
+    "row:[\"foundation-economy-idle\",\"dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ\",\"idlestatus\"]": "row_01M3GBBQCATYXQ6JC0FZMVS6PF",
     "type:IdleReward": "dt_00D0W2TXV2P9NTD0GZY11BN5M7",
     "type:IdleStatus": "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:IdleStatus:definition": "uic_0V6B6B7MREAJ3BYHRGSD6AMT2D",
+    "ui:IdleStatus:item:ReceiveButton": "uii_65BAXJF97WB6HBNT0S6RF4J8FW",
+    "ui:IdleStatus:item:RuleLabel": "uii_2ZWHE77FSXAG2BCZ4N4S537552"
+  }
 }

@@ -37,6 +37,11 @@
       }
     }
   },
+  "actionTransforms": {
+    "AcquireEquipment": "at_6VEP2XV1908GMR5151Y7W0YSSB",
+    "AddEquipmentCapacity": "at_3H7989KQGX9SJTTECEYMKHR6TJ",
+    "DeleteEquipment": "at_515DFFG71BQPMSDZ5HDC1D5TAR"
+  },
   "masterDataResources": {
     "inventory.InventoryModel": "mdr_7THH0THTYY830SYCKTT7NMYZHG",
     "inventory.ItemModel": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7",

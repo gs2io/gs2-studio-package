@@ -1,0 +1,82 @@
+{
+  "category": "acquire",
+  "id": "at_5V44WAAQRF94D51FPBFT5Q2DN2",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_3EJ714VYYS8V2SWXMCQTYD32VN",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "AcquireCharacter",
+  "outputs": [
+    {
+      "actionName": "Gs2Inventory:AcquireItemSetByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "resourceKey",
+          "parameterName": "inventoryName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "itemName",
+          "sourceParameter": "character"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "acquireCount",
+          "sourceParameter": "count"
+        },
+        {
+          "kind": "static",
+          "parameterName": "expiresAt",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "createNewItemSet",
+          "value": null
+        },
+        {
+          "kind": "static",
+          "parameterName": "itemSetName",
+          "value": null
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_3EJ714VYYS8V2SWXMCQTYD32VN",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "character",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+      }
+    },
+    {
+      "name": "count",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

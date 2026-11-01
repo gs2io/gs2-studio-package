@@ -14,8 +14,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-shop-character-gacha",
-    "directSourceTypeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
-    "sourcePackageId": "micro-shop-character-gacha",
-    "sourceTypeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
+    "directSourceTypeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
   }
 }

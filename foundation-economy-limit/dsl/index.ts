@@ -133,25 +133,30 @@ const LimitModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyLimit = definePackage("foundation-economy-limit", "0.0.0")
   .display({
-    label: { ja: "回数制限", en: "Usage Limits" },
-    description: {
-      ja: "「1日3回まで」のような回数制限を扱います。リセットのタイミングを共有しつつ、数える対象ごとにカウンターを分けられます。上限は使う側が指定します。",
-      en: "Handles allowances such as 'three times a day': one reset schedule, a separate counter per thing being counted, and a maximum supplied by the caller.",
+    ja: {
+      label: "回数制限",
+      description:
+        "「1日3回まで」のような回数制限を扱います。リセットのタイミングを共有しつつ、数える対象ごとにカウンターを分けられます。上限は使う側が指定します。",
+    },
+    en: {
+      label: "Usage Limits",
+      description:
+        "Handles allowances such as 'three times a day': one reset schedule, a separate counter per thing being counted, and a maximum supplied by the caller.",
     },
   })
   .displayType(UsageLimit, {
-    label: { ja: "リセット設定", en: "Reset schedule" },
-    description: {
-      ja: "利用回数カウンターのリセット方法と周期を設定します。",
-      en: "Configures how and when a usage counter is reset.",
+    ja: {
+      label: "リセット設定",
+      description: "利用回数カウンターのリセット方法と周期を設定します。",
+    },
+    en: {
+      label: "Reset schedule",
+      description: "Configures how and when a usage counter is reset.",
     },
   })
   .displayType(UsageLimitCounter, {
-    label: { ja: "回数カウンター", en: "Usage counter" },
-    description: {
-      ja: "プレイヤーごとの利用回数と上限を管理します。",
-      en: "Tracks each player's usage count and its limit.",
-    },
+    ja: { label: "回数カウンター", description: "プレイヤーごとの利用回数と上限を管理します。" },
+    en: { label: "Usage counter", description: "Tracks each player's usage count and its limit." },
   })
   .domainType(UsageLimit)
   .domainType(UsageLimitCounter)

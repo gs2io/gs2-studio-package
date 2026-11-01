@@ -1,58 +1,56 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "gradeUpPropertyIdRegex",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
-            },
-            "propertyId": "prop_00D0320HQ4N8QC4SDN75PFNFSF"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "metadata",
-        "value": ""
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "propertyIdRegex",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
-            },
-            "propertyId": "prop_00D0320HQ4HKJ6EW5M3Z8QS8PG"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "rankCapValue",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
-            },
-            "propertyId": "prop_00D0320HQ4H7XNC4RCNDDV9W35"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "gradeUpPropertyIdRegex",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
+          },
+          "propertyId": "prop_00D0320HQ4N8QC4SDN75PFNFSF"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "static",
+      "parameterName": "metadata",
+      "value": ""
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "propertyIdRegex",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
+          },
+          "propertyId": "prop_00D0320HQ4HKJ6EW5M3Z8QS8PG"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "rankCapValue",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
+          },
+          "propertyId": "prop_00D0320HQ4H7XNC4RCNDDV9W35"
+        }
+      }
+    }
+  ],
   "id": "mdr_6FMYQBP94FAQRRQNCBHDWRD8NM",
   "location": {
     "modelName": "GradeEntryModel",

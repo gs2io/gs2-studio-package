@@ -8,13 +8,13 @@
     "foundation-economy-character-formation": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the formation slots and the save-area expansion the live demo uses.",
-      "ja": "ライブデモ用の編成スロットと枠の拡張を提供します。"
+    "en": {
+      "description": "Supplies the formation slots and the save-area expansion the live demo uses.",
+      "label": "Party Formation (demo data)"
     },
-    "label": {
-      "en": "Party Formation (demo data)",
-      "ja": "パーティ編成（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用の編成スロットと枠の拡張を提供します。",
+      "label": "パーティ編成（デモデータ）"
     }
   }
 }

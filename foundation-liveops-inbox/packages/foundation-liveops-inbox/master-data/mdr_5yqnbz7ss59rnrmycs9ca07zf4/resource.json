@@ -1,73 +1,71 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "absoluteBegin",
-        "source": {
-          "scopes": [
-            {
-              "kind": "parent",
-              "parentResourceId": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B"
-            }
-          ],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
-            },
-            "propertyId": "prop_4DM29ET2A2JAHWK6D0MVPT25PW"
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "absoluteBegin",
+      "source": {
+        "scopes": [
+          {
+            "kind": "parent",
+            "parentResourceId": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B"
           }
+        ],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
+          },
+          "propertyId": "prop_4DM29ET2A2JAHWK6D0MVPT25PW"
         }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "absoluteEnd",
-        "source": {
-          "scopes": [
-            {
-              "kind": "parent",
-              "parentResourceId": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B"
-            }
-          ],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
-            },
-            "propertyId": "prop_28HE0VGFDJZC3C2B949D7TZD2W"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "repeatSetting.repeatType",
-        "value": "always"
-      },
-      {
-        "kind": "static",
-        "parameterName": "scheduleType",
-        "value": "absolute"
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "absoluteEnd",
+      "source": {
+        "scopes": [
+          {
+            "kind": "parent",
+            "parentResourceId": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B"
+          }
+        ],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
+          },
+          "propertyId": "prop_28HE0VGFDJZC3C2B949D7TZD2W"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "repeatSetting.repeatType",
+      "value": "always"
+    },
+    {
+      "kind": "static",
+      "parameterName": "scheduleType",
+      "value": "absolute"
+    }
+  ],
   "id": "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4",
   "location": {
     "modelName": "Event",

@@ -45,10 +45,15 @@ export const foundationLiveopsVersionDemo = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "バージョン管理（デモデータ）", en: "Version Gate (demo data)" },
-    description: {
-      ja: "ライブデモ用に、必須と任意の利用規約、アプリとアセットの申告バージョン、確認を通過したときのユーザーを提供します。",
-      en: "Supplies the live demo's required and optional agreements, the app and asset versions the client reports, and the user a player who passes is signed in as.",
+    ja: {
+      label: "バージョン管理（デモデータ）",
+      description:
+        "ライブデモ用に、必須と任意の利用規約、アプリとアセットの申告バージョン、確認を通過したときのユーザーを提供します。",
+    },
+    en: {
+      label: "Version Gate (demo data)",
+      description:
+        "Supplies the live demo's required and optional agreements, the app and asset versions the client reports, and the user a player who passes is signed in as.",
     },
   })
   .dependency(version.packageId, "github:gs2io/gs2-studio-package")

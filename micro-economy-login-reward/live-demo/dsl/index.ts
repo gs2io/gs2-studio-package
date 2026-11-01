@@ -57,16 +57,16 @@ const LoginReward = defineOverlayDomainType(
       {
         targetProperty: loginReward.propertyId("LoginReward", "acquireActions"),
         mode: "append",
-            transformPackageId: currency.packageId,
-            transformName: "DepositFreeCurrency",
-            arguments: [
-              { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
-              {
-                parameterName: "count",
-                source: { kind: "domainProperty", propertyName: "coins" },
-              },
-            ],
+        transformPackageId: currency.packageId,
+        transformId: currency.transformId("DepositFreeCurrency"),
+        arguments: [
+          { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
+          {
+            parameterName: "count",
+            source: { kind: "domainProperty", propertyName: "coins" },
           },
+        ],
+      },
     ],
   },
   domainType =>
@@ -105,33 +105,52 @@ const StartOverRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(LoginRewardCollection)
         .bindings({
-          action: Bind.transform(loginReward.packageId, "ResetReceiveStatus", [
-            Arg.domainProperty("loginRewardCollection", Source.direct(LoginRewardCollection, "id")),
-          ]),
+          action: Bind.transform(
+            loginReward.packageId,
+            loginReward.transformId("ResetReceiveStatus"),
+            [
+              Arg.domainProperty(
+                "loginRewardCollection",
+                Source.direct(LoginRewardCollection, "id")
+              ),
+            ]
+          ),
         });
     })
 );
 
 const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
   .display({
-    label: { ja: "ログインボーナス（デモデータ）", en: "Login Rewards (demo data)" },
-    description: {
-      ja: "ライブデモ用の 7 日間のログインボーナスと、各日の報酬コイン・やり直しの操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
-      en: "Supplies the live demo's seven-day login bonus, the coins each day pays, and the press that starts the track over. The rewards land in the currency package's wallet.",
+    ja: {
+      label: "ログインボーナス（デモデータ）",
+      description:
+        "ライブデモ用の 7 日間のログインボーナスと、各日の報酬コイン・やり直しの操作を提供します。報酬は通貨パッケージのウォレットへ入ります。",
+    },
+    en: {
+      label: "Login Rewards (demo data)",
+      description:
+        "Supplies the live demo's seven-day login bonus, the coins each day pays, and the press that starts the track over. The rewards land in the currency package's wallet.",
     },
   })
   .displayType(LoginRewardCollection, {
-    label: { ja: "ログインボーナスグループ", en: "Login reward group" },
-    description: {
-      ja: "デモのログインボーナスグループに、受け取り・やり直しの操作と表示を付けます。",
-      en: "Gives a demo login reward group its receive and start-over presses and its labels.",
+    ja: {
+      label: "ログインボーナスグループ",
+      description: "デモのログインボーナスグループに、受け取り・やり直しの操作と表示を付けます。",
+    },
+    en: {
+      label: "Login reward group",
+      description:
+        "Gives a demo login reward group its receive and start-over presses and its labels.",
     },
   })
   .displayType(LoginReward, {
-    label: { ja: "ログインボーナス", en: "Login reward" },
-    description: {
-      ja: "デモのログインボーナスに、表示名と報酬コインを足します。",
-      en: "Adds a display name and the coins it pays to a demo login reward.",
+    ja: {
+      label: "ログインボーナス",
+      description: "デモのログインボーナスに、表示名と報酬コインを足します。",
+    },
+    en: {
+      label: "Login reward",
+      description: "Adds a display name and the coins it pays to a demo login reward.",
     },
   })
   .dependency(loginReward.packageId, "github:gs2io/gs2-studio-package")
@@ -259,6 +278,6 @@ export const microEconomyLoginRewardDemo = withDays
   .delegatedAction(LoginRewardCollection, "StartOver", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: StartOverRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

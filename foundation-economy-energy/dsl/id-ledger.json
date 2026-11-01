@@ -1,6 +1,13 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "transform:ConsumeEnergy:output:direct:Gs2Stamina:ConsumeStaminaByUserId#0": "out_01KJSWEC171NCTKBC9FFAKXXZH",
+    "transform:ConsumeEnergy:parameter:energy": "param_01M2JGT1CDYTCHZZRQG3EEZXMJ",
+    "transform:ConsumeEnergy:parameter:value": "param_01KJSWEQFV1RRMDAGH2SZ0V69H",
+    "transform:RecoveryEnergy:output:direct:Gs2Stamina:RecoverStaminaByUserId#0": "out_01KJSWBYG7P39AB2Y66NDR9ZGD",
+    "transform:RecoveryEnergy:parameter:energy": "param_01M2JGT1CDAD638NHS1SN2VYHH",
+    "transform:RecoveryEnergy:parameter:value": "param_01KJSWD3KRSF44EMTA95EKTT0F"
+  },
   "random": {
     "property:Energy.currentMaximumValue": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56",
     "property:Energy.currentValue": "prop_7BX7N28W6KRGHGC40MXEWB2ESC",
@@ -10,17 +17,18 @@
     "property:Energy.recoveryIntervalMinutes": "prop_7B2HB91QDWZK8SXNC6ZJGCCAEA",
     "property:Energy.recoveryValue": "prop_5DW145AF8E14EQ3GHSC94QCMBW",
     "property:Energy.useOverflow": "prop_0DZD8RYHVEY4B0DGB0K83K7DNX",
-    "transform:ConsumeEnergy:output:direct:Gs2Stamina:ConsumeStaminaByUserId#0": "out_01KJSWEC171NCTKBC9FFAKXXZH",
-    "transform:ConsumeEnergy:parameter:energy": "param_01M2JGT1CDYTCHZZRQG3EEZXMJ",
-    "transform:ConsumeEnergy:parameter:value": "param_01KJSWEQFV1RRMDAGH2SZ0V69H",
-    "transform:RecoveryEnergy:output:direct:Gs2Stamina:RecoverStaminaByUserId#0": "out_01KJSWBYG7P39AB2Y66NDR9ZGD",
-    "transform:RecoveryEnergy:parameter:energy": "param_01M2JGT1CDAD638NHS1SN2VYHH",
-    "transform:RecoveryEnergy:parameter:value": "param_01KJSWD3KRSF44EMTA95EKTT0F",
+    "transform:ConsumeEnergy": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY",
+    "transform:RecoveryEnergy": "at_36P63PCH949RGSG69SRSAWWKR0",
     "type:Energy": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
   },
   "deterministicOverrides": {
     "master/stamina:Namespace:unmounted:Energy#0": "mdr_77M6CM017083FAVC4NT6STKDZD",
     "master/stamina:Namespace:unmounted:Energy#0/stamina:StaminaModel:Energy:#0": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5",
+    "ui:Energy:definition": "uic_0776YPMXFEBSHSW2Y6FBP615BJ",
+    "ui:Energy:item:FullActiveToggle": "uii_1RMA1JK4EFBMG904TJXTZ1KMD7",
+    "ui:Energy:item:NextRecoveryValue": "uii_6MCW3HYG84AMTT7145KZDGVE1N",
+    "ui:Energy:item:StaminaGauge": "uii_58A169ZXNQBKTA5X236KKZ0Z59",
+    "ui:Energy:item:StaminaLabel": "uii_2GR98W5SK2APQ9VC0PCQ25YS70",
     "user/stamina:Stamina:Energy:#0": "udr_1WAY8NTNY59DPT2MB7G0VGD7TT"
   }
 }

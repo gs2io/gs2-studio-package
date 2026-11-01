@@ -98,17 +98,18 @@ const StaminaModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyEnergy = definePackage("foundation-economy-energy", "0.0.0")
   .display({
-    label: { ja: "スタミナ", en: "Stamina" },
-    description: {
-      ja: "時間経過で回復するスタミナ（行動力）を管理します。",
-      en: "Manages a stamina meter that recovers over time.",
-    },
+    ja: { label: "スタミナ", description: "時間経過で回復するスタミナ（行動力）を管理します。" },
+    en: { label: "Stamina", description: "Manages a stamina meter that recovers over time." },
   })
   .displayType(Energy, {
-    label: { ja: "スタミナ", en: "Stamina" },
-    description: {
-      ja: "スタミナの初期値・上限・回復間隔とプレイヤーの現在値を管理します。",
-      en: "Manages stamina defaults, capacity, recovery interval, and each player's current value.",
+    ja: {
+      label: "スタミナ",
+      description: "スタミナの初期値・上限・回復間隔とプレイヤーの現在値を管理します。",
+    },
+    en: {
+      label: "Stamina",
+      description:
+        "Manages stamina defaults, capacity, recovery interval, and each player's current value.",
     },
   })
   .domainType(Energy)

@@ -11,17 +11,32 @@
     "BuffCampaign": {
       "id": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
       "singleEntry": true,
-      "delegatedActions": {
-        "EndCampaign": "resource:micro-economy-buff-demo:masterData:mdr_62ZMGKX8TQAHBTQAR56TDCXS7E::Gs2Exchange:RateModel.Exchange",
-        "StartCampaign": "resource:micro-economy-buff-demo:masterData:mdr_6SVF73ZCXEAEWRFC6R5JW33JCQ::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "micro-economy-buff-demo",
       "canonicalTypeId": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
+      "delegatedActions": {
+        "EndCampaign": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-buff-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_62ZMGKX8TQAHBTQAR56TDCXS7E"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "StartCampaign": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-buff-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_6SVF73ZCXEAEWRFC6R5JW33JCQ"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_3H9P4VT5JMB66S833SAD8518VF",
     "transaction.ConsumeAction": "mdr_4TJ98WDB33BXFVPDTMACYMCW4H"

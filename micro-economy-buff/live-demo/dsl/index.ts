@@ -56,7 +56,7 @@ const StartRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(BuffCampaign)
         .bindings({
-          action: Bind.transform(schedule.packageId, "PullTrigger", [
+          action: Bind.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.static("trigger", CAMPAIGN_TRIGGER),
             Arg.static("ttlSeconds", CAMPAIGN_SECONDS),
           ]),
@@ -74,7 +74,7 @@ const EndRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(BuffCampaign)
         .bindings({
-          action: Bind.transform(schedule.packageId, "ClearTrigger", [
+          action: Bind.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.static("trigger", CAMPAIGN_TRIGGER),
           ]),
         });
@@ -101,25 +101,27 @@ function campaignExchange(name: string) {
 
 export const microEconomyBuffDemo = definePackage("micro-economy-buff-demo", "0.0.0")
   .display({
-    label: { ja: "バフ（デモデータ）", en: "Buffs (demo data)" },
-    description: {
-      ja: "ライブデモ用に、キャンペーン中は放置報酬を 2 倍にするバフと、キャンペーンの開始・終了の操作を提供します。",
-      en: "Supplies the live demo's buff that doubles idle rewards during a campaign, and the presses that start and end the campaign.",
+    ja: {
+      label: "バフ（デモデータ）",
+      description:
+        "ライブデモ用に、キャンペーン中は放置報酬を 2 倍にするバフと、キャンペーンの開始・終了の操作を提供します。",
+    },
+    en: {
+      label: "Buffs (demo data)",
+      description:
+        "Supplies the live demo's buff that doubles idle rewards during a campaign, and the presses that start and end the campaign.",
     },
   })
   .displayType(Buff, {
-    label: { ja: "バフ", en: "Buff" },
-    description: {
-      ja: "デモのバフです。キャンペーン中の放置報酬を 2 倍にします。",
-      en: "The demo buff, which doubles idle rewards during the campaign.",
+    ja: { label: "バフ", description: "デモのバフです。キャンペーン中の放置報酬を 2 倍にします。" },
+    en: {
+      label: "Buff",
+      description: "The demo buff, which doubles idle rewards during the campaign.",
     },
   })
   .displayType(BuffCampaign, {
-    label: { ja: "キャンペーン", en: "Campaign" },
-    description: {
-      ja: "キャンペーンの開始・終了の操作と説明です。",
-      en: "The campaign's start and end presses and its rule.",
-    },
+    ja: { label: "キャンペーン", description: "キャンペーンの開始・終了の操作と説明です。" },
+    en: { label: "Campaign", description: "The campaign's start and end presses and its rule." },
   })
   .dependency(buff.packageId, "github:gs2io/gs2-studio-package")
   .dependency(schedule.packageId, "github:gs2io/gs2-studio-package")
@@ -175,11 +177,11 @@ export const microEconomyBuffDemo = definePackage("micro-economy-buff-demo", "0.
   .delegatedAction(BuffCampaign, "StartCampaign", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: StartRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(BuffCampaign, "EndCampaign", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: EndRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

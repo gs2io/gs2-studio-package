@@ -3,10 +3,14 @@
   "retired": {},
   "random": {
     "property:EnergyProduct.cost": "prop_00D0S4EG729BGHQ7R4RK1959TA",
-    "row:dt_2SJK4B40HKKNMMEXDSYAGF78QE.refill_large": "row_01M34HT0W983BH74CT6AXQNEZW",
-    "row:dt_2SJK4B40HKKNMMEXDSYAGF78QE.refill_medium": "row_01M34HT0W9CD3WAZG7ECQ4NHCN",
-    "row:dt_2SJK4B40HKKNMMEXDSYAGF78QE.refill_small": "row_01M34HT0W90RTWW045YC84YHAZ",
+    "row:[\"micro-shop-energy\",\"dt_2SJK4B40HKKNMMEXDSYAGF78QE\",\"refill_large\"]": "row_01M34HT0W983BH74CT6AXQNEZW",
+    "row:[\"micro-shop-energy\",\"dt_2SJK4B40HKKNMMEXDSYAGF78QE\",\"refill_medium\"]": "row_01M34HT0W9CD3WAZG7ECQ4NHCN",
+    "row:[\"micro-shop-energy\",\"dt_2SJK4B40HKKNMMEXDSYAGF78QE\",\"refill_small\"]": "row_01M34HT0W90RTWW045YC84YHAZ",
     "type:EnergyProduct": "dt_00D0S4EG72DAP5YJTQFA6F363W"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:EnergyProduct:definition": "uic_2F87GXBNEYAN5B13DYGYMCMF3M",
+    "ui:EnergyProduct:item:BuyButton": "uii_432ZG9G0QNBTTABMTFFQXFM5ED",
+    "ui:EnergyProduct:item:OfferLabel": "uii_431JA2VKHHATSTDVRJCV7HA1A4"
+  }
 }

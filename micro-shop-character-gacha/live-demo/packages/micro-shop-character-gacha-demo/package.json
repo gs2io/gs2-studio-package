@@ -14,13 +14,13 @@
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies one gacha, its per-rarity rates, and the coins a draw costs.",
-      "ja": "ライブデモ用に、1 つのガチャとレアリティ別の排出率、抽選コストを揃えます。"
+    "en": {
+      "description": "Supplies one gacha, its per-rarity rates, and the coins a draw costs.",
+      "label": "Character Gacha (demo data)"
     },
-    "label": {
-      "en": "Character Gacha (demo data)",
-      "ja": "キャラクターガチャ（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用に、1 つのガチャとレアリティ別の排出率、抽選コストを揃えます。",
+      "label": "キャラクターガチャ（デモデータ）"
     }
   }
 }

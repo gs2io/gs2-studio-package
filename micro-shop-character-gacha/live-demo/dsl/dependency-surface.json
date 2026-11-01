@@ -2,29 +2,11 @@
   "schemaVersion": 1,
   "packageId": "micro-shop-character-gacha-demo",
   "types": {
-    "CharacterRate": {
-      "id": "dt_00D0PAZ47BSJ8NVEYMP1KF1HFV",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-shop-character-gacha",
-      "canonicalTypeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
-    },
     "Gacha": {
       "id": "dt_00D0PAZ47BTJ1GZ2K5QP5DPDJ9",
       "singleEntry": false,
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
-    },
-    "GachaRarity": {
-      "id": "dt_00D0PAZ47BZF9K94C5CFW47Z07",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-shop-character-gacha",
-      "canonicalTypeId": "dt_479NFNV95H92HYQE8252JBRZ9Z"
-    },
-    "GachaRarityRate": {
-      "id": "dt_00D0PAZ47BT2WK8WP16M84KZ6R",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-shop-character-gacha",
-      "canonicalTypeId": "dt_0RM8RSFWGRCH1J86N5K65VV012"
     },
     "StoreProduct": {
       "id": "dt_00D0YBGPEVW2J3EFZWM2TMRJFH",
@@ -33,5 +15,6 @@
       "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {}
 }

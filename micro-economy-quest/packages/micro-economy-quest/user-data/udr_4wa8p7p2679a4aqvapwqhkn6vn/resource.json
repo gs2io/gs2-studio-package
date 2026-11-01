@@ -1,36 +1,34 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "completedQuestListId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "questGroupName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_51ABASNT7P8KMR2GCA3GN5685F",
-    "projectionBindings": [
-      {
-        "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "childMountPath": {
-          "kind": "local",
-          "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
-        },
-        "childTargetPropertyId": "prop_6VDGEC28BS22A8B64VXJQP14VQ",
-        "kind": "arrayMembership",
-        "parameterName": "completeQuestNames"
-      }
-    ]
-  },
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "completedQuestListId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "questGroupName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_4WA8P7P2679A4AQVAPWQHKN6VN",
+  "linkedMasterResourceId": "mdr_51ABASNT7P8KMR2GCA3GN5685F",
   "location": {
     "modelName": "CompletedQuestList",
     "service": "quest"
-  }
+  },
+  "projectionBindings": [
+    {
+      "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+      "childMountPath": {
+        "kind": "local",
+        "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
+      },
+      "childTargetPropertyId": "prop_6VDGEC28BS22A8B64VXJQP14VQ",
+      "kind": "arrayMembership",
+      "parameterName": "completeQuestNames"
+    }
+  ]
 }

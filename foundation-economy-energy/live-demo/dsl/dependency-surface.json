@@ -5,14 +5,29 @@
     "Energy": {
       "id": "dt_00D0MM25SM55BXJGSRRQEWD359",
       "singleEntry": false,
-      "delegatedActions": {
-        "Recover": "resource:foundation-economy-energy-demo:masterData:mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8::Gs2Exchange:RateModel.Exchange",
-        "Spend": "resource:foundation-economy-energy-demo:masterData:mdr_57KN8WGDJJBYHAZR30EV6G0H9R::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-energy",
-      "canonicalTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+      "canonicalTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+      "delegatedActions": {
+        "Recover": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-energy-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "Spend": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-energy-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_57KN8WGDJJBYHAZR30EV6G0H9R"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_4HT941Q8YCANZVZXXT90WFX8TV",
     "transaction.ConsumeAction": "mdr_7299CGSY1TANG9G7XSPWCSY102"

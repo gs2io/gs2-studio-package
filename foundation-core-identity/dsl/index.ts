@@ -144,24 +144,36 @@ const TakeOverTypeModel = defineMasterDataResource(resource =>
 
 export const foundationCoreIdentity = definePackage("foundation-core-identity", "0.0.0")
   .display({
-    label: { ja: "引き継ぎ設定", en: "Account Transfer" },
-    description: {
-      ja: "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。",
-      en: "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
+    ja: {
+      label: "引き継ぎ設定",
+      description:
+        "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。",
+    },
+    en: {
+      label: "Account Transfer",
+      description:
+        "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
     },
   })
   .displayType(TakeOverSetting, {
-    label: { ja: "引き継ぎ設定", en: "Take-over setting" },
-    description: {
-      ja: "アカウント引き継ぎに使用するOIDC接続情報と認証設定を登録します。",
-      en: "Configures the OIDC connection and authentication settings used for account transfer.",
+    ja: {
+      label: "引き継ぎ設定",
+      description: "アカウント引き継ぎに使用するOIDC接続情報と認証設定を登録します。",
+    },
+    en: {
+      label: "Take-over setting",
+      description:
+        "Configures the OIDC connection and authentication settings used for account transfer.",
     },
   })
   .displayType(TransferCode, {
-    label: { ja: "引き継ぎコード", en: "Transfer code" },
-    description: {
-      ja: "プレイヤーが登録した、IDとパスワードによる引き継ぎコードです。",
-      en: "The ID-and-password transfer code a player has registered.",
+    ja: {
+      label: "引き継ぎコード",
+      description: "プレイヤーが登録した、IDとパスワードによる引き継ぎコードです。",
+    },
+    en: {
+      label: "Transfer code",
+      description: "The ID-and-password transfer code a player has registered.",
     },
   })
   .domainType(TakeOverSetting)

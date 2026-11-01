@@ -3,13 +3,13 @@
   "name": "foundation-economy-inventory",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Basic inventory management for items the player owns.",
-      "ja": "プレイヤーが所持するアイテムの在庫を管理します。"
+    "en": {
+      "description": "Basic inventory management for items the player owns.",
+      "label": "Items"
     },
-    "label": {
-      "en": "Items",
-      "ja": "アイテム"
+    "ja": {
+      "description": "プレイヤーが所持するアイテムの在庫を管理します。",
+      "label": "アイテム"
     }
   }
 }

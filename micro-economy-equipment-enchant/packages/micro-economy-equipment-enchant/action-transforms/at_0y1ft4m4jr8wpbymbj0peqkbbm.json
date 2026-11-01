@@ -1,0 +1,63 @@
+{
+  "category": "acquire",
+  "id": "at_0Y1FT4M4JR8WPBYMBJ0PEQKBBM",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "RerollEquipmentEnchantment",
+  "outputs": [
+    {
+      "actionName": "Gs2Enchant:ReDrawRarityParameterStatusByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "parameterName",
+          "sourceParameter": "enchant"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "propertyId",
+          "sourceParameter": "propertyId"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "enchant",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D03217GRKX0AV27J248EX89N"
+      }
+    },
+    {
+      "name": "propertyId",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

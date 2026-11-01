@@ -59,6 +59,11 @@
       }
     }
   },
+  "actionTransforms": {
+    "AddEquipmentEnchantmentSlot": "at_4S1THMNVB898V882K2EPEZHDMA",
+    "RerollEquipmentEnchantment": "at_0Y1FT4M4JR8WPBYMBJ0PEQKBBM",
+    "VerifyEquipmentEnchantment": "at_0C84HMM5AM8YMRY4BJH76CPN0A"
+  },
   "masterDataResources": {
     "enchant.Namespace": "mdr_76184PJ0R0BH08AT4X9CWAG50W",
     "enchant.RarityParameterCountModel": "mdr_3P16399HYBAYEBQV1WZ298BEJF",

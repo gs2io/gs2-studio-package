@@ -56,10 +56,14 @@ const GetMaterialRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(CharacterEnhanceMaterial)
         .bindings({
-          action: Bind.transform(enhance.packageId, "AcquireCharacterEnhanceMaterial", [
-            Arg.domainProperty("material", Source.direct(CharacterEnhanceMaterial, "id")),
-            Arg.static("count", 1),
-          ]),
+          action: Bind.transform(
+            enhance.packageId,
+            enhance.transformId("AcquireCharacterEnhanceMaterial"),
+            [
+              Arg.domainProperty("material", Source.direct(CharacterEnhanceMaterial, "id")),
+              Arg.static("count", 1),
+            ]
+          ),
         });
     })
 );
@@ -76,7 +80,7 @@ function enhanceRateModel(materialName: string) {
           .model(GS2.transaction.AcquireAction)
           .mountLocal(Character)
           .bindings({
-            action: Bind.transform(enhance.packageId, "EnhanceCharacter", [
+            action: Bind.transform(enhance.packageId, enhance.transformId("EnhanceCharacter"), [
               Arg.static("enhance", RECIPE),
               Arg.placeholder("targetItemSetId", "#{propertyId}"),
               Arg.static("materialItemSetId", characterEnhanceMaterialItemId(materialName)),
@@ -107,29 +111,37 @@ function exchangeNamespaceBindings(name: string) {
   };
 }
 
-const PROPERTY_ID_CONFIG = { parameterName: "config", source: {
-  kind: "listEntries",
-  
-  entries: [
-    {
-      kind: "fields",
-      fields: [
-        { name: "key", source: { kind: "static", value: "propertyId" } },
-        { name: "value", source: { kind: "domainProperty", propertyName: PROPERTY_ID } },
-      ],
-    },
-  ],
-} } as const;
+const PROPERTY_ID_CONFIG = {
+  parameterName: "config",
+  source: {
+    kind: "listEntries",
+
+    entries: [
+      {
+        kind: "fields",
+        fields: [
+          { name: "key", source: { kind: "static", value: "propertyId" } },
+          { name: "value", source: { kind: "domainProperty", propertyName: PROPERTY_ID } },
+        ],
+      },
+    ],
+  },
+} as const;
 
 export const microEconomyCharacterEnhanceDemo = definePackage(
   "micro-economy-character-enhance-demo",
   "0.0.0"
 )
   .display({
-    label: { ja: "キャラクター強化（デモデータ）", en: "Character Enhancement (demo data)" },
-    description: {
-      ja: "ライブデモ用の強化レシピ・強化素材と、素材の入手・キャラクター強化の操作を提供します。",
-      en: "Supplies the recipe and materials the live demo enhances with, and the presses that get materials and spend them on a character.",
+    ja: {
+      label: "キャラクター強化（デモデータ）",
+      description:
+        "ライブデモ用の強化レシピ・強化素材と、素材の入手・キャラクター強化の操作を提供します。",
+    },
+    en: {
+      label: "Character Enhancement (demo data)",
+      description:
+        "Supplies the recipe and materials the live demo enhances with, and the presses that get materials and spend them on a character.",
     },
   })
   .dependency(enhance.packageId, "github:gs2io/gs2-studio-package")
@@ -193,16 +205,22 @@ export const microEconomyCharacterEnhanceDemo = definePackage(
   .delegatedAction(CharacterEnhanceMaterial, "Get", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: GetMaterialRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(Character, "EnhanceWithPotion", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: EnhanceWithPotionRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [
+      { parameterName: "count", source: { kind: "static", value: 1 } },
+      PROPERTY_ID_CONFIG,
+    ],
   })
   .delegatedAction(Character, "EnhanceWithElixir", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: EnhanceWithElixirRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [
+      { parameterName: "count", source: { kind: "static", value: 1 } },
+      PROPERTY_ID_CONFIG,
+    ],
   })
   .build();

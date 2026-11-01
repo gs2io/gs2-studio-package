@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "energy",
@@ -48,13 +48,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "RecoveryEnergy",
-        "transformPackageId": "foundation-economy-energy"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-energy",
+          "transformId": "at_36P63PCH949RGSG69SRSAWWKR0"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_062JQMMH7R8WD9JCTBTFANJ7NV",
   "location": {
     "modelName": "AcquireAction",

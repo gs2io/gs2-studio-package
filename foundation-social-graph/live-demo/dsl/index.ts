@@ -12,10 +12,15 @@ const ReceiveFriendRequest = graph.type("ReceiveFriendRequest");
 
 export const foundationSocialGraphDemo = definePackage("foundation-social-graph-demo", "0.0.0")
   .display({
-    label: { ja: "フレンド・プロフィール（デモデータ）", en: "Friends & Profile (demo data)" },
-    description: {
-      ja: "ライブデモ用に、プロフィール・フレンド・フォロー・フレンド申請の表示項目を提供します。",
-      en: "Supplies what the live demo shows of a profile, a friend, a follow and a friend request.",
+    ja: {
+      label: "フレンド・プロフィール（デモデータ）",
+      description:
+        "ライブデモ用に、プロフィール・フレンド・フォロー・フレンド申請の表示項目を提供します。",
+    },
+    en: {
+      label: "Friends & Profile (demo data)",
+      description:
+        "Supplies what the live demo shows of a profile, a friend, a follow and a friend request.",
     },
   })
   .dependency(graph.packageId, "github:gs2io/gs2-studio-package")

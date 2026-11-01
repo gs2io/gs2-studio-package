@@ -5,6 +5,8 @@
   "dependencies": {
     "foundation-core-identity": "file:../../../foundation-core-identity/packages/foundation-core-identity",
     "foundation-economy-character": "file:../../../foundation-economy-character/packages/foundation-economy-character",
+    "foundation-economy-character-dictionary": "file:../../../foundation-economy-character-dictionary/packages/foundation-economy-character-dictionary",
+    "foundation-economy-currency": "file:../../../foundation-economy-currency/packages/foundation-economy-currency",
     "foundation-economy-schedule": "file:../../../foundation-economy-schedule/packages/foundation-economy-schedule",
     "micro-economy-login-reward": "file:../../../micro-economy-login-reward/packages/micro-economy-login-reward",
     "micro-shop-character-gacha": "file:../../../micro-shop-character-gacha/packages/micro-shop-character-gacha",

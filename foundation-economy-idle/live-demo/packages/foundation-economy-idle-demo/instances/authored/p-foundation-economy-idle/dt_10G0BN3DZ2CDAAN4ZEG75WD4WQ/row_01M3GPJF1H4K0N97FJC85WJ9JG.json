@@ -1,0 +1,12 @@
+{
+  "id": "interval08",
+  "rowKey": "row_01M3GPJF1H4K0N97FJC85WJ9JG",
+  "type": {
+    "domainTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
+    "packageId": "foundation-economy-idle"
+  },
+  "values": {
+    "prop_00D05P2SE3WMNG5C27EG74BM38": [],
+    "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7": 5
+  }
+}

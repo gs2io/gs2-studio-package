@@ -1,0 +1,68 @@
+{
+  "category": "verify",
+  "id": "at_7V1ZWZC8KXW0ACRVWSK39HMHNX",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifySerialCodeActive",
+  "outputs": [
+    {
+      "actionName": "Gs2SerialKey:VerifyCodeByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "code",
+          "sourceParameter": "code"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "campaignModelName",
+          "sourceParameter": "campaign"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "active"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "campaign",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
+      }
+    },
+    {
+      "name": "code",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

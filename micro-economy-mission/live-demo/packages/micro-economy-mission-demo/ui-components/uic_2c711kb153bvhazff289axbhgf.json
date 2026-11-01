@@ -27,10 +27,15 @@
     {
       "arguments": [],
       "componentClassName": "ReceiveButton",
-      "delegatedActionKey": "resource:micro-economy-mission:masterData:mdr_4QWBNQ5KM59ZERS381QKYXGJCB::Gs2Mission:MissionTaskModel.Complete",
       "id": "uii_47AEFA8X40B3BSN00PKHPYX2ZZ",
       "kind": "buttonAction",
-      "name": "Mission"
+      "name": "Mission",
+      "targetActionKey": "Gs2Mission:MissionTaskModel.Complete",
+      "targetResource": {
+        "resourceId": "mdr_4QWBNQ5KM59ZERS381QKYXGJCB",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-mission"
+      }
     },
     {
       "componentClassName": "ReceivedLabel",
@@ -93,6 +98,5 @@
       "name": "Mission"
     }
   ],
-  "name": "Mission",
   "targetDomainTypeId": "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8"
 }

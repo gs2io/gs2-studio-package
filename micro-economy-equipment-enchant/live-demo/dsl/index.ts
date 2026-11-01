@@ -63,7 +63,7 @@ function enchantRateModel(
           .model(GS2.transaction.AcquireAction)
           .mountLocal(Equipment)
           .bindings({
-            action: Bind.transform(enchant.packageId, transformName, [
+            action: Bind.transform(enchant.packageId, enchant.transformId(transformName), [
               Arg.static("enchant", STANDARD),
               Arg.placeholder("propertyId", "#{propertyId}"),
               ...count,
@@ -75,7 +75,7 @@ function enchantRateModel(
           .model(GS2.transaction.ConsumeAction)
           .mountLocal(Equipment)
           .bindings({
-            action: Bind.transform(currency.packageId, "WithdrawCurrency", [
+            action: Bind.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
               Arg.static("slot", WALLET_SLOT),
               Arg.static("paidOnly", false),
               Arg.static("count", cost),
@@ -105,29 +105,36 @@ function exchangeNamespaceBindings(name: string) {
   };
 }
 
-const PROPERTY_ID_CONFIG = { parameterName: "config", source: {
-  kind: "listEntries",
-  
-  entries: [
-    {
-      kind: "fields",
-      fields: [
-        { name: "key", source: { kind: "static", value: "propertyId" } },
-        { name: "value", source: { kind: "domainProperty", propertyName: PROPERTY_ID } },
-      ],
-    },
-  ],
-} } as const;
+const PROPERTY_ID_CONFIG = {
+  parameterName: "config",
+  source: {
+    kind: "listEntries",
+
+    entries: [
+      {
+        kind: "fields",
+        fields: [
+          { name: "key", source: { kind: "static", value: "propertyId" } },
+          { name: "value", source: { kind: "domainProperty", propertyName: PROPERTY_ID } },
+        ],
+      },
+    ],
+  },
+} as const;
 
 export const microEconomyEquipmentEnchantDemo = definePackage(
   "micro-economy-equipment-enchant-demo",
   "0.0.0"
 )
   .display({
-    label: { ja: "装備エンチャント（デモデータ）", en: "Equipment Enchantment (demo data)" },
-    description: {
-      ja: "ライブデモ用のエンチャント設定と、効果の引き直し・追加の操作を提供します。",
-      en: "Supplies the enchantment pool the live demo rolls from, and the presses that reroll a piece's bonuses or add one.",
+    ja: {
+      label: "装備エンチャント（デモデータ）",
+      description: "ライブデモ用のエンチャント設定と、効果の引き直し・追加の操作を提供します。",
+    },
+    en: {
+      label: "Equipment Enchantment (demo data)",
+      description:
+        "Supplies the enchantment pool the live demo rolls from, and the presses that reroll a piece's bonuses or add one.",
     },
   })
   .dependency(enchant.packageId, "github:gs2io/gs2-studio-package")
@@ -181,11 +188,17 @@ export const microEconomyEquipmentEnchantDemo = definePackage(
   .delegatedAction(Equipment, "Reroll", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: RerollRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [
+      { parameterName: "count", source: { kind: "static", value: 1 } },
+      PROPERTY_ID_CONFIG,
+    ],
   })
   .delegatedAction(Equipment, "AddBonus", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: AddBonusRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }, PROPERTY_ID_CONFIG],
+    parameterOverrides: [
+      { parameterName: "count", source: { kind: "static", value: 1 } },
+      PROPERTY_ID_CONFIG,
+    ],
   })
   .build();

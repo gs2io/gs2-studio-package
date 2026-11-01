@@ -35,6 +35,10 @@
       }
     }
   },
+  "actionTransforms": {
+    "AcquireCharacterEnhanceMaterial": "at_1N85Q9X5J29M9BXPXJYV8V4Q5Z",
+    "EnhanceCharacter": "at_7A632P7NEB88WT2T9JAAWMTK45"
+  },
   "masterDataResources": {
     "enhance.BonusRate": "mdr_5ZD4J3CEE5B9K9981BTW05HQT1",
     "enhance.Namespace": "mdr_6HXS3762XWA3MA820N56XMDPY7",

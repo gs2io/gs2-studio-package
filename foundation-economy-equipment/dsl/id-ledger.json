@@ -1,6 +1,14 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "transform:AcquireEquipment:output:direct:Gs2Inventory:AcquireItemSetByUserId#0": "out_01KJSZ9MEHE2E60MS4JZ0DJM86",
+    "transform:AcquireEquipment:parameter:equipment": "param_01KJSZ97WF877V5M2X1T86ZYN3",
+    "transform:AddEquipmentCapacity:output:direct:Gs2Inventory:AddCapacityByUserId#0": "out_01KJSZFRFR8WP2S011GE4XENW7",
+    "transform:AddEquipmentCapacity:parameter:value": "param_01KJSZFHJ4CFGNT217PBF95XK6",
+    "transform:DeleteEquipment:output:direct:Gs2Inventory:ConsumeItemSetByUserId#0": "out_01KJSZCR4RJ05MYX523F1NRBFZ",
+    "transform:DeleteEquipment:parameter:equipment": "param_01KJSZDBSX9FKEMJW6AZEN8VWJ",
+    "transform:DeleteEquipment:parameter:equipmentPropertyId": "param_01KJSZCDH2E1VKT8CVBJRJJAH4"
+  },
   "random": {
     "property:Equipment.category": "prop_0K0GFBH6B7DRCKC1VP8N5BXAGP",
     "property:Equipment.propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H",
@@ -9,13 +17,9 @@
     "property:EquipmentCollection.currentMaximumCapacity": "prop_6DFT20J8RV6F8565KNNREYVH3N",
     "property:EquipmentCollection.defaultCapacity": "prop_071QWPTV93WY3RCTPXN9CBG00F",
     "property:EquipmentCollection.maximumCapacity": "prop_4J8TTATGZND7RB0CSEKFY3AG9Z",
-    "transform:AcquireEquipment:output:direct:Gs2Inventory:AcquireItemSetByUserId#0": "out_01KJSZ9MEHE2E60MS4JZ0DJM86",
-    "transform:AcquireEquipment:parameter:equipment": "param_01KJSZ97WF877V5M2X1T86ZYN3",
-    "transform:AddEquipmentCapacity:output:direct:Gs2Inventory:AddCapacityByUserId#0": "out_01KJSZFRFR8WP2S011GE4XENW7",
-    "transform:AddEquipmentCapacity:parameter:value": "param_01KJSZFHJ4CFGNT217PBF95XK6",
-    "transform:DeleteEquipment:output:direct:Gs2Inventory:ConsumeItemSetByUserId#0": "out_01KJSZCR4RJ05MYX523F1NRBFZ",
-    "transform:DeleteEquipment:parameter:equipment": "param_01KJSZDBSX9FKEMJW6AZEN8VWJ",
-    "transform:DeleteEquipment:parameter:equipmentPropertyId": "param_01KJSZCDH2E1VKT8CVBJRJJAH4",
+    "transform:AcquireEquipment": "at_6VEP2XV1908GMR5151Y7W0YSSB",
+    "transform:AddEquipmentCapacity": "at_3H7989KQGX9SJTTECEYMKHR6TJ",
+    "transform:DeleteEquipment": "at_515DFFG71BQPMSDZ5HDC1D5TAR",
     "type:Equipment": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
     "type:EquipmentCategory": "dt_5XY098JXVWPEN0Q0F7QY165JJA",
     "type:EquipmentCollection": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
@@ -24,6 +28,14 @@
     "master/inventory:Namespace:unmounted:Equipment#0": "mdr_0HAS2H6Z4F9ZXA940FE5S3KSCS",
     "master/inventory:Namespace:unmounted:Equipment#0/inventory:InventoryModel:EquipmentCollection:Equipment#0": "mdr_7THH0THTYY830SYCKTT7NMYZHG",
     "master/inventory:Namespace:unmounted:Equipment#0/inventory:InventoryModel:EquipmentCollection:Equipment#0/inventory:ItemModel:Equipment:@itemModels[0]#0": "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7",
+    "ui:Equipment:definition": "uic_5AHEMAAXG9AF1SKGATJCRK5PTB",
+    "ui:Equipment:item:NameLabel": "uii_62GTQGG18AAGFVV9JWJ7BEZ269",
+    "ui:Equipment:item:PropertyIdValue": "uii_1T96RH541DBMZAJSRP2JN7V7RP",
+    "ui:EquipmentCollection:definition": "uic_4PVAEFQM5BB0GVGSBY0J5C9Q94",
+    "ui:EquipmentCollection:item:CapacityGauge": "uii_19XZPDDBXVBAHRC8P085A3M2EB",
+    "ui:EquipmentCollection:item:CapacityLabel": "uii_02W1AS32H6AHA9V2VFGDK52KBN",
+    "ui:EquipmentCollection:item:ExpandableInteractable": "uii_4G0ZWMJX63AHNR0NHCHZVW1SWV",
+    "ui:EquipmentCollection:item:FullActiveToggle": "uii_05B366ZVQ3AM1A591GBRFKEBKX",
     "user/inventory:Inventory:unmounted:#0": "udr_57DAM0WWJY94WSZNGSAYA6P904",
     "user/inventory:ItemSet:Equipment:#0": "udr_6RWZH5HSNCACRV1YWW9AG4J6A4"
   }

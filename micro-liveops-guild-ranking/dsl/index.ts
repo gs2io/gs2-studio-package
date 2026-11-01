@@ -161,24 +161,37 @@ const ClusterRankingModel = defineMasterDataResource(resource =>
 
 export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranking", "0.0.0")
   .display({
-    label: { ja: "ギルドランキング", en: "Guild Rankings" },
-    description: {
-      ja: "ギルド単位で区切られたランキングです。所属ギルド内で競い、順位に応じた報酬を配れます。",
-      en: "A leaderboard partitioned by guild, so members compete inside their own guild, with rewards by rank.",
+    ja: {
+      label: "ギルドランキング",
+      description:
+        "ギルド単位で区切られたランキングです。所属ギルド内で競い、順位に応じた報酬を配れます。",
+    },
+    en: {
+      label: "Guild Rankings",
+      description:
+        "A leaderboard partitioned by guild, so members compete inside their own guild, with rewards by rank.",
     },
   })
   .displayType(GuildRanking, {
-    label: { ja: "ギルドランキング", en: "Guild ranking" },
-    description: {
-      ja: "ギルドごとにメンバー同士で競うランキングの集計方法、開催期間、参加条件を設定します。",
-      en: "Configures scoring, availability, and participation rules for a ranking of members within each guild.",
+    ja: {
+      label: "ギルドランキング",
+      description:
+        "ギルドごとにメンバー同士で競うランキングの集計方法、開催期間、参加条件を設定します。",
+    },
+    en: {
+      label: "Guild ranking",
+      description:
+        "Configures scoring, availability, and participation rules for a ranking of members within each guild.",
     },
   })
   .displayType(GuildRankingReward, {
-    label: { ja: "ランキング報酬", en: "Ranking reward" },
-    description: {
-      ja: "ギルドランキングの順位範囲ごとに配布する報酬を設定します。",
-      en: "Defines rewards distributed for each guild-ranking placement range.",
+    ja: {
+      label: "ランキング報酬",
+      description: "ギルドランキングの順位範囲ごとに配布する報酬を設定します。",
+    },
+    en: {
+      label: "Ranking reward",
+      description: "Defines rewards distributed for each guild-ranking placement range.",
     },
   })
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")

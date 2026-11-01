@@ -35,18 +35,12 @@ const SimpleItemModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyInventory = definePackage("foundation-economy-inventory", "0.0.0")
   .display({
-    label: { ja: "アイテム", en: "Items" },
-    description: {
-      ja: "プレイヤーが所持するアイテムの在庫を管理します。",
-      en: "Basic inventory management for items the player owns.",
-    },
+    ja: { label: "アイテム", description: "プレイヤーが所持するアイテムの在庫を管理します。" },
+    en: { label: "Items", description: "Basic inventory management for items the player owns." },
   })
   .displayType(Item, {
-    label: { ja: "アイテム", en: "Item" },
-    description: {
-      ja: "プレイヤーが所持する各アイテムの数量を管理します。",
-      en: "Tracks the quantity of each item owned by a player.",
-    },
+    ja: { label: "アイテム", description: "プレイヤーが所持する各アイテムの数量を管理します。" },
+    en: { label: "Item", description: "Tracks the quantity of each item owned by a player." },
   })
   .domainType(Item)
 

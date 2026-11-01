@@ -6,13 +6,13 @@
     "foundation-economy-equipment": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the equipment catalog and bag used by the live demo, and the presses that take, discard and expand.",
-      "ja": "ライブデモ用の装備カタログと所持枠、入手・破棄・拡張の操作を提供します。"
+    "en": {
+      "description": "Supplies the equipment catalog and bag used by the live demo, and the presses that take, discard and expand.",
+      "label": "Equipment (demo data)"
     },
-    "label": {
-      "en": "Equipment (demo data)",
-      "ja": "装備（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用の装備カタログと所持枠、入手・破棄・拡張の操作を提供します。",
+      "label": "装備（デモデータ）"
     }
   }
 }

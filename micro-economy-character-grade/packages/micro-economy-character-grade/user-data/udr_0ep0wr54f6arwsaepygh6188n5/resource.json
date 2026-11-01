@@ -1,31 +1,14 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "skip",
-        "parameterName": "gradeName"
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "gradeValue",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D"
-              },
-              "propertyId": "prop_00D0320HQ4G51XW7JS84YZ2VAA"
-            }
-          }
-        ]
-      },
-      {
-        "kind": "domainPropertyKey",
-        "parameterName": "propertyId",
-        "source": {
+  "declaredBindings": [
+    {
+      "kind": "skip",
+      "parameterName": "gradeName"
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "gradeValue",
+      "sources": [
+        {
           "scopes": [],
           "terminal": {
             "kind": "direct",
@@ -33,23 +16,38 @@
               "kind": "local",
               "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D"
             },
-            "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+            "propertyId": "prop_00D0320HQ4G51XW7JS84YZ2VAA"
           }
-        },
-        "suffix": ":level"
+        }
+      ]
+    },
+    {
+      "kind": "domainPropertyKey",
+      "parameterName": "propertyId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D0320HQ4G4BENW1GSJMERS0D"
+          },
+          "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV"
+        }
       },
-      {
-        "kind": "skip",
-        "parameterName": "statusId"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ],
-    "linkedMasterResourceId": "mdr_4VW2Y080DTBNAT9646NSMK434Q"
-  },
+      "suffix": ":level"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "statusId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_0EP0WR54F6ARWSAEPYGH6188N5",
+  "linkedMasterResourceId": "mdr_4VW2Y080DTBNAT9646NSMK434Q",
   "location": {
     "modelName": "Status",
     "service": "grade"

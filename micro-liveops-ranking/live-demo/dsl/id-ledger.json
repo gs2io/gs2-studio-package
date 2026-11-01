@@ -1,17 +1,23 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "type:Ranking": "dt_00D0WDGSP5434S78KXZEEJ3C67"
+  },
   "random": {
     "property:RankingReward.coins": "prop_00D0WDGSP51GEN4HR883CJVRCN",
-    "row:dt_00D031DYK08MQ218VMWRT5X90Q.1.contest": "row_01M3HP36RMZ6AWHT2ZFQJK4M7N",
-    "row:dt_00D031DYK08MQ218VMWRT5X90Q.10.contest": "row_01M3HP36RM83NV44CE9Z6KCW2Z",
-    "row:dt_00D031DYK08MQ218VMWRT5X90Q.1001.contest": "row_01M3HP36RMZGSY6HZCFN0MCWC9",
-    "row:dt_00D031DYK08MQ218VMWRT5X90Q.3.contest": "row_01M3HP36RMCSVGGMMRYPBTT6N3",
-    "row:dt_00D031DYK0AVE6F96GF6BCQBDY.contest": "row_01M3HP36RMCH02YXTHC9CCX5ST",
-    "row:type:RankingContest.rankingcontest": "row_01M3HP36RM2X44MKQJ4FEQ63BJ",
-    "type:Ranking": "dt_00D0WDGSP5434S78KXZEEJ3C67",
+    "row:[\"micro-liveops-ranking\",\"dt_00D031DYK08MQ218VMWRT5X90Q\",\"1.contest\"]": "row_01M3HP36RMZ6AWHT2ZFQJK4M7N",
+    "row:[\"micro-liveops-ranking\",\"dt_00D031DYK08MQ218VMWRT5X90Q\",\"10.contest\"]": "row_01M3HP36RM83NV44CE9Z6KCW2Z",
+    "row:[\"micro-liveops-ranking\",\"dt_00D031DYK08MQ218VMWRT5X90Q\",\"1001.contest\"]": "row_01M3HP36RMZGSY6HZCFN0MCWC9",
+    "row:[\"micro-liveops-ranking\",\"dt_00D031DYK08MQ218VMWRT5X90Q\",\"3.contest\"]": "row_01M3HP36RMCSVGGMMRYPBTT6N3",
+    "row:[\"micro-liveops-ranking\",\"dt_00D031DYK0AVE6F96GF6BCQBDY\",\"contest\"]": "row_01M3HP36RMCH02YXTHC9CCX5ST",
+    "row:[\"micro-liveops-ranking-demo\",\"type:RankingContest\",\"rankingcontest\"]": "row_01M3HP36RM2X44MKQJ4FEQ63BJ",
     "type:RankingContest": "dt_00D0WDGSP50X984BNS0PWV22MG",
     "type:RankingReward": "dt_00D0WDGSP50MVYN1KM5ZHRJG1F"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:RankingContest:definition": "uic_31PCE4Q398AYZBJ0RXWH3JCKNJ",
+    "ui:RankingContest:item:FinishContestButton": "uii_08SAH87PZ6AZB8NPG6EQPFM1WJ",
+    "ui:RankingContest:item:RuleLabel": "uii_1J82GNYYRGB5HVMN94RR74RWCM",
+    "ui:RankingContest:item:StartContestButton": "uii_7JWPVM4BS6AR18AVDYY7KZMB4W"
+  }
 }

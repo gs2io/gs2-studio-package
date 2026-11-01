@@ -9,13 +9,13 @@
     "micro-shop-currency": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "A currency-funded gacha that draws characters, with per-rarity drop rates.",
-      "ja": "通貨を消費してキャラクターを排出するガチャです。排出率をレアリティごとに設定できます。"
+    "en": {
+      "description": "A currency-funded gacha that draws characters, with per-rarity drop rates.",
+      "label": "Character Gacha"
     },
-    "label": {
-      "en": "Character Gacha",
-      "ja": "キャラクターガチャ"
+    "ja": {
+      "description": "通貨を消費してキャラクターを排出するガチャです。排出率をレアリティごとに設定できます。",
+      "label": "キャラクターガチャ"
     }
   }
 }

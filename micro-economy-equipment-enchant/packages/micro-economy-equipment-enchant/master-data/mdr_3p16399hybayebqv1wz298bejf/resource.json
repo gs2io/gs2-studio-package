@@ -1,38 +1,36 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "count",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D03217GRN3Z01B1EQB1GF0EE"
-            },
-            "propertyId": "prop_00D03217GRPNY6G1Z1K6JD36ZX"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "weight",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_00D03217GRN3Z01B1EQB1GF0EE"
-            },
-            "propertyId": "prop_00D03217GRMT119DB6K6XQAWV0"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "count",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D03217GRN3Z01B1EQB1GF0EE"
+          },
+          "propertyId": "prop_00D03217GRPNY6G1Z1K6JD36ZX"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "weight",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D03217GRN3Z01B1EQB1GF0EE"
+          },
+          "propertyId": "prop_00D03217GRMT119DB6K6XQAWV0"
+        }
+      }
+    }
+  ],
   "id": "mdr_3P16399HYBAYEBQV1WZ298BEJF",
   "location": {
     "modelName": "RarityParameterCountModel",

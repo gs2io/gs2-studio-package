@@ -1,6 +1,14 @@
 {
   "schemaVersion": 1,
-  "retired": {},
+  "retired": {
+    "transform:ReceiveRankingReward:output:direct:Gs2Ranking2:CreateGlobalRankingReceivedRewardByUserId#0": "out_01M0C5QTC15JHVCRXMYWHE2W8C",
+    "transform:ReceiveRankingReward:parameter:ranking": "param_01M0C5QTC16ZPQ4V2FAZRQPQ0V",
+    "transform:ReceiveRankingReward:parameter:season": "param_01M0C5QTC1ASM3KAQKX2Y0R4KA",
+    "transform:VerifyRankingScoreReached:output:direct:Gs2Ranking2:VerifyGlobalRankingScoreByUserId#0": "out_01M0C5QTC1KK98KDVV8XSGZZH5",
+    "transform:VerifyRankingScoreReached:parameter:ranking": "param_01M0C5QTC1EM8RWNPAVJT2T9BV",
+    "transform:VerifyRankingScoreReached:parameter:score": "param_01M0C5QTC1BS2R2J6CGS7M64AZ",
+    "transform:VerifyRankingScoreReached:parameter:season": "param_01M0C5QTC1903Z6A3Y1KRK4F79"
+  },
   "random": {
     "property:Ranking.maximumValue": "prop_00D031DYK0FVN99WA1Y6MF05YM",
     "property:Ranking.minimumValue": "prop_00D031DYK08ZD8FNSCWTGZTDNB",
@@ -11,13 +19,8 @@
     "property:RankingReward.acquireActions": "prop_00D031DYK0FBDNV00N30XJMEBY",
     "property:RankingReward.ranking": "prop_00D031DYK0DPGPB0KD153VWA20",
     "property:RankingReward.thresholdRank": "prop_00D031DYK0BEEZ9PX7AGRDHYGE",
-    "transform:ReceiveRankingReward:output:direct:Gs2Ranking2:CreateGlobalRankingReceivedRewardByUserId#0": "out_01M0C5QTC15JHVCRXMYWHE2W8C",
-    "transform:ReceiveRankingReward:parameter:ranking": "param_01M0C5QTC16ZPQ4V2FAZRQPQ0V",
-    "transform:ReceiveRankingReward:parameter:season": "param_01M0C5QTC1ASM3KAQKX2Y0R4KA",
-    "transform:VerifyRankingScoreReached:output:direct:Gs2Ranking2:VerifyGlobalRankingScoreByUserId#0": "out_01M0C5QTC1KK98KDVV8XSGZZH5",
-    "transform:VerifyRankingScoreReached:parameter:ranking": "param_01M0C5QTC1EM8RWNPAVJT2T9BV",
-    "transform:VerifyRankingScoreReached:parameter:score": "param_01M0C5QTC1BS2R2J6CGS7M64AZ",
-    "transform:VerifyRankingScoreReached:parameter:season": "param_01M0C5QTC1903Z6A3Y1KRK4F79",
+    "transform:ReceiveRankingReward": "at_14BNWJKZBZ8B1AW16TPFSHX7KY",
+    "transform:VerifyRankingScoreReached": "at_21RD4Y7BR38AQ9N31TQ5KZ9861",
     "type:Ranking": "dt_00D031DYK0AVE6F96GF6BCQBDY",
     "type:RankingReward": "dt_00D031DYK08MQ218VMWRT5X90Q"
   },

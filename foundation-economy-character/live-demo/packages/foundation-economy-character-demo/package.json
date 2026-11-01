@@ -6,13 +6,13 @@
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the roster, level curve, capacity and recruits used by the live demo.",
-      "ja": "ライブデモ用のキャラクター編成・レベル曲線・所持枠・勧誘を提供します。"
+    "en": {
+      "description": "Supplies the roster, level curve, capacity and recruits used by the live demo.",
+      "label": "Characters (demo data)"
     },
-    "label": {
-      "en": "Characters (demo data)",
-      "ja": "キャラクター（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用のキャラクター編成・レベル曲線・所持枠・勧誘を提供します。",
+      "label": "キャラクター（デモデータ）"
     }
   }
 }

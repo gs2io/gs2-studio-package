@@ -1,0 +1,63 @@
+{
+  "category": "consume",
+  "id": "at_14BNWJKZBZ8B1AW16TPFSHX7KY",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ReceiveRankingReward",
+  "outputs": [
+    {
+      "actionName": "Gs2Ranking2:CreateGlobalRankingReceivedRewardByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "rankingName",
+          "sourceParameter": "ranking"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "season",
+          "sourceParameter": "season"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "ranking",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
+      }
+    },
+    {
+      "name": "season",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ]
+}

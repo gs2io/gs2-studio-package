@@ -15,6 +15,7 @@
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_5TPJBX6WSR9GE8M0HGEBNTKSRW",
     "exchange.RateModel": "mdr_25CQKDMHCC8HNA1RJYJ3PVGC8B",

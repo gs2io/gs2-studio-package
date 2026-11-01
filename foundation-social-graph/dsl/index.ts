@@ -95,45 +95,71 @@ const notificationConfig = {
 
 export const foundationSocialGraph = definePackage("foundation-social-graph", "0.0.0")
   .display({
-    label: { ja: "フレンド・プロフィール", en: "Friends & Profile" },
-    description: {
-      ja: "フレンド申請・フォロー・プロフィールなど、プレイヤー同士のつながりを扱います。",
-      en: "Handles friend requests, follows, and profiles: the connections between players.",
+    ja: {
+      label: "フレンド・プロフィール",
+      description: "フレンド申請・フォロー・プロフィールなど、プレイヤー同士のつながりを扱います。",
+    },
+    en: {
+      label: "Friends & Profile",
+      description:
+        "Handles friend requests, follows, and profiles: the connections between players.",
     },
   })
   .displayType(Follow, {
-    label: { ja: "フォロー", en: "Follow" },
-    description: {
-      ja: "プレイヤーがフォローしている相手との関係を管理します。プロフィールはフォロー一覧から取得します。フォロワー一覧はありません。",
-      en: "Tracks the players followed by a player. Profiles come from the follow list. There is no follower list.",
+    ja: {
+      label: "フォロー",
+      description:
+        "プレイヤーがフォローしている相手との関係を管理します。プロフィールはフォロー一覧から取得します。フォロワー一覧はありません。",
+    },
+    en: {
+      label: "Follow",
+      description:
+        "Tracks the players followed by a player. Profiles come from the follow list. There is no follower list.",
     },
   })
   .displayType(Friend, {
-    label: { ja: "フレンド", en: "Friend" },
-    description: {
-      ja: "承認済みのフレンド関係を管理します。プロフィールはフレンド一覧から取得します。",
-      en: "Tracks confirmed friendship relationships between players. Profiles come from the friend list.",
+    ja: {
+      label: "フレンド",
+      description: "承認済みのフレンド関係を管理します。プロフィールはフレンド一覧から取得します。",
+    },
+    en: {
+      label: "Friend",
+      description:
+        "Tracks confirmed friendship relationships between players. Profiles come from the friend list.",
     },
   })
   .displayType(Profile, {
-    label: { ja: "プロフィール", en: "Profile" },
-    description: {
-      ja: "プレイヤーが公開するプロフィール情報を管理します。",
-      en: "Manages the profile information a player shares with others.",
+    ja: {
+      label: "プロフィール",
+      description: "プレイヤーが公開するプロフィール情報を管理します。",
+    },
+    en: {
+      label: "Profile",
+      description: "Manages the profile information a player shares with others.",
     },
   })
   .displayType(ReceiveFriendRequest, {
-    label: { ja: "フレンド申請（受信）", en: "Incoming friend request" },
-    description: {
-      ja: "他のプレイヤーから受け取ったフレンド申請を管理します。申請元のプロフィールは含みません。",
-      en: "Tracks friend requests received from other players. Requests carry no sender profile.",
+    ja: {
+      label: "フレンド申請（受信）",
+      description:
+        "他のプレイヤーから受け取ったフレンド申請を管理します。申請元のプロフィールは含みません。",
+    },
+    en: {
+      label: "Incoming friend request",
+      description:
+        "Tracks friend requests received from other players. Requests carry no sender profile.",
     },
   })
   .displayType(SendFriendRequest, {
-    label: { ja: "フレンド申請（送信）", en: "Outgoing friend request" },
-    description: {
-      ja: "他のプレイヤーへ送信したフレンド申請を管理します。申請先のプロフィールは含みません。",
-      en: "Tracks friend requests sent to other players. Requests carry no recipient profile.",
+    ja: {
+      label: "フレンド申請（送信）",
+      description:
+        "他のプレイヤーへ送信したフレンド申請を管理します。申請先のプロフィールは含みません。",
+    },
+    en: {
+      label: "Outgoing friend request",
+      description:
+        "Tracks friend requests sent to other players. Requests carry no recipient profile.",
     },
   })
   .domainType(Profile)

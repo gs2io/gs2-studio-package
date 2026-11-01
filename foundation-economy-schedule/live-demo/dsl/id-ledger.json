@@ -3,16 +3,28 @@
   "retired": {},
   "random": {
     "property:TriggerPull.trigger": "prop_00D0MRCJH84DS7K1B6V3Z7TBCH",
-    "row:dt_19DA4DB8PDFYRFX34P95AGJYKV.closed-season": "row_01M2K159BPKAGRSRJCATFSF6P8",
-    "row:dt_19DA4DB8PDFYRFX34P95AGJYKV.guild-season": "row_01M3PHSXK55TWYBQADB8E6BM94",
-    "row:dt_19DA4DB8PDFYRFX34P95AGJYKV.happy-hour": "row_01M2K159BPGQNYQWAEPN8TM8QP",
-    "row:dt_19DA4DB8PDFYRFX34P95AGJYKV.open-season": "row_01M2K159BP6Y23WZ60TXD5HHE1",
-    "row:dt_19DA4DB8PDFYRFX34P95AGJYKV.ranking-contest": "row_01M3HNGK2R4RPXSN1A8WEDDZH6",
-    "row:dt_7JFGC97Y1569S38ZN3HSK3M4PE.happy-hour": "row_01M2K159BPAKP4Y1TPSP6K12GQ",
-    "row:type:TriggerPull.happy-hour": "row_01M2K1JA50RPYA70AKTZDEWHNV",
+    "row:[\"foundation-economy-schedule\",\"dt_19DA4DB8PDFYRFX34P95AGJYKV\",\"closed-season\"]": "row_01M2K159BPKAGRSRJCATFSF6P8",
+    "row:[\"foundation-economy-schedule\",\"dt_19DA4DB8PDFYRFX34P95AGJYKV\",\"guild-season\"]": "row_01M3PHSXK55TWYBQADB8E6BM94",
+    "row:[\"foundation-economy-schedule\",\"dt_19DA4DB8PDFYRFX34P95AGJYKV\",\"happy-hour\"]": "row_01M2K159BPGQNYQWAEPN8TM8QP",
+    "row:[\"foundation-economy-schedule\",\"dt_19DA4DB8PDFYRFX34P95AGJYKV\",\"open-season\"]": "row_01M2K159BP6Y23WZ60TXD5HHE1",
+    "row:[\"foundation-economy-schedule\",\"dt_19DA4DB8PDFYRFX34P95AGJYKV\",\"ranking-contest\"]": "row_01M3HNGK2R4RPXSN1A8WEDDZH6",
+    "row:[\"foundation-economy-schedule\",\"dt_7JFGC97Y1569S38ZN3HSK3M4PE\",\"happy-hour\"]": "row_01M2K159BPAKP4Y1TPSP6K12GQ",
+    "row:[\"foundation-economy-schedule-demo\",\"type:TriggerPull\",\"happy-hour\"]": "row_01M2K1JA50RPYA70AKTZDEWHNV",
     "type:Schedule": "dt_00D0MR9AAXN3Q2ZQHZ1QPHTRFX",
     "type:Trigger": "dt_00D0MR9AAXNWQC1NCBP63HNVM4",
     "type:TriggerPull": "dt_00D0MRCJH866QJXZVA8BG03CPK"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:Schedule:definition": "uic_0RBXQT3QPDA2KS2YPK4C0WZCFE",
+    "ui:Schedule:item:ClosesInValue": "uii_3XX913TG27AVVRRKSESXYY19CE",
+    "ui:Schedule:item:EndsInValue": "uii_6KZFSH9K4HA5AVCCBY1TAAW903",
+    "ui:Schedule:item:WindowLabel": "uii_5ADSH0KPHBB8QTWA1S648RR581",
+    "ui:Trigger:definition": "uic_2VV7EPTHHAA34R6F4PM55KET69",
+    "ui:Trigger:item:ClearButton": "uii_4YVDW9FMKEA5W8AJA0MSMK3QBF",
+    "ui:Trigger:item:ExpiresInValue": "uii_3A1JK1MQZRAW9TWQBX5NKXEFK5",
+    "ui:Trigger:item:ExtendButton": "uii_2EQAMNN34ZAEF9D72YMDC8YJJ4",
+    "ui:TriggerPull:definition": "uic_089GX345GVBG1BGN3FXJWT49DB",
+    "ui:TriggerPull:item:NameLabel": "uii_2RCVW9E5CZBFDVYWV9N6ZB709H",
+    "ui:TriggerPull:item:PullButton": "uii_4XPSD2FTCNBQRTXR4QBK8WESED"
+  }
 }

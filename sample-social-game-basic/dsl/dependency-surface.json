@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "packageId": "sample-social-game-basic",
+  "types": {
+    "Gacha": {
+      "id": "dt_0Z4MAE826H4PXPD0G2GQPMQ21W",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-shop-character-gacha",
+      "canonicalTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+      "addedProperties": {
+        "drawCount": "prop_44GS4TR0HRE4SQCJEV2G7VDG1C",
+        "paidOnly": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04",
+        "price": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ",
+        "series": "prop_3Q5WE2KYP6JTQHWZQN7E8DW12Y"
+      }
+    },
+    "LoginReward": {
+      "id": "dt_5HD6CY3HJ692ZRTXS064XS4BS6",
+      "singleEntry": false,
+      "canonicalPackageId": "micro-economy-login-reward",
+      "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
+      "addedProperties": {
+        "contentsId": "prop_635XF953PW3BSYMHYSVYAKEJ0P",
+        "count": "prop_41KFTTF2RYSDR9FFDJ575SQRZV",
+        "rewardType": "prop_1TXDHTCHQHVT43M06HMWB1T86R"
+      }
+    },
+    "Reward": {
+      "id": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE",
+      "singleEntry": false,
+      "canonicalPackageId": "sample-social-game-basic",
+      "canonicalTypeId": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE",
+      "properties": {
+        "iconAddress": "prop_0K2GDNB2Z9R2MAY48RXEE0ZJQN",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "labelKey": "prop_408774GV3NAG937A3CXGK2YRBJ"
+      }
+    }
+  },
+  "actionTransforms": {
+    "Reward": "at_0QCVSFSXJRTZ5X1ZF7DCRWSQTE"
+  },
+  "masterDataResources": {}
+}

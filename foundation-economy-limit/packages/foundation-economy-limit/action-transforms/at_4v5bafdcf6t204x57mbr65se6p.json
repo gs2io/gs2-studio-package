@@ -1,0 +1,86 @@
+{
+  "category": "verify",
+  "id": "at_4V5BAFDCF6T204X57MBR65SE6P",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyUsageLimitNotReached",
+  "outputs": [
+    {
+      "actionName": "Gs2Limit:VerifyCounterByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "limitName",
+          "sourceParameter": "limit"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "counterName",
+          "sourceParameter": "counter"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "less"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "count",
+          "sourceParameter": "maxValue"
+        },
+        {
+          "kind": "static",
+          "parameterName": "multiplyValueSpecifyingQuantity",
+          "value": false
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "limit",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+      }
+    },
+    {
+      "name": "counter",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
+      }
+    },
+    {
+      "name": "maxValue",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

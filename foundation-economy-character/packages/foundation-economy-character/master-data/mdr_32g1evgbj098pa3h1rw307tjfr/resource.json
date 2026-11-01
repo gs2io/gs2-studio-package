@@ -1,43 +1,41 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperty",
-        "parameterName": "initialCapacity",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
-            },
-            "propertyId": "prop_2GW5Y3B5C72XV6HSRV8R9RZX58"
-          }
+  "declaredBindings": [
+    {
+      "kind": "domainProperty",
+      "parameterName": "initialCapacity",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
+          },
+          "propertyId": "prop_2GW5Y3B5C72XV6HSRV8R9RZX58"
         }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "maxCapacity",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
-            },
-            "propertyId": "prop_0YMDYAY5JDK7N10HPS96137T2V"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "name",
-        "value": "Character"
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "maxCapacity",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
+          },
+          "propertyId": "prop_0YMDYAY5JDK7N10HPS96137T2V"
+        }
+      }
+    },
+    {
+      "kind": "static",
+      "parameterName": "name",
+      "value": "Character"
+    }
+  ],
   "id": "mdr_32G1EVGBJ098PA3H1RW307TJFR",
   "location": {
     "modelName": "InventoryModel",

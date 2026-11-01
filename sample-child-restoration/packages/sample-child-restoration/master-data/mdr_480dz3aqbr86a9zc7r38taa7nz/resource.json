@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "resourceType",
@@ -55,13 +55,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "ConsumeResource",
-        "transformPackageId": "sample-child-restoration"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "sample-child-restoration",
+          "transformId": "at_4Q831FZJQJ81P8DAQA1D537QF7"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_480DZ3AQBR86A9ZC7R38TAA7NZ",
   "location": {
     "modelName": "ConsumeAction",

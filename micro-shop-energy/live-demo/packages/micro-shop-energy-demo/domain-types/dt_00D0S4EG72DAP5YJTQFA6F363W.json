@@ -1,33 +1,39 @@
 {
   "actionPropertyTransforms": [
     {
-      "arguments": [
-        {
-          "parameterName": "slot",
-          "source": {
-            "kind": "static",
-            "value": 0
+      "invocation": {
+        "arguments": [
+          {
+            "parameterName": "slot",
+            "source": {
+              "kind": "static",
+              "value": 0
+            }
+          },
+          {
+            "parameterName": "paidOnly",
+            "source": {
+              "kind": "static",
+              "value": false
+            }
+          },
+          {
+            "parameterName": "count",
+            "source": {
+              "kind": "domainProperty",
+              "source": {
+                "propertyId": "prop_00D0S4EG729BGHQ7R4RK1959TA"
+              }
+            }
           }
-        },
-        {
-          "parameterName": "paidOnly",
-          "source": {
-            "kind": "static",
-            "value": false
-          }
-        },
-        {
-          "parameterName": "count",
-          "source": {
-            "kind": "domainProperty",
-            "propertyId": "prop_00D0S4EG729BGHQ7R4RK1959TA"
-          }
+        ],
+        "target": {
+          "packageId": "foundation-economy-currency",
+          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5"
         }
-      ],
+      },
       "mode": "replace",
-      "targetPropertyId": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6",
-      "transformName": "WithdrawCurrency",
-      "transformPackageId": "foundation-economy-currency"
+      "targetPropertyId": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6"
     }
   ],
   "compositeKeyMode": {
@@ -99,8 +105,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "micro-shop-energy",
-    "directSourceTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
-    "sourcePackageId": "micro-shop-energy",
-    "sourceTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE"
+    "directSourceTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE"
   }
 }

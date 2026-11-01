@@ -14,8 +14,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-social-graph",
-    "directSourceTypeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
-    "sourcePackageId": "foundation-social-graph",
-    "sourceTypeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
+    "directSourceTypeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7"
   }
 }

@@ -74,8 +74,6 @@
   "singleEntry": false,
   "source": {
     "directSourcePackageId": "foundation-economy-currency",
-    "directSourceTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
-    "sourcePackageId": "foundation-economy-currency",
-    "sourceTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
+    "directSourceTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
   }
 }

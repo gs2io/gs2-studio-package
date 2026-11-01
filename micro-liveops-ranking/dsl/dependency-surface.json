@@ -30,6 +30,10 @@
       }
     }
   },
+  "actionTransforms": {
+    "ReceiveRankingReward": "at_14BNWJKZBZ8B1AW16TPFSHX7KY",
+    "VerifyRankingScoreReached": "at_21RD4Y7BR38AQ9N31TQ5KZ9861"
+  },
   "masterDataResources": {
     "ranking2.GlobalRankingModel": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR",
     "ranking2.Namespace": "mdr_2CV348B4KFBSMVV1CBVHJXB9JJ",

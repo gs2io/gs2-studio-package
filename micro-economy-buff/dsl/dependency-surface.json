@@ -22,6 +22,7 @@
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "buff.BuffEntryModel": "mdr_403PNWNXHGAHNVCTWXXVQPXKY1",
     "buff.BuffTargetAction": "mdr_5WZ0BQ95THBHMT5YJD62QKH4T4",

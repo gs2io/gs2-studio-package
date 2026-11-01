@@ -1,11 +1,6 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "property:Character.grade": "prop_00D0320HQ4G51XW7JS84YZ2VAA",
-    "property:CharacterGradeStep.gradeUpPropertyIdRegex": "prop_00D0320HQ4N8QC4SDN75PFNFSF",
-    "property:CharacterGradeStep.propertyIdRegex": "prop_00D0320HQ4HKJ6EW5M3Z8QS8PG",
-    "property:CharacterGradeStep.rankCapValue": "prop_00D0320HQ4H7XNC4RCNDDV9W35",
+  "retired": {
     "transform:ApplyCharacterGradeRankCap:output:direct:Gs2Grade:ApplyRankCapByUserId#0": "out_01M0C826WKTFVP49QPBQZYX1R8",
     "transform:ApplyCharacterGradeRankCap:parameter:propertyId": "param_01M0C826WK092B8J1DFWS8NM7G",
     "transform:PromoteCharacterGrade:output:direct:Gs2Grade:AddGradeByUserId#0": "out_01M0C826WKSESSEVV0C453ZPZS",
@@ -13,7 +8,16 @@
     "transform:PromoteCharacterGrade:parameter:propertyId": "param_01M0C826WJA2S7B46606GV62Y1",
     "transform:VerifyCharacterGradeReached:output:direct:Gs2Grade:VerifyGradeByUserId#0": "out_01M0C826WKCH2951TEBMPYTK1Y",
     "transform:VerifyCharacterGradeReached:parameter:gradeValue": "param_01M0C826WKH5WK6F2PP20J2FYY",
-    "transform:VerifyCharacterGradeReached:parameter:propertyId": "param_01M0C826WK3VT4BNP3TCW5427D",
+    "transform:VerifyCharacterGradeReached:parameter:propertyId": "param_01M0C826WK3VT4BNP3TCW5427D"
+  },
+  "random": {
+    "property:Character.grade": "prop_00D0320HQ4G51XW7JS84YZ2VAA",
+    "property:CharacterGradeStep.gradeUpPropertyIdRegex": "prop_00D0320HQ4N8QC4SDN75PFNFSF",
+    "property:CharacterGradeStep.propertyIdRegex": "prop_00D0320HQ4HKJ6EW5M3Z8QS8PG",
+    "property:CharacterGradeStep.rankCapValue": "prop_00D0320HQ4H7XNC4RCNDDV9W35",
+    "transform:ApplyCharacterGradeRankCap": "at_41T41XDEZE59HSDY1D8HV4F32X",
+    "transform:PromoteCharacterGrade": "at_0AV65RY3CPHDE6VDR8XQ9MH72H",
+    "transform:VerifyCharacterGradeReached": "at_0ZS4W918W38968ZST9EBSZJWTH",
     "type:Character": "dt_00D0320HQ4G4BENW1GSJMERS0D",
     "type:CharacterGradeStep": "dt_00D0320HQ4JPTS5BMVDRD7QZH7"
   },

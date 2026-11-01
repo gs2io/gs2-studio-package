@@ -12,10 +12,13 @@ const StoreProduct = shop.type("StoreProduct");
 
 export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "0.0.0")
   .display({
-    label: { ja: "通貨ショップ（デモデータ）", en: "Currency Shop (demo data)" },
-    description: {
-      ja: "ライブデモ用に、通貨デモの商品棚を通貨ショップへ並べます。",
-      en: "Puts the currency demo's shelf in front of the currency shop.",
+    ja: {
+      label: "通貨ショップ（デモデータ）",
+      description: "ライブデモ用に、通貨デモの商品棚を通貨ショップへ並べます。",
+    },
+    en: {
+      label: "Currency Shop (demo data)",
+      description: "Puts the currency demo's shelf in front of the currency shop.",
     },
   })
   .dependency(shop.packageId, "github:gs2io/gs2-studio-package")

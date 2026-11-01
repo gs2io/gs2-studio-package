@@ -4,11 +4,21 @@
   "random": {
     "property:Gift.amount": "prop_00D0SHMWJ1Q1KCCFKR0J26GETW",
     "property:Gift.payload": "prop_00D0SHMWJ1KSSS1CYCFS0AHJBT",
-    "row:dt_1MS9YFWFRVSBX6W84BDNXX17VB.welcome": "row_01M35Z5TAMBP3TDCQKCR3F6YXG",
-    "row:type:Gift.gift": "row_01M366KJ86ZVCF6KXWSRP8YCX2",
+    "row:[\"foundation-liveops-inbox\",\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\",\"welcome\"]": "row_01M35Z5TAMBP3TDCQKCR3F6YXG",
+    "row:[\"foundation-liveops-inbox-demo\",\"type:Gift\",\"gift\"]": "row_01M366KJ86ZVCF6KXWSRP8YCX2",
     "type:Gift": "dt_00D0SHMWJ1K42G74YQPF2DJNV6",
     "type:GlobalMessage": "dt_00D0SFSEJN1BET2KCMVWSZX3F8",
     "type:Message": "dt_00D0SFSEJN3BMDPZZXX51XNVPW"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:Gift:definition": "uic_7K1W85FC1AB8CR5S85ZE9P4VCN",
+    "ui:Gift:item:AmountLabel": "uii_2VFYE3J7QDBS8V4STBJPBRJ98V",
+    "ui:Gift:item:DeliverButton": "uii_2D8E7ANET0BQD9J3GKY1ZXK50K",
+    "ui:GlobalMessage:definition": "uic_1RB7S06ZBGB0QT2TZEJ9EM27HW",
+    "ui:GlobalMessage:item:DeliverButton": "uii_50523NKZFXBP6A9TXZ25C0BSNS",
+    "ui:Message:definition": "uic_2G5HRQC6VBBFS9XPQ0TBHGHKTR",
+    "ui:Message:item:OpenButton": "uii_4VXRB3HT8FBC2BBZST0FVRQVKR",
+    "ui:Message:item:OpenedLabel": "uii_0QDBE8GXB6B1YSATGX9SHJSRN0",
+    "ui:Message:item:UnreadActiveToggle": "uii_1NFZY63FKCBWZ8FW378AWJ9EC5"
+  }
 }

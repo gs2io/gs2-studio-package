@@ -20,12 +20,16 @@
     {
       "arguments": [],
       "componentClassName": "RecruitButton",
-      "delegatedActionKey": "resource:foundation-economy-character-demo:masterData:mdr_6C5BXK4CX6AGWT3V20TH8ECYYP::Gs2Exchange:RateModel.Exchange",
       "id": "uii_5JB5EHEF0HA7CVB86SW3ZAEJZP",
       "kind": "buttonAction",
-      "name": "CharacterRecruit"
+      "name": "CharacterRecruit",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_6C5BXK4CX6AGWT3V20TH8ECYYP",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-character-demo"
+      }
     }
   ],
-  "name": "CharacterRecruit",
   "targetDomainTypeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW"
 }

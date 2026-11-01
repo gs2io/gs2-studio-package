@@ -1,73 +1,71 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperties",
-        "parameterName": "maxValue",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
-              },
-              "propertyId": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56"
-            }
+  "declaredBindings": [
+    {
+      "kind": "domainProperties",
+      "parameterName": "maxValue",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+            },
+            "propertyId": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56"
           }
-        ]
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "nextRecoverAt",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
-              },
-              "propertyId": "prop_39T9A7P2NH6PNT4W12H0FZX9WW"
-            }
+        }
+      ]
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "nextRecoverAt",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+            },
+            "propertyId": "prop_39T9A7P2NH6PNT4W12H0FZX9WW"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "overflowValue"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "staminaName"
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "value",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
-              },
-              "propertyId": "prop_7BX7N28W6KRGHGC40MXEWB2ESC"
-            }
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "overflowValue"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "staminaName"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "value",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+            },
+            "propertyId": "prop_7BX7N28W6KRGHGC40MXEWB2ESC"
           }
-        ]
-      }
-    ],
-    "linkedMasterResourceId": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5"
-  },
+        }
+      ]
+    }
+  ],
   "id": "udr_1WAY8NTNY59DPT2MB7G0VGD7TT",
+  "linkedMasterResourceId": "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5",
   "location": {
     "modelName": "Stamina",
     "service": "stamina"

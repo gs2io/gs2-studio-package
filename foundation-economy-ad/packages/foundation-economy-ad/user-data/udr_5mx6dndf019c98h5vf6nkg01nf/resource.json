@@ -1,46 +1,44 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "domainProperties",
-        "parameterName": "point",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
-              },
-              "propertyId": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK"
-            }
+  "declaredBindings": [
+    {
+      "kind": "domainProperties",
+      "parameterName": "point",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
+            },
+            "propertyId": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK"
           }
-        ]
-      },
-      {
-        "kind": "domainProperties",
-        "parameterName": "pointId",
-        "sources": [
-          {
-            "scopes": [],
-            "terminal": {
-              "kind": "direct",
-              "mountPath": {
-                "kind": "local",
-                "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
-              },
-              "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-            }
+        }
+      ]
+    },
+    {
+      "kind": "domainProperties",
+      "parameterName": "pointId",
+      "sources": [
+        {
+          "scopes": [],
+          "terminal": {
+            "kind": "direct",
+            "mountPath": {
+              "kind": "local",
+              "typeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
+            },
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
           }
-        ]
-      },
-      {
-        "kind": "skip",
-        "parameterName": "userId"
-      }
-    ]
-  },
+        }
+      ]
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
+    }
+  ],
   "id": "udr_5MX6DNDF019C98H5VF6NKG01NF",
   "location": {
     "modelName": "Point",

@@ -4,12 +4,16 @@
     {
       "arguments": [],
       "componentClassName": "AdvanceButton",
-      "delegatedActionKey": "resource:micro-economy-mission-demo:masterData:mdr_21DB51BXCRBDQBFYF1JB1TQQ8M::Gs2Exchange:RateModel.Exchange",
       "id": "uii_2YBWFD2142ATGA9PBPGH06MKW1",
       "kind": "buttonAction",
-      "name": "MissionCounter"
+      "name": "MissionCounter",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_21DB51BXCRBDQBFYF1JB1TQQ8M",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-mission-demo"
+      }
     }
   ],
-  "name": "MissionCounter",
   "targetDomainTypeId": "dt_00D0QVYTV9BS74AACZHCPQGG1B"
 }

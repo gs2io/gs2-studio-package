@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "limit",
@@ -18,13 +18,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "ResetUsageLimitCounter",
-        "transformPackageId": "foundation-economy-limit"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-limit",
+          "transformId": "at_1WMTWBNWG4BJ36RG8TCVEP8A3A"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_2KB3QYWMS5AGMBVNZY93P2GKT7",
   "location": {
     "modelName": "AcquireAction",

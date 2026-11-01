@@ -1,63 +1,61 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "expiresTimeSpan",
-        "value": null
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "messageReceptionPeriodEventId.grnKey.eventName",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
-        }
-      },
-      {
-        "kind": "static",
-        "parameterName": "messageReceptionPeriodEventId.grnKey.namespaceName",
-        "value": "InboxSchedule"
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "metadata",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
-            },
-            "propertyId": "prop_19YMYXB5NJHVCEEQY795WH711C"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "name",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
-            },
-            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-          }
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "expiresTimeSpan",
+      "value": null
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "messageReceptionPeriodEventId.grnKey.eventName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "static",
+      "parameterName": "messageReceptionPeriodEventId.grnKey.namespaceName",
+      "value": "InboxSchedule"
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "metadata",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
+          },
+          "propertyId": "prop_19YMYXB5NJHVCEEQY795WH711C"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "name",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
+    }
+  ],
   "id": "mdr_53WXDED04D83MTF9Z40JH8CMXH",
   "location": {
     "modelName": "GlobalMessage",

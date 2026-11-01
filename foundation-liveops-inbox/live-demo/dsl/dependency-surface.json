@@ -5,11 +5,18 @@
     "Gift": {
       "id": "dt_00D0SHMWJ1K42G74YQPF2DJNV6",
       "singleEntry": true,
-      "delegatedActions": {
-        "Deliver": "resource:foundation-liveops-inbox-demo:masterData:mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-liveops-inbox-demo",
       "canonicalTypeId": "dt_00D0SHMWJ1K42G74YQPF2DJNV6",
+      "delegatedActions": {
+        "Deliver": {
+          "targetResource": {
+            "sourcePackageId": "foundation-liveops-inbox-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      },
       "properties": {
         "amount": "prop_00D0SHMWJ1Q1KCCFKR0J26GETW",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -19,11 +26,18 @@
     "GlobalMessage": {
       "id": "dt_00D0SFSEJN1BET2KCMVWSZX3F8",
       "singleEntry": false,
-      "delegatedActions": {
-        "Deliver": "resource:foundation-liveops-inbox-demo:masterData:mdr_3V90RSG8MJB8BVY29ZQGS45EZZ::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-liveops-inbox",
-      "canonicalTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
+      "canonicalTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
+      "delegatedActions": {
+        "Deliver": {
+          "targetResource": {
+            "sourcePackageId": "foundation-liveops-inbox-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     },
     "Message": {
       "id": "dt_00D0SFSEJN3BMDPZZXX51XNVPW",
@@ -32,5 +46,6 @@
       "canonicalTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {}
 }

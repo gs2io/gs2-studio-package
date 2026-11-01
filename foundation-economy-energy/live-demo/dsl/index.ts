@@ -39,7 +39,7 @@ const ConsumeRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Energy)
         .bindings({
-          action: Bind.transform(energy.packageId, "ConsumeEnergy", [
+          action: Bind.transform(energy.packageId, energy.transformId("ConsumeEnergy"), [
             Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", CONSUME_VALUE),
           ]),
@@ -57,7 +57,7 @@ const RecoverRateModel = defineMasterDataResource(resource =>
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Energy)
         .bindings({
-          action: Bind.transform(energy.packageId, "RecoveryEnergy", [
+          action: Bind.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
             Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", RECOVERY_VALUE),
           ]),
@@ -67,10 +67,14 @@ const RecoverRateModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyEnergyDemo = definePackage("foundation-economy-energy-demo", "0.0.0")
   .display({
-    label: { ja: "スタミナ（デモデータ）", en: "Stamina (demo data)" },
-    description: {
-      ja: "ライブデモ用のスタミナ設定と、消費・回復の操作を提供します。",
-      en: "Supplies the stamina settings used by the live demo, and the spend and recover presses.",
+    ja: {
+      label: "スタミナ（デモデータ）",
+      description: "ライブデモ用のスタミナ設定と、消費・回復の操作を提供します。",
+    },
+    en: {
+      label: "Stamina (demo data)",
+      description:
+        "Supplies the stamina settings used by the live demo, and the spend and recover presses.",
     },
   })
   .dependency(energy.packageId, "github:gs2io/gs2-studio-package")
@@ -131,11 +135,11 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
   .delegatedAction(Energy, "Spend", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: ConsumeRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .delegatedAction(Energy, "Recover", {
     targetActionKey: "Gs2Exchange:RateModel.Exchange",
     targetResource: RecoverRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static",  value: 1 } }],
+    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
   })
   .build();

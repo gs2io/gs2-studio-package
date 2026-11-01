@@ -5,11 +5,18 @@
     "Character": {
       "id": "dt_00D0KZXDBRG616WVXR4N5FCYH2",
       "singleEntry": false,
-      "delegatedActions": {
-        "Train": "resource:foundation-economy-character-demo:masterData:mdr_610EXTERWVB0FRCTCXD30A4ZX6::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+      "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "delegatedActions": {
+        "Train": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-character-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_610EXTERWVB0FRCTCXD30A4ZX6"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     },
     "CharacterCollection": {
       "id": "dt_00D0KZXDBRGT3NHQ0D86V61M35",
@@ -17,20 +24,21 @@
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
     },
-    "CharacterExperience": {
-      "id": "dt_00D0KZXDBRHQB69AXC371FPATG",
-      "singleEntry": true,
-      "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0"
-    },
     "CharacterRecruit": {
       "id": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
       "singleEntry": false,
-      "delegatedActions": {
-        "Recruit": "resource:foundation-economy-character-demo:masterData:mdr_6C5BXK4CX6AGWT3V20TH8ECYYP::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-character-demo",
       "canonicalTypeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
+      "delegatedActions": {
+        "Recruit": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-character-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_6C5BXK4CX6AGWT3V20TH8ECYYP"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      },
       "properties": {
         "character": "prop_00D0M4HCBWK48152NTS3ABDZMZ",
         "extraActions": "prop_00D0NTAZ7QKXA6Q5H5NDGEFQ2V",
@@ -38,5 +46,6 @@
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {}
 }

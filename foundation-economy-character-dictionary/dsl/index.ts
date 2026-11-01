@@ -51,17 +51,24 @@ export const foundationEconomyCharacterDictionary = definePackage(
   "0.0.0"
 )
   .display({
-    label: { ja: "キャラクター図鑑", en: "Character Dex" },
-    description: {
-      ja: "これまでに入手したキャラクターの種類を図鑑に記録します。",
-      en: "Keeps a dex of every character species the player has ever obtained.",
+    ja: {
+      label: "キャラクター図鑑",
+      description: "これまでに入手したキャラクターの種類を図鑑に記録します。",
+    },
+    en: {
+      label: "Character Dex",
+      description: "Keeps a dex of every character species the player has ever obtained.",
     },
   })
   .displayType(Character, {
-    label: { ja: "キャラクター", en: "Character" },
-    description: {
-      ja: "キャラクター図鑑に表示するキャラクターと閲覧状態を管理します。",
-      en: "Manages the characters shown in the character encyclopedia and their view state.",
+    ja: {
+      label: "キャラクター",
+      description: "キャラクター図鑑に表示するキャラクターと閲覧状態を管理します。",
+    },
+    en: {
+      label: "Character",
+      description:
+        "Manages the characters shown in the character encyclopedia and their view state.",
     },
   })
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")

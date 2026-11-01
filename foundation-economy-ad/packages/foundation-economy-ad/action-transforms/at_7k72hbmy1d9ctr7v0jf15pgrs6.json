@@ -1,0 +1,41 @@
+{
+  "category": "consume",
+  "id": "at_7K72HBMY1D9CTR7V0JF15PGRS6",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_753Q723JBB9AWB63KRPYZA6ZXN",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ConsumeAdViewPoint",
+  "outputs": [
+    {
+      "actionName": "Gs2AdReward:ConsumePointByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "static",
+          "parameterName": "point",
+          "value": 1
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_753Q723JBB9AWB63KRPYZA6ZXN",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": []
+}

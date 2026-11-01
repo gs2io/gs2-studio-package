@@ -4,10 +4,15 @@
     {
       "arguments": [],
       "componentClassName": "ExpandButton",
-      "delegatedActionKey": "resource:foundation-economy-equipment-demo:masterData:mdr_482VNSNE5TBE7AD7V9S49PCJC0::Gs2Exchange:RateModel.Exchange",
       "id": "uii_7ZF6Q1NABGAP7V1AMTW85J8Z6M",
       "kind": "buttonAction",
-      "name": "EquipmentCollection"
+      "name": "EquipmentCollection",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "resourceId": "mdr_482VNSNE5TBE7AD7V9S49PCJC0",
+        "resourceKind": "masterData",
+        "sourcePackageId": "foundation-economy-equipment-demo"
+      }
     },
     {
       "componentClassName": "NoneYetLabel",
@@ -38,6 +43,5 @@
       "name": "EquipmentCollection"
     }
   ],
-  "name": "EquipmentCollection",
   "targetDomainTypeId": "dt_00D0MNXASRRPHW8RV3NXTHX8AY"
 }

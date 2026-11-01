@@ -73,10 +73,15 @@
     {
       "arguments": [],
       "componentClassName": "StartButton",
-      "delegatedActionKey": "resource:micro-economy-quest:masterData:mdr_1E79KV3GSN9K19S1G9P9PRYHEE::Gs2Quest:QuestModel.Start",
       "id": "uii_7MPDEPYA3YAEG8WMC5HTW5EGWY",
       "kind": "buttonAction",
-      "name": "Quest"
+      "name": "Quest",
+      "targetActionKey": "Gs2Quest:QuestModel.Start",
+      "targetResource": {
+        "resourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
+        "resourceKind": "masterData",
+        "sourcePackageId": "micro-economy-quest"
+      }
     },
     {
       "componentClassName": "ClearedLabel",
@@ -103,6 +108,5 @@
       "name": "Quest"
     }
   ],
-  "name": "Quest",
   "targetDomainTypeId": "dt_00D0TT9XC953455EX93PBE33K4"
 }

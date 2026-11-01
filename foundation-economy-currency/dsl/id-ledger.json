@@ -1,14 +1,6 @@
 {
   "schemaVersion": 1,
-  "retired": {},
-  "random": {
-    "property:CurrencyStore.enableFakeReceipt": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ",
-    "property:StoreProduct.appleAppStoreProductId": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
-    "property:StoreProduct.googlePlayProductId": "prop_7TADZ4DEA40BBKZ46GN2R05E4J",
-    "property:Wallet.free": "prop_1MXFHCN7EY8JQ8GF8CAMDGTH78",
-    "property:Wallet.paid": "prop_6R2VWF0VG1FFZD7G3F2NB0W132",
-    "property:Wallet.total": "prop_3VQCQ7RXRT5DS14GV01R3MRB4J",
-    "row:type:CurrencyStore.currencystore": "row_08CCD0SG79SRTF2WW5GC77F72M",
+  "retired": {
     "transform:DepositCurrency:output:direct:Gs2Money2:DepositByUserId#0": "out_01KMYVXWW0KFTFAA58G00GJABH",
     "transform:DepositCurrency:parameter:count": "param_01KMYVXWW09S418P0ZRRBQT0RE",
     "transform:DepositCurrency:parameter:currencyType": "param_01KMYVXWW0K3RYB953PFHCTQTV",
@@ -25,7 +17,21 @@
     "transform:WithdrawCurrency:parameter:slot": "param_01M2G43PKB59TYZ8H19YCQ9HQ4",
     "transform:WithdrawPaidCurrency:output:direct:Gs2Money2:WithdrawByUserId#0": "out_01KMYVXWW0ZHVTAA5XZW1X3W52",
     "transform:WithdrawPaidCurrency:parameter:count": "param_01KMYVXWW02P46N2MGJ1ENZSA9",
-    "transform:WithdrawPaidCurrency:parameter:slot": "param_01M2G43PKBQJ60Q2H330MTFY0E",
+    "transform:WithdrawPaidCurrency:parameter:slot": "param_01M2G43PKBQJ60Q2H330MTFY0E"
+  },
+  "random": {
+    "property:CurrencyStore.enableFakeReceipt": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ",
+    "property:StoreProduct.appleAppStoreProductId": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
+    "property:StoreProduct.googlePlayProductId": "prop_7TADZ4DEA40BBKZ46GN2R05E4J",
+    "property:Wallet.free": "prop_1MXFHCN7EY8JQ8GF8CAMDGTH78",
+    "property:Wallet.paid": "prop_6R2VWF0VG1FFZD7G3F2NB0W132",
+    "property:Wallet.total": "prop_3VQCQ7RXRT5DS14GV01R3MRB4J",
+    "row:[\"foundation-economy-currency\",\"type:CurrencyStore\",\"currencystore\"]": "row_08CCD0SG79SRTF2WW5GC77F72M",
+    "transform:DepositCurrency": "at_103C3AGDYK65AAVXE24NG965GH",
+    "transform:DepositFreeCurrency": "at_128M69PST19WRR9BGD46M0YWAC",
+    "transform:VerifyReceipt": "at_0K0C5C0TAX954RK77HDAPJWBEG",
+    "transform:WithdrawCurrency": "at_1HH2KQVVENVPN5K0X2W69EB7D5",
+    "transform:WithdrawPaidCurrency": "at_0Q3S8P50EGKX0R74RAS4HWMC6F",
     "type:CurrencyStore": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
     "type:StoreProduct": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
     "type:Wallet": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9"
@@ -33,10 +39,10 @@
   "deterministicOverrides": {
     "master/money2:Namespace:CurrencyStore:Currency#0": "mdr_2E7WSMWGBTATQSVTMCW3T2R2AJ",
     "master/money2:Namespace:CurrencyStore:Currency#0/money2:StoreContentModel:StoreProduct:#0": "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX",
-    "ui:Wallet:Wallet:definition": "uic_0S3GCRDBG29GRA810YNW5F8ZZF",
-    "ui:Wallet:Wallet:item:FreeBalanceLabel": "uii_61Z6Z202DS98CRDCCRC6WPKH3J",
-    "ui:Wallet:Wallet:item:PaidBalanceLabel": "uii_5MVWS6P35W942RKQQB6KJR83CG",
-    "ui:Wallet:Wallet:item:TotalBalanceLabel": "uii_0J5VV2JWE99MQVQSAKQF6TH40W",
+    "ui:Wallet:definition": "uic_0S3GCRDBG29GRA810YNW5F8ZZF",
+    "ui:Wallet:item:FreeBalanceLabel": "uii_61Z6Z202DS98CRDCCRC6WPKH3J",
+    "ui:Wallet:item:PaidBalanceLabel": "uii_5MVWS6P35W942RKQQB6KJR83CG",
+    "ui:Wallet:item:TotalBalanceLabel": "uii_0J5VV2JWE99MQVQSAKQF6TH40W",
     "user/money2:Wallet:Wallet:#0": "udr_71QJPZGC8NACMTMVNEB8M5CP80"
   }
 }

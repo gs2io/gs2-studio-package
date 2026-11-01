@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "loginRewardCollection",
@@ -21,13 +21,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "ResetReceiveStatus",
-        "transformPackageId": "micro-economy-login-reward"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "micro-economy-login-reward",
+          "transformId": "at_7HZJD63FEK93PTBTQWK5A3KNT4"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_3DWPM98F2NA4SS3ATV0HR2RV01",
   "location": {
     "modelName": "AcquireAction",

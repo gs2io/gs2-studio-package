@@ -5,19 +5,21 @@
     "CharacterFormation": {
       "id": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6",
       "singleEntry": true,
+      "canonicalPackageId": "foundation-economy-character-formation",
+      "canonicalTypeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
       "delegatedActions": {
-        "Expand": "resource:foundation-economy-character-formation-demo:masterData:mdr_0XW8Q5N7XHAKQ9NSP0GVBBFFWQ::Gs2Exchange:RateModel.Exchange"
-      },
-      "canonicalPackageId": "foundation-economy-character-formation",
-      "canonicalTypeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN"
-    },
-    "CharacterFormationSlot": {
-      "id": "dt_00D0VQ0PMPJ5P1MCF12S58MS1E",
-      "singleEntry": false,
-      "canonicalPackageId": "foundation-economy-character-formation",
-      "canonicalTypeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG"
+        "Expand": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-character-formation-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_0XW8Q5N7XHAKQ9NSP0GVBBFFWQ"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_4XN0R3DYNCBQM8MKTANBTN8WAY",
     "exchange.RateModel": "mdr_0XW8Q5N7XHAKQ9NSP0GVBBFFWQ",

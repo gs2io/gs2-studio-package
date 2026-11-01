@@ -6,13 +6,13 @@
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Gives each character its own equipment slots, with per-slot restrictions on what fits.",
-      "ja": "キャラクターごとの装備スロットを扱います。スロットごとに装着できる装備を制限できます。"
+    "en": {
+      "description": "Gives each character its own equipment slots, with per-slot restrictions on what fits.",
+      "label": "Equipment Loadout"
     },
-    "label": {
-      "en": "Equipment Loadout",
-      "ja": "装備の装着"
+    "ja": {
+      "description": "キャラクターごとの装備スロットを扱います。スロットごとに装着できる装備を制限できます。",
+      "label": "装備の装着"
     }
   }
 }

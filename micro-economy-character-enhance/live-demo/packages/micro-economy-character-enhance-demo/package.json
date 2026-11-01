@@ -8,13 +8,13 @@
     "micro-economy-character-enhance": "github:gs2io/gs2-studio-package"
   },
   "display": {
-    "description": {
-      "en": "Supplies the recipe and materials the live demo enhances with, and the presses that get materials and spend them on a character.",
-      "ja": "ライブデモ用の強化レシピ・強化素材と、素材の入手・キャラクター強化の操作を提供します。"
+    "en": {
+      "description": "Supplies the recipe and materials the live demo enhances with, and the presses that get materials and spend them on a character.",
+      "label": "Character Enhancement (demo data)"
     },
-    "label": {
-      "en": "Character Enhancement (demo data)",
-      "ja": "キャラクター強化（デモデータ）"
+    "ja": {
+      "description": "ライブデモ用の強化レシピ・強化素材と、素材の入手・キャラクター強化の操作を提供します。",
+      "label": "キャラクター強化（デモデータ）"
     }
   }
 }

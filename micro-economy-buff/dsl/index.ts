@@ -202,17 +202,25 @@ const BuffEntryModel = defineMasterDataResource(resource =>
 
 export const microEconomyBuff = definePackage("micro-economy-buff", "0.0.0")
   .display({
-    label: { ja: "バフ", en: "Buffs" },
-    description: {
-      ja: "報酬の獲得量などを一時的に倍率で増減させます。対象のアクションまたはモデルと期間を指定できます。",
-      en: "Temporarily scales what a service hands out, targeted by action or model and limited to a period.",
+    ja: {
+      label: "バフ",
+      description:
+        "報酬の獲得量などを一時的に倍率で増減させます。対象のアクションまたはモデルと期間を指定できます。",
+    },
+    en: {
+      label: "Buffs",
+      description:
+        "Temporarily scales what a service hands out, targeted by action or model and limited to a period.",
     },
   })
   .displayType(Buff, {
-    label: { ja: "バフ", en: "Buff" },
-    description: {
-      ja: "一時的な能力補正の効果量、有効期間、重複ルールを設定します。",
-      en: "Defines a temporary stat modifier's effect, duration, and stacking rules.",
+    ja: {
+      label: "バフ",
+      description: "一時的な能力補正の効果量、有効期間、重複ルールを設定します。",
+    },
+    en: {
+      label: "Buff",
+      description: "Defines a temporary stat modifier's effect, duration, and stacking rules.",
     },
   })
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")

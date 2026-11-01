@@ -1,0 +1,13 @@
+{
+  "id": "counter1",
+  "rowKey": "row_01M2WTYP5ZFN44989EHERK30FD",
+  "type": {
+    "domainTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+    "packageId": "foundation-economy-limit"
+  },
+  "values": {
+    "prop_00D031N0N8XCG9EJ25SDVPGMYT": "daily",
+    "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D": 3,
+    "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE": 5
+  }
+}

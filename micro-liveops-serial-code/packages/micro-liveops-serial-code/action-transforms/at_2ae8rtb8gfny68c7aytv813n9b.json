@@ -1,0 +1,50 @@
+{
+  "category": "consume",
+  "id": "at_2AE8RTB8GFNY68C7AYTV813N9B",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "UseSerialCode",
+  "outputs": [
+    {
+      "actionName": "Gs2SerialKey:UseByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "code",
+          "sourceParameter": "code"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "code",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

@@ -2,12 +2,6 @@
   "schemaVersion": 1,
   "packageId": "micro-liveops-serial-code-demo",
   "types": {
-    "SerialCodeCampaign": {
-      "id": "dt_00D0WPXGH8GHE54Y9SHDAH57PG",
-      "singleEntry": false,
-      "canonicalPackageId": "micro-liveops-serial-code",
-      "canonicalTypeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB"
-    },
     "SerialCodeRedemption": {
       "id": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
       "singleEntry": true,
@@ -17,6 +11,10 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     }
+  },
+  "actionTransforms": {
+    "ClearRedemption": "at_0ANYB1CF038B2RMMTVPA8C9X3B",
+    "CountRedemption": "at_2HMSD4AP729NXVQMK5RM8CRXEQ"
   },
   "masterDataResources": {
     "limit.LimitModel": "mdr_7SMW1JXZZPB748SJB0THQW9XK1",

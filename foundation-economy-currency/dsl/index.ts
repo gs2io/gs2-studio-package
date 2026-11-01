@@ -124,32 +124,43 @@ const Namespace = defineMasterDataResource(resource => {
 
 export const foundationEconomyCurrency = definePackage("foundation-economy-currency", "0.0.0")
   .display({
-    label: { ja: "通貨", en: "Currency" },
-    description: {
-      ja: "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。",
-      en: "Manages an in-game currency balance (wallet) and the store products that sell it.",
+    ja: {
+      label: "通貨",
+      description: "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。",
+    },
+    en: {
+      label: "Currency",
+      description:
+        "Manages an in-game currency balance (wallet) and the store products that sell it.",
     },
   })
   .displayType(CurrencyStore, {
-    label: { ja: "通貨ストア", en: "Currency store" },
-    description: {
-      ja: "レシート検証とテスト購入に関する通貨ストア設定を管理します。",
-      en: "Configures receipt validation and test-purchase behavior for the currency store.",
+    ja: {
+      label: "通貨ストア",
+      description: "レシート検証とテスト購入に関する通貨ストア設定を管理します。",
+    },
+    en: {
+      label: "Currency store",
+      description:
+        "Configures receipt validation and test-purchase behavior for the currency store.",
     },
   })
   .displayType(StoreProduct, {
-    label: { ja: "ストア商品", en: "Store product" },
-    description: {
-      ja: "ストア商品とApp Store・Google Playの商品IDの対応を設定します。",
-      en: "Maps a store product to its App Store and Google Play product identifiers.",
+    ja: {
+      label: "ストア商品",
+      description: "ストア商品とApp Store・Google Playの商品IDの対応を設定します。",
+    },
+    en: {
+      label: "Store product",
+      description: "Maps a store product to its App Store and Google Play product identifiers.",
     },
   })
   .displayType(Wallet, {
-    label: { ja: "ウォレット", en: "Wallet" },
-    description: {
-      ja: "プレイヤーが保有する有償・無償通貨の残高を管理します。",
-      en: "Tracks a player's paid and free currency balances.",
+    ja: {
+      label: "ウォレット",
+      description: "プレイヤーが保有する有償・無償通貨の残高を管理します。",
     },
+    en: { label: "Wallet", description: "Tracks a player's paid and free currency balances." },
   })
   .domainType(Wallet)
   .domainType(StoreProduct)

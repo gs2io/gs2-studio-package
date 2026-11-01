@@ -3,13 +3,13 @@
   "name": "foundation-economy-ad",
   "version": "0.0.0",
   "display": {
-    "description": {
-      "en": "Tracks ad views and manages the points you can use to reward players for watching them.",
-      "ja": "広告視聴の実績を記録し、広告経由の報酬付与に使えるポイントを管理します。"
+    "en": {
+      "description": "Tracks ad views and manages the points you can use to reward players for watching them.",
+      "label": "Ads"
     },
-    "label": {
-      "en": "Ads",
-      "ja": "広告"
+    "ja": {
+      "description": "広告視聴の実績を記録し、広告経由の報酬付与に使えるポイントを管理します。",
+      "label": "広告"
     }
   }
 }

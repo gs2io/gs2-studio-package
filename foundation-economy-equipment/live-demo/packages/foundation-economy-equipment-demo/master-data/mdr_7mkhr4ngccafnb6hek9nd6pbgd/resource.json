@@ -1,7 +1,7 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
+  "declaredBindings": [
+    {
+      "invocation": {
         "arguments": [
           {
             "parameterName": "equipment",
@@ -21,13 +21,15 @@
             }
           }
         ],
-        "kind": "transform",
-        "parameterName": "action",
-        "transformName": "DeleteEquipment",
-        "transformPackageId": "foundation-economy-equipment"
-      }
-    ]
-  },
+        "target": {
+          "packageId": "foundation-economy-equipment",
+          "transformId": "at_515DFFG71BQPMSDZ5HDC1D5TAR"
+        }
+      },
+      "kind": "transform",
+      "parameterName": "action"
+    }
+  ],
   "id": "mdr_7MKHR4NGCCAFNB6HEK9ND6PBGD",
   "location": {
     "modelName": "ConsumeAction",

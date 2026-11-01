@@ -24,6 +24,11 @@
       }
     }
   },
+  "actionTransforms": {
+    "ApplyCharacterGradeRankCap": "at_41T41XDEZE59HSDY1D8HV4F32X",
+    "PromoteCharacterGrade": "at_0AV65RY3CPHDE6VDR8XQ9MH72H",
+    "VerifyCharacterGradeReached": "at_0ZS4W918W38968ZST9EBSZJWTH"
+  },
   "masterDataResources": {
     "grade.GradeEntryModel": "mdr_6FMYQBP94FAQRRQNCBHDWRD8NM",
     "grade.GradeModel": "mdr_4VW2Y080DTBNAT9646NSMK434Q",

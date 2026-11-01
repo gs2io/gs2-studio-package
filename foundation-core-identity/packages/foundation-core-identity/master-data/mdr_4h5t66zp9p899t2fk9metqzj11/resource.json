@@ -1,138 +1,136 @@
 {
-  "authored": {
-    "declaredBindings": [
-      {
-        "kind": "static",
-        "parameterName": "openIdConnectSetting.additionalReturnValues",
-        "value": []
-      },
-      {
-        "kind": "static",
-        "parameterName": "openIdConnectSetting.additionalScopeValues",
-        "value": []
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "openIdConnectSetting.appleKeyId",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
-            },
-            "propertyId": "prop_6SSER4P8KCWTCGCEHA41KMASPV"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "openIdConnectSetting.applePrivateKeyPem",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
-            },
-            "propertyId": "prop_1MDWB81CEGPC9T41TBZDES74PY"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "openIdConnectSetting.appleTeamId",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
-            },
-            "propertyId": "prop_0KMJV43AM8EPY2W7HSE81ECJ00"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "openIdConnectSetting.clientId",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
-            },
-            "propertyId": "prop_00AR2JNBEPQHX5YKYJXHQ5WSK3"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "openIdConnectSetting.clientSecret",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
-            },
-            "propertyId": "prop_32N7ZY8V34H4TD6AGG9TP7SWSQ"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "openIdConnectSetting.configurationPath",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
-            },
-            "propertyId": "prop_2GK8FWJBFSAN6QFBGZCFW4602M"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "openIdConnectSetting.doneEndpointUrl",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
-            },
-            "propertyId": "prop_7BE7STA2Y2Y72F0SD64FBQB2JQ"
-          }
-        }
-      },
-      {
-        "kind": "domainProperty",
-        "parameterName": "type",
-        "source": {
-          "scopes": [],
-          "terminal": {
-            "kind": "direct",
-            "mountPath": {
-              "kind": "local",
-              "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
-            },
-            "propertyId": "prop_4QCBW1JJ874A6NWJKA9KXV0E9D"
-          }
+  "declaredBindings": [
+    {
+      "kind": "static",
+      "parameterName": "openIdConnectSetting.additionalReturnValues",
+      "value": []
+    },
+    {
+      "kind": "static",
+      "parameterName": "openIdConnectSetting.additionalScopeValues",
+      "value": []
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "openIdConnectSetting.appleKeyId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
+          },
+          "propertyId": "prop_6SSER4P8KCWTCGCEHA41KMASPV"
         }
       }
-    ]
-  },
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "openIdConnectSetting.applePrivateKeyPem",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
+          },
+          "propertyId": "prop_1MDWB81CEGPC9T41TBZDES74PY"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "openIdConnectSetting.appleTeamId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
+          },
+          "propertyId": "prop_0KMJV43AM8EPY2W7HSE81ECJ00"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "openIdConnectSetting.clientId",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
+          },
+          "propertyId": "prop_00AR2JNBEPQHX5YKYJXHQ5WSK3"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "openIdConnectSetting.clientSecret",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
+          },
+          "propertyId": "prop_32N7ZY8V34H4TD6AGG9TP7SWSQ"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "openIdConnectSetting.configurationPath",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
+          },
+          "propertyId": "prop_2GK8FWJBFSAN6QFBGZCFW4602M"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "openIdConnectSetting.doneEndpointUrl",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
+          },
+          "propertyId": "prop_7BE7STA2Y2Y72F0SD64FBQB2JQ"
+        }
+      }
+    },
+    {
+      "kind": "domainProperty",
+      "parameterName": "type",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4"
+          },
+          "propertyId": "prop_4QCBW1JJ874A6NWJKA9KXV0E9D"
+        }
+      }
+    }
+  ],
   "id": "mdr_4H5T66ZP9P899T2FK9METQZJ11",
   "location": {
     "modelName": "TakeOverTypeModel",

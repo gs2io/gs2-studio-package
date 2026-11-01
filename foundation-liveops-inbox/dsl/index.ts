@@ -129,24 +129,34 @@ const InboxMessage = defineUserDataResource(resource =>
 
 export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", "0.0.0")
   .display({
-    label: { ja: "お知らせ・受信箱", en: "Inbox" },
-    description: {
-      ja: "運営からのお知らせや、アイテム付きメッセージをプレイヤーに届けます。",
-      en: "Delivers announcements and item-attached messages from the operator to players.",
+    ja: {
+      label: "お知らせ・受信箱",
+      description: "運営からのお知らせや、アイテム付きメッセージをプレイヤーに届けます。",
+    },
+    en: {
+      label: "Inbox",
+      description:
+        "Delivers announcements and item-attached messages from the operator to players.",
     },
   })
   .displayType(GlobalMessage, {
-    label: { ja: "全体メッセージ", en: "Global message" },
-    description: {
-      ja: "全プレイヤーへ配信するメッセージ、受取期間、添付報酬を設定します。",
-      en: "Defines a message sent to all players, its claim period, and attached rewards.",
+    ja: {
+      label: "全体メッセージ",
+      description: "全プレイヤーへ配信するメッセージ、受取期間、添付報酬を設定します。",
+    },
+    en: {
+      label: "Global message",
+      description: "Defines a message sent to all players, its claim period, and attached rewards.",
     },
   })
   .displayType(Message, {
-    label: { ja: "メッセージ", en: "Message" },
-    description: {
-      ja: "プレイヤーの受信箱に届く個別メッセージと受取状態を管理します。",
-      en: "Tracks individual inbox messages delivered to a player and their claim state.",
+    ja: {
+      label: "メッセージ",
+      description: "プレイヤーの受信箱に届く個別メッセージと受取状態を管理します。",
+    },
+    en: {
+      label: "Message",
+      description: "Tracks individual inbox messages delivered to a player and their claim state.",
     },
   })
   .domainType(GlobalMessage)

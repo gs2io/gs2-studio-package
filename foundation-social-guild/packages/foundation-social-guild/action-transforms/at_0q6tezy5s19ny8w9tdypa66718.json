@@ -1,0 +1,68 @@
+{
+  "category": "verify",
+  "id": "at_0Q6TEZY5S19NY8W9TDYPA66718",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "VerifyGuildMembership",
+  "outputs": [
+    {
+      "actionName": "Gs2Guild:VerifyIncludeMemberByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "guildModelName",
+          "sourceParameter": "guild"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "guildName",
+          "sourceParameter": "guildName"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "static",
+          "parameterName": "verifyType",
+          "value": "include"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "guild",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
+      }
+    },
+    {
+      "name": "guildName",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ]
+}

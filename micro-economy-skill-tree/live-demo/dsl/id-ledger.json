@@ -3,11 +3,15 @@
   "retired": {},
   "random": {
     "property:SkillNode.cost": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ",
-    "row:dt_00D0321TWK66MR7GWMWA3MCTP1.first": "row_01M31VN39972RGNYY8ABEXXBAQ",
-    "row:dt_00D0321TWK66MR7GWMWA3MCTP1.last": "row_01M31VN399WE1F5DEPKRJG78JE",
-    "row:dt_00D0321TWK66MR7GWMWA3MCTP1.left": "row_01M31VN399Z72NHHGM8HN9G4RV",
-    "row:dt_00D0321TWK66MR7GWMWA3MCTP1.right": "row_01M31VN399VSKYDFHEA906R6BN",
+    "row:[\"micro-economy-skill-tree\",\"dt_00D0321TWK66MR7GWMWA3MCTP1\",\"first\"]": "row_01M31VN39972RGNYY8ABEXXBAQ",
+    "row:[\"micro-economy-skill-tree\",\"dt_00D0321TWK66MR7GWMWA3MCTP1\",\"last\"]": "row_01M31VN399WE1F5DEPKRJG78JE",
+    "row:[\"micro-economy-skill-tree\",\"dt_00D0321TWK66MR7GWMWA3MCTP1\",\"left\"]": "row_01M31VN399Z72NHHGM8HN9G4RV",
+    "row:[\"micro-economy-skill-tree\",\"dt_00D0321TWK66MR7GWMWA3MCTP1\",\"right\"]": "row_01M31VN399VSKYDFHEA906R6BN",
     "type:SkillNode": "dt_00D0REX8TAF27YR23HD6W1WJAY"
   },
-  "deterministicOverrides": {}
+  "deterministicOverrides": {
+    "ui:SkillNode:definition": "uic_4SZASABN4HBG083GAPTDP5D53B",
+    "ui:SkillNode:item:ReleasedActiveToggle": "uii_6KNSRM8V3XBDF99Z0VK8QPSJQ6",
+    "ui:SkillNode:item:UnreleasedActiveToggle": "uii_5ZQ4DY67XZBBM8DWVR1RT82668"
+  }
 }

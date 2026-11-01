@@ -1,0 +1,46 @@
+{
+  "category": "acquire",
+  "id": "at_0ANYB1CF038B2RMMTVPA8C9X3B",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_7SMW1JXZZPB748SJB0THQW9XK1",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "ClearRedemption",
+  "outputs": [
+    {
+      "actionName": "Gs2Limit:DeleteCounterByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "static",
+          "parameterName": "limitName",
+          "value": "serialcoderedemption"
+        },
+        {
+          "kind": "static",
+          "parameterName": "counterName",
+          "value": "redeemed"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_7SMW1JXZZPB748SJB0THQW9XK1",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": []
+}

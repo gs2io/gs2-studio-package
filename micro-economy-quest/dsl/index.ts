@@ -248,38 +248,55 @@ const ProgressResource = defineUserDataResource(resource =>
 
 export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
   .display({
-    label: { ja: "クエスト", en: "Quests" },
-    description: {
-      ja: "プレイヤーが進めるクエストと、その進行状況・クリア報酬を管理します。",
-      en: "Manages quests players take on, their progress and their clear rewards.",
+    ja: {
+      label: "クエスト",
+      description: "プレイヤーが進めるクエストと、その進行状況・クリア報酬を管理します。",
+    },
+    en: {
+      label: "Quests",
+      description: "Manages quests players take on, their progress and their clear rewards.",
     },
   })
   .displayType(ProgressReward, {
-    label: { ja: "クエスト報酬", en: "Quest reward" },
-    description: {
-      ja: "進行中のクエストをクリアしたときに付与される報酬です。",
-      en: "A reward the quest in progress grants when it is completed.",
+    ja: {
+      label: "クエスト報酬",
+      description: "進行中のクエストをクリアしたときに付与される報酬です。",
+    },
+    en: {
+      label: "Quest reward",
+      description: "A reward the quest in progress grants when it is completed.",
     },
   })
   .displayType(Progress, {
-    label: { ja: "クエスト進行", en: "Quest progress" },
-    description: {
-      ja: "プレイヤーが進行中のクエストと、クリア時に付与される報酬を管理します。",
-      en: "Tracks the quest a player has in progress and the rewards completing it grants.",
+    ja: {
+      label: "クエスト進行",
+      description: "プレイヤーが進行中のクエストと、クリア時に付与される報酬を管理します。",
+    },
+    en: {
+      label: "Quest progress",
+      description:
+        "Tracks the quest a player has in progress and the rewards completing it grants.",
     },
   })
   .displayType(QuestCollection, {
-    label: { ja: "クエストグループ", en: "Quest group" },
-    description: {
-      ja: "関連するクエストをまとめ、開催スケジュールを設定します。",
-      en: "Groups related quests and sets the schedule they are available on.",
+    ja: {
+      label: "クエストグループ",
+      description: "関連するクエストをまとめ、開催スケジュールを設定します。",
+    },
+    en: {
+      label: "Quest group",
+      description: "Groups related quests and sets the schedule they are available on.",
     },
   })
   .displayType(Quest, {
-    label: { ja: "クエスト", en: "Quest" },
-    description: {
-      ja: "開始時の消費、初回・通常クリア報酬、失敗時アクションを設定します。",
-      en: "Defines start costs, first-clear and repeat-clear rewards, and failure actions.",
+    ja: {
+      label: "クエスト",
+      description: "開始時の消費、初回・通常クリア報酬、失敗時アクションを設定します。",
+    },
+    en: {
+      label: "Quest",
+      description:
+        "Defines start costs, first-clear and repeat-clear rewards, and failure actions.",
     },
   })
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
@@ -317,12 +334,12 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
   .delegatedAction(Quest, "Start", {
     targetActionKey: "Gs2Quest:QuestModel.Start",
     targetResource: QuestModel,
-    parameterOverrides: [{ parameterName: "force", source: { kind: "static",  value: false } }],
+    parameterOverrides: [{ parameterName: "force", source: { kind: "static", value: false } }],
   })
   // Leave rewards unspecified so completion uses the rewards drawn when the run started.
   .delegatedAction(Progress, "Complete", {
     targetActionKey: "Gs2Quest:Progress.End",
     targetResource: ProgressResource,
-    parameterOverrides: [{ parameterName: "isComplete", source: { kind: "static",  value: true } }],
+    parameterOverrides: [{ parameterName: "isComplete", source: { kind: "static", value: true } }],
   })
   .build();

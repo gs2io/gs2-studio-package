@@ -1,0 +1,76 @@
+{
+  "category": "acquire",
+  "id": "at_7V4HTYWQNV8VHVB64WH0FF3PCN",
+  "importedResourceRefs": [
+    {
+      "kind": "local",
+      "resourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+      "resourceKind": "masterData"
+    }
+  ],
+  "name": "CountDownUsageLimit",
+  "outputs": [
+    {
+      "actionName": "Gs2Limit:CountDownByUserId",
+      "conditions": [],
+      "kind": "direct",
+      "parameterMappings": [
+        {
+          "kind": "resourceKey",
+          "parameterName": "namespaceName"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "limitName",
+          "sourceParameter": "limit"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "counterName",
+          "sourceParameter": "counter"
+        },
+        {
+          "kind": "placeholder",
+          "parameterName": "userId",
+          "value": "#{userId}"
+        },
+        {
+          "kind": "parameter",
+          "parameterName": "countDownValue",
+          "sourceParameter": "countDownValue"
+        }
+      ],
+      "resourceRef": {
+        "kind": "local",
+        "resourceId": "mdr_3Z8F1QVR94BF989ZYXK1KEXJJG",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "limit",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+      }
+    },
+    {
+      "name": "counter",
+      "required": true,
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
+      }
+    },
+    {
+      "name": "countDownValue",
+      "required": true,
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ]
+}

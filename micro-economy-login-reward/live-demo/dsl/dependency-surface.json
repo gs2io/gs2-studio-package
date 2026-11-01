@@ -15,13 +15,21 @@
     "LoginRewardCollection": {
       "id": "dt_00D0VGDFNZ1P9DR7YQFQC90N00",
       "singleEntry": false,
-      "delegatedActions": {
-        "StartOver": "resource:micro-economy-login-reward-demo:masterData:mdr_764ATR9HCQB89B3EVDJZ7D08VS::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "micro-economy-login-reward",
-      "canonicalTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+      "canonicalTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+      "delegatedActions": {
+        "StartOver": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-login-reward-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_764ATR9HCQB89B3EVDJZ7D08VS"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_3VWTCVEBB8BP0R7X7PNFFM14YJ",
     "exchange.RateModel": "mdr_764ATR9HCQB89B3EVDJZ7D08VS",

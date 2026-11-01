@@ -27,7 +27,7 @@
     "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0": "mdr_4AGHB6Q7XM9449CE6A6SQB4263",
     "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[0]#0": "mdr_2MNS21YRE184MS400QVN23V4E2",
     "master/exchange:Namespace:unmounted:CharacterDexRecruit#0/exchange:RateModel:Character:#0/transaction:AcquireAction:Character:@acquireActions[1]#0": "mdr_2MR8J9CP5J8E0SMHFEPST0EYQ6",
-    "ui:Character:Character:definition": "uic_26JRHVDG278KV9YV1PX741VTMT",
-    "ui:Character:Character:item:RecruitButton": "uii_3PAHZDCDXT8A7VSQBFZ09VBYAM"
+    "ui:Character:definition": "uic_26JRHVDG278KV9YV1PX741VTMT",
+    "ui:Character:item:RecruitButton": "uii_3PAHZDCDXT8A7VSQBFZ09VBYAM"
   }
 }

@@ -11,18 +11,40 @@
     "UsageLimitCounter": {
       "id": "dt_00D0PP9ZFNBBW6QXYE041ZSN01",
       "singleEntry": false,
-      "delegatedActions": {
-        "ResetEveryAllowance": "resource:foundation-economy-limit-demo:masterData:mdr_2B66P1TX2CA2EV81HAS32228JF::Gs2Exchange:RateModel.Exchange",
-        "UseFree": "resource:foundation-economy-limit-demo:masterData:mdr_3QQV27BR5AA419F2032R6T95RZ::Gs2Exchange:RateModel.Exchange",
-        "UseWithAd": "resource:foundation-economy-limit-demo:masterData:mdr_6TC5FMVGD2AE0BT03QA7GCXZS0::Gs2Exchange:RateModel.Exchange"
-      },
       "canonicalPackageId": "foundation-economy-limit",
       "canonicalTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+      "delegatedActions": {
+        "ResetEveryAllowance": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-limit-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_2B66P1TX2CA2EV81HAS32228JF"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "UseFree": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-limit-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_3QQV27BR5AA419F2032R6T95RZ"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "UseWithAd": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-limit-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        }
+      },
       "addedProperties": {
         "adMax": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE",
         "freeMax": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
       }
     }
   },
+  "actionTransforms": {},
   "masterDataResources": {}
 }

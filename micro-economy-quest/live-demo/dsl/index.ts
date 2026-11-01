@@ -46,7 +46,7 @@ const QUESTS = [
 function depositEntry(propertyName: string) {
   return {
     transformPackageId: currency.packageId,
-    transformName: "DepositFreeCurrency",
+    transformId: currency.transformId("DepositFreeCurrency"),
     arguments: [
       { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
       { parameterName: "count", source: { kind: "domainProperty", propertyName } },
@@ -63,22 +63,26 @@ const Quest = defineOverlayDomainType(
       {
         targetProperty: quest.propertyId("Quest", "consumeActions"),
         mode: "append",
-            transformPackageId: energy.packageId,
-            transformName: "ConsumeEnergy",
-            arguments: [
-              { parameterName: "energy", source: { kind: "static", value: STAMINA } },
-              {
-                parameterName: "value",
-                source: { kind: "domainProperty", propertyName: "staminaCost" },
-              },
-            ],
+        transformPackageId: energy.packageId,
+        transformId: energy.transformId("ConsumeEnergy"),
+        arguments: [
+          { parameterName: "energy", source: { kind: "static", value: STAMINA } },
+          {
+            parameterName: "value",
+            source: { kind: "domainProperty", propertyName: "staminaCost" },
           },
+        ],
+      },
       {
         targetProperty: quest.propertyId("Quest", "completeAcquireActions"),
-        mode: "append",...depositEntry("reward")},
+        mode: "append",
+        ...depositEntry("reward"),
+      },
       {
         targetProperty: quest.propertyId("Quest", "firstCompleteAcquireActions"),
-        mode: "append",...depositEntry("firstClearReward")},
+        mode: "append",
+        ...depositEntry("firstClearReward"),
+      },
     ],
   },
   domainType =>
@@ -134,17 +138,27 @@ const withQuests = QUESTS.reduce(
     }),
   definePackage("micro-economy-quest-demo", "0.0.0")
     .display({
-      label: { ja: "クエスト（デモデータ）", en: "Quests (demo data)" },
-      description: {
-        ja: "ライブデモ用のクエストグループと 3 つのクエスト、その消費スタミナ・クリア報酬・初回クリアボーナスを提供します。",
-        en: "Supplies the live demo's quest group and three quests, with the stamina each costs, the reward each pays, and a first-clear bonus.",
+      ja: {
+        label: "クエスト（デモデータ）",
+        description:
+          "ライブデモ用のクエストグループと 3 つのクエスト、その消費スタミナ・クリア報酬・初回クリアボーナスを提供します。",
+      },
+      en: {
+        label: "Quests (demo data)",
+        description:
+          "Supplies the live demo's quest group and three quests, with the stamina each costs, the reward each pays, and a first-clear bonus.",
       },
     })
     .displayType(Quest, {
-      label: { ja: "クエスト", en: "Quest" },
-      description: {
-        ja: "デモのクエストに、表示名・消費スタミナ・クリア報酬・初回クリアボーナスを足します。",
-        en: "Adds a display name, stamina cost, clear reward and first-clear bonus to a demo quest.",
+      ja: {
+        label: "クエスト",
+        description:
+          "デモのクエストに、表示名・消費スタミナ・クリア報酬・初回クリアボーナスを足します。",
+      },
+      en: {
+        label: "Quest",
+        description:
+          "Adds a display name, stamina cost, clear reward and first-clear bonus to a demo quest.",
       },
     })
     .dependency(quest.packageId, "github:gs2io/gs2-studio-package")
