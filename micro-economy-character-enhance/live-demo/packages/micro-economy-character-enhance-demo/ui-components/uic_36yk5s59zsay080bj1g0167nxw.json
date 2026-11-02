@@ -28,5 +28,8 @@
       }
     }
   ],
-  "targetDomainTypeId": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY"
+  "target": {
+    "hostTypeId": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY",
+    "propertyPath": []
+  }
 }

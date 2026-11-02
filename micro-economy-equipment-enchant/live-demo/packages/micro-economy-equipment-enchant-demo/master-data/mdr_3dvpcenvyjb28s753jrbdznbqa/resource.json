@@ -26,8 +26,9 @@
           }
         ],
         "target": {
-          "packageId": "micro-economy-equipment-enchant",
-          "transformId": "at_4S1THMNVB898V882K2EPEZHDMA"
+          "kind": "selected",
+          "transformId": "at_4S1THMNVB898V882K2EPEZHDMA",
+          "transformPackageId": "micro-economy-equipment-enchant"
         }
       },
       "kind": "transform",

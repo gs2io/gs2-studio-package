@@ -24,6 +24,10 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "value": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK"
       }
     }
   },

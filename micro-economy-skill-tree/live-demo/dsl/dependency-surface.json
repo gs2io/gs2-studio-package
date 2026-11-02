@@ -7,8 +7,14 @@
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-skill-tree",
       "canonicalTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-      "addedProperties": {
-        "cost": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ"
+      "properties": {
+        "cost": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "owner": "prop_00D0RCHP2Q26RVYQM9TZ89PN0E",
+        "premiseNodes": "prop_00D0321TWK1SPCKRNJJDG1CSDW",
+        "releaseConsumeActions": "prop_00D05R0KFCTFK6442MMAKE56Y9",
+        "released": "prop_00D0321TWK6CDMBJRD83E6G2K2",
+        "restrainReturnRate": "prop_00D0321TWK5R5K4W0KWNR49SHT"
       }
     }
   },

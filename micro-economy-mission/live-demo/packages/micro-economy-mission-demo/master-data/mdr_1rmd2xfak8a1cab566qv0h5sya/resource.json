@@ -29,8 +29,9 @@
           }
         ],
         "target": {
-          "packageId": "micro-economy-mission",
-          "transformId": "at_683TMFPM3A87S843CGWG5PFWCJ"
+          "kind": "selected",
+          "transformId": "at_683TMFPM3A87S843CGWG5PFWCJ",
+          "transformPackageId": "micro-economy-mission"
         }
       },
       "kind": "transform",

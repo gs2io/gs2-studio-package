@@ -6,7 +6,20 @@
       "id": "dt_00D0WA19DYQ4YZEAD7PZ35YJD6",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-buff",
-      "canonicalTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
+      "canonicalTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+      "properties": {
+        "conditionGrn": "prop_00D0W9XTYQ31RW0YT593HMCK8H",
+        "conditionModelName": "prop_00D0W9XTYQ1GVDAJ4E8ZM4TA8A",
+        "expression": "prop_00D0322BN7G543V28MFV62QC0X",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "priority": "prop_00D0322BN7WAGFGTFPNZT8GHVP",
+        "rate": "prop_00D0322BN7XACWKGN03JMSRA8H",
+        "schedule": "prop_00D0322BN7Y0A6WHYB9YCFZQQ4",
+        "targetActionName": "prop_00D0322BN7XPKZEYZ4G0MDYS0P",
+        "targetFieldName": "prop_00D0322BN7Z2CA8G16H48JGTJ5",
+        "targetModelName": "prop_00D0W9XTYQ1EVCPWBQX16G20VV",
+        "targetType": "prop_00D0W9XTYQ1A7B8FZE88WBY1R0"
+      }
     },
     "BuffCampaign": {
       "id": "dt_00D0WA93FK0QYTWVRADQJVQ57K",

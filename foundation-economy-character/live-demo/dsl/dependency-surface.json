@@ -16,13 +16,29 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "experience": "prop_75G83NYX56T0KCQB3N92MQPVMT",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "level": "prop_04HMA7F4M0F29E8P9WE3E5YF3R",
+        "levelCap": "prop_6GPQDNYV0YP90F0V7GY2S79423",
+        "nextLevelExperience": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77",
+        "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
+        "sort": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
       }
     },
     "CharacterCollection": {
       "id": "dt_00D0KZXDBRGT3NHQ0D86V61M35",
       "singleEntry": true,
       "canonicalPackageId": "foundation-economy-character",
-      "canonicalTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
+      "canonicalTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
+      "properties": {
+        "currentCpacity": "prop_74G2303CD8WVN5H4711968MX05",
+        "currentCpacityUsage": "prop_0X7QN1KKKCJZMK5N4S6E4KX1A5",
+        "defaultCapacity": "prop_2GW5Y3B5C72XV6HSRV8R9RZX58",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "maximumCapacity": "prop_0YMDYAY5JDK7N10HPS96137T2V"
+      }
     },
     "CharacterRecruit": {
       "id": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",

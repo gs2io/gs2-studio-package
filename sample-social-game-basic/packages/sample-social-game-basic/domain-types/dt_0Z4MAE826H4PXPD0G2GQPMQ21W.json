@@ -30,8 +30,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-currency",
-          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5"
+          "kind": "selected",
+          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5",
+          "transformPackageId": "foundation-economy-currency"
         }
       },
       "mode": "replace",
@@ -49,6 +50,7 @@
     "properties": [
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04",
         "name": "paidOnly",
         "requirement": {
@@ -61,6 +63,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ",
         "name": "price",
         "requirement": {
@@ -73,6 +76,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_3Q5WE2KYP6JTQHWZQN7E8DW12Y",
         "name": "series",
         "requirement": {
@@ -85,6 +89,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_44GS4TR0HRE4SQCJEV2G7VDG1C",
         "name": "drawCount",
         "requirement": {

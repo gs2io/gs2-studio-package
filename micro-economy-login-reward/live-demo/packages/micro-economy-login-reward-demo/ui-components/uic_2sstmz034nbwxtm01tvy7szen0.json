@@ -40,7 +40,10 @@
           "kind": "property",
           "propertyId": "prop_00D0V3E8RR0S3JWWDZ37H09BS2"
         },
-        "sourceDomainTypeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00"
+        "source": {
+          "hostTypeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00",
+          "propertyPath": []
+        }
       },
       "id": "uii_31Y2485DHQAW2A6AWN8XTGB95E",
       "kind": "activeToggle",
@@ -55,7 +58,10 @@
             "kind": "property",
             "propertyId": "prop_00D0V3E8RR0S3JWWDZ37H09BS2"
           },
-          "sourceDomainTypeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00"
+          "source": {
+            "hostTypeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00",
+            "propertyPath": []
+          }
         },
         "kind": "not"
       },
@@ -64,5 +70,8 @@
       "name": "LoginReward"
     }
   ],
-  "targetDomainTypeId": "dt_00D0VGDFNZ677FVDGPR399YJ1P"
+  "target": {
+    "hostTypeId": "dt_00D0VGDFNZ677FVDGPR399YJ1P",
+    "propertyPath": []
+  }
 }

@@ -4,8 +4,9 @@
       "invocation": {
         "arguments": [],
         "target": {
-          "packageId": "foundation-economy-ad-demo",
-          "transformId": "at_1BKB0K494K8R6BV7VA50ZJ2T0D"
+          "kind": "selected",
+          "transformId": "at_1BKB0K494K8R6BV7VA50ZJ2T0D",
+          "transformPackageId": "foundation-economy-ad-demo"
         }
       },
       "kind": "transform",

@@ -22,5 +22,10 @@
       }
     }
   ],
-  "targetDomainTypeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD"
+  "target": {
+    "hostTypeId": "dt_130FYGH3W86EG2FK06VGEJSYCT",
+    "propertyPath": [
+      "prop_01M40RS7N08DEDFYE3YFC4TRYV"
+    ]
+  }
 }

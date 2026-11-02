@@ -7,6 +7,7 @@
     "properties": [
       {
         "bindingHint": "none",
+        "description": "",
         "id": "prop_00D0VM74GWQ6MGE8JHTBN6NJP5",
         "localizedDisplay": {
           "en": {
@@ -29,6 +30,7 @@
       },
       {
         "bindingHint": "userData",
+        "description": "",
         "id": "prop_00D03217GRK4Y3519ZYVXED9CW",
         "localizedDisplay": {
           "en": {

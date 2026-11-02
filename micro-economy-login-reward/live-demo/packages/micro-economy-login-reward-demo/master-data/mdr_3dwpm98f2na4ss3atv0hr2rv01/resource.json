@@ -22,8 +22,9 @@
           }
         ],
         "target": {
-          "packageId": "micro-economy-login-reward",
-          "transformId": "at_7HZJD63FEK93PTBTQWK5A3KNT4"
+          "kind": "selected",
+          "transformId": "at_7HZJD63FEK93PTBTQWK5A3KNT4",
+          "transformPackageId": "micro-economy-login-reward"
         }
       },
       "kind": "transform",

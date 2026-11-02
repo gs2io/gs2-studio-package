@@ -34,8 +34,12 @@
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-ranking",
       "canonicalTypeId": "dt_00D031DYK08MQ218VMWRT5X90Q",
-      "addedProperties": {
-        "coins": "prop_00D0WDGSP51GEN4HR883CJVRCN"
+      "properties": {
+        "acquireActions": "prop_00D031DYK0FBDNV00N30XJMEBY",
+        "coins": "prop_00D0WDGSP51GEN4HR883CJVRCN",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "ranking": "prop_00D031DYK0DPGPB0KD153VWA20",
+        "thresholdRank": "prop_00D031DYK0BEEZ9PX7AGRDHYGE"
       }
     }
   },

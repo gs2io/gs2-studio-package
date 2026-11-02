@@ -52,5 +52,8 @@
       }
     }
   ],
-  "targetDomainTypeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
+  "target": {
+    "hostTypeId": "dt_130FYGH3W86EG2FK06VGEJSYCT",
+    "propertyPath": []
+  }
 }

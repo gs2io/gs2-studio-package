@@ -114,5 +114,8 @@
       "name": "Schedule"
     }
   ],
-  "targetDomainTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+  "target": {
+    "hostTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+    "propertyPath": []
+  }
 }

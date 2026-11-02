@@ -19,8 +19,9 @@
           }
         ],
         "target": {
-          "packageId": "micro-economy-equipment-enchant",
-          "transformId": "at_0Y1FT4M4JR8WPBYMBJ0PEQKBBM"
+          "kind": "selected",
+          "transformId": "at_0Y1FT4M4JR8WPBYMBJ0PEQKBBM",
+          "transformPackageId": "micro-economy-equipment-enchant"
         }
       },
       "kind": "transform",

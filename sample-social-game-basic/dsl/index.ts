@@ -249,16 +249,16 @@ export const sampleSocialGameBasic = definePackage("sample-social-game-basic", "
   .instance(currency.type("StoreProduct"), "tier1", {
     [shop.propertyId("StoreProduct", "prices")]: [
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "JPY",
-        [shop.propertyId("StorePrice", "price")]: 100,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "JPY",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 100,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "USD",
-        [shop.propertyId("StorePrice", "price")]: 1,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "USD",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 1,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "XXX",
-        [shop.propertyId("StorePrice", "price")]: 1,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "XXX",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 1,
       },
     ],
     appleAppStoreProductId: "io.gs2.sample",
@@ -268,16 +268,16 @@ export const sampleSocialGameBasic = definePackage("sample-social-game-basic", "
   .instance(currency.type("StoreProduct"), "tier2", {
     [shop.propertyId("StoreProduct", "prices")]: [
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "JPY",
-        [shop.propertyId("StorePrice", "price")]: 200,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "JPY",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 200,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "USD",
-        [shop.propertyId("StorePrice", "price")]: 2,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "USD",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 2,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "XXX",
-        [shop.propertyId("StorePrice", "price")]: 2,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "XXX",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 2,
       },
     ],
     appleAppStoreProductId: "io.gs2.sample",
@@ -287,16 +287,16 @@ export const sampleSocialGameBasic = definePackage("sample-social-game-basic", "
   .instance(currency.type("StoreProduct"), "tier3", {
     [shop.propertyId("StoreProduct", "prices")]: [
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "JPY",
-        [shop.propertyId("StorePrice", "price")]: 300,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "JPY",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 300,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "USD",
-        [shop.propertyId("StorePrice", "price")]: 3,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "USD",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 3,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "XXX",
-        [shop.propertyId("StorePrice", "price")]: 3,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "XXX",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 3,
       },
     ],
     appleAppStoreProductId: "io.gs2.sample",
@@ -306,16 +306,16 @@ export const sampleSocialGameBasic = definePackage("sample-social-game-basic", "
   .instance(currency.type("StoreProduct"), "tier4", {
     [shop.propertyId("StoreProduct", "prices")]: [
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "JPY",
-        [shop.propertyId("StorePrice", "price")]: 400,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "JPY",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 400,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "USD",
-        [shop.propertyId("StorePrice", "price")]: 4,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "USD",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 4,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "XXX",
-        [shop.propertyId("StorePrice", "price")]: 4,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "XXX",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 4,
       },
     ],
     appleAppStoreProductId: "io.gs2.sample",
@@ -325,16 +325,16 @@ export const sampleSocialGameBasic = definePackage("sample-social-game-basic", "
   .instance(currency.type("StoreProduct"), "tier5", {
     [shop.propertyId("StoreProduct", "prices")]: [
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "JPY",
-        [shop.propertyId("StorePrice", "price")]: 500,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "JPY",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 500,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "USD",
-        [shop.propertyId("StorePrice", "price")]: 5,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "USD",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 5,
       },
       {
-        [shop.propertyId("StorePrice", "currencyType")]: "XXX",
-        [shop.propertyId("StorePrice", "price")]: 5,
+        [shop.elementPropertyId("StoreProduct", ["prices"], "currencyType")]: "XXX",
+        [shop.elementPropertyId("StoreProduct", ["prices"], "price")]: 5,
       },
     ],
     appleAppStoreProductId: "io.gs2.sample",

@@ -34,8 +34,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-schedule",
-          "transformId": "at_4FW3DYR9BB85TTH03JVZRFRTV3"
+          "kind": "selected",
+          "transformId": "at_4FW3DYR9BB85TTH03JVZRFRTV3",
+          "transformPackageId": "foundation-economy-schedule"
         }
       },
       "kind": "transform",

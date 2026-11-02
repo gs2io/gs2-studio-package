@@ -16,6 +16,12 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "currentSaveArea": "prop_7HNF20BCN1PY27WR4A2XSHQFB1",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "initialSaveArea": "prop_0F9XHSDTRNNY0TGSAM1K2Q5QFS",
+        "maximumSaveArea": "prop_2PBKJC9BR7P00EG4DQYQGAFFGP"
       }
     }
   },

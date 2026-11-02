@@ -27,8 +27,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-character-dictionary",
-          "transformId": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6"
+          "kind": "selected",
+          "transformId": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6",
+          "transformPackageId": "foundation-economy-character-dictionary"
         }
       },
       "kind": "transform",

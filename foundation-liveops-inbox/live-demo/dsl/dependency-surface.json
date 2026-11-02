@@ -37,13 +37,36 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "begin": "prop_4DM29ET2A2JAHWK6D0MVPT25PW",
+        "end": "prop_28HE0VGFDJZC3C2B949D7TZD2W",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "payload": "prop_19YMYXB5NJHVCEEQY795WH711C"
       }
     },
     "Message": {
       "id": "dt_00D0SFSEJN3BMDPZZXX51XNVPW",
       "singleEntry": false,
       "canonicalPackageId": "foundation-liveops-inbox",
-      "canonicalTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
+      "canonicalTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
+      "delegatedActions": {
+        "Read": {
+          "targetResource": {
+            "sourcePackageId": "foundation-liveops-inbox",
+            "resourceKind": "userData",
+            "resourceId": "udr_5B2DBE3P7M977TXCSEYBR6973N"
+          },
+          "targetActionKey": "Gs2Inbox:Message.ReadMessage"
+        }
+      },
+      "properties": {
+        "expiresAt": "prop_73SJBQ4ZAG2RW17EQSCW1V2TSG",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "isRead": "prop_3JX5PM4TDM36YWSQFMA0CXKKBW",
+        "payload": "prop_7WYH08M0F6N02WHFBRJ4TXX5VD",
+        "receivedAt": "prop_0AV2AGGK2HFK600HXSCDGP0CNC"
+      }
     }
   },
   "actionTransforms": {},

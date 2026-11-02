@@ -53,5 +53,8 @@
       "name": "Item"
     }
   ],
-  "targetDomainTypeId": "dt_47E751540GQRMAWTXYFT9376WH"
+  "target": {
+    "hostTypeId": "dt_47E751540GQRMAWTXYFT9376WH",
+    "propertyPath": []
+  }
 }

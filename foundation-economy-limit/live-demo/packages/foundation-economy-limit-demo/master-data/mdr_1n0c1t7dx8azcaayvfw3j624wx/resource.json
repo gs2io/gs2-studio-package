@@ -19,8 +19,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-limit",
-          "transformId": "at_1WMTWBNWG4BJ36RG8TCVEP8A3A"
+          "kind": "selected",
+          "transformId": "at_1WMTWBNWG4BJ36RG8TCVEP8A3A",
+          "transformPackageId": "foundation-economy-limit"
         }
       },
       "kind": "transform",

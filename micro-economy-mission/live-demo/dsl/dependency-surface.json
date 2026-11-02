@@ -7,8 +7,25 @@
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
-      "addedProperties": {
-        "rewardAmount": "prop_00D0QVYTV99Q49SBAE7J7GC9EG"
+      "delegatedActions": {
+        "Receive": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-mission",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_4QWBNQ5KM59ZERS381QKYXGJCB"
+          },
+          "targetActionKey": "Gs2Mission:MissionTaskModel.Complete"
+        }
+      },
+      "properties": {
+        "completeAcquireActions": "prop_00D060QP7EZPDKKKFPE3HYE2C5",
+        "completed": "prop_08ZS1KJ683EXX3ADZAVHK3E833",
+        "counter": "prop_0MYSS3YYHJEN9ZR5ZT014RB2HK",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "missionCollection": "prop_22KB372ZE4T79JBJKZGR5M596B",
+        "received": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB",
+        "rewardAmount": "prop_00D0QVYTV99Q49SBAE7J7GC9EG",
+        "targetValue": "prop_4Q0FZ49AS61KZCN0Z8MS0DE7SN"
       }
     },
     "MissionCounter": {
@@ -25,6 +42,13 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "monthlyValue": "prop_65GPGCJD76DD7BQCNVR9BHSP10",
+        "todayValue": "prop_3C8D5YDPFSJ3QVC205RWZ7XDZ2",
+        "totalValue": "prop_3HTNC82KPKW5J7DFN98H4PPGCW",
+        "weeklyValue": "prop_5917YYM3N8ZDDKYH7PDDHE20GG"
       }
     }
   },

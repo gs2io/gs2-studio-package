@@ -68,8 +68,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-limit",
-          "transformId": "at_3571THGJSH9VVT21JDG4STK77F"
+          "kind": "selected",
+          "transformId": "at_3571THGJSH9VVT21JDG4STK77F",
+          "transformPackageId": "foundation-economy-limit"
         }
       },
       "kind": "transform",

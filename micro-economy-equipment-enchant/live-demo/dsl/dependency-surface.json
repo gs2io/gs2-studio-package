@@ -24,13 +24,23 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "category": "prop_0K0GFBH6B7DRCKC1VP8N5BXAGP",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H",
+        "sortValue": "prop_494Q17EMVWXF1PQJW4HZ1K09SD"
       }
     },
     "EquipmentEnchant": {
       "id": "dt_00D0VNJHFYWCQ1ZBCPN9W9GNAF",
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-equipment-enchant",
-      "canonicalTypeId": "dt_00D03217GRKX0AV27J248EX89N"
+      "canonicalTypeId": "dt_00D03217GRKX0AV27J248EX89N",
+      "properties": {
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "maximumParameterCount": "prop_00D03217GRNEKVPR01373YAKSE"
+      }
     }
   },
   "actionTransforms": {},

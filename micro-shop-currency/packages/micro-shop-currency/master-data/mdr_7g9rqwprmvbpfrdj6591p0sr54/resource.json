@@ -75,8 +75,14 @@
                 "terminal": {
                   "kind": "direct",
                   "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD"
+                    "host": {
+                      "kind": "local",
+                      "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
+                    },
+                    "kind": "inlineElement",
+                    "propertyPath": [
+                      "prop_01M40RS7N08DEDFYE3YFC4TRYV"
+                    ]
                   },
                   "propertyId": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K"
                 }
@@ -85,8 +91,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-currency",
-          "transformId": "at_103C3AGDYK65AAVXE24NG965GH"
+          "kind": "selected",
+          "transformId": "at_103C3AGDYK65AAVXE24NG965GH",
+          "transformPackageId": "foundation-economy-currency"
         }
       },
       "kind": "transform",

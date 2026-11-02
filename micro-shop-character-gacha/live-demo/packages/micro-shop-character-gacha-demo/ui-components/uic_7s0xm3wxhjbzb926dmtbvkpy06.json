@@ -18,5 +18,8 @@
       "template": "{count} coins"
     }
   ],
-  "targetDomainTypeId": "dt_00D0YBGPEVW2J3EFZWM2TMRJFH"
+  "target": {
+    "hostTypeId": "dt_00D0YBGPEVW2J3EFZWM2TMRJFH",
+    "propertyPath": []
+  }
 }

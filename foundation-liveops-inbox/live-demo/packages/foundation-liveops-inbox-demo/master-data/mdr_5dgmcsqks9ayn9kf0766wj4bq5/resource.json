@@ -34,8 +34,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-liveops-inbox",
-          "transformId": "at_7DVPXYKCMX8GQ8HZV2NGV1VFXA"
+          "kind": "selected",
+          "transformId": "at_7DVPXYKCMX8GQ8HZV2NGV1VFXA",
+          "transformPackageId": "foundation-liveops-inbox"
         }
       },
       "kind": "transform",

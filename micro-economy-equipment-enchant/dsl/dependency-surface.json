@@ -7,9 +7,13 @@
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
-      "addedProperties": {
+      "properties": {
+        "category": "prop_0K0GFBH6B7DRCKC1VP8N5BXAGP",
         "enchant": "prop_00D0VM74GWQ6MGE8JHTBN6NJP5",
-        "enchantments": "prop_00D03217GRK4Y3519ZYVXED9CW"
+        "enchantments": "prop_00D03217GRK4Y3519ZYVXED9CW",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H",
+        "sortValue": "prop_494Q17EMVWXF1PQJW4HZ1K09SD"
       }
     },
     "EquipmentEnchant": {

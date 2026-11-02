@@ -99,5 +99,8 @@
       "name": "Character"
     }
   ],
-  "targetDomainTypeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP"
+  "target": {
+    "hostTypeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP",
+    "propertyPath": []
+  }
 }

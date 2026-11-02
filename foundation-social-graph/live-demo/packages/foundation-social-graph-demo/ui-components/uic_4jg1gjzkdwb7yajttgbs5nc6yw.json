@@ -34,5 +34,8 @@
       "template": "{followerProfile}"
     }
   ],
-  "targetDomainTypeId": "dt_00D0XGY063ZAR2EXEZ826YXHRA"
+  "target": {
+    "hostTypeId": "dt_00D0XGY063ZAR2EXEZ826YXHRA",
+    "propertyPath": []
+  }
 }

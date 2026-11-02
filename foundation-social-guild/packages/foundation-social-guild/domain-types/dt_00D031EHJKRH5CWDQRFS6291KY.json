@@ -127,6 +127,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_00D031EHJKV14ABPBSZYSZE6ZC",
         "localizedDisplay": {
           "en": {
@@ -151,6 +152,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_00D031EHJKZX0Z07JXP9EBMZE2",
         "localizedDisplay": {
           "en": {
@@ -175,6 +177,7 @@
       },
       {
         "bindingHint": "assetDelivery",
+        "description": "",
         "id": "prop_00D031EHJKYNMFXHPY3FTZNMT3",
         "localizedDisplay": {
           "en": {
@@ -197,6 +200,7 @@
       },
       {
         "bindingHint": "assetDelivery",
+        "description": "",
         "id": "prop_00D031EHJKX7SZME4RYKT42EHK",
         "localizedDisplay": {
           "en": {

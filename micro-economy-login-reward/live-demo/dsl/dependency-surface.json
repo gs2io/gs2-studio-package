@@ -7,9 +7,12 @@
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
-      "addedProperties": {
+      "properties": {
+        "acquireActions": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
         "coins": "prop_00D0VGDFNZ5T15JHGFR00Y73HS",
-        "displayName": "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ"
+        "displayName": "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "loginRewardCollection": "prop_0596SK59HPEYXW9Y868ZT82B8A"
       }
     },
     "LoginRewardCollection": {
@@ -18,6 +21,22 @@
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
       "delegatedActions": {
+        "MissedReceive": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-login-reward",
+            "resourceKind": "userData",
+            "resourceId": "udr_1P119645K49QZA8WP1Z2M8DV2J"
+          },
+          "targetActionKey": "Gs2LoginReward:ReceiveStatus.MissedReceive"
+        },
+        "Receive": {
+          "targetResource": {
+            "sourcePackageId": "micro-economy-login-reward",
+            "resourceKind": "userData",
+            "resourceId": "udr_1P119645K49QZA8WP1Z2M8DV2J"
+          },
+          "targetActionKey": "Gs2LoginReward:ReceiveStatus.Receive"
+        },
         "StartOver": {
           "targetResource": {
             "sourcePackageId": "micro-economy-login-reward-demo",
@@ -26,6 +45,17 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "lastReceivedAt": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC",
+        "missedReceiveRelief": "prop_00D0V3E8RR5VJ1PXB3RJT9T21J",
+        "missedReceiveReliefConsumeActions": "prop_00D0V3E8RR2GKRQNX7JBXAGYHX",
+        "mode": "prop_00D0V3E8RR357Z98YP7VMDXPP7",
+        "receivedSteps": "prop_00D0V3E8RR0S3JWWDZ37H09BS2",
+        "repeat": "prop_00D0V3E8RR3GSCNAW1JAKAQRRD",
+        "resetHour": "prop_5BWDJGV41VX2E7914HXAQ5PGBP",
+        "schedule": "prop_2GPQQQHZ70FS0R1N1B43CP2VMW"
       }
     }
   },

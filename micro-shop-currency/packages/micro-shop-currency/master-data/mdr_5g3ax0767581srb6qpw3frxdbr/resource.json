@@ -8,8 +8,14 @@
         "terminal": {
           "kind": "direct",
           "mountPath": {
-            "kind": "local",
-            "typeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD"
+            "host": {
+              "kind": "local",
+              "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
+            },
+            "kind": "inlineElement",
+            "propertyPath": [
+              "prop_01M40RS7N08DEDFYE3YFC4TRYV"
+            ]
           },
           "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
         }
@@ -37,8 +43,14 @@
     "service": "showcase"
   },
   "ownMountPath": {
-    "kind": "local",
-    "typeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD"
+    "host": {
+      "kind": "local",
+      "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
+    },
+    "kind": "inlineElement",
+    "propertyPath": [
+      "prop_01M40RS7N08DEDFYE3YFC4TRYV"
+    ]
   },
   "parent": {
     "arrayProperty": "displayItems",

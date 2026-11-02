@@ -23,7 +23,24 @@
             "resourceId": "mdr_5AWR0ERPJFBV383B9RDMGW53W0"
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+        },
+        "Train": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-character-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_610EXTERWVB0FRCTCXD30A4ZX6"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "experience": "prop_75G83NYX56T0KCQB3N92MQPVMT",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "level": "prop_04HMA7F4M0F29E8P9WE3E5YF3R",
+        "levelCap": "prop_6GPQDNYV0YP90F0V7GY2S79423",
+        "nextLevelExperience": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77",
+        "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
+        "sort": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
       }
     },
     "CharacterEnhanceMaterial": {
@@ -40,6 +57,11 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "count": "prop_00D0TAXWR8X0NVB2HS99J298KV",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "metadata": "prop_00D0TAXWR8ZNBCPP520RH8KRHD"
       }
     }
   },

@@ -6,7 +6,16 @@
       "id": "dt_00D0PP9ZFNCD6RFTHR08Z8NVF9",
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-limit",
-      "canonicalTypeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+      "canonicalTypeId": "dt_00D031CCJC5E77CH6RN2RE661E",
+      "properties": {
+        "anchorTimestamp": "prop_00D031CCJC8A73V9WDWHJYY5S9",
+        "days": "prop_00D031CCJCD9WHWSJ1N9W1NN13",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "resetDayOfMonth": "prop_00D031CCJCB6TXS4PV4ACMXFJC",
+        "resetDayOfWeek": "prop_00D031CCJCA2HJ6M98DXZEDTKY",
+        "resetHour": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0",
+        "resetType": "prop_00D031CCJC935P6N8JH9QZET3R"
+      }
     },
     "UsageLimitCounter": {
       "id": "dt_00D0PP9ZFNBBW6QXYE041ZSN01",
@@ -39,9 +48,13 @@
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
       },
-      "addedProperties": {
+      "properties": {
         "adMax": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE",
-        "freeMax": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D"
+        "count": "prop_00D031N0N8XZTBTN84BCXGFHMR",
+        "freeMax": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "limit": "prop_00D031N0N8XCG9EJ25SDVPGMYT",
+        "nextResetAt": "prop_00D031N0N8S7KC5GNB45BP0PGT"
       }
     }
   },

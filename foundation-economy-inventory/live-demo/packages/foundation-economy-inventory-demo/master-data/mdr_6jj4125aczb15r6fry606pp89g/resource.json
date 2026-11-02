@@ -29,8 +29,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-inventory",
-          "transformId": "at_5MZS971WV985R8Q1TP98MGN18Y"
+          "kind": "selected",
+          "transformId": "at_5MZS971WV985R8Q1TP98MGN18Y",
+          "transformPackageId": "foundation-economy-inventory"
         }
       },
       "kind": "transform",

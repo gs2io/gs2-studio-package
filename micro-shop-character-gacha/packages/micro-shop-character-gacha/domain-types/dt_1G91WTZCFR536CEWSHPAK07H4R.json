@@ -27,6 +27,7 @@
       },
       {
         "bindingHint": "assetDelivery",
+        "description": "",
         "id": "prop_42BYHE1CR1TEXDMCWR9B91PP5K",
         "localizedDisplay": {
           "en": {
@@ -49,6 +50,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_641SVQJRC0GWZ43QNEPB429MND",
         "localizedDisplay": {
           "en": {

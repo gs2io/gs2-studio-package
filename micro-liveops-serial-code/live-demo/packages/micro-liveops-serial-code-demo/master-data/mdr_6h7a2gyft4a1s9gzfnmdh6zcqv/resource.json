@@ -12,8 +12,9 @@
           }
         ],
         "target": {
-          "packageId": "micro-liveops-serial-code",
-          "transformId": "at_2AE8RTB8GFNY68C7AYTV813N9B"
+          "kind": "selected",
+          "transformId": "at_2AE8RTB8GFNY68C7AYTV813N9B",
+          "transformPackageId": "micro-liveops-serial-code"
         }
       },
       "kind": "transform",

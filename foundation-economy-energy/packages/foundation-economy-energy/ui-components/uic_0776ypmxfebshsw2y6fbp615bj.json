@@ -68,5 +68,8 @@
       "name": "Energy"
     }
   ],
-  "targetDomainTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+  "target": {
+    "hostTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+    "propertyPath": []
+  }
 }

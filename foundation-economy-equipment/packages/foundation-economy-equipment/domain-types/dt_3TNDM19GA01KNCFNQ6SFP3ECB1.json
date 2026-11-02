@@ -27,6 +27,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_071QWPTV93WY3RCTPXN9CBG00F",
         "localizedDisplay": {
           "en": {
@@ -51,6 +52,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_4J8TTATGZND7RB0CSEKFY3AG9Z",
         "localizedDisplay": {
           "en": {
@@ -75,6 +77,7 @@
       },
       {
         "bindingHint": "userData",
+        "description": "",
         "id": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS",
         "localizedDisplay": {
           "en": {
@@ -99,6 +102,7 @@
       },
       {
         "bindingHint": "userData",
+        "description": "",
         "id": "prop_6DFT20J8RV6F8565KNNREYVH3N",
         "localizedDisplay": {
           "en": {

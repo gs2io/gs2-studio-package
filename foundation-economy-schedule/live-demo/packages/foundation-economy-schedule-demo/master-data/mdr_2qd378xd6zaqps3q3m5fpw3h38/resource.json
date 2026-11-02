@@ -29,8 +29,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-schedule",
-          "transformId": "at_0FN6A3W4MR9VRA2RD233HW6NEV"
+          "kind": "selected",
+          "transformId": "at_0FN6A3W4MR9VRA2RD233HW6NEV",
+          "transformPackageId": "foundation-economy-schedule"
         }
       },
       "kind": "transform",

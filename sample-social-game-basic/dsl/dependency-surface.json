@@ -7,10 +7,23 @@
       "singleEntry": false,
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
-      "addedProperties": {
+      "delegatedActions": {
+        "Buy": {
+          "targetResource": {
+            "sourcePackageId": "micro-shop-character-gacha",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_5PRP4NWC3688X91404V01TV2F9"
+          },
+          "targetActionKey": "Gs2Showcase:DisplayItem.Buy"
+        }
+      },
+      "properties": {
+        "consumeActions": "prop_641SVQJRC0GWZ43QNEPB429MND",
         "drawCount": "prop_44GS4TR0HRE4SQCJEV2G7VDG1C",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "paidOnly": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04",
         "price": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ",
+        "schedule": "prop_42BYHE1CR1TEXDMCWR9B91PP5K",
         "series": "prop_3Q5WE2KYP6JTQHWZQN7E8DW12Y"
       }
     },
@@ -19,9 +32,12 @@
       "singleEntry": false,
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
-      "addedProperties": {
+      "properties": {
+        "acquireActions": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
         "contentsId": "prop_635XF953PW3BSYMHYSVYAKEJ0P",
         "count": "prop_41KFTTF2RYSDR9FFDJ575SQRZV",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "loginRewardCollection": "prop_0596SK59HPEYXW9Y868ZT82B8A",
         "rewardType": "prop_1TXDHTCHQHVT43M06HMWB1T86R"
       }
     },

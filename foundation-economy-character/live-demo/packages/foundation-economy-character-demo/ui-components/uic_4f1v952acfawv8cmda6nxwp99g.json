@@ -53,5 +53,8 @@
       "name": "CharacterCollection"
     }
   ],
-  "targetDomainTypeId": "dt_00D0KZXDBRGT3NHQ0D86V61M35"
+  "target": {
+    "hostTypeId": "dt_00D0KZXDBRGT3NHQ0D86V61M35",
+    "propertyPath": []
+  }
 }

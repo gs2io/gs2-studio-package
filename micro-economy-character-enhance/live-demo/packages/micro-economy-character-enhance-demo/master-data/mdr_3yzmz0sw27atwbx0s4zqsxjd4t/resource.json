@@ -33,8 +33,9 @@
           }
         ],
         "target": {
-          "packageId": "micro-economy-character-enhance",
-          "transformId": "at_7A632P7NEB88WT2T9JAAWMTK45"
+          "kind": "selected",
+          "transformId": "at_7A632P7NEB88WT2T9JAAWMTK45",
+          "transformPackageId": "micro-economy-character-enhance"
         }
       },
       "kind": "transform",

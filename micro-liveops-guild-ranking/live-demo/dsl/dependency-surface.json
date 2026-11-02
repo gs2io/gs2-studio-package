@@ -6,15 +6,28 @@
       "id": "dt_00D0XMTYBP5KNZJFD93BWF6SFG",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-guild-ranking",
-      "canonicalTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT"
+      "canonicalTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
+      "properties": {
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "maximumValue": "prop_00D033H0GPZP59YFFCVBBGVPGM",
+        "minimumValue": "prop_00D033H0GPY13F7M2F5MH9W2PW",
+        "orderDirection": "prop_00D033H0GPWEF15V2AMFQET09E",
+        "schedule": "prop_00D033H0GPV00M3DBQVFQC6VA2",
+        "score": "prop_00D033H0GPYB1S1KXMMSCNDR8E",
+        "sum": "prop_00D033H0GPZ8M64WY0868P8S2T"
+      }
     },
     "GuildRankingReward": {
       "id": "dt_00D0XMTYBP2S6WZJPBNGHGSC4Q",
       "singleEntry": false,
       "canonicalPackageId": "micro-liveops-guild-ranking",
       "canonicalTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
-      "addedProperties": {
-        "coins": "prop_00D0XMTYBP6TACW7H1W4YC1SET"
+      "properties": {
+        "acquireActions": "prop_00D033H0GPSX5TQB69ST80YSQG",
+        "coins": "prop_00D0XMTYBP6TACW7H1W4YC1SET",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "ranking": "prop_00D033H0GPW6DTTEFEGK4CXBVX",
+        "thresholdRank": "prop_00D033H0GPTR5V04T6YPBYCG0Q"
       }
     }
   },

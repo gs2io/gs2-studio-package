@@ -12,8 +12,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-character-formation",
-          "transformId": "at_4NRP2334FY75C65TXQZ4PCT9QH"
+          "kind": "selected",
+          "transformId": "at_4NRP2334FY75C65TXQZ4PCT9QH",
+          "transformPackageId": "foundation-economy-character-formation"
         }
       },
       "kind": "transform",

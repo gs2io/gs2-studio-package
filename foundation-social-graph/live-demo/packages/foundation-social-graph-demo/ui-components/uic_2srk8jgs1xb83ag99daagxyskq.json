@@ -18,5 +18,8 @@
       "template": "{id}"
     }
   ],
-  "targetDomainTypeId": "dt_00D0XGY063X0J6JMXCTZBJ6JKK"
+  "target": {
+    "hostTypeId": "dt_00D0XGY063X0J6JMXCTZBJ6JKK",
+    "propertyPath": []
+  }
 }

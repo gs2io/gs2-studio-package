@@ -28,5 +28,8 @@
       "name": "Mission"
     }
   ],
-  "targetDomainTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
+  "target": {
+    "hostTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
+    "propertyPath": []
+  }
 }

@@ -31,5 +31,8 @@
       "name": "SkillNode"
     }
   ],
-  "targetDomainTypeId": "dt_00D0REX8TAF27YR23HD6W1WJAY"
+  "target": {
+    "hostTypeId": "dt_00D0REX8TAF27YR23HD6W1WJAY",
+    "propertyPath": []
+  }
 }

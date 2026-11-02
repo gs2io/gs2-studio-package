@@ -29,8 +29,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-energy",
-          "transformId": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY"
+          "kind": "selected",
+          "transformId": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY",
+          "transformPackageId": "foundation-economy-energy"
         }
       },
       "kind": "transform",

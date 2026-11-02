@@ -6,7 +6,19 @@
       "id": "dt_00D0WZ24SMWZ7S3MC3VY8EJ6KG",
       "singleEntry": false,
       "canonicalPackageId": "foundation-social-guild",
-      "canonicalTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
+      "canonicalTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+      "properties": {
+        "defaultMaximumMemberCount": "prop_00D031EHJKS5RXCVAFMNT3SG8A",
+        "guildMasterRole": "prop_00D031EHJKYNMFXHPY3FTZNMT3",
+        "guildMemberDefaultRole": "prop_00D031EHJKX7SZME4RYKT42EHK",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "inactivityPeriodDays": "prop_00D031EHJKVGBMJB7FM4PCN6J7",
+        "joinedGuildName": "prop_00D031EHJKXQ1Y91SVXVS1NEG1",
+        "maxConcurrentGuildMasterCount": "prop_00D031EHJKZX0Z07JXP9EBMZE2",
+        "maxConcurrentJoinGuilds": "prop_00D031EHJKV14ABPBSZYSZE6ZC",
+        "maximumMemberCount": "prop_00D031EHJKXY4J4TES2QHN8F8E",
+        "rejoinCoolTimeMinutes": "prop_00D031EHJKRC55TT07BAPX05CG"
+      }
     }
   },
   "actionTransforms": {},

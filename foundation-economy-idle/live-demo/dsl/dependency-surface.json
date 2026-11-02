@@ -7,15 +7,35 @@
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-idle",
       "canonicalTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
-      "addedProperties": {
-        "coins": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7"
+      "properties": {
+        "acquireActions": "prop_00D05P2SE3WMNG5C27EG74BM38",
+        "coins": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       }
     },
     "IdleStatus": {
       "id": "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA",
       "singleEntry": true,
       "canonicalPackageId": "foundation-economy-idle",
-      "canonicalTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+      "canonicalTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
+      "delegatedActions": {
+        "Receive": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-idle",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_720YFK0MG497KRH6159H7NKWHY"
+          },
+          "targetActionKey": "Gs2Idle:CategoryModel.Receive"
+        }
+      },
+      "properties": {
+        "currentIdleMinutes": "prop_1M9DWWCBBYBQ9HF2CEHRBVTQG5",
+        "defaultMaximumIdleMinutes": "prop_7J143G8X27HCRCYX69FABGPKKT",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "maximumIdleMinutes": "prop_4RV2VH9G7RME7HVFFF1KSCK60P",
+        "nextRewardsAt": "prop_5651SXBQZ535SAK2H3JZBTZ5XS",
+        "rewardIntervalMinutes": "prop_343KJVJCADHD7053A0N9JQ0M7W"
+      }
     }
   },
   "actionTransforms": {},

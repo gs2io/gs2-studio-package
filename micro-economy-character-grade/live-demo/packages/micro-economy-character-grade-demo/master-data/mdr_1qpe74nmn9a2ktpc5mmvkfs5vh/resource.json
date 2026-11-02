@@ -19,8 +19,9 @@
           }
         ],
         "target": {
-          "packageId": "micro-economy-character-grade",
-          "transformId": "at_0AV65RY3CPHDE6VDR8XQ9MH72H"
+          "kind": "selected",
+          "transformId": "at_0AV65RY3CPHDE6VDR8XQ9MH72H",
+          "transformPackageId": "micro-economy-character-grade"
         }
       },
       "kind": "transform",

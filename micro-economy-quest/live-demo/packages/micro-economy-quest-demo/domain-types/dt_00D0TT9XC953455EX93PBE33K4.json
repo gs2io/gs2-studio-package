@@ -21,8 +21,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-energy",
-          "transformId": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY"
+          "kind": "selected",
+          "transformId": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY",
+          "transformPackageId": "foundation-economy-energy"
         }
       },
       "mode": "append",
@@ -49,8 +50,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-currency",
-          "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
+          "kind": "selected",
+          "transformId": "at_128M69PST19WRR9BGD46M0YWAC",
+          "transformPackageId": "foundation-economy-currency"
         }
       },
       "mode": "append",
@@ -77,8 +79,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-currency",
-          "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
+          "kind": "selected",
+          "transformId": "at_128M69PST19WRR9BGD46M0YWAC",
+          "transformPackageId": "foundation-economy-currency"
         }
       },
       "mode": "append",
@@ -92,6 +95,7 @@
     "properties": [
       {
         "bindingHint": "assetDelivery",
+        "description": "",
         "id": "prop_00D0TT9XC95AYPDS0FTC5G8GTG",
         "localizedDisplay": {
           "en": {
@@ -114,6 +118,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_00D0TT9XC92MQXXRTF4D7JBY0V",
         "localizedDisplay": {
           "en": {
@@ -138,6 +143,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR",
         "localizedDisplay": {
           "en": {
@@ -162,6 +168,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_00D0TT9XC90NGHJ1JGHG67DHY2",
         "localizedDisplay": {
           "en": {

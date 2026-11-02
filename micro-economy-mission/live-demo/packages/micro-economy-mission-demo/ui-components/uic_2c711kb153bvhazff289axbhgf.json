@@ -98,5 +98,8 @@
       "name": "Mission"
     }
   ],
-  "targetDomainTypeId": "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8"
+  "target": {
+    "hostTypeId": "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8",
+    "propertyPath": []
+  }
 }

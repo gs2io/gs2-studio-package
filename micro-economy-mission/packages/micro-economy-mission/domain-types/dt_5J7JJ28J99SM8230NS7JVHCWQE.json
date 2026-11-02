@@ -27,6 +27,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_22KB372ZE4T79JBJKZGR5M596B",
         "localizedDisplay": {
           "en": {
@@ -49,6 +50,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_00D060QP7EZPDKKKFPE3HYE2C5",
         "localizedDisplay": {
           "en": {
@@ -73,6 +75,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_0MYSS3YYHJEN9ZR5ZT014RB2HK",
         "localizedDisplay": {
           "en": {
@@ -95,6 +98,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_4Q0FZ49AS61KZCN0Z8MS0DE7SN",
         "localizedDisplay": {
           "en": {
@@ -117,6 +121,7 @@
       },
       {
         "bindingHint": "userData",
+        "description": "",
         "id": "prop_08ZS1KJ683EXX3ADZAVHK3E833",
         "localizedDisplay": {
           "en": {
@@ -139,6 +144,7 @@
       },
       {
         "bindingHint": "userData",
+        "description": "",
         "id": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB",
         "localizedDisplay": {
           "en": {

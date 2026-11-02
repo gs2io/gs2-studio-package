@@ -7,8 +7,15 @@
       "singleEntry": false,
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
-      "addedProperties": {
-        "releasedSkillNodes": "prop_00D0RCHP2Q6QHD0C070KPNT284"
+      "properties": {
+        "experience": "prop_75G83NYX56T0KCQB3N92MQPVMT",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "level": "prop_04HMA7F4M0F29E8P9WE3E5YF3R",
+        "levelCap": "prop_6GPQDNYV0YP90F0V7GY2S79423",
+        "nextLevelExperience": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77",
+        "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
+        "releasedSkillNodes": "prop_00D0RCHP2Q6QHD0C070KPNT284",
+        "sort": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
       }
     },
     "SkillNode": {

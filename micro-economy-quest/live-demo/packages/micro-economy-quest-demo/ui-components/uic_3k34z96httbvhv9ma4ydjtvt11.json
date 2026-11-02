@@ -108,5 +108,8 @@
       "name": "Quest"
     }
   ],
-  "targetDomainTypeId": "dt_00D0TT9XC953455EX93PBE33K4"
+  "target": {
+    "hostTypeId": "dt_00D0TT9XC953455EX93PBE33K4",
+    "propertyPath": []
+  }
 }

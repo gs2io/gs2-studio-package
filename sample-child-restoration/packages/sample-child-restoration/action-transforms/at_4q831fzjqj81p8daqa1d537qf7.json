@@ -29,7 +29,8 @@
           }
         ],
         "target": {
-          "packageId": "sample-child-restoration",
+          "kind": "selected",
+          "transformPackageId": "sample-child-restoration",
           "transformId": "at_0E2GBWX0958CTSSB22YANK1QZM"
         }
       },
@@ -61,7 +62,8 @@
           }
         ],
         "target": {
-          "packageId": "sample-child-restoration",
+          "kind": "selected",
+          "transformPackageId": "sample-child-restoration",
           "transformId": "at_3NA5W87R3P8HR916X2ET2E4TDV"
         }
       },

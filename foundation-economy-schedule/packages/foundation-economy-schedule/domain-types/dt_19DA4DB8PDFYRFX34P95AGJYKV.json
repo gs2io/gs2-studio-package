@@ -27,6 +27,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_787C2RE8TDR45Z47ER9FNGNTBH",
         "localizedDisplay": {
           "en": {
@@ -52,6 +53,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_7FMECH33GC393EZ4PGCPR1QCSE",
         "localizedDisplay": {
           "en": {
@@ -80,6 +82,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_1SGTZ9B0RDMXXPWHJ8K4W032AA",
         "localizedDisplay": {
           "en": {
@@ -108,6 +111,7 @@
       },
       {
         "bindingHint": "assetDelivery",
+        "description": "",
         "id": "prop_4T7XKM1CTQ7X9D94DB6868ZXR3",
         "localizedDisplay": {
           "en": {
@@ -136,6 +140,7 @@
       },
       {
         "bindingHint": "userData",
+        "description": "",
         "id": "prop_00D0N014B09H9M51PEBHNW82F9",
         "localizedDisplay": {
           "en": {
@@ -158,6 +163,7 @@
       },
       {
         "bindingHint": "userData",
+        "description": "",
         "id": "prop_00D0N014B0BF291EZZKRYPBJND",
         "localizedDisplay": {
           "en": {
@@ -180,6 +186,7 @@
       },
       {
         "bindingHint": "userData",
+        "description": "",
         "id": "prop_00D0N014B0BQ0XD43PAXV22PHQ",
         "localizedDisplay": {
           "en": {
@@ -202,6 +209,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_7EEM05TPX8JKCME8DS85QCDFJ2",
         "localizedDisplay": {
           "en": {
@@ -230,6 +238,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_5YGE7Q35M5VSYQ82A2NQ670JK6",
         "localizedDisplay": {
           "en": {
@@ -275,6 +284,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_38P73QVFM50Y6J21VG3JGA0KV0",
         "localizedDisplay": {
           "en": {
@@ -320,6 +330,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_4XH65E0SZT63G39F6JJHCB0QZM",
         "localizedDisplay": {
           "en": {
@@ -356,6 +367,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_77V0M2ZWPGV3Q5HSXX4T5N09JC",
         "localizedDisplay": {
           "en": {
@@ -392,6 +404,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_6QC4XV87VJBMWPHSXRHCCF5HPD",
         "localizedDisplay": {
           "en": {
@@ -422,6 +435,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_0P1QWDN8641827F5CQAK4BNXMQ",
         "localizedDisplay": {
           "en": {
@@ -452,6 +466,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_0WCCMQS198YK06YPJ16TKT4VSS",
         "localizedDisplay": {
           "en": {
@@ -480,6 +495,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_68GYGX3DAVXDYMJDJG8HKE0AET",
         "localizedDisplay": {
           "en": {
@@ -510,6 +526,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_1XTRCGKTRZCMM3A06B1BAZ9824",
         "localizedDisplay": {
           "en": {

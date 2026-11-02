@@ -43,8 +43,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-currency",
-          "transformId": "at_103C3AGDYK65AAVXE24NG965GH"
+          "kind": "selected",
+          "transformId": "at_103C3AGDYK65AAVXE24NG965GH",
+          "transformPackageId": "foundation-economy-currency"
         }
       },
       "kind": "delegation"
@@ -75,8 +76,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-character",
-          "transformId": "at_5V44WAAQRF94D51FPBFT5Q2DN2"
+          "kind": "selected",
+          "transformId": "at_5V44WAAQRF94D51FPBFT5Q2DN2",
+          "transformPackageId": "foundation-economy-character"
         }
       },
       "kind": "delegation"

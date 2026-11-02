@@ -52,5 +52,8 @@
       "name": "Progress"
     }
   ],
-  "targetDomainTypeId": "dt_00D0TT9XC903SNVA7P9GFM98G3"
+  "target": {
+    "hostTypeId": "dt_00D0TT9XC903SNVA7P9GFM98G3",
+    "propertyPath": []
+  }
 }

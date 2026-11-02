@@ -4,8 +4,9 @@
       "invocation": {
         "arguments": [],
         "target": {
-          "packageId": "micro-liveops-serial-code-demo",
-          "transformId": "at_2HMSD4AP729NXVQMK5RM8CRXEQ"
+          "kind": "selected",
+          "transformId": "at_2HMSD4AP729NXVQMK5RM8CRXEQ",
+          "transformPackageId": "micro-liveops-serial-code-demo"
         }
       },
       "kind": "transform",

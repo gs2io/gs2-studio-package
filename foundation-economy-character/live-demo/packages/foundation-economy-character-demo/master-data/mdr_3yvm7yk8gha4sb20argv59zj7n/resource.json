@@ -19,8 +19,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-character",
-          "transformId": "at_0TEHD9M5M58SY923NTA3T75DDM"
+          "kind": "selected",
+          "transformId": "at_0TEHD9M5M58SY923NTA3T75DDM",
+          "transformPackageId": "foundation-economy-character"
         }
       },
       "kind": "transform",

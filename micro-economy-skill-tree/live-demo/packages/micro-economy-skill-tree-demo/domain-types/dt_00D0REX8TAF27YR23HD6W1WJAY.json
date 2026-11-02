@@ -28,8 +28,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-currency",
-          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5"
+          "kind": "selected",
+          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5",
+          "transformPackageId": "foundation-economy-currency"
         }
       },
       "mode": "append",

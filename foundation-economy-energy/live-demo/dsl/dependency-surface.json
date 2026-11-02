@@ -24,6 +24,17 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "currentMaximumValue": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56",
+        "currentValue": "prop_7BX7N28W6KRGHGC40MXEWB2ESC",
+        "defaultMaximum": "prop_0VK8BTK0YT0KW0ZS5VN7E3RAWK",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "nextRecoverdAt": "prop_39T9A7P2NH6PNT4W12H0FZX9WW",
+        "overflowedMaximum": "prop_1H7FG0XTK823H3XX35XW00TCFT",
+        "recoveryIntervalMinutes": "prop_7B2HB91QDWZK8SXNC6ZJGCCAEA",
+        "recoveryValue": "prop_5DW145AF8E14EQ3GHSC94QCMBW",
+        "useOverflow": "prop_0DZD8RYHVEY4B0DGB0K83K7DNX"
       }
     }
   },

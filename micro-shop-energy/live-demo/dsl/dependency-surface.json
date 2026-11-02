@@ -17,8 +17,12 @@
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
       },
-      "addedProperties": {
-        "cost": "prop_00D0S4EG729BGHQ7R4RK1959TA"
+      "properties": {
+        "consumeActions": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6",
+        "cost": "prop_00D0S4EG729BGHQ7R4RK1959TA",
+        "energy": "prop_01M3YJ1DNJ3MS5AZDA6EMDZJTA",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "recoveryValue": "prop_11FCJPVBK2AQFDD6DXHKWSV827"
       }
     }
   },

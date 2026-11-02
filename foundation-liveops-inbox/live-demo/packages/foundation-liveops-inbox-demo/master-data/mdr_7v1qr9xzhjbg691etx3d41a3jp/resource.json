@@ -68,8 +68,9 @@
                   }
                 ],
                 "target": {
-                  "packageId": "foundation-economy-currency",
-                  "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
+                  "kind": "selected",
+                  "transformId": "at_128M69PST19WRR9BGD46M0YWAC",
+                  "transformPackageId": "foundation-economy-currency"
                 }
               },
               "kind": "actionTransformRef"
@@ -77,8 +78,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-liveops-inbox",
-          "transformId": "at_1RG4YKDR299ERAM1FKTZC304C6"
+          "kind": "selected",
+          "transformId": "at_1RG4YKDR299ERAM1FKTZC304C6",
+          "transformPackageId": "foundation-liveops-inbox"
         }
       },
       "kind": "transform",

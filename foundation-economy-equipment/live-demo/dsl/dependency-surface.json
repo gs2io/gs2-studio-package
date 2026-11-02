@@ -16,6 +16,12 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "category": "prop_0K0GFBH6B7DRCKC1VP8N5BXAGP",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H",
+        "sortValue": "prop_494Q17EMVWXF1PQJW4HZ1K09SD"
       }
     },
     "EquipmentCatalog": {
@@ -52,6 +58,13 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "currentCapacityUsage": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS",
+        "currentMaximumCapacity": "prop_6DFT20J8RV6F8565KNNREYVH3N",
+        "defaultCapacity": "prop_071QWPTV93WY3RCTPXN9CBG00F",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "maximumCapacity": "prop_4J8TTATGZND7RB0CSEKFY3AG9Z"
       }
     }
   },

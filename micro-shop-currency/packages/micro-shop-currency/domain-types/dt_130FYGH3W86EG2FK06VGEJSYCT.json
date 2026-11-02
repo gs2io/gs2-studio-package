@@ -7,6 +7,7 @@
     "properties": [
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_7GZCWER58FEK1Y8TQBHZPM0H6S",
         "localizedDisplay": {
           "en": {
@@ -31,6 +32,7 @@
       },
       {
         "bindingHint": "masterData",
+        "description": "",
         "id": "prop_01M40RS7N08DEDFYE3YFC4TRYV",
         "localizedDisplay": {
           "en": {
@@ -48,8 +50,119 @@
         },
         "type": {
           "elementType": {
-            "kind": "inline",
-            "targetTypeId": "dt_5E4C6RPJ7T9H48WD5QS1973QTD"
+            "kind": "inlineElement",
+            "schema": {
+              "delegatedActions": [
+                {
+                  "methodName": "Buy",
+                  "parameterOverrides": [
+                    {
+                      "parameterName": "quantity",
+                      "source": {
+                        "kind": "static",
+                        "value": 1
+                      }
+                    }
+                  ],
+                  "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
+                  "targetResource": {
+                    "resourceId": "mdr_5G3AX0767581SRB6QPW3FRXDBR",
+                    "resourceKind": "masterData",
+                    "sourcePackageId": "micro-shop-currency"
+                  }
+                }
+              ],
+              "description": "",
+              "elementKey": [
+                "prop_4F7GJCACK2YK78HYH2XVEEMN6R"
+              ],
+              "localizedDisplay": {
+                "en": {
+                  "description": "A store product's price in one currency, set as an element of the product's prices.",
+                  "label": "Store price"
+                },
+                "ja": {
+                  "description": "ストア商品を1つの販売通貨で売るときの価格です。ストア商品の販売価格の要素として設定します。",
+                  "label": "販売価格"
+                }
+              },
+              "name": "StorePrice",
+              "properties": [
+                {
+                  "bindingHint": "none",
+                  "description": "Unique identifier",
+                  "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+                  "localizedDisplay": {
+                    "en": {
+                      "description": "Uniquely identifies the store price.",
+                      "label": "ID"
+                    },
+                    "ja": {
+                      "description": "販売価格を一意に識別します。",
+                      "label": "ID"
+                    }
+                  },
+                  "name": "id",
+                  "requirement": {
+                    "kind": "always"
+                  },
+                  "type": {
+                    "kind": "primitive",
+                    "primitiveType": "string"
+                  }
+                },
+                {
+                  "bindingHint": "masterData",
+                  "description": "",
+                  "id": "prop_4F7GJCACK2YK78HYH2XVEEMN6R",
+                  "localizedDisplay": {
+                    "en": {
+                      "description": "Currency type used to price the product.",
+                      "label": "Price currency"
+                    },
+                    "ja": {
+                      "description": "商品の価格を表す通貨種別です。",
+                      "label": "販売通貨"
+                    }
+                  },
+                  "name": "currencyType",
+                  "requirement": {
+                    "kind": "always"
+                  },
+                  "type": {
+                    "kind": "ref",
+                    "targetTypeId": "dt_5X0WV26CPKD17193EPDQD24EP3"
+                  }
+                },
+                {
+                  "bindingHint": "masterData",
+                  "description": "",
+                  "id": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K",
+                  "localizedDisplay": {
+                    "en": {
+                      "description": "Product price in the selected currency.",
+                      "label": "Price"
+                    },
+                    "ja": {
+                      "description": "指定した通貨での商品価格です。",
+                      "label": "価格"
+                    }
+                  },
+                  "name": "price",
+                  "requirement": {
+                    "kind": "always"
+                  },
+                  "type": {
+                    "kind": "primitive",
+                    "primitiveType": "float64"
+                  }
+                }
+              ],
+              "sort": {
+                "direction": "asc",
+                "key": null
+              }
+            }
           },
           "kind": "list"
         }

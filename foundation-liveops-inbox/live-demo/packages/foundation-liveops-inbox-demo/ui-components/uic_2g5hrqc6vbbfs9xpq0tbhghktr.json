@@ -39,5 +39,8 @@
       "name": "Message"
     }
   ],
-  "targetDomainTypeId": "dt_00D0SFSEJN3BMDPZZXX51XNVPW"
+  "target": {
+    "hostTypeId": "dt_00D0SFSEJN3BMDPZZXX51XNVPW",
+    "propertyPath": []
+  }
 }

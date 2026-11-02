@@ -6,7 +6,12 @@
       "id": "dt_00D0XTX674NVFAHYD82WBJS5KF",
       "singleEntry": false,
       "canonicalPackageId": "foundation-core-identity",
-      "canonicalTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
+      "canonicalTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
+      "properties": {
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "registered": "prop_00D0XSWNPHK742VSBENVHWQX25",
+        "userIdentifier": "prop_00D0XSWNPHGADEPTVEW5ASX023"
+      }
     }
   },
   "actionTransforms": {},

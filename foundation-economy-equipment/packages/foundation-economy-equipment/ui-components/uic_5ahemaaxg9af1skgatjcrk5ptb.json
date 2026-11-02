@@ -28,5 +28,8 @@
       }
     }
   ],
-  "targetDomainTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+  "target": {
+    "hostTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+    "propertyPath": []
+  }
 }

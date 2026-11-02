@@ -17,6 +17,7 @@
       },
       {
         "bindingHint": "assetDelivery",
+        "description": "",
         "id": "prop_0K2GDNB2Z9R2MAY48RXEE0ZJQN",
         "name": "iconAddress",
         "requirement": {
@@ -29,6 +30,7 @@
       },
       {
         "bindingHint": "assetDelivery",
+        "description": "",
         "id": "prop_408774GV3NAG937A3CXGK2YRBJ",
         "name": "labelKey",
         "requirement": {

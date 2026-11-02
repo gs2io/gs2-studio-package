@@ -27,8 +27,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-equipment",
-          "transformId": "at_6VEP2XV1908GMR5151Y7W0YSSB"
+          "kind": "selected",
+          "transformId": "at_6VEP2XV1908GMR5151Y7W0YSSB",
+          "transformPackageId": "foundation-economy-equipment"
         }
       },
       "kind": "transform",

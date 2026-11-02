@@ -118,5 +118,8 @@
       }
     }
   ],
-  "targetDomainTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+  "target": {
+    "hostTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+    "propertyPath": []
+  }
 }

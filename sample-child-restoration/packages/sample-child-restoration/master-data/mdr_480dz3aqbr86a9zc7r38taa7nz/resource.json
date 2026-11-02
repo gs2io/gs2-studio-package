@@ -56,7 +56,8 @@
           }
         ],
         "target": {
-          "packageId": "sample-child-restoration",
+          "kind": "selected",
+          "transformPackageId": "sample-child-restoration",
           "transformId": "at_4Q831FZJQJ81P8DAQA1D537QF7"
         }
       },

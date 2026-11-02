@@ -34,8 +34,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-character",
-          "transformId": "at_5V44WAAQRF94D51FPBFT5Q2DN2"
+          "kind": "selected",
+          "transformId": "at_5V44WAAQRF94D51FPBFT5Q2DN2",
+          "transformPackageId": "foundation-economy-character"
         }
       },
       "kind": "transform",

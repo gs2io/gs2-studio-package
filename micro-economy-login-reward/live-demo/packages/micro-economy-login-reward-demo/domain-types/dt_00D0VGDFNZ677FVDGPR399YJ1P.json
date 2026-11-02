@@ -21,8 +21,9 @@
           }
         ],
         "target": {
-          "packageId": "foundation-economy-currency",
-          "transformId": "at_128M69PST19WRR9BGD46M0YWAC"
+          "kind": "selected",
+          "transformId": "at_128M69PST19WRR9BGD46M0YWAC",
+          "transformPackageId": "foundation-economy-currency"
         }
       },
       "mode": "append",
@@ -36,6 +37,7 @@
     "properties": [
       {
         "bindingHint": "assetDelivery",
+        "description": "",
         "id": "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ",
         "localizedDisplay": {
           "en": {

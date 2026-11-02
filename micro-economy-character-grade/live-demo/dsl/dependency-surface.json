@@ -24,6 +24,16 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange"
         }
+      },
+      "properties": {
+        "experience": "prop_75G83NYX56T0KCQB3N92MQPVMT",
+        "grade": "prop_00D0320HQ4G51XW7JS84YZ2VAA",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "level": "prop_04HMA7F4M0F29E8P9WE3E5YF3R",
+        "levelCap": "prop_6GPQDNYV0YP90F0V7GY2S79423",
+        "nextLevelExperience": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77",
+        "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
+        "sort": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
       }
     }
   },

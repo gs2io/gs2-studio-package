@@ -19,5 +19,8 @@
       "template": "{userIdentifier}"
     }
   ],
-  "targetDomainTypeId": "dt_00D0XTX674NVFAHYD82WBJS5KF"
+  "target": {
+    "hostTypeId": "dt_00D0XTX674NVFAHYD82WBJS5KF",
+    "propertyPath": []
+  }
 }

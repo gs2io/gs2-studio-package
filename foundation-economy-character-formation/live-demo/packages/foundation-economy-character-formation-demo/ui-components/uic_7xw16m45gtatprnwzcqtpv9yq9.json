@@ -56,5 +56,8 @@
       }
     }
   ],
-  "targetDomainTypeId": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6"
+  "target": {
+    "hostTypeId": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6",
+    "propertyPath": []
+  }
 }
