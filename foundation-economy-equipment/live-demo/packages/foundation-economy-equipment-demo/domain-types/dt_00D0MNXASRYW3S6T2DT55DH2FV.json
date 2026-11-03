@@ -1,32 +1,30 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA",
-        "localizedDisplay": {
-          "en": {
-            "description": "The equipment this catalog row grants.",
-            "label": "Equipment"
-          },
-          "ja": {
-            "description": "このカタログ行が付与する装備です。",
-            "label": "装備"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA",
+      "localizedDisplay": {
+        "en": {
+          "description": "The equipment this catalog row grants.",
+          "label": "Equipment"
         },
-        "name": "equipment",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+        "ja": {
+          "description": "このカタログ行が付与する装備です。",
+          "label": "装備"
         }
+      },
+      "name": "equipment",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [
     {
       "methodName": "Take",

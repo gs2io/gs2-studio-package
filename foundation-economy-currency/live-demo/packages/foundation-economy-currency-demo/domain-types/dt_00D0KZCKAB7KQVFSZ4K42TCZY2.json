@@ -1,28 +1,26 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_00D0KZCKABE9VVHET0Z8R3QD2M",
-        "localizedDisplay": {
-          "en": {
-            "description": "How much this deposit adds.",
-            "label": "Amount"
-          }
-        },
-        "name": "count",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_00D0KZCKABE9VVHET0Z8R3QD2M",
+      "localizedDisplay": {
+        "en": {
+          "description": "How much this deposit adds.",
+          "label": "Amount"
         }
+      },
+      "name": "count",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [
     {
       "methodName": "Deposit",

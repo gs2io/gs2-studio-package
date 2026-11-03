@@ -1,55 +1,53 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "userData",
-        "description": "",
-        "id": "prop_00D0XSWNPHGADEPTVEW5ASX023",
-        "localizedDisplay": {
-          "en": {
-            "description": "Identifier registered as the transfer code. The password is never stored, so it cannot be shown.",
-            "label": "Transfer ID"
-          },
-          "ja": {
-            "description": "引き継ぎコードとして登録した識別子です。パスワードは保存されないため表示できません。",
-            "label": "引き継ぎ用ID"
-          }
+  "declared": [
+    {
+      "bindingHint": "userData",
+      "description": "",
+      "id": "prop_00D0XSWNPHGADEPTVEW5ASX023",
+      "localizedDisplay": {
+        "en": {
+          "description": "Identifier registered as the transfer code. The password is never stored, so it cannot be shown.",
+          "label": "Transfer ID"
         },
-        "name": "userIdentifier",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
+        "ja": {
+          "description": "引き継ぎコードとして登録した識別子です。パスワードは保存されないため表示できません。",
+          "label": "引き継ぎ用ID"
         }
       },
-      {
-        "bindingHint": "userData",
-        "description": "",
-        "id": "prop_00D0XSWNPHK742VSBENVHWQX25",
-        "localizedDisplay": {
-          "en": {
-            "description": "Whether the player has registered a transfer code.",
-            "label": "Registered"
-          },
-          "ja": {
-            "description": "プレイヤーが引き継ぎコードを登録しているかを示します。",
-            "label": "登録済み"
-          }
-        },
-        "name": "registered",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "bool"
-        }
+      "name": "userIdentifier",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "userData",
+      "description": "",
+      "id": "prop_00D0XSWNPHK742VSBENVHWQX25",
+      "localizedDisplay": {
+        "en": {
+          "description": "Whether the player has registered a transfer code.",
+          "label": "Registered"
+        },
+        "ja": {
+          "description": "プレイヤーが引き継ぎコードを登録しているかを示します。",
+          "label": "登録済み"
+        }
+      },
+      "name": "registered",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "bool"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
   "idLocalizedDisplay": {

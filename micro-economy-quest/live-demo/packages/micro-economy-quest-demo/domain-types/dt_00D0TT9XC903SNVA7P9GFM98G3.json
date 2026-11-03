@@ -3,9 +3,7 @@
   "compositeKeyMode": {
     "kind": "inherit"
   },
-  "declared": {
-    "properties": []
-  },
+  "declared": [],
   "delegatedActions": [],
   "id": "dt_00D0TT9XC903SNVA7P9GFM98G3",
   "kind": "overlay",

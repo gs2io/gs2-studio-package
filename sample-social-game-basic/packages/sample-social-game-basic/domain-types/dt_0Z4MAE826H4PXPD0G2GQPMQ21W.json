@@ -46,62 +46,60 @@
       "prop_44GS4TR0HRE4SQCJEV2G7VDG1C"
     ]
   },
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04",
-        "name": "paidOnly",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "bool"
-        }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04",
+      "name": "paidOnly",
+      "requirement": {
+        "kind": "always"
       },
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ",
-        "name": "price",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
-        }
-      },
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_3Q5WE2KYP6JTQHWZQN7E8DW12Y",
-        "name": "series",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_44GS4TR0HRE4SQCJEV2G7VDG1C",
-        "name": "drawCount",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
-        }
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "bool"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ",
+      "name": "price",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_3Q5WE2KYP6JTQHWZQN7E8DW12Y",
+      "name": "series",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_44GS4TR0HRE4SQCJEV2G7VDG1C",
+      "name": "drawCount",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_0Z4MAE826H4PXPD0G2GQPMQ21W",
   "kind": "overlay",

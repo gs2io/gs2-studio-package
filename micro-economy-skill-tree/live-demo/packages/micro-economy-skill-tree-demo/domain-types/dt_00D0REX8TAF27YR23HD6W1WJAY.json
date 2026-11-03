@@ -40,33 +40,31 @@
   "compositeKeyMode": {
     "kind": "inherit"
   },
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "Coins this node charges when it is released",
-        "id": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Coins spent to unlock this node.",
-            "label": "Unlock cost"
-          },
-          "ja": {
-            "description": "このノードを解放するときに消費するコインの額です。",
-            "label": "解放コスト"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "Coins this node charges when it is released",
+      "id": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ",
+      "localizedDisplay": {
+        "en": {
+          "description": "Coins spent to unlock this node.",
+          "label": "Unlock cost"
         },
-        "name": "cost",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
+        "ja": {
+          "description": "このノードを解放するときに消費するコインの額です。",
+          "label": "解放コスト"
         }
+      },
+      "name": "cost",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_00D0REX8TAF27YR23HD6W1WJAY",
   "kind": "overlay",

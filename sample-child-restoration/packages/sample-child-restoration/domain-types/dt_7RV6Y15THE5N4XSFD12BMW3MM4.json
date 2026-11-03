@@ -1,21 +1,19 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "id": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN",
-        "name": "schedule",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
-        }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "id": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN",
+      "name": "schedule",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_7RV6Y15THE5N4XSFD12BMW3MM4",
   "kind": "local",

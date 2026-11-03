@@ -1,32 +1,30 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_00D0MRCJH84DS7K1B6V3Z7TBCH",
-        "localizedDisplay": {
-          "en": {
-            "description": "The trigger this row pulls.",
-            "label": "Trigger"
-          },
-          "ja": {
-            "description": "この行が引くトリガーです。",
-            "label": "トリガー"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_00D0MRCJH84DS7K1B6V3Z7TBCH",
+      "localizedDisplay": {
+        "en": {
+          "description": "The trigger this row pulls.",
+          "label": "Trigger"
         },
-        "name": "trigger",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
+        "ja": {
+          "description": "この行が引くトリガーです。",
+          "label": "トリガー"
         }
+      },
+      "name": "trigger",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [
     {
       "methodName": "Pull",

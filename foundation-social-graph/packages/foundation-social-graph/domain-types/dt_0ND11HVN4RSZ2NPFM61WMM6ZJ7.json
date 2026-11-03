@@ -1,55 +1,53 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "userData",
-        "description": "",
-        "id": "prop_2W4YWVQAX34Q9GNRA5PBY282CF",
-        "localizedDisplay": {
-          "en": {
-            "description": "Public profile information of the friend.",
-            "label": "Public profile"
-          },
-          "ja": {
-            "description": "フレンドの公開プロフィール情報です。",
-            "label": "公開プロフィール"
-          }
+  "declared": [
+    {
+      "bindingHint": "userData",
+      "description": "",
+      "id": "prop_2W4YWVQAX34Q9GNRA5PBY282CF",
+      "localizedDisplay": {
+        "en": {
+          "description": "Public profile information of the friend.",
+          "label": "Public profile"
         },
-        "name": "publicProfile",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
+        "ja": {
+          "description": "フレンドの公開プロフィール情報です。",
+          "label": "公開プロフィール"
         }
       },
-      {
-        "bindingHint": "userData",
-        "description": "",
-        "id": "prop_24MC6NM8NQ2X1W8TPT2T1V69RK",
-        "localizedDisplay": {
-          "en": {
-            "description": "Profile information visible because the players are friends.",
-            "label": "Friend profile"
-          },
-          "ja": {
-            "description": "フレンドとして閲覧できるプロフィール情報です。",
-            "label": "フレンド向けプロフィール"
-          }
-        },
-        "name": "friendProfile",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
+      "name": "publicProfile",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "userData",
+      "description": "",
+      "id": "prop_24MC6NM8NQ2X1W8TPT2T1V69RK",
+      "localizedDisplay": {
+        "en": {
+          "description": "Profile information visible because the players are friends.",
+          "label": "Friend profile"
+        },
+        "ja": {
+          "description": "フレンドとして閲覧できるプロフィール情報です。",
+          "label": "フレンド向けプロフィール"
+        }
+      },
+      "name": "friendProfile",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
   "idLocalizedDisplay": {

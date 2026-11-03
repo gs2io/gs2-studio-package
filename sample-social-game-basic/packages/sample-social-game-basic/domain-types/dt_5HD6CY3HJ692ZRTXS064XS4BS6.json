@@ -51,49 +51,47 @@
   "compositeKeyMode": {
     "kind": "inherit"
   },
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_1TXDHTCHQHVT43M06HMWB1T86R",
-        "name": "rewardType",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE"
-        }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_1TXDHTCHQHVT43M06HMWB1T86R",
+      "name": "rewardType",
+      "requirement": {
+        "kind": "always"
       },
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_635XF953PW3BSYMHYSVYAKEJ0P",
-        "name": "contentsId",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_41KFTTF2RYSDR9FFDJ575SQRZV",
-        "name": "count",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
-        }
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_635XF953PW3BSYMHYSVYAKEJ0P",
+      "name": "contentsId",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_41KFTTF2RYSDR9FFDJ575SQRZV",
+      "name": "count",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_5HD6CY3HJ692ZRTXS064XS4BS6",
   "kind": "overlay",

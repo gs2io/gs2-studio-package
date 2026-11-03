@@ -1,34 +1,32 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_00D05P2SE3WMNG5C27EG74BM38",
-        "localizedDisplay": {
-          "en": {
-            "description": "Acquire actions executed as idle rewards.",
-            "label": "Acquire actions"
-          },
-          "ja": {
-            "description": "放置報酬として実行する獲得アクションです。",
-            "label": "獲得アクション"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_00D05P2SE3WMNG5C27EG74BM38",
+      "localizedDisplay": {
+        "en": {
+          "description": "Acquire actions executed as idle rewards.",
+          "label": "Acquire actions"
         },
-        "name": "acquireActions",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "elementType": {
-            "kind": "acquireAction"
-          },
-          "kind": "list"
+        "ja": {
+          "description": "放置報酬として実行する獲得アクションです。",
+          "label": "獲得アクション"
         }
+      },
+      "name": "acquireActions",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "elementType": {
+          "kind": "acquireAction"
+        },
+        "kind": "list"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
   "idLocalizedDisplay": {

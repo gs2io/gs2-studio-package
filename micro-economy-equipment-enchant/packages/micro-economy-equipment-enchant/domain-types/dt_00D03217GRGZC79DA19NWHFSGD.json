@@ -1,55 +1,53 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "userData",
-        "description": "",
-        "id": "prop_00D03217GRKK3MAVRY7VKHB9GK",
-        "localizedDisplay": {
-          "en": {
-            "description": "Name of the target modified by the rolled effect.",
-            "label": "Effect target"
-          },
-          "ja": {
-            "description": "装備に付与された効果の対象名です。",
-            "label": "効果対象"
-          }
+  "declared": [
+    {
+      "bindingHint": "userData",
+      "description": "",
+      "id": "prop_00D03217GRKK3MAVRY7VKHB9GK",
+      "localizedDisplay": {
+        "en": {
+          "description": "Name of the target modified by the rolled effect.",
+          "label": "Effect target"
         },
-        "name": "resourceName",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
+        "ja": {
+          "description": "装備に付与された効果の対象名です。",
+          "label": "効果対象"
         }
       },
-      {
-        "bindingHint": "userData",
-        "description": "",
-        "id": "prop_00D03217GRMPQHMB5B4QST8GM4",
-        "localizedDisplay": {
-          "en": {
-            "description": "Value of the rolled effect applied to the equipment.",
-            "label": "Effect value"
-          },
-          "ja": {
-            "description": "装備に付与された追加効果の値です。",
-            "label": "効果値"
-          }
-        },
-        "name": "resourceValue",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int64"
-        }
+      "name": "resourceName",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "userData",
+      "description": "",
+      "id": "prop_00D03217GRMPQHMB5B4QST8GM4",
+      "localizedDisplay": {
+        "en": {
+          "description": "Value of the rolled effect applied to the equipment.",
+          "label": "Effect value"
+        },
+        "ja": {
+          "description": "装備に付与された追加効果の値です。",
+          "label": "効果値"
+        }
+      },
+      "name": "resourceValue",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_00D03217GRGZC79DA19NWHFSGD",
   "idLocalizedDisplay": {

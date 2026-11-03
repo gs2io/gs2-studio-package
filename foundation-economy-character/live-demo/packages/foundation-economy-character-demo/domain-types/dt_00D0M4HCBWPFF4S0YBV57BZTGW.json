@@ -1,57 +1,55 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_00D0M4HCBWK48152NTS3ABDZMZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "The character this recruit grants.",
-            "label": "Character"
-          },
-          "ja": {
-            "description": "この勧誘が付与するキャラクターです。",
-            "label": "キャラクター"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_00D0M4HCBWK48152NTS3ABDZMZ",
+      "localizedDisplay": {
+        "en": {
+          "description": "The character this recruit grants.",
+          "label": "Character"
         },
-        "name": "character",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+        "ja": {
+          "description": "この勧誘が付与するキャラクターです。",
+          "label": "キャラクター"
         }
       },
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_00D0NTAZ7QKXA6Q5H5NDGEFQ2V",
-        "localizedDisplay": {
-          "en": {
-            "description": "Acquire actions other installed packages add to this recruit. Not authored here.",
-            "label": "Added acquire actions"
-          },
-          "ja": {
-            "description": "同時に導入した他のパッケージが、この勧誘に足す獲得アクションです。直接は編集しません。",
-            "label": "追加の獲得アクション"
-          }
-        },
-        "name": "extraActions",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "elementType": {
-            "kind": "acquireAction"
-          },
-          "kind": "list"
-        }
+      "name": "character",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_00D0NTAZ7QKXA6Q5H5NDGEFQ2V",
+      "localizedDisplay": {
+        "en": {
+          "description": "Acquire actions other installed packages add to this recruit. Not authored here.",
+          "label": "Added acquire actions"
+        },
+        "ja": {
+          "description": "同時に導入した他のパッケージが、この勧誘に足す獲得アクションです。直接は編集しません。",
+          "label": "追加の獲得アクション"
+        }
+      },
+      "name": "extraActions",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "elementType": {
+          "kind": "acquireAction"
+        },
+        "kind": "list"
+      }
+    }
+  ],
   "delegatedActions": [
     {
       "methodName": "Recruit",

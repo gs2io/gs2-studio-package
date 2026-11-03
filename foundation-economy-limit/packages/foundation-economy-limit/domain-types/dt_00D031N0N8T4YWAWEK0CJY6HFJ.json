@@ -1,80 +1,78 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "assetDelivery",
-        "description": "The reset cadence this counter follows",
-        "id": "prop_00D031N0N8XCG9EJ25SDVPGMYT",
-        "localizedDisplay": {
-          "en": {
-            "description": "Reset schedule followed by this counter.",
-            "label": "Reset schedule"
-          },
-          "ja": {
-            "description": "このカウンターが従うリセット設定です。",
-            "label": "リセット設定"
-          }
+  "declared": [
+    {
+      "bindingHint": "assetDelivery",
+      "description": "The reset cadence this counter follows",
+      "id": "prop_00D031N0N8XCG9EJ25SDVPGMYT",
+      "localizedDisplay": {
+        "en": {
+          "description": "Reset schedule followed by this counter.",
+          "label": "Reset schedule"
         },
-        "name": "limit",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_00D031CCJC5E77CH6RN2RE661E"
+        "ja": {
+          "description": "このカウンターが従うリセット設定です。",
+          "label": "リセット設定"
         }
       },
-      {
-        "bindingHint": "userData",
-        "description": "Times used since the last reset",
-        "id": "prop_00D031N0N8XZTBTN84BCXGFHMR",
-        "localizedDisplay": {
-          "en": {
-            "description": "Number of uses since the previous reset.",
-            "label": "Usage count",
-            "unit": "uses"
-          },
-          "ja": {
-            "description": "前回のリセット以降に利用した回数です。",
-            "label": "利用回数",
-            "unit": "回"
-          }
-        },
-        "name": "count",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int64"
-        }
+      "name": "limit",
+      "requirement": {
+        "kind": "always"
       },
-      {
-        "bindingHint": "userData",
-        "description": "Next reset time",
-        "id": "prop_00D031N0N8S7KC5GNB45BP0PGT",
-        "localizedDisplay": {
-          "en": {
-            "description": "Time when this counter will next be reset.",
-            "label": "Next reset time"
-          },
-          "ja": {
-            "description": "このカウンターを次にリセットする日時です。",
-            "label": "次回リセット日時"
-          }
-        },
-        "name": "nextResetAt",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "timestamp"
-        }
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D031CCJC5E77CH6RN2RE661E"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "userData",
+      "description": "Times used since the last reset",
+      "id": "prop_00D031N0N8XZTBTN84BCXGFHMR",
+      "localizedDisplay": {
+        "en": {
+          "description": "Number of uses since the previous reset.",
+          "label": "Usage count",
+          "unit": "uses"
+        },
+        "ja": {
+          "description": "前回のリセット以降に利用した回数です。",
+          "label": "利用回数",
+          "unit": "回"
+        }
+      },
+      "name": "count",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int64"
+      }
+    },
+    {
+      "bindingHint": "userData",
+      "description": "Next reset time",
+      "id": "prop_00D031N0N8S7KC5GNB45BP0PGT",
+      "localizedDisplay": {
+        "en": {
+          "description": "Time when this counter will next be reset.",
+          "label": "Next reset time"
+        },
+        "ja": {
+          "description": "このカウンターを次にリセットする日時です。",
+          "label": "次回リセット日時"
+        }
+      },
+      "name": "nextResetAt",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "timestamp"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
   "idLocalizedDisplay": {

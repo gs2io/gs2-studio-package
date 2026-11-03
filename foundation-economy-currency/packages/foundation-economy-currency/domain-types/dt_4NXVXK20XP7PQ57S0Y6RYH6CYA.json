@@ -1,55 +1,53 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
-        "localizedDisplay": {
-          "en": {
-            "description": "Product identifier registered in App Store Connect.",
-            "label": "App Store product ID"
-          },
-          "ja": {
-            "description": "App Store Connectで登録した商品の識別子です。",
-            "label": "App Store商品ID"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
+      "localizedDisplay": {
+        "en": {
+          "description": "Product identifier registered in App Store Connect.",
+          "label": "App Store product ID"
         },
-        "name": "appleAppStoreProductId",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
+        "ja": {
+          "description": "App Store Connectで登録した商品の識別子です。",
+          "label": "App Store商品ID"
         }
       },
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_7TADZ4DEA40BBKZ46GN2R05E4J",
-        "localizedDisplay": {
-          "en": {
-            "description": "Product identifier registered in Google Play Console.",
-            "label": "Google Play product ID"
-          },
-          "ja": {
-            "description": "Google Play Consoleで登録した商品の識別子です。",
-            "label": "Google Play商品ID"
-          }
-        },
-        "name": "googlePlayProductId",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
+      "name": "appleAppStoreProductId",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_7TADZ4DEA40BBKZ46GN2R05E4J",
+      "localizedDisplay": {
+        "en": {
+          "description": "Product identifier registered in Google Play Console.",
+          "label": "Google Play product ID"
+        },
+        "ja": {
+          "description": "Google Play Consoleで登録した商品の識別子です。",
+          "label": "Google Play商品ID"
+        }
+      },
+      "name": "googlePlayProductId",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
   "idLocalizedDisplay": {

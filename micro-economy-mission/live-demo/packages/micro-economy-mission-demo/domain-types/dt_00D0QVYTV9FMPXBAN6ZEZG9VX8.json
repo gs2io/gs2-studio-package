@@ -33,23 +33,21 @@
   "compositeKeyMode": {
     "kind": "inherit"
   },
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "Coins this mission pays when its reward is received",
-        "id": "prop_00D0QVYTV99Q49SBAE7J7GC9EG",
-        "name": "rewardAmount",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
-        }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "Coins this mission pays when its reward is received",
+      "id": "prop_00D0QVYTV99Q49SBAE7J7GC9EG",
+      "name": "rewardAmount",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8",
   "kind": "overlay",

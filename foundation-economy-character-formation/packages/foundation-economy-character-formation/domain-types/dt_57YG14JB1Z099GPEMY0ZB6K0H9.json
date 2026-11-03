@@ -1,32 +1,30 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "userData",
-        "description": "",
-        "id": "prop_5YCV8XNQCMSWBB0KJEHTTDMTTQ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Identifier of the character instance assigned to this slot.",
-            "label": "Character instance ID"
-          },
-          "ja": {
-            "description": "このスロットに配置されたキャラクター個体の識別子です。",
-            "label": "キャラクター個体ID"
-          }
+  "declared": [
+    {
+      "bindingHint": "userData",
+      "description": "",
+      "id": "prop_5YCV8XNQCMSWBB0KJEHTTDMTTQ",
+      "localizedDisplay": {
+        "en": {
+          "description": "Identifier of the character instance assigned to this slot.",
+          "label": "Character instance ID"
         },
-        "name": "propertyId",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
+        "ja": {
+          "description": "このスロットに配置されたキャラクター個体の識別子です。",
+          "label": "キャラクター個体ID"
         }
+      },
+      "name": "propertyId",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_57YG14JB1Z099GPEMY0ZB6K0H9",
   "idLocalizedDisplay": {

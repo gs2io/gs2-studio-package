@@ -3,36 +3,34 @@
   "compositeKeyMode": {
     "kind": "inherit"
   },
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "Ceiling the free press names; recovered from its count-up action",
-        "id": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D",
-        "name": "freeMax",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
-        }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "Ceiling the free press names; recovered from its count-up action",
+      "id": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D",
+      "name": "freeMax",
+      "requirement": {
+        "kind": "always"
       },
-      {
-        "bindingHint": "masterData",
-        "description": "Ceiling the ad-backed press names; recovered from its count-up action",
-        "id": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE",
-        "name": "adMax",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
-        }
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "Ceiling the ad-backed press names; recovered from its count-up action",
+      "id": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE",
+      "name": "adMax",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ],
   "delegatedActions": [
     {
       "methodName": "UseFree",

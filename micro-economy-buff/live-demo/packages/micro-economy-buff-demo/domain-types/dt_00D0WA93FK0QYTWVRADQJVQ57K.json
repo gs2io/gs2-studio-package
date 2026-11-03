@@ -1,8 +1,6 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": []
-  },
+  "declared": [],
   "delegatedActions": [
     {
       "methodName": "StartCampaign",

@@ -3,59 +3,57 @@
   "compositeKeyMode": {
     "kind": "inherit"
   },
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "none",
-        "description": "",
-        "id": "prop_00D0VM74GWQ6MGE8JHTBN6NJP5",
-        "localizedDisplay": {
-          "en": {
-            "description": "Set one enchantment configuration per list. Without it the equipment list stays empty.",
-            "label": "Enchantment configuration"
-          },
-          "ja": {
-            "description": "一覧ごとに 1 つのエンチャント設定を指定します。指定しないと装備の一覧は空になります。",
-            "label": "エンチャント設定"
-          }
+  "declared": [
+    {
+      "bindingHint": "none",
+      "description": "",
+      "id": "prop_00D0VM74GWQ6MGE8JHTBN6NJP5",
+      "localizedDisplay": {
+        "en": {
+          "description": "Set one enchantment configuration per list. Without it the equipment list stays empty.",
+          "label": "Enchantment configuration"
         },
-        "name": "enchant",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_00D03217GRKX0AV27J248EX89N"
+        "ja": {
+          "description": "一覧ごとに 1 つのエンチャント設定を指定します。指定しないと装備の一覧は空になります。",
+          "label": "エンチャント設定"
         }
       },
-      {
-        "bindingHint": "userData",
-        "description": "",
-        "id": "prop_00D03217GRK4Y3519ZYVXED9CW",
-        "localizedDisplay": {
-          "en": {
-            "description": "Bonus effects rolled onto this equipment instance.",
-            "label": "Enchantments"
-          },
-          "ja": {
-            "description": "この装備個体に付与された追加効果の一覧です。",
-            "label": "付与済み効果"
-          }
-        },
-        "name": "enchantments",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "elementType": {
-            "kind": "inline",
-            "targetTypeId": "dt_00D03217GRGZC79DA19NWHFSGD"
-          },
-          "kind": "list"
-        }
+      "name": "enchant",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_00D03217GRKX0AV27J248EX89N"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "userData",
+      "description": "",
+      "id": "prop_00D03217GRK4Y3519ZYVXED9CW",
+      "localizedDisplay": {
+        "en": {
+          "description": "Bonus effects rolled onto this equipment instance.",
+          "label": "Enchantments"
+        },
+        "ja": {
+          "description": "この装備個体に付与された追加効果の一覧です。",
+          "label": "付与済み効果"
+        }
+      },
+      "name": "enchantments",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "elementType": {
+          "kind": "inline",
+          "targetTypeId": "dt_00D03217GRGZC79DA19NWHFSGD"
+        },
+        "kind": "list"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_00D03217GRGCSCWCZMF4D2PYM9",
   "kind": "overlay",

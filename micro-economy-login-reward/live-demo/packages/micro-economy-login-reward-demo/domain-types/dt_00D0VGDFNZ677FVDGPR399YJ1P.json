@@ -33,58 +33,56 @@
   "compositeKeyMode": {
     "kind": "inherit"
   },
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "assetDelivery",
-        "description": "",
-        "id": "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Name shown in the login reward track.",
-            "label": "Display name"
-          },
-          "ja": {
-            "description": "ログインボーナスの一覧に表示する名前です。",
-            "label": "表示名"
-          }
+  "declared": [
+    {
+      "bindingHint": "assetDelivery",
+      "description": "",
+      "id": "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ",
+      "localizedDisplay": {
+        "en": {
+          "description": "Name shown in the login reward track.",
+          "label": "Display name"
         },
-        "name": "displayName",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
+        "ja": {
+          "description": "ログインボーナスの一覧に表示する名前です。",
+          "label": "表示名"
         }
       },
-      {
-        "bindingHint": "masterData",
-        "description": "Coins this day deposits when it is claimed",
-        "id": "prop_00D0VGDFNZ5T15JHGFR00Y73HS",
-        "localizedDisplay": {
-          "en": {
-            "description": "Coins paid when this day is claimed.",
-            "label": "Reward coins",
-            "unit": "currency"
-          },
-          "ja": {
-            "description": "この日を受け取ったときに付与するコインの額です。",
-            "label": "報酬コイン",
-            "unit": "通貨"
-          }
-        },
-        "name": "coins",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
-        }
+      "name": "displayName",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "Coins this day deposits when it is claimed",
+      "id": "prop_00D0VGDFNZ5T15JHGFR00Y73HS",
+      "localizedDisplay": {
+        "en": {
+          "description": "Coins paid when this day is claimed.",
+          "label": "Reward coins",
+          "unit": "currency"
+        },
+        "ja": {
+          "description": "この日を受け取ったときに付与するコインの額です。",
+          "label": "報酬コイン",
+          "unit": "通貨"
+        }
+      },
+      "name": "coins",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_00D0VGDFNZ677FVDGPR399YJ1P",
   "kind": "overlay",

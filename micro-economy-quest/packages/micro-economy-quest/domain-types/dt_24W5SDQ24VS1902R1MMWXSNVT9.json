@@ -1,32 +1,30 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN",
-        "localizedDisplay": {
-          "en": {
-            "description": "Schedule during which this quest group is available.",
-            "label": "Availability schedule"
-          },
-          "ja": {
-            "description": "このクエストグループを開催するスケジュールです。",
-            "label": "開催スケジュール"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN",
+      "localizedDisplay": {
+        "en": {
+          "description": "Schedule during which this quest group is available.",
+          "label": "Availability schedule"
         },
-        "name": "schedule",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
+        "ja": {
+          "description": "このクエストグループを開催するスケジュールです。",
+          "label": "開催スケジュール"
         }
+      },
+      "name": "schedule",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
   "idLocalizedDisplay": {

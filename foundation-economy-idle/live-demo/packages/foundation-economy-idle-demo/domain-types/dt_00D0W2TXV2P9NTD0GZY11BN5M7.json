@@ -33,35 +33,33 @@
   "compositeKeyMode": {
     "kind": "inherit"
   },
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "Coins one interval away deposits",
-        "id": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7",
-        "localizedDisplay": {
-          "en": {
-            "description": "Coins paid for each interval away.",
-            "label": "Reward coins",
-            "unit": "currency"
-          },
-          "ja": {
-            "description": "放置 1 区間ごとに付与するコインの額です。",
-            "label": "報酬コイン",
-            "unit": "通貨"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "Coins one interval away deposits",
+      "id": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7",
+      "localizedDisplay": {
+        "en": {
+          "description": "Coins paid for each interval away.",
+          "label": "Reward coins",
+          "unit": "currency"
         },
-        "name": "coins",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
+        "ja": {
+          "description": "放置 1 区間ごとに付与するコインの額です。",
+          "label": "報酬コイン",
+          "unit": "通貨"
         }
+      },
+      "name": "coins",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_00D0W2TXV2P9NTD0GZY11BN5M7",
   "kind": "overlay",

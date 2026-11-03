@@ -1,61 +1,59 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_2E144V2D4DR6774190N39P62XT",
-        "localizedDisplay": {
-          "en": {
-            "description": "AdMob ad unit identifiers allowed by this configuration.",
-            "label": "AdMob ad unit IDs"
-          },
-          "ja": {
-            "description": "許可するAdMob広告ユニットIDの一覧です。",
-            "label": "AdMob広告ユニットID"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_2E144V2D4DR6774190N39P62XT",
+      "localizedDisplay": {
+        "en": {
+          "description": "AdMob ad unit identifiers allowed by this configuration.",
+          "label": "AdMob ad unit IDs"
         },
-        "name": "adMobAdUnitIds",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "elementType": {
-            "kind": "primitive",
-            "primitiveType": "string"
-          },
-          "kind": "list"
+        "ja": {
+          "description": "許可するAdMob広告ユニットIDの一覧です。",
+          "label": "AdMob広告ユニットID"
         }
       },
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_242M4XQ9VWCWPDXV75ACHQVJD1",
-        "localizedDisplay": {
-          "en": {
-            "description": "Game keys used by Unity Ads.",
-            "label": "Unity Ads keys"
-          },
-          "ja": {
-            "description": "Unity Adsで使用するゲームキーの一覧です。",
-            "label": "Unity Adsキー"
-          }
+      "name": "adMobAdUnitIds",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "elementType": {
+          "kind": "primitive",
+          "primitiveType": "string"
         },
-        "name": "unityAdKeys",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "elementType": {
-            "kind": "primitive",
-            "primitiveType": "string"
-          },
-          "kind": "list"
-        }
+        "kind": "list"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_242M4XQ9VWCWPDXV75ACHQVJD1",
+      "localizedDisplay": {
+        "en": {
+          "description": "Game keys used by Unity Ads.",
+          "label": "Unity Ads keys"
+        },
+        "ja": {
+          "description": "Unity Adsで使用するゲームキーの一覧です。",
+          "label": "Unity Adsキー"
+        }
+      },
+      "name": "unityAdKeys",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "elementType": {
+          "kind": "primitive",
+          "primitiveType": "string"
+        },
+        "kind": "list"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
   "idLocalizedDisplay": {

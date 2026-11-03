@@ -1,57 +1,55 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "assetDelivery",
-        "description": "",
-        "id": "prop_0596SK59HPEYXW9Y868ZT82B8A",
-        "localizedDisplay": {
-          "en": {
-            "description": "Login reward group this reward belongs to.",
-            "label": "Reward group"
-          },
-          "ja": {
-            "description": "この報酬が属するログインボーナスグループです。",
-            "label": "ボーナスグループ"
-          }
+  "declared": [
+    {
+      "bindingHint": "assetDelivery",
+      "description": "",
+      "id": "prop_0596SK59HPEYXW9Y868ZT82B8A",
+      "localizedDisplay": {
+        "en": {
+          "description": "Login reward group this reward belongs to.",
+          "label": "Reward group"
         },
-        "name": "loginRewardCollection",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "ref",
-          "targetTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
+        "ja": {
+          "description": "この報酬が属するログインボーナスグループです。",
+          "label": "ボーナスグループ"
         }
       },
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
-        "localizedDisplay": {
-          "en": {
-            "description": "Reward actions executed for this login step.",
-            "label": "Acquire actions"
-          },
-          "ja": {
-            "description": "このログイン段階で実行する報酬アクションです。",
-            "label": "獲得アクション"
-          }
-        },
-        "name": "acquireActions",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "elementType": {
-            "kind": "acquireAction"
-          },
-          "kind": "list"
-        }
+      "name": "loginRewardCollection",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "ref",
+        "targetTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
+      "localizedDisplay": {
+        "en": {
+          "description": "Reward actions executed for this login step.",
+          "label": "Acquire actions"
+        },
+        "ja": {
+          "description": "このログイン段階で実行する報酬アクションです。",
+          "label": "獲得アクション"
+        }
+      },
+      "name": "acquireActions",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "elementType": {
+          "kind": "acquireAction"
+        },
+        "kind": "list"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
   "idLocalizedDisplay": {

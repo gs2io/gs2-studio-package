@@ -1,35 +1,33 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Whether fake receipts used for test purchases are accepted.",
-            "label": "Test receipts"
-          },
-          "ja": {
-            "description": "テスト購入用の偽レシートを受け付けるかを設定します。",
-            "label": "テストレシート"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ",
+      "localizedDisplay": {
+        "en": {
+          "description": "Whether fake receipts used for test purchases are accepted.",
+          "label": "Test receipts"
         },
-        "name": "enableFakeReceipt",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "enum",
-          "values": [
-            "Accept",
-            "Reject"
-          ]
+        "ja": {
+          "description": "テスト購入用の偽レシートを受け付けるかを設定します。",
+          "label": "テストレシート"
         }
+      },
+      "name": "enableFakeReceipt",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "enum",
+        "values": [
+          "Accept",
+          "Reject"
+        ]
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
   "idLocalizedDisplay": {

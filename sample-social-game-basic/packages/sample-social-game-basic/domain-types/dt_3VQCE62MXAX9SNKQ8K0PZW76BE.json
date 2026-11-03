@@ -1,35 +1,33 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "assetDelivery",
-        "description": "",
-        "id": "prop_0K2GDNB2Z9R2MAY48RXEE0ZJQN",
-        "name": "iconAddress",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
+  "declared": [
+    {
+      "bindingHint": "assetDelivery",
+      "description": "",
+      "id": "prop_0K2GDNB2Z9R2MAY48RXEE0ZJQN",
+      "name": "iconAddress",
+      "requirement": {
+        "kind": "always"
       },
-      {
-        "bindingHint": "assetDelivery",
-        "description": "",
-        "id": "prop_408774GV3NAG937A3CXGK2YRBJ",
-        "name": "labelKey",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "assetDelivery",
+      "description": "",
+      "id": "prop_408774GV3NAG937A3CXGK2YRBJ",
+      "name": "labelKey",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE",
   "kind": "local",

@@ -1,33 +1,31 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "userData",
-        "id": "prop_1Y4C4J39XVY8GXQ1SCV6N3TZHT",
-        "name": "itemId",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
+  "declared": [
+    {
+      "bindingHint": "userData",
+      "id": "prop_1Y4C4J39XVY8GXQ1SCV6N3TZHT",
+      "name": "itemId",
+      "requirement": {
+        "kind": "always"
       },
-      {
-        "bindingHint": "userData",
-        "id": "prop_67KF4GJSKA9NANA1AKT6BFB88K",
-        "name": "value",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
-        }
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
       }
-    ]
-  },
+    },
+    {
+      "bindingHint": "userData",
+      "id": "prop_67KF4GJSKA9NANA1AKT6BFB88K",
+      "name": "value",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
+      }
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_0YSV97DT9NZTEKYEATS961RXY4",
   "kind": "local",

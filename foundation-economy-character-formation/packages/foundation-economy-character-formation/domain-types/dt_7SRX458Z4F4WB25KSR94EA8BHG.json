@@ -1,32 +1,30 @@
 {
   "compositeKey": null,
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "",
-        "id": "prop_1KTAJF5QGZJNR6EA3HVSC8QQBT",
-        "localizedDisplay": {
-          "en": {
-            "description": "Regular expression matching character instance IDs eligible for this slot.",
-            "label": "Eligibility pattern"
-          },
-          "ja": {
-            "description": "このスロットへ配置できるキャラクター個体IDの正規表現です。",
-            "label": "配置条件"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "",
+      "id": "prop_1KTAJF5QGZJNR6EA3HVSC8QQBT",
+      "localizedDisplay": {
+        "en": {
+          "description": "Regular expression matching character instance IDs eligible for this slot.",
+          "label": "Eligibility pattern"
         },
-        "name": "propertyRegex",
-        "requirement": {
-          "kind": "never"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
+        "ja": {
+          "description": "このスロットへ配置できるキャラクター個体IDの正規表現です。",
+          "label": "配置条件"
         }
+      },
+      "name": "propertyRegex",
+      "requirement": {
+        "kind": "never"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "string"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [],
   "id": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
   "idLocalizedDisplay": {

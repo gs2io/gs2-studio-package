@@ -40,35 +40,33 @@
   "compositeKeyMode": {
     "kind": "inherit"
   },
-  "declared": {
-    "properties": [
-      {
-        "bindingHint": "masterData",
-        "description": "Free currency this product charges when it is bought",
-        "id": "prop_00D0S4EG729BGHQ7R4RK1959TA",
-        "localizedDisplay": {
-          "en": {
-            "description": "Free currency spent to buy this product.",
-            "label": "Price",
-            "unit": "currency"
-          },
-          "ja": {
-            "description": "この商品を購入するときに消費する無償通貨の量です。",
-            "label": "価格",
-            "unit": "通貨"
-          }
+  "declared": [
+    {
+      "bindingHint": "masterData",
+      "description": "Free currency this product charges when it is bought",
+      "id": "prop_00D0S4EG729BGHQ7R4RK1959TA",
+      "localizedDisplay": {
+        "en": {
+          "description": "Free currency spent to buy this product.",
+          "label": "Price",
+          "unit": "currency"
         },
-        "name": "cost",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "int32"
+        "ja": {
+          "description": "この商品を購入するときに消費する無償通貨の量です。",
+          "label": "価格",
+          "unit": "通貨"
         }
+      },
+      "name": "cost",
+      "requirement": {
+        "kind": "always"
+      },
+      "type": {
+        "kind": "primitive",
+        "primitiveType": "int32"
       }
-    ]
-  },
+    }
+  ],
   "delegatedActions": [
     {
       "methodName": "Buy",
