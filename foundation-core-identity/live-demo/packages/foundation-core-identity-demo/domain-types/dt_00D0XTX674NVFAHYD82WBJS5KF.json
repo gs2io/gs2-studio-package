@@ -13,7 +13,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-core-identity",
-    "directSourceTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5"
+    "domainTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
+    "packageId": "foundation-core-identity"
   }
 }

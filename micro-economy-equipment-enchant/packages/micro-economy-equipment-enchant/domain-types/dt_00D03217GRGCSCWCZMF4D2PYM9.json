@@ -73,7 +73,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-economy-equipment",
-    "directSourceTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3"
+    "domainTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+    "packageId": "foundation-economy-equipment"
   }
 }

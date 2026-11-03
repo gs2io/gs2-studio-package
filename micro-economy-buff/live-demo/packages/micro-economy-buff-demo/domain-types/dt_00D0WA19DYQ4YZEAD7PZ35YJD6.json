@@ -23,7 +23,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-economy-buff",
-    "directSourceTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845"
+    "domainTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+    "packageId": "micro-economy-buff"
   }
 }

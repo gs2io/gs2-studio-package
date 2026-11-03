@@ -79,7 +79,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-liveops-ranking",
-    "directSourceTypeId": "dt_00D031DYK08MQ218VMWRT5X90Q"
+    "domainTypeId": "dt_00D031DYK08MQ218VMWRT5X90Q",
+    "packageId": "micro-liveops-ranking"
   }
 }

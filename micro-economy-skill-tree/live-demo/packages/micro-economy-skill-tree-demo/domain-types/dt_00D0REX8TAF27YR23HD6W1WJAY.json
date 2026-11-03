@@ -84,7 +84,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-economy-skill-tree",
-    "directSourceTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
+    "domainTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+    "packageId": "micro-economy-skill-tree"
   }
 }

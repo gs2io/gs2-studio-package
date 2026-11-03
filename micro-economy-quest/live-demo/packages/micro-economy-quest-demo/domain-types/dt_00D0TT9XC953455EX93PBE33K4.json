@@ -210,7 +210,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-economy-quest",
-    "directSourceTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
+    "domainTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
+    "packageId": "micro-economy-quest"
   }
 }

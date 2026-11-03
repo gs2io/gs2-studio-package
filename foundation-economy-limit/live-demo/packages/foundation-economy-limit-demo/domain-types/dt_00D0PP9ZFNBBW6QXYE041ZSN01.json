@@ -95,7 +95,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-economy-limit",
-    "directSourceTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ"
+    "domainTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+    "packageId": "foundation-economy-limit"
   }
 }

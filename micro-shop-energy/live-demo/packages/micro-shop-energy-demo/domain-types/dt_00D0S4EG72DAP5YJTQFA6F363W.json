@@ -105,7 +105,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-shop-energy",
-    "directSourceTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE"
+    "domainTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
+    "packageId": "micro-shop-energy"
   }
 }

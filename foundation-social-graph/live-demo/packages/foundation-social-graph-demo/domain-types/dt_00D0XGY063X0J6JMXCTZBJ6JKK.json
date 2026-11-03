@@ -13,7 +13,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-social-graph",
-    "directSourceTypeId": "dt_6JV3Y0KG2J3C3460P6WD93NW62"
+    "domainTypeId": "dt_6JV3Y0KG2J3C3460P6WD93NW62",
+    "packageId": "foundation-social-graph"
   }
 }

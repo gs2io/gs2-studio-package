@@ -173,7 +173,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-economy-currency",
-    "directSourceTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA"
+    "domainTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
+    "packageId": "foundation-economy-currency"
   }
 }

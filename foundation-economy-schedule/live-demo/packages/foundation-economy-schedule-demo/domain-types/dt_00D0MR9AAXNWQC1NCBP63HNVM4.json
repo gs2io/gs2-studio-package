@@ -50,7 +50,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-economy-schedule",
-    "directSourceTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE"
+    "domainTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+    "packageId": "foundation-economy-schedule"
   }
 }

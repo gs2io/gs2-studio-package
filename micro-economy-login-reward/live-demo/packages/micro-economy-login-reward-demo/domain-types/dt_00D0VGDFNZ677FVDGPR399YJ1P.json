@@ -102,7 +102,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-economy-login-reward",
-    "directSourceTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y"
+    "domainTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
+    "packageId": "micro-economy-login-reward"
   }
 }

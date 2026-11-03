@@ -108,7 +108,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-economy-character-grade",
-    "directSourceTypeId": "dt_00D0320HQ4G4BENW1GSJMERS0D"
+    "domainTypeId": "dt_00D0320HQ4G4BENW1GSJMERS0D",
+    "packageId": "micro-economy-character-grade"
   }
 }

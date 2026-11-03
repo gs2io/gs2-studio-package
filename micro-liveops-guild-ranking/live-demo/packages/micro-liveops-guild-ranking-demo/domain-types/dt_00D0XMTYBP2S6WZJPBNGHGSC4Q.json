@@ -79,7 +79,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-liveops-guild-ranking",
-    "directSourceTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63"
+    "domainTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+    "packageId": "micro-liveops-guild-ranking"
   }
 }

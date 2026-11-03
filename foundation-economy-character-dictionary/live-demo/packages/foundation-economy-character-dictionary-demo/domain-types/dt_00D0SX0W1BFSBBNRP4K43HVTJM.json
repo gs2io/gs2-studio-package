@@ -32,7 +32,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-economy-character-dictionary",
-    "directSourceTypeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP"
+    "domainTypeId": "dt_294B3NDY2CSVYZCGPT9QXRYRDP",
+    "packageId": "foundation-economy-character-dictionary"
   }
 }

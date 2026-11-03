@@ -13,7 +13,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-social-guild",
-    "directSourceTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY"
+    "domainTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+    "packageId": "foundation-social-guild"
   }
 }

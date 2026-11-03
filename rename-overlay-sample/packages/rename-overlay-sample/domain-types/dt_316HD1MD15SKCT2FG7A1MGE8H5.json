@@ -13,7 +13,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-economy-character",
-    "directSourceTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW"
+    "domainTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
+    "packageId": "foundation-economy-character"
   }
 }

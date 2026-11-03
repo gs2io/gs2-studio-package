@@ -13,7 +13,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-liveops-inbox",
-    "directSourceTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT"
+    "domainTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
+    "packageId": "foundation-liveops-inbox"
   }
 }

@@ -70,7 +70,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-economy-character",
-    "directSourceTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H"
+    "domainTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+    "packageId": "foundation-economy-character"
   }
 }

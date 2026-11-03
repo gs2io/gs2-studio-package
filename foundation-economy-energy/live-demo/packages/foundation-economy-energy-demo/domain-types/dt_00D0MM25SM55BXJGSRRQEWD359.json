@@ -50,7 +50,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-economy-energy",
-    "directSourceTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ"
+    "domainTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+    "packageId": "foundation-economy-energy"
   }
 }

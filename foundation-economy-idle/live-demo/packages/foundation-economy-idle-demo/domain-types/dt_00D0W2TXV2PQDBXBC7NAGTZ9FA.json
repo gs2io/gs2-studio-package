@@ -23,7 +23,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": true,
   "source": {
-    "directSourcePackageId": "foundation-economy-idle",
-    "directSourceTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ"
+    "domainTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
+    "packageId": "foundation-economy-idle"
   }
 }

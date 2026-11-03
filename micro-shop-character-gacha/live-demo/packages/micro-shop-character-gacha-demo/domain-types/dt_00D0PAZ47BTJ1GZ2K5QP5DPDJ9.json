@@ -48,7 +48,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-shop-character-gacha",
-    "directSourceTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R"
+    "domainTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
+    "packageId": "micro-shop-character-gacha"
   }
 }

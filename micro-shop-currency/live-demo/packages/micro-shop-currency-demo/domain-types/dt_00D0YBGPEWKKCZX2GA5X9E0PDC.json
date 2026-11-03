@@ -13,7 +13,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-shop-currency",
-    "directSourceTypeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
+    "domainTypeId": "dt_130FYGH3W86EG2FK06VGEJSYCT",
+    "packageId": "micro-shop-currency"
   }
 }

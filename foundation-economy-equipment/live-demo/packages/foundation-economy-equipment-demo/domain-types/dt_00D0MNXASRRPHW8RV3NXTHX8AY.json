@@ -32,7 +32,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": true,
   "source": {
-    "directSourcePackageId": "foundation-economy-equipment",
-    "directSourceTypeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1"
+    "domainTypeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
+    "packageId": "foundation-economy-equipment"
   }
 }

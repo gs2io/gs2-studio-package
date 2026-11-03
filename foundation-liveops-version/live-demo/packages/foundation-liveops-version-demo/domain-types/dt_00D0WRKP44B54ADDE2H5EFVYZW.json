@@ -13,7 +13,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "foundation-liveops-version",
-    "directSourceTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9"
+    "domainTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+    "packageId": "foundation-liveops-version"
   }
 }

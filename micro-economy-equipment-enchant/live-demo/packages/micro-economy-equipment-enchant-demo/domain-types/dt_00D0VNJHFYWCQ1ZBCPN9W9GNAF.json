@@ -13,7 +13,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-economy-equipment-enchant",
-    "directSourceTypeId": "dt_00D03217GRKX0AV27J248EX89N"
+    "domainTypeId": "dt_00D03217GRKX0AV27J248EX89N",
+    "packageId": "micro-economy-equipment-enchant"
   }
 }

@@ -32,7 +32,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": false,
   "source": {
-    "directSourcePackageId": "micro-economy-character-enhance",
-    "directSourceTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6"
+    "domainTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
+    "packageId": "micro-economy-character-enhance"
   }
 }

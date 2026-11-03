@@ -50,7 +50,7 @@
   "renamedInheritedProperties": {},
   "singleEntry": true,
   "source": {
-    "directSourcePackageId": "foundation-economy-ad",
-    "directSourceTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ"
+    "domainTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
+    "packageId": "foundation-economy-ad"
   }
 }
