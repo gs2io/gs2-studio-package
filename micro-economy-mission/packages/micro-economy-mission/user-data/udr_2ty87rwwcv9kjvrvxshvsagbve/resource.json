@@ -25,24 +25,24 @@
   },
   "projectionBindings": [
     {
-      "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-      "childMountPath": {
+      "kind": "arrayMembership",
+      "parameterName": "completedMissionTaskNames",
+      "targetKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+      "targetMountPath": {
         "kind": "local",
         "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
       },
-      "childTargetPropertyId": "prop_08ZS1KJ683EXX3ADZAVHK3E833",
-      "kind": "arrayMembership",
-      "parameterName": "completedMissionTaskNames"
+      "targetPropertyId": "prop_08ZS1KJ683EXX3ADZAVHK3E833"
     },
     {
-      "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-      "childMountPath": {
+      "kind": "arrayMembership",
+      "parameterName": "receivedMissionTaskNames",
+      "targetKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+      "targetMountPath": {
         "kind": "local",
         "typeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE"
       },
-      "childTargetPropertyId": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB",
-      "kind": "arrayMembership",
-      "parameterName": "receivedMissionTaskNames"
+      "targetPropertyId": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB"
     }
   ]
 }

@@ -21,14 +21,14 @@
   },
   "projectionBindings": [
     {
-      "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-      "childMountPath": {
+      "kind": "arrayMembership",
+      "parameterName": "completeQuestNames",
+      "targetKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+      "targetMountPath": {
         "kind": "local",
         "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
       },
-      "childTargetPropertyId": "prop_6VDGEC28BS22A8B64VXJQP14VQ",
-      "kind": "arrayMembership",
-      "parameterName": "completeQuestNames"
+      "targetPropertyId": "prop_6VDGEC28BS22A8B64VXJQP14VQ"
     }
   ]
 }

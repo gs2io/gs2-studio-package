@@ -32,14 +32,14 @@
   },
   "projectionBindings": [
     {
-      "childKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-      "childMountPath": {
+      "kind": "arrayMembership",
+      "parameterName": "releasedNodeNames",
+      "targetKeyPropertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+      "targetMountPath": {
         "kind": "local",
         "typeId": "dt_00D0321TWK66MR7GWMWA3MCTP1"
       },
-      "childTargetPropertyId": "prop_00D0321TWK6CDMBJRD83E6G2K2",
-      "kind": "arrayMembership",
-      "parameterName": "releasedNodeNames"
+      "targetPropertyId": "prop_00D0321TWK6CDMBJRD83E6G2K2"
     }
   ]
 }
