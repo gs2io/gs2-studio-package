@@ -6,29 +6,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the ranking reward.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "ランキング報酬を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_00D031DYK0DPGPB0KD153VWA20",
@@ -105,6 +82,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D031DYK08MQ218VMWRT5X90Q",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the ranking reward.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "ランキング報酬を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

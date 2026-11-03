@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the schedule.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "スケジュールを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_787C2RE8TDR45Z47ER9FNGNTBH",
@@ -559,6 +536,16 @@
   },
   "delegatedActions": [],
   "id": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the schedule.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "スケジュールを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

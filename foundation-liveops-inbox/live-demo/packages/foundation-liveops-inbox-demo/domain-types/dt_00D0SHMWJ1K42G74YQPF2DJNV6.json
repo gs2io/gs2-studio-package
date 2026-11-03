@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the gift.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "贈り物を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_00D0SHMWJ1KSSS1CYCFS0AHJBT",
@@ -96,6 +73,16 @@
     }
   ],
   "id": "dt_00D0SHMWJ1K42G74YQPF2DJNV6",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the gift.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "贈り物を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "name": "Gift",
   "singleEntry": true

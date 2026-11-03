@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Pulls one trigger in the demo.",
-            "label": "Pull"
-          },
-          "ja": {
-            "description": "デモでトリガーを 1 つ引きます。",
-            "label": "トリガー発火"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_00D0MRCJH84DS7K1B6V3Z7TBCH",
@@ -71,6 +48,16 @@
     }
   ],
   "id": "dt_00D0MRCJH866QJXZVA8BG03CPK",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Pulls one trigger in the demo.",
+      "label": "Pull"
+    },
+    "ja": {
+      "description": "デモでトリガーを 1 つ引きます。",
+      "label": "トリガー発火"
+    }
+  },
   "kind": "local",
   "name": "TriggerPull",
   "singleEntry": false

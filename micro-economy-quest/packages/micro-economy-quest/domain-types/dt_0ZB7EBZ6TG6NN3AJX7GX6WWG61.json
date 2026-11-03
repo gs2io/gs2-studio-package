@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the quest progress.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "クエスト進行を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "userData",
         "description": "",
         "id": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW",
@@ -143,6 +120,16 @@
     }
   ],
   "id": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the quest progress.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "クエスト進行を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

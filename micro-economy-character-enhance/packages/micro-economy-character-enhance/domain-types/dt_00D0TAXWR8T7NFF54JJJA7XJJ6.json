@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the enhancement material.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "強化素材を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "Item metadata JSON carrying the experience it grants, e.g. {\"experience\": 100}",
         "id": "prop_00D0TAXWR8ZNBCPP520RH8KRHD",
@@ -77,6 +54,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the enhancement material.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "強化素材を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

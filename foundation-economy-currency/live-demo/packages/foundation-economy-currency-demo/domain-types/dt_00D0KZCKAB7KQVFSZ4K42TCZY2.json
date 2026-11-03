@@ -3,25 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Adds currency to the free balance, the way a reward would.",
-            "label": "Free deposit"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_00D0KZCKABE9VVHET0Z8R3QD2M",
@@ -63,6 +44,12 @@
     }
   ],
   "id": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Adds currency to the free balance, the way a reward would.",
+      "label": "Free deposit"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

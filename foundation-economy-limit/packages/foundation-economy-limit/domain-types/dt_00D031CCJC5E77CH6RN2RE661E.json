@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the reset schedule.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "リセット設定を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "When the counts return to zero",
         "id": "prop_00D031CCJC935P6N8JH9QZET3R",
@@ -187,6 +164,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D031CCJC5E77CH6RN2RE661E",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the reset schedule.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "リセット設定を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

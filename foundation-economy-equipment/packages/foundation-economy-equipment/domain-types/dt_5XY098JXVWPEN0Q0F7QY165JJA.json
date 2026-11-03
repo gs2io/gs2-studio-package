@@ -1,34 +1,20 @@
 {
   "compositeKey": null,
   "declared": {
-    "properties": [
-      {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the equipment category.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "装備カテゴリを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      }
-    ]
+    "properties": []
   },
   "delegatedActions": [],
   "id": "dt_5XY098JXVWPEN0Q0F7QY165JJA",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the equipment category.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "装備カテゴリを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

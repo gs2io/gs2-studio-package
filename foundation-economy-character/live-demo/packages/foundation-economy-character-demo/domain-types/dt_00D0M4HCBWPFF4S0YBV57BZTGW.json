@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Grants one character in the demo.",
-            "label": "Recruit"
-          },
-          "ja": {
-            "description": "デモでキャラクターを1体入手します。",
-            "label": "勧誘"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_00D0M4HCBWK48152NTS3ABDZMZ",
@@ -96,6 +73,16 @@
     }
   ],
   "id": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Grants one character in the demo.",
+      "label": "Recruit"
+    },
+    "ja": {
+      "description": "デモでキャラクターを1体入手します。",
+      "label": "勧誘"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

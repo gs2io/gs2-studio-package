@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the follow relationship.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "フォロー関係を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "userData",
         "description": "",
         "id": "prop_0037P8GKD1Y37HERP8N6DHZM9F",
@@ -75,6 +52,16 @@
   },
   "delegatedActions": [],
   "id": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the follow relationship.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "フォロー関係を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

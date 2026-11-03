@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the enhancement bonus.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "強化ボーナスを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_00D031YG89KKJ5KMD4538TQ2RX",
@@ -100,6 +77,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D031YG89PEGW8QTF8JNDY638",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the enhancement bonus.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "強化ボーナスを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

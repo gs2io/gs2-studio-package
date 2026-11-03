@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the guild role.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "ギルド権限を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "GS2 policy document for acting as the guild; deny everything explicitly rather than leaving it empty",
         "id": "prop_00D031EHJKR6BBM9VDKF7BEEG6",
@@ -52,6 +29,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D031EHJKYH677VNXVWGBA2D0",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the guild role.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "ギルド権限を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

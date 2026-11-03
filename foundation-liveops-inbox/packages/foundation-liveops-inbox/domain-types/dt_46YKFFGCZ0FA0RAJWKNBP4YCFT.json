@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the message.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "メッセージを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "userData",
         "description": "",
         "id": "prop_7WYH08M0F6N02WHFBRJ4TXX5VD",
@@ -132,6 +109,16 @@
     }
   ],
   "id": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the message.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "メッセージを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

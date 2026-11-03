@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the rolled enchantment.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "付与済み効果を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "userData",
         "description": "",
         "id": "prop_00D03217GRKK3MAVRY7VKHB9GK",
@@ -75,6 +52,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D03217GRGZC79DA19NWHFSGD",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the rolled enchantment.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "付与済み効果を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

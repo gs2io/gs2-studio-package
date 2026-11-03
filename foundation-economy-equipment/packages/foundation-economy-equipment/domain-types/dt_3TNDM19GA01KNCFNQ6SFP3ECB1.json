@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the equipment inventory.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "装備所持枠を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_071QWPTV93WY3RCTPXN9CBG00F",
@@ -129,6 +106,16 @@
   },
   "delegatedActions": [],
   "id": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the equipment inventory.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "装備所持枠を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

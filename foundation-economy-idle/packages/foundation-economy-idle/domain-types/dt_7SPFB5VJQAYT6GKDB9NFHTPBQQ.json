@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the idle status.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "放置状況を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_343KJVJCADHD7053A0N9JQ0M7W",
@@ -163,6 +140,16 @@
     }
   ],
   "id": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the idle status.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "放置状況を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

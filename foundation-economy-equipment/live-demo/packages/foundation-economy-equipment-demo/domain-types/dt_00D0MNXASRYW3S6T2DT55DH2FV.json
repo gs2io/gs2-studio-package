@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Grants one piece of equipment in the demo.",
-            "label": "Catalog"
-          },
-          "ja": {
-            "description": "デモで装備を1つ入手します。",
-            "label": "装備カタログ"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA",
@@ -71,6 +48,16 @@
     }
   ],
   "id": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Grants one piece of equipment in the demo.",
+      "label": "Catalog"
+    },
+    "ja": {
+      "description": "デモで装備を1つ入手します。",
+      "label": "装備カタログ"
+    }
+  },
   "kind": "local",
   "name": "EquipmentCatalog",
   "singleEntry": false

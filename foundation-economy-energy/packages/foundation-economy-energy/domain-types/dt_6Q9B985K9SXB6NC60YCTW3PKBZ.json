@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the stamina model.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "スタミナを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_0VK8BTK0YT0KW0ZS5VN7E3RAWK",
@@ -225,6 +202,16 @@
   },
   "delegatedActions": [],
   "id": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the stamina model.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "スタミナを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

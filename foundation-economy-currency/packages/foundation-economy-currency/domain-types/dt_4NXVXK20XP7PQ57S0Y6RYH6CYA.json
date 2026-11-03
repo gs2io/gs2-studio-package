@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the store product.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "ストア商品を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
@@ -75,6 +52,16 @@
   },
   "delegatedActions": [],
   "id": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the store product.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "ストア商品を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

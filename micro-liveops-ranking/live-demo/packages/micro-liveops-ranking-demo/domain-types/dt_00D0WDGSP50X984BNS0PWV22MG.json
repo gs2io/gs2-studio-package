@@ -1,31 +1,7 @@
 {
   "compositeKey": null,
   "declared": {
-    "properties": [
-      {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "The few minutes in which a visitor can score.",
-            "label": "Contest"
-          },
-          "ja": {
-            "description": "ランキングに参加できる数分間の枠です。",
-            "label": "コンテスト"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      }
-    ]
+    "properties": []
   },
   "delegatedActions": [
     {
@@ -66,6 +42,16 @@
     }
   ],
   "id": "dt_00D0WDGSP50X984BNS0PWV22MG",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "The few minutes in which a visitor can score.",
+      "label": "Contest"
+    },
+    "ja": {
+      "description": "ランキングに参加できる数分間の枠です。",
+      "label": "コンテスト"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

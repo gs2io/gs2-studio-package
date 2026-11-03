@@ -1,34 +1,20 @@
 {
   "compositeKey": null,
   "declared": {
-    "properties": [
-      {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the incoming friend request.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "受信フレンド申請を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      }
-    ]
+    "properties": []
   },
   "delegatedActions": [],
   "id": "dt_0KJDB006NY2GQTXMYTCJ3XKERK",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the incoming friend request.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "受信フレンド申請を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the take-over setting.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "引き継ぎ設定を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "Setting Type Number",
         "id": "prop_4QCBW1JJ874A6NWJKA9KXV0E9D",
@@ -236,6 +213,16 @@
   },
   "delegatedActions": [],
   "id": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the take-over setting.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "引き継ぎ設定を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

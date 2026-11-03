@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the login reward group.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "ログインボーナスグループを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_00D0V3E8RR357Z98YP7VMDXPP7",
@@ -268,6 +245,16 @@
     }
   ],
   "id": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the login reward group.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "ログインボーナスグループを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

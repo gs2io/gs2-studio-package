@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the ad platform.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "広告プラットフォームを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_2E144V2D4DR6774190N39P62XT",
@@ -81,6 +58,16 @@
   },
   "delegatedActions": [],
   "id": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the ad platform.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "広告プラットフォームを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

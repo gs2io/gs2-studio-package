@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the usage counter.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "回数カウンターを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "assetDelivery",
         "description": "The reset cadence this counter follows",
         "id": "prop_00D031N0N8XCG9EJ25SDVPGMYT",
@@ -100,6 +77,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the usage counter.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "回数カウンターを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

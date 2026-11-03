@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the character inventory.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "キャラクター所持枠を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_0YMDYAY5JDK7N10HPS96137T2V",
@@ -129,6 +106,16 @@
   },
   "delegatedActions": [],
   "id": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the character inventory.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "キャラクター所持枠を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

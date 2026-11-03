@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the agreement version.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "規約バージョンを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_4552YRPM4T7DM461NZTHV2R3RF",
@@ -380,6 +357,16 @@
   },
   "delegatedActions": [],
   "id": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the agreement version.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "規約バージョンを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

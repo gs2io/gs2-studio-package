@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the trigger.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "トリガーを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "userData",
         "description": "",
         "id": "prop_1N32JT4VHQX89BMMSNSA8QE1W2",
@@ -98,6 +75,16 @@
   },
   "delegatedActions": [],
   "id": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the trigger.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "トリガーを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

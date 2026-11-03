@@ -76,6 +76,16 @@
               "elementKey": [
                 "prop_4F7GJCACK2YK78HYH2XVEEMN6R"
               ],
+              "idLocalizedDisplay": {
+                "en": {
+                  "description": "Uniquely identifies the store price.",
+                  "label": "ID"
+                },
+                "ja": {
+                  "description": "販売価格を一意に識別します。",
+                  "label": "ID"
+                }
+              },
               "localizedDisplay": {
                 "en": {
                   "description": "A store product's price in one currency, set as an element of the product's prices.",
@@ -88,29 +98,6 @@
               },
               "name": "StorePrice",
               "properties": [
-                {
-                  "bindingHint": "none",
-                  "description": "Unique identifier",
-                  "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-                  "localizedDisplay": {
-                    "en": {
-                      "description": "Uniquely identifies the store price.",
-                      "label": "ID"
-                    },
-                    "ja": {
-                      "description": "販売価格を一意に識別します。",
-                      "label": "ID"
-                    }
-                  },
-                  "name": "id",
-                  "requirement": {
-                    "kind": "always"
-                  },
-                  "type": {
-                    "kind": "primitive",
-                    "primitiveType": "string"
-                  }
-                },
                 {
                   "bindingHint": "masterData",
                   "description": "",

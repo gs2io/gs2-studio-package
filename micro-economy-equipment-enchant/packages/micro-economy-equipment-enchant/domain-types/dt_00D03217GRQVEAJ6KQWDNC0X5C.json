@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the enchantment option.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "エンチャント候補を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_00D03217GRGMDSEFAQS5E3A4B2",
@@ -121,6 +98,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the enchantment option.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "エンチャント候補を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

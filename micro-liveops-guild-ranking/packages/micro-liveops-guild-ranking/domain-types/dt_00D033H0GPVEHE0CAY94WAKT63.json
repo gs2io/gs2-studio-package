@@ -6,29 +6,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the guild ranking reward.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "ギルドランキング報酬を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_00D033H0GPW6DTTEFEGK4CXBVX",
@@ -105,6 +82,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D033H0GPVEHE0CAY94WAKT63",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the guild ranking reward.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "ギルドランキング報酬を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

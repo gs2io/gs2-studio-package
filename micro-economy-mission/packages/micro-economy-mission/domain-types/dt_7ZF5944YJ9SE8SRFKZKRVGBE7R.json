@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the mission group.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "ミッショングループを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_4SWXMEBZDC8Y2G8NHXBQSMNEXJ",
@@ -91,6 +68,16 @@
     }
   ],
   "id": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the mission group.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "ミッショングループを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

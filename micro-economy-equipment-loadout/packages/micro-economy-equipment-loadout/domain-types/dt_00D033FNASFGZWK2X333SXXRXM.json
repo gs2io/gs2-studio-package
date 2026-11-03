@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the equipment slot.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "装備スロットを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "Which equipment this slot accepts, matched on its property id",
         "id": "prop_00D033FNASBHYZ9W1VK8EE39WP",
@@ -52,6 +29,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D033FNASFGZWK2X333SXXRXM",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the equipment slot.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "装備スロットを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

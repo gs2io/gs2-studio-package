@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the mission counter.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "ミッションカウンターを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "userData",
         "description": "",
         "id": "prop_3C8D5YDPFSJ3QVC205RWZ7XDZ2",
@@ -121,6 +98,16 @@
   },
   "delegatedActions": [],
   "id": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the mission counter.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "ミッションカウンターを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

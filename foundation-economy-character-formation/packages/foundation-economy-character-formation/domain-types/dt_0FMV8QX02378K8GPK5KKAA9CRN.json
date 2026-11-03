@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the formation configuration.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "編成を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_0F9XHSDTRNNY0TGSAM1K2Q5QFS",
@@ -104,6 +81,16 @@
   },
   "delegatedActions": [],
   "id": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the formation configuration.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "編成を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

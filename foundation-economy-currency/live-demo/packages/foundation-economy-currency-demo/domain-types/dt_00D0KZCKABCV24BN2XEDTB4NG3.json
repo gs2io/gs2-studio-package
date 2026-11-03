@@ -3,25 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Adds currency to the paid balance, the way a purchase would.",
-            "label": "Paid deposit"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_00D0KZCKAB8JMZWPNE82NRXE0W",
@@ -63,6 +44,12 @@
     }
   ],
   "id": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Adds currency to the paid balance, the way a purchase would.",
+      "label": "Paid deposit"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

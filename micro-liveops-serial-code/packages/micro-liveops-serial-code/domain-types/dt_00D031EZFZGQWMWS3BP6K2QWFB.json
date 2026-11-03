@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the serial-code campaign.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "コードキャンペーンを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "Mark the campaign id as a shared code; GS2 currently accepts the id whether or not this is set",
         "id": "prop_00D031EZFZM4YG8CZFHGS7HMHD",
@@ -52,6 +29,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the serial-code campaign.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "コードキャンペーンを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

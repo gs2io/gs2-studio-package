@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the currency store.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "通貨ストアを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ",
@@ -55,6 +32,16 @@
   },
   "delegatedActions": [],
   "id": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the currency store.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "通貨ストアを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

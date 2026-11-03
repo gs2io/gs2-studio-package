@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the quest.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "クエストを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_5KZQK7RQTRZAX02G1K0EYEMQ35",
@@ -194,6 +171,16 @@
     }
   ],
   "id": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the quest.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "クエストを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

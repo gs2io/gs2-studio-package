@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the equipment slot assignment.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "装着スロットを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "userData",
         "description": "Property id of the equipment worn here, empty when the slot is free",
         "id": "prop_00D033FNAS8DNWPTTNV21SG9XF",
@@ -52,6 +29,16 @@
   },
   "delegatedActions": [],
   "id": "dt_00D033FNASFTV29D7YF0NEPDQD",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the equipment slot assignment.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "装着スロットを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

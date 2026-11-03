@@ -6,29 +6,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the rarity draw rate.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "レアリティ排出率を一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "assetDelivery",
         "description": "",
         "id": "prop_0FB9QM529M8HJWECVFGHK5ETSP",
@@ -101,6 +78,16 @@
   },
   "delegatedActions": [],
   "id": "dt_0RM8RSFWGRCH1J86N5K65VV012",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the rarity draw rate.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "レアリティ排出率を一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {

@@ -3,29 +3,6 @@
   "declared": {
     "properties": [
       {
-        "bindingHint": "none",
-        "description": "Unique identifier",
-        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "localizedDisplay": {
-          "en": {
-            "description": "Uniquely identifies the quest group.",
-            "label": "ID"
-          },
-          "ja": {
-            "description": "クエストグループを一意に識別します。",
-            "label": "ID"
-          }
-        },
-        "name": "id",
-        "requirement": {
-          "kind": "always"
-        },
-        "type": {
-          "kind": "primitive",
-          "primitiveType": "string"
-        }
-      },
-      {
         "bindingHint": "masterData",
         "description": "",
         "id": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN",
@@ -52,6 +29,16 @@
   },
   "delegatedActions": [],
   "id": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
+  "idLocalizedDisplay": {
+    "en": {
+      "description": "Uniquely identifies the quest group.",
+      "label": "ID"
+    },
+    "ja": {
+      "description": "クエストグループを一意に識別します。",
+      "label": "ID"
+    }
+  },
   "kind": "local",
   "localizedDisplay": {
     "en": {
