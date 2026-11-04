@@ -14,9 +14,7 @@
             "parameterName": "count",
             "source": {
               "kind": "domainProperty",
-              "source": {
-                "propertyId": "prop_00D0WDGSP51GEN4HR883CJVRCN"
-              }
+              "propertyId": "prop_00D0WDGSP51GEN4HR883CJVRCN"
             }
           }
         ],

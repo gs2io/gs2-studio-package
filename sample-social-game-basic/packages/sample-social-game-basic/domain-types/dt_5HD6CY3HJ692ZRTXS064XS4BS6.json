@@ -7,27 +7,21 @@
             "parameterName": "rewardType",
             "source": {
               "kind": "domainProperty",
-              "source": {
-                "propertyId": "prop_1TXDHTCHQHVT43M06HMWB1T86R"
-              }
+              "propertyId": "prop_1TXDHTCHQHVT43M06HMWB1T86R"
             }
           },
           {
             "parameterName": "contentsId",
             "source": {
               "kind": "domainProperty",
-              "source": {
-                "propertyId": "prop_635XF953PW3BSYMHYSVYAKEJ0P"
-              }
+              "propertyId": "prop_635XF953PW3BSYMHYSVYAKEJ0P"
             }
           },
           {
             "parameterName": "count",
             "source": {
               "kind": "domainProperty",
-              "source": {
-                "propertyId": "prop_41KFTTF2RYSDR9FFDJ575SQRZV"
-              }
+              "propertyId": "prop_41KFTTF2RYSDR9FFDJ575SQRZV"
             }
           },
           {

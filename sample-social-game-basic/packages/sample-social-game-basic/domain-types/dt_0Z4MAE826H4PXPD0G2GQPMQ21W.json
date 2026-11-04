@@ -7,18 +7,14 @@
             "parameterName": "count",
             "source": {
               "kind": "domainProperty",
-              "source": {
-                "propertyId": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ"
-              }
+              "propertyId": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ"
             }
           },
           {
             "parameterName": "paidOnly",
             "source": {
               "kind": "domainProperty",
-              "source": {
-                "propertyId": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04"
-              }
+              "propertyId": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04"
             }
           },
           {

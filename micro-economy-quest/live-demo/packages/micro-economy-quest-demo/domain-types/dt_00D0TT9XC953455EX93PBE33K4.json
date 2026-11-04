@@ -14,9 +14,7 @@
             "parameterName": "value",
             "source": {
               "kind": "domainProperty",
-              "source": {
-                "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
-              }
+              "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
             }
           }
         ],
@@ -43,9 +41,7 @@
             "parameterName": "count",
             "source": {
               "kind": "domainProperty",
-              "source": {
-                "propertyId": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR"
-              }
+              "propertyId": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR"
             }
           }
         ],
@@ -72,9 +68,7 @@
             "parameterName": "count",
             "source": {
               "kind": "domainProperty",
-              "source": {
-                "propertyId": "prop_00D0TT9XC90NGHJ1JGHG67DHY2"
-              }
+              "propertyId": "prop_00D0TT9XC90NGHJ1JGHG67DHY2"
             }
           }
         ],

@@ -32,9 +32,7 @@
                     "name": "value",
                     "source": {
                       "kind": "domainProperty",
-                      "source": {
-                        "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
-                      }
+                      "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
                     }
                   }
                 ],
@@ -79,9 +77,7 @@
                     "name": "value",
                     "source": {
                       "kind": "domainProperty",
-                      "source": {
-                        "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
-                      }
+                      "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H"
                     }
                   }
                 ],
