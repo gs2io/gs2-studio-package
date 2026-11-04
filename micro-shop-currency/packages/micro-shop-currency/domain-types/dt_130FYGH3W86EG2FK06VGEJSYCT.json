@@ -51,52 +51,7 @@
         "elementType": {
           "kind": "inlineElement",
           "schema": {
-            "delegatedActions": [
-              {
-                "methodName": "Buy",
-                "parameterOverrides": [
-                  {
-                    "parameterName": "quantity",
-                    "source": {
-                      "kind": "static",
-                      "value": 1
-                    }
-                  }
-                ],
-                "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
-                "targetResource": {
-                  "resourceId": "mdr_5G3AX0767581SRB6QPW3FRXDBR",
-                  "resourceKind": "masterData",
-                  "sourcePackageId": "micro-shop-currency"
-                }
-              }
-            ],
-            "description": "",
-            "elementKey": [
-              "prop_4F7GJCACK2YK78HYH2XVEEMN6R"
-            ],
-            "idLocalizedDisplay": {
-              "en": {
-                "description": "Uniquely identifies the store price.",
-                "label": "ID"
-              },
-              "ja": {
-                "description": "販売価格を一意に識別します。",
-                "label": "ID"
-              }
-            },
-            "localizedDisplay": {
-              "en": {
-                "description": "A store product's price in one currency, set as an element of the product's prices.",
-                "label": "Store price"
-              },
-              "ja": {
-                "description": "ストア商品を1つの販売通貨で売るときの価格です。ストア商品の販売価格の要素として設定します。",
-                "label": "販売価格"
-              }
-            },
-            "name": "StorePrice",
-            "properties": [
+            "declared": [
               {
                 "bindingHint": "masterData",
                 "description": "",
@@ -144,6 +99,51 @@
                 }
               }
             ],
+            "delegatedActions": [
+              {
+                "methodName": "Buy",
+                "parameterOverrides": [
+                  {
+                    "parameterName": "quantity",
+                    "source": {
+                      "kind": "static",
+                      "value": 1
+                    }
+                  }
+                ],
+                "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
+                "targetResource": {
+                  "resourceId": "mdr_5G3AX0767581SRB6QPW3FRXDBR",
+                  "resourceKind": "masterData",
+                  "sourcePackageId": "micro-shop-currency"
+                }
+              }
+            ],
+            "description": "",
+            "elementKey": [
+              "prop_4F7GJCACK2YK78HYH2XVEEMN6R"
+            ],
+            "idLocalizedDisplay": {
+              "en": {
+                "description": "Uniquely identifies the store price.",
+                "label": "ID"
+              },
+              "ja": {
+                "description": "販売価格を一意に識別します。",
+                "label": "ID"
+              }
+            },
+            "localizedDisplay": {
+              "en": {
+                "description": "A store product's price in one currency, set as an element of the product's prices.",
+                "label": "Store price"
+              },
+              "ja": {
+                "description": "ストア商品を1つの販売通貨で売るときの価格です。ストア商品の販売価格の要素として設定します。",
+                "label": "販売価格"
+              }
+            },
+            "name": "StorePrice",
             "sort": {
               "direction": "asc",
               "key": null
