@@ -9,8 +9,19 @@
       "parameterName": "metadata"
     },
     {
-      "kind": "skip",
-      "parameterName": "rankingName"
+      "kind": "domainProperty",
+      "parameterName": "rankingName",
+      "source": {
+        "scopes": [],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_00D031DYK0AVE6F96GF6BCQBDY"
+          },
+          "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      }
     },
     {
       "kind": "domainProperties",

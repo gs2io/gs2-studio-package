@@ -206,7 +206,7 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
       .bindings({
         score: Bind.domainProperties([Source.direct(GuildRanking, "score")]),
         clusterRankingScoreId: Bind.skip(),
-        rankingName: Bind.skip(),
+        rankingName: Bind.domainProperty(Source.direct(GuildRanking, "id")),
         clusterName: Bind.skip(),
         season: Bind.skip(),
         metadata: Bind.skip(),
