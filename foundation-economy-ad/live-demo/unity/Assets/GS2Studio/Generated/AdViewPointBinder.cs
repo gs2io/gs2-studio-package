@@ -308,10 +308,10 @@ namespace GS2Studio.Generated.AdViewPoint
         {
 
             _mountSurfaceValue = _mountSurface;
-            __exchangeAdWatchNamespaceRateModelLoader = Runs__exchangeAdWatchNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("AdWatch", (string.IsNullOrEmpty(__sdk__exchangeAdWatchNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeAdWatchNamespaceRateModel_1!)) : null!;
-            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("AdSpend", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
-            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("AdWatch", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
-            __exchangeAdSpendNamespaceRateModelLoader = Runs__exchangeAdSpendNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("AdSpend", (string.IsNullOrEmpty(__sdk__exchangeAdSpendNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeAdSpendNamespaceRateModel_1!)) : null!;
+            __exchangeAdWatchNamespaceRateModelLoader = Runs__exchangeAdWatchNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("AdWatch", (string.IsNullOrEmpty(__sdk__exchangeAdWatchNamespaceRateModel_1) ? _model.Id : __sdk__exchangeAdWatchNamespaceRateModel_1!)) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("AdSpend", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? _model.Id : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("AdWatch", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __exchangeAdSpendNamespaceRateModelLoader = Runs__exchangeAdSpendNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("AdSpend", (string.IsNullOrEmpty(__sdk__exchangeAdSpendNamespaceRateModel_1) ? _model.Id : __sdk__exchangeAdSpendNamespaceRateModel_1!)) : null!;
             __userdataAdRewardPointLoader = new Gs2Bind.Gs2AdReward.PointLoader("Ad");
         }
 

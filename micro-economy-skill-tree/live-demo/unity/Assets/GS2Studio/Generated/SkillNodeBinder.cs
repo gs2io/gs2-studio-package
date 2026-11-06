@@ -245,8 +245,8 @@ namespace GS2Studio.Generated.SkillNode
         ) : base(model, gs2, session)
         {
 
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2SkillTree.NodeModelConsumeActionArrayLoader("SkillTree", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!));
-            __skillTreeSkillTreeNamespaceNodeModelLoader = new Gs2Bind.Gs2SkillTree.NodeModelLoader("SkillTree", (string.IsNullOrEmpty(__sdk__skillTreeSkillTreeNamespaceNodeModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__skillTreeSkillTreeNamespaceNodeModel_1!));
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2SkillTree.NodeModelConsumeActionArrayLoader("SkillTree", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? _model.Id : __sdk__transactionConsumeAction_1!));
+            __skillTreeSkillTreeNamespaceNodeModelLoader = new Gs2Bind.Gs2SkillTree.NodeModelLoader("SkillTree", (string.IsNullOrEmpty(__sdk__skillTreeSkillTreeNamespaceNodeModel_1) ? _model.Id : __sdk__skillTreeSkillTreeNamespaceNodeModel_1!));
             __membershipSkillTreeStatusLoader = new Gs2Bind.Gs2SkillTree.StatusLoader("SkillTree", (string.IsNullOrEmpty(__sdk__membershipSkillTreeStatus_1) ? _model.Owner : __sdk__membershipSkillTreeStatus_1!));
         }
 

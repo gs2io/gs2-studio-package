@@ -295,10 +295,10 @@ namespace GS2Studio.Generated.BuffCampaign
         {
 
             _mountSurfaceValue = _mountSurface;
-            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("BuffCampaignStart", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
-            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("BuffCampaignEnd", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
-            __exchangeBuffCampaignEndNamespaceRateModelLoader = Runs__exchangeBuffCampaignEndNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("BuffCampaignEnd", (string.IsNullOrEmpty(__sdk__exchangeBuffCampaignEndNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeBuffCampaignEndNamespaceRateModel_1!)) : null!;
-            __exchangeBuffCampaignStartNamespaceRateModelLoader = Runs__exchangeBuffCampaignStartNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("BuffCampaignStart", (string.IsNullOrEmpty(__sdk__exchangeBuffCampaignStartNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeBuffCampaignStartNamespaceRateModel_1!)) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("BuffCampaignStart", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("BuffCampaignEnd", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? _model.Id : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __exchangeBuffCampaignEndNamespaceRateModelLoader = Runs__exchangeBuffCampaignEndNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("BuffCampaignEnd", (string.IsNullOrEmpty(__sdk__exchangeBuffCampaignEndNamespaceRateModel_1) ? _model.Id : __sdk__exchangeBuffCampaignEndNamespaceRateModel_1!)) : null!;
+            __exchangeBuffCampaignStartNamespaceRateModelLoader = Runs__exchangeBuffCampaignStartNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("BuffCampaignStart", (string.IsNullOrEmpty(__sdk__exchangeBuffCampaignStartNamespaceRateModel_1) ? _model.Id : __sdk__exchangeBuffCampaignStartNamespaceRateModel_1!)) : null!;
         }
 
 

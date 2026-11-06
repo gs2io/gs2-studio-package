@@ -54,7 +54,7 @@ namespace GS2Studio.Generated.StoreProduct
         /// </summary>
         /// <remarks>ShowcaseShopCurrencyMaster: does not supply SDK backing key name.</remarks>
         bool LoadedMoney2CurrencyNamespaceStoreContentModel { get; }
-        Task<IStoreProductPricesBinder> GetStoreProductPrices(CurrencyTypeId currencyType, string sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId, CancellationToken cancellationToken = default);
+        Task<IStoreProductPricesBinder> GetStoreProductPrices(CurrencyTypeId currencyType, CancellationToken cancellationToken = default);
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
@@ -108,10 +108,10 @@ namespace GS2Studio.Generated.StoreProduct
         protected virtual bool __scopeNavigationOwnerAlive => true;
 
         #region Single-fetch navigation
-        public async Task<IStoreProductPricesBinder> GetStoreProductPrices(CurrencyTypeId currencyType, string sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId, CancellationToken cancellationToken = default)
+        public async Task<IStoreProductPricesBinder> GetStoreProductPrices(CurrencyTypeId currencyType, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposedForNavigation();
-            return await StoreProductPricesBinder.CreateAsync(_model.Id, currencyType, _gs2, _session, cancellationToken, __sdk__showcaseShopCurrencyNamespaceShowcaseDisplayItem_2: sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId);
+            return await StoreProductPricesBinder.CreateAsync(_model.Id, currencyType, _gs2, _session, cancellationToken);
         }
         #endregion
     }
@@ -281,7 +281,7 @@ namespace GS2Studio.Generated.StoreProduct
         {
 
             _mountSurfaceValue = _mountSurface;
-            __money2CurrencyNamespaceStoreContentModelLoader = Runs__money2CurrencyNamespaceStoreContentModelLoader ? new Gs2Bind.Gs2Money2.StoreContentModelLoader("Currency", (string.IsNullOrEmpty(__sdk__money2CurrencyNamespaceStoreContentModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__money2CurrencyNamespaceStoreContentModel_1!)) : null!;
+            __money2CurrencyNamespaceStoreContentModelLoader = Runs__money2CurrencyNamespaceStoreContentModelLoader ? new Gs2Bind.Gs2Money2.StoreContentModelLoader("Currency", (string.IsNullOrEmpty(__sdk__money2CurrencyNamespaceStoreContentModel_1) ? _model.Id : __sdk__money2CurrencyNamespaceStoreContentModel_1!)) : null!;
         }
 
 

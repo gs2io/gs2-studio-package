@@ -252,7 +252,7 @@ namespace GS2Studio.Generated.UsageLimit
         ) : base(model, gs2, session)
         {
 
-            __limitLimitNamespaceLimitModelLoader = new Gs2Bind.Gs2Limit.LimitModelLoader("Limit", (string.IsNullOrEmpty(__sdk__limitLimitNamespaceLimitModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__limitLimitNamespaceLimitModel_1!));
+            __limitLimitNamespaceLimitModelLoader = new Gs2Bind.Gs2Limit.LimitModelLoader("Limit", (string.IsNullOrEmpty(__sdk__limitLimitNamespaceLimitModel_1) ? _model.Id : __sdk__limitLimitNamespaceLimitModel_1!));
         }
 
 

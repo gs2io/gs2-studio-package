@@ -288,8 +288,8 @@ namespace GS2Studio.Generated.Gacha
         {
 
             _mountSurfaceValue = _mountSurface;
-            __lotteryCharacterGachaNamespaceLotteryModelLoader = Runs__lotteryCharacterGachaNamespaceLotteryModelLoader ? new Gs2Bind.Gs2Lottery.LotteryModelLoader("CharacterGacha", (string.IsNullOrEmpty(__sdk__lotteryCharacterGachaNamespaceLotteryModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__lotteryCharacterGachaNamespaceLotteryModel_1!)) : null!;
-            __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader = Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader ? new Gs2Bind.Gs2Showcase.DisplayItemLoader("CharacterGacha", "Showcase", (string.IsNullOrEmpty(__sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2!)) : null!;
+            __lotteryCharacterGachaNamespaceLotteryModelLoader = Runs__lotteryCharacterGachaNamespaceLotteryModelLoader ? new Gs2Bind.Gs2Lottery.LotteryModelLoader("CharacterGacha", (string.IsNullOrEmpty(__sdk__lotteryCharacterGachaNamespaceLotteryModel_1) ? _model.Id : __sdk__lotteryCharacterGachaNamespaceLotteryModel_1!)) : null!;
+            __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader = Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader ? new Gs2Bind.Gs2Showcase.DisplayItemLoader("CharacterGacha", "Showcase", (string.IsNullOrEmpty(__sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2) ? _model.Id : __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2!)) : null!;
         }
 
 

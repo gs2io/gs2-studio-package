@@ -204,8 +204,8 @@ namespace GS2Studio.Generated.PaidDeposit
         ) : base(model, gs2, session)
         {
 
-            __exchangeCurrencyGrantNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CurrencyGrant", (string.IsNullOrEmpty(__sdk__exchangeCurrencyGrantNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeCurrencyGrantNamespaceRateModel_1!));
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CurrencyGrant", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0);
+            __exchangeCurrencyGrantNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CurrencyGrant", (string.IsNullOrEmpty(__sdk__exchangeCurrencyGrantNamespaceRateModel_1) ? _model.Id : __sdk__exchangeCurrencyGrantNamespaceRateModel_1!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CurrencyGrant", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0);
         }
 
 

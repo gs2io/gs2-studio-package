@@ -199,7 +199,7 @@ namespace GS2Studio.Generated.SerialCodeCampaign
         ) : base(model, gs2, session)
         {
 
-            __serialKeySerialCodeNamespaceCampaignModelLoader = new Gs2Bind.Gs2SerialKey.CampaignModelLoader("SerialCode", (string.IsNullOrEmpty(__sdk__serialKeySerialCodeNamespaceCampaignModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__serialKeySerialCodeNamespaceCampaignModel_1!));
+            __serialKeySerialCodeNamespaceCampaignModelLoader = new Gs2Bind.Gs2SerialKey.CampaignModelLoader("SerialCode", (string.IsNullOrEmpty(__sdk__serialKeySerialCodeNamespaceCampaignModel_1) ? _model.Id : __sdk__serialKeySerialCodeNamespaceCampaignModel_1!));
         }
 
 

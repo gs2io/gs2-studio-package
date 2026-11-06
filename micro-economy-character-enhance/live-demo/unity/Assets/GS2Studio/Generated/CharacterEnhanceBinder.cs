@@ -189,7 +189,7 @@ namespace GS2Studio.Generated.CharacterEnhance
         ) : base(model, gs2, session)
         {
 
-            __enhanceCharacterEnhanceNamespaceRateModelLoader = new Gs2Bind.Gs2Enhance.RateModelLoader("CharacterEnhance", (string.IsNullOrEmpty(__sdk__enhanceCharacterEnhanceNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__enhanceCharacterEnhanceNamespaceRateModel_1!));
+            __enhanceCharacterEnhanceNamespaceRateModelLoader = new Gs2Bind.Gs2Enhance.RateModelLoader("CharacterEnhance", (string.IsNullOrEmpty(__sdk__enhanceCharacterEnhanceNamespaceRateModel_1) ? _model.Id : __sdk__enhanceCharacterEnhanceNamespaceRateModel_1!));
         }
 
 

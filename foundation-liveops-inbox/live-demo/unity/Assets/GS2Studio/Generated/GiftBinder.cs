@@ -214,8 +214,8 @@ namespace GS2Studio.Generated.Gift
         ) : base(model, gs2, session)
         {
 
-            __exchangeInboxGiftNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("InboxGift", (string.IsNullOrEmpty(__sdk__exchangeInboxGiftNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeInboxGiftNamespaceRateModel_1!));
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("InboxGift", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0);
+            __exchangeInboxGiftNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("InboxGift", (string.IsNullOrEmpty(__sdk__exchangeInboxGiftNamespaceRateModel_1) ? _model.Id : __sdk__exchangeInboxGiftNamespaceRateModel_1!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("InboxGift", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0);
         }
 
 

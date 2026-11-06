@@ -27,10 +27,6 @@ namespace GS2Studio.Generated.Trigger
     public sealed class TriggerHandler : TriggerHandlerBase
     {
         [SerializeField] private string? _id;
-        private string? _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName;
-        private string? _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName;
-        private string? _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName_2;
-        private string? _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName_2;
         private string? _sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
@@ -75,13 +71,9 @@ namespace GS2Studio.Generated.Trigger
         }
 
         /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName, string? sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName, string? sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName_2, string? sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName_2, string? sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName)
+        public void SetSdkKeys(string? sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName)
         {
             InvalidateBindingIntent();
-            _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName = sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName;
-            _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName = sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName;
-            _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName_2 = sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName_2;
-            _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName_2 = sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName_2;
             _sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName = sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
@@ -112,17 +104,9 @@ namespace GS2Studio.Generated.Trigger
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName_2))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName_2' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName_2))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName_2' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new TriggerId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__exchangeTriggerClearNamespaceRateModel_1: _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName, __sdk__transactionAcquireAction_1: _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName, __sdk__transactionConsumeAction_1: _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName_2, __sdk__exchangeTriggerExtendNamespaceRateModel_1: _sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName_2, __sdk__userdataScheduleTrigger_1: _sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName);
+                var binder = await ResolveBinderFactory().CreateAsync(new TriggerId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__userdataScheduleTrigger_1: _sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -211,10 +195,6 @@ namespace GS2Studio.Generated.Trigger
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_0EW19XBQ94A2PB07R85WZ9TE2H_exchange_RateModel_rateName_2)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_x2d_demo_masterData_mdr_43ANN972MFBQHAXGP4CHFKDN2K_exchange_RateModel_rateName_2)) return false;
             if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_userData_udr_0BRD4DM0YFABGS80VXGWB73KQP_schedule_Trigger_triggerName)) return false;
             return true;
         }

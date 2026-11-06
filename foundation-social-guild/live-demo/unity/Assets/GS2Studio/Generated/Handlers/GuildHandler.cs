@@ -26,7 +26,6 @@ namespace GS2Studio.Generated.Guild
     {
         [SerializeField] private string? _id;
         [SerializeField] private string? _joinedGuildName;
-        private string? _sdk_foundation_x2d_social_x2d_guild_masterData_mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9_guild_GuildModel_guildModelName;
         private string? _sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
@@ -72,10 +71,9 @@ namespace GS2Studio.Generated.Guild
         }
 
         /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_foundation_x2d_social_x2d_guild_masterData_mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9_guild_GuildModel_guildModelName, string? sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName)
+        public void SetSdkKeys(string? sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName)
         {
             InvalidateBindingIntent();
-            _sdk_foundation_x2d_social_x2d_guild_masterData_mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9_guild_GuildModel_guildModelName = sdk_foundation_x2d_social_x2d_guild_masterData_mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9_guild_GuildModel_guildModelName;
             _sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName = sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
@@ -106,11 +104,9 @@ namespace GS2Studio.Generated.Guild
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_social_x2d_guild_masterData_mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9_guild_GuildModel_guildModelName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_social_x2d_guild_masterData_mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9_guild_GuildModel_guildModelName' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new GuildId(_id ?? string.Empty), _joinedGuildName, gs2, session, cancellationToken, __sdk__guildGuildNamespaceGuildModel_1: _sdk_foundation_x2d_social_x2d_guild_masterData_mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9_guild_GuildModel_guildModelName, __sdk__userdataGuildGuildGuildModel_1: _sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName);
+                var binder = await ResolveBinderFactory().CreateAsync(new GuildId(_id ?? string.Empty), _joinedGuildName, gs2, session, cancellationToken, __sdk__userdataGuildGuildGuildModel_1: _sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -200,7 +196,6 @@ namespace GS2Studio.Generated.Guild
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
             if (string.IsNullOrEmpty(_joinedGuildName)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_social_x2d_guild_masterData_mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9_guild_GuildModel_guildModelName)) return false;
             if (string.IsNullOrEmpty(_sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName)) return false;
             return true;
         }

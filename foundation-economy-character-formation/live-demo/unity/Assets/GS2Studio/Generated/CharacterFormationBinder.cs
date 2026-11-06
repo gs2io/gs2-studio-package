@@ -229,8 +229,8 @@ namespace GS2Studio.Generated.CharacterFormation
         ) : base(model, gs2, session)
         {
 
-            __exchangeCharacterFormationExpandNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterFormationExpand", (string.IsNullOrEmpty(__sdk__exchangeCharacterFormationExpandNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeCharacterFormationExpandNamespaceRateModel_1!));
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterFormationExpand", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0);
+            __exchangeCharacterFormationExpandNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterFormationExpand", (string.IsNullOrEmpty(__sdk__exchangeCharacterFormationExpandNamespaceRateModel_1) ? _model.Id : __sdk__exchangeCharacterFormationExpandNamespaceRateModel_1!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterFormationExpand", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0);
             __formationCharacterFormationNamespaceMoldModelLoader = new Gs2Bind.Gs2Formation.MoldModelLoader("CharacterFormation", (string.IsNullOrEmpty(__sdk__formationCharacterFormationNamespaceMoldModel_1) ? "CharacterFormation" : __sdk__formationCharacterFormationNamespaceMoldModel_1!));
             __userdataFormationCharacterFormationMoldModelLoader = new Gs2Bind.Gs2Formation.MoldLoader("CharacterFormation", (string.IsNullOrEmpty(__sdk__userdataFormationCharacterFormationMoldModel_1) ? "CharacterFormation" : __sdk__userdataFormationCharacterFormationMoldModel_1!));
         }

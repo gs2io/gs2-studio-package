@@ -25,7 +25,6 @@ namespace GS2Studio.Generated.MissionCollection
     public sealed class MissionCollectionHandler : MissionCollectionHandlerBase
     {
         [SerializeField] private string? _id;
-        private string? _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM_mission_MissionGroupModel_missionGroupName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -68,16 +67,6 @@ namespace GS2Studio.Generated.MissionCollection
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
-        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_mission_masterData_mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM_mission_MissionGroupModel_missionGroupName)
-        {
-            InvalidateBindingIntent();
-            _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM_mission_MissionGroupModel_missionGroupName = sdk_micro_x2d_economy_x2d_mission_masterData_mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM_mission_MissionGroupModel_missionGroupName;
-            if (IsReadyForReload())
-                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
-            else
-                DisposeOwnedBinder();
-        }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
@@ -102,9 +91,7 @@ namespace GS2Studio.Generated.MissionCollection
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_masterData_mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM_mission_MissionGroupModel_missionGroupName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_masterData_mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM_mission_MissionGroupModel_missionGroupName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new MissionCollectionId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__missionMissionNamespaceMissionGroupModel_1: _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM_mission_MissionGroupModel_missionGroupName);
+                var binder = await ResolveBinderFactory().CreateAsync(new MissionCollectionId(_id ?? string.Empty), gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -193,7 +180,6 @@ namespace GS2Studio.Generated.MissionCollection
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_masterData_mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM_mission_MissionGroupModel_missionGroupName)) return false;
             return true;
         }
 

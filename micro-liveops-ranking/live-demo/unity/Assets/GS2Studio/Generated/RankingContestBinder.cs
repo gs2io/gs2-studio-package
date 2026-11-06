@@ -295,10 +295,10 @@ namespace GS2Studio.Generated.RankingContest
         {
 
             _mountSurfaceValue = _mountSurface;
-            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("RankingContestFinish", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
-            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("RankingContestStart", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
-            __exchangeRankingContestFinishNamespaceRateModelLoader = Runs__exchangeRankingContestFinishNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("RankingContestFinish", (string.IsNullOrEmpty(__sdk__exchangeRankingContestFinishNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeRankingContestFinishNamespaceRateModel_1!)) : null!;
-            __exchangeRankingContestStartNamespaceRateModelLoader = Runs__exchangeRankingContestStartNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("RankingContestStart", (string.IsNullOrEmpty(__sdk__exchangeRankingContestStartNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeRankingContestStartNamespaceRateModel_1!)) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("RankingContestFinish", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? _model.Id : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("RankingContestStart", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __exchangeRankingContestFinishNamespaceRateModelLoader = Runs__exchangeRankingContestFinishNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("RankingContestFinish", (string.IsNullOrEmpty(__sdk__exchangeRankingContestFinishNamespaceRateModel_1) ? _model.Id : __sdk__exchangeRankingContestFinishNamespaceRateModel_1!)) : null!;
+            __exchangeRankingContestStartNamespaceRateModelLoader = Runs__exchangeRankingContestStartNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("RankingContestStart", (string.IsNullOrEmpty(__sdk__exchangeRankingContestStartNamespaceRateModel_1) ? _model.Id : __sdk__exchangeRankingContestStartNamespaceRateModel_1!)) : null!;
         }
 
 

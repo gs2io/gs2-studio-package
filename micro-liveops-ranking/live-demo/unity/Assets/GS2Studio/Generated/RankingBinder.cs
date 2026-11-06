@@ -249,7 +249,7 @@ namespace GS2Studio.Generated.Ranking
         ) : base(model, gs2, session)
         {
 
-            __ranking2RankingNamespaceGlobalRankingModelLoader = new Gs2Bind.Gs2Ranking2.GlobalRankingModelLoader("Ranking", (string.IsNullOrEmpty(__sdk__ranking2RankingNamespaceGlobalRankingModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__ranking2RankingNamespaceGlobalRankingModel_1!));
+            __ranking2RankingNamespaceGlobalRankingModelLoader = new Gs2Bind.Gs2Ranking2.GlobalRankingModelLoader("Ranking", (string.IsNullOrEmpty(__sdk__ranking2RankingNamespaceGlobalRankingModel_1) ? _model.Id : __sdk__ranking2RankingNamespaceGlobalRankingModel_1!));
         }
 
 

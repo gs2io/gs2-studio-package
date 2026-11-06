@@ -207,9 +207,9 @@ namespace GS2Studio.Generated.CharacterRecruit
         ) : base(model, gs2, session)
         {
 
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionArrayLoader("CharacterRecruit", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!));
-            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterRecruit", (string.IsNullOrEmpty(__sdk__transactionAcquireAction2_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction2_1!), 0);
-            __exchangeCharacterRecruitNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterRecruit", (string.IsNullOrEmpty(__sdk__exchangeCharacterRecruitNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeCharacterRecruitNamespaceRateModel_1!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionArrayLoader("CharacterRecruit", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!));
+            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterRecruit", (string.IsNullOrEmpty(__sdk__transactionAcquireAction2_1) ? _model.Id : __sdk__transactionAcquireAction2_1!), 0);
+            __exchangeCharacterRecruitNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterRecruit", (string.IsNullOrEmpty(__sdk__exchangeCharacterRecruitNamespaceRateModel_1) ? _model.Id : __sdk__exchangeCharacterRecruitNamespaceRateModel_1!));
         }
 
 

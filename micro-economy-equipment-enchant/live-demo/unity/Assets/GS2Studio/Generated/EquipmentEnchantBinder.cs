@@ -202,7 +202,7 @@ namespace GS2Studio.Generated.EquipmentEnchant
         ) : base(model, gs2, session)
         {
 
-            __enchantEquipmentEnchantNamespaceRarityParameterModelLoader = new Gs2Bind.Gs2Enchant.RarityParameterModelLoader("EquipmentEnchant", (string.IsNullOrEmpty(__sdk__enchantEquipmentEnchantNamespaceRarityParameterModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__enchantEquipmentEnchantNamespaceRarityParameterModel_1!));
+            __enchantEquipmentEnchantNamespaceRarityParameterModelLoader = new Gs2Bind.Gs2Enchant.RarityParameterModelLoader("EquipmentEnchant", (string.IsNullOrEmpty(__sdk__enchantEquipmentEnchantNamespaceRarityParameterModel_1) ? _model.Id : __sdk__enchantEquipmentEnchantNamespaceRarityParameterModel_1!));
         }
 
 

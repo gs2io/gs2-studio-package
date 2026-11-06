@@ -24,7 +24,7 @@ namespace GS2Studio.Generated.CurrencyType
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyCurrencyTypeBinder : CurrencyType
     {
-        Task<IStoreProductPricesBinder> GetStoreProductPrices(StoreProductId storeProduct, string sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId, CancellationToken cancellationToken = default);
+        Task<IStoreProductPricesBinder> GetStoreProductPrices(StoreProductId storeProduct, CancellationToken cancellationToken = default);
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
@@ -65,10 +65,10 @@ namespace GS2Studio.Generated.CurrencyType
         protected virtual bool __scopeNavigationOwnerAlive => true;
 
         #region Single-fetch navigation
-        public async Task<IStoreProductPricesBinder> GetStoreProductPrices(StoreProductId storeProduct, string sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId, CancellationToken cancellationToken = default)
+        public async Task<IStoreProductPricesBinder> GetStoreProductPrices(StoreProductId storeProduct, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposedForNavigation();
-            return await StoreProductPricesBinder.CreateAsync(storeProduct, _model.Id, _gs2, _session, cancellationToken, __sdk__showcaseShopCurrencyNamespaceShowcaseDisplayItem_2: sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId);
+            return await StoreProductPricesBinder.CreateAsync(storeProduct, _model.Id, _gs2, _session, cancellationToken);
         }
         #endregion
     }
@@ -200,7 +200,7 @@ namespace GS2Studio.Generated.CurrencyType
         ) : base(model, gs2, session)
         {
 
-            __showcaseShopCurrencyNamespaceShowcaseLoader = new Gs2Bind.Gs2Showcase.ShowcaseLoader("ShopCurrency", (string.IsNullOrEmpty(__sdk__showcaseShopCurrencyNamespaceShowcase_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__showcaseShopCurrencyNamespaceShowcase_1!));
+            __showcaseShopCurrencyNamespaceShowcaseLoader = new Gs2Bind.Gs2Showcase.ShowcaseLoader("ShopCurrency", (string.IsNullOrEmpty(__sdk__showcaseShopCurrencyNamespaceShowcase_1) ? _model.Id : __sdk__showcaseShopCurrencyNamespaceShowcase_1!));
         }
 
 

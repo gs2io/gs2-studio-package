@@ -24,7 +24,6 @@ namespace GS2Studio.Generated.AgreementVersion
     public sealed class AgreementVersionHandler : AgreementVersionHandlerBase
     {
         [SerializeField] private string? _id;
-        private string? _sdk_foundation_x2d_liveops_x2d_version_masterData_mdr_319778V7S98XR8N360KTTD5ZS2_version_VersionModel_versionName;
         private string? _sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
@@ -69,10 +68,9 @@ namespace GS2Studio.Generated.AgreementVersion
         }
 
         /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_foundation_x2d_liveops_x2d_version_masterData_mdr_319778V7S98XR8N360KTTD5ZS2_version_VersionModel_versionName, string? sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName)
+        public void SetSdkKeys(string? sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName)
         {
             InvalidateBindingIntent();
-            _sdk_foundation_x2d_liveops_x2d_version_masterData_mdr_319778V7S98XR8N360KTTD5ZS2_version_VersionModel_versionName = sdk_foundation_x2d_liveops_x2d_version_masterData_mdr_319778V7S98XR8N360KTTD5ZS2_version_VersionModel_versionName;
             _sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName = sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
@@ -103,11 +101,9 @@ namespace GS2Studio.Generated.AgreementVersion
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_version_masterData_mdr_319778V7S98XR8N360KTTD5ZS2_version_VersionModel_versionName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_liveops_x2d_version_masterData_mdr_319778V7S98XR8N360KTTD5ZS2_version_VersionModel_versionName' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new AgreementVersionId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__versionVersionNamespaceVersionModel_1: _sdk_foundation_x2d_liveops_x2d_version_masterData_mdr_319778V7S98XR8N360KTTD5ZS2_version_VersionModel_versionName, __sdk__userdataVersionVersionVersionModel_1: _sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName);
+                var binder = await ResolveBinderFactory().CreateAsync(new AgreementVersionId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__userdataVersionVersionVersionModel_1: _sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -196,7 +192,6 @@ namespace GS2Studio.Generated.AgreementVersion
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_version_masterData_mdr_319778V7S98XR8N360KTTD5ZS2_version_VersionModel_versionName)) return false;
             if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_version_userData_udr_75Q7XS8KGC8G9AZVS90PHGB4DK_version_AcceptVersion_versionName)) return false;
             return true;
         }

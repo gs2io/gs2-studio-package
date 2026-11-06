@@ -205,8 +205,8 @@ namespace GS2Studio.Generated.TriggerPull
         ) : base(model, gs2, session)
         {
 
-            __exchangeTriggerPullNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerPull", (string.IsNullOrEmpty(__sdk__exchangeTriggerPullNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeTriggerPullNamespaceRateModel_1!));
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("TriggerPull", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0);
+            __exchangeTriggerPullNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerPull", (string.IsNullOrEmpty(__sdk__exchangeTriggerPullNamespaceRateModel_1) ? _model.Id : __sdk__exchangeTriggerPullNamespaceRateModel_1!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("TriggerPull", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0);
         }
 
 

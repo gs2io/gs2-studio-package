@@ -290,7 +290,7 @@ namespace GS2Studio.Generated.Buff
         ) : base(model, gs2, session)
         {
 
-            __buffBuffNamespaceBuffEntryModelLoader = new Gs2Bind.Gs2Buff.BuffEntryModelLoader("Buff", (string.IsNullOrEmpty(__sdk__buffBuffNamespaceBuffEntryModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__buffBuffNamespaceBuffEntryModel_1!));
+            __buffBuffNamespaceBuffEntryModelLoader = new Gs2Bind.Gs2Buff.BuffEntryModelLoader("Buff", (string.IsNullOrEmpty(__sdk__buffBuffNamespaceBuffEntryModel_1) ? _model.Id : __sdk__buffBuffNamespaceBuffEntryModel_1!));
         }
 
 

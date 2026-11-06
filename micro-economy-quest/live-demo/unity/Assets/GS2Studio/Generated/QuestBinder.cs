@@ -263,11 +263,11 @@ namespace GS2Studio.Generated.Quest
         ) : base(model, gs2, session)
         {
 
-            __questQuestQuestModelLoader = new Gs2Bind.Gs2Quest.QuestModelLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__questQuestQuestModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__questQuestQuestModel_2!));
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Quest.QuestModelContentsAcquireActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_2!), 0);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Quest.QuestModelConsumeActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionConsumeAction_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_2!));
-            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Quest.QuestModelFailedAcquireActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction2_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction2_2!));
-            __transactionAcquireAction3Loader = new Gs2Bind.Gs2Quest.QuestModelFirstCompleteAcquireActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction3_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction3_2!));
+            __questQuestQuestModelLoader = new Gs2Bind.Gs2Quest.QuestModelLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__questQuestQuestModel_2) ? _model.Id : __sdk__questQuestQuestModel_2!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Quest.QuestModelContentsAcquireActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction_2) ? _model.Id : __sdk__transactionAcquireAction_2!), 0);
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2Quest.QuestModelConsumeActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionConsumeAction_2) ? _model.Id : __sdk__transactionConsumeAction_2!));
+            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Quest.QuestModelFailedAcquireActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction2_2) ? _model.Id : __sdk__transactionAcquireAction2_2!));
+            __transactionAcquireAction3Loader = new Gs2Bind.Gs2Quest.QuestModelFirstCompleteAcquireActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction3_2) ? _model.Id : __sdk__transactionAcquireAction3_2!));
             __membershipQuestCompletedQuestListLoader = new Gs2Bind.Gs2Quest.CompletedQuestListLoader("Quest", (string.IsNullOrEmpty(__sdk__membershipQuestCompletedQuestList_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__membershipQuestCompletedQuestList_1!));
         }
 

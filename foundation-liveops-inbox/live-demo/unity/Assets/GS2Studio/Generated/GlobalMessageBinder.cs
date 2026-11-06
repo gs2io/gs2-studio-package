@@ -50,7 +50,7 @@ namespace GS2Studio.Generated.GlobalMessage
         GlobalMessageMountSurface MountSurface { get; }
 
         /// <summary>
-        /// This construction path permits the <c>Gs2Bind.Gs2Schedule.EventLoader</c> load on <c>__scheduleInboxScheduleNamespaceEventLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// This construction path permits the <c>Gs2Bind.Gs2Schedule.EventLoader</c> load on <c>__scheduleInboxScheduleNamespaceEventLoader</c>. False means this path does not supply <c>Begin</c>, <c>End</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
         /// </summary>
         /// <remarks>ExchangeInboxDeliverMaster: does not supply SDK backing key name.</remarks>
         bool LoadedScheduleInboxScheduleNamespaceEvent { get; }
@@ -309,9 +309,9 @@ namespace GS2Studio.Generated.GlobalMessage
         {
 
             _mountSurfaceValue = _mountSurface;
-            __exchangeInboxDeliverNamespaceRateModelLoader = Runs__exchangeInboxDeliverNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("InboxDeliver", (string.IsNullOrEmpty(__sdk__exchangeInboxDeliverNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeInboxDeliverNamespaceRateModel_1!)) : null!;
-            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("InboxDeliver", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
-            __scheduleInboxScheduleNamespaceEventLoader = Runs__scheduleInboxScheduleNamespaceEventLoader ? new Gs2Bind.Gs2Schedule.EventLoader("InboxSchedule", (string.IsNullOrEmpty(__sdk__scheduleInboxScheduleNamespaceEvent_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__scheduleInboxScheduleNamespaceEvent_1!)) : null!;
+            __exchangeInboxDeliverNamespaceRateModelLoader = Runs__exchangeInboxDeliverNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("InboxDeliver", (string.IsNullOrEmpty(__sdk__exchangeInboxDeliverNamespaceRateModel_1) ? _model.Id : __sdk__exchangeInboxDeliverNamespaceRateModel_1!)) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("InboxDeliver", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __scheduleInboxScheduleNamespaceEventLoader = Runs__scheduleInboxScheduleNamespaceEventLoader ? new Gs2Bind.Gs2Schedule.EventLoader("InboxSchedule", (string.IsNullOrEmpty(__sdk__scheduleInboxScheduleNamespaceEvent_1) ? _model.Id : __sdk__scheduleInboxScheduleNamespaceEvent_1!)) : null!;
         }
 
 
@@ -353,8 +353,9 @@ namespace GS2Studio.Generated.GlobalMessage
             }
             var _scheduleInboxScheduleNamespaceEvent = Runs__scheduleInboxScheduleNamespaceEventLoader ? await __scheduleInboxScheduleNamespaceEventLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            if (_scheduleInboxScheduleNamespaceEvent != null)
+            if (Runs__scheduleInboxScheduleNamespaceEventLoader)
             {
+                ApplyScheduleInboxScheduleNamespaceEvent(_model, _scheduleInboxScheduleNamespaceEvent);
             }
             if (Runs__transactionAcquireActionLoader)
             {
@@ -409,9 +410,7 @@ namespace GS2Studio.Generated.GlobalMessage
                     (_, _, value) =>
                     {
                         if (_disposed) return Task.CompletedTask;
-                        if (value != null)
-                        {
-                        }
+                        ApplyScheduleInboxScheduleNamespaceEvent(_model, value);
                         return Task.CompletedTask;
                     },
                     () => onChange?.Invoke()
@@ -482,6 +481,24 @@ namespace GS2Studio.Generated.GlobalMessage
             EnsureActionContext();
             await new Gs2Bind.Gs2Exchange.RateModelLoader("InboxDeliver", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
         }
+        #endregion
+
+        #region Model composition
+        /// <summary>Mount, subscriptions and external stubs share this mapping so null-source resets stay consistent.</summary>
+        public static void ApplyScheduleInboxScheduleNamespaceEvent(IMutableGlobalMessage model, Gs2.Unity.Gs2Schedule.Model.EzEvent? source)
+        {
+            if (source != null)
+            {
+                model.Begin = DateTimeOffset.FromUnixTimeMilliseconds(source.AbsoluteBegin).UtcDateTime;
+                model.End = DateTimeOffset.FromUnixTimeMilliseconds(source.AbsoluteEnd).UtcDateTime;
+            }
+            else
+            {
+                model.Begin = default;
+                model.End = default;
+            }
+        }
+
         #endregion
 
         #region MasterData reverse decode

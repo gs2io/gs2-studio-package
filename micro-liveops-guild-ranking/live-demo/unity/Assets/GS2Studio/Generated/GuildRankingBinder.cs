@@ -249,7 +249,7 @@ namespace GS2Studio.Generated.GuildRanking
         ) : base(model, gs2, session)
         {
 
-            __ranking2GuildRankingNamespaceClusterRankingModelLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingModelLoader("GuildRanking", (string.IsNullOrEmpty(__sdk__ranking2GuildRankingNamespaceClusterRankingModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1!));
+            __ranking2GuildRankingNamespaceClusterRankingModelLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingModelLoader("GuildRanking", (string.IsNullOrEmpty(__sdk__ranking2GuildRankingNamespaceClusterRankingModel_1) ? _model.Id : __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1!));
         }
 
 

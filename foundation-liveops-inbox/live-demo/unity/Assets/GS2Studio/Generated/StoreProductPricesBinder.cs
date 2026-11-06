@@ -223,7 +223,7 @@ namespace GS2Studio.Generated.StoreProductPrices
         ) : base(model, gs2, session)
         {
 
-            __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader = new Gs2Bind.Gs2Showcase.DisplayItemLoader("ShopCurrency", _model.CurrencyType, (string.IsNullOrEmpty(__sdk__showcaseShopCurrencyNamespaceShowcaseDisplayItem_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__showcaseShopCurrencyNamespaceShowcaseDisplayItem_2!));
+            __showcaseShopCurrencyNamespaceShowcaseDisplayItemLoader = new Gs2Bind.Gs2Showcase.DisplayItemLoader("ShopCurrency", _model.CurrencyType, (string.IsNullOrEmpty(__sdk__showcaseShopCurrencyNamespaceShowcaseDisplayItem_2) ? _model.Id : __sdk__showcaseShopCurrencyNamespaceShowcaseDisplayItem_2!));
         }
 
 

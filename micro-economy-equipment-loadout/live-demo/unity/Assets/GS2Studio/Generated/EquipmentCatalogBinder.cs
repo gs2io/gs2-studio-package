@@ -205,8 +205,8 @@ namespace GS2Studio.Generated.EquipmentCatalog
         ) : base(model, gs2, session)
         {
 
-            __exchangeEquipmentTakeNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentTake", (string.IsNullOrEmpty(__sdk__exchangeEquipmentTakeNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEquipmentTakeNamespaceRateModel_1!));
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentTake", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0);
+            __exchangeEquipmentTakeNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentTake", (string.IsNullOrEmpty(__sdk__exchangeEquipmentTakeNamespaceRateModel_1) ? _model.Id : __sdk__exchangeEquipmentTakeNamespaceRateModel_1!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentTake", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0);
         }
 
 

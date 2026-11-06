@@ -389,7 +389,7 @@ namespace GS2Studio.Generated.AgreementVersion
         {
 
             _mountSurfaceValue = _mountSurface;
-            __versionVersionNamespaceVersionModelLoader = new Gs2Bind.Gs2Version.VersionModelLoader("Version", (string.IsNullOrEmpty(__sdk__versionVersionNamespaceVersionModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__versionVersionNamespaceVersionModel_1!));
+            __versionVersionNamespaceVersionModelLoader = new Gs2Bind.Gs2Version.VersionModelLoader("Version", (string.IsNullOrEmpty(__sdk__versionVersionNamespaceVersionModel_1) ? _model.Id : __sdk__versionVersionNamespaceVersionModel_1!));
             __userdataVersionVersionVersionModelLoader = Runs__userdataVersionVersionVersionModelLoader ? new Gs2Bind.Gs2Version.AcceptVersionLoader("Version", (string.IsNullOrEmpty(__sdk__userdataVersionVersionVersionModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataVersionVersionVersionModel_1!)) : null!;
         }
 

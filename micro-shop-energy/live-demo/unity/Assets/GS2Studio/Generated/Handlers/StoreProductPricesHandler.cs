@@ -27,7 +27,6 @@ namespace GS2Studio.Generated.StoreProductPrices
     {
         [SerializeField] private string? _storeProduct;
         [SerializeField] private string? _currencyType;
-        private string? _sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -80,16 +79,6 @@ namespace GS2Studio.Generated.StoreProductPrices
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
-        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId)
-        {
-            InvalidateBindingIntent();
-            _sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId = sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId;
-            if (IsReadyForReload())
-                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
-            else
-                DisposeOwnedBinder();
-        }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
@@ -116,9 +105,7 @@ namespace GS2Studio.Generated.StoreProductPrices
                     throw new InvalidOperationException("Composite key part '_storeProduct' is not set.");
                 if (string.IsNullOrEmpty(_currencyType))
                     throw new InvalidOperationException("Composite key part '_currencyType' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new StoreProductId(_storeProduct ?? string.Empty), new CurrencyTypeId(_currencyType ?? string.Empty), gs2, session, cancellationToken, __sdk__showcaseShopCurrencyNamespaceShowcaseDisplayItem_2: _sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId);
+                var binder = await ResolveBinderFactory().CreateAsync(new StoreProductId(_storeProduct ?? string.Empty), new CurrencyTypeId(_currencyType ?? string.Empty), gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -208,7 +195,6 @@ namespace GS2Studio.Generated.StoreProductPrices
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_storeProduct)) return false;
             if (string.IsNullOrEmpty(_currencyType)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_shop_x2d_currency_masterData_mdr_5G3AX0767581SRB6QPW3FRXDBR_showcase_DisplayItem_displayItemId)) return false;
             return true;
         }
 

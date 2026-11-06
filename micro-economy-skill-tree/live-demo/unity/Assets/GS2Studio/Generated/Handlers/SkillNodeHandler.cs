@@ -26,8 +26,6 @@ namespace GS2Studio.Generated.SkillNode
     {
         [SerializeField] private string? _id;
         [SerializeField] private string? _owner;
-        private string? _sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName;
-        private string? _sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName_2;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -71,17 +69,6 @@ namespace GS2Studio.Generated.SkillNode
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
-        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName, string? sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName_2)
-        {
-            InvalidateBindingIntent();
-            _sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName = sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName;
-            _sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName_2 = sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName_2;
-            if (IsReadyForReload())
-                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
-            else
-                DisposeOwnedBinder();
-        }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
@@ -106,11 +93,7 @@ namespace GS2Studio.Generated.SkillNode
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName_2))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName_2' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new SkillNodeId(_id ?? string.Empty), _owner, gs2, session, cancellationToken, __sdk__transactionConsumeAction_1: _sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName, __sdk__skillTreeSkillTreeNamespaceNodeModel_1: _sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName_2);
+                var binder = await ResolveBinderFactory().CreateAsync(new SkillNodeId(_id ?? string.Empty), _owner, gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -200,8 +183,6 @@ namespace GS2Studio.Generated.SkillNode
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
             if (string.IsNullOrEmpty(_owner)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_skill_x2d_tree_masterData_mdr_3CVJH2052ABYFVDDRM7WE3A8HD_skillTree_NodeModel_nodeModelName_2)) return false;
             return true;
         }
 

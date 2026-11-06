@@ -251,7 +251,7 @@ namespace GS2Studio.Generated.QuestCollection
         {
 
             _mountSurfaceValue = _mountSurface;
-            __questQuestNamespaceQuestGroupModelLoader = Runs__questQuestNamespaceQuestGroupModelLoader ? new Gs2Bind.Gs2Quest.QuestGroupModelLoader("Quest", (string.IsNullOrEmpty(__sdk__questQuestNamespaceQuestGroupModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__questQuestNamespaceQuestGroupModel_1!)) : null!;
+            __questQuestNamespaceQuestGroupModelLoader = Runs__questQuestNamespaceQuestGroupModelLoader ? new Gs2Bind.Gs2Quest.QuestGroupModelLoader("Quest", (string.IsNullOrEmpty(__sdk__questQuestNamespaceQuestGroupModel_1) ? _model.Id : __sdk__questQuestNamespaceQuestGroupModel_1!)) : null!;
         }
 
 

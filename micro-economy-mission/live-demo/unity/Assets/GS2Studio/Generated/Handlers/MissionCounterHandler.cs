@@ -27,9 +27,6 @@ namespace GS2Studio.Generated.MissionCounter
     public sealed class MissionCounterHandler : MissionCounterHandlerBase
     {
         [SerializeField] private string? _id;
-        private string? _sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName;
-        private string? _sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName_2;
-        private string? _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_5Z7G0Z6F359G1APS9TBY5BFARQ_mission_CounterModel_counterName;
         private string? _sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
@@ -74,12 +71,9 @@ namespace GS2Studio.Generated.MissionCounter
         }
 
         /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName, string? sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName_2, string? sdk_micro_x2d_economy_x2d_mission_masterData_mdr_5Z7G0Z6F359G1APS9TBY5BFARQ_mission_CounterModel_counterName, string? sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName)
+        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName)
         {
             InvalidateBindingIntent();
-            _sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName = sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName;
-            _sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName_2 = sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName_2;
-            _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_5Z7G0Z6F359G1APS9TBY5BFARQ_mission_CounterModel_counterName = sdk_micro_x2d_economy_x2d_mission_masterData_mdr_5Z7G0Z6F359G1APS9TBY5BFARQ_mission_CounterModel_counterName;
             _sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName = sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
@@ -110,15 +104,9 @@ namespace GS2Studio.Generated.MissionCounter
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName_2))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName_2' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_masterData_mdr_5Z7G0Z6F359G1APS9TBY5BFARQ_mission_CounterModel_counterName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_masterData_mdr_5Z7G0Z6F359G1APS9TBY5BFARQ_mission_CounterModel_counterName' is not set.");
                 if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName))
                     throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new MissionCounterId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__transactionAcquireAction_1: _sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName, __sdk__exchangeMissionAdvanceNamespaceRateModel_1: _sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName_2, __sdk__missionMissionNamespaceCounterModel_1: _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_5Z7G0Z6F359G1APS9TBY5BFARQ_mission_CounterModel_counterName, __sdk__userdataMissionMissionCounterModel_1: _sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName);
+                var binder = await ResolveBinderFactory().CreateAsync(new MissionCounterId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__userdataMissionMissionCounterModel_1: _sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -207,9 +195,6 @@ namespace GS2Studio.Generated.MissionCounter
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_x2d_demo_masterData_mdr_21DB51BXCRBDQBFYF1JB1TQQ8M_exchange_RateModel_rateName_2)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_masterData_mdr_5Z7G0Z6F359G1APS9TBY5BFARQ_mission_CounterModel_counterName)) return false;
             if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName)) return false;
             return true;
         }

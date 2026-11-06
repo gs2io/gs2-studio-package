@@ -262,7 +262,7 @@ namespace GS2Studio.Generated.MissionCollection
         {
 
             _mountSurfaceValue = _mountSurface;
-            __missionMissionNamespaceMissionGroupModelLoader = Runs__missionMissionNamespaceMissionGroupModelLoader ? new Gs2Bind.Gs2Mission.MissionGroupModelLoader("Mission", (string.IsNullOrEmpty(__sdk__missionMissionNamespaceMissionGroupModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__missionMissionNamespaceMissionGroupModel_1!)) : null!;
+            __missionMissionNamespaceMissionGroupModelLoader = Runs__missionMissionNamespaceMissionGroupModelLoader ? new Gs2Bind.Gs2Mission.MissionGroupModelLoader("Mission", (string.IsNullOrEmpty(__sdk__missionMissionNamespaceMissionGroupModel_1) ? _model.Id : __sdk__missionMissionNamespaceMissionGroupModel_1!)) : null!;
         }
 
 

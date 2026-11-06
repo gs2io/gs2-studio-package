@@ -27,11 +27,6 @@ namespace GS2Studio.Generated.Energy
     public sealed class EnergyHandler : EnergyHandlerBase
     {
         [SerializeField] private string? _id;
-        private string? _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName;
-        private string? _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName_2;
-        private string? _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName;
-        private string? _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName_2;
-        private string? _sdk_foundation_x2d_economy_x2d_energy_masterData_mdr_50W1CZCFK9821RVN6VZJ8P3JZ5_stamina_StaminaModel_staminaName;
         private string? _sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
@@ -76,14 +71,9 @@ namespace GS2Studio.Generated.Energy
         }
 
         /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName, string? sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName_2, string? sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName, string? sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName_2, string? sdk_foundation_x2d_economy_x2d_energy_masterData_mdr_50W1CZCFK9821RVN6VZJ8P3JZ5_stamina_StaminaModel_staminaName, string? sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName)
+        public void SetSdkKeys(string? sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName)
         {
             InvalidateBindingIntent();
-            _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName = sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName;
-            _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName_2 = sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName_2;
-            _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName = sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName;
-            _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName_2 = sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName_2;
-            _sdk_foundation_x2d_economy_x2d_energy_masterData_mdr_50W1CZCFK9821RVN6VZJ8P3JZ5_stamina_StaminaModel_staminaName = sdk_foundation_x2d_economy_x2d_energy_masterData_mdr_50W1CZCFK9821RVN6VZJ8P3JZ5_stamina_StaminaModel_staminaName;
             _sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName = sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
@@ -114,19 +104,9 @@ namespace GS2Studio.Generated.Energy
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName_2))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName_2' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName_2))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName_2' is not set.");
-                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_masterData_mdr_50W1CZCFK9821RVN6VZJ8P3JZ5_stamina_StaminaModel_staminaName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_energy_masterData_mdr_50W1CZCFK9821RVN6VZJ8P3JZ5_stamina_StaminaModel_staminaName' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new EnergyId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__exchangeEnergyRecoverNamespaceRateModel_1: _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName, __sdk__transactionAcquireAction_1: _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName_2, __sdk__exchangeEnergyConsumeNamespaceRateModel_1: _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName, __sdk__transactionConsumeAction_1: _sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName_2, __sdk__staminaEnergyNamespaceStaminaModel_1: _sdk_foundation_x2d_economy_x2d_energy_masterData_mdr_50W1CZCFK9821RVN6VZJ8P3JZ5_stamina_StaminaModel_staminaName, __sdk__userdataStaminaEnergyStaminaModel_1: _sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName);
+                var binder = await ResolveBinderFactory().CreateAsync(new EnergyId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__userdataStaminaEnergyStaminaModel_1: _sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -215,11 +195,6 @@ namespace GS2Studio.Generated.Energy
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8_exchange_RateModel_rateName_2)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_x2d_demo_masterData_mdr_57KN8WGDJJBYHAZR30EV6G0H9R_exchange_RateModel_rateName_2)) return false;
-            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_masterData_mdr_50W1CZCFK9821RVN6VZJ8P3JZ5_stamina_StaminaModel_staminaName)) return false;
             if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_energy_userData_udr_1WAY8NTNY59DPT2MB7G0VGD7TT_stamina_Stamina_staminaName)) return false;
             return true;
         }

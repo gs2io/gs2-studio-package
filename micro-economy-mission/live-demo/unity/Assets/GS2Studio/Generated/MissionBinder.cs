@@ -258,8 +258,8 @@ namespace GS2Studio.Generated.Mission
         ) : base(model, gs2, session)
         {
 
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Mission.MissionTaskModelAcquireActionArrayLoader("Mission", _model.MissionCollection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_2!));
-            __missionMissionMissionTaskModelLoader = new Gs2Bind.Gs2Mission.MissionTaskModelLoader("Mission", _model.MissionCollection, (string.IsNullOrEmpty(__sdk__missionMissionMissionTaskModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__missionMissionMissionTaskModel_2!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Mission.MissionTaskModelAcquireActionArrayLoader("Mission", _model.MissionCollection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction_2) ? _model.Id : __sdk__transactionAcquireAction_2!));
+            __missionMissionMissionTaskModelLoader = new Gs2Bind.Gs2Mission.MissionTaskModelLoader("Mission", _model.MissionCollection, (string.IsNullOrEmpty(__sdk__missionMissionMissionTaskModel_2) ? _model.Id : __sdk__missionMissionMissionTaskModel_2!));
             __membershipMissionCompleteLoader = new Gs2Bind.Gs2Mission.CompleteLoader("Mission", (string.IsNullOrEmpty(__sdk__membershipMissionComplete_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__membershipMissionComplete_1!));
         }
 
@@ -423,10 +423,12 @@ namespace GS2Studio.Generated.Mission
         {
             if (source != null)
             {
+                model.Counter = (MissionCounterId)source.TargetCounter.CounterName;
                 model.TargetValue = source.TargetCounter.Value;
             }
             else
             {
+                model.Counter = new MissionCounterId(string.Empty);
                 model.TargetValue = default;
             }
         }

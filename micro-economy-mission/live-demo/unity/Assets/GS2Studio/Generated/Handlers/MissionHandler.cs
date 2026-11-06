@@ -28,8 +28,6 @@ namespace GS2Studio.Generated.Mission
     {
         [SerializeField] private string? _id;
         [SerializeField] private string? _missionCollection;
-        private string? _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName;
-        private string? _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName_2;
         private string? _sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
@@ -75,11 +73,9 @@ namespace GS2Studio.Generated.Mission
         }
 
         /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName, string? sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName_2, string? sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName)
+        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName)
         {
             InvalidateBindingIntent();
-            _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName = sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName;
-            _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName_2 = sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName_2;
             _sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName = sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
@@ -110,13 +106,9 @@ namespace GS2Studio.Generated.Mission
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName_2))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName_2' is not set.");
                 if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName))
                     throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new MissionId(_id ?? string.Empty), new MissionCollectionId(_missionCollection ?? string.Empty), gs2, session, cancellationToken, __sdk__transactionAcquireAction_2: _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName, __sdk__missionMissionMissionTaskModel_2: _sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName_2, __sdk__membershipMissionComplete_1: _sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName);
+                var binder = await ResolveBinderFactory().CreateAsync(new MissionId(_id ?? string.Empty), new MissionCollectionId(_missionCollection ?? string.Empty), gs2, session, cancellationToken, __sdk__membershipMissionComplete_1: _sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -206,8 +198,6 @@ namespace GS2Studio.Generated.Mission
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
             if (string.IsNullOrEmpty(_missionCollection)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_masterData_mdr_4QWBNQ5KM59ZERS381QKYXGJCB_mission_MissionTaskModel_missionTaskName_2)) return false;
             if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName)) return false;
             return true;
         }

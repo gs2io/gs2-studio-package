@@ -406,7 +406,7 @@ namespace GS2Studio.Generated.Schedule
         {
 
             _mountSurfaceValue = _mountSurface;
-            __scheduleScheduleNamespaceEventLoader = new Gs2Bind.Gs2Schedule.EventLoader("Schedule", (string.IsNullOrEmpty(__sdk__scheduleScheduleNamespaceEvent_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__scheduleScheduleNamespaceEvent_1!));
+            __scheduleScheduleNamespaceEventLoader = new Gs2Bind.Gs2Schedule.EventLoader("Schedule", (string.IsNullOrEmpty(__sdk__scheduleScheduleNamespaceEvent_1) ? _model.Id : __sdk__scheduleScheduleNamespaceEvent_1!));
             __userdataScheduleTriggerLoader = Runs__userdataScheduleTriggerLoader ? new Gs2Bind.Gs2Schedule.TriggerLoader("Schedule", (string.IsNullOrEmpty(__sdk__userdataScheduleTrigger_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataScheduleTrigger_1!)) : null!;
         }
 

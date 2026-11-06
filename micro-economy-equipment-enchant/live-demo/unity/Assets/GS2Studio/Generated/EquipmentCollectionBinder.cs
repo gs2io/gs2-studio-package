@@ -239,8 +239,8 @@ namespace GS2Studio.Generated.EquipmentCollection
         ) : base(model, gs2, session)
         {
 
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentExpand", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0);
-            __exchangeEquipmentExpandNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentExpand", (string.IsNullOrEmpty(__sdk__exchangeEquipmentExpandNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEquipmentExpandNamespaceRateModel_1!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentExpand", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0);
+            __exchangeEquipmentExpandNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentExpand", (string.IsNullOrEmpty(__sdk__exchangeEquipmentExpandNamespaceRateModel_1) ? _model.Id : __sdk__exchangeEquipmentExpandNamespaceRateModel_1!));
             __inventoryEquipmentNamespaceInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryModelLoader("Equipment", (string.IsNullOrEmpty(__sdk__inventoryEquipmentNamespaceInventoryModel_1) ? "Equipment" : __sdk__inventoryEquipmentNamespaceInventoryModel_1!));
             __userdataInventoryEquipmentInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryLoader("Equipment", (string.IsNullOrEmpty(__sdk__userdataInventoryEquipmentInventoryModel_1) ? "Equipment" : __sdk__userdataInventoryEquipmentInventoryModel_1!));
         }

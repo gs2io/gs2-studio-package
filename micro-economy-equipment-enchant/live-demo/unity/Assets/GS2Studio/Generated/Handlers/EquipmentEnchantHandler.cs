@@ -24,7 +24,6 @@ namespace GS2Studio.Generated.EquipmentEnchant
     public sealed class EquipmentEnchantHandler : EquipmentEnchantHandlerBase
     {
         [SerializeField] private string? _id;
-        private string? _sdk_micro_x2d_economy_x2d_equipment_x2d_enchant_masterData_mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2_enchant_RarityParameterModel_parameterName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -67,16 +66,6 @@ namespace GS2Studio.Generated.EquipmentEnchant
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
-        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_equipment_x2d_enchant_masterData_mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2_enchant_RarityParameterModel_parameterName)
-        {
-            InvalidateBindingIntent();
-            _sdk_micro_x2d_economy_x2d_equipment_x2d_enchant_masterData_mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2_enchant_RarityParameterModel_parameterName = sdk_micro_x2d_economy_x2d_equipment_x2d_enchant_masterData_mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2_enchant_RarityParameterModel_parameterName;
-            if (IsReadyForReload())
-                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
-            else
-                DisposeOwnedBinder();
-        }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
@@ -101,9 +90,7 @@ namespace GS2Studio.Generated.EquipmentEnchant
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_equipment_x2d_enchant_masterData_mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2_enchant_RarityParameterModel_parameterName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_equipment_x2d_enchant_masterData_mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2_enchant_RarityParameterModel_parameterName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new EquipmentEnchantId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__enchantEquipmentEnchantNamespaceRarityParameterModel_1: _sdk_micro_x2d_economy_x2d_equipment_x2d_enchant_masterData_mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2_enchant_RarityParameterModel_parameterName);
+                var binder = await ResolveBinderFactory().CreateAsync(new EquipmentEnchantId(_id ?? string.Empty), gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -192,7 +179,6 @@ namespace GS2Studio.Generated.EquipmentEnchant
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_equipment_x2d_enchant_masterData_mdr_4SCNKTFJF0ARMRKR99F6KDV6Y2_enchant_RarityParameterModel_parameterName)) return false;
             return true;
         }
 
