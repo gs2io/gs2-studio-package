@@ -16,6 +16,8 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using GS2Studio.Generated.Ranking;
 using GS2Studio.Generated.RankingReward;
+using Gs2.Unity.Core.Model;
+using Gs2Bind.Gs2Ranking2;
 
 namespace GS2Studio.Generated.RankingReward
 {

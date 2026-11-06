@@ -407,7 +407,7 @@ namespace GS2Studio.Generated.Ranking
         {
             var model = RankingBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(RankingId) : new RankingId(item.Name)));
             ApplyRanking2RankingMasterItemTo(model, item);
-            var binder = new RankingBinder(model, _gs2, _session, __sdk__ranking2RankingNamespaceGlobalRankingModel_1: item.Name);
+            var binder = new RankingBinder(model, _gs2, _session, _mountSurface: RankingMountSurface.Ranking2RankingMaster, __sdk__ranking2RankingNamespaceGlobalRankingModel_1: item.Name);
             try { await binder.MountAsync(cancellationToken); return binder; }
             catch { binder.Dispose(); throw; }
         }

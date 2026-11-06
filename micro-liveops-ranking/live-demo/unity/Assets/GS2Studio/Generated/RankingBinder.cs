@@ -16,12 +16,37 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using Gs2.Unity.Gs2Ranking2.Model;
 using Gs2Bind.Gs2Ranking2;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Ranking
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum RankingMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the Ranking2Ranking master-data list axis.</summary>
+        [Gs2SkipsLoaders("UserdataRanking2RankingGlobalRankingModel")]
+        Ranking2RankingMaster,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyRankingBinder : Ranking
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        RankingMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Ranking2.GlobalRankingScoreLoader</c> load on <c>__userdataRanking2RankingGlobalRankingModelLoader</c>. False means this path does not supply <c>Score</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>Ranking2RankingMaster: passes no season constructor argument.</remarks>
+        /// <remarks>Runs only when season is supplied.</remarks>
+        bool LoadedUserdataRanking2RankingGlobalRankingModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
@@ -38,7 +63,7 @@ namespace GS2Studio.Generated.Ranking
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyRankingBinder : IReadOnlyRankingBinder
+    public abstract class ReadOnlyRankingBinder : IReadOnlyRankingBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableRanking _model;
@@ -61,6 +86,13 @@ namespace GS2Studio.Generated.Ranking
         public long? MaximumValue => _model.MaximumValue;
         /// <inheritdoc cref="Ranking.Score" />
         public long Score => _model.Score;
+
+        /// <inheritdoc />
+        public abstract RankingMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataRanking2RankingGlobalRankingModel { get; }
+
 
         private protected ReadOnlyRankingBinder(MutableRanking model, Gs2Domain gs2, IGameSession session)
         {
@@ -239,17 +271,38 @@ namespace GS2Studio.Generated.Ranking
         internal bool _mounted;
 
         private readonly Gs2Bind.Gs2Ranking2.GlobalRankingModelLoader __ranking2RankingNamespaceGlobalRankingModelLoader;
+        private readonly Gs2Bind.Gs2Ranking2.GlobalRankingScoreLoader __userdataRanking2RankingGlobalRankingModelLoader;
+
+        private readonly RankingMountSurface _mountSurfaceValue;
+        private readonly long? _seasonKey;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataRanking2RankingGlobalRankingModelLoader</c> reads.</summary>
+        /// <remarks>Ranking2RankingMaster: passes no season constructor argument.</remarks>
+        /// <remarks>Runs only when season is supplied.</remarks>
+        private bool Runs__userdataRanking2RankingGlobalRankingModelLoader => (_mountSurfaceValue is RankingMountSurface.Full) && _seasonKey.HasValue;
+
+        /// <inheritdoc />
+        public override RankingMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataRanking2RankingGlobalRankingModel => Runs__userdataRanking2RankingGlobalRankingModelLoader;
 
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal RankingBinder(
             MutableRanking model,
             Gs2Domain gs2,
             IGameSession session,
-            string? __sdk__ranking2RankingNamespaceGlobalRankingModel_1 = null
+            long? season = null,
+            RankingMountSurface _mountSurface = RankingMountSurface.Full,
+            string? __sdk__ranking2RankingNamespaceGlobalRankingModel_1 = null,
+            string? __sdk__userdataRanking2RankingGlobalRankingModel_1 = null
         ) : base(model, gs2, session)
         {
 
+            _mountSurfaceValue = _mountSurface;
+            _seasonKey = season;
             __ranking2RankingNamespaceGlobalRankingModelLoader = new Gs2Bind.Gs2Ranking2.GlobalRankingModelLoader("Ranking", (string.IsNullOrEmpty(__sdk__ranking2RankingNamespaceGlobalRankingModel_1) ? _model.Id : __sdk__ranking2RankingNamespaceGlobalRankingModel_1!));
+            __userdataRanking2RankingGlobalRankingModelLoader = Runs__userdataRanking2RankingGlobalRankingModelLoader ? new Gs2Bind.Gs2Ranking2.GlobalRankingScoreLoader("Ranking", (string.IsNullOrEmpty(__sdk__userdataRanking2RankingGlobalRankingModel_1) ? _model.Id : __sdk__userdataRanking2RankingGlobalRankingModel_1!), season!.Value) : null!;
         }
 
 
@@ -266,10 +319,12 @@ namespace GS2Studio.Generated.Ranking
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default,
-            string? __sdk__ranking2RankingNamespaceGlobalRankingModel_1 = null)
+            long? season = null,
+            string? __sdk__ranking2RankingNamespaceGlobalRankingModel_1 = null,
+            string? __sdk__userdataRanking2RankingGlobalRankingModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new RankingBinder(model, gs2, session, __sdk__ranking2RankingNamespaceGlobalRankingModel_1: __sdk__ranking2RankingNamespaceGlobalRankingModel_1);
+            var binder = new RankingBinder(model, gs2, session, season: season, __sdk__ranking2RankingNamespaceGlobalRankingModel_1: __sdk__ranking2RankingNamespaceGlobalRankingModel_1, __sdk__userdataRanking2RankingGlobalRankingModel_1: __sdk__userdataRanking2RankingGlobalRankingModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
@@ -280,6 +335,12 @@ namespace GS2Studio.Generated.Ranking
             var _ranking2RankingNamespaceGlobalRankingModel = await __ranking2RankingNamespaceGlobalRankingModelLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyRanking2RankingNamespaceGlobalRankingModel(_model, _ranking2RankingNamespaceGlobalRankingModel);
+            var _userdataRanking2RankingGlobalRankingModel = Runs__userdataRanking2RankingGlobalRankingModelLoader ? await __userdataRanking2RankingGlobalRankingModelLoader.Load(_gs2, _session) : null;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (Runs__userdataRanking2RankingGlobalRankingModelLoader)
+            {
+                ApplyUserdataRanking2RankingGlobalRankingModel(_model, _userdataRanking2RankingGlobalRankingModel);
+            }
             RankingOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
             _mounted = true;
         }
@@ -299,12 +360,30 @@ namespace GS2Studio.Generated.Ranking
                 },
                 () => onChange?.Invoke()
             ));
+            if (Runs__userdataRanking2RankingGlobalRankingModelLoader)
+            {
+                _unsubscribers.Add(__userdataRanking2RankingGlobalRankingModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataRanking2RankingGlobalRankingModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
             __ranking2RankingNamespaceGlobalRankingModelLoader.Invalidate(_gs2, _session);
+            if (Runs__userdataRanking2RankingGlobalRankingModelLoader)
+            {
+                __userdataRanking2RankingGlobalRankingModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -364,6 +443,19 @@ namespace GS2Studio.Generated.Ranking
                 model.MinimumValue = default;
                 model.OrderDirection = string.Empty;
                 model.Sum = default;
+            }
+        }
+
+        /// <summary>Mount, subscriptions and external stubs share this mapping so null-source resets stay consistent.</summary>
+        public static void ApplyUserdataRanking2RankingGlobalRankingModel(IMutableRanking model, Gs2.Unity.Gs2Ranking2.Model.EzGlobalRankingScore? source)
+        {
+            if (source != null)
+            {
+                model.Score = source.Score;
+            }
+            else
+            {
+                model.Score = default;
             }
         }
 

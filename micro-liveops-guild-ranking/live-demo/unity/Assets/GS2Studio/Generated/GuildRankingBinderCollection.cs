@@ -407,7 +407,7 @@ namespace GS2Studio.Generated.GuildRanking
         {
             var model = GuildRankingBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(GuildRankingId) : new GuildRankingId(item.Name)));
             ApplyRanking2GuildRankingMasterItemTo(model, item);
-            var binder = new GuildRankingBinder(model, _gs2, _session, __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1: item.Name);
+            var binder = new GuildRankingBinder(model, _gs2, _session, _mountSurface: GuildRankingMountSurface.Ranking2GuildRankingMaster, __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1: item.Name);
             try { await binder.MountAsync(cancellationToken); return binder; }
             catch { binder.Dispose(); throw; }
         }

@@ -24,6 +24,7 @@ namespace GS2Studio.Generated.Ranking
     public sealed class RankingHandler : RankingHandlerBase
     {
         [SerializeField] private string? _id;
+        private long? _seasonKey;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -66,6 +67,16 @@ namespace GS2Studio.Generated.Ranking
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
+        /// <summary>Supply the scope keys whose loaders stay off until every one of them is set.</summary>
+        public void SetScopeKeys(long? season)
+        {
+            InvalidateBindingIntent();
+            _seasonKey = season;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
+        }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
@@ -90,7 +101,7 @@ namespace GS2Studio.Generated.Ranking
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new RankingId(_id ?? string.Empty), gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new RankingId(_id ?? string.Empty), gs2, session, cancellationToken, season: _seasonKey);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

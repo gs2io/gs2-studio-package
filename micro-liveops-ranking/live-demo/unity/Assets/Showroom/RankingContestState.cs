@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using UnityEngine;
@@ -17,7 +18,9 @@ using Gs2.Gs2Schedule.Request;
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 
+using GS2Studio.Generated.Ranking;
 using GS2Studio.Generated.RankingContest.UI;
+using GS2Studio.Generated.RankingReward;
 
 namespace GS2Studio.Showroom.Demo
 {
@@ -65,7 +68,7 @@ namespace GS2Studio.Showroom.Demo
         public event Action? Updated;
 
         // Do not render unread data or an unadjusted deadline as settled contest state.
-        public bool HasValue => _triggerRead && _standingRead && DemoTimeOffset.Has(UserId);
+        public bool HasValue => _triggerRead && _standingRead && _scoreRead && DemoTimeOffset.Has(UserId);
 
         public bool Open => EndsAt != null;
 
@@ -92,6 +95,17 @@ namespace GS2Studio.Showroom.Demo
 
         public string UserId { get; private set; } = "";
 
+        // The generated binder owns the player's score and pushes each new submission; the season is passed explicitly.
+        private RankingBinder? _score;
+        private bool _scoreRead;
+        private bool _mountingScore;
+        private int _scoreTicket;
+
+        // Reward tiers are master data: read their coins once through the generated collection.
+        private IRankingRewardBinderCollection? _rewards;
+        private (int thresholdRank, int coins)[] _tiers = Array.Empty<(int, int)>();
+        private bool _mountingRewards;
+
         private long _triggerExpiresAt;
         private bool _triggerRead;
         private bool _standingRead;
@@ -113,20 +127,34 @@ namespace GS2Studio.Showroom.Demo
         // Polling may repeat one failure; report it once until a successful read clears the latch.
         private readonly ShowroomLatch _triggerFailures = new ShowroomLatch();
         private readonly ShowroomLatch _standingFailures = new ShowroomLatch();
+        private readonly ShowroomLatch _scoreFailures = new ShowroomLatch();
+        private readonly ShowroomLatch _rewardFailures = new ShowroomLatch();
+
+        private readonly ShowroomInbox _inbox = new ShowroomInbox();
 
         private readonly List<UnityEngine.Events.UnityEvent> _pressEvents = new List<UnityEngine.Events.UnityEvent>();
 
         private void OnEnable()
         {
             DemoTimeOffset.Loaded += OnOffsetLoaded;
+            DemoTimeOffset.Applied += OnClockApplied;
             StartCoroutine(Run());
         }
 
         private void OnDisable()
         {
             DemoTimeOffset.Loaded -= OnOffsetLoaded;
+            DemoTimeOffset.Applied -= OnClockApplied;
             foreach (var pressed in _pressEvents) pressed.RemoveListener(OnPressed);
             _pressEvents.Clear();
+            DropScore();
+            _rewards?.Dispose();
+            _rewards = null;
+        }
+
+        private void Update()
+        {
+            _inbox.Drain();
         }
 
         private IEnumerator Run()
@@ -141,6 +169,8 @@ namespace GS2Studio.Showroom.Demo
             DemoTimeOffset.TryGet(UserId, out _);
             ReadTrigger();
             ReadStanding();
+            MountScore();
+            MountRewards();
 
             var tick = new WaitForSecondsRealtime(1f);
             var nextStandingRead = Time.realtimeSinceStartup + StandingPollSeconds;
@@ -154,6 +184,9 @@ namespace GS2Studio.Showroom.Demo
                 {
                     nextStandingRead = now + StandingPollSeconds;
                     ReadStanding();
+                    // A failed mount is retried on the standing cadence; a mounted binder updates itself.
+                    if (_score == null) MountScore();
+                    if (_rewards == null) MountRewards();
                 }
                 // Clock expiry can close the contest without a new trigger value; subscribers still need that transition.
                 if (wasOpen != Open) Updated?.Invoke();
@@ -219,9 +252,7 @@ namespace GS2Studio.Showroom.Demo
                 return "Your contest has closed. Press Start contest to play again.";
             }
             if (this == null) return "";
-            _standingGeneration++;
-            Best = score;
-            Updated?.Invoke();
+            // The score binder receives the submission itself; only the rank needs a fresh read.
             ReadStanding();
             return $"You scored {score}, a new best.";
         }
@@ -261,6 +292,113 @@ namespace GS2Studio.Showroom.Demo
             Updated?.Invoke();
             ReadStanding();
             return "Received the reward for your rank.";
+        }
+
+        // The SDK caches the score under the access token's clock offset, so a refreshed clock needs a binder on the new key.
+        private void OnClockApplied(string userId)
+        {
+            if (userId != UserId || this == null) return;
+            DropScore();
+            MountScore();
+        }
+
+        // A mount still in flight belongs to the dropped ticket and disposes its binder when it completes.
+        private void DropScore()
+        {
+            _scoreTicket++;
+            _mountingScore = false;
+            _score?.Dispose();
+            _score = null;
+        }
+
+        private async void MountScore()
+        {
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
+            if (_mountingScore || _score != null) return;
+            _mountingScore = true;
+            var ticket = _scoreTicket;
+            RankingBinder? binder = null;
+            try
+            {
+                binder = await RankingBinder.CreateAsync(new RankingId(RankingName), gs2, session, season: Season);
+            }
+            catch (Exception error)
+            {
+                if (this != null && ticket == _scoreTicket) _scoreFailures.Fail("Your score could not be read", error);
+            }
+            finally
+            {
+                if (ticket == _scoreTicket) _mountingScore = false;
+            }
+            if (binder == null) return;
+            if (this == null || !isActiveAndEnabled || ticket != _scoreTicket)
+            {
+                binder.Dispose();
+                return;
+            }
+            _scoreFailures.Succeeded();
+            _score = binder;
+            // Cache callbacks can arrive off the main thread; apply them where Update drains the inbox.
+            binder.Subscribe(() => _inbox.Post(() =>
+            {
+                if (ticket == _scoreTicket) ApplyScore();
+            }));
+            ApplyScore();
+        }
+
+        // The coins of the first tier whose threshold covers the rank; null before the tiers are read or past the last tier.
+        public int? CoinsFor(int rank)
+        {
+            foreach (var tier in _tiers)
+            {
+                if (rank <= tier.thresholdRank) return tier.coins;
+            }
+            return null;
+        }
+
+        private async void MountRewards()
+        {
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
+            if (_mountingRewards || _rewards != null) return;
+            _mountingRewards = true;
+            var rewards = DefaultRankingRewardBinderFactory.Instance.CreateCollection(gs2, session);
+            try
+            {
+                await rewards.MountFromOverlayAsync();
+            }
+            catch (Exception error)
+            {
+                rewards.Dispose();
+                if (this != null) _rewardFailures.Fail("The reward tiers could not be read", error);
+                return;
+            }
+            finally
+            {
+                _mountingRewards = false;
+            }
+            var tiers = rewards.WhereRanking(new RankingId(RankingName))
+                .Select(reward => (thresholdRank: reward.ThresholdRank.Value, coins: reward.Coins))
+                .OrderBy(tier => tier.thresholdRank)
+                .ToArray();
+            // An empty read is retried on the standing cadence rather than kept as "no tiers".
+            if (this == null || !isActiveAndEnabled || tiers.Length == 0)
+            {
+                rewards.Dispose();
+                return;
+            }
+            _rewardFailures.Succeeded();
+            _rewards = rewards;
+            _tiers = tiers;
+            Updated?.Invoke();
+        }
+
+        private void ApplyScore()
+        {
+            if (_score == null) return;
+            // Scores are at least 1, so the zero a missing score row leaves behind means the player has not played.
+            Best = _score.Score > 0 ? _score.Score : null;
+            _scoreRead = true;
+            Updated?.Invoke();
         }
 
         // Coalesce scheduled trigger reads; direct press-time reads remain protected by the generation check.
@@ -373,13 +511,13 @@ namespace GS2Studio.Showroom.Demo
             var client = new Gs2Ranking2RestClient(gs2.Super.RestSession);
             var token = session.AccessToken.Token;
 
+            // The score binder supplies the player's score; the rank is computed data the package does not model.
             var own = await client.GetGlobalRankingAsync(
                 new GetGlobalRankingRequest()
                     .WithNamespaceName(RankingNamespace)
                     .WithRankingName(RankingName)
                     .WithSeason(Season)
                     .WithAccessToken(token));
-            var best = own?.Item?.Score;
             var rank = own?.Item?.Rank;
 
             var board = await client.DescribeGlobalRankingsAsync(
@@ -392,7 +530,8 @@ namespace GS2Studio.Showroom.Demo
 
             // Season 0 is fixed for this demo, so keep a confirmed receipt across board refreshes instead of rereading it.
             var received = Received;
-            if (!received && best != null)
+            // Read the receipt whenever the server has a row for the player; the score binder may not have mounted yet.
+            if (!received && own?.Item?.Score != null)
             {
                 try
                 {
@@ -411,7 +550,6 @@ namespace GS2Studio.Showroom.Demo
 
             if (this == null || generation != _standingGeneration) return;
             UserId = session.UserId;
-            Best = best;
             Rank = rank;
             Board = board?.Items ?? Array.Empty<GlobalRankingData>();
             Received = received;

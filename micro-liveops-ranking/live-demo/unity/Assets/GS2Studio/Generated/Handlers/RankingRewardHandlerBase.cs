@@ -10,6 +10,8 @@ using System;
 using UnityEngine;
 using GS2Studio.Generated.Ranking;
 using GS2Studio.Generated.RankingReward;
+using Gs2.Unity.Core.Model;
+using Gs2Bind.Gs2Ranking2;
 using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.RankingReward

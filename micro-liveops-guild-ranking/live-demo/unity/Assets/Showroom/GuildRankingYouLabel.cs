@@ -44,7 +44,7 @@ namespace GS2Studio.Showroom.Demo
                 _onUpdate.Invoke("No season is open, so there is nothing to rank yet");
                 return;
             }
-            if (!_season.StandingKnown)
+            if (!_season.StandingKnown || !_season.ScoreKnown)
             {
                 _onUpdate.Invoke("Reading your guild's board...");
                 return;

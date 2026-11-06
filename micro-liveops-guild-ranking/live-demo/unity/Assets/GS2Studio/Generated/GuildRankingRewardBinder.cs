@@ -16,6 +16,9 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using GS2Studio.Generated.GuildRanking;
 using GS2Studio.Generated.GuildRankingReward;
+using Gs2.Unity.Core.Model;
+using Gs2Bind.Gs2Ranking2;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.GuildRankingReward
 {
@@ -208,16 +211,18 @@ namespace GS2Studio.Generated.GuildRankingReward
         private bool _disposed;
         internal bool _mounted;
 
-
+        private readonly Gs2Bind.Gs2Ranking2.ClusterRankingModelRankingRewardAcquireActionArrayLoader __transactionAcquireActionLoader;
 
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal GuildRankingRewardBinder(
             MutableGuildRankingReward model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            string? __sdk__transactionAcquireAction_1 = null
         ) : base(model, gs2, session)
         {
 
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingModelRankingRewardAcquireActionArrayLoader("GuildRanking", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Ranking : __sdk__transactionAcquireAction_1!), _model.ThresholdRank);
         }
 
 
@@ -235,11 +240,12 @@ namespace GS2Studio.Generated.GuildRankingReward
             GuildRankingId ranking, GuildRankingRewardThresholdRank thresholdRank,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null)
         {
             var id = new GuildRankingRewardId($"{thresholdRank.Value.ToString(global::System.Globalization.CultureInfo.InvariantCulture)}.{ranking.ToString()}");
             var model = CreateModel(id, ranking, thresholdRank);
-            var binder = new GuildRankingRewardBinder(model, gs2, session);
+            var binder = new GuildRankingRewardBinder(model, gs2, session, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
@@ -247,21 +253,54 @@ namespace GS2Studio.Generated.GuildRankingReward
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            await Task.CompletedTask;
+            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_transactionAcquireAction != null)
+            {
+            }
             GuildRankingRewardOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+            _model.Coins = default;
+            if (_transactionAcquireAction != null)
+            {
+                foreach (var __action in _transactionAcquireAction)
+                {
+                    if (__action != null && RestoreCoins(_model, __action.Action, __action.Request)) break;
+                }
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-
+            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                _gs2,
+                _session,
+                (_, _, value) =>
+                {
+                    if (_disposed) return Task.CompletedTask;
+                    if (value != null)
+                    {
+                    }
+                    _model.Coins = default;
+                    if (value != null)
+                    {
+                        foreach (var __action in value)
+                        {
+                            if (__action != null && RestoreCoins(_model, __action.Action, __action.Request)) break;
+                        }
+                    }
+                    GuildRankingRewardOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                    return Task.CompletedTask;
+                },
+                () => onChange?.Invoke()
+            ));
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-
+            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
         }
 
         private void ThrowIfDisposed()
@@ -303,6 +342,46 @@ namespace GS2Studio.Generated.GuildRankingReward
 
             GC.SuppressFinalize(this);
         }
+
+        #region MasterData reverse decode
+        public static bool RestoreCoins(IMutableGuildRankingReward model, string actionName, string requestJson)
+        {
+            if (requestJson == null) return false;
+            var request = JsonMapper.ToObject(requestJson);
+            if (actionName == "Gs2Money2:DepositByUserId" && ReadRequestValue(request, new string[] { "namespaceName" }) == "Currency" && ReadRequestValue(request, new string[] { "depositTransactions", "[0]", "price" }) == (0L).ToString() && ReadRequestValue(request, new string[] { "depositTransactions", "[0]", "currency" }) == "")
+            {
+                var __value = ReadRequestValue(request, new string[] { "depositTransactions", "[0]", "count" });
+                if (__value != null)
+                {
+                    model.Coins = (int)Convert.ChangeType(__value, typeof(int));
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static string? ReadRequestValue(JsonData request, string[] segments)
+        {
+            JsonData current = request;
+            foreach (var segment in segments)
+            {
+                if (current == null) return null;
+                if (segment.Length >= 2 && segment[0] == '[' && segment[segment.Length - 1] == ']')
+                {
+                    if (!current.IsArray) return null;
+                    if (!int.TryParse(segment.Substring(1, segment.Length - 2), out var index)) return null;
+                    if (index < 0 || index >= current.Count) return null;
+                    current = current[index];
+                }
+                else
+                {
+                    if (!current.IsObject || !current.Keys.Contains(segment)) return null;
+                    current = current[segment];
+                }
+            }
+            return current == null ? null : current.ToString();
+        }
+        #endregion
 
     }
 }

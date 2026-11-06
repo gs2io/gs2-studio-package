@@ -24,7 +24,10 @@ namespace GS2Studio.Generated.GuildRanking
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default,
-            string? __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1 = null);
+            string? clusterName = null,
+            long? season = null,
+            string? __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1 = null,
+            string? __sdk__userdataRanking2GuildRankingClusterRankingModel_1 = null);
         IGuildRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -37,9 +40,12 @@ namespace GS2Studio.Generated.GuildRanking
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default,
-            string? __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1 = null)
+            string? clusterName = null,
+            long? season = null,
+            string? __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1 = null,
+            string? __sdk__userdataRanking2GuildRankingClusterRankingModel_1 = null)
         {
-            return await GuildRankingBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1);
+            return await GuildRankingBinder.CreateAsync(id, gs2, session, cancellationToken, clusterName, season, __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1, __sdk__userdataRanking2GuildRankingClusterRankingModel_1);
         }
         public IGuildRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

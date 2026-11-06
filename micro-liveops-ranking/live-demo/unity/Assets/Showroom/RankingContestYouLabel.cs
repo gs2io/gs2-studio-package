@@ -29,10 +29,12 @@ namespace GS2Studio.Showroom.Demo
         private void Publish()
         {
             if (_contest == null || !_contest.HasValue) return;
+            var coins = _contest.Rank != null ? _contest.CoinsFor(_contest.Rank.Value) : null;
+            var pays = coins != null ? $", pays {coins} coins" : "";
             _onUpdate.Invoke(_contest.Best == null
                 ? "Not on the board yet"
                 : _contest.Rank != null
-                    ? $"Rank {_contest.Rank} with {_contest.Best}"
+                    ? $"Rank {_contest.Rank} with {_contest.Best}{pays}"
                     : $"Best {_contest.Best}");
         }
     }

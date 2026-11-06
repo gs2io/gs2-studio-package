@@ -13,6 +13,9 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using GS2Studio.Generated.Ranking;
 using GS2Studio.Generated.RankingReward;
+using Gs2.Unity.Core.Model;
+using Gs2Bind.Gs2Ranking2;
+using Gs2.Util.LitJson;
 
 namespace GS2Studio.Generated.RankingReward
 {
@@ -23,7 +26,8 @@ namespace GS2Studio.Generated.RankingReward
             RankingId ranking, RankingRewardThresholdRank thresholdRank,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null);
         IRankingRewardBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +39,10 @@ namespace GS2Studio.Generated.RankingReward
             RankingId ranking, RankingRewardThresholdRank thresholdRank,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null)
         {
-            return await RankingRewardBinder.CreateAsync(ranking, thresholdRank, gs2, session, cancellationToken);
+            return await RankingRewardBinder.CreateAsync(ranking, thresholdRank, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1);
         }
         public IRankingRewardBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

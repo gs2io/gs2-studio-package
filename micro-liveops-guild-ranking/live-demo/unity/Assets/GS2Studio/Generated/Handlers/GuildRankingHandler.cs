@@ -24,6 +24,8 @@ namespace GS2Studio.Generated.GuildRanking
     public sealed class GuildRankingHandler : GuildRankingHandlerBase
     {
         [SerializeField] private string? _id;
+        private string? _clusterNameKey;
+        private long? _seasonKey;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -66,6 +68,17 @@ namespace GS2Studio.Generated.GuildRanking
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
+        /// <summary>Supply the scope keys whose loaders stay off until every one of them is set.</summary>
+        public void SetScopeKeys(string? clusterName, long? season)
+        {
+            InvalidateBindingIntent();
+            _clusterNameKey = clusterName;
+            _seasonKey = season;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
+        }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
@@ -90,7 +103,7 @@ namespace GS2Studio.Generated.GuildRanking
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new GuildRankingId(_id ?? string.Empty), gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new GuildRankingId(_id ?? string.Empty), gs2, session, cancellationToken, clusterName: _clusterNameKey, season: _seasonKey);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

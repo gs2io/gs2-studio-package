@@ -1,4 +1,5 @@
-// Ranking reads use REST so polling does not reuse the SDK domain cache.
+// Rank, board and past-season reads use REST so polling does not reuse the SDK domain cache.
+// The player's own score this season comes from the generated binder, which updates itself after each play.
 // Read generations guard ranking and season display updates after plays, receipts or clock changes.
 #nullable enable
 
@@ -25,6 +26,9 @@ using Gs2.Gs2Schedule;
 using Gs2.Gs2Schedule.Request;
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
+
+using GS2Studio.Generated.GuildRanking;
+using GS2Studio.Generated.GuildRankingReward;
 
 using GuildModel = Gs2.Gs2Guild.Model.Guild;
 using VisitorDomain = Gs2.Gs2Guild.Domain.Model.UserAccessTokenDomain;
@@ -64,6 +68,8 @@ namespace GS2Studio.Showroom.Demo
         private const string GuildFailure = "The guild could not be read";
         private const string BoardFailure = "The board could not be read";
         private const string PastFailure = "The past seasons could not be read";
+        private const string ScoreFailure = "Your score could not be read";
+        private const string RewardFailure = "The reward tiers could not be read";
 
         private static GuildRankingSeasonState? _instance;
 
@@ -116,6 +122,9 @@ namespace GS2Studio.Showroom.Demo
 
         public long? Total { get; private set; }
 
+        // Total is meaningful only once the score binder for the current guild and season has mounted.
+        public bool ScoreKnown { get; private set; }
+
         public int? Rank { get; private set; }
 
         public ClusterRankingData[] Board { get; private set; } = Array.Empty<ClusterRankingData>();
@@ -157,6 +166,9 @@ namespace GS2Studio.Showroom.Demo
 
         private readonly ShowroomInbox _inbox = new ShowroomInbox();
 
+        // Score callbacks have their own queue: clearing membership work must not drop a pending score update.
+        private readonly ShowroomInbox _scoreInbox = new ShowroomInbox();
+
         private VisitorDomain? _visitor;
 
         private ulong? _joinedSubscription;
@@ -179,6 +191,18 @@ namespace GS2Studio.Showroom.Demo
         private float _nextMembershipWatch;
         private float _nextStandingRead;
         private float _nextPastRead;
+        private float _nextScoreMount;
+        private float _nextRewardsMount;
+
+        // Reward tiers are master data: read their coins once through the generated collection.
+        private IGuildRankingRewardBinderCollection? _rewards;
+        private (int thresholdRank, int coins)[] _tiers = Array.Empty<(int, int)>();
+        private bool _mountingRewards;
+
+        // The score binder is keyed by guild, season and session: the cluster, the season and the clock all select the score row.
+        private GuildRankingBinder? _score;
+        private (string guildId, long season, IGameSession session)? _scoreKey;
+        private int _scoreTicket;
 
         // Repeated polling failures would flood the log; keep a separate latch per read so recovery is independent.
         // The latch dictionary is confined to the main thread.
@@ -198,6 +222,9 @@ namespace GS2Studio.Showroom.Demo
             DemoTimeOffset.Applied -= OnClockApplied;
             DemoTimeOffset.Loaded -= OnOffsetLoaded;
             StopFollowingJoined();
+            DropScore();
+            _rewards?.Dispose();
+            _rewards = null;
         }
 
         private void LogFailure(string what, Exception error)
@@ -223,6 +250,7 @@ namespace GS2Studio.Showroom.Demo
         private void Update()
         {
             _inbox.Drain();
+            _scoreInbox.Drain();
         }
 
         private IEnumerator Run()
@@ -268,6 +296,8 @@ namespace GS2Studio.Showroom.Demo
                     _nextPastRead = float.PositiveInfinity;
                     ReadPast();
                 }
+                if (now >= _nextScoreMount) FollowScore();
+                if (now >= _nextRewardsMount && _rewards == null) MountRewards();
                 yield return tick;
             }
         }
@@ -319,11 +349,9 @@ namespace GS2Studio.Showroom.Demo
                 return $"You scored {score}.";
             }
             if (guildId != GuildId) return $"You scored {score}.";
-            _standingGeneration++;
-            Total = (Total ?? 0) + score;
-            Updated?.Invoke();
+            // The score binder receives the new total itself; only the rank and board need a fresh read.
             ReadStanding();
-            return $"You scored {score}. Your total this season is {Total}.";
+            return $"You scored {score}.";
         }
 
         public async Task<string> Receive()
@@ -375,7 +403,9 @@ namespace GS2Studio.Showroom.Demo
             _received.Add((target.GuildId, target.Season));
             ForgetNext(target);
             var rank = target.Rank != null ? $"rank {target.Rank}" : "your rank";
-            return $"Received the reward for season {target.Season}: {rank} in {where}.";
+            var coins = target.Rank != null ? CoinsFor(target.Rank.Value) : null;
+            var paid = coins != null ? $" ({coins} coins)" : "";
+            return $"Received the reward for season {target.Season}: {rank} in {where}{paid}.";
         }
 
         private void ForgetNext(PastSeason target)
@@ -403,6 +433,8 @@ namespace GS2Studio.Showroom.Demo
         {
             if (userId != UserId || this == null) return;
             _clockNotApplied = false;
+            // The SDK caches the score under the access token's clock offset, which a session refresh changes; follow the score again on the new key.
+            DropScore();
             ReadAllAgain();
             StartCoroutine(ReadAllAfter(ClockSettleSeconds));
         }
@@ -474,7 +506,7 @@ namespace GS2Studio.Showroom.Demo
                     {
                         _standingGeneration++;
                         StandingKnown = false;
-                        Total = null;
+                        DropScore();
                         Rank = null;
                         Board = Array.Empty<ClusterRankingData>();
                         BoardHasMore = false;
@@ -644,7 +676,7 @@ namespace GS2Studio.Showroom.Demo
             {
                 _standingGeneration++;
                 StandingKnown = false;
-                Total = null;
+                DropScore();
                 Rank = null;
                 Board = Array.Empty<ClusterRankingData>();
                 BoardHasMore = false;
@@ -653,6 +685,114 @@ namespace GS2Studio.Showroom.Demo
             GuildKnown = true;
             GuildId = guildId;
             GuildDisplayName = displayName;
+            Updated?.Invoke();
+        }
+
+        // Follow the score of the current guild and season; a new guild, season or session replaces the binder.
+        private async void FollowScore()
+        {
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
+            var guildId = GuildId;
+            var season = Season;
+            (string guildId, long season, IGameSession session)? wanted =
+                guildId != null && season != null ? (guildId, season.Value, session) : null;
+            if (Nullable.Equals(wanted, _scoreKey)) return;
+            DropScore();
+            if (wanted == null) return;
+            _scoreKey = wanted;
+            var ticket = _scoreTicket;
+            GuildRankingBinder binder;
+            try
+            {
+                binder = await GuildRankingBinder.CreateAsync(
+                    new GuildRankingId(RankingName), gs2, session, clusterName: guildId, season: season);
+            }
+            catch (Exception error)
+            {
+                if (this == null || ticket != _scoreTicket) return;
+                LogFailure(ScoreFailure, error);
+                _scoreKey = null;
+                _nextScoreMount = Time.realtimeSinceStartup + SeasonRetrySeconds;
+                return;
+            }
+            if (this == null || !isActiveAndEnabled || ticket != _scoreTicket)
+            {
+                binder.Dispose();
+                return;
+            }
+            Recovered(ScoreFailure);
+            _score = binder;
+            // Cache callbacks can arrive off the main thread; apply them where Update drains the inbox.
+            binder.Subscribe(() => _scoreInbox.Post(() =>
+            {
+                if (ticket == _scoreTicket) ApplyScore();
+            }));
+            ApplyScore();
+        }
+
+        // The coins of the first tier whose threshold covers the rank; null before the tiers are read or past the last tier.
+        public int? CoinsFor(int rank)
+        {
+            foreach (var tier in _tiers)
+            {
+                if (rank <= tier.thresholdRank) return tier.coins;
+            }
+            return null;
+        }
+
+        private async void MountRewards()
+        {
+            if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return;
+            if (_mountingRewards || _rewards != null) return;
+            _mountingRewards = true;
+            // Schedule the next attempt before awaiting so a failure or an empty read is rate-limited too.
+            _nextRewardsMount = Time.realtimeSinceStartup + SeasonRetrySeconds;
+            var rewards = DefaultGuildRankingRewardBinderFactory.Instance.CreateCollection(gs2, session);
+            try
+            {
+                await rewards.MountFromOverlayAsync();
+            }
+            catch (Exception error)
+            {
+                rewards.Dispose();
+                if (this != null) LogFailure(RewardFailure, error);
+                return;
+            }
+            finally
+            {
+                _mountingRewards = false;
+            }
+            var tiers = rewards.WhereRanking(new GuildRankingId(RankingName))
+                .Select(reward => (thresholdRank: reward.ThresholdRank.Value, coins: reward.Coins))
+                .OrderBy(tier => tier.thresholdRank)
+                .ToArray();
+            if (this == null || !isActiveAndEnabled || tiers.Length == 0)
+            {
+                rewards.Dispose();
+                return;
+            }
+            Recovered(RewardFailure);
+            _rewards = rewards;
+            _tiers = tiers;
+            Updated?.Invoke();
+        }
+
+        private void DropScore()
+        {
+            _scoreTicket++;
+            _score?.Dispose();
+            _score = null;
+            _scoreKey = null;
+            ScoreKnown = false;
+            Total = null;
+        }
+
+        private void ApplyScore()
+        {
+            if (_score == null) return;
+            // Every play adds at least 1, so the zero a missing score row leaves behind means no play this season.
+            Total = _score.Score > 0 ? _score.Score : null;
+            ScoreKnown = true;
             Updated?.Invoke();
         }
 
@@ -732,7 +872,6 @@ namespace GS2Studio.Showroom.Demo
                 if (waiting != null) Updated?.Invoke();
                 return;
             }
-            Total = own?.Item?.Score;
             Rank = own?.Item?.Rank;
             Board = board?.Items ?? Array.Empty<ClusterRankingData>();
             BoardHasMore = !string.IsNullOrEmpty(board?.NextPageToken);

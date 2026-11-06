@@ -46,7 +46,9 @@ namespace GS2Studio.Showroom.Demo
             // Other accounts may still be playing that season; present its last-read rank as provisional.
             var rank = next.Rank != null ? $"rank {next.Rank} for now" : "unranked";
             var more = _season.MoreWaiting > 0 ? $" ({_season.MoreWaiting} earlier season(s) wait too)" : "";
-            _onUpdate.Invoke($"Season {next.Season} in {where}: {rank} with {next.Score} points, ready to receive{more}");
+            var coins = next.Rank != null ? _season.CoinsFor(next.Rank.Value) : null;
+            var worth = coins != null ? $" ({coins} coins)" : "";
+            _onUpdate.Invoke($"Season {next.Season} in {where}: {rank} with {next.Score} points, ready to receive{worth}{more}");
         }
     }
 }

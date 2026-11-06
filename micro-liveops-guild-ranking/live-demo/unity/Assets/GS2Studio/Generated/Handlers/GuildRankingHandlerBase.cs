@@ -24,6 +24,9 @@ namespace GS2Studio.Generated.GuildRanking
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public GuildRankingMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<GuildRanking>? Updated;
 
         public event Action<IActionableGuildRankingBinder>? Bound;
