@@ -16,18 +16,51 @@
   "listHandler": "RankingListHandler",
   "listItemHandler": "RankingListItemHandler",
   "binderListSource": "IRankingBinderListSource",
-  "scopeParameters": [],
+  "scopeParameters": [
+    {
+      "name": "rankingName",
+      "fieldName": "_rankingName",
+      "serializedType": "string"
+    },
+    {
+      "name": "season",
+      "fieldName": "_season",
+      "serializedType": "long"
+    }
+  ],
   "itemPrefabField": "_itemPrefab",
   "contentParentField": "_contentParent",
-  "listAxisEnumTypeName": "",
-  "listAxisField": "",
-  "listAxisMembers": [],
+  "listAxisEnumTypeName": "RankingListAxis",
+  "listAxisField": "_axis",
+  "listAxisMembers": [
+    {
+      "name": "Ranking2RankingMaster",
+      "value": 310452579
+    },
+    {
+      "name": "Ranking2RankingUser",
+      "value": 476693154
+    }
+  ],
   "listAxes": [
     {
       "memberName": "Ranking2RankingMaster",
       "mountMethodName": "MountFromRanking2RankingMasterDataAsync"
+    },
+    {
+      "memberName": "Ranking2RankingUser",
+      "mountMethodName": "MountFromRanking2RankingUserDataAsync"
     }
   ],
-  "mountFields": [],
+  "mountFields": [
+    {
+      "fieldName": "_rankingName",
+      "serializedType": "string"
+    },
+    {
+      "fieldName": "_season",
+      "serializedType": "long"
+    }
+  ],
   "components": []
 }

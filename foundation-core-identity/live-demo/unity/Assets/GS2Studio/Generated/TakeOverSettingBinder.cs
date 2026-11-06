@@ -279,7 +279,7 @@ namespace GS2Studio.Generated.TakeOverSetting
         ) : base(model, gs2, session)
         {
 
-            __userdataAccountAccountTakeOverTypeModelLoader = new Gs2Bind.Gs2Account.TakeOverLoader("Account", (__sdk__userdataAccountAccountTakeOverTypeModel_1 ?? throw new InvalidOperationException("An SDK backing key is required for this loader.")));
+            __userdataAccountAccountTakeOverTypeModelLoader = new Gs2Bind.Gs2Account.TakeOverLoader("Account", (__sdk__userdataAccountAccountTakeOverTypeModel_1 ?? _model.Type));
         }
 
 

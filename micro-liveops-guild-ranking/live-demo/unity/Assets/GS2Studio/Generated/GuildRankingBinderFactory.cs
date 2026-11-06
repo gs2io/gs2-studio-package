@@ -28,7 +28,7 @@ namespace GS2Studio.Generated.GuildRanking
             long? season = null,
             string? __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1 = null,
             string? __sdk__userdataRanking2GuildRankingClusterRankingModel_1 = null);
-        IGuildRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
+        IGuildRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string rankingName, string clusterName, long season);
     }
 
     public sealed class DefaultGuildRankingBinderFactory : IGuildRankingBinderFactory
@@ -47,9 +47,9 @@ namespace GS2Studio.Generated.GuildRanking
         {
             return await GuildRankingBinder.CreateAsync(id, gs2, session, cancellationToken, clusterName, season, __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1, __sdk__userdataRanking2GuildRankingClusterRankingModel_1);
         }
-        public IGuildRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
+        public IGuildRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string rankingName, string clusterName, long season)
         {
-            return new GuildRankingBinderCollection(gs2, session);
+            return new GuildRankingBinderCollection(gs2, session, rankingName, clusterName, season);
         }
     }
 }

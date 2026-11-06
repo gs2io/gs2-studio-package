@@ -16,19 +16,61 @@
   "listHandler": "GuildRankingListHandler",
   "listItemHandler": "GuildRankingListItemHandler",
   "binderListSource": "IGuildRankingBinderListSource",
-  "scopeParameters": [],
+  "scopeParameters": [
+    {
+      "name": "rankingName",
+      "fieldName": "_rankingName",
+      "serializedType": "string"
+    },
+    {
+      "name": "clusterName",
+      "fieldName": "_clusterName",
+      "serializedType": "string"
+    },
+    {
+      "name": "season",
+      "fieldName": "_season",
+      "serializedType": "long"
+    }
+  ],
   "itemPrefabField": "_itemPrefab",
   "contentParentField": "_contentParent",
-  "listAxisEnumTypeName": "",
-  "listAxisField": "",
-  "listAxisMembers": [],
+  "listAxisEnumTypeName": "GuildRankingListAxis",
+  "listAxisField": "_axis",
+  "listAxisMembers": [
+    {
+      "name": "Ranking2GuildRankingMaster",
+      "value": 96003524
+    },
+    {
+      "name": "Ranking2GuildRankingUser",
+      "value": -1383730303
+    }
+  ],
   "listAxes": [
     {
       "memberName": "Ranking2GuildRankingMaster",
       "mountMethodName": "MountFromRanking2GuildRankingMasterDataAsync"
+    },
+    {
+      "memberName": "Ranking2GuildRankingUser",
+      "mountMethodName": "MountFromRanking2GuildRankingUserDataAsync"
     }
   ],
-  "mountFields": [],
+  "mountFields": [
+    {
+      "fieldName": "_rankingName",
+      "serializedType": "string"
+    },
+    {
+      "fieldName": "_clusterName",
+      "serializedType": "string"
+    },
+    {
+      "fieldName": "_season",
+      "serializedType": "long"
+    }
+  ],
   "components": [
     {
       "className": "GuildRankingRuleLabel",

@@ -23,8 +23,8 @@ namespace GS2Studio.Generated.TakeOverSetting
     [AddComponentMenu("GS2 Studio/DomainType/TakeOverSetting/TakeOverSetting Handler")]
     public sealed class TakeOverSettingHandler : TakeOverSettingHandlerBase
     {
+        [SerializeField] private string? _id;
         [SerializeField] private int _type;
-        private int? _sdk_foundation_x2d_core_x2d_identity_userData_udr_49J77BF0CYAK0A4J2ER727A781_account_TakeOver_type;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -59,24 +59,15 @@ namespace GS2Studio.Generated.TakeOverSetting
             => _binderFactory ?? DefaultTakeOverSettingBinderFactory.Instance;
 
         /// <summary>Await ReloadAsync when completion matters; key-driven reloads report failures through Failed and logging.</summary>
-        public void SetKeys(int type)
+        public void SetKeys(string id, int type)
         {
             InvalidateBindingIntent();
+            _id = id;
             _type = type;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
-        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(int? sdk_foundation_x2d_core_x2d_identity_userData_udr_49J77BF0CYAK0A4J2ER727A781_account_TakeOver_type)
-        {
-            InvalidateBindingIntent();
-            _sdk_foundation_x2d_core_x2d_identity_userData_udr_49J77BF0CYAK0A4J2ER727A781_account_TakeOver_type = sdk_foundation_x2d_core_x2d_identity_userData_udr_49J77BF0CYAK0A4J2ER727A781_account_TakeOver_type;
-            if (IsReadyForReload())
-                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
-            else
-                DisposeOwnedBinder();
-        }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
@@ -99,9 +90,9 @@ namespace GS2Studio.Generated.TakeOverSetting
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
-                if (!_sdk_foundation_x2d_core_x2d_identity_userData_udr_49J77BF0CYAK0A4J2ER727A781_account_TakeOver_type.HasValue)
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_core_x2d_identity_userData_udr_49J77BF0CYAK0A4J2ER727A781_account_TakeOver_type' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new TakeOverSettingId(_type.ToString(global::System.Globalization.CultureInfo.InvariantCulture)), _type, gs2, session, cancellationToken, __sdk__userdataAccountAccountTakeOverTypeModel_1: _sdk_foundation_x2d_core_x2d_identity_userData_udr_49J77BF0CYAK0A4J2ER727A781_account_TakeOver_type);
+                if (string.IsNullOrEmpty(_id))
+                    throw new InvalidOperationException("Identity key '_id' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new TakeOverSettingId(_id ?? string.Empty), _type, gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -189,7 +180,7 @@ namespace GS2Studio.Generated.TakeOverSetting
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
-            if (!_sdk_foundation_x2d_core_x2d_identity_userData_udr_49J77BF0CYAK0A4J2ER727A781_account_TakeOver_type.HasValue) return false;
+            if (string.IsNullOrEmpty(_id)) return false;
             return true;
         }
 

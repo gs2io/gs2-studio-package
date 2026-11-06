@@ -24,6 +24,10 @@ namespace GS2Studio.Generated.Ranking
     [AddComponentMenu("GS2 Studio/DomainType/Ranking/Ranking List Handler")]
     public sealed class RankingListHandler : MonoBehaviour, IRankingBinderListSource, IGs2ListState
     {
+        // Share the collection axis enum so plain and ref-scoped handlers cannot diverge on axis names.
+        [SerializeField] private RankingListAxis _axis;
+        [SerializeField] private string? _rankingName;
+        [SerializeField] private long _season;
         [SerializeField] private RankingListItemHandler? _itemPrefab;
         [SerializeField] private Transform? _contentParent;
         [SerializeField] private bool _autoSubscribe = true;
@@ -115,6 +119,20 @@ namespace GS2Studio.Generated.Ranking
 
 
         /// <summary>
+        /// Scope values discovered at runtime cannot be fixed in the authored scene. Reload is fire-and-forget;
+        /// await <see cref="ReloadAsync"/> directly when completion must be observed.
+        /// </summary>
+        public void SetScope(string rankingName, long season)
+        {
+            // Invalidate the old scope even if the new scope is not ready to start a replacement reload.
+            _reloadGeneration++;
+            _rankingName = rankingName;
+            _season = season;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>
         public void Resort()
@@ -155,8 +173,11 @@ namespace GS2Studio.Generated.Ranking
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
+                var unusableAxisReason = UnusableAxisReason();
+                if (unusableAxisReason != null)
+                    throw new InvalidOperationException(unusableAxisReason);
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session);
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, _rankingName ?? string.Empty, _season);
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {
@@ -174,7 +195,16 @@ namespace GS2Studio.Generated.Ranking
                 // Mount emits ItemAdded for initial binders, so subscribe first to create their child handlers.
                 AttachCollectionCallbacks(operationGeneration, collection);
 
-                await collection.MountFromRanking2RankingMasterDataAsync(cancellationToken);
+                // UnusableAxisReason rejects unset and obsolete values before this switch, so no default axis is needed.
+                switch (_axis)
+                {
+                    case RankingListAxis.Ranking2RankingMaster:
+                        await collection.MountFromRanking2RankingMasterDataAsync(cancellationToken);
+                        break;
+                    case RankingListAxis.Ranking2RankingUser:
+                        await collection.MountFromRanking2RankingUserDataAsync(cancellationToken);
+                        break;
+                }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
                 SyncSiblingOrder(operationGeneration, collection);
@@ -184,7 +214,15 @@ namespace GS2Studio.Generated.Ranking
                     if (!IsCurrentOperation(operationGeneration, collection)) return;
                     Action collectionChanged = () => OnCollectionChanged(operationGeneration, collection);
                     Action<Exception> collectionFailed = ex => OnCollectionFailed(operationGeneration, collection, ex);
-                    collection.SubscribeFromRanking2RankingMasterData(collectionChanged, collectionFailed);
+                    switch (_axis)
+                    {
+                        case RankingListAxis.Ranking2RankingMaster:
+                            collection.SubscribeFromRanking2RankingMasterData(collectionChanged, collectionFailed);
+                            break;
+                        case RankingListAxis.Ranking2RankingUser:
+                            collection.SubscribeFromRanking2RankingUserData(collectionChanged, collectionFailed);
+                            break;
+                    }
                 }
 
                 if (!IsCurrentOperation(operationGeneration, collection)) return;
@@ -264,12 +302,54 @@ namespace GS2Studio.Generated.Ranking
             }
         }
 
+        private const string AxisMemberNames = "Ranking2RankingMaster, Ranking2RankingUser";
+
+        // Readiness is polled each frame; latch invalid-axis warnings to avoid repeating the same error.
+        private bool _warnedAxis;
+
+        /// <summary>
+        /// Reject an unset or obsolete axis rather than silently reading a different GS2 model.
+        /// </summary>
+        private string? UnusableAxisReason()
+        {
+            if (_axis == RankingListAxis.Unset)
+            {
+                return "'_axis' is not set: this list has not been told which axis to read from. " +
+                    "Set it to one of: " + AxisMemberNames + ".";
+            }
+            if (!Enum.IsDefined(typeof(RankingListAxis), _axis))
+            {
+                return "'_axis' names a mount axis this package no longer generates. " +
+                    "Set it to one of: " + AxisMemberNames + ".";
+            }
+            return null;
+        }
+
         private bool IsReadyForReload()
         {
             if (_isDestroyed) return false;
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
+            var unusableAxisReason = UnusableAxisReason();
+            if (unusableAxisReason != null)
+            {
+                if (!_warnedAxis)
+                {
+                    _warnedAxis = true;
+                    Debug.LogError(unusableAxisReason, this);
+                }
+                return false;
+            }
+            // Fields from other axes may never be set; waiting on them would block a valid selected axis.
+            switch (_axis)
+            {
+                case RankingListAxis.Ranking2RankingMaster:
+                    break;
+                case RankingListAxis.Ranking2RankingUser:
+                    if (string.IsNullOrEmpty(_rankingName)) return false;
+                    break;
+            }
             return true;
         }
 

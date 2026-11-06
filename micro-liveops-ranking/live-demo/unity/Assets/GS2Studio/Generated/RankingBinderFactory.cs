@@ -27,7 +27,7 @@ namespace GS2Studio.Generated.Ranking
             long? season = null,
             string? __sdk__ranking2RankingNamespaceGlobalRankingModel_1 = null,
             string? __sdk__userdataRanking2RankingGlobalRankingModel_1 = null);
-        IRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
+        IRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string rankingName, long season);
     }
 
     public sealed class DefaultRankingBinderFactory : IRankingBinderFactory
@@ -45,9 +45,9 @@ namespace GS2Studio.Generated.Ranking
         {
             return await RankingBinder.CreateAsync(id, gs2, session, cancellationToken, season, __sdk__ranking2RankingNamespaceGlobalRankingModel_1, __sdk__userdataRanking2RankingGlobalRankingModel_1);
         }
-        public IRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
+        public IRankingBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string rankingName, long season)
         {
-            return new RankingBinderCollection(gs2, session);
+            return new RankingBinderCollection(gs2, session, rankingName, season);
         }
     }
 }

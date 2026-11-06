@@ -8,6 +8,11 @@
   "keyed": true,
   "identityKeys": [
     {
+      "name": "id",
+      "fieldName": "_id",
+      "serializedType": "string"
+    },
+    {
       "name": "type",
       "fieldName": "_type",
       "serializedType": "int"

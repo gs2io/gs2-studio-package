@@ -33,6 +33,10 @@ namespace GS2Studio.Generated.GuildRanking
         /// <summary>Built by the Ranking2GuildRanking master-data list axis.</summary>
         [Gs2SkipsLoaders("UserdataRanking2GuildRankingClusterRankingModel")]
         Ranking2GuildRankingMaster,
+
+        /// <summary>Built by the Ranking2GuildRanking user-data list axis.</summary>
+        [Gs2SkipsLoaders("Ranking2GuildRankingNamespaceClusterRankingModel")]
+        Ranking2GuildRankingUser,
     }
 
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
@@ -42,11 +46,17 @@ namespace GS2Studio.Generated.GuildRanking
         GuildRankingMountSurface MountSurface { get; }
 
         /// <summary>
-        /// This construction path permits the <c>Gs2Bind.Gs2Ranking2.ClusterRankingScoreLoader</c> load on <c>__userdataRanking2GuildRankingClusterRankingModelLoader</c>. False means this path does not supply <c>Score</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// This construction path permits the <c>Gs2Bind.Gs2Ranking2.ClusterRankingScoreLoader</c> load on <c>__userdataRanking2GuildRankingClusterRankingModelLoader</c> or its composition from a list item. False means this path does not supply <c>Score</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
         /// </summary>
         /// <remarks>Ranking2GuildRankingMaster: passes no clusterName constructor argument.</remarks>
         /// <remarks>Runs only when clusterName and season are supplied.</remarks>
         bool LoadedUserdataRanking2GuildRankingClusterRankingModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Ranking2.ClusterRankingModelLoader</c> load on <c>__ranking2GuildRankingNamespaceClusterRankingModelLoader</c>. False means this path does not supply <c>MaximumValue</c>, <c>MinimumValue</c>, <c>OrderDirection</c>, <c>Sum</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>Ranking2GuildRankingUser: does not supply SDK backing key name.</remarks>
+        bool LoadedRanking2GuildRankingNamespaceClusterRankingModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
@@ -92,6 +102,9 @@ namespace GS2Studio.Generated.GuildRanking
 
         /// <inheritdoc />
         public abstract bool LoadedUserdataRanking2GuildRankingClusterRankingModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedRanking2GuildRankingNamespaceClusterRankingModel { get; }
 
 
         private protected ReadOnlyGuildRankingBinder(MutableGuildRanking model, Gs2Domain gs2, IGameSession session)
@@ -282,11 +295,18 @@ namespace GS2Studio.Generated.GuildRanking
         /// <remarks>Runs only when clusterName and season are supplied.</remarks>
         private bool Runs__userdataRanking2GuildRankingClusterRankingModelLoader => (_mountSurfaceValue is GuildRankingMountSurface.Full) && !string.IsNullOrEmpty(_clusterNameKey) && _seasonKey.HasValue;
 
+        /// <summary>Avoid loading unless this path supplies every key <c>__ranking2GuildRankingNamespaceClusterRankingModelLoader</c> reads.</summary>
+        /// <remarks>Ranking2GuildRankingUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__ranking2GuildRankingNamespaceClusterRankingModelLoader => _mountSurfaceValue is GuildRankingMountSurface.Full or GuildRankingMountSurface.Ranking2GuildRankingMaster;
+
         /// <inheritdoc />
         public override GuildRankingMountSurface MountSurface => _mountSurfaceValue;
 
         /// <inheritdoc />
-        public override bool LoadedUserdataRanking2GuildRankingClusterRankingModel => Runs__userdataRanking2GuildRankingClusterRankingModelLoader;
+        public override bool LoadedUserdataRanking2GuildRankingClusterRankingModel => (_mountSurfaceValue is GuildRankingMountSurface.Full) && !string.IsNullOrEmpty(_clusterNameKey) && _seasonKey.HasValue || _mountSurfaceValue is GuildRankingMountSurface.Ranking2GuildRankingUser;
+
+        /// <inheritdoc />
+        public override bool LoadedRanking2GuildRankingNamespaceClusterRankingModel => Runs__ranking2GuildRankingNamespaceClusterRankingModelLoader;
 
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal GuildRankingBinder(
@@ -304,7 +324,7 @@ namespace GS2Studio.Generated.GuildRanking
             _mountSurfaceValue = _mountSurface;
             _clusterNameKey = clusterName;
             _seasonKey = season;
-            __ranking2GuildRankingNamespaceClusterRankingModelLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingModelLoader("GuildRanking", (string.IsNullOrEmpty(__sdk__ranking2GuildRankingNamespaceClusterRankingModel_1) ? _model.Id : __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1!));
+            __ranking2GuildRankingNamespaceClusterRankingModelLoader = Runs__ranking2GuildRankingNamespaceClusterRankingModelLoader ? new Gs2Bind.Gs2Ranking2.ClusterRankingModelLoader("GuildRanking", (string.IsNullOrEmpty(__sdk__ranking2GuildRankingNamespaceClusterRankingModel_1) ? _model.Id : __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1!)) : null!;
             __userdataRanking2GuildRankingClusterRankingModelLoader = Runs__userdataRanking2GuildRankingClusterRankingModelLoader ? new Gs2Bind.Gs2Ranking2.ClusterRankingScoreLoader("GuildRanking", (string.IsNullOrEmpty(__sdk__userdataRanking2GuildRankingClusterRankingModel_1) ? _model.Id : __sdk__userdataRanking2GuildRankingClusterRankingModel_1!), clusterName!, season!.Value) : null!;
         }
 
@@ -336,9 +356,12 @@ namespace GS2Studio.Generated.GuildRanking
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _ranking2GuildRankingNamespaceClusterRankingModel = await __ranking2GuildRankingNamespaceClusterRankingModelLoader.Load(_gs2, _session);
+            var _ranking2GuildRankingNamespaceClusterRankingModel = Runs__ranking2GuildRankingNamespaceClusterRankingModelLoader ? await __ranking2GuildRankingNamespaceClusterRankingModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyRanking2GuildRankingNamespaceClusterRankingModel(_model, _ranking2GuildRankingNamespaceClusterRankingModel);
+            if (Runs__ranking2GuildRankingNamespaceClusterRankingModelLoader)
+            {
+                ApplyRanking2GuildRankingNamespaceClusterRankingModel(_model, _ranking2GuildRankingNamespaceClusterRankingModel);
+            }
             var _userdataRanking2GuildRankingClusterRankingModel = Runs__userdataRanking2GuildRankingClusterRankingModelLoader ? await __userdataRanking2GuildRankingClusterRankingModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (Runs__userdataRanking2GuildRankingClusterRankingModelLoader)
@@ -352,18 +375,21 @@ namespace GS2Studio.Generated.GuildRanking
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__ranking2GuildRankingNamespaceClusterRankingModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyRanking2GuildRankingNamespaceClusterRankingModel(_model, value);
-                    GuildRankingOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+            if (Runs__ranking2GuildRankingNamespaceClusterRankingModelLoader)
+            {
+                _unsubscribers.Add(__ranking2GuildRankingNamespaceClusterRankingModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyRanking2GuildRankingNamespaceClusterRankingModel(_model, value);
+                        GuildRankingOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
             if (Runs__userdataRanking2GuildRankingClusterRankingModelLoader)
             {
                 _unsubscribers.Add(__userdataRanking2GuildRankingClusterRankingModelLoader.Subscribe(
@@ -383,7 +409,10 @@ namespace GS2Studio.Generated.GuildRanking
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __ranking2GuildRankingNamespaceClusterRankingModelLoader.Invalidate(_gs2, _session);
+            if (Runs__ranking2GuildRankingNamespaceClusterRankingModelLoader)
+            {
+                __ranking2GuildRankingNamespaceClusterRankingModelLoader.Invalidate(_gs2, _session);
+            }
             if (Runs__userdataRanking2GuildRankingClusterRankingModelLoader)
             {
                 __userdataRanking2GuildRankingClusterRankingModelLoader.Invalidate(_gs2, _session);
@@ -455,6 +484,7 @@ namespace GS2Studio.Generated.GuildRanking
         {
             if (source != null)
             {
+                // CreateModel owns identity; applying SDK fields must not replace it.
                 model.Score = source.Score;
             }
             else
