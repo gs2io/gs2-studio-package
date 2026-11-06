@@ -4,12 +4,7 @@
       "kind": "domainProperty",
       "parameterName": "absoluteBegin",
       "source": {
-        "scopes": [
-          {
-            "kind": "parent",
-            "parentResourceId": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B"
-          }
-        ],
+        "scopes": [],
         "terminal": {
           "kind": "direct",
           "mountPath": {
@@ -24,12 +19,7 @@
       "kind": "domainProperty",
       "parameterName": "absoluteEnd",
       "source": {
-        "scopes": [
-          {
-            "kind": "parent",
-            "parentResourceId": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B"
-          }
-        ],
+        "scopes": [],
         "terminal": {
           "kind": "direct",
           "mountPath": {

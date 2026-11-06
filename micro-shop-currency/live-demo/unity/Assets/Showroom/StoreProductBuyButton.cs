@@ -9,8 +9,8 @@ using Gs2.Core.Exception;
 using Gs2.Unity.Gs2Showcase.Model;
 
 using GS2Studio.Generated.CurrencyType;
-using GS2Studio.Generated.StorePrice;
 using GS2Studio.Generated.StoreProduct;
+using GS2Studio.Generated.StoreProductPrices;
 
 namespace GS2Studio.Showroom.Demo
 {
@@ -45,7 +45,7 @@ namespace GS2Studio.Showroom.Demo
             if (!ShowroomRuntime.TryGet(out var gs2, out var session)) return "Not signed in yet.";
 
             // The product row does not select a currency; construct the price binder from the product and the demo currency.
-            var price = await StorePriceBinder.CreateAsync(
+            var price = await StoreProductPricesBinder.CreateAsync(
                 product.Value, new CurrencyTypeId(DemoCurrency), gs2, session);
             using (price)
             {

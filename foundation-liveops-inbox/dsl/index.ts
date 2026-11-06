@@ -178,10 +178,8 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
           .mountLocal(GlobalMessage)
           .bindings({
             name: Bind.domainProperty(Source.direct(GlobalMessage, "id")),
-            absoluteBegin: Bind.domainProperty(
-              Source.parent(Source.direct(GlobalMessage, "begin"))
-            ),
-            absoluteEnd: Bind.domainProperty(Source.parent(Source.direct(GlobalMessage, "end"))),
+            absoluteBegin: Bind.domainProperty(Source.direct(GlobalMessage, "begin")),
+            absoluteEnd: Bind.domainProperty(Source.direct(GlobalMessage, "end")),
             scheduleType: Bind.static("absolute"),
             // Keep messages receivable throughout their absolute period without an additional repeat window.
             repeatSetting: { repeatType: Bind.static("always") },
