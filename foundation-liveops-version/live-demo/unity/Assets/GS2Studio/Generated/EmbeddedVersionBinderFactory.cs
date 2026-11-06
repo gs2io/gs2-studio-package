@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.EmbeddedVersion
             EmbeddedVersionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__versionVersionNamespaceVersionModel_1 = null);
         IEmbeddedVersionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.EmbeddedVersion
             EmbeddedVersionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__versionVersionNamespaceVersionModel_1 = null)
         {
-            return await EmbeddedVersionBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await EmbeddedVersionBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__versionVersionNamespaceVersionModel_1);
         }
         public IEmbeddedVersionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

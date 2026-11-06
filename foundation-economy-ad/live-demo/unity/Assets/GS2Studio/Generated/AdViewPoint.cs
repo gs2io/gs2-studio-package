@@ -13,10 +13,13 @@ namespace GS2Studio.Generated.AdViewPoint
     public interface AdViewPoint
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the ad view point.
         /// </summary>
         AdViewPointId Id { get; }
 
+        /// <summary>
+        /// Current number of ad-view points available to the player.
+        /// </summary>
         long Value { get; }
     }
 

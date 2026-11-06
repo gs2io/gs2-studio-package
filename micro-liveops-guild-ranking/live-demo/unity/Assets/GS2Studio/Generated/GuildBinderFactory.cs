@@ -24,7 +24,10 @@ namespace GS2Studio.Generated.Guild
             GuildId id, string joinedGuildName,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__guildGuildNamespaceGuildModel_1 = null,
+            string? __sdk__userdataGuildGuildGuildModel_1 = null,
+            string? __sdk__userdataGuildGuildGuildModel_2 = null);
         IGuildBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -36,9 +39,12 @@ namespace GS2Studio.Generated.Guild
             GuildId id, string joinedGuildName,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__guildGuildNamespaceGuildModel_1 = null,
+            string? __sdk__userdataGuildGuildGuildModel_1 = null,
+            string? __sdk__userdataGuildGuildGuildModel_2 = null)
         {
-            return await GuildBinder.CreateAsync(id, joinedGuildName, gs2, session, cancellationToken);
+            return await GuildBinder.CreateAsync(id, joinedGuildName, gs2, session, cancellationToken, __sdk__guildGuildNamespaceGuildModel_1, __sdk__userdataGuildGuildGuildModel_1, __sdk__userdataGuildGuildGuildModel_2);
         }
         public IGuildBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

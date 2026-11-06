@@ -13,7 +13,7 @@ namespace GS2Studio.Generated.CurrencyType
     public interface CurrencyType
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the currency type.
         /// </summary>
         CurrencyTypeId Id { get; }
     }

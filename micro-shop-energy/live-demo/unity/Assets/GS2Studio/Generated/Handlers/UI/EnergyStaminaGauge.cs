@@ -25,8 +25,12 @@ namespace GS2Studio.Generated.Energy.UI
         [SerializeField] private EnergyHandlerBase? _handler;
         [SerializeField] private Image? _target;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataStaminaEnergyStaminaModel" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -65,11 +69,24 @@ namespace GS2Studio.Generated.Energy.UI
 
         private void OnUpdated(Energy model)
         {
+            WarnUnloadedLoadersOnce();
             if (_target == null) return;
             var current = System.Convert.ToDouble(model.CurrentValue, System.Globalization.CultureInfo.InvariantCulture);
             var max = System.Convert.ToDouble(model.CurrentMaximumValue, System.Globalization.CultureInfo.InvariantCulture);
             var fraction = max > 0d ? current / max : 0d;            if (fraction < 0d) fraction = 0d;
             else if (fraction > 1d) fraction = 1d;            _target.fillAmount = (float)fraction;
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataStaminaEnergyStaminaModel) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(EnergyStaminaGauge)} on '{name}': this row's mount surface did not run UserdataStaminaEnergyStaminaModel, which fills what this component reads (CurrentValue, CurrentMaximumValue); those readings render as their default, not as an absent value.", this);
         }
     }
 }

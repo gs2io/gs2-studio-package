@@ -26,7 +26,11 @@ namespace GS2Studio.Generated.EquipmentCollection
             EquipmentCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeEquipmentExpandNamespaceRateModel_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModel_1 = null,
+            string? __sdk__userdataInventoryEquipmentInventoryModel_1 = null);
     }
 
     public sealed class DefaultEquipmentCollectionBinderFactory : IEquipmentCollectionBinderFactory
@@ -37,9 +41,13 @@ namespace GS2Studio.Generated.EquipmentCollection
             EquipmentCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeEquipmentExpandNamespaceRateModel_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModel_1 = null,
+            string? __sdk__userdataInventoryEquipmentInventoryModel_1 = null)
         {
-            return await EquipmentCollectionBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await EquipmentCollectionBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1, __sdk__exchangeEquipmentExpandNamespaceRateModel_1, __sdk__inventoryEquipmentNamespaceInventoryModel_1, __sdk__userdataInventoryEquipmentInventoryModel_1);
         }
     }
 }

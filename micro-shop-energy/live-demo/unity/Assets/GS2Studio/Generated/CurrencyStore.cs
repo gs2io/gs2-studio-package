@@ -13,10 +13,13 @@ namespace GS2Studio.Generated.CurrencyStore
     public interface CurrencyStore
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the currency store.
         /// </summary>
         CurrencyStoreId Id { get; }
 
+        /// <summary>
+        /// Whether fake receipts used for test purchases are accepted.
+        /// </summary>
         string EnableFakeReceipt { get; }
     }
 

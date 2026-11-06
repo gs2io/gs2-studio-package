@@ -13,7 +13,7 @@ namespace GS2Studio.Generated.SerialCodeRedemption
     public interface SerialCodeRedemption
     {
         /// <summary>
-        /// Unique identifier
+        /// Redeeming a serial code.
         /// </summary>
         SerialCodeRedemptionId Id { get; }
     }

@@ -20,17 +20,71 @@ using Gs2.Unity.Gs2Inventory.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Inventory;
 using Gs2.Util.LitJson;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.CharacterEnhanceMaterial
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum CharacterEnhanceMaterialMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the InventoryCharacterEnhanceMaterial master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeCharacterEnhanceMaterialGetNamespaceRateModel", "UserdataInventoryCharacterEnhanceMaterialSimpleItemModel")]
+        InventoryCharacterEnhanceMaterialMaster,
+
+        /// <summary>Built by the ExchangeCharacterEnhanceMaterialGet master-data list axis.</summary>
+        [Gs2SkipsLoaders("InventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel", "UserdataInventoryCharacterEnhanceMaterialSimpleItemModel")]
+        ExchangeCharacterEnhanceMaterialGetMaster,
+
+        /// <summary>Built by the InventoryCharacterEnhanceMaterial user-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeCharacterEnhanceMaterialGetNamespaceRateModel")]
+        InventoryCharacterEnhanceMaterialUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyCharacterEnhanceMaterialBinder : CharacterEnhanceMaterial
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        CharacterEnhanceMaterialMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply <c>Id</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryCharacterEnhanceMaterialMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterEnhanceMaterialUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryCharacterEnhanceMaterialMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterEnhanceMaterialUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeCharacterEnhanceMaterialGetNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Inventory.SimpleItemLoader</c> load on <c>__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader</c> or its composition from a list item. False means this path does not supply <c>Count</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryCharacterEnhanceMaterialMaster: does not supply SDK backing key itemName.</remarks>
+        /// <remarks>ExchangeCharacterEnhanceMaterialGetMaster: does not supply SDK backing key itemName.</remarks>
+        bool LoadedUserdataInventoryCharacterEnhanceMaterialSimpleItemModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Inventory.SimpleItemModelLoader</c> load on <c>__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader</c>. False means this path does not supply <c>Metadata</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeCharacterEnhanceMaterialGetMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedInventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableCharacterEnhanceMaterialBinder : IReadOnlyCharacterEnhanceMaterialBinder
     {
+        CharacterEnhanceMaterialBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Get(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
     }
 
@@ -42,7 +96,7 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyCharacterEnhanceMaterialBinder : IReadOnlyCharacterEnhanceMaterialBinder
+    public abstract class ReadOnlyCharacterEnhanceMaterialBinder : IReadOnlyCharacterEnhanceMaterialBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableCharacterEnhanceMaterial _model;
@@ -58,6 +112,22 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         /// <inheritdoc cref="CharacterEnhanceMaterial.Count" />
         public long Count => _model.Count;
 
+        /// <inheritdoc />
+        public abstract CharacterEnhanceMaterialMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeCharacterEnhanceMaterialGetNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataInventoryCharacterEnhanceMaterialSimpleItemModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedInventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel { get; }
+
+
         private protected ReadOnlyCharacterEnhanceMaterialBinder(MutableCharacterEnhanceMaterial model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -67,10 +137,137 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class CharacterEnhanceMaterialBinder : ReadOnlyCharacterEnhanceMaterialBinder, ICharacterEnhanceMaterialBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly CharacterEnhanceMaterialBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(CharacterEnhanceMaterialBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public CharacterEnhanceMaterial Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableCharacterEnhanceMaterial? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableCharacterEnhanceMaterial
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal CharacterEnhanceMaterialId __valueId = default!;
+                public CharacterEnhanceMaterialId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setMetadata;
+                internal string __valueMetadata = default!;
+                public string Metadata
+                {
+                    get => __setMetadata ? __valueMetadata : __scopeOwner.Value.Metadata;
+                    set { __setMetadata = true; __valueMetadata = value; }
+                }
+                internal bool __setCount;
+                internal long __valueCount = default!;
+                public long Count
+                {
+                    get => __setCount ? __valueCount : __scopeOwner.Value.Count;
+                    set { __setCount = true; __valueCount = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setMetadata) { _owner._model.Metadata = changes.__valueMetadata; changes.__setMetadata = false; }
+                if (changes.__setCount) { _owner._model.Count = changes.__valueCount; changes.__setCount = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -80,18 +277,62 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         private readonly Gs2Bind.Gs2Inventory.SimpleItemModelLoader __inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader;
         private readonly Gs2Bind.Gs2Inventory.SimpleItemLoader __userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader;
 
+        private readonly CharacterEnhanceMaterialMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>InventoryCharacterEnhanceMaterialMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterEnhanceMaterialUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is CharacterEnhanceMaterialMountSurface.Full or CharacterEnhanceMaterialMountSurface.ExchangeCharacterEnhanceMaterialGetMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>InventoryCharacterEnhanceMaterialMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterEnhanceMaterialUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader => _mountSurfaceValue is CharacterEnhanceMaterialMountSurface.Full or CharacterEnhanceMaterialMountSurface.ExchangeCharacterEnhanceMaterialGetMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader</c> reads.</summary>
+        /// <remarks>InventoryCharacterEnhanceMaterialMaster: does not supply SDK backing key itemName.</remarks>
+        /// <remarks>ExchangeCharacterEnhanceMaterialGetMaster: does not supply SDK backing key itemName.</remarks>
+        private bool Runs__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader => _mountSurfaceValue is CharacterEnhanceMaterialMountSurface.Full;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeCharacterEnhanceMaterialGetMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader => _mountSurfaceValue is CharacterEnhanceMaterialMountSurface.Full or CharacterEnhanceMaterialMountSurface.InventoryCharacterEnhanceMaterialMaster or CharacterEnhanceMaterialMountSurface.InventoryCharacterEnhanceMaterialUser;
+
+        /// <inheritdoc />
+        public override CharacterEnhanceMaterialMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeCharacterEnhanceMaterialGetNamespaceRateModel => Runs__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataInventoryCharacterEnhanceMaterialSimpleItemModel => _mountSurfaceValue is CharacterEnhanceMaterialMountSurface.Full or CharacterEnhanceMaterialMountSurface.InventoryCharacterEnhanceMaterialUser;
+
+        /// <inheritdoc />
+        public override bool LoadedInventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel => Runs__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal CharacterEnhanceMaterialBinder(
             MutableCharacterEnhanceMaterial model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            CharacterEnhanceMaterialMountSurface _mountSurface = CharacterEnhanceMaterialMountSurface.Full,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1 = null,
+            string? __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2 = null
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterEnhanceMaterialGet", _model.Id, 0);
-            __exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterEnhanceMaterialGet", _model.Id);
-            __inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelLoader("CharacterEnhanceMaterial", "Material", _model.Id);
-            __userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader = new Gs2Bind.Gs2Inventory.SimpleItemLoader("CharacterEnhanceMaterial", "Material", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterEnhanceMaterialGet", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader = Runs__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterEnhanceMaterialGet", (string.IsNullOrEmpty(__sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1!)) : null!;
+            __inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader = Runs__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader ? new Gs2Bind.Gs2Inventory.SimpleItemModelLoader("CharacterEnhanceMaterial", "Material", (string.IsNullOrEmpty(__sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2!)) : null!;
+            __userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader = Runs__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader ? new Gs2Bind.Gs2Inventory.SimpleItemLoader("CharacterEnhanceMaterial", "Material", (string.IsNullOrEmpty(__sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableCharacterEnhanceMaterial CreateModel(CharacterEnhanceMaterialId id)
@@ -105,99 +346,135 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
             CharacterEnhanceMaterialId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1 = null,
+            string? __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2 = null)
         {
             var model = CreateModel(id);
-            var binder = new CharacterEnhanceMaterialBinder(model, gs2, session);
+            var binder = new CharacterEnhanceMaterialBinder(model, gs2, session, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1: __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1, __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2: __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2, __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2: __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _exchangeCharacterEnhanceMaterialGetNamespaceRateModel = await __exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeCharacterEnhanceMaterialGetNamespaceRateModel = Runs__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader ? await __exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeCharacterEnhanceMaterialGetNamespaceRateModel != null)
             {
             }
-            var _inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel = await __inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader.Load(_gs2, _session);
+            var _inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel = Runs__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader ? await __inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyInventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel(_model, _inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel);
-            var _userdataInventoryCharacterEnhanceMaterialSimpleItemModel = await __userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader.Load(_gs2, _session);
+            if (Runs__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader)
+            {
+                ApplyInventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel(_model, _inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel);
+            }
+            var _userdataInventoryCharacterEnhanceMaterialSimpleItemModel = Runs__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader ? await __userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataInventoryCharacterEnhanceMaterialSimpleItemModel(_model, _userdataInventoryCharacterEnhanceMaterialSimpleItemModel);
-            if (_transactionAcquireAction != null) RestoreId(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            if (Runs__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader)
+            {
+                ApplyUserdataInventoryCharacterEnhanceMaterialSimpleItemModel(_model, _userdataInventoryCharacterEnhanceMaterialSimpleItemModel);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                if (_transactionAcquireAction != null) RestoreId(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value != null) RestoreId(_model, value.Action, value.Request);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value != null) RestoreId(_model, value.Action, value.Request);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyInventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataInventoryCharacterEnhanceMaterialSimpleItemModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader)
+            {
+                _unsubscribers.Add(__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyInventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader)
+            {
+                _unsubscribers.Add(__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataInventoryCharacterEnhanceMaterialSimpleItemModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader.Invalidate(_gs2, _session);
-            __userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader.Invalidate(_gs2, _session);
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader)
+            {
+                __exchangeCharacterEnhanceMaterialGetNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader)
+            {
+                __inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader)
+            {
+                __userdataInventoryCharacterEnhanceMaterialSimpleItemModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -209,6 +486,7 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -273,6 +551,7 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 model.Count = default;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

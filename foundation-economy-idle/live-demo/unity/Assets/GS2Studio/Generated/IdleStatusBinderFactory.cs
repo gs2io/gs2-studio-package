@@ -23,7 +23,9 @@ namespace GS2Studio.Generated.IdleStatus
             IdleStatusId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__idleIdleNamespaceCategoryModel_1 = null,
+            string? __sdk__userdataIdleIdleCategoryModel_1 = null);
     }
 
     public sealed class DefaultIdleStatusBinderFactory : IIdleStatusBinderFactory
@@ -34,9 +36,11 @@ namespace GS2Studio.Generated.IdleStatus
             IdleStatusId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__idleIdleNamespaceCategoryModel_1 = null,
+            string? __sdk__userdataIdleIdleCategoryModel_1 = null)
         {
-            return await IdleStatusBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await IdleStatusBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__idleIdleNamespaceCategoryModel_1, __sdk__userdataIdleIdleCategoryModel_1);
         }
     }
 }

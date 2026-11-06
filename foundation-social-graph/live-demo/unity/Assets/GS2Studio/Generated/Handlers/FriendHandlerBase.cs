@@ -24,6 +24,9 @@ namespace GS2Studio.Generated.Friend
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public FriendMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<Friend>? Updated;
 
         public event Action<IActionableFriendBinder>? Bound;

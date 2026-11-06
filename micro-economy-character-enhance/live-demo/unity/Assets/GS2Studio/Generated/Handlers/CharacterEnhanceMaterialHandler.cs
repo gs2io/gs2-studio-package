@@ -27,6 +27,10 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
     public sealed class CharacterEnhanceMaterialHandler : CharacterEnhanceMaterialHandlerBase
     {
         [SerializeField] private string? _id;
+        private string? _sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName;
+        private string? _sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName_2;
+        private string? _sdk_micro_x2d_economy_x2d_character_x2d_enhance_masterData_mdr_2PEA8RQ1MGA16V5HGXBZA28G57_inventory_SimpleItemModel_itemName;
+        private string? _sdk_micro_x2d_economy_x2d_character_x2d_enhance_userData_udr_363K170NVHBVJASSCHEFC31QD9_inventory_SimpleItem_itemName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -51,6 +55,7 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(ICharacterEnhanceMaterialBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -66,6 +71,20 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
             _id = id;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName, string? sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName_2, string? sdk_micro_x2d_economy_x2d_character_x2d_enhance_masterData_mdr_2PEA8RQ1MGA16V5HGXBZA28G57_inventory_SimpleItemModel_itemName, string? sdk_micro_x2d_economy_x2d_character_x2d_enhance_userData_udr_363K170NVHBVJASSCHEFC31QD9_inventory_SimpleItem_itemName)
+        {
+            InvalidateBindingIntent();
+            _sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName = sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName;
+            _sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName_2 = sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName_2;
+            _sdk_micro_x2d_economy_x2d_character_x2d_enhance_masterData_mdr_2PEA8RQ1MGA16V5HGXBZA28G57_inventory_SimpleItemModel_itemName = sdk_micro_x2d_economy_x2d_character_x2d_enhance_masterData_mdr_2PEA8RQ1MGA16V5HGXBZA28G57_inventory_SimpleItemModel_itemName;
+            _sdk_micro_x2d_economy_x2d_character_x2d_enhance_userData_udr_363K170NVHBVJASSCHEFC31QD9_inventory_SimpleItem_itemName = sdk_micro_x2d_economy_x2d_character_x2d_enhance_userData_udr_363K170NVHBVJASSCHEFC31QD9_inventory_SimpleItem_itemName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -91,7 +110,15 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new CharacterEnhanceMaterialId(_id ?? string.Empty), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName_2' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_character_x2d_enhance_masterData_mdr_2PEA8RQ1MGA16V5HGXBZA28G57_inventory_SimpleItemModel_itemName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_character_x2d_enhance_masterData_mdr_2PEA8RQ1MGA16V5HGXBZA28G57_inventory_SimpleItemModel_itemName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_character_x2d_enhance_userData_udr_363K170NVHBVJASSCHEFC31QD9_inventory_SimpleItem_itemName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_character_x2d_enhance_userData_udr_363K170NVHBVJASSCHEFC31QD9_inventory_SimpleItem_itemName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new CharacterEnhanceMaterialId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__transactionAcquireAction_1: _sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName, __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1: _sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName_2, __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2: _sdk_micro_x2d_economy_x2d_character_x2d_enhance_masterData_mdr_2PEA8RQ1MGA16V5HGXBZA28G57_inventory_SimpleItemModel_itemName, __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2: _sdk_micro_x2d_economy_x2d_character_x2d_enhance_userData_udr_363K170NVHBVJASSCHEFC31QD9_inventory_SimpleItem_itemName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -180,6 +207,10 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_character_x2d_enhance_x2d_demo_masterData_mdr_5MBDT874NCB50AGHC6NS8XH9NP_exchange_RateModel_rateName_2)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_character_x2d_enhance_masterData_mdr_2PEA8RQ1MGA16V5HGXBZA28G57_inventory_SimpleItemModel_itemName)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_character_x2d_enhance_userData_udr_363K170NVHBVJASSCHEFC31QD9_inventory_SimpleItem_itemName)) return false;
             return true;
         }
 

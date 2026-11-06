@@ -13,12 +13,12 @@ namespace GS2Studio.Generated.EquipmentSlotAssignment
     public interface EquipmentSlotAssignment
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the equipment slot assignment.
         /// </summary>
         EquipmentSlotAssignmentId Id { get; }
 
         /// <summary>
-        /// Property id of the equipment worn here, empty when the slot is free
+        /// Equipment instance ID assigned to this slot; empty when the slot is free.
         /// </summary>
         string? Equipment { get; }
     }

@@ -26,7 +26,10 @@ namespace GS2Studio.Generated.CharacterRecruit
             CharacterRecruitId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeCharacterRecruitNamespaceRateModel_1 = null);
         ICharacterRecruitBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -38,9 +41,12 @@ namespace GS2Studio.Generated.CharacterRecruit
             CharacterRecruitId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeCharacterRecruitNamespaceRateModel_1 = null)
         {
-            return await CharacterRecruitBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await CharacterRecruitBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1, __sdk__transactionAcquireAction2_1, __sdk__exchangeCharacterRecruitNamespaceRateModel_1);
         }
         public ICharacterRecruitBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

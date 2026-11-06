@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.Follow
             FollowId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__userdataFriendFollowUser_1 = null);
         IFollowBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.Follow
             FollowId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__userdataFriendFollowUser_1 = null)
         {
-            return await FollowBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await FollowBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__userdataFriendFollowUser_1);
         }
         public IFollowBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

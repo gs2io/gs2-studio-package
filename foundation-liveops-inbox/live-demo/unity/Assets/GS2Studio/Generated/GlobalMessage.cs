@@ -13,14 +13,23 @@ namespace GS2Studio.Generated.GlobalMessage
     public interface GlobalMessage
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the global message.
         /// </summary>
         GlobalMessageId Id { get; }
 
+        /// <summary>
+        /// Content delivered to all players.
+        /// </summary>
         string Payload { get; }
 
+        /// <summary>
+        /// Time when the message becomes available.
+        /// </summary>
         DateTime Begin { get; }
 
+        /// <summary>
+        /// Time when the message stops being available.
+        /// </summary>
         DateTime End { get; }
     }
 

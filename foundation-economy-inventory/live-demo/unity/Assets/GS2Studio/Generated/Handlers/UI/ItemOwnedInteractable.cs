@@ -26,8 +26,12 @@ namespace GS2Studio.Generated.Item.UI
         [SerializeField] private Selectable[] _interactableWhenTrue = System.Array.Empty<Selectable>();
         [SerializeField] private Selectable[] _interactableWhenFalse = System.Array.Empty<Selectable>();
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataInventoryInventorySimpleItemModel" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -66,9 +70,22 @@ namespace GS2Studio.Generated.Item.UI
 
         private void OnUpdated(Item model)
         {
+            WarnUnloadedLoadersOnce();
             bool result = (System.Convert.ToInt64(model.Count, System.Globalization.CultureInfo.InvariantCulture) > System.Convert.ToInt64(0L, System.Globalization.CultureInfo.InvariantCulture));
             ApplyInteractableState(_interactableWhenTrue, result);
             ApplyInteractableState(_interactableWhenFalse, !result);
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataInventoryInventorySimpleItemModel) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(ItemOwnedInteractable)} on '{name}': this row's mount surface did not run UserdataInventoryInventorySimpleItemModel, which fills what this component reads (Count); those readings render as their default, not as an absent value.", this);
         }
 
         private static void ApplyInteractableState(Selectable[]? targets, bool interactable)

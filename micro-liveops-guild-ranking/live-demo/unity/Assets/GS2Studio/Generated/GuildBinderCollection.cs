@@ -149,8 +149,20 @@ namespace GS2Studio.Generated.Guild
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyGuildBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyGuildBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyGuildBinder> _configuredComparer = GuildBinderComparer.Default;
@@ -272,18 +284,38 @@ namespace GS2Studio.Generated.Guild
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Guild.GuildModelArrayLoader("Guild");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromGuildGuildMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromGuildGuildMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromGuildGuildMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromGuildGuildMasterItems");
+            _pendingCollectionAxis = "ReconcileFromGuildGuildMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Guild.GuildModelArrayLoader("Guild");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromGuildGuildMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromGuildGuildMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromGuildGuildMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromGuildGuildMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromGuildGuildMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -291,7 +323,6 @@ namespace GS2Studio.Generated.Guild
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Guild.GuildModelArrayLoader("Guild");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -299,9 +330,10 @@ namespace GS2Studio.Generated.Guild
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromGuildGuildMasterItems");
                     try
                     {
-                        await ReconcileFromGuildGuildMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromGuildGuildMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -310,41 +342,68 @@ namespace GS2Studio.Generated.Guild
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromGuildGuildMasterItems(IList<Gs2.Unity.Gs2Guild.Model.EzGuildModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromGuildGuildMasterItems(IList<Gs2.Unity.Gs2Guild.Model.EzGuildModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractGuildGuildMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildMasterItems", updateVersion)) return;
                 var rowKey = ExtractGuildGuildMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractGuildGuildMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<GuildId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyGuildGuildMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-social-guild", "masterData", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "foundation-social-guild", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "guild", "GuildModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-social-guild\",\"masterData\",\"mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9\",\"guild\",\"GuildModel\",\"guildModelName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-social-guild", "masterData", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "foundation-social-guild", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "guild", "GuildModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-social-guild", "masterData", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "foundation-social-guild", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "guild", "GuildModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromGuildGuildMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromGuildGuildMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<GuildId>.Default.Equals(raced.Id, nextId)) { ApplyGuildGuildMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-social-guild", "masterData", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "foundation-social-guild", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "guild", "GuildModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-social-guild\",\"masterData\",\"mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9\",\"guild\",\"GuildModel\",\"guildModelName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-social-guild", "masterData", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "foundation-social-guild", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "guild", "GuildModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-social-guild", "masterData", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "foundation-social-guild", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "guild", "GuildModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyGuildGuildMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-social-guild", "masterData", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "foundation-social-guild", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "guild", "GuildModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-social-guild\",\"masterData\",\"mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9\",\"guild\",\"GuildModel\",\"guildModelName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-social-guild", "masterData", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "foundation-social-guild", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "guild", "GuildModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-social-guild", "masterData", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "foundation-social-guild", "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9", "guild", "GuildModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -384,13 +443,13 @@ namespace GS2Studio.Generated.Guild
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GuildBinder> BuildBinderFromGuildGuildMasterItem(Gs2.Unity.Gs2Guild.Model.EzGuildModel item, CancellationToken cancellationToken)
+        private async Task<GuildBinder?> BuildBinderFromGuildGuildMasterItem(Gs2.Unity.Gs2Guild.Model.EzGuildModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = GuildBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(GuildId) : new GuildId(item.Name)), string.Empty);
             ApplyGuildGuildMasterItemTo(model, item);
-            var binder = new GuildBinder(model, _gs2, _session, _mountSurface: GuildMountSurface.GuildGuildMaster);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new GuildBinder(model, _gs2, _session, _mountSurface: GuildMountSurface.GuildGuildMaster, __sdk__guildGuildNamespaceGuildModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyGuildGuildMasterItemTo(MutableGuild model, Gs2.Unity.Gs2Guild.Model.EzGuildModel item)
@@ -409,8 +468,9 @@ namespace GS2Studio.Generated.Guild
         {
             var id = ExtractGuildGuildMasterIdentity(item);
             if (EqualityComparer<GuildId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"GuildGuild\",\"foundation-social-guild\",\"mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9\",null,null,\"foundation-social-guild\",\"mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9\",\"guild\",\"GuildModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<GuildBinderCollection> CreateFromGuildGuildUserDataAsync(
@@ -427,18 +487,38 @@ namespace GS2Studio.Generated.Guild
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Guild.JoinedGuildArrayLoader("Guild");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromGuildGuildUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromGuildGuildUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromGuildGuildUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromGuildGuildUserItems");
+            _pendingCollectionAxis = "ReconcileFromGuildGuildUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Guild.JoinedGuildArrayLoader("Guild");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromGuildGuildUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromGuildGuildUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromGuildGuildUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromGuildGuildUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromGuildGuildUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -446,7 +526,6 @@ namespace GS2Studio.Generated.Guild
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Guild.JoinedGuildArrayLoader("Guild");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -454,9 +533,10 @@ namespace GS2Studio.Generated.Guild
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromGuildGuildUserItems");
                     try
                     {
-                        await ReconcileFromGuildGuildUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromGuildGuildUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -465,41 +545,68 @@ namespace GS2Studio.Generated.Guild
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromGuildGuildUserItems(IList<Gs2.Unity.Gs2Guild.Model.EzJoinedGuild> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromGuildGuildUserItems(IList<Gs2.Unity.Gs2Guild.Model.EzJoinedGuild> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractGuildGuildUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildUserItems", updateVersion)) return;
                 var rowKey = ExtractGuildGuildUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractGuildGuildUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<GuildId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyGuildGuildUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-social-guild", "userData", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "foundation-social-guild", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "guild", "JoinedGuild", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-social-guild\",\"userData\",\"udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ\",\"guild\",\"JoinedGuild\",\"guildModelName\",\"string\"]"] = (object)item.GuildModelName!, ["[\"foundation-social-guild\",\"userData\",\"udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ\",\"guild\",\"JoinedGuild\",\"guildName\",\"string\"]"] = (object)item.GuildName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-social-guild", "userData", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "foundation-social-guild", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "guild", "JoinedGuild", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-social-guild", "userData", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "foundation-social-guild", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "guild", "JoinedGuild", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromGuildGuildUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromGuildGuildUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<GuildId>.Default.Equals(raced.Id, nextId)) { ApplyGuildGuildUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-social-guild", "userData", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "foundation-social-guild", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "guild", "JoinedGuild", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-social-guild\",\"userData\",\"udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ\",\"guild\",\"JoinedGuild\",\"guildModelName\",\"string\"]"] = (object)item.GuildModelName!, ["[\"foundation-social-guild\",\"userData\",\"udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ\",\"guild\",\"JoinedGuild\",\"guildName\",\"string\"]"] = (object)item.GuildName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-social-guild", "userData", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "foundation-social-guild", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "guild", "JoinedGuild", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-social-guild", "userData", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "foundation-social-guild", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "guild", "JoinedGuild", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyGuildGuildUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-social-guild", "userData", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "foundation-social-guild", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "guild", "JoinedGuild", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-social-guild\",\"userData\",\"udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ\",\"guild\",\"JoinedGuild\",\"guildModelName\",\"string\"]"] = (object)item.GuildModelName!, ["[\"foundation-social-guild\",\"userData\",\"udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ\",\"guild\",\"JoinedGuild\",\"guildName\",\"string\"]"] = (object)item.GuildName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-social-guild", "userData", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "foundation-social-guild", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "guild", "JoinedGuild", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-social-guild", "userData", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "foundation-social-guild", "udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ", "guild", "JoinedGuild", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromGuildGuildUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -539,13 +646,13 @@ namespace GS2Studio.Generated.Guild
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GuildBinder> BuildBinderFromGuildGuildUserItem(Gs2.Unity.Gs2Guild.Model.EzJoinedGuild item, CancellationToken cancellationToken)
+        private async Task<GuildBinder?> BuildBinderFromGuildGuildUserItem(Gs2.Unity.Gs2Guild.Model.EzJoinedGuild item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = GuildBinder.CreateModel((string.IsNullOrEmpty(item.GuildModelName) ? default(GuildId) : new GuildId(item.GuildModelName)), item.GuildName);
             ApplyGuildGuildUserItemTo(model, item);
-            var binder = new GuildBinder(model, _gs2, _session, _mountSurface: GuildMountSurface.GuildGuildUser);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new GuildBinder(model, _gs2, _session, _mountSurface: GuildMountSurface.GuildGuildUser, __sdk__guildGuildNamespaceGuildModel_1: item.GuildModelName, __sdk__userdataGuildGuildGuildModel_1: item.GuildModelName, __sdk__userdataGuildGuildGuildModel_2: item.GuildName);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyGuildGuildUserItemTo(MutableGuild model, Gs2.Unity.Gs2Guild.Model.EzJoinedGuild item)
@@ -562,8 +669,10 @@ namespace GS2Studio.Generated.Guild
         {
             var id = ExtractGuildGuildUserIdentity(item);
             if (EqualityComparer<GuildId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.GuildModelName) || string.IsNullOrEmpty(item.GuildName)) return null;
-            return $"{item.GuildModelName}.{item.GuildName}";
+            var __key0 = item.GuildModelName;
+            var __key1 = item.GuildName;
+            if (string.IsNullOrEmpty(__key0) || string.IsNullOrEmpty(__key1)) return null;
+            return string.Concat("[\"user\",\"GuildGuild\",null,null,\"foundation-social-guild\",\"udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ\",null,null,\"guild\",\"JoinedGuild\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0, __key1.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key1);
         }
 
         internal sealed class GuildBinderComparer : IComparer<IReadOnlyGuildBinder>

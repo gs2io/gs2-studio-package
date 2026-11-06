@@ -13,15 +13,18 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
     public interface CharacterEnhanceMaterial
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the enhancement material.
         /// </summary>
         CharacterEnhanceMaterialId Id { get; }
 
         /// <summary>
-        /// Item metadata JSON carrying the experience it grants, e.g. {"experience": 100}
+        /// JSON carrying the experience one material grants, written under experience, e.g. {"experience": 100}.
         /// </summary>
         string Metadata { get; }
 
+        /// <summary>
+        /// Quantity of the enhancement material owned by the player.
+        /// </summary>
         long Count { get; }
     }
 

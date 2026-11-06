@@ -14,57 +14,57 @@ namespace GS2Studio.Generated.Buff
     public interface Buff
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the buff.
         /// </summary>
         BuffId Id { get; }
 
         /// <summary>
-        /// How the rate combines with the original value
+        /// How the modifier is combined with the original value.
         /// </summary>
         string Expression { get; }
 
         /// <summary>
-        /// Whether an action's request or a model's field is scaled
+        /// Whether an action's request or a model's field is modified.
         /// </summary>
         string TargetType { get; }
 
         /// <summary>
-        /// Action whose request is scaled, e.g. Gs2Inventory:AcquireItemSetByUserId
+        /// GS2 action whose value is modified.
         /// </summary>
         string? TargetActionName { get; }
 
         /// <summary>
-        /// Model whose field is scaled, e.g. Gs2Idle:CategoryModel
+        /// GS2 model whose field is modified.
         /// </summary>
         string? TargetModelName { get; }
 
         /// <summary>
-        /// Field that is scaled, e.g. acquireCount or acquireActions
+        /// Field within the target action or model that is modified.
         /// </summary>
         string TargetFieldName { get; }
 
         /// <summary>
-        /// Model the condition GRN names, e.g. Gs2Idle:CategoryModel
+        /// Model the condition GRN refers to.
         /// </summary>
         string ConditionModelName { get; }
 
         /// <summary>
-        /// GRN the buff applies to, with {region} and {ownerId} left for GS2 to fill
+        /// GRN of what this buff applies to.
         /// </summary>
         string ConditionGrn { get; }
 
         /// <summary>
-        /// Multiplier applied
+        /// Multiplier or additive value applied to the target field.
         /// </summary>
         float Rate { get; }
 
         /// <summary>
-        /// Order among buffs touching the same field
+        /// Order used when multiple buffs affect the same field.
         /// </summary>
         int Priority { get; }
 
         /// <summary>
-        /// Period the buff is active for
+        /// Schedule during which this buff is active.
         /// </summary>
         ScheduleId? Schedule { get; }
     }

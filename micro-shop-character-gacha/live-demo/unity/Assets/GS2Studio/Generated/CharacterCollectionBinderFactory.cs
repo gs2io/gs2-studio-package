@@ -23,7 +23,9 @@ namespace GS2Studio.Generated.CharacterCollection
             CharacterCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__inventoryCharacterNamespaceInventoryModel_1 = null,
+            string? __sdk__userdataInventoryCharacterInventoryModel_1 = null);
     }
 
     public sealed class DefaultCharacterCollectionBinderFactory : ICharacterCollectionBinderFactory
@@ -34,9 +36,11 @@ namespace GS2Studio.Generated.CharacterCollection
             CharacterCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__inventoryCharacterNamespaceInventoryModel_1 = null,
+            string? __sdk__userdataInventoryCharacterInventoryModel_1 = null)
         {
-            return await CharacterCollectionBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await CharacterCollectionBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__inventoryCharacterNamespaceInventoryModel_1, __sdk__userdataInventoryCharacterInventoryModel_1);
         }
     }
 }

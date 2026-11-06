@@ -35,11 +35,15 @@ namespace GS2Studio.Generated.Item.UI
         public UnityEvent OnCompleted => _onCompleted;
         public ErrorEvent OnFailed => _onFailed;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before skipped loaders can leave action arguments at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "TransactionAcquireAction", "TransactionConsumeAction" };
+
         private bool _wired;
         private bool _warnedMissingHandler;
 
         // Drop overlapping clicks to avoid duplicate actions; an interactable component may own Button.interactable.
         private bool _inFlight;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -80,6 +84,7 @@ namespace GS2Studio.Generated.Item.UI
             // Authored argument expressions read model.X; the actionable binder also supplies that read contract.
             var model = _handler.Binder;
             if (model == null) return;
+            WarnUnloadedLoadersOnce(model);
             _inFlight = true;
             try
             {
@@ -102,6 +107,16 @@ namespace GS2Studio.Generated.Item.UI
                 _inFlight = false;
             }
             _onCompleted.Invoke();
+        }
+
+        // Missing-loader diagnostics must not change whether an otherwise callable action is sent.
+        private void WarnUnloadedLoadersOnce(IActionableItemBinder binder)
+        {
+            if (_warnedUnloadedLoaders) return;
+            if ((binder.LoadedTransactionAcquireAction || binder.LoadedTransactionConsumeAction)) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(ItemSpendButton)} on '{name}': this row's mount surface did not run TransactionAcquireAction, TransactionConsumeAction, which fills what this component reads (Id); those readings render as their default, not as an absent value.", this);
         }
     }
 }

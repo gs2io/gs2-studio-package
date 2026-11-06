@@ -131,8 +131,20 @@ namespace GS2Studio.Generated.LoginReward
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyLoginRewardBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyLoginRewardBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyLoginRewardBinder> _configuredComparer = LoginRewardBinderComparer.Default;
@@ -256,18 +268,38 @@ namespace GS2Studio.Generated.LoginReward
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2LoginReward.BonusModelRewardArrayLoader("LoginReward", _loginRewardCollection);
-            var items = IndexLoginRewardLoginRewardMasterElements(await arrayLoader.Load(_gs2, _session));
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromLoginRewardLoginRewardMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromLoginRewardLoginRewardMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromLoginRewardLoginRewardMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromLoginRewardLoginRewardMasterItems");
+            _pendingCollectionAxis = "ReconcileFromLoginRewardLoginRewardMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2LoginReward.BonusModelRewardArrayLoader("LoginReward", _loginRewardCollection);
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromLoginRewardLoginRewardMasterItems", updateVersion)) return;
+                var items = IndexLoginRewardLoginRewardMasterElements(loadedItems);
+                await ReconcileFromLoginRewardLoginRewardMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromLoginRewardLoginRewardMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromLoginRewardLoginRewardMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromLoginRewardLoginRewardMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromLoginRewardLoginRewardMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromLoginRewardLoginRewardMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -275,7 +307,6 @@ namespace GS2Studio.Generated.LoginReward
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2LoginReward.BonusModelRewardArrayLoader("LoginReward", _loginRewardCollection);
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -283,9 +314,10 @@ namespace GS2Studio.Generated.LoginReward
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromLoginRewardLoginRewardMasterItems");
                     try
                     {
-                        await ReconcileFromLoginRewardLoginRewardMasterItems(IndexLoginRewardLoginRewardMasterElements(items), attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromLoginRewardLoginRewardMasterItems(IndexLoginRewardLoginRewardMasterElements(items), attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -294,41 +326,68 @@ namespace GS2Studio.Generated.LoginReward
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromLoginRewardLoginRewardMasterItems(IList<(Gs2.Unity.Gs2LoginReward.Model.EzReward Item, int RewardIndex)> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromLoginRewardLoginRewardMasterItems(IList<(Gs2.Unity.Gs2LoginReward.Model.EzReward Item, int RewardIndex)> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromLoginRewardLoginRewardMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractLoginRewardLoginRewardMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromLoginRewardLoginRewardMasterItems", updateVersion)) return;
                 var rowKey = ExtractLoginRewardLoginRewardMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractLoginRewardLoginRewardMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<LoginRewardId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyLoginRewardLoginRewardMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-login-reward", "masterData", "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD", "micro-economy-login-reward", "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7", "loginReward", "Reward", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-login-reward\",\"masterData\",\"mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7\",\"loginReward\",\"BonusModel\",\"bonusModelName\",\"string\"]"] = (object)_loginRewardCollection! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-login-reward", "masterData", "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD", "micro-economy-login-reward", "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7", "loginReward", "Reward", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-login-reward", "masterData", "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD", "micro-economy-login-reward", "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7", "loginReward", "Reward", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromLoginRewardLoginRewardMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromLoginRewardLoginRewardMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromLoginRewardLoginRewardMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<LoginRewardId>.Default.Equals(raced.Id, nextId)) { ApplyLoginRewardLoginRewardMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-login-reward", "masterData", "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD", "micro-economy-login-reward", "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7", "loginReward", "Reward", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-login-reward\",\"masterData\",\"mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7\",\"loginReward\",\"BonusModel\",\"bonusModelName\",\"string\"]"] = (object)_loginRewardCollection! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-login-reward", "masterData", "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD", "micro-economy-login-reward", "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7", "loginReward", "Reward", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-login-reward", "masterData", "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD", "micro-economy-login-reward", "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7", "loginReward", "Reward", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyLoginRewardLoginRewardMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-login-reward", "masterData", "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD", "micro-economy-login-reward", "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7", "loginReward", "Reward", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-login-reward\",\"masterData\",\"mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7\",\"loginReward\",\"BonusModel\",\"bonusModelName\",\"string\"]"] = (object)_loginRewardCollection! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-login-reward", "masterData", "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD", "micro-economy-login-reward", "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7", "loginReward", "Reward", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-login-reward", "masterData", "mdr_6Y63M3YDY0AYDA9Q5KJ64658MD", "micro-economy-login-reward", "mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7", "loginReward", "Reward", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromLoginRewardLoginRewardMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -368,14 +427,14 @@ namespace GS2Studio.Generated.LoginReward
             if (!_disposed) SortBinders();
         }
 
-        private async Task<LoginRewardBinder> BuildBinderFromLoginRewardLoginRewardMasterItem((Gs2.Unity.Gs2LoginReward.Model.EzReward Item, int RewardIndex) item, CancellationToken cancellationToken)
+        private async Task<LoginRewardBinder?> BuildBinderFromLoginRewardLoginRewardMasterItem((Gs2.Unity.Gs2LoginReward.Model.EzReward Item, int RewardIndex) item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = LoginRewardBinder.CreateModel(ExtractLoginRewardLoginRewardMasterIdentity(item), new LoginRewardCollectionId(_loginRewardCollection));
             ApplyLoginRewardLoginRewardMasterItemTo(model, item);
             LoginRewardOverlayLoader.Active?.Get(model.Id.ToString())?.ApplyTo(model);
-            var binder = new LoginRewardBinder(model, _gs2, _session, rewardIndex: item.RewardIndex);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new LoginRewardBinder(model, _gs2, _session, rewardIndex: item.RewardIndex, __sdk__transactionAcquireAction_1: _loginRewardCollection);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyLoginRewardLoginRewardMasterItemTo(MutableLoginReward model, (Gs2.Unity.Gs2LoginReward.Model.EzReward Item, int RewardIndex) item)
@@ -392,7 +451,7 @@ namespace GS2Studio.Generated.LoginReward
 
         private string? ExtractLoginRewardLoginRewardMasterRowKey((Gs2.Unity.Gs2LoginReward.Model.EzReward Item, int RewardIndex) item)
         {
-            return item.RewardIndex.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            return string.Concat("[\"master\",\"LoginRewardLoginReward\",\"micro-economy-login-reward\",\"mdr_6Y63M3YDY0AYDA9Q5KJ64658MD\",null,null,\"micro-economy-login-reward\",\"mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7\",\"loginReward\",\"Reward\"]|", item.RewardIndex.ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
 
         // SDK elements provide no domain ID, so retain the current parent/index mapping from overlays.

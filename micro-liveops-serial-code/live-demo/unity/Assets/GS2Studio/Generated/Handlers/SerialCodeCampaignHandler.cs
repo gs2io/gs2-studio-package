@@ -24,6 +24,7 @@ namespace GS2Studio.Generated.SerialCodeCampaign
     public sealed class SerialCodeCampaignHandler : SerialCodeCampaignHandlerBase
     {
         [SerializeField] private string? _id;
+        private string? _sdk_micro_x2d_liveops_x2d_serial_x2d_code_masterData_mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ_serialKey_CampaignModel_campaignModelName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -48,6 +49,7 @@ namespace GS2Studio.Generated.SerialCodeCampaign
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(ISerialCodeCampaignBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -63,6 +65,17 @@ namespace GS2Studio.Generated.SerialCodeCampaign
             _id = id;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_micro_x2d_liveops_x2d_serial_x2d_code_masterData_mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ_serialKey_CampaignModel_campaignModelName)
+        {
+            InvalidateBindingIntent();
+            _sdk_micro_x2d_liveops_x2d_serial_x2d_code_masterData_mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ_serialKey_CampaignModel_campaignModelName = sdk_micro_x2d_liveops_x2d_serial_x2d_code_masterData_mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ_serialKey_CampaignModel_campaignModelName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -88,7 +101,9 @@ namespace GS2Studio.Generated.SerialCodeCampaign
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new SerialCodeCampaignId(_id ?? string.Empty), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_liveops_x2d_serial_x2d_code_masterData_mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ_serialKey_CampaignModel_campaignModelName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_liveops_x2d_serial_x2d_code_masterData_mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ_serialKey_CampaignModel_campaignModelName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new SerialCodeCampaignId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__serialKeySerialCodeNamespaceCampaignModel_1: _sdk_micro_x2d_liveops_x2d_serial_x2d_code_masterData_mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ_serialKey_CampaignModel_campaignModelName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -177,6 +192,7 @@ namespace GS2Studio.Generated.SerialCodeCampaign
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_liveops_x2d_serial_x2d_code_masterData_mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ_serialKey_CampaignModel_campaignModelName)) return false;
             return true;
         }
 

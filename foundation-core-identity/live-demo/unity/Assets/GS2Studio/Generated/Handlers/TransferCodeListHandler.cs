@@ -113,6 +113,7 @@ namespace GS2Studio.Generated.TransferCode
         private ITransferCodeBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultTransferCodeBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

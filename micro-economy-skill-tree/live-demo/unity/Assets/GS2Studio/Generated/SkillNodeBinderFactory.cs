@@ -25,7 +25,10 @@ namespace GS2Studio.Generated.SkillNode
             SkillNodeId id, string owner,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__skillTreeSkillTreeNamespaceNodeModel_1 = null,
+            string? __sdk__membershipSkillTreeStatus_1 = null);
         ISkillNodeBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string owner);
     }
 
@@ -37,9 +40,12 @@ namespace GS2Studio.Generated.SkillNode
             SkillNodeId id, string owner,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__skillTreeSkillTreeNamespaceNodeModel_1 = null,
+            string? __sdk__membershipSkillTreeStatus_1 = null)
         {
-            return await SkillNodeBinder.CreateAsync(id, owner, gs2, session, cancellationToken);
+            return await SkillNodeBinder.CreateAsync(id, owner, gs2, session, cancellationToken, __sdk__transactionConsumeAction_1, __sdk__skillTreeSkillTreeNamespaceNodeModel_1, __sdk__membershipSkillTreeStatus_1);
         }
         public ISkillNodeBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string owner)
         {

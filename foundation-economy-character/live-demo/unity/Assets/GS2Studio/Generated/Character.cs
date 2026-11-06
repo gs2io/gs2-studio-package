@@ -13,20 +13,38 @@ namespace GS2Studio.Generated.Character
     public interface Character
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the character.
         /// </summary>
         CharacterId Id { get; }
 
+        /// <summary>
+        /// Value used to order characters in lists.
+        /// </summary>
         int Sort { get; }
 
+        /// <summary>
+        /// Identifier of the character instance owned by the player.
+        /// </summary>
         string PropertyId { get; }
 
+        /// <summary>
+        /// Current level of the character.
+        /// </summary>
         long Level { get; }
 
+        /// <summary>
+        /// Level cap currently applied to the character.
+        /// </summary>
         long LevelCap { get; }
 
+        /// <summary>
+        /// Cumulative experience currently earned by the character.
+        /// </summary>
         long Experience { get; }
 
+        /// <summary>
+        /// Cumulative experience needed to reach the next level; 0 once the level cap is reached.
+        /// </summary>
         long NextLevelExperience { get; }
     }
 

@@ -13,12 +13,18 @@ namespace GS2Studio.Generated.Gift
     public interface Gift
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the gift.
         /// </summary>
         GiftId Id { get; }
 
+        /// <summary>
+        /// Content of the message the gift arrives with.
+        /// </summary>
         string Payload { get; }
 
+        /// <summary>
+        /// Coins received when the message is opened.
+        /// </summary>
         int Amount { get; }
     }
 

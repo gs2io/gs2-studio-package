@@ -14,10 +14,13 @@ namespace GS2Studio.Generated.TriggerPull
     public interface TriggerPull
     {
         /// <summary>
-        /// Unique identifier
+        /// Pulls one trigger in the demo.
         /// </summary>
         TriggerPullId Id { get; }
 
+        /// <summary>
+        /// The trigger this row pulls.
+        /// </summary>
         TriggerId Trigger { get; }
     }
 

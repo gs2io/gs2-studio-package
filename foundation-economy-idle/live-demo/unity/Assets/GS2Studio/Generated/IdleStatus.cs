@@ -13,18 +13,33 @@ namespace GS2Studio.Generated.IdleStatus
     public interface IdleStatus
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the idle status.
         /// </summary>
         IdleStatusId Id { get; }
 
+        /// <summary>
+        /// Interval at which idle rewards accumulate.
+        /// </summary>
         int RewardIntervalMinutes { get; }
 
+        /// <summary>
+        /// Initial maximum idle duration for a new player.
+        /// </summary>
         int DefaultMaximumIdleMinutes { get; }
 
+        /// <summary>
+        /// Idle duration accumulated so far.
+        /// </summary>
         int CurrentIdleMinutes { get; }
 
+        /// <summary>
+        /// Time when the next idle reward becomes available.
+        /// </summary>
         DateTime NextRewardsAt { get; }
 
+        /// <summary>
+        /// Current maximum idle duration applied to the player.
+        /// </summary>
         int MaximumIdleMinutes { get; }
     }
 

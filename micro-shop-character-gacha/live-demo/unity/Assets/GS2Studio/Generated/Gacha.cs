@@ -14,10 +14,13 @@ namespace GS2Studio.Generated.Gacha
     public interface Gacha
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the gacha.
         /// </summary>
         GachaId Id { get; }
 
+        /// <summary>
+        /// Schedule during which this gacha is available.
+        /// </summary>
         ScheduleId? Schedule { get; }
     }
 

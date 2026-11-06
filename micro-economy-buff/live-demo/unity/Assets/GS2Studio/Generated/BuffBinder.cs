@@ -28,6 +28,7 @@ namespace GS2Studio.Generated.Buff
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableBuffBinder : IReadOnlyBuffBinder
     {
+        BuffBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -79,10 +80,201 @@ namespace GS2Studio.Generated.Buff
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class BuffBinder : ReadOnlyBuffBinder, IBuffBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly BuffBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(BuffBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Buff Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableBuff? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableBuff
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal BuffId __valueId = default!;
+                public BuffId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setExpression;
+                internal string __valueExpression = default!;
+                public string Expression
+                {
+                    get => __setExpression ? __valueExpression : __scopeOwner.Value.Expression;
+                    set { __setExpression = true; __valueExpression = value; }
+                }
+                internal bool __setTargetType;
+                internal string __valueTargetType = default!;
+                public string TargetType
+                {
+                    get => __setTargetType ? __valueTargetType : __scopeOwner.Value.TargetType;
+                    set { __setTargetType = true; __valueTargetType = value; }
+                }
+                internal bool __setTargetActionName;
+                internal string? __valueTargetActionName = default!;
+                public string? TargetActionName
+                {
+                    get => __setTargetActionName ? __valueTargetActionName : __scopeOwner.Value.TargetActionName;
+                    set { __setTargetActionName = true; __valueTargetActionName = value; }
+                }
+                internal bool __setTargetModelName;
+                internal string? __valueTargetModelName = default!;
+                public string? TargetModelName
+                {
+                    get => __setTargetModelName ? __valueTargetModelName : __scopeOwner.Value.TargetModelName;
+                    set { __setTargetModelName = true; __valueTargetModelName = value; }
+                }
+                internal bool __setTargetFieldName;
+                internal string __valueTargetFieldName = default!;
+                public string TargetFieldName
+                {
+                    get => __setTargetFieldName ? __valueTargetFieldName : __scopeOwner.Value.TargetFieldName;
+                    set { __setTargetFieldName = true; __valueTargetFieldName = value; }
+                }
+                internal bool __setConditionModelName;
+                internal string __valueConditionModelName = default!;
+                public string ConditionModelName
+                {
+                    get => __setConditionModelName ? __valueConditionModelName : __scopeOwner.Value.ConditionModelName;
+                    set { __setConditionModelName = true; __valueConditionModelName = value; }
+                }
+                internal bool __setConditionGrn;
+                internal string __valueConditionGrn = default!;
+                public string ConditionGrn
+                {
+                    get => __setConditionGrn ? __valueConditionGrn : __scopeOwner.Value.ConditionGrn;
+                    set { __setConditionGrn = true; __valueConditionGrn = value; }
+                }
+                internal bool __setRate;
+                internal float __valueRate = default!;
+                public float Rate
+                {
+                    get => __setRate ? __valueRate : __scopeOwner.Value.Rate;
+                    set { __setRate = true; __valueRate = value; }
+                }
+                internal bool __setPriority;
+                internal int __valuePriority = default!;
+                public int Priority
+                {
+                    get => __setPriority ? __valuePriority : __scopeOwner.Value.Priority;
+                    set { __setPriority = true; __valuePriority = value; }
+                }
+                internal bool __setSchedule;
+                internal ScheduleId? __valueSchedule = default!;
+                public ScheduleId? Schedule
+                {
+                    get => __setSchedule ? __valueSchedule : __scopeOwner.Value.Schedule;
+                    set { __setSchedule = true; __valueSchedule = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<BuffId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setExpression) { _owner._model.Expression = changes.__valueExpression; changes.__setExpression = false; }
+                if (changes.__setTargetType) { _owner._model.TargetType = changes.__valueTargetType; changes.__setTargetType = false; }
+                if (changes.__setTargetActionName) { _owner._model.TargetActionName = changes.__valueTargetActionName; changes.__setTargetActionName = false; }
+                if (changes.__setTargetModelName) { _owner._model.TargetModelName = changes.__valueTargetModelName; changes.__setTargetModelName = false; }
+                if (changes.__setTargetFieldName) { _owner._model.TargetFieldName = changes.__valueTargetFieldName; changes.__setTargetFieldName = false; }
+                if (changes.__setConditionModelName) { _owner._model.ConditionModelName = changes.__valueConditionModelName; changes.__setConditionModelName = false; }
+                if (changes.__setConditionGrn) { _owner._model.ConditionGrn = changes.__valueConditionGrn; changes.__setConditionGrn = false; }
+                if (changes.__setRate) { _owner._model.Rate = changes.__valueRate; changes.__setRate = false; }
+                if (changes.__setPriority) { _owner._model.Priority = changes.__valuePriority; changes.__setPriority = false; }
+                if (changes.__setSchedule) { _owner._model.Schedule = changes.__valueSchedule; changes.__setSchedule = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -93,11 +285,14 @@ namespace GS2Studio.Generated.Buff
         internal BuffBinder(
             MutableBuff model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            string? __sdk__buffBuffNamespaceBuffEntryModel_1 = null
         ) : base(model, gs2, session)
         {
-            __buffBuffNamespaceBuffEntryModelLoader = new Gs2Bind.Gs2Buff.BuffEntryModelLoader("Buff", _model.Id);
+
+            __buffBuffNamespaceBuffEntryModelLoader = new Gs2Bind.Gs2Buff.BuffEntryModelLoader("Buff", (string.IsNullOrEmpty(__sdk__buffBuffNamespaceBuffEntryModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__buffBuffNamespaceBuffEntryModel_1!));
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableBuff CreateModel(BuffId id)
@@ -111,14 +306,14 @@ namespace GS2Studio.Generated.Buff
             BuffId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__buffBuffNamespaceBuffEntryModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new BuffBinder(model, gs2, session);
+            var binder = new BuffBinder(model, gs2, session, __sdk__buffBuffNamespaceBuffEntryModel_1: __sdk__buffBuffNamespaceBuffEntryModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -162,6 +357,7 @@ namespace GS2Studio.Generated.Buff
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -225,6 +421,7 @@ namespace GS2Studio.Generated.Buff
                 model.ConditionModelName = string.Empty;
             }
         }
+
         #endregion
 
     }

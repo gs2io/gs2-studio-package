@@ -18,8 +18,8 @@
   "binderListSource": "IStoreProductBinderListSource",
   "scopeParameters": [
     {
-      "name": "currencyType",
-      "fieldName": "_currencyType",
+      "name": "showcaseName",
+      "fieldName": "_showcaseName",
       "serializedType": "string"
     }
   ],
@@ -49,7 +49,7 @@
   ],
   "mountFields": [
     {
-      "fieldName": "_currencyType",
+      "fieldName": "_showcaseName",
       "serializedType": "string"
     }
   ],

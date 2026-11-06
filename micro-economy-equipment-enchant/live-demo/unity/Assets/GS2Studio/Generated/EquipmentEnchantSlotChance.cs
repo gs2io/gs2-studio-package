@@ -14,19 +14,22 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
     public interface EquipmentEnchantSlotChance
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the enchantment slot chance.
         /// </summary>
         EquipmentEnchantSlotChanceId Id { get; }
 
+        /// <summary>
+        /// Enchantment configuration this slot-count chance belongs to.
+        /// </summary>
         EquipmentEnchantId Enchant { get; }
 
         /// <summary>
-        /// Number of bonuses rolled
+        /// Number of effects added when this result is drawn.
         /// </summary>
         int Count { get; }
 
         /// <summary>
-        /// Relative draw weight
+        /// Relative weight used to draw this effect count.
         /// </summary>
         int Weight { get; }
     }

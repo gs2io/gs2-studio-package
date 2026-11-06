@@ -134,7 +134,7 @@ namespace GS2Studio.Generated.LoginReward.UI
                 {
                     _warnedLoginRewardCollectionReceivedStepsParentMismatch = true;
                     Debug.LogWarning(
-                        $"{nameof(LoginRewardReceivedActiveToggle)} on '{name}': this row belongs to LoginRewardCollection '{parentKey}', but the LoginRewardCollectionHandlerBase above it holds '{companionKey}'; reading false instead of another row's receivedSteps.", this);
+                        $"{nameof(LoginRewardReceivedActiveToggle)} on '{name}': this row belongs to LoginRewardCollection '{parentKey}', but the LoginRewardCollectionHandlerBase above it holds '{companionKey}'; reading false instead of another row's ReceivedSteps.", this);
                 }
                 return false;
             }

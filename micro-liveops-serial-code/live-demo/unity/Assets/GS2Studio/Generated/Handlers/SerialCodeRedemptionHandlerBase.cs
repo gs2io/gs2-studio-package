@@ -27,6 +27,9 @@ namespace GS2Studio.Generated.SerialCodeRedemption
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public SerialCodeRedemptionMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<SerialCodeRedemption>? Updated;
 
         public event Action<IActionableSerialCodeRedemptionBinder>? Bound;

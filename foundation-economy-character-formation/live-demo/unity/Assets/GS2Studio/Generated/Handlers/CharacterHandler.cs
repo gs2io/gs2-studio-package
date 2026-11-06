@@ -30,6 +30,11 @@ namespace GS2Studio.Generated.Character
     {
         [SerializeField] private string? _id;
         [SerializeField] private string? _propertyId;
+        private string? _sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName;
+        private string? _sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName_2;
+        private string? _sdk_foundation_x2d_economy_x2d_character_masterData_mdr_3EJ714VYYS8V2SWXMCQTYD32VN_inventory_ItemModel_itemName;
+        private string? _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName;
+        private string? _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -54,6 +59,7 @@ namespace GS2Studio.Generated.Character
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(ICharacterBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -70,6 +76,21 @@ namespace GS2Studio.Generated.Character
             _propertyId = propertyId;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName, string? sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName_2, string? sdk_foundation_x2d_economy_x2d_character_masterData_mdr_3EJ714VYYS8V2SWXMCQTYD32VN_inventory_ItemModel_itemName, string? sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName, string? sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName)
+        {
+            InvalidateBindingIntent();
+            _sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName = sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName;
+            _sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName_2 = sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName_2;
+            _sdk_foundation_x2d_economy_x2d_character_masterData_mdr_3EJ714VYYS8V2SWXMCQTYD32VN_inventory_ItemModel_itemName = sdk_foundation_x2d_economy_x2d_character_masterData_mdr_3EJ714VYYS8V2SWXMCQTYD32VN_inventory_ItemModel_itemName;
+            _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName = sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName;
+            _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName = sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -95,7 +116,17 @@ namespace GS2Studio.Generated.Character
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new CharacterId(_id ?? string.Empty), _propertyId, gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName_2' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_masterData_mdr_3EJ714VYYS8V2SWXMCQTYD32VN_inventory_ItemModel_itemName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_character_masterData_mdr_3EJ714VYYS8V2SWXMCQTYD32VN_inventory_ItemModel_itemName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new CharacterId(_id ?? string.Empty), _propertyId, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1: _sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName, __sdk__exchangeCharacterTrainNamespaceRateModel_1: _sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName_2, __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2: _sdk_foundation_x2d_economy_x2d_character_masterData_mdr_3EJ714VYYS8V2SWXMCQTYD32VN_inventory_ItemModel_itemName, __sdk__userdataInventoryCharacterItemModel_2: _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName, __sdk__userdataInventoryCharacterItemModel_3: _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -185,6 +216,11 @@ namespace GS2Studio.Generated.Character
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
             if (string.IsNullOrEmpty(_propertyId)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_x2d_demo_masterData_mdr_610EXTERWVB0FRCTCXD30A4ZX6_exchange_RateModel_rateName_2)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_masterData_mdr_3EJ714VYYS8V2SWXMCQTYD32VN_inventory_ItemModel_itemName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName)) return false;
             return true;
         }
 

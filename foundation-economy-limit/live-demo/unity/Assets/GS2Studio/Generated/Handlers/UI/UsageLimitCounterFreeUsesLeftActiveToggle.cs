@@ -26,8 +26,12 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
         [SerializeField] private GameObject[] _activeWhenTrue = System.Array.Empty<GameObject>();
         [SerializeField] private GameObject[] _activeWhenFalse = System.Array.Empty<GameObject>();
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "TransactionConsumeAction2", "UserdataLimitLimitLimitModel" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -66,9 +70,22 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 
         private void OnUpdated(UsageLimitCounter model)
         {
+            WarnUnloadedLoadersOnce();
             bool result = (System.Convert.ToInt64(model.Count, System.Globalization.CultureInfo.InvariantCulture) < System.Convert.ToInt64(model.FreeMax, System.Globalization.CultureInfo.InvariantCulture));
             ApplyActiveState(_activeWhenTrue, result);
             ApplyActiveState(_activeWhenFalse, !result);
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataLimitLimitLimitModel && binder.LoadedTransactionConsumeAction2) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(UsageLimitCounterFreeUsesLeftActiveToggle)} on '{name}': this row's mount surface did not run TransactionConsumeAction2, UserdataLimitLimitLimitModel, which fills what this component reads (Count, FreeMax); those readings render as their default, not as an absent value.", this);
         }
 
         private static void ApplyActiveState(GameObject[]? targets, bool active)

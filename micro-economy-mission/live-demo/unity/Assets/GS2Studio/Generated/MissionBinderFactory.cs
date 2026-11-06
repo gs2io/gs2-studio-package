@@ -27,7 +27,10 @@ namespace GS2Studio.Generated.Mission
             MissionId id, MissionCollectionId missionCollection,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_2 = null,
+            string? __sdk__missionMissionMissionTaskModel_2 = null,
+            string? __sdk__membershipMissionComplete_1 = null);
         IMissionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, MissionCollectionId missionCollection);
     }
 
@@ -39,9 +42,12 @@ namespace GS2Studio.Generated.Mission
             MissionId id, MissionCollectionId missionCollection,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_2 = null,
+            string? __sdk__missionMissionMissionTaskModel_2 = null,
+            string? __sdk__membershipMissionComplete_1 = null)
         {
-            return await MissionBinder.CreateAsync(id, missionCollection, gs2, session, cancellationToken);
+            return await MissionBinder.CreateAsync(id, missionCollection, gs2, session, cancellationToken, __sdk__transactionAcquireAction_2, __sdk__missionMissionMissionTaskModel_2, __sdk__membershipMissionComplete_1);
         }
         public IMissionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, MissionCollectionId missionCollection)
         {

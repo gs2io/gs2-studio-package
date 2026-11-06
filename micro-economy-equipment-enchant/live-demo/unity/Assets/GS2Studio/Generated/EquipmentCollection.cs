@@ -13,16 +13,28 @@ namespace GS2Studio.Generated.EquipmentCollection
     public interface EquipmentCollection
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the equipment inventory.
         /// </summary>
         EquipmentCollectionId Id { get; }
 
+        /// <summary>
+        /// Equipment capacity granted to a new player.
+        /// </summary>
         int DefaultCapacity { get; }
 
+        /// <summary>
+        /// Maximum equipment capacity a player can reach.
+        /// </summary>
         int MaximumCapacity { get; }
 
+        /// <summary>
+        /// Equipment capacity currently in use.
+        /// </summary>
         int CurrentCapacityUsage { get; }
 
+        /// <summary>
+        /// Equipment capacity currently available to the player.
+        /// </summary>
         int CurrentMaximumCapacity { get; }
     }
 

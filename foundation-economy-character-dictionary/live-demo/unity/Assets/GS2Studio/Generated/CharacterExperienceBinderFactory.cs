@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.CharacterExperience
             CharacterExperienceId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__experienceCharacterExperienceNamespaceExperienceModel_1 = null);
     }
 
     public sealed class DefaultCharacterExperienceBinderFactory : ICharacterExperienceBinderFactory
@@ -34,9 +35,10 @@ namespace GS2Studio.Generated.CharacterExperience
             CharacterExperienceId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__experienceCharacterExperienceNamespaceExperienceModel_1 = null)
         {
-            return await CharacterExperienceBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await CharacterExperienceBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__experienceCharacterExperienceNamespaceExperienceModel_1);
         }
     }
 }

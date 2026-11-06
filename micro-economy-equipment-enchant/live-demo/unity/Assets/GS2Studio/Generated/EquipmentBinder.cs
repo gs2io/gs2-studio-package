@@ -39,22 +39,23 @@ namespace GS2Studio.Generated.Equipment
         Full,
 
         /// <summary>Built by the InventoryEquipment master-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel")]
+        [Gs2SkipsLoaders("ExchangeEquipmentDiscardNamespaceRateModel", "TransactionConsumeAction", "TransactionConsumeAction2", "ExchangeEquipmentEnchantAddNamespaceRateModel", "TransactionAcquireAction", "TransactionConsumeAction3", "TransactionAcquireAction2", "ExchangeEquipmentEnchantRerollNamespaceRateModel", "UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel")]
         InventoryEquipmentMaster,
 
         /// <summary>Built by the ExchangeEquipmentDiscard master-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel")]
+        [Gs2SkipsLoaders("TransactionConsumeAction2", "ExchangeEquipmentEnchantAddNamespaceRateModel", "TransactionAcquireAction", "TransactionConsumeAction3", "TransactionAcquireAction2", "ExchangeEquipmentEnchantRerollNamespaceRateModel", "InventoryEquipmentNamespaceInventoryModelItemModel", "UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel")]
         ExchangeEquipmentDiscardMaster,
 
         /// <summary>Built by the ExchangeEquipmentEnchantAdd master-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel")]
+        [Gs2SkipsLoaders("ExchangeEquipmentDiscardNamespaceRateModel", "TransactionConsumeAction", "TransactionConsumeAction3", "TransactionAcquireAction2", "ExchangeEquipmentEnchantRerollNamespaceRateModel", "InventoryEquipmentNamespaceInventoryModelItemModel", "UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel")]
         ExchangeEquipmentEnchantAddMaster,
 
         /// <summary>Built by the ExchangeEquipmentEnchantReroll master-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel")]
+        [Gs2SkipsLoaders("ExchangeEquipmentDiscardNamespaceRateModel", "TransactionConsumeAction", "TransactionConsumeAction2", "ExchangeEquipmentEnchantAddNamespaceRateModel", "TransactionAcquireAction", "InventoryEquipmentNamespaceInventoryModelItemModel", "UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel")]
         ExchangeEquipmentEnchantRerollMaster,
 
         /// <summary>Built by the InventoryEquipment user-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeEquipmentDiscardNamespaceRateModel", "TransactionConsumeAction", "TransactionConsumeAction2", "ExchangeEquipmentEnchantAddNamespaceRateModel", "TransactionAcquireAction", "TransactionConsumeAction3", "TransactionAcquireAction2", "ExchangeEquipmentEnchantRerollNamespaceRateModel", "UserdataEnchantEquipmentEnchantRarityParameterModel")]
         InventoryEquipmentUser,
     }
 
@@ -65,7 +66,79 @@ namespace GS2Studio.Generated.Equipment
         EquipmentMountSurface MountSurface { get; }
 
         /// <summary>
-        /// This construction path permits the <c>Gs2Bind.Gs2Inventory.ItemSetLoader</c> load on <c>__userdataInventoryEquipmentItemModelLoader</c>. False means this path does not supply <c>PropertyId</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeEquipmentDiscardNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeEquipmentDiscardNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeActionLoader</c>. False means this path does not supply <c>Id</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeAction2Loader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction2 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeEquipmentEnchantAddNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeEquipmentEnchantAddNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeAction3Loader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction3 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireAction2Loader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction2 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeEquipmentEnchantRerollNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeEquipmentEnchantRerollNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Inventory.ItemSetLoader</c> load on <c>__userdataInventoryEquipmentItemModelLoader</c> or its composition from a list item. False means this path does not supply <c>PropertyId</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
         /// </summary>
         /// <remarks>InventoryEquipmentMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentDiscardMaster: no per-row value for _model.PropertyId.</remarks>
@@ -80,15 +153,26 @@ namespace GS2Studio.Generated.Equipment
         /// <remarks>ExchangeEquipmentDiscardMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentEnchantAddMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentEnchantRerollMaster: no per-row value for _model.PropertyId.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key parameterName.</remarks>
         bool LoadedUserdataEnchantEquipmentEnchantRarityParameterModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Inventory.ItemModelLoader</c> load on <c>__inventoryEquipmentNamespaceInventoryModelItemModelLoader</c>. False means this path does not supply <c>SortValue</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedInventoryEquipmentNamespaceInventoryModelItemModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableEquipmentBinder : IReadOnlyEquipmentBinder
     {
+        EquipmentBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Discard(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
         Task Reroll();
         Task AddBonus();
+        Task<GS2Studio.Generated.EquipmentCatalog.IReadOnlyEquipmentCatalogBinderCollection> GetEquipmentCatalogs(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -96,7 +180,6 @@ namespace GS2Studio.Generated.Equipment
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.EquipmentCatalog.IReadOnlyEquipmentCatalogBinderCollection> GetEquipmentCatalogs(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
@@ -126,10 +209,37 @@ namespace GS2Studio.Generated.Equipment
         public abstract EquipmentMountSurface MountSurface { get; }
 
         /// <inheritdoc />
+        public abstract bool LoadedExchangeEquipmentDiscardNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction2 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeEquipmentEnchantAddNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction3 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction2 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeEquipmentEnchantRerollNamespaceRateModel { get; }
+
+        /// <inheritdoc />
         public abstract bool LoadedUserdataInventoryEquipmentItemModel { get; }
 
         /// <inheritdoc />
         public abstract bool LoadedUserdataEnchantEquipmentEnchantRarityParameterModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedInventoryEquipmentNamespaceInventoryModelItemModel { get; }
 
 
         private protected ReadOnlyEquipmentBinder(MutableEquipment model, Gs2Domain gs2, IGameSession session)
@@ -141,10 +251,161 @@ namespace GS2Studio.Generated.Equipment
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class EquipmentBinder : ReadOnlyEquipmentBinder, IEquipmentBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly EquipmentBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(EquipmentBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Equipment Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableEquipment? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableEquipment
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal EquipmentId __valueId = default!;
+                public EquipmentId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setCategory;
+                internal EquipmentCategoryId __valueCategory = default!;
+                public EquipmentCategoryId Category
+                {
+                    get => __setCategory ? __valueCategory : __scopeOwner.Value.Category;
+                    set { __setCategory = true; __valueCategory = value; }
+                }
+                internal bool __setSortValue;
+                internal int __valueSortValue = default!;
+                public int SortValue
+                {
+                    get => __setSortValue ? __valueSortValue : __scopeOwner.Value.SortValue;
+                    set { __setSortValue = true; __valueSortValue = value; }
+                }
+                internal bool __setPropertyId;
+                internal string __valuePropertyId = default!;
+                public string PropertyId
+                {
+                    get => __setPropertyId ? __valuePropertyId : __scopeOwner.Value.PropertyId;
+                    set { __setPropertyId = true; __valuePropertyId = value; }
+                }
+                internal bool __setEnchant;
+                internal EquipmentEnchantId? __valueEnchant = default!;
+                public EquipmentEnchantId? Enchant
+                {
+                    get => __setEnchant ? __valueEnchant : __scopeOwner.Value.Enchant;
+                    set { __setEnchant = true; __valueEnchant = value; }
+                }
+                internal bool __setEnchantments;
+                internal IReadOnlyList<GS2Studio.Generated.EquipmentEnchantment.EquipmentEnchantment>? __valueEnchantments = default!;
+                public IReadOnlyList<GS2Studio.Generated.EquipmentEnchantment.EquipmentEnchantment>? Enchantments
+                {
+                    get => __setEnchantments ? __valueEnchantments : __scopeOwner.Value.Enchantments;
+                    set { __setEnchantments = true; __valueEnchantments = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<EquipmentId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setCategory) { _owner._model.Category = changes.__valueCategory; changes.__setCategory = false; }
+                if (changes.__setSortValue) { _owner._model.SortValue = changes.__valueSortValue; changes.__setSortValue = false; }
+                if (changes.__setPropertyId) { _owner._model.PropertyId = changes.__valuePropertyId; changes.__setPropertyId = false; }
+                if (changes.__setEnchant) { _owner._model.Enchant = changes.__valueEnchant; changes.__setEnchant = false; }
+                if (changes.__setEnchantments) { _owner._model.Enchantments = changes.__valueEnchantments; changes.__setEnchantments = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -165,50 +426,155 @@ namespace GS2Studio.Generated.Equipment
 
         private readonly EquipmentMountSurface _mountSurfaceValue;
 
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeEquipmentDiscardNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeEquipmentDiscardNamespaceRateModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentDiscardMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeActionLoader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeActionLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentDiscardMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeAction2Loader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeAction2Loader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentEnchantAddMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeEquipmentEnchantAddNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeEquipmentEnchantAddNamespaceRateModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentEnchantAddMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentEnchantAddMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeAction3Loader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeAction3Loader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentEnchantRerollMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireAction2Loader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireAction2Loader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentEnchantRerollMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeEquipmentEnchantRerollNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeEquipmentEnchantRerollNamespaceRateModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentEnchantRerollMaster;
+
         /// <summary>Avoid loading unless this path supplies every key <c>__userdataInventoryEquipmentItemModelLoader</c> reads.</summary>
         /// <remarks>InventoryEquipmentMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentDiscardMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentEnchantAddMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentEnchantRerollMaster: no per-row value for _model.PropertyId.</remarks>
-        private bool Runs__userdataInventoryEquipmentItemModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.InventoryEquipmentUser;
+        private bool Runs__userdataInventoryEquipmentItemModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full;
 
         /// <summary>Avoid loading unless this path supplies every key <c>__userdataEnchantEquipmentEnchantRarityParameterModelLoader</c> reads.</summary>
         /// <remarks>InventoryEquipmentMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentDiscardMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentEnchantAddMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentEnchantRerollMaster: no per-row value for _model.PropertyId.</remarks>
-        private bool Runs__userdataEnchantEquipmentEnchantRarityParameterModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.InventoryEquipmentUser;
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key parameterName.</remarks>
+        private bool Runs__userdataEnchantEquipmentEnchantRarityParameterModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__inventoryEquipmentNamespaceInventoryModelItemModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantAddMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEquipmentEnchantRerollMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.InventoryEquipmentMaster or EquipmentMountSurface.InventoryEquipmentUser;
 
         /// <inheritdoc />
         public override EquipmentMountSurface MountSurface => _mountSurfaceValue;
 
         /// <inheritdoc />
-        public override bool LoadedUserdataInventoryEquipmentItemModel => Runs__userdataInventoryEquipmentItemModelLoader;
+        public override bool LoadedExchangeEquipmentDiscardNamespaceRateModel => Runs__exchangeEquipmentDiscardNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction => Runs__transactionConsumeActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction2 => Runs__transactionConsumeAction2Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeEquipmentEnchantAddNamespaceRateModel => Runs__exchangeEquipmentEnchantAddNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction3 => Runs__transactionConsumeAction3Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction2 => Runs__transactionAcquireAction2Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeEquipmentEnchantRerollNamespaceRateModel => Runs__exchangeEquipmentEnchantRerollNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataInventoryEquipmentItemModel => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.InventoryEquipmentUser;
 
         /// <inheritdoc />
         public override bool LoadedUserdataEnchantEquipmentEnchantRarityParameterModel => Runs__userdataEnchantEquipmentEnchantRarityParameterModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedInventoryEquipmentNamespaceInventoryModelItemModel => Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader;
 
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal EquipmentBinder(
             MutableEquipment model,
             Gs2Domain gs2,
             IGameSession session,
-            EquipmentMountSurface _mountSurface = EquipmentMountSurface.Full
+            EquipmentMountSurface _mountSurface = EquipmentMountSurface.Full,
+            string? __sdk__exchangeEquipmentDiscardNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__exchangeEquipmentEnchantAddNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction3_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeEquipmentEnchantRerollNamespaceRateModel_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_3 = null,
+            string? __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_1 = null,
+            string? __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_2 = null
         ) : base(model, gs2, session)
         {
+
             _mountSurfaceValue = _mountSurface;
-            __exchangeEquipmentDiscardNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentDiscard", _model.Id);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EquipmentDiscard", _model.Id, 0);
-            __transactionConsumeAction2Loader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EquipmentEnchantAdd", _model.Id, 0);
-            __exchangeEquipmentEnchantAddNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentEnchantAdd", _model.Id);
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentEnchantAdd", _model.Id, 0);
-            __transactionConsumeAction3Loader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EquipmentEnchantReroll", _model.Id, 0);
-            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentEnchantReroll", _model.Id, 0);
-            __exchangeEquipmentEnchantRerollNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentEnchantReroll", _model.Id);
-            __inventoryEquipmentNamespaceInventoryModelItemModelLoader = new Gs2Bind.Gs2Inventory.ItemModelLoader("Equipment", "Equipment", _model.Id);
-            __userdataInventoryEquipmentItemModelLoader = new Gs2Bind.Gs2Inventory.ItemSetLoader("Equipment", "Equipment", _model.Id, _model.PropertyId);
-            __userdataEnchantEquipmentEnchantRarityParameterModelLoader = new Gs2Bind.Gs2Enchant.RarityParameterStatusLoader("EquipmentEnchant", _model.Enchant, _model.PropertyId);
+            __exchangeEquipmentDiscardNamespaceRateModelLoader = Runs__exchangeEquipmentDiscardNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentDiscard", (string.IsNullOrEmpty(__sdk__exchangeEquipmentDiscardNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEquipmentDiscardNamespaceRateModel_1!)) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EquipmentDiscard", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __transactionConsumeAction2Loader = Runs__transactionConsumeAction2Loader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EquipmentEnchantAdd", (string.IsNullOrEmpty(__sdk__transactionConsumeAction2_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction2_1!), 0) : null!;
+            __exchangeEquipmentEnchantAddNamespaceRateModelLoader = Runs__exchangeEquipmentEnchantAddNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentEnchantAdd", (string.IsNullOrEmpty(__sdk__exchangeEquipmentEnchantAddNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEquipmentEnchantAddNamespaceRateModel_1!)) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentEnchantAdd", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __transactionConsumeAction3Loader = Runs__transactionConsumeAction3Loader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EquipmentEnchantReroll", (string.IsNullOrEmpty(__sdk__transactionConsumeAction3_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction3_1!), 0) : null!;
+            __transactionAcquireAction2Loader = Runs__transactionAcquireAction2Loader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EquipmentEnchantReroll", (string.IsNullOrEmpty(__sdk__transactionAcquireAction2_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction2_1!), 0) : null!;
+            __exchangeEquipmentEnchantRerollNamespaceRateModelLoader = Runs__exchangeEquipmentEnchantRerollNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentEnchantReroll", (string.IsNullOrEmpty(__sdk__exchangeEquipmentEnchantRerollNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEquipmentEnchantRerollNamespaceRateModel_1!)) : null!;
+            __inventoryEquipmentNamespaceInventoryModelItemModelLoader = Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader ? new Gs2Bind.Gs2Inventory.ItemModelLoader("Equipment", "Equipment", (string.IsNullOrEmpty(__sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2!)) : null!;
+            __userdataInventoryEquipmentItemModelLoader = Runs__userdataInventoryEquipmentItemModelLoader ? new Gs2Bind.Gs2Inventory.ItemSetLoader("Equipment", "Equipment", (string.IsNullOrEmpty(__sdk__userdataInventoryEquipmentItemModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataInventoryEquipmentItemModel_2!), (string.IsNullOrEmpty(__sdk__userdataInventoryEquipmentItemModel_3) ? _model.PropertyId : __sdk__userdataInventoryEquipmentItemModel_3!)) : null!;
+            __userdataEnchantEquipmentEnchantRarityParameterModelLoader = Runs__userdataEnchantEquipmentEnchantRarityParameterModelLoader ? new Gs2Bind.Gs2Enchant.RarityParameterStatusLoader("EquipmentEnchant", (string.IsNullOrEmpty(__sdk__userdataEnchantEquipmentEnchantRarityParameterModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_1!), (string.IsNullOrEmpty(__sdk__userdataEnchantEquipmentEnchantRarityParameterModel_2) ? _model.PropertyId : __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_2!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableEquipment CreateModel(EquipmentId id, string propertyId, EquipmentEnchantId enchant)
@@ -224,61 +590,76 @@ namespace GS2Studio.Generated.Equipment
             EquipmentId id, string propertyId, EquipmentEnchantId enchant,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEquipmentDiscardNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__exchangeEquipmentEnchantAddNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction3_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeEquipmentEnchantRerollNamespaceRateModel_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_3 = null,
+            string? __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_1 = null,
+            string? __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_2 = null)
         {
             var model = CreateModel(id, propertyId, enchant);
-            var binder = new EquipmentBinder(model, gs2, session);
+            var binder = new EquipmentBinder(model, gs2, session, __sdk__exchangeEquipmentDiscardNamespaceRateModel_1: __sdk__exchangeEquipmentDiscardNamespaceRateModel_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__transactionConsumeAction2_1: __sdk__transactionConsumeAction2_1, __sdk__exchangeEquipmentEnchantAddNamespaceRateModel_1: __sdk__exchangeEquipmentEnchantAddNamespaceRateModel_1, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__transactionConsumeAction3_1: __sdk__transactionConsumeAction3_1, __sdk__transactionAcquireAction2_1: __sdk__transactionAcquireAction2_1, __sdk__exchangeEquipmentEnchantRerollNamespaceRateModel_1: __sdk__exchangeEquipmentEnchantRerollNamespaceRateModel_1, __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2: __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2, __sdk__userdataInventoryEquipmentItemModel_2: __sdk__userdataInventoryEquipmentItemModel_2, __sdk__userdataInventoryEquipmentItemModel_3: __sdk__userdataInventoryEquipmentItemModel_3, __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_1: __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_1, __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_2: __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_2);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _exchangeEquipmentDiscardNamespaceRateModel = await __exchangeEquipmentDiscardNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeEquipmentDiscardNamespaceRateModel = Runs__exchangeEquipmentDiscardNamespaceRateModelLoader ? await __exchangeEquipmentDiscardNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeEquipmentDiscardNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction = Runs__transactionConsumeActionLoader ? await __transactionConsumeActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
             }
-            var _transactionConsumeAction2 = await __transactionConsumeAction2Loader.Load(_gs2, _session);
+            var _transactionConsumeAction2 = Runs__transactionConsumeAction2Loader ? await __transactionConsumeAction2Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction2 != null)
             {
             }
-            var _exchangeEquipmentEnchantAddNamespaceRateModel = await __exchangeEquipmentEnchantAddNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeEquipmentEnchantAddNamespaceRateModel = Runs__exchangeEquipmentEnchantAddNamespaceRateModelLoader ? await __exchangeEquipmentEnchantAddNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeEquipmentEnchantAddNamespaceRateModel != null)
             {
             }
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _transactionConsumeAction3 = await __transactionConsumeAction3Loader.Load(_gs2, _session);
+            var _transactionConsumeAction3 = Runs__transactionConsumeAction3Loader ? await __transactionConsumeAction3Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction3 != null)
             {
             }
-            var _transactionAcquireAction2 = await __transactionAcquireAction2Loader.Load(_gs2, _session);
+            var _transactionAcquireAction2 = Runs__transactionAcquireAction2Loader ? await __transactionAcquireAction2Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction2 != null)
             {
             }
-            var _exchangeEquipmentEnchantRerollNamespaceRateModel = await __exchangeEquipmentEnchantRerollNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeEquipmentEnchantRerollNamespaceRateModel = Runs__exchangeEquipmentEnchantRerollNamespaceRateModelLoader ? await __exchangeEquipmentEnchantRerollNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeEquipmentEnchantRerollNamespaceRateModel != null)
             {
             }
-            var _inventoryEquipmentNamespaceInventoryModelItemModel = await __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Load(_gs2, _session);
+            var _inventoryEquipmentNamespaceInventoryModelItemModel = Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader ? await __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyInventoryEquipmentNamespaceInventoryModelItemModel(_model, _inventoryEquipmentNamespaceInventoryModelItemModel);
+            if (Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader)
+            {
+                ApplyInventoryEquipmentNamespaceInventoryModelItemModel(_model, _inventoryEquipmentNamespaceInventoryModelItemModel);
+            }
             var _userdataInventoryEquipmentItemModel = Runs__userdataInventoryEquipmentItemModelLoader ? await __userdataInventoryEquipmentItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (Runs__userdataInventoryEquipmentItemModelLoader)
@@ -292,7 +673,10 @@ namespace GS2Studio.Generated.Equipment
                 ApplyUserdataEnchantEquipmentEnchantRarityParameterModel(_model, _userdataEnchantEquipmentEnchantRarityParameterModel);
             }
             EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-            if (_transactionConsumeAction != null) RestoreId(_model, _transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            if (Runs__transactionConsumeActionLoader)
+            {
+                if (_transactionConsumeAction != null) RestoreId(_model, _transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            }
             if (Runs__userdataEnchantEquipmentEnchantRarityParameterModelLoader)
             {
                 var __enchantmentsItems = new List<GS2Studio.Generated.EquipmentEnchantment.EquipmentEnchantment>();
@@ -317,131 +701,158 @@ namespace GS2Studio.Generated.Equipment
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__exchangeEquipmentDiscardNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__exchangeEquipmentDiscardNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeEquipmentDiscardNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value != null) RestoreId(_model, value.Action, value.Request);
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeAction2Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value != null) RestoreId(_model, value.Action, value.Request);
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                _unsubscribers.Add(__transactionConsumeAction2Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeEquipmentEnchantAddNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeEquipmentEnchantAddNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeEquipmentEnchantAddNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeAction3Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeAction3Loader)
+            {
+                _unsubscribers.Add(__transactionConsumeAction3Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeEquipmentEnchantRerollNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeEquipmentEnchantRerollNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeEquipmentEnchantRerollNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__inventoryEquipmentNamespaceInventoryModelItemModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyInventoryEquipmentNamespaceInventoryModelItemModel(_model, value);
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader)
+            {
+                _unsubscribers.Add(__inventoryEquipmentNamespaceInventoryModelItemModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyInventoryEquipmentNamespaceInventoryModelItemModel(_model, value);
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
             if (Runs__userdataInventoryEquipmentItemModelLoader)
             {
                 _unsubscribers.Add(__userdataInventoryEquipmentItemModelLoader.Subscribe(
@@ -490,15 +901,42 @@ namespace GS2Studio.Generated.Equipment
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __exchangeEquipmentDiscardNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
-            __exchangeEquipmentEnchantAddNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __transactionConsumeAction3Loader.Invalidate(_gs2, _session);
-            __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
-            __exchangeEquipmentEnchantRerollNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
+            if (Runs__exchangeEquipmentDiscardNamespaceRateModelLoader)
+            {
+                __exchangeEquipmentDiscardNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeEquipmentEnchantAddNamespaceRateModelLoader)
+            {
+                __exchangeEquipmentEnchantAddNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeAction3Loader)
+            {
+                __transactionConsumeAction3Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeEquipmentEnchantRerollNamespaceRateModelLoader)
+            {
+                __exchangeEquipmentEnchantRerollNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader)
+            {
+                __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
+            }
             if (Runs__userdataInventoryEquipmentItemModelLoader)
             {
                 __userdataInventoryEquipmentItemModelLoader.Invalidate(_gs2, _session);
@@ -518,6 +956,7 @@ namespace GS2Studio.Generated.Equipment
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -642,6 +1081,7 @@ namespace GS2Studio.Generated.Equipment
                 model.PropertyId = source.PropertyId;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

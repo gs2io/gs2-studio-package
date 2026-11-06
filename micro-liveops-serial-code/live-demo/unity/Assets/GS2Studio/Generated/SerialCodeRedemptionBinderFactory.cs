@@ -26,7 +26,14 @@ namespace GS2Studio.Generated.SerialCodeRedemption
             SerialCodeRedemptionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeSerialCodeStartOverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeSerialCodeRedeemNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__limitSerialCodeLimitNamespaceLimitModel_1 = null);
     }
 
     public sealed class DefaultSerialCodeRedemptionBinderFactory : ISerialCodeRedemptionBinderFactory
@@ -37,9 +44,16 @@ namespace GS2Studio.Generated.SerialCodeRedemption
             SerialCodeRedemptionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeSerialCodeStartOverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeSerialCodeRedeemNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__limitSerialCodeLimitNamespaceLimitModel_1 = null)
         {
-            return await SerialCodeRedemptionBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await SerialCodeRedemptionBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__transactionConsumeAction_1, __sdk__exchangeSerialCodeStartOverNamespaceRateModel_1, __sdk__transactionAcquireAction_1, __sdk__exchangeSerialCodeRedeemNamespaceRateModel_1, __sdk__transactionConsumeAction2_1, __sdk__transactionAcquireAction2_1, __sdk__limitSerialCodeLimitNamespaceLimitModel_1);
         }
     }
 }

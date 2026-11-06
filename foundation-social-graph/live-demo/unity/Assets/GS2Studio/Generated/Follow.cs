@@ -13,12 +13,18 @@ namespace GS2Studio.Generated.Follow
     public interface Follow
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the follow relationship.
         /// </summary>
         FollowId Id { get; }
 
+        /// <summary>
+        /// Public profile information of the followed player.
+        /// </summary>
         string? PublicProfile { get; }
 
+        /// <summary>
+        /// Profile information visible because the player is a follower.
+        /// </summary>
         string? FollowerProfile { get; }
     }
 

@@ -13,22 +13,22 @@ namespace GS2Studio.Generated.CharacterGradeStep
     public interface CharacterGradeStep
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the grade step.
         /// </summary>
         CharacterGradeStepId Id { get; }
 
         /// <summary>
-        /// Level cap this grade raises the character to
+        /// Level cap unlocked by this grade.
         /// </summary>
         long RankCapValue { get; }
 
         /// <summary>
-        /// Which characters this step applies to
+        /// Regular expression matching characters eligible for this grade. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended.
         /// </summary>
         string PropertyIdRegex { get; }
 
         /// <summary>
-        /// Which characters may be spent to reach it
+        /// Regular expression matching characters that may be consumed for grade-up. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended.
         /// </summary>
         string GradeUpPropertyIdRegex { get; }
     }

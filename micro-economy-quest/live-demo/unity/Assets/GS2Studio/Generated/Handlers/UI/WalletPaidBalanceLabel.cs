@@ -27,8 +27,12 @@ namespace GS2Studio.Generated.Wallet.UI
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataMoney2Wallet" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -67,7 +71,20 @@ namespace GS2Studio.Generated.Wallet.UI
 
         private void OnUpdated(Wallet model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke(System.Convert.ToString(model.Paid) ?? "");
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataMoney2Wallet) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(WalletPaidBalanceLabel)} on '{name}': this row's mount surface did not run UserdataMoney2Wallet, which fills what this component reads (Paid); those readings render as their default, not as an absent value.", this);
         }
     }
 }

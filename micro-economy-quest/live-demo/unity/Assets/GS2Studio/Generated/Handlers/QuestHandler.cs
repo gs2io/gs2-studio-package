@@ -27,6 +27,12 @@ namespace GS2Studio.Generated.Quest
     {
         [SerializeField] private string? _id;
         [SerializeField] private string? _collection;
+        private string? _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName;
+        private string? _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_2;
+        private string? _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_3;
+        private string? _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_4;
+        private string? _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_5;
+        private string? _sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -51,6 +57,7 @@ namespace GS2Studio.Generated.Quest
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(IQuestBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -67,6 +74,22 @@ namespace GS2Studio.Generated.Quest
             _collection = collection;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName, string? sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_2, string? sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_3, string? sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_4, string? sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_5, string? sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName)
+        {
+            InvalidateBindingIntent();
+            _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName = sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName;
+            _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_2 = sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_2;
+            _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_3 = sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_3;
+            _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_4 = sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_4;
+            _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_5 = sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_5;
+            _sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName = sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -92,7 +115,19 @@ namespace GS2Studio.Generated.Quest
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new QuestId(_id ?? string.Empty), new QuestCollectionId(_collection ?? string.Empty), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_2' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_3))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_3' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_4))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_4' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_5))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_5' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new QuestId(_id ?? string.Empty), new QuestCollectionId(_collection ?? string.Empty), gs2, session, cancellationToken, __sdk__questQuestQuestModel_2: _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName, __sdk__transactionAcquireAction_2: _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_2, __sdk__transactionConsumeAction_2: _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_3, __sdk__transactionAcquireAction2_2: _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_4, __sdk__transactionAcquireAction3_2: _sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_5, __sdk__membershipQuestCompletedQuestList_1: _sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -182,6 +217,12 @@ namespace GS2Studio.Generated.Quest
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
             if (string.IsNullOrEmpty(_collection)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_2)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_3)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_4)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_masterData_mdr_1E79KV3GSN9K19S1G9P9PRYHEE_quest_QuestModel_questName_5)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName)) return false;
             return true;
         }
 

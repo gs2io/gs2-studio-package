@@ -13,38 +13,83 @@ namespace GS2Studio.Generated.AgreementVersion
     public interface AgreementVersion
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the agreement version.
         /// </summary>
         AgreementVersionId Id { get; }
 
+        /// <summary>
+        /// Whether approval of this agreement is required. An optional one can also be rejected, but a player who has neither accepted nor rejected it fails the version check.
+        /// </summary>
         string Required { get; }
 
+        /// <summary>
+        /// Major component of the currently published agreement version.
+        /// </summary>
         int CurrentMajor { get; }
 
+        /// <summary>
+        /// Minor component of the currently published agreement version.
+        /// </summary>
         int CurrentMinor { get; }
 
+        /// <summary>
+        /// Micro component of the currently published agreement version.
+        /// </summary>
         int CurrentMicro { get; }
 
+        /// <summary>
+        /// Whether the player accepted or rejected the agreement.
+        /// </summary>
         string? Status { get; }
 
+        /// <summary>
+        /// Whether an agreement approval record exists for the player.
+        /// </summary>
         bool Exists { get; }
 
+        /// <summary>
+        /// Major component of the version at or below which an acceptance triggers a warning.
+        /// </summary>
         int WarningMajor { get; }
 
+        /// <summary>
+        /// Minor component of the version at or below which an acceptance triggers a warning.
+        /// </summary>
         int WarningMinor { get; }
 
+        /// <summary>
+        /// Micro component of the version at or below which an acceptance triggers a warning.
+        /// </summary>
         int WarningMicro { get; }
 
+        /// <summary>
+        /// Major component of the version at or below which an acceptance blocks use.
+        /// </summary>
         int ErrorMajor { get; }
 
+        /// <summary>
+        /// Minor component of the version at or below which an acceptance blocks use.
+        /// </summary>
         int ErrorMinor { get; }
 
+        /// <summary>
+        /// Micro component of the version at or below which an acceptance blocks use.
+        /// </summary>
         int ErrorMicro { get; }
 
+        /// <summary>
+        /// Major component of the agreement version accepted by the player.
+        /// </summary>
         int AcceptedMajor { get; }
 
+        /// <summary>
+        /// Minor component of the agreement version accepted by the player.
+        /// </summary>
         int AcceptedMinor { get; }
 
+        /// <summary>
+        /// Micro component of the agreement version accepted by the player.
+        /// </summary>
         int AcceptedMicro { get; }
     }
 

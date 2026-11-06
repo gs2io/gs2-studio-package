@@ -13,12 +13,18 @@ namespace GS2Studio.Generated.TransferCode
     public interface TransferCode
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the transfer code.
         /// </summary>
         TransferCodeId Id { get; }
 
+        /// <summary>
+        /// Identifier registered as the transfer code. The password is never stored, so it cannot be shown.
+        /// </summary>
         string UserIdentifier { get; }
 
+        /// <summary>
+        /// Whether the player has registered a transfer code.
+        /// </summary>
         bool Registered { get; }
     }
 

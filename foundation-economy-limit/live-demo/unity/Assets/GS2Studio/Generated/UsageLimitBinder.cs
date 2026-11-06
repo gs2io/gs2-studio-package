@@ -27,6 +27,8 @@ namespace GS2Studio.Generated.UsageLimit
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableUsageLimitBinder : IReadOnlyUsageLimitBinder
     {
+        UsageLimitBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
+        Task<GS2Studio.Generated.UsageLimitCounter.IReadOnlyUsageLimitCounterBinderCollection> GetUsageLimitCounters(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -34,7 +36,6 @@ namespace GS2Studio.Generated.UsageLimit
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.UsageLimitCounter.IReadOnlyUsageLimitCounterBinderCollection> GetUsageLimitCounters(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
@@ -71,10 +72,169 @@ namespace GS2Studio.Generated.UsageLimit
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class UsageLimitBinder : ReadOnlyUsageLimitBinder, IUsageLimitBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly UsageLimitBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(UsageLimitBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public UsageLimit Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableUsageLimit? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableUsageLimit
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal UsageLimitId __valueId = default!;
+                public UsageLimitId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setResetType;
+                internal string __valueResetType = default!;
+                public string ResetType
+                {
+                    get => __setResetType ? __valueResetType : __scopeOwner.Value.ResetType;
+                    set { __setResetType = true; __valueResetType = value; }
+                }
+                internal bool __setResetDayOfWeek;
+                internal string? __valueResetDayOfWeek = default!;
+                public string? ResetDayOfWeek
+                {
+                    get => __setResetDayOfWeek ? __valueResetDayOfWeek : __scopeOwner.Value.ResetDayOfWeek;
+                    set { __setResetDayOfWeek = true; __valueResetDayOfWeek = value; }
+                }
+                internal bool __setResetDayOfMonth;
+                internal int? __valueResetDayOfMonth = default!;
+                public int? ResetDayOfMonth
+                {
+                    get => __setResetDayOfMonth ? __valueResetDayOfMonth : __scopeOwner.Value.ResetDayOfMonth;
+                    set { __setResetDayOfMonth = true; __valueResetDayOfMonth = value; }
+                }
+                internal bool __setResetHour;
+                internal int? __valueResetHour = default!;
+                public int? ResetHour
+                {
+                    get => __setResetHour ? __valueResetHour : __scopeOwner.Value.ResetHour;
+                    set { __setResetHour = true; __valueResetHour = value; }
+                }
+                internal bool __setDays;
+                internal int? __valueDays = default!;
+                public int? Days
+                {
+                    get => __setDays ? __valueDays : __scopeOwner.Value.Days;
+                    set { __setDays = true; __valueDays = value; }
+                }
+                internal bool __setAnchorTimestamp;
+                internal DateTime? __valueAnchorTimestamp = default!;
+                public DateTime? AnchorTimestamp
+                {
+                    get => __setAnchorTimestamp ? __valueAnchorTimestamp : __scopeOwner.Value.AnchorTimestamp;
+                    set { __setAnchorTimestamp = true; __valueAnchorTimestamp = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<UsageLimitId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setResetType) { _owner._model.ResetType = changes.__valueResetType; changes.__setResetType = false; }
+                if (changes.__setResetDayOfWeek) { _owner._model.ResetDayOfWeek = changes.__valueResetDayOfWeek; changes.__setResetDayOfWeek = false; }
+                if (changes.__setResetDayOfMonth) { _owner._model.ResetDayOfMonth = changes.__valueResetDayOfMonth; changes.__setResetDayOfMonth = false; }
+                if (changes.__setResetHour) { _owner._model.ResetHour = changes.__valueResetHour; changes.__setResetHour = false; }
+                if (changes.__setDays) { _owner._model.Days = changes.__valueDays; changes.__setDays = false; }
+                if (changes.__setAnchorTimestamp) { _owner._model.AnchorTimestamp = changes.__valueAnchorTimestamp; changes.__setAnchorTimestamp = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -87,11 +247,14 @@ namespace GS2Studio.Generated.UsageLimit
         internal UsageLimitBinder(
             MutableUsageLimit model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            string? __sdk__limitLimitNamespaceLimitModel_1 = null
         ) : base(model, gs2, session)
         {
-            __limitLimitNamespaceLimitModelLoader = new Gs2Bind.Gs2Limit.LimitModelLoader("Limit", _model.Id);
+
+            __limitLimitNamespaceLimitModelLoader = new Gs2Bind.Gs2Limit.LimitModelLoader("Limit", (string.IsNullOrEmpty(__sdk__limitLimitNamespaceLimitModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__limitLimitNamespaceLimitModel_1!));
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableUsageLimit CreateModel(UsageLimitId id)
@@ -105,14 +268,14 @@ namespace GS2Studio.Generated.UsageLimit
             UsageLimitId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__limitLimitNamespaceLimitModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new UsageLimitBinder(model, gs2, session);
+            var binder = new UsageLimitBinder(model, gs2, session, __sdk__limitLimitNamespaceLimitModel_1: __sdk__limitLimitNamespaceLimitModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -154,6 +317,7 @@ namespace GS2Studio.Generated.UsageLimit
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -250,6 +414,7 @@ namespace GS2Studio.Generated.UsageLimit
                 model.ResetType = string.Empty;
             }
         }
+
         #endregion
 
     }

@@ -24,7 +24,8 @@ namespace GS2Studio.Generated.MissionCollection
             MissionCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__missionMissionNamespaceMissionGroupModel_1 = null);
         IMissionCollectionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -36,9 +37,10 @@ namespace GS2Studio.Generated.MissionCollection
             MissionCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__missionMissionNamespaceMissionGroupModel_1 = null)
         {
-            return await MissionCollectionBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await MissionCollectionBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__missionMissionNamespaceMissionGroupModel_1);
         }
         public IMissionCollectionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

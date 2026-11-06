@@ -116,6 +116,7 @@ namespace GS2Studio.Generated.QuestCollection
         private IQuestCollectionBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultQuestCollectionBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

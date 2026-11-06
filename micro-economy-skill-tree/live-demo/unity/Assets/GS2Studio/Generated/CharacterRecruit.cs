@@ -14,10 +14,13 @@ namespace GS2Studio.Generated.CharacterRecruit
     public interface CharacterRecruit
     {
         /// <summary>
-        /// Unique identifier
+        /// Grants one character in the demo.
         /// </summary>
         CharacterRecruitId Id { get; }
 
+        /// <summary>
+        /// The character this recruit grants.
+        /// </summary>
         CharacterId Character { get; }
     }
 

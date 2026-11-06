@@ -19,17 +19,64 @@ using Gs2.Unity.Gs2AdReward.Model;
 using Gs2.Unity.Gs2Exchange.Model;
 using Gs2Bind.Gs2AdReward;
 using Gs2Bind.Gs2Exchange;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.AdViewPoint
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum AdViewPointMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the ExchangeAdWatch master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionConsumeAction", "ExchangeAdSpendNamespaceRateModel")]
+        ExchangeAdWatchMaster,
+
+        /// <summary>Built by the ExchangeAdSpend master-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeAdWatchNamespaceRateModel", "TransactionAcquireAction")]
+        ExchangeAdSpendMaster,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyAdViewPointBinder : AdViewPoint
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        AdViewPointMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeActionLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeAdWatchMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeAdSpendNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeAdWatchMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeAdSpendNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeAdWatchNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeAdSpendMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeAdWatchNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeAdSpendMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableAdViewPointBinder : IReadOnlyAdViewPointBinder
     {
+        AdViewPointBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Watch(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
         Task Spend(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
     }
@@ -42,7 +89,7 @@ namespace GS2Studio.Generated.AdViewPoint
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyAdViewPointBinder : IReadOnlyAdViewPointBinder
+    public abstract class ReadOnlyAdViewPointBinder : IReadOnlyAdViewPointBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableAdViewPoint _model;
@@ -56,6 +103,22 @@ namespace GS2Studio.Generated.AdViewPoint
         /// <inheritdoc cref="AdViewPoint.Value" />
         public long Value => _model.Value;
 
+        /// <inheritdoc />
+        public abstract AdViewPointMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeAdSpendNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeAdWatchNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+
         private protected ReadOnlyAdViewPointBinder(MutableAdViewPoint model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -65,10 +128,129 @@ namespace GS2Studio.Generated.AdViewPoint
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class AdViewPointBinder : ReadOnlyAdViewPointBinder, IAdViewPointBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly AdViewPointBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(AdViewPointBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public AdViewPoint Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableAdViewPoint? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableAdViewPoint
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal AdViewPointId __valueId = default!;
+                public AdViewPointId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setValue;
+                internal long __valueValue = default!;
+                public long Value
+                {
+                    get => __setValue ? __valueValue : __scopeOwner.Value.Value;
+                    set { __setValue = true; __valueValue = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<AdViewPointId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setValue) { _owner._model.Value = changes.__valueValue; changes.__setValue = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -79,19 +261,60 @@ namespace GS2Studio.Generated.AdViewPoint
         private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeAdSpendNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2AdReward.PointLoader __userdataAdRewardPointLoader;
 
+        private readonly AdViewPointMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeAdWatchMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeActionLoader => _mountSurfaceValue is AdViewPointMountSurface.Full or AdViewPointMountSurface.ExchangeAdSpendMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeAdSpendNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeAdWatchMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeAdSpendNamespaceRateModelLoader => _mountSurfaceValue is AdViewPointMountSurface.Full or AdViewPointMountSurface.ExchangeAdSpendMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeAdWatchNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeAdSpendMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeAdWatchNamespaceRateModelLoader => _mountSurfaceValue is AdViewPointMountSurface.Full or AdViewPointMountSurface.ExchangeAdWatchMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeAdSpendMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is AdViewPointMountSurface.Full or AdViewPointMountSurface.ExchangeAdWatchMaster;
+
+        /// <inheritdoc />
+        public override AdViewPointMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction => Runs__transactionConsumeActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeAdSpendNamespaceRateModel => Runs__exchangeAdSpendNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeAdWatchNamespaceRateModel => Runs__exchangeAdWatchNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal AdViewPointBinder(
             MutableAdViewPoint model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            AdViewPointMountSurface _mountSurface = AdViewPointMountSurface.Full,
+            string? __sdk__exchangeAdWatchNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeAdSpendNamespaceRateModel_1 = null
         ) : base(model, gs2, session)
         {
-            __exchangeAdWatchNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("AdWatch", _model.Id);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("AdSpend", _model.Id, 0);
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("AdWatch", _model.Id, 0);
-            __exchangeAdSpendNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("AdSpend", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __exchangeAdWatchNamespaceRateModelLoader = Runs__exchangeAdWatchNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("AdWatch", (string.IsNullOrEmpty(__sdk__exchangeAdWatchNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeAdWatchNamespaceRateModel_1!)) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("AdSpend", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("AdWatch", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __exchangeAdSpendNamespaceRateModelLoader = Runs__exchangeAdSpendNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("AdSpend", (string.IsNullOrEmpty(__sdk__exchangeAdSpendNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeAdSpendNamespaceRateModel_1!)) : null!;
             __userdataAdRewardPointLoader = new Gs2Bind.Gs2AdReward.PointLoader("Ad");
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableAdViewPoint CreateModel(AdViewPointId id)
@@ -105,34 +328,37 @@ namespace GS2Studio.Generated.AdViewPoint
             AdViewPointId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeAdWatchNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeAdSpendNamespaceRateModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new AdViewPointBinder(model, gs2, session);
+            var binder = new AdViewPointBinder(model, gs2, session, __sdk__exchangeAdWatchNamespaceRateModel_1: __sdk__exchangeAdWatchNamespaceRateModel_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__exchangeAdSpendNamespaceRateModel_1: __sdk__exchangeAdSpendNamespaceRateModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _exchangeAdWatchNamespaceRateModel = await __exchangeAdWatchNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeAdWatchNamespaceRateModel = Runs__exchangeAdWatchNamespaceRateModelLoader ? await __exchangeAdWatchNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeAdWatchNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction = Runs__transactionConsumeActionLoader ? await __transactionConsumeActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
             }
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _exchangeAdSpendNamespaceRateModel = await __exchangeAdSpendNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeAdSpendNamespaceRateModel = Runs__exchangeAdSpendNamespaceRateModelLoader ? await __exchangeAdSpendNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeAdSpendNamespaceRateModel != null)
             {
@@ -146,58 +372,70 @@ namespace GS2Studio.Generated.AdViewPoint
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__exchangeAdWatchNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__exchangeAdWatchNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeAdWatchNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeAdSpendNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeAdSpendNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeAdSpendNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
             _unsubscribers.Add(__userdataAdRewardPointLoader.Subscribe(
                 _gs2,
                 _session,
@@ -214,10 +452,22 @@ namespace GS2Studio.Generated.AdViewPoint
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __exchangeAdWatchNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __exchangeAdSpendNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            if (Runs__exchangeAdWatchNamespaceRateModelLoader)
+            {
+                __exchangeAdWatchNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeAdSpendNamespaceRateModelLoader)
+            {
+                __exchangeAdSpendNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
             __userdataAdRewardPointLoader.Invalidate(_gs2, _session);
         }
 
@@ -230,6 +480,7 @@ namespace GS2Studio.Generated.AdViewPoint
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -288,6 +539,7 @@ namespace GS2Studio.Generated.AdViewPoint
                 model.Value = default;
             }
         }
+
         #endregion
 
     }

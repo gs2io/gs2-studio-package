@@ -29,8 +29,12 @@ namespace GS2Studio.Generated.Schedule.UI
         public UnityEvent<DateTime> OnUpdate => _onUpdate;
         public UnityEvent<DateTime> OnSelect => _onSelect;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataScheduleTrigger" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -69,7 +73,20 @@ namespace GS2Studio.Generated.Schedule.UI
 
         private void OnUpdated(Schedule model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke(model.RelativeEndAt.GetValueOrDefault());
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataScheduleTrigger) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(ScheduleClosesInValue)} on '{name}': this row's mount surface did not run UserdataScheduleTrigger, which fills what this component reads (RelativeEndAt); those readings render as their default, not as an absent value.", this);
         }
 
         /// <summary>Selection consumers own persistence; publishing a choice does not mutate the displayed model.</summary>

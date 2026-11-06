@@ -14,40 +14,52 @@ namespace GS2Studio.Generated.Guild
     public interface Guild
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the guild kind.
         /// </summary>
         GuildId Id { get; }
 
         /// <summary>
-        /// Member capacity a newly created guild starts with
+        /// Initial member capacity of a newly created guild.
         /// </summary>
         int DefaultMaximumMemberCount { get; }
 
         /// <summary>
-        /// Highest capacity a guild can be raised to
+        /// Highest member capacity a guild can reach.
         /// </summary>
         int MaximumMemberCount { get; }
 
         /// <summary>
-        /// Days of guild-master inactivity before the seat opens up
+        /// Days of guild master inactivity after which the most senior member may promote themselves to master (PromoteSeniorMember).
         /// </summary>
         int? InactivityPeriodDays { get; }
 
         /// <summary>
-        /// Wait before a player may rejoin a guild they left
+        /// Wait time after leaving before a player may join any guild again.
         /// </summary>
         int? RejoinCoolTimeMinutes { get; }
 
+        /// <summary>
+        /// Maximum number of guilds a player may join at once.
+        /// </summary>
         int? MaxConcurrentJoinGuilds { get; }
 
+        /// <summary>
+        /// Maximum number of guild masters one guild may have at once.
+        /// </summary>
         int? MaxConcurrentGuildMasterCount { get; }
 
+        /// <summary>
+        /// Permission role assigned to the guild master.
+        /// </summary>
         GuildRoleId GuildMasterRole { get; }
 
+        /// <summary>
+        /// Permission role initially assigned to regular members.
+        /// </summary>
         GuildRoleId GuildMemberDefaultRole { get; }
 
         /// <summary>
-        /// The guild this player belongs to
+        /// Name of the guild the player currently belongs to.
         /// </summary>
         string? JoinedGuildName { get; }
     }

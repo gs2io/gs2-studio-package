@@ -37,26 +37,26 @@ namespace GS2Studio.Generated.Character
     public enum CharacterMountSurface
     {
         /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel")]
         Full,
 
         /// <summary>Built by the InventoryCharacter master-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeCharacterTrainNamespaceRateModel", "DictionaryCharacterDictionaryNamespaceEntryModel", "UserdataDictionaryCharacterDictionaryEntryModel", "UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
         InventoryCharacterMaster,
 
         /// <summary>Built by the ExchangeCharacterTrain master-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
+        [Gs2SkipsLoaders("DictionaryCharacterDictionaryNamespaceEntryModel", "InventoryCharacterNamespaceInventoryModelItemModel", "UserdataDictionaryCharacterDictionaryEntryModel", "UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
         ExchangeCharacterTrainMaster,
 
         /// <summary>Built by the DictionaryCharacterDictionary master-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeCharacterTrainNamespaceRateModel", "InventoryCharacterNamespaceInventoryModelItemModel", "UserdataDictionaryCharacterDictionaryEntryModel", "UserdataInventoryCharacterItemModel", "UserdataExperienceCharacterExperienceExperienceModel")]
         DictionaryCharacterDictionaryMaster,
 
         /// <summary>Built by the InventoryCharacter user-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeCharacterTrainNamespaceRateModel", "DictionaryCharacterDictionaryNamespaceEntryModel", "UserdataDictionaryCharacterDictionaryEntryModel")]
         InventoryCharacterUser,
 
         /// <summary>Built by the DictionaryCharacterDictionary user-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryCharacterItemModel")]
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeCharacterTrainNamespaceRateModel", "InventoryCharacterNamespaceInventoryModelItemModel", "UserdataInventoryCharacterItemModel")]
         DictionaryCharacterDictionaryUser,
     }
 
@@ -67,9 +67,43 @@ namespace GS2Studio.Generated.Character
         CharacterMountSurface MountSurface { get; }
 
         /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryCharacterMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterUser: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeCharacterTrainNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryCharacterMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterUser: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeCharacterTrainNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Dictionary.EntryModelLoader</c> load on <c>__dictionaryCharacterDictionaryNamespaceEntryModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryCharacterMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeCharacterTrainMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterUser: does not supply SDK backing key name.</remarks>
+        bool LoadedDictionaryCharacterDictionaryNamespaceEntryModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Dictionary.EntryLoader</c> load on <c>__userdataDictionaryCharacterDictionaryEntryModelLoader</c> or its composition from a list item. False means this path does not supply <c>AcquiredAt</c>, <c>Acquired</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryCharacterMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeCharacterTrainMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterUser: does not supply SDK backing key name.</remarks>
+        bool LoadedUserdataDictionaryCharacterDictionaryEntryModel { get; }
+
+        /// <summary>
         /// This construction path permits the <c>Gs2Bind.Gs2Inventory.ItemSetLoader</c> load on <c>__userdataInventoryCharacterItemModelLoader</c> or its composition from a list item. False means this path does not supply <c>PropertyId</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
         /// </summary>
-        /// <remarks>Full: passes no itemSetName constructor argument.</remarks>
         /// <remarks>InventoryCharacterMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>ExchangeCharacterTrainMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>DictionaryCharacterDictionaryMaster: passes no itemSetName constructor argument.</remarks>
@@ -83,13 +117,23 @@ namespace GS2Studio.Generated.Character
         /// <remarks>ExchangeCharacterTrainMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>DictionaryCharacterDictionaryMaster: no per-row value for _model.PropertyId.</remarks>
         bool LoadedUserdataExperienceCharacterExperienceExperienceModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Inventory.ItemModelLoader</c> load on <c>__inventoryCharacterNamespaceInventoryModelItemModelLoader</c>. False means this path does not supply <c>Sort</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeCharacterTrainMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryUser: does not supply SDK backing key name.</remarks>
+        bool LoadedInventoryCharacterNamespaceInventoryModelItemModel { get; }
         Task<ICharacterRateBinder> GetCharacterRate(GachaRarityId rarity, CancellationToken cancellationToken = default);
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableCharacterBinder : IReadOnlyCharacterBinder
     {
+        CharacterBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Train();
+        Task<GS2Studio.Generated.CharacterRecruit.IReadOnlyCharacterRecruitBinderCollection> GetCharacterRecruits(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -97,7 +141,6 @@ namespace GS2Studio.Generated.Character
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.CharacterRecruit.IReadOnlyCharacterRecruitBinderCollection> GetCharacterRecruits(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
@@ -133,10 +176,25 @@ namespace GS2Studio.Generated.Character
         public abstract CharacterMountSurface MountSurface { get; }
 
         /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeCharacterTrainNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedDictionaryCharacterDictionaryNamespaceEntryModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataDictionaryCharacterDictionaryEntryModel { get; }
+
+        /// <inheritdoc />
         public abstract bool LoadedUserdataInventoryCharacterItemModel { get; }
 
         /// <inheritdoc />
         public abstract bool LoadedUserdataExperienceCharacterExperienceExperienceModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedInventoryCharacterNamespaceInventoryModelItemModel { get; }
 
 
         private protected ReadOnlyCharacterBinder(MutableCharacter model, Gs2Domain gs2, IGameSession session)
@@ -148,6 +206,7 @@ namespace GS2Studio.Generated.Character
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
 
         #region Single-fetch navigation
         public async Task<ICharacterRateBinder> GetCharacterRate(GachaRarityId rarity, CancellationToken cancellationToken = default)
@@ -160,6 +219,180 @@ namespace GS2Studio.Generated.Character
 
     public sealed class CharacterBinder : ReadOnlyCharacterBinder, ICharacterBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly CharacterBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(CharacterBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Character Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableCharacter? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableCharacter
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal CharacterId __valueId = default!;
+                public CharacterId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setSort;
+                internal int __valueSort = default!;
+                public int Sort
+                {
+                    get => __setSort ? __valueSort : __scopeOwner.Value.Sort;
+                    set { __setSort = true; __valueSort = value; }
+                }
+                internal bool __setPropertyId;
+                internal string __valuePropertyId = default!;
+                public string PropertyId
+                {
+                    get => __setPropertyId ? __valuePropertyId : __scopeOwner.Value.PropertyId;
+                    set { __setPropertyId = true; __valuePropertyId = value; }
+                }
+                internal bool __setLevel;
+                internal long __valueLevel = default!;
+                public long Level
+                {
+                    get => __setLevel ? __valueLevel : __scopeOwner.Value.Level;
+                    set { __setLevel = true; __valueLevel = value; }
+                }
+                internal bool __setLevelCap;
+                internal long __valueLevelCap = default!;
+                public long LevelCap
+                {
+                    get => __setLevelCap ? __valueLevelCap : __scopeOwner.Value.LevelCap;
+                    set { __setLevelCap = true; __valueLevelCap = value; }
+                }
+                internal bool __setExperience;
+                internal long __valueExperience = default!;
+                public long Experience
+                {
+                    get => __setExperience ? __valueExperience : __scopeOwner.Value.Experience;
+                    set { __setExperience = true; __valueExperience = value; }
+                }
+                internal bool __setNextLevelExperience;
+                internal long __valueNextLevelExperience = default!;
+                public long NextLevelExperience
+                {
+                    get => __setNextLevelExperience ? __valueNextLevelExperience : __scopeOwner.Value.NextLevelExperience;
+                    set { __setNextLevelExperience = true; __valueNextLevelExperience = value; }
+                }
+                internal bool __setAcquired;
+                internal bool __valueAcquired = default!;
+                public bool Acquired
+                {
+                    get => __setAcquired ? __valueAcquired : __scopeOwner.Value.Acquired;
+                    set { __setAcquired = true; __valueAcquired = value; }
+                }
+                internal bool __setAcquiredAt;
+                internal DateTime __valueAcquiredAt = default!;
+                public DateTime AcquiredAt
+                {
+                    get => __setAcquiredAt ? __valueAcquiredAt : __scopeOwner.Value.AcquiredAt;
+                    set { __setAcquiredAt = true; __valueAcquiredAt = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<CharacterId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setSort) { _owner._model.Sort = changes.__valueSort; changes.__setSort = false; }
+                if (changes.__setPropertyId) { _owner._model.PropertyId = changes.__valuePropertyId; changes.__setPropertyId = false; }
+                if (changes.__setLevel) { _owner._model.Level = changes.__valueLevel; changes.__setLevel = false; }
+                if (changes.__setLevelCap) { _owner._model.LevelCap = changes.__valueLevelCap; changes.__setLevelCap = false; }
+                if (changes.__setExperience) { _owner._model.Experience = changes.__valueExperience; changes.__setExperience = false; }
+                if (changes.__setNextLevelExperience) { _owner._model.NextLevelExperience = changes.__valueNextLevelExperience; changes.__setNextLevelExperience = false; }
+                if (changes.__setAcquired) { _owner._model.Acquired = changes.__valueAcquired; changes.__setAcquired = false; }
+                if (changes.__setAcquiredAt) { _owner._model.AcquiredAt = changes.__valueAcquiredAt; changes.__setAcquiredAt = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -176,13 +409,39 @@ namespace GS2Studio.Generated.Character
 
         private readonly CharacterMountSurface _mountSurfaceValue;
 
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>InventoryCharacterMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterUser: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is CharacterMountSurface.Full or CharacterMountSurface.ExchangeCharacterTrainMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeCharacterTrainNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>InventoryCharacterMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterUser: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeCharacterTrainNamespaceRateModelLoader => _mountSurfaceValue is CharacterMountSurface.Full or CharacterMountSurface.ExchangeCharacterTrainMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__dictionaryCharacterDictionaryNamespaceEntryModelLoader</c> reads.</summary>
+        /// <remarks>InventoryCharacterMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeCharacterTrainMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__dictionaryCharacterDictionaryNamespaceEntryModelLoader => _mountSurfaceValue is CharacterMountSurface.Full or CharacterMountSurface.DictionaryCharacterDictionaryMaster or CharacterMountSurface.DictionaryCharacterDictionaryUser;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataDictionaryCharacterDictionaryEntryModelLoader</c> reads.</summary>
+        /// <remarks>InventoryCharacterMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeCharacterTrainMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryCharacterUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__userdataDictionaryCharacterDictionaryEntryModelLoader => _mountSurfaceValue is CharacterMountSurface.Full;
+
         /// <summary>Avoid loading unless this path supplies every key <c>__userdataInventoryCharacterItemModelLoader</c> reads.</summary>
-        /// <remarks>Full: passes no itemSetName constructor argument.</remarks>
         /// <remarks>InventoryCharacterMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>ExchangeCharacterTrainMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>DictionaryCharacterDictionaryMaster: passes no itemSetName constructor argument.</remarks>
         /// <remarks>DictionaryCharacterDictionaryUser: passes no itemSetName constructor argument.</remarks>
-        private bool Runs__userdataInventoryCharacterItemModelLoader => false;
+        private bool Runs__userdataInventoryCharacterItemModelLoader => _mountSurfaceValue is CharacterMountSurface.Full;
 
         /// <summary>Avoid loading unless this path supplies every key <c>__userdataExperienceCharacterExperienceExperienceModelLoader</c> reads.</summary>
         /// <remarks>InventoryCharacterMaster: no per-row value for _model.PropertyId.</remarks>
@@ -190,14 +449,35 @@ namespace GS2Studio.Generated.Character
         /// <remarks>DictionaryCharacterDictionaryMaster: no per-row value for _model.PropertyId.</remarks>
         private bool Runs__userdataExperienceCharacterExperienceExperienceModelLoader => _mountSurfaceValue is CharacterMountSurface.Full or CharacterMountSurface.InventoryCharacterUser or CharacterMountSurface.DictionaryCharacterDictionaryUser;
 
+        /// <summary>Avoid loading unless this path supplies every key <c>__inventoryCharacterNamespaceInventoryModelItemModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeCharacterTrainMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>DictionaryCharacterDictionaryUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__inventoryCharacterNamespaceInventoryModelItemModelLoader => _mountSurfaceValue is CharacterMountSurface.Full or CharacterMountSurface.InventoryCharacterMaster or CharacterMountSurface.InventoryCharacterUser;
+
         /// <inheritdoc />
         public override CharacterMountSurface MountSurface => _mountSurfaceValue;
 
         /// <inheritdoc />
-        public override bool LoadedUserdataInventoryCharacterItemModel => _mountSurfaceValue is CharacterMountSurface.InventoryCharacterUser;
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeCharacterTrainNamespaceRateModel => Runs__exchangeCharacterTrainNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedDictionaryCharacterDictionaryNamespaceEntryModel => Runs__dictionaryCharacterDictionaryNamespaceEntryModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataDictionaryCharacterDictionaryEntryModel => _mountSurfaceValue is CharacterMountSurface.Full or CharacterMountSurface.DictionaryCharacterDictionaryUser;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataInventoryCharacterItemModel => _mountSurfaceValue is CharacterMountSurface.Full or CharacterMountSurface.InventoryCharacterUser;
 
         /// <inheritdoc />
         public override bool LoadedUserdataExperienceCharacterExperienceExperienceModel => Runs__userdataExperienceCharacterExperienceExperienceModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedInventoryCharacterNamespaceInventoryModelItemModel => Runs__inventoryCharacterNamespaceInventoryModelItemModelLoader;
 
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal CharacterBinder(
@@ -205,18 +485,29 @@ namespace GS2Studio.Generated.Character
             Gs2Domain gs2,
             IGameSession session,
             string? itemSetName = null,
-            CharacterMountSurface _mountSurface = CharacterMountSurface.Full
+            CharacterMountSurface _mountSurface = CharacterMountSurface.Full,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeCharacterTrainNamespaceRateModel_1 = null,
+            string? __sdk__dictionaryCharacterDictionaryNamespaceEntryModel_1 = null,
+            string? __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataDictionaryCharacterDictionaryEntryModel_1 = null,
+            string? __sdk__userdataInventoryCharacterItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterItemModel_3 = null,
+            string? __sdk__userdataExperienceCharacterExperienceExperienceModel_1 = null,
+            string? __sdk__userdataExperienceCharacterExperienceExperienceModel_2 = null
         ) : base(model, gs2, session)
         {
+
             _mountSurfaceValue = _mountSurface;
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterTrain", _model.Id, 0);
-            __exchangeCharacterTrainNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterTrain", _model.Id);
-            __dictionaryCharacterDictionaryNamespaceEntryModelLoader = new Gs2Bind.Gs2Dictionary.EntryModelLoader("CharacterDictionary", _model.Id);
-            __inventoryCharacterNamespaceInventoryModelItemModelLoader = new Gs2Bind.Gs2Inventory.ItemModelLoader("Character", "Character", _model.Id);
-            __userdataDictionaryCharacterDictionaryEntryModelLoader = new Gs2Bind.Gs2Dictionary.EntryLoader("CharacterDictionary", _model.Id);
-            __userdataInventoryCharacterItemModelLoader = new Gs2Bind.Gs2Inventory.ItemSetLoader("Character", "Character", _model.Id, itemSetName!);
-            __userdataExperienceCharacterExperienceExperienceModelLoader = new Gs2Bind.Gs2Experience.StatusLoader("CharacterExperience", "Experience", (string.IsNullOrEmpty(_model.PropertyId) ? null : _model.PropertyId + ":level"));
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("CharacterTrain", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __exchangeCharacterTrainNamespaceRateModelLoader = Runs__exchangeCharacterTrainNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("CharacterTrain", (string.IsNullOrEmpty(__sdk__exchangeCharacterTrainNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeCharacterTrainNamespaceRateModel_1!)) : null!;
+            __dictionaryCharacterDictionaryNamespaceEntryModelLoader = Runs__dictionaryCharacterDictionaryNamespaceEntryModelLoader ? new Gs2Bind.Gs2Dictionary.EntryModelLoader("CharacterDictionary", (string.IsNullOrEmpty(__sdk__dictionaryCharacterDictionaryNamespaceEntryModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__dictionaryCharacterDictionaryNamespaceEntryModel_1!)) : null!;
+            __inventoryCharacterNamespaceInventoryModelItemModelLoader = Runs__inventoryCharacterNamespaceInventoryModelItemModelLoader ? new Gs2Bind.Gs2Inventory.ItemModelLoader("Character", "Character", (string.IsNullOrEmpty(__sdk__inventoryCharacterNamespaceInventoryModelItemModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2!)) : null!;
+            __userdataDictionaryCharacterDictionaryEntryModelLoader = Runs__userdataDictionaryCharacterDictionaryEntryModelLoader ? new Gs2Bind.Gs2Dictionary.EntryLoader("CharacterDictionary", (string.IsNullOrEmpty(__sdk__userdataDictionaryCharacterDictionaryEntryModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataDictionaryCharacterDictionaryEntryModel_1!)) : null!;
+            __userdataInventoryCharacterItemModelLoader = Runs__userdataInventoryCharacterItemModelLoader ? new Gs2Bind.Gs2Inventory.ItemSetLoader("Character", "Character", (string.IsNullOrEmpty(__sdk__userdataInventoryCharacterItemModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataInventoryCharacterItemModel_2!), (string.IsNullOrEmpty(__sdk__userdataInventoryCharacterItemModel_3) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataInventoryCharacterItemModel_3!)) : null!;
+            __userdataExperienceCharacterExperienceExperienceModelLoader = Runs__userdataExperienceCharacterExperienceExperienceModelLoader ? new Gs2Bind.Gs2Experience.StatusLoader("CharacterExperience", (string.IsNullOrEmpty(__sdk__userdataExperienceCharacterExperienceExperienceModel_1) ? "Experience" : __sdk__userdataExperienceCharacterExperienceExperienceModel_1!), (string.IsNullOrEmpty(__sdk__userdataExperienceCharacterExperienceExperienceModel_2) ? (string.IsNullOrEmpty(_model.PropertyId) ? null : _model.PropertyId + ":level") : __sdk__userdataExperienceCharacterExperienceExperienceModel_2!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableCharacter CreateModel(CharacterId id, string propertyId)
@@ -231,39 +522,53 @@ namespace GS2Studio.Generated.Character
             CharacterId id, string propertyId,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeCharacterTrainNamespaceRateModel_1 = null,
+            string? __sdk__dictionaryCharacterDictionaryNamespaceEntryModel_1 = null,
+            string? __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataDictionaryCharacterDictionaryEntryModel_1 = null,
+            string? __sdk__userdataInventoryCharacterItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterItemModel_3 = null,
+            string? __sdk__userdataExperienceCharacterExperienceExperienceModel_1 = null,
+            string? __sdk__userdataExperienceCharacterExperienceExperienceModel_2 = null)
         {
             var model = CreateModel(id, propertyId);
-            var binder = new CharacterBinder(model, gs2, session);
+            var binder = new CharacterBinder(model, gs2, session, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__exchangeCharacterTrainNamespaceRateModel_1: __sdk__exchangeCharacterTrainNamespaceRateModel_1, __sdk__dictionaryCharacterDictionaryNamespaceEntryModel_1: __sdk__dictionaryCharacterDictionaryNamespaceEntryModel_1, __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2: __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2, __sdk__userdataDictionaryCharacterDictionaryEntryModel_1: __sdk__userdataDictionaryCharacterDictionaryEntryModel_1, __sdk__userdataInventoryCharacterItemModel_2: __sdk__userdataInventoryCharacterItemModel_2, __sdk__userdataInventoryCharacterItemModel_3: __sdk__userdataInventoryCharacterItemModel_3, __sdk__userdataExperienceCharacterExperienceExperienceModel_1: __sdk__userdataExperienceCharacterExperienceExperienceModel_1, __sdk__userdataExperienceCharacterExperienceExperienceModel_2: __sdk__userdataExperienceCharacterExperienceExperienceModel_2);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _exchangeCharacterTrainNamespaceRateModel = await __exchangeCharacterTrainNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeCharacterTrainNamespaceRateModel = Runs__exchangeCharacterTrainNamespaceRateModelLoader ? await __exchangeCharacterTrainNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeCharacterTrainNamespaceRateModel != null)
             {
             }
-            var _dictionaryCharacterDictionaryNamespaceEntryModel = await __dictionaryCharacterDictionaryNamespaceEntryModelLoader.Load(_gs2, _session);
+            var _dictionaryCharacterDictionaryNamespaceEntryModel = Runs__dictionaryCharacterDictionaryNamespaceEntryModelLoader ? await __dictionaryCharacterDictionaryNamespaceEntryModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_dictionaryCharacterDictionaryNamespaceEntryModel != null)
             {
             }
-            var _inventoryCharacterNamespaceInventoryModelItemModel = await __inventoryCharacterNamespaceInventoryModelItemModelLoader.Load(_gs2, _session);
+            var _inventoryCharacterNamespaceInventoryModelItemModel = Runs__inventoryCharacterNamespaceInventoryModelItemModelLoader ? await __inventoryCharacterNamespaceInventoryModelItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyInventoryCharacterNamespaceInventoryModelItemModel(_model, _inventoryCharacterNamespaceInventoryModelItemModel);
-            var _userdataDictionaryCharacterDictionaryEntryModel = await __userdataDictionaryCharacterDictionaryEntryModelLoader.LoadOrNull(_gs2, _session);
+            if (Runs__inventoryCharacterNamespaceInventoryModelItemModelLoader)
+            {
+                ApplyInventoryCharacterNamespaceInventoryModelItemModel(_model, _inventoryCharacterNamespaceInventoryModelItemModel);
+            }
+            var _userdataDictionaryCharacterDictionaryEntryModel = Runs__userdataDictionaryCharacterDictionaryEntryModelLoader ? await __userdataDictionaryCharacterDictionaryEntryModelLoader.LoadOrNull(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataDictionaryCharacterDictionaryEntryModel(_model, _userdataDictionaryCharacterDictionaryEntryModel);
+            if (Runs__userdataDictionaryCharacterDictionaryEntryModelLoader)
+            {
+                ApplyUserdataDictionaryCharacterDictionaryEntryModel(_model, _userdataDictionaryCharacterDictionaryEntryModel);
+            }
             var _userdataInventoryCharacterItemModel = Runs__userdataInventoryCharacterItemModelLoader ? await __userdataInventoryCharacterItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (Runs__userdataInventoryCharacterItemModelLoader)
@@ -282,67 +587,82 @@ namespace GS2Studio.Generated.Character
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeCharacterTrainNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeCharacterTrainNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeCharacterTrainNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__dictionaryCharacterDictionaryNamespaceEntryModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__dictionaryCharacterDictionaryNamespaceEntryModelLoader)
+            {
+                _unsubscribers.Add(__dictionaryCharacterDictionaryNamespaceEntryModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__inventoryCharacterNamespaceInventoryModelItemModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyInventoryCharacterNamespaceInventoryModelItemModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__userdataDictionaryCharacterDictionaryEntryModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataDictionaryCharacterDictionaryEntryModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__inventoryCharacterNamespaceInventoryModelItemModelLoader)
+            {
+                _unsubscribers.Add(__inventoryCharacterNamespaceInventoryModelItemModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyInventoryCharacterNamespaceInventoryModelItemModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__userdataDictionaryCharacterDictionaryEntryModelLoader)
+            {
+                _unsubscribers.Add(__userdataDictionaryCharacterDictionaryEntryModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataDictionaryCharacterDictionaryEntryModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
             if (Runs__userdataInventoryCharacterItemModelLoader)
             {
                 _unsubscribers.Add(__userdataInventoryCharacterItemModelLoader.Subscribe(
@@ -376,11 +696,26 @@ namespace GS2Studio.Generated.Character
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __exchangeCharacterTrainNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __dictionaryCharacterDictionaryNamespaceEntryModelLoader.Invalidate(_gs2, _session);
-            __inventoryCharacterNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
-            __userdataDictionaryCharacterDictionaryEntryModelLoader.Invalidate(_gs2, _session);
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeCharacterTrainNamespaceRateModelLoader)
+            {
+                __exchangeCharacterTrainNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__dictionaryCharacterDictionaryNamespaceEntryModelLoader)
+            {
+                __dictionaryCharacterDictionaryNamespaceEntryModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__inventoryCharacterNamespaceInventoryModelItemModelLoader)
+            {
+                __inventoryCharacterNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__userdataDictionaryCharacterDictionaryEntryModelLoader)
+            {
+                __userdataDictionaryCharacterDictionaryEntryModelLoader.Invalidate(_gs2, _session);
+            }
             if (Runs__userdataInventoryCharacterItemModelLoader)
             {
                 __userdataInventoryCharacterItemModelLoader.Invalidate(_gs2, _session);
@@ -400,6 +735,7 @@ namespace GS2Studio.Generated.Character
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -540,6 +876,7 @@ namespace GS2Studio.Generated.Character
                 model.Level = default;
             }
         }
+
         #endregion
 
     }

@@ -25,7 +25,9 @@ namespace GS2Studio.Generated.PaidDeposit
             PaidDepositId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeCurrencyGrantNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null);
     }
 
     public sealed class DefaultPaidDepositBinderFactory : IPaidDepositBinderFactory
@@ -36,9 +38,11 @@ namespace GS2Studio.Generated.PaidDeposit
             PaidDepositId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeCurrencyGrantNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null)
         {
-            return await PaidDepositBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await PaidDepositBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__exchangeCurrencyGrantNamespaceRateModel_1, __sdk__transactionAcquireAction_1);
         }
     }
 }

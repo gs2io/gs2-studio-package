@@ -115,6 +115,7 @@ namespace GS2Studio.Generated.SkillNode
         private ISkillNodeBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultSkillNodeBinderFactory.Instance;
 
+
         /// <summary>
         /// Scope values discovered at runtime cannot be fixed in the authored scene. Reload is fire-and-forget;
         /// await <see cref="ReloadAsync"/> directly when completion must be observed.

@@ -119,8 +119,20 @@ namespace GS2Studio.Generated.Item
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyItemBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyItemBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyItemBinder> _configuredComparer = ItemBinderComparer.Default;
@@ -244,18 +256,38 @@ namespace GS2Studio.Generated.Item
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelArrayLoader("Inventory", "Inventory");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromInventoryInventoryMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromInventoryInventoryMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromInventoryInventoryMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromInventoryInventoryMasterItems");
+            _pendingCollectionAxis = "ReconcileFromInventoryInventoryMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelArrayLoader("Inventory", "Inventory");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromInventoryInventoryMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromInventoryInventoryMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromInventoryInventoryMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromInventoryInventoryMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromInventoryInventoryMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -263,7 +295,6 @@ namespace GS2Studio.Generated.Item
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelArrayLoader("Inventory", "Inventory");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -271,9 +302,10 @@ namespace GS2Studio.Generated.Item
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromInventoryInventoryMasterItems");
                     try
                     {
-                        await ReconcileFromInventoryInventoryMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromInventoryInventoryMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -282,41 +314,68 @@ namespace GS2Studio.Generated.Item
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromInventoryInventoryMasterItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryInventoryMasterItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractInventoryInventoryMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryMasterItems", updateVersion)) return;
                 var rowKey = ExtractInventoryInventoryMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractInventoryInventoryMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<ItemId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyInventoryInventoryMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-inventory", "masterData", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "foundation-economy-inventory", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "inventory", "SimpleItemModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory\",\"masterData\",\"mdr_2MZFS2Y6618P68QQHD5XJHVFV5\",\"inventory\",\"SimpleItemModel\",\"itemName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-inventory", "masterData", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "foundation-economy-inventory", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "inventory", "SimpleItemModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory", "masterData", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "foundation-economy-inventory", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "inventory", "SimpleItemModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromInventoryInventoryMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromInventoryInventoryMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<ItemId>.Default.Equals(raced.Id, nextId)) { ApplyInventoryInventoryMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-inventory", "masterData", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "foundation-economy-inventory", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "inventory", "SimpleItemModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory\",\"masterData\",\"mdr_2MZFS2Y6618P68QQHD5XJHVFV5\",\"inventory\",\"SimpleItemModel\",\"itemName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-inventory", "masterData", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "foundation-economy-inventory", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "inventory", "SimpleItemModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory", "masterData", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "foundation-economy-inventory", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "inventory", "SimpleItemModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyInventoryInventoryMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-inventory", "masterData", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "foundation-economy-inventory", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "inventory", "SimpleItemModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory\",\"masterData\",\"mdr_2MZFS2Y6618P68QQHD5XJHVFV5\",\"inventory\",\"SimpleItemModel\",\"itemName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-inventory", "masterData", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "foundation-economy-inventory", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "inventory", "SimpleItemModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory", "masterData", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "foundation-economy-inventory", "mdr_2MZFS2Y6618P68QQHD5XJHVFV5", "inventory", "SimpleItemModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -356,13 +415,13 @@ namespace GS2Studio.Generated.Item
             if (!_disposed) SortBinders();
         }
 
-        private async Task<ItemBinder> BuildBinderFromInventoryInventoryMasterItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item, CancellationToken cancellationToken)
+        private async Task<ItemBinder?> BuildBinderFromInventoryInventoryMasterItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = ItemBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(ItemId) : new ItemId(item.Name)));
             ApplyInventoryInventoryMasterItemTo(model, item);
-            var binder = new ItemBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new ItemBinder(model, _gs2, _session, _mountSurface: ItemMountSurface.InventoryInventoryMaster, __sdk__inventoryInventoryNamespaceSimpleInventoryModelSimpleItemModel_2: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyInventoryInventoryMasterItemTo(MutableItem model, Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item)
@@ -381,8 +440,9 @@ namespace GS2Studio.Generated.Item
         {
             var id = ExtractInventoryInventoryMasterIdentity(item);
             if (EqualityComparer<ItemId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"InventoryInventory\",\"foundation-economy-inventory\",\"mdr_2MZFS2Y6618P68QQHD5XJHVFV5\",null,null,\"foundation-economy-inventory\",\"mdr_2MZFS2Y6618P68QQHD5XJHVFV5\",\"inventory\",\"SimpleItemModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<ItemBinderCollection> CreateFromExchangeItemGainMasterDataAsync(
@@ -399,18 +459,38 @@ namespace GS2Studio.Generated.Item
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemGain");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeItemGainMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeItemGainMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeItemGainMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeItemGainMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeItemGainMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemGain");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemGainMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeItemGainMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemGainMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeItemGainMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeItemGainMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeItemGainMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeItemGainMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -418,7 +498,6 @@ namespace GS2Studio.Generated.Item
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemGain");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -426,9 +505,10 @@ namespace GS2Studio.Generated.Item
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeItemGainMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeItemGainMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeItemGainMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -437,41 +517,68 @@ namespace GS2Studio.Generated.Item
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeItemGainMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeItemGainMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemGainMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeItemGainMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemGainMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeItemGainMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeItemGainMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<ItemId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeItemGainMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-inventory-demo", "masterData", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "foundation-economy-inventory-demo", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory-demo\",\"masterData\",\"mdr_458KCGR65PBYEAQY4PZN1E6X4S\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "foundation-economy-inventory-demo", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "foundation-economy-inventory-demo", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeItemGainMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemGainMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeItemGainMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<ItemId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeItemGainMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-inventory-demo", "masterData", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "foundation-economy-inventory-demo", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory-demo\",\"masterData\",\"mdr_458KCGR65PBYEAQY4PZN1E6X4S\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "foundation-economy-inventory-demo", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "foundation-economy-inventory-demo", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeItemGainMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-inventory-demo", "masterData", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "foundation-economy-inventory-demo", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory-demo\",\"masterData\",\"mdr_458KCGR65PBYEAQY4PZN1E6X4S\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "foundation-economy-inventory-demo", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "foundation-economy-inventory-demo", "mdr_458KCGR65PBYEAQY4PZN1E6X4S", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemGainMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -511,13 +618,13 @@ namespace GS2Studio.Generated.Item
             if (!_disposed) SortBinders();
         }
 
-        private async Task<ItemBinder> BuildBinderFromExchangeItemGainMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<ItemBinder?> BuildBinderFromExchangeItemGainMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = ItemBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(ItemId) : new ItemId(item.Name)));
             ApplyExchangeItemGainMasterItemTo(model, item);
-            var binder = new ItemBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new ItemBinder(model, _gs2, _session, _mountSurface: ItemMountSurface.ExchangeItemGainMaster, __sdk__transactionAcquireAction_1: item.Name, __sdk__exchangeItemGainNamespaceRateModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeItemGainMasterItemTo(MutableItem model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -536,8 +643,9 @@ namespace GS2Studio.Generated.Item
         {
             var id = ExtractExchangeItemGainMasterIdentity(item);
             if (EqualityComparer<ItemId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeItemGain\",\"foundation-economy-inventory-demo\",\"mdr_458KCGR65PBYEAQY4PZN1E6X4S\",null,null,\"foundation-economy-inventory-demo\",\"mdr_458KCGR65PBYEAQY4PZN1E6X4S\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<ItemBinderCollection> CreateFromExchangeItemSpendMasterDataAsync(
@@ -554,18 +662,38 @@ namespace GS2Studio.Generated.Item
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemSpend");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeItemSpendMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeItemSpendMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeItemSpendMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeItemSpendMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeItemSpendMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemSpend");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemSpendMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeItemSpendMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemSpendMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeItemSpendMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeItemSpendMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeItemSpendMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeItemSpendMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -573,7 +701,6 @@ namespace GS2Studio.Generated.Item
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("ItemSpend");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -581,9 +708,10 @@ namespace GS2Studio.Generated.Item
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeItemSpendMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeItemSpendMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeItemSpendMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -592,41 +720,68 @@ namespace GS2Studio.Generated.Item
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeItemSpendMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeItemSpendMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemSpendMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeItemSpendMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemSpendMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeItemSpendMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeItemSpendMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<ItemId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeItemSpendMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-inventory-demo", "masterData", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "foundation-economy-inventory-demo", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory-demo\",\"masterData\",\"mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "foundation-economy-inventory-demo", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "foundation-economy-inventory-demo", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeItemSpendMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemSpendMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeItemSpendMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<ItemId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeItemSpendMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-inventory-demo", "masterData", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "foundation-economy-inventory-demo", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory-demo\",\"masterData\",\"mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "foundation-economy-inventory-demo", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "foundation-economy-inventory-demo", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeItemSpendMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-inventory-demo", "masterData", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "foundation-economy-inventory-demo", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory-demo\",\"masterData\",\"mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "foundation-economy-inventory-demo", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory-demo", "masterData", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "foundation-economy-inventory-demo", "mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeItemSpendMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -666,13 +821,13 @@ namespace GS2Studio.Generated.Item
             if (!_disposed) SortBinders();
         }
 
-        private async Task<ItemBinder> BuildBinderFromExchangeItemSpendMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<ItemBinder?> BuildBinderFromExchangeItemSpendMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = ItemBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(ItemId) : new ItemId(item.Name)));
             ApplyExchangeItemSpendMasterItemTo(model, item);
-            var binder = new ItemBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new ItemBinder(model, _gs2, _session, _mountSurface: ItemMountSurface.ExchangeItemSpendMaster, __sdk__exchangeItemSpendNamespaceRateModel_1: item.Name, __sdk__transactionConsumeAction_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeItemSpendMasterItemTo(MutableItem model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -691,8 +846,9 @@ namespace GS2Studio.Generated.Item
         {
             var id = ExtractExchangeItemSpendMasterIdentity(item);
             if (EqualityComparer<ItemId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeItemSpend\",\"foundation-economy-inventory-demo\",\"mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB\",null,null,\"foundation-economy-inventory-demo\",\"mdr_5YKJWTPD8BAC19G3AQ15T8P2ZB\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<ItemBinderCollection> CreateFromInventoryInventoryUserDataAsync(
@@ -709,18 +865,38 @@ namespace GS2Studio.Generated.Item
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemArrayLoader("Inventory", "Inventory");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromInventoryInventoryUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromInventoryInventoryUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromInventoryInventoryUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromInventoryInventoryUserItems");
+            _pendingCollectionAxis = "ReconcileFromInventoryInventoryUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemArrayLoader("Inventory", "Inventory");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromInventoryInventoryUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromInventoryInventoryUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromInventoryInventoryUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromInventoryInventoryUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromInventoryInventoryUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -728,7 +904,6 @@ namespace GS2Studio.Generated.Item
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemArrayLoader("Inventory", "Inventory");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -736,9 +911,10 @@ namespace GS2Studio.Generated.Item
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromInventoryInventoryUserItems");
                     try
                     {
-                        await ReconcileFromInventoryInventoryUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromInventoryInventoryUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -747,41 +923,68 @@ namespace GS2Studio.Generated.Item
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromInventoryInventoryUserItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryInventoryUserItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItem> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractInventoryInventoryUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryUserItems", updateVersion)) return;
                 var rowKey = ExtractInventoryInventoryUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractInventoryInventoryUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<ItemId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyInventoryInventoryUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-inventory", "userData", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "foundation-economy-inventory", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "inventory", "SimpleItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory\",\"userData\",\"udr_7HSSTMTZH09CRA81A2KHRBV7RJ\",\"inventory\",\"SimpleItem\",\"itemName\",\"string\"]"] = (object)item.ItemName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-inventory", "userData", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "foundation-economy-inventory", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "inventory", "SimpleItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory", "userData", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "foundation-economy-inventory", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "inventory", "SimpleItem", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromInventoryInventoryUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromInventoryInventoryUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<ItemId>.Default.Equals(raced.Id, nextId)) { ApplyInventoryInventoryUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-inventory", "userData", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "foundation-economy-inventory", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "inventory", "SimpleItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory\",\"userData\",\"udr_7HSSTMTZH09CRA81A2KHRBV7RJ\",\"inventory\",\"SimpleItem\",\"itemName\",\"string\"]"] = (object)item.ItemName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-inventory", "userData", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "foundation-economy-inventory", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "inventory", "SimpleItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory", "userData", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "foundation-economy-inventory", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "inventory", "SimpleItem", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyInventoryInventoryUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-inventory", "userData", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "foundation-economy-inventory", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "inventory", "SimpleItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-inventory\",\"userData\",\"udr_7HSSTMTZH09CRA81A2KHRBV7RJ\",\"inventory\",\"SimpleItem\",\"itemName\",\"string\"]"] = (object)item.ItemName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-inventory", "userData", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "foundation-economy-inventory", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "inventory", "SimpleItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-inventory", "userData", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "foundation-economy-inventory", "udr_7HSSTMTZH09CRA81A2KHRBV7RJ", "inventory", "SimpleItem", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryInventoryUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -821,13 +1024,13 @@ namespace GS2Studio.Generated.Item
             if (!_disposed) SortBinders();
         }
 
-        private async Task<ItemBinder> BuildBinderFromInventoryInventoryUserItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item, CancellationToken cancellationToken)
+        private async Task<ItemBinder?> BuildBinderFromInventoryInventoryUserItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = ItemBinder.CreateModel((string.IsNullOrEmpty(item.ItemName) ? default(ItemId) : new ItemId(item.ItemName)));
             ApplyInventoryInventoryUserItemTo(model, item);
-            var binder = new ItemBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new ItemBinder(model, _gs2, _session, _mountSurface: ItemMountSurface.InventoryInventoryUser, __sdk__inventoryInventoryNamespaceSimpleInventoryModelSimpleItemModel_2: item.ItemName, __sdk__userdataInventoryInventorySimpleItemModel_2: item.ItemName);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyInventoryInventoryUserItemTo(MutableItem model, Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item)
@@ -844,8 +1047,9 @@ namespace GS2Studio.Generated.Item
         {
             var id = ExtractInventoryInventoryUserIdentity(item);
             if (EqualityComparer<ItemId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.ItemName)) return null;
-            return $"{item.ItemName}";
+            var __key0 = item.ItemName;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"user\",\"InventoryInventory\",null,null,\"foundation-economy-inventory\",\"udr_7HSSTMTZH09CRA81A2KHRBV7RJ\",null,null,\"inventory\",\"SimpleItem\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class ItemBinderComparer : IComparer<IReadOnlyItemBinder>

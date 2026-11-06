@@ -18,8 +18,8 @@
   "binderListSource": "IStoreProductBinderListSource",
   "scopeParameters": [
     {
-      "name": "currencyType",
-      "fieldName": "_currencyType",
+      "name": "showcaseName",
+      "fieldName": "_showcaseName",
       "serializedType": "string"
     }
   ],
@@ -29,27 +29,27 @@
   "listAxisField": "_axis",
   "listAxisMembers": [
     {
-      "name": "ShowcaseShopCurrencyMaster",
-      "value": -136075035
-    },
-    {
       "name": "Money2CurrencyMaster",
       "value": -711576390
+    },
+    {
+      "name": "ShowcaseShopCurrencyMaster",
+      "value": -136075035
     }
   ],
   "listAxes": [
     {
-      "memberName": "ShowcaseShopCurrencyMaster",
-      "mountMethodName": "MountFromShowcaseShopCurrencyMasterDataAsync"
-    },
-    {
       "memberName": "Money2CurrencyMaster",
       "mountMethodName": "MountFromMoney2CurrencyMasterDataAsync"
+    },
+    {
+      "memberName": "ShowcaseShopCurrencyMaster",
+      "mountMethodName": "MountFromShowcaseShopCurrencyMasterDataAsync"
     }
   ],
   "mountFields": [
     {
-      "fieldName": "_currencyType",
+      "fieldName": "_showcaseName",
       "serializedType": "string"
     }
   ],

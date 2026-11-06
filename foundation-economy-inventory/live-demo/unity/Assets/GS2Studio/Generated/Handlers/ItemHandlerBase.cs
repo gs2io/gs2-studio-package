@@ -27,6 +27,9 @@ namespace GS2Studio.Generated.Item
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public ItemMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<Item>? Updated;
 
         public event Action<IActionableItemBinder>? Bound;

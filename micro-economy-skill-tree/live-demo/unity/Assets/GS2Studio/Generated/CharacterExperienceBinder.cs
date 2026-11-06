@@ -27,6 +27,7 @@ namespace GS2Studio.Generated.CharacterExperience
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableCharacterExperienceBinder : IReadOnlyCharacterExperienceBinder
     {
+        CharacterExperienceBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -64,10 +65,145 @@ namespace GS2Studio.Generated.CharacterExperience
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class CharacterExperienceBinder : ReadOnlyCharacterExperienceBinder, ICharacterExperienceBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly CharacterExperienceBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(CharacterExperienceBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public CharacterExperience Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableCharacterExperience? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableCharacterExperience
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal CharacterExperienceId __valueId = default!;
+                public CharacterExperienceId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setThreshold;
+                internal IReadOnlyList<long> __valueThreshold = default!;
+                public IReadOnlyList<long> Threshold
+                {
+                    get => __setThreshold ? __valueThreshold : __scopeOwner.Value.Threshold;
+                    set { __setThreshold = true; __valueThreshold = value; }
+                }
+                internal bool __setDefaultLevelCap;
+                internal int __valueDefaultLevelCap = default!;
+                public int DefaultLevelCap
+                {
+                    get => __setDefaultLevelCap ? __valueDefaultLevelCap : __scopeOwner.Value.DefaultLevelCap;
+                    set { __setDefaultLevelCap = true; __valueDefaultLevelCap = value; }
+                }
+                internal bool __setMaxLevelCap;
+                internal int __valueMaxLevelCap = default!;
+                public int MaxLevelCap
+                {
+                    get => __setMaxLevelCap ? __valueMaxLevelCap : __scopeOwner.Value.MaxLevelCap;
+                    set { __setMaxLevelCap = true; __valueMaxLevelCap = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<CharacterExperienceId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setThreshold) { _owner._model.Threshold = changes.__valueThreshold; changes.__setThreshold = false; }
+                if (changes.__setDefaultLevelCap) { _owner._model.DefaultLevelCap = changes.__valueDefaultLevelCap; changes.__setDefaultLevelCap = false; }
+                if (changes.__setMaxLevelCap) { _owner._model.MaxLevelCap = changes.__valueMaxLevelCap; changes.__setMaxLevelCap = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -78,11 +214,14 @@ namespace GS2Studio.Generated.CharacterExperience
         internal CharacterExperienceBinder(
             MutableCharacterExperience model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            string? __sdk__experienceCharacterExperienceNamespaceExperienceModel_1 = null
         ) : base(model, gs2, session)
         {
-            __experienceCharacterExperienceNamespaceExperienceModelLoader = new Gs2Bind.Gs2Experience.ExperienceModelLoader("CharacterExperience", "Experience");
+
+            __experienceCharacterExperienceNamespaceExperienceModelLoader = new Gs2Bind.Gs2Experience.ExperienceModelLoader("CharacterExperience", (string.IsNullOrEmpty(__sdk__experienceCharacterExperienceNamespaceExperienceModel_1) ? "Experience" : __sdk__experienceCharacterExperienceNamespaceExperienceModel_1!));
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableCharacterExperience CreateModel(CharacterExperienceId id)
@@ -96,14 +235,14 @@ namespace GS2Studio.Generated.CharacterExperience
             CharacterExperienceId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__experienceCharacterExperienceNamespaceExperienceModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new CharacterExperienceBinder(model, gs2, session);
+            var binder = new CharacterExperienceBinder(model, gs2, session, __sdk__experienceCharacterExperienceNamespaceExperienceModel_1: __sdk__experienceCharacterExperienceNamespaceExperienceModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -145,6 +284,7 @@ namespace GS2Studio.Generated.CharacterExperience
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -192,6 +332,7 @@ namespace GS2Studio.Generated.CharacterExperience
                 model.Threshold = new List<long>();
             }
         }
+
         #endregion
 
     }

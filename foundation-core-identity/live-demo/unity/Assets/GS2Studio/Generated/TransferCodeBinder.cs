@@ -16,17 +16,40 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using Gs2.Unity.Gs2Account.Model;
 using Gs2Bind.Gs2Account;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.TransferCode
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum TransferCodeMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the AccountAccount user-data list axis.</summary>
+        AccountAccountUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyTransferCodeBinder : TransferCode
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        TransferCodeMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Account.TakeOverLoader</c> load on <c>__userdataAccountTakeOverLoader</c> or its composition from a list item. False means this path does not supply <c>UserIdentifier</c>, <c>Registered</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        bool LoadedUserdataAccountTakeOver { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableTransferCodeBinder : IReadOnlyTransferCodeBinder
     {
+        TransferCodeBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -37,7 +60,7 @@ namespace GS2Studio.Generated.TransferCode
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyTransferCodeBinder : IReadOnlyTransferCodeBinder
+    public abstract class ReadOnlyTransferCodeBinder : IReadOnlyTransferCodeBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableTransferCode _model;
@@ -53,6 +76,13 @@ namespace GS2Studio.Generated.TransferCode
         /// <inheritdoc cref="TransferCode.Registered" />
         public bool Registered => _model.Registered;
 
+        /// <inheritdoc />
+        public abstract TransferCodeMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataAccountTakeOver { get; }
+
+
         private protected ReadOnlyTransferCodeBinder(MutableTransferCode model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -62,26 +92,169 @@ namespace GS2Studio.Generated.TransferCode
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class TransferCodeBinder : ReadOnlyTransferCodeBinder, ITransferCodeBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly TransferCodeBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(TransferCodeBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public TransferCode Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableTransferCode? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableTransferCode
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal TransferCodeId __valueId = default!;
+                public TransferCodeId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setUserIdentifier;
+                internal string __valueUserIdentifier = default!;
+                public string UserIdentifier
+                {
+                    get => __setUserIdentifier ? __valueUserIdentifier : __scopeOwner.Value.UserIdentifier;
+                    set { __setUserIdentifier = true; __valueUserIdentifier = value; }
+                }
+                internal bool __setRegistered;
+                internal bool __valueRegistered = default!;
+                public bool Registered
+                {
+                    get => __setRegistered ? __valueRegistered : __scopeOwner.Value.Registered;
+                    set { __setRegistered = true; __valueRegistered = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<TransferCodeId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setUserIdentifier) { _owner._model.UserIdentifier = changes.__valueUserIdentifier; changes.__setUserIdentifier = false; }
+                if (changes.__setRegistered) { _owner._model.Registered = changes.__valueRegistered; changes.__setRegistered = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
 
         private readonly Gs2Bind.Gs2Account.TakeOverLoader __userdataAccountTakeOverLoader;
 
+        private readonly TransferCodeMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataAccountTakeOverLoader</c> reads.</summary>
+        private bool Runs__userdataAccountTakeOverLoader => _mountSurfaceValue is TransferCodeMountSurface.Full;
+
+        /// <inheritdoc />
+        public override TransferCodeMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataAccountTakeOver => _mountSurfaceValue is TransferCodeMountSurface.Full or TransferCodeMountSurface.AccountAccountUser;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal TransferCodeBinder(
             MutableTransferCode model,
             Gs2Domain gs2,
             IGameSession session,
-            int type
+            int type,
+            TransferCodeMountSurface _mountSurface = TransferCodeMountSurface.Full,
+            int? __sdk__userdataAccountTakeOver_1 = null
         ) : base(model, gs2, session)
         {
-            __userdataAccountTakeOverLoader = new Gs2Bind.Gs2Account.TakeOverLoader("Account", type);
+
+            _mountSurfaceValue = _mountSurface;
+            __userdataAccountTakeOverLoader = Runs__userdataAccountTakeOverLoader ? new Gs2Bind.Gs2Account.TakeOverLoader("Account", (__sdk__userdataAccountTakeOver_1 ?? throw new InvalidOperationException("An SDK backing key is required for this loader."))) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableTransferCode CreateModel(TransferCodeId id)
@@ -95,44 +268,53 @@ namespace GS2Studio.Generated.TransferCode
             TransferCodeId id, int type,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataAccountTakeOver_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new TransferCodeBinder(model, gs2, session, type: type);
+            var binder = new TransferCodeBinder(model, gs2, session, type: type, __sdk__userdataAccountTakeOver_1: __sdk__userdataAccountTakeOver_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _userdataAccountTakeOver = await __userdataAccountTakeOverLoader.LoadOrNull(_gs2, _session);
+            var _userdataAccountTakeOver = Runs__userdataAccountTakeOverLoader ? await __userdataAccountTakeOverLoader.LoadOrNull(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataAccountTakeOver(_model, _userdataAccountTakeOver);
+            if (Runs__userdataAccountTakeOverLoader)
+            {
+                ApplyUserdataAccountTakeOver(_model, _userdataAccountTakeOver);
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__userdataAccountTakeOverLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataAccountTakeOver(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+            if (Runs__userdataAccountTakeOverLoader)
+            {
+                _unsubscribers.Add(__userdataAccountTakeOverLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataAccountTakeOver(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __userdataAccountTakeOverLoader.Invalidate(_gs2, _session);
+            if (Runs__userdataAccountTakeOverLoader)
+            {
+                __userdataAccountTakeOverLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -144,6 +326,7 @@ namespace GS2Studio.Generated.TransferCode
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -189,6 +372,7 @@ namespace GS2Studio.Generated.TransferCode
                 model.UserIdentifier = string.Empty;
             }
         }
+
         #endregion
 
     }

@@ -20,19 +20,82 @@ using Gs2.Unity.Gs2Schedule.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Schedule;
 using Gs2.Util.LitJson;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Trigger
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum TriggerMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the ExchangeTriggerClear master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeTriggerExtendNamespaceRateModel", "UserdataScheduleTrigger")]
+        ExchangeTriggerClearMaster,
+
+        /// <summary>Built by the ExchangeTriggerExtend master-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeTriggerClearNamespaceRateModel", "TransactionConsumeAction", "UserdataScheduleTrigger")]
+        ExchangeTriggerExtendMaster,
+
+        /// <summary>Built by the ScheduleSchedule user-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeTriggerClearNamespaceRateModel", "TransactionAcquireAction", "TransactionConsumeAction", "ExchangeTriggerExtendNamespaceRateModel")]
+        ScheduleScheduleUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyTriggerBinder : Trigger
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        TriggerMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply <c>Id</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeTriggerClearMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ScheduleScheduleUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeTriggerExtendNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeTriggerClearMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ScheduleScheduleUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeTriggerExtendNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Schedule.TriggerLoader</c> load on <c>__userdataScheduleTriggerLoader</c> or its composition from a list item. False means this path does not supply <c>ExpiresAt</c>, <c>TriggeredAt</c>, <c>Triggered</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeTriggerClearMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeTriggerExtendMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedUserdataScheduleTrigger { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeTriggerClearNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeTriggerExtendMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ScheduleScheduleUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeTriggerClearNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeActionLoader</c>. False means this path does not supply <c>Id</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeTriggerExtendMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ScheduleScheduleUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableTriggerBinder : IReadOnlyTriggerBinder
     {
+        TriggerBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Extend(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
         Task Clear(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
+        Task<GS2Studio.Generated.TriggerPull.IReadOnlyTriggerPullBinderCollection> GetTriggerPulls(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -40,11 +103,10 @@ namespace GS2Studio.Generated.Trigger
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.TriggerPull.IReadOnlyTriggerPullBinderCollection> GetTriggerPulls(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyTriggerBinder : IReadOnlyTriggerBinder
+    public abstract class ReadOnlyTriggerBinder : IReadOnlyTriggerBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableTrigger _model;
@@ -62,6 +124,25 @@ namespace GS2Studio.Generated.Trigger
         /// <inheritdoc cref="Trigger.ExpiresAt" />
         public DateTime ExpiresAt => _model.ExpiresAt;
 
+        /// <inheritdoc />
+        public abstract TriggerMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeTriggerExtendNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataScheduleTrigger { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeTriggerClearNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction { get; }
+
+
         private protected ReadOnlyTriggerBinder(MutableTrigger model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -71,10 +152,145 @@ namespace GS2Studio.Generated.Trigger
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class TriggerBinder : ReadOnlyTriggerBinder, ITriggerBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly TriggerBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(TriggerBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Trigger Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableTrigger? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableTrigger
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal TriggerId __valueId = default!;
+                public TriggerId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setTriggered;
+                internal bool __valueTriggered = default!;
+                public bool Triggered
+                {
+                    get => __setTriggered ? __valueTriggered : __scopeOwner.Value.Triggered;
+                    set { __setTriggered = true; __valueTriggered = value; }
+                }
+                internal bool __setTriggeredAt;
+                internal DateTime __valueTriggeredAt = default!;
+                public DateTime TriggeredAt
+                {
+                    get => __setTriggeredAt ? __valueTriggeredAt : __scopeOwner.Value.TriggeredAt;
+                    set { __setTriggeredAt = true; __valueTriggeredAt = value; }
+                }
+                internal bool __setExpiresAt;
+                internal DateTime __valueExpiresAt = default!;
+                public DateTime ExpiresAt
+                {
+                    get => __setExpiresAt ? __valueExpiresAt : __scopeOwner.Value.ExpiresAt;
+                    set { __setExpiresAt = true; __valueExpiresAt = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<TriggerId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setTriggered) { _owner._model.Triggered = changes.__valueTriggered; changes.__setTriggered = false; }
+                if (changes.__setTriggeredAt) { _owner._model.TriggeredAt = changes.__valueTriggeredAt; changes.__setTriggeredAt = false; }
+                if (changes.__setExpiresAt) { _owner._model.ExpiresAt = changes.__valueExpiresAt; changes.__setExpiresAt = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -87,19 +303,73 @@ namespace GS2Studio.Generated.Trigger
         private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeTriggerExtendNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Schedule.TriggerLoader __userdataScheduleTriggerLoader;
 
+        private readonly TriggerMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeTriggerClearMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ScheduleScheduleUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is TriggerMountSurface.Full or TriggerMountSurface.ExchangeTriggerExtendMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeTriggerExtendNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeTriggerClearMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ScheduleScheduleUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeTriggerExtendNamespaceRateModelLoader => _mountSurfaceValue is TriggerMountSurface.Full or TriggerMountSurface.ExchangeTriggerExtendMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataScheduleTriggerLoader</c> reads.</summary>
+        /// <remarks>ExchangeTriggerClearMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeTriggerExtendMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__userdataScheduleTriggerLoader => _mountSurfaceValue is TriggerMountSurface.Full;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeTriggerClearNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeTriggerExtendMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ScheduleScheduleUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeTriggerClearNamespaceRateModelLoader => _mountSurfaceValue is TriggerMountSurface.Full or TriggerMountSurface.ExchangeTriggerClearMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeTriggerExtendMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ScheduleScheduleUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeActionLoader => _mountSurfaceValue is TriggerMountSurface.Full or TriggerMountSurface.ExchangeTriggerClearMaster;
+
+        /// <inheritdoc />
+        public override TriggerMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeTriggerExtendNamespaceRateModel => Runs__exchangeTriggerExtendNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataScheduleTrigger => _mountSurfaceValue is TriggerMountSurface.Full or TriggerMountSurface.ScheduleScheduleUser;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeTriggerClearNamespaceRateModel => Runs__exchangeTriggerClearNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction => Runs__transactionConsumeActionLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal TriggerBinder(
             MutableTrigger model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            TriggerMountSurface _mountSurface = TriggerMountSurface.Full,
+            string? __sdk__exchangeTriggerClearNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeTriggerExtendNamespaceRateModel_1 = null,
+            string? __sdk__userdataScheduleTrigger_1 = null
         ) : base(model, gs2, session)
         {
-            __exchangeTriggerClearNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerClear", _model.Id);
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("TriggerExtend", _model.Id, 0);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("TriggerClear", _model.Id, 0);
-            __exchangeTriggerExtendNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerExtend", _model.Id);
-            __userdataScheduleTriggerLoader = new Gs2Bind.Gs2Schedule.TriggerLoader("Schedule", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __exchangeTriggerClearNamespaceRateModelLoader = Runs__exchangeTriggerClearNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerClear", (string.IsNullOrEmpty(__sdk__exchangeTriggerClearNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeTriggerClearNamespaceRateModel_1!)) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("TriggerExtend", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("TriggerClear", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __exchangeTriggerExtendNamespaceRateModelLoader = Runs__exchangeTriggerExtendNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("TriggerExtend", (string.IsNullOrEmpty(__sdk__exchangeTriggerExtendNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeTriggerExtendNamespaceRateModel_1!)) : null!;
+            __userdataScheduleTriggerLoader = Runs__userdataScheduleTriggerLoader ? new Gs2Bind.Gs2Schedule.TriggerLoader("Schedule", (string.IsNullOrEmpty(__sdk__userdataScheduleTrigger_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataScheduleTrigger_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableTrigger CreateModel(TriggerId id)
@@ -113,43 +383,56 @@ namespace GS2Studio.Generated.Trigger
             TriggerId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeTriggerClearNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeTriggerExtendNamespaceRateModel_1 = null,
+            string? __sdk__userdataScheduleTrigger_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new TriggerBinder(model, gs2, session);
+            var binder = new TriggerBinder(model, gs2, session, __sdk__exchangeTriggerClearNamespaceRateModel_1: __sdk__exchangeTriggerClearNamespaceRateModel_1, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__exchangeTriggerExtendNamespaceRateModel_1: __sdk__exchangeTriggerExtendNamespaceRateModel_1, __sdk__userdataScheduleTrigger_1: __sdk__userdataScheduleTrigger_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _exchangeTriggerClearNamespaceRateModel = await __exchangeTriggerClearNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeTriggerClearNamespaceRateModel = Runs__exchangeTriggerClearNamespaceRateModelLoader ? await __exchangeTriggerClearNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeTriggerClearNamespaceRateModel != null)
             {
             }
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction = Runs__transactionConsumeActionLoader ? await __transactionConsumeActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
             }
-            var _exchangeTriggerExtendNamespaceRateModel = await __exchangeTriggerExtendNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeTriggerExtendNamespaceRateModel = Runs__exchangeTriggerExtendNamespaceRateModelLoader ? await __exchangeTriggerExtendNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeTriggerExtendNamespaceRateModel != null)
             {
             }
-            var _userdataScheduleTrigger = await __userdataScheduleTriggerLoader.LoadOrNull(_gs2, _session);
+            var _userdataScheduleTrigger = Runs__userdataScheduleTriggerLoader ? await __userdataScheduleTriggerLoader.LoadOrNull(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataScheduleTrigger(_model, _userdataScheduleTrigger);
-            if (_transactionAcquireAction == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
-            if (_transactionConsumeAction == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (_transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            if (Runs__userdataScheduleTriggerLoader)
+            {
+                ApplyUserdataScheduleTrigger(_model, _userdataScheduleTrigger);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                if (_transactionAcquireAction == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                if (_transactionConsumeAction == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (_transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            }
             RestoreIdFromSources();
             _mounted = true;
         }
@@ -157,83 +440,113 @@ namespace GS2Studio.Generated.Trigger
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__exchangeTriggerClearNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__exchangeTriggerClearNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeTriggerClearNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (value.Action, value.Request);
-                    RestoreIdFromSources();
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (value.Action, value.Request);
+                        RestoreIdFromSources();
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (value.Action, value.Request);
-                    RestoreIdFromSources();
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeTriggerExtendNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (value.Action, value.Request);
+                        RestoreIdFromSources();
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeTriggerExtendNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeTriggerExtendNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__userdataScheduleTriggerLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataScheduleTrigger(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__userdataScheduleTriggerLoader)
+            {
+                _unsubscribers.Add(__userdataScheduleTriggerLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataScheduleTrigger(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __exchangeTriggerClearNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __exchangeTriggerExtendNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __userdataScheduleTriggerLoader.Invalidate(_gs2, _session);
+            if (Runs__exchangeTriggerClearNamespaceRateModelLoader)
+            {
+                __exchangeTriggerClearNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeTriggerExtendNamespaceRateModelLoader)
+            {
+                __exchangeTriggerExtendNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__userdataScheduleTriggerLoader)
+            {
+                __userdataScheduleTriggerLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -245,6 +558,7 @@ namespace GS2Studio.Generated.Trigger
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -349,6 +663,7 @@ namespace GS2Studio.Generated.Trigger
                 model.TriggeredAt = default;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

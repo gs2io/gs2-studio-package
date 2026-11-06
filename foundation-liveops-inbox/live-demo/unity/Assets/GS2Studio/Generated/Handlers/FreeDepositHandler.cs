@@ -24,6 +24,8 @@ namespace GS2Studio.Generated.FreeDeposit
     [AddComponentMenu("GS2 Studio/DomainType/FreeDeposit/FreeDeposit Handler")]
     public sealed class FreeDepositHandler : FreeDepositHandlerBase
     {
+        private string? _sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName;
+        private string? _sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName_2;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -48,6 +50,7 @@ namespace GS2Studio.Generated.FreeDeposit
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(IFreeDepositBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -62,6 +65,18 @@ namespace GS2Studio.Generated.FreeDeposit
             InvalidateBindingIntent();
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName, string? sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName_2)
+        {
+            InvalidateBindingIntent();
+            _sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName = sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName;
+            _sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName_2 = sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName_2;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -85,7 +100,11 @@ namespace GS2Studio.Generated.FreeDeposit
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
-                var binder = await ResolveBinderFactory().CreateAsync(new FreeDepositId("freedeposit"), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName_2' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new FreeDepositId("freedeposit"), gs2, session, cancellationToken, __sdk__exchangeCurrencyGrantNamespaceRateModel_1: _sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName, __sdk__transactionAcquireAction_1: _sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName_2);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -173,6 +192,8 @@ namespace GS2Studio.Generated.FreeDeposit
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_currency_x2d_demo_masterData_mdr_0WQYMCRMNHA27R3GC0HP8TDAM1_exchange_RateModel_rateName_2)) return false;
             return true;
         }
 

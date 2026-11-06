@@ -20,19 +20,98 @@ using Gs2.Unity.Gs2Stamina.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Stamina;
 using Gs2.Util.LitJson;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Energy
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum EnergyMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the StaminaEnergy master-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeEnergyRecoverNamespaceRateModel", "TransactionAcquireAction", "ExchangeEnergyConsumeNamespaceRateModel", "TransactionConsumeAction", "UserdataStaminaEnergyStaminaModel")]
+        StaminaEnergyMaster,
+
+        /// <summary>Built by the ExchangeEnergyRecover master-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeEnergyConsumeNamespaceRateModel", "TransactionConsumeAction", "StaminaEnergyNamespaceStaminaModel", "UserdataStaminaEnergyStaminaModel")]
+        ExchangeEnergyRecoverMaster,
+
+        /// <summary>Built by the ExchangeEnergyConsume master-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeEnergyRecoverNamespaceRateModel", "TransactionAcquireAction", "StaminaEnergyNamespaceStaminaModel", "UserdataStaminaEnergyStaminaModel")]
+        ExchangeEnergyConsumeMaster,
+
+        /// <summary>Built by the StaminaEnergy user-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeEnergyRecoverNamespaceRateModel", "TransactionAcquireAction", "ExchangeEnergyConsumeNamespaceRateModel", "TransactionConsumeAction")]
+        StaminaEnergyUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyEnergyBinder : Energy
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        EnergyMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeEnergyRecoverNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyConsumeMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>StaminaEnergyUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeEnergyRecoverNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply <c>Id</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyConsumeMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>StaminaEnergyUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeEnergyConsumeNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyRecoverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>StaminaEnergyUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeEnergyConsumeNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeActionLoader</c>. False means this path does not supply <c>Id</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyRecoverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>StaminaEnergyUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Stamina.StaminaLoader</c> load on <c>__userdataStaminaEnergyStaminaModelLoader</c> or its composition from a list item. False means this path does not supply <c>CurrentMaximumValue</c>, <c>NextRecoverdAt</c>, <c>CurrentValue</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key staminaName.</remarks>
+        /// <remarks>ExchangeEnergyRecoverMaster: does not supply SDK backing key staminaName.</remarks>
+        /// <remarks>ExchangeEnergyConsumeMaster: does not supply SDK backing key staminaName.</remarks>
+        bool LoadedUserdataStaminaEnergyStaminaModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Stamina.StaminaModelLoader</c> load on <c>__staminaEnergyNamespaceStaminaModelLoader</c>. False means this path does not supply <c>DefaultMaximum</c>, <c>UseOverflow</c>, <c>OverflowedMaximum</c>, <c>RecoveryIntervalMinutes</c>, <c>RecoveryValue</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeEnergyRecoverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyConsumeMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedStaminaEnergyNamespaceStaminaModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableEnergyBinder : IReadOnlyEnergyBinder
     {
+        EnergyBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Spend(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
         Task Recover(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
+        Task<GS2Studio.Generated.EnergyProduct.IReadOnlyEnergyProductBinderCollection> GetEnergyProducts(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -40,11 +119,10 @@ namespace GS2Studio.Generated.Energy
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.EnergyProduct.IReadOnlyEnergyProductBinderCollection> GetEnergyProducts(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyEnergyBinder : IReadOnlyEnergyBinder
+    public abstract class ReadOnlyEnergyBinder : IReadOnlyEnergyBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableEnergy _model;
@@ -72,6 +150,28 @@ namespace GS2Studio.Generated.Energy
         /// <inheritdoc cref="Energy.NextRecoverdAt" />
         public DateTime NextRecoverdAt => _model.NextRecoverdAt;
 
+        /// <inheritdoc />
+        public abstract EnergyMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeEnergyRecoverNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeEnergyConsumeNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataStaminaEnergyStaminaModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedStaminaEnergyNamespaceStaminaModel { get; }
+
+
         private protected ReadOnlyEnergyBinder(MutableEnergy model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -81,10 +181,185 @@ namespace GS2Studio.Generated.Energy
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class EnergyBinder : ReadOnlyEnergyBinder, IEnergyBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly EnergyBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(EnergyBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Energy Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableEnergy? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableEnergy
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal EnergyId __valueId = default!;
+                public EnergyId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setDefaultMaximum;
+                internal int __valueDefaultMaximum = default!;
+                public int DefaultMaximum
+                {
+                    get => __setDefaultMaximum ? __valueDefaultMaximum : __scopeOwner.Value.DefaultMaximum;
+                    set { __setDefaultMaximum = true; __valueDefaultMaximum = value; }
+                }
+                internal bool __setUseOverflow;
+                internal bool __valueUseOverflow = default!;
+                public bool UseOverflow
+                {
+                    get => __setUseOverflow ? __valueUseOverflow : __scopeOwner.Value.UseOverflow;
+                    set { __setUseOverflow = true; __valueUseOverflow = value; }
+                }
+                internal bool __setOverflowedMaximum;
+                internal int __valueOverflowedMaximum = default!;
+                public int OverflowedMaximum
+                {
+                    get => __setOverflowedMaximum ? __valueOverflowedMaximum : __scopeOwner.Value.OverflowedMaximum;
+                    set { __setOverflowedMaximum = true; __valueOverflowedMaximum = value; }
+                }
+                internal bool __setRecoveryIntervalMinutes;
+                internal int __valueRecoveryIntervalMinutes = default!;
+                public int RecoveryIntervalMinutes
+                {
+                    get => __setRecoveryIntervalMinutes ? __valueRecoveryIntervalMinutes : __scopeOwner.Value.RecoveryIntervalMinutes;
+                    set { __setRecoveryIntervalMinutes = true; __valueRecoveryIntervalMinutes = value; }
+                }
+                internal bool __setRecoveryValue;
+                internal int __valueRecoveryValue = default!;
+                public int RecoveryValue
+                {
+                    get => __setRecoveryValue ? __valueRecoveryValue : __scopeOwner.Value.RecoveryValue;
+                    set { __setRecoveryValue = true; __valueRecoveryValue = value; }
+                }
+                internal bool __setCurrentValue;
+                internal int __valueCurrentValue = default!;
+                public int CurrentValue
+                {
+                    get => __setCurrentValue ? __valueCurrentValue : __scopeOwner.Value.CurrentValue;
+                    set { __setCurrentValue = true; __valueCurrentValue = value; }
+                }
+                internal bool __setCurrentMaximumValue;
+                internal int __valueCurrentMaximumValue = default!;
+                public int CurrentMaximumValue
+                {
+                    get => __setCurrentMaximumValue ? __valueCurrentMaximumValue : __scopeOwner.Value.CurrentMaximumValue;
+                    set { __setCurrentMaximumValue = true; __valueCurrentMaximumValue = value; }
+                }
+                internal bool __setNextRecoverdAt;
+                internal DateTime __valueNextRecoverdAt = default!;
+                public DateTime NextRecoverdAt
+                {
+                    get => __setNextRecoverdAt ? __valueNextRecoverdAt : __scopeOwner.Value.NextRecoverdAt;
+                    set { __setNextRecoverdAt = true; __valueNextRecoverdAt = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<EnergyId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setDefaultMaximum) { _owner._model.DefaultMaximum = changes.__valueDefaultMaximum; changes.__setDefaultMaximum = false; }
+                if (changes.__setUseOverflow) { _owner._model.UseOverflow = changes.__valueUseOverflow; changes.__setUseOverflow = false; }
+                if (changes.__setOverflowedMaximum) { _owner._model.OverflowedMaximum = changes.__valueOverflowedMaximum; changes.__setOverflowedMaximum = false; }
+                if (changes.__setRecoveryIntervalMinutes) { _owner._model.RecoveryIntervalMinutes = changes.__valueRecoveryIntervalMinutes; changes.__setRecoveryIntervalMinutes = false; }
+                if (changes.__setRecoveryValue) { _owner._model.RecoveryValue = changes.__valueRecoveryValue; changes.__setRecoveryValue = false; }
+                if (changes.__setCurrentValue) { _owner._model.CurrentValue = changes.__valueCurrentValue; changes.__setCurrentValue = false; }
+                if (changes.__setCurrentMaximumValue) { _owner._model.CurrentMaximumValue = changes.__valueCurrentMaximumValue; changes.__setCurrentMaximumValue = false; }
+                if (changes.__setNextRecoverdAt) { _owner._model.NextRecoverdAt = changes.__valueNextRecoverdAt; changes.__setNextRecoverdAt = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -98,20 +373,88 @@ namespace GS2Studio.Generated.Energy
         private readonly Gs2Bind.Gs2Stamina.StaminaModelLoader __staminaEnergyNamespaceStaminaModelLoader;
         private readonly Gs2Bind.Gs2Stamina.StaminaLoader __userdataStaminaEnergyStaminaModelLoader;
 
+        private readonly EnergyMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeEnergyRecoverNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyConsumeMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>StaminaEnergyUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeEnergyRecoverNamespaceRateModelLoader => _mountSurfaceValue is EnergyMountSurface.Full or EnergyMountSurface.ExchangeEnergyRecoverMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyConsumeMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>StaminaEnergyUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is EnergyMountSurface.Full or EnergyMountSurface.ExchangeEnergyRecoverMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeEnergyConsumeNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyRecoverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>StaminaEnergyUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeEnergyConsumeNamespaceRateModelLoader => _mountSurfaceValue is EnergyMountSurface.Full or EnergyMountSurface.ExchangeEnergyConsumeMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeActionLoader</c> reads.</summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyRecoverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>StaminaEnergyUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeActionLoader => _mountSurfaceValue is EnergyMountSurface.Full or EnergyMountSurface.ExchangeEnergyConsumeMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataStaminaEnergyStaminaModelLoader</c> reads.</summary>
+        /// <remarks>StaminaEnergyMaster: does not supply SDK backing key staminaName.</remarks>
+        /// <remarks>ExchangeEnergyRecoverMaster: does not supply SDK backing key staminaName.</remarks>
+        /// <remarks>ExchangeEnergyConsumeMaster: does not supply SDK backing key staminaName.</remarks>
+        private bool Runs__userdataStaminaEnergyStaminaModelLoader => _mountSurfaceValue is EnergyMountSurface.Full;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__staminaEnergyNamespaceStaminaModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeEnergyRecoverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeEnergyConsumeMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__staminaEnergyNamespaceStaminaModelLoader => _mountSurfaceValue is EnergyMountSurface.Full or EnergyMountSurface.StaminaEnergyMaster or EnergyMountSurface.StaminaEnergyUser;
+
+        /// <inheritdoc />
+        public override EnergyMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeEnergyRecoverNamespaceRateModel => Runs__exchangeEnergyRecoverNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeEnergyConsumeNamespaceRateModel => Runs__exchangeEnergyConsumeNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction => Runs__transactionConsumeActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataStaminaEnergyStaminaModel => _mountSurfaceValue is EnergyMountSurface.Full or EnergyMountSurface.StaminaEnergyUser;
+
+        /// <inheritdoc />
+        public override bool LoadedStaminaEnergyNamespaceStaminaModel => Runs__staminaEnergyNamespaceStaminaModelLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal EnergyBinder(
             MutableEnergy model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            EnergyMountSurface _mountSurface = EnergyMountSurface.Full,
+            string? __sdk__exchangeEnergyRecoverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeEnergyConsumeNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
+            string? __sdk__userdataStaminaEnergyStaminaModel_1 = null
         ) : base(model, gs2, session)
         {
-            __exchangeEnergyRecoverNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyRecover", _model.Id);
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EnergyRecover", _model.Id, 0);
-            __exchangeEnergyConsumeNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyConsume", _model.Id);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EnergyConsume", _model.Id, 0);
-            __staminaEnergyNamespaceStaminaModelLoader = new Gs2Bind.Gs2Stamina.StaminaModelLoader("Energy", _model.Id);
-            __userdataStaminaEnergyStaminaModelLoader = new Gs2Bind.Gs2Stamina.StaminaLoader("Energy", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __exchangeEnergyRecoverNamespaceRateModelLoader = Runs__exchangeEnergyRecoverNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyRecover", (string.IsNullOrEmpty(__sdk__exchangeEnergyRecoverNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEnergyRecoverNamespaceRateModel_1!)) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EnergyRecover", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __exchangeEnergyConsumeNamespaceRateModelLoader = Runs__exchangeEnergyConsumeNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyConsume", (string.IsNullOrEmpty(__sdk__exchangeEnergyConsumeNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEnergyConsumeNamespaceRateModel_1!)) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EnergyConsume", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __staminaEnergyNamespaceStaminaModelLoader = Runs__staminaEnergyNamespaceStaminaModelLoader ? new Gs2Bind.Gs2Stamina.StaminaModelLoader("Energy", (string.IsNullOrEmpty(__sdk__staminaEnergyNamespaceStaminaModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__staminaEnergyNamespaceStaminaModel_1!)) : null!;
+            __userdataStaminaEnergyStaminaModelLoader = Runs__userdataStaminaEnergyStaminaModelLoader ? new Gs2Bind.Gs2Stamina.StaminaLoader("Energy", (string.IsNullOrEmpty(__sdk__userdataStaminaEnergyStaminaModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataStaminaEnergyStaminaModel_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableEnergy CreateModel(EnergyId id)
@@ -125,46 +468,63 @@ namespace GS2Studio.Generated.Energy
             EnergyId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEnergyRecoverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeEnergyConsumeNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
+            string? __sdk__userdataStaminaEnergyStaminaModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new EnergyBinder(model, gs2, session);
+            var binder = new EnergyBinder(model, gs2, session, __sdk__exchangeEnergyRecoverNamespaceRateModel_1: __sdk__exchangeEnergyRecoverNamespaceRateModel_1, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__exchangeEnergyConsumeNamespaceRateModel_1: __sdk__exchangeEnergyConsumeNamespaceRateModel_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__staminaEnergyNamespaceStaminaModel_1: __sdk__staminaEnergyNamespaceStaminaModel_1, __sdk__userdataStaminaEnergyStaminaModel_1: __sdk__userdataStaminaEnergyStaminaModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _exchangeEnergyRecoverNamespaceRateModel = await __exchangeEnergyRecoverNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeEnergyRecoverNamespaceRateModel = Runs__exchangeEnergyRecoverNamespaceRateModelLoader ? await __exchangeEnergyRecoverNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeEnergyRecoverNamespaceRateModel != null)
             {
             }
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _exchangeEnergyConsumeNamespaceRateModel = await __exchangeEnergyConsumeNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeEnergyConsumeNamespaceRateModel = Runs__exchangeEnergyConsumeNamespaceRateModelLoader ? await __exchangeEnergyConsumeNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeEnergyConsumeNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction = Runs__transactionConsumeActionLoader ? await __transactionConsumeActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
             }
-            var _staminaEnergyNamespaceStaminaModel = await __staminaEnergyNamespaceStaminaModelLoader.Load(_gs2, _session);
+            var _staminaEnergyNamespaceStaminaModel = Runs__staminaEnergyNamespaceStaminaModelLoader ? await __staminaEnergyNamespaceStaminaModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyStaminaEnergyNamespaceStaminaModel(_model, _staminaEnergyNamespaceStaminaModel);
-            var _userdataStaminaEnergyStaminaModel = await __userdataStaminaEnergyStaminaModelLoader.Load(_gs2, _session);
+            if (Runs__staminaEnergyNamespaceStaminaModelLoader)
+            {
+                ApplyStaminaEnergyNamespaceStaminaModel(_model, _staminaEnergyNamespaceStaminaModel);
+            }
+            var _userdataStaminaEnergyStaminaModel = Runs__userdataStaminaEnergyStaminaModelLoader ? await __userdataStaminaEnergyStaminaModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataStaminaEnergyStaminaModel(_model, _userdataStaminaEnergyStaminaModel);
-            if (_transactionAcquireAction == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
-            if (_transactionConsumeAction == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (_transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            if (Runs__userdataStaminaEnergyStaminaModelLoader)
+            {
+                ApplyUserdataStaminaEnergyStaminaModel(_model, _userdataStaminaEnergyStaminaModel);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                if (_transactionAcquireAction == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                if (_transactionConsumeAction == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (_transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            }
             RestoreIdFromSources();
             _mounted = true;
         }
@@ -172,95 +532,131 @@ namespace GS2Studio.Generated.Energy
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__exchangeEnergyRecoverNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__exchangeEnergyRecoverNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeEnergyRecoverNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (value.Action, value.Request);
-                    RestoreIdFromSources();
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeEnergyConsumeNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value == null) _RestoreId__transactionAcquireActionCache = null; else _RestoreId__transactionAcquireActionCache = (value.Action, value.Request);
+                        RestoreIdFromSources();
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeEnergyConsumeNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeEnergyConsumeNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (value.Action, value.Request);
-                    RestoreIdFromSources();
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__staminaEnergyNamespaceStaminaModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyStaminaEnergyNamespaceStaminaModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__userdataStaminaEnergyStaminaModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataStaminaEnergyStaminaModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value == null) _RestoreId__transactionConsumeActionCache = null; else _RestoreId__transactionConsumeActionCache = (value.Action, value.Request);
+                        RestoreIdFromSources();
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__staminaEnergyNamespaceStaminaModelLoader)
+            {
+                _unsubscribers.Add(__staminaEnergyNamespaceStaminaModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyStaminaEnergyNamespaceStaminaModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__userdataStaminaEnergyStaminaModelLoader)
+            {
+                _unsubscribers.Add(__userdataStaminaEnergyStaminaModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataStaminaEnergyStaminaModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __exchangeEnergyRecoverNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __exchangeEnergyConsumeNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __staminaEnergyNamespaceStaminaModelLoader.Invalidate(_gs2, _session);
-            __userdataStaminaEnergyStaminaModelLoader.Invalidate(_gs2, _session);
+            if (Runs__exchangeEnergyRecoverNamespaceRateModelLoader)
+            {
+                __exchangeEnergyRecoverNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeEnergyConsumeNamespaceRateModelLoader)
+            {
+                __exchangeEnergyConsumeNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__staminaEnergyNamespaceStaminaModelLoader)
+            {
+                __staminaEnergyNamespaceStaminaModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__userdataStaminaEnergyStaminaModelLoader)
+            {
+                __userdataStaminaEnergyStaminaModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -272,6 +668,7 @@ namespace GS2Studio.Generated.Energy
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -397,6 +794,7 @@ namespace GS2Studio.Generated.Energy
                 model.CurrentValue = default;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

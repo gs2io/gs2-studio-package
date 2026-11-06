@@ -137,8 +137,20 @@ namespace GS2Studio.Generated.Gacha
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyGachaBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyGachaBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyGachaBinder> _configuredComparer = GachaBinderComparer.Default;
@@ -261,18 +273,38 @@ namespace GS2Studio.Generated.Gacha
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromShowcaseCharacterGachaMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromShowcaseCharacterGachaMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromShowcaseCharacterGachaMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromShowcaseCharacterGachaMasterItems");
+            _pendingCollectionAxis = "ReconcileFromShowcaseCharacterGachaMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGachaMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromShowcaseCharacterGachaMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGachaMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromShowcaseCharacterGachaMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromShowcaseCharacterGachaMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromShowcaseCharacterGachaMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromShowcaseCharacterGachaMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -280,7 +312,6 @@ namespace GS2Studio.Generated.Gacha
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -288,9 +319,10 @@ namespace GS2Studio.Generated.Gacha
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromShowcaseCharacterGachaMasterItems");
                     try
                     {
-                        await ReconcileFromShowcaseCharacterGachaMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromShowcaseCharacterGachaMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -299,41 +331,68 @@ namespace GS2Studio.Generated.Gacha
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromShowcaseCharacterGachaMasterItems(IList<Gs2.Unity.Gs2Showcase.Model.EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromShowcaseCharacterGachaMasterItems(IList<Gs2.Unity.Gs2Showcase.Model.EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGachaMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractShowcaseCharacterGachaMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGachaMasterItems", updateVersion)) return;
                 var rowKey = ExtractShowcaseCharacterGachaMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractShowcaseCharacterGachaMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<GachaId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyShowcaseCharacterGachaMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-shop-character-gacha", "masterData", "mdr_028ZABCBPXBJYV9XV7741Q468N", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-character-gacha\",\"masterData\",\"mdr_5PRP4NWC3688X91404V01TV2F9\",\"showcase\",\"DisplayItem\",\"displayItemId\",\"string\"]"] = (object)item.DisplayItemId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_028ZABCBPXBJYV9XV7741Q468N", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_028ZABCBPXBJYV9XV7741Q468N", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromShowcaseCharacterGachaMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGachaMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromShowcaseCharacterGachaMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<GachaId>.Default.Equals(raced.Id, nextId)) { ApplyShowcaseCharacterGachaMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-shop-character-gacha", "masterData", "mdr_028ZABCBPXBJYV9XV7741Q468N", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-character-gacha\",\"masterData\",\"mdr_5PRP4NWC3688X91404V01TV2F9\",\"showcase\",\"DisplayItem\",\"displayItemId\",\"string\"]"] = (object)item.DisplayItemId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_028ZABCBPXBJYV9XV7741Q468N", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_028ZABCBPXBJYV9XV7741Q468N", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyShowcaseCharacterGachaMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-shop-character-gacha", "masterData", "mdr_028ZABCBPXBJYV9XV7741Q468N", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-character-gacha\",\"masterData\",\"mdr_5PRP4NWC3688X91404V01TV2F9\",\"showcase\",\"DisplayItem\",\"displayItemId\",\"string\"]"] = (object)item.DisplayItemId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_028ZABCBPXBJYV9XV7741Q468N", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_028ZABCBPXBJYV9XV7741Q468N", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGachaMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -373,13 +432,13 @@ namespace GS2Studio.Generated.Gacha
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GachaBinder> BuildBinderFromShowcaseCharacterGachaMasterItem(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item, CancellationToken cancellationToken)
+        private async Task<GachaBinder?> BuildBinderFromShowcaseCharacterGachaMasterItem(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = GachaBinder.CreateModel(((item.SalesItem == null || string.IsNullOrEmpty(item.SalesItem.Name)) ? default(GachaId) : new GachaId(item.SalesItem.Name)));
             ApplyShowcaseCharacterGachaMasterItemTo(model, item);
-            var binder = new GachaBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new GachaBinder(model, _gs2, _session, _mountSurface: GachaMountSurface.ShowcaseCharacterGachaMaster, __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2: item.DisplayItemId);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyShowcaseCharacterGachaMasterItemTo(MutableGacha model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
@@ -398,7 +457,9 @@ namespace GS2Studio.Generated.Gacha
         {
             var id = ExtractShowcaseCharacterGachaMasterIdentity(item);
             if (EqualityComparer<GachaId>.Default.Equals(id, default)) return null;
-            return id.ToString();
+            var __key0 = item.DisplayItemId;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ShowcaseCharacterGacha\",\"micro-shop-character-gacha\",\"mdr_028ZABCBPXBJYV9XV7741Q468N\",null,null,\"micro-shop-character-gacha\",\"mdr_5PRP4NWC3688X91404V01TV2F9\",\"showcase\",\"DisplayItem\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<GachaBinderCollection> CreateFromLotteryCharacterGachaMasterDataAsync(
@@ -415,18 +476,38 @@ namespace GS2Studio.Generated.Gacha
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Lottery.LotteryModelArrayLoader("CharacterGacha");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromLotteryCharacterGachaMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromLotteryCharacterGachaMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromLotteryCharacterGachaMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromLotteryCharacterGachaMasterItems");
+            _pendingCollectionAxis = "ReconcileFromLotteryCharacterGachaMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Lottery.LotteryModelArrayLoader("CharacterGacha");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromLotteryCharacterGachaMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromLotteryCharacterGachaMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromLotteryCharacterGachaMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromLotteryCharacterGachaMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromLotteryCharacterGachaMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromLotteryCharacterGachaMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromLotteryCharacterGachaMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -434,7 +515,6 @@ namespace GS2Studio.Generated.Gacha
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Lottery.LotteryModelArrayLoader("CharacterGacha");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -442,9 +522,10 @@ namespace GS2Studio.Generated.Gacha
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromLotteryCharacterGachaMasterItems");
                     try
                     {
-                        await ReconcileFromLotteryCharacterGachaMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromLotteryCharacterGachaMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -453,41 +534,68 @@ namespace GS2Studio.Generated.Gacha
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromLotteryCharacterGachaMasterItems(IList<Gs2.Unity.Gs2Lottery.Model.EzLotteryModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromLotteryCharacterGachaMasterItems(IList<Gs2.Unity.Gs2Lottery.Model.EzLotteryModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromLotteryCharacterGachaMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractLotteryCharacterGachaMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromLotteryCharacterGachaMasterItems", updateVersion)) return;
                 var rowKey = ExtractLotteryCharacterGachaMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractLotteryCharacterGachaMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<GachaId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyLotteryCharacterGachaMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-shop-character-gacha", "masterData", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "micro-shop-character-gacha", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "lottery", "LotteryModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-character-gacha\",\"masterData\",\"mdr_0RHJ2THW6N8MT9CJQ9W0309GPP\",\"lottery\",\"LotteryModel\",\"lotteryName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "micro-shop-character-gacha", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "lottery", "LotteryModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "micro-shop-character-gacha", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "lottery", "LotteryModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromLotteryCharacterGachaMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromLotteryCharacterGachaMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromLotteryCharacterGachaMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<GachaId>.Default.Equals(raced.Id, nextId)) { ApplyLotteryCharacterGachaMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-shop-character-gacha", "masterData", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "micro-shop-character-gacha", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "lottery", "LotteryModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-character-gacha\",\"masterData\",\"mdr_0RHJ2THW6N8MT9CJQ9W0309GPP\",\"lottery\",\"LotteryModel\",\"lotteryName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "micro-shop-character-gacha", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "lottery", "LotteryModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "micro-shop-character-gacha", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "lottery", "LotteryModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyLotteryCharacterGachaMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-shop-character-gacha", "masterData", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "micro-shop-character-gacha", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "lottery", "LotteryModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-character-gacha\",\"masterData\",\"mdr_0RHJ2THW6N8MT9CJQ9W0309GPP\",\"lottery\",\"LotteryModel\",\"lotteryName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "micro-shop-character-gacha", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "lottery", "LotteryModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "micro-shop-character-gacha", "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP", "lottery", "LotteryModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromLotteryCharacterGachaMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -527,13 +635,13 @@ namespace GS2Studio.Generated.Gacha
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GachaBinder> BuildBinderFromLotteryCharacterGachaMasterItem(Gs2.Unity.Gs2Lottery.Model.EzLotteryModel item, CancellationToken cancellationToken)
+        private async Task<GachaBinder?> BuildBinderFromLotteryCharacterGachaMasterItem(Gs2.Unity.Gs2Lottery.Model.EzLotteryModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = GachaBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(GachaId) : new GachaId(item.Name)));
             ApplyLotteryCharacterGachaMasterItemTo(model, item);
-            var binder = new GachaBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new GachaBinder(model, _gs2, _session, _mountSurface: GachaMountSurface.LotteryCharacterGachaMaster, __sdk__lotteryCharacterGachaNamespaceLotteryModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyLotteryCharacterGachaMasterItemTo(MutableGacha model, Gs2.Unity.Gs2Lottery.Model.EzLotteryModel item)
@@ -552,8 +660,9 @@ namespace GS2Studio.Generated.Gacha
         {
             var id = ExtractLotteryCharacterGachaMasterIdentity(item);
             if (EqualityComparer<GachaId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"LotteryCharacterGacha\",\"micro-shop-character-gacha\",\"mdr_0RHJ2THW6N8MT9CJQ9W0309GPP\",null,null,\"micro-shop-character-gacha\",\"mdr_0RHJ2THW6N8MT9CJQ9W0309GPP\",\"lottery\",\"LotteryModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<GachaBinderCollection> CreateFromShowcaseCharacterGacha2MasterDataAsync(
@@ -570,18 +679,38 @@ namespace GS2Studio.Generated.Gacha
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromShowcaseCharacterGacha2MasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromShowcaseCharacterGacha2MasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromShowcaseCharacterGacha2MasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromShowcaseCharacterGacha2MasterItems");
+            _pendingCollectionAxis = "ReconcileFromShowcaseCharacterGacha2MasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGacha2MasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromShowcaseCharacterGacha2MasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGacha2MasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromShowcaseCharacterGacha2MasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromShowcaseCharacterGacha2MasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromShowcaseCharacterGacha2MasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromShowcaseCharacterGacha2MasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -589,7 +718,6 @@ namespace GS2Studio.Generated.Gacha
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("CharacterGacha", "Showcase");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -597,9 +725,10 @@ namespace GS2Studio.Generated.Gacha
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromShowcaseCharacterGacha2MasterItems");
                     try
                     {
-                        await ReconcileFromShowcaseCharacterGacha2MasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromShowcaseCharacterGacha2MasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -608,41 +737,68 @@ namespace GS2Studio.Generated.Gacha
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromShowcaseCharacterGacha2MasterItems(IList<Gs2.Unity.Gs2Showcase.Model.EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromShowcaseCharacterGacha2MasterItems(IList<Gs2.Unity.Gs2Showcase.Model.EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGacha2MasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractShowcaseCharacterGacha2MasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGacha2MasterItems", updateVersion)) return;
                 var rowKey = ExtractShowcaseCharacterGacha2MasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractShowcaseCharacterGacha2MasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<GachaId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyShowcaseCharacterGacha2MasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-shop-character-gacha", "masterData", "mdr_5PRP4NWC3688X91404V01TV2F9", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-character-gacha\",\"masterData\",\"mdr_5PRP4NWC3688X91404V01TV2F9\",\"showcase\",\"DisplayItem\",\"displayItemId\",\"string\"]"] = (object)item.DisplayItemId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_5PRP4NWC3688X91404V01TV2F9", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_5PRP4NWC3688X91404V01TV2F9", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromShowcaseCharacterGacha2MasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGacha2MasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromShowcaseCharacterGacha2MasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<GachaId>.Default.Equals(raced.Id, nextId)) { ApplyShowcaseCharacterGacha2MasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-shop-character-gacha", "masterData", "mdr_5PRP4NWC3688X91404V01TV2F9", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-character-gacha\",\"masterData\",\"mdr_5PRP4NWC3688X91404V01TV2F9\",\"showcase\",\"DisplayItem\",\"displayItemId\",\"string\"]"] = (object)item.DisplayItemId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_5PRP4NWC3688X91404V01TV2F9", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_5PRP4NWC3688X91404V01TV2F9", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyShowcaseCharacterGacha2MasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-shop-character-gacha", "masterData", "mdr_5PRP4NWC3688X91404V01TV2F9", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-character-gacha\",\"masterData\",\"mdr_5PRP4NWC3688X91404V01TV2F9\",\"showcase\",\"DisplayItem\",\"displayItemId\",\"string\"]"] = (object)item.DisplayItemId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_5PRP4NWC3688X91404V01TV2F9", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-character-gacha", "masterData", "mdr_5PRP4NWC3688X91404V01TV2F9", "micro-shop-character-gacha", "mdr_5PRP4NWC3688X91404V01TV2F9", "showcase", "DisplayItem", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromShowcaseCharacterGacha2MasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -682,13 +838,13 @@ namespace GS2Studio.Generated.Gacha
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GachaBinder> BuildBinderFromShowcaseCharacterGacha2MasterItem(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item, CancellationToken cancellationToken)
+        private async Task<GachaBinder?> BuildBinderFromShowcaseCharacterGacha2MasterItem(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = GachaBinder.CreateModel((string.IsNullOrEmpty(item.DisplayItemId) ? default(GachaId) : new GachaId(item.DisplayItemId)));
             ApplyShowcaseCharacterGacha2MasterItemTo(model, item);
-            var binder = new GachaBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new GachaBinder(model, _gs2, _session, _mountSurface: GachaMountSurface.ShowcaseCharacterGacha2Master, __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2: item.DisplayItemId);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyShowcaseCharacterGacha2MasterItemTo(MutableGacha model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
@@ -707,8 +863,9 @@ namespace GS2Studio.Generated.Gacha
         {
             var id = ExtractShowcaseCharacterGacha2MasterIdentity(item);
             if (EqualityComparer<GachaId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.DisplayItemId)) return null;
-            return $"{item.DisplayItemId}";
+            var __key0 = item.DisplayItemId;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ShowcaseCharacterGacha2\",\"micro-shop-character-gacha\",\"mdr_5PRP4NWC3688X91404V01TV2F9\",null,null,\"micro-shop-character-gacha\",\"mdr_5PRP4NWC3688X91404V01TV2F9\",\"showcase\",\"DisplayItem\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class GachaBinderComparer : IComparer<IReadOnlyGachaBinder>

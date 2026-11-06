@@ -13,14 +13,23 @@ namespace GS2Studio.Generated.MissionSetting
     public interface MissionSetting
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the mission settings.
         /// </summary>
         MissionSettingId Id { get; }
 
+        /// <summary>
+        /// Weekday when weekly missions reset.
+        /// </summary>
         string ResetDayOfWeek { get; }
 
+        /// <summary>
+        /// Day of the month when monthly missions reset.
+        /// </summary>
         int ResetDayOfMonth { get; }
 
+        /// <summary>
+        /// UTC hour when missions reset.
+        /// </summary>
         int ResetHour { get; }
     }
 

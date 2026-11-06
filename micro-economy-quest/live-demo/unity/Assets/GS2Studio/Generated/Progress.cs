@@ -15,16 +15,28 @@ namespace GS2Studio.Generated.Progress
     public interface Progress
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the quest progress.
         /// </summary>
         ProgressId Id { get; }
 
+        /// <summary>
+        /// Whether the player has a quest in progress.
+        /// </summary>
         bool InProgress { get; }
 
+        /// <summary>
+        /// Quest currently in progress for the player.
+        /// </summary>
         QuestId Quest { get; }
 
+        /// <summary>
+        /// Quest group of the quest currently in progress.
+        /// </summary>
         QuestCollectionId QuestCollection { get; }
 
+        /// <summary>
+        /// Rewards granted when the quest in progress is completed; decided when it starts.
+        /// </summary>
         IReadOnlyList<GS2Studio.Generated.ProgressReward.ProgressReward>? Rewards { get; }
     }
 

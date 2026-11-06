@@ -149,8 +149,20 @@ namespace GS2Studio.Generated.Mission
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyMissionBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyMissionBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyMissionBinder> _configuredComparer = MissionBinderComparer.Default;
@@ -274,18 +286,38 @@ namespace GS2Studio.Generated.Mission
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Mission.MissionTaskModelArrayLoader("Mission", _missionCollection);
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromMissionMissionMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromMissionMissionMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromMissionMissionMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromMissionMissionMasterItems");
+            _pendingCollectionAxis = "ReconcileFromMissionMissionMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Mission.MissionTaskModelArrayLoader("Mission", _missionCollection);
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromMissionMissionMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromMissionMissionMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromMissionMissionMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromMissionMissionMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromMissionMissionMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromMissionMissionMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromMissionMissionMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -293,7 +325,6 @@ namespace GS2Studio.Generated.Mission
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Mission.MissionTaskModelArrayLoader("Mission", _missionCollection);
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -301,9 +332,10 @@ namespace GS2Studio.Generated.Mission
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromMissionMissionMasterItems");
                     try
                     {
-                        await ReconcileFromMissionMissionMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromMissionMissionMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -312,41 +344,68 @@ namespace GS2Studio.Generated.Mission
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromMissionMissionMasterItems(IList<Gs2.Unity.Gs2Mission.Model.EzMissionTaskModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromMissionMissionMasterItems(IList<Gs2.Unity.Gs2Mission.Model.EzMissionTaskModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromMissionMissionMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractMissionMissionMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromMissionMissionMasterItems", updateVersion)) return;
                 var rowKey = ExtractMissionMissionMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractMissionMissionMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<MissionId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyMissionMissionMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-mission", "masterData", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "micro-economy-mission", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "mission", "MissionTaskModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-mission\",\"masterData\",\"mdr_4QWBNQ5KM59ZERS381QKYXGJCB\",\"mission\",\"MissionTaskModel\",\"missionTaskName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-mission", "masterData", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "micro-economy-mission", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "mission", "MissionTaskModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-mission", "masterData", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "micro-economy-mission", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "mission", "MissionTaskModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromMissionMissionMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromMissionMissionMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromMissionMissionMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<MissionId>.Default.Equals(raced.Id, nextId)) { ApplyMissionMissionMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-mission", "masterData", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "micro-economy-mission", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "mission", "MissionTaskModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-mission\",\"masterData\",\"mdr_4QWBNQ5KM59ZERS381QKYXGJCB\",\"mission\",\"MissionTaskModel\",\"missionTaskName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-mission", "masterData", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "micro-economy-mission", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "mission", "MissionTaskModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-mission", "masterData", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "micro-economy-mission", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "mission", "MissionTaskModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyMissionMissionMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-mission", "masterData", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "micro-economy-mission", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "mission", "MissionTaskModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-mission\",\"masterData\",\"mdr_4QWBNQ5KM59ZERS381QKYXGJCB\",\"mission\",\"MissionTaskModel\",\"missionTaskName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-mission", "masterData", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "micro-economy-mission", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "mission", "MissionTaskModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-mission", "masterData", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "micro-economy-mission", "mdr_4QWBNQ5KM59ZERS381QKYXGJCB", "mission", "MissionTaskModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromMissionMissionMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -386,13 +445,13 @@ namespace GS2Studio.Generated.Mission
             if (!_disposed) SortBinders();
         }
 
-        private async Task<MissionBinder> BuildBinderFromMissionMissionMasterItem(Gs2.Unity.Gs2Mission.Model.EzMissionTaskModel item, CancellationToken cancellationToken)
+        private async Task<MissionBinder?> BuildBinderFromMissionMissionMasterItem(Gs2.Unity.Gs2Mission.Model.EzMissionTaskModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
-            var model = MissionBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(MissionId) : new MissionId(item.Name)), new MissionCollectionId(_missionCollection));
+            var model = MissionBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(MissionId) : new MissionId(item.Name)), _missionCollection);
             ApplyMissionMissionMasterItemTo(model, item);
-            var binder = new MissionBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new MissionBinder(model, _gs2, _session, __sdk__transactionAcquireAction_2: item.Name, __sdk__missionMissionMissionTaskModel_2: item.Name, __sdk__membershipMissionComplete_1: _missionCollection);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyMissionMissionMasterItemTo(MutableMission model, Gs2.Unity.Gs2Mission.Model.EzMissionTaskModel item)
@@ -411,8 +470,9 @@ namespace GS2Studio.Generated.Mission
         {
             var id = ExtractMissionMissionMasterIdentity(item);
             if (EqualityComparer<MissionId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"MissionMission\",\"micro-economy-mission\",\"mdr_4QWBNQ5KM59ZERS381QKYXGJCB\",null,null,\"micro-economy-mission\",\"mdr_4QWBNQ5KM59ZERS381QKYXGJCB\",\"mission\",\"MissionTaskModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class MissionBinderComparer : IComparer<IReadOnlyMissionBinder>

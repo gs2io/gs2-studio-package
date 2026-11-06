@@ -13,24 +13,48 @@ namespace GS2Studio.Generated.Energy
     public interface Energy
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the stamina model.
         /// </summary>
         EnergyId Id { get; }
 
+        /// <summary>
+        /// Initial stamina capacity available to a player.
+        /// </summary>
         int DefaultMaximum { get; }
 
+        /// <summary>
+        /// Whether recovered stamina may exceed the normal capacity.
+        /// </summary>
         bool UseOverflow { get; }
 
+        /// <summary>
+        /// Maximum stamina retained when overflow is allowed.
+        /// </summary>
         int OverflowedMaximum { get; }
 
+        /// <summary>
+        /// Interval between automatic stamina recoveries.
+        /// </summary>
         int RecoveryIntervalMinutes { get; }
 
+        /// <summary>
+        /// Amount of stamina restored at each recovery interval.
+        /// </summary>
         int RecoveryValue { get; }
 
+        /// <summary>
+        /// Current stamina held by the player.
+        /// </summary>
         int CurrentValue { get; }
 
+        /// <summary>
+        /// Current stamina capacity applied to the player.
+        /// </summary>
         int CurrentMaximumValue { get; }
 
+        /// <summary>
+        /// Time of the next automatic stamina recovery.
+        /// </summary>
         DateTime NextRecoverdAt { get; }
     }
 

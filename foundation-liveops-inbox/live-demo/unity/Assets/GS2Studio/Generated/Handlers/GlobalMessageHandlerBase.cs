@@ -27,6 +27,9 @@ namespace GS2Studio.Generated.GlobalMessage
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public GlobalMessageMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<GlobalMessage>? Updated;
 
         public event Action<IActionableGlobalMessageBinder>? Bound;

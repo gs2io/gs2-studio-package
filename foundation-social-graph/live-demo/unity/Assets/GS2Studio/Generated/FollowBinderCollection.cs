@@ -110,8 +110,20 @@ namespace GS2Studio.Generated.Follow
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyFollowBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyFollowBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyFollowBinder> _configuredComparer = FollowBinderComparer.Default;
@@ -232,18 +244,38 @@ namespace GS2Studio.Generated.Follow
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Friend.FollowUserArrayLoader("Friend", withProfile: true);
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromFriendFriendUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromFriendFriendUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromFriendFriendUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromFriendFriendUserItems");
+            _pendingCollectionAxis = "ReconcileFromFriendFriendUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Friend.FollowUserArrayLoader("Friend", withProfile: true);
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromFriendFriendUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromFriendFriendUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromFriendFriendUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromFriendFriendUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromFriendFriendUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromFriendFriendUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromFriendFriendUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -251,7 +283,6 @@ namespace GS2Studio.Generated.Follow
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Friend.FollowUserArrayLoader("Friend", withProfile: true);
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -259,9 +290,10 @@ namespace GS2Studio.Generated.Follow
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromFriendFriendUserItems");
                     try
                     {
-                        await ReconcileFromFriendFriendUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromFriendFriendUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -270,41 +302,68 @@ namespace GS2Studio.Generated.Follow
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromFriendFriendUserItems(IList<Gs2.Unity.Gs2Friend.Model.EzFollowUser> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromFriendFriendUserItems(IList<Gs2.Unity.Gs2Friend.Model.EzFollowUser> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromFriendFriendUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractFriendFriendUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromFriendFriendUserItems", updateVersion)) return;
                 var rowKey = ExtractFriendFriendUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractFriendFriendUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<FollowId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyFriendFriendUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-social-graph", "userData", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "foundation-social-graph", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "friend", "FollowUser", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-social-graph\",\"userData\",\"udr_4DXQVXM8MA8HFTDRT0KJT81D6X\",\"friend\",\"FollowUser\",\"targetUserId\",\"string\"]"] = (object)item.UserId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-social-graph", "userData", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "foundation-social-graph", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "friend", "FollowUser", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-social-graph", "userData", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "foundation-social-graph", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "friend", "FollowUser", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromFriendFriendUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromFriendFriendUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromFriendFriendUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<FollowId>.Default.Equals(raced.Id, nextId)) { ApplyFriendFriendUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-social-graph", "userData", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "foundation-social-graph", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "friend", "FollowUser", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-social-graph\",\"userData\",\"udr_4DXQVXM8MA8HFTDRT0KJT81D6X\",\"friend\",\"FollowUser\",\"targetUserId\",\"string\"]"] = (object)item.UserId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-social-graph", "userData", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "foundation-social-graph", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "friend", "FollowUser", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-social-graph", "userData", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "foundation-social-graph", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "friend", "FollowUser", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyFriendFriendUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-social-graph", "userData", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "foundation-social-graph", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "friend", "FollowUser", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-social-graph\",\"userData\",\"udr_4DXQVXM8MA8HFTDRT0KJT81D6X\",\"friend\",\"FollowUser\",\"targetUserId\",\"string\"]"] = (object)item.UserId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-social-graph", "userData", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "foundation-social-graph", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "friend", "FollowUser", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-social-graph", "userData", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "foundation-social-graph", "udr_4DXQVXM8MA8HFTDRT0KJT81D6X", "friend", "FollowUser", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromFriendFriendUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -344,13 +403,13 @@ namespace GS2Studio.Generated.Follow
             if (!_disposed) SortBinders();
         }
 
-        private async Task<FollowBinder> BuildBinderFromFriendFriendUserItem(Gs2.Unity.Gs2Friend.Model.EzFollowUser item, CancellationToken cancellationToken)
+        private async Task<FollowBinder?> BuildBinderFromFriendFriendUserItem(Gs2.Unity.Gs2Friend.Model.EzFollowUser item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = FollowBinder.CreateModel((string.IsNullOrEmpty(item.UserId) ? default(FollowId) : new FollowId(item.UserId)));
             ApplyFriendFriendUserItemTo(model, item);
-            var binder = new FollowBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new FollowBinder(model, _gs2, _session, _mountSurface: FollowMountSurface.FriendFriendUser, __sdk__userdataFriendFollowUser_1: item.UserId);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyFriendFriendUserItemTo(MutableFollow model, Gs2.Unity.Gs2Friend.Model.EzFollowUser item)
@@ -367,8 +426,9 @@ namespace GS2Studio.Generated.Follow
         {
             var id = ExtractFriendFriendUserIdentity(item);
             if (EqualityComparer<FollowId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.UserId)) return null;
-            return $"{item.UserId}";
+            var __key0 = item.UserId;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"user\",\"FriendFriend\",null,null,\"foundation-social-graph\",\"udr_4DXQVXM8MA8HFTDRT0KJT81D6X\",null,null,\"friend\",\"FollowUser\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class FollowBinderComparer : IComparer<IReadOnlyFollowBinder>

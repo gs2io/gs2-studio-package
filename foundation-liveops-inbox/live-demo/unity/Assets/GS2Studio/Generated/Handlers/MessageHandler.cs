@@ -24,6 +24,7 @@ namespace GS2Studio.Generated.Message
     public sealed class MessageHandler : MessageHandlerBase
     {
         [SerializeField] private string? _id;
+        private string? _sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -48,6 +49,7 @@ namespace GS2Studio.Generated.Message
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(IMessageBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -63,6 +65,17 @@ namespace GS2Studio.Generated.Message
             _id = id;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName)
+        {
+            InvalidateBindingIntent();
+            _sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName = sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -88,7 +101,9 @@ namespace GS2Studio.Generated.Message
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new MessageId(_id ?? string.Empty), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new MessageId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__userdataInboxMessage_1: _sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -177,6 +192,7 @@ namespace GS2Studio.Generated.Message
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName)) return false;
             return true;
         }
 

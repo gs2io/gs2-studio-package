@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.TransferCode
             TransferCodeId id, int type,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataAccountTakeOver_1 = null);
         ITransferCodeBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.TransferCode
             TransferCodeId id, int type,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataAccountTakeOver_1 = null)
         {
-            return await TransferCodeBinder.CreateAsync(id, type, gs2, session, cancellationToken);
+            return await TransferCodeBinder.CreateAsync(id, type, gs2, session, cancellationToken, __sdk__userdataAccountTakeOver_1);
         }
         public ITransferCodeBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

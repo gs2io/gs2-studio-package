@@ -26,7 +26,8 @@ namespace GS2Studio.Generated.LoginReward
             LoginRewardId id, int rewardIndex, LoginRewardCollectionId loginRewardCollection,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null);
         ILoginRewardBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string loginRewardCollection);
     }
 
@@ -38,9 +39,10 @@ namespace GS2Studio.Generated.LoginReward
             LoginRewardId id, int rewardIndex, LoginRewardCollectionId loginRewardCollection,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null)
         {
-            return await LoginRewardBinder.CreateAsync(id, rewardIndex, loginRewardCollection, gs2, session, cancellationToken);
+            return await LoginRewardBinder.CreateAsync(id, rewardIndex, loginRewardCollection, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1);
         }
         public ILoginRewardBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string loginRewardCollection)
         {

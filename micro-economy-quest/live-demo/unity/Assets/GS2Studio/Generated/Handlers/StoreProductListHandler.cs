@@ -15,7 +15,6 @@ using UnityEngine;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
-using GS2Studio.Generated.CurrencyType;
 using Gs2.Unity.Gs2Money2.Model;
 using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Money2;
@@ -29,7 +28,7 @@ namespace GS2Studio.Generated.StoreProduct
     {
         // Share the collection axis enum so plain and ref-scoped handlers cannot diverge on axis names.
         [SerializeField] private StoreProductListAxis _axis;
-        [SerializeField] private string? _currencyType;
+        [SerializeField] private string? _showcaseName;
         [SerializeField] private StoreProductListItemHandler? _itemPrefab;
         [SerializeField] private Transform? _contentParent;
         [SerializeField] private bool _autoSubscribe = true;
@@ -119,15 +118,16 @@ namespace GS2Studio.Generated.StoreProduct
         private IStoreProductBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultStoreProductBinderFactory.Instance;
 
+
         /// <summary>
         /// Scope values discovered at runtime cannot be fixed in the authored scene. Reload is fire-and-forget;
         /// await <see cref="ReloadAsync"/> directly when completion must be observed.
         /// </summary>
-        public void SetScope(string currencyType)
+        public void SetScope(string showcaseName)
         {
             // Invalidate the old scope even if the new scope is not ready to start a replacement reload.
             _reloadGeneration++;
-            _currencyType = currencyType;
+            _showcaseName = showcaseName;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
@@ -177,7 +177,7 @@ namespace GS2Studio.Generated.StoreProduct
                 if (unusableAxisReason != null)
                     throw new InvalidOperationException(unusableAxisReason);
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new CurrencyTypeId(_currencyType ?? string.Empty));
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, _showcaseName ?? string.Empty);
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {
@@ -345,7 +345,7 @@ namespace GS2Studio.Generated.StoreProduct
             switch (_axis)
             {
                 case StoreProductListAxis.ShowcaseShopCurrencyMaster:
-                    if (string.IsNullOrEmpty(_currencyType)) return false;
+                    if (string.IsNullOrEmpty(_showcaseName)) return false;
                     break;
                 case StoreProductListAxis.Money2CurrencyMaster:
                     break;

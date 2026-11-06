@@ -14,16 +14,22 @@ namespace GS2Studio.Generated.EnergyProduct
     public interface EnergyProduct
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the stamina product.
         /// </summary>
         EnergyProductId Id { get; }
 
+        /// <summary>
+        /// The stamina this product refills when it is bought.
+        /// </summary>
         EnergyId Energy { get; }
 
+        /// <summary>
+        /// Amount of stamina restored by purchasing this product.
+        /// </summary>
         int RecoveryValue { get; }
 
         /// <summary>
-        /// Free currency this product charges when it is bought
+        /// Free currency spent to buy this product.
         /// </summary>
         int Cost { get; }
     }

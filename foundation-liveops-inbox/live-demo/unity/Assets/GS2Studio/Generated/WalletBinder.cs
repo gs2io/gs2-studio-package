@@ -16,17 +16,40 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using Gs2.Unity.Gs2Money2.Model;
 using Gs2Bind.Gs2Money2;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Wallet
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum WalletMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the Money2Currency user-data list axis.</summary>
+        Money2CurrencyUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyWalletBinder : Wallet
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        WalletMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Money2.WalletLoader</c> load on <c>__userdataMoney2WalletLoader</c> or its composition from a list item. False means this path does not supply <c>Free</c>, <c>Paid</c>, <c>Total</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        bool LoadedUserdataMoney2Wallet { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableWalletBinder : IReadOnlyWalletBinder
     {
+        WalletBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -37,7 +60,7 @@ namespace GS2Studio.Generated.Wallet
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyWalletBinder : IReadOnlyWalletBinder
+    public abstract class ReadOnlyWalletBinder : IReadOnlyWalletBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableWallet _model;
@@ -55,6 +78,13 @@ namespace GS2Studio.Generated.Wallet
         /// <inheritdoc cref="Wallet.Total" />
         public int Total => _model.Total;
 
+        /// <inheritdoc />
+        public abstract WalletMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataMoney2Wallet { get; }
+
+
         private protected ReadOnlyWalletBinder(MutableWallet model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -64,26 +94,177 @@ namespace GS2Studio.Generated.Wallet
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class WalletBinder : ReadOnlyWalletBinder, IWalletBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly WalletBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(WalletBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Wallet Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableWallet? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableWallet
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal WalletId __valueId = default!;
+                public WalletId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setFree;
+                internal int __valueFree = default!;
+                public int Free
+                {
+                    get => __setFree ? __valueFree : __scopeOwner.Value.Free;
+                    set { __setFree = true; __valueFree = value; }
+                }
+                internal bool __setPaid;
+                internal int __valuePaid = default!;
+                public int Paid
+                {
+                    get => __setPaid ? __valuePaid : __scopeOwner.Value.Paid;
+                    set { __setPaid = true; __valuePaid = value; }
+                }
+                internal bool __setTotal;
+                internal int __valueTotal = default!;
+                public int Total
+                {
+                    get => __setTotal ? __valueTotal : __scopeOwner.Value.Total;
+                    set { __setTotal = true; __valueTotal = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<WalletId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setFree) { _owner._model.Free = changes.__valueFree; changes.__setFree = false; }
+                if (changes.__setPaid) { _owner._model.Paid = changes.__valuePaid; changes.__setPaid = false; }
+                if (changes.__setTotal) { _owner._model.Total = changes.__valueTotal; changes.__setTotal = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
 
         private readonly Gs2Bind.Gs2Money2.WalletLoader __userdataMoney2WalletLoader;
 
+        private readonly WalletMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataMoney2WalletLoader</c> reads.</summary>
+        private bool Runs__userdataMoney2WalletLoader => _mountSurfaceValue is WalletMountSurface.Full;
+
+        /// <inheritdoc />
+        public override WalletMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataMoney2Wallet => _mountSurfaceValue is WalletMountSurface.Full or WalletMountSurface.Money2CurrencyUser;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal WalletBinder(
             MutableWallet model,
             Gs2Domain gs2,
             IGameSession session,
-            int slot
+            int slot,
+            WalletMountSurface _mountSurface = WalletMountSurface.Full,
+            int? __sdk__userdataMoney2Wallet_1 = null
         ) : base(model, gs2, session)
         {
-            __userdataMoney2WalletLoader = new Gs2Bind.Gs2Money2.WalletLoader("Currency", slot);
+
+            _mountSurfaceValue = _mountSurface;
+            __userdataMoney2WalletLoader = Runs__userdataMoney2WalletLoader ? new Gs2Bind.Gs2Money2.WalletLoader("Currency", (__sdk__userdataMoney2Wallet_1 ?? throw new InvalidOperationException("An SDK backing key is required for this loader."))) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableWallet CreateModel(WalletId id)
@@ -97,44 +278,53 @@ namespace GS2Studio.Generated.Wallet
             WalletId id, int slot,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataMoney2Wallet_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new WalletBinder(model, gs2, session, slot: slot);
+            var binder = new WalletBinder(model, gs2, session, slot: slot, __sdk__userdataMoney2Wallet_1: __sdk__userdataMoney2Wallet_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _userdataMoney2Wallet = await __userdataMoney2WalletLoader.Load(_gs2, _session);
+            var _userdataMoney2Wallet = Runs__userdataMoney2WalletLoader ? await __userdataMoney2WalletLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataMoney2Wallet(_model, _userdataMoney2Wallet);
+            if (Runs__userdataMoney2WalletLoader)
+            {
+                ApplyUserdataMoney2Wallet(_model, _userdataMoney2Wallet);
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__userdataMoney2WalletLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataMoney2Wallet(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+            if (Runs__userdataMoney2WalletLoader)
+            {
+                _unsubscribers.Add(__userdataMoney2WalletLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataMoney2Wallet(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __userdataMoney2WalletLoader.Invalidate(_gs2, _session);
+            if (Runs__userdataMoney2WalletLoader)
+            {
+                __userdataMoney2WalletLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -146,6 +336,7 @@ namespace GS2Studio.Generated.Wallet
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -194,6 +385,7 @@ namespace GS2Studio.Generated.Wallet
                 model.Total = default;
             }
         }
+
         #endregion
 
     }

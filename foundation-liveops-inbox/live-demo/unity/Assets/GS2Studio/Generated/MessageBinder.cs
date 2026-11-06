@@ -16,17 +16,40 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using Gs2.Unity.Gs2Inbox.Model;
 using Gs2Bind.Gs2Inbox;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Message
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum MessageMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the InboxInbox user-data list axis.</summary>
+        InboxInboxUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyMessageBinder : Message
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        MessageMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Inbox.MessageLoader</c> load on <c>__userdataInboxMessageLoader</c> or its composition from a list item. False means this path does not supply <c>ExpiresAt</c>, <c>IsRead</c>, <c>Payload</c>, <c>ReceivedAt</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        bool LoadedUserdataInboxMessage { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableMessageBinder : IReadOnlyMessageBinder
     {
+        MessageBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Read();
     }
 
@@ -38,7 +61,7 @@ namespace GS2Studio.Generated.Message
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyMessageBinder : IReadOnlyMessageBinder
+    public abstract class ReadOnlyMessageBinder : IReadOnlyMessageBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableMessage _model;
@@ -58,6 +81,13 @@ namespace GS2Studio.Generated.Message
         /// <inheritdoc cref="Message.ExpiresAt" />
         public DateTime? ExpiresAt => _model.ExpiresAt;
 
+        /// <inheritdoc />
+        public abstract MessageMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataInboxMessage { get; }
+
+
         private protected ReadOnlyMessageBinder(MutableMessage model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -67,25 +97,184 @@ namespace GS2Studio.Generated.Message
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class MessageBinder : ReadOnlyMessageBinder, IMessageBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly MessageBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(MessageBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Message Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableMessage? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableMessage
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal MessageId __valueId = default!;
+                public MessageId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setPayload;
+                internal string __valuePayload = default!;
+                public string Payload
+                {
+                    get => __setPayload ? __valuePayload : __scopeOwner.Value.Payload;
+                    set { __setPayload = true; __valuePayload = value; }
+                }
+                internal bool __setIsRead;
+                internal bool __valueIsRead = default!;
+                public bool IsRead
+                {
+                    get => __setIsRead ? __valueIsRead : __scopeOwner.Value.IsRead;
+                    set { __setIsRead = true; __valueIsRead = value; }
+                }
+                internal bool __setReceivedAt;
+                internal DateTime __valueReceivedAt = default!;
+                public DateTime ReceivedAt
+                {
+                    get => __setReceivedAt ? __valueReceivedAt : __scopeOwner.Value.ReceivedAt;
+                    set { __setReceivedAt = true; __valueReceivedAt = value; }
+                }
+                internal bool __setExpiresAt;
+                internal DateTime? __valueExpiresAt = default!;
+                public DateTime? ExpiresAt
+                {
+                    get => __setExpiresAt ? __valueExpiresAt : __scopeOwner.Value.ExpiresAt;
+                    set { __setExpiresAt = true; __valueExpiresAt = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<MessageId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setPayload) { _owner._model.Payload = changes.__valuePayload; changes.__setPayload = false; }
+                if (changes.__setIsRead) { _owner._model.IsRead = changes.__valueIsRead; changes.__setIsRead = false; }
+                if (changes.__setReceivedAt) { _owner._model.ReceivedAt = changes.__valueReceivedAt; changes.__setReceivedAt = false; }
+                if (changes.__setExpiresAt) { _owner._model.ExpiresAt = changes.__valueExpiresAt; changes.__setExpiresAt = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
 
         private readonly Gs2Bind.Gs2Inbox.MessageLoader __userdataInboxMessageLoader;
 
+        private readonly MessageMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataInboxMessageLoader</c> reads.</summary>
+        private bool Runs__userdataInboxMessageLoader => _mountSurfaceValue is MessageMountSurface.Full;
+
+        /// <inheritdoc />
+        public override MessageMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataInboxMessage => _mountSurfaceValue is MessageMountSurface.Full or MessageMountSurface.InboxInboxUser;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal MessageBinder(
             MutableMessage model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            MessageMountSurface _mountSurface = MessageMountSurface.Full,
+            string? __sdk__userdataInboxMessage_1 = null
         ) : base(model, gs2, session)
         {
-            __userdataInboxMessageLoader = new Gs2Bind.Gs2Inbox.MessageLoader("Inbox", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __userdataInboxMessageLoader = Runs__userdataInboxMessageLoader ? new Gs2Bind.Gs2Inbox.MessageLoader("Inbox", (string.IsNullOrEmpty(__sdk__userdataInboxMessage_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataInboxMessage_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableMessage CreateModel(MessageId id)
@@ -99,44 +288,53 @@ namespace GS2Studio.Generated.Message
             MessageId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__userdataInboxMessage_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new MessageBinder(model, gs2, session);
+            var binder = new MessageBinder(model, gs2, session, __sdk__userdataInboxMessage_1: __sdk__userdataInboxMessage_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _userdataInboxMessage = await __userdataInboxMessageLoader.Load(_gs2, _session);
+            var _userdataInboxMessage = Runs__userdataInboxMessageLoader ? await __userdataInboxMessageLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataInboxMessage(_model, _userdataInboxMessage);
+            if (Runs__userdataInboxMessageLoader)
+            {
+                ApplyUserdataInboxMessage(_model, _userdataInboxMessage);
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__userdataInboxMessageLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataInboxMessage(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+            if (Runs__userdataInboxMessageLoader)
+            {
+                _unsubscribers.Add(__userdataInboxMessageLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataInboxMessage(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __userdataInboxMessageLoader.Invalidate(_gs2, _session);
+            if (Runs__userdataInboxMessageLoader)
+            {
+                __userdataInboxMessageLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -148,6 +346,7 @@ namespace GS2Studio.Generated.Message
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -206,6 +405,7 @@ namespace GS2Studio.Generated.Message
                 model.ReceivedAt = default;
             }
         }
+
         #endregion
 
     }

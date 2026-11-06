@@ -26,7 +26,13 @@ namespace GS2Studio.Generated.Quest
             QuestId id, QuestCollectionId collection,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__questQuestQuestModel_2 = null,
+            string? __sdk__transactionAcquireAction_2 = null,
+            string? __sdk__transactionConsumeAction_2 = null,
+            string? __sdk__transactionAcquireAction2_2 = null,
+            string? __sdk__transactionAcquireAction3_2 = null,
+            string? __sdk__membershipQuestCompletedQuestList_1 = null);
         IQuestBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, QuestCollectionId collection);
     }
 
@@ -38,9 +44,15 @@ namespace GS2Studio.Generated.Quest
             QuestId id, QuestCollectionId collection,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__questQuestQuestModel_2 = null,
+            string? __sdk__transactionAcquireAction_2 = null,
+            string? __sdk__transactionConsumeAction_2 = null,
+            string? __sdk__transactionAcquireAction2_2 = null,
+            string? __sdk__transactionAcquireAction3_2 = null,
+            string? __sdk__membershipQuestCompletedQuestList_1 = null)
         {
-            return await QuestBinder.CreateAsync(id, collection, gs2, session, cancellationToken);
+            return await QuestBinder.CreateAsync(id, collection, gs2, session, cancellationToken, __sdk__questQuestQuestModel_2, __sdk__transactionAcquireAction_2, __sdk__transactionConsumeAction_2, __sdk__transactionAcquireAction2_2, __sdk__transactionAcquireAction3_2, __sdk__membershipQuestCompletedQuestList_1);
         }
         public IQuestBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, QuestCollectionId collection)
         {

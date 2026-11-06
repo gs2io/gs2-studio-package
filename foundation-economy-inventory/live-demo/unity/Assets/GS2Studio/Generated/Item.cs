@@ -13,10 +13,13 @@ namespace GS2Studio.Generated.Item
     public interface Item
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the item.
         /// </summary>
         ItemId Id { get; }
 
+        /// <summary>
+        /// Quantity of the item owned by the player.
+        /// </summary>
         long Count { get; }
     }
 

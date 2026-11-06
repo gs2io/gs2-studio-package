@@ -28,6 +28,9 @@ namespace GS2Studio.Generated.UsageLimitCounter
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public UsageLimitCounterMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<UsageLimitCounter>? Updated;
 
         public event Action<IActionableUsageLimitCounterBinder>? Bound;

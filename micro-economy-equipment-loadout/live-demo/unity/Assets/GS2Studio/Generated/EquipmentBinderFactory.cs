@@ -28,7 +28,12 @@ namespace GS2Studio.Generated.Equipment
             EquipmentId id, string propertyId,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEquipmentDiscardNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_3 = null);
         IEquipmentBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -40,9 +45,14 @@ namespace GS2Studio.Generated.Equipment
             EquipmentId id, string propertyId,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEquipmentDiscardNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_3 = null)
         {
-            return await EquipmentBinder.CreateAsync(id, propertyId, gs2, session, cancellationToken);
+            return await EquipmentBinder.CreateAsync(id, propertyId, gs2, session, cancellationToken, __sdk__exchangeEquipmentDiscardNamespaceRateModel_1, __sdk__transactionConsumeAction_1, __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2, __sdk__userdataInventoryEquipmentItemModel_2, __sdk__userdataInventoryEquipmentItemModel_3);
         }
         public IEquipmentBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

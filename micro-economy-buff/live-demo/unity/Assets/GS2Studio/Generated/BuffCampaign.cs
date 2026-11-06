@@ -13,7 +13,7 @@ namespace GS2Studio.Generated.BuffCampaign
     public interface BuffCampaign
     {
         /// <summary>
-        /// Unique identifier
+        /// The double idle rewards campaign.
         /// </summary>
         BuffCampaignId Id { get; }
     }

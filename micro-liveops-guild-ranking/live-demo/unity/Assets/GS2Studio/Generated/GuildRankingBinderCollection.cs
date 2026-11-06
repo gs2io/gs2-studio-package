@@ -110,8 +110,20 @@ namespace GS2Studio.Generated.GuildRanking
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyGuildRankingBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyGuildRankingBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyGuildRankingBinder> _configuredComparer = GuildRankingBinderComparer.Default;
@@ -232,18 +244,38 @@ namespace GS2Studio.Generated.GuildRanking
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingModelArrayLoader("GuildRanking");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromRanking2GuildRankingMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromRanking2GuildRankingMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromRanking2GuildRankingMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromRanking2GuildRankingMasterItems");
+            _pendingCollectionAxis = "ReconcileFromRanking2GuildRankingMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingModelArrayLoader("GuildRanking");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromRanking2GuildRankingMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromRanking2GuildRankingMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromRanking2GuildRankingMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromRanking2GuildRankingMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromRanking2GuildRankingMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromRanking2GuildRankingMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromRanking2GuildRankingMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -251,7 +283,6 @@ namespace GS2Studio.Generated.GuildRanking
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingModelArrayLoader("GuildRanking");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -259,9 +290,10 @@ namespace GS2Studio.Generated.GuildRanking
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromRanking2GuildRankingMasterItems");
                     try
                     {
-                        await ReconcileFromRanking2GuildRankingMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromRanking2GuildRankingMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -270,41 +302,68 @@ namespace GS2Studio.Generated.GuildRanking
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromRanking2GuildRankingMasterItems(IList<Gs2.Unity.Gs2Ranking2.Model.EzClusterRankingModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromRanking2GuildRankingMasterItems(IList<Gs2.Unity.Gs2Ranking2.Model.EzClusterRankingModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromRanking2GuildRankingMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractRanking2GuildRankingMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromRanking2GuildRankingMasterItems", updateVersion)) return;
                 var rowKey = ExtractRanking2GuildRankingMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractRanking2GuildRankingMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<GuildRankingId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyRanking2GuildRankingMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-liveops-guild-ranking", "masterData", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "micro-liveops-guild-ranking", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "ranking2", "ClusterRankingModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-liveops-guild-ranking\",\"masterData\",\"mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ\",\"ranking2\",\"ClusterRankingModel\",\"rankingName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-liveops-guild-ranking", "masterData", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "micro-liveops-guild-ranking", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "ranking2", "ClusterRankingModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-liveops-guild-ranking", "masterData", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "micro-liveops-guild-ranking", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "ranking2", "ClusterRankingModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromRanking2GuildRankingMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromRanking2GuildRankingMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromRanking2GuildRankingMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<GuildRankingId>.Default.Equals(raced.Id, nextId)) { ApplyRanking2GuildRankingMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-liveops-guild-ranking", "masterData", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "micro-liveops-guild-ranking", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "ranking2", "ClusterRankingModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-liveops-guild-ranking\",\"masterData\",\"mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ\",\"ranking2\",\"ClusterRankingModel\",\"rankingName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-liveops-guild-ranking", "masterData", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "micro-liveops-guild-ranking", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "ranking2", "ClusterRankingModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-liveops-guild-ranking", "masterData", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "micro-liveops-guild-ranking", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "ranking2", "ClusterRankingModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyRanking2GuildRankingMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-liveops-guild-ranking", "masterData", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "micro-liveops-guild-ranking", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "ranking2", "ClusterRankingModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-liveops-guild-ranking\",\"masterData\",\"mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ\",\"ranking2\",\"ClusterRankingModel\",\"rankingName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-liveops-guild-ranking", "masterData", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "micro-liveops-guild-ranking", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "ranking2", "ClusterRankingModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-liveops-guild-ranking", "masterData", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "micro-liveops-guild-ranking", "mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ", "ranking2", "ClusterRankingModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromRanking2GuildRankingMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -344,13 +403,13 @@ namespace GS2Studio.Generated.GuildRanking
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GuildRankingBinder> BuildBinderFromRanking2GuildRankingMasterItem(Gs2.Unity.Gs2Ranking2.Model.EzClusterRankingModel item, CancellationToken cancellationToken)
+        private async Task<GuildRankingBinder?> BuildBinderFromRanking2GuildRankingMasterItem(Gs2.Unity.Gs2Ranking2.Model.EzClusterRankingModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = GuildRankingBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(GuildRankingId) : new GuildRankingId(item.Name)));
             ApplyRanking2GuildRankingMasterItemTo(model, item);
-            var binder = new GuildRankingBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new GuildRankingBinder(model, _gs2, _session, __sdk__ranking2GuildRankingNamespaceClusterRankingModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyRanking2GuildRankingMasterItemTo(MutableGuildRanking model, Gs2.Unity.Gs2Ranking2.Model.EzClusterRankingModel item)
@@ -369,8 +428,9 @@ namespace GS2Studio.Generated.GuildRanking
         {
             var id = ExtractRanking2GuildRankingMasterIdentity(item);
             if (EqualityComparer<GuildRankingId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"Ranking2GuildRanking\",\"micro-liveops-guild-ranking\",\"mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ\",null,null,\"micro-liveops-guild-ranking\",\"mdr_7QANVQ73WFB35V1E9F2Y7SH2GZ\",\"ranking2\",\"ClusterRankingModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class GuildRankingBinderComparer : IComparer<IReadOnlyGuildRankingBinder>

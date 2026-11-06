@@ -27,6 +27,7 @@ namespace GS2Studio.Generated.TakeOverSetting
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableTakeOverSettingBinder : IReadOnlyTakeOverSettingBinder
     {
+        TakeOverSettingBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -76,10 +77,193 @@ namespace GS2Studio.Generated.TakeOverSetting
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class TakeOverSettingBinder : ReadOnlyTakeOverSettingBinder, ITakeOverSettingBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly TakeOverSettingBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(TakeOverSettingBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public TakeOverSetting Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableTakeOverSetting? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableTakeOverSetting
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal TakeOverSettingId __valueId = default!;
+                public TakeOverSettingId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setType;
+                internal int __valueType = default!;
+                public int Type
+                {
+                    get => __setType ? __valueType : __scopeOwner.Value.Type;
+                    set { __setType = true; __valueType = value; }
+                }
+                internal bool __setConfigurationPath;
+                internal string __valueConfigurationPath = default!;
+                public string ConfigurationPath
+                {
+                    get => __setConfigurationPath ? __valueConfigurationPath : __scopeOwner.Value.ConfigurationPath;
+                    set { __setConfigurationPath = true; __valueConfigurationPath = value; }
+                }
+                internal bool __setClientId;
+                internal string __valueClientId = default!;
+                public string ClientId
+                {
+                    get => __setClientId ? __valueClientId : __scopeOwner.Value.ClientId;
+                    set { __setClientId = true; __valueClientId = value; }
+                }
+                internal bool __setClientSecret;
+                internal string __valueClientSecret = default!;
+                public string ClientSecret
+                {
+                    get => __setClientSecret ? __valueClientSecret : __scopeOwner.Value.ClientSecret;
+                    set { __setClientSecret = true; __valueClientSecret = value; }
+                }
+                internal bool __setDoneEndpointUrl;
+                internal string __valueDoneEndpointUrl = default!;
+                public string DoneEndpointUrl
+                {
+                    get => __setDoneEndpointUrl ? __valueDoneEndpointUrl : __scopeOwner.Value.DoneEndpointUrl;
+                    set { __setDoneEndpointUrl = true; __valueDoneEndpointUrl = value; }
+                }
+                internal bool __setAppleTeamId;
+                internal string? __valueAppleTeamId = default!;
+                public string? AppleTeamId
+                {
+                    get => __setAppleTeamId ? __valueAppleTeamId : __scopeOwner.Value.AppleTeamId;
+                    set { __setAppleTeamId = true; __valueAppleTeamId = value; }
+                }
+                internal bool __setAppleKeyId;
+                internal string? __valueAppleKeyId = default!;
+                public string? AppleKeyId
+                {
+                    get => __setAppleKeyId ? __valueAppleKeyId : __scopeOwner.Value.AppleKeyId;
+                    set { __setAppleKeyId = true; __valueAppleKeyId = value; }
+                }
+                internal bool __setApplePrivateKeyPem;
+                internal string? __valueApplePrivateKeyPem = default!;
+                public string? ApplePrivateKeyPem
+                {
+                    get => __setApplePrivateKeyPem ? __valueApplePrivateKeyPem : __scopeOwner.Value.ApplePrivateKeyPem;
+                    set { __setApplePrivateKeyPem = true; __valueApplePrivateKeyPem = value; }
+                }
+                internal bool __setHasTakeOver;
+                internal bool? __valueHasTakeOver = default!;
+                public bool? HasTakeOver
+                {
+                    get => __setHasTakeOver ? __valueHasTakeOver : __scopeOwner.Value.HasTakeOver;
+                    set { __setHasTakeOver = true; __valueHasTakeOver = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<TakeOverSettingId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setType) { _owner._model.Type = changes.__valueType; changes.__setType = false; }
+                if (changes.__setConfigurationPath) { _owner._model.ConfigurationPath = changes.__valueConfigurationPath; changes.__setConfigurationPath = false; }
+                if (changes.__setClientId) { _owner._model.ClientId = changes.__valueClientId; changes.__setClientId = false; }
+                if (changes.__setClientSecret) { _owner._model.ClientSecret = changes.__valueClientSecret; changes.__setClientSecret = false; }
+                if (changes.__setDoneEndpointUrl) { _owner._model.DoneEndpointUrl = changes.__valueDoneEndpointUrl; changes.__setDoneEndpointUrl = false; }
+                if (changes.__setAppleTeamId) { _owner._model.AppleTeamId = changes.__valueAppleTeamId; changes.__setAppleTeamId = false; }
+                if (changes.__setAppleKeyId) { _owner._model.AppleKeyId = changes.__valueAppleKeyId; changes.__setAppleKeyId = false; }
+                if (changes.__setApplePrivateKeyPem) { _owner._model.ApplePrivateKeyPem = changes.__valueApplePrivateKeyPem; changes.__setApplePrivateKeyPem = false; }
+                if (changes.__setHasTakeOver) { _owner._model.HasTakeOver = changes.__valueHasTakeOver; changes.__setHasTakeOver = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -90,11 +274,14 @@ namespace GS2Studio.Generated.TakeOverSetting
         internal TakeOverSettingBinder(
             MutableTakeOverSetting model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            int? __sdk__userdataAccountAccountTakeOverTypeModel_1 = null
         ) : base(model, gs2, session)
         {
-            __userdataAccountAccountTakeOverTypeModelLoader = new Gs2Bind.Gs2Account.TakeOverLoader("Account", _model.Type);
+
+            __userdataAccountAccountTakeOverTypeModelLoader = new Gs2Bind.Gs2Account.TakeOverLoader("Account", (__sdk__userdataAccountAccountTakeOverTypeModel_1 ?? throw new InvalidOperationException("An SDK backing key is required for this loader.")));
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableTakeOverSetting CreateModel(TakeOverSettingId id, int type)
@@ -109,14 +296,14 @@ namespace GS2Studio.Generated.TakeOverSetting
             TakeOverSettingId id, int type,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataAccountAccountTakeOverTypeModel_1 = null)
         {
             var model = CreateModel(id, type);
-            var binder = new TakeOverSettingBinder(model, gs2, session);
+            var binder = new TakeOverSettingBinder(model, gs2, session, __sdk__userdataAccountAccountTakeOverTypeModel_1: __sdk__userdataAccountAccountTakeOverTypeModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -158,6 +345,7 @@ namespace GS2Studio.Generated.TakeOverSetting
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -200,6 +388,7 @@ namespace GS2Studio.Generated.TakeOverSetting
             {
             }
         }
+
         #endregion
 
     }

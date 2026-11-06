@@ -14,10 +14,13 @@ namespace GS2Studio.Generated.QuestCollection
     public interface QuestCollection
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the quest group.
         /// </summary>
         QuestCollectionId Id { get; }
 
+        /// <summary>
+        /// Schedule during which this quest group is available.
+        /// </summary>
         ScheduleId? Schedule { get; }
     }
 

@@ -13,32 +13,32 @@ namespace GS2Studio.Generated.SkillNode
     public interface SkillNode
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the skill node.
         /// </summary>
         SkillNodeId Id { get; }
 
         /// <summary>
-        /// Nodes that must be released first
+        /// Nodes that must be unlocked before this node.
         /// </summary>
         IReadOnlyList<string>? PremiseNodes { get; }
 
         /// <summary>
-        /// Share of the cost refunded when the node is reset
+        /// Share of the unlock cost refunded when the node is reset.
         /// </summary>
         float? RestrainReturnRate { get; }
 
         /// <summary>
-        /// Unlocked by this player
+        /// Whether the player has unlocked this node.
         /// </summary>
         bool Released { get; }
 
         /// <summary>
-        /// Whose tree these flags are read for
+        /// Identifier of the character whose unlock state these flags are read for.
         /// </summary>
         string? Owner { get; }
 
         /// <summary>
-        /// Coins this node charges when it is released
+        /// Coins spent to unlock this node.
         /// </summary>
         int Cost { get; }
     }

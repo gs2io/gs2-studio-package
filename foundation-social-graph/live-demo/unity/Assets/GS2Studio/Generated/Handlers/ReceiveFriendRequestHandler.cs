@@ -24,6 +24,7 @@ namespace GS2Studio.Generated.ReceiveFriendRequest
     public sealed class ReceiveFriendRequestHandler : ReceiveFriendRequestHandlerBase
     {
         [SerializeField] private string? _id;
+        private string? _sdk_foundation_x2d_social_x2d_graph_userData_udr_1SFSPFWZFE9P6R9HCVSHVVEF3M_friend_ReceiveFriendRequest_fromUserId;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -48,6 +49,7 @@ namespace GS2Studio.Generated.ReceiveFriendRequest
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(IReceiveFriendRequestBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -63,6 +65,17 @@ namespace GS2Studio.Generated.ReceiveFriendRequest
             _id = id;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_foundation_x2d_social_x2d_graph_userData_udr_1SFSPFWZFE9P6R9HCVSHVVEF3M_friend_ReceiveFriendRequest_fromUserId)
+        {
+            InvalidateBindingIntent();
+            _sdk_foundation_x2d_social_x2d_graph_userData_udr_1SFSPFWZFE9P6R9HCVSHVVEF3M_friend_ReceiveFriendRequest_fromUserId = sdk_foundation_x2d_social_x2d_graph_userData_udr_1SFSPFWZFE9P6R9HCVSHVVEF3M_friend_ReceiveFriendRequest_fromUserId;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -88,7 +101,9 @@ namespace GS2Studio.Generated.ReceiveFriendRequest
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new ReceiveFriendRequestId(_id ?? string.Empty), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_social_x2d_graph_userData_udr_1SFSPFWZFE9P6R9HCVSHVVEF3M_friend_ReceiveFriendRequest_fromUserId))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_social_x2d_graph_userData_udr_1SFSPFWZFE9P6R9HCVSHVVEF3M_friend_ReceiveFriendRequest_fromUserId' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new ReceiveFriendRequestId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__userdataFriendReceiveFriendRequest_1: _sdk_foundation_x2d_social_x2d_graph_userData_udr_1SFSPFWZFE9P6R9HCVSHVVEF3M_friend_ReceiveFriendRequest_fromUserId);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -177,6 +192,7 @@ namespace GS2Studio.Generated.ReceiveFriendRequest
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_social_x2d_graph_userData_udr_1SFSPFWZFE9P6R9HCVSHVVEF3M_friend_ReceiveFriendRequest_fromUserId)) return false;
             return true;
         }
 

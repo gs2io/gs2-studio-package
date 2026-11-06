@@ -13,12 +13,18 @@ namespace GS2Studio.Generated.ProgressReward
     public interface ProgressReward
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the quest reward.
         /// </summary>
         ProgressRewardId Id { get; }
 
+        /// <summary>
+        /// GRN of the resource granted as a reward when the quest is completed.
+        /// </summary>
         string ItemId { get; }
 
+        /// <summary>
+        /// Quantity of the reward granted when the quest is completed.
+        /// </summary>
         int Value { get; }
     }
 

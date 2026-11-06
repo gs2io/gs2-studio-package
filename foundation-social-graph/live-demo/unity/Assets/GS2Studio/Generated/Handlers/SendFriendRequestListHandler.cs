@@ -113,6 +113,7 @@ namespace GS2Studio.Generated.SendFriendRequest
         private ISendFriendRequestBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultSendFriendRequestBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

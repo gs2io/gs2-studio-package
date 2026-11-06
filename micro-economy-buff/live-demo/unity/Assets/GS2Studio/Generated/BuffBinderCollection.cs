@@ -130,8 +130,20 @@ namespace GS2Studio.Generated.Buff
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyBuffBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyBuffBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyBuffBinder> _configuredComparer = BuffBinderComparer.Default;
@@ -252,18 +264,38 @@ namespace GS2Studio.Generated.Buff
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Buff.BuffEntryModelArrayLoader("Buff");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromBuffBuffMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromBuffBuffMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromBuffBuffMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromBuffBuffMasterItems");
+            _pendingCollectionAxis = "ReconcileFromBuffBuffMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Buff.BuffEntryModelArrayLoader("Buff");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromBuffBuffMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromBuffBuffMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromBuffBuffMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromBuffBuffMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromBuffBuffMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromBuffBuffMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromBuffBuffMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -271,7 +303,6 @@ namespace GS2Studio.Generated.Buff
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Buff.BuffEntryModelArrayLoader("Buff");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -279,9 +310,10 @@ namespace GS2Studio.Generated.Buff
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromBuffBuffMasterItems");
                     try
                     {
-                        await ReconcileFromBuffBuffMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromBuffBuffMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -290,41 +322,68 @@ namespace GS2Studio.Generated.Buff
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromBuffBuffMasterItems(IList<Gs2.Unity.Gs2Buff.Model.EzBuffEntryModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromBuffBuffMasterItems(IList<Gs2.Unity.Gs2Buff.Model.EzBuffEntryModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromBuffBuffMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractBuffBuffMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromBuffBuffMasterItems", updateVersion)) return;
                 var rowKey = ExtractBuffBuffMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractBuffBuffMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<BuffId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyBuffBuffMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-buff", "masterData", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "micro-economy-buff", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "buff", "BuffEntryModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-buff\",\"masterData\",\"mdr_403PNWNXHGAHNVCTWXXVQPXKY1\",\"buff\",\"BuffEntryModel\",\"buffEntryName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-buff", "masterData", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "micro-economy-buff", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "buff", "BuffEntryModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-buff", "masterData", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "micro-economy-buff", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "buff", "BuffEntryModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromBuffBuffMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromBuffBuffMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromBuffBuffMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<BuffId>.Default.Equals(raced.Id, nextId)) { ApplyBuffBuffMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-buff", "masterData", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "micro-economy-buff", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "buff", "BuffEntryModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-buff\",\"masterData\",\"mdr_403PNWNXHGAHNVCTWXXVQPXKY1\",\"buff\",\"BuffEntryModel\",\"buffEntryName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-buff", "masterData", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "micro-economy-buff", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "buff", "BuffEntryModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-buff", "masterData", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "micro-economy-buff", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "buff", "BuffEntryModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyBuffBuffMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-buff", "masterData", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "micro-economy-buff", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "buff", "BuffEntryModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-buff\",\"masterData\",\"mdr_403PNWNXHGAHNVCTWXXVQPXKY1\",\"buff\",\"BuffEntryModel\",\"buffEntryName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-buff", "masterData", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "micro-economy-buff", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "buff", "BuffEntryModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-buff", "masterData", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "micro-economy-buff", "mdr_403PNWNXHGAHNVCTWXXVQPXKY1", "buff", "BuffEntryModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromBuffBuffMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -364,13 +423,13 @@ namespace GS2Studio.Generated.Buff
             if (!_disposed) SortBinders();
         }
 
-        private async Task<BuffBinder> BuildBinderFromBuffBuffMasterItem(Gs2.Unity.Gs2Buff.Model.EzBuffEntryModel item, CancellationToken cancellationToken)
+        private async Task<BuffBinder?> BuildBinderFromBuffBuffMasterItem(Gs2.Unity.Gs2Buff.Model.EzBuffEntryModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = BuffBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(BuffId) : new BuffId(item.Name)));
             ApplyBuffBuffMasterItemTo(model, item);
-            var binder = new BuffBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new BuffBinder(model, _gs2, _session, __sdk__buffBuffNamespaceBuffEntryModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyBuffBuffMasterItemTo(MutableBuff model, Gs2.Unity.Gs2Buff.Model.EzBuffEntryModel item)
@@ -389,8 +448,9 @@ namespace GS2Studio.Generated.Buff
         {
             var id = ExtractBuffBuffMasterIdentity(item);
             if (EqualityComparer<BuffId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"BuffBuff\",\"micro-economy-buff\",\"mdr_403PNWNXHGAHNVCTWXXVQPXKY1\",null,null,\"micro-economy-buff\",\"mdr_403PNWNXHGAHNVCTWXXVQPXKY1\",\"buff\",\"BuffEntryModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class BuffBinderComparer : IComparer<IReadOnlyBuffBinder>

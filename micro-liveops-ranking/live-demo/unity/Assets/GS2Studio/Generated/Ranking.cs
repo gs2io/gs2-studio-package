@@ -13,34 +13,37 @@ namespace GS2Studio.Generated.Ranking
     public interface Ranking
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the ranking.
         /// </summary>
         RankingId Id { get; }
 
+        /// <summary>
+        /// Schedule during which scores may be submitted.
+        /// </summary>
         string? Schedule { get; }
 
         /// <summary>
-        /// Whether a higher or a lower score ranks first
+        /// Whether higher or lower scores rank first.
         /// </summary>
         string OrderDirection { get; }
 
         /// <summary>
-        /// Add each submitted score to the last instead of replacing it
+        /// Whether submitted scores are added up. Otherwise the last score submitted replaces the one before.
         /// </summary>
         bool? Sum { get; }
 
         /// <summary>
-        /// Lowest score accepted
+        /// Lowest score accepted by the ranking.
         /// </summary>
         long? MinimumValue { get; }
 
         /// <summary>
-        /// Highest score accepted
+        /// Highest score accepted by the ranking.
         /// </summary>
         long? MaximumValue { get; }
 
         /// <summary>
-        /// The player's own score
+        /// Player's current score in this ranking.
         /// </summary>
         long Score { get; }
     }

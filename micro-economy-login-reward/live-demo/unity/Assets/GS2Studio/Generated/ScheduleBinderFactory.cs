@@ -23,7 +23,9 @@ namespace GS2Studio.Generated.Schedule
             ScheduleId id, string trigger,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__scheduleScheduleNamespaceEvent_1 = null,
+            string? __sdk__userdataScheduleTrigger_1 = null);
         IScheduleBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +37,11 @@ namespace GS2Studio.Generated.Schedule
             ScheduleId id, string trigger,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__scheduleScheduleNamespaceEvent_1 = null,
+            string? __sdk__userdataScheduleTrigger_1 = null)
         {
-            return await ScheduleBinder.CreateAsync(id, trigger, gs2, session, cancellationToken);
+            return await ScheduleBinder.CreateAsync(id, trigger, gs2, session, cancellationToken, __sdk__scheduleScheduleNamespaceEvent_1, __sdk__userdataScheduleTrigger_1);
         }
         public IScheduleBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

@@ -27,6 +27,9 @@ namespace GS2Studio.Generated.GlobalMessage
     public sealed class GlobalMessageHandler : GlobalMessageHandlerBase
     {
         [SerializeField] private string? _id;
+        private string? _sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName;
+        private string? _sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName_2;
+        private string? _sdk_foundation_x2d_liveops_x2d_inbox_masterData_mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4_schedule_Event_eventName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -51,6 +54,7 @@ namespace GS2Studio.Generated.GlobalMessage
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(IGlobalMessageBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -66,6 +70,19 @@ namespace GS2Studio.Generated.GlobalMessage
             _id = id;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName, string? sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName_2, string? sdk_foundation_x2d_liveops_x2d_inbox_masterData_mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4_schedule_Event_eventName)
+        {
+            InvalidateBindingIntent();
+            _sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName = sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName;
+            _sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName_2 = sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName_2;
+            _sdk_foundation_x2d_liveops_x2d_inbox_masterData_mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4_schedule_Event_eventName = sdk_foundation_x2d_liveops_x2d_inbox_masterData_mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4_schedule_Event_eventName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -91,7 +108,13 @@ namespace GS2Studio.Generated.GlobalMessage
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new GlobalMessageId(_id ?? string.Empty), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName_2' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_inbox_masterData_mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4_schedule_Event_eventName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_liveops_x2d_inbox_masterData_mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4_schedule_Event_eventName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new GlobalMessageId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__exchangeInboxDeliverNamespaceRateModel_1: _sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName, __sdk__transactionAcquireAction_1: _sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName_2, __sdk__scheduleInboxScheduleNamespaceEvent_1: _sdk_foundation_x2d_liveops_x2d_inbox_masterData_mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4_schedule_Event_eventName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -180,6 +203,9 @@ namespace GS2Studio.Generated.GlobalMessage
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_inbox_x2d_demo_masterData_mdr_3V90RSG8MJB8BVY29ZQGS45EZZ_exchange_RateModel_rateName_2)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_inbox_masterData_mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4_schedule_Event_eventName)) return false;
             return true;
         }
 

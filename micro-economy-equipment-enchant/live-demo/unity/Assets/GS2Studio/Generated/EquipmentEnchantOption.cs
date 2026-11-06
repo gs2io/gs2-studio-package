@@ -14,24 +14,27 @@ namespace GS2Studio.Generated.EquipmentEnchantOption
     public interface EquipmentEnchantOption
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the enchantment option.
         /// </summary>
         EquipmentEnchantOptionId Id { get; }
 
+        /// <summary>
+        /// Enchantment configuration this option belongs to.
+        /// </summary>
         EquipmentEnchantId Enchant { get; }
 
         /// <summary>
-        /// Stat this bonus applies to
+        /// Name of the stat or resource modified by this effect.
         /// </summary>
         string ResourceName { get; }
 
         /// <summary>
-        /// How much it applies
+        /// Value applied to the target by this bonus.
         /// </summary>
         long ResourceValue { get; }
 
         /// <summary>
-        /// Relative draw weight
+        /// Relative weight used to draw this effect.
         /// </summary>
         int Weight { get; }
     }

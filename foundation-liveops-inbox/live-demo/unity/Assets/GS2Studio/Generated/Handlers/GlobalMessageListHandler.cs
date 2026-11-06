@@ -118,6 +118,7 @@ namespace GS2Studio.Generated.GlobalMessage
         private IGlobalMessageBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultGlobalMessageBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

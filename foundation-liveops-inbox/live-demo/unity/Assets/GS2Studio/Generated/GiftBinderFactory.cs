@@ -25,7 +25,9 @@ namespace GS2Studio.Generated.Gift
             GiftId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeInboxGiftNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null);
     }
 
     public sealed class DefaultGiftBinderFactory : IGiftBinderFactory
@@ -36,9 +38,11 @@ namespace GS2Studio.Generated.Gift
             GiftId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeInboxGiftNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null)
         {
-            return await GiftBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await GiftBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__exchangeInboxGiftNamespaceRateModel_1, __sdk__transactionAcquireAction_1);
         }
     }
 }

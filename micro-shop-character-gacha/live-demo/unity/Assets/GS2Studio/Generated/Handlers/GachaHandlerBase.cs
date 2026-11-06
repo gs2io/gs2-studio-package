@@ -28,6 +28,9 @@ namespace GS2Studio.Generated.Gacha
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public GachaMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<Gacha>? Updated;
 
         public event Action<IActionableGachaBinder>? Bound;

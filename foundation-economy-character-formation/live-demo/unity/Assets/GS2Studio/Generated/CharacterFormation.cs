@@ -13,14 +13,23 @@ namespace GS2Studio.Generated.CharacterFormation
     public interface CharacterFormation
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the formation configuration.
         /// </summary>
         CharacterFormationId Id { get; }
 
+        /// <summary>
+        /// Formation save slots granted to a new player.
+        /// </summary>
         int InitialSaveArea { get; }
 
+        /// <summary>
+        /// Maximum number of formation save slots.
+        /// </summary>
         int MaximumSaveArea { get; }
 
+        /// <summary>
+        /// Formation save slots currently available to the player.
+        /// </summary>
         int CurrentSaveArea { get; }
     }
 

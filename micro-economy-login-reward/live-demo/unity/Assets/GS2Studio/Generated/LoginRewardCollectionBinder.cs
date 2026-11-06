@@ -21,20 +21,81 @@ using Gs2.Unity.Gs2LoginReward.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2LoginReward;
 using Gs2.Util.LitJson;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.LoginRewardCollection
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum LoginRewardCollectionMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the LoginRewardLoginReward master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeLoginRewardStartOverNamespaceRateModel", "UserdataLoginRewardLoginRewardBonusModel")]
+        LoginRewardLoginRewardMaster,
+
+        /// <summary>Built by the ExchangeLoginRewardStartOver master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionConsumeAction", "LoginRewardLoginRewardNamespaceBonusModel", "UserdataLoginRewardLoginRewardBonusModel")]
+        ExchangeLoginRewardStartOverMaster,
+
+        /// <summary>Built by the LoginRewardLoginReward user-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeLoginRewardStartOverNamespaceRateModel")]
+        LoginRewardLoginRewardUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyLoginRewardCollectionBinder : LoginRewardCollection
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        LoginRewardCollectionMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply <c>Id</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>LoginRewardLoginRewardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LoginRewardLoginRewardUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeLoginRewardStartOverNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>LoginRewardLoginRewardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LoginRewardLoginRewardUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeLoginRewardStartOverNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2LoginReward.ReceiveStatusLoader</c> load on <c>__userdataLoginRewardLoginRewardBonusModelLoader</c> or its composition from a list item. False means this path does not supply <c>LastReceivedAt</c>, <c>ReceivedSteps</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>LoginRewardLoginRewardMaster: does not supply SDK backing key bonusModelName.</remarks>
+        /// <remarks>ExchangeLoginRewardStartOverMaster: does not supply SDK backing key bonusModelName.</remarks>
+        bool LoadedUserdataLoginRewardLoginRewardBonusModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2LoginReward.BonusModelConsumeActionArrayLoader</c> load on <c>__transactionConsumeActionLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLoginRewardStartOverMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2LoginReward.BonusModelLoader</c> load on <c>__loginRewardLoginRewardNamespaceBonusModelLoader</c>. False means this path does not supply <c>MissedReceiveRelief</c>, <c>Mode</c>, <c>Repeat</c>, <c>ResetHour</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLoginRewardStartOverMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedLoginRewardLoginRewardNamespaceBonusModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableLoginRewardCollectionBinder : IReadOnlyLoginRewardCollectionBinder
     {
+        LoginRewardCollectionBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Receive(Gs2.Unity.Gs2LoginReward.Model.EzConfig[]? config = null);
         Task MissedReceive(int? stepNumber = null, Gs2.Unity.Gs2LoginReward.Model.EzConfig[]? config = null);
         Task StartOver(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
+        Task<GS2Studio.Generated.LoginReward.IReadOnlyLoginRewardBinderCollection> GetLoginRewards(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -42,11 +103,10 @@ namespace GS2Studio.Generated.LoginRewardCollection
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.LoginReward.IReadOnlyLoginRewardBinderCollection> GetLoginRewards(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyLoginRewardCollectionBinder : IReadOnlyLoginRewardCollectionBinder
+    public abstract class ReadOnlyLoginRewardCollectionBinder : IReadOnlyLoginRewardCollectionBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableLoginRewardCollection _model;
@@ -72,6 +132,25 @@ namespace GS2Studio.Generated.LoginRewardCollection
         /// <inheritdoc cref="LoginRewardCollection.LastReceivedAt" />
         public DateTime? LastReceivedAt => _model.LastReceivedAt;
 
+        /// <inheritdoc />
+        public abstract LoginRewardCollectionMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeLoginRewardStartOverNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataLoginRewardLoginRewardBonusModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedLoginRewardLoginRewardNamespaceBonusModel { get; }
+
+
         private protected ReadOnlyLoginRewardCollectionBinder(MutableLoginRewardCollection model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -81,10 +160,177 @@ namespace GS2Studio.Generated.LoginRewardCollection
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class LoginRewardCollectionBinder : ReadOnlyLoginRewardCollectionBinder, ILoginRewardCollectionBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly LoginRewardCollectionBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(LoginRewardCollectionBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public LoginRewardCollection Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableLoginRewardCollection? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableLoginRewardCollection
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal LoginRewardCollectionId __valueId = default!;
+                public LoginRewardCollectionId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setMode;
+                internal string __valueMode = default!;
+                public string Mode
+                {
+                    get => __setMode ? __valueMode : __scopeOwner.Value.Mode;
+                    set { __setMode = true; __valueMode = value; }
+                }
+                internal bool __setSchedule;
+                internal ScheduleId? __valueSchedule = default!;
+                public ScheduleId? Schedule
+                {
+                    get => __setSchedule ? __valueSchedule : __scopeOwner.Value.Schedule;
+                    set { __setSchedule = true; __valueSchedule = value; }
+                }
+                internal bool __setResetHour;
+                internal int? __valueResetHour = default!;
+                public int? ResetHour
+                {
+                    get => __setResetHour ? __valueResetHour : __scopeOwner.Value.ResetHour;
+                    set { __setResetHour = true; __valueResetHour = value; }
+                }
+                internal bool __setRepeat;
+                internal string? __valueRepeat = default!;
+                public string? Repeat
+                {
+                    get => __setRepeat ? __valueRepeat : __scopeOwner.Value.Repeat;
+                    set { __setRepeat = true; __valueRepeat = value; }
+                }
+                internal bool __setMissedReceiveRelief;
+                internal string? __valueMissedReceiveRelief = default!;
+                public string? MissedReceiveRelief
+                {
+                    get => __setMissedReceiveRelief ? __valueMissedReceiveRelief : __scopeOwner.Value.MissedReceiveRelief;
+                    set { __setMissedReceiveRelief = true; __valueMissedReceiveRelief = value; }
+                }
+                internal bool __setReceivedSteps;
+                internal IReadOnlyList<bool>? __valueReceivedSteps = default!;
+                public IReadOnlyList<bool>? ReceivedSteps
+                {
+                    get => __setReceivedSteps ? __valueReceivedSteps : __scopeOwner.Value.ReceivedSteps;
+                    set { __setReceivedSteps = true; __valueReceivedSteps = value; }
+                }
+                internal bool __setLastReceivedAt;
+                internal DateTime? __valueLastReceivedAt = default!;
+                public DateTime? LastReceivedAt
+                {
+                    get => __setLastReceivedAt ? __valueLastReceivedAt : __scopeOwner.Value.LastReceivedAt;
+                    set { __setLastReceivedAt = true; __valueLastReceivedAt = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<LoginRewardCollectionId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setMode) { _owner._model.Mode = changes.__valueMode; changes.__setMode = false; }
+                if (changes.__setSchedule) { _owner._model.Schedule = changes.__valueSchedule; changes.__setSchedule = false; }
+                if (changes.__setResetHour) { _owner._model.ResetHour = changes.__valueResetHour; changes.__setResetHour = false; }
+                if (changes.__setRepeat) { _owner._model.Repeat = changes.__valueRepeat; changes.__setRepeat = false; }
+                if (changes.__setMissedReceiveRelief) { _owner._model.MissedReceiveRelief = changes.__valueMissedReceiveRelief; changes.__setMissedReceiveRelief = false; }
+                if (changes.__setReceivedSteps) { _owner._model.ReceivedSteps = changes.__valueReceivedSteps; changes.__setReceivedSteps = false; }
+                if (changes.__setLastReceivedAt) { _owner._model.LastReceivedAt = changes.__valueLastReceivedAt; changes.__setLastReceivedAt = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -97,19 +343,71 @@ namespace GS2Studio.Generated.LoginRewardCollection
         private readonly Gs2Bind.Gs2LoginReward.BonusModelLoader __loginRewardLoginRewardNamespaceBonusModelLoader;
         private readonly Gs2Bind.Gs2LoginReward.ReceiveStatusLoader __userdataLoginRewardLoginRewardBonusModelLoader;
 
+        private readonly LoginRewardCollectionMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>LoginRewardLoginRewardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LoginRewardLoginRewardUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is LoginRewardCollectionMountSurface.Full or LoginRewardCollectionMountSurface.ExchangeLoginRewardStartOverMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeLoginRewardStartOverNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>LoginRewardLoginRewardMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LoginRewardLoginRewardUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeLoginRewardStartOverNamespaceRateModelLoader => _mountSurfaceValue is LoginRewardCollectionMountSurface.Full or LoginRewardCollectionMountSurface.ExchangeLoginRewardStartOverMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataLoginRewardLoginRewardBonusModelLoader</c> reads.</summary>
+        /// <remarks>LoginRewardLoginRewardMaster: does not supply SDK backing key bonusModelName.</remarks>
+        /// <remarks>ExchangeLoginRewardStartOverMaster: does not supply SDK backing key bonusModelName.</remarks>
+        private bool Runs__userdataLoginRewardLoginRewardBonusModelLoader => _mountSurfaceValue is LoginRewardCollectionMountSurface.Full;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeLoginRewardStartOverMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeActionLoader => _mountSurfaceValue is LoginRewardCollectionMountSurface.Full or LoginRewardCollectionMountSurface.LoginRewardLoginRewardMaster or LoginRewardCollectionMountSurface.LoginRewardLoginRewardUser;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__loginRewardLoginRewardNamespaceBonusModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeLoginRewardStartOverMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__loginRewardLoginRewardNamespaceBonusModelLoader => _mountSurfaceValue is LoginRewardCollectionMountSurface.Full or LoginRewardCollectionMountSurface.LoginRewardLoginRewardMaster or LoginRewardCollectionMountSurface.LoginRewardLoginRewardUser;
+
+        /// <inheritdoc />
+        public override LoginRewardCollectionMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeLoginRewardStartOverNamespaceRateModel => Runs__exchangeLoginRewardStartOverNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataLoginRewardLoginRewardBonusModel => _mountSurfaceValue is LoginRewardCollectionMountSurface.Full or LoginRewardCollectionMountSurface.LoginRewardLoginRewardUser;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction => Runs__transactionConsumeActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedLoginRewardLoginRewardNamespaceBonusModel => Runs__loginRewardLoginRewardNamespaceBonusModelLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal LoginRewardCollectionBinder(
             MutableLoginRewardCollection model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            LoginRewardCollectionMountSurface _mountSurface = LoginRewardCollectionMountSurface.Full,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeLoginRewardStartOverNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__loginRewardLoginRewardNamespaceBonusModel_1 = null,
+            string? __sdk__userdataLoginRewardLoginRewardBonusModel_1 = null
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LoginRewardStartOver", _model.Id, 0);
-            __exchangeLoginRewardStartOverNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("LoginRewardStartOver", _model.Id);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2LoginReward.BonusModelConsumeActionArrayLoader("LoginReward", _model.Id);
-            __loginRewardLoginRewardNamespaceBonusModelLoader = new Gs2Bind.Gs2LoginReward.BonusModelLoader("LoginReward", _model.Id);
-            __userdataLoginRewardLoginRewardBonusModelLoader = new Gs2Bind.Gs2LoginReward.ReceiveStatusLoader("LoginReward", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LoginRewardStartOver", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __exchangeLoginRewardStartOverNamespaceRateModelLoader = Runs__exchangeLoginRewardStartOverNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("LoginRewardStartOver", (string.IsNullOrEmpty(__sdk__exchangeLoginRewardStartOverNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeLoginRewardStartOverNamespaceRateModel_1!)) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2LoginReward.BonusModelConsumeActionArrayLoader("LoginReward", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!)) : null!;
+            __loginRewardLoginRewardNamespaceBonusModelLoader = Runs__loginRewardLoginRewardNamespaceBonusModelLoader ? new Gs2Bind.Gs2LoginReward.BonusModelLoader("LoginReward", (string.IsNullOrEmpty(__sdk__loginRewardLoginRewardNamespaceBonusModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__loginRewardLoginRewardNamespaceBonusModel_1!)) : null!;
+            __userdataLoginRewardLoginRewardBonusModelLoader = Runs__userdataLoginRewardLoginRewardBonusModelLoader ? new Gs2Bind.Gs2LoginReward.ReceiveStatusLoader("LoginReward", (string.IsNullOrEmpty(__sdk__userdataLoginRewardLoginRewardBonusModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataLoginRewardLoginRewardBonusModel_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableLoginRewardCollection CreateModel(LoginRewardCollectionId id)
@@ -123,123 +421,166 @@ namespace GS2Studio.Generated.LoginRewardCollection
             LoginRewardCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeLoginRewardStartOverNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__loginRewardLoginRewardNamespaceBonusModel_1 = null,
+            string? __sdk__userdataLoginRewardLoginRewardBonusModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new LoginRewardCollectionBinder(model, gs2, session);
+            var binder = new LoginRewardCollectionBinder(model, gs2, session, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__exchangeLoginRewardStartOverNamespaceRateModel_1: __sdk__exchangeLoginRewardStartOverNamespaceRateModel_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__loginRewardLoginRewardNamespaceBonusModel_1: __sdk__loginRewardLoginRewardNamespaceBonusModel_1, __sdk__userdataLoginRewardLoginRewardBonusModel_1: __sdk__userdataLoginRewardLoginRewardBonusModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _exchangeLoginRewardStartOverNamespaceRateModel = await __exchangeLoginRewardStartOverNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeLoginRewardStartOverNamespaceRateModel = Runs__exchangeLoginRewardStartOverNamespaceRateModelLoader ? await __exchangeLoginRewardStartOverNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeLoginRewardStartOverNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction = Runs__transactionConsumeActionLoader ? await __transactionConsumeActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
             }
-            var _loginRewardLoginRewardNamespaceBonusModel = await __loginRewardLoginRewardNamespaceBonusModelLoader.Load(_gs2, _session);
+            var _loginRewardLoginRewardNamespaceBonusModel = Runs__loginRewardLoginRewardNamespaceBonusModelLoader ? await __loginRewardLoginRewardNamespaceBonusModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyLoginRewardLoginRewardNamespaceBonusModel(_model, _loginRewardLoginRewardNamespaceBonusModel);
-            var _userdataLoginRewardLoginRewardBonusModel = await __userdataLoginRewardLoginRewardBonusModelLoader.Load(_gs2, _session);
+            if (Runs__loginRewardLoginRewardNamespaceBonusModelLoader)
+            {
+                ApplyLoginRewardLoginRewardNamespaceBonusModel(_model, _loginRewardLoginRewardNamespaceBonusModel);
+            }
+            var _userdataLoginRewardLoginRewardBonusModel = Runs__userdataLoginRewardLoginRewardBonusModelLoader ? await __userdataLoginRewardLoginRewardBonusModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataLoginRewardLoginRewardBonusModel(_model, _userdataLoginRewardLoginRewardBonusModel);
+            if (Runs__userdataLoginRewardLoginRewardBonusModelLoader)
+            {
+                ApplyUserdataLoginRewardLoginRewardBonusModel(_model, _userdataLoginRewardLoginRewardBonusModel);
+            }
             LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-            if (_transactionAcquireAction != null) RestoreId(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            if (Runs__transactionAcquireActionLoader)
+            {
+                if (_transactionAcquireAction != null) RestoreId(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value != null) RestoreId(_model, value.Action, value.Request);
-                    LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeLoginRewardStartOverNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value != null) RestoreId(_model, value.Action, value.Request);
+                        LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeLoginRewardStartOverNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeLoginRewardStartOverNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__loginRewardLoginRewardNamespaceBonusModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyLoginRewardLoginRewardNamespaceBonusModel(_model, value);
-                    LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__userdataLoginRewardLoginRewardBonusModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataLoginRewardLoginRewardBonusModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__loginRewardLoginRewardNamespaceBonusModelLoader)
+            {
+                _unsubscribers.Add(__loginRewardLoginRewardNamespaceBonusModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyLoginRewardLoginRewardNamespaceBonusModel(_model, value);
+                        LoginRewardCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__userdataLoginRewardLoginRewardBonusModelLoader)
+            {
+                _unsubscribers.Add(__userdataLoginRewardLoginRewardBonusModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataLoginRewardLoginRewardBonusModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __exchangeLoginRewardStartOverNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __loginRewardLoginRewardNamespaceBonusModelLoader.Invalidate(_gs2, _session);
-            __userdataLoginRewardLoginRewardBonusModelLoader.Invalidate(_gs2, _session);
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeLoginRewardStartOverNamespaceRateModelLoader)
+            {
+                __exchangeLoginRewardStartOverNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__loginRewardLoginRewardNamespaceBonusModelLoader)
+            {
+                __loginRewardLoginRewardNamespaceBonusModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__userdataLoginRewardLoginRewardBonusModelLoader)
+            {
+                __userdataLoginRewardLoginRewardBonusModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -251,6 +592,7 @@ namespace GS2Studio.Generated.LoginRewardCollection
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -379,6 +721,7 @@ namespace GS2Studio.Generated.LoginRewardCollection
                 model.ReceivedSteps = default;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

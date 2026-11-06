@@ -30,6 +30,7 @@ namespace GS2Studio.Generated.Quest
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableQuestBinder : IReadOnlyQuestBinder
     {
+        QuestBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Start(Gs2.Unity.Gs2Quest.Model.EzConfig[]? config = null);
     }
 
@@ -74,10 +75,169 @@ namespace GS2Studio.Generated.Quest
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class QuestBinder : ReadOnlyQuestBinder, IQuestBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly QuestBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(QuestBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Quest Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableQuest? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableQuest
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal QuestId __valueId = default!;
+                public QuestId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setCollection;
+                internal QuestCollectionId __valueCollection = default!;
+                public QuestCollectionId Collection
+                {
+                    get => __setCollection ? __valueCollection : __scopeOwner.Value.Collection;
+                    set { __setCollection = true; __valueCollection = value; }
+                }
+                internal bool __setCompleted;
+                internal bool __valueCompleted = default!;
+                public bool Completed
+                {
+                    get => __setCompleted ? __valueCompleted : __scopeOwner.Value.Completed;
+                    set { __setCompleted = true; __valueCompleted = value; }
+                }
+                internal bool __setDisplayName;
+                internal string __valueDisplayName = default!;
+                public string DisplayName
+                {
+                    get => __setDisplayName ? __valueDisplayName : __scopeOwner.Value.DisplayName;
+                    set { __setDisplayName = true; __valueDisplayName = value; }
+                }
+                internal bool __setStaminaCost;
+                internal int __valueStaminaCost = default!;
+                public int StaminaCost
+                {
+                    get => __setStaminaCost ? __valueStaminaCost : __scopeOwner.Value.StaminaCost;
+                    set { __setStaminaCost = true; __valueStaminaCost = value; }
+                }
+                internal bool __setReward;
+                internal int __valueReward = default!;
+                public int Reward
+                {
+                    get => __setReward ? __valueReward : __scopeOwner.Value.Reward;
+                    set { __setReward = true; __valueReward = value; }
+                }
+                internal bool __setFirstClearReward;
+                internal int __valueFirstClearReward = default!;
+                public int FirstClearReward
+                {
+                    get => __setFirstClearReward ? __valueFirstClearReward : __scopeOwner.Value.FirstClearReward;
+                    set { __setFirstClearReward = true; __valueFirstClearReward = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<QuestId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setCollection) { _owner._model.Collection = changes.__valueCollection; changes.__setCollection = false; }
+                if (changes.__setCompleted) { _owner._model.Completed = changes.__valueCompleted; changes.__setCompleted = false; }
+                if (changes.__setDisplayName) { _owner._model.DisplayName = changes.__valueDisplayName; changes.__setDisplayName = false; }
+                if (changes.__setStaminaCost) { _owner._model.StaminaCost = changes.__valueStaminaCost; changes.__setStaminaCost = false; }
+                if (changes.__setReward) { _owner._model.Reward = changes.__valueReward; changes.__setReward = false; }
+                if (changes.__setFirstClearReward) { _owner._model.FirstClearReward = changes.__valueFirstClearReward; changes.__setFirstClearReward = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -93,16 +253,24 @@ namespace GS2Studio.Generated.Quest
         internal QuestBinder(
             MutableQuest model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            string? __sdk__questQuestQuestModel_2 = null,
+            string? __sdk__transactionAcquireAction_2 = null,
+            string? __sdk__transactionConsumeAction_2 = null,
+            string? __sdk__transactionAcquireAction2_2 = null,
+            string? __sdk__transactionAcquireAction3_2 = null,
+            string? __sdk__membershipQuestCompletedQuestList_1 = null
         ) : base(model, gs2, session)
         {
-            __questQuestQuestModelLoader = new Gs2Bind.Gs2Quest.QuestModelLoader("Quest", _model.Collection, _model.Id);
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Quest.QuestModelContentsAcquireActionArrayLoader("Quest", _model.Collection, _model.Id, 0);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Quest.QuestModelConsumeActionArrayLoader("Quest", _model.Collection, _model.Id);
-            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Quest.QuestModelFailedAcquireActionArrayLoader("Quest", _model.Collection, _model.Id);
-            __transactionAcquireAction3Loader = new Gs2Bind.Gs2Quest.QuestModelFirstCompleteAcquireActionArrayLoader("Quest", _model.Collection, _model.Id);
-            __membershipQuestCompletedQuestListLoader = new Gs2Bind.Gs2Quest.CompletedQuestListLoader("Quest", _model.Collection);
+
+            __questQuestQuestModelLoader = new Gs2Bind.Gs2Quest.QuestModelLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__questQuestQuestModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__questQuestQuestModel_2!));
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Quest.QuestModelContentsAcquireActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_2!), 0);
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2Quest.QuestModelConsumeActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionConsumeAction_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_2!));
+            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Quest.QuestModelFailedAcquireActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction2_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction2_2!));
+            __transactionAcquireAction3Loader = new Gs2Bind.Gs2Quest.QuestModelFirstCompleteAcquireActionArrayLoader("Quest", _model.Collection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction3_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction3_2!));
+            __membershipQuestCompletedQuestListLoader = new Gs2Bind.Gs2Quest.CompletedQuestListLoader("Quest", (string.IsNullOrEmpty(__sdk__membershipQuestCompletedQuestList_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__membershipQuestCompletedQuestList_1!));
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableQuest CreateModel(QuestId id, QuestCollectionId collection)
@@ -117,14 +285,19 @@ namespace GS2Studio.Generated.Quest
             QuestId id, QuestCollectionId collection,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__questQuestQuestModel_2 = null,
+            string? __sdk__transactionAcquireAction_2 = null,
+            string? __sdk__transactionConsumeAction_2 = null,
+            string? __sdk__transactionAcquireAction2_2 = null,
+            string? __sdk__transactionAcquireAction3_2 = null,
+            string? __sdk__membershipQuestCompletedQuestList_1 = null)
         {
             var model = CreateModel(id, collection);
-            var binder = new QuestBinder(model, gs2, session);
+            var binder = new QuestBinder(model, gs2, session, __sdk__questQuestQuestModel_2: __sdk__questQuestQuestModel_2, __sdk__transactionAcquireAction_2: __sdk__transactionAcquireAction_2, __sdk__transactionConsumeAction_2: __sdk__transactionConsumeAction_2, __sdk__transactionAcquireAction2_2: __sdk__transactionAcquireAction2_2, __sdk__transactionAcquireAction3_2: __sdk__transactionAcquireAction3_2, __sdk__membershipQuestCompletedQuestList_1: __sdk__membershipQuestCompletedQuestList_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -315,6 +488,7 @@ namespace GS2Studio.Generated.Quest
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -366,6 +540,7 @@ namespace GS2Studio.Generated.Quest
                 model.Completed = default;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

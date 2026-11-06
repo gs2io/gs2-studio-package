@@ -24,6 +24,9 @@ namespace GS2Studio.Generated.Wallet
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public WalletMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<Wallet>? Updated;
 
         public event Action<IActionableWalletBinder>? Bound;

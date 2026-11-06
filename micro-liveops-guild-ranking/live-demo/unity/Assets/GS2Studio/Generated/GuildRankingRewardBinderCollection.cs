@@ -128,7 +128,6 @@ namespace GS2Studio.Generated.GuildRankingReward
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyGuildRankingRewardBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyGuildRankingRewardBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private Action? _onChange;
 
         private IComparer<IReadOnlyGuildRankingRewardBinder> _configuredComparer = GuildRankingRewardBinderComparer.Default;
@@ -255,7 +254,7 @@ namespace GS2Studio.Generated.GuildRankingReward
             foreach (var entry in entries)
             {
                 if (string.IsNullOrEmpty(entry.RawInstanceId)) continue;
-                var rowKey = entry.RawInstanceId;
+                var rowKey = string.Concat("overlay|", entry.RawInstanceId);
                 if (!TryParseCompositeIdentity(entry.RawInstanceId, out var thresholdRank, out var ranking)) continue;
                 seen.Add(rowKey);
                 if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
@@ -319,7 +318,6 @@ namespace GS2Studio.Generated.GuildRankingReward
                 if (removalError != null) throw removalError;
             }
             if (!_disposed) SortBinders();
-            _mounted = true;
         }
         private static bool TryParseCompositeIdentity(string idScalar, out int thresholdRank, out string ranking)
         {

@@ -15,22 +15,37 @@ namespace GS2Studio.Generated.Mission
     public interface Mission
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the mission.
         /// </summary>
         MissionId Id { get; }
 
+        /// <summary>
+        /// Mission group this mission belongs to.
+        /// </summary>
         MissionCollectionId MissionCollection { get; }
 
+        /// <summary>
+        /// Mission counter used to determine completion.
+        /// </summary>
         MissionCounterId Counter { get; }
 
+        /// <summary>
+        /// Counter value required to complete the mission.
+        /// </summary>
         long TargetValue { get; }
 
+        /// <summary>
+        /// Whether the player has completed this mission.
+        /// </summary>
         bool Completed { get; }
 
+        /// <summary>
+        /// Whether the player has claimed the completion reward.
+        /// </summary>
         bool Received { get; }
 
         /// <summary>
-        /// Coins this mission pays when its reward is received
+        /// Coins paid when this mission's reward is received.
         /// </summary>
         int RewardAmount { get; }
     }

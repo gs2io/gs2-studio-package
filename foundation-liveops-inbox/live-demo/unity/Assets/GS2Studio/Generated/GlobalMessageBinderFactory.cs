@@ -27,7 +27,10 @@ namespace GS2Studio.Generated.GlobalMessage
             GlobalMessageId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeInboxDeliverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__scheduleInboxScheduleNamespaceEvent_1 = null);
         IGlobalMessageBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -39,9 +42,12 @@ namespace GS2Studio.Generated.GlobalMessage
             GlobalMessageId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeInboxDeliverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__scheduleInboxScheduleNamespaceEvent_1 = null)
         {
-            return await GlobalMessageBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await GlobalMessageBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__exchangeInboxDeliverNamespaceRateModel_1, __sdk__transactionAcquireAction_1, __sdk__scheduleInboxScheduleNamespaceEvent_1);
         }
         public IGlobalMessageBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

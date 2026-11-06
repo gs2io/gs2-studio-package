@@ -13,16 +13,28 @@ namespace GS2Studio.Generated.MissionCounter
     public interface MissionCounter
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the mission counter.
         /// </summary>
         MissionCounterId Id { get; }
 
+        /// <summary>
+        /// Progress accumulated in the current daily reset period.
+        /// </summary>
         long TodayValue { get; }
 
+        /// <summary>
+        /// Progress accumulated in the current weekly reset period.
+        /// </summary>
         long WeeklyValue { get; }
 
+        /// <summary>
+        /// Progress accumulated in the current monthly reset period.
+        /// </summary>
         long MonthlyValue { get; }
 
+        /// <summary>
+        /// All-time progress value that is not reset.
+        /// </summary>
         long TotalValue { get; }
     }
 

@@ -14,19 +14,22 @@ namespace GS2Studio.Generated.CharacterEnhanceBonus
     public interface CharacterEnhanceBonus
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the enhancement bonus.
         /// </summary>
         CharacterEnhanceBonusId Id { get; }
 
+        /// <summary>
+        /// Enhancement recipe to which this bonus applies.
+        /// </summary>
         CharacterEnhanceId Enhance { get; }
 
         /// <summary>
-        /// Experience multiplier when drawn
+        /// Multiplier applied to experience when this bonus is drawn.
         /// </summary>
         float Rate { get; }
 
         /// <summary>
-        /// Relative draw weight
+        /// Relative weight used when drawing this bonus.
         /// </summary>
         int Weight { get; }
     }

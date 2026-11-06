@@ -27,6 +27,9 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public CharacterEnhanceMaterialMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<CharacterEnhanceMaterial>? Updated;
 
         public event Action<IActionableCharacterEnhanceMaterialBinder>? Bound;

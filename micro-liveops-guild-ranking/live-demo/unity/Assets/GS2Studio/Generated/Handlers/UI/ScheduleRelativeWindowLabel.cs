@@ -27,8 +27,12 @@ namespace GS2Studio.Generated.Schedule.UI
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataScheduleTrigger" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -67,7 +71,20 @@ namespace GS2Studio.Generated.Schedule.UI
 
         private void OnUpdated(Schedule model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke($"{(model.RelativeStartAt.HasValue ? model.RelativeStartAt.Value.ToString("yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture) : string.Empty)} - {(model.RelativeEndAt.HasValue ? model.RelativeEndAt.Value.ToString("yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture) : string.Empty)}");
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataScheduleTrigger) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(ScheduleRelativeWindowLabel)} on '{name}': this row's mount surface did not run UserdataScheduleTrigger, which fills what this component reads (RelativeStartAt, RelativeEndAt); those readings render as their default, not as an absent value.", this);
         }
     }
 }

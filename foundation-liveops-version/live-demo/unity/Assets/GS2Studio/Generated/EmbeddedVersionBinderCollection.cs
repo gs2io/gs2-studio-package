@@ -110,8 +110,20 @@ namespace GS2Studio.Generated.EmbeddedVersion
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyEmbeddedVersionBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyEmbeddedVersionBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyEmbeddedVersionBinder> _configuredComparer = EmbeddedVersionBinderComparer.Default;
@@ -232,18 +244,38 @@ namespace GS2Studio.Generated.EmbeddedVersion
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Version.VersionModelArrayLoader("Version");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromVersionVersionMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromVersionVersionMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromVersionVersionMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromVersionVersionMasterItems");
+            _pendingCollectionAxis = "ReconcileFromVersionVersionMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Version.VersionModelArrayLoader("Version");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromVersionVersionMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromVersionVersionMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromVersionVersionMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromVersionVersionMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromVersionVersionMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromVersionVersionMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromVersionVersionMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -251,7 +283,6 @@ namespace GS2Studio.Generated.EmbeddedVersion
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Version.VersionModelArrayLoader("Version");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -259,9 +290,10 @@ namespace GS2Studio.Generated.EmbeddedVersion
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromVersionVersionMasterItems");
                     try
                     {
-                        await ReconcileFromVersionVersionMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromVersionVersionMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -270,41 +302,68 @@ namespace GS2Studio.Generated.EmbeddedVersion
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromVersionVersionMasterItems(IList<Gs2.Unity.Gs2Version.Model.EzVersionModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromVersionVersionMasterItems(IList<Gs2.Unity.Gs2Version.Model.EzVersionModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromVersionVersionMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractVersionVersionMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromVersionVersionMasterItems", updateVersion)) return;
                 var rowKey = ExtractVersionVersionMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractVersionVersionMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<EmbeddedVersionId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyVersionVersionMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-liveops-version", "masterData", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "foundation-liveops-version", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "version", "VersionModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-liveops-version\",\"masterData\",\"mdr_0EAW92E9858ZJVGBKXZQ584WAH\",\"version\",\"VersionModel\",\"versionName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-liveops-version", "masterData", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "foundation-liveops-version", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "version", "VersionModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-liveops-version", "masterData", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "foundation-liveops-version", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "version", "VersionModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromVersionVersionMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromVersionVersionMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromVersionVersionMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<EmbeddedVersionId>.Default.Equals(raced.Id, nextId)) { ApplyVersionVersionMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-liveops-version", "masterData", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "foundation-liveops-version", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "version", "VersionModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-liveops-version\",\"masterData\",\"mdr_0EAW92E9858ZJVGBKXZQ584WAH\",\"version\",\"VersionModel\",\"versionName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-liveops-version", "masterData", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "foundation-liveops-version", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "version", "VersionModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-liveops-version", "masterData", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "foundation-liveops-version", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "version", "VersionModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyVersionVersionMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-liveops-version", "masterData", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "foundation-liveops-version", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "version", "VersionModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-liveops-version\",\"masterData\",\"mdr_0EAW92E9858ZJVGBKXZQ584WAH\",\"version\",\"VersionModel\",\"versionName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-liveops-version", "masterData", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "foundation-liveops-version", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "version", "VersionModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-liveops-version", "masterData", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "foundation-liveops-version", "mdr_0EAW92E9858ZJVGBKXZQ584WAH", "version", "VersionModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromVersionVersionMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -344,13 +403,13 @@ namespace GS2Studio.Generated.EmbeddedVersion
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EmbeddedVersionBinder> BuildBinderFromVersionVersionMasterItem(Gs2.Unity.Gs2Version.Model.EzVersionModel item, CancellationToken cancellationToken)
+        private async Task<EmbeddedVersionBinder?> BuildBinderFromVersionVersionMasterItem(Gs2.Unity.Gs2Version.Model.EzVersionModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = EmbeddedVersionBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EmbeddedVersionId) : new EmbeddedVersionId(item.Name)));
             ApplyVersionVersionMasterItemTo(model, item);
-            var binder = new EmbeddedVersionBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new EmbeddedVersionBinder(model, _gs2, _session, __sdk__versionVersionNamespaceVersionModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyVersionVersionMasterItemTo(MutableEmbeddedVersion model, Gs2.Unity.Gs2Version.Model.EzVersionModel item)
@@ -369,8 +428,9 @@ namespace GS2Studio.Generated.EmbeddedVersion
         {
             var id = ExtractVersionVersionMasterIdentity(item);
             if (EqualityComparer<EmbeddedVersionId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"VersionVersion\",\"foundation-liveops-version\",\"mdr_0EAW92E9858ZJVGBKXZQ584WAH\",null,null,\"foundation-liveops-version\",\"mdr_0EAW92E9858ZJVGBKXZQ584WAH\",\"version\",\"VersionModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class EmbeddedVersionBinderComparer : IComparer<IReadOnlyEmbeddedVersionBinder>

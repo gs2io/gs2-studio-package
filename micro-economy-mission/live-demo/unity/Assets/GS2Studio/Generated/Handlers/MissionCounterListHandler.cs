@@ -118,6 +118,7 @@ namespace GS2Studio.Generated.MissionCounter
         private IMissionCounterBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultMissionCounterBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

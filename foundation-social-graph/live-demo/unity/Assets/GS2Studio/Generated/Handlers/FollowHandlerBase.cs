@@ -24,6 +24,9 @@ namespace GS2Studio.Generated.Follow
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public FollowMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<Follow>? Updated;
 
         public event Action<IActionableFollowBinder>? Bound;

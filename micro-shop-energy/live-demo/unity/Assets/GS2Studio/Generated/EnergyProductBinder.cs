@@ -19,17 +19,76 @@ using Gs2.Unity.Core.Model;
 using Gs2.Unity.Gs2Exchange.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2.Util.LitJson;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.EnergyProduct
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum EnergyProductMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the ExchangeEnergyShop master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction2", "ExchangeEnergyProductNamespaceRateModel", "TransactionConsumeAction2")]
+        ExchangeEnergyShopMaster,
+
+        /// <summary>Built by the ExchangeEnergyProduct master-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeEnergyShopNamespaceRateModel", "TransactionConsumeAction", "TransactionAcquireAction")]
+        ExchangeEnergyProductMaster,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyEnergyProductBinder : EnergyProduct
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        EnergyProductMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireAction2Loader</c>. False means this path does not supply <c>Energy</c>, <c>RecoveryValue</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeEnergyShopMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction2 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeEnergyProductNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeEnergyShopMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeEnergyProductNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionArrayLoader</c> load on <c>__transactionConsumeAction2Loader</c>. False means this path does not supply <c>Cost</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeEnergyShopMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction2 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeEnergyShopNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeEnergyProductMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeEnergyShopNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeActionLoader</c>. False means this path does not supply <c>Cost</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeEnergyProductMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply <c>Energy</c>, <c>RecoveryValue</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeEnergyProductMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableEnergyProductBinder : IReadOnlyEnergyProductBinder
     {
+        EnergyProductBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Buy(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
     }
 
@@ -41,7 +100,7 @@ namespace GS2Studio.Generated.EnergyProduct
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyEnergyProductBinder : IReadOnlyEnergyProductBinder
+    public abstract class ReadOnlyEnergyProductBinder : IReadOnlyEnergyProductBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableEnergyProduct _model;
@@ -59,6 +118,28 @@ namespace GS2Studio.Generated.EnergyProduct
         /// <inheritdoc cref="EnergyProduct.Cost" />
         public int Cost => _model.Cost;
 
+        /// <inheritdoc />
+        public abstract EnergyProductMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction2 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeEnergyProductNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction2 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeEnergyShopNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+
         private protected ReadOnlyEnergyProductBinder(MutableEnergyProduct model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -68,10 +149,145 @@ namespace GS2Studio.Generated.EnergyProduct
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class EnergyProductBinder : ReadOnlyEnergyProductBinder, IEnergyProductBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly EnergyProductBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(EnergyProductBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public EnergyProduct Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableEnergyProduct? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableEnergyProduct
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal EnergyProductId __valueId = default!;
+                public EnergyProductId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setEnergy;
+                internal EnergyId __valueEnergy = default!;
+                public EnergyId Energy
+                {
+                    get => __setEnergy ? __valueEnergy : __scopeOwner.Value.Energy;
+                    set { __setEnergy = true; __valueEnergy = value; }
+                }
+                internal bool __setRecoveryValue;
+                internal int __valueRecoveryValue = default!;
+                public int RecoveryValue
+                {
+                    get => __setRecoveryValue ? __valueRecoveryValue : __scopeOwner.Value.RecoveryValue;
+                    set { __setRecoveryValue = true; __valueRecoveryValue = value; }
+                }
+                internal bool __setCost;
+                internal int __valueCost = default!;
+                public int Cost
+                {
+                    get => __setCost ? __valueCost : __scopeOwner.Value.Cost;
+                    set { __setCost = true; __valueCost = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<EnergyProductId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setEnergy) { _owner._model.Energy = changes.__valueEnergy; changes.__setEnergy = false; }
+                if (changes.__setRecoveryValue) { _owner._model.RecoveryValue = changes.__valueRecoveryValue; changes.__setRecoveryValue = false; }
+                if (changes.__setCost) { _owner._model.Cost = changes.__valueCost; changes.__setCost = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -83,20 +299,77 @@ namespace GS2Studio.Generated.EnergyProduct
         private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeEnergyProductNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionArrayLoader __transactionConsumeAction2Loader;
 
+        private readonly EnergyProductMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireAction2Loader</c> reads.</summary>
+        /// <remarks>ExchangeEnergyShopMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireAction2Loader => _mountSurfaceValue is EnergyProductMountSurface.Full or EnergyProductMountSurface.ExchangeEnergyProductMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeEnergyProductNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeEnergyShopMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeEnergyProductNamespaceRateModelLoader => _mountSurfaceValue is EnergyProductMountSurface.Full or EnergyProductMountSurface.ExchangeEnergyProductMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeAction2Loader</c> reads.</summary>
+        /// <remarks>ExchangeEnergyShopMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeAction2Loader => _mountSurfaceValue is EnergyProductMountSurface.Full or EnergyProductMountSurface.ExchangeEnergyProductMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeEnergyShopNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeEnergyProductMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeEnergyShopNamespaceRateModelLoader => _mountSurfaceValue is EnergyProductMountSurface.Full or EnergyProductMountSurface.ExchangeEnergyShopMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeEnergyProductMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeActionLoader => _mountSurfaceValue is EnergyProductMountSurface.Full or EnergyProductMountSurface.ExchangeEnergyShopMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeEnergyProductMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is EnergyProductMountSurface.Full or EnergyProductMountSurface.ExchangeEnergyShopMaster;
+
+        /// <inheritdoc />
+        public override EnergyProductMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction2 => Runs__transactionAcquireAction2Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeEnergyProductNamespaceRateModel => Runs__exchangeEnergyProductNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction2 => Runs__transactionConsumeAction2Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeEnergyShopNamespaceRateModel => Runs__exchangeEnergyShopNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction => Runs__transactionConsumeActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal EnergyProductBinder(
             MutableEnergyProduct model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            EnergyProductMountSurface _mountSurface = EnergyProductMountSurface.Full,
+            string? __sdk__exchangeEnergyShopNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeEnergyProductNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null
         ) : base(model, gs2, session)
         {
-            __exchangeEnergyShopNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyShop", _model.Id);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EnergyShop", _model.Id, 0);
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EnergyShop", _model.Id, 0);
-            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EnergyProduct", _model.Id, 0);
-            __exchangeEnergyProductNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyProduct", _model.Id);
-            __transactionConsumeAction2Loader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionArrayLoader("EnergyProduct", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __exchangeEnergyShopNamespaceRateModelLoader = Runs__exchangeEnergyShopNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyShop", (string.IsNullOrEmpty(__sdk__exchangeEnergyShopNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEnergyShopNamespaceRateModel_1!)) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EnergyShop", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EnergyShop", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __transactionAcquireAction2Loader = Runs__transactionAcquireAction2Loader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EnergyProduct", (string.IsNullOrEmpty(__sdk__transactionAcquireAction2_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction2_1!), 0) : null!;
+            __exchangeEnergyProductNamespaceRateModelLoader = Runs__exchangeEnergyProductNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyProduct", (string.IsNullOrEmpty(__sdk__exchangeEnergyProductNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEnergyProductNamespaceRateModel_1!)) : null!;
+            __transactionConsumeAction2Loader = Runs__transactionConsumeAction2Loader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionArrayLoader("EnergyProduct", (string.IsNullOrEmpty(__sdk__transactionConsumeAction2_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction2_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableEnergyProduct CreateModel(EnergyProductId id)
@@ -110,63 +383,86 @@ namespace GS2Studio.Generated.EnergyProduct
             EnergyProductId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEnergyShopNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeEnergyProductNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new EnergyProductBinder(model, gs2, session);
+            var binder = new EnergyProductBinder(model, gs2, session, __sdk__exchangeEnergyShopNamespaceRateModel_1: __sdk__exchangeEnergyShopNamespaceRateModel_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__transactionAcquireAction2_1: __sdk__transactionAcquireAction2_1, __sdk__exchangeEnergyProductNamespaceRateModel_1: __sdk__exchangeEnergyProductNamespaceRateModel_1, __sdk__transactionConsumeAction2_1: __sdk__transactionConsumeAction2_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _exchangeEnergyShopNamespaceRateModel = await __exchangeEnergyShopNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeEnergyShopNamespaceRateModel = Runs__exchangeEnergyShopNamespaceRateModelLoader ? await __exchangeEnergyShopNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeEnergyShopNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction = Runs__transactionConsumeActionLoader ? await __transactionConsumeActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
             }
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _transactionAcquireAction2 = await __transactionAcquireAction2Loader.Load(_gs2, _session);
+            var _transactionAcquireAction2 = Runs__transactionAcquireAction2Loader ? await __transactionAcquireAction2Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction2 != null)
             {
             }
-            var _exchangeEnergyProductNamespaceRateModel = await __exchangeEnergyProductNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeEnergyProductNamespaceRateModel = Runs__exchangeEnergyProductNamespaceRateModelLoader ? await __exchangeEnergyProductNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeEnergyProductNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction2 = await __transactionConsumeAction2Loader.Load(_gs2, _session);
+            var _transactionConsumeAction2 = Runs__transactionConsumeAction2Loader ? await __transactionConsumeAction2Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction2 != null)
             {
             }
-            if (_transactionConsumeAction == null) _RestoreCost__transactionConsumeActionCache = null; else _RestoreCost__transactionConsumeActionCache = (_transactionConsumeAction.Action, _transactionConsumeAction.Request);
-            _RestoreCost__transactionConsumeAction2Cache.Clear();
-            if (_transactionConsumeAction2 != null)
+            if (Runs__transactionConsumeActionLoader)
             {
-                foreach (var __action in _transactionConsumeAction2)
+                if (_transactionConsumeAction == null) _RestoreCost__transactionConsumeActionCache = null; else _RestoreCost__transactionConsumeActionCache = (_transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            }
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                _RestoreCost__transactionConsumeAction2Cache.Clear();
+                if (_transactionConsumeAction2 != null)
                 {
-                    if (__action != null) _RestoreCost__transactionConsumeAction2Cache.Add((__action.Action, __action.Request));
+                    foreach (var __action in _transactionConsumeAction2)
+                    {
+                        if (__action != null) _RestoreCost__transactionConsumeAction2Cache.Add((__action.Action, __action.Request));
+                    }
                 }
             }
             RestoreCostFromSources();
-            if (_transactionAcquireAction == null) _RestoreEnergy__transactionAcquireActionCache = null; else _RestoreEnergy__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
-            if (_transactionAcquireAction2 == null) _RestoreEnergy__transactionAcquireAction2Cache = null; else _RestoreEnergy__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
+            if (Runs__transactionAcquireActionLoader)
+            {
+                if (_transactionAcquireAction == null) _RestoreEnergy__transactionAcquireActionCache = null; else _RestoreEnergy__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                if (_transactionAcquireAction2 == null) _RestoreEnergy__transactionAcquireAction2Cache = null; else _RestoreEnergy__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
+            }
             RestoreEnergyFromSources();
-            if (_transactionAcquireAction == null) _RestoreRecoveryValue__transactionAcquireActionCache = null; else _RestoreRecoveryValue__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
-            if (_transactionAcquireAction2 == null) _RestoreRecoveryValue__transactionAcquireAction2Cache = null; else _RestoreRecoveryValue__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
+            if (Runs__transactionAcquireActionLoader)
+            {
+                if (_transactionAcquireAction == null) _RestoreRecoveryValue__transactionAcquireActionCache = null; else _RestoreRecoveryValue__transactionAcquireActionCache = (_transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                if (_transactionAcquireAction2 == null) _RestoreRecoveryValue__transactionAcquireAction2Cache = null; else _RestoreRecoveryValue__transactionAcquireAction2Cache = (_transactionAcquireAction2.Action, _transactionAcquireAction2.Request);
+            }
             RestoreRecoveryValueFromSources();
             _mounted = true;
         }
@@ -174,114 +470,150 @@ namespace GS2Studio.Generated.EnergyProduct
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__exchangeEnergyShopNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__exchangeEnergyShopNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeEnergyShopNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
-                    {
-                    }
-                    if (value == null) _RestoreCost__transactionConsumeActionCache = null; else _RestoreCost__transactionConsumeActionCache = (value.Action, value.Request);
-                    RestoreCostFromSources();
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
-                    {
-                    }
-                    if (value == null) _RestoreEnergy__transactionAcquireActionCache = null; else _RestoreEnergy__transactionAcquireActionCache = (value.Action, value.Request);
-                    RestoreEnergyFromSources();
-                    if (value == null) _RestoreRecoveryValue__transactionAcquireActionCache = null; else _RestoreRecoveryValue__transactionAcquireActionCache = (value.Action, value.Request);
-                    RestoreRecoveryValueFromSources();
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
-                    {
-                    }
-                    if (value == null) _RestoreEnergy__transactionAcquireAction2Cache = null; else _RestoreEnergy__transactionAcquireAction2Cache = (value.Action, value.Request);
-                    RestoreEnergyFromSources();
-                    if (value == null) _RestoreRecoveryValue__transactionAcquireAction2Cache = null; else _RestoreRecoveryValue__transactionAcquireAction2Cache = (value.Action, value.Request);
-                    RestoreRecoveryValueFromSources();
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeEnergyProductNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
-                    {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeAction2Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
-                    {
-                    }
-                    _RestoreCost__transactionConsumeAction2Cache.Clear();
-                    if (value != null)
-                    {
-                        foreach (var __action in value)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
                         {
-                            if (__action != null) _RestoreCost__transactionConsumeAction2Cache.Add((__action.Action, __action.Request));
                         }
-                    }
-                    RestoreCostFromSources();
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value == null) _RestoreCost__transactionConsumeActionCache = null; else _RestoreCost__transactionConsumeActionCache = (value.Action, value.Request);
+                        RestoreCostFromSources();
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value == null) _RestoreEnergy__transactionAcquireActionCache = null; else _RestoreEnergy__transactionAcquireActionCache = (value.Action, value.Request);
+                        RestoreEnergyFromSources();
+                        if (value == null) _RestoreRecoveryValue__transactionAcquireActionCache = null; else _RestoreRecoveryValue__transactionAcquireActionCache = (value.Action, value.Request);
+                        RestoreRecoveryValueFromSources();
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value == null) _RestoreEnergy__transactionAcquireAction2Cache = null; else _RestoreEnergy__transactionAcquireAction2Cache = (value.Action, value.Request);
+                        RestoreEnergyFromSources();
+                        if (value == null) _RestoreRecoveryValue__transactionAcquireAction2Cache = null; else _RestoreRecoveryValue__transactionAcquireAction2Cache = (value.Action, value.Request);
+                        RestoreRecoveryValueFromSources();
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeEnergyProductNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeEnergyProductNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                _unsubscribers.Add(__transactionConsumeAction2Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        _RestoreCost__transactionConsumeAction2Cache.Clear();
+                        if (value != null)
+                        {
+                            foreach (var __action in value)
+                            {
+                                if (__action != null) _RestoreCost__transactionConsumeAction2Cache.Add((__action.Action, __action.Request));
+                            }
+                        }
+                        RestoreCostFromSources();
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __exchangeEnergyShopNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
-            __exchangeEnergyProductNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
+            if (Runs__exchangeEnergyShopNamespaceRateModelLoader)
+            {
+                __exchangeEnergyShopNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeEnergyProductNamespaceRateModelLoader)
+            {
+                __exchangeEnergyProductNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -293,6 +625,7 @@ namespace GS2Studio.Generated.EnergyProduct
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {

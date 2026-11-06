@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.EquipmentEnchant
             EquipmentEnchantId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__enchantEquipmentEnchantNamespaceRarityParameterModel_1 = null);
         IEquipmentEnchantBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.EquipmentEnchant
             EquipmentEnchantId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__enchantEquipmentEnchantNamespaceRarityParameterModel_1 = null)
         {
-            return await EquipmentEnchantBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await EquipmentEnchantBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__enchantEquipmentEnchantNamespaceRarityParameterModel_1);
         }
         public IEquipmentEnchantBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

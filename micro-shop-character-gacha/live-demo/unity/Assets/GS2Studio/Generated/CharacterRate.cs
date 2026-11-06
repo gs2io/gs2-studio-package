@@ -15,14 +15,23 @@ namespace GS2Studio.Generated.CharacterRate
     public interface CharacterRate
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the character draw rate.
         /// </summary>
         CharacterRateId Id { get; }
 
+        /// <summary>
+        /// Gacha rarity this character belongs to.
+        /// </summary>
         GachaRarityId Rarity { get; }
 
+        /// <summary>
+        /// Character included in the draw pool.
+        /// </summary>
         CharacterId Character { get; }
 
+        /// <summary>
+        /// Relative weight used to draw this character within its rarity.
+        /// </summary>
         int Weight { get; }
     }
 

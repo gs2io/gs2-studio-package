@@ -20,17 +20,58 @@ using Gs2.Unity.Gs2Schedule.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Schedule;
 using Gs2.Util.LitJson;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.GlobalMessage
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum GlobalMessageMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the ExchangeInboxDeliver master-data list axis.</summary>
+        [Gs2SkipsLoaders("ScheduleInboxScheduleNamespaceEvent")]
+        ExchangeInboxDeliverMaster,
+
+        /// <summary>Built by the ScheduleInboxSchedule master-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeInboxDeliverNamespaceRateModel", "TransactionAcquireAction")]
+        ScheduleInboxScheduleMaster,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyGlobalMessageBinder : GlobalMessage
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        GlobalMessageMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Schedule.EventLoader</c> load on <c>__scheduleInboxScheduleNamespaceEventLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeInboxDeliverMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedScheduleInboxScheduleNamespaceEvent { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeInboxDeliverNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ScheduleInboxScheduleMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeInboxDeliverNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply <c>Payload</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ScheduleInboxScheduleMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableGlobalMessageBinder : IReadOnlyGlobalMessageBinder
     {
+        GlobalMessageBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Deliver(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
     }
 
@@ -42,7 +83,7 @@ namespace GS2Studio.Generated.GlobalMessage
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyGlobalMessageBinder : IReadOnlyGlobalMessageBinder
+    public abstract class ReadOnlyGlobalMessageBinder : IReadOnlyGlobalMessageBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableGlobalMessage _model;
@@ -60,6 +101,19 @@ namespace GS2Studio.Generated.GlobalMessage
         /// <inheritdoc cref="GlobalMessage.End" />
         public DateTime End => _model.End;
 
+        /// <inheritdoc />
+        public abstract GlobalMessageMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedScheduleInboxScheduleNamespaceEvent { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeInboxDeliverNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+
         private protected ReadOnlyGlobalMessageBinder(MutableGlobalMessage model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -69,10 +123,145 @@ namespace GS2Studio.Generated.GlobalMessage
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class GlobalMessageBinder : ReadOnlyGlobalMessageBinder, IGlobalMessageBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly GlobalMessageBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(GlobalMessageBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public GlobalMessage Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableGlobalMessage? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableGlobalMessage
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal GlobalMessageId __valueId = default!;
+                public GlobalMessageId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setPayload;
+                internal string __valuePayload = default!;
+                public string Payload
+                {
+                    get => __setPayload ? __valuePayload : __scopeOwner.Value.Payload;
+                    set { __setPayload = true; __valuePayload = value; }
+                }
+                internal bool __setBegin;
+                internal DateTime __valueBegin = default!;
+                public DateTime Begin
+                {
+                    get => __setBegin ? __valueBegin : __scopeOwner.Value.Begin;
+                    set { __setBegin = true; __valueBegin = value; }
+                }
+                internal bool __setEnd;
+                internal DateTime __valueEnd = default!;
+                public DateTime End
+                {
+                    get => __setEnd ? __valueEnd : __scopeOwner.Value.End;
+                    set { __setEnd = true; __valueEnd = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<GlobalMessageId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setPayload) { _owner._model.Payload = changes.__valuePayload; changes.__setPayload = false; }
+                if (changes.__setBegin) { _owner._model.Begin = changes.__valueBegin; changes.__setBegin = false; }
+                if (changes.__setEnd) { _owner._model.End = changes.__valueEnd; changes.__setEnd = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -81,17 +270,50 @@ namespace GS2Studio.Generated.GlobalMessage
         private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
         private readonly Gs2Bind.Gs2Schedule.EventLoader __scheduleInboxScheduleNamespaceEventLoader;
 
+        private readonly GlobalMessageMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__scheduleInboxScheduleNamespaceEventLoader</c> reads.</summary>
+        /// <remarks>ExchangeInboxDeliverMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__scheduleInboxScheduleNamespaceEventLoader => _mountSurfaceValue is GlobalMessageMountSurface.Full or GlobalMessageMountSurface.ScheduleInboxScheduleMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeInboxDeliverNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ScheduleInboxScheduleMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeInboxDeliverNamespaceRateModelLoader => _mountSurfaceValue is GlobalMessageMountSurface.Full or GlobalMessageMountSurface.ExchangeInboxDeliverMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>ScheduleInboxScheduleMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is GlobalMessageMountSurface.Full or GlobalMessageMountSurface.ExchangeInboxDeliverMaster;
+
+        /// <inheritdoc />
+        public override GlobalMessageMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedScheduleInboxScheduleNamespaceEvent => Runs__scheduleInboxScheduleNamespaceEventLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeInboxDeliverNamespaceRateModel => Runs__exchangeInboxDeliverNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal GlobalMessageBinder(
             MutableGlobalMessage model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            GlobalMessageMountSurface _mountSurface = GlobalMessageMountSurface.Full,
+            string? __sdk__exchangeInboxDeliverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__scheduleInboxScheduleNamespaceEvent_1 = null
         ) : base(model, gs2, session)
         {
-            __exchangeInboxDeliverNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("InboxDeliver", _model.Id);
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("InboxDeliver", _model.Id, 0);
-            __scheduleInboxScheduleNamespaceEventLoader = new Gs2Bind.Gs2Schedule.EventLoader("InboxSchedule", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __exchangeInboxDeliverNamespaceRateModelLoader = Runs__exchangeInboxDeliverNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("InboxDeliver", (string.IsNullOrEmpty(__sdk__exchangeInboxDeliverNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeInboxDeliverNamespaceRateModel_1!)) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("InboxDeliver", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __scheduleInboxScheduleNamespaceEventLoader = Runs__scheduleInboxScheduleNamespaceEventLoader ? new Gs2Bind.Gs2Schedule.EventLoader("InboxSchedule", (string.IsNullOrEmpty(__sdk__scheduleInboxScheduleNamespaceEvent_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__scheduleInboxScheduleNamespaceEvent_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableGlobalMessage CreateModel(GlobalMessageId id)
@@ -105,86 +327,113 @@ namespace GS2Studio.Generated.GlobalMessage
             GlobalMessageId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeInboxDeliverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__scheduleInboxScheduleNamespaceEvent_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new GlobalMessageBinder(model, gs2, session);
+            var binder = new GlobalMessageBinder(model, gs2, session, __sdk__exchangeInboxDeliverNamespaceRateModel_1: __sdk__exchangeInboxDeliverNamespaceRateModel_1, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__scheduleInboxScheduleNamespaceEvent_1: __sdk__scheduleInboxScheduleNamespaceEvent_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _exchangeInboxDeliverNamespaceRateModel = await __exchangeInboxDeliverNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeInboxDeliverNamespaceRateModel = Runs__exchangeInboxDeliverNamespaceRateModelLoader ? await __exchangeInboxDeliverNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeInboxDeliverNamespaceRateModel != null)
             {
             }
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _scheduleInboxScheduleNamespaceEvent = await __scheduleInboxScheduleNamespaceEventLoader.Load(_gs2, _session);
+            var _scheduleInboxScheduleNamespaceEvent = Runs__scheduleInboxScheduleNamespaceEventLoader ? await __scheduleInboxScheduleNamespaceEventLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyScheduleInboxScheduleNamespaceEvent(_model, _scheduleInboxScheduleNamespaceEvent);
-            _model.Payload = string.Empty;
-            if (_transactionAcquireAction != null) RestorePayload(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            if (_scheduleInboxScheduleNamespaceEvent != null)
+            {
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _model.Payload = string.Empty;
+                if (_transactionAcquireAction != null) RestorePayload(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__exchangeInboxDeliverNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__exchangeInboxDeliverNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeInboxDeliverNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    _model.Payload = string.Empty;
-                    if (value != null) RestorePayload(_model, value.Action, value.Request);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__scheduleInboxScheduleNamespaceEventLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyScheduleInboxScheduleNamespaceEvent(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        _model.Payload = string.Empty;
+                        if (value != null) RestorePayload(_model, value.Action, value.Request);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__scheduleInboxScheduleNamespaceEventLoader)
+            {
+                _unsubscribers.Add(__scheduleInboxScheduleNamespaceEventLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __exchangeInboxDeliverNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __scheduleInboxScheduleNamespaceEventLoader.Invalidate(_gs2, _session);
+            if (Runs__exchangeInboxDeliverNamespaceRateModelLoader)
+            {
+                __exchangeInboxDeliverNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__scheduleInboxScheduleNamespaceEventLoader)
+            {
+                __scheduleInboxScheduleNamespaceEventLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -196,6 +445,7 @@ namespace GS2Studio.Generated.GlobalMessage
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -231,23 +481,6 @@ namespace GS2Studio.Generated.GlobalMessage
         {
             EnsureActionContext();
             await new Gs2Bind.Gs2Exchange.RateModelLoader("InboxDeliver", _model.Id).Exchange(_gs2, _session, count: 1, config: config);
-        }
-        #endregion
-
-        #region Model composition
-        /// <summary>Mount, subscriptions and external stubs share this mapping so null-source resets stay consistent.</summary>
-        public static void ApplyScheduleInboxScheduleNamespaceEvent(IMutableGlobalMessage model, Gs2.Unity.Gs2Schedule.Model.EzEvent? source)
-        {
-            if (source != null)
-            {
-                model.Begin = DateTimeOffset.FromUnixTimeMilliseconds(source.AbsoluteBegin).UtcDateTime;
-                model.End = DateTimeOffset.FromUnixTimeMilliseconds(source.AbsoluteEnd).UtcDateTime;
-            }
-            else
-            {
-                model.Begin = default;
-                model.End = default;
-            }
         }
         #endregion
 

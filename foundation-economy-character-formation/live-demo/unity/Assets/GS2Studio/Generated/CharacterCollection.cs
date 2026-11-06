@@ -13,16 +13,28 @@ namespace GS2Studio.Generated.CharacterCollection
     public interface CharacterCollection
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the character inventory.
         /// </summary>
         CharacterCollectionId Id { get; }
 
+        /// <summary>
+        /// Maximum character capacity a player can reach.
+        /// </summary>
         int MaximumCapacity { get; }
 
+        /// <summary>
+        /// Character capacity granted to a new player.
+        /// </summary>
         int DefaultCapacity { get; }
 
+        /// <summary>
+        /// Character capacity currently in use.
+        /// </summary>
         int CurrentCpacityUsage { get; }
 
+        /// <summary>
+        /// Character capacity currently available to the player.
+        /// </summary>
         int CurrentCpacity { get; }
     }
 

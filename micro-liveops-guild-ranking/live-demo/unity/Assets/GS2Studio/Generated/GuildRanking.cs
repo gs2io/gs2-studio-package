@@ -13,34 +13,37 @@ namespace GS2Studio.Generated.GuildRanking
     public interface GuildRanking
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the guild ranking.
         /// </summary>
         GuildRankingId Id { get; }
 
+        /// <summary>
+        /// Schedule during which guild-ranking scores may be submitted.
+        /// </summary>
         string Schedule { get; }
 
         /// <summary>
-        /// Whether a higher or a lower score ranks first
+        /// Whether higher or lower scores rank first.
         /// </summary>
         string OrderDirection { get; }
 
         /// <summary>
-        /// Add each submission from the same member to their last one instead of replacing it
+        /// Whether scores a member submits are added up. Otherwise the member's last score submitted replaces the one before.
         /// </summary>
         bool? Sum { get; }
 
         /// <summary>
-        /// Lowest score accepted
+        /// Lowest score accepted by the ranking.
         /// </summary>
         long? MinimumValue { get; }
 
         /// <summary>
-        /// Highest score accepted
+        /// Highest score accepted by the ranking.
         /// </summary>
         long? MaximumValue { get; }
 
         /// <summary>
-        /// The player's own score
+        /// Player's current contribution to the guild ranking.
         /// </summary>
         long Score { get; }
     }

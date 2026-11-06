@@ -27,6 +27,7 @@ namespace GS2Studio.Generated.IdleStatus
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableIdleStatusBinder : IReadOnlyIdleStatusBinder
     {
+        IdleStatusBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Receive();
     }
 
@@ -69,10 +70,161 @@ namespace GS2Studio.Generated.IdleStatus
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class IdleStatusBinder : ReadOnlyIdleStatusBinder, IIdleStatusBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly IdleStatusBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(IdleStatusBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public IdleStatus Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableIdleStatus? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableIdleStatus
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal IdleStatusId __valueId = default!;
+                public IdleStatusId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setRewardIntervalMinutes;
+                internal int __valueRewardIntervalMinutes = default!;
+                public int RewardIntervalMinutes
+                {
+                    get => __setRewardIntervalMinutes ? __valueRewardIntervalMinutes : __scopeOwner.Value.RewardIntervalMinutes;
+                    set { __setRewardIntervalMinutes = true; __valueRewardIntervalMinutes = value; }
+                }
+                internal bool __setDefaultMaximumIdleMinutes;
+                internal int __valueDefaultMaximumIdleMinutes = default!;
+                public int DefaultMaximumIdleMinutes
+                {
+                    get => __setDefaultMaximumIdleMinutes ? __valueDefaultMaximumIdleMinutes : __scopeOwner.Value.DefaultMaximumIdleMinutes;
+                    set { __setDefaultMaximumIdleMinutes = true; __valueDefaultMaximumIdleMinutes = value; }
+                }
+                internal bool __setCurrentIdleMinutes;
+                internal int __valueCurrentIdleMinutes = default!;
+                public int CurrentIdleMinutes
+                {
+                    get => __setCurrentIdleMinutes ? __valueCurrentIdleMinutes : __scopeOwner.Value.CurrentIdleMinutes;
+                    set { __setCurrentIdleMinutes = true; __valueCurrentIdleMinutes = value; }
+                }
+                internal bool __setNextRewardsAt;
+                internal DateTime __valueNextRewardsAt = default!;
+                public DateTime NextRewardsAt
+                {
+                    get => __setNextRewardsAt ? __valueNextRewardsAt : __scopeOwner.Value.NextRewardsAt;
+                    set { __setNextRewardsAt = true; __valueNextRewardsAt = value; }
+                }
+                internal bool __setMaximumIdleMinutes;
+                internal int __valueMaximumIdleMinutes = default!;
+                public int MaximumIdleMinutes
+                {
+                    get => __setMaximumIdleMinutes ? __valueMaximumIdleMinutes : __scopeOwner.Value.MaximumIdleMinutes;
+                    set { __setMaximumIdleMinutes = true; __valueMaximumIdleMinutes = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<IdleStatusId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setRewardIntervalMinutes) { _owner._model.RewardIntervalMinutes = changes.__valueRewardIntervalMinutes; changes.__setRewardIntervalMinutes = false; }
+                if (changes.__setDefaultMaximumIdleMinutes) { _owner._model.DefaultMaximumIdleMinutes = changes.__valueDefaultMaximumIdleMinutes; changes.__setDefaultMaximumIdleMinutes = false; }
+                if (changes.__setCurrentIdleMinutes) { _owner._model.CurrentIdleMinutes = changes.__valueCurrentIdleMinutes; changes.__setCurrentIdleMinutes = false; }
+                if (changes.__setNextRewardsAt) { _owner._model.NextRewardsAt = changes.__valueNextRewardsAt; changes.__setNextRewardsAt = false; }
+                if (changes.__setMaximumIdleMinutes) { _owner._model.MaximumIdleMinutes = changes.__valueMaximumIdleMinutes; changes.__setMaximumIdleMinutes = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -84,12 +236,16 @@ namespace GS2Studio.Generated.IdleStatus
         internal IdleStatusBinder(
             MutableIdleStatus model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            string? __sdk__idleIdleNamespaceCategoryModel_1 = null,
+            string? __sdk__userdataIdleIdleCategoryModel_1 = null
         ) : base(model, gs2, session)
         {
-            __idleIdleNamespaceCategoryModelLoader = new Gs2Bind.Gs2Idle.CategoryModelLoader("Idle", "Idle");
-            __userdataIdleIdleCategoryModelLoader = new Gs2Bind.Gs2Idle.StatusLoader("Idle", "Idle");
+
+            __idleIdleNamespaceCategoryModelLoader = new Gs2Bind.Gs2Idle.CategoryModelLoader("Idle", (string.IsNullOrEmpty(__sdk__idleIdleNamespaceCategoryModel_1) ? "Idle" : __sdk__idleIdleNamespaceCategoryModel_1!));
+            __userdataIdleIdleCategoryModelLoader = new Gs2Bind.Gs2Idle.StatusLoader("Idle", (string.IsNullOrEmpty(__sdk__userdataIdleIdleCategoryModel_1) ? "Idle" : __sdk__userdataIdleIdleCategoryModel_1!));
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableIdleStatus CreateModel(IdleStatusId id)
@@ -103,14 +259,15 @@ namespace GS2Studio.Generated.IdleStatus
             IdleStatusId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__idleIdleNamespaceCategoryModel_1 = null,
+            string? __sdk__userdataIdleIdleCategoryModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new IdleStatusBinder(model, gs2, session);
+            var binder = new IdleStatusBinder(model, gs2, session, __sdk__idleIdleNamespaceCategoryModel_1: __sdk__idleIdleNamespaceCategoryModel_1, __sdk__userdataIdleIdleCategoryModel_1: __sdk__userdataIdleIdleCategoryModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -167,6 +324,7 @@ namespace GS2Studio.Generated.IdleStatus
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -237,6 +395,7 @@ namespace GS2Studio.Generated.IdleStatus
                 model.NextRewardsAt = default;
             }
         }
+
         #endregion
 
     }

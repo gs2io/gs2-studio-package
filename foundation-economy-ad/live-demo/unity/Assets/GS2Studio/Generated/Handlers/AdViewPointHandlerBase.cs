@@ -27,6 +27,9 @@ namespace GS2Studio.Generated.AdViewPoint
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public AdViewPointMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<AdViewPoint>? Updated;
 
         public event Action<IActionableAdViewPointBinder>? Bound;

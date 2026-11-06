@@ -24,6 +24,7 @@ namespace GS2Studio.Generated.CharacterFormationForm
     public sealed class CharacterFormationFormHandler : CharacterFormationFormHandlerBase
     {
         [SerializeField] private int _index;
+        private int? _sdk_foundation_x2d_economy_x2d_character_x2d_formation_userData_udr_2SQ6KKX9J79N6T007TNJZ17ZTM_formation_Form_index;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -48,6 +49,7 @@ namespace GS2Studio.Generated.CharacterFormationForm
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(ICharacterFormationFormBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -63,6 +65,17 @@ namespace GS2Studio.Generated.CharacterFormationForm
             _index = index;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(int? sdk_foundation_x2d_economy_x2d_character_x2d_formation_userData_udr_2SQ6KKX9J79N6T007TNJZ17ZTM_formation_Form_index)
+        {
+            InvalidateBindingIntent();
+            _sdk_foundation_x2d_economy_x2d_character_x2d_formation_userData_udr_2SQ6KKX9J79N6T007TNJZ17ZTM_formation_Form_index = sdk_foundation_x2d_economy_x2d_character_x2d_formation_userData_udr_2SQ6KKX9J79N6T007TNJZ17ZTM_formation_Form_index;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -86,7 +99,9 @@ namespace GS2Studio.Generated.CharacterFormationForm
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
-                var binder = await ResolveBinderFactory().CreateAsync(new CharacterFormationFormId(_index.ToString(global::System.Globalization.CultureInfo.InvariantCulture)), _index, gs2, session, cancellationToken);
+                if (!_sdk_foundation_x2d_economy_x2d_character_x2d_formation_userData_udr_2SQ6KKX9J79N6T007TNJZ17ZTM_formation_Form_index.HasValue)
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_character_x2d_formation_userData_udr_2SQ6KKX9J79N6T007TNJZ17ZTM_formation_Form_index' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new CharacterFormationFormId(_index.ToString(global::System.Globalization.CultureInfo.InvariantCulture)), _index, gs2, session, cancellationToken, __sdk__userdataFormationForm_2: _sdk_foundation_x2d_economy_x2d_character_x2d_formation_userData_udr_2SQ6KKX9J79N6T007TNJZ17ZTM_formation_Form_index);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -174,6 +189,7 @@ namespace GS2Studio.Generated.CharacterFormationForm
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
+            if (!_sdk_foundation_x2d_economy_x2d_character_x2d_formation_userData_udr_2SQ6KKX9J79N6T007TNJZ17ZTM_formation_Form_index.HasValue) return false;
             return true;
         }
 

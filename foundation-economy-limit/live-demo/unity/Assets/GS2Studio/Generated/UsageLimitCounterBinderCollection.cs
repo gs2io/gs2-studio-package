@@ -139,8 +139,20 @@ namespace GS2Studio.Generated.UsageLimitCounter
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyUsageLimitCounterBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyUsageLimitCounterBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyUsageLimitCounterBinder> _configuredComparer = UsageLimitCounterBinderComparer.Default;
@@ -267,18 +279,38 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitReset");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeLimitResetMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeLimitResetMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeLimitResetMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeLimitResetMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeLimitResetMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitReset");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitResetMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeLimitResetMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitResetMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeLimitResetMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeLimitResetMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeLimitResetMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeLimitResetMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -286,7 +318,6 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitReset");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -294,9 +325,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeLimitResetMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeLimitResetMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeLimitResetMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -305,41 +337,68 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeLimitResetMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeLimitResetMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitResetMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeLimitResetMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitResetMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeLimitResetMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeLimitResetMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<UsageLimitCounterId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeLimitResetMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-limit-demo", "masterData", "mdr_2B66P1TX2CA2EV81HAS32228JF", "foundation-economy-limit-demo", "mdr_2B66P1TX2CA2EV81HAS32228JF", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit-demo\",\"masterData\",\"mdr_2B66P1TX2CA2EV81HAS32228JF\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_2B66P1TX2CA2EV81HAS32228JF", "foundation-economy-limit-demo", "mdr_2B66P1TX2CA2EV81HAS32228JF", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_2B66P1TX2CA2EV81HAS32228JF", "foundation-economy-limit-demo", "mdr_2B66P1TX2CA2EV81HAS32228JF", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeLimitResetMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitResetMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeLimitResetMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<UsageLimitCounterId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeLimitResetMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-limit-demo", "masterData", "mdr_2B66P1TX2CA2EV81HAS32228JF", "foundation-economy-limit-demo", "mdr_2B66P1TX2CA2EV81HAS32228JF", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit-demo\",\"masterData\",\"mdr_2B66P1TX2CA2EV81HAS32228JF\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_2B66P1TX2CA2EV81HAS32228JF", "foundation-economy-limit-demo", "mdr_2B66P1TX2CA2EV81HAS32228JF", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_2B66P1TX2CA2EV81HAS32228JF", "foundation-economy-limit-demo", "mdr_2B66P1TX2CA2EV81HAS32228JF", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeLimitResetMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-limit-demo", "masterData", "mdr_2B66P1TX2CA2EV81HAS32228JF", "foundation-economy-limit-demo", "mdr_2B66P1TX2CA2EV81HAS32228JF", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit-demo\",\"masterData\",\"mdr_2B66P1TX2CA2EV81HAS32228JF\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_2B66P1TX2CA2EV81HAS32228JF", "foundation-economy-limit-demo", "mdr_2B66P1TX2CA2EV81HAS32228JF", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_2B66P1TX2CA2EV81HAS32228JF", "foundation-economy-limit-demo", "mdr_2B66P1TX2CA2EV81HAS32228JF", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitResetMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -379,13 +438,13 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitResetMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder?> BuildBinderFromExchangeLimitResetMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
             ApplyExchangeLimitResetMasterItemTo(model, item);
-            var binder = new UsageLimitCounterBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new UsageLimitCounterBinder(model, _gs2, _session, _mountSurface: UsageLimitCounterMountSurface.ExchangeLimitResetMaster, __sdk__transactionAcquireAction_1: item.Name, __sdk__exchangeLimitResetNamespaceRateModel_1: item.Name, __sdk__transactionAcquireAction2_1: item.Name, __sdk__transactionAcquireAction3_1: item.Name, __sdk__transactionAcquireAction4_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeLimitResetMasterItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -404,8 +463,9 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             var id = ExtractExchangeLimitResetMasterIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeLimitReset\",\"foundation-economy-limit-demo\",\"mdr_2B66P1TX2CA2EV81HAS32228JF\",null,null,\"foundation-economy-limit-demo\",\"mdr_2B66P1TX2CA2EV81HAS32228JF\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<UsageLimitCounterBinderCollection> CreateFromExchangeLimitFreeUseMasterDataAsync(
@@ -423,18 +483,38 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitFreeUse");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeLimitFreeUseMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeLimitFreeUseMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeLimitFreeUseMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeLimitFreeUseMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeLimitFreeUseMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitFreeUse");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitFreeUseMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeLimitFreeUseMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitFreeUseMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeLimitFreeUseMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeLimitFreeUseMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeLimitFreeUseMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeLimitFreeUseMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -442,7 +522,6 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitFreeUse");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -450,9 +529,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeLimitFreeUseMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeLimitFreeUseMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeLimitFreeUseMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -461,41 +541,68 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeLimitFreeUseMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeLimitFreeUseMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitFreeUseMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeLimitFreeUseMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitFreeUseMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeLimitFreeUseMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeLimitFreeUseMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<UsageLimitCounterId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeLimitFreeUseMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-limit-demo", "masterData", "mdr_3QQV27BR5AA419F2032R6T95RZ", "foundation-economy-limit-demo", "mdr_3QQV27BR5AA419F2032R6T95RZ", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit-demo\",\"masterData\",\"mdr_3QQV27BR5AA419F2032R6T95RZ\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_3QQV27BR5AA419F2032R6T95RZ", "foundation-economy-limit-demo", "mdr_3QQV27BR5AA419F2032R6T95RZ", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_3QQV27BR5AA419F2032R6T95RZ", "foundation-economy-limit-demo", "mdr_3QQV27BR5AA419F2032R6T95RZ", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeLimitFreeUseMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitFreeUseMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeLimitFreeUseMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<UsageLimitCounterId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeLimitFreeUseMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-limit-demo", "masterData", "mdr_3QQV27BR5AA419F2032R6T95RZ", "foundation-economy-limit-demo", "mdr_3QQV27BR5AA419F2032R6T95RZ", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit-demo\",\"masterData\",\"mdr_3QQV27BR5AA419F2032R6T95RZ\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_3QQV27BR5AA419F2032R6T95RZ", "foundation-economy-limit-demo", "mdr_3QQV27BR5AA419F2032R6T95RZ", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_3QQV27BR5AA419F2032R6T95RZ", "foundation-economy-limit-demo", "mdr_3QQV27BR5AA419F2032R6T95RZ", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeLimitFreeUseMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-limit-demo", "masterData", "mdr_3QQV27BR5AA419F2032R6T95RZ", "foundation-economy-limit-demo", "mdr_3QQV27BR5AA419F2032R6T95RZ", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit-demo\",\"masterData\",\"mdr_3QQV27BR5AA419F2032R6T95RZ\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_3QQV27BR5AA419F2032R6T95RZ", "foundation-economy-limit-demo", "mdr_3QQV27BR5AA419F2032R6T95RZ", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_3QQV27BR5AA419F2032R6T95RZ", "foundation-economy-limit-demo", "mdr_3QQV27BR5AA419F2032R6T95RZ", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitFreeUseMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -535,13 +642,13 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitFreeUseMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder?> BuildBinderFromExchangeLimitFreeUseMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
             ApplyExchangeLimitFreeUseMasterItemTo(model, item);
-            var binder = new UsageLimitCounterBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new UsageLimitCounterBinder(model, _gs2, _session, _mountSurface: UsageLimitCounterMountSurface.ExchangeLimitFreeUseMaster, __sdk__exchangeLimitFreeUseNamespaceRateModel_1: item.Name, __sdk__transactionConsumeAction2_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeLimitFreeUseMasterItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -560,8 +667,9 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             var id = ExtractExchangeLimitFreeUseMasterIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeLimitFreeUse\",\"foundation-economy-limit-demo\",\"mdr_3QQV27BR5AA419F2032R6T95RZ\",null,null,\"foundation-economy-limit-demo\",\"mdr_3QQV27BR5AA419F2032R6T95RZ\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<UsageLimitCounterBinderCollection> CreateFromExchangeLimitAdUseMasterDataAsync(
@@ -579,18 +687,38 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitAdUse");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeLimitAdUseMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeLimitAdUseMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeLimitAdUseMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeLimitAdUseMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeLimitAdUseMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitAdUse");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitAdUseMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeLimitAdUseMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitAdUseMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeLimitAdUseMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeLimitAdUseMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeLimitAdUseMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeLimitAdUseMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -598,7 +726,6 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("LimitAdUse");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -606,9 +733,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeLimitAdUseMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeLimitAdUseMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeLimitAdUseMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -617,41 +745,68 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeLimitAdUseMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeLimitAdUseMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitAdUseMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeLimitAdUseMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitAdUseMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeLimitAdUseMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeLimitAdUseMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<UsageLimitCounterId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeLimitAdUseMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-limit-demo", "masterData", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "foundation-economy-limit-demo", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit-demo\",\"masterData\",\"mdr_6TC5FMVGD2AE0BT03QA7GCXZS0\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "foundation-economy-limit-demo", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "foundation-economy-limit-demo", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeLimitAdUseMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitAdUseMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeLimitAdUseMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<UsageLimitCounterId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeLimitAdUseMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-limit-demo", "masterData", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "foundation-economy-limit-demo", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit-demo\",\"masterData\",\"mdr_6TC5FMVGD2AE0BT03QA7GCXZS0\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "foundation-economy-limit-demo", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "foundation-economy-limit-demo", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeLimitAdUseMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-limit-demo", "masterData", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "foundation-economy-limit-demo", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit-demo\",\"masterData\",\"mdr_6TC5FMVGD2AE0BT03QA7GCXZS0\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "foundation-economy-limit-demo", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit-demo", "masterData", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "foundation-economy-limit-demo", "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeLimitAdUseMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -691,13 +846,13 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromExchangeLimitAdUseMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder?> BuildBinderFromExchangeLimitAdUseMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
             ApplyExchangeLimitAdUseMasterItemTo(model, item);
-            var binder = new UsageLimitCounterBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new UsageLimitCounterBinder(model, _gs2, _session, _mountSurface: UsageLimitCounterMountSurface.ExchangeLimitAdUseMaster, __sdk__transactionConsumeAction_1: item.Name, __sdk__exchangeLimitAdUseNamespaceRateModel_1: item.Name, __sdk__transactionConsumeAction3_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeLimitAdUseMasterItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -716,8 +871,9 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             var id = ExtractExchangeLimitAdUseMasterIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeLimitAdUse\",\"foundation-economy-limit-demo\",\"mdr_6TC5FMVGD2AE0BT03QA7GCXZS0\",null,null,\"foundation-economy-limit-demo\",\"mdr_6TC5FMVGD2AE0BT03QA7GCXZS0\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<UsageLimitCounterBinderCollection> CreateFromLimitLimitUserDataAsync(
@@ -735,18 +891,38 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Limit.CounterArrayLoader("Limit");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromLimitLimitUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromLimitLimitUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromLimitLimitUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromLimitLimitUserItems");
+            _pendingCollectionAxis = "ReconcileFromLimitLimitUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Limit.CounterArrayLoader("Limit");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromLimitLimitUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromLimitLimitUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromLimitLimitUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromLimitLimitUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromLimitLimitUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromLimitLimitUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromLimitLimitUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -754,7 +930,6 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Limit.CounterArrayLoader("Limit");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -762,9 +937,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromLimitLimitUserItems");
                     try
                     {
-                        await ReconcileFromLimitLimitUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromLimitLimitUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -773,41 +949,68 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromLimitLimitUserItems(IList<Gs2.Unity.Gs2Limit.Model.EzCounter> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromLimitLimitUserItems(IList<Gs2.Unity.Gs2Limit.Model.EzCounter> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromLimitLimitUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractLimitLimitUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromLimitLimitUserItems", updateVersion)) return;
                 var rowKey = ExtractLimitLimitUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractLimitLimitUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<UsageLimitCounterId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyLimitLimitUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-limit", "userData", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "foundation-economy-limit", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "limit", "Counter", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit\",\"userData\",\"udr_6QV98XRJE8B8R8TDT3FYN967PS\",\"limit\",\"Counter\",\"limitName\",\"string\"]"] = (object)item.LimitName!, ["[\"foundation-economy-limit\",\"userData\",\"udr_6QV98XRJE8B8R8TDT3FYN967PS\",\"limit\",\"Counter\",\"counterName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-limit", "userData", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "foundation-economy-limit", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "limit", "Counter", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit", "userData", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "foundation-economy-limit", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "limit", "Counter", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromLimitLimitUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromLimitLimitUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromLimitLimitUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<UsageLimitCounterId>.Default.Equals(raced.Id, nextId)) { ApplyLimitLimitUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-limit", "userData", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "foundation-economy-limit", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "limit", "Counter", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit\",\"userData\",\"udr_6QV98XRJE8B8R8TDT3FYN967PS\",\"limit\",\"Counter\",\"limitName\",\"string\"]"] = (object)item.LimitName!, ["[\"foundation-economy-limit\",\"userData\",\"udr_6QV98XRJE8B8R8TDT3FYN967PS\",\"limit\",\"Counter\",\"counterName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-limit", "userData", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "foundation-economy-limit", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "limit", "Counter", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit", "userData", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "foundation-economy-limit", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "limit", "Counter", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyLimitLimitUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-limit", "userData", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "foundation-economy-limit", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "limit", "Counter", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-limit\",\"userData\",\"udr_6QV98XRJE8B8R8TDT3FYN967PS\",\"limit\",\"Counter\",\"limitName\",\"string\"]"] = (object)item.LimitName!, ["[\"foundation-economy-limit\",\"userData\",\"udr_6QV98XRJE8B8R8TDT3FYN967PS\",\"limit\",\"Counter\",\"counterName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-limit", "userData", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "foundation-economy-limit", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "limit", "Counter", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-limit", "userData", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "foundation-economy-limit", "udr_6QV98XRJE8B8R8TDT3FYN967PS", "limit", "Counter", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromLimitLimitUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -847,13 +1050,13 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!_disposed) SortBinders();
         }
 
-        private async Task<UsageLimitCounterBinder> BuildBinderFromLimitLimitUserItem(Gs2.Unity.Gs2Limit.Model.EzCounter item, CancellationToken cancellationToken)
+        private async Task<UsageLimitCounterBinder?> BuildBinderFromLimitLimitUserItem(Gs2.Unity.Gs2Limit.Model.EzCounter item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = UsageLimitCounterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(UsageLimitCounterId) : new UsageLimitCounterId(item.Name)), new UsageLimitId(_limit));
             ApplyLimitLimitUserItemTo(model, item);
-            var binder = new UsageLimitCounterBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new UsageLimitCounterBinder(model, _gs2, _session, _mountSurface: UsageLimitCounterMountSurface.LimitLimitUser);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyLimitLimitUserItemTo(MutableUsageLimitCounter model, Gs2.Unity.Gs2Limit.Model.EzCounter item)
@@ -871,8 +1074,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
         {
             var id = ExtractLimitLimitUserIdentity(item);
             if (EqualityComparer<UsageLimitCounterId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.LimitName) || string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.LimitName}.{item.Name}";
+            var __key0 = item.LimitName;
+            var __key1 = item.Name;
+            if (string.IsNullOrEmpty(__key0) || string.IsNullOrEmpty(__key1)) return null;
+            return string.Concat("[\"user\",\"LimitLimit\",null,null,\"foundation-economy-limit\",\"udr_6QV98XRJE8B8R8TDT3FYN967PS\",null,null,\"limit\",\"Counter\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0, __key1.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key1);
         }
 
         internal sealed class UsageLimitCounterBinderComparer : IComparer<IReadOnlyUsageLimitCounterBinder>

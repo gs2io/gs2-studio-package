@@ -26,7 +26,13 @@ namespace GS2Studio.Generated.EnergyProduct
             EnergyProductId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEnergyShopNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeEnergyProductNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null);
         IEnergyProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -38,9 +44,15 @@ namespace GS2Studio.Generated.EnergyProduct
             EnergyProductId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEnergyShopNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeEnergyProductNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null)
         {
-            return await EnergyProductBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await EnergyProductBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__exchangeEnergyShopNamespaceRateModel_1, __sdk__transactionConsumeAction_1, __sdk__transactionAcquireAction_1, __sdk__transactionAcquireAction2_1, __sdk__exchangeEnergyProductNamespaceRateModel_1, __sdk__transactionConsumeAction2_1);
         }
         public IEnergyProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

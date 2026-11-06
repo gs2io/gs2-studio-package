@@ -14,14 +14,23 @@ namespace GS2Studio.Generated.Equipment
     public interface Equipment
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the equipment item.
         /// </summary>
         EquipmentId Id { get; }
 
+        /// <summary>
+        /// Category this equipment belongs to.
+        /// </summary>
         EquipmentCategoryId Category { get; }
 
+        /// <summary>
+        /// Value used to order equipment in lists.
+        /// </summary>
         int SortValue { get; }
 
+        /// <summary>
+        /// Identifier of the equipment instance owned by the player.
+        /// </summary>
         string PropertyId { get; }
     }
 

@@ -26,7 +26,11 @@ namespace GS2Studio.Generated.AdViewPoint
             AdViewPointId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeAdWatchNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeAdSpendNamespaceRateModel_1 = null);
     }
 
     public sealed class DefaultAdViewPointBinderFactory : IAdViewPointBinderFactory
@@ -37,9 +41,13 @@ namespace GS2Studio.Generated.AdViewPoint
             AdViewPointId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeAdWatchNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeAdSpendNamespaceRateModel_1 = null)
         {
-            return await AdViewPointBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await AdViewPointBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__exchangeAdWatchNamespaceRateModel_1, __sdk__transactionConsumeAction_1, __sdk__transactionAcquireAction_1, __sdk__exchangeAdSpendNamespaceRateModel_1);
         }
     }
 }

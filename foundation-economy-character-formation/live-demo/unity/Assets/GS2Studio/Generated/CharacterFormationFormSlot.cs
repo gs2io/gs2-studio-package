@@ -13,10 +13,13 @@ namespace GS2Studio.Generated.CharacterFormationFormSlot
     public interface CharacterFormationFormSlot
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the formation form slot.
         /// </summary>
         CharacterFormationFormSlotId Id { get; }
 
+        /// <summary>
+        /// Identifier of the character instance assigned to this slot.
+        /// </summary>
         string PropertyId { get; }
     }
 

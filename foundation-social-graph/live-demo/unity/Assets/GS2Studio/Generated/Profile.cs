@@ -13,14 +13,23 @@ namespace GS2Studio.Generated.Profile
     public interface Profile
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the profile.
         /// </summary>
         ProfileId Id { get; }
 
+        /// <summary>
+        /// Profile information visible to every player.
+        /// </summary>
         string? PublicProfile { get; }
 
+        /// <summary>
+        /// Profile information visible to followers.
+        /// </summary>
         string? FollowerProfile { get; }
 
+        /// <summary>
+        /// Profile information visible to friends.
+        /// </summary>
         string? FriendProfile { get; }
     }
 

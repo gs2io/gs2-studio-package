@@ -27,7 +27,11 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
             CharacterEnhanceMaterialId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1 = null,
+            string? __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2 = null);
         ICharacterEnhanceMaterialBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -39,9 +43,13 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
             CharacterEnhanceMaterialId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1 = null,
+            string? __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2 = null)
         {
-            return await CharacterEnhanceMaterialBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await CharacterEnhanceMaterialBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1, __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1, __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2, __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2);
         }
         public ICharacterEnhanceMaterialBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

@@ -46,7 +46,7 @@ namespace GS2Studio.Generated.Guild
         GuildMountSurface MountSurface { get; }
 
         /// <summary>
-        /// This construction path permits the <c>Gs2Bind.Gs2Guild.JoinedGuildLoader</c> load on <c>__userdataGuildGuildGuildModelLoader</c>. False means this path does not supply <c>JoinedGuildName</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// This construction path permits the <c>Gs2Bind.Gs2Guild.JoinedGuildLoader</c> load on <c>__userdataGuildGuildGuildModelLoader</c> or its composition from a list item. False means this path does not supply <c>JoinedGuildName</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
         /// </summary>
         /// <remarks>GuildGuildMaster: no per-row value for _model.JoinedGuildName.</remarks>
         bool LoadedUserdataGuildGuildGuildModel { get; }
@@ -55,6 +55,7 @@ namespace GS2Studio.Generated.Guild
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableGuildBinder : IReadOnlyGuildBinder
     {
+        GuildBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -111,10 +112,193 @@ namespace GS2Studio.Generated.Guild
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class GuildBinder : ReadOnlyGuildBinder, IGuildBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly GuildBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(GuildBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Guild Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableGuild? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableGuild
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal GuildId __valueId = default!;
+                public GuildId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setDefaultMaximumMemberCount;
+                internal int __valueDefaultMaximumMemberCount = default!;
+                public int DefaultMaximumMemberCount
+                {
+                    get => __setDefaultMaximumMemberCount ? __valueDefaultMaximumMemberCount : __scopeOwner.Value.DefaultMaximumMemberCount;
+                    set { __setDefaultMaximumMemberCount = true; __valueDefaultMaximumMemberCount = value; }
+                }
+                internal bool __setMaximumMemberCount;
+                internal int __valueMaximumMemberCount = default!;
+                public int MaximumMemberCount
+                {
+                    get => __setMaximumMemberCount ? __valueMaximumMemberCount : __scopeOwner.Value.MaximumMemberCount;
+                    set { __setMaximumMemberCount = true; __valueMaximumMemberCount = value; }
+                }
+                internal bool __setInactivityPeriodDays;
+                internal int? __valueInactivityPeriodDays = default!;
+                public int? InactivityPeriodDays
+                {
+                    get => __setInactivityPeriodDays ? __valueInactivityPeriodDays : __scopeOwner.Value.InactivityPeriodDays;
+                    set { __setInactivityPeriodDays = true; __valueInactivityPeriodDays = value; }
+                }
+                internal bool __setRejoinCoolTimeMinutes;
+                internal int? __valueRejoinCoolTimeMinutes = default!;
+                public int? RejoinCoolTimeMinutes
+                {
+                    get => __setRejoinCoolTimeMinutes ? __valueRejoinCoolTimeMinutes : __scopeOwner.Value.RejoinCoolTimeMinutes;
+                    set { __setRejoinCoolTimeMinutes = true; __valueRejoinCoolTimeMinutes = value; }
+                }
+                internal bool __setMaxConcurrentJoinGuilds;
+                internal int? __valueMaxConcurrentJoinGuilds = default!;
+                public int? MaxConcurrentJoinGuilds
+                {
+                    get => __setMaxConcurrentJoinGuilds ? __valueMaxConcurrentJoinGuilds : __scopeOwner.Value.MaxConcurrentJoinGuilds;
+                    set { __setMaxConcurrentJoinGuilds = true; __valueMaxConcurrentJoinGuilds = value; }
+                }
+                internal bool __setMaxConcurrentGuildMasterCount;
+                internal int? __valueMaxConcurrentGuildMasterCount = default!;
+                public int? MaxConcurrentGuildMasterCount
+                {
+                    get => __setMaxConcurrentGuildMasterCount ? __valueMaxConcurrentGuildMasterCount : __scopeOwner.Value.MaxConcurrentGuildMasterCount;
+                    set { __setMaxConcurrentGuildMasterCount = true; __valueMaxConcurrentGuildMasterCount = value; }
+                }
+                internal bool __setGuildMasterRole;
+                internal GuildRoleId __valueGuildMasterRole = default!;
+                public GuildRoleId GuildMasterRole
+                {
+                    get => __setGuildMasterRole ? __valueGuildMasterRole : __scopeOwner.Value.GuildMasterRole;
+                    set { __setGuildMasterRole = true; __valueGuildMasterRole = value; }
+                }
+                internal bool __setGuildMemberDefaultRole;
+                internal GuildRoleId __valueGuildMemberDefaultRole = default!;
+                public GuildRoleId GuildMemberDefaultRole
+                {
+                    get => __setGuildMemberDefaultRole ? __valueGuildMemberDefaultRole : __scopeOwner.Value.GuildMemberDefaultRole;
+                    set { __setGuildMemberDefaultRole = true; __valueGuildMemberDefaultRole = value; }
+                }
+                internal bool __setJoinedGuildName;
+                internal string? __valueJoinedGuildName = default!;
+                public string? JoinedGuildName
+                {
+                    get => __setJoinedGuildName ? __valueJoinedGuildName : __scopeOwner.Value.JoinedGuildName;
+                    set { __setJoinedGuildName = true; __valueJoinedGuildName = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<GuildId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setDefaultMaximumMemberCount) { _owner._model.DefaultMaximumMemberCount = changes.__valueDefaultMaximumMemberCount; changes.__setDefaultMaximumMemberCount = false; }
+                if (changes.__setMaximumMemberCount) { _owner._model.MaximumMemberCount = changes.__valueMaximumMemberCount; changes.__setMaximumMemberCount = false; }
+                if (changes.__setInactivityPeriodDays) { _owner._model.InactivityPeriodDays = changes.__valueInactivityPeriodDays; changes.__setInactivityPeriodDays = false; }
+                if (changes.__setRejoinCoolTimeMinutes) { _owner._model.RejoinCoolTimeMinutes = changes.__valueRejoinCoolTimeMinutes; changes.__setRejoinCoolTimeMinutes = false; }
+                if (changes.__setMaxConcurrentJoinGuilds) { _owner._model.MaxConcurrentJoinGuilds = changes.__valueMaxConcurrentJoinGuilds; changes.__setMaxConcurrentJoinGuilds = false; }
+                if (changes.__setMaxConcurrentGuildMasterCount) { _owner._model.MaxConcurrentGuildMasterCount = changes.__valueMaxConcurrentGuildMasterCount; changes.__setMaxConcurrentGuildMasterCount = false; }
+                if (changes.__setGuildMasterRole) { _owner._model.GuildMasterRole = changes.__valueGuildMasterRole; changes.__setGuildMasterRole = false; }
+                if (changes.__setGuildMemberDefaultRole) { _owner._model.GuildMemberDefaultRole = changes.__valueGuildMemberDefaultRole; changes.__setGuildMemberDefaultRole = false; }
+                if (changes.__setJoinedGuildName) { _owner._model.JoinedGuildName = changes.__valueJoinedGuildName; changes.__setJoinedGuildName = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -126,26 +310,31 @@ namespace GS2Studio.Generated.Guild
 
         /// <summary>Avoid loading unless this path supplies every key <c>__userdataGuildGuildGuildModelLoader</c> reads.</summary>
         /// <remarks>GuildGuildMaster: no per-row value for _model.JoinedGuildName.</remarks>
-        private bool Runs__userdataGuildGuildGuildModelLoader => _mountSurfaceValue is GuildMountSurface.Full or GuildMountSurface.GuildGuildUser;
+        private bool Runs__userdataGuildGuildGuildModelLoader => _mountSurfaceValue is GuildMountSurface.Full;
 
         /// <inheritdoc />
         public override GuildMountSurface MountSurface => _mountSurfaceValue;
 
         /// <inheritdoc />
-        public override bool LoadedUserdataGuildGuildGuildModel => Runs__userdataGuildGuildGuildModelLoader;
+        public override bool LoadedUserdataGuildGuildGuildModel => _mountSurfaceValue is GuildMountSurface.Full or GuildMountSurface.GuildGuildUser;
 
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal GuildBinder(
             MutableGuild model,
             Gs2Domain gs2,
             IGameSession session,
-            GuildMountSurface _mountSurface = GuildMountSurface.Full
+            GuildMountSurface _mountSurface = GuildMountSurface.Full,
+            string? __sdk__guildGuildNamespaceGuildModel_1 = null,
+            string? __sdk__userdataGuildGuildGuildModel_1 = null,
+            string? __sdk__userdataGuildGuildGuildModel_2 = null
         ) : base(model, gs2, session)
         {
+
             _mountSurfaceValue = _mountSurface;
-            __guildGuildNamespaceGuildModelLoader = new Gs2Bind.Gs2Guild.GuildModelLoader("Guild", _model.Id);
-            __userdataGuildGuildGuildModelLoader = new Gs2Bind.Gs2Guild.JoinedGuildLoader("Guild", _model.Id, _model.JoinedGuildName);
+            __guildGuildNamespaceGuildModelLoader = new Gs2Bind.Gs2Guild.GuildModelLoader("Guild", (string.IsNullOrEmpty(__sdk__guildGuildNamespaceGuildModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__guildGuildNamespaceGuildModel_1!));
+            __userdataGuildGuildGuildModelLoader = Runs__userdataGuildGuildGuildModelLoader ? new Gs2Bind.Gs2Guild.JoinedGuildLoader("Guild", (string.IsNullOrEmpty(__sdk__userdataGuildGuildGuildModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataGuildGuildGuildModel_1!), (string.IsNullOrEmpty(__sdk__userdataGuildGuildGuildModel_2) ? _model.JoinedGuildName : __sdk__userdataGuildGuildGuildModel_2!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableGuild CreateModel(GuildId id, string joinedGuildName)
@@ -160,14 +349,16 @@ namespace GS2Studio.Generated.Guild
             GuildId id, string joinedGuildName,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__guildGuildNamespaceGuildModel_1 = null,
+            string? __sdk__userdataGuildGuildGuildModel_1 = null,
+            string? __sdk__userdataGuildGuildGuildModel_2 = null)
         {
             var model = CreateModel(id, joinedGuildName);
-            var binder = new GuildBinder(model, gs2, session);
+            var binder = new GuildBinder(model, gs2, session, __sdk__guildGuildNamespaceGuildModel_1: __sdk__guildGuildNamespaceGuildModel_1, __sdk__userdataGuildGuildGuildModel_1: __sdk__userdataGuildGuildGuildModel_1, __sdk__userdataGuildGuildGuildModel_2: __sdk__userdataGuildGuildGuildModel_2);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -235,6 +426,7 @@ namespace GS2Studio.Generated.Guild
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -297,6 +489,7 @@ namespace GS2Studio.Generated.Guild
                 model.JoinedGuildName = source.GuildName;
             }
         }
+
         #endregion
 
     }

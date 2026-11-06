@@ -14,32 +14,32 @@ namespace GS2Studio.Generated.UsageLimitCounter
     public interface UsageLimitCounter
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the usage counter.
         /// </summary>
         UsageLimitCounterId Id { get; }
 
         /// <summary>
-        /// The reset cadence this counter follows
+        /// Reset schedule followed by this counter.
         /// </summary>
         UsageLimitId Limit { get; }
 
         /// <summary>
-        /// Times used since the last reset
+        /// Number of uses since the previous reset.
         /// </summary>
         long Count { get; }
 
         /// <summary>
-        /// Next reset time
+        /// Time when this counter will next be reset.
         /// </summary>
         DateTime NextResetAt { get; }
 
         /// <summary>
-        /// Ceiling the free press names; recovered from its count-up action
+        /// How many times this can be used for free in each period.
         /// </summary>
         int FreeMax { get; }
 
         /// <summary>
-        /// Ceiling the ad-backed press names; recovered from its count-up action
+        /// How many times this can be used by watching an ad in each period.
         /// </summary>
         int AdMax { get; }
     }

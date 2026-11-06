@@ -25,6 +25,8 @@ namespace GS2Studio.Generated.Schedule
     {
         [SerializeField] private string? _id;
         [SerializeField] private string? _trigger;
+        private string? _sdk_foundation_x2d_economy_x2d_schedule_masterData_mdr_44PB7J1MKEA3HB951V9904EYQW_schedule_Event_eventName;
+        private string? _sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -49,6 +51,7 @@ namespace GS2Studio.Generated.Schedule
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(IScheduleBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -65,6 +68,18 @@ namespace GS2Studio.Generated.Schedule
             _trigger = trigger;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_foundation_x2d_economy_x2d_schedule_masterData_mdr_44PB7J1MKEA3HB951V9904EYQW_schedule_Event_eventName, string? sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName)
+        {
+            InvalidateBindingIntent();
+            _sdk_foundation_x2d_economy_x2d_schedule_masterData_mdr_44PB7J1MKEA3HB951V9904EYQW_schedule_Event_eventName = sdk_foundation_x2d_economy_x2d_schedule_masterData_mdr_44PB7J1MKEA3HB951V9904EYQW_schedule_Event_eventName;
+            _sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName = sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -90,7 +105,11 @@ namespace GS2Studio.Generated.Schedule
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new ScheduleId(_id ?? string.Empty), _trigger, gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_masterData_mdr_44PB7J1MKEA3HB951V9904EYQW_schedule_Event_eventName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_schedule_masterData_mdr_44PB7J1MKEA3HB951V9904EYQW_schedule_Event_eventName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new ScheduleId(_id ?? string.Empty), _trigger, gs2, session, cancellationToken, __sdk__scheduleScheduleNamespaceEvent_1: _sdk_foundation_x2d_economy_x2d_schedule_masterData_mdr_44PB7J1MKEA3HB951V9904EYQW_schedule_Event_eventName, __sdk__userdataScheduleTrigger_1: _sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -180,6 +199,8 @@ namespace GS2Studio.Generated.Schedule
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
             if (string.IsNullOrEmpty(_trigger)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_masterData_mdr_44PB7J1MKEA3HB951V9904EYQW_schedule_Event_eventName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName)) return false;
             return true;
         }
 

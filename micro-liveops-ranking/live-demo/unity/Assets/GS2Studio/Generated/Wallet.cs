@@ -13,14 +13,23 @@ namespace GS2Studio.Generated.Wallet
     public interface Wallet
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the wallet.
         /// </summary>
         WalletId Id { get; }
 
+        /// <summary>
+        /// Current free-currency balance.
+        /// </summary>
         int Free { get; }
 
+        /// <summary>
+        /// Current paid-currency balance.
+        /// </summary>
         int Paid { get; }
 
+        /// <summary>
+        /// Current combined paid and free currency balance.
+        /// </summary>
         int Total { get; }
     }
 

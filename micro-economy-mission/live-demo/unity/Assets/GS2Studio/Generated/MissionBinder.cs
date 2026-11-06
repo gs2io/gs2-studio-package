@@ -31,6 +31,7 @@ namespace GS2Studio.Generated.Mission
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableMissionBinder : IReadOnlyMissionBinder
     {
+        MissionBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Receive(Gs2.Unity.Gs2Mission.Model.EzConfig[]? config = null);
     }
 
@@ -75,10 +76,169 @@ namespace GS2Studio.Generated.Mission
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class MissionBinder : ReadOnlyMissionBinder, IMissionBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly MissionBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(MissionBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Mission Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableMission? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableMission
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal MissionId __valueId = default!;
+                public MissionId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setMissionCollection;
+                internal MissionCollectionId __valueMissionCollection = default!;
+                public MissionCollectionId MissionCollection
+                {
+                    get => __setMissionCollection ? __valueMissionCollection : __scopeOwner.Value.MissionCollection;
+                    set { __setMissionCollection = true; __valueMissionCollection = value; }
+                }
+                internal bool __setCounter;
+                internal MissionCounterId __valueCounter = default!;
+                public MissionCounterId Counter
+                {
+                    get => __setCounter ? __valueCounter : __scopeOwner.Value.Counter;
+                    set { __setCounter = true; __valueCounter = value; }
+                }
+                internal bool __setTargetValue;
+                internal long __valueTargetValue = default!;
+                public long TargetValue
+                {
+                    get => __setTargetValue ? __valueTargetValue : __scopeOwner.Value.TargetValue;
+                    set { __setTargetValue = true; __valueTargetValue = value; }
+                }
+                internal bool __setCompleted;
+                internal bool __valueCompleted = default!;
+                public bool Completed
+                {
+                    get => __setCompleted ? __valueCompleted : __scopeOwner.Value.Completed;
+                    set { __setCompleted = true; __valueCompleted = value; }
+                }
+                internal bool __setReceived;
+                internal bool __valueReceived = default!;
+                public bool Received
+                {
+                    get => __setReceived ? __valueReceived : __scopeOwner.Value.Received;
+                    set { __setReceived = true; __valueReceived = value; }
+                }
+                internal bool __setRewardAmount;
+                internal int __valueRewardAmount = default!;
+                public int RewardAmount
+                {
+                    get => __setRewardAmount ? __valueRewardAmount : __scopeOwner.Value.RewardAmount;
+                    set { __setRewardAmount = true; __valueRewardAmount = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<MissionId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setMissionCollection) { _owner._model.MissionCollection = changes.__valueMissionCollection; changes.__setMissionCollection = false; }
+                if (changes.__setCounter) { _owner._model.Counter = changes.__valueCounter; changes.__setCounter = false; }
+                if (changes.__setTargetValue) { _owner._model.TargetValue = changes.__valueTargetValue; changes.__setTargetValue = false; }
+                if (changes.__setCompleted) { _owner._model.Completed = changes.__valueCompleted; changes.__setCompleted = false; }
+                if (changes.__setReceived) { _owner._model.Received = changes.__valueReceived; changes.__setReceived = false; }
+                if (changes.__setRewardAmount) { _owner._model.RewardAmount = changes.__valueRewardAmount; changes.__setRewardAmount = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -91,13 +251,18 @@ namespace GS2Studio.Generated.Mission
         internal MissionBinder(
             MutableMission model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            string? __sdk__transactionAcquireAction_2 = null,
+            string? __sdk__missionMissionMissionTaskModel_2 = null,
+            string? __sdk__membershipMissionComplete_1 = null
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Mission.MissionTaskModelAcquireActionArrayLoader("Mission", _model.MissionCollection, _model.Id);
-            __missionMissionMissionTaskModelLoader = new Gs2Bind.Gs2Mission.MissionTaskModelLoader("Mission", _model.MissionCollection, _model.Id);
-            __membershipMissionCompleteLoader = new Gs2Bind.Gs2Mission.CompleteLoader("Mission", _model.MissionCollection);
+
+            __transactionAcquireActionLoader = new Gs2Bind.Gs2Mission.MissionTaskModelAcquireActionArrayLoader("Mission", _model.MissionCollection, (string.IsNullOrEmpty(__sdk__transactionAcquireAction_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_2!));
+            __missionMissionMissionTaskModelLoader = new Gs2Bind.Gs2Mission.MissionTaskModelLoader("Mission", _model.MissionCollection, (string.IsNullOrEmpty(__sdk__missionMissionMissionTaskModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__missionMissionMissionTaskModel_2!));
+            __membershipMissionCompleteLoader = new Gs2Bind.Gs2Mission.CompleteLoader("Mission", (string.IsNullOrEmpty(__sdk__membershipMissionComplete_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__membershipMissionComplete_1!));
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableMission CreateModel(MissionId id, MissionCollectionId missionCollection)
@@ -112,14 +277,16 @@ namespace GS2Studio.Generated.Mission
             MissionId id, MissionCollectionId missionCollection,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_2 = null,
+            string? __sdk__missionMissionMissionTaskModel_2 = null,
+            string? __sdk__membershipMissionComplete_1 = null)
         {
             var model = CreateModel(id, missionCollection);
-            var binder = new MissionBinder(model, gs2, session);
+            var binder = new MissionBinder(model, gs2, session, __sdk__transactionAcquireAction_2: __sdk__transactionAcquireAction_2, __sdk__missionMissionMissionTaskModel_2: __sdk__missionMissionMissionTaskModel_2, __sdk__membershipMissionComplete_1: __sdk__membershipMissionComplete_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -211,6 +378,7 @@ namespace GS2Studio.Generated.Mission
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -255,7 +423,6 @@ namespace GS2Studio.Generated.Mission
         {
             if (source != null)
             {
-                // CreateModel owns identity; applying SDK fields must not replace it.
                 model.TargetValue = source.TargetCounter.Value;
             }
             else
@@ -278,6 +445,7 @@ namespace GS2Studio.Generated.Mission
                 model.Received = default;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

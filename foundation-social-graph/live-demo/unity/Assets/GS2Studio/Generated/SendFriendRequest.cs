@@ -13,7 +13,7 @@ namespace GS2Studio.Generated.SendFriendRequest
     public interface SendFriendRequest
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the outgoing friend request.
         /// </summary>
         SendFriendRequestId Id { get; }
     }

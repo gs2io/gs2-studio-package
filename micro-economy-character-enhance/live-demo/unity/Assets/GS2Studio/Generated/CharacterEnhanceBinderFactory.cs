@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.CharacterEnhance
             CharacterEnhanceId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__enhanceCharacterEnhanceNamespaceRateModel_1 = null);
         ICharacterEnhanceBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.CharacterEnhance
             CharacterEnhanceId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__enhanceCharacterEnhanceNamespaceRateModel_1 = null)
         {
-            return await CharacterEnhanceBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await CharacterEnhanceBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__enhanceCharacterEnhanceNamespaceRateModel_1);
         }
         public ICharacterEnhanceBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

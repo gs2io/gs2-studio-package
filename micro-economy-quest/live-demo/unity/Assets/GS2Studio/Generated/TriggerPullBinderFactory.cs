@@ -26,7 +26,9 @@ namespace GS2Studio.Generated.TriggerPull
             TriggerPullId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeTriggerPullNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null);
         ITriggerPullBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -38,9 +40,11 @@ namespace GS2Studio.Generated.TriggerPull
             TriggerPullId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeTriggerPullNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null)
         {
-            return await TriggerPullBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await TriggerPullBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__exchangeTriggerPullNamespaceRateModel_1, __sdk__transactionAcquireAction_1);
         }
         public ITriggerPullBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

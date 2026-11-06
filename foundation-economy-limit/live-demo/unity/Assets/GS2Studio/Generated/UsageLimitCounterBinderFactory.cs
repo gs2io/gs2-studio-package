@@ -28,7 +28,19 @@ namespace GS2Studio.Generated.UsageLimitCounter
             UsageLimitCounterId id, UsageLimitId limit,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeLimitResetNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeLimitFreeUseNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction3_1 = null,
+            string? __sdk__transactionAcquireAction4_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__exchangeLimitAdUseNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction3_1 = null,
+            string? __sdk__userdataLimitLimitLimitModel_1 = null,
+            string? __sdk__userdataLimitLimitLimitModel_2 = null);
         IUsageLimitCounterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string limit);
     }
 
@@ -40,9 +52,21 @@ namespace GS2Studio.Generated.UsageLimitCounter
             UsageLimitCounterId id, UsageLimitId limit,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeLimitResetNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeLimitFreeUseNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction3_1 = null,
+            string? __sdk__transactionAcquireAction4_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__exchangeLimitAdUseNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction3_1 = null,
+            string? __sdk__userdataLimitLimitLimitModel_1 = null,
+            string? __sdk__userdataLimitLimitLimitModel_2 = null)
         {
-            return await UsageLimitCounterBinder.CreateAsync(id, limit, gs2, session, cancellationToken);
+            return await UsageLimitCounterBinder.CreateAsync(id, limit, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1, __sdk__transactionConsumeAction_1, __sdk__exchangeLimitResetNamespaceRateModel_1, __sdk__transactionAcquireAction2_1, __sdk__exchangeLimitFreeUseNamespaceRateModel_1, __sdk__transactionAcquireAction3_1, __sdk__transactionAcquireAction4_1, __sdk__transactionConsumeAction2_1, __sdk__exchangeLimitAdUseNamespaceRateModel_1, __sdk__transactionConsumeAction3_1, __sdk__userdataLimitLimitLimitModel_1, __sdk__userdataLimitLimitLimitModel_2);
         }
         public IUsageLimitCounterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string limit)
         {

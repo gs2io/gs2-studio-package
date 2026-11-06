@@ -21,18 +21,73 @@ using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Mission;
 using GS2Studio.Generated.MissionCollection;
 using Gs2.Util.LitJson;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.MissionCounter
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum MissionCounterMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the MissionMission master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeMissionAdvanceNamespaceRateModel", "UserdataMissionMissionCounterModel")]
+        MissionMissionMaster,
+
+        /// <summary>Built by the ExchangeMissionAdvance master-data list axis.</summary>
+        [Gs2SkipsLoaders("MissionMissionNamespaceCounterModel", "UserdataMissionMissionCounterModel")]
+        ExchangeMissionAdvanceMaster,
+
+        /// <summary>Built by the MissionMission user-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeMissionAdvanceNamespaceRateModel")]
+        MissionMissionUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyMissionCounterBinder : MissionCounter
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        MissionCounterMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply <c>Id</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>MissionMissionMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>MissionMissionUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeMissionAdvanceNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>MissionMissionMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>MissionMissionUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeMissionAdvanceNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Mission.CounterLoader</c> load on <c>__userdataMissionMissionCounterModelLoader</c> or its composition from a list item. False means this path does not supply <c>TodayValue</c>, <c>WeeklyValue</c>, <c>MonthlyValue</c>, <c>TotalValue</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>MissionMissionMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeMissionAdvanceMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedUserdataMissionMissionCounterModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Mission.CounterModelLoader</c> load on <c>__missionMissionNamespaceCounterModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeMissionAdvanceMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedMissionMissionNamespaceCounterModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableMissionCounterBinder : IReadOnlyMissionCounterBinder
     {
+        MissionCounterBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Advance(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
+        Task<GS2Studio.Generated.Mission.IReadOnlyMissionBinderCollection> GetMissions(MissionCollectionId missionCollection, CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -40,11 +95,10 @@ namespace GS2Studio.Generated.MissionCounter
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.Mission.IReadOnlyMissionBinderCollection> GetMissions(MissionCollectionId missionCollection, CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyMissionCounterBinder : IReadOnlyMissionCounterBinder
+    public abstract class ReadOnlyMissionCounterBinder : IReadOnlyMissionCounterBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableMissionCounter _model;
@@ -64,6 +118,22 @@ namespace GS2Studio.Generated.MissionCounter
         /// <inheritdoc cref="MissionCounter.TotalValue" />
         public long TotalValue => _model.TotalValue;
 
+        /// <inheritdoc />
+        public abstract MissionCounterMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeMissionAdvanceNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataMissionMissionCounterModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedMissionMissionNamespaceCounterModel { get; }
+
+
         private protected ReadOnlyMissionCounterBinder(MutableMissionCounter model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -73,10 +143,153 @@ namespace GS2Studio.Generated.MissionCounter
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class MissionCounterBinder : ReadOnlyMissionCounterBinder, IMissionCounterBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly MissionCounterBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(MissionCounterBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public MissionCounter Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableMissionCounter? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableMissionCounter
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal MissionCounterId __valueId = default!;
+                public MissionCounterId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setTodayValue;
+                internal long __valueTodayValue = default!;
+                public long TodayValue
+                {
+                    get => __setTodayValue ? __valueTodayValue : __scopeOwner.Value.TodayValue;
+                    set { __setTodayValue = true; __valueTodayValue = value; }
+                }
+                internal bool __setWeeklyValue;
+                internal long __valueWeeklyValue = default!;
+                public long WeeklyValue
+                {
+                    get => __setWeeklyValue ? __valueWeeklyValue : __scopeOwner.Value.WeeklyValue;
+                    set { __setWeeklyValue = true; __valueWeeklyValue = value; }
+                }
+                internal bool __setMonthlyValue;
+                internal long __valueMonthlyValue = default!;
+                public long MonthlyValue
+                {
+                    get => __setMonthlyValue ? __valueMonthlyValue : __scopeOwner.Value.MonthlyValue;
+                    set { __setMonthlyValue = true; __valueMonthlyValue = value; }
+                }
+                internal bool __setTotalValue;
+                internal long __valueTotalValue = default!;
+                public long TotalValue
+                {
+                    get => __setTotalValue ? __valueTotalValue : __scopeOwner.Value.TotalValue;
+                    set { __setTotalValue = true; __valueTotalValue = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<MissionCounterId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setTodayValue) { _owner._model.TodayValue = changes.__valueTodayValue; changes.__setTodayValue = false; }
+                if (changes.__setWeeklyValue) { _owner._model.WeeklyValue = changes.__valueWeeklyValue; changes.__setWeeklyValue = false; }
+                if (changes.__setMonthlyValue) { _owner._model.MonthlyValue = changes.__valueMonthlyValue; changes.__setMonthlyValue = false; }
+                if (changes.__setTotalValue) { _owner._model.TotalValue = changes.__valueTotalValue; changes.__setTotalValue = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -89,18 +302,62 @@ namespace GS2Studio.Generated.MissionCounter
         private readonly Gs2Bind.Gs2Mission.CounterModelLoader __missionMissionNamespaceCounterModelLoader;
         private readonly Gs2Bind.Gs2Mission.CounterLoader __userdataMissionMissionCounterModelLoader;
 
+        private readonly MissionCounterMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>MissionMissionMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>MissionMissionUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is MissionCounterMountSurface.Full or MissionCounterMountSurface.ExchangeMissionAdvanceMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeMissionAdvanceNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>MissionMissionMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>MissionMissionUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeMissionAdvanceNamespaceRateModelLoader => _mountSurfaceValue is MissionCounterMountSurface.Full or MissionCounterMountSurface.ExchangeMissionAdvanceMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataMissionMissionCounterModelLoader</c> reads.</summary>
+        /// <remarks>MissionMissionMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeMissionAdvanceMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__userdataMissionMissionCounterModelLoader => _mountSurfaceValue is MissionCounterMountSurface.Full;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__missionMissionNamespaceCounterModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeMissionAdvanceMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__missionMissionNamespaceCounterModelLoader => _mountSurfaceValue is MissionCounterMountSurface.Full or MissionCounterMountSurface.MissionMissionMaster or MissionCounterMountSurface.MissionMissionUser;
+
+        /// <inheritdoc />
+        public override MissionCounterMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeMissionAdvanceNamespaceRateModel => Runs__exchangeMissionAdvanceNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataMissionMissionCounterModel => _mountSurfaceValue is MissionCounterMountSurface.Full or MissionCounterMountSurface.MissionMissionUser;
+
+        /// <inheritdoc />
+        public override bool LoadedMissionMissionNamespaceCounterModel => Runs__missionMissionNamespaceCounterModelLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal MissionCounterBinder(
             MutableMissionCounter model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            MissionCounterMountSurface _mountSurface = MissionCounterMountSurface.Full,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeMissionAdvanceNamespaceRateModel_1 = null,
+            string? __sdk__missionMissionNamespaceCounterModel_1 = null,
+            string? __sdk__userdataMissionMissionCounterModel_1 = null
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("MissionAdvance", _model.Id, 0);
-            __exchangeMissionAdvanceNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("MissionAdvance", _model.Id);
-            __missionMissionNamespaceCounterModelLoader = new Gs2Bind.Gs2Mission.CounterModelLoader("Mission", _model.Id);
-            __userdataMissionMissionCounterModelLoader = new Gs2Bind.Gs2Mission.CounterLoader("Mission", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("MissionAdvance", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __exchangeMissionAdvanceNamespaceRateModelLoader = Runs__exchangeMissionAdvanceNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("MissionAdvance", (string.IsNullOrEmpty(__sdk__exchangeMissionAdvanceNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeMissionAdvanceNamespaceRateModel_1!)) : null!;
+            __missionMissionNamespaceCounterModelLoader = Runs__missionMissionNamespaceCounterModelLoader ? new Gs2Bind.Gs2Mission.CounterModelLoader("Mission", (string.IsNullOrEmpty(__sdk__missionMissionNamespaceCounterModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__missionMissionNamespaceCounterModel_1!)) : null!;
+            __userdataMissionMissionCounterModelLoader = Runs__userdataMissionMissionCounterModelLoader ? new Gs2Bind.Gs2Mission.CounterLoader("Mission", (string.IsNullOrEmpty(__sdk__userdataMissionMissionCounterModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataMissionMissionCounterModel_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableMissionCounter CreateModel(MissionCounterId id)
@@ -114,103 +371,136 @@ namespace GS2Studio.Generated.MissionCounter
             MissionCounterId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeMissionAdvanceNamespaceRateModel_1 = null,
+            string? __sdk__missionMissionNamespaceCounterModel_1 = null,
+            string? __sdk__userdataMissionMissionCounterModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new MissionCounterBinder(model, gs2, session);
+            var binder = new MissionCounterBinder(model, gs2, session, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__exchangeMissionAdvanceNamespaceRateModel_1: __sdk__exchangeMissionAdvanceNamespaceRateModel_1, __sdk__missionMissionNamespaceCounterModel_1: __sdk__missionMissionNamespaceCounterModel_1, __sdk__userdataMissionMissionCounterModel_1: __sdk__userdataMissionMissionCounterModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _exchangeMissionAdvanceNamespaceRateModel = await __exchangeMissionAdvanceNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeMissionAdvanceNamespaceRateModel = Runs__exchangeMissionAdvanceNamespaceRateModelLoader ? await __exchangeMissionAdvanceNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeMissionAdvanceNamespaceRateModel != null)
             {
             }
-            var _missionMissionNamespaceCounterModel = await __missionMissionNamespaceCounterModelLoader.Load(_gs2, _session);
+            var _missionMissionNamespaceCounterModel = Runs__missionMissionNamespaceCounterModelLoader ? await __missionMissionNamespaceCounterModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_missionMissionNamespaceCounterModel != null)
             {
             }
-            var _userdataMissionMissionCounterModel = await __userdataMissionMissionCounterModelLoader.Load(_gs2, _session);
+            var _userdataMissionMissionCounterModel = Runs__userdataMissionMissionCounterModelLoader ? await __userdataMissionMissionCounterModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataMissionMissionCounterModel(_model, _userdataMissionMissionCounterModel);
-            if (_transactionAcquireAction != null) RestoreId(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            if (Runs__userdataMissionMissionCounterModelLoader)
+            {
+                ApplyUserdataMissionMissionCounterModel(_model, _userdataMissionMissionCounterModel);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                if (_transactionAcquireAction != null) RestoreId(_model, _transactionAcquireAction.Action, _transactionAcquireAction.Request);
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value != null) RestoreId(_model, value.Action, value.Request);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeMissionAdvanceNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value != null) RestoreId(_model, value.Action, value.Request);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeMissionAdvanceNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeMissionAdvanceNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__missionMissionNamespaceCounterModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__missionMissionNamespaceCounterModelLoader)
+            {
+                _unsubscribers.Add(__missionMissionNamespaceCounterModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__userdataMissionMissionCounterModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataMissionMissionCounterModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__userdataMissionMissionCounterModelLoader)
+            {
+                _unsubscribers.Add(__userdataMissionMissionCounterModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataMissionMissionCounterModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __exchangeMissionAdvanceNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __missionMissionNamespaceCounterModelLoader.Invalidate(_gs2, _session);
-            __userdataMissionMissionCounterModelLoader.Invalidate(_gs2, _session);
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeMissionAdvanceNamespaceRateModelLoader)
+            {
+                __exchangeMissionAdvanceNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__missionMissionNamespaceCounterModelLoader)
+            {
+                __missionMissionNamespaceCounterModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__userdataMissionMissionCounterModelLoader)
+            {
+                __userdataMissionMissionCounterModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -222,6 +512,7 @@ namespace GS2Studio.Generated.MissionCounter
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -372,6 +663,7 @@ namespace GS2Studio.Generated.MissionCounter
                 model.TotalValue = default;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

@@ -115,6 +115,7 @@ namespace GS2Studio.Generated.CharacterRecruit
         private ICharacterRecruitBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultCharacterRecruitBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

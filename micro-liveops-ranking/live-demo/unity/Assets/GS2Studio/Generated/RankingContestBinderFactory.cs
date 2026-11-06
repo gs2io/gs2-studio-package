@@ -24,7 +24,11 @@ namespace GS2Studio.Generated.RankingContest
             RankingContestId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeRankingContestFinishNamespaceRateModel_1 = null,
+            string? __sdk__exchangeRankingContestStartNamespaceRateModel_1 = null);
     }
 
     public sealed class DefaultRankingContestBinderFactory : IRankingContestBinderFactory
@@ -35,9 +39,13 @@ namespace GS2Studio.Generated.RankingContest
             RankingContestId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeRankingContestFinishNamespaceRateModel_1 = null,
+            string? __sdk__exchangeRankingContestStartNamespaceRateModel_1 = null)
         {
-            return await RankingContestBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await RankingContestBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__transactionConsumeAction_1, __sdk__transactionAcquireAction_1, __sdk__exchangeRankingContestFinishNamespaceRateModel_1, __sdk__exchangeRankingContestStartNamespaceRateModel_1);
         }
     }
 }

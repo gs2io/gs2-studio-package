@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.TakeOverSetting
             TakeOverSettingId id, int type,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataAccountAccountTakeOverTypeModel_1 = null);
     }
 
     public sealed class DefaultTakeOverSettingBinderFactory : ITakeOverSettingBinderFactory
@@ -34,9 +35,10 @@ namespace GS2Studio.Generated.TakeOverSetting
             TakeOverSettingId id, int type,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataAccountAccountTakeOverTypeModel_1 = null)
         {
-            return await TakeOverSettingBinder.CreateAsync(id, type, gs2, session, cancellationToken);
+            return await TakeOverSettingBinder.CreateAsync(id, type, gs2, session, cancellationToken, __sdk__userdataAccountAccountTakeOverTypeModel_1);
         }
     }
 }

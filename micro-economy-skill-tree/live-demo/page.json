@@ -48,7 +48,7 @@
     "CurrencyType": {
       "rows": []
     },
-    "StorePrice": {
+    "StoreProductPrices": {
       "rows": []
     }
   }

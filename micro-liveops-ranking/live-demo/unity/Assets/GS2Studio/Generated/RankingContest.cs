@@ -13,7 +13,7 @@ namespace GS2Studio.Generated.RankingContest
     public interface RankingContest
     {
         /// <summary>
-        /// Unique identifier
+        /// The few minutes in which a visitor can score.
         /// </summary>
         RankingContestId Id { get; }
     }

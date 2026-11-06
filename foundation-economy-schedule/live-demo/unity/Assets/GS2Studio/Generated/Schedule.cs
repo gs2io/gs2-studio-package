@@ -13,42 +13,93 @@ namespace GS2Studio.Generated.Schedule
     public interface Schedule
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the schedule.
         /// </summary>
         ScheduleId Id { get; }
 
+        /// <summary>
+        /// Whether the schedule uses absolute times or times relative to a trigger.
+        /// </summary>
         string ScheduleType { get; }
 
+        /// <summary>
+        /// Start time for an absolute schedule.
+        /// </summary>
         DateTime? StartAt { get; }
 
+        /// <summary>
+        /// End time for an absolute schedule.
+        /// </summary>
         DateTime? EndAt { get; }
 
+        /// <summary>
+        /// Trigger used as the reference for a relative schedule.
+        /// </summary>
         string? Trigger { get; }
 
+        /// <summary>
+        /// Whether the reference trigger has fired for this player.
+        /// </summary>
         bool? TriggerFired { get; }
 
+        /// <summary>
+        /// When this player's relative schedule opened. Equals the reference trigger's fire time.
+        /// </summary>
         DateTime? RelativeStartAt { get; }
 
+        /// <summary>
+        /// When this player's relative schedule closes. Equals the reference trigger's expiration.
+        /// </summary>
         DateTime? RelativeEndAt { get; }
 
+        /// <summary>
+        /// Cadence used to repeat the schedule.
+        /// </summary>
         string RepeatType { get; }
 
+        /// <summary>
+        /// Hour when the active period begins for daily, weekly, or monthly repetition.
+        /// </summary>
         int? BeginHour { get; }
 
+        /// <summary>
+        /// Hour when the active period ends for daily, weekly, or monthly repetition.
+        /// </summary>
         int? EndHour { get; }
 
+        /// <summary>
+        /// Weekday when a weekly active period begins.
+        /// </summary>
         string? BeginDayOfWeek { get; }
 
+        /// <summary>
+        /// Weekday when a weekly active period ends.
+        /// </summary>
         string? EndDayOfWeek { get; }
 
+        /// <summary>
+        /// Day of the month when a monthly active period begins.
+        /// </summary>
         int? BeginDayOfMonth { get; }
 
+        /// <summary>
+        /// Day of the month when a monthly active period ends.
+        /// </summary>
         int? EndDayOfMonth { get; }
 
+        /// <summary>
+        /// Reference time used to calculate a custom cycle.
+        /// </summary>
         DateTime? AnchorTimestamp { get; }
 
+        /// <summary>
+        /// Number of active days in a custom cycle.
+        /// </summary>
         int? ActiveDays { get; }
 
+        /// <summary>
+        /// Number of inactive days in a custom cycle.
+        /// </summary>
         int? InactiveDays { get; }
     }
 

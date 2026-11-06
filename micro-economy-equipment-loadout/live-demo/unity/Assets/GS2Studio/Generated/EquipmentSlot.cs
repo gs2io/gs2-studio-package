@@ -13,12 +13,12 @@ namespace GS2Studio.Generated.EquipmentSlot
     public interface EquipmentSlot
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the equipment slot.
         /// </summary>
         EquipmentSlotId Id { get; }
 
         /// <summary>
-        /// Which equipment this slot accepts, matched on its property id
+        /// Regular expression matching equipment instance IDs accepted by this slot.
         /// </summary>
         string PropertyRegex { get; }
     }

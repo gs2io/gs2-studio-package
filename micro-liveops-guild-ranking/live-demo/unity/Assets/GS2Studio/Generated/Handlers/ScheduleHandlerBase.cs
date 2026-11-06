@@ -24,6 +24,9 @@ namespace GS2Studio.Generated.Schedule
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public ScheduleMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<Schedule>? Updated;
 
         public event Action<IActionableScheduleBinder>? Bound;

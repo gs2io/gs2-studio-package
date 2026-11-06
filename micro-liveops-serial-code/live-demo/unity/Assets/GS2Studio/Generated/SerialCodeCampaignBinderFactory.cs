@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.SerialCodeCampaign
             SerialCodeCampaignId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__serialKeySerialCodeNamespaceCampaignModel_1 = null);
     }
 
     public sealed class DefaultSerialCodeCampaignBinderFactory : ISerialCodeCampaignBinderFactory
@@ -34,9 +35,10 @@ namespace GS2Studio.Generated.SerialCodeCampaign
             SerialCodeCampaignId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__serialKeySerialCodeNamespaceCampaignModel_1 = null)
         {
-            return await SerialCodeCampaignBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await SerialCodeCampaignBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__serialKeySerialCodeNamespaceCampaignModel_1);
         }
     }
 }

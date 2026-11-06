@@ -111,8 +111,20 @@ namespace GS2Studio.Generated.SkillNode
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlySkillNodeBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlySkillNodeBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlySkillNodeBinder> _configuredComparer = SkillNodeBinderComparer.Default;
@@ -236,18 +248,38 @@ namespace GS2Studio.Generated.SkillNode
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2SkillTree.NodeModelArrayLoader("SkillTree");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromSkillTreeSkillTreeMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromSkillTreeSkillTreeMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromSkillTreeSkillTreeMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromSkillTreeSkillTreeMasterItems");
+            _pendingCollectionAxis = "ReconcileFromSkillTreeSkillTreeMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2SkillTree.NodeModelArrayLoader("SkillTree");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromSkillTreeSkillTreeMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromSkillTreeSkillTreeMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromSkillTreeSkillTreeMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromSkillTreeSkillTreeMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromSkillTreeSkillTreeMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromSkillTreeSkillTreeMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromSkillTreeSkillTreeMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -255,7 +287,6 @@ namespace GS2Studio.Generated.SkillNode
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2SkillTree.NodeModelArrayLoader("SkillTree");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -263,9 +294,10 @@ namespace GS2Studio.Generated.SkillNode
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromSkillTreeSkillTreeMasterItems");
                     try
                     {
-                        await ReconcileFromSkillTreeSkillTreeMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromSkillTreeSkillTreeMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -274,41 +306,68 @@ namespace GS2Studio.Generated.SkillNode
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromSkillTreeSkillTreeMasterItems(IList<Gs2.Unity.Gs2SkillTree.Model.EzNodeModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromSkillTreeSkillTreeMasterItems(IList<Gs2.Unity.Gs2SkillTree.Model.EzNodeModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromSkillTreeSkillTreeMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractSkillTreeSkillTreeMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromSkillTreeSkillTreeMasterItems", updateVersion)) return;
                 var rowKey = ExtractSkillTreeSkillTreeMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractSkillTreeSkillTreeMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<SkillNodeId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplySkillTreeSkillTreeMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-skill-tree", "masterData", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "micro-economy-skill-tree", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "skillTree", "NodeModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-skill-tree\",\"masterData\",\"mdr_3CVJH2052ABYFVDDRM7WE3A8HD\",\"skillTree\",\"NodeModel\",\"nodeModelName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-skill-tree", "masterData", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "micro-economy-skill-tree", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "skillTree", "NodeModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-skill-tree", "masterData", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "micro-economy-skill-tree", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "skillTree", "NodeModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromSkillTreeSkillTreeMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromSkillTreeSkillTreeMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromSkillTreeSkillTreeMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<SkillNodeId>.Default.Equals(raced.Id, nextId)) { ApplySkillTreeSkillTreeMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-skill-tree", "masterData", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "micro-economy-skill-tree", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "skillTree", "NodeModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-skill-tree\",\"masterData\",\"mdr_3CVJH2052ABYFVDDRM7WE3A8HD\",\"skillTree\",\"NodeModel\",\"nodeModelName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-skill-tree", "masterData", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "micro-economy-skill-tree", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "skillTree", "NodeModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-skill-tree", "masterData", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "micro-economy-skill-tree", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "skillTree", "NodeModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplySkillTreeSkillTreeMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-skill-tree", "masterData", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "micro-economy-skill-tree", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "skillTree", "NodeModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-skill-tree\",\"masterData\",\"mdr_3CVJH2052ABYFVDDRM7WE3A8HD\",\"skillTree\",\"NodeModel\",\"nodeModelName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-skill-tree", "masterData", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "micro-economy-skill-tree", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "skillTree", "NodeModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-skill-tree", "masterData", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "micro-economy-skill-tree", "mdr_3CVJH2052ABYFVDDRM7WE3A8HD", "skillTree", "NodeModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromSkillTreeSkillTreeMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -348,13 +407,13 @@ namespace GS2Studio.Generated.SkillNode
             if (!_disposed) SortBinders();
         }
 
-        private async Task<SkillNodeBinder> BuildBinderFromSkillTreeSkillTreeMasterItem(Gs2.Unity.Gs2SkillTree.Model.EzNodeModel item, CancellationToken cancellationToken)
+        private async Task<SkillNodeBinder?> BuildBinderFromSkillTreeSkillTreeMasterItem(Gs2.Unity.Gs2SkillTree.Model.EzNodeModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = SkillNodeBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(SkillNodeId) : new SkillNodeId(item.Name)), _owner);
             ApplySkillTreeSkillTreeMasterItemTo(model, item);
-            var binder = new SkillNodeBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new SkillNodeBinder(model, _gs2, _session, __sdk__transactionConsumeAction_1: item.Name, __sdk__skillTreeSkillTreeNamespaceNodeModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplySkillTreeSkillTreeMasterItemTo(MutableSkillNode model, Gs2.Unity.Gs2SkillTree.Model.EzNodeModel item)
@@ -373,8 +432,9 @@ namespace GS2Studio.Generated.SkillNode
         {
             var id = ExtractSkillTreeSkillTreeMasterIdentity(item);
             if (EqualityComparer<SkillNodeId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"SkillTreeSkillTree\",\"micro-economy-skill-tree\",\"mdr_3CVJH2052ABYFVDDRM7WE3A8HD\",null,null,\"micro-economy-skill-tree\",\"mdr_3CVJH2052ABYFVDDRM7WE3A8HD\",\"skillTree\",\"NodeModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class SkillNodeBinderComparer : IComparer<IReadOnlySkillNodeBinder>

@@ -13,7 +13,7 @@ namespace GS2Studio.Generated.GachaRarity
     public interface GachaRarity
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the gacha rarity.
         /// </summary>
         GachaRarityId Id { get; }
     }

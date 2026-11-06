@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 using Gs2.Unity.Core;
 using Gs2.Unity.Util;
-using GS2Studio.Generated.CurrencyType;
 using Gs2.Unity.Gs2Money2.Model;
 using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Money2;
@@ -34,10 +33,10 @@ namespace GS2Studio.Generated.StoreProduct
         event Action<IStoreProductBinder> ItemAdded;
         event Action<IStoreProductBinder> ItemRemoved;
         void Invalidate();
-        Task MountFromShowcaseShopCurrencyMasterDataAsync(CancellationToken cancellationToken = default);
-        void SubscribeFromShowcaseShopCurrencyMasterData(Action? onChange = null, Action<Exception>? onError = null);
         Task MountFromMoney2CurrencyMasterDataAsync(CancellationToken cancellationToken = default);
         void SubscribeFromMoney2CurrencyMasterData(Action? onChange = null, Action<Exception>? onError = null);
+        Task MountFromShowcaseShopCurrencyMasterDataAsync(CancellationToken cancellationToken = default);
+        void SubscribeFromShowcaseShopCurrencyMasterData(Action? onChange = null, Action<Exception>? onError = null);
     }
 
     /// <summary>Filtered views borrow binders from one owning root, so they expose no independent mount or disposal.</summary>
@@ -107,7 +106,7 @@ namespace GS2Studio.Generated.StoreProduct
     {
         private readonly Gs2Domain _gs2;
         private readonly IGameSession _session;
-        private readonly CurrencyTypeId _currencyType;
+        private readonly string _showcaseName;
         private readonly List<StoreProductBinder> _binders = new List<StoreProductBinder>();
         // Reconcile by backing row key because distinct rows may share a domain ID.
         private readonly Dictionary<string, StoreProductBinder> _bindersByRowKey = new Dictionary<string, StoreProductBinder>();
@@ -115,8 +114,20 @@ namespace GS2Studio.Generated.StoreProduct
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyStoreProductBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyStoreProductBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyStoreProductBinder> _configuredComparer = StoreProductBinderComparer.Default;
@@ -156,18 +167,18 @@ namespace GS2Studio.Generated.StoreProduct
         public StoreProductBinderCollection(
             Gs2Domain gs2,
             IGameSession session,
-            CurrencyTypeId currencyType)
+            string showcaseName)
         {
             _gs2 = gs2;
             _session = session;
-            _currencyType = currencyType;
+            _showcaseName = showcaseName;
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType).Invalidate(_gs2, _session);
             new Gs2Bind.Gs2Money2.StoreContentModelArrayLoader("Currency").Invalidate(_gs2, _session);
+            new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _showcaseName).Invalidate(_gs2, _session);
         }
 
         // Stable sorting preserves row order when both the sort key and domain ID compare equal.
@@ -226,166 +237,13 @@ namespace GS2Studio.Generated.StoreProduct
         }
 
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
-        public static async Task<StoreProductBinderCollection> CreateFromShowcaseShopCurrencyMasterDataAsync(
-            Gs2Domain gs2,
-            IGameSession session,
-            CurrencyTypeId currencyType,
-            CancellationToken cancellationToken = default)
-        {
-            var coll = new StoreProductBinderCollection(gs2, session, currencyType);
-            await coll.MountFromShowcaseShopCurrencyMasterDataAsync(cancellationToken);
-            return coll;
-        }
-
-        public async Task MountFromShowcaseShopCurrencyMasterDataAsync(CancellationToken cancellationToken = default)
-        {
-            ThrowIfDisposed();
-            cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType);
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromShowcaseShopCurrencyMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
-        }
-
-        public void SubscribeFromShowcaseShopCurrencyMasterData(Action? onChange = null, Action<Exception>? onError = null)
-        {
-            ThrowIfDisposed();
-            if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
-            _subscriptionActive = true;
-            // Consumer failures need the same error channel as asynchronous reconciliation.
-            Action notify = () =>
-            {
-                try { onChange?.Invoke(); }
-                catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
-            };
-            _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
-            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _currencyType);
-            _unsubscribers.Add(arrayLoader.Subscribe(
-                _gs2,
-                _session,
-                async (_, _, items) =>
-                {
-                    if (_disposed) return;
-                    try
-                    {
-                        await ReconcileFromShowcaseShopCurrencyMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
-                    }
-                    catch (Exception ex)
-                    {
-                        if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex);
-                    }
-                },
-                notify
-            ));
-        }
-
-        private async Task ReconcileFromShowcaseShopCurrencyMasterItems(IList<Gs2.Unity.Gs2Showcase.Model.EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
-        {
-            var seen = new HashSet<string>();
-            foreach (var item in items)
-            {
-                if (_disposed) return;
-                var rowKey = ExtractShowcaseShopCurrencyMasterRowKey(item);
-                if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
-                {
-                    ApplyShowcaseShopCurrencyMasterItemTo(existing.MutableModel, item);
-                }
-                else
-                {
-                    var binder = await BuildBinderFromShowcaseShopCurrencyMasterItem(item, cancellationToken);
-                    if (_disposed)
-                    {
-                        binder.Dispose();
-                        return;
-                    }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyShowcaseShopCurrencyMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
-                }
-            }
-            if (_bindersByRowKey.Count > seen.Count)
-            {
-                var toRemove = new List<string>();
-                foreach (var kv in _bindersByRowKey)
-                {
-                    if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
-                }
-                // Detach every stale binder before callbacks; a callback may dispose this Collection.
-                var pendingRemovals = new List<Action>();
-                foreach (var rowKey in toRemove)
-                {
-                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
-                    _bindersByRowKey.Remove(rowKey);
-                    _binders.Remove(binder);
-                    var detachedBinder = binder;
-                    // Notify while the binder is live; the Collection retains disposal ownership.
-                    pendingRemovals.Add(() =>
-                    {
-                        try
-                        {
-                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
-                        }
-                        finally
-                        {
-                            detachedBinder.Dispose();
-                        }
-                    });
-                }
-                Exception? removalError = null;
-                foreach (var remove in pendingRemovals)
-                {
-                    try { remove(); }
-                    catch (Exception ex) { removalError ??= ex; }
-                }
-                if (removalError != null) throw removalError;
-            }
-            if (!_disposed) SortBinders();
-        }
-
-        private async Task<StoreProductBinder> BuildBinderFromShowcaseShopCurrencyMasterItem(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item, CancellationToken cancellationToken)
-        {
-            var model = StoreProductBinder.CreateModel(((item.SalesItem == null || string.IsNullOrEmpty(item.SalesItem.Name)) ? default(StoreProductId) : new StoreProductId(item.SalesItem.Name)));
-            ApplyShowcaseShopCurrencyMasterItemTo(model, item);
-            var binder = new StoreProductBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
-        }
-
-        private static void ApplyShowcaseShopCurrencyMasterItemTo(MutableStoreProduct model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
-        {
-            StoreProductBinder.ApplyShowcaseShopCurrencyMasterItem(model, item);
-        }
-
-        private StoreProductId ExtractShowcaseShopCurrencyMasterIdentity(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
-        {
-            return ((item.SalesItem == null || string.IsNullOrEmpty(item.SalesItem.Name)) ? default(StoreProductId) : new StoreProductId(item.SalesItem.Name));
-        }
-
-        private string? ExtractShowcaseShopCurrencyMasterRowKey(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
-        {
-            var id = ExtractShowcaseShopCurrencyMasterIdentity(item);
-            if (EqualityComparer<StoreProductId>.Default.Equals(id, default)) return null;
-            return id.ToString();
-        }
-        /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<StoreProductBinderCollection> CreateFromMoney2CurrencyMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            CurrencyTypeId currencyType,
+            string showcaseName,
             CancellationToken cancellationToken = default)
         {
-            var coll = new StoreProductBinderCollection(gs2, session, currencyType);
+            var coll = new StoreProductBinderCollection(gs2, session, showcaseName);
             await coll.MountFromMoney2CurrencyMasterDataAsync(cancellationToken);
             return coll;
         }
@@ -394,18 +252,38 @@ namespace GS2Studio.Generated.StoreProduct
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Money2.StoreContentModelArrayLoader("Currency");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromMoney2CurrencyMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromMoney2CurrencyMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromMoney2CurrencyMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromMoney2CurrencyMasterItems");
+            _pendingCollectionAxis = "ReconcileFromMoney2CurrencyMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Money2.StoreContentModelArrayLoader("Currency");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromMoney2CurrencyMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromMoney2CurrencyMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromMoney2CurrencyMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromMoney2CurrencyMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromMoney2CurrencyMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -413,7 +291,6 @@ namespace GS2Studio.Generated.StoreProduct
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Money2.StoreContentModelArrayLoader("Currency");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -421,9 +298,10 @@ namespace GS2Studio.Generated.StoreProduct
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromMoney2CurrencyMasterItems");
                     try
                     {
-                        await ReconcileFromMoney2CurrencyMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromMoney2CurrencyMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -432,41 +310,68 @@ namespace GS2Studio.Generated.StoreProduct
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromMoney2CurrencyMasterItems(IList<Gs2.Unity.Gs2Money2.Model.EzStoreContentModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromMoney2CurrencyMasterItems(IList<Gs2.Unity.Gs2Money2.Model.EzStoreContentModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractMoney2CurrencyMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyMasterItems", updateVersion)) return;
                 var rowKey = ExtractMoney2CurrencyMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractMoney2CurrencyMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<StoreProductId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyMoney2CurrencyMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-currency", "masterData", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "foundation-economy-currency", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "money2", "StoreContentModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-currency\",\"masterData\",\"mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX\",\"money2\",\"StoreContentModel\",\"contentName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-currency", "masterData", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "foundation-economy-currency", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "money2", "StoreContentModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-currency", "masterData", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "foundation-economy-currency", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "money2", "StoreContentModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromMoney2CurrencyMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromMoney2CurrencyMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<StoreProductId>.Default.Equals(raced.Id, nextId)) { ApplyMoney2CurrencyMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-currency", "masterData", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "foundation-economy-currency", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "money2", "StoreContentModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-currency\",\"masterData\",\"mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX\",\"money2\",\"StoreContentModel\",\"contentName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-currency", "masterData", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "foundation-economy-currency", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "money2", "StoreContentModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-currency", "masterData", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "foundation-economy-currency", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "money2", "StoreContentModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyMoney2CurrencyMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-currency", "masterData", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "foundation-economy-currency", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "money2", "StoreContentModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-currency\",\"masterData\",\"mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX\",\"money2\",\"StoreContentModel\",\"contentName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-currency", "masterData", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "foundation-economy-currency", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "money2", "StoreContentModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-currency", "masterData", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "foundation-economy-currency", "mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX", "money2", "StoreContentModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -506,13 +411,13 @@ namespace GS2Studio.Generated.StoreProduct
             if (!_disposed) SortBinders();
         }
 
-        private async Task<StoreProductBinder> BuildBinderFromMoney2CurrencyMasterItem(Gs2.Unity.Gs2Money2.Model.EzStoreContentModel item, CancellationToken cancellationToken)
+        private async Task<StoreProductBinder?> BuildBinderFromMoney2CurrencyMasterItem(Gs2.Unity.Gs2Money2.Model.EzStoreContentModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = StoreProductBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(StoreProductId) : new StoreProductId(item.Name)));
             ApplyMoney2CurrencyMasterItemTo(model, item);
-            var binder = new StoreProductBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new StoreProductBinder(model, _gs2, _session, _mountSurface: StoreProductMountSurface.Money2CurrencyMaster, __sdk__money2CurrencyNamespaceStoreContentModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyMoney2CurrencyMasterItemTo(MutableStoreProduct model, Gs2.Unity.Gs2Money2.Model.EzStoreContentModel item)
@@ -531,8 +436,211 @@ namespace GS2Studio.Generated.StoreProduct
         {
             var id = ExtractMoney2CurrencyMasterIdentity(item);
             if (EqualityComparer<StoreProductId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"Money2Currency\",\"foundation-economy-currency\",\"mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX\",null,null,\"foundation-economy-currency\",\"mdr_27YZ4W2PM4BV7VAGFDD8Z4A7AX\",\"money2\",\"StoreContentModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
+        }
+        /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
+        public static async Task<StoreProductBinderCollection> CreateFromShowcaseShopCurrencyMasterDataAsync(
+            Gs2Domain gs2,
+            IGameSession session,
+            string showcaseName,
+            CancellationToken cancellationToken = default)
+        {
+            var coll = new StoreProductBinderCollection(gs2, session, showcaseName);
+            await coll.MountFromShowcaseShopCurrencyMasterDataAsync(cancellationToken);
+            return coll;
+        }
+
+        public async Task MountFromShowcaseShopCurrencyMasterDataAsync(CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromShowcaseShopCurrencyMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromShowcaseShopCurrencyMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromShowcaseShopCurrencyMasterItems");
+            _pendingCollectionAxis = "ReconcileFromShowcaseShopCurrencyMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _showcaseName);
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseShopCurrencyMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromShowcaseShopCurrencyMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseShopCurrencyMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromShowcaseShopCurrencyMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
+        }
+
+        public void SubscribeFromShowcaseShopCurrencyMasterData(Action? onChange = null, Action<Exception>? onError = null)
+        {
+            ThrowIfDisposed();
+            if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromShowcaseShopCurrencyMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
+            _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromShowcaseShopCurrencyMasterItems";
+            try
+            {
+            // Consumer failures need the same error channel as asynchronous reconciliation.
+            Action notify = () =>
+            {
+                try { onChange?.Invoke(); }
+                catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
+            };
+            _onChange = notify;
+            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _showcaseName);
+            _unsubscribers.Add(arrayLoader.Subscribe(
+                _gs2,
+                _session,
+                async (_, _, items) =>
+                {
+                    if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromShowcaseShopCurrencyMasterItems");
+                    try
+                    {
+                        await ReconcileFromShowcaseShopCurrencyMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex);
+                    }
+                },
+                notify
+            ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
+        }
+
+        private async Task ReconcileFromShowcaseShopCurrencyMasterItems(IList<Gs2.Unity.Gs2Showcase.Model.EzDisplayItem> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
+        {
+            if (!IsCurrentAxisUpdate("ReconcileFromShowcaseShopCurrencyMasterItems", updateVersion)) return;
+            var seen = new HashSet<string>();
+            foreach (var item in items)
+            {
+                var key = ExtractShowcaseShopCurrencyMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseShopCurrencyMasterItems", updateVersion)) return;
+                var rowKey = ExtractShowcaseShopCurrencyMasterRowKey(item);
+                if (rowKey == null) continue;
+                var nextId = ExtractShowcaseShopCurrencyMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<StoreProductId>.Default.Equals(existing.Id, nextId))
+                {
+                    ApplyShowcaseShopCurrencyMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-shop-currency", "masterData", "mdr_536KCCGT1ABNT9C0MQ4D79H9GE", "micro-shop-currency", "mdr_5G3AX0767581SRB6QPW3FRXDBR", "showcase", "DisplayItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-currency\",\"masterData\",\"mdr_5G3AX0767581SRB6QPW3FRXDBR\",\"showcase\",\"DisplayItem\",\"displayItemId\",\"string\"]"] = (object)item.DisplayItemId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-shop-currency", "masterData", "mdr_536KCCGT1ABNT9C0MQ4D79H9GE", "micro-shop-currency", "mdr_5G3AX0767581SRB6QPW3FRXDBR", "showcase", "DisplayItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-currency", "masterData", "mdr_536KCCGT1ABNT9C0MQ4D79H9GE", "micro-shop-currency", "mdr_5G3AX0767581SRB6QPW3FRXDBR", "showcase", "DisplayItem", id)) == 1);
+                    continue;
+                }
+                var binder = await BuildBinderFromShowcaseShopCurrencyMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromShowcaseShopCurrencyMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
+                {
+                    try
+                    {
+                        if (raced != null && EqualityComparer<StoreProductId>.Default.Equals(raced.Id, nextId)) { ApplyShowcaseShopCurrencyMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-shop-currency", "masterData", "mdr_536KCCGT1ABNT9C0MQ4D79H9GE", "micro-shop-currency", "mdr_5G3AX0767581SRB6QPW3FRXDBR", "showcase", "DisplayItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-currency\",\"masterData\",\"mdr_5G3AX0767581SRB6QPW3FRXDBR\",\"showcase\",\"DisplayItem\",\"displayItemId\",\"string\"]"] = (object)item.DisplayItemId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-shop-currency", "masterData", "mdr_536KCCGT1ABNT9C0MQ4D79H9GE", "micro-shop-currency", "mdr_5G3AX0767581SRB6QPW3FRXDBR", "showcase", "DisplayItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-currency", "masterData", "mdr_536KCCGT1ABNT9C0MQ4D79H9GE", "micro-shop-currency", "mdr_5G3AX0767581SRB6QPW3FRXDBR", "showcase", "DisplayItem", id)) == 1); }
+                    }
+                    finally { binder.Dispose(); }
+                    continue;
+                }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-shop-currency", "masterData", "mdr_536KCCGT1ABNT9C0MQ4D79H9GE", "micro-shop-currency", "mdr_5G3AX0767581SRB6QPW3FRXDBR", "showcase", "DisplayItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-shop-currency\",\"masterData\",\"mdr_5G3AX0767581SRB6QPW3FRXDBR\",\"showcase\",\"DisplayItem\",\"displayItemId\",\"string\"]"] = (object)item.DisplayItemId! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-shop-currency", "masterData", "mdr_536KCCGT1ABNT9C0MQ4D79H9GE", "micro-shop-currency", "mdr_5G3AX0767581SRB6QPW3FRXDBR", "showcase", "DisplayItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-shop-currency", "masterData", "mdr_536KCCGT1ABNT9C0MQ4D79H9GE", "micro-shop-currency", "mdr_5G3AX0767581SRB6QPW3FRXDBR", "showcase", "DisplayItem", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
+            }
+            if (!IsCurrentAxisUpdate("ReconcileFromShowcaseShopCurrencyMasterItems", updateVersion)) return;
+            if (_bindersByRowKey.Count > seen.Count)
+            {
+                var toRemove = new List<string>();
+                foreach (var kv in _bindersByRowKey)
+                {
+                    if (!seen.Contains(kv.Key)) toRemove.Add(kv.Key);
+                }
+                // Detach every stale binder before callbacks; a callback may dispose this Collection.
+                var pendingRemovals = new List<Action>();
+                foreach (var rowKey in toRemove)
+                {
+                    if (!_bindersByRowKey.TryGetValue(rowKey, out var binder)) continue;
+                    _bindersByRowKey.Remove(rowKey);
+                    _binders.Remove(binder);
+                    var detachedBinder = binder;
+                    // Notify while the binder is live; the Collection retains disposal ownership.
+                    pendingRemovals.Add(() =>
+                    {
+                        try
+                        {
+                            if (!_disposed) ItemRemoved?.Invoke(detachedBinder);
+                        }
+                        finally
+                        {
+                            detachedBinder.Dispose();
+                        }
+                    });
+                }
+                Exception? removalError = null;
+                foreach (var remove in pendingRemovals)
+                {
+                    try { remove(); }
+                    catch (Exception ex) { removalError ??= ex; }
+                }
+                if (removalError != null) throw removalError;
+            }
+            if (!_disposed) SortBinders();
+        }
+
+        private async Task<StoreProductBinder?> BuildBinderFromShowcaseShopCurrencyMasterItem(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
+        {
+            var model = StoreProductBinder.CreateModel(((item.SalesItem == null || string.IsNullOrEmpty(item.SalesItem.Name)) ? default(StoreProductId) : new StoreProductId(item.SalesItem.Name)));
+            ApplyShowcaseShopCurrencyMasterItemTo(model, item);
+            var binder = new StoreProductBinder(model, _gs2, _session, _mountSurface: StoreProductMountSurface.ShowcaseShopCurrencyMaster);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
+        }
+
+        private static void ApplyShowcaseShopCurrencyMasterItemTo(MutableStoreProduct model, Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
+        {
+            StoreProductBinder.ApplyShowcaseShopCurrencyMasterItem(model, item);
+        }
+
+        private StoreProductId ExtractShowcaseShopCurrencyMasterIdentity(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
+        {
+            return ((item.SalesItem == null || string.IsNullOrEmpty(item.SalesItem.Name)) ? default(StoreProductId) : new StoreProductId(item.SalesItem.Name));
+        }
+
+        private string? ExtractShowcaseShopCurrencyMasterRowKey(Gs2.Unity.Gs2Showcase.Model.EzDisplayItem item)
+        {
+            var id = ExtractShowcaseShopCurrencyMasterIdentity(item);
+            if (EqualityComparer<StoreProductId>.Default.Equals(id, default)) return null;
+            var __key0 = item.DisplayItemId;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ShowcaseShopCurrency\",\"micro-shop-currency\",\"mdr_536KCCGT1ABNT9C0MQ4D79H9GE\",null,null,\"micro-shop-currency\",\"mdr_5G3AX0767581SRB6QPW3FRXDBR\",\"showcase\",\"DisplayItem\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class StoreProductBinderComparer : IComparer<IReadOnlyStoreProductBinder>

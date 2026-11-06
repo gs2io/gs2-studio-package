@@ -24,7 +24,8 @@ namespace GS2Studio.Generated.IdleReward
             IdleRewardId id, int acquireActionListIndex,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null);
     }
 
     public sealed class DefaultIdleRewardBinderFactory : IIdleRewardBinderFactory
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.IdleReward
             IdleRewardId id, int acquireActionListIndex,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null)
         {
-            return await IdleRewardBinder.CreateAsync(id, acquireActionListIndex, gs2, session, cancellationToken);
+            return await IdleRewardBinder.CreateAsync(id, acquireActionListIndex, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1);
         }
     }
 }

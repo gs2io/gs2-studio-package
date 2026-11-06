@@ -110,8 +110,20 @@ namespace GS2Studio.Generated.CharacterEnhance
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyCharacterEnhanceBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyCharacterEnhanceBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyCharacterEnhanceBinder> _configuredComparer = CharacterEnhanceBinderComparer.Default;
@@ -232,18 +244,38 @@ namespace GS2Studio.Generated.CharacterEnhance
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Enhance.RateModelArrayLoader("CharacterEnhance");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromEnhanceCharacterEnhanceMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromEnhanceCharacterEnhanceMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromEnhanceCharacterEnhanceMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromEnhanceCharacterEnhanceMasterItems");
+            _pendingCollectionAxis = "ReconcileFromEnhanceCharacterEnhanceMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Enhance.RateModelArrayLoader("CharacterEnhance");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromEnhanceCharacterEnhanceMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromEnhanceCharacterEnhanceMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromEnhanceCharacterEnhanceMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromEnhanceCharacterEnhanceMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromEnhanceCharacterEnhanceMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromEnhanceCharacterEnhanceMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromEnhanceCharacterEnhanceMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -251,7 +283,6 @@ namespace GS2Studio.Generated.CharacterEnhance
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Enhance.RateModelArrayLoader("CharacterEnhance");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -259,9 +290,10 @@ namespace GS2Studio.Generated.CharacterEnhance
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromEnhanceCharacterEnhanceMasterItems");
                     try
                     {
-                        await ReconcileFromEnhanceCharacterEnhanceMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromEnhanceCharacterEnhanceMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -270,41 +302,68 @@ namespace GS2Studio.Generated.CharacterEnhance
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromEnhanceCharacterEnhanceMasterItems(IList<Gs2.Unity.Gs2Enhance.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromEnhanceCharacterEnhanceMasterItems(IList<Gs2.Unity.Gs2Enhance.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromEnhanceCharacterEnhanceMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractEnhanceCharacterEnhanceMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromEnhanceCharacterEnhanceMasterItems", updateVersion)) return;
                 var rowKey = ExtractEnhanceCharacterEnhanceMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractEnhanceCharacterEnhanceMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<CharacterEnhanceId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyEnhanceCharacterEnhanceMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-character-enhance", "masterData", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "micro-economy-character-enhance", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "enhance", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance\",\"masterData\",\"mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8\",\"enhance\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "micro-economy-character-enhance", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "enhance", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "micro-economy-character-enhance", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "enhance", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromEnhanceCharacterEnhanceMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromEnhanceCharacterEnhanceMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromEnhanceCharacterEnhanceMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<CharacterEnhanceId>.Default.Equals(raced.Id, nextId)) { ApplyEnhanceCharacterEnhanceMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-character-enhance", "masterData", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "micro-economy-character-enhance", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "enhance", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance\",\"masterData\",\"mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8\",\"enhance\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "micro-economy-character-enhance", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "enhance", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "micro-economy-character-enhance", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "enhance", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyEnhanceCharacterEnhanceMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-character-enhance", "masterData", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "micro-economy-character-enhance", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "enhance", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance\",\"masterData\",\"mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8\",\"enhance\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "micro-economy-character-enhance", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "enhance", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "micro-economy-character-enhance", "mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8", "enhance", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromEnhanceCharacterEnhanceMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -344,13 +403,13 @@ namespace GS2Studio.Generated.CharacterEnhance
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterEnhanceBinder> BuildBinderFromEnhanceCharacterEnhanceMasterItem(Gs2.Unity.Gs2Enhance.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<CharacterEnhanceBinder?> BuildBinderFromEnhanceCharacterEnhanceMasterItem(Gs2.Unity.Gs2Enhance.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = CharacterEnhanceBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterEnhanceId) : new CharacterEnhanceId(item.Name)));
             ApplyEnhanceCharacterEnhanceMasterItemTo(model, item);
-            var binder = new CharacterEnhanceBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new CharacterEnhanceBinder(model, _gs2, _session, __sdk__enhanceCharacterEnhanceNamespaceRateModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyEnhanceCharacterEnhanceMasterItemTo(MutableCharacterEnhance model, Gs2.Unity.Gs2Enhance.Model.EzRateModel item)
@@ -369,8 +428,9 @@ namespace GS2Studio.Generated.CharacterEnhance
         {
             var id = ExtractEnhanceCharacterEnhanceMasterIdentity(item);
             if (EqualityComparer<CharacterEnhanceId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"EnhanceCharacterEnhance\",\"micro-economy-character-enhance\",\"mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8\",null,null,\"micro-economy-character-enhance\",\"mdr_37Y08JJ6B4BX8R2BSZ2E0FSMH8\",\"enhance\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class CharacterEnhanceBinderComparer : IComparer<IReadOnlyCharacterEnhanceBinder>

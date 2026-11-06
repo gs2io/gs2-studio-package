@@ -14,19 +14,22 @@ namespace GS2Studio.Generated.RankingReward
     public interface RankingReward
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the ranking reward.
         /// </summary>
         RankingRewardId Id { get; }
 
+        /// <summary>
+        /// Ranking that distributes this reward.
+        /// </summary>
         RankingId Ranking { get; }
 
         /// <summary>
-        /// Lowest placement this reward tier pays; 1001 pays those ranked below the top 1000
+        /// Lowest placement eligible for this reward. 1001 is for players outside the top 1000.
         /// </summary>
         RankingRewardThresholdRank ThresholdRank { get; }
 
         /// <summary>
-        /// Coins this tier deposits when it is received
+        /// Coins paid when this tier's reward is received.
         /// </summary>
         int Coins { get; }
     }

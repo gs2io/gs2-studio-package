@@ -117,6 +117,7 @@ namespace GS2Studio.Generated.EnergyProduct
         private IEnergyProductBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultEnergyProductBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

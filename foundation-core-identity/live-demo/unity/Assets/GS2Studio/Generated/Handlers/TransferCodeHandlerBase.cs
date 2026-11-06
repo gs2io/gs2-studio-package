@@ -24,6 +24,9 @@ namespace GS2Studio.Generated.TransferCode
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public TransferCodeMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<TransferCode>? Updated;
 
         public event Action<IActionableTransferCodeBinder>? Bound;

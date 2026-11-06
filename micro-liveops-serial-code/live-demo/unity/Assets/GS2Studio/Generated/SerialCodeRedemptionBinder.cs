@@ -19,17 +19,93 @@ using Gs2.Unity.Gs2Exchange.Model;
 using Gs2.Unity.Gs2Limit.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Limit;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.SerialCodeRedemption
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum SerialCodeRedemptionMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the ExchangeSerialCodeStartOver master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionConsumeAction", "TransactionAcquireAction", "ExchangeSerialCodeRedeemNamespaceRateModel", "TransactionConsumeAction2", "LimitSerialCodeLimitNamespaceLimitModel")]
+        ExchangeSerialCodeStartOverMaster,
+
+        /// <summary>Built by the ExchangeSerialCodeRedeem master-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeSerialCodeStartOverNamespaceRateModel", "TransactionAcquireAction2", "LimitSerialCodeLimitNamespaceLimitModel")]
+        ExchangeSerialCodeRedeemMaster,
+
+        /// <summary>Built by the LimitSerialCodeLimit master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionConsumeAction", "ExchangeSerialCodeStartOverNamespaceRateModel", "TransactionAcquireAction", "ExchangeSerialCodeRedeemNamespaceRateModel", "TransactionConsumeAction2", "TransactionAcquireAction2")]
+        LimitSerialCodeLimitMaster,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlySerialCodeRedemptionBinder : SerialCodeRedemption
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        SerialCodeRedemptionMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeActionLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeSerialCodeRedeemNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeSerialCodeRedeemNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeAction2Loader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction2 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Limit.LimitModelLoader</c> load on <c>__limitSerialCodeLimitNamespaceLimitModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeSerialCodeRedeemMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedLimitSerialCodeLimitNamespaceLimitModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeSerialCodeStartOverNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeSerialCodeRedeemMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeSerialCodeStartOverNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireAction2Loader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeSerialCodeRedeemMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction2 { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableSerialCodeRedemptionBinder : IReadOnlySerialCodeRedemptionBinder
     {
+        SerialCodeRedemptionBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -40,7 +116,7 @@ namespace GS2Studio.Generated.SerialCodeRedemption
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlySerialCodeRedemptionBinder : IReadOnlySerialCodeRedemptionBinder
+    public abstract class ReadOnlySerialCodeRedemptionBinder : IReadOnlySerialCodeRedemptionBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableSerialCodeRedemption _model;
@@ -52,6 +128,31 @@ namespace GS2Studio.Generated.SerialCodeRedemption
         /// <inheritdoc cref="SerialCodeRedemption.Id" />
         public SerialCodeRedemptionId Id => _model.Id;
 
+        /// <inheritdoc />
+        public abstract SerialCodeRedemptionMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeSerialCodeRedeemNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction2 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedLimitSerialCodeLimitNamespaceLimitModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeSerialCodeStartOverNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction2 { get; }
+
+
         private protected ReadOnlySerialCodeRedemptionBinder(MutableSerialCodeRedemption model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -61,10 +162,121 @@ namespace GS2Studio.Generated.SerialCodeRedemption
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class SerialCodeRedemptionBinder : ReadOnlySerialCodeRedemptionBinder, ISerialCodeRedemptionBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly SerialCodeRedemptionBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(SerialCodeRedemptionBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public SerialCodeRedemption Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableSerialCodeRedemption? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableSerialCodeRedemption
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal SerialCodeRedemptionId __valueId = default!;
+                public SerialCodeRedemptionId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<SerialCodeRedemptionId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -77,21 +289,93 @@ namespace GS2Studio.Generated.SerialCodeRedemption
         private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireAction2Loader;
         private readonly Gs2Bind.Gs2Limit.LimitModelLoader __limitSerialCodeLimitNamespaceLimitModelLoader;
 
+        private readonly SerialCodeRedemptionMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeActionLoader => _mountSurfaceValue is SerialCodeRedemptionMountSurface.Full or SerialCodeRedemptionMountSurface.ExchangeSerialCodeRedeemMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is SerialCodeRedemptionMountSurface.Full or SerialCodeRedemptionMountSurface.ExchangeSerialCodeRedeemMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeSerialCodeRedeemNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeSerialCodeRedeemNamespaceRateModelLoader => _mountSurfaceValue is SerialCodeRedemptionMountSurface.Full or SerialCodeRedemptionMountSurface.ExchangeSerialCodeRedeemMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeAction2Loader</c> reads.</summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeAction2Loader => _mountSurfaceValue is SerialCodeRedemptionMountSurface.Full or SerialCodeRedemptionMountSurface.ExchangeSerialCodeRedeemMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__limitSerialCodeLimitNamespaceLimitModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeSerialCodeStartOverMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeSerialCodeRedeemMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__limitSerialCodeLimitNamespaceLimitModelLoader => _mountSurfaceValue is SerialCodeRedemptionMountSurface.Full or SerialCodeRedemptionMountSurface.LimitSerialCodeLimitMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeSerialCodeStartOverNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeSerialCodeRedeemMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeSerialCodeStartOverNamespaceRateModelLoader => _mountSurfaceValue is SerialCodeRedemptionMountSurface.Full or SerialCodeRedemptionMountSurface.ExchangeSerialCodeStartOverMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireAction2Loader</c> reads.</summary>
+        /// <remarks>ExchangeSerialCodeRedeemMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitSerialCodeLimitMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireAction2Loader => _mountSurfaceValue is SerialCodeRedemptionMountSurface.Full or SerialCodeRedemptionMountSurface.ExchangeSerialCodeStartOverMaster;
+
+        /// <inheritdoc />
+        public override SerialCodeRedemptionMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction => Runs__transactionConsumeActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeSerialCodeRedeemNamespaceRateModel => Runs__exchangeSerialCodeRedeemNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction2 => Runs__transactionConsumeAction2Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedLimitSerialCodeLimitNamespaceLimitModel => Runs__limitSerialCodeLimitNamespaceLimitModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeSerialCodeStartOverNamespaceRateModel => Runs__exchangeSerialCodeStartOverNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction2 => Runs__transactionAcquireAction2Loader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal SerialCodeRedemptionBinder(
             MutableSerialCodeRedemption model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            SerialCodeRedemptionMountSurface _mountSurface = SerialCodeRedemptionMountSurface.Full,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeSerialCodeStartOverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeSerialCodeRedeemNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__limitSerialCodeLimitNamespaceLimitModel_1 = null
         ) : base(model, gs2, session)
         {
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("SerialCodeRedeem", _model.Id, 0);
-            __exchangeSerialCodeStartOverNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("SerialCodeStartOver", _model.Id);
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("SerialCodeRedeem", _model.Id, 0);
-            __exchangeSerialCodeRedeemNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("SerialCodeRedeem", _model.Id);
-            __transactionConsumeAction2Loader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("SerialCodeRedeem", _model.Id, 1);
-            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("SerialCodeStartOver", _model.Id, 0);
-            __limitSerialCodeLimitNamespaceLimitModelLoader = new Gs2Bind.Gs2Limit.LimitModelLoader("SerialCodeLimit", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("SerialCodeRedeem", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __exchangeSerialCodeStartOverNamespaceRateModelLoader = Runs__exchangeSerialCodeStartOverNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("SerialCodeStartOver", (string.IsNullOrEmpty(__sdk__exchangeSerialCodeStartOverNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeSerialCodeStartOverNamespaceRateModel_1!)) : null!;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("SerialCodeRedeem", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 0) : null!;
+            __exchangeSerialCodeRedeemNamespaceRateModelLoader = Runs__exchangeSerialCodeRedeemNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("SerialCodeRedeem", (string.IsNullOrEmpty(__sdk__exchangeSerialCodeRedeemNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeSerialCodeRedeemNamespaceRateModel_1!)) : null!;
+            __transactionConsumeAction2Loader = Runs__transactionConsumeAction2Loader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("SerialCodeRedeem", (string.IsNullOrEmpty(__sdk__transactionConsumeAction2_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction2_1!), 1) : null!;
+            __transactionAcquireAction2Loader = Runs__transactionAcquireAction2Loader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("SerialCodeStartOver", (string.IsNullOrEmpty(__sdk__transactionAcquireAction2_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction2_1!), 0) : null!;
+            __limitSerialCodeLimitNamespaceLimitModelLoader = Runs__limitSerialCodeLimitNamespaceLimitModelLoader ? new Gs2Bind.Gs2Limit.LimitModelLoader("SerialCodeLimit", (string.IsNullOrEmpty(__sdk__limitSerialCodeLimitNamespaceLimitModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__limitSerialCodeLimitNamespaceLimitModel_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableSerialCodeRedemption CreateModel(SerialCodeRedemptionId id)
@@ -105,49 +389,55 @@ namespace GS2Studio.Generated.SerialCodeRedemption
             SerialCodeRedemptionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeSerialCodeStartOverNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeSerialCodeRedeemNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__limitSerialCodeLimitNamespaceLimitModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new SerialCodeRedemptionBinder(model, gs2, session);
+            var binder = new SerialCodeRedemptionBinder(model, gs2, session, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__exchangeSerialCodeStartOverNamespaceRateModel_1: __sdk__exchangeSerialCodeStartOverNamespaceRateModel_1, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__exchangeSerialCodeRedeemNamespaceRateModel_1: __sdk__exchangeSerialCodeRedeemNamespaceRateModel_1, __sdk__transactionConsumeAction2_1: __sdk__transactionConsumeAction2_1, __sdk__transactionAcquireAction2_1: __sdk__transactionAcquireAction2_1, __sdk__limitSerialCodeLimitNamespaceLimitModel_1: __sdk__limitSerialCodeLimitNamespaceLimitModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction = Runs__transactionConsumeActionLoader ? await __transactionConsumeActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
             }
-            var _exchangeSerialCodeStartOverNamespaceRateModel = await __exchangeSerialCodeStartOverNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeSerialCodeStartOverNamespaceRateModel = Runs__exchangeSerialCodeStartOverNamespaceRateModelLoader ? await __exchangeSerialCodeStartOverNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeSerialCodeStartOverNamespaceRateModel != null)
             {
             }
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _exchangeSerialCodeRedeemNamespaceRateModel = await __exchangeSerialCodeRedeemNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeSerialCodeRedeemNamespaceRateModel = Runs__exchangeSerialCodeRedeemNamespaceRateModelLoader ? await __exchangeSerialCodeRedeemNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeSerialCodeRedeemNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction2 = await __transactionConsumeAction2Loader.Load(_gs2, _session);
+            var _transactionConsumeAction2 = Runs__transactionConsumeAction2Loader ? await __transactionConsumeAction2Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction2 != null)
             {
             }
-            var _transactionAcquireAction2 = await __transactionAcquireAction2Loader.Load(_gs2, _session);
+            var _transactionAcquireAction2 = Runs__transactionAcquireAction2Loader ? await __transactionAcquireAction2Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction2 != null)
             {
             }
-            var _limitSerialCodeLimitNamespaceLimitModel = await __limitSerialCodeLimitNamespaceLimitModelLoader.Load(_gs2, _session);
+            var _limitSerialCodeLimitNamespaceLimitModel = Runs__limitSerialCodeLimitNamespaceLimitModelLoader ? await __limitSerialCodeLimitNamespaceLimitModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_limitSerialCodeLimitNamespaceLimitModel != null)
             {
@@ -158,109 +448,151 @@ namespace GS2Studio.Generated.SerialCodeRedemption
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__transactionConsumeActionLoader)
+            {
+                _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeSerialCodeStartOverNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeSerialCodeStartOverNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeSerialCodeStartOverNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeSerialCodeRedeemNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeSerialCodeRedeemNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeSerialCodeRedeemNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeAction2Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                _unsubscribers.Add(__transactionConsumeAction2Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__limitSerialCodeLimitNamespaceLimitModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__limitSerialCodeLimitNamespaceLimitModelLoader)
+            {
+                _unsubscribers.Add(__limitSerialCodeLimitNamespaceLimitModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __exchangeSerialCodeStartOverNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __exchangeSerialCodeRedeemNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
-            __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
-            __limitSerialCodeLimitNamespaceLimitModelLoader.Invalidate(_gs2, _session);
+            if (Runs__transactionConsumeActionLoader)
+            {
+                __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeSerialCodeStartOverNamespaceRateModelLoader)
+            {
+                __exchangeSerialCodeStartOverNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeSerialCodeRedeemNamespaceRateModelLoader)
+            {
+                __exchangeSerialCodeRedeemNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__limitSerialCodeLimitNamespaceLimitModelLoader)
+            {
+                __limitSerialCodeLimitNamespaceLimitModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -272,6 +604,7 @@ namespace GS2Studio.Generated.SerialCodeRedemption
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {

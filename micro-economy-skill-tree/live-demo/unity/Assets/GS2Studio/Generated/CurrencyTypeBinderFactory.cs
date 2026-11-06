@@ -13,7 +13,7 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Showcase;
-using GS2Studio.Generated.StorePrice;
+using GS2Studio.Generated.StoreProductPrices;
 using GS2Studio.Generated.StoreProduct;
 
 namespace GS2Studio.Generated.CurrencyType
@@ -25,7 +25,8 @@ namespace GS2Studio.Generated.CurrencyType
             CurrencyTypeId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__showcaseShopCurrencyNamespaceShowcase_1 = null);
     }
 
     public sealed class DefaultCurrencyTypeBinderFactory : ICurrencyTypeBinderFactory
@@ -36,9 +37,10 @@ namespace GS2Studio.Generated.CurrencyType
             CurrencyTypeId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__showcaseShopCurrencyNamespaceShowcase_1 = null)
         {
-            return await CurrencyTypeBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await CurrencyTypeBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__showcaseShopCurrencyNamespaceShowcase_1);
         }
     }
 }

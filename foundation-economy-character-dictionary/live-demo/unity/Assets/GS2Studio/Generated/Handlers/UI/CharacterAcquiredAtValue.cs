@@ -29,8 +29,12 @@ namespace GS2Studio.Generated.Character.UI
         public UnityEvent<DateTime> OnUpdate => _onUpdate;
         public UnityEvent<DateTime> OnSelect => _onSelect;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataDictionaryCharacterDictionaryEntryModel" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -69,7 +73,20 @@ namespace GS2Studio.Generated.Character.UI
 
         private void OnUpdated(Character model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke(model.AcquiredAt);
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataDictionaryCharacterDictionaryEntryModel) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(CharacterAcquiredAtValue)} on '{name}': this row's mount surface did not run UserdataDictionaryCharacterDictionaryEntryModel, which fills what this component reads (AcquiredAt); those readings render as their default, not as an absent value.", this);
         }
 
         /// <summary>Selection consumers own persistence; publishing a choice does not mutate the displayed model.</summary>

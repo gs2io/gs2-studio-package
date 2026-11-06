@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.ReceiveFriendRequest
             ReceiveFriendRequestId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__userdataFriendReceiveFriendRequest_1 = null);
         IReceiveFriendRequestBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.ReceiveFriendRequest
             ReceiveFriendRequestId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__userdataFriendReceiveFriendRequest_1 = null)
         {
-            return await ReceiveFriendRequestBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await ReceiveFriendRequestBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__userdataFriendReceiveFriendRequest_1);
         }
         public IReceiveFriendRequestBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

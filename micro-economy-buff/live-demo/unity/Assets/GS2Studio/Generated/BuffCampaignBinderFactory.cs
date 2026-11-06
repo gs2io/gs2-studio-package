@@ -24,7 +24,11 @@ namespace GS2Studio.Generated.BuffCampaign
             BuffCampaignId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeBuffCampaignEndNamespaceRateModel_1 = null,
+            string? __sdk__exchangeBuffCampaignStartNamespaceRateModel_1 = null);
     }
 
     public sealed class DefaultBuffCampaignBinderFactory : IBuffCampaignBinderFactory
@@ -35,9 +39,13 @@ namespace GS2Studio.Generated.BuffCampaign
             BuffCampaignId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeBuffCampaignEndNamespaceRateModel_1 = null,
+            string? __sdk__exchangeBuffCampaignStartNamespaceRateModel_1 = null)
         {
-            return await BuffCampaignBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await BuffCampaignBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1, __sdk__transactionConsumeAction_1, __sdk__exchangeBuffCampaignEndNamespaceRateModel_1, __sdk__exchangeBuffCampaignStartNamespaceRateModel_1);
         }
     }
 }

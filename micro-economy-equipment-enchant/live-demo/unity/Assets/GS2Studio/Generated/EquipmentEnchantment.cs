@@ -13,12 +13,18 @@ namespace GS2Studio.Generated.EquipmentEnchantment
     public interface EquipmentEnchantment
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the rolled enchantment.
         /// </summary>
         EquipmentEnchantmentId Id { get; }
 
+        /// <summary>
+        /// Name of the target modified by the rolled effect.
+        /// </summary>
         string ResourceName { get; }
 
+        /// <summary>
+        /// Value of the rolled effect applied to the equipment.
+        /// </summary>
         long ResourceValue { get; }
     }
 

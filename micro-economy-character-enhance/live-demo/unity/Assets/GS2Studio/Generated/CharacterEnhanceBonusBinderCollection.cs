@@ -127,7 +127,6 @@ namespace GS2Studio.Generated.CharacterEnhanceBonus
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyCharacterEnhanceBonusBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyCharacterEnhanceBonusBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private Action? _onChange;
 
         private IComparer<IReadOnlyCharacterEnhanceBonusBinder> _configuredComparer = CharacterEnhanceBonusBinderComparer.Default;
@@ -254,7 +253,7 @@ namespace GS2Studio.Generated.CharacterEnhanceBonus
             foreach (var entry in entries)
             {
                 if (string.IsNullOrEmpty(entry.RawInstanceId)) continue;
-                var rowKey = entry.RawInstanceId;
+                var rowKey = string.Concat("overlay|", entry.RawInstanceId);
                 var id = new CharacterEnhanceBonusId(entry.RawInstanceId);
                 if (EqualityComparer<CharacterEnhanceBonusId>.Default.Equals(id, default)) continue;
                 seen.Add(rowKey);
@@ -319,7 +318,6 @@ namespace GS2Studio.Generated.CharacterEnhanceBonus
                 if (removalError != null) throw removalError;
             }
             if (!_disposed) SortBinders();
-            _mounted = true;
         }
 
         internal sealed class CharacterEnhanceBonusBinderComparer : IComparer<IReadOnlyCharacterEnhanceBonusBinder>

@@ -127,7 +127,6 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyEquipmentEnchantSlotChanceBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyEquipmentEnchantSlotChanceBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private Action? _onChange;
 
         private IComparer<IReadOnlyEquipmentEnchantSlotChanceBinder> _configuredComparer = EquipmentEnchantSlotChanceBinderComparer.Default;
@@ -254,7 +253,7 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
             foreach (var entry in entries)
             {
                 if (string.IsNullOrEmpty(entry.RawInstanceId)) continue;
-                var rowKey = entry.RawInstanceId;
+                var rowKey = string.Concat("overlay|", entry.RawInstanceId);
                 var id = new EquipmentEnchantSlotChanceId(entry.RawInstanceId);
                 if (EqualityComparer<EquipmentEnchantSlotChanceId>.Default.Equals(id, default)) continue;
                 seen.Add(rowKey);
@@ -319,7 +318,6 @@ namespace GS2Studio.Generated.EquipmentEnchantSlotChance
                 if (removalError != null) throw removalError;
             }
             if (!_disposed) SortBinders();
-            _mounted = true;
         }
 
         internal sealed class EquipmentEnchantSlotChanceBinderComparer : IComparer<IReadOnlyEquipmentEnchantSlotChanceBinder>

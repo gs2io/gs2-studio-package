@@ -16,17 +16,43 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using Gs2.Unity.Gs2Schedule.Model;
 using Gs2Bind.Gs2Schedule;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Schedule
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum ScheduleMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the ScheduleSchedule master-data list axis.</summary>
+        [Gs2SkipsLoaders("UserdataScheduleTrigger")]
+        ScheduleScheduleMaster,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyScheduleBinder : Schedule
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        ScheduleMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Schedule.TriggerLoader</c> load on <c>__userdataScheduleTriggerLoader</c>. False means this path does not supply <c>RelativeEndAt</c>, <c>RelativeStartAt</c>, <c>TriggerFired</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ScheduleScheduleMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedUserdataScheduleTrigger { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableScheduleBinder : IReadOnlyScheduleBinder
     {
+        ScheduleBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
+        Task<GS2Studio.Generated.MissionCollection.IReadOnlyMissionCollectionBinderCollection> GetMissionCollections(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -34,11 +60,10 @@ namespace GS2Studio.Generated.Schedule
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.MissionCollection.IReadOnlyMissionCollectionBinderCollection> GetMissionCollections(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyScheduleBinder : IReadOnlyScheduleBinder
+    public abstract class ReadOnlyScheduleBinder : IReadOnlyScheduleBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableSchedule _model;
@@ -84,6 +109,13 @@ namespace GS2Studio.Generated.Schedule
         /// <inheritdoc cref="Schedule.InactiveDays" />
         public int? InactiveDays => _model.InactiveDays;
 
+        /// <inheritdoc />
+        public abstract ScheduleMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataScheduleTrigger { get; }
+
+
         private protected ReadOnlyScheduleBinder(MutableSchedule model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -93,10 +125,257 @@ namespace GS2Studio.Generated.Schedule
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class ScheduleBinder : ReadOnlyScheduleBinder, IScheduleBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly ScheduleBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(ScheduleBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Schedule Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableSchedule? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableSchedule
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal ScheduleId __valueId = default!;
+                public ScheduleId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setScheduleType;
+                internal string __valueScheduleType = default!;
+                public string ScheduleType
+                {
+                    get => __setScheduleType ? __valueScheduleType : __scopeOwner.Value.ScheduleType;
+                    set { __setScheduleType = true; __valueScheduleType = value; }
+                }
+                internal bool __setStartAt;
+                internal DateTime? __valueStartAt = default!;
+                public DateTime? StartAt
+                {
+                    get => __setStartAt ? __valueStartAt : __scopeOwner.Value.StartAt;
+                    set { __setStartAt = true; __valueStartAt = value; }
+                }
+                internal bool __setEndAt;
+                internal DateTime? __valueEndAt = default!;
+                public DateTime? EndAt
+                {
+                    get => __setEndAt ? __valueEndAt : __scopeOwner.Value.EndAt;
+                    set { __setEndAt = true; __valueEndAt = value; }
+                }
+                internal bool __setTrigger;
+                internal string? __valueTrigger = default!;
+                public string? Trigger
+                {
+                    get => __setTrigger ? __valueTrigger : __scopeOwner.Value.Trigger;
+                    set { __setTrigger = true; __valueTrigger = value; }
+                }
+                internal bool __setTriggerFired;
+                internal bool? __valueTriggerFired = default!;
+                public bool? TriggerFired
+                {
+                    get => __setTriggerFired ? __valueTriggerFired : __scopeOwner.Value.TriggerFired;
+                    set { __setTriggerFired = true; __valueTriggerFired = value; }
+                }
+                internal bool __setRelativeStartAt;
+                internal DateTime? __valueRelativeStartAt = default!;
+                public DateTime? RelativeStartAt
+                {
+                    get => __setRelativeStartAt ? __valueRelativeStartAt : __scopeOwner.Value.RelativeStartAt;
+                    set { __setRelativeStartAt = true; __valueRelativeStartAt = value; }
+                }
+                internal bool __setRelativeEndAt;
+                internal DateTime? __valueRelativeEndAt = default!;
+                public DateTime? RelativeEndAt
+                {
+                    get => __setRelativeEndAt ? __valueRelativeEndAt : __scopeOwner.Value.RelativeEndAt;
+                    set { __setRelativeEndAt = true; __valueRelativeEndAt = value; }
+                }
+                internal bool __setRepeatType;
+                internal string __valueRepeatType = default!;
+                public string RepeatType
+                {
+                    get => __setRepeatType ? __valueRepeatType : __scopeOwner.Value.RepeatType;
+                    set { __setRepeatType = true; __valueRepeatType = value; }
+                }
+                internal bool __setBeginHour;
+                internal int? __valueBeginHour = default!;
+                public int? BeginHour
+                {
+                    get => __setBeginHour ? __valueBeginHour : __scopeOwner.Value.BeginHour;
+                    set { __setBeginHour = true; __valueBeginHour = value; }
+                }
+                internal bool __setEndHour;
+                internal int? __valueEndHour = default!;
+                public int? EndHour
+                {
+                    get => __setEndHour ? __valueEndHour : __scopeOwner.Value.EndHour;
+                    set { __setEndHour = true; __valueEndHour = value; }
+                }
+                internal bool __setBeginDayOfWeek;
+                internal string? __valueBeginDayOfWeek = default!;
+                public string? BeginDayOfWeek
+                {
+                    get => __setBeginDayOfWeek ? __valueBeginDayOfWeek : __scopeOwner.Value.BeginDayOfWeek;
+                    set { __setBeginDayOfWeek = true; __valueBeginDayOfWeek = value; }
+                }
+                internal bool __setEndDayOfWeek;
+                internal string? __valueEndDayOfWeek = default!;
+                public string? EndDayOfWeek
+                {
+                    get => __setEndDayOfWeek ? __valueEndDayOfWeek : __scopeOwner.Value.EndDayOfWeek;
+                    set { __setEndDayOfWeek = true; __valueEndDayOfWeek = value; }
+                }
+                internal bool __setBeginDayOfMonth;
+                internal int? __valueBeginDayOfMonth = default!;
+                public int? BeginDayOfMonth
+                {
+                    get => __setBeginDayOfMonth ? __valueBeginDayOfMonth : __scopeOwner.Value.BeginDayOfMonth;
+                    set { __setBeginDayOfMonth = true; __valueBeginDayOfMonth = value; }
+                }
+                internal bool __setEndDayOfMonth;
+                internal int? __valueEndDayOfMonth = default!;
+                public int? EndDayOfMonth
+                {
+                    get => __setEndDayOfMonth ? __valueEndDayOfMonth : __scopeOwner.Value.EndDayOfMonth;
+                    set { __setEndDayOfMonth = true; __valueEndDayOfMonth = value; }
+                }
+                internal bool __setAnchorTimestamp;
+                internal DateTime? __valueAnchorTimestamp = default!;
+                public DateTime? AnchorTimestamp
+                {
+                    get => __setAnchorTimestamp ? __valueAnchorTimestamp : __scopeOwner.Value.AnchorTimestamp;
+                    set { __setAnchorTimestamp = true; __valueAnchorTimestamp = value; }
+                }
+                internal bool __setActiveDays;
+                internal int? __valueActiveDays = default!;
+                public int? ActiveDays
+                {
+                    get => __setActiveDays ? __valueActiveDays : __scopeOwner.Value.ActiveDays;
+                    set { __setActiveDays = true; __valueActiveDays = value; }
+                }
+                internal bool __setInactiveDays;
+                internal int? __valueInactiveDays = default!;
+                public int? InactiveDays
+                {
+                    get => __setInactiveDays ? __valueInactiveDays : __scopeOwner.Value.InactiveDays;
+                    set { __setInactiveDays = true; __valueInactiveDays = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<ScheduleId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setScheduleType) { _owner._model.ScheduleType = changes.__valueScheduleType; changes.__setScheduleType = false; }
+                if (changes.__setStartAt) { _owner._model.StartAt = changes.__valueStartAt; changes.__setStartAt = false; }
+                if (changes.__setEndAt) { _owner._model.EndAt = changes.__valueEndAt; changes.__setEndAt = false; }
+                if (changes.__setTrigger) { _owner._model.Trigger = changes.__valueTrigger; changes.__setTrigger = false; }
+                if (changes.__setTriggerFired) { _owner._model.TriggerFired = changes.__valueTriggerFired; changes.__setTriggerFired = false; }
+                if (changes.__setRelativeStartAt) { _owner._model.RelativeStartAt = changes.__valueRelativeStartAt; changes.__setRelativeStartAt = false; }
+                if (changes.__setRelativeEndAt) { _owner._model.RelativeEndAt = changes.__valueRelativeEndAt; changes.__setRelativeEndAt = false; }
+                if (changes.__setRepeatType) { _owner._model.RepeatType = changes.__valueRepeatType; changes.__setRepeatType = false; }
+                if (changes.__setBeginHour) { _owner._model.BeginHour = changes.__valueBeginHour; changes.__setBeginHour = false; }
+                if (changes.__setEndHour) { _owner._model.EndHour = changes.__valueEndHour; changes.__setEndHour = false; }
+                if (changes.__setBeginDayOfWeek) { _owner._model.BeginDayOfWeek = changes.__valueBeginDayOfWeek; changes.__setBeginDayOfWeek = false; }
+                if (changes.__setEndDayOfWeek) { _owner._model.EndDayOfWeek = changes.__valueEndDayOfWeek; changes.__setEndDayOfWeek = false; }
+                if (changes.__setBeginDayOfMonth) { _owner._model.BeginDayOfMonth = changes.__valueBeginDayOfMonth; changes.__setBeginDayOfMonth = false; }
+                if (changes.__setEndDayOfMonth) { _owner._model.EndDayOfMonth = changes.__valueEndDayOfMonth; changes.__setEndDayOfMonth = false; }
+                if (changes.__setAnchorTimestamp) { _owner._model.AnchorTimestamp = changes.__valueAnchorTimestamp; changes.__setAnchorTimestamp = false; }
+                if (changes.__setActiveDays) { _owner._model.ActiveDays = changes.__valueActiveDays; changes.__setActiveDays = false; }
+                if (changes.__setInactiveDays) { _owner._model.InactiveDays = changes.__valueInactiveDays; changes.__setInactiveDays = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -106,16 +385,34 @@ namespace GS2Studio.Generated.Schedule
         private readonly Gs2Bind.Gs2Schedule.EventLoader __scheduleScheduleNamespaceEventLoader;
         private readonly Gs2Bind.Gs2Schedule.TriggerLoader __userdataScheduleTriggerLoader;
 
+        private readonly ScheduleMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataScheduleTriggerLoader</c> reads.</summary>
+        /// <remarks>ScheduleScheduleMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__userdataScheduleTriggerLoader => _mountSurfaceValue is ScheduleMountSurface.Full;
+
+        /// <inheritdoc />
+        public override ScheduleMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataScheduleTrigger => Runs__userdataScheduleTriggerLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal ScheduleBinder(
             MutableSchedule model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            ScheduleMountSurface _mountSurface = ScheduleMountSurface.Full,
+            string? __sdk__scheduleScheduleNamespaceEvent_1 = null,
+            string? __sdk__userdataScheduleTrigger_1 = null
         ) : base(model, gs2, session)
         {
-            __scheduleScheduleNamespaceEventLoader = new Gs2Bind.Gs2Schedule.EventLoader("Schedule", _model.Id);
-            __userdataScheduleTriggerLoader = new Gs2Bind.Gs2Schedule.TriggerLoader("Schedule", _model.Trigger);
+
+            _mountSurfaceValue = _mountSurface;
+            __scheduleScheduleNamespaceEventLoader = new Gs2Bind.Gs2Schedule.EventLoader("Schedule", (string.IsNullOrEmpty(__sdk__scheduleScheduleNamespaceEvent_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__scheduleScheduleNamespaceEvent_1!));
+            __userdataScheduleTriggerLoader = Runs__userdataScheduleTriggerLoader ? new Gs2Bind.Gs2Schedule.TriggerLoader("Schedule", (string.IsNullOrEmpty(__sdk__userdataScheduleTrigger_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataScheduleTrigger_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableSchedule CreateModel(ScheduleId id, string trigger)
@@ -130,14 +427,15 @@ namespace GS2Studio.Generated.Schedule
             ScheduleId id, string trigger,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__scheduleScheduleNamespaceEvent_1 = null,
+            string? __sdk__userdataScheduleTrigger_1 = null)
         {
             var model = CreateModel(id, trigger);
-            var binder = new ScheduleBinder(model, gs2, session);
+            var binder = new ScheduleBinder(model, gs2, session, __sdk__scheduleScheduleNamespaceEvent_1: __sdk__scheduleScheduleNamespaceEvent_1, __sdk__userdataScheduleTrigger_1: __sdk__userdataScheduleTrigger_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -145,9 +443,12 @@ namespace GS2Studio.Generated.Schedule
             var _scheduleScheduleNamespaceEvent = await __scheduleScheduleNamespaceEventLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyScheduleScheduleNamespaceEvent(_model, _scheduleScheduleNamespaceEvent);
-            var _userdataScheduleTrigger = await __userdataScheduleTriggerLoader.LoadOrNull(_gs2, _session);
+            var _userdataScheduleTrigger = Runs__userdataScheduleTriggerLoader ? await __userdataScheduleTriggerLoader.LoadOrNull(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataScheduleTrigger(_model, _userdataScheduleTrigger);
+            if (Runs__userdataScheduleTriggerLoader)
+            {
+                ApplyUserdataScheduleTrigger(_model, _userdataScheduleTrigger);
+            }
             ScheduleOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
             _mounted = true;
         }
@@ -167,24 +468,30 @@ namespace GS2Studio.Generated.Schedule
                 },
                 () => onChange?.Invoke()
             ));
-            _unsubscribers.Add(__userdataScheduleTriggerLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataScheduleTrigger(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+            if (Runs__userdataScheduleTriggerLoader)
+            {
+                _unsubscribers.Add(__userdataScheduleTriggerLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataScheduleTrigger(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
             __scheduleScheduleNamespaceEventLoader.Invalidate(_gs2, _session);
-            __userdataScheduleTriggerLoader.Invalidate(_gs2, _session);
+            if (Runs__userdataScheduleTriggerLoader)
+            {
+                __userdataScheduleTriggerLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -196,6 +503,7 @@ namespace GS2Studio.Generated.Schedule
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -318,6 +626,7 @@ namespace GS2Studio.Generated.Schedule
                 model.RelativeStartAt = default;
             }
         }
+
         #endregion
 
     }

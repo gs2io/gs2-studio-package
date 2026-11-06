@@ -27,8 +27,12 @@ namespace GS2Studio.Generated.TransferCode.UI
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataAccountTakeOver" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -68,7 +72,20 @@ namespace GS2Studio.Generated.TransferCode.UI
 
         private void OnUpdated(TransferCode model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke($"{model.UserIdentifier}");
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataAccountTakeOver) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(TransferCodeIdentifierLabel)} on '{name}': this row's mount surface did not run UserdataAccountTakeOver, which fills what this component reads (UserIdentifier); those readings render as their default, not as an absent value.", this);
         }
     }
 }

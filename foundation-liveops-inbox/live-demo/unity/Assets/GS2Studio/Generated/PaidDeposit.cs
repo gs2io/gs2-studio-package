@@ -13,10 +13,13 @@ namespace GS2Studio.Generated.PaidDeposit
     public interface PaidDeposit
     {
         /// <summary>
-        /// Unique identifier
+        /// Adds currency to the paid balance, the way a purchase would.
         /// </summary>
         PaidDepositId Id { get; }
 
+        /// <summary>
+        /// How much this deposit adds.
+        /// </summary>
         int Count { get; }
     }
 

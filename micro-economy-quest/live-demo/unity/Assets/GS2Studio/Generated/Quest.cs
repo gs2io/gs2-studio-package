@@ -14,20 +14,38 @@ namespace GS2Studio.Generated.Quest
     public interface Quest
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the quest.
         /// </summary>
         QuestId Id { get; }
 
+        /// <summary>
+        /// Quest group this quest belongs to.
+        /// </summary>
         QuestCollectionId Collection { get; }
 
+        /// <summary>
+        /// Whether the player has completed this quest.
+        /// </summary>
         bool Completed { get; }
 
+        /// <summary>
+        /// Name shown in the quest list and the running panel.
+        /// </summary>
         string DisplayName { get; }
 
+        /// <summary>
+        /// Stamina spent when the quest starts.
+        /// </summary>
         int StaminaCost { get; }
 
+        /// <summary>
+        /// Free currency paid on every clear.
+        /// </summary>
         int Reward { get; }
 
+        /// <summary>
+        /// Free currency paid on top of the reward on the first clear only.
+        /// </summary>
         int FirstClearReward { get; }
     }
 

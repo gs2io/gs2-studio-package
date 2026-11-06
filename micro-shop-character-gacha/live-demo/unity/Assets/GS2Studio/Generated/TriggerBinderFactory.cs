@@ -27,7 +27,12 @@ namespace GS2Studio.Generated.Trigger
             TriggerId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeTriggerClearNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeTriggerExtendNamespaceRateModel_1 = null,
+            string? __sdk__userdataScheduleTrigger_1 = null);
         ITriggerBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -39,9 +44,14 @@ namespace GS2Studio.Generated.Trigger
             TriggerId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeTriggerClearNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeTriggerExtendNamespaceRateModel_1 = null,
+            string? __sdk__userdataScheduleTrigger_1 = null)
         {
-            return await TriggerBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await TriggerBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__exchangeTriggerClearNamespaceRateModel_1, __sdk__transactionAcquireAction_1, __sdk__transactionConsumeAction_1, __sdk__exchangeTriggerExtendNamespaceRateModel_1, __sdk__userdataScheduleTrigger_1);
         }
         public ITriggerBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

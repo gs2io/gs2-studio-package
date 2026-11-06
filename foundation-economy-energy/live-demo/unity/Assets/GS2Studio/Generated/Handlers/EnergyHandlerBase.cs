@@ -27,6 +27,9 @@ namespace GS2Studio.Generated.Energy
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public EnergyMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<Energy>? Updated;
 
         public event Action<IActionableEnergyBinder>? Bound;

@@ -132,8 +132,20 @@ namespace GS2Studio.Generated.QuestCollection
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyQuestCollectionBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyQuestCollectionBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyQuestCollectionBinder> _configuredComparer = QuestCollectionBinderComparer.Default;
@@ -255,18 +267,38 @@ namespace GS2Studio.Generated.QuestCollection
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Quest.QuestGroupModelArrayLoader("Quest");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromQuestQuestMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromQuestQuestMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromQuestQuestMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromQuestQuestMasterItems");
+            _pendingCollectionAxis = "ReconcileFromQuestQuestMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Quest.QuestGroupModelArrayLoader("Quest");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromQuestQuestMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromQuestQuestMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromQuestQuestMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromQuestQuestMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromQuestQuestMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -274,7 +306,6 @@ namespace GS2Studio.Generated.QuestCollection
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Quest.QuestGroupModelArrayLoader("Quest");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -282,9 +313,10 @@ namespace GS2Studio.Generated.QuestCollection
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromQuestQuestMasterItems");
                     try
                     {
-                        await ReconcileFromQuestQuestMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromQuestQuestMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -293,41 +325,68 @@ namespace GS2Studio.Generated.QuestCollection
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromQuestQuestMasterItems(IList<Gs2.Unity.Gs2Quest.Model.EzQuestGroupModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromQuestQuestMasterItems(IList<Gs2.Unity.Gs2Quest.Model.EzQuestGroupModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractQuestQuestMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestMasterItems", updateVersion)) return;
                 var rowKey = ExtractQuestQuestMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractQuestQuestMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<QuestCollectionId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyQuestQuestMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-quest", "masterData", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "micro-economy-quest", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "quest", "QuestGroupModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-quest\",\"masterData\",\"mdr_51ABASNT7P8KMR2GCA3GN5685F\",\"quest\",\"QuestGroupModel\",\"questGroupName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-quest", "masterData", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "micro-economy-quest", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "quest", "QuestGroupModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-quest", "masterData", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "micro-economy-quest", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "quest", "QuestGroupModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromQuestQuestMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromQuestQuestMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<QuestCollectionId>.Default.Equals(raced.Id, nextId)) { ApplyQuestQuestMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-quest", "masterData", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "micro-economy-quest", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "quest", "QuestGroupModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-quest\",\"masterData\",\"mdr_51ABASNT7P8KMR2GCA3GN5685F\",\"quest\",\"QuestGroupModel\",\"questGroupName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-quest", "masterData", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "micro-economy-quest", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "quest", "QuestGroupModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-quest", "masterData", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "micro-economy-quest", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "quest", "QuestGroupModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyQuestQuestMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-quest", "masterData", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "micro-economy-quest", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "quest", "QuestGroupModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-quest\",\"masterData\",\"mdr_51ABASNT7P8KMR2GCA3GN5685F\",\"quest\",\"QuestGroupModel\",\"questGroupName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-quest", "masterData", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "micro-economy-quest", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "quest", "QuestGroupModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-quest", "masterData", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "micro-economy-quest", "mdr_51ABASNT7P8KMR2GCA3GN5685F", "quest", "QuestGroupModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -367,13 +426,13 @@ namespace GS2Studio.Generated.QuestCollection
             if (!_disposed) SortBinders();
         }
 
-        private async Task<QuestCollectionBinder> BuildBinderFromQuestQuestMasterItem(Gs2.Unity.Gs2Quest.Model.EzQuestGroupModel item, CancellationToken cancellationToken)
+        private async Task<QuestCollectionBinder?> BuildBinderFromQuestQuestMasterItem(Gs2.Unity.Gs2Quest.Model.EzQuestGroupModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = QuestCollectionBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(QuestCollectionId) : new QuestCollectionId(item.Name)));
             ApplyQuestQuestMasterItemTo(model, item);
-            var binder = new QuestCollectionBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new QuestCollectionBinder(model, _gs2, _session, _mountSurface: QuestCollectionMountSurface.QuestQuestMaster, __sdk__questQuestNamespaceQuestGroupModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyQuestQuestMasterItemTo(MutableQuestCollection model, Gs2.Unity.Gs2Quest.Model.EzQuestGroupModel item)
@@ -392,8 +451,9 @@ namespace GS2Studio.Generated.QuestCollection
         {
             var id = ExtractQuestQuestMasterIdentity(item);
             if (EqualityComparer<QuestCollectionId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"QuestQuest\",\"micro-economy-quest\",\"mdr_51ABASNT7P8KMR2GCA3GN5685F\",null,null,\"micro-economy-quest\",\"mdr_51ABASNT7P8KMR2GCA3GN5685F\",\"quest\",\"QuestGroupModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<QuestCollectionBinderCollection> CreateFromQuestQuestUserDataAsync(
@@ -410,18 +470,38 @@ namespace GS2Studio.Generated.QuestCollection
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Quest.CompletedQuestListArrayLoader("Quest");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromQuestQuestUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromQuestQuestUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromQuestQuestUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromQuestQuestUserItems");
+            _pendingCollectionAxis = "ReconcileFromQuestQuestUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Quest.CompletedQuestListArrayLoader("Quest");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromQuestQuestUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromQuestQuestUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromQuestQuestUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromQuestQuestUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromQuestQuestUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -429,7 +509,6 @@ namespace GS2Studio.Generated.QuestCollection
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Quest.CompletedQuestListArrayLoader("Quest");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -437,9 +516,10 @@ namespace GS2Studio.Generated.QuestCollection
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromQuestQuestUserItems");
                     try
                     {
-                        await ReconcileFromQuestQuestUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromQuestQuestUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -448,41 +528,68 @@ namespace GS2Studio.Generated.QuestCollection
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromQuestQuestUserItems(IList<Gs2.Unity.Gs2Quest.Model.EzCompletedQuestList> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromQuestQuestUserItems(IList<Gs2.Unity.Gs2Quest.Model.EzCompletedQuestList> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractQuestQuestUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestUserItems", updateVersion)) return;
                 var rowKey = ExtractQuestQuestUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractQuestQuestUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<QuestCollectionId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyQuestQuestUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-quest", "userData", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "micro-economy-quest", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "quest", "CompletedQuestList", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-quest\",\"userData\",\"udr_4WA8P7P2679A4AQVAPWQHKN6VN\",\"quest\",\"CompletedQuestList\",\"questGroupName\",\"string\"]"] = (object)item.QuestGroupName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-quest", "userData", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "micro-economy-quest", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "quest", "CompletedQuestList", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-quest", "userData", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "micro-economy-quest", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "quest", "CompletedQuestList", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromQuestQuestUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromQuestQuestUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<QuestCollectionId>.Default.Equals(raced.Id, nextId)) { ApplyQuestQuestUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-quest", "userData", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "micro-economy-quest", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "quest", "CompletedQuestList", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-quest\",\"userData\",\"udr_4WA8P7P2679A4AQVAPWQHKN6VN\",\"quest\",\"CompletedQuestList\",\"questGroupName\",\"string\"]"] = (object)item.QuestGroupName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-quest", "userData", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "micro-economy-quest", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "quest", "CompletedQuestList", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-quest", "userData", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "micro-economy-quest", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "quest", "CompletedQuestList", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyQuestQuestUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-quest", "userData", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "micro-economy-quest", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "quest", "CompletedQuestList", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-quest\",\"userData\",\"udr_4WA8P7P2679A4AQVAPWQHKN6VN\",\"quest\",\"CompletedQuestList\",\"questGroupName\",\"string\"]"] = (object)item.QuestGroupName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-quest", "userData", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "micro-economy-quest", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "quest", "CompletedQuestList", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-quest", "userData", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "micro-economy-quest", "udr_4WA8P7P2679A4AQVAPWQHKN6VN", "quest", "CompletedQuestList", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromQuestQuestUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -522,13 +629,13 @@ namespace GS2Studio.Generated.QuestCollection
             if (!_disposed) SortBinders();
         }
 
-        private async Task<QuestCollectionBinder> BuildBinderFromQuestQuestUserItem(Gs2.Unity.Gs2Quest.Model.EzCompletedQuestList item, CancellationToken cancellationToken)
+        private async Task<QuestCollectionBinder?> BuildBinderFromQuestQuestUserItem(Gs2.Unity.Gs2Quest.Model.EzCompletedQuestList item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = QuestCollectionBinder.CreateModel((string.IsNullOrEmpty(item.QuestGroupName) ? default(QuestCollectionId) : new QuestCollectionId(item.QuestGroupName)));
             ApplyQuestQuestUserItemTo(model, item);
-            var binder = new QuestCollectionBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new QuestCollectionBinder(model, _gs2, _session, _mountSurface: QuestCollectionMountSurface.QuestQuestUser);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyQuestQuestUserItemTo(MutableQuestCollection model, Gs2.Unity.Gs2Quest.Model.EzCompletedQuestList item)
@@ -546,8 +653,9 @@ namespace GS2Studio.Generated.QuestCollection
         {
             var id = ExtractQuestQuestUserIdentity(item);
             if (EqualityComparer<QuestCollectionId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.QuestGroupName)) return null;
-            return $"{item.QuestGroupName}";
+            var __key0 = item.QuestGroupName;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"user\",\"QuestQuest\",null,null,\"micro-economy-quest\",\"udr_4WA8P7P2679A4AQVAPWQHKN6VN\",null,null,\"quest\",\"CompletedQuestList\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class QuestCollectionBinderComparer : IComparer<IReadOnlyQuestCollectionBinder>

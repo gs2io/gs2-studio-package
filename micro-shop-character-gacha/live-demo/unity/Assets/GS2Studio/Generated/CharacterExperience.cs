@@ -13,14 +13,23 @@ namespace GS2Studio.Generated.CharacterExperience
     public interface CharacterExperience
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the character experience configuration.
         /// </summary>
         CharacterExperienceId Id { get; }
 
+        /// <summary>
+        /// Cumulative experience required to reach each level.
+        /// </summary>
         IReadOnlyList<long> Threshold { get; }
 
+        /// <summary>
+        /// Initial level cap applied to a character.
+        /// </summary>
         int DefaultLevelCap { get; }
 
+        /// <summary>
+        /// Highest level cap a character can reach.
+        /// </summary>
         int MaxLevelCap { get; }
     }
 

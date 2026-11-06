@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.Message
             MessageId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__userdataInboxMessage_1 = null);
         IMessageBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.Message
             MessageId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__userdataInboxMessage_1 = null)
         {
-            return await MessageBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await MessageBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__userdataInboxMessage_1);
         }
         public IMessageBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

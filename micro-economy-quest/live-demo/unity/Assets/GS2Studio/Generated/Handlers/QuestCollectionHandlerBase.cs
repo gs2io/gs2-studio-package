@@ -25,6 +25,9 @@ namespace GS2Studio.Generated.QuestCollection
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public QuestCollectionMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<QuestCollection>? Updated;
 
         public event Action<IActionableQuestCollectionBinder>? Bound;

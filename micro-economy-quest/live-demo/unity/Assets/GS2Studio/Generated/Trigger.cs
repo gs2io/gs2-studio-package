@@ -13,14 +13,23 @@ namespace GS2Studio.Generated.Trigger
     public interface Trigger
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the trigger.
         /// </summary>
         TriggerId Id { get; }
 
+        /// <summary>
+        /// Whether this trigger has fired for the player.
+        /// </summary>
         bool Triggered { get; }
 
+        /// <summary>
+        /// Time when the trigger fired.
+        /// </summary>
         DateTime TriggeredAt { get; }
 
+        /// <summary>
+        /// Time until which the trigger state remains valid.
+        /// </summary>
         DateTime ExpiresAt { get; }
     }
 

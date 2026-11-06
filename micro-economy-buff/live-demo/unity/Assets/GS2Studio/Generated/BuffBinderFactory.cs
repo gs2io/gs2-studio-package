@@ -24,7 +24,8 @@ namespace GS2Studio.Generated.Buff
             BuffId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__buffBuffNamespaceBuffEntryModel_1 = null);
         IBuffBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -36,9 +37,10 @@ namespace GS2Studio.Generated.Buff
             BuffId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__buffBuffNamespaceBuffEntryModel_1 = null)
         {
-            return await BuffBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await BuffBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__buffBuffNamespaceBuffEntryModel_1);
         }
         public IBuffBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

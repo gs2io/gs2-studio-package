@@ -13,20 +13,38 @@ namespace GS2Studio.Generated.EmbeddedVersion
     public interface EmbeddedVersion
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the reported version.
         /// </summary>
         EmbeddedVersionId Id { get; }
 
+        /// <summary>
+        /// Major component of the version at or below which a reported version triggers an update warning.
+        /// </summary>
         int WarningMajor { get; }
 
+        /// <summary>
+        /// Minor component of the version at or below which a reported version triggers an update warning.
+        /// </summary>
         int WarningMinor { get; }
 
+        /// <summary>
+        /// Micro component of the version at or below which a reported version triggers an update warning.
+        /// </summary>
         int WarningMicro { get; }
 
+        /// <summary>
+        /// Major component of the version at or below which a reported version is refused.
+        /// </summary>
         int ErrorMajor { get; }
 
+        /// <summary>
+        /// Minor component of the version at or below which a reported version is refused.
+        /// </summary>
         int ErrorMinor { get; }
 
+        /// <summary>
+        /// Micro component of the version at or below which a reported version is refused.
+        /// </summary>
         int ErrorMicro { get; }
     }
 

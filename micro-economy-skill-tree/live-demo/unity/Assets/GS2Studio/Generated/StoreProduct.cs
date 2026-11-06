@@ -13,14 +13,23 @@ namespace GS2Studio.Generated.StoreProduct
     public interface StoreProduct
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the store product.
         /// </summary>
         StoreProductId Id { get; }
 
+        /// <summary>
+        /// Product identifier registered in App Store Connect.
+        /// </summary>
         string? AppleAppStoreProductId { get; }
 
+        /// <summary>
+        /// Product identifier registered in Google Play Console.
+        /// </summary>
         string? GooglePlayProductId { get; }
 
+        /// <summary>
+        /// Amount of currency granted when this store product is purchased.
+        /// </summary>
         int Count { get; }
     }
 

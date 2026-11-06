@@ -13,12 +13,12 @@ namespace GS2Studio.Generated.GuildRole
     public interface GuildRole
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the guild role.
         /// </summary>
         GuildRoleId Id { get; }
 
         /// <summary>
-        /// GS2 policy document for acting as the guild; deny everything explicitly rather than leaving it empty
+        /// GS2 policy document describing what a member with this role may do while acting as the guild (Assume). For a role that may do nothing, do not leave it empty: write a policy that denies everything, with one statement whose Effect is Deny and whose Actions and Resources are *. Some GS2 versions treat an empty policy as allowing everything.
         /// </summary>
         string PolicyDocument { get; }
     }

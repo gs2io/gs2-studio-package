@@ -31,7 +31,20 @@ namespace GS2Studio.Generated.Equipment
             EquipmentId id, string propertyId, EquipmentEnchantId enchant,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEquipmentDiscardNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__exchangeEquipmentEnchantAddNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction3_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeEquipmentEnchantRerollNamespaceRateModel_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_3 = null,
+            string? __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_1 = null,
+            string? __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_2 = null);
         IEquipmentBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string enchant);
     }
 
@@ -43,9 +56,22 @@ namespace GS2Studio.Generated.Equipment
             EquipmentId id, string propertyId, EquipmentEnchantId enchant,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEquipmentDiscardNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__exchangeEquipmentEnchantAddNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction3_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeEquipmentEnchantRerollNamespaceRateModel_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_3 = null,
+            string? __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_1 = null,
+            string? __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_2 = null)
         {
-            return await EquipmentBinder.CreateAsync(id, propertyId, enchant, gs2, session, cancellationToken);
+            return await EquipmentBinder.CreateAsync(id, propertyId, enchant, gs2, session, cancellationToken, __sdk__exchangeEquipmentDiscardNamespaceRateModel_1, __sdk__transactionConsumeAction_1, __sdk__transactionConsumeAction2_1, __sdk__exchangeEquipmentEnchantAddNamespaceRateModel_1, __sdk__transactionAcquireAction_1, __sdk__transactionConsumeAction3_1, __sdk__transactionAcquireAction2_1, __sdk__exchangeEquipmentEnchantRerollNamespaceRateModel_1, __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2, __sdk__userdataInventoryEquipmentItemModel_2, __sdk__userdataInventoryEquipmentItemModel_3, __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_1, __sdk__userdataEnchantEquipmentEnchantRarityParameterModel_2);
         }
         public IEquipmentBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string enchant)
         {

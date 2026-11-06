@@ -8,7 +8,6 @@
 using System;
 
 using UnityEngine;
-using GS2Studio.Generated.CurrencyType;
 using Gs2.Unity.Gs2Money2.Model;
 using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Money2;

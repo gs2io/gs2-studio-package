@@ -26,8 +26,12 @@ namespace GS2Studio.Generated.Message.UI
         [SerializeField] private GameObject[] _activeWhenTrue = System.Array.Empty<GameObject>();
         [SerializeField] private GameObject[] _activeWhenFalse = System.Array.Empty<GameObject>();
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataInboxMessage" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -66,9 +70,22 @@ namespace GS2Studio.Generated.Message.UI
 
         private void OnUpdated(Message model)
         {
+            WarnUnloadedLoadersOnce();
             bool result = ((object?)model.IsRead) switch { null => false, bool __b => __b, string __s => !string.IsNullOrEmpty(__s), int __i => __i != 0, long __l => __l != 0L, float __f => __f != 0f, double __d => __d != 0d, _ => true };
             ApplyActiveState(_activeWhenTrue, result);
             ApplyActiveState(_activeWhenFalse, !result);
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataInboxMessage) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(MessageReadActiveToggle)} on '{name}': this row's mount surface did not run UserdataInboxMessage, which fills what this component reads (IsRead); those readings render as their default, not as an absent value.", this);
         }
 
         private static void ApplyActiveState(GameObject[]? targets, bool active)

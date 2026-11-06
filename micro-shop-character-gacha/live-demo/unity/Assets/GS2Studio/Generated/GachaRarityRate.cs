@@ -15,14 +15,23 @@ namespace GS2Studio.Generated.GachaRarityRate
     public interface GachaRarityRate
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the rarity draw rate.
         /// </summary>
         GachaRarityRateId Id { get; }
 
+        /// <summary>
+        /// Gacha to which this rarity rate applies.
+        /// </summary>
         GachaId Gacha { get; }
 
+        /// <summary>
+        /// Gacha rarity whose rate is configured.
+        /// </summary>
         GachaRarityId Rarity { get; }
 
+        /// <summary>
+        /// Relative weight used to draw this rarity.
+        /// </summary>
         int Weight { get; }
     }
 

@@ -28,7 +28,14 @@ namespace GS2Studio.Generated.Character
             CharacterId id, string propertyId,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeCharacterTrainNamespaceRateModel_1 = null,
+            string? __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterItemModel_3 = null,
+            string? __sdk__userdataExperienceCharacterExperienceExperienceModel_1 = null,
+            string? __sdk__userdataExperienceCharacterExperienceExperienceModel_2 = null);
         ICharacterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -40,9 +47,16 @@ namespace GS2Studio.Generated.Character
             CharacterId id, string propertyId,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeCharacterTrainNamespaceRateModel_1 = null,
+            string? __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterItemModel_2 = null,
+            string? __sdk__userdataInventoryCharacterItemModel_3 = null,
+            string? __sdk__userdataExperienceCharacterExperienceExperienceModel_1 = null,
+            string? __sdk__userdataExperienceCharacterExperienceExperienceModel_2 = null)
         {
-            return await CharacterBinder.CreateAsync(id, propertyId, gs2, session, cancellationToken);
+            return await CharacterBinder.CreateAsync(id, propertyId, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1, __sdk__exchangeCharacterTrainNamespaceRateModel_1, __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2, __sdk__userdataInventoryCharacterItemModel_2, __sdk__userdataInventoryCharacterItemModel_3, __sdk__userdataExperienceCharacterExperienceExperienceModel_1, __sdk__userdataExperienceCharacterExperienceExperienceModel_2);
         }
         public ICharacterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

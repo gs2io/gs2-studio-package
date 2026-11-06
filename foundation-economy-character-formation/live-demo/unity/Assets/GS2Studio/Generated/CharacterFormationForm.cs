@@ -13,10 +13,13 @@ namespace GS2Studio.Generated.CharacterFormationForm
     public interface CharacterFormationForm
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the formation form.
         /// </summary>
         CharacterFormationFormId Id { get; }
 
+        /// <summary>
+        /// Character assignments contained in the saved formation.
+        /// </summary>
         IReadOnlyList<GS2Studio.Generated.CharacterFormationFormSlot.CharacterFormationFormSlot>? Slots { get; }
     }
 

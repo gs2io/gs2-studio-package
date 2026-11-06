@@ -13,7 +13,7 @@ namespace GS2Studio.Generated.CharacterEnhance
     public interface CharacterEnhance
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the enhancement recipe.
         /// </summary>
         CharacterEnhanceId Id { get; }
     }

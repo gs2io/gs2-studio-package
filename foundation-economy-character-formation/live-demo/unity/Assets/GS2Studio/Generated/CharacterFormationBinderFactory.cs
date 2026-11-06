@@ -26,7 +26,11 @@ namespace GS2Studio.Generated.CharacterFormation
             CharacterFormationId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeCharacterFormationExpandNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__formationCharacterFormationNamespaceMoldModel_1 = null,
+            string? __sdk__userdataFormationCharacterFormationMoldModel_1 = null);
     }
 
     public sealed class DefaultCharacterFormationBinderFactory : ICharacterFormationBinderFactory
@@ -37,9 +41,13 @@ namespace GS2Studio.Generated.CharacterFormation
             CharacterFormationId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeCharacterFormationExpandNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__formationCharacterFormationNamespaceMoldModel_1 = null,
+            string? __sdk__userdataFormationCharacterFormationMoldModel_1 = null)
         {
-            return await CharacterFormationBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await CharacterFormationBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__exchangeCharacterFormationExpandNamespaceRateModel_1, __sdk__transactionAcquireAction_1, __sdk__formationCharacterFormationNamespaceMoldModel_1, __sdk__userdataFormationCharacterFormationMoldModel_1);
         }
     }
 }

@@ -29,6 +29,7 @@ namespace GS2Studio.Generated.SkillNode
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableSkillNodeBinder : IReadOnlySkillNodeBinder
     {
+        SkillNodeBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -70,10 +71,161 @@ namespace GS2Studio.Generated.SkillNode
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class SkillNodeBinder : ReadOnlySkillNodeBinder, ISkillNodeBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly SkillNodeBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(SkillNodeBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public SkillNode Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableSkillNode? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableSkillNode
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal SkillNodeId __valueId = default!;
+                public SkillNodeId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setPremiseNodes;
+                internal IReadOnlyList<string>? __valuePremiseNodes = default!;
+                public IReadOnlyList<string>? PremiseNodes
+                {
+                    get => __setPremiseNodes ? __valuePremiseNodes : __scopeOwner.Value.PremiseNodes;
+                    set { __setPremiseNodes = true; __valuePremiseNodes = value; }
+                }
+                internal bool __setRestrainReturnRate;
+                internal float? __valueRestrainReturnRate = default!;
+                public float? RestrainReturnRate
+                {
+                    get => __setRestrainReturnRate ? __valueRestrainReturnRate : __scopeOwner.Value.RestrainReturnRate;
+                    set { __setRestrainReturnRate = true; __valueRestrainReturnRate = value; }
+                }
+                internal bool __setReleased;
+                internal bool __valueReleased = default!;
+                public bool Released
+                {
+                    get => __setReleased ? __valueReleased : __scopeOwner.Value.Released;
+                    set { __setReleased = true; __valueReleased = value; }
+                }
+                internal bool __setOwner;
+                internal string? __valueOwner = default!;
+                public string? Owner
+                {
+                    get => __setOwner ? __valueOwner : __scopeOwner.Value.Owner;
+                    set { __setOwner = true; __valueOwner = value; }
+                }
+                internal bool __setCost;
+                internal int __valueCost = default!;
+                public int Cost
+                {
+                    get => __setCost ? __valueCost : __scopeOwner.Value.Cost;
+                    set { __setCost = true; __valueCost = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<SkillNodeId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setPremiseNodes) { _owner._model.PremiseNodes = changes.__valuePremiseNodes; changes.__setPremiseNodes = false; }
+                if (changes.__setRestrainReturnRate) { _owner._model.RestrainReturnRate = changes.__valueRestrainReturnRate; changes.__setRestrainReturnRate = false; }
+                if (changes.__setReleased) { _owner._model.Released = changes.__valueReleased; changes.__setReleased = false; }
+                if (changes.__setOwner) { _owner._model.Owner = changes.__valueOwner; changes.__setOwner = false; }
+                if (changes.__setCost) { _owner._model.Cost = changes.__valueCost; changes.__setCost = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -86,13 +238,18 @@ namespace GS2Studio.Generated.SkillNode
         internal SkillNodeBinder(
             MutableSkillNode model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__skillTreeSkillTreeNamespaceNodeModel_1 = null,
+            string? __sdk__membershipSkillTreeStatus_1 = null
         ) : base(model, gs2, session)
         {
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2SkillTree.NodeModelConsumeActionArrayLoader("SkillTree", _model.Id);
-            __skillTreeSkillTreeNamespaceNodeModelLoader = new Gs2Bind.Gs2SkillTree.NodeModelLoader("SkillTree", _model.Id);
-            __membershipSkillTreeStatusLoader = new Gs2Bind.Gs2SkillTree.StatusLoader("SkillTree", _model.Owner);
+
+            __transactionConsumeActionLoader = new Gs2Bind.Gs2SkillTree.NodeModelConsumeActionArrayLoader("SkillTree", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!));
+            __skillTreeSkillTreeNamespaceNodeModelLoader = new Gs2Bind.Gs2SkillTree.NodeModelLoader("SkillTree", (string.IsNullOrEmpty(__sdk__skillTreeSkillTreeNamespaceNodeModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__skillTreeSkillTreeNamespaceNodeModel_1!));
+            __membershipSkillTreeStatusLoader = new Gs2Bind.Gs2SkillTree.StatusLoader("SkillTree", (string.IsNullOrEmpty(__sdk__membershipSkillTreeStatus_1) ? _model.Owner : __sdk__membershipSkillTreeStatus_1!));
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableSkillNode CreateModel(SkillNodeId id, string owner)
@@ -107,14 +264,16 @@ namespace GS2Studio.Generated.SkillNode
             SkillNodeId id, string owner,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__skillTreeSkillTreeNamespaceNodeModel_1 = null,
+            string? __sdk__membershipSkillTreeStatus_1 = null)
         {
             var model = CreateModel(id, owner);
-            var binder = new SkillNodeBinder(model, gs2, session);
+            var binder = new SkillNodeBinder(model, gs2, session, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__skillTreeSkillTreeNamespaceNodeModel_1: __sdk__skillTreeSkillTreeNamespaceNodeModel_1, __sdk__membershipSkillTreeStatus_1: __sdk__membershipSkillTreeStatus_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -206,6 +365,7 @@ namespace GS2Studio.Generated.SkillNode
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -264,6 +424,7 @@ namespace GS2Studio.Generated.SkillNode
                 model.Released = default;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

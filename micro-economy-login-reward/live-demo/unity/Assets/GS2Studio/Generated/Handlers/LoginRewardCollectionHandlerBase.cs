@@ -28,6 +28,9 @@ namespace GS2Studio.Generated.LoginRewardCollection
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public LoginRewardCollectionMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<LoginRewardCollection>? Updated;
 
         public event Action<IActionableLoginRewardCollectionBinder>? Bound;

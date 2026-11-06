@@ -28,6 +28,11 @@ namespace GS2Studio.Generated.LoginRewardCollection
     public sealed class LoginRewardCollectionHandler : LoginRewardCollectionHandlerBase
     {
         [SerializeField] private string? _id;
+        private string? _sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName;
+        private string? _sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName_2;
+        private string? _sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName;
+        private string? _sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName_2;
+        private string? _sdk_micro_x2d_economy_x2d_login_x2d_reward_userData_udr_1P119645K49QZA8WP1Z2M8DV2J_loginReward_ReceiveStatus_bonusModelName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -52,6 +57,7 @@ namespace GS2Studio.Generated.LoginRewardCollection
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(ILoginRewardCollectionBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -67,6 +73,21 @@ namespace GS2Studio.Generated.LoginRewardCollection
             _id = id;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName, string? sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName_2, string? sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName, string? sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName_2, string? sdk_micro_x2d_economy_x2d_login_x2d_reward_userData_udr_1P119645K49QZA8WP1Z2M8DV2J_loginReward_ReceiveStatus_bonusModelName)
+        {
+            InvalidateBindingIntent();
+            _sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName = sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName;
+            _sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName_2 = sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName_2;
+            _sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName = sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName;
+            _sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName_2 = sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName_2;
+            _sdk_micro_x2d_economy_x2d_login_x2d_reward_userData_udr_1P119645K49QZA8WP1Z2M8DV2J_loginReward_ReceiveStatus_bonusModelName = sdk_micro_x2d_economy_x2d_login_x2d_reward_userData_udr_1P119645K49QZA8WP1Z2M8DV2J_loginReward_ReceiveStatus_bonusModelName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -92,7 +113,17 @@ namespace GS2Studio.Generated.LoginRewardCollection
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new LoginRewardCollectionId(_id ?? string.Empty), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName_2' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName_2' is not set.");
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_userData_udr_1P119645K49QZA8WP1Z2M8DV2J_loginReward_ReceiveStatus_bonusModelName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_login_x2d_reward_userData_udr_1P119645K49QZA8WP1Z2M8DV2J_loginReward_ReceiveStatus_bonusModelName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new LoginRewardCollectionId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__transactionAcquireAction_1: _sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName, __sdk__exchangeLoginRewardStartOverNamespaceRateModel_1: _sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName_2, __sdk__transactionConsumeAction_1: _sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName, __sdk__loginRewardLoginRewardNamespaceBonusModel_1: _sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName_2, __sdk__userdataLoginRewardLoginRewardBonusModel_1: _sdk_micro_x2d_economy_x2d_login_x2d_reward_userData_udr_1P119645K49QZA8WP1Z2M8DV2J_loginReward_ReceiveStatus_bonusModelName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -181,6 +212,11 @@ namespace GS2Studio.Generated.LoginRewardCollection
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_x2d_demo_masterData_mdr_764ATR9HCQB89B3EVDJZ7D08VS_exchange_RateModel_rateName_2)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName_2)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_userData_udr_1P119645K49QZA8WP1Z2M8DV2J_loginReward_ReceiveStatus_bonusModelName)) return false;
             return true;
         }
 

@@ -13,7 +13,7 @@ namespace GS2Studio.Generated.EquipmentCategory
     public interface EquipmentCategory
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the equipment category.
         /// </summary>
         EquipmentCategoryId Id { get; }
     }

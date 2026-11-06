@@ -17,18 +17,47 @@ using Gs2.Unity.Util;
 using GS2Studio.Generated.Schedule;
 using Gs2.Unity.Gs2Mission.Model;
 using Gs2Bind.Gs2Mission;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.MissionCollection
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum MissionCollectionMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the MissionMission master-data list axis.</summary>
+        MissionMissionMaster,
+
+        /// <summary>Built by the MissionMission user-data list axis.</summary>
+        [Gs2SkipsLoaders("MissionMissionNamespaceMissionGroupModel")]
+        MissionMissionUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyMissionCollectionBinder : MissionCollection
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        MissionCollectionMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Mission.MissionGroupModelLoader</c> load on <c>__missionMissionNamespaceMissionGroupModelLoader</c>. False means this path does not supply <c>Scope</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>MissionMissionUser: does not supply SDK backing key name.</remarks>
+        bool LoadedMissionMissionNamespaceMissionGroupModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableMissionCollectionBinder : IReadOnlyMissionCollectionBinder
     {
+        MissionCollectionBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Receive(string[] missionTaskNames, Gs2.Unity.Gs2Mission.Model.EzConfig[]? config = null);
+        Task<GS2Studio.Generated.Mission.IReadOnlyMissionBinderCollection> GetMissions(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -36,11 +65,10 @@ namespace GS2Studio.Generated.MissionCollection
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.Mission.IReadOnlyMissionBinderCollection> GetMissions(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyMissionCollectionBinder : IReadOnlyMissionCollectionBinder
+    public abstract class ReadOnlyMissionCollectionBinder : IReadOnlyMissionCollectionBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableMissionCollection _model;
@@ -56,6 +84,13 @@ namespace GS2Studio.Generated.MissionCollection
         /// <inheritdoc cref="MissionCollection.Scope" />
         public string Scope => _model.Scope;
 
+        /// <inheritdoc />
+        public abstract MissionCollectionMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedMissionMissionNamespaceMissionGroupModel { get; }
+
+
         private protected ReadOnlyMissionCollectionBinder(MutableMissionCollection model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -65,10 +100,137 @@ namespace GS2Studio.Generated.MissionCollection
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class MissionCollectionBinder : ReadOnlyMissionCollectionBinder, IMissionCollectionBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly MissionCollectionBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(MissionCollectionBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public MissionCollection Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableMissionCollection? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableMissionCollection
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal MissionCollectionId __valueId = default!;
+                public MissionCollectionId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setSchedule;
+                internal ScheduleId? __valueSchedule = default!;
+                public ScheduleId? Schedule
+                {
+                    get => __setSchedule ? __valueSchedule : __scopeOwner.Value.Schedule;
+                    set { __setSchedule = true; __valueSchedule = value; }
+                }
+                internal bool __setScope;
+                internal string __valueScope = default!;
+                public string Scope
+                {
+                    get => __setScope ? __valueScope : __scopeOwner.Value.Scope;
+                    set { __setScope = true; __valueScope = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<MissionCollectionId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setSchedule) { _owner._model.Schedule = changes.__valueSchedule; changes.__setSchedule = false; }
+                if (changes.__setScope) { _owner._model.Scope = changes.__valueScope; changes.__setScope = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -77,15 +239,32 @@ namespace GS2Studio.Generated.MissionCollection
 
         private readonly Gs2Bind.Gs2Mission.MissionGroupModelLoader __missionMissionNamespaceMissionGroupModelLoader;
 
+        private readonly MissionCollectionMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__missionMissionNamespaceMissionGroupModelLoader</c> reads.</summary>
+        /// <remarks>MissionMissionUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__missionMissionNamespaceMissionGroupModelLoader => _mountSurfaceValue is MissionCollectionMountSurface.Full or MissionCollectionMountSurface.MissionMissionMaster;
+
+        /// <inheritdoc />
+        public override MissionCollectionMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedMissionMissionNamespaceMissionGroupModel => Runs__missionMissionNamespaceMissionGroupModelLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal MissionCollectionBinder(
             MutableMissionCollection model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            MissionCollectionMountSurface _mountSurface = MissionCollectionMountSurface.Full,
+            string? __sdk__missionMissionNamespaceMissionGroupModel_1 = null
         ) : base(model, gs2, session)
         {
-            __missionMissionNamespaceMissionGroupModelLoader = new Gs2Bind.Gs2Mission.MissionGroupModelLoader("Mission", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __missionMissionNamespaceMissionGroupModelLoader = Runs__missionMissionNamespaceMissionGroupModelLoader ? new Gs2Bind.Gs2Mission.MissionGroupModelLoader("Mission", (string.IsNullOrEmpty(__sdk__missionMissionNamespaceMissionGroupModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__missionMissionNamespaceMissionGroupModel_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableMissionCollection CreateModel(MissionCollectionId id)
@@ -99,21 +278,24 @@ namespace GS2Studio.Generated.MissionCollection
             MissionCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__missionMissionNamespaceMissionGroupModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new MissionCollectionBinder(model, gs2, session);
+            var binder = new MissionCollectionBinder(model, gs2, session, __sdk__missionMissionNamespaceMissionGroupModel_1: __sdk__missionMissionNamespaceMissionGroupModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _missionMissionNamespaceMissionGroupModel = await __missionMissionNamespaceMissionGroupModelLoader.Load(_gs2, _session);
+            var _missionMissionNamespaceMissionGroupModel = Runs__missionMissionNamespaceMissionGroupModelLoader ? await __missionMissionNamespaceMissionGroupModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyMissionMissionNamespaceMissionGroupModel(_model, _missionMissionNamespaceMissionGroupModel);
+            if (Runs__missionMissionNamespaceMissionGroupModelLoader)
+            {
+                ApplyMissionMissionNamespaceMissionGroupModel(_model, _missionMissionNamespaceMissionGroupModel);
+            }
             MissionCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
             _mounted = true;
         }
@@ -121,24 +303,30 @@ namespace GS2Studio.Generated.MissionCollection
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__missionMissionNamespaceMissionGroupModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyMissionMissionNamespaceMissionGroupModel(_model, value);
-                    MissionCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+            if (Runs__missionMissionNamespaceMissionGroupModelLoader)
+            {
+                _unsubscribers.Add(__missionMissionNamespaceMissionGroupModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyMissionMissionNamespaceMissionGroupModel(_model, value);
+                        MissionCollectionOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __missionMissionNamespaceMissionGroupModelLoader.Invalidate(_gs2, _session);
+            if (Runs__missionMissionNamespaceMissionGroupModelLoader)
+            {
+                __missionMissionNamespaceMissionGroupModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -150,6 +338,7 @@ namespace GS2Studio.Generated.MissionCollection
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -244,6 +433,7 @@ namespace GS2Studio.Generated.MissionCollection
                 model.Scope = string.Empty;
             }
         }
+
         #endregion
 
     }

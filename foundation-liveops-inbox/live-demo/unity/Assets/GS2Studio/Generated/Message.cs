@@ -13,16 +13,28 @@ namespace GS2Studio.Generated.Message
     public interface Message
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the message.
         /// </summary>
         MessageId Id { get; }
 
+        /// <summary>
+        /// Content of the message delivered to the player's inbox.
+        /// </summary>
         string Payload { get; }
 
+        /// <summary>
+        /// Whether the player has opened this message.
+        /// </summary>
         bool IsRead { get; }
 
+        /// <summary>
+        /// Time when the message was received.
+        /// </summary>
         DateTime ReceivedAt { get; }
 
+        /// <summary>
+        /// Time until which the message remains available.
+        /// </summary>
         DateTime? ExpiresAt { get; }
     }
 

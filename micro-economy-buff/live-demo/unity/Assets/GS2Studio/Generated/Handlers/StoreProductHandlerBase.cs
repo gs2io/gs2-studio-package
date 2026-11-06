@@ -8,7 +8,6 @@
 using System;
 
 using UnityEngine;
-using GS2Studio.Generated.CurrencyType;
 using Gs2.Unity.Gs2Money2.Model;
 using Gs2.Unity.Gs2Showcase.Model;
 using Gs2Bind.Gs2Money2;
@@ -26,6 +25,9 @@ namespace GS2Studio.Generated.StoreProduct
         public abstract StoreProduct? Model { get; }
 
         public abstract bool HasValue { get; }
+
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public StoreProductMountSurface? MountSurface => Binder?.MountSurface;
 
         public event Action<StoreProduct>? Updated;
 

@@ -22,18 +22,58 @@ using Gs2Bind.Gs2Lottery;
 using Gs2Bind.Gs2Showcase;
 using GS2Studio.Generated.GachaRarityRate;
 using GS2Studio.Generated.GachaRarity;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Gacha
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum GachaMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the ShowcaseCharacterGacha master-data list axis.</summary>
+        [Gs2SkipsLoaders("LotteryCharacterGachaNamespaceLotteryModel")]
+        ShowcaseCharacterGachaMaster,
+
+        /// <summary>Built by the LotteryCharacterGacha master-data list axis.</summary>
+        [Gs2SkipsLoaders("ShowcaseCharacterGachaNamespaceShowcaseDisplayItem")]
+        LotteryCharacterGachaMaster,
+
+        /// <summary>Built by the ShowcaseCharacterGacha2 master-data list axis.</summary>
+        [Gs2SkipsLoaders("LotteryCharacterGachaNamespaceLotteryModel")]
+        ShowcaseCharacterGacha2Master,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyGachaBinder : Gacha
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        GachaMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Lottery.LotteryModelLoader</c> load on <c>__lotteryCharacterGachaNamespaceLotteryModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ShowcaseCharacterGachaMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ShowcaseCharacterGacha2Master: does not supply SDK backing key name.</remarks>
+        bool LoadedLotteryCharacterGachaNamespaceLotteryModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Showcase.DisplayItemLoader</c> load on <c>__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>LotteryCharacterGachaMaster: does not supply SDK backing key displayItemId.</remarks>
+        bool LoadedShowcaseCharacterGachaNamespaceShowcaseDisplayItem { get; }
         Task<IGachaRarityRateBinder> GetGachaRarityRate(GachaRarityId rarity, CancellationToken cancellationToken = default);
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableGachaBinder : IReadOnlyGachaBinder
     {
+        GachaBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Buy(int? quantity = null, Gs2.Unity.Gs2Showcase.Model.EzConfig[]? config = null);
     }
 
@@ -45,7 +85,7 @@ namespace GS2Studio.Generated.Gacha
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyGachaBinder : IReadOnlyGachaBinder
+    public abstract class ReadOnlyGachaBinder : IReadOnlyGachaBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableGacha _model;
@@ -59,6 +99,16 @@ namespace GS2Studio.Generated.Gacha
         /// <inheritdoc cref="Gacha.Schedule" />
         public ScheduleId? Schedule => _model.Schedule;
 
+        /// <inheritdoc />
+        public abstract GachaMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedLotteryCharacterGachaNamespaceLotteryModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedShowcaseCharacterGachaNamespaceShowcaseDisplayItem { get; }
+
+
         private protected ReadOnlyGachaBinder(MutableGacha model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -68,6 +118,7 @@ namespace GS2Studio.Generated.Gacha
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
 
         #region Single-fetch navigation
         public async Task<IGachaRarityRateBinder> GetGachaRarityRate(GachaRarityId rarity, CancellationToken cancellationToken = default)
@@ -80,6 +131,124 @@ namespace GS2Studio.Generated.Gacha
 
     public sealed class GachaBinder : ReadOnlyGachaBinder, IGachaBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly GachaBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(GachaBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Gacha Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableGacha? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableGacha
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal GachaId __valueId = default!;
+                public GachaId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setSchedule;
+                internal ScheduleId? __valueSchedule = default!;
+                public ScheduleId? Schedule
+                {
+                    get => __setSchedule ? __valueSchedule : __scopeOwner.Value.Schedule;
+                    set { __setSchedule = true; __valueSchedule = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<GachaId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setSchedule) { _owner._model.Schedule = changes.__valueSchedule; changes.__setSchedule = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -87,16 +256,42 @@ namespace GS2Studio.Generated.Gacha
         private readonly Gs2Bind.Gs2Lottery.LotteryModelLoader __lotteryCharacterGachaNamespaceLotteryModelLoader;
         private readonly Gs2Bind.Gs2Showcase.DisplayItemLoader __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader;
 
+        private readonly GachaMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__lotteryCharacterGachaNamespaceLotteryModelLoader</c> reads.</summary>
+        /// <remarks>ShowcaseCharacterGachaMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ShowcaseCharacterGacha2Master: does not supply SDK backing key name.</remarks>
+        private bool Runs__lotteryCharacterGachaNamespaceLotteryModelLoader => _mountSurfaceValue is GachaMountSurface.Full or GachaMountSurface.LotteryCharacterGachaMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader</c> reads.</summary>
+        /// <remarks>LotteryCharacterGachaMaster: does not supply SDK backing key displayItemId.</remarks>
+        private bool Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader => _mountSurfaceValue is GachaMountSurface.Full or GachaMountSurface.ShowcaseCharacterGachaMaster or GachaMountSurface.ShowcaseCharacterGacha2Master;
+
+        /// <inheritdoc />
+        public override GachaMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedLotteryCharacterGachaNamespaceLotteryModel => Runs__lotteryCharacterGachaNamespaceLotteryModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedShowcaseCharacterGachaNamespaceShowcaseDisplayItem => Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal GachaBinder(
             MutableGacha model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            GachaMountSurface _mountSurface = GachaMountSurface.Full,
+            string? __sdk__lotteryCharacterGachaNamespaceLotteryModel_1 = null,
+            string? __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2 = null
         ) : base(model, gs2, session)
         {
-            __lotteryCharacterGachaNamespaceLotteryModelLoader = new Gs2Bind.Gs2Lottery.LotteryModelLoader("CharacterGacha", _model.Id);
-            __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader = new Gs2Bind.Gs2Showcase.DisplayItemLoader("CharacterGacha", "Showcase", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __lotteryCharacterGachaNamespaceLotteryModelLoader = Runs__lotteryCharacterGachaNamespaceLotteryModelLoader ? new Gs2Bind.Gs2Lottery.LotteryModelLoader("CharacterGacha", (string.IsNullOrEmpty(__sdk__lotteryCharacterGachaNamespaceLotteryModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__lotteryCharacterGachaNamespaceLotteryModel_1!)) : null!;
+            __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader = Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader ? new Gs2Bind.Gs2Showcase.DisplayItemLoader("CharacterGacha", "Showcase", (string.IsNullOrEmpty(__sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableGacha CreateModel(GachaId id)
@@ -110,25 +305,26 @@ namespace GS2Studio.Generated.Gacha
             GachaId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__lotteryCharacterGachaNamespaceLotteryModel_1 = null,
+            string? __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2 = null)
         {
             var model = CreateModel(id);
-            var binder = new GachaBinder(model, gs2, session);
+            var binder = new GachaBinder(model, gs2, session, __sdk__lotteryCharacterGachaNamespaceLotteryModel_1: __sdk__lotteryCharacterGachaNamespaceLotteryModel_1, __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2: __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _lotteryCharacterGachaNamespaceLotteryModel = await __lotteryCharacterGachaNamespaceLotteryModelLoader.Load(_gs2, _session);
+            var _lotteryCharacterGachaNamespaceLotteryModel = Runs__lotteryCharacterGachaNamespaceLotteryModelLoader ? await __lotteryCharacterGachaNamespaceLotteryModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_lotteryCharacterGachaNamespaceLotteryModel != null)
             {
                 // CreateModel owns identity; applying SDK fields must not replace it.
             }
-            var _showcaseCharacterGachaNamespaceShowcaseDisplayItem = await __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader.Load(_gs2, _session);
+            var _showcaseCharacterGachaNamespaceShowcaseDisplayItem = Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader ? await __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_showcaseCharacterGachaNamespaceShowcaseDisplayItem != null)
             {
@@ -141,43 +337,55 @@ namespace GS2Studio.Generated.Gacha
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__lotteryCharacterGachaNamespaceLotteryModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__lotteryCharacterGachaNamespaceLotteryModelLoader)
+            {
+                _unsubscribers.Add(__lotteryCharacterGachaNamespaceLotteryModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                        // CreateModel owns identity; applying SDK fields must not replace it.
-                    }
-                    GachaOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                            // CreateModel owns identity; applying SDK fields must not replace it.
+                        }
+                        GachaOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader)
+            {
+                _unsubscribers.Add(__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                        // CreateModel owns identity; applying SDK fields must not replace it.
-                    }
-                    GachaOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                            // CreateModel owns identity; applying SDK fields must not replace it.
+                        }
+                        GachaOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __lotteryCharacterGachaNamespaceLotteryModelLoader.Invalidate(_gs2, _session);
-            __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader.Invalidate(_gs2, _session);
+            if (Runs__lotteryCharacterGachaNamespaceLotteryModelLoader)
+            {
+                __lotteryCharacterGachaNamespaceLotteryModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader)
+            {
+                __showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -189,6 +397,7 @@ namespace GS2Studio.Generated.Gacha
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {

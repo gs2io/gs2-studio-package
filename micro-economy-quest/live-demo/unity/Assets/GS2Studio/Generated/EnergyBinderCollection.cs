@@ -119,8 +119,20 @@ namespace GS2Studio.Generated.Energy
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyEnergyBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyEnergyBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyEnergyBinder> _configuredComparer = EnergyBinderComparer.Default;
@@ -244,18 +256,38 @@ namespace GS2Studio.Generated.Energy
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaModelArrayLoader("Energy");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromStaminaEnergyMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromStaminaEnergyMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromStaminaEnergyMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromStaminaEnergyMasterItems");
+            _pendingCollectionAxis = "ReconcileFromStaminaEnergyMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaModelArrayLoader("Energy");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromStaminaEnergyMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromStaminaEnergyMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromStaminaEnergyMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromStaminaEnergyMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromStaminaEnergyMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -263,7 +295,6 @@ namespace GS2Studio.Generated.Energy
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaModelArrayLoader("Energy");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -271,9 +302,10 @@ namespace GS2Studio.Generated.Energy
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromStaminaEnergyMasterItems");
                     try
                     {
-                        await ReconcileFromStaminaEnergyMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromStaminaEnergyMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -282,41 +314,68 @@ namespace GS2Studio.Generated.Energy
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromStaminaEnergyMasterItems(IList<Gs2.Unity.Gs2Stamina.Model.EzStaminaModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromStaminaEnergyMasterItems(IList<Gs2.Unity.Gs2Stamina.Model.EzStaminaModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractStaminaEnergyMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyMasterItems", updateVersion)) return;
                 var rowKey = ExtractStaminaEnergyMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractStaminaEnergyMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<EnergyId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyStaminaEnergyMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-energy", "masterData", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "foundation-economy-energy", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "stamina", "StaminaModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy\",\"masterData\",\"mdr_50W1CZCFK9821RVN6VZJ8P3JZ5\",\"stamina\",\"StaminaModel\",\"staminaName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-energy", "masterData", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "foundation-economy-energy", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "stamina", "StaminaModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy", "masterData", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "foundation-economy-energy", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "stamina", "StaminaModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromStaminaEnergyMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromStaminaEnergyMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<EnergyId>.Default.Equals(raced.Id, nextId)) { ApplyStaminaEnergyMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-energy", "masterData", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "foundation-economy-energy", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "stamina", "StaminaModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy\",\"masterData\",\"mdr_50W1CZCFK9821RVN6VZJ8P3JZ5\",\"stamina\",\"StaminaModel\",\"staminaName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-energy", "masterData", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "foundation-economy-energy", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "stamina", "StaminaModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy", "masterData", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "foundation-economy-energy", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "stamina", "StaminaModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyStaminaEnergyMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-energy", "masterData", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "foundation-economy-energy", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "stamina", "StaminaModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy\",\"masterData\",\"mdr_50W1CZCFK9821RVN6VZJ8P3JZ5\",\"stamina\",\"StaminaModel\",\"staminaName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-energy", "masterData", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "foundation-economy-energy", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "stamina", "StaminaModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy", "masterData", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "foundation-economy-energy", "mdr_50W1CZCFK9821RVN6VZJ8P3JZ5", "stamina", "StaminaModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -356,13 +415,13 @@ namespace GS2Studio.Generated.Energy
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EnergyBinder> BuildBinderFromStaminaEnergyMasterItem(Gs2.Unity.Gs2Stamina.Model.EzStaminaModel item, CancellationToken cancellationToken)
+        private async Task<EnergyBinder?> BuildBinderFromStaminaEnergyMasterItem(Gs2.Unity.Gs2Stamina.Model.EzStaminaModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = EnergyBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EnergyId) : new EnergyId(item.Name)));
             ApplyStaminaEnergyMasterItemTo(model, item);
-            var binder = new EnergyBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new EnergyBinder(model, _gs2, _session, _mountSurface: EnergyMountSurface.StaminaEnergyMaster, __sdk__staminaEnergyNamespaceStaminaModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyStaminaEnergyMasterItemTo(MutableEnergy model, Gs2.Unity.Gs2Stamina.Model.EzStaminaModel item)
@@ -381,8 +440,9 @@ namespace GS2Studio.Generated.Energy
         {
             var id = ExtractStaminaEnergyMasterIdentity(item);
             if (EqualityComparer<EnergyId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"StaminaEnergy\",\"foundation-economy-energy\",\"mdr_50W1CZCFK9821RVN6VZJ8P3JZ5\",null,null,\"foundation-economy-energy\",\"mdr_50W1CZCFK9821RVN6VZJ8P3JZ5\",\"stamina\",\"StaminaModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<EnergyBinderCollection> CreateFromExchangeEnergyRecoverMasterDataAsync(
@@ -399,18 +459,38 @@ namespace GS2Studio.Generated.Energy
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyRecover");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeEnergyRecoverMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeEnergyRecoverMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeEnergyRecoverMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeEnergyRecoverMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeEnergyRecoverMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyRecover");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyRecoverMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeEnergyRecoverMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyRecoverMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeEnergyRecoverMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeEnergyRecoverMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeEnergyRecoverMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeEnergyRecoverMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -418,7 +498,6 @@ namespace GS2Studio.Generated.Energy
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyRecover");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -426,9 +505,10 @@ namespace GS2Studio.Generated.Energy
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeEnergyRecoverMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeEnergyRecoverMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeEnergyRecoverMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -437,41 +517,68 @@ namespace GS2Studio.Generated.Energy
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeEnergyRecoverMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeEnergyRecoverMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyRecoverMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeEnergyRecoverMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyRecoverMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeEnergyRecoverMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeEnergyRecoverMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<EnergyId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeEnergyRecoverMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-energy-demo", "masterData", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "foundation-economy-energy-demo", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy-demo\",\"masterData\",\"mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "foundation-economy-energy-demo", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "foundation-economy-energy-demo", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeEnergyRecoverMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyRecoverMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeEnergyRecoverMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<EnergyId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeEnergyRecoverMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-energy-demo", "masterData", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "foundation-economy-energy-demo", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy-demo\",\"masterData\",\"mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "foundation-economy-energy-demo", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "foundation-economy-energy-demo", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeEnergyRecoverMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-energy-demo", "masterData", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "foundation-economy-energy-demo", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy-demo\",\"masterData\",\"mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "foundation-economy-energy-demo", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "foundation-economy-energy-demo", "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyRecoverMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -511,13 +618,13 @@ namespace GS2Studio.Generated.Energy
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EnergyBinder> BuildBinderFromExchangeEnergyRecoverMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<EnergyBinder?> BuildBinderFromExchangeEnergyRecoverMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = EnergyBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EnergyId) : new EnergyId(item.Name)));
             ApplyExchangeEnergyRecoverMasterItemTo(model, item);
-            var binder = new EnergyBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new EnergyBinder(model, _gs2, _session, _mountSurface: EnergyMountSurface.ExchangeEnergyRecoverMaster, __sdk__exchangeEnergyRecoverNamespaceRateModel_1: item.Name, __sdk__transactionAcquireAction_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeEnergyRecoverMasterItemTo(MutableEnergy model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -536,8 +643,9 @@ namespace GS2Studio.Generated.Energy
         {
             var id = ExtractExchangeEnergyRecoverMasterIdentity(item);
             if (EqualityComparer<EnergyId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeEnergyRecover\",\"foundation-economy-energy-demo\",\"mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8\",null,null,\"foundation-economy-energy-demo\",\"mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<EnergyBinderCollection> CreateFromExchangeEnergyConsumeMasterDataAsync(
@@ -554,18 +662,38 @@ namespace GS2Studio.Generated.Energy
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyConsume");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeEnergyConsumeMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeEnergyConsumeMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeEnergyConsumeMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeEnergyConsumeMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeEnergyConsumeMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyConsume");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyConsumeMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeEnergyConsumeMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyConsumeMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeEnergyConsumeMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeEnergyConsumeMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeEnergyConsumeMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeEnergyConsumeMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -573,7 +701,6 @@ namespace GS2Studio.Generated.Energy
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EnergyConsume");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -581,9 +708,10 @@ namespace GS2Studio.Generated.Energy
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeEnergyConsumeMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeEnergyConsumeMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeEnergyConsumeMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -592,41 +720,68 @@ namespace GS2Studio.Generated.Energy
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeEnergyConsumeMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeEnergyConsumeMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyConsumeMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeEnergyConsumeMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyConsumeMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeEnergyConsumeMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeEnergyConsumeMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<EnergyId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeEnergyConsumeMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-energy-demo", "masterData", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "foundation-economy-energy-demo", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy-demo\",\"masterData\",\"mdr_57KN8WGDJJBYHAZR30EV6G0H9R\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "foundation-economy-energy-demo", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "foundation-economy-energy-demo", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeEnergyConsumeMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyConsumeMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeEnergyConsumeMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<EnergyId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeEnergyConsumeMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-energy-demo", "masterData", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "foundation-economy-energy-demo", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy-demo\",\"masterData\",\"mdr_57KN8WGDJJBYHAZR30EV6G0H9R\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "foundation-economy-energy-demo", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "foundation-economy-energy-demo", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeEnergyConsumeMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-energy-demo", "masterData", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "foundation-economy-energy-demo", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy-demo\",\"masterData\",\"mdr_57KN8WGDJJBYHAZR30EV6G0H9R\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "foundation-economy-energy-demo", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy-demo", "masterData", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "foundation-economy-energy-demo", "mdr_57KN8WGDJJBYHAZR30EV6G0H9R", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeEnergyConsumeMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -666,13 +821,13 @@ namespace GS2Studio.Generated.Energy
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EnergyBinder> BuildBinderFromExchangeEnergyConsumeMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<EnergyBinder?> BuildBinderFromExchangeEnergyConsumeMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = EnergyBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EnergyId) : new EnergyId(item.Name)));
             ApplyExchangeEnergyConsumeMasterItemTo(model, item);
-            var binder = new EnergyBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new EnergyBinder(model, _gs2, _session, _mountSurface: EnergyMountSurface.ExchangeEnergyConsumeMaster, __sdk__exchangeEnergyConsumeNamespaceRateModel_1: item.Name, __sdk__transactionConsumeAction_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeEnergyConsumeMasterItemTo(MutableEnergy model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -691,8 +846,9 @@ namespace GS2Studio.Generated.Energy
         {
             var id = ExtractExchangeEnergyConsumeMasterIdentity(item);
             if (EqualityComparer<EnergyId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeEnergyConsume\",\"foundation-economy-energy-demo\",\"mdr_57KN8WGDJJBYHAZR30EV6G0H9R\",null,null,\"foundation-economy-energy-demo\",\"mdr_57KN8WGDJJBYHAZR30EV6G0H9R\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<EnergyBinderCollection> CreateFromStaminaEnergyUserDataAsync(
@@ -709,18 +865,38 @@ namespace GS2Studio.Generated.Energy
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaArrayLoader("Energy");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromStaminaEnergyUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromStaminaEnergyUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromStaminaEnergyUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromStaminaEnergyUserItems");
+            _pendingCollectionAxis = "ReconcileFromStaminaEnergyUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaArrayLoader("Energy");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromStaminaEnergyUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromStaminaEnergyUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromStaminaEnergyUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromStaminaEnergyUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromStaminaEnergyUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -728,7 +904,6 @@ namespace GS2Studio.Generated.Energy
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Stamina.StaminaArrayLoader("Energy");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -736,9 +911,10 @@ namespace GS2Studio.Generated.Energy
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromStaminaEnergyUserItems");
                     try
                     {
-                        await ReconcileFromStaminaEnergyUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromStaminaEnergyUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -747,41 +923,68 @@ namespace GS2Studio.Generated.Energy
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromStaminaEnergyUserItems(IList<Gs2.Unity.Gs2Stamina.Model.EzStamina> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromStaminaEnergyUserItems(IList<Gs2.Unity.Gs2Stamina.Model.EzStamina> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractStaminaEnergyUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyUserItems", updateVersion)) return;
                 var rowKey = ExtractStaminaEnergyUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractStaminaEnergyUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<EnergyId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyStaminaEnergyUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-energy", "userData", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "foundation-economy-energy", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "stamina", "Stamina", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy\",\"userData\",\"udr_1WAY8NTNY59DPT2MB7G0VGD7TT\",\"stamina\",\"Stamina\",\"staminaName\",\"string\"]"] = (object)item.StaminaName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-energy", "userData", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "foundation-economy-energy", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "stamina", "Stamina", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy", "userData", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "foundation-economy-energy", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "stamina", "Stamina", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromStaminaEnergyUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromStaminaEnergyUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<EnergyId>.Default.Equals(raced.Id, nextId)) { ApplyStaminaEnergyUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-energy", "userData", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "foundation-economy-energy", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "stamina", "Stamina", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy\",\"userData\",\"udr_1WAY8NTNY59DPT2MB7G0VGD7TT\",\"stamina\",\"Stamina\",\"staminaName\",\"string\"]"] = (object)item.StaminaName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-energy", "userData", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "foundation-economy-energy", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "stamina", "Stamina", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy", "userData", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "foundation-economy-energy", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "stamina", "Stamina", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyStaminaEnergyUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-energy", "userData", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "foundation-economy-energy", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "stamina", "Stamina", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-energy\",\"userData\",\"udr_1WAY8NTNY59DPT2MB7G0VGD7TT\",\"stamina\",\"Stamina\",\"staminaName\",\"string\"]"] = (object)item.StaminaName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-energy", "userData", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "foundation-economy-energy", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "stamina", "Stamina", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-energy", "userData", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "foundation-economy-energy", "udr_1WAY8NTNY59DPT2MB7G0VGD7TT", "stamina", "Stamina", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromStaminaEnergyUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -821,13 +1024,13 @@ namespace GS2Studio.Generated.Energy
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EnergyBinder> BuildBinderFromStaminaEnergyUserItem(Gs2.Unity.Gs2Stamina.Model.EzStamina item, CancellationToken cancellationToken)
+        private async Task<EnergyBinder?> BuildBinderFromStaminaEnergyUserItem(Gs2.Unity.Gs2Stamina.Model.EzStamina item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = EnergyBinder.CreateModel((string.IsNullOrEmpty(item.StaminaName) ? default(EnergyId) : new EnergyId(item.StaminaName)));
             ApplyStaminaEnergyUserItemTo(model, item);
-            var binder = new EnergyBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new EnergyBinder(model, _gs2, _session, _mountSurface: EnergyMountSurface.StaminaEnergyUser, __sdk__staminaEnergyNamespaceStaminaModel_1: item.StaminaName, __sdk__userdataStaminaEnergyStaminaModel_1: item.StaminaName);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyStaminaEnergyUserItemTo(MutableEnergy model, Gs2.Unity.Gs2Stamina.Model.EzStamina item)
@@ -844,8 +1047,9 @@ namespace GS2Studio.Generated.Energy
         {
             var id = ExtractStaminaEnergyUserIdentity(item);
             if (EqualityComparer<EnergyId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.StaminaName)) return null;
-            return $"{item.StaminaName}";
+            var __key0 = item.StaminaName;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"user\",\"StaminaEnergy\",null,null,\"foundation-economy-energy\",\"udr_1WAY8NTNY59DPT2MB7G0VGD7TT\",null,null,\"stamina\",\"Stamina\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class EnergyBinderComparer : IComparer<IReadOnlyEnergyBinder>

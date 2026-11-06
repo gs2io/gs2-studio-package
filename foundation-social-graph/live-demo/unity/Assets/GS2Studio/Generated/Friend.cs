@@ -13,12 +13,18 @@ namespace GS2Studio.Generated.Friend
     public interface Friend
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the friend relationship.
         /// </summary>
         FriendId Id { get; }
 
+        /// <summary>
+        /// Public profile information of the friend.
+        /// </summary>
         string? PublicProfile { get; }
 
+        /// <summary>
+        /// Profile information visible because the players are friends.
+        /// </summary>
         string? FriendProfile { get; }
     }
 

@@ -118,6 +118,7 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         private ICharacterEnhanceMaterialBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultCharacterEnhanceMaterialBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

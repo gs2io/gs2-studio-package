@@ -13,52 +13,52 @@ namespace GS2Studio.Generated.TakeOverSetting
     public interface TakeOverSetting
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the take-over setting.
         /// </summary>
         TakeOverSettingId Id { get; }
 
         /// <summary>
-        /// Setting Type Number
+        /// Numeric type of authentication used for account transfer.
         /// </summary>
         int Type { get; }
 
         /// <summary>
-        /// OIDC Configuration URL
+        /// URL of the OpenID Connect configuration document.
         /// </summary>
         string ConfigurationPath { get; }
 
         /// <summary>
-        /// OIDC Client ID
+        /// OIDC client identifier.
         /// </summary>
         string ClientId { get; }
 
         /// <summary>
-        /// OIDC Secret
+        /// Client secret used for OIDC authentication.
         /// </summary>
         string ClientSecret { get; }
 
         /// <summary>
-        /// Redirect URL when login completed
+        /// URL opened after login completes.
         /// </summary>
         string DoneEndpointUrl { get; }
 
         /// <summary>
-        /// Apple Team ID(if Sign-in Apple Account)
+        /// Apple Team ID used for Sign in with Apple.
         /// </summary>
         string? AppleTeamId { get; }
 
         /// <summary>
-        /// Apple Key ID(if Sign-in Apple Account)
+        /// Apple Key ID used for Sign in with Apple.
         /// </summary>
         string? AppleKeyId { get; }
 
         /// <summary>
-        /// Apple Private Key PEM(if Sign-in Apple Account)
+        /// PEM private key used for Sign in with Apple.
         /// </summary>
         string? ApplePrivateKeyPem { get; }
 
         /// <summary>
-        /// Whether the user has TakeOver data
+        /// Whether take-over data is registered for the player.
         /// </summary>
         bool? HasTakeOver { get; }
     }

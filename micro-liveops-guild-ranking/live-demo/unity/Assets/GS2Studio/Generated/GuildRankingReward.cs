@@ -14,19 +14,22 @@ namespace GS2Studio.Generated.GuildRankingReward
     public interface GuildRankingReward
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the guild ranking reward.
         /// </summary>
         GuildRankingRewardId Id { get; }
 
+        /// <summary>
+        /// Guild ranking that distributes this reward.
+        /// </summary>
         GuildRankingId Ranking { get; }
 
         /// <summary>
-        /// Lowest placement within the guild this reward tier pays
+        /// Lowest placement eligible for this reward.
         /// </summary>
         GuildRankingRewardThresholdRank ThresholdRank { get; }
 
         /// <summary>
-        /// Coins this tier deposits when it is received
+        /// Coins paid when this tier's reward is received.
         /// </summary>
         int Coins { get; }
     }

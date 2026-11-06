@@ -13,10 +13,13 @@ namespace GS2Studio.Generated.FreeDeposit
     public interface FreeDeposit
     {
         /// <summary>
-        /// Unique identifier
+        /// Adds currency to the free balance, the way a reward would.
         /// </summary>
         FreeDepositId Id { get; }
 
+        /// <summary>
+        /// How much this deposit adds.
+        /// </summary>
         int Count { get; }
     }
 

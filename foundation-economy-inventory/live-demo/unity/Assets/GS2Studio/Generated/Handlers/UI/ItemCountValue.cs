@@ -29,8 +29,12 @@ namespace GS2Studio.Generated.Item.UI
         public UnityEvent<long> OnUpdate => _onUpdate;
         public UnityEvent<long> OnSelect => _onSelect;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataInventoryInventorySimpleItemModel" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -69,7 +73,20 @@ namespace GS2Studio.Generated.Item.UI
 
         private void OnUpdated(Item model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke(model.Count);
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataInventoryInventorySimpleItemModel) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(ItemCountValue)} on '{name}': this row's mount surface did not run UserdataInventoryInventorySimpleItemModel, which fills what this component reads (Count); those readings render as their default, not as an absent value.", this);
         }
 
         /// <summary>Selection consumers own persistence; publishing a choice does not mutate the displayed model.</summary>

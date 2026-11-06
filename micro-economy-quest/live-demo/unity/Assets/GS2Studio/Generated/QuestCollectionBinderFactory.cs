@@ -24,7 +24,8 @@ namespace GS2Studio.Generated.QuestCollection
             QuestCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__questQuestNamespaceQuestGroupModel_1 = null);
         IQuestCollectionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -36,9 +37,10 @@ namespace GS2Studio.Generated.QuestCollection
             QuestCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__questQuestNamespaceQuestGroupModel_1 = null)
         {
-            return await QuestCollectionBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await QuestCollectionBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__questQuestNamespaceQuestGroupModel_1);
         }
         public IQuestCollectionBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

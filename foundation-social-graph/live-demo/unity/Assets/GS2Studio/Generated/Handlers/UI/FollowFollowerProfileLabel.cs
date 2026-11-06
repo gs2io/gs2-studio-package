@@ -27,8 +27,12 @@ namespace GS2Studio.Generated.Follow.UI
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "UserdataFriendFollowUser" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -67,7 +71,20 @@ namespace GS2Studio.Generated.Follow.UI
 
         private void OnUpdated(Follow model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke($"{model.FollowerProfile}");
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataFriendFollowUser) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(FollowFollowerProfileLabel)} on '{name}': this row's mount surface did not run UserdataFriendFollowUser, which fills what this component reads (FollowerProfile); those readings render as their default, not as an absent value.", this);
         }
     }
 }

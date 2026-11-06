@@ -13,12 +13,12 @@ namespace GS2Studio.Generated.SerialCodeCampaign
     public interface SerialCodeCampaign
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the serial-code campaign.
         /// </summary>
         SerialCodeCampaignId Id { get; }
 
         /// <summary>
-        /// Mark the campaign id as a shared code; GS2 currently accepts the id whether or not this is set
+        /// Marks the campaign id as a code shared by every player. GS2 currently accepts the id whatever this says, any number of times.
         /// </summary>
         bool? EnableCampaignCode { get; }
     }

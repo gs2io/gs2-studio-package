@@ -27,8 +27,12 @@ namespace GS2Studio.Generated.EnergyProduct.UI
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "TransactionAcquireAction2", "TransactionConsumeAction2", "TransactionConsumeAction", "TransactionAcquireAction" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -67,7 +71,20 @@ namespace GS2Studio.Generated.EnergyProduct.UI
 
         private void OnUpdated(EnergyProduct model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke($"+{model.RecoveryValue} stamina for {model.Cost} coins");
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if ((binder.LoadedTransactionAcquireAction2 || binder.LoadedTransactionAcquireAction) && (binder.LoadedTransactionConsumeAction2 || binder.LoadedTransactionConsumeAction)) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(EnergyProductOfferLabel)} on '{name}': this row's mount surface did not run TransactionAcquireAction2, TransactionConsumeAction2, TransactionConsumeAction, TransactionAcquireAction, which fills what this component reads (RecoveryValue, Cost); those readings render as their default, not as an absent value.", this);
         }
     }
 }

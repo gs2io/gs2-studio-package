@@ -14,16 +14,22 @@ namespace GS2Studio.Generated.LoginReward
     public interface LoginReward
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the login reward.
         /// </summary>
         LoginRewardId Id { get; }
 
+        /// <summary>
+        /// Login reward group this reward belongs to.
+        /// </summary>
         LoginRewardCollectionId LoginRewardCollection { get; }
 
+        /// <summary>
+        /// Name shown in the login reward track.
+        /// </summary>
         string DisplayName { get; }
 
         /// <summary>
-        /// Coins this day deposits when it is claimed
+        /// Coins paid when this day is claimed.
         /// </summary>
         int Coins { get; }
     }

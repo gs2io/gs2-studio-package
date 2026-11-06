@@ -27,7 +27,13 @@ namespace GS2Studio.Generated.Item
             ItemId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeItemGainNamespaceRateModel_1 = null,
+            string? __sdk__exchangeItemSpendNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__inventoryInventoryNamespaceSimpleInventoryModelSimpleItemModel_2 = null,
+            string? __sdk__userdataInventoryInventorySimpleItemModel_2 = null);
         IItemBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -39,9 +45,15 @@ namespace GS2Studio.Generated.Item
             ItemId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeItemGainNamespaceRateModel_1 = null,
+            string? __sdk__exchangeItemSpendNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__inventoryInventoryNamespaceSimpleInventoryModelSimpleItemModel_2 = null,
+            string? __sdk__userdataInventoryInventorySimpleItemModel_2 = null)
         {
-            return await ItemBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await ItemBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1, __sdk__exchangeItemGainNamespaceRateModel_1, __sdk__exchangeItemSpendNamespaceRateModel_1, __sdk__transactionConsumeAction_1, __sdk__inventoryInventoryNamespaceSimpleInventoryModelSimpleItemModel_2, __sdk__userdataInventoryInventorySimpleItemModel_2);
         }
         public IItemBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

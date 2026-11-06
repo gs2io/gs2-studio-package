@@ -127,6 +127,7 @@ namespace GS2Studio.Generated.Buff
         private IBuffBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultBuffBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

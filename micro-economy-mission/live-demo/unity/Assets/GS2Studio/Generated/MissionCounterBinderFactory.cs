@@ -28,7 +28,11 @@ namespace GS2Studio.Generated.MissionCounter
             MissionCounterId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeMissionAdvanceNamespaceRateModel_1 = null,
+            string? __sdk__missionMissionNamespaceCounterModel_1 = null,
+            string? __sdk__userdataMissionMissionCounterModel_1 = null);
         IMissionCounterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -40,9 +44,13 @@ namespace GS2Studio.Generated.MissionCounter
             MissionCounterId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__exchangeMissionAdvanceNamespaceRateModel_1 = null,
+            string? __sdk__missionMissionNamespaceCounterModel_1 = null,
+            string? __sdk__userdataMissionMissionCounterModel_1 = null)
         {
-            return await MissionCounterBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await MissionCounterBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1, __sdk__exchangeMissionAdvanceNamespaceRateModel_1, __sdk__missionMissionNamespaceCounterModel_1, __sdk__userdataMissionMissionCounterModel_1);
         }
         public IMissionCounterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

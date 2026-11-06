@@ -25,6 +25,9 @@ namespace GS2Studio.Generated.RankingContest
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public RankingContestMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<RankingContest>? Updated;
 
         public event Action<IActionableRankingContestBinder>? Bound;

@@ -13,8 +13,8 @@ namespace GS2Studio.Generated.StoreProduct
         /// <summary>Zero keeps an unbaked scene from silently selecting a mount axis.</summary>
         Unset = 0,
 
-        ShowcaseShopCurrencyMaster = -136075035,
-
         Money2CurrencyMaster = -711576390,
+
+        ShowcaseShopCurrencyMaster = -136075035,
     }
 }

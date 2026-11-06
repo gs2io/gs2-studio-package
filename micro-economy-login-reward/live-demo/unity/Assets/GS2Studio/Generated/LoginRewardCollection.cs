@@ -14,22 +14,43 @@ namespace GS2Studio.Generated.LoginRewardCollection
     public interface LoginRewardCollection
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the login reward group.
         /// </summary>
         LoginRewardCollectionId Id { get; }
 
+        /// <summary>
+        /// schedule picks the step by days since the schedule started; streaming by days claimed.
+        /// </summary>
         string Mode { get; }
 
+        /// <summary>
+        /// Schedule during which this login reward is available.
+        /// </summary>
         ScheduleId? Schedule { get; }
 
+        /// <summary>
+        /// UTC hour when streaming moves on to the next day. Not used when a schedule is set.
+        /// </summary>
         int? ResetHour { get; }
 
+        /// <summary>
+        /// Whether streaming returns to the first step after the last one is claimed. Missed-receive relief is unavailable while it is enabled.
+        /// </summary>
         string? Repeat { get; }
 
+        /// <summary>
+        /// Lets a player claim a missed step in exchange for the relief consume actions. In schedule mode the step to claim must be given.
+        /// </summary>
         string? MissedReceiveRelief { get; }
 
+        /// <summary>
+        /// Steps the player has claimed, in step order.
+        /// </summary>
         IReadOnlyList<bool>? ReceivedSteps { get; }
 
+        /// <summary>
+        /// When the player last claimed a reward.
+        /// </summary>
         DateTime? LastReceivedAt { get; }
     }
 

@@ -13,12 +13,12 @@ namespace GS2Studio.Generated.IdleReward
     public interface IdleReward
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the idle reward.
         /// </summary>
         IdleRewardId Id { get; }
 
         /// <summary>
-        /// Coins one interval away deposits
+        /// Coins paid for each interval away.
         /// </summary>
         int Coins { get; }
     }

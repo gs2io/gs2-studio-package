@@ -27,6 +27,7 @@ namespace GS2Studio.Generated.CharacterCollection
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableCharacterCollectionBinder : IReadOnlyCharacterCollectionBinder
     {
+        CharacterCollectionBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -66,10 +67,153 @@ namespace GS2Studio.Generated.CharacterCollection
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class CharacterCollectionBinder : ReadOnlyCharacterCollectionBinder, ICharacterCollectionBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly CharacterCollectionBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(CharacterCollectionBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public CharacterCollection Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableCharacterCollection? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableCharacterCollection
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal CharacterCollectionId __valueId = default!;
+                public CharacterCollectionId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setMaximumCapacity;
+                internal int __valueMaximumCapacity = default!;
+                public int MaximumCapacity
+                {
+                    get => __setMaximumCapacity ? __valueMaximumCapacity : __scopeOwner.Value.MaximumCapacity;
+                    set { __setMaximumCapacity = true; __valueMaximumCapacity = value; }
+                }
+                internal bool __setDefaultCapacity;
+                internal int __valueDefaultCapacity = default!;
+                public int DefaultCapacity
+                {
+                    get => __setDefaultCapacity ? __valueDefaultCapacity : __scopeOwner.Value.DefaultCapacity;
+                    set { __setDefaultCapacity = true; __valueDefaultCapacity = value; }
+                }
+                internal bool __setCurrentCpacityUsage;
+                internal int __valueCurrentCpacityUsage = default!;
+                public int CurrentCpacityUsage
+                {
+                    get => __setCurrentCpacityUsage ? __valueCurrentCpacityUsage : __scopeOwner.Value.CurrentCpacityUsage;
+                    set { __setCurrentCpacityUsage = true; __valueCurrentCpacityUsage = value; }
+                }
+                internal bool __setCurrentCpacity;
+                internal int __valueCurrentCpacity = default!;
+                public int CurrentCpacity
+                {
+                    get => __setCurrentCpacity ? __valueCurrentCpacity : __scopeOwner.Value.CurrentCpacity;
+                    set { __setCurrentCpacity = true; __valueCurrentCpacity = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<CharacterCollectionId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setMaximumCapacity) { _owner._model.MaximumCapacity = changes.__valueMaximumCapacity; changes.__setMaximumCapacity = false; }
+                if (changes.__setDefaultCapacity) { _owner._model.DefaultCapacity = changes.__valueDefaultCapacity; changes.__setDefaultCapacity = false; }
+                if (changes.__setCurrentCpacityUsage) { _owner._model.CurrentCpacityUsage = changes.__valueCurrentCpacityUsage; changes.__setCurrentCpacityUsage = false; }
+                if (changes.__setCurrentCpacity) { _owner._model.CurrentCpacity = changes.__valueCurrentCpacity; changes.__setCurrentCpacity = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -81,12 +225,16 @@ namespace GS2Studio.Generated.CharacterCollection
         internal CharacterCollectionBinder(
             MutableCharacterCollection model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            string? __sdk__inventoryCharacterNamespaceInventoryModel_1 = null,
+            string? __sdk__userdataInventoryCharacterInventoryModel_1 = null
         ) : base(model, gs2, session)
         {
-            __inventoryCharacterNamespaceInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryModelLoader("Character", "Character");
-            __userdataInventoryCharacterInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryLoader("Character", "Character");
+
+            __inventoryCharacterNamespaceInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryModelLoader("Character", (string.IsNullOrEmpty(__sdk__inventoryCharacterNamespaceInventoryModel_1) ? "Character" : __sdk__inventoryCharacterNamespaceInventoryModel_1!));
+            __userdataInventoryCharacterInventoryModelLoader = new Gs2Bind.Gs2Inventory.InventoryLoader("Character", (string.IsNullOrEmpty(__sdk__userdataInventoryCharacterInventoryModel_1) ? "Character" : __sdk__userdataInventoryCharacterInventoryModel_1!));
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableCharacterCollection CreateModel(CharacterCollectionId id)
@@ -100,14 +248,15 @@ namespace GS2Studio.Generated.CharacterCollection
             CharacterCollectionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__inventoryCharacterNamespaceInventoryModel_1 = null,
+            string? __sdk__userdataInventoryCharacterInventoryModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new CharacterCollectionBinder(model, gs2, session);
+            var binder = new CharacterCollectionBinder(model, gs2, session, __sdk__inventoryCharacterNamespaceInventoryModel_1: __sdk__inventoryCharacterNamespaceInventoryModel_1, __sdk__userdataInventoryCharacterInventoryModel_1: __sdk__userdataInventoryCharacterInventoryModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -164,6 +313,7 @@ namespace GS2Studio.Generated.CharacterCollection
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -224,6 +374,7 @@ namespace GS2Studio.Generated.CharacterCollection
                 model.CurrentCpacity = default;
             }
         }
+
         #endregion
 
     }

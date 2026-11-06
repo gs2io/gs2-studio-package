@@ -119,6 +119,7 @@ namespace GS2Studio.Generated.Equipment
         private IEquipmentBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultEquipmentBinderFactory.Instance;
 
+
         /// <summary>
         /// Per-item sort-key changes do not trigger collection sorting; call this to refresh their order.
         /// </summary>

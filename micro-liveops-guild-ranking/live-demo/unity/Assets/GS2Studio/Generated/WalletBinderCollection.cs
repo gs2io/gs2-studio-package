@@ -110,8 +110,20 @@ namespace GS2Studio.Generated.Wallet
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyWalletBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyWalletBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyWalletBinder> _configuredComparer = WalletBinderComparer.Default;
@@ -232,18 +244,38 @@ namespace GS2Studio.Generated.Wallet
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Money2.WalletArrayLoader("Currency");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromMoney2CurrencyUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromMoney2CurrencyUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromMoney2CurrencyUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromMoney2CurrencyUserItems");
+            _pendingCollectionAxis = "ReconcileFromMoney2CurrencyUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Money2.WalletArrayLoader("Currency");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromMoney2CurrencyUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromMoney2CurrencyUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromMoney2CurrencyUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromMoney2CurrencyUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromMoney2CurrencyUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -251,7 +283,6 @@ namespace GS2Studio.Generated.Wallet
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Money2.WalletArrayLoader("Currency");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -259,9 +290,10 @@ namespace GS2Studio.Generated.Wallet
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromMoney2CurrencyUserItems");
                     try
                     {
-                        await ReconcileFromMoney2CurrencyUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromMoney2CurrencyUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -270,41 +302,68 @@ namespace GS2Studio.Generated.Wallet
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromMoney2CurrencyUserItems(IList<Gs2.Unity.Gs2Money2.Model.EzWallet> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromMoney2CurrencyUserItems(IList<Gs2.Unity.Gs2Money2.Model.EzWallet> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractMoney2CurrencyUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyUserItems", updateVersion)) return;
                 var rowKey = ExtractMoney2CurrencyUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractMoney2CurrencyUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<WalletId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyMoney2CurrencyUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-currency", "userData", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "foundation-economy-currency", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "money2", "Wallet", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-currency\",\"userData\",\"udr_71QJPZGC8NACMTMVNEB8M5CP80\",\"money2\",\"Wallet\",\"slot\",\"int\"]"] = (object)item.Slot! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-currency", "userData", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "foundation-economy-currency", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "money2", "Wallet", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-currency", "userData", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "foundation-economy-currency", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "money2", "Wallet", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromMoney2CurrencyUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromMoney2CurrencyUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<WalletId>.Default.Equals(raced.Id, nextId)) { ApplyMoney2CurrencyUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-currency", "userData", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "foundation-economy-currency", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "money2", "Wallet", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-currency\",\"userData\",\"udr_71QJPZGC8NACMTMVNEB8M5CP80\",\"money2\",\"Wallet\",\"slot\",\"int\"]"] = (object)item.Slot! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-currency", "userData", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "foundation-economy-currency", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "money2", "Wallet", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-currency", "userData", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "foundation-economy-currency", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "money2", "Wallet", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyMoney2CurrencyUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-currency", "userData", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "foundation-economy-currency", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "money2", "Wallet", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-currency\",\"userData\",\"udr_71QJPZGC8NACMTMVNEB8M5CP80\",\"money2\",\"Wallet\",\"slot\",\"int\"]"] = (object)item.Slot! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-currency", "userData", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "foundation-economy-currency", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "money2", "Wallet", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-currency", "userData", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "foundation-economy-currency", "udr_71QJPZGC8NACMTMVNEB8M5CP80", "money2", "Wallet", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromMoney2CurrencyUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -344,13 +403,13 @@ namespace GS2Studio.Generated.Wallet
             if (!_disposed) SortBinders();
         }
 
-        private async Task<WalletBinder> BuildBinderFromMoney2CurrencyUserItem(Gs2.Unity.Gs2Money2.Model.EzWallet item, CancellationToken cancellationToken)
+        private async Task<WalletBinder?> BuildBinderFromMoney2CurrencyUserItem(Gs2.Unity.Gs2Money2.Model.EzWallet item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = WalletBinder.CreateModel(new WalletId(item.Slot.ToString(global::System.Globalization.CultureInfo.InvariantCulture)));
             ApplyMoney2CurrencyUserItemTo(model, item);
-            var binder = new WalletBinder(model, _gs2, _session, slot: item.Slot);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new WalletBinder(model, _gs2, _session, slot: item.Slot, _mountSurface: WalletMountSurface.Money2CurrencyUser, __sdk__userdataMoney2Wallet_1: item.Slot);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyMoney2CurrencyUserItemTo(MutableWallet model, Gs2.Unity.Gs2Money2.Model.EzWallet item)
@@ -367,7 +426,9 @@ namespace GS2Studio.Generated.Wallet
         {
             var id = ExtractMoney2CurrencyUserIdentity(item);
             if (EqualityComparer<WalletId>.Default.Equals(id, default)) return null;
-            return $"{item.Slot}";
+            var __key0 = System.Convert.ToString(item.Slot, System.Globalization.CultureInfo.InvariantCulture);
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"user\",\"Money2Currency\",null,null,\"foundation-economy-currency\",\"udr_71QJPZGC8NACMTMVNEB8M5CP80\",null,null,\"money2\",\"Wallet\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class WalletBinderComparer : IComparer<IReadOnlyWalletBinder>

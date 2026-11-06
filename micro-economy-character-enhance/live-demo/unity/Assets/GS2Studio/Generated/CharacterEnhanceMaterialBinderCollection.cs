@@ -117,8 +117,20 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyCharacterEnhanceMaterialBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyCharacterEnhanceMaterialBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyCharacterEnhanceMaterialBinder> _configuredComparer = CharacterEnhanceMaterialBinderComparer.Default;
@@ -241,18 +253,38 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelArrayLoader("CharacterEnhanceMaterial", "Material");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromInventoryCharacterEnhanceMaterialMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromInventoryCharacterEnhanceMaterialMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromInventoryCharacterEnhanceMaterialMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialMasterItems");
+            _pendingCollectionAxis = "ReconcileFromInventoryCharacterEnhanceMaterialMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelArrayLoader("CharacterEnhanceMaterial", "Material");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromInventoryCharacterEnhanceMaterialMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromInventoryCharacterEnhanceMaterialMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromInventoryCharacterEnhanceMaterialMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromInventoryCharacterEnhanceMaterialMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromInventoryCharacterEnhanceMaterialMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -260,7 +292,6 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemModelArrayLoader("CharacterEnhanceMaterial", "Material");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -268,9 +299,10 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialMasterItems");
                     try
                     {
-                        await ReconcileFromInventoryCharacterEnhanceMaterialMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromInventoryCharacterEnhanceMaterialMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -279,41 +311,68 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromInventoryCharacterEnhanceMaterialMasterItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryCharacterEnhanceMaterialMasterItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractInventoryCharacterEnhanceMaterialMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialMasterItems", updateVersion)) return;
                 var rowKey = ExtractInventoryCharacterEnhanceMaterialMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractInventoryCharacterEnhanceMaterialMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyInventoryCharacterEnhanceMaterialMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-character-enhance", "masterData", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "micro-economy-character-enhance", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "inventory", "SimpleItemModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance\",\"masterData\",\"mdr_2PEA8RQ1MGA16V5HGXBZA28G57\",\"inventory\",\"SimpleItemModel\",\"itemName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "micro-economy-character-enhance", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "inventory", "SimpleItemModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "micro-economy-character-enhance", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "inventory", "SimpleItemModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromInventoryCharacterEnhanceMaterialMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromInventoryCharacterEnhanceMaterialMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(raced.Id, nextId)) { ApplyInventoryCharacterEnhanceMaterialMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-character-enhance", "masterData", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "micro-economy-character-enhance", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "inventory", "SimpleItemModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance\",\"masterData\",\"mdr_2PEA8RQ1MGA16V5HGXBZA28G57\",\"inventory\",\"SimpleItemModel\",\"itemName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "micro-economy-character-enhance", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "inventory", "SimpleItemModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "micro-economy-character-enhance", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "inventory", "SimpleItemModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyInventoryCharacterEnhanceMaterialMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-character-enhance", "masterData", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "micro-economy-character-enhance", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "inventory", "SimpleItemModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance\",\"masterData\",\"mdr_2PEA8RQ1MGA16V5HGXBZA28G57\",\"inventory\",\"SimpleItemModel\",\"itemName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "micro-economy-character-enhance", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "inventory", "SimpleItemModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance", "masterData", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "micro-economy-character-enhance", "mdr_2PEA8RQ1MGA16V5HGXBZA28G57", "inventory", "SimpleItemModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -353,13 +412,13 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterEnhanceMaterialBinder> BuildBinderFromInventoryCharacterEnhanceMaterialMasterItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item, CancellationToken cancellationToken)
+        private async Task<CharacterEnhanceMaterialBinder?> BuildBinderFromInventoryCharacterEnhanceMaterialMasterItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = CharacterEnhanceMaterialBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterEnhanceMaterialId) : new CharacterEnhanceMaterialId(item.Name)));
             ApplyInventoryCharacterEnhanceMaterialMasterItemTo(model, item);
-            var binder = new CharacterEnhanceMaterialBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new CharacterEnhanceMaterialBinder(model, _gs2, _session, _mountSurface: CharacterEnhanceMaterialMountSurface.InventoryCharacterEnhanceMaterialMaster, __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyInventoryCharacterEnhanceMaterialMasterItemTo(MutableCharacterEnhanceMaterial model, Gs2.Unity.Gs2Inventory.Model.EzSimpleItemModel item)
@@ -378,8 +437,9 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         {
             var id = ExtractInventoryCharacterEnhanceMaterialMasterIdentity(item);
             if (EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"InventoryCharacterEnhanceMaterial\",\"micro-economy-character-enhance\",\"mdr_2PEA8RQ1MGA16V5HGXBZA28G57\",null,null,\"micro-economy-character-enhance\",\"mdr_2PEA8RQ1MGA16V5HGXBZA28G57\",\"inventory\",\"SimpleItemModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<CharacterEnhanceMaterialBinderCollection> CreateFromExchangeCharacterEnhanceMaterialGetMasterDataAsync(
@@ -396,18 +456,38 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("CharacterEnhanceMaterialGet");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("CharacterEnhanceMaterialGet");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeCharacterEnhanceMaterialGetMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -415,7 +495,6 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("CharacterEnhanceMaterialGet");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -423,9 +502,10 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -434,41 +514,68 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeCharacterEnhanceMaterialGetMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeCharacterEnhanceMaterialGetMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeCharacterEnhanceMaterialGetMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeCharacterEnhanceMaterialGetMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-character-enhance-demo", "masterData", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "micro-economy-character-enhance-demo", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance-demo\",\"masterData\",\"mdr_5MBDT874NCB50AGHC6NS8XH9NP\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-character-enhance-demo", "masterData", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "micro-economy-character-enhance-demo", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance-demo", "masterData", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "micro-economy-character-enhance-demo", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeCharacterEnhanceMaterialGetMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeCharacterEnhanceMaterialGetMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeCharacterEnhanceMaterialGetMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-character-enhance-demo", "masterData", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "micro-economy-character-enhance-demo", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance-demo\",\"masterData\",\"mdr_5MBDT874NCB50AGHC6NS8XH9NP\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-character-enhance-demo", "masterData", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "micro-economy-character-enhance-demo", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance-demo", "masterData", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "micro-economy-character-enhance-demo", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeCharacterEnhanceMaterialGetMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-character-enhance-demo", "masterData", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "micro-economy-character-enhance-demo", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance-demo\",\"masterData\",\"mdr_5MBDT874NCB50AGHC6NS8XH9NP\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-character-enhance-demo", "masterData", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "micro-economy-character-enhance-demo", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance-demo", "masterData", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "micro-economy-character-enhance-demo", "mdr_5MBDT874NCB50AGHC6NS8XH9NP", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeCharacterEnhanceMaterialGetMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -508,13 +615,13 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterEnhanceMaterialBinder> BuildBinderFromExchangeCharacterEnhanceMaterialGetMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<CharacterEnhanceMaterialBinder?> BuildBinderFromExchangeCharacterEnhanceMaterialGetMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = CharacterEnhanceMaterialBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterEnhanceMaterialId) : new CharacterEnhanceMaterialId(item.Name)));
             ApplyExchangeCharacterEnhanceMaterialGetMasterItemTo(model, item);
-            var binder = new CharacterEnhanceMaterialBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new CharacterEnhanceMaterialBinder(model, _gs2, _session, _mountSurface: CharacterEnhanceMaterialMountSurface.ExchangeCharacterEnhanceMaterialGetMaster, __sdk__transactionAcquireAction_1: item.Name, __sdk__exchangeCharacterEnhanceMaterialGetNamespaceRateModel_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeCharacterEnhanceMaterialGetMasterItemTo(MutableCharacterEnhanceMaterial model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -533,8 +640,9 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         {
             var id = ExtractExchangeCharacterEnhanceMaterialGetMasterIdentity(item);
             if (EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeCharacterEnhanceMaterialGet\",\"micro-economy-character-enhance-demo\",\"mdr_5MBDT874NCB50AGHC6NS8XH9NP\",null,null,\"micro-economy-character-enhance-demo\",\"mdr_5MBDT874NCB50AGHC6NS8XH9NP\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<CharacterEnhanceMaterialBinderCollection> CreateFromInventoryCharacterEnhanceMaterialUserDataAsync(
@@ -551,18 +659,38 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemArrayLoader("CharacterEnhanceMaterial", "Material");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromInventoryCharacterEnhanceMaterialUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromInventoryCharacterEnhanceMaterialUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromInventoryCharacterEnhanceMaterialUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialUserItems");
+            _pendingCollectionAxis = "ReconcileFromInventoryCharacterEnhanceMaterialUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemArrayLoader("CharacterEnhanceMaterial", "Material");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromInventoryCharacterEnhanceMaterialUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromInventoryCharacterEnhanceMaterialUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromInventoryCharacterEnhanceMaterialUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromInventoryCharacterEnhanceMaterialUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromInventoryCharacterEnhanceMaterialUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -570,7 +698,6 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Inventory.SimpleItemArrayLoader("CharacterEnhanceMaterial", "Material");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -578,9 +705,10 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialUserItems");
                     try
                     {
-                        await ReconcileFromInventoryCharacterEnhanceMaterialUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromInventoryCharacterEnhanceMaterialUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -589,41 +717,68 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromInventoryCharacterEnhanceMaterialUserItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItem> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryCharacterEnhanceMaterialUserItems(IList<Gs2.Unity.Gs2Inventory.Model.EzSimpleItem> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractInventoryCharacterEnhanceMaterialUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialUserItems", updateVersion)) return;
                 var rowKey = ExtractInventoryCharacterEnhanceMaterialUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractInventoryCharacterEnhanceMaterialUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyInventoryCharacterEnhanceMaterialUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("micro-economy-character-enhance", "userData", "udr_363K170NVHBVJASSCHEFC31QD9", "micro-economy-character-enhance", "udr_363K170NVHBVJASSCHEFC31QD9", "inventory", "SimpleItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance\",\"userData\",\"udr_363K170NVHBVJASSCHEFC31QD9\",\"inventory\",\"SimpleItem\",\"itemName\",\"string\"]"] = (object)item.ItemName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("micro-economy-character-enhance", "userData", "udr_363K170NVHBVJASSCHEFC31QD9", "micro-economy-character-enhance", "udr_363K170NVHBVJASSCHEFC31QD9", "inventory", "SimpleItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance", "userData", "udr_363K170NVHBVJASSCHEFC31QD9", "micro-economy-character-enhance", "udr_363K170NVHBVJASSCHEFC31QD9", "inventory", "SimpleItem", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromInventoryCharacterEnhanceMaterialUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromInventoryCharacterEnhanceMaterialUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(raced.Id, nextId)) { ApplyInventoryCharacterEnhanceMaterialUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("micro-economy-character-enhance", "userData", "udr_363K170NVHBVJASSCHEFC31QD9", "micro-economy-character-enhance", "udr_363K170NVHBVJASSCHEFC31QD9", "inventory", "SimpleItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance\",\"userData\",\"udr_363K170NVHBVJASSCHEFC31QD9\",\"inventory\",\"SimpleItem\",\"itemName\",\"string\"]"] = (object)item.ItemName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("micro-economy-character-enhance", "userData", "udr_363K170NVHBVJASSCHEFC31QD9", "micro-economy-character-enhance", "udr_363K170NVHBVJASSCHEFC31QD9", "inventory", "SimpleItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance", "userData", "udr_363K170NVHBVJASSCHEFC31QD9", "micro-economy-character-enhance", "udr_363K170NVHBVJASSCHEFC31QD9", "inventory", "SimpleItem", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyInventoryCharacterEnhanceMaterialUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("micro-economy-character-enhance", "userData", "udr_363K170NVHBVJASSCHEFC31QD9", "micro-economy-character-enhance", "udr_363K170NVHBVJASSCHEFC31QD9", "inventory", "SimpleItem", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"micro-economy-character-enhance\",\"userData\",\"udr_363K170NVHBVJASSCHEFC31QD9\",\"inventory\",\"SimpleItem\",\"itemName\",\"string\"]"] = (object)item.ItemName! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("micro-economy-character-enhance", "userData", "udr_363K170NVHBVJASSCHEFC31QD9", "micro-economy-character-enhance", "udr_363K170NVHBVJASSCHEFC31QD9", "inventory", "SimpleItem", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("micro-economy-character-enhance", "userData", "udr_363K170NVHBVJASSCHEFC31QD9", "micro-economy-character-enhance", "udr_363K170NVHBVJASSCHEFC31QD9", "inventory", "SimpleItem", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryCharacterEnhanceMaterialUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -663,13 +818,13 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterEnhanceMaterialBinder> BuildBinderFromInventoryCharacterEnhanceMaterialUserItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item, CancellationToken cancellationToken)
+        private async Task<CharacterEnhanceMaterialBinder?> BuildBinderFromInventoryCharacterEnhanceMaterialUserItem(Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = CharacterEnhanceMaterialBinder.CreateModel((string.IsNullOrEmpty(item.ItemName) ? default(CharacterEnhanceMaterialId) : new CharacterEnhanceMaterialId(item.ItemName)));
             ApplyInventoryCharacterEnhanceMaterialUserItemTo(model, item);
-            var binder = new CharacterEnhanceMaterialBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new CharacterEnhanceMaterialBinder(model, _gs2, _session, _mountSurface: CharacterEnhanceMaterialMountSurface.InventoryCharacterEnhanceMaterialUser, __sdk__inventoryCharacterEnhanceMaterialNamespaceSimpleInventoryModelSimpleItemModel_2: item.ItemName, __sdk__userdataInventoryCharacterEnhanceMaterialSimpleItemModel_2: item.ItemName);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyInventoryCharacterEnhanceMaterialUserItemTo(MutableCharacterEnhanceMaterial model, Gs2.Unity.Gs2Inventory.Model.EzSimpleItem item)
@@ -686,8 +841,9 @@ namespace GS2Studio.Generated.CharacterEnhanceMaterial
         {
             var id = ExtractInventoryCharacterEnhanceMaterialUserIdentity(item);
             if (EqualityComparer<CharacterEnhanceMaterialId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.ItemName)) return null;
-            return $"{item.ItemName}";
+            var __key0 = item.ItemName;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"user\",\"InventoryCharacterEnhanceMaterial\",null,null,\"micro-economy-character-enhance\",\"udr_363K170NVHBVJASSCHEFC31QD9\",null,null,\"inventory\",\"SimpleItem\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class CharacterEnhanceMaterialBinderComparer : IComparer<IReadOnlyCharacterEnhanceMaterialBinder>

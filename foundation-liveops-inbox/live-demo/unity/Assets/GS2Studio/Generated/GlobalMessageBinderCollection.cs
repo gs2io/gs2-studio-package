@@ -115,8 +115,20 @@ namespace GS2Studio.Generated.GlobalMessage
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyGlobalMessageBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyGlobalMessageBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyGlobalMessageBinder> _configuredComparer = GlobalMessageBinderComparer.Default;
@@ -238,18 +250,38 @@ namespace GS2Studio.Generated.GlobalMessage
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("InboxDeliver");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeInboxDeliverMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeInboxDeliverMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeInboxDeliverMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeInboxDeliverMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeInboxDeliverMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("InboxDeliver");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeInboxDeliverMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeInboxDeliverMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeInboxDeliverMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeInboxDeliverMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeInboxDeliverMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeInboxDeliverMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeInboxDeliverMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -257,7 +289,6 @@ namespace GS2Studio.Generated.GlobalMessage
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("InboxDeliver");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -265,9 +296,10 @@ namespace GS2Studio.Generated.GlobalMessage
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeInboxDeliverMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeInboxDeliverMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeInboxDeliverMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -276,41 +308,68 @@ namespace GS2Studio.Generated.GlobalMessage
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeInboxDeliverMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeInboxDeliverMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeInboxDeliverMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeInboxDeliverMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeInboxDeliverMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeInboxDeliverMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeInboxDeliverMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<GlobalMessageId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeInboxDeliverMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-liveops-inbox-demo", "masterData", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "foundation-liveops-inbox-demo", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "exchange", "RateModel", rowKey, System.String.Equals(Convert.ToString("InboxDeliver", System.Globalization.CultureInfo.InvariantCulture), "InboxDeliver", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ExchangeInboxDeliver\",\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",null,null,\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(existing.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? new string[] {  } : Array.Empty<string>(), System.String.Equals(Convert.ToString("InboxDeliver", System.Globalization.CultureInfo.InvariantCulture), "InboxDeliver", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ExchangeInboxDeliver\",\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",null,null,\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(existing.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? "[\"foundation-liveops-inbox\",\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\",\"foundation-liveops-inbox-demo\",\"[\\\"authored\\\",\\\"foundation-liveops-inbox\\\",\\\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\\\",\\\"row_01M35Z5TAMBP3TDCQKCR3F6YXG\\\"]\"]" : null, new Dictionary<string, object> { ["[\"foundation-liveops-inbox-demo\",\"masterData\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-liveops-inbox-demo", "masterData", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "foundation-liveops-inbox-demo", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-liveops-inbox-demo", "masterData", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "foundation-liveops-inbox-demo", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeInboxDeliverMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeInboxDeliverMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeInboxDeliverMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<GlobalMessageId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeInboxDeliverMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-liveops-inbox-demo", "masterData", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "foundation-liveops-inbox-demo", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "exchange", "RateModel", rowKey, System.String.Equals(Convert.ToString("InboxDeliver", System.Globalization.CultureInfo.InvariantCulture), "InboxDeliver", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ExchangeInboxDeliver\",\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",null,null,\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(raced.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? new string[] {  } : Array.Empty<string>(), System.String.Equals(Convert.ToString("InboxDeliver", System.Globalization.CultureInfo.InvariantCulture), "InboxDeliver", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ExchangeInboxDeliver\",\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",null,null,\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(raced.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? "[\"foundation-liveops-inbox\",\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\",\"foundation-liveops-inbox-demo\",\"[\\\"authored\\\",\\\"foundation-liveops-inbox\\\",\\\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\\\",\\\"row_01M35Z5TAMBP3TDCQKCR3F6YXG\\\"]\"]" : null, new Dictionary<string, object> { ["[\"foundation-liveops-inbox-demo\",\"masterData\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-liveops-inbox-demo", "masterData", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "foundation-liveops-inbox-demo", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-liveops-inbox-demo", "masterData", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "foundation-liveops-inbox-demo", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeInboxDeliverMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-liveops-inbox-demo", "masterData", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "foundation-liveops-inbox-demo", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "exchange", "RateModel", rowKey, System.String.Equals(Convert.ToString("InboxDeliver", System.Globalization.CultureInfo.InvariantCulture), "InboxDeliver", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ExchangeInboxDeliver\",\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",null,null,\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(binder.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? new string[] {  } : Array.Empty<string>(), System.String.Equals(Convert.ToString("InboxDeliver", System.Globalization.CultureInfo.InvariantCulture), "InboxDeliver", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ExchangeInboxDeliver\",\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",null,null,\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(binder.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? "[\"foundation-liveops-inbox\",\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\",\"foundation-liveops-inbox-demo\",\"[\\\"authored\\\",\\\"foundation-liveops-inbox\\\",\\\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\\\",\\\"row_01M35Z5TAMBP3TDCQKCR3F6YXG\\\"]\"]" : null, new Dictionary<string, object> { ["[\"foundation-liveops-inbox-demo\",\"masterData\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-liveops-inbox-demo", "masterData", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "foundation-liveops-inbox-demo", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-liveops-inbox-demo", "masterData", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "foundation-liveops-inbox-demo", "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeInboxDeliverMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -350,13 +409,13 @@ namespace GS2Studio.Generated.GlobalMessage
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GlobalMessageBinder> BuildBinderFromExchangeInboxDeliverMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<GlobalMessageBinder?> BuildBinderFromExchangeInboxDeliverMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = GlobalMessageBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(GlobalMessageId) : new GlobalMessageId(item.Name)));
             ApplyExchangeInboxDeliverMasterItemTo(model, item);
-            var binder = new GlobalMessageBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new GlobalMessageBinder(model, _gs2, _session, _mountSurface: GlobalMessageMountSurface.ExchangeInboxDeliverMaster, __sdk__exchangeInboxDeliverNamespaceRateModel_1: item.Name, __sdk__transactionAcquireAction_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeInboxDeliverMasterItemTo(MutableGlobalMessage model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -375,8 +434,9 @@ namespace GS2Studio.Generated.GlobalMessage
         {
             var id = ExtractExchangeInboxDeliverMasterIdentity(item);
             if (EqualityComparer<GlobalMessageId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeInboxDeliver\",\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",null,null,\"foundation-liveops-inbox-demo\",\"mdr_3V90RSG8MJB8BVY29ZQGS45EZZ\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<GlobalMessageBinderCollection> CreateFromScheduleInboxScheduleMasterDataAsync(
@@ -393,18 +453,38 @@ namespace GS2Studio.Generated.GlobalMessage
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Schedule.EventArrayLoader("InboxSchedule");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromScheduleInboxScheduleMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromScheduleInboxScheduleMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromScheduleInboxScheduleMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromScheduleInboxScheduleMasterItems");
+            _pendingCollectionAxis = "ReconcileFromScheduleInboxScheduleMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Schedule.EventArrayLoader("InboxSchedule");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromScheduleInboxScheduleMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromScheduleInboxScheduleMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromScheduleInboxScheduleMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromScheduleInboxScheduleMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromScheduleInboxScheduleMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromScheduleInboxScheduleMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromScheduleInboxScheduleMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -412,7 +492,6 @@ namespace GS2Studio.Generated.GlobalMessage
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Schedule.EventArrayLoader("InboxSchedule");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -420,9 +499,10 @@ namespace GS2Studio.Generated.GlobalMessage
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromScheduleInboxScheduleMasterItems");
                     try
                     {
-                        await ReconcileFromScheduleInboxScheduleMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromScheduleInboxScheduleMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -431,41 +511,68 @@ namespace GS2Studio.Generated.GlobalMessage
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromScheduleInboxScheduleMasterItems(IList<Gs2.Unity.Gs2Schedule.Model.EzEvent> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromScheduleInboxScheduleMasterItems(IList<Gs2.Unity.Gs2Schedule.Model.EzEvent> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromScheduleInboxScheduleMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractScheduleInboxScheduleMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromScheduleInboxScheduleMasterItems", updateVersion)) return;
                 var rowKey = ExtractScheduleInboxScheduleMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractScheduleInboxScheduleMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<GlobalMessageId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyScheduleInboxScheduleMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-liveops-inbox", "masterData", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "foundation-liveops-inbox", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "schedule", "Event", rowKey, System.String.Equals(Convert.ToString("InboxSchedule", System.Globalization.CultureInfo.InvariantCulture), "InboxSchedule", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ScheduleInboxSchedule\",\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",null,null,\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(existing.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? new string[] {  } : Array.Empty<string>(), System.String.Equals(Convert.ToString("InboxSchedule", System.Globalization.CultureInfo.InvariantCulture), "InboxSchedule", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ScheduleInboxSchedule\",\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",null,null,\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(existing.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? "[\"foundation-liveops-inbox\",\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\",\"foundation-liveops-inbox-demo\",\"[\\\"authored\\\",\\\"foundation-liveops-inbox\\\",\\\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\\\",\\\"row_01M35Z5TAMBP3TDCQKCR3F6YXG\\\"]\"]" : null, new Dictionary<string, object> { ["[\"foundation-liveops-inbox\",\"masterData\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\",\"eventName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-liveops-inbox", "masterData", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "foundation-liveops-inbox", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "schedule", "Event", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-liveops-inbox", "masterData", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "foundation-liveops-inbox", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "schedule", "Event", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromScheduleInboxScheduleMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromScheduleInboxScheduleMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromScheduleInboxScheduleMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<GlobalMessageId>.Default.Equals(raced.Id, nextId)) { ApplyScheduleInboxScheduleMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-liveops-inbox", "masterData", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "foundation-liveops-inbox", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "schedule", "Event", rowKey, System.String.Equals(Convert.ToString("InboxSchedule", System.Globalization.CultureInfo.InvariantCulture), "InboxSchedule", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ScheduleInboxSchedule\",\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",null,null,\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(raced.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? new string[] {  } : Array.Empty<string>(), System.String.Equals(Convert.ToString("InboxSchedule", System.Globalization.CultureInfo.InvariantCulture), "InboxSchedule", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ScheduleInboxSchedule\",\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",null,null,\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(raced.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? "[\"foundation-liveops-inbox\",\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\",\"foundation-liveops-inbox-demo\",\"[\\\"authored\\\",\\\"foundation-liveops-inbox\\\",\\\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\\\",\\\"row_01M35Z5TAMBP3TDCQKCR3F6YXG\\\"]\"]" : null, new Dictionary<string, object> { ["[\"foundation-liveops-inbox\",\"masterData\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\",\"eventName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-liveops-inbox", "masterData", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "foundation-liveops-inbox", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "schedule", "Event", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-liveops-inbox", "masterData", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "foundation-liveops-inbox", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "schedule", "Event", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyScheduleInboxScheduleMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-liveops-inbox", "masterData", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "foundation-liveops-inbox", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "schedule", "Event", rowKey, System.String.Equals(Convert.ToString("InboxSchedule", System.Globalization.CultureInfo.InvariantCulture), "InboxSchedule", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ScheduleInboxSchedule\",\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",null,null,\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(binder.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? new string[] {  } : Array.Empty<string>(), System.String.Equals(Convert.ToString("InboxSchedule", System.Globalization.CultureInfo.InvariantCulture), "InboxSchedule", System.StringComparison.Ordinal) && System.String.Equals(rowKey, "[\"master\",\"ScheduleInboxSchedule\",\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",null,null,\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\"]|7:welcome", System.StringComparison.Ordinal) && System.String.Equals(Convert.ToString(binder.Id.Value, System.Globalization.CultureInfo.InvariantCulture), "welcome", System.StringComparison.Ordinal) ? "[\"foundation-liveops-inbox\",\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\",\"foundation-liveops-inbox-demo\",\"[\\\"authored\\\",\\\"foundation-liveops-inbox\\\",\\\"dt_1MS9YFWFRVSBX6W84BDNXX17VB\\\",\\\"row_01M35Z5TAMBP3TDCQKCR3F6YXG\\\"]\"]" : null, new Dictionary<string, object> { ["[\"foundation-liveops-inbox\",\"masterData\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\",\"eventName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-liveops-inbox", "masterData", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "foundation-liveops-inbox", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "schedule", "Event", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-liveops-inbox", "masterData", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "foundation-liveops-inbox", "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4", "schedule", "Event", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromScheduleInboxScheduleMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -505,13 +612,13 @@ namespace GS2Studio.Generated.GlobalMessage
             if (!_disposed) SortBinders();
         }
 
-        private async Task<GlobalMessageBinder> BuildBinderFromScheduleInboxScheduleMasterItem(Gs2.Unity.Gs2Schedule.Model.EzEvent item, CancellationToken cancellationToken)
+        private async Task<GlobalMessageBinder?> BuildBinderFromScheduleInboxScheduleMasterItem(Gs2.Unity.Gs2Schedule.Model.EzEvent item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = GlobalMessageBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(GlobalMessageId) : new GlobalMessageId(item.Name)));
             ApplyScheduleInboxScheduleMasterItemTo(model, item);
-            var binder = new GlobalMessageBinder(model, _gs2, _session);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new GlobalMessageBinder(model, _gs2, _session, _mountSurface: GlobalMessageMountSurface.ScheduleInboxScheduleMaster, __sdk__scheduleInboxScheduleNamespaceEvent_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyScheduleInboxScheduleMasterItemTo(MutableGlobalMessage model, Gs2.Unity.Gs2Schedule.Model.EzEvent item)
@@ -530,8 +637,9 @@ namespace GS2Studio.Generated.GlobalMessage
         {
             var id = ExtractScheduleInboxScheduleMasterIdentity(item);
             if (EqualityComparer<GlobalMessageId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ScheduleInboxSchedule\",\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",null,null,\"foundation-liveops-inbox\",\"mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4\",\"schedule\",\"Event\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class GlobalMessageBinderComparer : IComparer<IReadOnlyGlobalMessageBinder>

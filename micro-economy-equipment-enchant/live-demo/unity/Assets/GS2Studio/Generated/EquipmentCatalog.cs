@@ -14,10 +14,13 @@ namespace GS2Studio.Generated.EquipmentCatalog
     public interface EquipmentCatalog
     {
         /// <summary>
-        /// Unique identifier
+        /// Grants one piece of equipment in the demo.
         /// </summary>
         EquipmentCatalogId Id { get; }
 
+        /// <summary>
+        /// The equipment this catalog row grants.
+        /// </summary>
         EquipmentId Equipment { get; }
     }
 

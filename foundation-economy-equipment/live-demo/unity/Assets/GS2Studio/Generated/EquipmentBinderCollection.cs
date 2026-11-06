@@ -137,8 +137,20 @@ namespace GS2Studio.Generated.Equipment
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyEquipmentBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyEquipmentBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyEquipmentBinder> _configuredComparer = EquipmentBinderComparer.Default;
@@ -261,18 +273,38 @@ namespace GS2Studio.Generated.Equipment
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemModelArrayLoader("Equipment", "Equipment");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromInventoryEquipmentMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromInventoryEquipmentMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromInventoryEquipmentMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromInventoryEquipmentMasterItems");
+            _pendingCollectionAxis = "ReconcileFromInventoryEquipmentMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Inventory.ItemModelArrayLoader("Equipment", "Equipment");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromInventoryEquipmentMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromInventoryEquipmentMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromInventoryEquipmentMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromInventoryEquipmentMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromInventoryEquipmentMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -280,7 +312,6 @@ namespace GS2Studio.Generated.Equipment
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Inventory.ItemModelArrayLoader("Equipment", "Equipment");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -288,9 +319,10 @@ namespace GS2Studio.Generated.Equipment
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromInventoryEquipmentMasterItems");
                     try
                     {
-                        await ReconcileFromInventoryEquipmentMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromInventoryEquipmentMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -299,41 +331,68 @@ namespace GS2Studio.Generated.Equipment
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromInventoryEquipmentMasterItems(IList<Gs2.Unity.Gs2Inventory.Model.EzItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryEquipmentMasterItems(IList<Gs2.Unity.Gs2Inventory.Model.EzItemModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractInventoryEquipmentMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentMasterItems", updateVersion)) return;
                 var rowKey = ExtractInventoryEquipmentMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractInventoryEquipmentMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<EquipmentId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyInventoryEquipmentMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-equipment", "masterData", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "foundation-economy-equipment", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "inventory", "ItemModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-equipment\",\"masterData\",\"mdr_74CE4M8X7P8HTVNAF9MV0BHSG7\",\"inventory\",\"ItemModel\",\"itemName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-equipment", "masterData", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "foundation-economy-equipment", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "inventory", "ItemModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-equipment", "masterData", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "foundation-economy-equipment", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "inventory", "ItemModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromInventoryEquipmentMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromInventoryEquipmentMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<EquipmentId>.Default.Equals(raced.Id, nextId)) { ApplyInventoryEquipmentMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-equipment", "masterData", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "foundation-economy-equipment", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "inventory", "ItemModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-equipment\",\"masterData\",\"mdr_74CE4M8X7P8HTVNAF9MV0BHSG7\",\"inventory\",\"ItemModel\",\"itemName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-equipment", "masterData", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "foundation-economy-equipment", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "inventory", "ItemModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-equipment", "masterData", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "foundation-economy-equipment", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "inventory", "ItemModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyInventoryEquipmentMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-equipment", "masterData", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "foundation-economy-equipment", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "inventory", "ItemModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-equipment\",\"masterData\",\"mdr_74CE4M8X7P8HTVNAF9MV0BHSG7\",\"inventory\",\"ItemModel\",\"itemName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-equipment", "masterData", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "foundation-economy-equipment", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "inventory", "ItemModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-equipment", "masterData", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "foundation-economy-equipment", "mdr_74CE4M8X7P8HTVNAF9MV0BHSG7", "inventory", "ItemModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -373,13 +432,13 @@ namespace GS2Studio.Generated.Equipment
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EquipmentBinder> BuildBinderFromInventoryEquipmentMasterItem(Gs2.Unity.Gs2Inventory.Model.EzItemModel item, CancellationToken cancellationToken)
+        private async Task<EquipmentBinder?> BuildBinderFromInventoryEquipmentMasterItem(Gs2.Unity.Gs2Inventory.Model.EzItemModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = EquipmentBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EquipmentId) : new EquipmentId(item.Name)), string.Empty);
             ApplyInventoryEquipmentMasterItemTo(model, item);
-            var binder = new EquipmentBinder(model, _gs2, _session, _mountSurface: EquipmentMountSurface.InventoryEquipmentMaster);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new EquipmentBinder(model, _gs2, _session, _mountSurface: EquipmentMountSurface.InventoryEquipmentMaster, __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyInventoryEquipmentMasterItemTo(MutableEquipment model, Gs2.Unity.Gs2Inventory.Model.EzItemModel item)
@@ -398,8 +457,9 @@ namespace GS2Studio.Generated.Equipment
         {
             var id = ExtractInventoryEquipmentMasterIdentity(item);
             if (EqualityComparer<EquipmentId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"InventoryEquipment\",\"foundation-economy-equipment\",\"mdr_74CE4M8X7P8HTVNAF9MV0BHSG7\",null,null,\"foundation-economy-equipment\",\"mdr_74CE4M8X7P8HTVNAF9MV0BHSG7\",\"inventory\",\"ItemModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<EquipmentBinderCollection> CreateFromExchangeEquipmentDiscardMasterDataAsync(
@@ -416,18 +476,38 @@ namespace GS2Studio.Generated.Equipment
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EquipmentDiscard");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromExchangeEquipmentDiscardMasterItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromExchangeEquipmentDiscardMasterItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromExchangeEquipmentDiscardMasterItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromExchangeEquipmentDiscardMasterItems");
+            _pendingCollectionAxis = "ReconcileFromExchangeEquipmentDiscardMasterItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EquipmentDiscard");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEquipmentDiscardMasterItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromExchangeEquipmentDiscardMasterItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEquipmentDiscardMasterItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromExchangeEquipmentDiscardMasterItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromExchangeEquipmentDiscardMasterData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromExchangeEquipmentDiscardMasterItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromExchangeEquipmentDiscardMasterItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -435,7 +515,6 @@ namespace GS2Studio.Generated.Equipment
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Exchange.RateModelArrayLoader("EquipmentDiscard");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -443,9 +522,10 @@ namespace GS2Studio.Generated.Equipment
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromExchangeEquipmentDiscardMasterItems");
                     try
                     {
-                        await ReconcileFromExchangeEquipmentDiscardMasterItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromExchangeEquipmentDiscardMasterItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -454,41 +534,68 @@ namespace GS2Studio.Generated.Equipment
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromExchangeEquipmentDiscardMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromExchangeEquipmentDiscardMasterItems(IList<Gs2.Unity.Gs2Exchange.Model.EzRateModel> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeEquipmentDiscardMasterItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractExchangeEquipmentDiscardMasterRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEquipmentDiscardMasterItems", updateVersion)) return;
                 var rowKey = ExtractExchangeEquipmentDiscardMasterRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractExchangeEquipmentDiscardMasterIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<EquipmentId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyExchangeEquipmentDiscardMasterItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-equipment-demo", "masterData", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "foundation-economy-equipment-demo", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-equipment-demo\",\"masterData\",\"mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-equipment-demo", "masterData", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "foundation-economy-equipment-demo", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-equipment-demo", "masterData", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "foundation-economy-equipment-demo", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "exchange", "RateModel", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromExchangeEquipmentDiscardMasterItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromExchangeEquipmentDiscardMasterItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromExchangeEquipmentDiscardMasterItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<EquipmentId>.Default.Equals(raced.Id, nextId)) { ApplyExchangeEquipmentDiscardMasterItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-equipment-demo", "masterData", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "foundation-economy-equipment-demo", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-equipment-demo\",\"masterData\",\"mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-equipment-demo", "masterData", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "foundation-economy-equipment-demo", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-equipment-demo", "masterData", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "foundation-economy-equipment-demo", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "exchange", "RateModel", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyExchangeEquipmentDiscardMasterItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-equipment-demo", "masterData", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "foundation-economy-equipment-demo", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "exchange", "RateModel", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-equipment-demo\",\"masterData\",\"mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB\",\"exchange\",\"RateModel\",\"rateName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-equipment-demo", "masterData", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "foundation-economy-equipment-demo", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "exchange", "RateModel", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-equipment-demo", "masterData", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "foundation-economy-equipment-demo", "mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB", "exchange", "RateModel", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromExchangeEquipmentDiscardMasterItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -528,13 +635,13 @@ namespace GS2Studio.Generated.Equipment
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EquipmentBinder> BuildBinderFromExchangeEquipmentDiscardMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken)
+        private async Task<EquipmentBinder?> BuildBinderFromExchangeEquipmentDiscardMasterItem(Gs2.Unity.Gs2Exchange.Model.EzRateModel item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = EquipmentBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(EquipmentId) : new EquipmentId(item.Name)), string.Empty);
             ApplyExchangeEquipmentDiscardMasterItemTo(model, item);
-            var binder = new EquipmentBinder(model, _gs2, _session, _mountSurface: EquipmentMountSurface.ExchangeEquipmentDiscardMaster);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new EquipmentBinder(model, _gs2, _session, _mountSurface: EquipmentMountSurface.ExchangeEquipmentDiscardMaster, __sdk__exchangeEquipmentDiscardNamespaceRateModel_1: item.Name, __sdk__transactionConsumeAction_1: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyExchangeEquipmentDiscardMasterItemTo(MutableEquipment model, Gs2.Unity.Gs2Exchange.Model.EzRateModel item)
@@ -553,8 +660,9 @@ namespace GS2Studio.Generated.Equipment
         {
             var id = ExtractExchangeEquipmentDiscardMasterIdentity(item);
             if (EqualityComparer<EquipmentId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.Name}";
+            var __key0 = item.Name;
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"master\",\"ExchangeEquipmentDiscard\",\"foundation-economy-equipment-demo\",\"mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB\",null,null,\"foundation-economy-equipment-demo\",\"mdr_6M7AJBQK3ZA8A9BHRV62XQWVRB\",\"exchange\",\"RateModel\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
         /// <summary>Leave subscription ownership with the caller so construction does not start a persistent listener.</summary>
         public static async Task<EquipmentBinderCollection> CreateFromInventoryEquipmentUserDataAsync(
@@ -571,18 +679,38 @@ namespace GS2Studio.Generated.Equipment
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader("Equipment", "Equipment");
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromInventoryEquipmentUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromInventoryEquipmentUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromInventoryEquipmentUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromInventoryEquipmentUserItems");
+            _pendingCollectionAxis = "ReconcileFromInventoryEquipmentUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader("Equipment", "Equipment");
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromInventoryEquipmentUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromInventoryEquipmentUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromInventoryEquipmentUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromInventoryEquipmentUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromInventoryEquipmentUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -590,7 +718,6 @@ namespace GS2Studio.Generated.Equipment
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Inventory.ItemSetArrayLoader("Equipment", "Equipment");
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -598,9 +725,10 @@ namespace GS2Studio.Generated.Equipment
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromInventoryEquipmentUserItems");
                     try
                     {
-                        await ReconcileFromInventoryEquipmentUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromInventoryEquipmentUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -609,41 +737,68 @@ namespace GS2Studio.Generated.Equipment
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromInventoryEquipmentUserItems(IList<Gs2.Unity.Gs2Inventory.Model.EzItemSet> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromInventoryEquipmentUserItems(IList<Gs2.Unity.Gs2Inventory.Model.EzItemSet> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractInventoryEquipmentUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentUserItems", updateVersion)) return;
                 var rowKey = ExtractInventoryEquipmentUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractInventoryEquipmentUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<EquipmentId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyInventoryEquipmentUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-equipment", "userData", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "foundation-economy-equipment", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "inventory", "ItemSet", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-equipment\",\"userData\",\"udr_6RWZH5HSNCACRV1YWW9AG4J6A4\",\"inventory\",\"ItemSet\",\"itemName\",\"string\"]"] = (object)item.ItemName!, ["[\"foundation-economy-equipment\",\"userData\",\"udr_6RWZH5HSNCACRV1YWW9AG4J6A4\",\"inventory\",\"ItemSet\",\"itemSetName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-equipment", "userData", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "foundation-economy-equipment", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "inventory", "ItemSet", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-equipment", "userData", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "foundation-economy-equipment", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "inventory", "ItemSet", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromInventoryEquipmentUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromInventoryEquipmentUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<EquipmentId>.Default.Equals(raced.Id, nextId)) { ApplyInventoryEquipmentUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-equipment", "userData", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "foundation-economy-equipment", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "inventory", "ItemSet", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-equipment\",\"userData\",\"udr_6RWZH5HSNCACRV1YWW9AG4J6A4\",\"inventory\",\"ItemSet\",\"itemName\",\"string\"]"] = (object)item.ItemName!, ["[\"foundation-economy-equipment\",\"userData\",\"udr_6RWZH5HSNCACRV1YWW9AG4J6A4\",\"inventory\",\"ItemSet\",\"itemSetName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-equipment", "userData", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "foundation-economy-equipment", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "inventory", "ItemSet", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-equipment", "userData", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "foundation-economy-equipment", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "inventory", "ItemSet", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyInventoryEquipmentUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-equipment", "userData", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "foundation-economy-equipment", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "inventory", "ItemSet", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-equipment\",\"userData\",\"udr_6RWZH5HSNCACRV1YWW9AG4J6A4\",\"inventory\",\"ItemSet\",\"itemName\",\"string\"]"] = (object)item.ItemName!, ["[\"foundation-economy-equipment\",\"userData\",\"udr_6RWZH5HSNCACRV1YWW9AG4J6A4\",\"inventory\",\"ItemSet\",\"itemSetName\",\"string\"]"] = (object)item.Name! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-equipment", "userData", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "foundation-economy-equipment", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "inventory", "ItemSet", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-equipment", "userData", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "foundation-economy-equipment", "udr_6RWZH5HSNCACRV1YWW9AG4J6A4", "inventory", "ItemSet", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromInventoryEquipmentUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -683,13 +838,13 @@ namespace GS2Studio.Generated.Equipment
             if (!_disposed) SortBinders();
         }
 
-        private async Task<EquipmentBinder> BuildBinderFromInventoryEquipmentUserItem(Gs2.Unity.Gs2Inventory.Model.EzItemSet item, CancellationToken cancellationToken)
+        private async Task<EquipmentBinder?> BuildBinderFromInventoryEquipmentUserItem(Gs2.Unity.Gs2Inventory.Model.EzItemSet item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = EquipmentBinder.CreateModel((string.IsNullOrEmpty(item.ItemName) ? default(EquipmentId) : new EquipmentId(item.ItemName)), item.Name);
             ApplyInventoryEquipmentUserItemTo(model, item);
-            var binder = new EquipmentBinder(model, _gs2, _session, _mountSurface: EquipmentMountSurface.InventoryEquipmentUser);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new EquipmentBinder(model, _gs2, _session, _mountSurface: EquipmentMountSurface.InventoryEquipmentUser, __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2: item.ItemName, __sdk__userdataInventoryEquipmentItemModel_2: item.ItemName, __sdk__userdataInventoryEquipmentItemModel_3: item.Name);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyInventoryEquipmentUserItemTo(MutableEquipment model, Gs2.Unity.Gs2Inventory.Model.EzItemSet item)
@@ -706,8 +861,10 @@ namespace GS2Studio.Generated.Equipment
         {
             var id = ExtractInventoryEquipmentUserIdentity(item);
             if (EqualityComparer<EquipmentId>.Default.Equals(id, default)) return null;
-            if (string.IsNullOrEmpty(item.ItemName) || string.IsNullOrEmpty(item.Name)) return null;
-            return $"{item.ItemName}.{item.Name}";
+            var __key0 = item.ItemName;
+            var __key1 = item.Name;
+            if (string.IsNullOrEmpty(__key0) || string.IsNullOrEmpty(__key1)) return null;
+            return string.Concat("[\"user\",\"InventoryEquipment\",null,null,\"foundation-economy-equipment\",\"udr_6RWZH5HSNCACRV1YWW9AG4J6A4\",null,null,\"inventory\",\"ItemSet\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0, __key1.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key1);
         }
 
         internal sealed class EquipmentBinderComparer : IComparer<IReadOnlyEquipmentBinder>

@@ -29,7 +29,7 @@
     "StoreProduct": {
       "rows": []
     },
-    "StorePrice": {
+    "StoreProductPrices": {
       "rows": []
     },
     "CurrencyType": {

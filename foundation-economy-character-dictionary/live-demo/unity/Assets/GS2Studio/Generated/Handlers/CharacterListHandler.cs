@@ -123,6 +123,7 @@ namespace GS2Studio.Generated.Character
         private ICharacterBinderFactory ResolveBinderFactory()
             => _binderFactory ?? DefaultCharacterBinderFactory.Instance;
 
+
         /// <summary>
         /// Scope values discovered at runtime cannot be fixed in the authored scene. Reload is fire-and-forget;
         /// await <see cref="ReloadAsync"/> directly when completion must be observed.

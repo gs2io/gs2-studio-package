@@ -36,14 +36,15 @@ namespace GS2Studio.Generated.Equipment
         Full,
 
         /// <summary>Built by the InventoryEquipment master-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryEquipmentItemModel")]
+        [Gs2SkipsLoaders("ExchangeEquipmentDiscardNamespaceRateModel", "TransactionConsumeAction", "UserdataInventoryEquipmentItemModel")]
         InventoryEquipmentMaster,
 
         /// <summary>Built by the ExchangeEquipmentDiscard master-data list axis.</summary>
-        [Gs2SkipsLoaders("UserdataInventoryEquipmentItemModel")]
+        [Gs2SkipsLoaders("InventoryEquipmentNamespaceInventoryModelItemModel", "UserdataInventoryEquipmentItemModel")]
         ExchangeEquipmentDiscardMaster,
 
         /// <summary>Built by the InventoryEquipment user-data list axis.</summary>
+        [Gs2SkipsLoaders("ExchangeEquipmentDiscardNamespaceRateModel", "TransactionConsumeAction")]
         InventoryEquipmentUser,
     }
 
@@ -54,17 +55,39 @@ namespace GS2Studio.Generated.Equipment
         EquipmentMountSurface MountSurface { get; }
 
         /// <summary>
-        /// This construction path permits the <c>Gs2Bind.Gs2Inventory.ItemSetLoader</c> load on <c>__userdataInventoryEquipmentItemModelLoader</c>. False means this path does not supply <c>PropertyId</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeEquipmentDiscardNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeEquipmentDiscardNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeActionLoader</c>. False means this path does not supply <c>Id</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Inventory.ItemSetLoader</c> load on <c>__userdataInventoryEquipmentItemModelLoader</c> or its composition from a list item. False means this path does not supply <c>PropertyId</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
         /// </summary>
         /// <remarks>InventoryEquipmentMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentDiscardMaster: no per-row value for _model.PropertyId.</remarks>
         bool LoadedUserdataInventoryEquipmentItemModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Inventory.ItemModelLoader</c> load on <c>__inventoryEquipmentNamespaceInventoryModelItemModelLoader</c>. False means this path does not supply <c>SortValue</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        bool LoadedInventoryEquipmentNamespaceInventoryModelItemModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableEquipmentBinder : IReadOnlyEquipmentBinder
     {
+        EquipmentBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task Discard(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
+        Task<GS2Studio.Generated.EquipmentCatalog.IReadOnlyEquipmentCatalogBinderCollection> GetEquipmentCatalogs(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -72,7 +95,6 @@ namespace GS2Studio.Generated.Equipment
     {
         void Subscribe(Action? onChange = null);
         void Invalidate();
-        Task<GS2Studio.Generated.EquipmentCatalog.IReadOnlyEquipmentCatalogBinderCollection> GetEquipmentCatalogs(CancellationToken cancellationToken = default);
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
@@ -98,7 +120,16 @@ namespace GS2Studio.Generated.Equipment
         public abstract EquipmentMountSurface MountSurface { get; }
 
         /// <inheritdoc />
+        public abstract bool LoadedExchangeEquipmentDiscardNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction { get; }
+
+        /// <inheritdoc />
         public abstract bool LoadedUserdataInventoryEquipmentItemModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedInventoryEquipmentNamespaceInventoryModelItemModel { get; }
 
 
         private protected ReadOnlyEquipmentBinder(MutableEquipment model, Gs2Domain gs2, IGameSession session)
@@ -110,10 +141,145 @@ namespace GS2Studio.Generated.Equipment
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class EquipmentBinder : ReadOnlyEquipmentBinder, IEquipmentBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly EquipmentBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(EquipmentBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public Equipment Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableEquipment? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableEquipment
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal EquipmentId __valueId = default!;
+                public EquipmentId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setCategory;
+                internal EquipmentCategoryId __valueCategory = default!;
+                public EquipmentCategoryId Category
+                {
+                    get => __setCategory ? __valueCategory : __scopeOwner.Value.Category;
+                    set { __setCategory = true; __valueCategory = value; }
+                }
+                internal bool __setSortValue;
+                internal int __valueSortValue = default!;
+                public int SortValue
+                {
+                    get => __setSortValue ? __valueSortValue : __scopeOwner.Value.SortValue;
+                    set { __setSortValue = true; __valueSortValue = value; }
+                }
+                internal bool __setPropertyId;
+                internal string __valuePropertyId = default!;
+                public string PropertyId
+                {
+                    get => __setPropertyId ? __valuePropertyId : __scopeOwner.Value.PropertyId;
+                    set { __setPropertyId = true; __valuePropertyId = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<EquipmentId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setCategory) { _owner._model.Category = changes.__valueCategory; changes.__setCategory = false; }
+                if (changes.__setSortValue) { _owner._model.SortValue = changes.__valueSortValue; changes.__setSortValue = false; }
+                if (changes.__setPropertyId) { _owner._model.PropertyId = changes.__valuePropertyId; changes.__setPropertyId = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -127,31 +293,61 @@ namespace GS2Studio.Generated.Equipment
 
         private readonly EquipmentMountSurface _mountSurfaceValue;
 
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeEquipmentDiscardNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeEquipmentDiscardNamespaceRateModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentDiscardMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeActionLoader</c> reads.</summary>
+        /// <remarks>InventoryEquipmentMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>InventoryEquipmentUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeActionLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.ExchangeEquipmentDiscardMaster;
+
         /// <summary>Avoid loading unless this path supplies every key <c>__userdataInventoryEquipmentItemModelLoader</c> reads.</summary>
         /// <remarks>InventoryEquipmentMaster: no per-row value for _model.PropertyId.</remarks>
         /// <remarks>ExchangeEquipmentDiscardMaster: no per-row value for _model.PropertyId.</remarks>
-        private bool Runs__userdataInventoryEquipmentItemModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.InventoryEquipmentUser;
+        private bool Runs__userdataInventoryEquipmentItemModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__inventoryEquipmentNamespaceInventoryModelItemModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeEquipmentDiscardMaster: does not supply SDK backing key name.</remarks>
+        private bool Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.InventoryEquipmentMaster or EquipmentMountSurface.InventoryEquipmentUser;
 
         /// <inheritdoc />
         public override EquipmentMountSurface MountSurface => _mountSurfaceValue;
 
         /// <inheritdoc />
-        public override bool LoadedUserdataInventoryEquipmentItemModel => Runs__userdataInventoryEquipmentItemModelLoader;
+        public override bool LoadedExchangeEquipmentDiscardNamespaceRateModel => Runs__exchangeEquipmentDiscardNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction => Runs__transactionConsumeActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataInventoryEquipmentItemModel => _mountSurfaceValue is EquipmentMountSurface.Full or EquipmentMountSurface.InventoryEquipmentUser;
+
+        /// <inheritdoc />
+        public override bool LoadedInventoryEquipmentNamespaceInventoryModelItemModel => Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader;
 
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal EquipmentBinder(
             MutableEquipment model,
             Gs2Domain gs2,
             IGameSession session,
-            EquipmentMountSurface _mountSurface = EquipmentMountSurface.Full
+            EquipmentMountSurface _mountSurface = EquipmentMountSurface.Full,
+            string? __sdk__exchangeEquipmentDiscardNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_3 = null
         ) : base(model, gs2, session)
         {
+
             _mountSurfaceValue = _mountSurface;
-            __exchangeEquipmentDiscardNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentDiscard", _model.Id);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EquipmentDiscard", _model.Id, 0);
-            __inventoryEquipmentNamespaceInventoryModelItemModelLoader = new Gs2Bind.Gs2Inventory.ItemModelLoader("Equipment", "Equipment", _model.Id);
-            __userdataInventoryEquipmentItemModelLoader = new Gs2Bind.Gs2Inventory.ItemSetLoader("Equipment", "Equipment", _model.Id, _model.PropertyId);
+            __exchangeEquipmentDiscardNamespaceRateModelLoader = Runs__exchangeEquipmentDiscardNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EquipmentDiscard", (string.IsNullOrEmpty(__sdk__exchangeEquipmentDiscardNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeEquipmentDiscardNamespaceRateModel_1!)) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EquipmentDiscard", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __inventoryEquipmentNamespaceInventoryModelItemModelLoader = Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader ? new Gs2Bind.Gs2Inventory.ItemModelLoader("Equipment", "Equipment", (string.IsNullOrEmpty(__sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2!)) : null!;
+            __userdataInventoryEquipmentItemModelLoader = Runs__userdataInventoryEquipmentItemModelLoader ? new Gs2Bind.Gs2Inventory.ItemSetLoader("Equipment", "Equipment", (string.IsNullOrEmpty(__sdk__userdataInventoryEquipmentItemModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataInventoryEquipmentItemModel_2!), (string.IsNullOrEmpty(__sdk__userdataInventoryEquipmentItemModel_3) ? _model.PropertyId : __sdk__userdataInventoryEquipmentItemModel_3!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableEquipment CreateModel(EquipmentId id, string propertyId)
@@ -166,31 +362,38 @@ namespace GS2Studio.Generated.Equipment
             EquipmentId id, string propertyId,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__exchangeEquipmentDiscardNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_2 = null,
+            string? __sdk__userdataInventoryEquipmentItemModel_3 = null)
         {
             var model = CreateModel(id, propertyId);
-            var binder = new EquipmentBinder(model, gs2, session);
+            var binder = new EquipmentBinder(model, gs2, session, __sdk__exchangeEquipmentDiscardNamespaceRateModel_1: __sdk__exchangeEquipmentDiscardNamespaceRateModel_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2: __sdk__inventoryEquipmentNamespaceInventoryModelItemModel_2, __sdk__userdataInventoryEquipmentItemModel_2: __sdk__userdataInventoryEquipmentItemModel_2, __sdk__userdataInventoryEquipmentItemModel_3: __sdk__userdataInventoryEquipmentItemModel_3);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _exchangeEquipmentDiscardNamespaceRateModel = await __exchangeEquipmentDiscardNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeEquipmentDiscardNamespaceRateModel = Runs__exchangeEquipmentDiscardNamespaceRateModelLoader ? await __exchangeEquipmentDiscardNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeEquipmentDiscardNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction = Runs__transactionConsumeActionLoader ? await __transactionConsumeActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
             }
-            var _inventoryEquipmentNamespaceInventoryModelItemModel = await __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Load(_gs2, _session);
+            var _inventoryEquipmentNamespaceInventoryModelItemModel = Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader ? await __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyInventoryEquipmentNamespaceInventoryModelItemModel(_model, _inventoryEquipmentNamespaceInventoryModelItemModel);
+            if (Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader)
+            {
+                ApplyInventoryEquipmentNamespaceInventoryModelItemModel(_model, _inventoryEquipmentNamespaceInventoryModelItemModel);
+            }
             var _userdataInventoryEquipmentItemModel = Runs__userdataInventoryEquipmentItemModelLoader ? await __userdataInventoryEquipmentItemModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (Runs__userdataInventoryEquipmentItemModelLoader)
@@ -198,54 +401,66 @@ namespace GS2Studio.Generated.Equipment
                 ApplyUserdataInventoryEquipmentItemModel(_model, _userdataInventoryEquipmentItemModel);
             }
             EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-            if (_transactionConsumeAction != null) RestoreId(_model, _transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            if (Runs__transactionConsumeActionLoader)
+            {
+                if (_transactionConsumeAction != null) RestoreId(_model, _transactionConsumeAction.Action, _transactionConsumeAction.Request);
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__exchangeEquipmentDiscardNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__exchangeEquipmentDiscardNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeEquipmentDiscardNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value != null) RestoreId(_model, value.Action, value.Request);
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__inventoryEquipmentNamespaceInventoryModelItemModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyInventoryEquipmentNamespaceInventoryModelItemModel(_model, value);
-                    EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value != null) RestoreId(_model, value.Action, value.Request);
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader)
+            {
+                _unsubscribers.Add(__inventoryEquipmentNamespaceInventoryModelItemModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyInventoryEquipmentNamespaceInventoryModelItemModel(_model, value);
+                        EquipmentOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
             if (Runs__userdataInventoryEquipmentItemModelLoader)
             {
                 _unsubscribers.Add(__userdataInventoryEquipmentItemModelLoader.Subscribe(
@@ -265,9 +480,18 @@ namespace GS2Studio.Generated.Equipment
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __exchangeEquipmentDiscardNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
+            if (Runs__exchangeEquipmentDiscardNamespaceRateModelLoader)
+            {
+                __exchangeEquipmentDiscardNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__inventoryEquipmentNamespaceInventoryModelItemModelLoader)
+            {
+                __inventoryEquipmentNamespaceInventoryModelItemModelLoader.Invalidate(_gs2, _session);
+            }
             if (Runs__userdataInventoryEquipmentItemModelLoader)
             {
                 __userdataInventoryEquipmentItemModelLoader.Invalidate(_gs2, _session);
@@ -283,6 +507,7 @@ namespace GS2Studio.Generated.Equipment
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -386,6 +611,7 @@ namespace GS2Studio.Generated.Equipment
                 model.PropertyId = source.Name;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

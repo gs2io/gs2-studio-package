@@ -13,12 +13,18 @@ namespace GS2Studio.Generated.AdPlatform
     public interface AdPlatform
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the ad platform.
         /// </summary>
         AdPlatformId Id { get; }
 
+        /// <summary>
+        /// AdMob ad unit identifiers allowed by this configuration.
+        /// </summary>
         IReadOnlyList<string>? AdMobAdUnitIds { get; }
 
+        /// <summary>
+        /// Game keys used by Unity Ads.
+        /// </summary>
         IReadOnlyList<string> UnityAdKeys { get; }
     }
 

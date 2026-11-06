@@ -29,6 +29,18 @@ namespace GS2Studio.Generated.UsageLimitCounter
     {
         [SerializeField] private string? _id;
         [SerializeField] private string? _limit;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_2;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_3;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_4;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_5;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName_2;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_2;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_3;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName;
+        private string? _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -53,6 +65,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(IUsageLimitCounterBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -69,6 +82,28 @@ namespace GS2Studio.Generated.UsageLimitCounter
             _limit = limit;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName, string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName, string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_2, string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_3, string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName, string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_4, string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_5, string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName_2, string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_2, string? sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_3, string? sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName, string? sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName)
+        {
+            InvalidateBindingIntent();
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName;
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName;
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_2 = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_2;
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_3 = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_3;
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName;
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_4 = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_4;
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_5 = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_5;
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName_2 = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName_2;
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_2 = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_2;
+            _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_3 = sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_3;
+            _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName = sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName;
+            _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName = sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -94,7 +129,31 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new UsageLimitCounterId(_id ?? string.Empty), new UsageLimitId(_limit ?? string.Empty), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_2' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_3))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_3' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_4))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_4' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_5))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_5' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName_2' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_2))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_2' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_3))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_3' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName' is not set.");
+                if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new UsageLimitCounterId(_id ?? string.Empty), new UsageLimitId(_limit ?? string.Empty), gs2, session, cancellationToken, __sdk__transactionAcquireAction_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName, __sdk__transactionConsumeAction_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName, __sdk__exchangeLimitResetNamespaceRateModel_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_2, __sdk__transactionAcquireAction2_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_3, __sdk__exchangeLimitFreeUseNamespaceRateModel_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName, __sdk__transactionAcquireAction3_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_4, __sdk__transactionAcquireAction4_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_5, __sdk__transactionConsumeAction2_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName_2, __sdk__exchangeLimitAdUseNamespaceRateModel_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_2, __sdk__transactionConsumeAction3_1: _sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_3, __sdk__userdataLimitLimitLimitModel_1: _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName, __sdk__userdataLimitLimitLimitModel_2: _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -184,6 +243,18 @@ namespace GS2Studio.Generated.UsageLimitCounter
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
             if (string.IsNullOrEmpty(_limit)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_2)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_3)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_4)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_2B66P1TX2CA2EV81HAS32228JF_exchange_RateModel_rateName_5)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_3QQV27BR5AA419F2032R6T95RZ_exchange_RateModel_rateName_2)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_2)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_x2d_demo_masterData_mdr_6TC5FMVGD2AE0BT03QA7GCXZS0_exchange_RateModel_rateName_3)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName)) return false;
+            if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName)) return false;
             return true;
         }
 

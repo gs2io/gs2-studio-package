@@ -36,7 +36,7 @@ namespace GS2Studio.Generated.Character.UI
         public ErrorEvent OnFailed => _onFailed;
 
         /// <summary>Scene baking compares these names with Gs2SkipsLoaders before skipped loaders can leave action arguments at their defaults.</summary>
-        public static readonly string[] RequiredLoaders = { "UserdataInventoryCharacterItemModel" };
+        public static readonly string[] RequiredLoaders = { "TransactionAcquireAction2", "TransactionAcquireAction3", "UserdataInventoryCharacterItemModel" };
 
         private bool _wired;
         private bool _warnedMissingHandler;
@@ -113,10 +113,10 @@ namespace GS2Studio.Generated.Character.UI
         private void WarnUnloadedLoadersOnce(IActionableCharacterBinder binder)
         {
             if (_warnedUnloadedLoaders) return;
-            if (binder.LoadedUserdataInventoryCharacterItemModel) return;
+            if (binder.LoadedUserdataInventoryCharacterItemModel && (binder.LoadedTransactionAcquireAction2 || binder.LoadedTransactionAcquireAction3)) return;
             _warnedUnloadedLoaders = true;
             Debug.LogWarning(
-                $"{nameof(CharacterTrainButton)} on '{name}': this row's mount surface did not run UserdataInventoryCharacterItemModel, which fills what this component reads (PropertyId, Id); those readings render as their default, not as an absent value.", this);
+                $"{nameof(CharacterTrainButton)} on '{name}': this row's mount surface did not run TransactionAcquireAction2, TransactionAcquireAction3, UserdataInventoryCharacterItemModel, which fills what this component reads (PropertyId, Id); those readings render as their default, not as an absent value.", this);
         }
     }
 }

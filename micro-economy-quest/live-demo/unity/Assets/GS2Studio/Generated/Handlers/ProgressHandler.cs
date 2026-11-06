@@ -49,6 +49,7 @@ namespace GS2Studio.Generated.Progress
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(IProgressBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -64,6 +65,7 @@ namespace GS2Studio.Generated.Progress
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
+
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()

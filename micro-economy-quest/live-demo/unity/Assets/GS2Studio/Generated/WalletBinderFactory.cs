@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.Wallet
             WalletId id, int slot,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataMoney2Wallet_1 = null);
         IWalletBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.Wallet
             WalletId id, int slot,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataMoney2Wallet_1 = null)
         {
-            return await WalletBinder.CreateAsync(id, slot, gs2, session, cancellationToken);
+            return await WalletBinder.CreateAsync(id, slot, gs2, session, cancellationToken, __sdk__userdataMoney2Wallet_1);
         }
         public IWalletBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

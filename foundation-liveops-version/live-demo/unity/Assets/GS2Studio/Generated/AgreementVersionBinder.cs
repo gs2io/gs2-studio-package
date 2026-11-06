@@ -16,17 +16,45 @@ using Gs2.Unity.Core;
 using Gs2.Unity.Util;
 using Gs2.Unity.Gs2Version.Model;
 using Gs2Bind.Gs2Version;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.AgreementVersion
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum AgreementVersionMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the VersionVersion master-data list axis.</summary>
+        [Gs2SkipsLoaders("UserdataVersionVersionVersionModel")]
+        VersionVersionMaster,
+
+        /// <summary>Built by the VersionVersion user-data list axis.</summary>
+        VersionVersionUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyAgreementVersionBinder : AgreementVersion
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        AgreementVersionMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Version.AcceptVersionLoader</c> load on <c>__userdataVersionVersionVersionModelLoader</c> or its composition from a list item. False means this path does not supply <c>Status</c>, <c>AcceptedMajor</c>, <c>AcceptedMicro</c>, <c>AcceptedMinor</c>, <c>Exists</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>VersionVersionMaster: does not supply SDK backing key versionName.</remarks>
+        bool LoadedUserdataVersionVersionVersionModel { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableAgreementVersionBinder : IReadOnlyAgreementVersionBinder
     {
+        AgreementVersionBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
     }
 
     /// <summary>Factories return this owning contract so callers can manage subscription and disposal.</summary>
@@ -37,7 +65,7 @@ namespace GS2Studio.Generated.AgreementVersion
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyAgreementVersionBinder : IReadOnlyAgreementVersionBinder
+    public abstract class ReadOnlyAgreementVersionBinder : IReadOnlyAgreementVersionBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableAgreementVersion _model;
@@ -79,6 +107,13 @@ namespace GS2Studio.Generated.AgreementVersion
         /// <inheritdoc cref="AgreementVersion.AcceptedMicro" />
         public int AcceptedMicro => _model.AcceptedMicro;
 
+        /// <inheritdoc />
+        public abstract AgreementVersionMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataVersionVersionVersionModel { get; }
+
+
         private protected ReadOnlyAgreementVersionBinder(MutableAgreementVersion model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -88,10 +123,241 @@ namespace GS2Studio.Generated.AgreementVersion
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class AgreementVersionBinder : ReadOnlyAgreementVersionBinder, IAgreementVersionBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly AgreementVersionBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(AgreementVersionBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public AgreementVersion Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableAgreementVersion? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableAgreementVersion
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal AgreementVersionId __valueId = default!;
+                public AgreementVersionId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setRequired;
+                internal string __valueRequired = default!;
+                public string Required
+                {
+                    get => __setRequired ? __valueRequired : __scopeOwner.Value.Required;
+                    set { __setRequired = true; __valueRequired = value; }
+                }
+                internal bool __setCurrentMajor;
+                internal int __valueCurrentMajor = default!;
+                public int CurrentMajor
+                {
+                    get => __setCurrentMajor ? __valueCurrentMajor : __scopeOwner.Value.CurrentMajor;
+                    set { __setCurrentMajor = true; __valueCurrentMajor = value; }
+                }
+                internal bool __setCurrentMinor;
+                internal int __valueCurrentMinor = default!;
+                public int CurrentMinor
+                {
+                    get => __setCurrentMinor ? __valueCurrentMinor : __scopeOwner.Value.CurrentMinor;
+                    set { __setCurrentMinor = true; __valueCurrentMinor = value; }
+                }
+                internal bool __setCurrentMicro;
+                internal int __valueCurrentMicro = default!;
+                public int CurrentMicro
+                {
+                    get => __setCurrentMicro ? __valueCurrentMicro : __scopeOwner.Value.CurrentMicro;
+                    set { __setCurrentMicro = true; __valueCurrentMicro = value; }
+                }
+                internal bool __setStatus;
+                internal string? __valueStatus = default!;
+                public string? Status
+                {
+                    get => __setStatus ? __valueStatus : __scopeOwner.Value.Status;
+                    set { __setStatus = true; __valueStatus = value; }
+                }
+                internal bool __setExists;
+                internal bool __valueExists = default!;
+                public bool Exists
+                {
+                    get => __setExists ? __valueExists : __scopeOwner.Value.Exists;
+                    set { __setExists = true; __valueExists = value; }
+                }
+                internal bool __setWarningMajor;
+                internal int __valueWarningMajor = default!;
+                public int WarningMajor
+                {
+                    get => __setWarningMajor ? __valueWarningMajor : __scopeOwner.Value.WarningMajor;
+                    set { __setWarningMajor = true; __valueWarningMajor = value; }
+                }
+                internal bool __setWarningMinor;
+                internal int __valueWarningMinor = default!;
+                public int WarningMinor
+                {
+                    get => __setWarningMinor ? __valueWarningMinor : __scopeOwner.Value.WarningMinor;
+                    set { __setWarningMinor = true; __valueWarningMinor = value; }
+                }
+                internal bool __setWarningMicro;
+                internal int __valueWarningMicro = default!;
+                public int WarningMicro
+                {
+                    get => __setWarningMicro ? __valueWarningMicro : __scopeOwner.Value.WarningMicro;
+                    set { __setWarningMicro = true; __valueWarningMicro = value; }
+                }
+                internal bool __setErrorMajor;
+                internal int __valueErrorMajor = default!;
+                public int ErrorMajor
+                {
+                    get => __setErrorMajor ? __valueErrorMajor : __scopeOwner.Value.ErrorMajor;
+                    set { __setErrorMajor = true; __valueErrorMajor = value; }
+                }
+                internal bool __setErrorMinor;
+                internal int __valueErrorMinor = default!;
+                public int ErrorMinor
+                {
+                    get => __setErrorMinor ? __valueErrorMinor : __scopeOwner.Value.ErrorMinor;
+                    set { __setErrorMinor = true; __valueErrorMinor = value; }
+                }
+                internal bool __setErrorMicro;
+                internal int __valueErrorMicro = default!;
+                public int ErrorMicro
+                {
+                    get => __setErrorMicro ? __valueErrorMicro : __scopeOwner.Value.ErrorMicro;
+                    set { __setErrorMicro = true; __valueErrorMicro = value; }
+                }
+                internal bool __setAcceptedMajor;
+                internal int __valueAcceptedMajor = default!;
+                public int AcceptedMajor
+                {
+                    get => __setAcceptedMajor ? __valueAcceptedMajor : __scopeOwner.Value.AcceptedMajor;
+                    set { __setAcceptedMajor = true; __valueAcceptedMajor = value; }
+                }
+                internal bool __setAcceptedMinor;
+                internal int __valueAcceptedMinor = default!;
+                public int AcceptedMinor
+                {
+                    get => __setAcceptedMinor ? __valueAcceptedMinor : __scopeOwner.Value.AcceptedMinor;
+                    set { __setAcceptedMinor = true; __valueAcceptedMinor = value; }
+                }
+                internal bool __setAcceptedMicro;
+                internal int __valueAcceptedMicro = default!;
+                public int AcceptedMicro
+                {
+                    get => __setAcceptedMicro ? __valueAcceptedMicro : __scopeOwner.Value.AcceptedMicro;
+                    set { __setAcceptedMicro = true; __valueAcceptedMicro = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<AgreementVersionId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setRequired) { _owner._model.Required = changes.__valueRequired; changes.__setRequired = false; }
+                if (changes.__setCurrentMajor) { _owner._model.CurrentMajor = changes.__valueCurrentMajor; changes.__setCurrentMajor = false; }
+                if (changes.__setCurrentMinor) { _owner._model.CurrentMinor = changes.__valueCurrentMinor; changes.__setCurrentMinor = false; }
+                if (changes.__setCurrentMicro) { _owner._model.CurrentMicro = changes.__valueCurrentMicro; changes.__setCurrentMicro = false; }
+                if (changes.__setStatus) { _owner._model.Status = changes.__valueStatus; changes.__setStatus = false; }
+                if (changes.__setExists) { _owner._model.Exists = changes.__valueExists; changes.__setExists = false; }
+                if (changes.__setWarningMajor) { _owner._model.WarningMajor = changes.__valueWarningMajor; changes.__setWarningMajor = false; }
+                if (changes.__setWarningMinor) { _owner._model.WarningMinor = changes.__valueWarningMinor; changes.__setWarningMinor = false; }
+                if (changes.__setWarningMicro) { _owner._model.WarningMicro = changes.__valueWarningMicro; changes.__setWarningMicro = false; }
+                if (changes.__setErrorMajor) { _owner._model.ErrorMajor = changes.__valueErrorMajor; changes.__setErrorMajor = false; }
+                if (changes.__setErrorMinor) { _owner._model.ErrorMinor = changes.__valueErrorMinor; changes.__setErrorMinor = false; }
+                if (changes.__setErrorMicro) { _owner._model.ErrorMicro = changes.__valueErrorMicro; changes.__setErrorMicro = false; }
+                if (changes.__setAcceptedMajor) { _owner._model.AcceptedMajor = changes.__valueAcceptedMajor; changes.__setAcceptedMajor = false; }
+                if (changes.__setAcceptedMinor) { _owner._model.AcceptedMinor = changes.__valueAcceptedMinor; changes.__setAcceptedMinor = false; }
+                if (changes.__setAcceptedMicro) { _owner._model.AcceptedMicro = changes.__valueAcceptedMicro; changes.__setAcceptedMicro = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -99,16 +365,34 @@ namespace GS2Studio.Generated.AgreementVersion
         private readonly Gs2Bind.Gs2Version.VersionModelLoader __versionVersionNamespaceVersionModelLoader;
         private readonly Gs2Bind.Gs2Version.AcceptVersionLoader __userdataVersionVersionVersionModelLoader;
 
+        private readonly AgreementVersionMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataVersionVersionVersionModelLoader</c> reads.</summary>
+        /// <remarks>VersionVersionMaster: does not supply SDK backing key versionName.</remarks>
+        private bool Runs__userdataVersionVersionVersionModelLoader => _mountSurfaceValue is AgreementVersionMountSurface.Full;
+
+        /// <inheritdoc />
+        public override AgreementVersionMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataVersionVersionVersionModel => _mountSurfaceValue is AgreementVersionMountSurface.Full or AgreementVersionMountSurface.VersionVersionUser;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal AgreementVersionBinder(
             MutableAgreementVersion model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            AgreementVersionMountSurface _mountSurface = AgreementVersionMountSurface.Full,
+            string? __sdk__versionVersionNamespaceVersionModel_1 = null,
+            string? __sdk__userdataVersionVersionVersionModel_1 = null
         ) : base(model, gs2, session)
         {
-            __versionVersionNamespaceVersionModelLoader = new Gs2Bind.Gs2Version.VersionModelLoader("Version", _model.Id);
-            __userdataVersionVersionVersionModelLoader = new Gs2Bind.Gs2Version.AcceptVersionLoader("Version", _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __versionVersionNamespaceVersionModelLoader = new Gs2Bind.Gs2Version.VersionModelLoader("Version", (string.IsNullOrEmpty(__sdk__versionVersionNamespaceVersionModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__versionVersionNamespaceVersionModel_1!));
+            __userdataVersionVersionVersionModelLoader = Runs__userdataVersionVersionVersionModelLoader ? new Gs2Bind.Gs2Version.AcceptVersionLoader("Version", (string.IsNullOrEmpty(__sdk__userdataVersionVersionVersionModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataVersionVersionVersionModel_1!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableAgreementVersion CreateModel(AgreementVersionId id)
@@ -122,14 +406,15 @@ namespace GS2Studio.Generated.AgreementVersion
             AgreementVersionId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__versionVersionNamespaceVersionModel_1 = null,
+            string? __sdk__userdataVersionVersionVersionModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new AgreementVersionBinder(model, gs2, session);
+            var binder = new AgreementVersionBinder(model, gs2, session, __sdk__versionVersionNamespaceVersionModel_1: __sdk__versionVersionNamespaceVersionModel_1, __sdk__userdataVersionVersionVersionModel_1: __sdk__userdataVersionVersionVersionModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
@@ -137,9 +422,12 @@ namespace GS2Studio.Generated.AgreementVersion
             var _versionVersionNamespaceVersionModel = await __versionVersionNamespaceVersionModelLoader.Load(_gs2, _session);
             cancellationToken.ThrowIfCancellationRequested();
             ApplyVersionVersionNamespaceVersionModel(_model, _versionVersionNamespaceVersionModel);
-            var _userdataVersionVersionVersionModel = await __userdataVersionVersionVersionModelLoader.LoadOrNull(_gs2, _session);
+            var _userdataVersionVersionVersionModel = Runs__userdataVersionVersionVersionModelLoader ? await __userdataVersionVersionVersionModelLoader.LoadOrNull(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataVersionVersionVersionModel(_model, _userdataVersionVersionVersionModel);
+            if (Runs__userdataVersionVersionVersionModelLoader)
+            {
+                ApplyUserdataVersionVersionVersionModel(_model, _userdataVersionVersionVersionModel);
+            }
             _mounted = true;
         }
 
@@ -157,24 +445,30 @@ namespace GS2Studio.Generated.AgreementVersion
                 },
                 () => onChange?.Invoke()
             ));
-            _unsubscribers.Add(__userdataVersionVersionVersionModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataVersionVersionVersionModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+            if (Runs__userdataVersionVersionVersionModelLoader)
+            {
+                _unsubscribers.Add(__userdataVersionVersionVersionModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataVersionVersionVersionModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
             __versionVersionNamespaceVersionModelLoader.Invalidate(_gs2, _session);
-            __userdataVersionVersionVersionModelLoader.Invalidate(_gs2, _session);
+            if (Runs__userdataVersionVersionVersionModelLoader)
+            {
+                __userdataVersionVersionVersionModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -186,6 +480,7 @@ namespace GS2Studio.Generated.AgreementVersion
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -267,6 +562,7 @@ namespace GS2Studio.Generated.AgreementVersion
                 model.AcceptedMinor = default;
             }
         }
+
         #endregion
 
     }

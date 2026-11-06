@@ -14,12 +14,18 @@ namespace GS2Studio.Generated.MissionCollection
     public interface MissionCollection
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the mission group.
         /// </summary>
         MissionCollectionId Id { get; }
 
+        /// <summary>
+        /// Schedule during which this mission group is available.
+        /// </summary>
         ScheduleId? Schedule { get; }
 
+        /// <summary>
+        /// Reset cadence used by missions in this group.
+        /// </summary>
         string Scope { get; }
     }
 

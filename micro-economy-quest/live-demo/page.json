@@ -71,7 +71,7 @@
     "PaidDeposit": {
       "rows": []
     },
-    "StorePrice": {
+    "StoreProductPrices": {
       "rows": []
     }
   }

@@ -110,8 +110,20 @@ namespace GS2Studio.Generated.CharacterFormationForm
         // Weak references let unused filter views be collected while their root remains alive.
         private readonly List<WeakReference<ReadOnlyCharacterFormationFormBinderCollection>> _derivedViews = new List<WeakReference<ReadOnlyCharacterFormationFormBinderCollection>>();
         private bool _disposed;
-        private bool _mounted;
         private bool _subscriptionActive;
+        private string? _activeCollectionAxis;
+        private string? _subscribedCollectionAxis;
+        private int _pendingCollectionMounts;
+        private string? _pendingCollectionAxis;
+        private readonly Dictionary<string, long> _axisUpdateVersions = new Dictionary<string, long>();
+        private long BeginAxisUpdate(string axis)
+        {
+            _axisUpdateVersions.TryGetValue(axis, out var version);
+            _axisUpdateVersions[axis] = ++version;
+            return version;
+        }
+        private bool IsCurrentAxisUpdate(string axis, long version) =>
+            !_disposed && _axisUpdateVersions.TryGetValue(axis, out var current) && current == version;
         private Action? _onChange;
 
         private IComparer<IReadOnlyCharacterFormationFormBinder> _configuredComparer = CharacterFormationFormBinderComparer.Default;
@@ -235,18 +247,38 @@ namespace GS2Studio.Generated.CharacterFormationForm
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var arrayLoader = new Gs2Bind.Gs2Formation.FormArrayLoader("CharacterFormation", _moldModelName);
-            var items = await arrayLoader.Load(_gs2, _session);
-            cancellationToken.ThrowIfCancellationRequested();
-            await ReconcileFromFormationCharacterFormationUserItems(items, attachChildSubscribe: false, cancellationToken);
-            _mounted = true;
+            if (_subscriptionActive && _subscribedCollectionAxis != "ReconcileFromFormationCharacterFormationUserItems")
+                throw new InvalidOperationException("Cannot change collection axis while subscribed.");
+            if (_pendingCollectionMounts != 0 && _pendingCollectionAxis != "ReconcileFromFormationCharacterFormationUserItems")
+                throw new InvalidOperationException("Cannot mount a different collection axis while a mount is pending.");
+            var updateVersion = BeginAxisUpdate("ReconcileFromFormationCharacterFormationUserItems");
+            _pendingCollectionAxis = "ReconcileFromFormationCharacterFormationUserItems";
+            _pendingCollectionMounts++;
+            try
+            {
+                var arrayLoader = new Gs2Bind.Gs2Formation.FormArrayLoader("CharacterFormation", _moldModelName);
+                var loadedItems = await arrayLoader.Load(_gs2, _session);
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!IsCurrentAxisUpdate("ReconcileFromFormationCharacterFormationUserItems", updateVersion)) return;
+                var items = loadedItems;
+                await ReconcileFromFormationCharacterFormationUserItems(items, attachChildSubscribe: _subscriptionActive, cancellationToken, updateVersion);
+                if (!IsCurrentAxisUpdate("ReconcileFromFormationCharacterFormationUserItems", updateVersion)) return;
+                _activeCollectionAxis = "ReconcileFromFormationCharacterFormationUserItems";
+            }
+            finally { if (--_pendingCollectionMounts == 0) _pendingCollectionAxis = null; }
         }
 
         public void SubscribeFromFormationCharacterFormationUserData(Action? onChange = null, Action<Exception>? onError = null)
         {
             ThrowIfDisposed();
             if (_subscriptionActive) throw new InvalidOperationException("Already subscribed");
+            if (_pendingCollectionMounts != 0) throw new InvalidOperationException("Cannot subscribe while a collection mount is pending.");
+            if (_activeCollectionAxis != null && _activeCollectionAxis != "ReconcileFromFormationCharacterFormationUserItems")
+                throw new InvalidOperationException("Cannot subscribe to a different collection axis.");
             _subscriptionActive = true;
+            _subscribedCollectionAxis = "ReconcileFromFormationCharacterFormationUserItems";
+            try
+            {
             // Consumer failures need the same error channel as asynchronous reconciliation.
             Action notify = () =>
             {
@@ -254,7 +286,6 @@ namespace GS2Studio.Generated.CharacterFormationForm
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            foreach (var b in _binders) b.Subscribe(notify);
             var arrayLoader = new Gs2Bind.Gs2Formation.FormArrayLoader("CharacterFormation", _moldModelName);
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
@@ -262,9 +293,10 @@ namespace GS2Studio.Generated.CharacterFormationForm
                 async (_, _, items) =>
                 {
                     if (_disposed) return;
+                    var updateVersion = BeginAxisUpdate("ReconcileFromFormationCharacterFormationUserItems");
                     try
                     {
-                        await ReconcileFromFormationCharacterFormationUserItems(items, attachChildSubscribe: true, CancellationToken.None);
+                        await ReconcileFromFormationCharacterFormationUserItems(items, attachChildSubscribe: true, CancellationToken.None, updateVersion);
                     }
                     catch (Exception ex)
                     {
@@ -273,41 +305,68 @@ namespace GS2Studio.Generated.CharacterFormationForm
                 },
                 notify
             ));
+            foreach (var b in _binders) b.Subscribe(notify);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
-        private async Task ReconcileFromFormationCharacterFormationUserItems(IList<Gs2.Unity.Gs2Formation.Model.EzForm> items, bool attachChildSubscribe, CancellationToken cancellationToken)
+        private async Task ReconcileFromFormationCharacterFormationUserItems(IList<Gs2.Unity.Gs2Formation.Model.EzForm> items, bool attachChildSubscribe, CancellationToken cancellationToken, long updateVersion)
         {
+            if (!IsCurrentAxisUpdate("ReconcileFromFormationCharacterFormationUserItems", updateVersion)) return;
             var seen = new HashSet<string>();
             foreach (var item in items)
             {
-                if (_disposed) return;
+                var key = ExtractFormationCharacterFormationUserRowKey(item);
+                if (key != null && !seen.Add(key)) throw new InvalidOperationException("Duplicate SDK backing row key.");
+            }
+            foreach (var item in items)
+            {
+                if (!IsCurrentAxisUpdate("ReconcileFromFormationCharacterFormationUserItems", updateVersion)) return;
                 var rowKey = ExtractFormationCharacterFormationUserRowKey(item);
                 if (rowKey == null) continue;
-                seen.Add(rowKey);
-                if (_bindersByRowKey.TryGetValue(rowKey, out var existing))
+                var nextId = ExtractFormationCharacterFormationUserIdentity(item);
+                _bindersByRowKey.TryGetValue(rowKey, out var existing);
+                if (existing != null && EqualityComparer<CharacterFormationFormId>.Default.Equals(existing.Id, nextId))
                 {
                     ApplyFormationCharacterFormationUserItemTo(existing.MutableModel, item);
+                    existing.RegisterOwnedScope("foundation-economy-character-formation", "userData", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "foundation-economy-character-formation", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "formation", "Form", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-character-formation\",\"userData\",\"udr_2SQ6KKX9J79N6T007TNJZ17ZTM\",\"formation\",\"Form\",\"index\",\"int\"]"] = (object)item.Index! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, existing), id => existing.HasOwnedReference("foundation-economy-character-formation", "userData", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "foundation-economy-character-formation", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "formation", "Form", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-character-formation", "userData", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "foundation-economy-character-formation", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "formation", "Form", id)) == 1);
+                    continue;
                 }
-                else
+                var binder = await BuildBinderFromFormationCharacterFormationUserItem(item, cancellationToken, updateVersion, attachChildSubscribe);
+                if (binder == null) return;
+                if (!IsCurrentAxisUpdate("ReconcileFromFormationCharacterFormationUserItems", updateVersion)) { binder.Dispose(); return; }
+                _bindersByRowKey.TryGetValue(rowKey, out var raced);
+                if (!ReferenceEquals(existing, raced))
                 {
-                    var binder = await BuildBinderFromFormationCharacterFormationUserItem(item, cancellationToken);
-                    if (_disposed)
+                    try
                     {
-                        binder.Dispose();
-                        return;
+                        if (raced != null && EqualityComparer<CharacterFormationFormId>.Default.Equals(raced.Id, nextId)) { ApplyFormationCharacterFormationUserItemTo(raced.MutableModel, item); raced.RegisterOwnedScope("foundation-economy-character-formation", "userData", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "foundation-economy-character-formation", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "formation", "Form", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-character-formation\",\"userData\",\"udr_2SQ6KKX9J79N6T007TNJZ17ZTM\",\"formation\",\"Form\",\"index\",\"int\"]"] = (object)item.Index! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, raced), id => raced.HasOwnedReference("foundation-economy-character-formation", "userData", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "foundation-economy-character-formation", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "formation", "Form", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-character-formation", "userData", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "foundation-economy-character-formation", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "formation", "Form", id)) == 1); }
                     }
-                    if (_bindersByRowKey.TryGetValue(rowKey, out var raced))
-                    {
-                        ApplyFormationCharacterFormationUserItemTo(raced.MutableModel, item);
-                        binder.Dispose();
-                        continue;
-                    }
-                    if (attachChildSubscribe) binder.Subscribe(_onChange);
-                    _bindersByRowKey[rowKey] = binder;
-                    _binders.Add(binder);
-                    ItemAdded?.Invoke(binder);
+                    finally { binder.Dispose(); }
+                    continue;
                 }
+                try { if (attachChildSubscribe) binder.Subscribe(_onChange); }
+                catch { binder.Dispose(); throw; }
+                _bindersByRowKey[rowKey] = binder;
+                binder.RegisterOwnedScope("foundation-economy-character-formation", "userData", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "foundation-economy-character-formation", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "formation", "Form", rowKey, Array.Empty<string>(), null, new Dictionary<string, object> { ["[\"foundation-economy-character-formation\",\"userData\",\"udr_2SQ6KKX9J79N6T007TNJZ17ZTM\",\"formation\",\"Form\",\"index\",\"int\"]"] = (object)item.Index! }, () => !_disposed && _bindersByRowKey.TryGetValue(rowKey, out var current) && ReferenceEquals(current, binder), id => binder.HasOwnedReference("foundation-economy-character-formation", "userData", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "foundation-economy-character-formation", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "formation", "Form", id) && _bindersByRowKey.Values.Count(candidate => candidate.HasOwnedReference("foundation-economy-character-formation", "userData", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "foundation-economy-character-formation", "udr_2SQ6KKX9J79N6T007TNJZ17ZTM", "formation", "Form", id)) == 1);
+                Exception? notificationError = null;
+                if (existing != null)
+                {
+                    _binders.Remove(existing);
+                    _binders.Add(binder);
+                    try { ItemRemoved?.Invoke(existing); } catch (Exception ex) { notificationError = ex; }
+                    try { existing.Dispose(); } catch (Exception ex) { notificationError ??= ex; }
+                    if (_disposed) { if (notificationError != null) throw notificationError; return; }
+                }
+                else _binders.Add(binder);
+                try { ItemAdded?.Invoke(binder); } catch (Exception ex) { notificationError ??= ex; }
+                if (notificationError != null) throw notificationError;
             }
+            if (!IsCurrentAxisUpdate("ReconcileFromFormationCharacterFormationUserItems", updateVersion)) return;
             if (_bindersByRowKey.Count > seen.Count)
             {
                 var toRemove = new List<string>();
@@ -347,13 +406,13 @@ namespace GS2Studio.Generated.CharacterFormationForm
             if (!_disposed) SortBinders();
         }
 
-        private async Task<CharacterFormationFormBinder> BuildBinderFromFormationCharacterFormationUserItem(Gs2.Unity.Gs2Formation.Model.EzForm item, CancellationToken cancellationToken)
+        private async Task<CharacterFormationFormBinder?> BuildBinderFromFormationCharacterFormationUserItem(Gs2.Unity.Gs2Formation.Model.EzForm item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
             var model = CharacterFormationFormBinder.CreateModel(new CharacterFormationFormId(item.Index.ToString(global::System.Globalization.CultureInfo.InvariantCulture)));
             ApplyFormationCharacterFormationUserItemTo(model, item);
-            var binder = new CharacterFormationFormBinder(model, _gs2, _session, index: item.Index);
-            await binder.MountAsync(cancellationToken);
-            return binder;
+            var binder = new CharacterFormationFormBinder(model, _gs2, _session, index: item.Index, __sdk__userdataFormationForm_2: item.Index);
+            try { await binder.MountAsync(cancellationToken); return binder; }
+            catch { binder.Dispose(); throw; }
         }
 
         private static void ApplyFormationCharacterFormationUserItemTo(MutableCharacterFormationForm model, Gs2.Unity.Gs2Formation.Model.EzForm item)
@@ -371,7 +430,9 @@ namespace GS2Studio.Generated.CharacterFormationForm
         {
             var id = ExtractFormationCharacterFormationUserIdentity(item);
             if (EqualityComparer<CharacterFormationFormId>.Default.Equals(id, default)) return null;
-            return $"{item.Index}";
+            var __key0 = System.Convert.ToString(item.Index, System.Globalization.CultureInfo.InvariantCulture);
+            if (string.IsNullOrEmpty(__key0)) return null;
+            return string.Concat("[\"user\",\"FormationCharacterFormation\",null,null,\"foundation-economy-character-formation\",\"udr_2SQ6KKX9J79N6T007TNJZ17ZTM\",null,null,\"formation\",\"Form\"]|", __key0.Length.ToString(System.Globalization.CultureInfo.InvariantCulture), ":", __key0);
         }
 
         internal sealed class CharacterFormationFormBinderComparer : IComparer<IReadOnlyCharacterFormationFormBinder>

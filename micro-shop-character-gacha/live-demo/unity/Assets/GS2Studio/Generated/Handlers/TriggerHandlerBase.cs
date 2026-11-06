@@ -27,6 +27,9 @@ namespace GS2Studio.Generated.Trigger
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public TriggerMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<Trigger>? Updated;
 
         public event Action<IActionableTriggerBinder>? Bound;

@@ -27,8 +27,12 @@ namespace GS2Studio.Generated.Equipment.UI
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "TransactionConsumeAction" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -67,7 +71,20 @@ namespace GS2Studio.Generated.Equipment.UI
 
         private void OnUpdated(Equipment model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke($"{model.Id.Value}");
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedTransactionConsumeAction) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(EquipmentNameLabel)} on '{name}': this row's mount surface did not run TransactionConsumeAction, which fills what this component reads (Id); those readings render as their default, not as an absent value.", this);
         }
     }
 }

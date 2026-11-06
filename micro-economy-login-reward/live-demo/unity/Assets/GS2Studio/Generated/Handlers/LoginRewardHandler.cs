@@ -28,6 +28,7 @@ namespace GS2Studio.Generated.LoginReward
         [SerializeField] private string? _id;
         [SerializeField] private int _rewardIndex;
         [SerializeField] private string? _loginRewardCollection;
+        private string? _sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -52,6 +53,7 @@ namespace GS2Studio.Generated.LoginReward
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(ILoginRewardBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -69,6 +71,17 @@ namespace GS2Studio.Generated.LoginReward
             _loginRewardCollection = loginRewardCollection;
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+        }
+
+        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
+        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName)
+        {
+            InvalidateBindingIntent();
+            _sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName = sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName;
+            if (IsReadyForReload())
+                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
+            else
+                DisposeOwnedBinder();
         }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
@@ -94,7 +107,9 @@ namespace GS2Studio.Generated.LoginReward
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new LoginRewardId(_id ?? string.Empty), _rewardIndex, new LoginRewardCollectionId(_loginRewardCollection ?? string.Empty), gs2, session, cancellationToken);
+                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName))
+                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName' is not set.");
+                var binder = await ResolveBinderFactory().CreateAsync(new LoginRewardId(_id ?? string.Empty), _rewardIndex, new LoginRewardCollectionId(_loginRewardCollection ?? string.Empty), gs2, session, cancellationToken, __sdk__transactionAcquireAction_1: _sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -184,6 +199,7 @@ namespace GS2Studio.Generated.LoginReward
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
             if (string.IsNullOrEmpty(_loginRewardCollection)) return false;
+            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_login_x2d_reward_masterData_mdr_1VVYCBC8X1AZSSWXJHHSN1XCC7_loginReward_BonusModel_bonusModelName)) return false;
             return true;
         }
 

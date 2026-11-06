@@ -25,6 +25,9 @@ namespace GS2Studio.Generated.MissionCollection
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public MissionCollectionMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<MissionCollection>? Updated;
 
         public event Action<IActionableMissionCollectionBinder>? Bound;

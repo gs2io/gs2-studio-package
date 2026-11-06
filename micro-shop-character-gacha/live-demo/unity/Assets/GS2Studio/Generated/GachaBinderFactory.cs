@@ -29,7 +29,9 @@ namespace GS2Studio.Generated.Gacha
             GachaId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            string? __sdk__lotteryCharacterGachaNamespaceLotteryModel_1 = null,
+            string? __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2 = null);
         IGachaBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
 
@@ -41,9 +43,11 @@ namespace GS2Studio.Generated.Gacha
             GachaId id,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__lotteryCharacterGachaNamespaceLotteryModel_1 = null,
+            string? __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2 = null)
         {
-            return await GachaBinder.CreateAsync(id, gs2, session, cancellationToken);
+            return await GachaBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__lotteryCharacterGachaNamespaceLotteryModel_1, __sdk__showcaseCharacterGachaNamespaceShowcaseDisplayItem_2);
         }
         public IGachaBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

@@ -13,12 +13,12 @@ namespace GS2Studio.Generated.VersionGate
     public interface VersionGate
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the version gate.
         /// </summary>
         VersionGateId Id { get; }
 
         /// <summary>
-        /// GRN of the GS2-Identifier user a player who passes the check is signed in as: grn:gs2::{ownerId}:identifier:user:&lt;name&gt;
+        /// GS2-Identifier user whose project token a player receives on passing the version check, as grn:gs2::{ownerId}:identifier:user:&lt;name&gt;.
         /// </summary>
         string AssumeUserId { get; }
     }

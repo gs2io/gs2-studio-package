@@ -23,7 +23,8 @@ namespace GS2Studio.Generated.CharacterFormationForm
             CharacterFormationFormId id, int index,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataFormationForm_2 = null);
         ICharacterFormationFormBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string moldModelName);
     }
 
@@ -35,9 +36,10 @@ namespace GS2Studio.Generated.CharacterFormationForm
             CharacterFormationFormId id, int index,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            int? __sdk__userdataFormationForm_2 = null)
         {
-            return await CharacterFormationFormBinder.CreateAsync(id, index, gs2, session, cancellationToken);
+            return await CharacterFormationFormBinder.CreateAsync(id, index, gs2, session, cancellationToken, __sdk__userdataFormationForm_2);
         }
         public ICharacterFormationFormBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string moldModelName)
         {

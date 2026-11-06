@@ -13,12 +13,12 @@ namespace GS2Studio.Generated.EquipmentEnchant
     public interface EquipmentEnchant
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the enchantment configuration.
         /// </summary>
         EquipmentEnchantId Id { get; }
 
         /// <summary>
-        /// Most bonuses a single piece can hold
+        /// Maximum number of bonus effects one equipment item can hold.
         /// </summary>
         int MaximumParameterCount { get; }
     }

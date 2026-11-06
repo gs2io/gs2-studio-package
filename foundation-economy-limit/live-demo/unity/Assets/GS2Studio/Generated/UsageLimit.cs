@@ -13,37 +13,37 @@ namespace GS2Studio.Generated.UsageLimit
     public interface UsageLimit
     {
         /// <summary>
-        /// Unique identifier
+        /// Uniquely identifies the reset schedule.
         /// </summary>
         UsageLimitId Id { get; }
 
         /// <summary>
-        /// When the counts return to zero
+        /// Cadence used to reset usage counts.
         /// </summary>
         string ResetType { get; }
 
         /// <summary>
-        /// Reset weekday (weekly only)
+        /// Weekday on which a weekly reset occurs.
         /// </summary>
         string? ResetDayOfWeek { get; }
 
         /// <summary>
-        /// Reset day (monthly only)
+        /// Day of the month on which a monthly reset occurs.
         /// </summary>
         int? ResetDayOfMonth { get; }
 
         /// <summary>
-        /// Reset hour, UTC
+        /// UTC hour at which the reset occurs.
         /// </summary>
         int? ResetHour { get; }
 
         /// <summary>
-        /// Reset interval in days (days only)
+        /// Number of days between resets for the days-based cadence.
         /// </summary>
         int? Days { get; }
 
         /// <summary>
-        /// Interval origin (days only)
+        /// Reference time used to calculate a days-based reset cadence.
         /// </summary>
         DateTime? AnchorTimestamp { get; }
     }

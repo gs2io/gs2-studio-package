@@ -21,17 +21,137 @@ using Gs2.Unity.Gs2Limit.Model;
 using Gs2Bind.Gs2Exchange;
 using Gs2Bind.Gs2Limit;
 using Gs2.Util.LitJson;
+using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.UsageLimitCounter
 {
+    /// <summary>
+    /// Which construction path built a row. A row built by a path that has no
+    /// value for a loader's key must not run that loader: the key would go out
+    /// empty and the server would reject the request.
+    /// </summary>
+    public enum UsageLimitCounterMountSurface
+    {
+        /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
+        Full,
+
+        /// <summary>Built by the ExchangeLimitReset master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionConsumeAction", "ExchangeLimitFreeUseNamespaceRateModel", "TransactionConsumeAction2", "ExchangeLimitAdUseNamespaceRateModel", "TransactionConsumeAction3", "UserdataLimitLimitLimitModel")]
+        ExchangeLimitResetMaster,
+
+        /// <summary>Built by the ExchangeLimitFreeUse master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "TransactionConsumeAction", "ExchangeLimitResetNamespaceRateModel", "TransactionAcquireAction2", "TransactionAcquireAction3", "TransactionAcquireAction4", "ExchangeLimitAdUseNamespaceRateModel", "TransactionConsumeAction3", "UserdataLimitLimitLimitModel")]
+        ExchangeLimitFreeUseMaster,
+
+        /// <summary>Built by the ExchangeLimitAdUse master-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "ExchangeLimitResetNamespaceRateModel", "TransactionAcquireAction2", "ExchangeLimitFreeUseNamespaceRateModel", "TransactionAcquireAction3", "TransactionAcquireAction4", "TransactionConsumeAction2", "UserdataLimitLimitLimitModel")]
+        ExchangeLimitAdUseMaster,
+
+        /// <summary>Built by the LimitLimit user-data list axis.</summary>
+        [Gs2SkipsLoaders("TransactionAcquireAction", "TransactionConsumeAction", "ExchangeLimitResetNamespaceRateModel", "TransactionAcquireAction2", "ExchangeLimitFreeUseNamespaceRateModel", "TransactionAcquireAction3", "TransactionAcquireAction4", "TransactionConsumeAction2", "ExchangeLimitAdUseNamespaceRateModel", "TransactionConsumeAction3", "UserdataLimitLimitLimitModel")]
+        LimitLimitUser,
+    }
+
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
     public interface IReadOnlyUsageLimitCounterBinder : UsageLimitCounter
     {
+        /// <summary>Explains why some loader values remain at their defaults on this construction path.</summary>
+        UsageLimitCounterMountSurface MountSurface { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeActionLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeLimitFreeUseNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeLimitFreeUseNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeAction2Loader</c>. False means this path does not supply <c>Limit</c>, <c>Id</c>, <c>FreeMax</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction2 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeLimitAdUseNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeLimitAdUseNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader</c> load on <c>__transactionConsumeAction3Loader</c>. False means this path does not supply <c>Limit</c>, <c>Id</c>, <c>AdMax</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionConsumeAction3 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Limit.CounterLoader</c> load on <c>__userdataLimitLimitLimitModelLoader</c>. False means this path does not supply <c>Count</c>, <c>NextResetAt</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key limitName.</remarks>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key limitName.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key limitName.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key limitName.</remarks>
+        bool LoadedUserdataLimitLimitLimitModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireActionLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelLoader</c> load on <c>__exchangeLimitResetNamespaceRateModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedExchangeLimitResetNamespaceRateModel { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireAction2Loader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction2 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireAction3Loader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction3 { get; }
+
+        /// <summary>
+        /// This construction path permits the <c>Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader</c> load on <c>__transactionAcquireAction4Loader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// </summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        bool LoadedTransactionAcquireAction4 { get; }
     }
 
     /// <summary>Collection consumers can dispatch actions without taking over subscription or disposal.</summary>
     public interface IActionableUsageLimitCounterBinder : IReadOnlyUsageLimitCounterBinder
     {
+        UsageLimitCounterBinder.OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId);
         Task UseFree(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
         Task UseWithAd(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
         Task ResetEveryAllowance(Gs2.Unity.Gs2Exchange.Model.EzConfig[]? config = null);
@@ -45,7 +165,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
     }
 
     /// <summary>Keep read and navigation access available through non-owning views without exposing lifecycle methods.</summary>
-    public class ReadOnlyUsageLimitCounterBinder : IReadOnlyUsageLimitCounterBinder
+    public abstract class ReadOnlyUsageLimitCounterBinder : IReadOnlyUsageLimitCounterBinder
     {
         // The mutable model is internal, so private protected keeps its field within the same assembly.
         private protected readonly MutableUsageLimitCounter _model;
@@ -67,6 +187,43 @@ namespace GS2Studio.Generated.UsageLimitCounter
         /// <inheritdoc cref="UsageLimitCounter.AdMax" />
         public int AdMax => _model.AdMax;
 
+        /// <inheritdoc />
+        public abstract UsageLimitCounterMountSurface MountSurface { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeLimitFreeUseNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction2 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeLimitAdUseNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionConsumeAction3 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedUserdataLimitLimitLimitModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedExchangeLimitResetNamespaceRateModel { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction2 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction3 { get; }
+
+        /// <inheritdoc />
+        public abstract bool LoadedTransactionAcquireAction4 { get; }
+
+
         private protected ReadOnlyUsageLimitCounterBinder(MutableUsageLimitCounter model, Gs2Domain gs2, IGameSession session)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
@@ -76,10 +233,161 @@ namespace GS2Studio.Generated.UsageLimitCounter
 
         /// <summary>Delegate disposed checks to the owner so read-only callers cannot navigate after disposal.</summary>
         protected virtual void ThrowIfDisposedForNavigation() { }
+        protected virtual bool __scopeNavigationOwnerAlive => true;
     }
 
     public sealed class UsageLimitCounterBinder : ReadOnlyUsageLimitCounterBinder, IUsageLimitCounterBinder
     {
+        /// <summary>A collection-issued scope identifying the resource and SDK backing row.</summary>
+        public sealed class OwnedScopeHandle
+        {
+            private readonly UsageLimitCounterBinder _owner;
+            private readonly Func<bool> _isCurrent;
+            private readonly Func<string, bool> _matchesReference;
+            private string[] _aliases;
+            private string? _aliasIdentity;
+            private string? _authoredIdentity;
+            private Dictionary<string, object> _sdkKeys;
+            public string PackageId { get; }
+            public string ResourceKind { get; }
+            public string ResourceId { get; }
+            public string ProviderPackageId { get; }
+            public string ProviderResourceId { get; }
+            public string ServiceName { get; }
+            public string ModelName { get; }
+            public string RowKey { get; }
+            internal OwnedScopeHandle(UsageLimitCounterBinder owner, string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+            {
+                _aliases = aliases;
+                _authoredIdentity = authoredIdentity;
+                _sdkKeys = sdkKeys;
+                _aliasIdentity = Convert.ToString(owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _owner = owner;
+                PackageId = packageId;
+                ResourceKind = resourceKind;
+                ResourceId = resourceId;
+                ProviderPackageId = providerPackageId;
+                ProviderResourceId = providerResourceId;
+                ServiceName = serviceName;
+                ModelName = modelName;
+                RowKey = rowKey;
+                _isCurrent = isCurrent;
+                _matchesReference = matchesReference;
+            }
+            internal void UpdateValues(string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys) { _aliases = aliases; _authoredIdentity = authoredIdentity; _sdkKeys = sdkKeys; _aliasIdentity = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture); }
+            internal object? ReadSdkKey(string name) => IsCurrent && _sdkKeys.TryGetValue(name, out var value) ? value : null;
+            internal string? ReadAuthoredIdentity() => IsCurrent ? _authoredIdentity : null;
+            internal bool IncludesReference(string id)
+            {
+                var current = Convert.ToString(_owner.Id.Value, System.Globalization.CultureInfo.InvariantCulture);
+                return string.Equals(current, id, StringComparison.Ordinal) || (string.Equals(current, _aliasIdentity, StringComparison.Ordinal) && _aliases.Contains(id, StringComparer.Ordinal));
+            }
+            public bool IsCurrent => !_owner._disposed && _isCurrent();
+            public bool MatchesReference(string id) => IsCurrent && _matchesReference(id);
+            public bool MatchesOwner(object identity) => IsCurrent && ReferenceEquals(_owner._model, identity);
+            public UsageLimitCounter Value => IsCurrent ? _owner : throw new InvalidOperationException("The owning row is unavailable.");
+            internal MutableUsageLimitCounter? BorrowSameRow() => IsCurrent ? _owner._model : null;
+            /// <summary>Stage only fields written by the child; this never exposes the owned mutable model.</summary>
+            public sealed class Changes : IMutableUsageLimitCounter
+            {
+                internal readonly OwnedScopeHandle __scopeOwner;
+                internal Changes(OwnedScopeHandle scope) { __scopeOwner = scope; }
+                internal bool __setId;
+                internal UsageLimitCounterId __valueId = default!;
+                public UsageLimitCounterId Id
+                {
+                    get => __setId ? __valueId : __scopeOwner.Value.Id;
+                    set { __setId = true; __valueId = value; }
+                }
+                internal bool __setLimit;
+                internal UsageLimitId __valueLimit = default!;
+                public UsageLimitId Limit
+                {
+                    get => __setLimit ? __valueLimit : __scopeOwner.Value.Limit;
+                    set { __setLimit = true; __valueLimit = value; }
+                }
+                internal bool __setCount;
+                internal long __valueCount = default!;
+                public long Count
+                {
+                    get => __setCount ? __valueCount : __scopeOwner.Value.Count;
+                    set { __setCount = true; __valueCount = value; }
+                }
+                internal bool __setNextResetAt;
+                internal DateTime __valueNextResetAt = default!;
+                public DateTime NextResetAt
+                {
+                    get => __setNextResetAt ? __valueNextResetAt : __scopeOwner.Value.NextResetAt;
+                    set { __setNextResetAt = true; __valueNextResetAt = value; }
+                }
+                internal bool __setFreeMax;
+                internal int __valueFreeMax = default!;
+                public int FreeMax
+                {
+                    get => __setFreeMax ? __valueFreeMax : __scopeOwner.Value.FreeMax;
+                    set { __setFreeMax = true; __valueFreeMax = value; }
+                }
+                internal bool __setAdMax;
+                internal int __valueAdMax = default!;
+                public int AdMax
+                {
+                    get => __setAdMax ? __valueAdMax : __scopeOwner.Value.AdMax;
+                    set { __setAdMax = true; __valueAdMax = value; }
+                }
+            }
+            public Changes CreateChanges()
+            {
+                if (!IsCurrent) throw new InvalidOperationException("The owning row is unavailable.");
+                return new Changes(this);
+            }
+            public bool TryCommit(Changes changes)
+            {
+                if (changes == null || !ReferenceEquals(changes.__scopeOwner, this) || !IsCurrent) return false;
+                if (changes.__setId && !EqualityComparer<UsageLimitCounterId>.Default.Equals(changes.__valueId, _owner._model.Id)) return false;
+                if (changes.__setId) { _owner._model.Id = changes.__valueId; changes.__setId = false; }
+                if (changes.__setLimit) { _owner._model.Limit = changes.__valueLimit; changes.__setLimit = false; }
+                if (changes.__setCount) { _owner._model.Count = changes.__valueCount; changes.__setCount = false; }
+                if (changes.__setNextResetAt) { _owner._model.NextResetAt = changes.__valueNextResetAt; changes.__setNextResetAt = false; }
+                if (changes.__setFreeMax) { _owner._model.FreeMax = changes.__valueFreeMax; changes.__setFreeMax = false; }
+                if (changes.__setAdMax) { _owner._model.AdMax = changes.__valueAdMax; changes.__setAdMax = false; }
+                return true;
+            }
+        }
+
+        private readonly List<OwnedScopeHandle> _ownedScopes = new List<OwnedScopeHandle>();
+        internal void RegisterOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string rowKey, string[] aliases, string? authoredIdentity, Dictionary<string, object> sdkKeys, Func<bool> isCurrent, Func<string, bool> matchesReference)
+        {
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.RowKey == rowKey) { scope.UpdateValues(aliases, authoredIdentity, sdkKeys); return; }
+            _ownedScopes.Add(new OwnedScopeHandle(this, packageId, resourceKind, resourceId, providerPackageId, providerResourceId, serviceName, modelName, rowKey, aliases, authoredIdentity, sdkKeys, isCurrent, matchesReference));
+        }
+        internal bool HasOwnedReference(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId, string serviceName, string modelName, string id)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId && scope.ServiceName == serviceName && scope.ModelName == modelName && scope.IncludesReference(id)) return true;
+            return false;
+        }
+        internal bool HasOwnedScope(string packageId, string resourceKind, string resourceId, string providerPackageId, string providerResourceId)
+        {
+            if (_disposed) return false;
+            foreach (var scope in _ownedScopes)
+                if (scope.IsCurrent && scope.PackageId == packageId && scope.ResourceKind == resourceKind && scope.ResourceId == resourceId && scope.ProviderPackageId == providerPackageId && scope.ProviderResourceId == providerResourceId) return true;
+            return false;
+        }
+        public OwnedScopeHandle? GetOwnedScopeHandle(string packageId, string resourceKind, string resourceId)
+        {
+            ThrowIfDisposed();
+            OwnedScopeHandle? selected = null;
+            foreach (var scope in _ownedScopes)
+            {
+                if (!scope.IsCurrent || scope.PackageId != packageId || scope.ResourceKind != resourceKind || scope.ResourceId != resourceId) continue;
+                if (selected != null) return null;
+                selected = scope;
+            }
+            return selected;
+        }
+
         private readonly List<Action> _unsubscribers = new List<Action>();
         private bool _disposed;
         internal bool _mounted;
@@ -96,25 +404,146 @@ namespace GS2Studio.Generated.UsageLimitCounter
         private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeAction3Loader;
         private readonly Gs2Bind.Gs2Limit.CounterLoader __userdataLimitLimitLimitModelLoader;
 
+        private readonly UsageLimitCounterMountSurface _mountSurfaceValue;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeActionLoader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitAdUseMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeLimitFreeUseNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeLimitFreeUseNamespaceRateModelLoader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitFreeUseMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeAction2Loader</c> reads.</summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeAction2Loader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitFreeUseMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeLimitAdUseNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeLimitAdUseNamespaceRateModelLoader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitAdUseMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionConsumeAction3Loader</c> reads.</summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionConsumeAction3Loader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitAdUseMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__userdataLimitLimitLimitModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeLimitResetMaster: does not supply SDK backing key limitName.</remarks>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key limitName.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key limitName.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key limitName.</remarks>
+        private bool Runs__userdataLimitLimitLimitModelLoader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireActionLoader</c> reads.</summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireActionLoader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitResetMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__exchangeLimitResetNamespaceRateModelLoader</c> reads.</summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__exchangeLimitResetNamespaceRateModelLoader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitResetMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireAction2Loader</c> reads.</summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireAction2Loader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitResetMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireAction3Loader</c> reads.</summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireAction3Loader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitResetMaster;
+
+        /// <summary>Avoid loading unless this path supplies every key <c>__transactionAcquireAction4Loader</c> reads.</summary>
+        /// <remarks>ExchangeLimitFreeUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ExchangeLimitAdUseMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>LimitLimitUser: does not supply SDK backing key name.</remarks>
+        private bool Runs__transactionAcquireAction4Loader => _mountSurfaceValue is UsageLimitCounterMountSurface.Full or UsageLimitCounterMountSurface.ExchangeLimitResetMaster;
+
+        /// <inheritdoc />
+        public override UsageLimitCounterMountSurface MountSurface => _mountSurfaceValue;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction => Runs__transactionConsumeActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeLimitFreeUseNamespaceRateModel => Runs__exchangeLimitFreeUseNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction2 => Runs__transactionConsumeAction2Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeLimitAdUseNamespaceRateModel => Runs__exchangeLimitAdUseNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionConsumeAction3 => Runs__transactionConsumeAction3Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedUserdataLimitLimitLimitModel => Runs__userdataLimitLimitLimitModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction => Runs__transactionAcquireActionLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedExchangeLimitResetNamespaceRateModel => Runs__exchangeLimitResetNamespaceRateModelLoader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction2 => Runs__transactionAcquireAction2Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction3 => Runs__transactionAcquireAction3Loader;
+
+        /// <inheritdoc />
+        public override bool LoadedTransactionAcquireAction4 => Runs__transactionAcquireAction4Loader;
+
         /// <summary>Factories own initialization and mounting so external consumers cannot construct an incomplete binder.</summary>
         internal UsageLimitCounterBinder(
             MutableUsageLimitCounter model,
             Gs2Domain gs2,
-            IGameSession session
+            IGameSession session,
+            UsageLimitCounterMountSurface _mountSurface = UsageLimitCounterMountSurface.Full,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeLimitResetNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeLimitFreeUseNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction3_1 = null,
+            string? __sdk__transactionAcquireAction4_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__exchangeLimitAdUseNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction3_1 = null,
+            string? __sdk__userdataLimitLimitLimitModel_1 = null,
+            string? __sdk__userdataLimitLimitLimitModel_2 = null
         ) : base(model, gs2, session)
         {
-            __transactionAcquireActionLoader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", _model.Id, 1);
-            __transactionConsumeActionLoader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("LimitAdUse", _model.Id, 0);
-            __exchangeLimitResetNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("LimitReset", _model.Id);
-            __transactionAcquireAction2Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", _model.Id, 3);
-            __exchangeLimitFreeUseNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("LimitFreeUse", _model.Id);
-            __transactionAcquireAction3Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", _model.Id, 0);
-            __transactionAcquireAction4Loader = new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", _model.Id, 2);
-            __transactionConsumeAction2Loader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("LimitFreeUse", _model.Id, 0);
-            __exchangeLimitAdUseNamespaceRateModelLoader = new Gs2Bind.Gs2Exchange.RateModelLoader("LimitAdUse", _model.Id);
-            __transactionConsumeAction3Loader = new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("LimitAdUse", _model.Id, 1);
-            __userdataLimitLimitLimitModelLoader = new Gs2Bind.Gs2Limit.CounterLoader("Limit", _model.Limit, _model.Id);
+
+            _mountSurfaceValue = _mountSurface;
+            __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction_1!), 1) : null!;
+            __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("LimitAdUse", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction_1!), 0) : null!;
+            __exchangeLimitResetNamespaceRateModelLoader = Runs__exchangeLimitResetNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("LimitReset", (string.IsNullOrEmpty(__sdk__exchangeLimitResetNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeLimitResetNamespaceRateModel_1!)) : null!;
+            __transactionAcquireAction2Loader = Runs__transactionAcquireAction2Loader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", (string.IsNullOrEmpty(__sdk__transactionAcquireAction2_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction2_1!), 3) : null!;
+            __exchangeLimitFreeUseNamespaceRateModelLoader = Runs__exchangeLimitFreeUseNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("LimitFreeUse", (string.IsNullOrEmpty(__sdk__exchangeLimitFreeUseNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeLimitFreeUseNamespaceRateModel_1!)) : null!;
+            __transactionAcquireAction3Loader = Runs__transactionAcquireAction3Loader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", (string.IsNullOrEmpty(__sdk__transactionAcquireAction3_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction3_1!), 0) : null!;
+            __transactionAcquireAction4Loader = Runs__transactionAcquireAction4Loader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("LimitReset", (string.IsNullOrEmpty(__sdk__transactionAcquireAction4_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionAcquireAction4_1!), 2) : null!;
+            __transactionConsumeAction2Loader = Runs__transactionConsumeAction2Loader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("LimitFreeUse", (string.IsNullOrEmpty(__sdk__transactionConsumeAction2_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction2_1!), 0) : null!;
+            __exchangeLimitAdUseNamespaceRateModelLoader = Runs__exchangeLimitAdUseNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("LimitAdUse", (string.IsNullOrEmpty(__sdk__exchangeLimitAdUseNamespaceRateModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__exchangeLimitAdUseNamespaceRateModel_1!)) : null!;
+            __transactionConsumeAction3Loader = Runs__transactionConsumeAction3Loader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("LimitAdUse", (string.IsNullOrEmpty(__sdk__transactionConsumeAction3_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__transactionConsumeAction3_1!), 1) : null!;
+            __userdataLimitLimitLimitModelLoader = Runs__userdataLimitLimitLimitModelLoader ? new Gs2Bind.Gs2Limit.CounterLoader("Limit", (string.IsNullOrEmpty(__sdk__userdataLimitLimitLimitModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataLimitLimitLimitModel_1!), (string.IsNullOrEmpty(__sdk__userdataLimitLimitLimitModel_2) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataLimitLimitLimitModel_2!)) : null!;
         }
+
 
         /// <summary>Seed identity before constructing loaders because their arguments may read model ID and reference properties.</summary>
         internal static MutableUsageLimitCounter CreateModel(UsageLimitCounterId id, UsageLimitId limit)
@@ -129,267 +558,365 @@ namespace GS2Studio.Generated.UsageLimitCounter
             UsageLimitCounterId id, UsageLimitId limit,
             Gs2Domain gs2,
             IGameSession session,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? __sdk__transactionAcquireAction_1 = null,
+            string? __sdk__transactionConsumeAction_1 = null,
+            string? __sdk__exchangeLimitResetNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction2_1 = null,
+            string? __sdk__exchangeLimitFreeUseNamespaceRateModel_1 = null,
+            string? __sdk__transactionAcquireAction3_1 = null,
+            string? __sdk__transactionAcquireAction4_1 = null,
+            string? __sdk__transactionConsumeAction2_1 = null,
+            string? __sdk__exchangeLimitAdUseNamespaceRateModel_1 = null,
+            string? __sdk__transactionConsumeAction3_1 = null,
+            string? __sdk__userdataLimitLimitLimitModel_1 = null,
+            string? __sdk__userdataLimitLimitLimitModel_2 = null)
         {
             var model = CreateModel(id, limit);
-            var binder = new UsageLimitCounterBinder(model, gs2, session);
+            var binder = new UsageLimitCounterBinder(model, gs2, session, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__exchangeLimitResetNamespaceRateModel_1: __sdk__exchangeLimitResetNamespaceRateModel_1, __sdk__transactionAcquireAction2_1: __sdk__transactionAcquireAction2_1, __sdk__exchangeLimitFreeUseNamespaceRateModel_1: __sdk__exchangeLimitFreeUseNamespaceRateModel_1, __sdk__transactionAcquireAction3_1: __sdk__transactionAcquireAction3_1, __sdk__transactionAcquireAction4_1: __sdk__transactionAcquireAction4_1, __sdk__transactionConsumeAction2_1: __sdk__transactionConsumeAction2_1, __sdk__exchangeLimitAdUseNamespaceRateModel_1: __sdk__exchangeLimitAdUseNamespaceRateModel_1, __sdk__transactionConsumeAction3_1: __sdk__transactionConsumeAction3_1, __sdk__userdataLimitLimitLimitModel_1: __sdk__userdataLimitLimitLimitModel_1, __sdk__userdataLimitLimitLimitModel_2: __sdk__userdataLimitLimitLimitModel_2);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
-
         public async Task MountAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
-            var _transactionAcquireAction = await __transactionAcquireActionLoader.Load(_gs2, _session);
+            var _transactionAcquireAction = Runs__transactionAcquireActionLoader ? await __transactionAcquireActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction != null)
             {
             }
-            var _transactionConsumeAction = await __transactionConsumeActionLoader.Load(_gs2, _session);
+            var _transactionConsumeAction = Runs__transactionConsumeActionLoader ? await __transactionConsumeActionLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
             }
-            var _exchangeLimitResetNamespaceRateModel = await __exchangeLimitResetNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeLimitResetNamespaceRateModel = Runs__exchangeLimitResetNamespaceRateModelLoader ? await __exchangeLimitResetNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeLimitResetNamespaceRateModel != null)
             {
             }
-            var _transactionAcquireAction2 = await __transactionAcquireAction2Loader.Load(_gs2, _session);
+            var _transactionAcquireAction2 = Runs__transactionAcquireAction2Loader ? await __transactionAcquireAction2Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction2 != null)
             {
             }
-            var _exchangeLimitFreeUseNamespaceRateModel = await __exchangeLimitFreeUseNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeLimitFreeUseNamespaceRateModel = Runs__exchangeLimitFreeUseNamespaceRateModelLoader ? await __exchangeLimitFreeUseNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeLimitFreeUseNamespaceRateModel != null)
             {
             }
-            var _transactionAcquireAction3 = await __transactionAcquireAction3Loader.Load(_gs2, _session);
+            var _transactionAcquireAction3 = Runs__transactionAcquireAction3Loader ? await __transactionAcquireAction3Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction3 != null)
             {
             }
-            var _transactionAcquireAction4 = await __transactionAcquireAction4Loader.Load(_gs2, _session);
+            var _transactionAcquireAction4 = Runs__transactionAcquireAction4Loader ? await __transactionAcquireAction4Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionAcquireAction4 != null)
             {
             }
-            var _transactionConsumeAction2 = await __transactionConsumeAction2Loader.Load(_gs2, _session);
+            var _transactionConsumeAction2 = Runs__transactionConsumeAction2Loader ? await __transactionConsumeAction2Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction2 != null)
             {
             }
-            var _exchangeLimitAdUseNamespaceRateModel = await __exchangeLimitAdUseNamespaceRateModelLoader.Load(_gs2, _session);
+            var _exchangeLimitAdUseNamespaceRateModel = Runs__exchangeLimitAdUseNamespaceRateModelLoader ? await __exchangeLimitAdUseNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeLimitAdUseNamespaceRateModel != null)
             {
             }
-            var _transactionConsumeAction3 = await __transactionConsumeAction3Loader.Load(_gs2, _session);
+            var _transactionConsumeAction3 = Runs__transactionConsumeAction3Loader ? await __transactionConsumeAction3Loader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction3 != null)
             {
             }
-            var _userdataLimitLimitLimitModel = await __userdataLimitLimitLimitModelLoader.Load(_gs2, _session);
+            var _userdataLimitLimitLimitModel = Runs__userdataLimitLimitLimitModelLoader ? await __userdataLimitLimitLimitModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
-            ApplyUserdataLimitLimitLimitModel(_model, _userdataLimitLimitLimitModel);
+            if (Runs__userdataLimitLimitLimitModelLoader)
+            {
+                ApplyUserdataLimitLimitLimitModel(_model, _userdataLimitLimitLimitModel);
+            }
             UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-            if (_transactionConsumeAction2 == null) _RestoreLimit__transactionConsumeAction2Cache = null; else _RestoreLimit__transactionConsumeAction2Cache = (_transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
-            if (_transactionConsumeAction3 == null) _RestoreLimit__transactionConsumeAction3Cache = null; else _RestoreLimit__transactionConsumeAction3Cache = (_transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                if (_transactionConsumeAction2 == null) _RestoreLimit__transactionConsumeAction2Cache = null; else _RestoreLimit__transactionConsumeAction2Cache = (_transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
+            }
+            if (Runs__transactionConsumeAction3Loader)
+            {
+                if (_transactionConsumeAction3 == null) _RestoreLimit__transactionConsumeAction3Cache = null; else _RestoreLimit__transactionConsumeAction3Cache = (_transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
+            }
             RestoreLimitFromSources();
-            if (_transactionConsumeAction2 == null) _RestoreId__transactionConsumeAction2Cache = null; else _RestoreId__transactionConsumeAction2Cache = (_transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
-            if (_transactionConsumeAction3 == null) _RestoreId__transactionConsumeAction3Cache = null; else _RestoreId__transactionConsumeAction3Cache = (_transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                if (_transactionConsumeAction2 == null) _RestoreId__transactionConsumeAction2Cache = null; else _RestoreId__transactionConsumeAction2Cache = (_transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
+            }
+            if (Runs__transactionConsumeAction3Loader)
+            {
+                if (_transactionConsumeAction3 == null) _RestoreId__transactionConsumeAction3Cache = null; else _RestoreId__transactionConsumeAction3Cache = (_transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
+            }
             RestoreIdFromSources();
-            _model.FreeMax = default;
-            if (_transactionConsumeAction2 != null) RestoreFreeMax(_model, _transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
-            _model.AdMax = default;
-            if (_transactionConsumeAction3 != null) RestoreAdMax(_model, _transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                _model.FreeMax = default;
+                if (_transactionConsumeAction2 != null) RestoreFreeMax(_model, _transactionConsumeAction2.Action, _transactionConsumeAction2.Request);
+            }
+            if (Runs__transactionConsumeAction3Loader)
+            {
+                _model.AdMax = default;
+                if (_transactionConsumeAction3 != null) RestoreAdMax(_model, _transactionConsumeAction3.Action, _transactionConsumeAction3.Request);
+            }
             _mounted = true;
         }
 
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
-            _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+            if (Runs__transactionAcquireActionLoader)
+            {
+                _unsubscribers.Add(__transactionAcquireActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                _unsubscribers.Add(__transactionConsumeActionLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeLimitResetNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeLimitResetNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeLimitResetNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                _unsubscribers.Add(__transactionAcquireAction2Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeLimitFreeUseNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeLimitFreeUseNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeLimitFreeUseNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireAction3Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireAction3Loader)
+            {
+                _unsubscribers.Add(__transactionAcquireAction3Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionAcquireAction4Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionAcquireAction4Loader)
+            {
+                _unsubscribers.Add(__transactionAcquireAction4Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeAction2Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                _unsubscribers.Add(__transactionConsumeAction2Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value == null) _RestoreLimit__transactionConsumeAction2Cache = null; else _RestoreLimit__transactionConsumeAction2Cache = (value.Action, value.Request);
-                    RestoreLimitFromSources();
-                    if (value == null) _RestoreId__transactionConsumeAction2Cache = null; else _RestoreId__transactionConsumeAction2Cache = (value.Action, value.Request);
-                    RestoreIdFromSources();
-                    _model.FreeMax = default;
-                    if (value != null) RestoreFreeMax(_model, value.Action, value.Request);
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__exchangeLimitAdUseNamespaceRateModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value == null) _RestoreLimit__transactionConsumeAction2Cache = null; else _RestoreLimit__transactionConsumeAction2Cache = (value.Action, value.Request);
+                        RestoreLimitFromSources();
+                        if (value == null) _RestoreId__transactionConsumeAction2Cache = null; else _RestoreId__transactionConsumeAction2Cache = (value.Action, value.Request);
+                        RestoreIdFromSources();
+                        _model.FreeMax = default;
+                        if (value != null) RestoreFreeMax(_model, value.Action, value.Request);
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__exchangeLimitAdUseNamespaceRateModelLoader)
+            {
+                _unsubscribers.Add(__exchangeLimitAdUseNamespaceRateModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__transactionConsumeAction3Loader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    if (value != null)
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__transactionConsumeAction3Loader)
+            {
+                _unsubscribers.Add(__transactionConsumeAction3Loader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
                     {
-                    }
-                    if (value == null) _RestoreLimit__transactionConsumeAction3Cache = null; else _RestoreLimit__transactionConsumeAction3Cache = (value.Action, value.Request);
-                    RestoreLimitFromSources();
-                    if (value == null) _RestoreId__transactionConsumeAction3Cache = null; else _RestoreId__transactionConsumeAction3Cache = (value.Action, value.Request);
-                    RestoreIdFromSources();
-                    _model.AdMax = default;
-                    if (value != null) RestoreAdMax(_model, value.Action, value.Request);
-                    UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
-            _unsubscribers.Add(__userdataLimitLimitLimitModelLoader.Subscribe(
-                _gs2,
-                _session,
-                (_, _, value) =>
-                {
-                    if (_disposed) return Task.CompletedTask;
-                    ApplyUserdataLimitLimitLimitModel(_model, value);
-                    return Task.CompletedTask;
-                },
-                () => onChange?.Invoke()
-            ));
+                        if (_disposed) return Task.CompletedTask;
+                        if (value != null)
+                        {
+                        }
+                        if (value == null) _RestoreLimit__transactionConsumeAction3Cache = null; else _RestoreLimit__transactionConsumeAction3Cache = (value.Action, value.Request);
+                        RestoreLimitFromSources();
+                        if (value == null) _RestoreId__transactionConsumeAction3Cache = null; else _RestoreId__transactionConsumeAction3Cache = (value.Action, value.Request);
+                        RestoreIdFromSources();
+                        _model.AdMax = default;
+                        if (value != null) RestoreAdMax(_model, value.Action, value.Request);
+                        UsageLimitCounterOverlayLoader.Active?.Get(_model.Id.ToString())?.ApplyTo(_model);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
+            if (Runs__userdataLimitLimitLimitModelLoader)
+            {
+                _unsubscribers.Add(__userdataLimitLimitLimitModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyUserdataLimitLimitLimitModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
         }
 
         public void Invalidate()
         {
             ThrowIfDisposed();
-            __transactionAcquireActionLoader.Invalidate(_gs2, _session);
-            __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            __exchangeLimitResetNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
-            __exchangeLimitFreeUseNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionAcquireAction3Loader.Invalidate(_gs2, _session);
-            __transactionAcquireAction4Loader.Invalidate(_gs2, _session);
-            __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
-            __exchangeLimitAdUseNamespaceRateModelLoader.Invalidate(_gs2, _session);
-            __transactionConsumeAction3Loader.Invalidate(_gs2, _session);
-            __userdataLimitLimitLimitModelLoader.Invalidate(_gs2, _session);
+            if (Runs__transactionAcquireActionLoader)
+            {
+                __transactionAcquireActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeActionLoader)
+            {
+                __transactionConsumeActionLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeLimitResetNamespaceRateModelLoader)
+            {
+                __exchangeLimitResetNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireAction2Loader)
+            {
+                __transactionAcquireAction2Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeLimitFreeUseNamespaceRateModelLoader)
+            {
+                __exchangeLimitFreeUseNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireAction3Loader)
+            {
+                __transactionAcquireAction3Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionAcquireAction4Loader)
+            {
+                __transactionAcquireAction4Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeAction2Loader)
+            {
+                __transactionConsumeAction2Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__exchangeLimitAdUseNamespaceRateModelLoader)
+            {
+                __exchangeLimitAdUseNamespaceRateModelLoader.Invalidate(_gs2, _session);
+            }
+            if (Runs__transactionConsumeAction3Loader)
+            {
+                __transactionConsumeAction3Loader.Invalidate(_gs2, _session);
+            }
+            if (Runs__userdataLimitLimitLimitModelLoader)
+            {
+                __userdataLimitLimitLimitModelLoader.Invalidate(_gs2, _session);
+            }
         }
 
         private void ThrowIfDisposed()
@@ -401,6 +928,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
         }
 
         protected override void ThrowIfDisposedForNavigation() => ThrowIfDisposed();
+        protected override bool __scopeNavigationOwnerAlive => !_disposed;
 
         private void EnsureActionContext()
         {
@@ -467,6 +995,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 model.NextResetAt = default;
             }
         }
+
         #endregion
 
         #region MasterData reverse decode

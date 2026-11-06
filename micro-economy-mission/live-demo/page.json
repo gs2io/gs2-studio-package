@@ -59,7 +59,7 @@
     "PaidDeposit": {
       "rows": []
     },
-    "StorePrice": {
+    "StoreProductPrices": {
       "rows": []
     },
     "TriggerPull": {

@@ -27,8 +27,12 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 
         public UnityEvent<string> OnUpdate => _onUpdate;
 
+        /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
+        public static readonly string[] RequiredLoaders = { "TransactionConsumeAction2", "UserdataLimitLimitLimitModel" };
+
         private bool _subscribed;
         private bool _warnedMissingHandler;
+        private bool _warnedUnloadedLoaders;
 
         private void OnEnable()
         {
@@ -67,7 +71,20 @@ namespace GS2Studio.Generated.UsageLimitCounter.UI
 
         private void OnUpdated(UsageLimitCounter model)
         {
+            WarnUnloadedLoadersOnce();
             _onUpdate.Invoke($"{model.Count} of {model.FreeMax} free uses are spent. Free uses come back at the next reset.");
+        }
+
+        // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
+        private void WarnUnloadedLoadersOnce()
+        {
+            if (_warnedUnloadedLoaders) return;
+            var binder = _handler?.Binder;
+            if (binder == null) return;
+            if (binder.LoadedUserdataLimitLimitLimitModel && binder.LoadedTransactionConsumeAction2) return;
+            _warnedUnloadedLoaders = true;
+            Debug.LogWarning(
+                $"{nameof(UsageLimitCounterNoFreeUsesLeftLabel)} on '{name}': this row's mount surface did not run TransactionConsumeAction2, UserdataLimitLimitLimitModel, which fills what this component reads (Count, FreeMax); those readings render as their default, not as an absent value.", this);
         }
     }
 }

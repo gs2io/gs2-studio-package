@@ -25,6 +25,9 @@ namespace GS2Studio.Generated.BuffCampaign
 
         public abstract bool HasValue { get; }
 
+        /// <summary>Mount origin explains why some loader readings remain at their defaults.</summary>
+        public BuffCampaignMountSurface? MountSurface => Binder?.MountSurface;
+
         public event Action<BuffCampaign>? Updated;
 
         public event Action<IActionableBuffCampaignBinder>? Bound;

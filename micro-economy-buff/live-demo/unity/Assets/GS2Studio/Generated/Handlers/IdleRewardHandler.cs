@@ -49,6 +49,7 @@ namespace GS2Studio.Generated.IdleReward
             _runtimeOverride = provider;
         }
 
+
         public void SetBinderFactory(IIdleRewardBinderFactory? factory)
         {
             _binderFactory = factory;
@@ -66,6 +67,7 @@ namespace GS2Studio.Generated.IdleReward
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
+
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()

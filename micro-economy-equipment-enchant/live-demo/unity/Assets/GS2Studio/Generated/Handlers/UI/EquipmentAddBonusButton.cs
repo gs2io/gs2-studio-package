@@ -36,7 +36,7 @@ namespace GS2Studio.Generated.Equipment.UI
         public ErrorEvent OnFailed => _onFailed;
 
         /// <summary>Scene baking compares these names with Gs2SkipsLoaders before skipped loaders can leave action arguments at their defaults.</summary>
-        public static readonly string[] RequiredLoaders = { "UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel" };
+        public static readonly string[] RequiredLoaders = { "TransactionConsumeAction", "UserdataInventoryEquipmentItemModel", "UserdataEnchantEquipmentEnchantRarityParameterModel" };
 
         private bool _wired;
         private bool _warnedMissingHandler;
@@ -113,10 +113,10 @@ namespace GS2Studio.Generated.Equipment.UI
         private void WarnUnloadedLoadersOnce(IActionableEquipmentBinder binder)
         {
             if (_warnedUnloadedLoaders) return;
-            if ((binder.LoadedUserdataInventoryEquipmentItemModel || binder.LoadedUserdataEnchantEquipmentEnchantRarityParameterModel)) return;
+            if ((binder.LoadedUserdataInventoryEquipmentItemModel || binder.LoadedUserdataEnchantEquipmentEnchantRarityParameterModel) && binder.LoadedTransactionConsumeAction) return;
             _warnedUnloadedLoaders = true;
             Debug.LogWarning(
-                $"{nameof(EquipmentAddBonusButton)} on '{name}': this row's mount surface did not run UserdataInventoryEquipmentItemModel, UserdataEnchantEquipmentEnchantRarityParameterModel, which fills what this component reads (PropertyId, Id); those readings render as their default, not as an absent value.", this);
+                $"{nameof(EquipmentAddBonusButton)} on '{name}': this row's mount surface did not run TransactionConsumeAction, UserdataInventoryEquipmentItemModel, UserdataEnchantEquipmentEnchantRarityParameterModel, which fills what this component reads (PropertyId, Id); those readings render as their default, not as an absent value.", this);
         }
     }
 }
