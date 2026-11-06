@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "The reset cadence this counter follows",
       "id": "prop_00D031N0N8XCG9EJ25SDVPGMYT",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "Times used since the last reset",
       "id": "prop_00D031N0N8XZTBTN84BCXGFHMR",
       "localizedDisplay": {
         "en": {
@@ -51,7 +48,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "Next reset time",
       "id": "prop_00D031N0N8S7KC5GNB45BP0PGT",
       "localizedDisplay": {
         "en": {

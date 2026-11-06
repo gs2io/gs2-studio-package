@@ -34,8 +34,19 @@
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Coins this mission pays when its reward is received",
       "id": "prop_00D0QVYTV99Q49SBAE7J7GC9EG",
+      "localizedDisplay": {
+        "en": {
+          "description": "Coins paid when this mission's reward is received.",
+          "label": "Reward coins",
+          "unit": "currency"
+        },
+        "ja": {
+          "description": "このミッションの報酬を受け取ったときに付与するコインの額です。",
+          "label": "報酬コイン",
+          "unit": "通貨"
+        }
+      },
       "name": "rewardAmount",
       "requirement": {
         "kind": "always"

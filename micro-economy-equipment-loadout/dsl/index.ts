@@ -24,40 +24,27 @@ const character = dependencyPackage(characterSurface);
 const CHARACTER_PROPERTY_ID = character.propertyId("Character", "propertyId");
 
 const EquipmentSlot = defineDomainType("EquipmentSlot", dt =>
-  dt
-    .property(
-      PT.string("propertyRegex")
-        .masterData()
-        .required()
-        .description("Which equipment this slot accepts, matched on its property id")
-    )
-    .localizedProperties({
-      id: jaEnId("装備スロット", "equipment slot"),
-      propertyRegex: jaEnField(
-        "装着条件",
-        "Equipment pattern",
-        "このスロットへ装着できる装備個体IDの正規表現です。",
-        "Regular expression matching equipment instance IDs accepted by this slot."
-      ),
-    })
+  dt.property(PT.string("propertyRegex").masterData().required()).localizedProperties({
+    id: jaEnId("装備スロット", "equipment slot"),
+    propertyRegex: jaEnField(
+      "装着条件",
+      "Equipment pattern",
+      "このスロットへ装着できる装備個体IDの正規表現です。",
+      "Regular expression matching equipment instance IDs accepted by this slot."
+    ),
+  })
 );
 
 const EquipmentSlotAssignment = defineDomainType("EquipmentSlotAssignment", dt =>
-  dt
-    .property(
-      PT.string("equipment")
-        .userData()
-        .description("Property id of the equipment worn here, empty when the slot is free")
-    )
-    .localizedProperties({
-      id: jaEnId("装着スロット", "equipment slot assignment"),
-      equipment: jaEnField(
-        "装着中の装備",
-        "Equipped item",
-        "このスロットに装着されている装備個体IDです。空の場合は未装着です。",
-        "Equipment instance ID assigned to this slot; empty when the slot is free."
-      ),
-    })
+  dt.property(PT.string("equipment").userData()).localizedProperties({
+    id: jaEnId("装着スロット", "equipment slot assignment"),
+    equipment: jaEnField(
+      "装着中の装備",
+      "Equipped item",
+      "このスロットに装着されている装備個体IDです。空の場合は未装着です。",
+      "Equipment instance ID assigned to this slot; empty when the slot is free."
+    ),
+  })
 );
 
 const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>

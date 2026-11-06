@@ -45,9 +45,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_1NXX629711BHJBYFNF7Q2QG8D9",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-character-grade-demo"
+        "resourceKind": "masterData"
       }
     },
     {
@@ -90,9 +90,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_6NZTG6G7F8ACCRD6NFACZYDDPH",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-character-grade-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

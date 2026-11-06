@@ -6,7 +6,6 @@
   "declared": [
     {
       "bindingHint": "userData",
-      "description": "Skill nodes this character has unlocked",
       "id": "prop_00D0RCHP2Q6QHD0C070KPNT284",
       "localizedDisplay": {
         "en": {

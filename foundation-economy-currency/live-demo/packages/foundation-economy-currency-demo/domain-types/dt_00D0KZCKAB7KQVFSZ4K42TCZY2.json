@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D0KZCKABE9VVHET0Z8R3QD2M",
       "localizedDisplay": {
         "en": {
@@ -35,9 +33,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_0WQYMCRMNHA27R3GC0HP8TDAM1",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-economy-currency-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

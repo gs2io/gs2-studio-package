@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_00D03217GRGMDSEFAQS5E3A4B2",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Stat this bonus applies to",
       "id": "prop_00D03217GRGMXYDWA00MEVCB01",
       "localizedDisplay": {
         "en": {
@@ -49,7 +46,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "How much it applies",
       "id": "prop_00D03217GRQTVSP4FQ10EXQ3TG",
       "localizedDisplay": {
         "en": {
@@ -72,7 +68,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Relative draw weight",
       "id": "prop_00D03217GRKQF9AK7J19KVJDGJ",
       "localizedDisplay": {
         "en": {

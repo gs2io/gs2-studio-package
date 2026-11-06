@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Which equipment this slot accepts, matched on its property id",
       "id": "prop_00D033FNASBHYZ9W1VK8EE39WP",
       "localizedDisplay": {
         "en": {

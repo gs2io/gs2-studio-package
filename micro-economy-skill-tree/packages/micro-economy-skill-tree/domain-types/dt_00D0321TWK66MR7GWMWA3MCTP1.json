@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "What unlocking this node costs",
       "id": "prop_00D05R0KFCTFK6442MMAKE56Y9",
       "localizedDisplay": {
         "en": {
@@ -28,7 +26,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Nodes that must be released first",
       "id": "prop_00D0321TWK1SPCKRNJJDG1CSDW",
       "localizedDisplay": {
         "en": {
@@ -54,7 +51,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Share of the cost refunded when the node is reset",
       "id": "prop_00D0321TWK5R5K4W0KWNR49SHT",
       "localizedDisplay": {
         "en": {
@@ -79,7 +75,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "Unlocked by this player",
       "id": "prop_00D0321TWK6CDMBJRD83E6G2K2",
       "localizedDisplay": {
         "en": {
@@ -102,7 +97,6 @@
     },
     {
       "bindingHint": "none",
-      "description": "Whose tree these flags are read for",
       "id": "prop_00D0RCHP2Q26RVYQM9TZ89PN0E",
       "localizedDisplay": {
         "en": {

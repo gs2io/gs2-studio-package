@@ -48,7 +48,6 @@
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_1TXDHTCHQHVT43M06HMWB1T86R",
       "name": "rewardType",
       "requirement": {
@@ -61,7 +60,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_635XF953PW3BSYMHYSVYAKEJ0P",
       "name": "contentsId",
       "requirement": {
@@ -74,7 +72,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_41KFTTF2RYSDR9FFDJ575SQRZV",
       "name": "count",
       "requirement": {

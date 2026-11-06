@@ -1,10 +1,6 @@
 {
   "id": "tier1",
   "rowKey": "row_0V5FYVT1WFTAC1C6ZAG1PJ4AMF",
-  "type": {
-    "domainTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
-    "packageId": "foundation-economy-currency"
-  },
   "values": {
     "prop_01M40RS7N08DEDFYE3YFC4TRYV": [
       {

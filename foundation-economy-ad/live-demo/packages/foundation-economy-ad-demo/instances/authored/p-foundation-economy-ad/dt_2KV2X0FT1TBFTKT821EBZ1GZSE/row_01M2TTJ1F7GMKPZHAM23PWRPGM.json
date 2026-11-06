@@ -1,10 +1,6 @@
 {
   "id": "adplatform",
   "rowKey": "row_01M2TTJ1F7GMKPZHAM23PWRPGM",
-  "type": {
-    "domainTypeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
-    "packageId": "foundation-economy-ad"
-  },
   "values": {
     "prop_242M4XQ9VWCWPDXV75ACHQVJD1": [
       "showroom-demo-placeholder"

@@ -46,19 +46,15 @@ const IdleReward = defineOverlayDomainType(
     ],
   },
   domainType =>
-    domainType
-      .property(
-        PT.int32("coins").masterData().required().description("Coins one interval away deposits")
-      )
-      .localizedProperties({
-        coins: jaEnField(
-          "報酬コイン",
-          "Reward coins",
-          "放置 1 区間ごとに付与するコインの額です。",
-          "Coins paid for each interval away.",
-          { ja: "通貨", en: "currency" }
-        ),
-      })
+    domainType.property(PT.int32("coins").masterData().required()).localizedProperties({
+      coins: jaEnField(
+        "報酬コイン",
+        "Reward coins",
+        "放置 1 区間ごとに付与するコインの額です。",
+        "Coins paid for each interval away.",
+        { ja: "通貨", en: "currency" }
+      ),
+    })
 );
 
 const withStatus = definePackage("foundation-economy-idle-demo", "0.0.0")

@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Item metadata JSON carrying the experience it grants, e.g. {\"experience\": 100}",
       "id": "prop_00D0TAXWR8ZNBCPP520RH8KRHD",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "",
       "id": "prop_00D0TAXWR8X0NVB2HS99J298KV",
       "localizedDisplay": {
         "en": {

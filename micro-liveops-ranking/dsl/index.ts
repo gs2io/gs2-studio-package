@@ -19,20 +19,11 @@ const schedule = dependencyPackage(scheduleSurface);
 const Ranking = defineDomainType("Ranking", dt =>
   dt
     .property(PT.string("schedule").assetDelivery())
-    .property(
-      PT.prop("orderDirection", PT.enum("asc", "desc"))
-        .masterData()
-        .required()
-        .description("Whether a higher or a lower score ranks first")
-    )
-    .property(
-      PT.bool("sum")
-        .masterData()
-        .description("Add each submitted score to the last instead of replacing it")
-    )
-    .property(PT.int64("minimumValue").masterData().description("Lowest score accepted"))
-    .property(PT.int64("maximumValue").masterData().description("Highest score accepted"))
-    .property(PT.int64("score").userData().required().description("The player's own score"))
+    .property(PT.prop("orderDirection", PT.enum("asc", "desc")).masterData().required())
+    .property(PT.bool("sum").masterData())
+    .property(PT.int64("minimumValue").masterData())
+    .property(PT.int64("maximumValue").masterData())
+    .property(PT.int64("score").userData().required())
     .localizedProperties({
       id: jaEnId("ランキング", "ranking"),
       schedule: jaEnField(
@@ -78,14 +69,7 @@ const Ranking = defineDomainType("Ranking", dt =>
 const RankingReward = defineDomainType("RankingReward", dt =>
   dt
     .property(PT.prop("ranking", PT.ref("Ranking")).assetDelivery().required())
-    .property(
-      PT.int32("thresholdRank")
-        .masterData()
-        .required()
-        .description(
-          "Lowest placement this reward tier pays; 1001 pays those ranked below the top 1000"
-        )
-    )
+    .property(PT.int32("thresholdRank").masterData().required())
     .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
     .compositeKey("ranking", "thresholdRank")
     .localizedProperties({

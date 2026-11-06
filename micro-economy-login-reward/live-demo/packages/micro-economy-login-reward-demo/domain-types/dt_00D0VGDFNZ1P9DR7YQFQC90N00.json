@@ -18,9 +18,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_764ATR9HCQB89B3EVDJZ7D08VS",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-login-reward-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

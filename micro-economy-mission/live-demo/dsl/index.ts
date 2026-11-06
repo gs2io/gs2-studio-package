@@ -12,6 +12,7 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField } from "../../../dsl/jaEnField";
 import missionSurface from "../../dsl/dependency-surface.json";
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
 
@@ -49,12 +50,15 @@ const Mission = defineOverlayDomainType(
     ],
   },
   domainType =>
-    domainType.property(
-      PT.int32("rewardAmount")
-        .masterData()
-        .required()
-        .description("Coins this mission pays when its reward is received")
-    )
+    domainType.property(PT.int32("rewardAmount").masterData().required()).localizedProperties({
+      rewardAmount: jaEnField(
+        "報酬コイン",
+        "Reward coins",
+        "このミッションの報酬を受け取ったときに付与するコインの額です。",
+        "Coins paid when this mission's reward is received.",
+        { ja: "通貨", en: "currency" }
+      ),
+    })
 );
 
 const COUNTER_ID = mission.propertyId("MissionCounter", "id");

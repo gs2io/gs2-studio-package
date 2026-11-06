@@ -176,14 +176,7 @@ const EmbeddedVersion = defineDomainType("EmbeddedVersion", dt =>
 const VersionGate = defineDomainType("VersionGate", dt =>
   dt
     .singleEntry()
-    .property(
-      PT.string("assumeUserId")
-        .masterData()
-        .required()
-        .description(
-          "GRN of the GS2-Identifier user a player who passes the check is signed in as: grn:gs2::{ownerId}:identifier:user:<name>"
-        )
-    )
+    .property(PT.string("assumeUserId").masterData().required())
     .localizedProperties({
       id: jaEnId("バージョン確認", "version gate"),
       assumeUserId: jaEnField(

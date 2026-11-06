@@ -1,0 +1,47 @@
+{
+  "id": "uic_2G5HRQC6VBBFS9XPQ0TBHGHKTR",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "OpenButton",
+      "id": "uii_4VXRB3HT8FBC2BBZST0FVRQVKR",
+      "kind": "buttonAction",
+      "name": "Message",
+      "targetActionKey": "Gs2Inbox:Message.ReadMessage",
+      "targetResource": {
+        "kind": "external",
+        "resourceId": "udr_5B2DBE3P7M977TXCSEYBR6973N",
+        "resourceKind": "userData",
+        "sourcePackageId": "foundation-liveops-inbox"
+      }
+    },
+    {
+      "componentClassName": "OpenedLabel",
+      "id": "uii_0QDBE8GXB6B1YSATGX9SHJSRN0",
+      "kind": "templateLabel",
+      "name": "Message",
+      "sources": [],
+      "template": "Opened."
+    },
+    {
+      "componentClassName": "UnreadActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_3JX5PM4TDM36YWSQFMA0CXKKBW"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_1NFZY63FKCBWZ8FW378AWJ9EC5",
+      "kind": "activeToggle",
+      "name": "Message"
+    }
+  ],
+  "target": {
+    "hostTypeId": "dt_00D0SFSEJN3BMDPZZXX51XNVPW",
+    "propertyPath": []
+  }
+}

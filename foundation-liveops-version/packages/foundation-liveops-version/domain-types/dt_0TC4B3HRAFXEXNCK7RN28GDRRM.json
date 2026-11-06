@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_4PT78T02KWA1HPEZ8MCP0VX5H6",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_5RDYW3PXBDRRF7AYDRV6MT5KQP",
       "localizedDisplay": {
         "en": {
@@ -49,7 +46,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_4NEC0PH7FVMSYG63VYH3WFP9SX",
       "localizedDisplay": {
         "en": {
@@ -72,7 +68,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_0ZP0B813EK60XZBRG80Q1FSRXN",
       "localizedDisplay": {
         "en": {
@@ -95,7 +90,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_2X33JSM8QFZPQE0N0D37ES51G1",
       "localizedDisplay": {
         "en": {
@@ -118,7 +112,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_3JBFJEQGKAFGB7G2D6HZSKBQQK",
       "localizedDisplay": {
         "en": {

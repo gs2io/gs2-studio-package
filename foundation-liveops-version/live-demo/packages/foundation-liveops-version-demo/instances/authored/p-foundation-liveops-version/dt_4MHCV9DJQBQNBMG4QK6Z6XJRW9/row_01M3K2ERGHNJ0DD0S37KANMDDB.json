@@ -1,10 +1,6 @@
 {
   "id": "terms",
   "rowKey": "row_01M3K2ERGHNJ0DD0S37KANMDDB",
-  "type": {
-    "domainTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
-    "packageId": "foundation-liveops-version"
-  },
   "values": {
     "prop_00D05Q4S5W070TY1RCRJYBGAJ6": 0,
     "prop_00D05Q4S5W18JS83RNRWD5MKDY": 0,

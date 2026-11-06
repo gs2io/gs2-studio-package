@@ -12,6 +12,7 @@ import {
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
+import { jaEnField } from "../../../dsl/jaEnField";
 import limitSurface from "../../dsl/dependency-surface.json";
 import adSurface from "../../../foundation-economy-ad/dsl/dependency-surface.json";
 import adDemoSurface from "../../../foundation-economy-ad/live-demo/dsl/dependency-surface.json";
@@ -28,18 +29,24 @@ const UsageLimitCounter = defineOverlayDomainType(
   limit.overlay("UsageLimitCounter"),
   domainType =>
     domainType
-      .property(
-        PT.int32("freeMax")
-          .masterData()
-          .required()
-          .description("Ceiling the free press names; recovered from its count-up action")
-      )
-      .property(
-        PT.int32("adMax")
-          .masterData()
-          .required()
-          .description("Ceiling the ad-backed press names; recovered from its count-up action")
-      )
+      .property(PT.int32("freeMax").masterData().required())
+      .property(PT.int32("adMax").masterData().required())
+      .localizedProperties({
+        freeMax: jaEnField(
+          "無料回数の上限",
+          "Free uses limit",
+          "この期間に無料で使える回数の上限です。",
+          "How many times this can be used for free in each period.",
+          { ja: "回", en: "uses" }
+        ),
+        adMax: jaEnField(
+          "広告視聴回数の上限",
+          "Ad uses limit",
+          "この期間に広告を見て使える回数の上限です。",
+          "How many times this can be used by watching an ad in each period.",
+          { ja: "回", en: "uses" }
+        ),
+      })
 );
 
 /** Use the dependency handle for inherited property ids; the local overlay handle owns its new property names. */

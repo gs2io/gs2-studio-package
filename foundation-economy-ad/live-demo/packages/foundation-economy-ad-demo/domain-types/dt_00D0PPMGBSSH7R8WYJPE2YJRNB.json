@@ -18,9 +18,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_097S3NBVT0AH9A94KKQCBHPNG5",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-economy-ad-demo"
+        "resourceKind": "masterData"
       }
     },
     {
@@ -36,9 +36,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_50881G8A8QBAWTRD6J25BKQBE8",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-economy-ad-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

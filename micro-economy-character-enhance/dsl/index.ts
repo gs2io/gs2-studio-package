@@ -43,14 +43,7 @@ const CharacterEnhance = defineDomainType("CharacterEnhance", dt =>
 /** Store material experience at MATERIAL_EXPERIENCE_HIERARCHY so the rate model can read it from metadata. */
 const CharacterEnhanceMaterial = defineDomainType("CharacterEnhanceMaterial", dt =>
   dt
-    .property(
-      PT.string("metadata")
-        .masterData()
-        .required()
-        .description(
-          'Item metadata JSON carrying the experience it grants, e.g. {"experience": 100}'
-        )
-    )
+    .property(PT.string("metadata").masterData().required())
     .property(PT.int64("count").userData().required())
     .localizedProperties({
       id: jaEnId("強化素材", "enhancement material"),
@@ -73,10 +66,8 @@ const CharacterEnhanceMaterial = defineDomainType("CharacterEnhanceMaterial", dt
 const CharacterEnhanceBonus = defineDomainType("CharacterEnhanceBonus", dt =>
   dt
     .property(PT.prop("enhance", PT.ref("CharacterEnhance")).assetDelivery().required())
-    .property(
-      PT.float32("rate").masterData().required().description("Experience multiplier when drawn")
-    )
-    .property(PT.int32("weight").masterData().required().description("Relative draw weight"))
+    .property(PT.float32("rate").masterData().required())
+    .property(PT.int32("weight").masterData().required())
     .localizedProperties({
       id: jaEnId("強化ボーナス", "enhancement bonus"),
       enhance: jaEnField(

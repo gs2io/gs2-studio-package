@@ -58,22 +58,15 @@ const EnergyProduct = defineOverlayDomainType(
     ],
   },
   domainType =>
-    domainType
-      .property(
-        PT.int32("cost")
-          .masterData()
-          .required()
-          .description("Free currency this product charges when it is bought")
-      )
-      .localizedProperties({
-        cost: jaEnField(
-          "価格",
-          "Price",
-          "この商品を購入するときに消費する無償通貨の量です。",
-          "Free currency spent to buy this product.",
-          { ja: "通貨", en: "currency" }
-        ),
-      })
+    domainType.property(PT.int32("cost").masterData().required()).localizedProperties({
+      cost: jaEnField(
+        "価格",
+        "Price",
+        "この商品を購入するときに消費する無償通貨の量です。",
+        "Free currency spent to buy this product.",
+        { ja: "通貨", en: "currency" }
+      ),
+    })
 );
 
 const BuyRateModel = defineMasterDataResource(resource =>

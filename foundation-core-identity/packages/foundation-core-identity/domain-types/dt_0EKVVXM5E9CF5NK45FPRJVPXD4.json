@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Setting Type Number",
       "id": "prop_4QCBW1JJ874A6NWJKA9KXV0E9D",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "OIDC Configuration URL",
       "id": "prop_2GK8FWJBFSAN6QFBGZCFW4602M",
       "localizedDisplay": {
         "en": {
@@ -49,7 +46,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "OIDC Client ID",
       "id": "prop_00AR2JNBEPQHX5YKYJXHQ5WSK3",
       "localizedDisplay": {
         "en": {
@@ -72,7 +68,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "OIDC Secret",
       "id": "prop_32N7ZY8V34H4TD6AGG9TP7SWSQ",
       "localizedDisplay": {
         "en": {
@@ -95,7 +90,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Redirect URL when login completed",
       "id": "prop_7BE7STA2Y2Y72F0SD64FBQB2JQ",
       "localizedDisplay": {
         "en": {
@@ -118,7 +112,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Apple Team ID(if Sign-in Apple Account)",
       "id": "prop_0KMJV43AM8EPY2W7HSE81ECJ00",
       "localizedDisplay": {
         "en": {
@@ -141,7 +134,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Apple Key ID(if Sign-in Apple Account)",
       "id": "prop_6SSER4P8KCWTCGCEHA41KMASPV",
       "localizedDisplay": {
         "en": {
@@ -164,7 +156,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Apple Private Key PEM(if Sign-in Apple Account)",
       "id": "prop_1MDWB81CEGPC9T41TBZDES74PY",
       "localizedDisplay": {
         "en": {
@@ -187,7 +178,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "Whether the user has TakeOver data",
       "id": "prop_1FT8XXM16XVK8VQ989XQ049TZ2",
       "localizedDisplay": {
         "en": {

@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D0SHMWJ1KSSS1CYCFS0AHJBT",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D0SHMWJ1Q1KCCFKR0J26GETW",
       "localizedDisplay": {
         "en": {
@@ -64,9 +61,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-liveops-inbox-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

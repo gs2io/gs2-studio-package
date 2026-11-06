@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Level cap this grade raises the character to",
       "id": "prop_00D0320HQ4H7XNC4RCNDDV9W35",
       "localizedDisplay": {
         "en": {
@@ -28,7 +26,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Which characters this step applies to",
       "id": "prop_00D0320HQ4HKJ6EW5M3Z8QS8PG",
       "localizedDisplay": {
         "en": {
@@ -51,7 +48,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Which characters may be spent to reach it",
       "id": "prop_00D0320HQ4N8QC4SDN75PFNFSF",
       "localizedDisplay": {
         "en": {

@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D05P2SE3WMNG5C27EG74BM38",
       "localizedDisplay": {
         "en": {

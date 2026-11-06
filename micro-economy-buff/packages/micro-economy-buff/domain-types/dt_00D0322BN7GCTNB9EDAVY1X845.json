@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "How the rate combines with the original value",
       "id": "prop_00D0322BN7G543V28MFV62QC0X",
       "localizedDisplay": {
         "en": {
@@ -30,7 +28,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Whether an action's request or a model's field is scaled",
       "id": "prop_00D0W9XTYQ1A7B8FZE88WBY1R0",
       "localizedDisplay": {
         "en": {
@@ -56,7 +53,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Action whose request is scaled, e.g. Gs2Inventory:AcquireItemSetByUserId",
       "id": "prop_00D0322BN7XPKZEYZ4G0MDYS0P",
       "localizedDisplay": {
         "en": {
@@ -85,7 +81,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Model whose field is scaled, e.g. Gs2Idle:CategoryModel",
       "id": "prop_00D0W9XTYQ1EVCPWBQX16G20VV",
       "localizedDisplay": {
         "en": {
@@ -114,7 +109,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Field that is scaled, e.g. acquireCount or acquireActions",
       "id": "prop_00D0322BN7Z2CA8G16H48JGTJ5",
       "localizedDisplay": {
         "en": {
@@ -137,7 +131,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Model the condition GRN names, e.g. Gs2Idle:CategoryModel",
       "id": "prop_00D0W9XTYQ1GVDAJ4E8ZM4TA8A",
       "localizedDisplay": {
         "en": {
@@ -160,7 +153,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "GRN the buff applies to, with {region} and {ownerId} left for GS2 to fill",
       "id": "prop_00D0W9XTYQ31RW0YT593HMCK8H",
       "localizedDisplay": {
         "en": {
@@ -183,7 +175,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Multiplier applied",
       "id": "prop_00D0322BN7XACWKGN03JMSRA8H",
       "localizedDisplay": {
         "en": {
@@ -206,7 +197,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Order among buffs touching the same field",
       "id": "prop_00D0322BN7WAGFGTFPNZT8GHVP",
       "localizedDisplay": {
         "en": {
@@ -229,7 +219,6 @@
     },
     {
       "bindingHint": "assetDelivery",
-      "description": "Period the buff is active for",
       "id": "prop_00D0322BN7Y0A6WHYB9YCFZQQ4",
       "localizedDisplay": {
         "en": {

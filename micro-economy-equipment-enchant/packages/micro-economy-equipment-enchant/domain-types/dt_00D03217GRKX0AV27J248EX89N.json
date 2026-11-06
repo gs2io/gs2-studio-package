@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Most bonuses a single piece can hold",
       "id": "prop_00D03217GRNEKVPR01373YAKSE",
       "localizedDisplay": {
         "en": {

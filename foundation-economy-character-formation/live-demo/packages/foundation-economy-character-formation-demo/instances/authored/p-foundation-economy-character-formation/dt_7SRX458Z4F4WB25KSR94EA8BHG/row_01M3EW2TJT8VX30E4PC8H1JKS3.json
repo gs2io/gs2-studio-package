@@ -1,10 +1,6 @@
 {
   "id": "slot1",
   "rowKey": "row_01M3EW2TJT8VX30E4PC8H1JKS3",
-  "type": {
-    "domainTypeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
-    "packageId": "foundation-economy-character-formation"
-  },
   "values": {
     "prop_1KTAJF5QGZJNR6EA3HVSC8QQBT": "grn:gs2:{region}:{ownerId}:inventory:Character:user:{userId}:inventory:Character:item:.*"
   }

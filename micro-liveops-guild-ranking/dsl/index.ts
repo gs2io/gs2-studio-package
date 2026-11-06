@@ -21,22 +21,11 @@ const SCHEDULE_NAMESPACE_RESOURCE_ID = schedule.resourceId("schedule.Namespace")
 const GuildRanking = defineDomainType("GuildRanking", dt =>
   dt
     .property(PT.string("schedule").assetDelivery().required())
-    .property(
-      PT.prop("orderDirection", PT.enum("asc", "desc"))
-        .masterData()
-        .required()
-        .description("Whether a higher or a lower score ranks first")
-    )
-    .property(
-      PT.bool("sum")
-        .masterData()
-        .description(
-          "Add each submission from the same member to their last one instead of replacing it"
-        )
-    )
-    .property(PT.int64("minimumValue").masterData().description("Lowest score accepted"))
-    .property(PT.int64("maximumValue").masterData().description("Highest score accepted"))
-    .property(PT.int64("score").userData().required().description("The player's own score"))
+    .property(PT.prop("orderDirection", PT.enum("asc", "desc")).masterData().required())
+    .property(PT.bool("sum").masterData())
+    .property(PT.int64("minimumValue").masterData())
+    .property(PT.int64("maximumValue").masterData())
+    .property(PT.int64("score").userData().required())
     .localizedProperties({
       id: jaEnId("ギルドランキング", "guild ranking"),
       schedule: jaEnField(
@@ -82,12 +71,7 @@ const GuildRanking = defineDomainType("GuildRanking", dt =>
 const GuildRankingReward = defineDomainType("GuildRankingReward", dt =>
   dt
     .property(PT.prop("ranking", PT.ref("GuildRanking")).assetDelivery().required())
-    .property(
-      PT.int32("thresholdRank")
-        .masterData()
-        .required()
-        .description("Lowest placement within the guild this reward tier pays")
-    )
+    .property(PT.int32("thresholdRank").masterData().required())
     .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
     .compositeKey("ranking", "thresholdRank")
     .localizedProperties({

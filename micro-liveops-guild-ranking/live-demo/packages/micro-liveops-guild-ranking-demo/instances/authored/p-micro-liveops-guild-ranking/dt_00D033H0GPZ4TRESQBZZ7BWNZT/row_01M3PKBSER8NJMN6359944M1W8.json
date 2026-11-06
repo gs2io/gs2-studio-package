@@ -1,10 +1,6 @@
 {
   "id": "guild",
   "rowKey": "row_01M3PKBSER8NJMN6359944M1W8",
-  "type": {
-    "domainTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
-    "packageId": "micro-liveops-guild-ranking"
-  },
   "values": {
     "prop_00D033H0GPV00M3DBQVFQC6VA2": "guild-season",
     "prop_00D033H0GPWEF15V2AMFQET09E": "desc",

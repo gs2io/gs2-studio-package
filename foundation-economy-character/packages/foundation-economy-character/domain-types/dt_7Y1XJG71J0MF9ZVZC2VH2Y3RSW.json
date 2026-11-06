@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_0YMDYAY5JDK7N10HPS96137T2V",
       "localizedDisplay": {
         "en": {
@@ -28,7 +26,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_2GW5Y3B5C72XV6HSRV8R9RZX58",
       "localizedDisplay": {
         "en": {
@@ -53,7 +50,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "",
       "id": "prop_0X7QN1KKKCJZMK5N4S6E4KX1A5",
       "localizedDisplay": {
         "en": {
@@ -78,7 +74,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "",
       "id": "prop_74G2303CD8WVN5H4711968MX05",
       "localizedDisplay": {
         "en": {

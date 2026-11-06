@@ -18,9 +18,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-liveops-inbox-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

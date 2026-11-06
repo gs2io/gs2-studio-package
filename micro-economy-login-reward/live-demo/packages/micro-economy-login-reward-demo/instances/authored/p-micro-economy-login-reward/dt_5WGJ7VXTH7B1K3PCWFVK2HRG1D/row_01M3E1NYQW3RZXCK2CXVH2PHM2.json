@@ -1,10 +1,6 @@
 {
   "id": "daily",
   "rowKey": "row_01M3E1NYQW3RZXCK2CXVH2PHM2",
-  "type": {
-    "domainTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
-    "packageId": "micro-economy-login-reward"
-  },
   "values": {
     "prop_00D0V3E8RR357Z98YP7VMDXPP7": "streaming",
     "prop_00D0V3E8RR3GSCNAW1JAKAQRRD": "disabled",

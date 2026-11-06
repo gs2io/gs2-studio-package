@@ -1,0 +1,22 @@
+{
+  "id": "uic_2K78W4BGV5AVTRX53ATFZY1CW2",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "AdvanceButton",
+      "id": "uii_2YBWFD2142ATGA9PBPGH06MKW1",
+      "kind": "buttonAction",
+      "name": "MissionCounter",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "kind": "local",
+        "resourceId": "mdr_21DB51BXCRBDQBFYF1JB1TQQ8M",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "target": {
+    "hostTypeId": "dt_00D0QVYTV9BS74AACZHCPQGG1B",
+    "propertyPath": []
+  }
+}

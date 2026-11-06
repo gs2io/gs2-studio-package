@@ -13,57 +13,28 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 /** Keep policy text in GS2 grammar rather than introducing a second permission model here. */
 const GuildRole = defineDomainType("GuildRole", dt =>
-  dt
-    .property(
-      PT.string("policyDocument")
-        .masterData()
-        .required()
-        .description(
-          "GS2 policy document for acting as the guild; deny everything explicitly rather than leaving it empty"
-        )
-    )
-    .localizedProperties({
-      id: jaEnId("ギルド権限", "guild role"),
-      policyDocument: jaEnField(
-        "権限ポリシー",
-        "Permission policy",
-        "このロールのメンバーがギルドとして振る舞うとき（Assume）に許可する操作を記述した GS2 ポリシーです。何も許可しないロールは、空にせず、Effect を Deny、Actions と Resources を * にした文で、すべてを拒否するポリシーを明示してください。空のポリシーは、GS2 の版によっては全許可として扱われます。",
-        "GS2 policy document describing what a member with this role may do while acting as the guild (Assume). For a role that may do nothing, do not leave it empty: write a policy that denies everything, with one statement whose Effect is Deny and whose Actions and Resources are *. Some GS2 versions treat an empty policy as allowing everything."
-      ),
-    })
+  dt.property(PT.string("policyDocument").masterData().required()).localizedProperties({
+    id: jaEnId("ギルド権限", "guild role"),
+    policyDocument: jaEnField(
+      "権限ポリシー",
+      "Permission policy",
+      "このロールのメンバーがギルドとして振る舞うとき（Assume）に許可する操作を記述した GS2 ポリシーです。何も許可しないロールは、空にせず、Effect を Deny、Actions と Resources を * にした文で、すべてを拒否するポリシーを明示してください。空のポリシーは、GS2 の版によっては全許可として扱われます。",
+      "GS2 policy document describing what a member with this role may do while acting as the guild (Assume). For a role that may do nothing, do not leave it empty: write a policy that denies everything, with one statement whose Effect is Deny and whose Actions and Resources are *. Some GS2 versions treat an empty policy as allowing everything."
+    ),
+  })
 );
 
 const Guild = defineDomainType("Guild", dt =>
   dt
-    .property(
-      PT.int32("defaultMaximumMemberCount")
-        .masterData()
-        .required()
-        .description("Member capacity a newly created guild starts with")
-    )
-    .property(
-      PT.int32("maximumMemberCount")
-        .masterData()
-        .required()
-        .description("Highest capacity a guild can be raised to")
-    )
-    .property(
-      PT.int32("inactivityPeriodDays")
-        .masterData()
-        .description("Days of guild-master inactivity before the seat opens up")
-    )
-    .property(
-      PT.int32("rejoinCoolTimeMinutes")
-        .masterData()
-        .description("Wait before a player may rejoin a guild they left")
-    )
+    .property(PT.int32("defaultMaximumMemberCount").masterData().required())
+    .property(PT.int32("maximumMemberCount").masterData().required())
+    .property(PT.int32("inactivityPeriodDays").masterData())
+    .property(PT.int32("rejoinCoolTimeMinutes").masterData())
     .property(PT.int32("maxConcurrentJoinGuilds").masterData())
     .property(PT.int32("maxConcurrentGuildMasterCount").masterData())
     .property(PT.prop("guildMasterRole", PT.ref("GuildRole")).assetDelivery().required())
     .property(PT.prop("guildMemberDefaultRole", PT.ref("GuildRole")).assetDelivery().required())
-    .property(
-      PT.string("joinedGuildName").userData().description("The guild this player belongs to")
-    )
+    .property(PT.string("joinedGuildName").userData())
     .localizedProperties({
       id: jaEnId("ギルド種別", "guild kind"),
       defaultMaximumMemberCount: jaEnField(

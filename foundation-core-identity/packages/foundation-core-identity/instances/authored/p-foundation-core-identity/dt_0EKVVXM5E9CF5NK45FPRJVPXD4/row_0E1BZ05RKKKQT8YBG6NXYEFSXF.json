@@ -1,10 +1,6 @@
 {
   "id": "google",
   "rowKey": "row_0E1BZ05RKKKQT8YBG6NXYEFSXF",
-  "type": {
-    "domainTypeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
-    "packageId": "foundation-core-identity"
-  },
   "values": {
     "prop_00AR2JNBEPQHX5YKYJXHQ5WSK3": "dummy",
     "prop_2GK8FWJBFSAN6QFBGZCFW4602M": "https://accounts.google.com/.well-known/openid-configuration",

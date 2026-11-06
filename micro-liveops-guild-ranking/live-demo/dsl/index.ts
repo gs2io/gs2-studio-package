@@ -76,22 +76,15 @@ const GuildRankingReward = defineOverlayDomainType(
     ],
   },
   domainType =>
-    domainType
-      .property(
-        PT.int32("coins")
-          .masterData()
-          .required()
-          .description("Coins this tier deposits when it is received")
-      )
-      .localizedProperties({
-        coins: jaEnField(
-          "報酬コイン",
-          "Reward coins",
-          "この順位帯の報酬を受け取ったときに付与するコインの額です。",
-          "Coins paid when this tier's reward is received.",
-          { ja: "通貨", en: "currency" }
-        ),
-      })
+    domainType.property(PT.int32("coins").masterData().required()).localizedProperties({
+      coins: jaEnField(
+        "報酬コイン",
+        "Reward coins",
+        "この順位帯の報酬を受け取ったときに付与するコインの額です。",
+        "Coins paid when this tier's reward is received.",
+        { ja: "通貨", en: "currency" }
+      ),
+    })
 );
 
 const withRanking = definePackage("micro-liveops-guild-ranking-demo", "0.0.0")

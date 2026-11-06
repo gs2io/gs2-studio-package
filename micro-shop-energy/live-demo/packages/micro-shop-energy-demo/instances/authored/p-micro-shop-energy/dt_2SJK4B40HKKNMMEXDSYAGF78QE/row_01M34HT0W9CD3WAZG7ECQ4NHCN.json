@@ -1,10 +1,6 @@
 {
   "id": "refill_medium",
   "rowKey": "row_01M34HT0W9CD3WAZG7ECQ4NHCN",
-  "type": {
-    "domainTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
-    "packageId": "micro-shop-energy"
-  },
   "values": {
     "prop_00D0S4EG729BGHQ7R4RK1959TA": 70,
     "prop_01M3YJ1DNJ3MS5AZDA6EMDZJTA": "stamina",

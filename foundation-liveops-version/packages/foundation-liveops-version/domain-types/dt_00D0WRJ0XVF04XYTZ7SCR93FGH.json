@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "GRN of the GS2-Identifier user a player who passes the check is signed in as: grn:gs2::{ownerId}:identifier:user:<name>",
       "id": "prop_00D0WRJ0XVBVDA97KMXC76V58C",
       "localizedDisplay": {
         "en": {

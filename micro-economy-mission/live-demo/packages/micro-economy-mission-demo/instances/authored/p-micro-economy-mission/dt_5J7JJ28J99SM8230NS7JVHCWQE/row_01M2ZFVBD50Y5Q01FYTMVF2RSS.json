@@ -1,10 +1,6 @@
 {
   "id": "career1",
   "rowKey": "row_01M2ZFVBD50Y5Q01FYTMVF2RSS",
-  "type": {
-    "domainTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
-    "packageId": "micro-economy-mission"
-  },
   "values": {
     "prop_00D060QP7EZPDKKKFPE3HYE2C5": [],
     "prop_00D0QVYTV99Q49SBAE7J7GC9EG": 10,

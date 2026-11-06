@@ -34,7 +34,6 @@
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Coins this tier deposits when it is received",
       "id": "prop_00D0XMTYBP6TACW7H1W4YC1SET",
       "localizedDisplay": {
         "en": {

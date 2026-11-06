@@ -18,9 +18,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_0XW8Q5N7XHAKQ9NSP0GVBBFFWQ",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-economy-character-formation-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

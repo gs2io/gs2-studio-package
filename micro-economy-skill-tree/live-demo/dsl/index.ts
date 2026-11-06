@@ -42,21 +42,14 @@ const SkillNode = defineOverlayDomainType(
     ],
   },
   domainType =>
-    domainType
-      .property(
-        PT.int32("cost")
-          .masterData()
-          .required()
-          .description("Coins this node charges when it is released")
-      )
-      .localizedProperties({
-        cost: jaEnField(
-          "解放コスト",
-          "Unlock cost",
-          "このノードを解放するときに消費するコインの額です。",
-          "Coins spent to unlock this node."
-        ),
-      })
+    domainType.property(PT.int32("cost").masterData().required()).localizedProperties({
+      cost: jaEnField(
+        "解放コスト",
+        "Unlock cost",
+        "このノードを解放するときに消費するコインの額です。",
+        "Coins spent to unlock this node."
+      ),
+    })
 );
 
 /** Require both branches at the final node so the demo exercises a join rather than only a prerequisite chain. */

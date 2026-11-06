@@ -1,0 +1,38 @@
+{
+  "id": "uic_089GX345GVBG1BGN3FXJWT49DB",
+  "items": [
+    {
+      "componentClassName": "NameLabel",
+      "id": "uii_2RCVW9E5CZBFDVYWV9N6ZB709H",
+      "kind": "templateLabel",
+      "name": "TriggerPull",
+      "sources": [
+        {
+          "key": "id",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+          }
+        }
+      ],
+      "template": "{id}"
+    },
+    {
+      "arguments": [],
+      "componentClassName": "PullButton",
+      "id": "uii_4XPSD2FTCNBQRTXR4QBK8WESED",
+      "kind": "buttonAction",
+      "name": "TriggerPull",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "kind": "local",
+        "resourceId": "mdr_3VCDNWHPCXA3YSDAT2G6GFVYBC",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "target": {
+    "hostTypeId": "dt_00D0MRCJH866QJXZVA8BG03CPK",
+    "propertyPath": []
+  }
+}

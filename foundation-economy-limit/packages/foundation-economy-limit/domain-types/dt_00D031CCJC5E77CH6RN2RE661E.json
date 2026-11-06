@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "When the counts return to zero",
       "id": "prop_00D031CCJC935P6N8JH9QZET3R",
       "localizedDisplay": {
         "en": {
@@ -32,7 +30,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Reset weekday (weekly only)",
       "id": "prop_00D031CCJCA2HJ6M98DXZEDTKY",
       "localizedDisplay": {
         "en": {
@@ -63,7 +60,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Reset day (monthly only)",
       "id": "prop_00D031CCJCB6TXS4PV4ACMXFJC",
       "localizedDisplay": {
         "en": {
@@ -88,7 +84,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Reset hour, UTC",
       "id": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0",
       "localizedDisplay": {
         "en": {
@@ -113,7 +108,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Reset interval in days (days only)",
       "id": "prop_00D031CCJCD9WHWSJ1N9W1NN13",
       "localizedDisplay": {
         "en": {
@@ -138,7 +132,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Interval origin (days only)",
       "id": "prop_00D031CCJC8A73V9WDWHJYY5S9",
       "localizedDisplay": {
         "en": {

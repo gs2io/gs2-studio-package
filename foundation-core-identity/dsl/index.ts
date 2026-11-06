@@ -13,30 +13,15 @@ import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const TakeOverSetting = defineDomainType("TakeOverSetting", dt =>
   dt
-    .property(PT.int32("type").masterData().description("Setting Type Number").required())
-    .property(
-      PT.string("configurationPath").masterData().description("OIDC Configuration URL").required()
-    )
-    .property(PT.string("clientId").masterData().description("OIDC Client ID").required())
-    .property(PT.string("clientSecret").masterData().description("OIDC Secret").required())
-    .property(
-      PT.string("doneEndpointUrl")
-        .masterData()
-        .description("Redirect URL when login completed")
-        .required()
-    )
-    .property(
-      PT.string("appleTeamId").masterData().description("Apple Team ID(if Sign-in Apple Account)")
-    )
-    .property(
-      PT.string("appleKeyId").masterData().description("Apple Key ID(if Sign-in Apple Account)")
-    )
-    .property(
-      PT.string("applePrivateKeyPem")
-        .masterData()
-        .description("Apple Private Key PEM(if Sign-in Apple Account)")
-    )
-    .property(PT.bool("hasTakeOver").userData().description("Whether the user has TakeOver data"))
+    .property(PT.int32("type").masterData().required())
+    .property(PT.string("configurationPath").masterData().required())
+    .property(PT.string("clientId").masterData().required())
+    .property(PT.string("clientSecret").masterData().required())
+    .property(PT.string("doneEndpointUrl").masterData().required())
+    .property(PT.string("appleTeamId").masterData())
+    .property(PT.string("appleKeyId").masterData())
+    .property(PT.string("applePrivateKeyPem").masterData())
+    .property(PT.bool("hasTakeOver").userData())
     .localizedProperties({
       id: jaEnId("引き継ぎ設定", "take-over setting"),
       type: jaEnField(

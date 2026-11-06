@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_5KZQK7RQTRZAX02G1K0EYEMQ35",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_6KRKPN3YWC7M677JZT7MQZFW16",
       "localizedDisplay": {
         "en": {
@@ -51,7 +48,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_49CWPE451G4S2NWECN50J39WNY",
       "localizedDisplay": {
         "en": {
@@ -76,7 +72,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8",
       "localizedDisplay": {
         "en": {
@@ -101,7 +96,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_5FQSXKRKJNEMGY0SBCNZ9QF7CC",
       "localizedDisplay": {
         "en": {
@@ -126,7 +120,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "",
       "id": "prop_6VDGEC28BS22A8B64VXJQP14VQ",
       "localizedDisplay": {
         "en": {
@@ -162,9 +155,9 @@
       ],
       "targetActionKey": "Gs2Quest:QuestModel.Start",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-quest"
+        "resourceKind": "masterData"
       }
     }
   ],

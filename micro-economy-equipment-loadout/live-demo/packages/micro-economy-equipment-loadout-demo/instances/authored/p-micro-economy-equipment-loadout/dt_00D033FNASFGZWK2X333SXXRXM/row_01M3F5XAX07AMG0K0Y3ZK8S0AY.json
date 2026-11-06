@@ -1,10 +1,6 @@
 {
   "id": "armor",
   "rowKey": "row_01M3F5XAX07AMG0K0Y3ZK8S0AY",
-  "type": {
-    "domainTypeId": "dt_00D033FNASFGZWK2X333SXXRXM",
-    "packageId": "micro-economy-equipment-loadout"
-  },
   "values": {
     "prop_00D033FNASBHYZ9W1VK8EE39WP": "^grn:gs2:{region}:{ownerId}:inventory:Equipment:user:{userId}:inventory:Equipment:item:(steel-shield):itemSet:[^:]+$"
   }

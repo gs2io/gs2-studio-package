@@ -6,7 +6,6 @@
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_00D033H0GPW6DTTEFEGK4CXBVX",
       "localizedDisplay": {
         "en": {
@@ -29,7 +28,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Lowest placement within the guild this reward tier pays",
       "id": "prop_00D033H0GPTR5V04T6YPBYCG0Q",
       "localizedDisplay": {
         "en": {
@@ -54,7 +52,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D033H0GPSX5TQB69ST80YSQG",
       "localizedDisplay": {
         "en": {

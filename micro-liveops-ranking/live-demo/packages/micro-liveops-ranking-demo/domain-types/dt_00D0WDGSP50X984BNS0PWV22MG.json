@@ -1,5 +1,4 @@
 {
-  "compositeKey": null,
   "declared": [],
   "delegatedActions": [
     {
@@ -15,9 +14,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_63W68202TEBA2RK172FRMJ5JWG",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-liveops-ranking-demo"
+        "resourceKind": "masterData"
       }
     },
     {
@@ -33,9 +32,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_5PGH31GRPRBZESSV5XFZQWJ4KS",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-liveops-ranking-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

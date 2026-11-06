@@ -1,10 +1,6 @@
 {
   "id": "healer",
   "rowKey": "row_01M2GJ5HFJPVTPBS1Y3XZG1KME",
-  "type": {
-    "domainTypeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
-    "packageId": "foundation-economy-character-demo"
-  },
   "values": {
     "prop_00D0M4HCBWK48152NTS3ABDZMZ": "healer"
   }

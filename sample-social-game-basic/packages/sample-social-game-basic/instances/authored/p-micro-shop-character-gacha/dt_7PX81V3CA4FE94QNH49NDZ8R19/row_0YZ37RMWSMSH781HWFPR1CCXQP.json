@@ -1,10 +1,6 @@
 {
   "id": "n.character-0004",
   "rowKey": "row_0YZ37RMWSMSH781HWFPR1CCXQP",
-  "type": {
-    "domainTypeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
-    "packageId": "micro-shop-character-gacha"
-  },
   "values": {
     "prop_0QQ39TDDTA8E2W3B2GWBQWC3EJ": 1,
     "prop_1N7H0DM41KAPYE0ZPFH7KEQPDQ": "n",

@@ -45,9 +45,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_7B5FM276ZTBNSAQYJ948JES7GM",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-equipment-enchant-demo"
+        "resourceKind": "masterData"
       }
     },
     {
@@ -90,9 +90,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_1GGPJSBVVQB1MAWJR3VTQ9Y7QK",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-equipment-enchant-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

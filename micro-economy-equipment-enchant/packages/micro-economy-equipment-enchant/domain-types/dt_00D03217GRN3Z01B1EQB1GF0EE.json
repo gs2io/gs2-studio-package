@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_00D03217GRGSNN857DXEA47C4Y",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Number of bonuses rolled",
       "id": "prop_00D03217GRPNY6G1Z1K6JD36ZX",
       "localizedDisplay": {
         "en": {
@@ -51,7 +48,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Relative draw weight",
       "id": "prop_00D03217GRMT119DB6K6XQAWV0",
       "localizedDisplay": {
         "en": {

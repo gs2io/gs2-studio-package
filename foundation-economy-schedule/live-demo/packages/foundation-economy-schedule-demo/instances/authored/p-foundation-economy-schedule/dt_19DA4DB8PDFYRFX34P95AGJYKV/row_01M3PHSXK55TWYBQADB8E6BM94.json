@@ -1,10 +1,6 @@
 {
   "id": "guild-season",
   "rowKey": "row_01M3PHSXK55TWYBQADB8E6BM94",
-  "type": {
-    "domainTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
-    "packageId": "foundation-economy-schedule"
-  },
   "values": {
     "prop_1SGTZ9B0RDMXXPWHJ8K4W032AA": "2031-01-01T00:00:00.000Z",
     "prop_38P73QVFM50Y6J21VG3JGA0KV0": 0,

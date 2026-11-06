@@ -1,0 +1,22 @@
+{
+  "id": "uic_6S998T659XAZG9508ZS1EX6QPA",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "TrainButton",
+      "id": "uii_6Q7KC4M407B80AT6WPH1G97SKR",
+      "kind": "buttonAction",
+      "name": "Character",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "kind": "local",
+        "resourceId": "mdr_610EXTERWVB0FRCTCXD30A4ZX6",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "target": {
+    "hostTypeId": "dt_00D0KZXDBRG616WVXR4N5FCYH2",
+    "propertyPath": []
+  }
+}

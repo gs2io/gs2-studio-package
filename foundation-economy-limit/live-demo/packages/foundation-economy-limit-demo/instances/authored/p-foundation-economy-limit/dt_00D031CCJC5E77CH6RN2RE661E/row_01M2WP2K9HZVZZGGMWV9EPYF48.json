@@ -1,10 +1,6 @@
 {
   "id": "weekly",
   "rowKey": "row_01M2WP2K9HZVZZGGMWV9EPYF48",
-  "type": {
-    "domainTypeId": "dt_00D031CCJC5E77CH6RN2RE661E",
-    "packageId": "foundation-economy-limit"
-  },
   "values": {
     "prop_00D031CCJC935P6N8JH9QZET3R": "weekly",
     "prop_00D031CCJCA2HJ6M98DXZEDTKY": "monday",

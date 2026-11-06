@@ -1,9 +1,5 @@
 {
   "id": "1",
   "rowKey": "row_0ZABFHPEZ9R4Y9NKN64RRPDV4F",
-  "type": {
-    "domainTypeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
-    "packageId": "foundation-economy-currency"
-  },
   "values": {}
 }

@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "GS2 policy document for acting as the guild; deny everything explicitly rather than leaving it empty",
       "id": "prop_00D031EHJKR6BBM9VDKF7BEEG6",
       "localizedDisplay": {
         "en": {

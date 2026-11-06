@@ -1,10 +1,6 @@
 {
   "id": "coin_medium",
   "rowKey": "row_01M2FXJD9EGE1V5V5EV9DDVATJ",
-  "type": {
-    "domainTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
-    "packageId": "foundation-economy-currency"
-  },
   "values": {
     "prop_01M40RS7N08DEDFYE3YFC4TRYV": [
       {

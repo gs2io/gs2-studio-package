@@ -18,9 +18,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_21DB51BXCRBDQBFYF1JB1TQQ8M",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-mission-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

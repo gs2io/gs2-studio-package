@@ -1,10 +1,6 @@
 {
   "id": "standard",
   "rowKey": "row_01M3EPA5ZVSM9NGTGHRKHK16KE",
-  "type": {
-    "domainTypeId": "dt_00D03217GRKX0AV27J248EX89N",
-    "packageId": "micro-economy-equipment-enchant"
-  },
   "values": {
     "prop_00D03217GRNEKVPR01373YAKSE": 3
   }

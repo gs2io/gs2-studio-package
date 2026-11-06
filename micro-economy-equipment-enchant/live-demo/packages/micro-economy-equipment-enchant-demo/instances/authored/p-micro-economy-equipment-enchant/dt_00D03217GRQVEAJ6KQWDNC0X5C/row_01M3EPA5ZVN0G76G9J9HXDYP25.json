@@ -1,10 +1,6 @@
 {
   "id": "luck",
   "rowKey": "row_01M3EPA5ZVN0G76G9J9HXDYP25",
-  "type": {
-    "domainTypeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
-    "packageId": "micro-economy-equipment-enchant"
-  },
   "values": {
     "prop_00D03217GRGMDSEFAQS5E3A4B2": "standard",
     "prop_00D03217GRGMXYDWA00MEVCB01": "luck",

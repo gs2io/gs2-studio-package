@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_4552YRPM4T7DM461NZTHV2R3RF",
       "localizedDisplay": {
         "en": {
@@ -29,7 +27,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_39JZE7W62J9YCF3MACWWNCT3RA",
       "localizedDisplay": {
         "en": {
@@ -52,7 +49,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_05RTDSG3B2294A2YP12RV1Z3CB",
       "localizedDisplay": {
         "en": {
@@ -75,7 +71,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_0MRVXPF9WP8QEAKM6P22E33AXF",
       "localizedDisplay": {
         "en": {
@@ -98,7 +93,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "",
       "id": "prop_2Q40AJMB9QV5RFRKE25RKH3S3E",
       "localizedDisplay": {
         "en": {
@@ -124,7 +118,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "",
       "id": "prop_476CQNTX4ZK67EJZTF4JRWNVG1",
       "localizedDisplay": {
         "en": {
@@ -147,7 +140,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D05Q4S5W51ASB747VGW2QRXK",
       "localizedDisplay": {
         "en": {
@@ -170,7 +162,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D05Q4S5W18JS83RNRWD5MKDY",
       "localizedDisplay": {
         "en": {
@@ -193,7 +184,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D05Q4S5W2SKTP42MZPMK3GW3",
       "localizedDisplay": {
         "en": {
@@ -216,7 +206,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D05Q4S5W070TY1RCRJYBGAJ6",
       "localizedDisplay": {
         "en": {
@@ -239,7 +228,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D05Q4S5W5SPT9R3W97DXKD0V",
       "localizedDisplay": {
         "en": {
@@ -262,7 +250,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D05Q4S5W7TVBGYJHB1K9M01W",
       "localizedDisplay": {
         "en": {
@@ -285,7 +272,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "",
       "id": "prop_00D05Q8M1NSNSYDW517S8FBNB3",
       "localizedDisplay": {
         "en": {
@@ -308,7 +294,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "",
       "id": "prop_00D05Q8M1NWQBSABFCZBY6BMP6",
       "localizedDisplay": {
         "en": {
@@ -331,7 +316,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "",
       "id": "prop_00D05Q8M1NWSDJEXKMV352NRG6",
       "localizedDisplay": {
         "en": {

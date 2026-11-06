@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Member capacity a newly created guild starts with",
       "id": "prop_00D031EHJKS5RXCVAFMNT3SG8A",
       "localizedDisplay": {
         "en": {
@@ -28,7 +26,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Highest capacity a guild can be raised to",
       "id": "prop_00D031EHJKXY4J4TES2QHN8F8E",
       "localizedDisplay": {
         "en": {
@@ -53,7 +50,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Days of guild-master inactivity before the seat opens up",
       "id": "prop_00D031EHJKVGBMJB7FM4PCN6J7",
       "localizedDisplay": {
         "en": {
@@ -78,7 +74,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Wait before a player may rejoin a guild they left",
       "id": "prop_00D031EHJKRC55TT07BAPX05CG",
       "localizedDisplay": {
         "en": {
@@ -103,7 +98,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D031EHJKV14ABPBSZYSZE6ZC",
       "localizedDisplay": {
         "en": {
@@ -128,7 +122,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D031EHJKZX0Z07JXP9EBMZE2",
       "localizedDisplay": {
         "en": {
@@ -153,7 +146,6 @@
     },
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_00D031EHJKYNMFXHPY3FTZNMT3",
       "localizedDisplay": {
         "en": {
@@ -176,7 +168,6 @@
     },
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_00D031EHJKX7SZME4RYKT42EHK",
       "localizedDisplay": {
         "en": {
@@ -199,7 +190,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "The guild this player belongs to",
       "id": "prop_00D031EHJKXQ1Y91SVXVS1NEG1",
       "localizedDisplay": {
         "en": {

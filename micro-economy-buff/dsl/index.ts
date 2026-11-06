@@ -26,56 +26,20 @@ const Buff = defineDomainType("Buff", dt =>
       PT.prop("expression", PT.enum("rate_add", "mul", "value_add"))
         .masterData()
         .required()
-        .description("How the rate combines with the original value")
+    )
+    .property(PT.prop("targetType", PT.enum("action", "model")).masterData().required())
+    .property(
+      PT.string("targetActionName").masterData().requiredWhen(Cond.eq("targetType", "action"))
     )
     .property(
-      PT.prop("targetType", PT.enum("action", "model"))
-        .masterData()
-        .required()
-        .description("Whether an action's request or a model's field is scaled")
+      PT.string("targetModelName").masterData().requiredWhen(Cond.eq("targetType", "model"))
     )
-    .property(
-      PT.string("targetActionName")
-        .masterData()
-        .requiredWhen(Cond.eq("targetType", "action"))
-        .description("Action whose request is scaled, e.g. Gs2Inventory:AcquireItemSetByUserId")
-    )
-    .property(
-      PT.string("targetModelName")
-        .masterData()
-        .requiredWhen(Cond.eq("targetType", "model"))
-        .description("Model whose field is scaled, e.g. Gs2Idle:CategoryModel")
-    )
-    .property(
-      PT.string("targetFieldName")
-        .masterData()
-        .required()
-        .description("Field that is scaled, e.g. acquireCount or acquireActions")
-    )
-    .property(
-      PT.string("conditionModelName")
-        .masterData()
-        .required()
-        .description("Model the condition GRN names, e.g. Gs2Idle:CategoryModel")
-    )
-    .property(
-      PT.string("conditionGrn")
-        .masterData()
-        .required()
-        .description("GRN the buff applies to, with {region} and {ownerId} left for GS2 to fill")
-    )
-    .property(PT.float32("rate").masterData().required().description("Multiplier applied"))
-    .property(
-      PT.int32("priority")
-        .masterData()
-        .required()
-        .description("Order among buffs touching the same field")
-    )
-    .property(
-      PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID))
-        .assetDelivery()
-        .description("Period the buff is active for")
-    )
+    .property(PT.string("targetFieldName").masterData().required())
+    .property(PT.string("conditionModelName").masterData().required())
+    .property(PT.string("conditionGrn").masterData().required())
+    .property(PT.float32("rate").masterData().required())
+    .property(PT.int32("priority").masterData().required())
+    .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).assetDelivery())
     .localizedProperties({
       id: jaEnId("バフ", "buff"),
       expression: jaEnField(

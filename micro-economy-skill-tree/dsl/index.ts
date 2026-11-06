@@ -22,24 +22,13 @@ const CHARACTER_PROPERTY_ID = character.propertyId("Character", "propertyId");
 const SkillNode = defineDomainType("SkillNode", dt =>
   dt
     .property(
-      PT.prop("releaseConsumeActions", PT.listOf(PT.consumeAction()))
-        .masterData()
-        .required()
-        .description("What unlocking this node costs")
+      PT.prop("releaseConsumeActions", PT.listOf(PT.consumeAction())).masterData().required()
     )
-    .property(
-      PT.prop("premiseNodes", PT.listOf(PT.string()))
-        .masterData()
-        .description("Nodes that must be released first")
-    )
-    .property(
-      PT.float32("restrainReturnRate")
-        .masterData()
-        .description("Share of the cost refunded when the node is reset")
-    )
-    .property(PT.bool("released").userData().required().description("Unlocked by this player"))
+    .property(PT.prop("premiseNodes", PT.listOf(PT.string())).masterData())
+    .property(PT.float32("restrainReturnRate").masterData())
+    .property(PT.bool("released").userData().required())
     // Leave storage unset so owner is a runtime scope argument; the shared node master rows cannot supply a character identity.
-    .property(PT.string("owner").description("Whose tree these flags are read for"))
+    .property(PT.string("owner"))
     .localizedProperties({
       id: jaEnId("スキルノード", "skill node"),
       releaseConsumeActions: jaEnField(
@@ -78,11 +67,7 @@ const SkillNode = defineDomainType("SkillNode", dt =>
 
 const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>
   domainType
-    .property(
-      PT.prop("releasedSkillNodes", PT.listOf(PT.string()))
-        .userData()
-        .description("Skill nodes this character has unlocked")
-    )
+    .property(PT.prop("releasedSkillNodes", PT.listOf(PT.string())).userData())
     .localizedProperties({
       releasedSkillNodes: jaEnField(
         "解放済みスキルノード",

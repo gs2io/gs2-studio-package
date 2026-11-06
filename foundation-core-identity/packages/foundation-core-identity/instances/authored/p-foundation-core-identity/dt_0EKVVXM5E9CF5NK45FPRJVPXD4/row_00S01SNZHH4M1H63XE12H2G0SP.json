@@ -1,10 +1,6 @@
 {
   "id": "apple",
   "rowKey": "row_00S01SNZHH4M1H63XE12H2G0SP",
-  "type": {
-    "domainTypeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
-    "packageId": "foundation-core-identity"
-  },
   "values": {
     "prop_00AR2JNBEPQHX5YKYJXHQ5WSK3": "dummy",
     "prop_0KMJV43AM8EPY2W7HSE81ECJ00": "dummy",

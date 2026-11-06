@@ -1,10 +1,6 @@
 {
   "id": "ranking-contest",
   "rowKey": "row_01M3HNGK2R4RPXSN1A8WEDDZH6",
-  "type": {
-    "domainTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
-    "packageId": "foundation-economy-schedule"
-  },
   "values": {
     "prop_4T7XKM1CTQ7X9D94DB6868ZXR3": "ranking-contest",
     "prop_787C2RE8TDR45Z47ER9FNGNTBH": "relative",

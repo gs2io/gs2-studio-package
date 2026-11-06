@@ -6,7 +6,6 @@
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_7GZCWER58FEK1Y8TQBHZPM0H6S",
       "localizedDisplay": {
         "en": {
@@ -31,7 +30,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_01M40RS7N08DEDFYE3YFC4TRYV",
       "localizedDisplay": {
         "en": {
@@ -54,7 +52,6 @@
             "declared": [
               {
                 "bindingHint": "masterData",
-                "description": "",
                 "id": "prop_4F7GJCACK2YK78HYH2XVEEMN6R",
                 "localizedDisplay": {
                   "en": {
@@ -77,7 +74,6 @@
               },
               {
                 "bindingHint": "masterData",
-                "description": "",
                 "id": "prop_5F0WQDHQVNVH3DJAEMMFVJSJ2K",
                 "localizedDisplay": {
                   "en": {
@@ -113,13 +109,12 @@
                 ],
                 "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
                 "targetResource": {
+                  "kind": "local",
                   "resourceId": "mdr_5G3AX0767581SRB6QPW3FRXDBR",
-                  "resourceKind": "masterData",
-                  "sourcePackageId": "micro-shop-currency"
+                  "resourceKind": "masterData"
                 }
               }
             ],
-            "description": "",
             "elementKey": [
               "prop_4F7GJCACK2YK78HYH2XVEEMN6R"
             ],

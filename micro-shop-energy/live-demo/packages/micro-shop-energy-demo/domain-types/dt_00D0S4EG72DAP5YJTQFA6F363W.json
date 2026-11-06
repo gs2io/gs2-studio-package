@@ -41,7 +41,6 @@
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Free currency this product charges when it is bought",
       "id": "prop_00D0S4EG729BGHQ7R4RK1959TA",
       "localizedDisplay": {
         "en": {
@@ -79,9 +78,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_316T157DF8AHNBQJVWHABKV8MZ",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-shop-energy-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

@@ -6,8 +6,19 @@
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Ceiling the free press names; recovered from its count-up action",
       "id": "prop_00D0QB6DZ0RC9VB2JXFFYS3H1D",
+      "localizedDisplay": {
+        "en": {
+          "description": "How many times this can be used for free in each period.",
+          "label": "Free uses limit",
+          "unit": "uses"
+        },
+        "ja": {
+          "description": "この期間に無料で使える回数の上限です。",
+          "label": "無料回数の上限",
+          "unit": "回"
+        }
+      },
       "name": "freeMax",
       "requirement": {
         "kind": "always"
@@ -19,8 +30,19 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Ceiling the ad-backed press names; recovered from its count-up action",
       "id": "prop_00D0QB6DZ0ZKN1NV2NXPG9JNAE",
+      "localizedDisplay": {
+        "en": {
+          "description": "How many times this can be used by watching an ad in each period.",
+          "label": "Ad uses limit",
+          "unit": "uses"
+        },
+        "ja": {
+          "description": "この期間に広告を見て使える回数の上限です。",
+          "label": "広告視聴回数の上限",
+          "unit": "回"
+        }
+      },
       "name": "adMax",
       "requirement": {
         "kind": "always"
@@ -45,9 +67,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_3QQV27BR5AA419F2032R6T95RZ",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-economy-limit-demo"
+        "resourceKind": "masterData"
       }
     },
     {
@@ -63,9 +85,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-economy-limit-demo"
+        "resourceKind": "masterData"
       }
     },
     {
@@ -81,9 +103,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_2B66P1TX2CA2EV81HAS32228JF",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-economy-limit-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

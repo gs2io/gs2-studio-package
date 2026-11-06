@@ -21,38 +21,14 @@ const SCHEDULE_NAMESPACE_RESOURCE_ID = schedule.resourceId("schedule.Namespace")
 /** Use a separate Money2 namespace so subscription setup does not replace the currency package's wallet configuration. */
 const StoreSubscription = defineDomainType("StoreSubscription", dt =>
   dt
-    .property(
-      PT.string("appleSubscriptionGroupIdentifier")
-        .masterData()
-        .description("App Store subscription group")
-    )
-    .property(
-      PT.string("googlePlayProductId").masterData().description("Google Play subscription product")
-    )
-    .property(
-      PT.string("renewalTrigger")
-        .assetDelivery()
-        .required()
-        .description("Trigger pulled each time the subscription renews")
-    )
-    .property(
-      PT.prop("triggerExtendMode", PT.enum("just", "rollupHour"))
-        .masterData()
-        .description("Whether a renewal extends exactly or rounds to an hour")
-    )
-    .property(PT.int32("rollupHour").masterData().description("Hour renewals round to"))
-    .property(
-      PT.int32("reallocateSpanDays")
-        .masterData()
-        .description("Days before expiry that the store may re-bill")
-    )
-    .property(
-      PT.prop("status", PT.enum("active", "inactive"))
-        .userData()
-        .required()
-        .description("Whether the player currently holds it")
-    )
-    .property(PT.timestamp("expiresAt").userData().required().description("When it lapses"))
+    .property(PT.string("appleSubscriptionGroupIdentifier").masterData())
+    .property(PT.string("googlePlayProductId").masterData())
+    .property(PT.string("renewalTrigger").assetDelivery().required())
+    .property(PT.prop("triggerExtendMode", PT.enum("just", "rollupHour")).masterData())
+    .property(PT.int32("rollupHour").masterData())
+    .property(PT.int32("reallocateSpanDays").masterData())
+    .property(PT.prop("status", PT.enum("active", "inactive")).userData().required())
+    .property(PT.timestamp("expiresAt").userData().required())
     .localizedProperties({
       id: jaEnId("サブスクリプション商品", "subscription product"),
       appleSubscriptionGroupIdentifier: jaEnField(

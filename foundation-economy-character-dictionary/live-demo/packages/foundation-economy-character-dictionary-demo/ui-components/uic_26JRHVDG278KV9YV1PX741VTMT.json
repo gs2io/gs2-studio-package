@@ -1,0 +1,22 @@
+{
+  "id": "uic_26JRHVDG278KV9YV1PX741VTMT",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "RecruitButton",
+      "id": "uii_3PAHZDCDXT8A7VSQBFZ09VBYAM",
+      "kind": "buttonAction",
+      "name": "Character",
+      "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+      "targetResource": {
+        "kind": "local",
+        "resourceId": "mdr_4AGHB6Q7XM9449CE6A6SQB4263",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "target": {
+    "hostTypeId": "dt_00D0SX0W1BFSBBNRP4K43HVTJM",
+    "propertyPath": []
+  }
+}

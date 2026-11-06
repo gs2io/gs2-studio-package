@@ -1,10 +1,6 @@
 {
   "id": "daily",
   "rowKey": "row_01M2ZFVBD5EB25Q3GD77KVB653",
-  "type": {
-    "domainTypeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
-    "packageId": "micro-economy-mission"
-  },
   "values": {
     "prop_56NPGQ1SCN4Y44TB7EE3JSQZ12": "daily"
   }

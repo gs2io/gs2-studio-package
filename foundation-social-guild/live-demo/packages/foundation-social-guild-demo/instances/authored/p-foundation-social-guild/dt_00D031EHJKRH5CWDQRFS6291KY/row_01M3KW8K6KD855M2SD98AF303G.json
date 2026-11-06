@@ -1,10 +1,6 @@
 {
   "id": "adventurers",
   "rowKey": "row_01M3KW8K6KD855M2SD98AF303G",
-  "type": {
-    "domainTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
-    "packageId": "foundation-social-guild"
-  },
   "values": {
     "prop_00D031EHJKRC55TT07BAPX05CG": 0,
     "prop_00D031EHJKS5RXCVAFMNT3SG8A": 5,

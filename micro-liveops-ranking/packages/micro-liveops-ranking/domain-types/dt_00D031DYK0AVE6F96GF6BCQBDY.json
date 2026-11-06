@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_00D031DYK085H3KN6JQ04P6PST",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Whether a higher or a lower score ranks first",
       "id": "prop_00D031DYK0BV4VMYQ95YNG6TSF",
       "localizedDisplay": {
         "en": {
@@ -52,7 +49,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Add each submitted score to the last instead of replacing it",
       "id": "prop_00D031DYK09YX8Q1K3QBKCFV3Q",
       "localizedDisplay": {
         "en": {
@@ -75,7 +71,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Lowest score accepted",
       "id": "prop_00D031DYK08ZD8FNSCWTGZTDNB",
       "localizedDisplay": {
         "en": {
@@ -98,7 +93,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Highest score accepted",
       "id": "prop_00D031DYK0FVN99WA1Y6MF05YM",
       "localizedDisplay": {
         "en": {
@@ -121,7 +115,6 @@
     },
     {
       "bindingHint": "userData",
-      "description": "The player's own score",
       "id": "prop_00D031DYK0992AG7MFZHFPE8KQ",
       "localizedDisplay": {
         "en": {

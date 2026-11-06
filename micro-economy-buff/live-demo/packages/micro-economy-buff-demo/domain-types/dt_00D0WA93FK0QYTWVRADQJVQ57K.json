@@ -1,5 +1,4 @@
 {
-  "compositeKey": null,
   "declared": [],
   "delegatedActions": [
     {
@@ -15,9 +14,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_6SVF73ZCXEAEWRFC6R5JW33JCQ",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-buff-demo"
+        "resourceKind": "masterData"
       }
     },
     {
@@ -33,9 +32,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_62ZMGKX8TQAHBTQAR56TDCXS7E",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-buff-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

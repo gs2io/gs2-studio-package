@@ -45,9 +45,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_610EXTERWVB0FRCTCXD30A4ZX6",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-economy-character-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

@@ -1,10 +1,6 @@
 {
   "id": "3.contest",
   "rowKey": "row_01M3HP36RMCSVGGMMRYPBTT6N3",
-  "type": {
-    "domainTypeId": "dt_00D031DYK08MQ218VMWRT5X90Q",
-    "packageId": "micro-liveops-ranking"
-  },
   "values": {
     "prop_00D031DYK0BEEZ9PX7AGRDHYGE": 3,
     "prop_00D031DYK0DPGPB0KD153VWA20": "contest",

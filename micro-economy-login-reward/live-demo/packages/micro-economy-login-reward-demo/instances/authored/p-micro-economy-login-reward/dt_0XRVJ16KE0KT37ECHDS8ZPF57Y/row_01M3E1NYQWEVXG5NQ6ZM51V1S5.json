@@ -1,10 +1,6 @@
 {
   "id": "day1",
   "rowKey": "row_01M3E1NYQWEVXG5NQ6ZM51V1S5",
-  "type": {
-    "domainTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
-    "packageId": "micro-economy-login-reward"
-  },
   "values": {
     "prop_00D0VGDFNZ5T15JHGFR00Y73HS": 10,
     "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ": "Day 1",

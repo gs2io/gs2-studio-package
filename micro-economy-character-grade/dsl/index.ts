@@ -23,24 +23,9 @@ const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = character.resourceId("experience.
 
 const CharacterGradeStep = defineDomainType("CharacterGradeStep", dt =>
   dt
-    .property(
-      PT.int64("rankCapValue")
-        .masterData()
-        .required()
-        .description("Level cap this grade raises the character to")
-    )
-    .property(
-      PT.string("propertyIdRegex")
-        .masterData()
-        .required()
-        .description("Which characters this step applies to")
-    )
-    .property(
-      PT.string("gradeUpPropertyIdRegex")
-        .masterData()
-        .required()
-        .description("Which characters may be spent to reach it")
-    )
+    .property(PT.int64("rankCapValue").masterData().required())
+    .property(PT.string("propertyIdRegex").masterData().required())
+    .property(PT.string("gradeUpPropertyIdRegex").masterData().required())
     .localizedProperties({
       id: jaEnId("グレード段階", "grade step"),
       rankCapValue: jaEnField(
@@ -66,17 +51,15 @@ const CharacterGradeStep = defineDomainType("CharacterGradeStep", dt =>
 );
 
 const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>
-  domainType
-    .property(PT.int64("grade").userData().required().description("Grades promoted so far"))
-    .localizedProperties({
-      grade: jaEnField(
-        "現在グレード",
-        "Current grade",
-        "キャラクターが現在到達しているグレードです。",
-        "Current grade reached by the character.",
-        { ja: "段階", en: "grades" }
-      ),
-    })
+  domainType.property(PT.int64("grade").userData().required()).localizedProperties({
+    grade: jaEnField(
+      "現在グレード",
+      "Current grade",
+      "キャラクターが現在到達しているグレードです。",
+      "Current grade reached by the character.",
+      { ja: "段階", en: "grades" }
+    ),
+  })
 );
 
 const GradeModel = defineMasterDataResource(resource =>

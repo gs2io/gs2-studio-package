@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "userData",
-      "description": "Property id of the equipment worn here, empty when the slot is free",
       "id": "prop_00D033FNAS8DNWPTTNV21SG9XF",
       "localizedDisplay": {
         "en": {

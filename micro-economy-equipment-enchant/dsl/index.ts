@@ -20,30 +20,23 @@ const equipment = dependencyPackage(equipmentSurface);
 const EQUIPMENT_PROPERTY_ID = equipment.propertyId("Equipment", "propertyId");
 
 const EquipmentEnchant = defineDomainType("EquipmentEnchant", dt =>
-  dt
-    .property(
-      PT.int32("maximumParameterCount")
-        .masterData()
-        .required()
-        .description("Most bonuses a single piece can hold")
-    )
-    .localizedProperties({
-      id: jaEnId("エンチャント設定", "enchantment configuration"),
-      maximumParameterCount: jaEnField(
-        "最大効果数",
-        "Maximum effect count",
-        "1つの装備に付与できる追加効果の最大数です。",
-        "Maximum number of bonus effects one equipment item can hold.",
-        { ja: "個", en: "effects" }
-      ),
-    })
+  dt.property(PT.int32("maximumParameterCount").masterData().required()).localizedProperties({
+    id: jaEnId("エンチャント設定", "enchantment configuration"),
+    maximumParameterCount: jaEnField(
+      "最大効果数",
+      "Maximum effect count",
+      "1つの装備に付与できる追加効果の最大数です。",
+      "Maximum number of bonus effects one equipment item can hold.",
+      { ja: "個", en: "effects" }
+    ),
+  })
 );
 
 const EquipmentEnchantSlotChance = defineDomainType("EquipmentEnchantSlotChance", dt =>
   dt
     .property(PT.prop("enchant", PT.ref("EquipmentEnchant")).assetDelivery().required())
-    .property(PT.int32("count").masterData().required().description("Number of bonuses rolled"))
-    .property(PT.int32("weight").masterData().required().description("Relative draw weight"))
+    .property(PT.int32("count").masterData().required())
+    .property(PT.int32("weight").masterData().required())
     .localizedProperties({
       id: jaEnId("効果数抽選", "enchantment slot chance"),
       enchant: jaEnField(
@@ -71,11 +64,9 @@ const EquipmentEnchantSlotChance = defineDomainType("EquipmentEnchantSlotChance"
 const EquipmentEnchantOption = defineDomainType("EquipmentEnchantOption", dt =>
   dt
     .property(PT.prop("enchant", PT.ref("EquipmentEnchant")).assetDelivery().required())
-    .property(
-      PT.string("resourceName").masterData().required().description("Stat this bonus applies to")
-    )
-    .property(PT.int64("resourceValue").masterData().required().description("How much it applies"))
-    .property(PT.int32("weight").masterData().required().description("Relative draw weight"))
+    .property(PT.string("resourceName").masterData().required())
+    .property(PT.int64("resourceValue").masterData().required())
+    .property(PT.int32("weight").masterData().required())
     .localizedProperties({
       id: jaEnId("エンチャント候補", "enchantment option"),
       enchant: jaEnField(

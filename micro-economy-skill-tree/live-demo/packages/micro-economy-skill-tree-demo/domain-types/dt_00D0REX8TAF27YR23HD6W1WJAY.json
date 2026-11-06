@@ -41,7 +41,6 @@
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "Coins this node charges when it is released",
       "id": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ",
       "localizedDisplay": {
         "en": {

@@ -1,10 +1,6 @@
 {
   "id": "first",
   "rowKey": "row_01M31VN39972RGNYY8ABEXXBAQ",
-  "type": {
-    "domainTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
-    "packageId": "micro-economy-skill-tree"
-  },
   "values": {
     "prop_00D0321TWK1SPCKRNJJDG1CSDW": [],
     "prop_00D0321TWK5R5K4W0KWNR49SHT": 0.5,

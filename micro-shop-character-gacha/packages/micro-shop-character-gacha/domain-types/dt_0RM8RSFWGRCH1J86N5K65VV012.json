@@ -6,7 +6,6 @@
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_0FB9QM529M8HJWECVFGHK5ETSP",
       "localizedDisplay": {
         "en": {
@@ -29,7 +28,6 @@
     },
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_61V2Q6GDX782JAG5F3ZJQNRFHY",
       "localizedDisplay": {
         "en": {
@@ -52,7 +50,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_4FZRY1TPG3AT3E8S78CR5XY0XT",
       "localizedDisplay": {
         "en": {

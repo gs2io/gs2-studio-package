@@ -45,7 +45,6 @@
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_3J1CN3EHTA701ERZ1SNDB0XJ04",
       "name": "paidOnly",
       "requirement": {
@@ -58,7 +57,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_2AWS6DS1EXJ27NF6VQKWYGQFZZ",
       "name": "price",
       "requirement": {
@@ -71,7 +69,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_3Q5WE2KYP6JTQHWZQN7E8DW12Y",
       "name": "series",
       "requirement": {
@@ -84,7 +81,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_44GS4TR0HRE4SQCJEV2G7VDG1C",
       "name": "drawCount",
       "requirement": {

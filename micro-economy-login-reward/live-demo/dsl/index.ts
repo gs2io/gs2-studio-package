@@ -72,12 +72,7 @@ const LoginReward = defineOverlayDomainType(
   domainType =>
     domainType
       .property(PT.string("displayName").assetDelivery().required())
-      .property(
-        PT.int32("coins")
-          .masterData()
-          .required()
-          .description("Coins this day deposits when it is claimed")
-      )
+      .property(PT.int32("coins").masterData().required())
       .localizedProperties({
         displayName: jaEnField(
           "表示名",

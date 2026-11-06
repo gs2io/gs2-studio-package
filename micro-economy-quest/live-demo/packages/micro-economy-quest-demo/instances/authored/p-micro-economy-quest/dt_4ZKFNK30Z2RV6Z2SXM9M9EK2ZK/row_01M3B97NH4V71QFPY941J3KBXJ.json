@@ -1,10 +1,6 @@
 {
   "id": "quest1",
   "rowKey": "row_01M3B97NH4V71QFPY941J3KBXJ",
-  "type": {
-    "domainTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
-    "packageId": "micro-economy-quest"
-  },
   "values": {
     "prop_00D0TT9XC90NGHJ1JGHG67DHY2": 100,
     "prop_00D0TT9XC90ZNF8NCGHP5RHNBR": 10,

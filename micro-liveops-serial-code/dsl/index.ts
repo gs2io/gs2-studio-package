@@ -12,23 +12,15 @@ import { GS2 } from "~/dsl/gs2";
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 const SerialCodeCampaign = defineDomainType("SerialCodeCampaign", dt =>
-  dt
-    .property(
-      PT.bool("enableCampaignCode")
-        .masterData()
-        .description(
-          "Mark the campaign id as a shared code; GS2 currently accepts the id whether or not this is set"
-        )
-    )
-    .localizedProperties({
-      id: jaEnId("コードキャンペーン", "serial-code campaign"),
-      enableCampaignCode: jaEnField(
-        "共通キャンペーンコード",
-        "Shared campaign code",
-        "キャンペーン ID を全員共通のコードとして扱うことを示します。現在の GS2 はこの設定に関係なくキャンペーン ID を受け付け、何度でも使えます。",
-        "Marks the campaign id as a code shared by every player. GS2 currently accepts the id whatever this says, any number of times."
-      ),
-    })
+  dt.property(PT.bool("enableCampaignCode").masterData()).localizedProperties({
+    id: jaEnId("コードキャンペーン", "serial-code campaign"),
+    enableCampaignCode: jaEnField(
+      "共通キャンペーンコード",
+      "Shared campaign code",
+      "キャンペーン ID を全員共通のコードとして扱うことを示します。現在の GS2 はこの設定に関係なくキャンペーン ID を受け付け、何度でも使えます。",
+      "Marks the campaign id as a code shared by every player. GS2 currently accepts the id whatever this says, any number of times."
+    ),
+  })
 );
 
 const CampaignModel = defineMasterDataResource(resource =>

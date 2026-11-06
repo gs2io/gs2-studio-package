@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D0M4HCBWK48152NTS3ABDZMZ",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D0NTAZ7QKXA6Q5H5NDGEFQ2V",
       "localizedDisplay": {
         "en": {
@@ -64,9 +61,9 @@
       ],
       "targetActionKey": "Gs2Exchange:RateModel.Exchange",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_6C5BXK4CX6AGWT3V20TH8ECYYP",
-        "resourceKind": "masterData",
-        "sourcePackageId": "foundation-economy-character-demo"
+        "resourceKind": "masterData"
       }
     }
   ],

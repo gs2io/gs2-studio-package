@@ -34,7 +34,6 @@
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ",
       "localizedDisplay": {
         "en": {
@@ -57,7 +56,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Coins this day deposits when it is claimed",
       "id": "prop_00D0VGDFNZ5T15JHGFR00Y73HS",
       "localizedDisplay": {
         "en": {

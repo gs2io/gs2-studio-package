@@ -1,10 +1,6 @@
 {
   "id": "double-idle",
   "rowKey": "row_01M3H855QVS9T055RANN7FEMK4",
-  "type": {
-    "domainTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
-    "packageId": "micro-economy-buff"
-  },
   "values": {
     "prop_00D0322BN7G543V28MFV62QC0X": "mul",
     "prop_00D0322BN7WAGFGTFPNZT8GHVP": 0,

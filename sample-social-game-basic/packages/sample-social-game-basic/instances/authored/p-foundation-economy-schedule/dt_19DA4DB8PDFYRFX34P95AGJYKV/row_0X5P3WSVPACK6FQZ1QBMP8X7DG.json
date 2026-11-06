@@ -1,10 +1,6 @@
 {
   "id": "login-bonus-event",
   "rowKey": "row_0X5P3WSVPACK6FQZ1QBMP8X7DG",
-  "type": {
-    "domainTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
-    "packageId": "foundation-economy-schedule"
-  },
   "values": {
     "prop_1SGTZ9B0RDMXXPWHJ8K4W032AA": "2025-01-01T00:00:00.000Z",
     "prop_787C2RE8TDR45Z47ER9FNGNTBH": "absolute",

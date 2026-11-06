@@ -1,10 +1,6 @@
 {
   "id": "characterexperience",
   "rowKey": "row_0RJXZQ3JHCTGYKW2JWQYK6YGWM",
-  "type": {
-    "domainTypeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
-    "packageId": "foundation-economy-character"
-  },
   "values": {
     "prop_224DYPA75PEZKHXJMGJZP3G393": 100,
     "prop_2RQX4HDJCJDYTZYM4B9J09JZ9Z": 100,

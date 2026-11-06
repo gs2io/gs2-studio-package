@@ -1,10 +1,6 @@
 {
   "id": "open-season",
   "rowKey": "row_01M2K159BP6Y23WZ60TXD5HHE1",
-  "type": {
-    "domainTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
-    "packageId": "foundation-economy-schedule"
-  },
   "values": {
     "prop_1SGTZ9B0RDMXXPWHJ8K4W032AA": "2031-01-01T00:00:00.000Z",
     "prop_787C2RE8TDR45Z47ER9FNGNTBH": "absolute",

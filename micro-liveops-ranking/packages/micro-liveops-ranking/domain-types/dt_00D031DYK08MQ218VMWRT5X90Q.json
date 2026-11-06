@@ -6,7 +6,6 @@
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_00D031DYK0DPGPB0KD153VWA20",
       "localizedDisplay": {
         "en": {
@@ -29,7 +28,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "Lowest placement this reward tier pays; 1001 pays those ranked below the top 1000",
       "id": "prop_00D031DYK0BEEZ9PX7AGRDHYGE",
       "localizedDisplay": {
         "en": {
@@ -54,7 +52,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_00D031DYK0FBDNV00N30XJMEBY",
       "localizedDisplay": {
         "en": {

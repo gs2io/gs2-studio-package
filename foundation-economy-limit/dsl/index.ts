@@ -18,22 +18,17 @@ const UsageLimit = defineDomainType("UsageLimit", dt =>
       PT.prop("resetType", PT.enum("notReset", "daily", "weekly", "monthly", "days"))
         .masterData()
         .required()
-        .description("When the counts return to zero")
     )
     .property(
       PT.prop(
         "resetDayOfWeek",
         PT.enum("sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday")
-      )
-        .masterData()
-        .description("Reset weekday (weekly only)")
+      ).masterData()
     )
-    .property(PT.int32("resetDayOfMonth").masterData().description("Reset day (monthly only)"))
-    .property(PT.int32("resetHour").masterData().description("Reset hour, UTC"))
-    .property(PT.int32("days").masterData().description("Reset interval in days (days only)"))
-    .property(
-      PT.timestamp("anchorTimestamp").masterData().description("Interval origin (days only)")
-    )
+    .property(PT.int32("resetDayOfMonth").masterData())
+    .property(PT.int32("resetHour").masterData())
+    .property(PT.int32("days").masterData())
+    .property(PT.timestamp("anchorTimestamp").masterData())
     .localizedProperties({
       id: jaEnId("リセット設定", "reset schedule"),
       resetType: jaEnField(
@@ -81,16 +76,9 @@ const UsageLimit = defineDomainType("UsageLimit", dt =>
 /** Separate counter identity from reset cadence so multiple allowances can reset together without sharing counts. */
 const UsageLimitCounter = defineDomainType("UsageLimitCounter", dt =>
   dt
-    .property(
-      PT.prop("limit", PT.ref("UsageLimit"))
-        .assetDelivery()
-        .required()
-        .description("The reset cadence this counter follows")
-    )
-    .property(
-      PT.int64("count").userData().required().description("Times used since the last reset")
-    )
-    .property(PT.timestamp("nextResetAt").userData().required().description("Next reset time"))
+    .property(PT.prop("limit", PT.ref("UsageLimit")).assetDelivery().required())
+    .property(PT.int64("count").userData().required())
+    .property(PT.timestamp("nextResetAt").userData().required())
     .localizedProperties({
       id: jaEnId("回数カウンター", "usage counter"),
       limit: jaEnField(

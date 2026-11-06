@@ -1,10 +1,6 @@
 {
   "id": "always",
   "rowKey": "row_0BJMS49JNTPYQV5NMEB76KHN2M",
-  "type": {
-    "domainTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
-    "packageId": "micro-economy-login-reward"
-  },
   "values": {
     "prop_00D0V3E8RR357Z98YP7VMDXPP7": "schedule",
     "prop_2GPQQQHZ70FS0R1N1B43CP2VMW": "login-bonus-event",

@@ -1,9 +1,7 @@
 {
-  "compositeKey": null,
   "declared": [
     {
       "bindingHint": "assetDelivery",
-      "description": "",
       "id": "prop_42BYHE1CR1TEXDMCWR9B91PP5K",
       "localizedDisplay": {
         "en": {
@@ -26,7 +24,6 @@
     },
     {
       "bindingHint": "masterData",
-      "description": "",
       "id": "prop_641SVQJRC0GWZ43QNEPB429MND",
       "localizedDisplay": {
         "en": {
@@ -56,9 +53,9 @@
       "parameterOverrides": [],
       "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
       "targetResource": {
+        "kind": "local",
         "resourceId": "mdr_5PRP4NWC3688X91404V01TV2F9",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-shop-character-gacha"
+        "resourceKind": "masterData"
       }
     }
   ],
