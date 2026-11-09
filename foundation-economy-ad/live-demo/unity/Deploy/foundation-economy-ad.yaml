@@ -12,9 +12,13 @@ Resources:
         GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
       Name: "Ad"
       TransactionSetting:
+        AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: false
         EnableAutoRun: false
         QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
       UnityAd:
         Keys:
           - "showroom-demo-placeholder"

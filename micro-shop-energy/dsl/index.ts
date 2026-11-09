@@ -7,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -112,7 +112,7 @@ export const microShopEnergy = definePackage("micro-shop-energy", "0.0.0")
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(RateModel)
   )

@@ -1,4 +1,4 @@
-import { Bind, defineDomainType, definePackage, PT, Source, transactionSetting } from "~/dsl";
+import { Bind, defineDomainType, definePackage, PT, Source, transactionSettingV2 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -188,7 +188,7 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
       acceptRequestNotification: { ...notificationConfig },
       rejectRequestNotification: { ...notificationConfig },
       deleteFriendNotification: { ...notificationConfig },
-      transactionSetting: transactionSetting(),
+      transactionSettingV2: transactionSettingV2(),
     })
   )
 

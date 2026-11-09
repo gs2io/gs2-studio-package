@@ -55,6 +55,10 @@ Resources:
     Properties:
       Name: "SkillTree"
       TransactionSetting:
+        AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: false
         EnableAutoRun: false
         QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

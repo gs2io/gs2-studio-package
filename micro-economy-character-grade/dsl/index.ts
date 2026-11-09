@@ -7,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -134,7 +134,7 @@ export const microEconomyCharacterGrade = definePackage("micro-economy-character
       .bindings({
         name: Bind.static("CharacterGrade"),
         ...Bind.nulls("changeGradeScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(GradeModel)
   )

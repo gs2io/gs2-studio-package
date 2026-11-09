@@ -7,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -326,7 +326,7 @@ export const microShopCharacterGacha = definePackage("micro-shop-character-gacha
       .bindings({
         name: Bind.static("CharacterGacha"),
         ...Bind.nulls("lotteryTriggerScriptId", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(LotteryModel)
       .addChild(PrizeTable)
@@ -339,7 +339,7 @@ export const microShopCharacterGacha = definePackage("micro-shop-character-gacha
       .bindings({
         name: Bind.static("CharacterGacha"),
         ...Bind.nulls("buyScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(Showcase)
   )

@@ -7,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -252,7 +252,7 @@ export const microEconomyEquipmentEnchant = definePackage(
       .bindings({
         name: Bind.static("EquipmentEnchant"),
         logSetting: Bind.null(),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(RarityParameterModel)
   )

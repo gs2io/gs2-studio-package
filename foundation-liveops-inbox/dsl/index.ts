@@ -6,7 +6,7 @@ import {
   defineUserDataResource,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -88,7 +88,7 @@ const InboxNamespace = defineMasterDataResource(resource => {
         "receiveMessageScript",
         "receiveNotification"
       ),
-      transactionSetting: transactionSetting(),
+      transactionSettingV2: transactionSettingV2(),
     })
     .addChild(child => {
       child
@@ -170,7 +170,7 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
       .bindings({
         name: Bind.static("InboxSchedule"),
         logSetting: Bind.null(),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(child => {
         child

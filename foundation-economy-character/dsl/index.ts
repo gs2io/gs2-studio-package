@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -235,7 +235,7 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           "rankCapScriptId",
           "logSetting"
         ),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(ExperienceModel)
   )
@@ -255,7 +255,7 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           "bigItemConsumeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(InventoryModel)
   )

@@ -7,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -148,10 +148,7 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
           "logSetting"
         ),
         // Auto-run delivers the message without a second client request to execute the transaction.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(DeliverRateModel)
   )
@@ -167,10 +164,7 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(GiftRateModel)
   )

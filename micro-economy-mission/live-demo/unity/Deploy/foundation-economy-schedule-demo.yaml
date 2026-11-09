@@ -57,6 +57,7 @@ Resources:
       Name: "TriggerClear"
       TransactionSetting:
         AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
         EnableAtomicCommit: true
         EnableAutoRun: true
@@ -68,6 +69,7 @@ Resources:
       Name: "TriggerExtend"
       TransactionSetting:
         AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
         EnableAtomicCommit: true
         EnableAutoRun: true
@@ -79,6 +81,7 @@ Resources:
       Name: "TriggerPull"
       TransactionSetting:
         AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
         EnableAtomicCommit: true
         EnableAutoRun: true

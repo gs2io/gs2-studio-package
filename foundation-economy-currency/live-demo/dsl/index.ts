@@ -7,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -173,10 +173,7 @@ export const foundationEconomyCurrencyDemo = definePackage(
           "logSetting"
         ),
         // Auto-run executes the deposit without requiring a second client request after the exchange.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(FreeDepositRateModel)
       .addChild(PaidDepositRateModel)

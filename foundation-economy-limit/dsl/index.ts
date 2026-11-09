@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -155,7 +155,7 @@ export const foundationEconomyLimit = definePackage("foundation-economy-limit", 
       .bindings({
         name: Bind.static("Limit"),
         ...Bind.nulls("countUpScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(LimitModel)
   )

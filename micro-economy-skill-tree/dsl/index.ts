@@ -7,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -141,7 +141,7 @@ export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "
       .bindings({
         name: Bind.static("SkillTree"),
         ...Bind.nulls("releaseScript", "restrainScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(NodeModel)
   )

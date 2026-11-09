@@ -29,6 +29,7 @@ Resources:
       Name: "CurrencyGrant"
       TransactionSetting:
         AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
         EnableAtomicCommit: true
         EnableAutoRun: true

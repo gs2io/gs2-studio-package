@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -120,7 +120,7 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
       .bindings({
         name: Bind.static("Energy"),
         ...Bind.nulls("overflowTriggerScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(StaminaModel)
   )

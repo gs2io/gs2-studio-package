@@ -6,7 +6,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -78,7 +78,7 @@ export const foundationEconomyCharacterDictionary = definePackage(
     r.model(GS2.dictionary.Namespace)
       .bindings({
         name: Bind.static("CharacterDictionary"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
         ...Bind.nulls("logSetting", "entryScript", "duplicateEntryScript"),
       })
       .addChild(EntryModel);

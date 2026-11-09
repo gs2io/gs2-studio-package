@@ -8,7 +8,7 @@ import {
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -122,10 +122,7 @@ function redemptionExchange(name: string) {
       "incrementalExchangeScript",
       "logSetting"
     ),
-    transactionSetting: transactionSetting({
-      enableAtomicCommit: Bind.static(true),
-      enableAutoRun: Bind.static(true),
-    }),
+    transactionSettingV2: transactionSettingV2(),
   };
 }
 
@@ -196,7 +193,7 @@ export const microLiveopsSerialCodeDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0"
       .bindings({
         name: Bind.static("SerialCodeLimit"),
         ...Bind.nulls("countUpScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(RedemptionLimitModel)
   )

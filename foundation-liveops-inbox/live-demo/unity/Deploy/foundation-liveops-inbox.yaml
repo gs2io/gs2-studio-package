@@ -19,9 +19,13 @@ Resources:
     Properties:
       Name: "Inbox"
       TransactionSetting:
+        AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: false
         EnableAutoRun: false
         QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
   ScheduleCurrentEventMaster_InboxSchedule:
     Type: "GS2::Schedule::CurrentEventMaster"
     Properties:
@@ -43,6 +47,10 @@ Resources:
     Properties:
       Name: "InboxSchedule"
       TransactionSetting:
+        AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: false
         EnableAutoRun: false
         QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

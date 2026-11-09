@@ -81,6 +81,7 @@ Resources:
       Name: "EquipmentDiscard"
       TransactionSetting:
         AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
         EnableAtomicCommit: true
         EnableAutoRun: true
@@ -92,6 +93,7 @@ Resources:
       Name: "EquipmentExpand"
       TransactionSetting:
         AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
         EnableAtomicCommit: true
         EnableAutoRun: true
@@ -103,6 +105,7 @@ Resources:
       Name: "EquipmentTake"
       TransactionSetting:
         AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
         EnableAtomicCommit: true
         EnableAutoRun: true

@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -139,10 +139,7 @@ export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0
         name: Bind.static("Idle"),
         ...Bind.nulls("overrideAcquireActionsScriptId", "receiveScript"),
         // Auto-run executes the reward transaction; atomic commit keeps the idle reset and payout together.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(CategoryModel)
   )

@@ -6,7 +6,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -204,7 +204,7 @@ const Namespace = defineMasterDataResource(resource =>
     .bindings({
       name: Bind.static("Schedule"),
       logSetting: Bind.null(),
-      transactionSetting: transactionSetting(),
+      transactionSettingV2: transactionSettingV2(),
     })
     .addChild(child => {
       child

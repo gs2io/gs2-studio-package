@@ -66,9 +66,13 @@ Resources:
     Properties:
       Name: "CharacterGacha"
       TransactionSetting:
+        AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: false
         EnableAutoRun: false
         QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
   ShowcaseCurrentShowcaseMaster_CharacterGacha:
     Type: "GS2::Showcase::CurrentShowcaseMaster"
     Properties:
@@ -90,6 +94,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Lottery:DrawByUserId"
                       request: "{\"count\":1,\"userId\":\"#{userId}\",\"lotteryName\":\"standard\",\"namespaceName\":\"CharacterGacha\"}"
+                  bonuses: []
         randomShowcases: []
       Mode: "direct"
     DependsOn:
@@ -99,6 +104,10 @@ Resources:
     Properties:
       Name: "CharacterGacha"
       TransactionSetting:
+        AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: false
         EnableAutoRun: false
         QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false

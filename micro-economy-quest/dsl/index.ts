@@ -7,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -311,7 +311,7 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
       .bindings({
         name: Bind.static("Quest"),
         ...Bind.nulls("startQuestScript", "completeQuestScript", "failedQuestScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(QuestGroupModel)
   )

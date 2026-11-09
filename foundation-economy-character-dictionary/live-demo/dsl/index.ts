@@ -7,7 +7,7 @@ import {
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -87,10 +87,7 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage(
           "logSetting"
         ),
         // Auto-run executes the combined transaction without a second request from the page.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(DexRecruitRateModel)
   )

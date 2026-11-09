@@ -7,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -175,10 +175,7 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
           "logSetting"
         ),
         // Auto-run avoids a second client request; atomic commit keeps charging and recovery in the same purchase.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(BuyRateModel)
   )

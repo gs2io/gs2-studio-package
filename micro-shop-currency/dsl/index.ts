@@ -10,7 +10,7 @@ import {
   inlineElementOf,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -217,7 +217,7 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
       .bindings({
         name: Bind.static("ShopCurrency"),
         ...Bind.nulls("buyScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(Showcase)
   )

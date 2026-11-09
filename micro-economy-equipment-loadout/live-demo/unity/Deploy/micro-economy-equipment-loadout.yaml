@@ -25,9 +25,13 @@ Resources:
     Properties:
       Name: "CharacterEquipment"
       TransactionSetting:
+        AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: false
         EnableAutoRun: false
         QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
       UpdatePropertyFormScript:
         DoneTriggerTargetType: "none"
         TriggerScriptId: "grn:gs2:{region}:{ownerId}:script:CharacterEquipmentScript:script:UpdatePropertyForm"
@@ -36,9 +40,13 @@ Resources:
     Properties:
       Name: "CharacterEquipmentScript"
       TransactionSetting:
+        AcquireActionUseJobQueue: false
+        CommitScriptResultInUseDistributor: false
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
+        EnableAtomicCommit: false
         EnableAutoRun: false
         QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        TransactionUseDistributor: false
   ScriptScript_CharacterEquipmentScript_UpdatePropertyForm:
     Type: "GS2::Script::Script"
     Properties:

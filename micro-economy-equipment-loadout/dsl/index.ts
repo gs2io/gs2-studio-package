@@ -9,7 +9,7 @@ import {
   scriptGrn,
   scriptSetting,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -140,7 +140,7 @@ export const microEconomyEquipmentLoadout = definePackage(
       .bindings({
         name: Bind.static(SCRIPT_NAMESPACE),
         ...Bind.nulls("logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(script =>
         script.model(GS2.script.Script).bindings({
@@ -162,7 +162,7 @@ export const microEconomyEquipmentLoadout = definePackage(
         updatePropertyFormScript: scriptSetting({
           triggerScriptId: scriptGrn(SCRIPT_NAMESPACE, UPDATE_PROPERTY_FORM_SCRIPT),
         }),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(PropertyFormModel)
   )

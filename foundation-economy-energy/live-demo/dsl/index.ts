@@ -5,7 +5,7 @@ import {
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -99,10 +99,7 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
           "logSetting"
         ),
         // Auto-run executes the exchange transaction without a second client request.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(ConsumeRateModel)
   )
@@ -118,10 +115,7 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(RecoverRateModel)
   )

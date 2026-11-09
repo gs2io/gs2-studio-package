@@ -9,7 +9,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -230,10 +230,7 @@ export const microEconomyLoginReward = definePackage("micro-economy-login-reward
         logSetting: Bind.null(),
         name: Bind.static("LoginReward"),
         receiveScript: Bind.null(),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(BonusModel)
   )

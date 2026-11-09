@@ -6,7 +6,7 @@ import {
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -113,10 +113,7 @@ export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
           "logSetting"
         ),
         // Auto-run avoids a second client request to execute the transaction after the exchange succeeds.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(WatchRateModel)
   )
@@ -132,10 +129,7 @@ export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(SpendRateModel)
   )
