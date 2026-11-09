@@ -39,26 +39,6 @@
       "parameterName": "randomSeed"
     },
     {
-      "kind": "skip",
-      "parameterName": "transactionId"
-    },
-    {
-      "kind": "skip",
-      "parameterName": "userId"
-    }
-  ],
-  "id": "udr_4TR60HC6M28STTKPCST9SRAVZA",
-  "linkedMasterResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
-  "location": {
-    "modelName": "Progress",
-    "service": "quest"
-  },
-  "ownMountPath": {
-    "kind": "local",
-    "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP"
-  },
-  "projectionBindings": [
-    {
       "fieldMappings": [
         {
           "fieldName": "itemId",
@@ -76,6 +56,24 @@
         "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP"
       },
       "targetPropertyId": "prop_13P7PMR0A3DBCG13JCB54KM0HP"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "transactionId"
+    },
+    {
+      "kind": "skip",
+      "parameterName": "userId"
     }
-  ]
+  ],
+  "id": "udr_4TR60HC6M28STTKPCST9SRAVZA",
+  "linkedMasterResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
+  "location": {
+    "modelName": "Progress",
+    "service": "quest"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_2RBV8SPG989F1J35N35XH96PTP"
+  }
 }
