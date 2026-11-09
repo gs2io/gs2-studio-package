@@ -1,6 +1,7 @@
 /** Own the combined recruit rate here so enabling dex registration cannot change the shared character demo stack. */
 
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -33,24 +34,24 @@ const DexRecruitRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
-        .bindings({
-          action: Bind.transform(CHARACTER_PACKAGE_ID, character.transformId("AcquireCharacter"), [
+        .actionProgram(
+          ActionProgram.transform(CHARACTER_PACKAGE_ID, character.transformId("AcquireCharacter"), [
             Arg.domainProperty("character", Source.direct(Character, "id")),
             Arg.static("count", 1),
-          ]),
-        });
+          ])
+        );
     })
     .addArrayChild("acquireActions", dictionaryAction => {
       dictionaryAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             dictionary.packageId,
             dictionary.transformId("MarkCharacterDictionary"),
             [Arg.domainProperty("character", Source.direct(Character, "id"))]
-          ),
-        });
+          )
+        );
     })
 );
 

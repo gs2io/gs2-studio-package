@@ -1,18 +1,16 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_1BKB0K494K8R6BV7VA50ZJ2T0D",
-          "transformPackageId": "foundation-economy-ad-demo"
-        }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+  "actionProgram": {
+    "invocation": {
+      "arguments": [],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_1BKB0K494K8R6BV7VA50ZJ2T0D",
+        "transformPackageId": "foundation-economy-ad-demo"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_3ESNRVY21ZAPJS612007NXVYD0",
   "location": {
     "modelName": "AcquireAction",

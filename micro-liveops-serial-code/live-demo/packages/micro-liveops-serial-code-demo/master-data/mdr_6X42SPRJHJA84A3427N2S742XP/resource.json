@@ -1,18 +1,16 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_0ANYB1CF038B2RMMTVPA8C9X3B",
-          "transformPackageId": "micro-liveops-serial-code-demo"
-        }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+  "actionProgram": {
+    "invocation": {
+      "arguments": [],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_0ANYB1CF038B2RMMTVPA8C9X3B",
+        "transformPackageId": "micro-liveops-serial-code-demo"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_6X42SPRJHJA84A3427N2S742XP",
   "location": {
     "modelName": "AcquireAction",

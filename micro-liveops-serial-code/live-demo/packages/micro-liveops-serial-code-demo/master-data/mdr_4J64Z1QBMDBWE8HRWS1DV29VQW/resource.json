@@ -1,33 +1,31 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "slot",
-            "source": {
-              "kind": "static",
-              "value": 0
-            }
-          },
-          {
-            "parameterName": "count",
-            "source": {
-              "kind": "static",
-              "value": 100
-            }
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "slot",
+          "source": {
+            "kind": "static",
+            "value": 0
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_128M69PST19WRR9BGD46M0YWAC",
-          "transformPackageId": "foundation-economy-currency"
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "static",
+            "value": 100
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_128M69PST19WRR9BGD46M0YWAC",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_4J64Z1QBMDBWE8HRWS1DV29VQW",
   "location": {
     "modelName": "AcquireAction",

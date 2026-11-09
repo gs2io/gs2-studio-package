@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -27,12 +28,12 @@ const GainRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Item)
-        .bindings({
-          action: Bind.transform(inventory.packageId, inventory.transformId("AcquireItem"), [
+        .actionProgram(
+          ActionProgram.transform(inventory.packageId, inventory.transformId("AcquireItem"), [
             Arg.domainProperty("itemName", Source.direct(Item, "id")),
             Arg.static("count", STEP),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -45,12 +46,12 @@ const SpendRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Item)
-        .bindings({
-          action: Bind.transform(inventory.packageId, inventory.transformId("ConsumeItem"), [
+        .actionProgram(
+          ActionProgram.transform(inventory.packageId, inventory.transformId("ConsumeItem"), [
             Arg.domainProperty("itemName", Source.direct(Item, "id")),
             Arg.static("count", STEP),
-          ]),
-        });
+          ])
+        );
     })
 );
 

@@ -1,40 +1,38 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "enchant",
-            "source": {
-              "kind": "static",
-              "value": "standard"
-            }
-          },
-          {
-            "parameterName": "propertyId",
-            "source": {
-              "kind": "placeholder",
-              "value": "#{propertyId}"
-            }
-          },
-          {
-            "parameterName": "count",
-            "source": {
-              "kind": "static",
-              "value": 1
-            }
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "enchant",
+          "source": {
+            "kind": "static",
+            "value": "standard"
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_4S1THMNVB898V882K2EPEZHDMA",
-          "transformPackageId": "micro-economy-equipment-enchant"
+        },
+        {
+          "parameterName": "propertyId",
+          "source": {
+            "kind": "placeholder",
+            "value": "#{propertyId}"
+          }
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_4S1THMNVB898V882K2EPEZHDMA",
+        "transformPackageId": "micro-economy-equipment-enchant"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_3DVPCENVYJB28S753JRBDZNBQA",
   "location": {
     "modelName": "AcquireAction",

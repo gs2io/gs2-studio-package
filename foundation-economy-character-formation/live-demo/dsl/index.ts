@@ -1,6 +1,7 @@
 /** Reuse the shared character demo content so formation does not deploy a second version of its roster and recruit rates. */
 
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -44,11 +45,11 @@ const ExpandRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(CharacterFormation)
-        .bindings({
-          action: Bind.transform(formation.packageId, formation.transformId("IncreaseSaveArea"), [
+        .actionProgram(
+          ActionProgram.transform(formation.packageId, formation.transformId("IncreaseSaveArea"), [
             Arg.static("value", 1),
-          ]),
-        });
+          ])
+        );
     })
 );
 

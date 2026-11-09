@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -62,25 +63,25 @@ const RateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EnergyProduct)
-        .bindings({
-          action: Bind.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
+        .actionProgram(
+          ActionProgram.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
             Arg.domainProperty("energy", Source.parent(Source.direct(EnergyProduct, "energy"))),
             Arg.domainProperty(
               "value",
               Source.parent(Source.direct(EnergyProduct, "recoveryValue"))
             ),
-          ]),
-        });
+          ])
+        );
     })
     .addArrayChild("consumeActions", consumeAction => {
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(EnergyProduct)
-        .bindings({
-          action: Bind.domainProperty(
+        .actionProgram(
+          ActionProgram.domainProperty(
             Source.parent(Source.direct(EnergyProduct, "consumeActions"))
-          ),
-        });
+          )
+        );
     })
 );
 

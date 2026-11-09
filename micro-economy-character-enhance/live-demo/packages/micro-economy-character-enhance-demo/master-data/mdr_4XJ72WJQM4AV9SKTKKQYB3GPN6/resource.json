@@ -1,43 +1,41 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "material",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "material",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR"
-                  },
-                  "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-                }
+              "scopes": [],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR"
+                },
+                "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
               }
             }
-          },
-          {
-            "parameterName": "count",
-            "source": {
-              "kind": "static",
-              "value": 1
-            }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_1N85Q9X5J29M9BXPXJYV8V4Q5Z",
-          "transformPackageId": "micro-economy-character-enhance"
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_1N85Q9X5J29M9BXPXJYV8V4Q5Z",
+        "transformPackageId": "micro-economy-character-enhance"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_4XJ72WJQM4AV9SKTKKQYB3GPN6",
   "location": {
     "modelName": "AcquireAction",

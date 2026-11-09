@@ -1,33 +1,31 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "propertyId",
-            "source": {
-              "kind": "placeholder",
-              "value": "#{propertyId}:level"
-            }
-          },
-          {
-            "parameterName": "value",
-            "source": {
-              "kind": "static",
-              "value": 40
-            }
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "propertyId",
+          "source": {
+            "kind": "placeholder",
+            "value": "#{propertyId}:level"
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_0TEHD9M5M58SY923NTA3T75DDM",
-          "transformPackageId": "foundation-economy-character"
+        },
+        {
+          "parameterName": "value",
+          "source": {
+            "kind": "static",
+            "value": 40
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_0TEHD9M5M58SY923NTA3T75DDM",
+        "transformPackageId": "foundation-economy-character"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_3YVM7YK8GHA4SB20ARGV59ZJ7N",
   "location": {
     "modelName": "AcquireAction",

@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -78,8 +79,8 @@ const BuyRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EnergyProduct)
-        .bindings({
-          action: Bind.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
+        .actionProgram(
+          ActionProgram.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
             // Use published ids because these inherited properties are absent from the local overlay declarations.
             Arg.domainProperty(
               "energy",
@@ -96,20 +97,20 @@ const BuyRateModel = defineMasterDataResource(resource =>
                 )
               )
             ),
-          ]),
-        });
+          ])
+        );
     })
     .addArrayChild("consumeActions", consumeAction => {
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(EnergyProduct)
-        .bindings({
-          action: Bind.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
+        .actionProgram(
+          ActionProgram.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
             Arg.static("slot", WALLET_SLOT),
             Arg.static("paidOnly", false),
             Arg.domainProperty("count", Source.parent(Source.direct(EnergyProduct, "cost"))),
-          ]),
-        });
+          ])
+        );
     })
 );
 

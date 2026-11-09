@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -91,13 +92,17 @@ const AdvanceRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(MissionCounter)
-        .bindings({
-          action: Bind.transform(mission.packageId, mission.transformId("IncreaseMissionCounter"), [
-            // Bind the counter identity so each authored counter gets its own rate without duplicating this definition.
-            Arg.domainProperty("counter", Source.direct(MissionCounter, COUNTER_ID)),
-            Arg.static("value", STEP),
-          ]),
-        });
+        .actionProgram(
+          ActionProgram.transform(
+            mission.packageId,
+            mission.transformId("IncreaseMissionCounter"),
+            [
+              // Bind the counter identity so each authored counter gets its own rate without duplicating this definition.
+              Arg.domainProperty("counter", Source.direct(MissionCounter, COUNTER_ID)),
+              Arg.static("value", STEP),
+            ]
+          )
+        );
     })
 );
 

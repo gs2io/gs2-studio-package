@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -49,8 +50,8 @@ const DisplayItem = defineMasterDataResource(resource =>
           acquireAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal("StoreProduct")
-            .bindings({
-              action: Bind.transform(
+            .actionProgram(
+              ActionProgram.transform(
                 "foundation-economy-currency",
                 currency.transformId("DepositCurrency"),
                 [
@@ -66,20 +67,20 @@ const DisplayItem = defineMasterDataResource(resource =>
                     Source.parent(Source.parent(Source.direct(StorePrice, "price")))
                   ),
                 ]
-              ),
-            });
+              )
+            );
         })
         .addArrayChild("consumeActions", consumeAction => {
           consumeAction
             .model(GS2.transaction.ConsumeAction)
             .mountLocal("StoreProduct")
-            .bindings({
-              action: Bind.transform(
+            .actionProgram(
+              ActionProgram.transform(
                 "foundation-economy-currency",
                 currency.transformId("VerifyReceipt"),
                 [Arg.domainProperty("contentName", Source.direct("StoreProduct", "id"))]
-              ),
-            });
+              )
+            );
         });
     })
 );

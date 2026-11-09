@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Bind,
   defineDomainType,
   defineMasterDataResource,
@@ -163,38 +164,38 @@ const QuestModel = defineMasterDataResource(resource =>
           acquireAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal(Quest)
-            .bindings({
-              action: Bind.domainProperty(
+            .actionProgram(
+              ActionProgram.domainProperty(
                 Source.parent(Source.parent(Source.direct(Quest, "completeAcquireActions")))
-              ),
-            });
+              )
+            );
         });
     })
     .addArrayChild("consumeActions", consumeAction => {
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Quest)
-        .bindings({
-          action: Bind.domainProperty(Source.parent(Source.direct(Quest, "consumeActions"))),
-        });
+        .actionProgram(
+          ActionProgram.domainProperty(Source.parent(Source.direct(Quest, "consumeActions")))
+        );
     })
     .addArrayChild("failedAcquireActions", acquireAction => {
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Quest)
-        .bindings({
-          action: Bind.domainProperty(Source.parent(Source.direct(Quest, "failedAcquireActions"))),
-        });
+        .actionProgram(
+          ActionProgram.domainProperty(Source.parent(Source.direct(Quest, "failedAcquireActions")))
+        );
     })
     .addArrayChild("firstCompleteAcquireActions", acquireAction => {
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Quest)
-        .bindings({
-          action: Bind.domainProperty(
+        .actionProgram(
+          ActionProgram.domainProperty(
             Source.parent(Source.direct(Quest, "firstCompleteAcquireActions"))
-          ),
-        });
+          )
+        );
     })
 );
 

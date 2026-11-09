@@ -1,26 +1,24 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "value",
-            "source": {
-              "kind": "static",
-              "value": 2
-            }
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "value",
+          "source": {
+            "kind": "static",
+            "value": 2
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_3H7989KQGX9SJTTECEYMKHR6TJ",
-          "transformPackageId": "foundation-economy-equipment"
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_3H7989KQGX9SJTTECEYMKHR6TJ",
+        "transformPackageId": "foundation-economy-equipment"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_3AB9XMQHG9ACP8C665WPSMFK1P",
   "location": {
     "modelName": "AcquireAction",

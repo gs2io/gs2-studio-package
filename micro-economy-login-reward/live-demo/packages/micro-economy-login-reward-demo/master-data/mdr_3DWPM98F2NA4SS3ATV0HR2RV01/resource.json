@@ -1,36 +1,34 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "loginRewardCollection",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "loginRewardCollection",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00"
-                  },
-                  "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-                }
+              "scopes": [],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0VGDFNZ1P9DR7YQFQC90N00"
+                },
+                "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
               }
             }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_7HZJD63FEK93PTBTQWK5A3KNT4",
-          "transformPackageId": "micro-economy-login-reward"
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_7HZJD63FEK93PTBTQWK5A3KNT4",
+        "transformPackageId": "micro-economy-login-reward"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_3DWPM98F2NA4SS3ATV0HR2RV01",
   "location": {
     "modelName": "AcquireAction",

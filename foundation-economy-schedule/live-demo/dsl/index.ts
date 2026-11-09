@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -52,12 +53,12 @@ const PullRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(TriggerPull)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.domainProperty("trigger", Source.parent(Source.direct(TriggerPull, "trigger"))),
             Arg.static("ttlSeconds", TTL_SECONDS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -70,12 +71,12 @@ const ExtendRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Trigger)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("TriggerSchedule"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("TriggerSchedule"), [
             Arg.domainProperty("trigger", Source.direct("Trigger", "id")),
             Arg.static("extendSeconds", EXTEND_SECONDS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -88,11 +89,11 @@ const ClearRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Trigger)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.domainProperty("trigger", Source.direct("Trigger", "id")),
-          ]),
-        });
+          ])
+        );
     })
 );
 

@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -142,8 +143,8 @@ const RarityPrizeTable = defineMasterDataResource(resource =>
           acquireAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal(CharacterRate)
-            .bindings({
-              action: Bind.transform(
+            .actionProgram(
+              ActionProgram.transform(
                 "foundation-economy-character",
                 character.transformId("AcquireCharacter"),
                 [
@@ -153,15 +154,15 @@ const RarityPrizeTable = defineMasterDataResource(resource =>
                   ),
                   Arg.static("count", 1),
                 ]
-              ),
-            });
+              )
+            );
         })
         .addArrayChild("acquireActions", dictionaryAction => {
           dictionaryAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal(CharacterRate)
-            .bindings({
-              action: Bind.transform(
+            .actionProgram(
+              ActionProgram.transform(
                 "foundation-economy-character-dictionary",
                 dictionary.transformId("MarkCharacterDictionary"),
                 [
@@ -170,8 +171,8 @@ const RarityPrizeTable = defineMasterDataResource(resource =>
                     Source.parent(Source.direct(CharacterRate, "character"))
                   ),
                 ]
-              ),
-            });
+              )
+            );
         });
     })
 );
@@ -224,27 +225,23 @@ const DisplayItem = defineMasterDataResource(resource =>
           drawAction
             .model(GS2.transaction.AcquireAction)
             .resourceLink(LotteryModel)
-            .bindings({
-              action: Bind.static("Gs2Lottery:DrawByUserId"),
-            })
-            // Bind request fields by parameter path because the catalog exposes the request as a JSON blob.
-            .domainPropertyBindings({
-              request: {
+            .actionProgram(
+              ActionProgram.concrete("Gs2Lottery:DrawByUserId", {
                 namespaceName: Bind.resourceKey(),
                 lotteryName: Bind.resourceKey(),
                 userId: Bind.placeholder("#{userId}"),
                 count: Bind.static(1),
                 config: Bind.null(),
-              },
-            });
+              })
+            );
         })
         .addArrayChild("consumeActions", consumeAction => {
           consumeAction
             .model(GS2.transaction.ConsumeAction)
             .mountLocal(Gacha)
-            .bindings({
-              action: Bind.domainProperty(Source.parent(Source.direct(Gacha, "consumeActions"))),
-            });
+            .actionProgram(
+              ActionProgram.domainProperty(Source.parent(Source.direct(Gacha, "consumeActions")))
+            );
         });
     })
 );

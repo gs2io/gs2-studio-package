@@ -1,62 +1,60 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "count",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [
-                  {
-                    "kind": "parent",
-                    "parentResourceId": "mdr_6JVGGGN9A9AB9TWSKZS4RDACTQ"
-                  }
-                ],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3"
-                  },
-                  "propertyId": "prop_00D0KZCKAB8JMZWPNE82NRXE0W"
+              "scopes": [
+                {
+                  "kind": "parent",
+                  "parentResourceId": "mdr_6JVGGGN9A9AB9TWSKZS4RDACTQ"
                 }
+              ],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3"
+                },
+                "propertyId": "prop_00D0KZCKAB8JMZWPNE82NRXE0W"
               }
             }
-          },
-          {
-            "parameterName": "currencyType",
-            "source": {
-              "kind": "static",
-              "value": "JPY"
-            }
-          },
-          {
-            "parameterName": "price",
-            "source": {
-              "kind": "static",
-              "value": 120
-            }
-          },
-          {
-            "parameterName": "slot",
-            "source": {
-              "kind": "static",
-              "value": 0
-            }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_103C3AGDYK65AAVXE24NG965GH",
-          "transformPackageId": "foundation-economy-currency"
+        },
+        {
+          "parameterName": "currencyType",
+          "source": {
+            "kind": "static",
+            "value": "JPY"
+          }
+        },
+        {
+          "parameterName": "price",
+          "source": {
+            "kind": "static",
+            "value": 120
+          }
+        },
+        {
+          "parameterName": "slot",
+          "source": {
+            "kind": "static",
+            "value": 0
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_103C3AGDYK65AAVXE24NG965GH",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_6N5MN0PDY6AHC8SDVAXNJG9CRV",
   "location": {
     "modelName": "AcquireAction",

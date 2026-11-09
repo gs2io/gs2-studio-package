@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -117,12 +118,12 @@ const StartRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(RankingContest)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.static("trigger", CONTEST_TRIGGER),
             Arg.static("ttlSeconds", CONTEST_SECONDS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -135,11 +136,11 @@ const FinishRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(RankingContest)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.static("trigger", CONTEST_TRIGGER),
-          ]),
-        });
+          ])
+        );
     })
 );
 

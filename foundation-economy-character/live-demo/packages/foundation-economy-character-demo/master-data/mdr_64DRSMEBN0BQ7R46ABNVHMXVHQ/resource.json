@@ -1,48 +1,46 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "character",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "character",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [
-                  {
-                    "kind": "parent",
-                    "parentResourceId": "mdr_6C5BXK4CX6AGWT3V20TH8ECYYP"
-                  }
-                ],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW"
-                  },
-                  "propertyId": "prop_00D0M4HCBWK48152NTS3ABDZMZ"
+              "scopes": [
+                {
+                  "kind": "parent",
+                  "parentResourceId": "mdr_6C5BXK4CX6AGWT3V20TH8ECYYP"
                 }
+              ],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW"
+                },
+                "propertyId": "prop_00D0M4HCBWK48152NTS3ABDZMZ"
               }
             }
-          },
-          {
-            "parameterName": "count",
-            "source": {
-              "kind": "static",
-              "value": 1
-            }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_5V44WAAQRF94D51FPBFT5Q2DN2",
-          "transformPackageId": "foundation-economy-character"
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_5V44WAAQRF94D51FPBFT5Q2DN2",
+        "transformPackageId": "foundation-economy-character"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_64DRSMEBN0BQ7R46ABNVHMXVHQ",
   "location": {
     "modelName": "AcquireAction",

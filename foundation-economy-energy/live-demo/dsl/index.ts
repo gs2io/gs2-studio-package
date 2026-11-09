@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -38,12 +39,12 @@ const ConsumeRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Energy)
-        .bindings({
-          action: Bind.transform(energy.packageId, energy.transformId("ConsumeEnergy"), [
+        .actionProgram(
+          ActionProgram.transform(energy.packageId, energy.transformId("ConsumeEnergy"), [
             Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", CONSUME_VALUE),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -56,12 +57,12 @@ const RecoverRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Energy)
-        .bindings({
-          action: Bind.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
+        .actionProgram(
+          ActionProgram.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
             Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", RECOVERY_VALUE),
-          ]),
-        });
+          ])
+        );
     })
 );
 

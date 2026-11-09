@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -99,8 +100,8 @@ const StartOverRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(LoginRewardCollection)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             loginReward.packageId,
             loginReward.transformId("ResetReceiveStatus"),
             [
@@ -109,8 +110,8 @@ const StartOverRateModel = defineMasterDataResource(resource =>
                 Source.direct(LoginRewardCollection, "id")
               ),
             ]
-          ),
-        });
+          )
+        );
     })
 );
 

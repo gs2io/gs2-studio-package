@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -91,9 +92,9 @@ const FreeUseRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(UsageLimitCounter)
-        .bindings({
+        .actionProgram(
           // Read the schedule from the counter reference so the two-part identity cannot drift.
-          action: Bind.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
+          ActionProgram.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
             Arg.domainProperty(
               "limit",
               Source.parent(Source.direct(UsageLimitCounterRow, COUNTER_LIMIT))
@@ -102,8 +103,8 @@ const FreeUseRateModel = defineMasterDataResource(resource =>
             Arg.static("countUpValue", STEP),
             // Bind the ceiling to its property so generated readers can recover it from the deployed request.
             Arg.domainProperty("maxValue", Source.direct(UsageLimitCounter, "freeMax")),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -117,16 +118,16 @@ const AdUseRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(UsageLimitCounter)
-        .bindings({
-          action: Bind.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), []),
-        });
+        .actionProgram(
+          ActionProgram.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), [])
+        );
     })
     .addArrayChild("consumeActions", consumeAction => {
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(UsageLimitCounter)
-        .bindings({
-          action: Bind.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
+        .actionProgram(
+          ActionProgram.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
             Arg.domainProperty(
               "limit",
               Source.parent(Source.direct(UsageLimitCounterRow, COUNTER_LIMIT))
@@ -134,8 +135,8 @@ const AdUseRateModel = defineMasterDataResource(resource =>
             Arg.domainProperty("counter", Source.direct(UsageLimitCounter, "id")),
             Arg.static("countUpValue", STEP),
             Arg.domainProperty("maxValue", Source.direct(UsageLimitCounter, "adMax")),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -150,12 +151,12 @@ const ResetEveryAllowanceRateModel = defineMasterDataResource(resource => {
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(UsageLimitCounter)
-        .bindings({
-          action: Bind.transform(limit.packageId, limit.transformId("ResetUsageLimitCounter"), [
+        .actionProgram(
+          ActionProgram.transform(limit.packageId, limit.transformId("ResetUsageLimitCounter"), [
             Arg.static("limit", schedule),
             Arg.static("counter", counter),
-          ]),
-        });
+          ])
+        );
     });
   }
 });

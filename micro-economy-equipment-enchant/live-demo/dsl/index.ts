@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -62,25 +63,25 @@ function enchantRateModel(
         acquireAction
           .model(GS2.transaction.AcquireAction)
           .mountLocal(Equipment)
-          .bindings({
-            action: Bind.transform(enchant.packageId, enchant.transformId(transformName), [
+          .actionProgram(
+            ActionProgram.transform(enchant.packageId, enchant.transformId(transformName), [
               Arg.static("enchant", STANDARD),
               Arg.placeholder("propertyId", "#{propertyId}"),
               ...count,
-            ]),
-          });
+            ])
+          );
       })
       .addArrayChild("consumeActions", consumeAction => {
         consumeAction
           .model(GS2.transaction.ConsumeAction)
           .mountLocal(Equipment)
-          .bindings({
-            action: Bind.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
+          .actionProgram(
+            ActionProgram.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
               Arg.static("slot", WALLET_SLOT),
               Arg.static("paidOnly", false),
               Arg.static("count", cost),
-            ]),
-          });
+            ])
+          );
       })
   );
 }

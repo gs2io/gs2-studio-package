@@ -1,33 +1,31 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "propertyId",
-            "source": {
-              "kind": "placeholder",
-              "value": "#{propertyId}:level"
-            }
-          },
-          {
-            "parameterName": "gradeValue",
-            "source": {
-              "kind": "static",
-              "value": 1
-            }
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "propertyId",
+          "source": {
+            "kind": "placeholder",
+            "value": "#{propertyId}:level"
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_0AV65RY3CPHDE6VDR8XQ9MH72H",
-          "transformPackageId": "micro-economy-character-grade"
+        },
+        {
+          "parameterName": "gradeValue",
+          "source": {
+            "kind": "static",
+            "value": 1
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_0AV65RY3CPHDE6VDR8XQ9MH72H",
+        "transformPackageId": "micro-economy-character-grade"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_1QPE74NMN9A2KTPC5MMVKFS5VH",
   "location": {
     "modelName": "AcquireAction",

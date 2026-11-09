@@ -1,6 +1,7 @@
 /** Supply a free recruit action so a new account can populate the otherwise empty owned-character list. */
 
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -66,26 +67,26 @@ const RecruitRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(CharacterRecruit)
-        .bindings({
-          action: Bind.transform(character.packageId, character.transformId("AcquireCharacter"), [
+        .actionProgram(
+          ActionProgram.transform(character.packageId, character.transformId("AcquireCharacter"), [
             Arg.domainProperty(
               "character",
               Source.parent(Source.direct(CharacterRecruit, "character"))
             ),
             Arg.static("count", 1),
-          ]),
-        });
+          ])
+        );
     })
     // Leave this binding empty in demo rows so installing the base demo adds no extra acquisition actions.
     .addArrayChild("acquireActions", extraAction => {
       extraAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(CharacterRecruit)
-        .bindings({
-          action: Bind.domainProperty(
+        .actionProgram(
+          ActionProgram.domainProperty(
             Source.parent(Source.direct(CharacterRecruit, "extraActions"))
-          ),
-        });
+          )
+        );
     })
 );
 
@@ -99,16 +100,16 @@ const TrainRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             character.packageId,
             character.transformId("AcquireCharacterExperience"),
             [
               Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
               Arg.static("value", 40),
             ]
-          ),
-        });
+          )
+        );
     })
 );
 

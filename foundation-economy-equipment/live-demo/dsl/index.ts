@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -56,14 +57,14 @@ const TakeRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EquipmentCatalog)
-        .bindings({
-          action: Bind.transform(equipment.packageId, equipment.transformId("AcquireEquipment"), [
+        .actionProgram(
+          ActionProgram.transform(equipment.packageId, equipment.transformId("AcquireEquipment"), [
             Arg.domainProperty(
               "equipment",
               Source.parent(Source.direct(EquipmentCatalog, "equipment"))
             ),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -76,12 +77,12 @@ const DiscardRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Equipment)
-        .bindings({
-          action: Bind.transform(equipment.packageId, equipment.transformId("DeleteEquipment"), [
+        .actionProgram(
+          ActionProgram.transform(equipment.packageId, equipment.transformId("DeleteEquipment"), [
             Arg.domainProperty("equipment", Source.direct(Equipment, "id")),
             // Omit instance selection because the deployed rate cannot name a future owned item set; discard consumes by equipment type.
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -94,13 +95,13 @@ const ExpandRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EquipmentCollection)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             equipment.packageId,
             equipment.transformId("AddEquipmentCapacity"),
             [Arg.static("value", CAPACITY_STEP)]
-          ),
-        });
+          )
+        );
     })
 );
 

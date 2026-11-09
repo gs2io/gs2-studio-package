@@ -1,6 +1,7 @@
 /** The page simulates ad completion; the demo owns point grants because the feature package cannot decide when a view qualifies. */
 
 import {
+  ActionProgram,
   Bind,
   defineMasterDataResource,
   definePackage,
@@ -42,9 +43,7 @@ const WatchRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(AdViewPoint)
-        .bindings({
-          action: Bind.transform(DEMO_PACKAGE_ID, AcquireAdViewPointTransform, []),
-        });
+        .actionProgram(ActionProgram.transform(DEMO_PACKAGE_ID, AcquireAdViewPointTransform, []));
     })
 );
 
@@ -58,9 +57,9 @@ const SpendRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(AdViewPoint)
-        .bindings({
-          action: Bind.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), []),
-        });
+        .actionProgram(
+          ActionProgram.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), [])
+        );
     })
 );
 

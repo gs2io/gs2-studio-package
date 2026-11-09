@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Bind,
   Cond,
   defineDomainType,
@@ -148,22 +149,22 @@ const BonusModel = defineMasterDataResource(resource =>
           acquireAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal(LoginReward)
-            .bindings({
-              action: Bind.domainProperty(
+            .actionProgram(
+              ActionProgram.domainProperty(
                 Source.parent(Source.direct(LoginReward, "acquireActions"))
-              ),
-            });
+              )
+            );
         });
     })
     .addArrayChild("missedReceiveReliefConsumeActions", consumeAction => {
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(LoginRewardCollection)
-        .bindings({
-          action: Bind.domainProperty(
+        .actionProgram(
+          ActionProgram.domainProperty(
             Source.parent(Source.direct(LoginRewardCollection, "missedReceiveReliefConsumeActions"))
-          ),
-        });
+          )
+        );
     })
 );
 

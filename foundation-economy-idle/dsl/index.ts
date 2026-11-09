@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Bind,
   defineDomainType,
   defineMasterDataResource,
@@ -97,11 +98,11 @@ const CategoryModel = defineMasterDataResource(resource =>
           transactionAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal(IdleReward)
-            .bindings({
-              action: Bind.domainProperty(
+            .actionProgram(
+              ActionProgram.domainProperty(
                 Source.parent(Source.direct(IdleReward, "acquireActions"))
-              ),
-            });
+              )
+            );
         });
     })
 );

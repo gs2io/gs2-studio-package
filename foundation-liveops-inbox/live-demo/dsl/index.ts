@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -63,8 +64,8 @@ const DeliverRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(GlobalMessage)
-        .bindings({
-          action: Bind.transform(inbox.packageId, inbox.transformId("SendMessage"), [
+        .actionProgram(
+          ActionProgram.transform(inbox.packageId, inbox.transformId("SendMessage"), [
             Arg.domainProperty(
               "metadata",
               Source.parent(
@@ -72,8 +73,8 @@ const DeliverRateModel = defineMasterDataResource(resource =>
               )
             ),
             Arg.static("expireDays", EXPIRE_DAYS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -87,8 +88,8 @@ const GiftRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Gift)
-        .bindings({
-          action: Bind.transform(inbox.packageId, inbox.transformId("SendMessageWithReward"), [
+        .actionProgram(
+          ActionProgram.transform(inbox.packageId, inbox.transformId("SendMessageWithReward"), [
             Arg.domainProperty("metadata", Source.parent(Source.direct(Gift, "payload"))),
             Arg.static("expireDays", EXPIRE_DAYS),
             Arg.actionTransformRef(
@@ -100,8 +101,8 @@ const GiftRateModel = defineMasterDataResource(resource =>
                 Arg.domainProperty("count", Source.parent(Source.direct(Gift, "amount"))),
               ]
             ),
-          ]),
-        });
+          ])
+        );
     })
 );
 

@@ -1,26 +1,24 @@
 {
-  "declaredBindings": [
-    {
-      "kind": "domainProperty",
-      "parameterName": "action",
-      "source": {
-        "scopes": [
-          {
-            "kind": "parent",
-            "parentResourceId": "mdr_25CQKDMHCC8HNA1RJYJ3PVGC8B"
-          }
-        ],
-        "terminal": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE"
-          },
-          "propertyId": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6"
+  "actionProgram": {
+    "kind": "domainProperty",
+    "source": {
+      "scopes": [
+        {
+          "kind": "parent",
+          "parentResourceId": "mdr_25CQKDMHCC8HNA1RJYJ3PVGC8B"
         }
+      ],
+      "terminal": {
+        "kind": "direct",
+        "mountPath": {
+          "kind": "local",
+          "typeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE"
+        },
+        "propertyId": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6"
       }
     }
-  ],
+  },
+  "declaredBindings": [],
   "id": "mdr_3Z0XQX69768KHAMF86H3KJB4MV",
   "location": {
     "modelName": "ConsumeAction",

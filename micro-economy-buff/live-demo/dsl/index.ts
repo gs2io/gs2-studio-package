@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -55,12 +56,12 @@ const StartRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(BuffCampaign)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.static("trigger", CAMPAIGN_TRIGGER),
             Arg.static("ttlSeconds", CAMPAIGN_SECONDS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -73,11 +74,11 @@ const EndRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(BuffCampaign)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.static("trigger", CAMPAIGN_TRIGGER),
-          ]),
-        });
+          ])
+        );
     })
 );
 

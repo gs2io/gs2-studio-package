@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -55,16 +56,16 @@ const GetMaterialRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(CharacterEnhanceMaterial)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             enhance.packageId,
             enhance.transformId("AcquireCharacterEnhanceMaterial"),
             [
               Arg.domainProperty("material", Source.direct(CharacterEnhanceMaterial, "id")),
               Arg.static("count", 1),
             ]
-          ),
-        });
+          )
+        );
     })
 );
 
@@ -79,14 +80,14 @@ function enhanceRateModel(materialName: string) {
         acquireAction
           .model(GS2.transaction.AcquireAction)
           .mountLocal(Character)
-          .bindings({
-            action: Bind.transform(enhance.packageId, enhance.transformId("EnhanceCharacter"), [
+          .actionProgram(
+            ActionProgram.transform(enhance.packageId, enhance.transformId("EnhanceCharacter"), [
               Arg.static("enhance", RECIPE),
               Arg.placeholder("targetItemSetId", "#{propertyId}"),
               Arg.static("materialItemSetId", characterEnhanceMaterialItemId(materialName)),
               Arg.static("count", 1),
-            ]),
-          });
+            ])
+          );
       })
   );
 }

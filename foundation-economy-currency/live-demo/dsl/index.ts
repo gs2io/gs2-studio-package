@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -61,12 +62,16 @@ const FreeDepositRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(FreeDeposit)
-        .bindings({
-          action: Bind.transform(CURRENCY_PACKAGE_ID, currency.transformId("DepositFreeCurrency"), [
-            Arg.domainProperty("count", Source.parent(Source.direct(FreeDeposit, "count"))),
-            Arg.static("slot", WALLET_SLOT),
-          ]),
-        });
+        .actionProgram(
+          ActionProgram.transform(
+            CURRENCY_PACKAGE_ID,
+            currency.transformId("DepositFreeCurrency"),
+            [
+              Arg.domainProperty("count", Source.parent(Source.direct(FreeDeposit, "count"))),
+              Arg.static("slot", WALLET_SLOT),
+            ]
+          )
+        );
     })
 );
 
@@ -82,14 +87,14 @@ const PaidDepositRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(PaidDeposit)
-        .bindings({
-          action: Bind.transform(CURRENCY_PACKAGE_ID, currency.transformId("DepositCurrency"), [
+        .actionProgram(
+          ActionProgram.transform(CURRENCY_PACKAGE_ID, currency.transformId("DepositCurrency"), [
             Arg.domainProperty("count", Source.parent(Source.direct(PaidDeposit, "count"))),
             Arg.static("currencyType", "JPY"),
             Arg.static("price", 120),
             Arg.static("slot", WALLET_SLOT),
-          ]),
-        });
+          ])
+        );
     })
 );
 

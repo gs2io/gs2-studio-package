@@ -1,48 +1,46 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "count",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [
-                  {
-                    "kind": "parent",
-                    "parentResourceId": "mdr_0WQYMCRMNHA27R3GC0HP8TDAM1"
-                  }
-                ],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2"
-                  },
-                  "propertyId": "prop_00D0KZCKABE9VVHET0Z8R3QD2M"
+              "scopes": [
+                {
+                  "kind": "parent",
+                  "parentResourceId": "mdr_0WQYMCRMNHA27R3GC0HP8TDAM1"
                 }
+              ],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2"
+                },
+                "propertyId": "prop_00D0KZCKABE9VVHET0Z8R3QD2M"
               }
             }
-          },
-          {
-            "parameterName": "slot",
-            "source": {
-              "kind": "static",
-              "value": 0
-            }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_128M69PST19WRR9BGD46M0YWAC",
-          "transformPackageId": "foundation-economy-currency"
+        },
+        {
+          "parameterName": "slot",
+          "source": {
+            "kind": "static",
+            "value": 0
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_128M69PST19WRR9BGD46M0YWAC",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_7D1B71PKTZBZJ9Y9YSA6BRB7W4",
   "location": {
     "modelName": "AcquireAction",

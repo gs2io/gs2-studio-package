@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -45,12 +46,12 @@ const LimitBreakRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
-        .bindings({
-          action: Bind.transform(grade.packageId, grade.transformId("PromoteCharacterGrade"), [
+        .actionProgram(
+          ActionProgram.transform(grade.packageId, grade.transformId("PromoteCharacterGrade"), [
             Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
             Arg.static("gradeValue", 1),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -63,16 +64,16 @@ const TrainHardRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             character.packageId,
             character.transformId("AcquireCharacterExperience"),
             [
               Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
               Arg.static("value", TRAIN_HARD_EXPERIENCE),
             ]
-          ),
-        });
+          )
+        );
     })
 );
 
