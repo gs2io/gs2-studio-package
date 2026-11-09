@@ -45,11 +45,6 @@ Resources:
     Type: "GS2::Ranking2::Namespace"
     Properties:
       Name: "Ranking"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
-        CommitScriptResultInUseDistributor: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false

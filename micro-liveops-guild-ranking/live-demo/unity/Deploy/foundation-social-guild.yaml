@@ -47,11 +47,6 @@ Resources:
         Enable: "Enabled"
         EnableTransferMobileNotification: false
         GatewayNamespaceId: "grn:gs2:{region}:{ownerId}:gateway:default"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
-        CommitScriptResultInUseDistributor: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: false
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false

@@ -27,11 +27,6 @@ Resources:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "CurrencyGrant"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
-        CommitScriptResultInUseDistributor: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false

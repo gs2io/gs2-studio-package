@@ -71,11 +71,6 @@ Resources:
     Properties:
       AssumeUserId: "grn:gs2::{ownerId}:identifier:user:demo-version-passed"
       Name: "Version"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
-        CommitScriptResultInUseDistributor: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: false
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false

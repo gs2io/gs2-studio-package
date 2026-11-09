@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "68241db21de1df80227e55c75eb2e96591f213e0",
-      "integrity": "sha256-YlbaeI1mB/bqXUyixYjJm7NB/oPRfMRKe6byk9Tpwjc=",
+      "commitSha": "8006cd6cc2551e756bf4c2026dbe04405c9f55d0",
+      "integrity": "sha256-ROaTTd6dM5SDTYgTodNs9qVSZxAqeeYkDJj8sJEvmT0=",
       "owner": "gs2io",
       "packageId": "foundation-social-graph",
       "repo": "gs2-studio-package",

@@ -33,11 +33,6 @@ Resources:
     Type: "GS2::Inventory::Namespace"
     Properties:
       Name: "Equipment"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
-        CommitScriptResultInUseDistributor: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: false
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false
