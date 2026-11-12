@@ -90,7 +90,7 @@ const GradeModel = defineMasterDataResource(resource =>
     })
 );
 
-export const microEconomyCharacterGrade = definePackage("micro-economy-character-grade", "0.0.0")
+export const microEconomyCharacterGrade = definePackage("micro-economy-character-grade", "0.0.1")
   .display({
     ja: {
       label: "キャラクター限界突破",

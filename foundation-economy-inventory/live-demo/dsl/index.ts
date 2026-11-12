@@ -57,7 +57,7 @@ const SpendRateModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyInventoryDemo = definePackage(
   "foundation-economy-inventory-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

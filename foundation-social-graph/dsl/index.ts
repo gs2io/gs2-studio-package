@@ -93,7 +93,7 @@ const notificationConfig = {
   sound: Bind.static(""),
 };
 
-export const foundationSocialGraph = definePackage("foundation-social-graph", "0.0.0")
+export const foundationSocialGraph = definePackage("foundation-social-graph", "0.0.1")
   .display({
     ja: {
       label: "フレンド・プロフィール",

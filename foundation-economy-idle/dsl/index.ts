@@ -107,7 +107,7 @@ const CategoryModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0.0.0")
+export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0.0.1")
   .display({
     ja: { label: "放置報酬", description: "遊んでいない間にたまる放置報酬を計算・付与します。" },
     en: {

@@ -159,7 +159,7 @@ function contestExchange(name: string) {
   };
 }
 
-const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.0")
+const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.1")
   .display({
     ja: {
       label: "ランキング（デモデータ）",

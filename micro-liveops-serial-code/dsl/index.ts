@@ -36,7 +36,7 @@ const CampaignModel = defineMasterDataResource(resource =>
     })
 );
 
-export const microLiveopsSerialCode = definePackage("micro-liveops-serial-code", "0.0.0")
+export const microLiveopsSerialCode = definePackage("micro-liveops-serial-code", "0.0.1")
   .display({
     ja: {
       label: "シリアルコード",

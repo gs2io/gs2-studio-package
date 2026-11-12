@@ -107,7 +107,7 @@ const ExpandRateModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyEquipmentDemo = definePackage(
   "foundation-economy-equipment-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

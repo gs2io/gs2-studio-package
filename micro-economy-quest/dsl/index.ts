@@ -247,7 +247,7 @@ const ProgressResource = defineUserDataResource(resource =>
     ])
 );
 
-export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
+export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.1")
   .display({
     ja: {
       label: "クエスト",

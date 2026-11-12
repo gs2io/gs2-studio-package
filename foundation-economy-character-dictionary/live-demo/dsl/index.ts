@@ -57,7 +57,7 @@ const DexRecruitRateModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyCharacterDictionaryDemo = definePackage(
   "foundation-economy-character-dictionary-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

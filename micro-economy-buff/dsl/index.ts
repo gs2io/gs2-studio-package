@@ -164,7 +164,7 @@ const BuffEntryModel = defineMasterDataResource(resource =>
     )
 );
 
-export const microEconomyBuff = definePackage("micro-economy-buff", "0.0.0")
+export const microEconomyBuff = definePackage("micro-economy-buff", "0.0.1")
   .display({
     ja: {
       label: "バフ",

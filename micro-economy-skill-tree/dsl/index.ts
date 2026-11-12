@@ -101,7 +101,7 @@ const NodeModel = defineMasterDataResource(resource =>
     })
 );
 
-export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "0.0.0")
+export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "0.0.1")
   .display({
     ja: {
       label: "スキルツリー",

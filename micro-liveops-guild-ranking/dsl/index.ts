@@ -144,7 +144,7 @@ const ClusterRankingModel = defineMasterDataResource(resource =>
     })
 );
 
-export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranking", "0.0.0")
+export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranking", "0.0.1")
   .display({
     ja: {
       label: "ギルドランキング",

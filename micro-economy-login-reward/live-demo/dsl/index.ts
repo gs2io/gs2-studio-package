@@ -115,7 +115,7 @@ const StartOverRateModel = defineMasterDataResource(resource =>
     })
 );
 
-const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
+const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.1")
   .display({
     ja: {
       label: "ログインボーナス（デモデータ）",

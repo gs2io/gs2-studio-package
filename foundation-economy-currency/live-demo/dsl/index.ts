@@ -117,7 +117,7 @@ function demoProduct(
 
 export const foundationEconomyCurrencyDemo = definePackage(
   "foundation-economy-currency-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

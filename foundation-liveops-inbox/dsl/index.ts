@@ -127,7 +127,7 @@ const InboxMessage = defineUserDataResource(resource =>
     })
 );
 
-export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", "0.0.0")
+export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", "0.0.1")
   .display({
     ja: {
       label: "お知らせ・受信箱",
@@ -166,7 +166,6 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
 
   .masterDataResource(r => {
     r.model(GS2.schedule.Namespace)
-      .mountLocal(GlobalMessage)
       .bindings({
         name: Bind.static("InboxSchedule"),
         logSetting: Bind.null(),

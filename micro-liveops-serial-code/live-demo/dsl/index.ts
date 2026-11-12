@@ -123,7 +123,7 @@ function redemptionExchange(name: string) {
   };
 }
 
-export const microLiveopsSerialCodeDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
+export const microLiveopsSerialCodeDemo = definePackage(DEMO_PACKAGE_ID, "0.0.1")
   .display({
     ja: {
       label: "シリアルコード（デモデータ）",

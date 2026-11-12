@@ -111,7 +111,7 @@ const StoreSubscriptionContentModel = defineMasterDataResource(resource =>
     ])
 );
 
-export const microShopSubscription = definePackage("micro-shop-subscription", "0.0.0")
+export const microShopSubscription = definePackage("micro-shop-subscription", "0.0.1")
   .display({
     ja: {
       label: "サブスクリプション",

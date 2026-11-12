@@ -8,7 +8,7 @@ const identity = dependencyPackage(identitySurface);
 
 const TransferCode = identity.type("TransferCode");
 
-export const foundationCoreIdentityDemo = definePackage("foundation-core-identity-demo", "0.0.0")
+export const foundationCoreIdentityDemo = definePackage("foundation-core-identity-demo", "0.0.1")
   .display({
     ja: {
       label: "引き継ぎ設定（デモデータ）",

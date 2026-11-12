@@ -100,7 +100,7 @@ const PROPERTY_ID_CONFIG = {
 
 export const microEconomyCharacterGradeDemo = definePackage(
   "micro-economy-character-grade-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

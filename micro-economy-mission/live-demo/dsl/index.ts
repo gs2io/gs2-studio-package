@@ -106,7 +106,7 @@ const AdvanceRateModel = defineMasterDataResource(resource =>
     })
 );
 
-const withGroups = definePackage("micro-economy-mission-demo", "0.0.0")
+const withGroups = definePackage("micro-economy-mission-demo", "0.0.1")
   .display({
     ja: {
       label: "ミッション（デモデータ）",

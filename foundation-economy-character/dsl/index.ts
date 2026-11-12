@@ -183,7 +183,7 @@ const InventoryModel = defineMasterDataResource(resource =>
     .addArrayChild("itemModels", ItemModel)
 );
 
-export const foundationEconomyCharacter = definePackage("foundation-economy-character", "0.0.0")
+export const foundationEconomyCharacter = definePackage("foundation-economy-character", "0.0.1")
   .display({
     ja: { label: "キャラクター", description: "キャラクターの所持・レベル・経験値を扱います。" },
     en: { label: "Characters", description: "Handles character ownership, level, and experience." },

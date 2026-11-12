@@ -97,7 +97,7 @@ function campaignExchange(name: string) {
   };
 }
 
-export const microEconomyBuffDemo = definePackage("micro-economy-buff-demo", "0.0.0")
+export const microEconomyBuffDemo = definePackage("micro-economy-buff-demo", "0.0.1")
   .display({
     ja: {
       label: "バフ（デモデータ）",

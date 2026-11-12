@@ -25,7 +25,7 @@ const RARE = ["mage", "healer"] as const;
 
 const STANDARD = "standard";
 
-export const microShopCharacterGachaDemo = definePackage("micro-shop-character-gacha-demo", "0.0.0")
+export const microShopCharacterGachaDemo = definePackage("micro-shop-character-gacha-demo", "0.0.1")
   .display({
     ja: {
       label: "キャラクターガチャ（デモデータ）",

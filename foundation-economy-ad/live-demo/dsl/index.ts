@@ -63,7 +63,7 @@ const SpendRateModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
+export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.1")
   .display({
     ja: {
       label: "広告（デモデータ）",

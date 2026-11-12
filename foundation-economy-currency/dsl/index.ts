@@ -122,7 +122,7 @@ const Namespace = defineMasterDataResource(resource => {
     });
 });
 
-export const foundationEconomyCurrency = definePackage("foundation-economy-currency", "0.0.0")
+export const foundationEconomyCurrency = definePackage("foundation-economy-currency", "0.0.1")
   .display({
     ja: {
       label: "通貨",

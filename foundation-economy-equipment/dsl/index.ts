@@ -113,7 +113,7 @@ const InventoryModel = defineMasterDataResource(resource =>
     .addArrayChild("itemModels", ItemModel)
 );
 
-export const foundationEconomyEquipment = definePackage("foundation-economy-equipment", "0.0.0")
+export const foundationEconomyEquipment = definePackage("foundation-economy-equipment", "0.0.1")
   .display({
     ja: {
       label: "装備",

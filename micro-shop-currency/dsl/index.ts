@@ -159,7 +159,7 @@ const Showcase = defineMasterDataResource(resource =>
     .addArrayChild("displayItems", DisplayItem)
 );
 
-export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
+export const microShopCurrency = definePackage("micro-shop-currency", "0.0.1")
   .display({
     ja: { label: "通貨ショップ", description: "通貨を購入できる商品と価格を扱います。" },
     en: {

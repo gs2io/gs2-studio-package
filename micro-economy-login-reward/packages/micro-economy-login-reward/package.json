@@ -1,7 +1,7 @@
 {
   "id": "micro-economy-login-reward",
   "name": "micro-economy-login-reward",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },

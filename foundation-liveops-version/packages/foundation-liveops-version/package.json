@@ -1,7 +1,7 @@
 {
   "id": "foundation-liveops-version",
   "name": "foundation-liveops-version",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "display": {
     "en": {
       "description": "Checks the agreement (terms of service) versions a player accepted, and the versions a client reports, such as its app and asset versions.",

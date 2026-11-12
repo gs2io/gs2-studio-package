@@ -66,7 +66,7 @@ const RecoverRateModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationEconomyEnergyDemo = definePackage("foundation-economy-energy-demo", "0.0.0")
+export const foundationEconomyEnergyDemo = definePackage("foundation-economy-energy-demo", "0.0.1")
   .display({
     ja: {
       label: "スタミナ（デモデータ）",

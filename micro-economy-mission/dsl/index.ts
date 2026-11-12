@@ -291,7 +291,7 @@ const MissionGroupModel = defineMasterDataResource(resource =>
     .addArrayChild("tasks", MissionTaskModel)
 );
 
-export const microEconomyMission = definePackage("micro-economy-mission", "0.0.0")
+export const microEconomyMission = definePackage("micro-economy-mission", "0.0.1")
   .display({
     ja: {
       label: "ミッション",

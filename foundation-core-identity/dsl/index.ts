@@ -127,7 +127,7 @@ const TakeOverTypeModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationCoreIdentity = definePackage("foundation-core-identity", "0.0.0")
+export const foundationCoreIdentity = definePackage("foundation-core-identity", "0.0.1")
   .display({
     ja: {
       label: "引き継ぎ設定",

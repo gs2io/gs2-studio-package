@@ -48,7 +48,7 @@ const EntryModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyCharacterDictionary = definePackage(
   "foundation-economy-character-dictionary",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

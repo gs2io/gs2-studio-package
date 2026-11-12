@@ -85,7 +85,7 @@ const PropertyFormModel = defineMasterDataResource(resource =>
 
 export const microEconomyEquipmentLoadout = definePackage(
   "micro-economy-equipment-loadout",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

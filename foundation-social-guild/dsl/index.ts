@@ -140,7 +140,7 @@ const notificationConfig = {
   sound: Bind.static(""),
 };
 
-export const foundationSocialGuild = definePackage("foundation-social-guild", "0.0.0")
+export const foundationSocialGuild = definePackage("foundation-social-guild", "0.0.1")
   .display({
     ja: {
       label: "ギルド",

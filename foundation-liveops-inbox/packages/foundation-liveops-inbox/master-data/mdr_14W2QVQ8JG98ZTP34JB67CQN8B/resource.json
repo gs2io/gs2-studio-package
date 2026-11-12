@@ -25,9 +25,5 @@
   "location": {
     "modelName": "Namespace",
     "service": "schedule"
-  },
-  "ownMountPath": {
-    "kind": "local",
-    "typeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB"
   }
 }

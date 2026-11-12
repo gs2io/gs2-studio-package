@@ -25,8 +25,8 @@
   "deterministicOverrides": {
     "master/inbox:Namespace:unmounted:Inbox#0": "mdr_5TQZFM8AS38R69FHM3H76YY11G",
     "master/inbox:Namespace:unmounted:Inbox#0/inbox:GlobalMessage:GlobalMessage:#0": "mdr_53WXDED04D83MTF9Z40JH8CMXH",
-    "master/schedule:Namespace:GlobalMessage:InboxSchedule#0": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B",
-    "master/schedule:Namespace:GlobalMessage:InboxSchedule#0/schedule:Event:GlobalMessage:#0": "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4",
+    "master/schedule:Namespace:unmounted:InboxSchedule#0": "mdr_14W2QVQ8JG98ZTP34JB67CQN8B",
+    "master/schedule:Namespace:unmounted:InboxSchedule#0/schedule:Event:GlobalMessage:#0": "mdr_5YQNBZ7SS59RNRMYCS9CA07ZF4",
     "ui:Message:definition": "uic_1KYWDEFN3XAZHSC741HNQQSTWY",
     "ui:Message:item:PayloadLabel": "uii_0SHYNK3RTEBR0TB2FC0XVJ756B",
     "ui:Message:item:ReadActiveToggle": "uii_0Z4M79SYE2BY5SFV6HGJ77DR2M",

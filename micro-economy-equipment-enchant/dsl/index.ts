@@ -176,7 +176,7 @@ const RarityParameterModel = defineMasterDataResource(resource =>
 
 export const microEconomyEquipmentEnchant = definePackage(
   "micro-economy-equipment-enchant",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

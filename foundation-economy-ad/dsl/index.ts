@@ -72,7 +72,7 @@ const Namespace = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationEconomyAd = definePackage("foundation-economy-ad", "0.0.0")
+export const foundationEconomyAd = definePackage("foundation-economy-ad", "0.0.1")
   .display({
     ja: {
       label: "広告",

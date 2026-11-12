@@ -106,7 +106,7 @@ const GiftRateModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbox-demo", "0.0.0")
+export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbox-demo", "0.0.1")
   .display({
     ja: {
       label: "お知らせ・受信箱（デモデータ）",

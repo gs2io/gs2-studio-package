@@ -141,7 +141,7 @@ const GlobalRankingModel = defineMasterDataResource(resource =>
     })
 );
 
-export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.0")
+export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.1")
   .display({
     ja: {
       label: "ランキング",

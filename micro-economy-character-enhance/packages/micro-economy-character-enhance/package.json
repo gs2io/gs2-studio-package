@@ -1,7 +1,7 @@
 {
   "id": "micro-economy-character-enhance",
   "name": "micro-economy-character-enhance",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "foundation-economy-character": "github:gs2io/gs2-studio-package"
   },

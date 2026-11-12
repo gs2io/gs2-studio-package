@@ -10,7 +10,7 @@ const currency = dependencyPackage(currencySurface);
 
 const StoreProduct = shop.type("StoreProduct");
 
-export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "0.0.0")
+export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "0.0.1")
   .display({
     ja: {
       label: "通貨ショップ（デモデータ）",

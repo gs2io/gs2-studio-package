@@ -161,7 +161,7 @@ const ResetEveryAllowanceRateModel = defineMasterDataResource(resource => {
   }
 });
 
-const withSchedules = definePackage("foundation-economy-limit-demo", "0.0.0")
+const withSchedules = definePackage("foundation-economy-limit-demo", "0.0.1")
   .display({
     ja: {
       label: "回数制限（デモデータ）",

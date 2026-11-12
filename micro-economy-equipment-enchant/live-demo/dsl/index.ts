@@ -122,7 +122,7 @@ const PROPERTY_ID_CONFIG = {
 
 export const microEconomyEquipmentEnchantDemo = definePackage(
   "micro-economy-equipment-enchant-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

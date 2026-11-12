@@ -1,7 +1,7 @@
 {
   "id": "foundation-social-guild-demo",
   "name": "foundation-social-guild-demo",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "foundation-social-guild": "github:gs2io/gs2-studio-package"
   },

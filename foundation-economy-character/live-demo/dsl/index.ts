@@ -123,7 +123,7 @@ const ROSTER = ["knight", "mage", "archer", "healer"] as const;
 
 export const foundationEconomyCharacterDemo = definePackage(
   "foundation-economy-character-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

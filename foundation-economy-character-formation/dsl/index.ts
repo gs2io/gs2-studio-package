@@ -115,7 +115,7 @@ const MoldModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyCharacterFormation = definePackage(
   "foundation-economy-character-formation",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

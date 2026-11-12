@@ -136,7 +136,7 @@ const MaterialItemModel = defineMasterDataResource(resource =>
 
 export const microEconomyCharacterEnhance = definePackage(
   "micro-economy-character-enhance",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

@@ -128,7 +128,7 @@ const PROPERTY_ID_CONFIG = {
 
 export const microEconomyCharacterEnhanceDemo = definePackage(
   "micro-economy-character-enhance-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

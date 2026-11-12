@@ -119,7 +119,7 @@ const LimitModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationEconomyLimit = definePackage("foundation-economy-limit", "0.0.0")
+export const foundationEconomyLimit = definePackage("foundation-economy-limit", "0.0.1")
   .display({
     ja: {
       label: "回数制限",

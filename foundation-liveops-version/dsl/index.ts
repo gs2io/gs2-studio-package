@@ -215,7 +215,7 @@ const AgreementVersionModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationLiveopsVersion = definePackage("foundation-liveops-version", "0.0.0")
+export const foundationLiveopsVersion = definePackage("foundation-liveops-version", "0.0.1")
   .display({
     ja: {
       label: "バージョン管理",

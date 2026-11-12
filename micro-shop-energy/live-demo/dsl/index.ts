@@ -114,7 +114,7 @@ const BuyRateModel = defineMasterDataResource(resource =>
     })
 );
 
-export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.0")
+export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.1")
   .display({
     ja: {
       label: "スタミナショップ（デモデータ）",

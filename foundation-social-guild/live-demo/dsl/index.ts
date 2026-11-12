@@ -35,7 +35,7 @@ const MEMBER_POLICY = JSON.stringify({
   Statements: [{ Effect: "Deny", Actions: ["*"], Resources: ["*"] }],
 });
 
-export const foundationSocialGuildDemo = definePackage("foundation-social-guild-demo", "0.0.0")
+export const foundationSocialGuildDemo = definePackage("foundation-social-guild-demo", "0.0.1")
   .display({
     ja: {
       label: "ギルド（デモデータ）",

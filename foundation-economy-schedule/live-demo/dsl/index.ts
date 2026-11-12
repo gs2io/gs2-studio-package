@@ -99,7 +99,7 @@ const ClearRateModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyScheduleDemo = definePackage(
   "foundation-economy-schedule-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

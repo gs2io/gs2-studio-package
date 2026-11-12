@@ -85,7 +85,7 @@ const RateModel = defineMasterDataResource(resource =>
     })
 );
 
-export const microShopEnergy = definePackage("micro-shop-energy", "0.0.0")
+export const microShopEnergy = definePackage("micro-shop-energy", "0.0.1")
   .display({
     ja: { label: "スタミナショップ", description: "スタミナを回復する商品を販売します。" },
     en: { label: "Stamina Shop", description: "A shop that sells products to refill stamina." },
