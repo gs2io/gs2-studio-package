@@ -1,9 +1,24 @@
 {
   "declaredBindings": [
     {
-      "kind": "static",
-      "parameterName": "challengePeriodEventId",
-      "value": null
+      "kind": "domainProperty",
+      "parameterName": "challengePeriodEventId.grnKey.eventName",
+      "source": {
+        "scopes": [
+          {
+            "kind": "parent",
+            "parentResourceId": "mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM"
+          }
+        ],
+        "terminal": {
+          "kind": "direct",
+          "mountPath": {
+            "kind": "local",
+            "typeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R"
+          },
+          "propertyId": "prop_4SWXMEBZDC8Y2G8NHXBQSMNEXJ"
+        }
+      }
     },
     {
       "kind": "domainProperty",
@@ -90,5 +105,19 @@
     "index": 0,
     "kind": "arrayElement",
     "parentId": "mdr_6TZWN38W1Y9BNAEXRSX3X8EJYM"
+  },
+  "resourceLinks": {
+    "grnMounts": [
+      {
+        "keyMappings": [
+          {
+            "grnKeyName": "namespaceName",
+            "sourceKeyName": "namespaceName"
+          }
+        ],
+        "mountedResourceId": "mdr_352QMYJZ1FB3X9Z9GDT9V9N7KX",
+        "parameterName": "challengePeriodEventId"
+      }
+    ]
   }
 }

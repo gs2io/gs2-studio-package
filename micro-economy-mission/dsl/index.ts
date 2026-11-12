@@ -236,7 +236,6 @@ const MissionTaskModel = defineMasterDataResource(resource =>
     .mountLocal(Mission)
     .bindings({
       name: Bind.domainProperty(Source.direct(Mission, "id")),
-      challengePeriodEventId: Bind.null(),
       verifyCompleteType: Bind.static("counter"),
       targetCounter: {
         conditionName: Bind.static(""),
@@ -252,6 +251,14 @@ const MissionTaskModel = defineMasterDataResource(resource =>
         value: Bind.domainProperty(Source.direct(Mission, "targetValue")),
       },
     })
+    .grnFieldMount("challengePeriodEventId", schedule.resourceId("schedule.Namespace"), [
+      { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
+    ])
+    .grnKeyBinding(
+      "challengePeriodEventId",
+      "eventName",
+      Bind.domainProperty(Source.parent(Source.direct(MissionCollection, "schedule")))
+    )
     .addArrayChild("completeAcquireActions", acquireAction => {
       acquireAction
         .model(GS2.transaction.AcquireAction)
