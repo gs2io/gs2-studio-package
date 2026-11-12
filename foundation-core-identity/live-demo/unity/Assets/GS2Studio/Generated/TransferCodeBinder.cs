@@ -252,7 +252,7 @@ namespace GS2Studio.Generated.TransferCode
         {
 
             _mountSurfaceValue = _mountSurface;
-            __userdataAccountTakeOverLoader = Runs__userdataAccountTakeOverLoader ? new Gs2Bind.Gs2Account.TakeOverLoader("Account", (__sdk__userdataAccountTakeOver_1 ?? throw new InvalidOperationException("An SDK backing key is required for this loader."))) : null!;
+            __userdataAccountTakeOverLoader = Runs__userdataAccountTakeOverLoader ? new Gs2Bind.Gs2Account.TakeOverLoader("Account", (__sdk__userdataAccountTakeOver_1 ?? type)) : null!;
         }
 
 

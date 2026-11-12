@@ -405,7 +405,7 @@ namespace GS2Studio.Generated.LoginRewardCollection
             __exchangeLoginRewardStartOverNamespaceRateModelLoader = Runs__exchangeLoginRewardStartOverNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("LoginRewardStartOver", (string.IsNullOrEmpty(__sdk__exchangeLoginRewardStartOverNamespaceRateModel_1) ? _model.Id : __sdk__exchangeLoginRewardStartOverNamespaceRateModel_1!)) : null!;
             __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2LoginReward.BonusModelConsumeActionArrayLoader("LoginReward", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? _model.Id : __sdk__transactionConsumeAction_1!)) : null!;
             __loginRewardLoginRewardNamespaceBonusModelLoader = Runs__loginRewardLoginRewardNamespaceBonusModelLoader ? new Gs2Bind.Gs2LoginReward.BonusModelLoader("LoginReward", (string.IsNullOrEmpty(__sdk__loginRewardLoginRewardNamespaceBonusModel_1) ? _model.Id : __sdk__loginRewardLoginRewardNamespaceBonusModel_1!)) : null!;
-            __userdataLoginRewardLoginRewardBonusModelLoader = Runs__userdataLoginRewardLoginRewardBonusModelLoader ? new Gs2Bind.Gs2LoginReward.ReceiveStatusLoader("LoginReward", (string.IsNullOrEmpty(__sdk__userdataLoginRewardLoginRewardBonusModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataLoginRewardLoginRewardBonusModel_1!)) : null!;
+            __userdataLoginRewardLoginRewardBonusModelLoader = Runs__userdataLoginRewardLoginRewardBonusModelLoader ? new Gs2Bind.Gs2LoginReward.ReceiveStatusLoader("LoginReward", (string.IsNullOrEmpty(__sdk__userdataLoginRewardLoginRewardBonusModel_1) ? _model.Id : __sdk__userdataLoginRewardLoginRewardBonusModel_1!)) : null!;
         }
 
 

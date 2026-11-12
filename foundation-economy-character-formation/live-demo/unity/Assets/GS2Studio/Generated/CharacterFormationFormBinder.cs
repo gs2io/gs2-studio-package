@@ -200,7 +200,7 @@ namespace GS2Studio.Generated.CharacterFormationForm
         ) : base(model, gs2, session)
         {
 
-            __userdataFormationFormLoader = new Gs2Bind.Gs2Formation.FormLoader("CharacterFormation", "CharacterFormation", (__sdk__userdataFormationForm_2 ?? throw new InvalidOperationException("An SDK backing key is required for this loader.")));
+            __userdataFormationFormLoader = new Gs2Bind.Gs2Formation.FormLoader("CharacterFormation", "CharacterFormation", (__sdk__userdataFormationForm_2 ?? index));
         }
 
 
