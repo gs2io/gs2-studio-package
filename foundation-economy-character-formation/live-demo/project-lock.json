@@ -1,34 +1,34 @@
 {
   "entries": [
     {
-      "commitSha": "0221c5c6f2d5afe129649ec33ff6d76564fbba13",
-      "integrity": "sha256-vRWT4Kdel6K42X4nCnvxpTkSsmEN66EcYPI14Py+TM0=",
+      "commitSha": "d09d08a18eaaf63b7b8cd37421daa523afa36fc4",
+      "integrity": "sha256-KGJqsj8U6uhMg6PhOQpTBpxmOeyTkf/IzFTIQqJLxhI=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character",
       "repo": "gs2-studio-package",
       "sourceKind": "github",
       "subdirectory": "foundation-economy-character/packages/foundation-economy-character",
-      "version": "0.0.0"
+      "version": "0.0.1"
     },
     {
-      "commitSha": "0221c5c6f2d5afe129649ec33ff6d76564fbba13",
-      "integrity": "sha256-vRWT4Kdel6K42X4nCnvxpTkSsmEN66EcYPI14Py+TM0=",
+      "commitSha": "d09d08a18eaaf63b7b8cd37421daa523afa36fc4",
+      "integrity": "sha256-KGJqsj8U6uhMg6PhOQpTBpxmOeyTkf/IzFTIQqJLxhI=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character-demo",
       "repo": "gs2-studio-package",
       "sourceKind": "github",
       "subdirectory": "foundation-economy-character/live-demo/packages/foundation-economy-character-demo",
-      "version": "0.0.0"
+      "version": "0.0.1"
     },
     {
-      "commitSha": "0221c5c6f2d5afe129649ec33ff6d76564fbba13",
-      "integrity": "sha256-vRWT4Kdel6K42X4nCnvxpTkSsmEN66EcYPI14Py+TM0=",
+      "commitSha": "d09d08a18eaaf63b7b8cd37421daa523afa36fc4",
+      "integrity": "sha256-KGJqsj8U6uhMg6PhOQpTBpxmOeyTkf/IzFTIQqJLxhI=",
       "owner": "gs2io",
       "packageId": "foundation-economy-character-formation",
       "repo": "gs2-studio-package",
       "sourceKind": "github",
       "subdirectory": "foundation-economy-character-formation/packages/foundation-economy-character-formation",
-      "version": "0.0.0"
+      "version": "0.0.1"
     }
   ],
   "schemaVersion": 1
