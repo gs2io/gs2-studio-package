@@ -1,11 +1,12 @@
 import {
+  ActionProgram,
   Bind,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -97,16 +98,16 @@ const CategoryModel = defineMasterDataResource(resource =>
           transactionAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal(IdleReward)
-            .bindings({
-              action: Bind.domainProperty(
+            .actionProgram(
+              ActionProgram.domainProperty(
                 Source.parent(Source.direct(IdleReward, "acquireActions"))
-              ),
-            });
+              )
+            );
         });
     })
 );
 
-export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0.0.0")
+export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0.0.1")
   .display({
     ja: { label: "放置報酬", description: "遊んでいない間にたまる放置報酬を計算・付与します。" },
     en: {
@@ -139,10 +140,7 @@ export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0
         name: Bind.static("Idle"),
         ...Bind.nulls("overrideAcquireActionsScriptId", "receiveScript"),
         // Auto-run executes the reward transaction; atomic commit keeps the idle reset and payout together.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(CategoryModel)
   )

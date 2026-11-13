@@ -1,7 +1,7 @@
 {
   "id": "micro-shop-energy",
   "name": "micro-shop-energy",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "foundation-economy-energy": "github:gs2io/gs2-studio-package"
   },

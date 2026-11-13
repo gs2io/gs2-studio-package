@@ -1,7 +1,7 @@
 {
   "id": "rename-overlay-sample-fixture-closure",
   "name": "rename-overlay-sample-fixture-closure",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "foundation-economy-character-dictionary": "file:../../../foundation-economy-character-dictionary/packages/foundation-economy-character-dictionary",
     "foundation-economy-currency": "file:../../../foundation-economy-currency/packages/foundation-economy-currency",

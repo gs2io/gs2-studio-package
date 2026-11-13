@@ -136,7 +136,7 @@ const withQuests = QUESTS.reduce(
       reward,
       firstClearReward,
     }),
-  definePackage("micro-economy-quest-demo", "0.0.0")
+  definePackage("micro-economy-quest-demo", "0.0.1")
     .display({
       ja: {
         label: "クエスト（デモデータ）",

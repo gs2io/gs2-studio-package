@@ -1,26 +1,24 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "code",
-            "source": {
-              "kind": "placeholder",
-              "value": "#{code}"
-            }
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "code",
+          "source": {
+            "kind": "placeholder",
+            "value": "#{code}"
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_2AE8RTB8GFNY68C7AYTV813N9B",
-          "transformPackageId": "micro-liveops-serial-code"
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_2AE8RTB8GFNY68C7AYTV813N9B",
+        "transformPackageId": "micro-liveops-serial-code"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_6H7A2GYFT4A1S9GZFNMDH6ZCQV",
   "location": {
     "modelName": "ConsumeAction",

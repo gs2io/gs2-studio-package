@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Bind,
   defineDomainType,
   defineMasterDataResource,
@@ -6,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -263,11 +264,11 @@ const MissionTaskModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Mission)
-        .bindings({
-          action: Bind.domainProperty(
+        .actionProgram(
+          ActionProgram.domainProperty(
             Source.parent(Source.direct(Mission, "completeAcquireActions"))
-          ),
-        });
+          )
+        );
     })
 );
 
@@ -290,7 +291,7 @@ const MissionGroupModel = defineMasterDataResource(resource =>
     .addArrayChild("tasks", MissionTaskModel)
 );
 
-export const microEconomyMission = definePackage("micro-economy-mission", "0.0.0")
+export const microEconomyMission = definePackage("micro-economy-mission", "0.0.1")
   .display({
     ja: {
       label: "ミッション",
@@ -382,7 +383,7 @@ export const microEconomyMission = definePackage("micro-economy-mission", "0.0.0
           gatewayNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:gateway:default"),
           sound: Bind.static(""),
         },
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(CounterModel)
       .addChild(MissionGroupModel)

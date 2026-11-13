@@ -29,10 +29,9 @@ Resources:
     Type: "GS2::Enhance::Namespace"
     Properties:
       Name: "CharacterEnhance"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false
   InventoryCurrentItemModelMaster_CharacterEnhanceMaterial:
     Type: "GS2::Inventory::CurrentItemModelMaster"
     Properties:

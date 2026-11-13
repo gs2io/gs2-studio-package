@@ -1,41 +1,39 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "equipment",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "equipment",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [
-                  {
-                    "kind": "parent",
-                    "parentResourceId": "mdr_1SXTWJSMJ6A05BST0S7A467E70"
-                  }
-                ],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV"
-                  },
-                  "propertyId": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA"
+              "scopes": [
+                {
+                  "kind": "parent",
+                  "parentResourceId": "mdr_1SXTWJSMJ6A05BST0S7A467E70"
                 }
+              ],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV"
+                },
+                "propertyId": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA"
               }
             }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_6VEP2XV1908GMR5151Y7W0YSSB",
-          "transformPackageId": "foundation-economy-equipment"
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_6VEP2XV1908GMR5151Y7W0YSSB",
+        "transformPackageId": "foundation-economy-equipment"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_7CXEZXFTK6ACWBFJ8CPM6Y9X5K",
   "location": {
     "modelName": "AcquireAction",

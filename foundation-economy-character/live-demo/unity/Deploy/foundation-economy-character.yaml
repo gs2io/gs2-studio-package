@@ -49,10 +49,9 @@ Resources:
     Type: "GS2::Experience::Namespace"
     Properties:
       Name: "CharacterExperience"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false
   InventoryCurrentItemModelMaster_Character:
     Type: "GS2::Inventory::CurrentItemModelMaster"
     Properties:
@@ -89,7 +88,6 @@ Resources:
     Type: "GS2::Inventory::Namespace"
     Properties:
       Name: "Character"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false

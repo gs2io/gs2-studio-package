@@ -1,41 +1,39 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "character",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "character",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [
-                  {
-                    "kind": "parent",
-                    "parentResourceId": "mdr_32HRESJ2KJBFR8VWRQRZZVM1NC"
-                  }
-                ],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
-                  },
-                  "propertyId": "prop_2JPPK6P7F94GT0KKPVM3JFZPSQ"
+              "scopes": [
+                {
+                  "kind": "parent",
+                  "parentResourceId": "mdr_32HRESJ2KJBFR8VWRQRZZVM1NC"
                 }
+              ],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19"
+                },
+                "propertyId": "prop_2JPPK6P7F94GT0KKPVM3JFZPSQ"
               }
             }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6",
-          "transformPackageId": "foundation-economy-character-dictionary"
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6",
+        "transformPackageId": "foundation-economy-character-dictionary"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_3VRJZ0DHQNB6MANMT7WQG1WQ3G",
   "location": {
     "modelName": "AcquireAction",

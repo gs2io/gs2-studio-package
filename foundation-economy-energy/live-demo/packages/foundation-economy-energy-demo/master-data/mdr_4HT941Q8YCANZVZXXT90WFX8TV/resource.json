@@ -1,43 +1,41 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "energy",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "energy",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0MM25SM55BXJGSRRQEWD359"
-                  },
-                  "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-                }
+              "scopes": [],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0MM25SM55BXJGSRRQEWD359"
+                },
+                "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
               }
             }
-          },
-          {
-            "parameterName": "value",
-            "source": {
-              "kind": "static",
-              "value": 5
-            }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_36P63PCH949RGSG69SRSAWWKR0",
-          "transformPackageId": "foundation-economy-energy"
+        },
+        {
+          "parameterName": "value",
+          "source": {
+            "kind": "static",
+            "value": 5
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_36P63PCH949RGSG69SRSAWWKR0",
+        "transformPackageId": "foundation-economy-energy"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_4HT941Q8YCANZVZXXT90WFX8TV",
   "location": {
     "modelName": "AcquireAction",

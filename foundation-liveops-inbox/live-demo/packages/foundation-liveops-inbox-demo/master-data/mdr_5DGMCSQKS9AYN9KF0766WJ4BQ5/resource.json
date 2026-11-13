@@ -1,48 +1,46 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "metadata",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "metadata",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [
-                  {
-                    "kind": "parent",
-                    "parentResourceId": "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ"
-                  }
-                ],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0SFSEJN1BET2KCMVWSZX3F8"
-                  },
-                  "propertyId": "prop_19YMYXB5NJHVCEEQY795WH711C"
+              "scopes": [
+                {
+                  "kind": "parent",
+                  "parentResourceId": "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ"
                 }
+              ],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0SFSEJN1BET2KCMVWSZX3F8"
+                },
+                "propertyId": "prop_19YMYXB5NJHVCEEQY795WH711C"
               }
             }
-          },
-          {
-            "parameterName": "expireDays",
-            "source": {
-              "kind": "static",
-              "value": 7
-            }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_7DVPXYKCMX8GQ8HZV2NGV1VFXA",
-          "transformPackageId": "foundation-liveops-inbox"
+        },
+        {
+          "parameterName": "expireDays",
+          "source": {
+            "kind": "static",
+            "value": 7
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_7DVPXYKCMX8GQ8HZV2NGV1VFXA",
+        "transformPackageId": "foundation-liveops-inbox"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_5DGMCSQKS9AYN9KF0766WJ4BQ5",
   "location": {
     "modelName": "AcquireAction",

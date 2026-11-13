@@ -10,7 +10,7 @@ const Follow = graph.type("Follow");
 const SendFriendRequest = graph.type("SendFriendRequest");
 const ReceiveFriendRequest = graph.type("ReceiveFriendRequest");
 
-export const foundationSocialGraphDemo = definePackage("foundation-social-graph-demo", "0.0.0")
+export const foundationSocialGraphDemo = definePackage("foundation-social-graph-demo", "0.0.1")
   .display({
     ja: {
       label: "フレンド・プロフィール（デモデータ）",

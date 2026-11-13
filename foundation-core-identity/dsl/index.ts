@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -127,7 +127,7 @@ const TakeOverTypeModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationCoreIdentity = definePackage("foundation-core-identity", "0.0.0")
+export const foundationCoreIdentity = definePackage("foundation-core-identity", "0.0.1")
   .display({
     ja: {
       label: "引き継ぎ設定",
@@ -196,7 +196,7 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
           "unBanScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(TakeOverTypeModel)
   )

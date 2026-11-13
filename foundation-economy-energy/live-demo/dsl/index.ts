@@ -1,11 +1,12 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -38,12 +39,12 @@ const ConsumeRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Energy)
-        .bindings({
-          action: Bind.transform(energy.packageId, energy.transformId("ConsumeEnergy"), [
+        .actionProgram(
+          ActionProgram.transform(energy.packageId, energy.transformId("ConsumeEnergy"), [
             Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", CONSUME_VALUE),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -56,16 +57,16 @@ const RecoverRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Energy)
-        .bindings({
-          action: Bind.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
+        .actionProgram(
+          ActionProgram.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
             Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", RECOVERY_VALUE),
-          ]),
-        });
+          ])
+        );
     })
 );
 
-export const foundationEconomyEnergyDemo = definePackage("foundation-economy-energy-demo", "0.0.0")
+export const foundationEconomyEnergyDemo = definePackage("foundation-economy-energy-demo", "0.0.1")
   .display({
     ja: {
       label: "スタミナ（デモデータ）",
@@ -99,10 +100,7 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
           "logSetting"
         ),
         // Auto-run executes the exchange transaction without a second client request.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(ConsumeRateModel)
   )
@@ -118,10 +116,7 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(RecoverRateModel)
   )

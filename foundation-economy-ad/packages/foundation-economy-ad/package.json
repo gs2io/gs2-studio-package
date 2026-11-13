@@ -1,7 +1,7 @@
 {
   "id": "foundation-economy-ad",
   "name": "foundation-economy-ad",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "display": {
     "en": {
       "description": "Tracks ad views and manages the points you can use to reward players for watching them.",

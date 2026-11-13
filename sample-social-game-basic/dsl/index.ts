@@ -14,7 +14,7 @@ const loginReward = dependencyPackage(loginRewardSurface);
 const gacha = dependencyPackage(gachaSurface);
 const shop = dependencyPackage(shopSurface);
 
-export const sampleSocialGameBasic = definePackage("sample-social-game-basic", "0.0.0")
+export const sampleSocialGameBasic = definePackage("sample-social-game-basic", "0.0.1")
   .dependency(
     "foundation-core-identity",
     "file:../../../foundation-core-identity/packages/foundation-core-identity"

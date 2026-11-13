@@ -1,13 +1,14 @@
 /** Own the combined recruit rate here so enabling dex registration cannot change the shared character demo stack. */
 
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -33,30 +34,30 @@ const DexRecruitRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
-        .bindings({
-          action: Bind.transform(CHARACTER_PACKAGE_ID, character.transformId("AcquireCharacter"), [
+        .actionProgram(
+          ActionProgram.transform(CHARACTER_PACKAGE_ID, character.transformId("AcquireCharacter"), [
             Arg.domainProperty("character", Source.direct(Character, "id")),
             Arg.static("count", 1),
-          ]),
-        });
+          ])
+        );
     })
     .addArrayChild("acquireActions", dictionaryAction => {
       dictionaryAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             dictionary.packageId,
             dictionary.transformId("MarkCharacterDictionary"),
             [Arg.domainProperty("character", Source.direct(Character, "id"))]
-          ),
-        });
+          )
+        );
     })
 );
 
 export const foundationEconomyCharacterDictionaryDemo = definePackage(
   "foundation-economy-character-dictionary-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {
@@ -87,10 +88,7 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage(
           "logSetting"
         ),
         // Auto-run executes the combined transaction without a second request from the page.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(DexRecruitRateModel)
   )

@@ -1,11 +1,12 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -62,25 +63,25 @@ function enchantRateModel(
         acquireAction
           .model(GS2.transaction.AcquireAction)
           .mountLocal(Equipment)
-          .bindings({
-            action: Bind.transform(enchant.packageId, enchant.transformId(transformName), [
+          .actionProgram(
+            ActionProgram.transform(enchant.packageId, enchant.transformId(transformName), [
               Arg.static("enchant", STANDARD),
               Arg.placeholder("propertyId", "#{propertyId}"),
               ...count,
-            ]),
-          });
+            ])
+          );
       })
       .addArrayChild("consumeActions", consumeAction => {
         consumeAction
           .model(GS2.transaction.ConsumeAction)
           .mountLocal(Equipment)
-          .bindings({
-            action: Bind.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
+          .actionProgram(
+            ActionProgram.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
               Arg.static("slot", WALLET_SLOT),
               Arg.static("paidOnly", false),
               Arg.static("count", cost),
-            ]),
-          });
+            ])
+          );
       })
   );
 }
@@ -98,10 +99,7 @@ function exchangeNamespaceBindings(name: string) {
       "incrementalExchangeScript",
       "logSetting"
     ),
-    transactionSetting: transactionSetting({
-      enableAtomicCommit: Bind.static(true),
-      enableAutoRun: Bind.static(true),
-    }),
+    transactionSettingV2: transactionSettingV2(),
   };
 }
 
@@ -124,7 +122,7 @@ const PROPERTY_ID_CONFIG = {
 
 export const microEconomyEquipmentEnchantDemo = definePackage(
   "micro-economy-equipment-enchant-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

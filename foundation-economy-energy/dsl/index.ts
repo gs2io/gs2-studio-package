@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -96,7 +96,7 @@ const StaminaModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationEconomyEnergy = definePackage("foundation-economy-energy", "0.0.0")
+export const foundationEconomyEnergy = definePackage("foundation-economy-energy", "0.0.1")
   .display({
     ja: { label: "スタミナ", description: "時間経過で回復するスタミナ（行動力）を管理します。" },
     en: { label: "Stamina", description: "Manages a stamina meter that recovers over time." },
@@ -120,7 +120,7 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
       .bindings({
         name: Bind.static("Energy"),
         ...Bind.nulls("overflowTriggerScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(StaminaModel)
   )

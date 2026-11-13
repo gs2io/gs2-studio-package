@@ -24,7 +24,6 @@ namespace GS2Studio.Generated.Wallet
     public sealed class WalletHandler : WalletHandlerBase
     {
         [SerializeField] private int _slot;
-        private int? _sdk_foundation_x2d_economy_x2d_currency_userData_udr_71QJPZGC8NACMTMVNEB8M5CP80_money2_Wallet_slot;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -67,16 +66,6 @@ namespace GS2Studio.Generated.Wallet
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
-        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(int? sdk_foundation_x2d_economy_x2d_currency_userData_udr_71QJPZGC8NACMTMVNEB8M5CP80_money2_Wallet_slot)
-        {
-            InvalidateBindingIntent();
-            _sdk_foundation_x2d_economy_x2d_currency_userData_udr_71QJPZGC8NACMTMVNEB8M5CP80_money2_Wallet_slot = sdk_foundation_x2d_economy_x2d_currency_userData_udr_71QJPZGC8NACMTMVNEB8M5CP80_money2_Wallet_slot;
-            if (IsReadyForReload())
-                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
-            else
-                DisposeOwnedBinder();
-        }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
@@ -99,9 +88,7 @@ namespace GS2Studio.Generated.Wallet
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
-                if (!_sdk_foundation_x2d_economy_x2d_currency_userData_udr_71QJPZGC8NACMTMVNEB8M5CP80_money2_Wallet_slot.HasValue)
-                    throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_currency_userData_udr_71QJPZGC8NACMTMVNEB8M5CP80_money2_Wallet_slot' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new WalletId(_slot.ToString(global::System.Globalization.CultureInfo.InvariantCulture)), _slot, gs2, session, cancellationToken, __sdk__userdataMoney2Wallet_1: _sdk_foundation_x2d_economy_x2d_currency_userData_udr_71QJPZGC8NACMTMVNEB8M5CP80_money2_Wallet_slot);
+                var binder = await ResolveBinderFactory().CreateAsync(new WalletId(_slot.ToString(global::System.Globalization.CultureInfo.InvariantCulture)), _slot, gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -189,7 +176,6 @@ namespace GS2Studio.Generated.Wallet
             var provider = ResolveRuntimeProvider();
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
-            if (!_sdk_foundation_x2d_economy_x2d_currency_userData_udr_71QJPZGC8NACMTMVNEB8M5CP80_money2_Wallet_slot.HasValue) return false;
             return true;
         }
 

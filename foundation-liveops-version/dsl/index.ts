@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -215,7 +215,7 @@ const AgreementVersionModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationLiveopsVersion = definePackage("foundation-liveops-version", "0.0.0")
+export const foundationLiveopsVersion = definePackage("foundation-liveops-version", "0.0.1")
   .display({
     ja: {
       label: "バージョン管理",
@@ -274,7 +274,7 @@ export const foundationLiveopsVersion = definePackage("foundation-liveops-versio
         name: Bind.static("Version"),
         assumeUserId: Bind.domainProperty(Source.direct(VersionGate, "assumeUserId")),
         ...Bind.nulls("acceptVersionScript", "checkVersionTriggerScriptId", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(AgreementVersionModel)
       .addChild(child => {

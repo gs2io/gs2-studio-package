@@ -42,7 +42,7 @@ function reportedVersion(prefix: "warning" | "error", value: Triple) {
 
 export const foundationLiveopsVersionDemo = definePackage(
   "foundation-liveops-version-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

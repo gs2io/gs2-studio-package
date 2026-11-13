@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -103,7 +103,7 @@ const Namespace = defineMasterDataResource(resource => {
       renewScript: Bind.null(),
       sharedFreeCurrency: Bind.static(false),
       ...Bind.nulls("subscribeScript", "takeOverScript"),
-      transactionSetting: transactionSetting(),
+      transactionSettingV2: transactionSettingV2(),
       ...Bind.nulls("unsubscribeScript", "verifyReceiptScript", "withdrawBalanceScript"),
     })
     .addChild(child => {
@@ -122,7 +122,7 @@ const Namespace = defineMasterDataResource(resource => {
     });
 });
 
-export const foundationEconomyCurrency = definePackage("foundation-economy-currency", "0.0.0")
+export const foundationEconomyCurrency = definePackage("foundation-economy-currency", "0.0.1")
   .display({
     ja: {
       label: "通貨",

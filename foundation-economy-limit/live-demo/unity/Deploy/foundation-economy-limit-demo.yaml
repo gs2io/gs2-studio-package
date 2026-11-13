@@ -141,32 +141,20 @@ Resources:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "LimitAdUse"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false
   ExchangeNamespace_LimitFreeUse:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "LimitFreeUse"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false
   ExchangeNamespace_LimitReset:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "LimitReset"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false

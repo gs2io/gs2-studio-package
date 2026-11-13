@@ -449,7 +449,7 @@ namespace GS2Studio.Generated.Energy
             __exchangeEnergyConsumeNamespaceRateModelLoader = Runs__exchangeEnergyConsumeNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyConsume", (string.IsNullOrEmpty(__sdk__exchangeEnergyConsumeNamespaceRateModel_1) ? _model.Id : __sdk__exchangeEnergyConsumeNamespaceRateModel_1!)) : null!;
             __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EnergyConsume", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? _model.Id : __sdk__transactionConsumeAction_1!), 0) : null!;
             __staminaEnergyNamespaceStaminaModelLoader = Runs__staminaEnergyNamespaceStaminaModelLoader ? new Gs2Bind.Gs2Stamina.StaminaModelLoader("Energy", (string.IsNullOrEmpty(__sdk__staminaEnergyNamespaceStaminaModel_1) ? _model.Id : __sdk__staminaEnergyNamespaceStaminaModel_1!)) : null!;
-            __userdataStaminaEnergyStaminaModelLoader = Runs__userdataStaminaEnergyStaminaModelLoader ? new Gs2Bind.Gs2Stamina.StaminaLoader("Energy", (string.IsNullOrEmpty(__sdk__userdataStaminaEnergyStaminaModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataStaminaEnergyStaminaModel_1!)) : null!;
+            __userdataStaminaEnergyStaminaModelLoader = Runs__userdataStaminaEnergyStaminaModelLoader ? new Gs2Bind.Gs2Stamina.StaminaLoader("Energy", (string.IsNullOrEmpty(__sdk__userdataStaminaEnergyStaminaModel_1) ? _model.Id : __sdk__userdataStaminaEnergyStaminaModel_1!)) : null!;
         }
 
 

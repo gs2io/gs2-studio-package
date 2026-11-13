@@ -1,43 +1,41 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "energy",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "energy",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0MM25SM55BXJGSRRQEWD359"
-                  },
-                  "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-                }
+              "scopes": [],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0MM25SM55BXJGSRRQEWD359"
+                },
+                "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
               }
             }
-          },
-          {
-            "parameterName": "value",
-            "source": {
-              "kind": "static",
-              "value": 10
-            }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY",
-          "transformPackageId": "foundation-economy-energy"
+        },
+        {
+          "parameterName": "value",
+          "source": {
+            "kind": "static",
+            "value": 10
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY",
+        "transformPackageId": "foundation-economy-energy"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_7299CGSY1TANG9G7XSPWCSY102",
   "location": {
     "modelName": "ConsumeAction",

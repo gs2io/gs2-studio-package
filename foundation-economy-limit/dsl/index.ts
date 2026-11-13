@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -119,7 +119,7 @@ const LimitModel = defineMasterDataResource(resource =>
     })
 );
 
-export const foundationEconomyLimit = definePackage("foundation-economy-limit", "0.0.0")
+export const foundationEconomyLimit = definePackage("foundation-economy-limit", "0.0.1")
   .display({
     ja: {
       label: "回数制限",
@@ -155,7 +155,7 @@ export const foundationEconomyLimit = definePackage("foundation-economy-limit", 
       .bindings({
         name: Bind.static("Limit"),
         ...Bind.nulls("countUpScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(LimitModel)
   )

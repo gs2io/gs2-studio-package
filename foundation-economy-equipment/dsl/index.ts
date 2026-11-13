@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -113,7 +113,7 @@ const InventoryModel = defineMasterDataResource(resource =>
     .addArrayChild("itemModels", ItemModel)
 );
 
-export const foundationEconomyEquipment = definePackage("foundation-economy-equipment", "0.0.0")
+export const foundationEconomyEquipment = definePackage("foundation-economy-equipment", "0.0.1")
   .display({
     ja: {
       label: "装備",
@@ -168,7 +168,7 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
           "bigItemConsumeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(InventoryModel)
   )

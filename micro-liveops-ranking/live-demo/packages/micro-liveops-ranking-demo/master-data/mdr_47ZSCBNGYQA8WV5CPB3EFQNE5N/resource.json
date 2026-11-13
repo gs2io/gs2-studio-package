@@ -1,26 +1,24 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "trigger",
-            "source": {
-              "kind": "static",
-              "value": "ranking-contest"
-            }
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "trigger",
+          "source": {
+            "kind": "static",
+            "value": "ranking-contest"
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_6F6C7GXB118PF9RTSGY69S57DC",
-          "transformPackageId": "foundation-economy-schedule"
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_6F6C7GXB118PF9RTSGY69S57DC",
+        "transformPackageId": "foundation-economy-schedule"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_47ZSCBNGYQA8WV5CPB3EFQNE5N",
   "location": {
     "modelName": "ConsumeAction",

@@ -57,7 +57,7 @@ const IdleReward = defineOverlayDomainType(
     })
 );
 
-const withStatus = definePackage("foundation-economy-idle-demo", "0.0.0")
+const withStatus = definePackage("foundation-economy-idle-demo", "0.0.1")
   .display({
     ja: {
       label: "放置報酬（デモデータ）",

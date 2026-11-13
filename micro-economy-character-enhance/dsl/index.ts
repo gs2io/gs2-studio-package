@@ -6,7 +6,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -136,7 +136,7 @@ const MaterialItemModel = defineMasterDataResource(resource =>
 
 export const microEconomyCharacterEnhance = definePackage(
   "micro-economy-character-enhance",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {
@@ -194,7 +194,7 @@ export const microEconomyCharacterEnhance = definePackage(
       .model(GS2.enhance.Namespace)
       .bindings({
         name: Bind.static("CharacterEnhance"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(RateModel)
   )

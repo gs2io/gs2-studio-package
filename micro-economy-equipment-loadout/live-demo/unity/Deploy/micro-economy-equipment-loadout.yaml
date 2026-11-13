@@ -24,10 +24,9 @@ Resources:
     Type: "GS2::Formation::Namespace"
     Properties:
       Name: "CharacterEquipment"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false
       UpdatePropertyFormScript:
         DoneTriggerTargetType: "none"
         TriggerScriptId: "grn:gs2:{region}:{ownerId}:script:CharacterEquipmentScript:script:UpdatePropertyForm"
@@ -35,10 +34,9 @@ Resources:
     Type: "GS2::Script::Namespace"
     Properties:
       Name: "CharacterEquipmentScript"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false
   ScriptScript_CharacterEquipmentScript_UpdatePropertyForm:
     Type: "GS2::Script::Script"
     Properties:

@@ -1,40 +1,38 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "slot",
-            "source": {
-              "kind": "static",
-              "value": 0
-            }
-          },
-          {
-            "parameterName": "paidOnly",
-            "source": {
-              "kind": "static",
-              "value": false
-            }
-          },
-          {
-            "parameterName": "count",
-            "source": {
-              "kind": "static",
-              "value": 10
-            }
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "slot",
+          "source": {
+            "kind": "static",
+            "value": 0
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5",
-          "transformPackageId": "foundation-economy-currency"
+        },
+        {
+          "parameterName": "paidOnly",
+          "source": {
+            "kind": "static",
+            "value": false
+          }
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "static",
+            "value": 10
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_1HH2KQVVENVPN5K0X2W69EB7D5",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_3QTN74ZEG7AV8VTJBNZP5ZK328",
   "location": {
     "modelName": "ConsumeAction",

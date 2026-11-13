@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -10,7 +11,7 @@ import {
   inlineElementOf,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -49,8 +50,8 @@ const DisplayItem = defineMasterDataResource(resource =>
           acquireAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal("StoreProduct")
-            .bindings({
-              action: Bind.transform(
+            .actionProgram(
+              ActionProgram.transform(
                 "foundation-economy-currency",
                 currency.transformId("DepositCurrency"),
                 [
@@ -66,20 +67,20 @@ const DisplayItem = defineMasterDataResource(resource =>
                     Source.parent(Source.parent(Source.direct(StorePrice, "price")))
                   ),
                 ]
-              ),
-            });
+              )
+            );
         })
         .addArrayChild("consumeActions", consumeAction => {
           consumeAction
             .model(GS2.transaction.ConsumeAction)
             .mountLocal("StoreProduct")
-            .bindings({
-              action: Bind.transform(
+            .actionProgram(
+              ActionProgram.transform(
                 "foundation-economy-currency",
                 currency.transformId("VerifyReceipt"),
                 [Arg.domainProperty("contentName", Source.direct("StoreProduct", "id"))]
-              ),
-            });
+              )
+            );
         });
     })
 );
@@ -158,7 +159,7 @@ const Showcase = defineMasterDataResource(resource =>
     .addArrayChild("displayItems", DisplayItem)
 );
 
-export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
+export const microShopCurrency = definePackage("micro-shop-currency", "0.0.1")
   .display({
     ja: { label: "通貨ショップ", description: "通貨を購入できる商品と価格を扱います。" },
     en: {
@@ -217,7 +218,7 @@ export const microShopCurrency = definePackage("micro-shop-currency", "0.0.0")
       .bindings({
         name: Bind.static("ShopCurrency"),
         ...Bind.nulls("buyScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(Showcase)
   )

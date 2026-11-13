@@ -27,7 +27,6 @@ namespace GS2Studio.Generated.MissionCounter
     public sealed class MissionCounterHandler : MissionCounterHandlerBase
     {
         [SerializeField] private string? _id;
-        private string? _sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName;
         private Gs2HolderRuntimeContextProvider? _runtime;
 
         private IGs2RuntimeContextProvider? _runtimeOverride;
@@ -70,16 +69,6 @@ namespace GS2Studio.Generated.MissionCounter
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
-        /// <summary>Supply the SDK backing keys independently of domain identity.</summary>
-        public void SetSdkKeys(string? sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName)
-        {
-            InvalidateBindingIntent();
-            _sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName = sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName;
-            if (IsReadyForReload())
-                _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
-            else
-                DisposeOwnedBinder();
-        }
 
         /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
         public void Reload()
@@ -104,9 +93,7 @@ namespace GS2Studio.Generated.MissionCounter
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName))
-                    throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new MissionCounterId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__userdataMissionMissionCounterModel_1: _sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName);
+                var binder = await ResolveBinderFactory().CreateAsync(new MissionCounterId(_id ?? string.Empty), gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {
@@ -195,7 +182,6 @@ namespace GS2Studio.Generated.MissionCounter
             if (provider == null) return false;
             if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null) return false;
             if (string.IsNullOrEmpty(_id)) return false;
-            if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_userData_udr_2D1KXNH7QQ9KMS364S53H0YHWB_mission_Counter_counterName)) return false;
             return true;
         }
 

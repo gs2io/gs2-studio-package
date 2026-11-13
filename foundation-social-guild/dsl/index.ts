@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -140,7 +140,7 @@ const notificationConfig = {
   sound: Bind.static(""),
 };
 
-export const foundationSocialGuild = definePackage("foundation-social-guild", "0.0.0")
+export const foundationSocialGuild = definePackage("foundation-social-guild", "0.0.1")
   .display({
     ja: {
       label: "ギルド",
@@ -199,7 +199,7 @@ export const foundationSocialGuild = definePackage("foundation-social-guild", "0
           "deleteGuildScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(GuildModel)
   )

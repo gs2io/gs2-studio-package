@@ -1,11 +1,12 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -27,12 +28,12 @@ const GainRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Item)
-        .bindings({
-          action: Bind.transform(inventory.packageId, inventory.transformId("AcquireItem"), [
+        .actionProgram(
+          ActionProgram.transform(inventory.packageId, inventory.transformId("AcquireItem"), [
             Arg.domainProperty("itemName", Source.direct(Item, "id")),
             Arg.static("count", STEP),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -45,18 +46,18 @@ const SpendRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Item)
-        .bindings({
-          action: Bind.transform(inventory.packageId, inventory.transformId("ConsumeItem"), [
+        .actionProgram(
+          ActionProgram.transform(inventory.packageId, inventory.transformId("ConsumeItem"), [
             Arg.domainProperty("itemName", Source.direct(Item, "id")),
             Arg.static("count", STEP),
-          ]),
-        });
+          ])
+        );
     })
 );
 
 export const foundationEconomyInventoryDemo = definePackage(
   "foundation-economy-inventory-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {
@@ -88,10 +89,7 @@ export const foundationEconomyInventoryDemo = definePackage(
           "logSetting"
         ),
         // Auto-run executes the transaction without a second client request after the exchange.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(GainRateModel)
   )
@@ -107,10 +105,7 @@ export const foundationEconomyInventoryDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(SpendRateModel)
   )

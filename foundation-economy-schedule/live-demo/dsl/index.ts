@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -7,7 +8,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -52,12 +53,12 @@ const PullRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(TriggerPull)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.domainProperty("trigger", Source.parent(Source.direct(TriggerPull, "trigger"))),
             Arg.static("ttlSeconds", TTL_SECONDS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -70,12 +71,12 @@ const ExtendRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Trigger)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("TriggerSchedule"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("TriggerSchedule"), [
             Arg.domainProperty("trigger", Source.direct("Trigger", "id")),
             Arg.static("extendSeconds", EXTEND_SECONDS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -88,17 +89,17 @@ const ClearRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Trigger)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.domainProperty("trigger", Source.direct("Trigger", "id")),
-          ]),
-        });
+          ])
+        );
     })
 );
 
 export const foundationEconomyScheduleDemo = definePackage(
   "foundation-economy-schedule-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {
@@ -168,10 +169,7 @@ export const foundationEconomyScheduleDemo = definePackage(
           "logSetting"
         ),
         // Auto-run executes the transaction without a second client request after the exchange.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(PullRateModel)
   )
@@ -187,10 +185,7 @@ export const foundationEconomyScheduleDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(ExtendRateModel)
   )
@@ -206,10 +201,7 @@ export const foundationEconomyScheduleDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(ClearRateModel)
   )

@@ -71,7 +71,6 @@ Resources:
     Properties:
       AssumeUserId: "grn:gs2::{ownerId}:identifier:user:demo-version-passed"
       Name: "Version"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false

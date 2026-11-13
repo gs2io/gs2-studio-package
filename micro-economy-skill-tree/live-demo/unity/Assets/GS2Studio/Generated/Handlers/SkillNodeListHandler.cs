@@ -379,6 +379,8 @@ namespace GS2Studio.Generated.SkillNode
             ISkillNodeBinder binder)
         {
             if (_handlers.ContainsKey(binder)) return;
+            // Binder-only consumers do not need generated item UI.
+            if (_itemPrefab == null && _contentParent == null) return;
             if (_itemPrefab == null || _contentParent == null)
             {
                 Failed?.Invoke(new InvalidOperationException("itemPrefab or contentParent is not assigned."));

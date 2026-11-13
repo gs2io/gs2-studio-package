@@ -1,11 +1,12 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -55,16 +56,16 @@ const GetMaterialRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(CharacterEnhanceMaterial)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             enhance.packageId,
             enhance.transformId("AcquireCharacterEnhanceMaterial"),
             [
               Arg.domainProperty("material", Source.direct(CharacterEnhanceMaterial, "id")),
               Arg.static("count", 1),
             ]
-          ),
-        });
+          )
+        );
     })
 );
 
@@ -79,14 +80,14 @@ function enhanceRateModel(materialName: string) {
         acquireAction
           .model(GS2.transaction.AcquireAction)
           .mountLocal(Character)
-          .bindings({
-            action: Bind.transform(enhance.packageId, enhance.transformId("EnhanceCharacter"), [
+          .actionProgram(
+            ActionProgram.transform(enhance.packageId, enhance.transformId("EnhanceCharacter"), [
               Arg.static("enhance", RECIPE),
               Arg.placeholder("targetItemSetId", "#{propertyId}"),
               Arg.static("materialItemSetId", characterEnhanceMaterialItemId(materialName)),
               Arg.static("count", 1),
-            ]),
-          });
+            ])
+          );
       })
   );
 }
@@ -104,10 +105,7 @@ function exchangeNamespaceBindings(name: string) {
       "incrementalExchangeScript",
       "logSetting"
     ),
-    transactionSetting: transactionSetting({
-      enableAtomicCommit: Bind.static(true),
-      enableAutoRun: Bind.static(true),
-    }),
+    transactionSettingV2: transactionSettingV2(),
   };
 }
 
@@ -130,7 +128,7 @@ const PROPERTY_ID_CONFIG = {
 
 export const microEconomyCharacterEnhanceDemo = definePackage(
   "micro-economy-character-enhance-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

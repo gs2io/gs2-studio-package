@@ -1,33 +1,31 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "trigger",
-            "source": {
-              "kind": "static",
-              "value": "happy-hour"
-            }
-          },
-          {
-            "parameterName": "ttlSeconds",
-            "source": {
-              "kind": "static",
-              "value": 86400
-            }
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "trigger",
+          "source": {
+            "kind": "static",
+            "value": "happy-hour"
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_4FW3DYR9BB85TTH03JVZRFRTV3",
-          "transformPackageId": "foundation-economy-schedule"
+        },
+        {
+          "parameterName": "ttlSeconds",
+          "source": {
+            "kind": "static",
+            "value": 86400
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_4FW3DYR9BB85TTH03JVZRFRTV3",
+        "transformPackageId": "foundation-economy-schedule"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_3H9P4VT5JMB66S833SAD8518VF",
   "location": {
     "modelName": "AcquireAction",

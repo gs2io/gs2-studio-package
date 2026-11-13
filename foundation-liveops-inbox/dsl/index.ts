@@ -6,7 +6,7 @@ import {
   defineUserDataResource,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -88,7 +88,7 @@ const InboxNamespace = defineMasterDataResource(resource => {
         "receiveMessageScript",
         "receiveNotification"
       ),
-      transactionSetting: transactionSetting(),
+      transactionSettingV2: transactionSettingV2(),
     })
     .addChild(child => {
       child
@@ -127,7 +127,7 @@ const InboxMessage = defineUserDataResource(resource =>
     })
 );
 
-export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", "0.0.0")
+export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", "0.0.1")
   .display({
     ja: {
       label: "お知らせ・受信箱",
@@ -166,11 +166,10 @@ export const foundationLiveopsInbox = definePackage("foundation-liveops-inbox", 
 
   .masterDataResource(r => {
     r.model(GS2.schedule.Namespace)
-      .mountLocal(GlobalMessage)
       .bindings({
         name: Bind.static("InboxSchedule"),
         logSetting: Bind.null(),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(child => {
         child

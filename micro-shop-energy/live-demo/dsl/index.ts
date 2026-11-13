@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -7,7 +8,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -78,8 +79,8 @@ const BuyRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EnergyProduct)
-        .bindings({
-          action: Bind.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
+        .actionProgram(
+          ActionProgram.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
             // Use published ids because these inherited properties are absent from the local overlay declarations.
             Arg.domainProperty(
               "energy",
@@ -96,24 +97,24 @@ const BuyRateModel = defineMasterDataResource(resource =>
                 )
               )
             ),
-          ]),
-        });
+          ])
+        );
     })
     .addArrayChild("consumeActions", consumeAction => {
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(EnergyProduct)
-        .bindings({
-          action: Bind.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
+        .actionProgram(
+          ActionProgram.transform(currency.packageId, currency.transformId("WithdrawCurrency"), [
             Arg.static("slot", WALLET_SLOT),
             Arg.static("paidOnly", false),
             Arg.domainProperty("count", Source.parent(Source.direct(EnergyProduct, "cost"))),
-          ]),
-        });
+          ])
+        );
     })
 );
 
-export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.0")
+export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.1")
   .display({
     ja: {
       label: "スタミナショップ（デモデータ）",
@@ -175,10 +176,7 @@ export const microShopEnergyDemo = definePackage("micro-shop-energy-demo", "0.0.
           "logSetting"
         ),
         // Auto-run avoids a second client request; atomic commit keeps charging and recovery in the same purchase.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(BuyRateModel)
   )

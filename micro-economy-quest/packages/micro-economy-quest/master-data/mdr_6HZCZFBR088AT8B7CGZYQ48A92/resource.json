@@ -1,26 +1,24 @@
 {
-  "declaredBindings": [
-    {
-      "kind": "domainProperty",
-      "parameterName": "action",
-      "source": {
-        "scopes": [
-          {
-            "kind": "parent",
-            "parentResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
-          }
-        ],
-        "terminal": {
-          "kind": "direct",
-          "mountPath": {
-            "kind": "local",
-            "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
-          },
-          "propertyId": "prop_49CWPE451G4S2NWECN50J39WNY"
+  "actionProgram": {
+    "kind": "domainProperty",
+    "source": {
+      "scopes": [
+        {
+          "kind": "parent",
+          "parentResourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE"
         }
+      ],
+      "terminal": {
+        "kind": "direct",
+        "mountPath": {
+          "kind": "local",
+          "typeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK"
+        },
+        "propertyId": "prop_49CWPE451G4S2NWECN50J39WNY"
       }
     }
-  ],
+  },
+  "declaredBindings": [],
   "id": "mdr_6HZCZFBR088AT8B7CGZYQ48A92",
   "location": {
     "modelName": "AcquireAction",

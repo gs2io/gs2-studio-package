@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Bind,
   defineDomainType,
   defineMasterDataResource,
@@ -6,7 +7,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -131,16 +132,16 @@ const GlobalRankingModel = defineMasterDataResource(resource =>
           acquireAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal(RankingReward)
-            .bindings({
-              action: Bind.domainProperty(
+            .actionProgram(
+              ActionProgram.domainProperty(
                 Source.parent(Source.direct(RankingReward, "acquireActions"))
-              ),
-            });
+              )
+            );
         });
     })
 );
 
-export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.0")
+export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.1")
   .display({
     ja: {
       label: "ランキング",
@@ -185,10 +186,7 @@ export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.0
         name: Bind.static("Ranking"),
         logSetting: Bind.null(),
         // Auto-run executes the reward transaction; atomic commit keeps the receipt record and payout together.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(GlobalRankingModel)
   )

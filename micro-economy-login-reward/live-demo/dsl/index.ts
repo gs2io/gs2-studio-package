@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -7,7 +8,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -99,8 +100,8 @@ const StartOverRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(LoginRewardCollection)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             loginReward.packageId,
             loginReward.transformId("ResetReceiveStatus"),
             [
@@ -109,12 +110,12 @@ const StartOverRateModel = defineMasterDataResource(resource =>
                 Source.direct(LoginRewardCollection, "id")
               ),
             ]
-          ),
-        });
+          )
+        );
     })
 );
 
-const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.0")
+const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.1")
   .display({
     ja: {
       label: "ログインボーナス（デモデータ）",
@@ -193,10 +194,7 @@ export const microEconomyLoginRewardDemo = withDays
           "logSetting"
         ),
         // Auto-run executes the reset without a second client request after the exchange.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(StartOverRateModel)
   )

@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -36,7 +36,7 @@ const CampaignModel = defineMasterDataResource(resource =>
     })
 );
 
-export const microLiveopsSerialCode = definePackage("micro-liveops-serial-code", "0.0.0")
+export const microLiveopsSerialCode = definePackage("micro-liveops-serial-code", "0.0.1")
   .display({
     ja: {
       label: "シリアルコード",
@@ -65,7 +65,7 @@ export const microLiveopsSerialCode = definePackage("micro-liveops-serial-code",
       .bindings({
         name: Bind.static("SerialCode"),
         logSetting: Bind.null(),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(CampaignModel)
   )

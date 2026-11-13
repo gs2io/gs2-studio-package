@@ -38,21 +38,13 @@ Resources:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "AdSpend"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false
   ExchangeNamespace_AdWatch:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "AdWatch"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false

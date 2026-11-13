@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -7,7 +8,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -56,14 +57,14 @@ const TakeRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EquipmentCatalog)
-        .bindings({
-          action: Bind.transform(equipment.packageId, equipment.transformId("AcquireEquipment"), [
+        .actionProgram(
+          ActionProgram.transform(equipment.packageId, equipment.transformId("AcquireEquipment"), [
             Arg.domainProperty(
               "equipment",
               Source.parent(Source.direct(EquipmentCatalog, "equipment"))
             ),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -76,12 +77,12 @@ const DiscardRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Equipment)
-        .bindings({
-          action: Bind.transform(equipment.packageId, equipment.transformId("DeleteEquipment"), [
+        .actionProgram(
+          ActionProgram.transform(equipment.packageId, equipment.transformId("DeleteEquipment"), [
             Arg.domainProperty("equipment", Source.direct(Equipment, "id")),
             // Omit instance selection because the deployed rate cannot name a future owned item set; discard consumes by equipment type.
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -94,19 +95,19 @@ const ExpandRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(EquipmentCollection)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             equipment.packageId,
             equipment.transformId("AddEquipmentCapacity"),
             [Arg.static("value", CAPACITY_STEP)]
-          ),
-        });
+          )
+        );
     })
 );
 
 export const foundationEconomyEquipmentDemo = definePackage(
   "foundation-economy-equipment-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {
@@ -160,10 +161,7 @@ export const foundationEconomyEquipmentDemo = definePackage(
           "logSetting"
         ),
         // Auto-run executes the grant without requiring a second client request after the exchange.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(TakeRateModel)
   )
@@ -179,10 +177,7 @@ export const foundationEconomyEquipmentDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(DiscardRateModel)
   )
@@ -198,10 +193,7 @@ export const foundationEconomyEquipmentDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(ExpandRateModel)
   )

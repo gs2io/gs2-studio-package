@@ -30,7 +30,7 @@ function slot(...itemNames: readonly string[]) {
 
 export const microEconomyEquipmentLoadoutDemo = definePackage(
   "micro-economy-equipment-loadout-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {

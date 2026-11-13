@@ -1,36 +1,34 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "character",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "character",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_00D0SX0W1BFSBBNRP4K43HVTJM"
-                  },
-                  "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-                }
+              "scopes": [],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_00D0SX0W1BFSBBNRP4K43HVTJM"
+                },
+                "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
               }
             }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6",
-          "transformPackageId": "foundation-economy-character-dictionary"
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6",
+        "transformPackageId": "foundation-economy-character-dictionary"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_2MR8J9CP5J8E0SMHFEPST0EYQ6",
   "location": {
     "modelName": "AcquireAction",

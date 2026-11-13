@@ -21,6 +21,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
                       request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":300,\"currency\":\"JPY\",\"count\":250}]}"
+                  bonuses: []
               - displayItemId: "coin_medium.JPY"
                 type: "salesItem"
                 salesItem:
@@ -33,6 +34,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
                       request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":200,\"currency\":\"JPY\",\"count\":50}]}"
+                  bonuses: []
               - displayItemId: "coin_small.JPY"
                 type: "salesItem"
                 salesItem:
@@ -45,6 +47,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
                       request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":100,\"currency\":\"JPY\",\"count\":10}]}"
+                  bonuses: []
           - name: "USD"
             displayItems:
               - displayItemId: "coin_large.USD"
@@ -59,6 +62,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
                       request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":3,\"currency\":\"USD\",\"count\":250}]}"
+                  bonuses: []
               - displayItemId: "coin_medium.USD"
                 type: "salesItem"
                 salesItem:
@@ -71,6 +75,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
                       request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":2,\"currency\":\"USD\",\"count\":50}]}"
+                  bonuses: []
               - displayItemId: "coin_small.USD"
                 type: "salesItem"
                 salesItem:
@@ -83,6 +88,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
                       request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":1,\"currency\":\"USD\",\"count\":10}]}"
+                  bonuses: []
           - name: "XXX"
             displayItems:
               - displayItemId: "coin_large.XXX"
@@ -97,6 +103,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
                       request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":3,\"currency\":\"XXX\",\"count\":250}]}"
+                  bonuses: []
               - displayItemId: "coin_medium.XXX"
                 type: "salesItem"
                 salesItem:
@@ -109,6 +116,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
                       request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":2,\"currency\":\"XXX\",\"count\":50}]}"
+                  bonuses: []
               - displayItemId: "coin_small.XXX"
                 type: "salesItem"
                 salesItem:
@@ -121,6 +129,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
                       request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":1,\"currency\":\"XXX\",\"count\":10}]}"
+                  bonuses: []
         randomShowcases: []
       Mode: "direct"
     DependsOn:
@@ -129,7 +138,6 @@ Resources:
     Type: "GS2::Showcase::Namespace"
     Properties:
       Name: "ShopCurrency"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false

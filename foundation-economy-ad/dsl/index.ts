@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -68,11 +68,11 @@ const Namespace = defineMasterDataResource(resource =>
         gatewayNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:gateway:default"),
         sound: Bind.static(""),
       },
-      transactionSetting: transactionSetting(),
+      transactionSettingV2: transactionSettingV2(),
     })
 );
 
-export const foundationEconomyAd = definePackage("foundation-economy-ad", "0.0.0")
+export const foundationEconomyAd = definePackage("foundation-economy-ad", "0.0.1")
   .display({
     ja: {
       label: "広告",

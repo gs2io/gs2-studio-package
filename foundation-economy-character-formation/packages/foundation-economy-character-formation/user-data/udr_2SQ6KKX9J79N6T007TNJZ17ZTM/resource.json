@@ -25,21 +25,6 @@
       "value": "CharacterFormation"
     },
     {
-      "kind": "skip",
-      "parameterName": "slots"
-    }
-  ],
-  "id": "udr_2SQ6KKX9J79N6T007TNJZ17ZTM",
-  "location": {
-    "modelName": "Form",
-    "service": "formation"
-  },
-  "ownMountPath": {
-    "kind": "local",
-    "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
-  },
-  "projectionBindings": [
-    {
       "fieldMappings": [
         {
           "fieldName": "propertyId",
@@ -55,5 +40,14 @@
       },
       "targetPropertyId": "prop_0B395S1GETW77ZBQ7FK8Z7TPGS"
     }
-  ]
+  ],
+  "id": "udr_2SQ6KKX9J79N6T007TNJZ17ZTM",
+  "location": {
+    "modelName": "Form",
+    "service": "formation"
+  },
+  "ownMountPath": {
+    "kind": "local",
+    "typeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF"
+  }
 }

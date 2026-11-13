@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
@@ -7,7 +8,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -91,17 +92,21 @@ const AdvanceRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(MissionCounter)
-        .bindings({
-          action: Bind.transform(mission.packageId, mission.transformId("IncreaseMissionCounter"), [
-            // Bind the counter identity so each authored counter gets its own rate without duplicating this definition.
-            Arg.domainProperty("counter", Source.direct(MissionCounter, COUNTER_ID)),
-            Arg.static("value", STEP),
-          ]),
-        });
+        .actionProgram(
+          ActionProgram.transform(
+            mission.packageId,
+            mission.transformId("IncreaseMissionCounter"),
+            [
+              // Bind the counter identity so each authored counter gets its own rate without duplicating this definition.
+              Arg.domainProperty("counter", Source.direct(MissionCounter, COUNTER_ID)),
+              Arg.static("value", STEP),
+            ]
+          )
+        );
     })
 );
 
-const withGroups = definePackage("micro-economy-mission-demo", "0.0.0")
+const withGroups = definePackage("micro-economy-mission-demo", "0.0.1")
   .display({
     ja: {
       label: "ミッション（デモデータ）",
@@ -179,10 +184,7 @@ export const microEconomyMissionDemo = withMissions
           "logSetting"
         ),
         // Auto-run executes the counter change without a second client request after the exchange.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(AdvanceRateModel)
   )

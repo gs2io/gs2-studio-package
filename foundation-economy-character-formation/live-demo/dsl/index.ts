@@ -1,13 +1,14 @@
 /** Reuse the shared character demo content so formation does not deploy a second version of its roster and recruit rates. */
 
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -44,17 +45,17 @@ const ExpandRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(CharacterFormation)
-        .bindings({
-          action: Bind.transform(formation.packageId, formation.transformId("IncreaseSaveArea"), [
+        .actionProgram(
+          ActionProgram.transform(formation.packageId, formation.transformId("IncreaseSaveArea"), [
             Arg.static("value", 1),
-          ]),
-        });
+          ])
+        );
     })
 );
 
 export const foundationEconomyCharacterFormationDemo = definePackage(
   "foundation-economy-character-formation-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {
@@ -89,10 +90,7 @@ export const foundationEconomyCharacterFormationDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(ExpandRateModel)
   )

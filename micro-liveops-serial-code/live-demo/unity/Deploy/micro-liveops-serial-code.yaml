@@ -17,7 +17,6 @@ Resources:
     Type: "GS2::SerialKey::Namespace"
     Properties:
       Name: "SerialCode"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false

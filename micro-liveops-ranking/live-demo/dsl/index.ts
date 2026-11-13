@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -8,7 +9,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -117,12 +118,12 @@ const StartRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(RankingContest)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.static("trigger", CONTEST_TRIGGER),
             Arg.static("ttlSeconds", CONTEST_SECONDS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -135,11 +136,11 @@ const FinishRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(RankingContest)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.static("trigger", CONTEST_TRIGGER),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -154,14 +155,11 @@ function contestExchange(name: string) {
       "logSetting"
     ),
     // Auto-run executes the transaction without a second client request after the exchange.
-    transactionSetting: transactionSetting({
-      enableAtomicCommit: Bind.static(true),
-      enableAutoRun: Bind.static(true),
-    }),
+    transactionSettingV2: transactionSettingV2(),
   };
 }
 
-const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.0")
+const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.1")
   .display({
     ja: {
       label: "ランキング（デモデータ）",

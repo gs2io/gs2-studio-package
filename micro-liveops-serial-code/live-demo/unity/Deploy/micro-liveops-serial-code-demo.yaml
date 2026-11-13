@@ -42,24 +42,16 @@ Resources:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "SerialCodeRedeem"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false
   ExchangeNamespace_SerialCodeStartOver:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "SerialCodeStartOver"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false
   LimitCurrentLimitMaster_SerialCodeLimit:
     Type: "GS2::Limit::CurrentLimitMaster"
     Properties:
@@ -77,7 +69,6 @@ Resources:
     Type: "GS2::Limit::Namespace"
     Properties:
       Name: "SerialCodeLimit"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false

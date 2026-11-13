@@ -1,12 +1,13 @@
 /** The page simulates ad completion; the demo owns point grants because the feature package cannot decide when a view qualifies. */
 
 import {
+  ActionProgram,
   Bind,
   defineMasterDataResource,
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -42,9 +43,7 @@ const WatchRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(AdViewPoint)
-        .bindings({
-          action: Bind.transform(DEMO_PACKAGE_ID, AcquireAdViewPointTransform, []),
-        });
+        .actionProgram(ActionProgram.transform(DEMO_PACKAGE_ID, AcquireAdViewPointTransform, []));
     })
 );
 
@@ -58,13 +57,13 @@ const SpendRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(AdViewPoint)
-        .bindings({
-          action: Bind.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), []),
-        });
+        .actionProgram(
+          ActionProgram.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), [])
+        );
     })
 );
 
-export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
+export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.1")
   .display({
     ja: {
       label: "広告（デモデータ）",
@@ -113,10 +112,7 @@ export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
           "logSetting"
         ),
         // Auto-run avoids a second client request to execute the transaction after the exchange succeeds.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(WatchRateModel)
   )
@@ -132,10 +128,7 @@ export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(SpendRateModel)
   )

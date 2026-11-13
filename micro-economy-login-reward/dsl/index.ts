@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Bind,
   Cond,
   defineDomainType,
@@ -9,7 +10,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -148,22 +149,22 @@ const BonusModel = defineMasterDataResource(resource =>
           acquireAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal(LoginReward)
-            .bindings({
-              action: Bind.domainProperty(
+            .actionProgram(
+              ActionProgram.domainProperty(
                 Source.parent(Source.direct(LoginReward, "acquireActions"))
-              ),
-            });
+              )
+            );
         });
     })
     .addArrayChild("missedReceiveReliefConsumeActions", consumeAction => {
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(LoginRewardCollection)
-        .bindings({
-          action: Bind.domainProperty(
+        .actionProgram(
+          ActionProgram.domainProperty(
             Source.parent(Source.direct(LoginRewardCollection, "missedReceiveReliefConsumeActions"))
-          ),
-        });
+          )
+        );
     })
 );
 
@@ -181,7 +182,7 @@ const ReceiveStatus = defineUserDataResource(resource =>
     })
 );
 
-export const microEconomyLoginReward = definePackage("micro-economy-login-reward", "0.0.0")
+export const microEconomyLoginReward = definePackage("micro-economy-login-reward", "0.0.1")
   .display({
     ja: {
       label: "ログインボーナス",
@@ -230,10 +231,7 @@ export const microEconomyLoginReward = definePackage("micro-economy-login-reward
         logSetting: Bind.null(),
         name: Bind.static("LoginReward"),
         receiveScript: Bind.null(),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(BonusModel)
   )

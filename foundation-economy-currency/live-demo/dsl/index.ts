@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -7,7 +8,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -61,12 +62,16 @@ const FreeDepositRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(FreeDeposit)
-        .bindings({
-          action: Bind.transform(CURRENCY_PACKAGE_ID, currency.transformId("DepositFreeCurrency"), [
-            Arg.domainProperty("count", Source.parent(Source.direct(FreeDeposit, "count"))),
-            Arg.static("slot", WALLET_SLOT),
-          ]),
-        });
+        .actionProgram(
+          ActionProgram.transform(
+            CURRENCY_PACKAGE_ID,
+            currency.transformId("DepositFreeCurrency"),
+            [
+              Arg.domainProperty("count", Source.parent(Source.direct(FreeDeposit, "count"))),
+              Arg.static("slot", WALLET_SLOT),
+            ]
+          )
+        );
     })
 );
 
@@ -82,14 +87,14 @@ const PaidDepositRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(PaidDeposit)
-        .bindings({
-          action: Bind.transform(CURRENCY_PACKAGE_ID, currency.transformId("DepositCurrency"), [
+        .actionProgram(
+          ActionProgram.transform(CURRENCY_PACKAGE_ID, currency.transformId("DepositCurrency"), [
             Arg.domainProperty("count", Source.parent(Source.direct(PaidDeposit, "count"))),
             Arg.static("currencyType", "JPY"),
             Arg.static("price", 120),
             Arg.static("slot", WALLET_SLOT),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -112,7 +117,7 @@ function demoProduct(
 
 export const foundationEconomyCurrencyDemo = definePackage(
   "foundation-economy-currency-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {
@@ -173,10 +178,7 @@ export const foundationEconomyCurrencyDemo = definePackage(
           "logSetting"
         ),
         // Auto-run executes the deposit without requiring a second client request after the exchange.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(FreeDepositRateModel)
       .addChild(PaidDepositRateModel)

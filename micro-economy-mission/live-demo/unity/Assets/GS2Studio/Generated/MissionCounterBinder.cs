@@ -355,7 +355,7 @@ namespace GS2Studio.Generated.MissionCounter
             __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("MissionAdvance", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0) : null!;
             __exchangeMissionAdvanceNamespaceRateModelLoader = Runs__exchangeMissionAdvanceNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("MissionAdvance", (string.IsNullOrEmpty(__sdk__exchangeMissionAdvanceNamespaceRateModel_1) ? _model.Id : __sdk__exchangeMissionAdvanceNamespaceRateModel_1!)) : null!;
             __missionMissionNamespaceCounterModelLoader = Runs__missionMissionNamespaceCounterModelLoader ? new Gs2Bind.Gs2Mission.CounterModelLoader("Mission", (string.IsNullOrEmpty(__sdk__missionMissionNamespaceCounterModel_1) ? _model.Id : __sdk__missionMissionNamespaceCounterModel_1!)) : null!;
-            __userdataMissionMissionCounterModelLoader = Runs__userdataMissionMissionCounterModelLoader ? new Gs2Bind.Gs2Mission.CounterLoader("Mission", (string.IsNullOrEmpty(__sdk__userdataMissionMissionCounterModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataMissionMissionCounterModel_1!)) : null!;
+            __userdataMissionMissionCounterModelLoader = Runs__userdataMissionMissionCounterModelLoader ? new Gs2Bind.Gs2Mission.CounterLoader("Mission", (string.IsNullOrEmpty(__sdk__userdataMissionMissionCounterModel_1) ? _model.Id : __sdk__userdataMissionMissionCounterModel_1!)) : null!;
         }
 
 

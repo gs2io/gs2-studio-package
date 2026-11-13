@@ -262,7 +262,7 @@ namespace GS2Studio.Generated.Wallet
         {
 
             _mountSurfaceValue = _mountSurface;
-            __userdataMoney2WalletLoader = Runs__userdataMoney2WalletLoader ? new Gs2Bind.Gs2Money2.WalletLoader("Currency", (__sdk__userdataMoney2Wallet_1 ?? throw new InvalidOperationException("An SDK backing key is required for this loader."))) : null!;
+            __userdataMoney2WalletLoader = Runs__userdataMoney2WalletLoader ? new Gs2Bind.Gs2Money2.WalletLoader("Currency", (__sdk__userdataMoney2Wallet_1 ?? slot)) : null!;
         }
 
 

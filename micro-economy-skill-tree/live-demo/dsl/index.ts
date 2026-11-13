@@ -60,7 +60,7 @@ const NODES = [
   { id: "last", premises: ["left", "right"], cost: 50 },
 ] as const;
 
-const withDependencies = definePackage("micro-economy-skill-tree-demo", "0.0.0")
+const withDependencies = definePackage("micro-economy-skill-tree-demo", "0.0.1")
   .display({
     ja: {
       label: "スキルツリー（デモデータ）",

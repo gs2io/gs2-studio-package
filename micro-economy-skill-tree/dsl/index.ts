@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Bind,
   defineDomainType,
   defineMasterDataResource,
@@ -7,7 +8,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -92,15 +93,15 @@ const NodeModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(SkillNode)
-        .bindings({
-          action: Bind.domainProperty(
+        .actionProgram(
+          ActionProgram.domainProperty(
             Source.parent(Source.direct(SkillNode, "releaseConsumeActions"))
-          ),
-        });
+          )
+        );
     })
 );
 
-export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "0.0.0")
+export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "0.0.1")
   .display({
     ja: {
       label: "スキルツリー",
@@ -141,7 +142,7 @@ export const microEconomySkillTree = definePackage("micro-economy-skill-tree", "
       .bindings({
         name: Bind.static("SkillTree"),
         ...Bind.nulls("releaseScript", "restrainScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(NodeModel)
   )

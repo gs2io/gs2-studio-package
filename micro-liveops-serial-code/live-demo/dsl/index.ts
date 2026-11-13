@@ -1,6 +1,7 @@
 /** Own the redemption limit in a separate namespace so this demo cannot alter the shared usage-limit stack. */
 
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -8,7 +9,7 @@ import {
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -70,30 +71,28 @@ const RedeemRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(SerialCodeRedemption)
-        .bindings({
-          action: Bind.transform(DEMO_PACKAGE_ID, CountRedemptionTransform, []),
-        });
+        .actionProgram(ActionProgram.transform(DEMO_PACKAGE_ID, CountRedemptionTransform, []));
     })
     .addArrayChild("consumeActions", consumeAction => {
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(SerialCodeRedemption)
-        .bindings({
-          action: Bind.transform(serialCode.packageId, serialCode.transformId("UseSerialCode"), [
+        .actionProgram(
+          ActionProgram.transform(serialCode.packageId, serialCode.transformId("UseSerialCode"), [
             Arg.placeholder("code", `#{${CODE_CONFIG_KEY}}`),
-          ]),
-        });
+          ])
+        );
     })
     .addArrayChild("acquireActions", acquireAction => {
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(SerialCodeRedemption)
-        .bindings({
-          action: Bind.transform(currency.packageId, currency.transformId("DepositFreeCurrency"), [
+        .actionProgram(
+          ActionProgram.transform(currency.packageId, currency.transformId("DepositFreeCurrency"), [
             Arg.static("slot", WALLET_SLOT),
             Arg.static("count", REWARD_COINS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -106,9 +105,7 @@ const StartOverRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(SerialCodeRedemption)
-        .bindings({
-          action: Bind.transform(DEMO_PACKAGE_ID, ClearRedemptionTransform, []),
-        });
+        .actionProgram(ActionProgram.transform(DEMO_PACKAGE_ID, ClearRedemptionTransform, []));
     })
 );
 
@@ -122,14 +119,11 @@ function redemptionExchange(name: string) {
       "incrementalExchangeScript",
       "logSetting"
     ),
-    transactionSetting: transactionSetting({
-      enableAtomicCommit: Bind.static(true),
-      enableAutoRun: Bind.static(true),
-    }),
+    transactionSettingV2: transactionSettingV2(),
   };
 }
 
-export const microLiveopsSerialCodeDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0")
+export const microLiveopsSerialCodeDemo = definePackage(DEMO_PACKAGE_ID, "0.0.1")
   .display({
     ja: {
       label: "シリアルコード（デモデータ）",
@@ -196,7 +190,7 @@ export const microLiveopsSerialCodeDemo = definePackage(DEMO_PACKAGE_ID, "0.0.0"
       .bindings({
         name: Bind.static("SerialCodeLimit"),
         ...Bind.nulls("countUpScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(RedemptionLimitModel)
   )

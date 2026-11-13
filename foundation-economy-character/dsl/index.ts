@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -183,7 +183,7 @@ const InventoryModel = defineMasterDataResource(resource =>
     .addArrayChild("itemModels", ItemModel)
 );
 
-export const foundationEconomyCharacter = definePackage("foundation-economy-character", "0.0.0")
+export const foundationEconomyCharacter = definePackage("foundation-economy-character", "0.0.1")
   .display({
     ja: { label: "キャラクター", description: "キャラクターの所持・レベル・経験値を扱います。" },
     en: { label: "Characters", description: "Handles character ownership, level, and experience." },
@@ -235,7 +235,7 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           "rankCapScriptId",
           "logSetting"
         ),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(ExperienceModel)
   )
@@ -255,7 +255,7 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           "bigItemConsumeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(InventoryModel)
   )

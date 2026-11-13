@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -7,7 +8,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -63,8 +64,8 @@ const DeliverRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(GlobalMessage)
-        .bindings({
-          action: Bind.transform(inbox.packageId, inbox.transformId("SendMessage"), [
+        .actionProgram(
+          ActionProgram.transform(inbox.packageId, inbox.transformId("SendMessage"), [
             Arg.domainProperty(
               "metadata",
               Source.parent(
@@ -72,8 +73,8 @@ const DeliverRateModel = defineMasterDataResource(resource =>
               )
             ),
             Arg.static("expireDays", EXPIRE_DAYS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -87,8 +88,8 @@ const GiftRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Gift)
-        .bindings({
-          action: Bind.transform(inbox.packageId, inbox.transformId("SendMessageWithReward"), [
+        .actionProgram(
+          ActionProgram.transform(inbox.packageId, inbox.transformId("SendMessageWithReward"), [
             Arg.domainProperty("metadata", Source.parent(Source.direct(Gift, "payload"))),
             Arg.static("expireDays", EXPIRE_DAYS),
             Arg.actionTransformRef(
@@ -100,12 +101,12 @@ const GiftRateModel = defineMasterDataResource(resource =>
                 Arg.domainProperty("count", Source.parent(Source.direct(Gift, "amount"))),
               ]
             ),
-          ]),
-        });
+          ])
+        );
     })
 );
 
-export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbox-demo", "0.0.0")
+export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbox-demo", "0.0.1")
   .display({
     ja: {
       label: "お知らせ・受信箱（デモデータ）",
@@ -148,10 +149,7 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
           "logSetting"
         ),
         // Auto-run delivers the message without a second client request to execute the transaction.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(DeliverRateModel)
   )
@@ -167,10 +165,7 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(GiftRateModel)
   )

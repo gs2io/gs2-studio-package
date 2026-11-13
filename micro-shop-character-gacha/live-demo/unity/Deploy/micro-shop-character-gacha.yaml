@@ -65,10 +65,9 @@ Resources:
     Type: "GS2::Lottery::Namespace"
     Properties:
       Name: "CharacterGacha"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false
   ShowcaseCurrentShowcaseMaster_CharacterGacha:
     Type: "GS2::Showcase::CurrentShowcaseMaster"
     Properties:
@@ -90,6 +89,7 @@ Resources:
                   acquireActions:
                     - action: "Gs2Lottery:DrawByUserId"
                       request: "{\"count\":1,\"userId\":\"#{userId}\",\"lotteryName\":\"standard\",\"namespaceName\":\"CharacterGacha\"}"
+                  bonuses: []
         randomShowcases: []
       Mode: "direct"
     DependsOn:
@@ -98,7 +98,6 @@ Resources:
     Type: "GS2::Showcase::Namespace"
     Properties:
       Name: "CharacterGacha"
-      TransactionSetting:
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAutoRun: false
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
+        EnableParallelExecution: false

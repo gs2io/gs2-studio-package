@@ -55,32 +55,20 @@ Resources:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "TriggerClear"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false
   ExchangeNamespace_TriggerExtend:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "TriggerExtend"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false
   ExchangeNamespace_TriggerPull:
     Type: "GS2::Exchange::Namespace"
     Properties:
       Name: "TriggerPull"
-      TransactionSetting:
-        AcquireActionUseJobQueue: false
+      TransactionSettingV2:
         DistributorNamespaceId: "grn:gs2:{region}:{ownerId}:distributor:default"
-        EnableAtomicCommit: true
-        EnableAutoRun: true
-        QueueNamespaceId: "grn:gs2:{region}:{ownerId}:queue:default"
-        TransactionUseDistributor: false
+        EnableParallelExecution: false

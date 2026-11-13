@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Bind,
   defineDomainType,
   defineMasterDataResource,
@@ -7,7 +8,7 @@ import {
   dependencyPackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -163,38 +164,38 @@ const QuestModel = defineMasterDataResource(resource =>
           acquireAction
             .model(GS2.transaction.AcquireAction)
             .mountLocal(Quest)
-            .bindings({
-              action: Bind.domainProperty(
+            .actionProgram(
+              ActionProgram.domainProperty(
                 Source.parent(Source.parent(Source.direct(Quest, "completeAcquireActions")))
-              ),
-            });
+              )
+            );
         });
     })
     .addArrayChild("consumeActions", consumeAction => {
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(Quest)
-        .bindings({
-          action: Bind.domainProperty(Source.parent(Source.direct(Quest, "consumeActions"))),
-        });
+        .actionProgram(
+          ActionProgram.domainProperty(Source.parent(Source.direct(Quest, "consumeActions")))
+        );
     })
     .addArrayChild("failedAcquireActions", acquireAction => {
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Quest)
-        .bindings({
-          action: Bind.domainProperty(Source.parent(Source.direct(Quest, "failedAcquireActions"))),
-        });
+        .actionProgram(
+          ActionProgram.domainProperty(Source.parent(Source.direct(Quest, "failedAcquireActions")))
+        );
     })
     .addArrayChild("firstCompleteAcquireActions", acquireAction => {
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Quest)
-        .bindings({
-          action: Bind.domainProperty(
+        .actionProgram(
+          ActionProgram.domainProperty(
             Source.parent(Source.direct(Quest, "firstCompleteAcquireActions"))
-          ),
-        });
+          )
+        );
     })
 );
 
@@ -246,7 +247,7 @@ const ProgressResource = defineUserDataResource(resource =>
     ])
 );
 
-export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
+export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.1")
   .display({
     ja: {
       label: "クエスト",
@@ -311,7 +312,7 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.0")
       .bindings({
         name: Bind.static("Quest"),
         ...Bind.nulls("startQuestScript", "completeQuestScript", "failedQuestScript", "logSetting"),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(QuestGroupModel)
   )

@@ -1,70 +1,68 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "resourceType",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "resourceType",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
-                  },
-                  "propertyId": "prop_00CYQANBEMD1KZZ3KNW41Q5E1N"
-                }
-              }
-            }
-          },
-          {
-            "parameterName": "resourceId",
-            "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
-                  },
-                  "propertyId": "prop_00CYQANBEME0HWT60VTZGNMGZJ"
-                }
-              }
-            }
-          },
-          {
-            "parameterName": "count",
-            "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
-                  },
-                  "propertyId": "prop_00CYQANBEME23TGTQKPJD745ET"
-                }
+              "scopes": [],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
+                },
+                "propertyId": "prop_00CYQANBEMD1KZZ3KNW41Q5E1N"
               }
             }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformPackageId": "sample-child-restoration",
-          "transformId": "at_4Q831FZJQJ81P8DAQA1D537QF7"
+        },
+        {
+          "parameterName": "resourceId",
+          "source": {
+            "kind": "domainProperty",
+            "source": {
+              "scopes": [],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
+                },
+                "propertyId": "prop_00CYQANBEME0HWT60VTZGNMGZJ"
+              }
+            }
+          }
+        },
+        {
+          "parameterName": "count",
+          "source": {
+            "kind": "domainProperty",
+            "source": {
+              "scopes": [],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_7E8NF7BHDR0WDQMJ3H22TNYJCG"
+                },
+                "propertyId": "prop_00CYQANBEME23TGTQKPJD745ET"
+              }
+            }
+          }
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_4Q831FZJQJ81P8DAQA1D537QF7",
+        "transformPackageId": "sample-child-restoration"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_480DZ3AQBR86A9ZC7R38TAA7NZ",
   "location": {
     "modelName": "ConsumeAction",

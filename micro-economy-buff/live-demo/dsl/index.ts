@@ -1,4 +1,5 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineDomainType,
@@ -7,7 +8,7 @@ import {
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -55,12 +56,12 @@ const StartRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(BuffCampaign)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.static("trigger", CAMPAIGN_TRIGGER),
             Arg.static("ttlSeconds", CAMPAIGN_SECONDS),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -73,11 +74,11 @@ const EndRateModel = defineMasterDataResource(resource =>
       consumeAction
         .model(GS2.transaction.ConsumeAction)
         .mountLocal(BuffCampaign)
-        .bindings({
-          action: Bind.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
+        .actionProgram(
+          ActionProgram.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.static("trigger", CAMPAIGN_TRIGGER),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -92,14 +93,11 @@ function campaignExchange(name: string) {
       "logSetting"
     ),
     // Auto-run executes the transaction without a second client request after the exchange.
-    transactionSetting: transactionSetting({
-      enableAtomicCommit: Bind.static(true),
-      enableAutoRun: Bind.static(true),
-    }),
+    transactionSettingV2: transactionSettingV2(),
   };
 }
 
-export const microEconomyBuffDemo = definePackage("micro-economy-buff-demo", "0.0.0")
+export const microEconomyBuffDemo = definePackage("micro-economy-buff-demo", "0.0.1")
   .display({
     ja: {
       label: "バフ（デモデータ）",

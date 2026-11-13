@@ -1,7 +1,7 @@
 {
   "id": "foundation-economy-schedule",
   "name": "foundation-economy-schedule",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "display": {
     "en": {
       "description": "Shared date-range and trigger infrastructure other features build on.",

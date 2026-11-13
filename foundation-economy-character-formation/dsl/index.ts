@@ -5,7 +5,7 @@ import {
   definePackage,
   PT,
   Source,
-  transactionSetting,
+  transactionSettingV2,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
 
@@ -115,7 +115,7 @@ const MoldModel = defineMasterDataResource(resource =>
 
 export const foundationEconomyCharacterFormation = definePackage(
   "foundation-economy-character-formation",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {
@@ -181,7 +181,7 @@ export const foundationEconomyCharacterFormation = definePackage(
           "updateMoldScript",
           "updatePropertyFormScript"
         ),
-        transactionSetting: transactionSetting(),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(MoldModel)
   )

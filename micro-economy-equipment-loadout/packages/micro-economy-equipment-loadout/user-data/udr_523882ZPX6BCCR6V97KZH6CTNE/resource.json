@@ -24,8 +24,20 @@
       }
     },
     {
-      "kind": "skip",
-      "parameterName": "slots"
+      "fieldMappings": [
+        {
+          "fieldName": "propertyId",
+          "targetPropertyId": "prop_00D033FNAS8DNWPTTNV21SG9XF"
+        }
+      ],
+      "idSourceField": "name",
+      "kind": "modelArrayDecode",
+      "parameterName": "slots",
+      "targetMountPath": {
+        "kind": "local",
+        "typeId": "dt_00D033FNASESS5578YF3CS7Y34"
+      },
+      "targetPropertyId": "prop_00D033FNASB4JJM9FNP61KXE7B"
     },
     {
       "kind": "skip",
@@ -41,23 +53,5 @@
   "ownMountPath": {
     "kind": "local",
     "typeId": "dt_00D033FNASESS5578YF3CS7Y34"
-  },
-  "projectionBindings": [
-    {
-      "fieldMappings": [
-        {
-          "fieldName": "propertyId",
-          "targetPropertyId": "prop_00D033FNAS8DNWPTTNV21SG9XF"
-        }
-      ],
-      "idSourceField": "name",
-      "kind": "modelArrayDecode",
-      "parameterName": "slots",
-      "targetMountPath": {
-        "kind": "local",
-        "typeId": "dt_00D033FNASESS5578YF3CS7Y34"
-      },
-      "targetPropertyId": "prop_00D033FNASB4JJM9FNP61KXE7B"
-    }
-  ]
+  }
 }

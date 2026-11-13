@@ -87,7 +87,7 @@ const GuildRankingReward = defineOverlayDomainType(
     })
 );
 
-const withRanking = definePackage("micro-liveops-guild-ranking-demo", "0.0.0")
+const withRanking = definePackage("micro-liveops-guild-ranking-demo", "0.0.1")
   .display({
     ja: {
       label: "ギルドランキング（デモデータ）",

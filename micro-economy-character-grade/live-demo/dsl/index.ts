@@ -1,11 +1,12 @@
 import {
+  ActionProgram,
   Arg,
   Bind,
   defineMasterDataResource,
   definePackage,
   dependencyPackage,
   Source,
-  transactionSetting,
+  transactionSettingV2,
   UiCond,
 } from "~/dsl";
 import { GS2 } from "~/dsl/gs2";
@@ -45,12 +46,12 @@ const LimitBreakRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
-        .bindings({
-          action: Bind.transform(grade.packageId, grade.transformId("PromoteCharacterGrade"), [
+        .actionProgram(
+          ActionProgram.transform(grade.packageId, grade.transformId("PromoteCharacterGrade"), [
             Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
             Arg.static("gradeValue", 1),
-          ]),
-        });
+          ])
+        );
     })
 );
 
@@ -63,16 +64,16 @@ const TrainHardRateModel = defineMasterDataResource(resource =>
       acquireAction
         .model(GS2.transaction.AcquireAction)
         .mountLocal(Character)
-        .bindings({
-          action: Bind.transform(
+        .actionProgram(
+          ActionProgram.transform(
             character.packageId,
             character.transformId("AcquireCharacterExperience"),
             [
               Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
               Arg.static("value", TRAIN_HARD_EXPERIENCE),
             ]
-          ),
-        });
+          )
+        );
     })
 );
 
@@ -99,7 +100,7 @@ const PROPERTY_ID_CONFIG = {
 
 export const microEconomyCharacterGradeDemo = definePackage(
   "micro-economy-character-grade-demo",
-  "0.0.0"
+  "0.0.1"
 )
   .display({
     ja: {
@@ -135,10 +136,7 @@ export const microEconomyCharacterGradeDemo = definePackage(
           "logSetting"
         ),
         // Auto-run executes the transaction without a second client request after the exchange.
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(LimitBreakRateModel)
   )
@@ -153,10 +151,7 @@ export const microEconomyCharacterGradeDemo = definePackage(
           "incrementalExchangeScript",
           "logSetting"
         ),
-        transactionSetting: transactionSetting({
-          enableAtomicCommit: Bind.static(true),
-          enableAutoRun: Bind.static(true),
-        }),
+        transactionSettingV2: transactionSettingV2(),
       })
       .addChild(TrainHardRateModel)
   )

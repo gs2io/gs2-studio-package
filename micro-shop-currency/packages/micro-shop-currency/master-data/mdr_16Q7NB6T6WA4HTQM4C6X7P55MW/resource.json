@@ -1,36 +1,34 @@
 {
-  "declaredBindings": [
-    {
-      "invocation": {
-        "arguments": [
-          {
-            "parameterName": "contentName",
+  "actionProgram": {
+    "invocation": {
+      "arguments": [
+        {
+          "parameterName": "contentName",
+          "source": {
+            "kind": "domainProperty",
             "source": {
-              "kind": "domainProperty",
-              "source": {
-                "scopes": [],
-                "terminal": {
-                  "kind": "direct",
-                  "mountPath": {
-                    "kind": "local",
-                    "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
-                  },
-                  "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
-                }
+              "scopes": [],
+              "terminal": {
+                "kind": "direct",
+                "mountPath": {
+                  "kind": "local",
+                  "typeId": "dt_130FYGH3W86EG2FK06VGEJSYCT"
+                },
+                "propertyId": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
               }
             }
           }
-        ],
-        "target": {
-          "kind": "selected",
-          "transformId": "at_0K0C5C0TAX954RK77HDAPJWBEG",
-          "transformPackageId": "foundation-economy-currency"
         }
-      },
-      "kind": "transform",
-      "parameterName": "action"
-    }
-  ],
+      ],
+      "target": {
+        "kind": "selected",
+        "transformId": "at_0K0C5C0TAX954RK77HDAPJWBEG",
+        "transformPackageId": "foundation-economy-currency"
+      }
+    },
+    "kind": "transform"
+  },
+  "declaredBindings": [],
   "id": "mdr_16Q7NB6T6WA4HTQM4C6X7P55MW",
   "location": {
     "modelName": "ConsumeAction",
