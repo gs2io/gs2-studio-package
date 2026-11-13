@@ -12,7 +12,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Mission:IncreaseCounterByUserId"
-                request: "{\"namespaceName\":\"Mission\",\"counterName\":\"counter\",\"userId\":\"#{userId}\",\"value\":1}"
+                request: "{\"counterName\":\"counter\",\"namespaceName\":\"Mission\",\"userId\":\"#{userId}\",\"value\":1}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

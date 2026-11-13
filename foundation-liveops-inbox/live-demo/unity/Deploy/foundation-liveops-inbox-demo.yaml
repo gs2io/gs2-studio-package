@@ -12,7 +12,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Inbox:SendMessageByUserId"
-                request: "{\"namespaceName\":\"Inbox\",\"userId\":\"#{userId}\",\"metadata\":\"Welcome to the GS2 inbox demo!\",\"expiresTimeSpan\":{\"days\":7}}"
+                request: "{\"expiresTimeSpan\":{\"days\":7},\"metadata\":\"Welcome to the GS2 inbox demo!\",\"namespaceName\":\"Inbox\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -29,7 +29,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Inbox:SendMessageByUserId"
-                request: "{\"namespaceName\":\"Inbox\",\"userId\":\"#{userId}\",\"metadata\":\"A gift from the operator: 100 coins.\",\"readAcquireActions\":[{\"action\":\"Gs2Money2:DepositByUserId\",\"request\":\"{\\\"namespaceName\\\":\\\"Currency\\\",\\\"userId\\\":\\\"#{userId}\\\",\\\"slot\\\":0,\\\"depositTransactions\\\":[{\\\"price\\\":0,\\\"currency\\\":\\\"\\\",\\\"count\\\":100}]}\"}],\"expiresTimeSpan\":{\"days\":7}}"
+                request: "{\"expiresTimeSpan\":{\"days\":7},\"metadata\":\"A gift from the operator: 100 coins.\",\"namespaceName\":\"Inbox\",\"readAcquireActions\":[{\"action\":\"Gs2Money2:DepositByUserId\",\"request\":\"{\\\"depositTransactions\\\":[{\\\"count\\\":100,\\\"currency\\\":\\\"\\\",\\\"price\\\":0}],\\\"namespaceName\\\":\\\"Currency\\\",\\\"slot\\\":0,\\\"userId\\\":\\\"#{userId}\\\"}\"}],\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

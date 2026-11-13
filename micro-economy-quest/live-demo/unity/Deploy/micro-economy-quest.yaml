@@ -13,40 +13,40 @@ Resources:
                 contents:
                   - completeAcquireActions:
                       - action: "Gs2Money2:DepositByUserId"
-                        request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":10}]}"
+                        request: "{\"depositTransactions\":[{\"count\":10,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
                 firstCompleteAcquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}"
+                    request: "{\"depositTransactions\":[{\"count\":100,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
                 verifyActions: []
                 consumeActions:
                   - action: "Gs2Stamina:ConsumeStaminaByUserId"
-                    request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"consumeValue\":10}"
+                    request: "{\"consumeValue\":10,\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\"}"
                 failedAcquireActions: []
               - name: "quest2"
                 contents:
                   - completeAcquireActions:
                       - action: "Gs2Money2:DepositByUserId"
-                        request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":30}]}"
+                        request: "{\"depositTransactions\":[{\"count\":30,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
                 firstCompleteAcquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":200}]}"
+                    request: "{\"depositTransactions\":[{\"count\":200,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
                 verifyActions: []
                 consumeActions:
                   - action: "Gs2Stamina:ConsumeStaminaByUserId"
-                    request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"consumeValue\":20}"
+                    request: "{\"consumeValue\":20,\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\"}"
                 failedAcquireActions: []
               - name: "quest3"
                 contents:
                   - completeAcquireActions:
                       - action: "Gs2Money2:DepositByUserId"
-                        request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":60}]}"
+                        request: "{\"depositTransactions\":[{\"count\":60,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
                 firstCompleteAcquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":300}]}"
+                    request: "{\"depositTransactions\":[{\"count\":300,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
                 verifyActions: []
                 consumeActions:
                   - action: "Gs2Stamina:ConsumeStaminaByUserId"
-                    request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"consumeValue\":30}"
+                    request: "{\"consumeValue\":30,\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\"}"
                 failedAcquireActions: []
       Mode: "direct"
     DependsOn:

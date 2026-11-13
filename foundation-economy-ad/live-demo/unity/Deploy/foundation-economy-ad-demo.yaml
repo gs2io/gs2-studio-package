@@ -11,7 +11,7 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2AdReward:ConsumePointByUserId"
-                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+                request: "{\"namespaceName\":\"Ad\",\"point\":1,\"userId\":\"#{userId}\"}"
             acquireActions: []
         incrementalRateModels: []
       Mode: "direct"
@@ -29,7 +29,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2AdReward:AcquirePointByUserId"
-                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+                request: "{\"namespaceName\":\"Ad\",\"point\":1,\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

@@ -12,7 +12,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2LoginReward:DeleteReceiveStatusByUserId"
-                request: "{\"namespaceName\":\"LoginReward\",\"bonusModelName\":\"daily\",\"userId\":\"#{userId}\"}"
+                request: "{\"bonusModelName\":\"daily\",\"namespaceName\":\"LoginReward\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

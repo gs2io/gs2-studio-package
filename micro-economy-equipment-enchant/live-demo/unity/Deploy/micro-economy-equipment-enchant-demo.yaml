@@ -11,26 +11,26 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":30,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":30}"
             acquireActions:
               - action: "Gs2Enchant:AddRarityParameterStatusByUserId"
-                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"count\":1}"
+                request: "{\"count\":1,\"namespaceName\":\"EquipmentEnchant\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "oak-staff"
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":30,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":30}"
             acquireActions:
               - action: "Gs2Enchant:AddRarityParameterStatusByUserId"
-                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"count\":1}"
+                request: "{\"count\":1,\"namespaceName\":\"EquipmentEnchant\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "steel-shield"
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":30,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":30}"
             acquireActions:
               - action: "Gs2Enchant:AddRarityParameterStatusByUserId"
-                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"count\":1}"
+                request: "{\"count\":1,\"namespaceName\":\"EquipmentEnchant\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -46,26 +46,26 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":10}"
             acquireActions:
               - action: "Gs2Enchant:ReDrawRarityParameterStatusByUserId"
-                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\"}"
+                request: "{\"namespaceName\":\"EquipmentEnchant\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "oak-staff"
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":10}"
             acquireActions:
               - action: "Gs2Enchant:ReDrawRarityParameterStatusByUserId"
-                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\"}"
+                request: "{\"namespaceName\":\"EquipmentEnchant\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "steel-shield"
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":10}"
             acquireActions:
               - action: "Gs2Enchant:ReDrawRarityParameterStatusByUserId"
-                request: "{\"namespaceName\":\"EquipmentEnchant\",\"userId\":\"#{userId}\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\"}"
+                request: "{\"namespaceName\":\"EquipmentEnchant\",\"parameterName\":\"standard\",\"propertyId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

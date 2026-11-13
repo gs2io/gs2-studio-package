@@ -14,7 +14,7 @@ Resources:
             releaseVerifyActions: []
             releaseConsumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":10}"
             returnAcquireActions: []
           - metadata: ""
             name: "last"
@@ -25,7 +25,7 @@ Resources:
             releaseVerifyActions: []
             releaseConsumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":50,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":50}"
             returnAcquireActions: []
           - metadata: ""
             name: "left"
@@ -35,7 +35,7 @@ Resources:
             releaseVerifyActions: []
             releaseConsumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":20,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":20}"
             returnAcquireActions: []
           - metadata: ""
             name: "right"
@@ -45,7 +45,7 @@ Resources:
             releaseVerifyActions: []
             releaseConsumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":20,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":20}"
             returnAcquireActions: []
       Mode: "direct"
     DependsOn:

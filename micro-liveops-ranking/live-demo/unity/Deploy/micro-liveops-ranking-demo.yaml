@@ -29,7 +29,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Schedule:TriggerByUserId"
-                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"ranking-contest\",\"userId\":\"#{userId}\",\"triggerStrategy\":\"renew\",\"ttl\":180}"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"ranking-contest\",\"triggerStrategy\":\"renew\",\"ttl\":180,\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

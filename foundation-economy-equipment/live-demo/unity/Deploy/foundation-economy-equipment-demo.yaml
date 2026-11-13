@@ -11,19 +11,19 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2Inventory:ConsumeItemSetByUserId"
-                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"userId\":\"#{userId}\",\"itemName\":\"iron-sword\",\"consumeCount\":1}"
+                request: "{\"consumeCount\":1,\"inventoryName\":\"Equipment\",\"itemName\":\"iron-sword\",\"namespaceName\":\"Equipment\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "oak-staff"
             verifyActions: []
             consumeActions:
               - action: "Gs2Inventory:ConsumeItemSetByUserId"
-                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"userId\":\"#{userId}\",\"itemName\":\"oak-staff\",\"consumeCount\":1}"
+                request: "{\"consumeCount\":1,\"inventoryName\":\"Equipment\",\"itemName\":\"oak-staff\",\"namespaceName\":\"Equipment\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "steel-shield"
             verifyActions: []
             consumeActions:
               - action: "Gs2Inventory:ConsumeItemSetByUserId"
-                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"userId\":\"#{userId}\",\"itemName\":\"steel-shield\",\"consumeCount\":1}"
+                request: "{\"consumeCount\":1,\"inventoryName\":\"Equipment\",\"itemName\":\"steel-shield\",\"namespaceName\":\"Equipment\",\"userId\":\"#{userId}\"}"
             acquireActions: []
         incrementalRateModels: []
       Mode: "direct"
@@ -41,7 +41,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AddCapacityByUserId"
-                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"userId\":\"#{userId}\",\"addCapacityValue\":2}"
+                request: "{\"addCapacityValue\":2,\"inventoryName\":\"Equipment\",\"namespaceName\":\"Equipment\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -58,19 +58,19 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"itemName\":\"iron-sword\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Equipment\",\"itemName\":\"iron-sword\",\"namespaceName\":\"Equipment\",\"userId\":\"#{userId}\"}"
           - name: "oak-staff"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"itemName\":\"oak-staff\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Equipment\",\"itemName\":\"oak-staff\",\"namespaceName\":\"Equipment\",\"userId\":\"#{userId}\"}"
           - name: "steel-shield"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Equipment\",\"inventoryName\":\"Equipment\",\"itemName\":\"steel-shield\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Equipment\",\"itemName\":\"steel-shield\",\"namespaceName\":\"Equipment\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

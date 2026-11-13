@@ -11,12 +11,12 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"SerialCodeLimit\",\"limitName\":\"serialcoderedemption\",\"counterName\":\"redeemed\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":1}"
+                request: "{\"countUpValue\":1,\"counterName\":\"redeemed\",\"limitName\":\"serialcoderedemption\",\"maxValue\":1,\"namespaceName\":\"SerialCodeLimit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2SerialKey:UseByUserId"
-                request: "{\"namespaceName\":\"SerialCode\",\"userId\":\"#{userId}\",\"code\":\"#{code}\"}"
+                request: "{\"code\":\"#{code}\",\"namespaceName\":\"SerialCode\",\"userId\":\"#{userId}\"}"
             acquireActions:
               - action: "Gs2Money2:DepositByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}"
+                request: "{\"depositTransactions\":[{\"count\":100,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -33,7 +33,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"SerialCodeLimit\",\"limitName\":\"serialcoderedemption\",\"counterName\":\"redeemed\",\"userId\":\"#{userId}\"}"
+                request: "{\"counterName\":\"redeemed\",\"limitName\":\"serialcoderedemption\",\"namespaceName\":\"SerialCodeLimit\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

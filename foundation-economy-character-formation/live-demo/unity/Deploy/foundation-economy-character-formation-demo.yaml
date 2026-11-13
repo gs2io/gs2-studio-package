@@ -12,7 +12,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Formation:AddMoldCapacityByUserId"
-                request: "{\"namespaceName\":\"CharacterFormation\",\"userId\":\"#{userId}\",\"moldModelName\":\"CharacterFormation\",\"capacity\":1}"
+                request: "{\"capacity\":1,\"moldModelName\":\"CharacterFormation\",\"namespaceName\":\"CharacterFormation\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

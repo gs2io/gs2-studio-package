@@ -11,7 +11,7 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2Stamina:ConsumeStaminaByUserId"
-                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"consumeValue\":10}"
+                request: "{\"consumeValue\":10,\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\"}"
             acquireActions: []
         incrementalRateModels: []
       Mode: "direct"
@@ -29,7 +29,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Stamina:RecoverStaminaByUserId"
-                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":5}"
+                request: "{\"namespaceName\":\"Energy\",\"recoverValue\":5,\"staminaName\":\"stamina\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
