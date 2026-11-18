@@ -20,22 +20,22 @@ Resources:
                 thresholdRank: 1
                 acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":300}]}"
+                    request: "{\"depositTransactions\":[{\"count\":300,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
               - metadata: "{\"thresholdRank\":{\"present\":true,\"value\":10},\"ranking\":{\"present\":true,\"value\":\"contest\"}}"
                 thresholdRank: 10
                 acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":80}]}"
+                    request: "{\"depositTransactions\":[{\"count\":80,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
               - metadata: "{\"thresholdRank\":{\"present\":true,\"value\":1001},\"ranking\":{\"present\":true,\"value\":\"contest\"}}"
                 thresholdRank: 1001
                 acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":30}]}"
+                    request: "{\"depositTransactions\":[{\"count\":30,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
               - metadata: "{\"thresholdRank\":{\"present\":true,\"value\":3},\"ranking\":{\"present\":true,\"value\":\"contest\"}}"
                 thresholdRank: 3
                 acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":150}]}"
+                    request: "{\"depositTransactions\":[{\"count\":150,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
         clusterRankingModels: []
         subscribeRankingModels: []
       Mode: "direct"

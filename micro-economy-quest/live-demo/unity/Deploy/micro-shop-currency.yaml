@@ -17,10 +17,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:VerifyReceiptByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_large\",\"receipt\":\"#{receipt}\"}"
+                      request: "{\"contentName\":\"coin_large\",\"namespaceName\":\"Currency\",\"receipt\":\"#{receipt}\",\"userId\":\"#{userId}\"}"
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":300,\"currency\":\"JPY\",\"count\":250}]}"
+                      request: "{\"depositTransactions\":[{\"count\":250,\"currency\":\"JPY\",\"price\":300}],\"namespaceName\":\"Currency\",\"slot\":\"#{slot}\",\"userId\":\"#{userId}\"}"
                   bonuses: []
               - displayItemId: "coin_medium.JPY"
                 type: "salesItem"
@@ -30,10 +30,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:VerifyReceiptByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_medium\",\"receipt\":\"#{receipt}\"}"
+                      request: "{\"contentName\":\"coin_medium\",\"namespaceName\":\"Currency\",\"receipt\":\"#{receipt}\",\"userId\":\"#{userId}\"}"
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":200,\"currency\":\"JPY\",\"count\":50}]}"
+                      request: "{\"depositTransactions\":[{\"count\":50,\"currency\":\"JPY\",\"price\":200}],\"namespaceName\":\"Currency\",\"slot\":\"#{slot}\",\"userId\":\"#{userId}\"}"
                   bonuses: []
               - displayItemId: "coin_small.JPY"
                 type: "salesItem"
@@ -43,10 +43,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:VerifyReceiptByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_small\",\"receipt\":\"#{receipt}\"}"
+                      request: "{\"contentName\":\"coin_small\",\"namespaceName\":\"Currency\",\"receipt\":\"#{receipt}\",\"userId\":\"#{userId}\"}"
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":100,\"currency\":\"JPY\",\"count\":10}]}"
+                      request: "{\"depositTransactions\":[{\"count\":10,\"currency\":\"JPY\",\"price\":100}],\"namespaceName\":\"Currency\",\"slot\":\"#{slot}\",\"userId\":\"#{userId}\"}"
                   bonuses: []
           - name: "USD"
             displayItems:
@@ -58,10 +58,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:VerifyReceiptByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_large\",\"receipt\":\"#{receipt}\"}"
+                      request: "{\"contentName\":\"coin_large\",\"namespaceName\":\"Currency\",\"receipt\":\"#{receipt}\",\"userId\":\"#{userId}\"}"
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":3,\"currency\":\"USD\",\"count\":250}]}"
+                      request: "{\"depositTransactions\":[{\"count\":250,\"currency\":\"USD\",\"price\":3}],\"namespaceName\":\"Currency\",\"slot\":\"#{slot}\",\"userId\":\"#{userId}\"}"
                   bonuses: []
               - displayItemId: "coin_medium.USD"
                 type: "salesItem"
@@ -71,10 +71,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:VerifyReceiptByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_medium\",\"receipt\":\"#{receipt}\"}"
+                      request: "{\"contentName\":\"coin_medium\",\"namespaceName\":\"Currency\",\"receipt\":\"#{receipt}\",\"userId\":\"#{userId}\"}"
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":2,\"currency\":\"USD\",\"count\":50}]}"
+                      request: "{\"depositTransactions\":[{\"count\":50,\"currency\":\"USD\",\"price\":2}],\"namespaceName\":\"Currency\",\"slot\":\"#{slot}\",\"userId\":\"#{userId}\"}"
                   bonuses: []
               - displayItemId: "coin_small.USD"
                 type: "salesItem"
@@ -84,10 +84,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:VerifyReceiptByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_small\",\"receipt\":\"#{receipt}\"}"
+                      request: "{\"contentName\":\"coin_small\",\"namespaceName\":\"Currency\",\"receipt\":\"#{receipt}\",\"userId\":\"#{userId}\"}"
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":1,\"currency\":\"USD\",\"count\":10}]}"
+                      request: "{\"depositTransactions\":[{\"count\":10,\"currency\":\"USD\",\"price\":1}],\"namespaceName\":\"Currency\",\"slot\":\"#{slot}\",\"userId\":\"#{userId}\"}"
                   bonuses: []
           - name: "XXX"
             displayItems:
@@ -99,10 +99,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:VerifyReceiptByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_large\",\"receipt\":\"#{receipt}\"}"
+                      request: "{\"contentName\":\"coin_large\",\"namespaceName\":\"Currency\",\"receipt\":\"#{receipt}\",\"userId\":\"#{userId}\"}"
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":3,\"currency\":\"XXX\",\"count\":250}]}"
+                      request: "{\"depositTransactions\":[{\"count\":250,\"currency\":\"XXX\",\"price\":3}],\"namespaceName\":\"Currency\",\"slot\":\"#{slot}\",\"userId\":\"#{userId}\"}"
                   bonuses: []
               - displayItemId: "coin_medium.XXX"
                 type: "salesItem"
@@ -112,10 +112,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:VerifyReceiptByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_medium\",\"receipt\":\"#{receipt}\"}"
+                      request: "{\"contentName\":\"coin_medium\",\"namespaceName\":\"Currency\",\"receipt\":\"#{receipt}\",\"userId\":\"#{userId}\"}"
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":2,\"currency\":\"XXX\",\"count\":50}]}"
+                      request: "{\"depositTransactions\":[{\"count\":50,\"currency\":\"XXX\",\"price\":2}],\"namespaceName\":\"Currency\",\"slot\":\"#{slot}\",\"userId\":\"#{userId}\"}"
                   bonuses: []
               - displayItemId: "coin_small.XXX"
                 type: "salesItem"
@@ -125,10 +125,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:VerifyReceiptByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"contentName\":\"coin_small\",\"receipt\":\"#{receipt}\"}"
+                      request: "{\"contentName\":\"coin_small\",\"namespaceName\":\"Currency\",\"receipt\":\"#{receipt}\",\"userId\":\"#{userId}\"}"
                   acquireActions:
                     - action: "Gs2Money2:DepositByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":\"#{slot}\",\"depositTransactions\":[{\"price\":1,\"currency\":\"XXX\",\"count\":10}]}"
+                      request: "{\"depositTransactions\":[{\"count\":10,\"currency\":\"XXX\",\"price\":1}],\"namespaceName\":\"Currency\",\"slot\":\"#{slot}\",\"userId\":\"#{userId}\"}"
                   bonuses: []
         randomShowcases: []
       Mode: "direct"

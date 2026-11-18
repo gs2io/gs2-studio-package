@@ -12,25 +12,25 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":1000}"
+                request: "{\"experienceName\":\"Experience\",\"experienceValue\":1000,\"namespaceName\":\"CharacterExperience\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":1000}"
+                request: "{\"experienceName\":\"Experience\",\"experienceValue\":1000,\"namespaceName\":\"CharacterExperience\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":1000}"
+                request: "{\"experienceName\":\"Experience\",\"experienceValue\":1000,\"namespaceName\":\"CharacterExperience\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":1000}"
+                request: "{\"experienceName\":\"Experience\",\"experienceValue\":1000,\"namespaceName\":\"CharacterExperience\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -47,25 +47,25 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Grade:AddGradeByUserId"
-                request: "{\"namespaceName\":\"CharacterGrade\",\"userId\":\"#{userId}\",\"gradeName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}:level\",\"gradeValue\":1}"
+                request: "{\"gradeName\":\"CharacterGrade\",\"gradeValue\":1,\"namespaceName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Grade:AddGradeByUserId"
-                request: "{\"namespaceName\":\"CharacterGrade\",\"userId\":\"#{userId}\",\"gradeName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}:level\",\"gradeValue\":1}"
+                request: "{\"gradeName\":\"CharacterGrade\",\"gradeValue\":1,\"namespaceName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Grade:AddGradeByUserId"
-                request: "{\"namespaceName\":\"CharacterGrade\",\"userId\":\"#{userId}\",\"gradeName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}:level\",\"gradeValue\":1}"
+                request: "{\"gradeName\":\"CharacterGrade\",\"gradeValue\":1,\"namespaceName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Grade:AddGradeByUserId"
-                request: "{\"namespaceName\":\"CharacterGrade\",\"userId\":\"#{userId}\",\"gradeName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}:level\",\"gradeValue\":1}"
+                request: "{\"gradeName\":\"CharacterGrade\",\"gradeValue\":1,\"namespaceName\":\"CharacterGrade\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

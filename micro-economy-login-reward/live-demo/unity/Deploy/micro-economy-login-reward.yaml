@@ -15,25 +15,25 @@ Resources:
             rewards:
               - acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":10}]}"
+                    request: "{\"depositTransactions\":[{\"count\":10,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
               - acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":20}]}"
+                    request: "{\"depositTransactions\":[{\"count\":20,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
               - acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":30}]}"
+                    request: "{\"depositTransactions\":[{\"count\":30,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
               - acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":40}]}"
+                    request: "{\"depositTransactions\":[{\"count\":40,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
               - acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":50}]}"
+                    request: "{\"depositTransactions\":[{\"count\":50,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
               - acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":60}]}"
+                    request: "{\"depositTransactions\":[{\"count\":60,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
               - acquireActions:
                   - action: "Gs2Money2:DepositByUserId"
-                    request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"depositTransactions\":[{\"price\":0,\"currency\":\"\",\"count\":100}]}"
+                    request: "{\"depositTransactions\":[{\"count\":100,\"currency\":\"\",\"price\":0}],\"namespaceName\":\"Currency\",\"slot\":0,\"userId\":\"#{userId}\"}"
       Mode: "direct"
     DependsOn:
       - "LoginRewardNamespace_LoginReward"

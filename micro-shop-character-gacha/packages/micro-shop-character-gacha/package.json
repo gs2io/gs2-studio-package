@@ -5,8 +5,8 @@
   "dependencies": {
     "foundation-economy-character": "github:gs2io/gs2-studio-package",
     "foundation-economy-character-dictionary": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
   },
   "display": {
     "en": {

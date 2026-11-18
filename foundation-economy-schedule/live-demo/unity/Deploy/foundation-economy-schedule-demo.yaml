@@ -29,7 +29,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Schedule:ExtendTriggerByUserId"
-                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\",\"extendSeconds\":60}"
+                request: "{\"extendSeconds\":60,\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -46,7 +46,7 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Schedule:TriggerByUserId"
-                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"userId\":\"#{userId}\",\"triggerStrategy\":\"renew\",\"ttl\":300}"
+                request: "{\"namespaceName\":\"Schedule\",\"triggerName\":\"happy-hour\",\"triggerStrategy\":\"renew\",\"ttl\":300,\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

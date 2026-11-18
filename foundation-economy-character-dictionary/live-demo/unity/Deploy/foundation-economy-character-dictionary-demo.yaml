@@ -12,33 +12,33 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"archer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"archer\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Dictionary:AddEntriesByUserId"
-                request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"archer\"]}"
+                request: "{\"entryModelNames\":[\"archer\"],\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\"}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"healer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"healer\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Dictionary:AddEntriesByUserId"
-                request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"healer\"]}"
+                request: "{\"entryModelNames\":[\"healer\"],\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\"}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Dictionary:AddEntriesByUserId"
-                request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"knight\"]}"
+                request: "{\"entryModelNames\":[\"knight\"],\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\"}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"mage\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"mage\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Dictionary:AddEntriesByUserId"
-                request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"mage\"]}"
+                request: "{\"entryModelNames\":[\"mage\"],\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

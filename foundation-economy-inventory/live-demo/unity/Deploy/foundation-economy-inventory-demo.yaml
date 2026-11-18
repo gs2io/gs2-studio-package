@@ -12,19 +12,19 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"elixir\",\"count\":1}]}"
+                request: "{\"acquireCounts\":[{\"count\":1,\"itemName\":\"elixir\"}],\"inventoryName\":\"Inventory\",\"namespaceName\":\"Inventory\",\"userId\":\"#{userId}\"}"
           - name: "ether"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"ether\",\"count\":1}]}"
+                request: "{\"acquireCounts\":[{\"count\":1,\"itemName\":\"ether\"}],\"inventoryName\":\"Inventory\",\"namespaceName\":\"Inventory\",\"userId\":\"#{userId}\"}"
           - name: "potion"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"potion\",\"count\":1}]}"
+                request: "{\"acquireCounts\":[{\"count\":1,\"itemName\":\"potion\"}],\"inventoryName\":\"Inventory\",\"namespaceName\":\"Inventory\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -40,19 +40,19 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2Inventory:ConsumeSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"consumeCounts\":[{\"itemName\":\"elixir\",\"count\":1}]}"
+                request: "{\"consumeCounts\":[{\"count\":1,\"itemName\":\"elixir\"}],\"inventoryName\":\"Inventory\",\"namespaceName\":\"Inventory\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "ether"
             verifyActions: []
             consumeActions:
               - action: "Gs2Inventory:ConsumeSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"consumeCounts\":[{\"itemName\":\"ether\",\"count\":1}]}"
+                request: "{\"consumeCounts\":[{\"count\":1,\"itemName\":\"ether\"}],\"inventoryName\":\"Inventory\",\"namespaceName\":\"Inventory\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "potion"
             verifyActions: []
             consumeActions:
               - action: "Gs2Inventory:ConsumeSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"Inventory\",\"inventoryName\":\"Inventory\",\"userId\":\"#{userId}\",\"consumeCounts\":[{\"itemName\":\"potion\",\"count\":1}]}"
+                request: "{\"consumeCounts\":[{\"count\":1,\"itemName\":\"potion\"}],\"inventoryName\":\"Inventory\",\"namespaceName\":\"Inventory\",\"userId\":\"#{userId}\"}"
             acquireActions: []
         incrementalRateModels: []
       Mode: "direct"

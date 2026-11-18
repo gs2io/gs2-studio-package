@@ -311,7 +311,7 @@ export const microShopCharacterGacha = definePackage("micro-shop-character-gacha
   .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-character-dictionary", "github:gs2io/gs2-studio-package")
   .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
+  .dependency("foundation-economy-currency", "github:gs2io/gs2-studio-package")
   .domainType(CharacterRate)
   .domainType(GachaRarityRate)
   .domainType(GachaRarity)

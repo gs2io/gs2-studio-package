@@ -12,25 +12,25 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"archer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"archer\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"healer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"healer\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireItemSetByUserId"
-                request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"mage\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"mage\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -47,25 +47,25 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":40}"
+                request: "{\"experienceName\":\"Experience\",\"experienceValue\":40,\"namespaceName\":\"CharacterExperience\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":40}"
+                request: "{\"experienceName\":\"Experience\",\"experienceValue\":40,\"namespaceName\":\"CharacterExperience\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":40}"
+                request: "{\"experienceName\":\"Experience\",\"experienceValue\":40,\"namespaceName\":\"CharacterExperience\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Experience:AddExperienceByUserId"
-                request: "{\"namespaceName\":\"CharacterExperience\",\"userId\":\"#{userId}\",\"experienceName\":\"Experience\",\"propertyId\":\"#{propertyId}:level\",\"experienceValue\":40}"
+                request: "{\"experienceName\":\"Experience\",\"experienceValue\":40,\"namespaceName\":\"CharacterExperience\",\"propertyId\":\"#{propertyId}:level\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

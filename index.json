@@ -466,7 +466,7 @@
         "foundation-economy-character",
         "foundation-economy-character-dictionary",
         "foundation-economy-schedule",
-        "micro-shop-currency"
+        "foundation-economy-currency"
       ],
       "install": {
         "url": "https://github.com/gs2io/gs2-studio-package/tree/main/micro-shop-character-gacha/packages/micro-shop-character-gacha"

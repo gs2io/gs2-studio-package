@@ -29,17 +29,17 @@ Resources:
                 weight: 1
                 acquireActions:
                   - action: "Gs2Inventory:AcquireItemSetByUserId"
-                    request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"archer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                    request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"archer\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
                   - action: "Gs2Dictionary:AddEntriesByUserId"
-                    request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"archer\"]}"
+                    request: "{\"entryModelNames\":[\"archer\"],\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\"}"
               - prizeId: "common.knight"
                 type: "action"
                 weight: 1
                 acquireActions:
                   - action: "Gs2Inventory:AcquireItemSetByUserId"
-                    request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                    request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"knight\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
                   - action: "Gs2Dictionary:AddEntriesByUserId"
-                    request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"knight\"]}"
+                    request: "{\"entryModelNames\":[\"knight\"],\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\"}"
           - name: "rare"
             prizes:
               - prizeId: "rare.healer"
@@ -47,17 +47,17 @@ Resources:
                 weight: 1
                 acquireActions:
                   - action: "Gs2Inventory:AcquireItemSetByUserId"
-                    request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"healer\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                    request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"healer\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
                   - action: "Gs2Dictionary:AddEntriesByUserId"
-                    request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"healer\"]}"
+                    request: "{\"entryModelNames\":[\"healer\"],\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\"}"
               - prizeId: "rare.mage"
                 type: "action"
                 weight: 1
                 acquireActions:
                   - action: "Gs2Inventory:AcquireItemSetByUserId"
-                    request: "{\"namespaceName\":\"Character\",\"inventoryName\":\"Character\",\"itemName\":\"mage\",\"userId\":\"#{userId}\",\"acquireCount\":1}"
+                    request: "{\"acquireCount\":1,\"inventoryName\":\"Character\",\"itemName\":\"mage\",\"namespaceName\":\"Character\",\"userId\":\"#{userId}\"}"
                   - action: "Gs2Dictionary:AddEntriesByUserId"
-                    request: "{\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\",\"entryModelNames\":[\"mage\"]}"
+                    request: "{\"entryModelNames\":[\"mage\"],\"namespaceName\":\"CharacterDictionary\",\"userId\":\"#{userId}\"}"
       Mode: "direct"
     DependsOn:
       - "LotteryNamespace_CharacterGacha"
@@ -85,10 +85,10 @@ Resources:
                   verifyActions: []
                   consumeActions:
                     - action: "Gs2Money2:WithdrawByUserId"
-                      request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":10,\"paidOnly\":false}"
+                      request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":10}"
                   acquireActions:
                     - action: "Gs2Lottery:DrawByUserId"
-                      request: "{\"count\":1,\"userId\":\"#{userId}\",\"lotteryName\":\"standard\",\"namespaceName\":\"CharacterGacha\"}"
+                      request: "{\"count\":1,\"lotteryName\":\"standard\",\"namespaceName\":\"CharacterGacha\",\"userId\":\"#{userId}\"}"
                   bonuses: []
         randomShowcases: []
       Mode: "direct"

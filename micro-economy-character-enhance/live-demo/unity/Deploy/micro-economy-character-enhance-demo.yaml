@@ -12,13 +12,13 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhanceMaterial\",\"inventoryName\":\"Material\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"elixir\",\"count\":1}]}"
+                request: "{\"acquireCounts\":[{\"count\":1,\"itemName\":\"elixir\"}],\"inventoryName\":\"Material\",\"namespaceName\":\"CharacterEnhanceMaterial\",\"userId\":\"#{userId}\"}"
           - name: "potion"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Inventory:AcquireSimpleItemsByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhanceMaterial\",\"inventoryName\":\"Material\",\"userId\":\"#{userId}\",\"acquireCounts\":[{\"itemName\":\"potion\",\"count\":1}]}"
+                request: "{\"acquireCounts\":[{\"count\":1,\"itemName\":\"potion\"}],\"inventoryName\":\"Material\",\"namespaceName\":\"CharacterEnhanceMaterial\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -35,25 +35,25 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\",\"count\":1}]}"
+                request: "{\"materials\":[{\"count\":1,\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\"}],\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"targetItemSetId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\",\"count\":1}]}"
+                request: "{\"materials\":[{\"count\":1,\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\"}],\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"targetItemSetId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\",\"count\":1}]}"
+                request: "{\"materials\":[{\"count\":1,\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\"}],\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"targetItemSetId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\",\"count\":1}]}"
+                request: "{\"materials\":[{\"count\":1,\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:elixir\"}],\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"targetItemSetId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
@@ -70,25 +70,25 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\",\"count\":1}]}"
+                request: "{\"materials\":[{\"count\":1,\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\"}],\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"targetItemSetId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "healer"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\",\"count\":1}]}"
+                request: "{\"materials\":[{\"count\":1,\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\"}],\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"targetItemSetId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "knight"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\",\"count\":1}]}"
+                request: "{\"materials\":[{\"count\":1,\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\"}],\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"targetItemSetId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
           - name: "mage"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Enhance:DirectEnhanceByUserId"
-                request: "{\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"userId\":\"#{userId}\",\"targetItemSetId\":\"#{propertyId}\",\"materials\":[{\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\",\"count\":1}]}"
+                request: "{\"materials\":[{\"count\":1,\"materialItemSetId\":\"grn:gs2:{region}:{ownerId}:inventory:CharacterEnhanceMaterial:user:{userId}:simple:inventory:Material:item:potion\"}],\"namespaceName\":\"CharacterEnhance\",\"rateName\":\"Basic\",\"targetItemSetId\":\"#{propertyId}\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

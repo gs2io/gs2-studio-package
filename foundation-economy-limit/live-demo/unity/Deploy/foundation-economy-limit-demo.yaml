@@ -11,33 +11,33 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2AdReward:ConsumePointByUserId"
-                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+                request: "{\"namespaceName\":\"Ad\",\"point\":1,\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"counter1\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":5}"
+                request: "{\"countUpValue\":1,\"counterName\":\"counter1\",\"limitName\":\"daily\",\"maxValue\":5,\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "counter2"
             verifyActions: []
             consumeActions:
               - action: "Gs2AdReward:ConsumePointByUserId"
-                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+                request: "{\"namespaceName\":\"Ad\",\"point\":1,\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"counter2\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":4}"
+                request: "{\"countUpValue\":1,\"counterName\":\"counter2\",\"limitName\":\"daily\",\"maxValue\":4,\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "counter3"
             verifyActions: []
             consumeActions:
               - action: "Gs2AdReward:ConsumePointByUserId"
-                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+                request: "{\"namespaceName\":\"Ad\",\"point\":1,\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"counter3\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":6}"
+                request: "{\"countUpValue\":1,\"counterName\":\"counter3\",\"limitName\":\"daily\",\"maxValue\":6,\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "counter4"
             verifyActions: []
             consumeActions:
               - action: "Gs2AdReward:ConsumePointByUserId"
-                request: "{\"namespaceName\":\"Ad\",\"userId\":\"#{userId}\",\"point\":1}"
+                request: "{\"namespaceName\":\"Ad\",\"point\":1,\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"counterName\":\"counter4\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":1}"
+                request: "{\"countUpValue\":1,\"counterName\":\"counter4\",\"limitName\":\"weekly\",\"maxValue\":1,\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
             acquireActions: []
         incrementalRateModels: []
       Mode: "direct"
@@ -54,25 +54,25 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"counter1\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":3}"
+                request: "{\"countUpValue\":1,\"counterName\":\"counter1\",\"limitName\":\"daily\",\"maxValue\":3,\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "counter2"
             verifyActions: []
             consumeActions:
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"counter2\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":4}"
+                request: "{\"countUpValue\":1,\"counterName\":\"counter2\",\"limitName\":\"daily\",\"maxValue\":4,\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "counter3"
             verifyActions: []
             consumeActions:
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"counterName\":\"counter3\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":6}"
+                request: "{\"countUpValue\":1,\"counterName\":\"counter3\",\"limitName\":\"daily\",\"maxValue\":6,\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
             acquireActions: []
           - name: "counter4"
             verifyActions: []
             consumeActions:
               - action: "Gs2Limit:CountUpByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"counterName\":\"counter4\",\"userId\":\"#{userId}\",\"countUpValue\":1,\"maxValue\":1}"
+                request: "{\"countUpValue\":1,\"counterName\":\"counter4\",\"limitName\":\"weekly\",\"maxValue\":1,\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
             acquireActions: []
         incrementalRateModels: []
       Mode: "direct"
@@ -90,49 +90,49 @@ Resources:
             consumeActions: []
             acquireActions:
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter1\"}"
+                request: "{\"counterName\":\"counter1\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter2\"}"
+                request: "{\"counterName\":\"counter2\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter3\"}"
+                request: "{\"counterName\":\"counter3\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"userId\":\"#{userId}\",\"counterName\":\"counter4\"}"
+                request: "{\"counterName\":\"counter4\",\"limitName\":\"weekly\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
           - name: "counter2"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter1\"}"
+                request: "{\"counterName\":\"counter1\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter2\"}"
+                request: "{\"counterName\":\"counter2\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter3\"}"
+                request: "{\"counterName\":\"counter3\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"userId\":\"#{userId}\",\"counterName\":\"counter4\"}"
+                request: "{\"counterName\":\"counter4\",\"limitName\":\"weekly\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
           - name: "counter3"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter1\"}"
+                request: "{\"counterName\":\"counter1\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter2\"}"
+                request: "{\"counterName\":\"counter2\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter3\"}"
+                request: "{\"counterName\":\"counter3\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"userId\":\"#{userId}\",\"counterName\":\"counter4\"}"
+                request: "{\"counterName\":\"counter4\",\"limitName\":\"weekly\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
           - name: "counter4"
             verifyActions: []
             consumeActions: []
             acquireActions:
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter1\"}"
+                request: "{\"counterName\":\"counter1\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter2\"}"
+                request: "{\"counterName\":\"counter2\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"daily\",\"userId\":\"#{userId}\",\"counterName\":\"counter3\"}"
+                request: "{\"counterName\":\"counter3\",\"limitName\":\"daily\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
               - action: "Gs2Limit:DeleteCounterByUserId"
-                request: "{\"namespaceName\":\"Limit\",\"limitName\":\"weekly\",\"userId\":\"#{userId}\",\"counterName\":\"counter4\"}"
+                request: "{\"counterName\":\"counter4\",\"limitName\":\"weekly\",\"namespaceName\":\"Limit\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:

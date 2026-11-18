@@ -11,26 +11,26 @@ Resources:
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":100,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":100}"
             acquireActions:
               - action: "Gs2Stamina:RecoverStaminaByUserId"
-                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":40}"
+                request: "{\"namespaceName\":\"Energy\",\"recoverValue\":40,\"staminaName\":\"stamina\",\"userId\":\"#{userId}\"}"
           - name: "refill_medium"
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":70,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":70}"
             acquireActions:
               - action: "Gs2Stamina:RecoverStaminaByUserId"
-                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":15}"
+                request: "{\"namespaceName\":\"Energy\",\"recoverValue\":15,\"staminaName\":\"stamina\",\"userId\":\"#{userId}\"}"
           - name: "refill_small"
             verifyActions: []
             consumeActions:
               - action: "Gs2Money2:WithdrawByUserId"
-                request: "{\"namespaceName\":\"Currency\",\"userId\":\"#{userId}\",\"slot\":0,\"withdrawCount\":30,\"paidOnly\":false}"
+                request: "{\"namespaceName\":\"Currency\",\"paidOnly\":false,\"slot\":0,\"userId\":\"#{userId}\",\"withdrawCount\":30}"
             acquireActions:
               - action: "Gs2Stamina:RecoverStaminaByUserId"
-                request: "{\"namespaceName\":\"Energy\",\"staminaName\":\"stamina\",\"userId\":\"#{userId}\",\"recoverValue\":5}"
+                request: "{\"namespaceName\":\"Energy\",\"recoverValue\":5,\"staminaName\":\"stamina\",\"userId\":\"#{userId}\"}"
         incrementalRateModels: []
       Mode: "direct"
     DependsOn:
