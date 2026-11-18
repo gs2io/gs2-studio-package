@@ -256,7 +256,7 @@ const Showcase = defineMasterDataResource(resource =>
     .addArrayChild("displayItems", DisplayItem)
 );
 
-export const microShopCharacterGacha = definePackage("micro-shop-character-gacha", "0.0.1")
+export const microShopCharacterGacha = definePackage("micro-shop-character-gacha", "0.0.2")
   .display({
     ja: {
       label: "キャラクターガチャ",
