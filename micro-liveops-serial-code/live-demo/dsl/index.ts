@@ -10,8 +10,8 @@ import {
   dependencyPackage,
   Source,
   transactionSettingV2,
-} from "~/dsl";
-import { GS2 } from "~/dsl/gs2";
+} from "gs2-studio-dsl";
+import { GS2 } from "gs2-studio-dsl/gs2";
 
 import serialCodeSurface from "../../dsl/dependency-surface.json";
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";

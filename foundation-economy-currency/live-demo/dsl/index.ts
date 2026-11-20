@@ -9,8 +9,8 @@ import {
   PT,
   Source,
   transactionSettingV2,
-} from "~/dsl";
-import { GS2 } from "~/dsl/gs2";
+} from "gs2-studio-dsl";
+import { GS2 } from "gs2-studio-dsl/gs2";
 
 import currencySurface from "../../dsl/dependency-surface.json";
 import shopSurface from "../../../micro-shop-currency/dsl/dependency-surface.json";

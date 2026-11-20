@@ -1,4 +1,4 @@
-import { defineOverlayDomainType, definePackage, dependencyPackage, PT } from "~/dsl";
+import { defineOverlayDomainType, definePackage, dependencyPackage, PT } from "gs2-studio-dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
 import guildRankingSurface from "../../dsl/dependency-surface.json";

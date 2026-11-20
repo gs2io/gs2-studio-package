@@ -1,6 +1,6 @@
 /** Reuse the currency demo shelf and receipt settings so every demo deploys the same shared store content. */
 
-import { definePackage, dependencyPackage } from "~/dsl";
+import { definePackage, dependencyPackage } from "gs2-studio-dsl";
 
 import shopSurface from "../../dsl/dependency-surface.json";
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";

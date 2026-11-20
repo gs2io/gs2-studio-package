@@ -1,6 +1,6 @@
 /** The page refreshes idle predictions separately because elapsed time alone does not change the stored status. */
 
-import { defineOverlayDomainType, definePackage, dependencyPackage, PT } from "~/dsl";
+import { defineOverlayDomainType, definePackage, dependencyPackage, PT } from "gs2-studio-dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
 import idleSurface from "../../dsl/dependency-surface.json";

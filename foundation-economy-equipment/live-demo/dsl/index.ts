@@ -10,8 +10,8 @@ import {
   Source,
   transactionSettingV2,
   UiCond,
-} from "~/dsl";
-import { GS2 } from "~/dsl/gs2";
+} from "gs2-studio-dsl";
+import { GS2 } from "gs2-studio-dsl/gs2";
 
 import equipmentSurface from "../../dsl/dependency-surface.json";
 

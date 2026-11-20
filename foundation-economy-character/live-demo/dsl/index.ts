@@ -12,8 +12,8 @@ import {
   Source,
   transactionSettingV2,
   UiCond,
-} from "~/dsl";
-import { GS2 } from "~/dsl/gs2";
+} from "gs2-studio-dsl";
+import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { CHARACTER_LEVEL_KEY_PLACEHOLDER } from "../../../dsl/characterLevelKey";
 import characterSurface from "../../dsl/dependency-surface.json";

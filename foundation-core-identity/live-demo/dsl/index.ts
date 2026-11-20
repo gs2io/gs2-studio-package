@@ -1,6 +1,6 @@
 /** The page owns credential entry and takeover before login; this package supplies the transfer-slot read view. */
 
-import { definePackage, dependencyPackage } from "~/dsl";
+import { definePackage, dependencyPackage } from "gs2-studio-dsl";
 
 import identitySurface from "../../dsl/dependency-surface.json";
 

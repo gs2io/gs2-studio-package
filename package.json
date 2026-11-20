@@ -1,0 +1,13 @@
+{
+  "name": "gs2-studio-package",
+  "private": true,
+  "description": "Package definitions authored with the GS2 Studio DSL; the generated packages live in each <id>/packages/<id> directory.",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "gs2-studio-dsl": "2026.11.10",
+    "typescript": "5.9.3"
+  }
+}

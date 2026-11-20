@@ -1,4 +1,4 @@
-import { definePackage, dependencyPackage, PT } from "~/dsl";
+import { definePackage, dependencyPackage, PT } from "gs2-studio-dsl";
 
 import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
 import currencySurface from "../../foundation-economy-currency/dsl/dependency-surface.json";

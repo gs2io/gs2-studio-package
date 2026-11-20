@@ -1,4 +1,4 @@
-import { defineOverlayDomainType, definePackage, dependencyPackage, PT, UiCond } from "~/dsl";
+import { defineOverlayDomainType, definePackage, dependencyPackage, PT, UiCond } from "gs2-studio-dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
 

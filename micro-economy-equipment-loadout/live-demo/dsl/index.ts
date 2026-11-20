@@ -1,6 +1,6 @@
 /** Reuse the shared character and equipment demos so this demo cannot replace their catalogs with different stack content. */
 
-import { definePackage, dependencyPackage } from "~/dsl";
+import { definePackage, dependencyPackage } from "gs2-studio-dsl";
 
 import loadoutSurface from "../../dsl/dependency-surface.json";
 import characterDemoSurface from "../../../foundation-economy-character/live-demo/dsl/dependency-surface.json";

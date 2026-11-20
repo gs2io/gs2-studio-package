@@ -1,4 +1,4 @@
-import { definePackage, dependencyPackage } from "~/dsl";
+import { definePackage, dependencyPackage } from "gs2-studio-dsl";
 
 import gachaSurface from "../../dsl/dependency-surface.json";
 import characterDemoSurface from "../../../foundation-economy-character/live-demo/dsl/dependency-surface.json";

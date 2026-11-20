@@ -7,8 +7,8 @@ import {
   PT,
   Source,
   transactionSettingV2,
-} from "~/dsl";
-import { GS2 } from "~/dsl/gs2";
+} from "gs2-studio-dsl";
+import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 

@@ -1,4 +1,4 @@
-import type { LocalizedDisplaySnapshotDto } from "~/contracts/LocalizedDisplaySnapshotDto";
+import type { LocalizedDisplay } from "gs2-studio-dsl";
 
 type LocalizedUnit = string | { readonly ja: string; readonly en: string };
 
@@ -8,7 +8,7 @@ export function jaEnField(
   jaDescription: string,
   enDescription: string,
   unit?: LocalizedUnit
-): LocalizedDisplaySnapshotDto {
+): LocalizedDisplay {
   const jaUnit = typeof unit === "string" ? unit : unit?.ja;
   const enUnit = typeof unit === "string" ? unit : unit?.en;
   return {
@@ -25,7 +25,7 @@ export function jaEnField(
   };
 }
 
-export function jaEnId(jaSubject: string, enSubject: string): LocalizedDisplaySnapshotDto {
+export function jaEnId(jaSubject: string, enSubject: string): LocalizedDisplay {
   return jaEnField(
     "ID",
     "ID",

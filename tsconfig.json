@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "types": ["gs2-studio-dsl/raw"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": ["dsl/**/*.ts", "*/dsl/**/*.ts", "*/live-demo/dsl/**/*.ts"]
+}

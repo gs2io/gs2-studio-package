@@ -1,4 +1,4 @@
-import { definePackage, dependencyPackage } from "~/dsl";
+import { definePackage, dependencyPackage } from "gs2-studio-dsl";
 
 import guildSurface from "../../dsl/dependency-surface.json";
 
