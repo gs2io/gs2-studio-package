@@ -5,8 +5,10 @@
     "EnergyProduct": {
       "id": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-energy",
       "canonicalTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
+      "uiComponents": {},
       "properties": {
         "consumeActions": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6",
         "energy": "prop_01M3YJ1DNJ3MS5AZDA6EMDZJTA",
@@ -79,6 +81,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

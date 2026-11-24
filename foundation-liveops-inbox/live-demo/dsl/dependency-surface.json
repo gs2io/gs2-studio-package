@@ -5,6 +5,9 @@
     "Gift": {
       "id": "dt_00D0SHMWJ1K42G74YQPF2DJNV6",
       "singleEntry": true,
+      "shippedRowIds": [
+        "gift"
+      ],
       "canonicalPackageId": "foundation-liveops-inbox-demo",
       "canonicalTypeId": "dt_00D0SHMWJ1K42G74YQPF2DJNV6",
       "delegatedActions": {
@@ -21,6 +24,19 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "AmountLabel": {
+          "kind": "templateLabel",
+          "name": "Gift",
+          "packageId": "foundation-liveops-inbox-demo"
+        },
+        "DeliverButton": {
+          "kind": "buttonAction",
+          "name": "Gift",
+          "packageId": "foundation-liveops-inbox-demo",
+          "method": "Deliver"
         }
       },
       "properties": {
@@ -81,6 +97,9 @@
     "GlobalMessage": {
       "id": "dt_00D0SFSEJN1BET2KCMVWSZX3F8",
       "singleEntry": false,
+      "shippedRowIds": [
+        "welcome"
+      ],
       "canonicalPackageId": "foundation-liveops-inbox",
       "canonicalTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
       "delegatedActions": {
@@ -97,6 +116,14 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "DeliverButton": {
+          "kind": "buttonAction",
+          "name": "GlobalMessage",
+          "packageId": "foundation-liveops-inbox-demo",
+          "method": "Deliver"
         }
       },
       "properties": {
@@ -171,6 +198,7 @@
     "Message": {
       "id": "dt_00D0SFSEJN3BMDPZZXX51XNVPW",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-inbox",
       "canonicalTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
       "delegatedActions": {
@@ -182,6 +210,34 @@
           },
           "targetActionKey": "Gs2Inbox:Message.ReadMessage",
           "parameters": {}
+        }
+      },
+      "uiComponents": {
+        "OpenButton": {
+          "kind": "buttonAction",
+          "name": "Message",
+          "packageId": "foundation-liveops-inbox-demo",
+          "method": "Read"
+        },
+        "OpenedLabel": {
+          "kind": "templateLabel",
+          "name": "Message",
+          "packageId": "foundation-liveops-inbox-demo"
+        },
+        "PayloadLabel": {
+          "kind": "label",
+          "name": "Message",
+          "packageId": "foundation-liveops-inbox"
+        },
+        "ReadActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Message",
+          "packageId": "foundation-liveops-inbox"
+        },
+        "UnreadActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Message",
+          "packageId": "foundation-liveops-inbox-demo"
         }
       },
       "properties": {
@@ -270,6 +326,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {}

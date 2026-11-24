@@ -5,6 +5,7 @@
     "Mission": {
       "id": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
       "delegatedActions": {
@@ -21,6 +22,18 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "CompletedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Mission",
+          "packageId": "micro-economy-mission"
+        },
+        "ReceivedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Mission",
+          "packageId": "micro-economy-mission"
         }
       },
       "properties": {
@@ -143,6 +156,7 @@
     "MissionCollection": {
       "id": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_7ZF5944YJ9SE8SRFKZKRVGBE7R",
       "delegatedActions": {
@@ -165,6 +179,7 @@
           }
         }
       },
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "schedule": "prop_4SWXMEBZDC8Y2G8NHXBQSMNEXJ",
@@ -221,8 +236,31 @@
     "MissionCounter": {
       "id": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
+      "uiComponents": {
+        "MonthlyValueLabel": {
+          "kind": "label",
+          "name": "MissionCounter",
+          "packageId": "micro-economy-mission"
+        },
+        "TodayValueLabel": {
+          "kind": "label",
+          "name": "MissionCounter",
+          "packageId": "micro-economy-mission"
+        },
+        "TotalValueLabel": {
+          "kind": "label",
+          "name": "MissionCounter",
+          "packageId": "micro-economy-mission"
+        },
+        "WeeklyValueLabel": {
+          "kind": "label",
+          "name": "MissionCounter",
+          "packageId": "micro-economy-mission"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "monthlyValue": "prop_65GPGCJD76DD7BQCNVR9BHSP10",
@@ -311,8 +349,10 @@
     "MissionSetting": {
       "id": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E",
       "singleEntry": true,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_3F1QHV3BC3R5XCG0F08AZT8J7E",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "resetDayOfMonth": "prop_00D060QP7EVETDNC4SPNMZG6RB",
@@ -387,6 +427,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "IncreaseMissionCounter": "at_683TMFPM3A87S843CGWG5PFWCJ"
   },

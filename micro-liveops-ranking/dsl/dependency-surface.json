@@ -5,8 +5,10 @@
     "Ranking": {
       "id": "dt_00D031DYK0AVE6F96GF6BCQBDY",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-ranking",
       "canonicalTypeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "maximumValue": "prop_00D031DYK0FVN99WA1Y6MF05YM",
@@ -129,8 +131,10 @@
     "RankingReward": {
       "id": "dt_00D031DYK08MQ218VMWRT5X90Q",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-ranking",
       "canonicalTypeId": "dt_00D031DYK08MQ218VMWRT5X90Q",
+      "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D031DYK0FBDNV00N30XJMEBY",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -203,6 +207,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "ReceiveRankingReward": "at_14BNWJKZBZ8B1AW16TPFSHX7KY",
     "VerifyRankingScoreReached": "at_21RD4Y7BR38AQ9N31TQ5KZ9861"

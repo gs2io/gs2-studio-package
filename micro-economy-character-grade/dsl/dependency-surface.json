@@ -5,8 +5,41 @@
     "Character": {
       "id": "dt_00D0320HQ4G4BENW1GSJMERS0D",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "uiComponents": {
+        "ExperienceGauge": {
+          "kind": "gauge",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelActiveToggle": {
+          "kind": "activeToggle",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelInteractable": {
+          "kind": "interactable",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        }
+      },
       "properties": {
         "experience": "prop_75G83NYX56T0KCQB3N92MQPVMT",
         "grade": "prop_00D0320HQ4G51XW7JS84YZ2VAA",
@@ -153,8 +186,10 @@
     "CharacterGradeStep": {
       "id": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-character-grade",
       "canonicalTypeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
+      "uiComponents": {},
       "properties": {
         "gradeUpPropertyIdRegex": "prop_00D0320HQ4N8QC4SDN75PFNFSF",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -227,6 +262,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "ApplyCharacterGradeRankCap": "at_41T41XDEZE59HSDY1D8HV4F32X",
     "PromoteCharacterGrade": "at_0AV65RY3CPHDE6VDR8XQ9MH72H",

@@ -5,8 +5,10 @@
     "GlobalMessage": {
       "id": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-inbox",
       "canonicalTypeId": "dt_1MS9YFWFRVSBX6W84BDNXX17VB",
+      "uiComponents": {},
       "properties": {
         "begin": "prop_4DM29ET2A2JAHWK6D0MVPT25PW",
         "end": "prop_28HE0VGFDJZC3C2B949D7TZD2W",
@@ -79,6 +81,7 @@
     "Message": {
       "id": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-inbox",
       "canonicalTypeId": "dt_46YKFFGCZ0FA0RAJWKNBP4YCFT",
       "delegatedActions": {
@@ -90,6 +93,18 @@
           },
           "targetActionKey": "Gs2Inbox:Message.ReadMessage",
           "parameters": {}
+        }
+      },
+      "uiComponents": {
+        "PayloadLabel": {
+          "kind": "label",
+          "name": "Message",
+          "packageId": "foundation-liveops-inbox"
+        },
+        "ReadActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Message",
+          "packageId": "foundation-liveops-inbox"
         }
       },
       "properties": {
@@ -178,6 +193,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "SendMessage": "at_7DVPXYKCMX8GQ8HZV2NGV1VFXA",
     "SendMessageWithReward": "at_1RG4YKDR299ERAM1FKTZC304C6"

@@ -5,6 +5,9 @@
     "RankingContest": {
       "id": "dt_00D0WDGSP50X984BNS0PWV22MG",
       "singleEntry": true,
+      "shippedRowIds": [
+        "rankingcontest"
+      ],
       "canonicalPackageId": "micro-liveops-ranking-demo",
       "canonicalTypeId": "dt_00D0WDGSP50X984BNS0PWV22MG",
       "delegatedActions": {
@@ -37,6 +40,25 @@
           }
         }
       },
+      "uiComponents": {
+        "FinishContestButton": {
+          "kind": "buttonAction",
+          "name": "RankingContest",
+          "packageId": "micro-liveops-ranking-demo",
+          "method": "FinishContest"
+        },
+        "RuleLabel": {
+          "kind": "templateLabel",
+          "name": "RankingContest",
+          "packageId": "micro-liveops-ranking-demo"
+        },
+        "StartContestButton": {
+          "kind": "buttonAction",
+          "name": "RankingContest",
+          "packageId": "micro-liveops-ranking-demo",
+          "method": "StartContest"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       },
@@ -61,8 +83,15 @@
     "RankingReward": {
       "id": "dt_00D0WDGSP50MVYN1KM5ZHRJG1F",
       "singleEntry": false,
+      "shippedRowIds": [
+        "1.contest",
+        "10.contest",
+        "1001.contest",
+        "3.contest"
+      ],
       "canonicalPackageId": "micro-liveops-ranking",
       "canonicalTypeId": "dt_00D031DYK08MQ218VMWRT5X90Q",
+      "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D031DYK0FBDNV00N30XJMEBY",
         "coins": "prop_00D0WDGSP51GEN4HR883CJVRCN",
@@ -152,6 +181,11 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "micro-liveops-ranking:dt_00D031DYK0AVE6F96GF6BCQBDY": [
+      "contest"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

@@ -5,8 +5,26 @@
     "SkillNode": {
       "id": "dt_00D0REX8TAF27YR23HD6W1WJAY",
       "singleEntry": false,
+      "shippedRowIds": [
+        "first",
+        "last",
+        "left",
+        "right"
+      ],
       "canonicalPackageId": "micro-economy-skill-tree",
       "canonicalTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+      "uiComponents": {
+        "ReleasedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "SkillNode",
+          "packageId": "micro-economy-skill-tree-demo"
+        },
+        "UnreleasedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "SkillNode",
+          "packageId": "micro-economy-skill-tree-demo"
+        }
+      },
       "properties": {
         "cost": "prop_00D0REX8TA8QNSS2H1KRYRVTJQ",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -127,6 +145,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {}

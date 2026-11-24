@@ -5,8 +5,41 @@
     "Character": {
       "id": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "uiComponents": {
+        "ExperienceGauge": {
+          "kind": "gauge",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelActiveToggle": {
+          "kind": "activeToggle",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelInteractable": {
+          "kind": "interactable",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        }
+      },
       "properties": {
         "experience": "prop_75G83NYX56T0KCQB3N92MQPVMT",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -135,8 +168,10 @@
     "CharacterCollection": {
       "id": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
       "singleEntry": true,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
+      "uiComponents": {},
       "properties": {
         "currentCpacity": "prop_74G2303CD8WVN5H4711968MX05",
         "currentCpacityUsage": "prop_0X7QN1KKKCJZMK5N4S6E4KX1A5",
@@ -233,8 +268,10 @@
     "CharacterExperience": {
       "id": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
       "singleEntry": true,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
+      "uiComponents": {},
       "properties": {
         "defaultLevelCap": "prop_2RQX4HDJCJDYTZYM4B9J09JZ9Z",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -311,6 +348,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "AcquireCharacter": "at_5V44WAAQRF94D51FPBFT5Q2DN2",
     "AcquireCharacterExperience": "at_0TEHD9M5M58SY923NTA3T75DDM",

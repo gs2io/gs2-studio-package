@@ -5,8 +5,46 @@
     "Schedule": {
       "id": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-schedule",
       "canonicalTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+      "uiComponents": {
+        "AbsoluteActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "EndAtValue": {
+          "kind": "value",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "PeriodLabel": {
+          "kind": "templateLabel",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "RelativeActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "RelativeEndAtValue": {
+          "kind": "value",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "RelativeWindowLabel": {
+          "kind": "templateLabel",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "StartAtValue": {
+          "kind": "value",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        }
+      },
       "properties": {
         "activeDays": "prop_68GYGX3DAVXDYMJDJG8HKE0AET",
         "anchorTimestamp": "prop_0WCCMQS198YK06YPJ16TKT4VSS",
@@ -315,8 +353,36 @@
     "Trigger": {
       "id": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-schedule",
       "canonicalTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+      "uiComponents": {
+        "ExpiresAtValue": {
+          "kind": "value",
+          "name": "Trigger",
+          "packageId": "foundation-economy-schedule"
+        },
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Trigger",
+          "packageId": "foundation-economy-schedule"
+        },
+        "TriggeredActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Trigger",
+          "packageId": "foundation-economy-schedule"
+        },
+        "TriggeredInteractable": {
+          "kind": "interactable",
+          "name": "Trigger",
+          "packageId": "foundation-economy-schedule"
+        },
+        "WindowLabel": {
+          "kind": "templateLabel",
+          "name": "Trigger",
+          "packageId": "foundation-economy-schedule"
+        }
+      },
       "properties": {
         "expiresAt": "prop_7GBQSK2XRE2JNP4FBPTB9K8BDK",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -387,6 +453,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "ClearTrigger": "at_6F6C7GXB118PF9RTSGY69S57DC",
     "PullTrigger": "at_4FW3DYR9BB85TTH03JVZRFRTV3",

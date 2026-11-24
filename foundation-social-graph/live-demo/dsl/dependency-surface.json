@@ -5,8 +5,21 @@
     "Follow": {
       "id": "dt_00D0XGY063ZAR2EXEZ826YXHRA",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+      "uiComponents": {
+        "FollowerProfileLabel": {
+          "kind": "templateLabel",
+          "name": "Follow",
+          "packageId": "foundation-social-graph-demo"
+        },
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Follow",
+          "packageId": "foundation-social-graph-demo"
+        }
+      },
       "properties": {
         "followerProfile": "prop_73QSS5XZ6NRSZZM9W4XV4JB0F2",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -63,8 +76,21 @@
     "Friend": {
       "id": "dt_00D0XGY063RV4HT0ED8A08F50C",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
+      "uiComponents": {
+        "FriendProfileLabel": {
+          "kind": "templateLabel",
+          "name": "Friend",
+          "packageId": "foundation-social-graph-demo"
+        },
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Friend",
+          "packageId": "foundation-social-graph-demo"
+        }
+      },
       "properties": {
         "friendProfile": "prop_24MC6NM8NQ2X1W8TPT2T1V69RK",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -121,8 +147,26 @@
     "Profile": {
       "id": "dt_00D0XGY063RZCJ9MC2Z97D8P1G",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
+      "uiComponents": {
+        "FollowerProfileLabel": {
+          "kind": "templateLabel",
+          "name": "Profile",
+          "packageId": "foundation-social-graph-demo"
+        },
+        "FriendProfileLabel": {
+          "kind": "templateLabel",
+          "name": "Profile",
+          "packageId": "foundation-social-graph-demo"
+        },
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Profile",
+          "packageId": "foundation-social-graph-demo"
+        }
+      },
       "properties": {
         "followerProfile": "prop_759K6DP8VBDS06P0YW25QNEN5N",
         "friendProfile": "prop_1D82CH5SP6SD8KM3DMX71SZ738",
@@ -195,8 +239,16 @@
     "ReceiveFriendRequest": {
       "id": "dt_00D0XGY063T3ZK1VVAW47ZSE6K",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK",
+      "uiComponents": {
+        "IdLabel": {
+          "kind": "templateLabel",
+          "name": "ReceiveFriendRequest",
+          "packageId": "foundation-social-graph-demo"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       },
@@ -221,8 +273,16 @@
     "SendFriendRequest": {
       "id": "dt_00D0XGY063X0J6JMXCTZBJ6JKK",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_6JV3Y0KG2J3C3460P6WD93NW62",
+      "uiComponents": {
+        "IdLabel": {
+          "kind": "templateLabel",
+          "name": "SendFriendRequest",
+          "packageId": "foundation-social-graph-demo"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       },
@@ -245,6 +305,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {}

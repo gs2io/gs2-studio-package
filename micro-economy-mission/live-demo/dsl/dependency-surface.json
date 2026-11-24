@@ -5,6 +5,12 @@
     "Mission": {
       "id": "dt_00D0QVYTV9FMPXBAN6ZEZG9VX8",
       "singleEntry": false,
+      "shippedRowIds": [
+        "career1",
+        "career3",
+        "career5",
+        "daily2"
+      ],
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_5J7JJ28J99SM8230NS7JVHCWQE",
       "delegatedActions": {
@@ -21,6 +27,44 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "BriefLabel": {
+          "kind": "templateLabel",
+          "name": "Mission",
+          "packageId": "micro-economy-mission-demo"
+        },
+        "CompletedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Mission",
+          "packageId": "micro-economy-mission"
+        },
+        "NotReceivedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Mission",
+          "packageId": "micro-economy-mission-demo"
+        },
+        "ReceiveButton": {
+          "kind": "buttonAction",
+          "name": "Mission",
+          "packageId": "micro-economy-mission-demo",
+          "method": "Receive"
+        },
+        "ReceiveUnavailableActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Mission",
+          "packageId": "micro-economy-mission-demo"
+        },
+        "ReceivedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Mission",
+          "packageId": "micro-economy-mission"
+        },
+        "ReceivedLabel": {
+          "kind": "templateLabel",
+          "name": "Mission",
+          "packageId": "micro-economy-mission-demo"
         }
       },
       "properties": {
@@ -161,6 +205,9 @@
     "MissionCounter": {
       "id": "dt_00D0QVYTV9BS74AACZHCPQGG1B",
       "singleEntry": false,
+      "shippedRowIds": [
+        "counter"
+      ],
       "canonicalPackageId": "micro-economy-mission",
       "canonicalTypeId": "dt_25NE2A9EGFGG1GXFQWN6WYCFXB",
       "delegatedActions": {
@@ -177,6 +224,34 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "AdvanceButton": {
+          "kind": "buttonAction",
+          "name": "MissionCounter",
+          "packageId": "micro-economy-mission-demo",
+          "method": "Advance"
+        },
+        "MonthlyValueLabel": {
+          "kind": "label",
+          "name": "MissionCounter",
+          "packageId": "micro-economy-mission"
+        },
+        "TodayValueLabel": {
+          "kind": "label",
+          "name": "MissionCounter",
+          "packageId": "micro-economy-mission"
+        },
+        "TotalValueLabel": {
+          "kind": "label",
+          "name": "MissionCounter",
+          "packageId": "micro-economy-mission"
+        },
+        "WeeklyValueLabel": {
+          "kind": "label",
+          "name": "MissionCounter",
+          "packageId": "micro-economy-mission"
         }
       },
       "properties": {
@@ -264,6 +339,15 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "micro-economy-mission:dt_3F1QHV3BC3R5XCG0F08AZT8J7E": [
+      "missionsetting"
+    ],
+    "micro-economy-mission:dt_7ZF5944YJ9SE8SRFKZKRVGBE7R": [
+      "career",
+      "daily"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

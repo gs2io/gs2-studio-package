@@ -5,6 +5,7 @@
     "Character": {
       "id": "dt_00D0TBEX7BCPMK9NFY4EXNQDHY",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
       "delegatedActions": {
@@ -34,6 +35,56 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange",
           "parameters": {}
+        }
+      },
+      "uiComponents": {
+        "EnhanceWithElixirButton": {
+          "kind": "buttonAction",
+          "name": "Character",
+          "packageId": "micro-economy-character-enhance-demo",
+          "method": "EnhanceWithElixir"
+        },
+        "EnhanceWithPotionButton": {
+          "kind": "buttonAction",
+          "name": "Character",
+          "packageId": "micro-economy-character-enhance-demo",
+          "method": "EnhanceWithPotion"
+        },
+        "ExperienceGauge": {
+          "kind": "gauge",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelActiveToggle": {
+          "kind": "activeToggle",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelInteractable": {
+          "kind": "interactable",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "TrainButton": {
+          "kind": "buttonAction",
+          "name": "Character",
+          "packageId": "foundation-economy-character-demo",
+          "method": "Train"
         }
       },
       "properties": {
@@ -164,6 +215,10 @@
     "CharacterEnhanceMaterial": {
       "id": "dt_00D0TBEX7B5CTAPP6VZ0A34YDR",
       "singleEntry": false,
+      "shippedRowIds": [
+        "elixir",
+        "potion"
+      ],
       "canonicalPackageId": "micro-economy-character-enhance",
       "canonicalTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
       "delegatedActions": {
@@ -180,6 +235,19 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "GetButton": {
+          "kind": "buttonAction",
+          "name": "CharacterEnhanceMaterial",
+          "packageId": "micro-economy-character-enhance-demo",
+          "method": "Get"
+        },
+        "StockLabel": {
+          "kind": "templateLabel",
+          "name": "CharacterEnhanceMaterial",
+          "packageId": "micro-economy-character-enhance-demo"
         }
       },
       "properties": {
@@ -237,6 +305,15 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "micro-economy-character-enhance:dt_00D031YG89PEGW8QTF8JNDY638": [
+      "great",
+      "normal"
+    ],
+    "micro-economy-character-enhance:dt_00D031YG89PXH0J9RYZKY8NP6R": [
+      "Basic"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

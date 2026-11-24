@@ -5,8 +5,10 @@
     "Guild": {
       "id": "dt_00D031EHJKRH5CWDQRFS6291KY",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-guild",
       "canonicalTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+      "uiComponents": {},
       "properties": {
         "defaultMaximumMemberCount": "prop_00D031EHJKS5RXCVAFMNT3SG8A",
         "guildMasterRole": "prop_00D031EHJKYNMFXHPY3FTZNMT3",
@@ -187,8 +189,10 @@
     "GuildRole": {
       "id": "dt_00D031EHJKYH677VNXVWGBA2D0",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-guild",
       "canonicalTypeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "policyDocument": "prop_00D031EHJKR6BBM9VDKF7BEEG6"
@@ -227,6 +231,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "IncreaseGuildCapacity": "at_2CVP0VMSNYSCJY7J93T0091WZ3",
     "VerifyGuildMembership": "at_0Q6TEZY5S19NY8W9TDYPA66718"

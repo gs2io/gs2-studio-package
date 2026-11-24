@@ -5,8 +5,10 @@
     "IdleReward": {
       "id": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-idle",
       "canonicalTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
+      "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D05P2SE3WMNG5C27EG74BM38",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -47,6 +49,7 @@
     "IdleStatus": {
       "id": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
       "singleEntry": true,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-idle",
       "canonicalTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
       "delegatedActions": {
@@ -60,6 +63,7 @@
           "parameters": {}
         }
       },
+      "uiComponents": {},
       "properties": {
         "currentIdleMinutes": "prop_1M9DWWCBBYBQ9HF2CEHRBVTQG5",
         "defaultMaximumIdleMinutes": "prop_7J143G8X27HCRCYX69FABGPKKT",
@@ -170,6 +174,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

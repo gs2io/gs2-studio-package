@@ -5,8 +5,19 @@
     "AgreementVersion": {
       "id": "dt_00D0WRKP44B54ADDE2H5EFVYZW",
       "singleEntry": false,
+      "shippedRowIds": [
+        "marketing",
+        "terms"
+      ],
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+      "uiComponents": {
+        "RuleLabel": {
+          "kind": "templateLabel",
+          "name": "AgreementVersion",
+          "packageId": "foundation-liveops-version-demo"
+        }
+      },
       "properties": {
         "acceptedMajor": "prop_00D05Q8M1NSNSYDW517S8FBNB3",
         "acceptedMicro": "prop_00D05Q8M1NWSDJEXKMV352NRG6",
@@ -268,6 +279,15 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "foundation-liveops-version:dt_00D0WRJ0XVF04XYTZ7SCR93FGH": [
+      "versiongate"
+    ],
+    "foundation-liveops-version:dt_0TC4B3HRAFXEXNCK7RN28GDRRM": [
+      "app",
+      "asset"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

@@ -5,8 +5,12 @@
     "CurrencyStore": {
       "id": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
       "singleEntry": true,
+      "shippedRowIds": [
+        "currencystore"
+      ],
       "canonicalPackageId": "foundation-economy-currency",
       "canonicalTypeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
+      "uiComponents": {},
       "properties": {
         "enableFakeReceipt": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -47,8 +51,10 @@
     "StoreProduct": {
       "id": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-currency",
       "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
+      "uiComponents": {},
       "properties": {
         "appleAppStoreProductId": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
         "googlePlayProductId": "prop_7TADZ4DEA40BBKZ46GN2R05E4J",
@@ -105,8 +111,26 @@
     "Wallet": {
       "id": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-currency",
       "canonicalTypeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
+      "uiComponents": {
+        "FreeBalanceLabel": {
+          "kind": "label",
+          "name": "FreeBalance",
+          "packageId": "foundation-economy-currency"
+        },
+        "PaidBalanceLabel": {
+          "kind": "label",
+          "name": "PaidBalance",
+          "packageId": "foundation-economy-currency"
+        },
+        "TotalBalanceLabel": {
+          "kind": "label",
+          "name": "TotalBalance",
+          "packageId": "foundation-economy-currency"
+        }
+      },
       "properties": {
         "free": "prop_1MXFHCN7EY8JQ8GF8CAMDGTH78",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -183,6 +207,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "DepositCurrency": "at_103C3AGDYK65AAVXE24NG965GH",
     "DepositFreeCurrency": "at_128M69PST19WRR9BGD46M0YWAC",

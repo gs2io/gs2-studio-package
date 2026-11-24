@@ -5,6 +5,9 @@
     "Gacha": {
       "id": "dt_0Z4MAE826H4PXPD0G2GQPMQ21W",
       "singleEntry": false,
+      "shippedRowIds": [
+        "premium.10"
+      ],
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
       "delegatedActions": {
@@ -27,6 +30,7 @@
           }
         }
       },
+      "uiComponents": {},
       "properties": {
         "consumeActions": "prop_641SVQJRC0GWZ43QNEPB429MND",
         "drawCount": "prop_44GS4TR0HRE4SQCJEV2G7VDG1C",
@@ -107,8 +111,18 @@
     "LoginReward": {
       "id": "dt_5HD6CY3HJ692ZRTXS064XS4BS6",
       "singleEntry": false,
+      "shippedRowIds": [
+        "always_day1",
+        "always_day2",
+        "always_day3",
+        "always_day4",
+        "always_day5",
+        "always_day6",
+        "always_day7"
+      ],
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
+      "uiComponents": {},
       "properties": {
         "acquireActions": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
         "contentsId": "prop_635XF953PW3BSYMHYSVYAKEJ0P",
@@ -183,8 +197,12 @@
     "Reward": {
       "id": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE",
       "singleEntry": false,
+      "shippedRowIds": [
+        "currency"
+      ],
       "canonicalPackageId": "sample-social-game-basic",
       "canonicalTypeId": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE",
+      "uiComponents": {},
       "properties": {
         "iconAddress": "prop_0K2GDNB2Z9R2MAY48RXEE0ZJQN",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -208,6 +226,57 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "foundation-economy-character:dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0": [
+      "characterexperience"
+    ],
+    "foundation-economy-character:dt_64PCJ4KXWQBQ45VF7D5MTQ017H": [
+      "character-0001",
+      "character-0003",
+      "character-0004",
+      "character_0002",
+      "character_0005"
+    ],
+    "foundation-economy-character:dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW": [
+      "charactercollection"
+    ],
+    "foundation-economy-currency:dt_0WCFBJN2Y3V0FG40XBC78MWHM9": [
+      "0",
+      "1"
+    ],
+    "foundation-economy-currency:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA": [
+      "tier1",
+      "tier2",
+      "tier3",
+      "tier4",
+      "tier5"
+    ],
+    "foundation-economy-schedule:dt_19DA4DB8PDFYRFX34P95AGJYKV": [
+      "login-bonus-event"
+    ],
+    "micro-economy-login-reward:dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D": [
+      "always"
+    ],
+    "micro-shop-character-gacha:dt_0RM8RSFWGRCH1J86N5K65VV012": [
+      "premium.10.n",
+      "premium.10.r",
+      "premium.10.sr",
+      "premium.10.ssr"
+    ],
+    "micro-shop-character-gacha:dt_479NFNV95H92HYQE8252JBRZ9Z": [
+      "n",
+      "r",
+      "sr",
+      "ssr"
+    ],
+    "micro-shop-character-gacha:dt_7PX81V3CA4FE94QNH49NDZ8R19": [
+      "n.character-0004",
+      "r.character_0005",
+      "sr.character-0003",
+      "sr.character_0002",
+      "ssr.character-0001"
+    ]
   },
   "actionTransforms": {
     "Reward": "at_0QCVSFSXJRTZ5X1ZF7DCRWSQTE"

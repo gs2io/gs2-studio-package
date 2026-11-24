@@ -5,6 +5,7 @@
     "Character": {
       "id": "dt_00D0T33MWD8D0Y1Q3JK8YD7EZ8",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
       "delegatedActions": {
@@ -25,6 +26,60 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange",
           "parameters": {}
+        }
+      },
+      "uiComponents": {
+        "ExperienceGauge": {
+          "kind": "gauge",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "GradeLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "micro-economy-character-grade-demo"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelActiveToggle": {
+          "kind": "activeToggle",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelInteractable": {
+          "kind": "interactable",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "LimitBreakButton": {
+          "kind": "buttonAction",
+          "name": "Character",
+          "packageId": "micro-economy-character-grade-demo",
+          "method": "LimitBreak"
+        },
+        "LimitBreakInteractable": {
+          "kind": "interactable",
+          "name": "Character",
+          "packageId": "micro-economy-character-grade-demo"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "TrainHardButton": {
+          "kind": "buttonAction",
+          "name": "Character",
+          "packageId": "micro-economy-character-grade-demo",
+          "method": "TrainHard"
         }
       },
       "properties": {
@@ -170,6 +225,13 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "micro-economy-character-grade:dt_00D0320HQ4JPTS5BMVDRD7QZH7": [
+      "grade1",
+      "grade2",
+      "grade3"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

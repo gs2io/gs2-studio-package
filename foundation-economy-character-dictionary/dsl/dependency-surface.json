@@ -5,8 +5,76 @@
     "Character": {
       "id": "dt_294B3NDY2CSVYZCGPT9QXRYRDP",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "uiComponents": {
+        "AcquiredActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Character",
+          "packageId": "foundation-economy-character-dictionary"
+        },
+        "AcquiredAtLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character-dictionary"
+        },
+        "AcquiredAtValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character-dictionary"
+        },
+        "AcquiredLabel": {
+          "kind": "label",
+          "name": "Character",
+          "packageId": "foundation-economy-character-dictionary"
+        },
+        "ExperienceGauge": {
+          "kind": "gauge",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelActiveToggle": {
+          "kind": "activeToggle",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelInteractable": {
+          "kind": "interactable",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character-dictionary"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "UnacquiredActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Character",
+          "packageId": "foundation-economy-character-dictionary"
+        },
+        "UnregisteredInteractable": {
+          "kind": "interactable",
+          "name": "Character",
+          "packageId": "foundation-economy-character-dictionary"
+        }
+      },
       "properties": {
         "acquired": "prop_6K2DAV9HFZF5PG2DKYE78E3MDK",
         "acquiredAt": "prop_2SMS2KDR27EFR2G4DEY7VYXJF1",
@@ -165,6 +233,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "MarkCharacterDictionary": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6"
   },

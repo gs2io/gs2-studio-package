@@ -5,6 +5,9 @@
     "FreeDeposit": {
       "id": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
       "singleEntry": true,
+      "shippedRowIds": [
+        "freedeposit"
+      ],
       "canonicalPackageId": "foundation-economy-currency-demo",
       "canonicalTypeId": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
       "delegatedActions": {
@@ -21,6 +24,19 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "CountLabel": {
+          "kind": "templateLabel",
+          "name": "FreeDeposit",
+          "packageId": "foundation-economy-currency-demo"
+        },
+        "DepositButton": {
+          "kind": "buttonAction",
+          "name": "FreeDeposit",
+          "packageId": "foundation-economy-currency-demo",
+          "method": "Deposit"
         }
       },
       "properties": {
@@ -55,6 +71,9 @@
     "PaidDeposit": {
       "id": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
       "singleEntry": true,
+      "shippedRowIds": [
+        "paiddeposit"
+      ],
       "canonicalPackageId": "foundation-economy-currency-demo",
       "canonicalTypeId": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
       "delegatedActions": {
@@ -71,6 +90,19 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "CountLabel": {
+          "kind": "templateLabel",
+          "name": "PaidDeposit",
+          "packageId": "foundation-economy-currency-demo"
+        },
+        "DepositButton": {
+          "kind": "buttonAction",
+          "name": "PaidDeposit",
+          "packageId": "foundation-economy-currency-demo",
+          "method": "Deposit"
         }
       },
       "properties": {
@@ -102,6 +134,16 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "foundation-economy-currency:dt_2X6G49X3GPEBFY4C5FVR08QQYY": [
+      "currencystore"
+    ],
+    "foundation-economy-currency:dt_4NXVXK20XP7PQ57S0Y6RYH6CYA": [
+      "coin_large",
+      "coin_medium",
+      "coin_small"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

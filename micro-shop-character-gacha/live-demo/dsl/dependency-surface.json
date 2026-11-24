@@ -5,6 +5,9 @@
     "Gacha": {
       "id": "dt_00D0PAZ47BTJ1GZ2K5QP5DPDJ9",
       "singleEntry": false,
+      "shippedRowIds": [
+        "standard"
+      ],
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
       "delegatedActions": {
@@ -25,6 +28,19 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "BuyButton": {
+          "kind": "buttonAction",
+          "name": "Gacha",
+          "packageId": "micro-shop-character-gacha-demo",
+          "method": "Buy"
+        },
+        "DrawLabel": {
+          "kind": "label",
+          "name": "Gacha",
+          "packageId": "micro-shop-character-gacha-demo"
         }
       },
       "properties": {
@@ -83,6 +99,7 @@
     "StoreProduct": {
       "id": "dt_00D0YBGPEVW2J3EFZWM2TMRJFH",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-currency",
       "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
       "inlineSchemas": {
@@ -104,7 +121,51 @@
               },
               "targetActionKey": "Gs2Showcase:DisplayItem.Buy"
             }
+          },
+          "uiComponents": {
+            "PriceLabel": {
+              "kind": "label",
+              "name": "StorePrice",
+              "packageId": "micro-shop-currency"
+            },
+            "PriceValue": {
+              "kind": "value",
+              "name": "StorePrice",
+              "packageId": "micro-shop-currency"
+            }
           }
+        }
+      },
+      "uiComponents": {
+        "AppleAppStoreProductIdValue": {
+          "kind": "value",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
+        },
+        "CoinsLabel": {
+          "kind": "templateLabel",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-character-gacha-demo"
+        },
+        "CountLabel": {
+          "kind": "label",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
+        },
+        "CountValue": {
+          "kind": "value",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
+        },
+        "GooglePlayProductIdValue": {
+          "kind": "value",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
         }
       },
       "properties": {
@@ -194,6 +255,22 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "micro-shop-character-gacha:dt_0RM8RSFWGRCH1J86N5K65VV012": [
+      "standard.common",
+      "standard.rare"
+    ],
+    "micro-shop-character-gacha:dt_479NFNV95H92HYQE8252JBRZ9Z": [
+      "common",
+      "rare"
+    ],
+    "micro-shop-character-gacha:dt_7PX81V3CA4FE94QNH49NDZ8R19": [
+      "common.archer",
+      "common.knight",
+      "rare.healer",
+      "rare.mage"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

@@ -5,8 +5,10 @@
     "AgreementVersion": {
       "id": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+      "uiComponents": {},
       "properties": {
         "acceptedMajor": "prop_00D05Q8M1NSNSYDW517S8FBNB3",
         "acceptedMicro": "prop_00D05Q8M1NWSDJEXKMV352NRG6",
@@ -271,8 +273,10 @@
     "EmbeddedVersion": {
       "id": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
+      "uiComponents": {},
       "properties": {
         "errorMajor": "prop_0ZP0B813EK60XZBRG80Q1FSRXN",
         "errorMicro": "prop_3JBFJEQGKAFGB7G2D6HZSKBQQK",
@@ -393,8 +397,10 @@
     "VersionGate": {
       "id": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
       "singleEntry": true,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
+      "uiComponents": {},
       "properties": {
         "assumeUserId": "prop_00D0WRJ0XVBVDA97KMXC76V58C",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -433,6 +439,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

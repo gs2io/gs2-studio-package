@@ -5,6 +5,7 @@
     "Progress": {
       "id": "dt_00D0TT9XC903SNVA7P9GFM98G3",
       "singleEntry": true,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
       "delegatedActions": {
@@ -25,6 +26,29 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "CompleteButton": {
+          "kind": "buttonAction",
+          "name": "Progress",
+          "packageId": "micro-economy-quest-demo",
+          "method": "Complete"
+        },
+        "IdleActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Progress",
+          "packageId": "micro-economy-quest-demo"
+        },
+        "IdleLabel": {
+          "kind": "templateLabel",
+          "name": "Progress",
+          "packageId": "micro-economy-quest-demo"
+        },
+        "RunningActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Progress",
+          "packageId": "micro-economy-quest-demo"
         }
       },
       "properties": {
@@ -115,6 +139,11 @@
     "Quest": {
       "id": "dt_00D0TT9XC953455EX93PBE33K4",
       "singleEntry": false,
+      "shippedRowIds": [
+        "quest1",
+        "quest2",
+        "quest3"
+      ],
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
       "delegatedActions": {
@@ -131,6 +160,39 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "BriefLabel": {
+          "kind": "templateLabel",
+          "name": "Quest",
+          "packageId": "micro-economy-quest-demo"
+        },
+        "ClearedLabel": {
+          "kind": "templateLabel",
+          "name": "Quest",
+          "packageId": "micro-economy-quest-demo"
+        },
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Quest",
+          "packageId": "micro-economy-quest-demo"
+        },
+        "RunningLabel": {
+          "kind": "templateLabel",
+          "name": "Quest",
+          "packageId": "micro-economy-quest-demo"
+        },
+        "StartButton": {
+          "kind": "buttonAction",
+          "name": "Quest",
+          "packageId": "micro-economy-quest-demo",
+          "method": "Start"
+        },
+        "UnclearedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Quest",
+          "packageId": "micro-economy-quest-demo"
         }
       },
       "properties": {
@@ -320,6 +382,11 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "micro-economy-quest:dt_24W5SDQ24VS1902R1MMWXSNVT9": [
+      "main"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

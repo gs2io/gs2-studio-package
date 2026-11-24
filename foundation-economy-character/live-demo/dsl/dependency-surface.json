@@ -5,6 +5,12 @@
     "Character": {
       "id": "dt_00D0KZXDBRG616WVXR4N5FCYH2",
       "singleEntry": false,
+      "shippedRowIds": [
+        "archer",
+        "healer",
+        "knight",
+        "mage"
+      ],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
       "delegatedActions": {
@@ -16,6 +22,44 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange",
           "parameters": {}
+        }
+      },
+      "uiComponents": {
+        "ExperienceGauge": {
+          "kind": "gauge",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelActiveToggle": {
+          "kind": "activeToggle",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelInteractable": {
+          "kind": "interactable",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "TrainButton": {
+          "kind": "buttonAction",
+          "name": "Character",
+          "packageId": "foundation-economy-character-demo",
+          "method": "Train"
         }
       },
       "properties": {
@@ -146,8 +190,28 @@
     "CharacterCollection": {
       "id": "dt_00D0KZXDBRGT3NHQ0D86V61M35",
       "singleEntry": true,
+      "shippedRowIds": [
+        "charactercollection"
+      ],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
+      "uiComponents": {
+        "NoneYetLabel": {
+          "kind": "label",
+          "name": "CharacterCollection",
+          "packageId": "foundation-economy-character-demo"
+        },
+        "OwnsAnyActiveToggle": {
+          "kind": "activeToggle",
+          "name": "CharacterCollection",
+          "packageId": "foundation-economy-character-demo"
+        },
+        "SlotsLabel": {
+          "kind": "templateLabel",
+          "name": "CharacterCollection",
+          "packageId": "foundation-economy-character-demo"
+        }
+      },
       "properties": {
         "currentCpacity": "prop_74G2303CD8WVN5H4711968MX05",
         "currentCpacityUsage": "prop_0X7QN1KKKCJZMK5N4S6E4KX1A5",
@@ -244,6 +308,12 @@
     "CharacterRecruit": {
       "id": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
       "singleEntry": false,
+      "shippedRowIds": [
+        "archer",
+        "healer",
+        "knight",
+        "mage"
+      ],
       "canonicalPackageId": "foundation-economy-character-demo",
       "canonicalTypeId": "dt_00D0M4HCBWPFF4S0YBV57BZTGW",
       "delegatedActions": {
@@ -260,6 +330,19 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "CharacterLabel": {
+          "kind": "templateLabel",
+          "name": "CharacterRecruit",
+          "packageId": "foundation-economy-character-demo"
+        },
+        "RecruitButton": {
+          "kind": "buttonAction",
+          "name": "CharacterRecruit",
+          "packageId": "foundation-economy-character-demo",
+          "method": "Recruit"
         }
       },
       "properties": {
@@ -315,6 +398,11 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "foundation-economy-character:dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0": [
+      "characterexperience"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

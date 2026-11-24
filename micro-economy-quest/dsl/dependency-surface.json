@@ -5,6 +5,7 @@
     "Progress": {
       "id": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
       "singleEntry": true,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
       "delegatedActions": {
@@ -27,6 +28,7 @@
           }
         }
       },
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "inProgress": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW",
@@ -115,8 +117,10 @@
     "ProgressReward": {
       "id": "dt_0DG28CJ0D7BAHETYKX56H5NG65",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_0DG28CJ0D7BAHETYKX56H5NG65",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "itemId": "prop_1Y4C4J39XVY8GXQ1SCV6N3TZHT",
@@ -175,6 +179,7 @@
     "Quest": {
       "id": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
       "delegatedActions": {
@@ -193,6 +198,7 @@
           }
         }
       },
+      "uiComponents": {},
       "properties": {
         "collection": "prop_5KZQK7RQTRZAX02G1K0EYEMQ35",
         "completeAcquireActions": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8",
@@ -313,8 +319,10 @@
     "QuestCollection": {
       "id": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "schedule": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN"
@@ -353,6 +361,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

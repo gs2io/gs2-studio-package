@@ -5,6 +5,9 @@
     "AdViewPoint": {
       "id": "dt_00D0PPMGBSSH7R8WYJPE2YJRNB",
       "singleEntry": true,
+      "shippedRowIds": [
+        "adviewpoint"
+      ],
       "canonicalPackageId": "foundation-economy-ad",
       "canonicalTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
       "delegatedActions": {
@@ -35,6 +38,25 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "BalanceLabel": {
+          "kind": "templateLabel",
+          "name": "AdViewPoint",
+          "packageId": "foundation-economy-ad-demo"
+        },
+        "SpendButton": {
+          "kind": "buttonAction",
+          "name": "AdViewPoint",
+          "packageId": "foundation-economy-ad-demo",
+          "method": "Spend"
+        },
+        "WatchButton": {
+          "kind": "buttonAction",
+          "name": "AdViewPoint",
+          "packageId": "foundation-economy-ad-demo",
+          "method": "Watch"
         }
       },
       "properties": {
@@ -76,6 +98,11 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "foundation-economy-ad:dt_2KV2X0FT1TBFTKT821EBZ1GZSE": [
+      "adplatform"
+    ]
   },
   "actionTransforms": {
     "AcquireAdViewPoint": "at_1BKB0K494K8R6BV7VA50ZJ2T0D"

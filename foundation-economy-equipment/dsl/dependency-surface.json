@@ -5,8 +5,21 @@
     "Equipment": {
       "id": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+      "uiComponents": {
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Equipment",
+          "packageId": "foundation-economy-equipment"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Equipment",
+          "packageId": "foundation-economy-equipment"
+        }
+      },
       "properties": {
         "category": "prop_0K0GFBH6B7DRCKC1VP8N5BXAGP",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -79,8 +92,10 @@
     "EquipmentCategory": {
       "id": "dt_5XY098JXVWPEN0Q0F7QY165JJA",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_5XY098JXVWPEN0Q0F7QY165JJA",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       },
@@ -105,8 +120,31 @@
     "EquipmentCollection": {
       "id": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
       "singleEntry": true,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
+      "uiComponents": {
+        "CapacityGauge": {
+          "kind": "gauge",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment"
+        },
+        "CapacityLabel": {
+          "kind": "templateLabel",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment"
+        },
+        "ExpandableInteractable": {
+          "kind": "interactable",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment"
+        },
+        "FullActiveToggle": {
+          "kind": "activeToggle",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment"
+        }
+      },
       "properties": {
         "currentCapacityUsage": "prop_5AJDKN2K2YMW7ACMQZ1MJTRKZS",
         "currentMaximumCapacity": "prop_6DFT20J8RV6F8565KNNREYVH3N",
@@ -201,6 +239,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "AcquireEquipment": "at_6VEP2XV1908GMR5151Y7W0YSSB",
     "AddEquipmentCapacity": "at_3H7989KQGX9SJTTECEYMKHR6TJ",

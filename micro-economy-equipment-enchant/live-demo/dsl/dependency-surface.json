@@ -5,6 +5,7 @@
     "Equipment": {
       "id": "dt_00D0VNJHFYSPVEE231WA4Z2Q47",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
       "delegatedActions": {
@@ -25,6 +26,30 @@
           },
           "targetActionKey": "Gs2Exchange:RateModel.Exchange",
           "parameters": {}
+        }
+      },
+      "uiComponents": {
+        "AddBonusButton": {
+          "kind": "buttonAction",
+          "name": "Equipment",
+          "packageId": "micro-economy-equipment-enchant-demo",
+          "method": "AddBonus"
+        },
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Equipment",
+          "packageId": "foundation-economy-equipment"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Equipment",
+          "packageId": "foundation-economy-equipment"
+        },
+        "RerollButton": {
+          "kind": "buttonAction",
+          "name": "Equipment",
+          "packageId": "micro-economy-equipment-enchant-demo",
+          "method": "Reroll"
         }
       },
       "properties": {
@@ -99,8 +124,18 @@
     "EquipmentEnchant": {
       "id": "dt_00D0VNJHFYWCQ1ZBCPN9W9GNAF",
       "singleEntry": false,
+      "shippedRowIds": [
+        "standard"
+      ],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRKX0AV27J248EX89N",
+      "uiComponents": {
+        "RuleLabel": {
+          "kind": "templateLabel",
+          "name": "EquipmentEnchant",
+          "packageId": "micro-economy-equipment-enchant-demo"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "maximumParameterCount": "prop_00D03217GRNEKVPR01373YAKSE"
@@ -140,6 +175,21 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "micro-economy-equipment-enchant:dt_00D03217GRN3Z01B1EQB1GF0EE": [
+      "one",
+      "three",
+      "two"
+    ],
+    "micro-economy-equipment-enchant:dt_00D03217GRQVEAJ6KQWDNC0X5C": [
+      "attack",
+      "critical",
+      "defense",
+      "hp",
+      "luck",
+      "speed"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

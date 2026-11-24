@@ -5,8 +5,10 @@
     "StoreSubscription": {
       "id": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-subscription",
       "canonicalTypeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+      "uiComponents": {},
       "properties": {
         "appleSubscriptionGroupIdentifier": "prop_00D033GGSV9BP263BX1BS3S5V5",
         "expiresAt": "prop_00D033GGSV8N0RCPVPPVQ5F484",
@@ -161,6 +163,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

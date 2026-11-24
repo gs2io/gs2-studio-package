@@ -5,6 +5,11 @@
     "Item": {
       "id": "dt_00D0MNDT9MDX92JSEWTBM568ZP",
       "singleEntry": false,
+      "shippedRowIds": [
+        "elixir",
+        "ether",
+        "potion"
+      ],
       "canonicalPackageId": "foundation-economy-inventory",
       "canonicalTypeId": "dt_47E751540GQRMAWTXYFT9376WH",
       "delegatedActions": {
@@ -35,6 +40,35 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "CountValue": {
+          "kind": "value",
+          "name": "Item",
+          "packageId": "foundation-economy-inventory"
+        },
+        "GainButton": {
+          "kind": "buttonAction",
+          "name": "Item",
+          "packageId": "foundation-economy-inventory-demo",
+          "method": "Gain"
+        },
+        "OwnedInteractable": {
+          "kind": "interactable",
+          "name": "Item",
+          "packageId": "foundation-economy-inventory"
+        },
+        "SpendButton": {
+          "kind": "buttonAction",
+          "name": "Item",
+          "packageId": "foundation-economy-inventory-demo",
+          "method": "Spend"
+        },
+        "StockLabel": {
+          "kind": "templateLabel",
+          "name": "Item",
+          "packageId": "foundation-economy-inventory"
         }
       },
       "properties": {
@@ -77,6 +111,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

@@ -5,8 +5,23 @@
     "Guild": {
       "id": "dt_00D0WZ24SMWZ7S3MC3VY8EJ6KG",
       "singleEntry": false,
+      "shippedRowIds": [
+        "adventurers"
+      ],
       "canonicalPackageId": "foundation-social-guild",
       "canonicalTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+      "uiComponents": {
+        "CapacityLabel": {
+          "kind": "templateLabel",
+          "name": "Guild",
+          "packageId": "foundation-social-guild-demo"
+        },
+        "MembershipLabel": {
+          "kind": "templateLabel",
+          "name": "Guild",
+          "packageId": "foundation-social-guild-demo"
+        }
+      },
       "properties": {
         "defaultMaximumMemberCount": "prop_00D031EHJKS5RXCVAFMNT3SG8A",
         "guildMasterRole": "prop_00D031EHJKYNMFXHPY3FTZNMT3",
@@ -184,6 +199,12 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "foundation-social-guild:dt_00D031EHJKYH677VNXVWGBA2D0": [
+      "master",
+      "member"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

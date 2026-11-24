@@ -5,6 +5,9 @@
     "Energy": {
       "id": "dt_00D0MM25SM55BXJGSRRQEWD359",
       "singleEntry": false,
+      "shippedRowIds": [
+        "stamina"
+      ],
       "canonicalPackageId": "foundation-economy-energy",
       "canonicalTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
       "delegatedActions": {
@@ -35,6 +38,40 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "FullActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
+        "NextRecoveryValue": {
+          "kind": "value",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
+        "RecoverButton": {
+          "kind": "buttonAction",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy-demo",
+          "method": "Recover"
+        },
+        "SpendButton": {
+          "kind": "buttonAction",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy-demo",
+          "method": "Spend"
+        },
+        "StaminaGauge": {
+          "kind": "gauge",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
+        "StaminaLabel": {
+          "kind": "templateLabel",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
         }
       },
       "properties": {
@@ -199,6 +236,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

@@ -5,8 +5,23 @@
     "IdleReward": {
       "id": "dt_00D0W2TXV2P9NTD0GZY11BN5M7",
       "singleEntry": false,
+      "shippedRowIds": [
+        "interval01",
+        "interval02",
+        "interval03",
+        "interval04",
+        "interval05",
+        "interval06",
+        "interval07",
+        "interval08",
+        "interval09",
+        "interval10",
+        "interval11",
+        "interval12"
+      ],
       "canonicalPackageId": "foundation-economy-idle",
       "canonicalTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
+      "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D05P2SE3WMNG5C27EG74BM38",
         "coins": "prop_00D0W2TXV2H8PJ8GN2FB2YETZ7",
@@ -65,6 +80,9 @@
     "IdleStatus": {
       "id": "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA",
       "singleEntry": true,
+      "shippedRowIds": [
+        "idlestatus"
+      ],
       "canonicalPackageId": "foundation-economy-idle",
       "canonicalTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
       "delegatedActions": {
@@ -76,6 +94,19 @@
           },
           "targetActionKey": "Gs2Idle:CategoryModel.Receive",
           "parameters": {}
+        }
+      },
+      "uiComponents": {
+        "ReceiveButton": {
+          "kind": "buttonAction",
+          "name": "IdleStatus",
+          "packageId": "foundation-economy-idle-demo",
+          "method": "Receive"
+        },
+        "RuleLabel": {
+          "kind": "templateLabel",
+          "name": "IdleStatus",
+          "packageId": "foundation-economy-idle-demo"
         }
       },
       "properties": {
@@ -188,6 +219,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {}

@@ -5,8 +5,21 @@
     "Equipment": {
       "id": "dt_00D03217GRGCSCWCZMF4D2PYM9",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+      "uiComponents": {
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Equipment",
+          "packageId": "foundation-economy-equipment"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Equipment",
+          "packageId": "foundation-economy-equipment"
+        }
+      },
       "properties": {
         "category": "prop_0K0GFBH6B7DRCKC1VP8N5BXAGP",
         "enchant": "prop_00D0VM74GWQ6MGE8JHTBN6NJP5",
@@ -111,8 +124,10 @@
     "EquipmentEnchant": {
       "id": "dt_00D03217GRKX0AV27J248EX89N",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRKX0AV27J248EX89N",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "maximumParameterCount": "prop_00D03217GRNEKVPR01373YAKSE"
@@ -155,8 +170,10 @@
     "EquipmentEnchantOption": {
       "id": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+      "uiComponents": {},
       "properties": {
         "enchant": "prop_00D03217GRGMDSEFAQS5E3A4B2",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -245,8 +262,10 @@
     "EquipmentEnchantSlotChance": {
       "id": "dt_00D03217GRN3Z01B1EQB1GF0EE",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRN3Z01B1EQB1GF0EE",
+      "uiComponents": {},
       "properties": {
         "count": "prop_00D03217GRPNY6G1Z1K6JD36ZX",
         "enchant": "prop_00D03217GRGSNN857DXEA47C4Y",
@@ -321,8 +340,10 @@
     "EquipmentEnchantment": {
       "id": "dt_00D03217GRGZC79DA19NWHFSGD",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRGZC79DA19NWHFSGD",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "resourceName": "prop_00D03217GRKK3MAVRY7VKHB9GK",
@@ -377,6 +398,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "AddEquipmentEnchantmentSlot": "at_4S1THMNVB898V882K2EPEZHDMA",
     "RerollEquipmentEnchantment": "at_0Y1FT4M4JR8WPBYMBJ0PEQKBBM",

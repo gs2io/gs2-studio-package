@@ -5,8 +5,10 @@
     "SerialCodeCampaign": {
       "id": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-serial-code",
       "canonicalTypeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
+      "uiComponents": {},
       "properties": {
         "enableCampaignCode": "prop_00D031EZFZM4YG8CZFHGS7HMHD",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -45,6 +47,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "RevertSerialCodeUse": "at_6F1PXD6D4E9918TRGXQHDJHTS9",
     "UseSerialCode": "at_2AE8RTB8GFNY68C7AYTV813N9B",

@@ -5,8 +5,10 @@
     "CharacterFormation": {
       "id": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
       "singleEntry": true,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
+      "uiComponents": {},
       "properties": {
         "currentSaveArea": "prop_7HNF20BCN1PY27WR4A2XSHQFB1",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -85,8 +87,10 @@
     "CharacterFormationForm": {
       "id": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "slots": "prop_0B395S1GETW77ZBQ7FK8Z7TPGS"
@@ -127,8 +131,10 @@
     "CharacterFormationFormSlot": {
       "id": "dt_57YG14JB1Z099GPEMY0ZB6K0H9",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_57YG14JB1Z099GPEMY0ZB6K0H9",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "propertyId": "prop_5YCV8XNQCMSWBB0KJEHTTDMTTQ"
@@ -169,8 +175,10 @@
     "CharacterFormationSlot": {
       "id": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "propertyRegex": "prop_1KTAJF5QGZJNR6EA3HVSC8QQBT"
@@ -209,6 +217,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "AcquireToCharacterFormation": "at_19DKKF7AKA89JB5SY1CDA44B63",
     "IncreaseSaveArea": "at_4NRP2334FY75C65TXQZ4PCT9QH"

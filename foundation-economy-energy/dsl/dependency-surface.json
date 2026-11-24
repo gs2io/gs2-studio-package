@@ -5,8 +5,31 @@
     "Energy": {
       "id": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-energy",
       "canonicalTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+      "uiComponents": {
+        "FullActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
+        "NextRecoveryValue": {
+          "kind": "value",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
+        "StaminaGauge": {
+          "kind": "gauge",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
+        "StaminaLabel": {
+          "kind": "templateLabel",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        }
+      },
       "properties": {
         "currentMaximumValue": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56",
         "currentValue": "prop_7BX7N28W6KRGHGC40MXEWB2ESC",
@@ -169,6 +192,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "ConsumeEnergy": "at_47WTKN8BDJ9YBR6F7R4JYSKMFY",
     "RecoveryEnergy": "at_36P63PCH949RGSG69SRSAWWKR0"

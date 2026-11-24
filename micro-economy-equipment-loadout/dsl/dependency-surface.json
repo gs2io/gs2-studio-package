@@ -5,8 +5,41 @@
     "Character": {
       "id": "dt_00D033FNASESS5578YF3CS7Y34",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "uiComponents": {
+        "ExperienceGauge": {
+          "kind": "gauge",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelActiveToggle": {
+          "kind": "activeToggle",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelInteractable": {
+          "kind": "interactable",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        }
+      },
       "properties": {
         "equipmentSlots": "prop_00D033FNASB4JJM9FNP61KXE7B",
         "experience": "prop_75G83NYX56T0KCQB3N92MQPVMT",
@@ -151,8 +184,10 @@
     "EquipmentSlot": {
       "id": "dt_00D033FNASFGZWK2X333SXXRXM",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-loadout",
       "canonicalTypeId": "dt_00D033FNASFGZWK2X333SXXRXM",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "propertyRegex": "prop_00D033FNASBHYZ9W1VK8EE39WP"
@@ -193,8 +228,10 @@
     "EquipmentSlotAssignment": {
       "id": "dt_00D033FNASFTV29D7YF0NEPDQD",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-loadout",
       "canonicalTypeId": "dt_00D033FNASFTV29D7YF0NEPDQD",
+      "uiComponents": {},
       "properties": {
         "equipment": "prop_00D033FNAS8DNWPTTNV21SG9XF",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -233,6 +270,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

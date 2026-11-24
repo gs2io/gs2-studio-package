@@ -5,8 +5,14 @@
     "CurrencyType": {
       "id": "dt_5X0WV26CPKD17193EPDQD24EP3",
       "singleEntry": false,
+      "shippedRowIds": [
+        "JPY",
+        "USD",
+        "XXX"
+      ],
       "canonicalPackageId": "micro-shop-currency",
       "canonicalTypeId": "dt_5X0WV26CPKD17193EPDQD24EP3",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       },
@@ -31,6 +37,7 @@
     "StoreProduct": {
       "id": "dt_130FYGH3W86EG2FK06VGEJSYCT",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-currency",
       "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
       "inlineSchemas": {
@@ -52,7 +59,46 @@
               },
               "targetActionKey": "Gs2Showcase:DisplayItem.Buy"
             }
+          },
+          "uiComponents": {
+            "PriceLabel": {
+              "kind": "label",
+              "name": "StorePrice",
+              "packageId": "micro-shop-currency"
+            },
+            "PriceValue": {
+              "kind": "value",
+              "name": "StorePrice",
+              "packageId": "micro-shop-currency"
+            }
           }
+        }
+      },
+      "uiComponents": {
+        "AppleAppStoreProductIdValue": {
+          "kind": "value",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
+        },
+        "CountLabel": {
+          "kind": "label",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
+        },
+        "CountValue": {
+          "kind": "value",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
+        },
+        "GooglePlayProductIdValue": {
+          "kind": "value",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "StoreProduct",
+          "packageId": "micro-shop-currency"
         }
       },
       "properties": {
@@ -143,6 +189,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

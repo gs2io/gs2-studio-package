@@ -5,8 +5,26 @@
     "Item": {
       "id": "dt_47E751540GQRMAWTXYFT9376WH",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-inventory",
       "canonicalTypeId": "dt_47E751540GQRMAWTXYFT9376WH",
+      "uiComponents": {
+        "CountValue": {
+          "kind": "value",
+          "name": "Item",
+          "packageId": "foundation-economy-inventory"
+        },
+        "OwnedInteractable": {
+          "kind": "interactable",
+          "name": "Item",
+          "packageId": "foundation-economy-inventory"
+        },
+        "StockLabel": {
+          "kind": "templateLabel",
+          "name": "Item",
+          "packageId": "foundation-economy-inventory"
+        }
+      },
       "properties": {
         "count": "prop_4RM1PKMWET4WYQBAW013CTF8YD",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -47,6 +65,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "AcquireItem": "at_4AHYMDX4JN8BHV2Q0MHBGXCA0Z",
     "ConsumeItem": "at_5MZS971WV985R8Q1TP98MGN18Y"

@@ -5,8 +5,10 @@
     "Buff": {
       "id": "dt_00D0322BN7GCTNB9EDAVY1X845",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-buff",
       "canonicalTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+      "uiComponents": {},
       "properties": {
         "conditionGrn": "prop_00D0W9XTYQ31RW0YT593HMCK8H",
         "conditionModelName": "prop_00D0W9XTYQ1GVDAJ4E8ZM4TA8A",
@@ -189,6 +191,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

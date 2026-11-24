@@ -5,8 +5,10 @@
     "LoginReward": {
       "id": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
+      "uiComponents": {},
       "properties": {
         "acquireActions": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -63,6 +65,7 @@
     "LoginRewardCollection": {
       "id": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
       "delegatedActions": {
@@ -99,6 +102,7 @@
           }
         }
       },
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "lastReceivedAt": "prop_00D0V3E8RR1XJQ1S7CYS47B9MC",
@@ -253,8 +257,46 @@
     "Schedule": {
       "id": "dt_51N1KRW6N6Q3BEP1VCG5A15M74",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-schedule",
       "canonicalTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+      "uiComponents": {
+        "AbsoluteActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "EndAtValue": {
+          "kind": "value",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "PeriodLabel": {
+          "kind": "templateLabel",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "RelativeActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "RelativeEndAtValue": {
+          "kind": "value",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "RelativeWindowLabel": {
+          "kind": "templateLabel",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        },
+        "StartAtValue": {
+          "kind": "value",
+          "name": "Schedule",
+          "packageId": "foundation-economy-schedule"
+        }
+      },
       "properties": {
         "activeDays": "prop_68GYGX3DAVXDYMJDJG8HKE0AET",
         "anchorTimestamp": "prop_0WCCMQS198YK06YPJ16TKT4VSS",
@@ -561,6 +603,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "ResetReceiveStatus": "at_7HZJD63FEK93PTBTQWK5A3KNT4"
   },

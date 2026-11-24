@@ -5,8 +5,10 @@
     "CharacterEnhance": {
       "id": "dt_00D031YG89PXH0J9RYZKY8NP6R",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-character-enhance",
       "canonicalTypeId": "dt_00D031YG89PXH0J9RYZKY8NP6R",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       },
@@ -31,8 +33,10 @@
     "CharacterEnhanceBonus": {
       "id": "dt_00D031YG89PEGW8QTF8JNDY638",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-character-enhance",
       "canonicalTypeId": "dt_00D031YG89PEGW8QTF8JNDY638",
+      "uiComponents": {},
       "properties": {
         "enhance": "prop_00D031YG89KKJ5KMD4538TQ2RX",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -107,8 +111,10 @@
     "CharacterEnhanceMaterial": {
       "id": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-character-enhance",
       "canonicalTypeId": "dt_00D0TAXWR8T7NFF54JJJA7XJJ6",
+      "uiComponents": {},
       "properties": {
         "count": "prop_00D0TAXWR8X0NVB2HS99J298KV",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -165,6 +171,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "AcquireCharacterEnhanceMaterial": "at_1N85Q9X5J29M9BXPXJYV8V4Q5Z",
     "EnhanceCharacter": "at_7A632P7NEB88WT2T9JAAWMTK45"

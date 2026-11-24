@@ -5,8 +5,39 @@
     "LoginReward": {
       "id": "dt_00D0VGDFNZ677FVDGPR399YJ1P",
       "singleEntry": false,
+      "shippedRowIds": [
+        "day1",
+        "day2",
+        "day3",
+        "day4",
+        "day5",
+        "day6",
+        "day7"
+      ],
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
+      "uiComponents": {
+        "DayLabel": {
+          "kind": "templateLabel",
+          "name": "LoginReward",
+          "packageId": "micro-economy-login-reward-demo"
+        },
+        "ReceivedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "LoginReward",
+          "packageId": "micro-economy-login-reward-demo"
+        },
+        "ReceivedLabel": {
+          "kind": "templateLabel",
+          "name": "LoginReward",
+          "packageId": "micro-economy-login-reward-demo"
+        },
+        "UnreceivedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "LoginReward",
+          "packageId": "micro-economy-login-reward-demo"
+        }
+      },
       "properties": {
         "acquireActions": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
         "coins": "prop_00D0VGDFNZ5T15JHGFR00Y73HS",
@@ -97,6 +128,9 @@
     "LoginRewardCollection": {
       "id": "dt_00D0VGDFNZ1P9DR7YQFQC90N00",
       "singleEntry": false,
+      "shippedRowIds": [
+        "daily"
+      ],
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_5WGJ7VXTH7B1K3PCWFVK2HRG1D",
       "delegatedActions": {
@@ -145,6 +179,45 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "LastReceivedLabel": {
+          "kind": "templateLabel",
+          "name": "LoginRewardCollection",
+          "packageId": "micro-economy-login-reward-demo"
+        },
+        "NeverReceivedActiveToggle": {
+          "kind": "activeToggle",
+          "name": "LoginRewardCollection",
+          "packageId": "micro-economy-login-reward-demo"
+        },
+        "NeverReceivedLabel": {
+          "kind": "templateLabel",
+          "name": "LoginRewardCollection",
+          "packageId": "micro-economy-login-reward-demo"
+        },
+        "ReceiveButton": {
+          "kind": "buttonAction",
+          "name": "LoginRewardCollection",
+          "packageId": "micro-economy-login-reward-demo",
+          "method": "Receive"
+        },
+        "ReceivedOnceActiveToggle": {
+          "kind": "activeToggle",
+          "name": "LoginRewardCollection",
+          "packageId": "micro-economy-login-reward-demo"
+        },
+        "RuleLabel": {
+          "kind": "templateLabel",
+          "name": "LoginRewardCollection",
+          "packageId": "micro-economy-login-reward-demo"
+        },
+        "StartOverButton": {
+          "kind": "buttonAction",
+          "name": "LoginRewardCollection",
+          "packageId": "micro-economy-login-reward-demo",
+          "method": "StartOver"
         }
       },
       "properties": {
@@ -299,6 +372,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

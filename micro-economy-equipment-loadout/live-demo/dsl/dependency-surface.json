@@ -2,6 +2,12 @@
   "schemaVersion": 1,
   "packageId": "micro-economy-equipment-loadout-demo",
   "types": {},
+  "shippedRowsOfDependencyTypes": {
+    "micro-economy-equipment-loadout:dt_00D033FNASFGZWK2X333SXXRXM": [
+      "armor",
+      "weapon"
+    ]
+  },
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {}

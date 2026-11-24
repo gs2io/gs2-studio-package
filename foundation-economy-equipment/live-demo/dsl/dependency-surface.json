@@ -5,6 +5,11 @@
     "Equipment": {
       "id": "dt_00D0MNXASRT2QXV1SJH71CX4V2",
       "singleEntry": false,
+      "shippedRowIds": [
+        "iron-sword",
+        "oak-staff",
+        "steel-shield"
+      ],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
       "delegatedActions": {
@@ -21,6 +26,24 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "DiscardButton": {
+          "kind": "buttonAction",
+          "name": "Equipment",
+          "packageId": "foundation-economy-equipment-demo",
+          "method": "Discard"
+        },
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "Equipment",
+          "packageId": "foundation-economy-equipment"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Equipment",
+          "packageId": "foundation-economy-equipment"
         }
       },
       "properties": {
@@ -95,6 +118,11 @@
     "EquipmentCatalog": {
       "id": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
       "singleEntry": false,
+      "shippedRowIds": [
+        "iron-sword",
+        "oak-staff",
+        "steel-shield"
+      ],
       "canonicalPackageId": "foundation-economy-equipment-demo",
       "canonicalTypeId": "dt_00D0MNXASRYW3S6T2DT55DH2FV",
       "delegatedActions": {
@@ -111,6 +139,19 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "NameLabel": {
+          "kind": "templateLabel",
+          "name": "EquipmentCatalog",
+          "packageId": "foundation-economy-equipment-demo"
+        },
+        "TakeButton": {
+          "kind": "buttonAction",
+          "name": "EquipmentCatalog",
+          "packageId": "foundation-economy-equipment-demo",
+          "method": "Take"
         }
       },
       "properties": {
@@ -153,6 +194,9 @@
     "EquipmentCollection": {
       "id": "dt_00D0MNXASRRPHW8RV3NXTHX8AY",
       "singleEntry": true,
+      "shippedRowIds": [
+        "equipmentcollection"
+      ],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
       "delegatedActions": {
@@ -169,6 +213,44 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "CapacityGauge": {
+          "kind": "gauge",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment"
+        },
+        "CapacityLabel": {
+          "kind": "templateLabel",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment"
+        },
+        "ExpandButton": {
+          "kind": "buttonAction",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment-demo",
+          "method": "Expand"
+        },
+        "ExpandableInteractable": {
+          "kind": "interactable",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment"
+        },
+        "FullActiveToggle": {
+          "kind": "activeToggle",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment"
+        },
+        "HoldsAnyActiveToggle": {
+          "kind": "activeToggle",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment-demo"
+        },
+        "NoneYetLabel": {
+          "kind": "label",
+          "name": "EquipmentCollection",
+          "packageId": "foundation-economy-equipment-demo"
         }
       },
       "properties": {
@@ -264,6 +346,12 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "foundation-economy-equipment:dt_5XY098JXVWPEN0Q0F7QY165JJA": [
+      "armor",
+      "weapon"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

@@ -5,8 +5,18 @@
     "SerialCodeRedemption": {
       "id": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
       "singleEntry": true,
+      "shippedRowIds": [
+        "serialcoderedemption"
+      ],
       "canonicalPackageId": "micro-liveops-serial-code-demo",
       "canonicalTypeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
+      "uiComponents": {
+        "RuleLabel": {
+          "kind": "templateLabel",
+          "name": "SerialCodeRedemption",
+          "packageId": "micro-liveops-serial-code-demo"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       },
@@ -28,6 +38,11 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "micro-liveops-serial-code:dt_00D031EZFZGQWMWS3BP6K2QWFB": [
+      "WELCOME2026"
+    ]
   },
   "actionTransforms": {
     "ClearRedemption": "at_0ANYB1CF038B2RMMTVPA8C9X3B",

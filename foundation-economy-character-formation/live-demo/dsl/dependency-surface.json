@@ -5,6 +5,9 @@
     "CharacterFormation": {
       "id": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6",
       "singleEntry": true,
+      "shippedRowIds": [
+        "characterformation"
+      ],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
       "delegatedActions": {
@@ -21,6 +24,24 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "ExpandButton": {
+          "kind": "buttonAction",
+          "name": "CharacterFormation",
+          "packageId": "foundation-economy-character-formation-demo",
+          "method": "Expand"
+        },
+        "ExpandInteractable": {
+          "kind": "interactable",
+          "name": "CharacterFormation",
+          "packageId": "foundation-economy-character-formation-demo"
+        },
+        "SaveAreaLabel": {
+          "kind": "templateLabel",
+          "name": "CharacterFormation",
+          "packageId": "foundation-economy-character-formation-demo"
         }
       },
       "properties": {
@@ -98,6 +119,13 @@
         }
       }
     }
+  },
+  "shippedRowsOfDependencyTypes": {
+    "foundation-economy-character-formation:dt_7SRX458Z4F4WB25KSR94EA8BHG": [
+      "slot1",
+      "slot2",
+      "slot3"
+    ]
   },
   "actionTransforms": {},
   "actionTransformSignatures": {},

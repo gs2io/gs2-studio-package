@@ -5,8 +5,10 @@
     "GuildRanking": {
       "id": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-guild-ranking",
       "canonicalTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "maximumValue": "prop_00D033H0GPZP59YFFCVBBGVPGM",
@@ -129,8 +131,10 @@
     "GuildRankingReward": {
       "id": "dt_00D033H0GPVEHE0CAY94WAKT63",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-guild-ranking",
       "canonicalTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+      "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D033H0GPSX5TQB69ST80YSQG",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -203,6 +207,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "ReceiveGuildRankingReward": "at_2XGMST1H43X6MHHSJHQHWNG568",
     "VerifyGuildRankingScoreReached": "at_0R2C0TCE7E855VHKXTGCZBFTBC"

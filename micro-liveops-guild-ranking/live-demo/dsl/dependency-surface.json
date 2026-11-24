@@ -5,8 +5,18 @@
     "GuildRanking": {
       "id": "dt_00D0XMTYBP5KNZJFD93BWF6SFG",
       "singleEntry": false,
+      "shippedRowIds": [
+        "guild"
+      ],
       "canonicalPackageId": "micro-liveops-guild-ranking",
       "canonicalTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
+      "uiComponents": {
+        "RuleLabel": {
+          "kind": "templateLabel",
+          "name": "GuildRanking",
+          "packageId": "micro-liveops-guild-ranking-demo"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "maximumValue": "prop_00D033H0GPZP59YFFCVBBGVPGM",
@@ -129,8 +139,14 @@
     "GuildRankingReward": {
       "id": "dt_00D0XMTYBP2S6WZJPBNGHGSC4Q",
       "singleEntry": false,
+      "shippedRowIds": [
+        "1.guild",
+        "10.guild",
+        "3.guild"
+      ],
       "canonicalPackageId": "micro-liveops-guild-ranking",
       "canonicalTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+      "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D033H0GPSX5TQB69ST80YSQG",
         "coins": "prop_00D0XMTYBP6TACW7H1W4YC1SET",
@@ -221,6 +237,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {}

@@ -5,8 +5,41 @@
     "Character": {
       "id": "dt_00D0RCHP2Q2DTSP41SVC7C111T",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "uiComponents": {
+        "ExperienceGauge": {
+          "kind": "gauge",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "IdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelActiveToggle": {
+          "kind": "activeToggle",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelInteractable": {
+          "kind": "interactable",
+          "name": "CharacterReachLevelCap",
+          "packageId": "foundation-economy-character"
+        },
+        "LevelLabel": {
+          "kind": "templateLabel",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        },
+        "PropertyIdValue": {
+          "kind": "value",
+          "name": "Character",
+          "packageId": "foundation-economy-character"
+        }
+      },
       "properties": {
         "experience": "prop_75G83NYX56T0KCQB3N92MQPVMT",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -151,8 +184,10 @@
     "SkillNode": {
       "id": "dt_00D0321TWK66MR7GWMWA3MCTP1",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-skill-tree",
       "canonicalTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "owner": "prop_00D0RCHP2Q26RVYQM9TZ89PN0E",
@@ -257,6 +292,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {
     "ReleaseSkillNode": "at_5WT3G6Z2TK8KETEF100N0T9FQK",
     "RestrainSkillNode": "at_0T4E2X5NJ896J92H8ZAD72DD60"

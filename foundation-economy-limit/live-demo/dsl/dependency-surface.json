@@ -5,8 +5,34 @@
     "UsageLimit": {
       "id": "dt_00D0PP9ZFNCD6RFTHR08Z8NVF9",
       "singleEntry": false,
+      "shippedRowIds": [
+        "daily",
+        "weekly"
+      ],
       "canonicalPackageId": "foundation-economy-limit",
       "canonicalTypeId": "dt_00D031CCJC5E77CH6RN2RE661E",
+      "uiComponents": {
+        "NotWeeklyActiveToggle": {
+          "kind": "activeToggle",
+          "name": "UsageLimit",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "ScheduleLabel": {
+          "kind": "templateLabel",
+          "name": "UsageLimit",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "WeeklyActiveToggle": {
+          "kind": "activeToggle",
+          "name": "UsageLimit",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "WeeklyScheduleLabel": {
+          "kind": "templateLabel",
+          "name": "UsageLimit",
+          "packageId": "foundation-economy-limit-demo"
+        }
+      },
       "properties": {
         "anchorTimestamp": "prop_00D031CCJC8A73V9WDWHJYY5S9",
         "days": "prop_00D031CCJCD9WHWSJ1N9W1NN13",
@@ -133,6 +159,12 @@
     "UsageLimitCounter": {
       "id": "dt_00D0PP9ZFNBBW6QXYE041ZSN01",
       "singleEntry": false,
+      "shippedRowIds": [
+        "counter1",
+        "counter2",
+        "counter3",
+        "counter4"
+      ],
       "canonicalPackageId": "foundation-economy-limit",
       "canonicalTypeId": "dt_00D031N0N8T4YWAWEK0CJY6HFJ",
       "delegatedActions": {
@@ -177,6 +209,71 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "AdUsesUnavailableActiveToggle": {
+          "kind": "activeToggle",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "AllowanceLabel": {
+          "kind": "templateLabel",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "AnyUseLeftActiveToggle": {
+          "kind": "activeToggle",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "FreeUsesLeftActiveToggle": {
+          "kind": "activeToggle",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "FreeUsesSpentActiveToggle": {
+          "kind": "activeToggle",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "NextResetInValue": {
+          "kind": "value",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "NoFreeUsesLeftLabel": {
+          "kind": "templateLabel",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "NothingLeftLabel": {
+          "kind": "templateLabel",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "ResetEveryAllowanceButton": {
+          "kind": "buttonAction",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo",
+          "method": "ResetEveryAllowance"
+        },
+        "UsageLabel": {
+          "kind": "templateLabel",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo"
+        },
+        "UseFreeButton": {
+          "kind": "buttonAction",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo",
+          "method": "UseFree"
+        },
+        "UseWithAdButton": {
+          "kind": "buttonAction",
+          "name": "UsageLimitCounter",
+          "packageId": "foundation-economy-limit-demo",
+          "method": "UseWithAd"
         }
       },
       "properties": {
@@ -287,6 +384,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {}

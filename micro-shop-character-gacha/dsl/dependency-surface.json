@@ -5,8 +5,10 @@
     "CharacterRate": {
       "id": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
+      "uiComponents": {},
       "properties": {
         "character": "prop_2JPPK6P7F94GT0KKPVM3JFZPSQ",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -79,6 +81,7 @@
     "Gacha": {
       "id": "dt_1G91WTZCFR536CEWSHPAK07H4R",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_1G91WTZCFR536CEWSHPAK07H4R",
       "delegatedActions": {
@@ -101,6 +104,7 @@
           }
         }
       },
+      "uiComponents": {},
       "properties": {
         "consumeActions": "prop_641SVQJRC0GWZ43QNEPB429MND",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -157,8 +161,10 @@
     "GachaRarity": {
       "id": "dt_479NFNV95H92HYQE8252JBRZ9Z",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_479NFNV95H92HYQE8252JBRZ9Z",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
       },
@@ -183,8 +189,10 @@
     "GachaRarityRate": {
       "id": "dt_0RM8RSFWGRCH1J86N5K65VV012",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_0RM8RSFWGRCH1J86N5K65VV012",
+      "uiComponents": {},
       "properties": {
         "gacha": "prop_0FB9QM529M8HJWECVFGHK5ETSP",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -255,6 +263,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

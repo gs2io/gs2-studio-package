@@ -5,8 +5,13 @@
     "TakeOverSetting": {
       "id": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
       "singleEntry": false,
+      "shippedRowIds": [
+        "apple",
+        "google"
+      ],
       "canonicalPackageId": "foundation-core-identity",
       "canonicalTypeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
+      "uiComponents": {},
       "properties": {
         "appleKeyId": "prop_6SSER4P8KCWTCGCEHA41KMASPV",
         "applePrivateKeyPem": "prop_1MDWB81CEGPC9T41TBZDES74PY",
@@ -175,8 +180,10 @@
     "TransferCode": {
       "id": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
       "singleEntry": false,
+      "shippedRowIds": [],
       "canonicalPackageId": "foundation-core-identity",
       "canonicalTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
+      "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "registered": "prop_00D0XSWNPHK742VSBENVHWQX25",
@@ -231,6 +238,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {

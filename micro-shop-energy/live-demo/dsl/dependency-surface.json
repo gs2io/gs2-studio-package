@@ -5,6 +5,11 @@
     "EnergyProduct": {
       "id": "dt_00D0S4EG72DAP5YJTQFA6F363W",
       "singleEntry": false,
+      "shippedRowIds": [
+        "refill_large",
+        "refill_medium",
+        "refill_small"
+      ],
       "canonicalPackageId": "micro-shop-energy",
       "canonicalTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
       "delegatedActions": {
@@ -21,6 +26,19 @@
               "required": false
             }
           }
+        }
+      },
+      "uiComponents": {
+        "BuyButton": {
+          "kind": "buttonAction",
+          "name": "EnergyProduct",
+          "packageId": "micro-shop-energy-demo",
+          "method": "Buy"
+        },
+        "OfferLabel": {
+          "kind": "templateLabel",
+          "name": "EnergyProduct",
+          "packageId": "micro-shop-energy-demo"
         }
       },
       "properties": {
@@ -113,6 +131,7 @@
       }
     }
   },
+  "shippedRowsOfDependencyTypes": {},
   "actionTransforms": {},
   "actionTransformSignatures": {},
   "masterDataResources": {
