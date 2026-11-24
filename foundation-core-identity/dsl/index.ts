@@ -3,26 +3,41 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
+  instance,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-const TakeOverSetting = defineDomainType("TakeOverSetting", dt =>
-  dt
-    .property(PT.int32("type").masterData().required())
-    .property(PT.string("configurationPath").masterData().required())
-    .property(PT.string("clientId").masterData().required())
-    .property(PT.string("clientSecret").masterData().required())
-    .property(PT.string("doneEndpointUrl").masterData().required())
-    .property(PT.string("appleTeamId").masterData())
-    .property(PT.string("appleKeyId").masterData())
-    .property(PT.string("applePrivateKeyPem").masterData())
-    .property(PT.bool("hasTakeOver").userData())
-    .localizedProperties({
+const TakeOverSetting = defineDomainType("TakeOverSetting", {
+  properties: {
+    type: PT.int32().masterData().required(),
+    configurationPath: PT.string().masterData().required(),
+    clientId: PT.string().masterData().required(),
+    clientSecret: PT.string().masterData().required(),
+    doneEndpointUrl: PT.string().masterData().required(),
+    appleTeamId: PT.string().masterData(),
+    appleKeyId: PT.string().masterData(),
+    applePrivateKeyPem: PT.string().masterData(),
+    hasTakeOver: PT.bool().userData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "引き継ぎ設定",
+      description: "アカウント引き継ぎに使用するOIDC接続情報と認証設定を登録します。",
+    },
+    en: {
+      label: "Take-over setting",
+      description:
+        "Configures the OIDC connection and authentication settings used for account transfer.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("引き継ぎ設定", "take-over setting"),
       type: jaEnField(
         "認証種別",
@@ -78,17 +93,27 @@ const TakeOverSetting = defineDomainType("TakeOverSetting", dt =>
         "プレイヤーに引き継ぎデータが登録されているかを示します。",
         "Whether take-over data is registered for the player."
       ),
-    })
-);
+    },
+});
 
-/** Reserve a separate take-over type so transfer codes cannot share an OIDC configuration slot. */
 export const TRANSFER_CODE_TAKE_OVER_TYPE = 1024;
 
-const TransferCode = defineDomainType("TransferCode", dt =>
-  dt
-    .property(PT.string("userIdentifier").userData().required())
-    .property(PT.bool("registered").userData().required())
-    .localizedProperties({
+const TransferCode = defineDomainType("TransferCode", {
+  properties: {
+    userIdentifier: PT.string().userData().required(),
+    registered: PT.bool().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "引き継ぎコード",
+      description: "プレイヤーが登録した、IDとパスワードによる引き継ぎコードです。",
+    },
+    en: {
+      label: "Transfer code",
+      description: "The ID-and-password transfer code a player has registered.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("引き継ぎコード", "transfer code"),
       userIdentifier: jaEnField(
         "引き継ぎ用ID",
@@ -102,14 +127,13 @@ const TransferCode = defineDomainType("TransferCode", dt =>
         "プレイヤーが引き継ぎコードを登録しているかを示します。",
         "Whether the player has registered a transfer code."
       ),
-    })
-);
+    },
+});
 
-const TakeOverTypeModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.account.TakeOverTypeModel)
-    .mountLocal(TakeOverSetting)
-    .bindings({
+const TakeOverTypeModel = defineMasterDataResource({
+  model: GS2.account.TakeOverTypeModel,
+  mount: TakeOverSetting,
+  bindings: {
       type: Bind.domainProperty(Source.direct(TakeOverSetting, "type")),
       openIdConnectSetting: {
         additionalReturnValues: Bind.static([]),
@@ -124,11 +148,13 @@ const TakeOverTypeModel = defineMasterDataResource(resource =>
         configurationPath: Bind.domainProperty(Source.direct(TakeOverSetting, "configurationPath")),
         doneEndpointUrl: Bind.domainProperty(Source.direct(TakeOverSetting, "doneEndpointUrl")),
       },
-    })
-);
+    },
+});
 
-export const foundationCoreIdentity = definePackage("foundation-core-identity", "0.0.1")
-  .display({
+export const foundationCoreIdentity = definePackage({
+  id: "foundation-core-identity",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "引き継ぎ設定",
       description:
@@ -139,31 +165,10 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
       description:
         "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
     },
-  })
-  .displayType(TakeOverSetting, {
-    ja: {
-      label: "引き継ぎ設定",
-      description: "アカウント引き継ぎに使用するOIDC接続情報と認証設定を登録します。",
-    },
-    en: {
-      label: "Take-over setting",
-      description:
-        "Configures the OIDC connection and authentication settings used for account transfer.",
-    },
-  })
-  .displayType(TransferCode, {
-    ja: {
-      label: "引き継ぎコード",
-      description: "プレイヤーが登録した、IDとパスワードによる引き継ぎコードです。",
-    },
-    en: {
-      label: "Transfer code",
-      description: "The ID-and-password transfer code a player has registered.",
-    },
-  })
-  .domainType(TakeOverSetting)
-  .domainType(TransferCode)
-  .instance(TakeOverSetting, "apple", {
+  },
+  domainTypes: [TakeOverSetting, TransferCode],
+  instances: [
+    instance(TakeOverSetting, "apple", {
     type: 0,
     configurationPath: "https://appleid.apple.com/.well-known/openid-configuration",
     clientId: "dummy",
@@ -172,18 +177,19 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
     appleTeamId: "dummy",
     appleKeyId: "dummy",
     applePrivateKeyPem: "dummy",
-  })
-  .instance(TakeOverSetting, "google", {
+  }),
+    instance(TakeOverSetting, "google", {
     type: 1,
     configurationPath: "https://accounts.google.com/.well-known/openid-configuration",
     clientId: "dummy",
     clientSecret: "dummy",
     doneEndpointUrl: "dummy",
-  })
-  .masterDataResource(r =>
-    r
-      .model(GS2.account.Namespace)
-      .bindings({
+  }),
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.account.Namespace,
+  bindings: {
         name: Bind.static("Account"),
         // Keep the issuing device's credentials valid after a transfer-code takeover.
         changePasswordIfTakeOver: Bind.static(false),
@@ -197,31 +203,32 @@ export const foundationCoreIdentity = definePackage("foundation-core-identity", 
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(TakeOverTypeModel)
-  )
-  .userDataResource(r =>
-    r
-      .model(GS2.account.TakeOver)
-      .linkedMasterResourceId(TakeOverTypeModel)
-      .existenceProperty("hasTakeOver")
-      .bindings({
+      },
+  children: [
+    TakeOverTypeModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.account.TakeOver,
+  linkedMaster: TakeOverTypeModel,
+  existenceProperty: "hasTakeOver",
+  bindings: {
         type: Bind.skip(),
         userId: Bind.skip(),
         userIdentifier: Bind.skip(),
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.account.TakeOver)
-      .mountLocal(TransferCode)
-      .existenceProperty("registered")
-      .bindings({
+      },
+}),
+    defineUserDataResource({
+  model: GS2.account.TakeOver,
+  mount: TransferCode,
+  existenceProperty: "registered",
+  bindings: {
         type: Bind.domainProperty(Source.direct(TransferCode, "id")),
         userIdentifier: Bind.domainProperties([Source.direct(TransferCode, "userIdentifier")]),
         userId: Bind.skip(),
-      })
-  )
-
-  .build();
+      },
+}),
+  ],
+});

@@ -1,28 +1,47 @@
 import {
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
+  defineUserDataResource,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-const Energy = defineDomainType("Energy", dt =>
-  dt
-    .property(PT.int32("defaultMaximum").masterData().required())
-    .property(PT.bool("useOverflow").masterData().required())
-    .property(PT.int32("overflowedMaximum").masterData().required())
-    .property(PT.int32("recoveryIntervalMinutes").masterData().required())
-    .property(PT.int32("recoveryValue").masterData().required())
-    .property(PT.int32("currentValue").userData().required())
-    .property(PT.int32("currentMaximumValue").userData().required())
-    .property(PT.timestamp("nextRecoverdAt").userData().required())
-    .localizedProperties({
+const Energy = defineDomainType("Energy", {
+  properties: {
+    defaultMaximum: PT.int32().masterData().required(),
+    useOverflow: PT.bool().masterData().required(),
+    overflowedMaximum: PT.int32().masterData().required(),
+    recoveryIntervalMinutes: PT.int32().masterData().required(),
+    recoveryValue: PT.int32().masterData().required(),
+    currentValue: PT.int32().userData().required(),
+    currentMaximumValue: PT.int32().userData().required(),
+    nextRecoverdAt: PT.timestamp().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "スタミナ",
+      description: "スタミナの初期値・上限・回復間隔とプレイヤーの現在値を管理します。",
+    },
+    en: {
+      label: "Stamina",
+      description:
+        "Manages stamina defaults, capacity, recovery interval, and each player's current value.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("スタミナ", "stamina model"),
       defaultMaximum: jaEnField(
         "初期上限",
@@ -78,16 +97,15 @@ const Energy = defineDomainType("Energy", dt =>
         "次にスタミナが自動回復する日時です。",
         "Time of the next automatic stamina recovery."
       ),
-    })
-);
+    },
+});
 
 const ENERGY_PARAMETER = "Id of the Energy row, which is the GS2 Stamina model name.";
 
-const StaminaModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.stamina.StaminaModel)
-    .mountLocal(Energy)
-    .bindings({
+const StaminaModel = defineMasterDataResource({
+  model: GS2.stamina.StaminaModel,
+  mount: Energy,
+  bindings: {
       name: Bind.domainProperty(Source.direct(Energy, "id")),
       initialCapacity: Bind.domainProperty(Source.direct(Energy, "defaultMaximum")),
       isOverflow: Bind.domainProperty(Source.direct(Energy, "useOverflow")),
@@ -95,105 +113,102 @@ const StaminaModel = defineMasterDataResource(resource =>
       recoverIntervalMinutes: Bind.domainProperty(Source.direct(Energy, "recoveryIntervalMinutes")),
       recoverValue: Bind.domainProperty(Source.direct(Energy, "recoveryValue")),
       ...Bind.nulls("maxStaminaTable", "recoverIntervalTable", "recoverValueTable"),
-    })
-);
+    },
+});
 
-export const foundationEconomyEnergy = definePackage("foundation-economy-energy", "0.0.1")
-  .display({
+const ConsumeEnergyTransform = defineActionTransform("ConsumeEnergy", {
+  category: "consume",
+  parameters: {
+    energy: { type: PT.ref(Energy), description: ENERGY_PARAMETER },
+    value: { type: PT.int32(), description: "Amount of stamina to consume." },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Stamina:ConsumeStaminaByUserId",
+    resource: () => StaminaModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      staminaName: OutputMap.parameter("energy"),
+      userId: OutputMap.placeholder("#{userId}"),
+      consumeValue: OutputMap.parameter("value"),
+    },
+  },
+  ],
+});
+
+const RecoveryEnergyTransform = defineActionTransform("RecoveryEnergy", {
+  category: "acquire",
+  parameters: {
+    energy: { type: PT.ref(Energy), description: ENERGY_PARAMETER },
+    value: { type: PT.int32(), description: "Amount of stamina to recover." },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Stamina:RecoverStaminaByUserId",
+    resource: () => StaminaModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      staminaName: OutputMap.parameter("energy"),
+      userId: OutputMap.placeholder("#{userId}"),
+      recoverValue: OutputMap.parameter("value"),
+    },
+  },
+  ],
+});
+
+export const foundationEconomyEnergy = definePackage({
+  id: "foundation-economy-energy",
+  version: "0.0.1",
+  display: {
     ja: { label: "スタミナ", description: "時間経過で回復するスタミナ（行動力）を管理します。" },
     en: { label: "Stamina", description: "Manages a stamina meter that recovers over time." },
-  })
-  .displayType(Energy, {
-    ja: {
-      label: "スタミナ",
-      description: "スタミナの初期値・上限・回復間隔とプレイヤーの現在値を管理します。",
-    },
-    en: {
-      label: "Stamina",
-      description:
-        "Manages stamina defaults, capacity, recovery interval, and each player's current value.",
-    },
-  })
-  .domainType(Energy)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.stamina.Namespace)
-      .bindings({
+  },
+  domainTypes: [Energy],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.stamina.Namespace,
+  bindings: {
         name: Bind.static("Energy"),
         ...Bind.nulls("overflowTriggerScript", "logSetting"),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(StaminaModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.stamina.Stamina)
-      .linkedMasterResourceId(StaminaModel)
-      .mountLocal(Energy)
-      .bindings({
+      },
+  children: [
+    StaminaModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.stamina.Stamina,
+  mount: Energy,
+  linkedMaster: StaminaModel,
+  bindings: {
         value: Bind.domainProperties([Source.direct(Energy, "currentValue")]),
         maxValue: Bind.domainProperties([Source.direct(Energy, "currentMaximumValue")]),
         nextRecoverAt: Bind.domainProperties([Source.direct(Energy, "nextRecoverdAt")]),
         overflowValue: Bind.skip(),
         staminaName: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  // The stamina name varies per row, so callers supply it; only the static namespace can be read as a resource key.
-  .actionTransform("ConsumeEnergy", at =>
-    at
-      .category("consume")
-      .parameter("energy", { type: PT.ref("Energy"), description: ENERGY_PARAMETER })
-      .parameter("value", { type: PT.int32(), description: "Amount of stamina to consume." })
-      .output("Gs2Stamina:ConsumeStaminaByUserId", o =>
-        o
-          .resourceRef(() => StaminaModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("staminaName", "energy")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("consumeValue", "value")
-      )
-  )
-  .uiComponent(Energy, ui =>
-    ui
-      // Use the player's current capacity because it may exceed the authored default.
-      .gauge("StaminaGauge", ui.prop("currentValue"), ui.prop("currentMaximumValue"), {
+      },
+}),
+  ],
+  actionTransforms: [ConsumeEnergyTransform, RecoveryEnergyTransform],
+  uiComponents: [
+    defineUiComponent(Energy, {
+  items: [
+    UiItem.gauge("StaminaGauge", UiSource.prop("currentValue"), UiSource.prop("currentMaximumValue"), {
         name: "Energy",
         clamp: true,
-      })
-      .templateLabel(
-        "StaminaLabel",
-        "{currentValue}/{currentMaximumValue}",
-        {
-          currentValue: ui.prop("currentValue"),
-          currentMaximumValue: ui.prop("currentMaximumValue"),
-        },
-        { name: "Energy" }
-      )
-      .value("NextRecoveryValue", ui.prop("nextRecoverdAt"), { name: "Energy" })
-      // Expose full state so pages can hide an unset recovery timestamp instead of showing an epoch date.
-      .activeToggle(
-        "FullActiveToggle",
-        UiCond.gte(ui.prop("currentValue"), ui.prop("currentMaximumValue")),
-        { name: "Energy" }
-      )
-  )
-
-  .actionTransform("RecoveryEnergy", at =>
-    at
-      .category("acquire")
-      .parameter("energy", { type: PT.ref("Energy"), description: ENERGY_PARAMETER })
-      .parameter("value", { type: PT.int32(), description: "Amount of stamina to recover." })
-      .output("Gs2Stamina:RecoverStaminaByUserId", o =>
-        o
-          .resourceRef(() => StaminaModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("staminaName", "energy")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("recoverValue", "value")
-      )
-  )
-  .build();
+      }),
+    UiItem.templateLabel("StaminaLabel", "{currentValue}/{currentMaximumValue}", {
+          currentValue: UiSource.prop("currentValue"),
+          currentMaximumValue: UiSource.prop("currentMaximumValue"),
+        }, { name: "Energy" }),
+    UiItem.value("NextRecoveryValue", UiSource.prop("nextRecoverdAt"), { name: "Energy" }),
+    UiItem.activeToggle("FullActiveToggle", UiCond.gte(UiSource.prop("currentValue"), UiSource.prop("currentMaximumValue")), { name: "Energy" }),
+  ],
+}),
+  ],
+});

@@ -1,14 +1,35 @@
-import { Bind, defineDomainType, definePackage, PT, Source, transactionSettingV2 } from "gs2-studio-dsl";
+import {
+  Bind,
+  defineDomainType,
+  defineMasterDataResource,
+  definePackage,
+  defineUserDataResource,
+  PT,
+  Source,
+  transactionSettingV2,
+} from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-const Profile = defineDomainType("Profile", dt =>
-  dt
-    .property(PT.string("publicProfile").userData())
-    .property(PT.string("followerProfile").userData())
-    .property(PT.string("friendProfile").userData())
-    .localizedProperties({
+const Profile = defineDomainType("Profile", {
+  properties: {
+    publicProfile: PT.string().userData(),
+    followerProfile: PT.string().userData(),
+    friendProfile: PT.string().userData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "プロフィール",
+      description: "プレイヤーが公開するプロフィール情報を管理します。",
+    },
+    en: {
+      label: "Profile",
+      description: "Manages the profile information a player shares with others.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("プロフィール", "profile"),
       publicProfile: jaEnField(
         "公開プロフィール",
@@ -28,14 +49,27 @@ const Profile = defineDomainType("Profile", dt =>
         "フレンドへ公開するプロフィール情報です。",
         "Profile information visible to friends."
       ),
-    })
-);
+    },
+});
 
-const Follow = defineDomainType("Follow", dt =>
-  dt
-    .property(PT.string("publicProfile").userData())
-    .property(PT.string("followerProfile").userData())
-    .localizedProperties({
+const Follow = defineDomainType("Follow", {
+  properties: {
+    publicProfile: PT.string().userData(),
+    followerProfile: PT.string().userData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "フォロー",
+      description:
+        "プレイヤーがフォローしている相手との関係を管理します。プロフィールはフォロー一覧から取得します。フォロワー一覧はありません。",
+    },
+    en: {
+      label: "Follow",
+      description:
+        "Tracks the players followed by a player. Profiles come from the follow list. There is no follower list.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("フォロー関係", "follow relationship"),
       publicProfile: jaEnField(
         "公開プロフィール",
@@ -49,14 +83,26 @@ const Follow = defineDomainType("Follow", dt =>
         "フォロワーとして閲覧できるプロフィール情報です。",
         "Profile information visible because the player is a follower."
       ),
-    })
-);
+    },
+});
 
-const Friend = defineDomainType("Friend", dt =>
-  dt
-    .property(PT.string("publicProfile").userData())
-    .property(PT.string("friendProfile").userData())
-    .localizedProperties({
+const Friend = defineDomainType("Friend", {
+  properties: {
+    publicProfile: PT.string().userData(),
+    friendProfile: PT.string().userData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "フレンド",
+      description: "承認済みのフレンド関係を管理します。プロフィールはフレンド一覧から取得します。",
+    },
+    en: {
+      label: "Friend",
+      description:
+        "Tracks confirmed friendship relationships between players. Profiles come from the friend list.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("フレンド関係", "friend relationship"),
       publicProfile: jaEnField(
         "公開プロフィール",
@@ -70,87 +116,11 @@ const Friend = defineDomainType("Friend", dt =>
         "フレンドとして閲覧できるプロフィール情報です。",
         "Profile information visible because the players are friends."
       ),
-    })
-);
+    },
+});
 
-// Request records expose the other player id without the profile payload, so they use separate types.
-const SendFriendRequest = defineDomainType("SendFriendRequest", dt =>
-  dt.localizedProperties({
-    id: jaEnId("送信フレンド申請", "outgoing friend request"),
-  })
-);
-
-const ReceiveFriendRequest = defineDomainType("ReceiveFriendRequest", dt =>
-  dt.localizedProperties({
-    id: jaEnId("受信フレンド申請", "incoming friend request"),
-  })
-);
-
-const notificationConfig = {
-  enable: Bind.static("Enabled"),
-  enableTransferMobileNotification: Bind.static(false),
-  gatewayNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:gateway:default"),
-  sound: Bind.static(""),
-};
-
-export const foundationSocialGraph = definePackage("foundation-social-graph", "0.0.1")
-  .display({
-    ja: {
-      label: "フレンド・プロフィール",
-      description: "フレンド申請・フォロー・プロフィールなど、プレイヤー同士のつながりを扱います。",
-    },
-    en: {
-      label: "Friends & Profile",
-      description:
-        "Handles friend requests, follows, and profiles: the connections between players.",
-    },
-  })
-  .displayType(Follow, {
-    ja: {
-      label: "フォロー",
-      description:
-        "プレイヤーがフォローしている相手との関係を管理します。プロフィールはフォロー一覧から取得します。フォロワー一覧はありません。",
-    },
-    en: {
-      label: "Follow",
-      description:
-        "Tracks the players followed by a player. Profiles come from the follow list. There is no follower list.",
-    },
-  })
-  .displayType(Friend, {
-    ja: {
-      label: "フレンド",
-      description: "承認済みのフレンド関係を管理します。プロフィールはフレンド一覧から取得します。",
-    },
-    en: {
-      label: "Friend",
-      description:
-        "Tracks confirmed friendship relationships between players. Profiles come from the friend list.",
-    },
-  })
-  .displayType(Profile, {
-    ja: {
-      label: "プロフィール",
-      description: "プレイヤーが公開するプロフィール情報を管理します。",
-    },
-    en: {
-      label: "Profile",
-      description: "Manages the profile information a player shares with others.",
-    },
-  })
-  .displayType(ReceiveFriendRequest, {
-    ja: {
-      label: "フレンド申請（受信）",
-      description:
-        "他のプレイヤーから受け取ったフレンド申請を管理します。申請元のプロフィールは含みません。",
-    },
-    en: {
-      label: "Incoming friend request",
-      description:
-        "Tracks friend requests received from other players. Requests carry no sender profile.",
-    },
-  })
-  .displayType(SendFriendRequest, {
+const SendFriendRequest = defineDomainType("SendFriendRequest", {
+  localizedDisplay: {
     ja: {
       label: "フレンド申請（送信）",
       description:
@@ -161,15 +131,56 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
       description:
         "Tracks friend requests sent to other players. Requests carry no recipient profile.",
     },
-  })
-  .domainType(Profile)
-  .domainType(Follow)
-  .domainType(Friend)
-  .domainType(SendFriendRequest)
-  .domainType(ReceiveFriendRequest)
+  },
+  localizedProperties: {
+    id: jaEnId("送信フレンド申請", "outgoing friend request"),
+  },
+});
 
-  .masterDataResource(r =>
-    r.model(GS2.friend.Namespace).bindings({
+const ReceiveFriendRequest = defineDomainType("ReceiveFriendRequest", {
+  localizedDisplay: {
+    ja: {
+      label: "フレンド申請（受信）",
+      description:
+        "他のプレイヤーから受け取ったフレンド申請を管理します。申請元のプロフィールは含みません。",
+    },
+    en: {
+      label: "Incoming friend request",
+      description:
+        "Tracks friend requests received from other players. Requests carry no sender profile.",
+    },
+  },
+  localizedProperties: {
+    id: jaEnId("受信フレンド申請", "incoming friend request"),
+  },
+});
+
+const notificationConfig = {
+  enable: Bind.static("Enabled"),
+  enableTransferMobileNotification: Bind.static(false),
+  gatewayNamespaceId: Bind.static("grn:gs2:{region}:{ownerId}:gateway:default"),
+  sound: Bind.static(""),
+};
+
+export const foundationSocialGraph = definePackage({
+  id: "foundation-social-graph",
+  version: "0.0.1",
+  display: {
+    ja: {
+      label: "フレンド・プロフィール",
+      description: "フレンド申請・フォロー・プロフィールなど、プレイヤー同士のつながりを扱います。",
+    },
+    en: {
+      label: "Friends & Profile",
+      description:
+        "Handles friend requests, follows, and profiles: the connections between players.",
+    },
+  },
+  domainTypes: [Profile, Follow, Friend, SendFriendRequest, ReceiveFriendRequest],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.friend.Namespace,
+  bindings: {
       name: Bind.static("Friend"),
       ...Bind.nulls(
         "logSetting",
@@ -189,68 +200,60 @@ export const foundationSocialGraph = definePackage("foundation-social-graph", "0
       rejectRequestNotification: { ...notificationConfig },
       deleteFriendNotification: { ...notificationConfig },
       transactionSettingV2: transactionSettingV2(),
-    })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.friend.Profile)
-      .mountLocal(Profile)
-      .bindings({
+    },
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.friend.Profile,
+  mount: Profile,
+  bindings: {
         followerProfile: Bind.domainProperties([Source.direct(Profile, "followerProfile")]),
         friendProfile: Bind.domainProperties([Source.direct(Profile, "friendProfile")]),
         profileId: Bind.skip(),
         publicProfile: Bind.domainProperties([Source.direct(Profile, "publicProfile")]),
         userId: Bind.skip(),
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.friend.FriendUser)
-      .mountLocal(Friend)
-      .bindings({
+      },
+}),
+    defineUserDataResource({
+  model: GS2.friend.FriendUser,
+  mount: Friend,
+  bindings: {
         friendProfile: Bind.domainProperties([Source.direct(Friend, "friendProfile")]),
         publicProfile: Bind.domainProperties([Source.direct(Friend, "publicProfile")]),
         userId: Bind.domainProperty(Source.direct(Friend, "id")),
         // The bound profile fields require profiles to be included in loader results.
         withProfile: Bind.static(true),
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.friend.FollowUser)
-      .mountLocal(Follow)
-      .bindings({
+      },
+}),
+    defineUserDataResource({
+  model: GS2.friend.FollowUser,
+  mount: Follow,
+  bindings: {
         followerProfile: Bind.domainProperties([Source.direct(Follow, "followerProfile")]),
         publicProfile: Bind.domainProperties([Source.direct(Follow, "publicProfile")]),
         userId: Bind.domainProperty(Source.direct(Follow, "id")),
         // The bound profile fields require profiles to be included in loader results.
         withProfile: Bind.static(true),
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.friend.SendFriendRequest)
-      .mountLocal(SendFriendRequest)
-      .bindings({
+      },
+}),
+    defineUserDataResource({
+  model: GS2.friend.SendFriendRequest,
+  mount: SendFriendRequest,
+  bindings: {
         publicProfile: Bind.skip(),
         targetUserId: Bind.domainProperty(Source.direct(SendFriendRequest, "id")),
         userId: Bind.skip(),
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.friend.ReceiveFriendRequest)
-      .mountLocal(ReceiveFriendRequest)
-      .bindings({
+      },
+}),
+    defineUserDataResource({
+  model: GS2.friend.ReceiveFriendRequest,
+  mount: ReceiveFriendRequest,
+  bindings: {
         publicProfile: Bind.skip(),
         targetUserId: Bind.skip(),
         userId: Bind.domainProperty(Source.direct(ReceiveFriendRequest, "id")),
-      })
-  )
-
-  .build();
+      },
+}),
+  ],
+});

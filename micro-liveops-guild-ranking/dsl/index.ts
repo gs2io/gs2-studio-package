@@ -1,14 +1,18 @@
 import {
   ActionProgram,
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
   dependencyPackage,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -19,15 +23,28 @@ const schedule = dependencyPackage(scheduleSurface);
 
 const SCHEDULE_NAMESPACE_RESOURCE_ID = schedule.resourceId("schedule.Namespace");
 
-const GuildRanking = defineDomainType("GuildRanking", dt =>
-  dt
-    .property(PT.string("schedule").assetDelivery().required())
-    .property(PT.prop("orderDirection", PT.enum("asc", "desc")).masterData().required())
-    .property(PT.bool("sum").masterData())
-    .property(PT.int64("minimumValue").masterData())
-    .property(PT.int64("maximumValue").masterData())
-    .property(PT.int64("score").userData().required())
-    .localizedProperties({
+const GuildRanking = defineDomainType("GuildRanking", {
+  properties: {
+    schedule: PT.string().assetDelivery().required(),
+    orderDirection: PT.enum("asc", "desc").masterData().required(),
+    sum: PT.bool().masterData(),
+    minimumValue: PT.int64().masterData(),
+    maximumValue: PT.int64().masterData(),
+    score: PT.int64().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ギルドランキング",
+      description:
+        "ギルドごとにメンバー同士で競うランキングの集計方法、開催期間、参加条件を設定します。",
+    },
+    en: {
+      label: "Guild ranking",
+      description:
+        "Configures scoring, availability, and participation rules for a ranking of members within each guild.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ギルドランキング", "guild ranking"),
       schedule: jaEnField(
         "開催スケジュール",
@@ -66,16 +83,27 @@ const GuildRanking = defineDomainType("GuildRanking", dt =>
         "Player's current contribution to the guild ranking.",
         { ja: "点", en: "points" }
       ),
-    })
-);
+    },
+});
 
-const GuildRankingReward = defineDomainType("GuildRankingReward", dt =>
-  dt
-    .property(PT.prop("ranking", PT.ref("GuildRanking")).assetDelivery().required())
-    .property(PT.int32("thresholdRank").masterData().required())
-    .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
-    .compositeKey("ranking", "thresholdRank")
-    .localizedProperties({
+const GuildRankingReward = defineDomainType("GuildRankingReward", {
+  properties: {
+    ranking: PT.ref(GuildRanking).assetDelivery().required(),
+    thresholdRank: PT.int32().masterData().required(),
+    acquireActions: PT.listOf(PT.acquireAction()).masterData().required(),
+  },
+  compositeKey: ["ranking", "thresholdRank"],
+  localizedDisplay: {
+    ja: {
+      label: "ランキング報酬",
+      description: "ギルドランキングの順位範囲ごとに配布する報酬を設定します。",
+    },
+    en: {
+      label: "Ranking reward",
+      description: "Defines rewards distributed for each guild-ranking placement range.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ギルドランキング報酬", "guild ranking reward"),
       ranking: jaEnField(
         "対象ランキング",
@@ -96,14 +124,13 @@ const GuildRankingReward = defineDomainType("GuildRankingReward", dt =>
         "順位条件を満たしたメンバーへ実行する報酬アクションです。",
         "Reward actions executed for members who meet the placement threshold."
       ),
-    })
-);
+    },
+});
 
-const ClusterRankingModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.ranking2.ClusterRankingModel)
-    .mountLocal(GuildRanking)
-    .bindings({
+const ClusterRankingModel = defineMasterDataResource({
+  model: GS2.ranking2.ClusterRankingModel,
+  mount: GuildRanking,
+  bindings: {
       name: Bind.domainProperty(Source.direct(GuildRanking, "id")),
       metadata: Bind.static(""),
       clusterType: Bind.static("Gs2Guild::Guild"),
@@ -114,38 +141,102 @@ const ClusterRankingModel = defineMasterDataResource(resource =>
       accessPeriodEventId: Bind.null(),
       // Match reward thresholds to placement so tied members receive the same tier.
       rewardCalculationIndex: Bind.static("rank"),
-    })
-    .grnFieldMount("entryPeriodEventId", SCHEDULE_NAMESPACE_RESOURCE_ID, [
+    },
+  grnFieldMounts: [
+    { parameterName: "entryPeriodEventId", mountedResource: SCHEDULE_NAMESPACE_RESOURCE_ID, keyMappings: [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
-    ])
-    .grnKeyBinding(
-      "entryPeriodEventId",
-      "eventName",
-      Bind.domainProperty(Source.direct(GuildRanking, "schedule"))
-    )
-    .addArrayChild("rankingRewards", reward => {
-      reward
-        .model(GS2.ranking2.RankingReward)
-        .mountLocal(GuildRankingReward)
-        .bindings({
+    ] },
+  ],
+  grnKeyBindings: [
+    { parameterName: "entryPeriodEventId", keyName: "eventName", directive: Bind.domainProperty(Source.direct(GuildRanking, "schedule")) },
+  ],
+  arrayChildren: {
+    rankingRewards: [
+      defineMasterDataResource({
+  model: GS2.ranking2.RankingReward,
+  mount: GuildRankingReward,
+  bindings: {
           thresholdRank: Bind.domainProperty(Source.direct(GuildRankingReward, "thresholdRank")),
           metadata: Bind.static(""),
-        })
-        .addArrayChild("acquireActions", acquireAction => {
-          acquireAction
-            .model(GS2.transaction.AcquireAction)
-            .mountLocal(GuildRankingReward)
-            .actionProgram(
-              ActionProgram.domainProperty(
+        },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: GuildRankingReward,
+  actionProgram: ActionProgram.domainProperty(
                 Source.parent(Source.direct(GuildRankingReward, "acquireActions"))
-              )
-            );
-        });
-    })
-);
+              ),
+}),
+    ],
+  },
+}),
+    ],
+  },
+});
 
-export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranking", "0.0.1")
-  .display({
+const ReceiveGuildRankingRewardTransform = defineActionTransform("ReceiveGuildRankingReward", {
+  category: "consume",
+  parameters: {
+    ranking: { type: PT.ref(GuildRanking) },
+    guildName: {
+        type: PT.string(),
+        description:
+          "GRN of the guild whose ranking this is: grn:gs2:{region}:{ownerId}:guild:<namespace>:guild:<guild model>:<guild name>",
+      },
+    season: { type: PT.int64() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Ranking2:CreateClusterRankingReceivedRewardByUserId",
+    resource: () => ClusterRankingModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      rankingName: OutputMap.parameter("ranking"),
+      clusterName: OutputMap.parameter("guildName"),
+      userId: OutputMap.placeholder("#{userId}"),
+      season: OutputMap.parameter("season"),
+    },
+  },
+  ],
+});
+
+const VerifyGuildRankingScoreReachedTransform = defineActionTransform("VerifyGuildRankingScoreReached", {
+  category: "verify",
+  parameters: {
+    ranking: { type: PT.ref(GuildRanking) },
+    guildName: {
+        type: PT.string(),
+        description:
+          "GRN of the guild whose ranking this is: grn:gs2:{region}:{ownerId}:guild:<namespace>:guild:<guild model>:<guild name>",
+      },
+    season: { type: PT.int64() },
+    score: { type: PT.int64() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Ranking2:VerifyClusterRankingScoreByUserId",
+    resource: () => ClusterRankingModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      rankingName: OutputMap.parameter("ranking"),
+      clusterName: OutputMap.parameter("guildName"),
+      verifyType: OutputMap.static("greaterEqual"),
+      season: OutputMap.parameter("season"),
+      score: OutputMap.parameter("score"),
+      multiplyValueSpecifyingQuantity: OutputMap.static(false),
+    },
+  },
+  ],
+});
+
+export const microLiveopsGuildRanking = definePackage({
+  id: "micro-liveops-guild-ranking",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "ギルドランキング",
       description:
@@ -156,52 +247,32 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
       description:
         "A leaderboard partitioned by guild, so members compete inside their own guild, with rewards by rank.",
     },
-  })
-  .displayType(GuildRanking, {
-    ja: {
-      label: "ギルドランキング",
-      description:
-        "ギルドごとにメンバー同士で競うランキングの集計方法、開催期間、参加条件を設定します。",
-    },
-    en: {
-      label: "Guild ranking",
-      description:
-        "Configures scoring, availability, and participation rules for a ranking of members within each guild.",
-    },
-  })
-  .displayType(GuildRankingReward, {
-    ja: {
-      label: "ランキング報酬",
-      description: "ギルドランキングの順位範囲ごとに配布する報酬を設定します。",
-    },
-    en: {
-      label: "Ranking reward",
-      description: "Defines rewards distributed for each guild-ranking placement range.",
-    },
-  })
-  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  .dependency("foundation-social-guild", "github:gs2io/gs2-studio-package")
-  .domainType(GuildRanking)
-  .domainType(GuildRankingReward)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.ranking2.Namespace)
-      .bindings({
+  },
+  dependencies: {
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "foundation-social-guild": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [GuildRanking, GuildRankingReward],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.ranking2.Namespace,
+  bindings: {
         name: Bind.static("GuildRanking"),
         logSetting: Bind.null(),
         // Auto-run executes the reward transaction; atomic commit keeps the receipt record and payout together.
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(ClusterRankingModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.ranking2.ClusterRankingScore)
-      .mountLocal(GuildRanking)
-      .linkedMasterResourceId(ClusterRankingModel)
-      .bindings({
+      },
+  children: [
+    ClusterRankingModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.ranking2.ClusterRankingScore,
+  mount: GuildRanking,
+  linkedMaster: ClusterRankingModel,
+  bindings: {
         score: Bind.domainProperties([Source.direct(GuildRanking, "score")]),
         clusterRankingScoreId: Bind.skip(),
         rankingName: Bind.domainProperty(Source.direct(GuildRanking, "id")),
@@ -209,51 +280,8 @@ export const microLiveopsGuildRanking = definePackage("micro-liveops-guild-ranki
         season: Bind.skip(),
         metadata: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .actionTransform("ReceiveGuildRankingReward", at =>
-    at
-      .category("consume")
-      .parameter("ranking", { type: PT.ref("GuildRanking") })
-      .parameter("guildName", {
-        type: PT.string(),
-        description:
-          "GRN of the guild whose ranking this is: grn:gs2:{region}:{ownerId}:guild:<namespace>:guild:<guild model>:<guild name>",
-      })
-      .parameter("season", { type: PT.int64() })
-      .output("Gs2Ranking2:CreateClusterRankingReceivedRewardByUserId", o =>
-        o
-          .resourceRef(() => ClusterRankingModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("rankingName", "ranking")
-          .mapParameter("clusterName", "guildName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("season", "season")
-      )
-  )
-  .actionTransform("VerifyGuildRankingScoreReached", at =>
-    at
-      .category("verify")
-      .parameter("ranking", { type: PT.ref("GuildRanking") })
-      .parameter("guildName", {
-        type: PT.string(),
-        description:
-          "GRN of the guild whose ranking this is: grn:gs2:{region}:{ownerId}:guild:<namespace>:guild:<guild model>:<guild name>",
-      })
-      .parameter("season", { type: PT.int64() })
-      .parameter("score", { type: PT.int64() })
-      .output("Gs2Ranking2:VerifyClusterRankingScoreByUserId", o =>
-        o
-          .resourceRef(() => ClusterRankingModel)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("rankingName", "ranking")
-          .mapParameter("clusterName", "guildName")
-          .mapStatic("verifyType", "greaterEqual")
-          .mapParameter("season", "season")
-          .mapParameter("score", "score")
-          .mapStatic("multiplyValueSpecifyingQuantity", false)
-      )
-  )
-  .build();
+      },
+}),
+  ],
+  actionTransforms: [ReceiveGuildRankingRewardTransform, VerifyGuildRankingScoreReachedTransform],
+});

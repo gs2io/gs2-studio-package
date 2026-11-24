@@ -3,32 +3,46 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-const AgreementVersion = defineDomainType("AgreementVersion", dt =>
-  dt
-    .property(PT.prop("required", PT.enum("required", "optional")).masterData().required())
-    .property(PT.int32("currentMajor").masterData().required())
-    .property(PT.int32("currentMinor").masterData().required())
-    .property(PT.int32("currentMicro").masterData().required())
-    .property(PT.prop("status", PT.enum("accept", "reject")).userData())
-    .property(PT.bool("exists").userData().required())
-    .property(PT.int32("warningMajor").masterData().required())
-    .property(PT.int32("warningMinor").masterData().required())
-    .property(PT.int32("warningMicro").masterData().required())
-    .property(PT.int32("errorMajor").masterData().required())
-    .property(PT.int32("errorMinor").masterData().required())
-    .property(PT.int32("errorMicro").masterData().required())
-    .property(PT.int32("acceptedMajor").userData().required())
-    .property(PT.int32("acceptedMinor").userData().required())
-    .property(PT.int32("acceptedMicro").userData().required())
-    .localizedProperties({
+const AgreementVersion = defineDomainType("AgreementVersion", {
+  properties: {
+    required: PT.enum("required", "optional").masterData().required(),
+    currentMajor: PT.int32().masterData().required(),
+    currentMinor: PT.int32().masterData().required(),
+    currentMicro: PT.int32().masterData().required(),
+    status: PT.enum("accept", "reject").userData(),
+    exists: PT.bool().userData().required(),
+    warningMajor: PT.int32().masterData().required(),
+    warningMinor: PT.int32().masterData().required(),
+    warningMicro: PT.int32().masterData().required(),
+    errorMajor: PT.int32().masterData().required(),
+    errorMinor: PT.int32().masterData().required(),
+    errorMicro: PT.int32().masterData().required(),
+    acceptedMajor: PT.int32().userData().required(),
+    acceptedMinor: PT.int32().userData().required(),
+    acceptedMicro: PT.int32().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "規約バージョン",
+      description: "利用規約やプライバシーポリシーの公開バージョンを管理します。",
+    },
+    en: {
+      label: "Agreement version",
+      description:
+        "Manages published versions of agreements such as terms of service and privacy policies.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("規約バージョン", "agreement version"),
       required: jaEnField(
         "同意要否",
@@ -120,18 +134,31 @@ const AgreementVersion = defineDomainType("AgreementVersion", dt =>
         "プレイヤーが同意した規約バージョンのマイクロ値です。",
         "Micro component of the agreement version accepted by the player."
       ),
-    })
-);
+    },
+});
 
-const EmbeddedVersion = defineDomainType("EmbeddedVersion", dt =>
-  dt
-    .property(PT.int32("warningMajor").masterData().required())
-    .property(PT.int32("warningMinor").masterData().required())
-    .property(PT.int32("warningMicro").masterData().required())
-    .property(PT.int32("errorMajor").masterData().required())
-    .property(PT.int32("errorMinor").masterData().required())
-    .property(PT.int32("errorMicro").masterData().required())
-    .localizedProperties({
+const EmbeddedVersion = defineDomainType("EmbeddedVersion", {
+  properties: {
+    warningMajor: PT.int32().masterData().required(),
+    warningMinor: PT.int32().masterData().required(),
+    warningMicro: PT.int32().masterData().required(),
+    errorMajor: PT.int32().masterData().required(),
+    errorMinor: PT.int32().masterData().required(),
+    errorMicro: PT.int32().masterData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "申告バージョン",
+      description:
+        "アプリやアセットのように、クライアントが自分のバージョンを申告して確認を受けるものです。警告と利用拒否になるバージョンを設定します。",
+    },
+    en: {
+      label: "Reported version",
+      description:
+        "Something the client reports its own version of, such as the app or its assets, and the versions at or below which that version warns or is refused.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("申告バージョン", "reported version"),
       warningMajor: jaEnField(
         "警告メジャーバージョン",
@@ -169,15 +196,27 @@ const EmbeddedVersion = defineDomainType("EmbeddedVersion", dt =>
         "申告されたバージョンがこれ以下のとき利用を拒否するバージョンのマイクロ値です。",
         "Micro component of the version at or below which a reported version is refused."
       ),
-    })
-);
+    },
+});
 
-/** Mount the namespace on this gate so its assumeUserId comes from the authored configuration. */
-const VersionGate = defineDomainType("VersionGate", dt =>
-  dt
-    .singleEntry()
-    .property(PT.string("assumeUserId").masterData().required())
-    .localizedProperties({
+const VersionGate = defineDomainType("VersionGate", {
+  singleEntry: true,
+  properties: {
+    assumeUserId: PT.string().masterData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "バージョン確認",
+      description:
+        "バージョン確認を通過したプレイヤーをどのユーザーとして扱うかを設定します。この行が無いと、バージョン管理の名前空間とバージョンモデルはデプロイされません。",
+    },
+    en: {
+      label: "Version gate",
+      description:
+        "Configures which user a player who passes the version check is signed in as. Without this row, the version namespace and its version models are not deployed.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("バージョン確認", "version gate"),
       assumeUserId: jaEnField(
         "通過後のユーザー",
@@ -185,14 +224,13 @@ const VersionGate = defineDomainType("VersionGate", dt =>
         "バージョン確認を通過したプレイヤーに発行するプロジェクトトークンの GS2-Identifier ユーザーです。grn:gs2::{ownerId}:identifier:user:<名前> の形式で指定します。",
         "GS2-Identifier user whose project token a player receives on passing the version check, as grn:gs2::{ownerId}:identifier:user:<name>."
       ),
-    })
-);
+    },
+});
 
-const AgreementVersionModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.version.VersionModel)
-    .mountLocal(AgreementVersion)
-    .bindings({
+const AgreementVersionModel = defineMasterDataResource({
+  model: GS2.version.VersionModel,
+  mount: AgreementVersion,
+  bindings: {
       name: Bind.domainProperty(Source.direct(AgreementVersion, "id")),
       approveRequirement: Bind.domainProperty(Source.direct(AgreementVersion, "required")),
       scope: Bind.static("active"),
@@ -212,11 +250,13 @@ const AgreementVersionModel = defineMasterDataResource(resource =>
         minor: Bind.domainProperty(Source.direct(AgreementVersion, "errorMinor")),
         micro: Bind.domainProperty(Source.direct(AgreementVersion, "errorMicro")),
       },
-    })
-);
+    },
+});
 
-export const foundationLiveopsVersion = definePackage("foundation-liveops-version", "0.0.1")
-  .display({
+export const foundationLiveopsVersion = definePackage({
+  id: "foundation-liveops-version",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "バージョン管理",
       description:
@@ -227,61 +267,24 @@ export const foundationLiveopsVersion = definePackage("foundation-liveops-versio
       description:
         "Checks the agreement (terms of service) versions a player accepted, and the versions a client reports, such as its app and asset versions.",
     },
-  })
-  .displayType(AgreementVersion, {
-    ja: {
-      label: "規約バージョン",
-      description: "利用規約やプライバシーポリシーの公開バージョンを管理します。",
-    },
-    en: {
-      label: "Agreement version",
-      description:
-        "Manages published versions of agreements such as terms of service and privacy policies.",
-    },
-  })
-  .displayType(EmbeddedVersion, {
-    ja: {
-      label: "申告バージョン",
-      description:
-        "アプリやアセットのように、クライアントが自分のバージョンを申告して確認を受けるものです。警告と利用拒否になるバージョンを設定します。",
-    },
-    en: {
-      label: "Reported version",
-      description:
-        "Something the client reports its own version of, such as the app or its assets, and the versions at or below which that version warns or is refused.",
-    },
-  })
-  .displayType(VersionGate, {
-    ja: {
-      label: "バージョン確認",
-      description:
-        "バージョン確認を通過したプレイヤーをどのユーザーとして扱うかを設定します。この行が無いと、バージョン管理の名前空間とバージョンモデルはデプロイされません。",
-    },
-    en: {
-      label: "Version gate",
-      description:
-        "Configures which user a player who passes the version check is signed in as. Without this row, the version namespace and its version models are not deployed.",
-    },
-  })
-  .domainType(VersionGate)
-  .domainType(AgreementVersion)
-  .domainType(EmbeddedVersion)
-  .masterDataResource(r =>
-    r
-      .model(GS2.version.Namespace)
-      .mountLocal(VersionGate)
-      .bindings({
+  },
+  domainTypes: [VersionGate, AgreementVersion, EmbeddedVersion],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.version.Namespace,
+  mount: VersionGate,
+  bindings: {
         name: Bind.static("Version"),
         assumeUserId: Bind.domainProperty(Source.direct(VersionGate, "assumeUserId")),
         ...Bind.nulls("acceptVersionScript", "checkVersionTriggerScriptId", "logSetting"),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(AgreementVersionModel)
-      .addChild(child => {
-        child
-          .model(GS2.version.VersionModel)
-          .mountLocal(EmbeddedVersion)
-          .bindings({
+      },
+  children: [
+    AgreementVersionModel,
+    defineMasterDataResource({
+  model: GS2.version.VersionModel,
+  mount: EmbeddedVersion,
+  bindings: {
             name: Bind.domainProperty(Source.direct(EmbeddedVersion, "id")),
             scope: Bind.static("passive"),
             type: Bind.static("simple"),
@@ -296,17 +299,18 @@ export const foundationLiveopsVersion = definePackage("foundation-liveops-versio
               minor: Bind.domainProperty(Source.direct(EmbeddedVersion, "errorMinor")),
               micro: Bind.domainProperty(Source.direct(EmbeddedVersion, "errorMicro")),
             },
-          });
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.version.AcceptVersion)
-      .linkedMasterResourceId(AgreementVersionModel)
-      .mountLocal(AgreementVersion)
-      .existenceProperty("exists")
-      .bindings({
+          },
+}),
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.version.AcceptVersion,
+  mount: AgreementVersion,
+  linkedMaster: AgreementVersionModel,
+  existenceProperty: "exists",
+  bindings: {
         status: Bind.domainProperties([Source.direct(AgreementVersion, "status")]),
         userId: Bind.skip(),
         version: {
@@ -315,7 +319,7 @@ export const foundationLiveopsVersion = definePackage("foundation-liveops-versio
           micro: Bind.domainProperty(Source.direct(AgreementVersion, "acceptedMicro")),
         },
         versionName: Bind.skip(),
-      })
-  )
-
-  .build();
+      },
+}),
+  ],
+});

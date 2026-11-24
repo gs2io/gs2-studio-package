@@ -1,14 +1,18 @@
 import {
   ActionProgram,
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
   dependencyPackage,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -17,15 +21,27 @@ import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-su
 
 const schedule = dependencyPackage(scheduleSurface);
 
-const Ranking = defineDomainType("Ranking", dt =>
-  dt
-    .property(PT.string("schedule").assetDelivery())
-    .property(PT.prop("orderDirection", PT.enum("asc", "desc")).masterData().required())
-    .property(PT.bool("sum").masterData())
-    .property(PT.int64("minimumValue").masterData())
-    .property(PT.int64("maximumValue").masterData())
-    .property(PT.int64("score").userData().required())
-    .localizedProperties({
+const Ranking = defineDomainType("Ranking", {
+  properties: {
+    schedule: PT.string().assetDelivery(),
+    orderDirection: PT.enum("asc", "desc").masterData().required(),
+    sum: PT.bool().masterData(),
+    minimumValue: PT.int64().masterData(),
+    maximumValue: PT.int64().masterData(),
+    score: PT.int64().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ランキング",
+      description: "プレイヤーランキングの集計方法、開催期間、参加条件を設定します。",
+    },
+    en: {
+      label: "Ranking",
+      description:
+        "Configures scoring, availability, and participation rules for a player ranking.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ランキング", "ranking"),
       schedule: jaEnField(
         "開催スケジュール",
@@ -64,16 +80,27 @@ const Ranking = defineDomainType("Ranking", dt =>
         "Player's current score in this ranking.",
         { ja: "点", en: "points" }
       ),
-    })
-);
+    },
+});
 
-const RankingReward = defineDomainType("RankingReward", dt =>
-  dt
-    .property(PT.prop("ranking", PT.ref("Ranking")).assetDelivery().required())
-    .property(PT.int32("thresholdRank").masterData().required())
-    .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
-    .compositeKey("ranking", "thresholdRank")
-    .localizedProperties({
+const RankingReward = defineDomainType("RankingReward", {
+  properties: {
+    ranking: PT.ref(Ranking).assetDelivery().required(),
+    thresholdRank: PT.int32().masterData().required(),
+    acquireActions: PT.listOf(PT.acquireAction()).masterData().required(),
+  },
+  compositeKey: ["ranking", "thresholdRank"],
+  localizedDisplay: {
+    ja: {
+      label: "ランキング報酬",
+      description: "ランキングの順位範囲ごとに配布する報酬を設定します。",
+    },
+    en: {
+      label: "Ranking reward",
+      description: "Defines rewards distributed for each ranking placement range.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ランキング報酬", "ranking reward"),
       ranking: jaEnField(
         "対象ランキング",
@@ -94,14 +121,13 @@ const RankingReward = defineDomainType("RankingReward", dt =>
         "順位条件を満たしたプレイヤーへ実行する報酬アクションです。",
         "Reward actions executed for players who meet the placement threshold."
       ),
-    })
-);
+    },
+});
 
-const GlobalRankingModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.ranking2.GlobalRankingModel)
-    .mountLocal(Ranking)
-    .bindings({
+const GlobalRankingModel = defineMasterDataResource({
+  model: GS2.ranking2.GlobalRankingModel,
+  mount: Ranking,
+  bindings: {
       name: Bind.domainProperty(Source.direct(Ranking, "id")),
       metadata: Bind.static(""),
       orderDirection: Bind.domainProperty(Source.direct(Ranking, "orderDirection")),
@@ -111,38 +137,90 @@ const GlobalRankingModel = defineMasterDataResource(resource =>
       // Match reward thresholds to placement rather than score values.
       rewardCalculationIndex: Bind.static("rank"),
       ...Bind.nulls("accessPeriodEventId"),
-    })
-    .grnFieldMount("entryPeriodEventId", schedule.resourceId("schedule.Namespace"), [
+    },
+  grnFieldMounts: [
+    { parameterName: "entryPeriodEventId", mountedResource: schedule.resourceId("schedule.Namespace"), keyMappings: [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
-    ])
-    .grnKeyBinding(
-      "entryPeriodEventId",
-      "eventName",
-      Bind.domainProperty(Source.direct(Ranking, "schedule"))
-    )
-    .addArrayChild("rankingRewards", reward => {
-      reward
-        .model(GS2.ranking2.RankingReward)
-        .mountLocal(RankingReward)
-        .bindings({
+    ] },
+  ],
+  grnKeyBindings: [
+    { parameterName: "entryPeriodEventId", keyName: "eventName", directive: Bind.domainProperty(Source.direct(Ranking, "schedule")) },
+  ],
+  arrayChildren: {
+    rankingRewards: [
+      defineMasterDataResource({
+  model: GS2.ranking2.RankingReward,
+  mount: RankingReward,
+  bindings: {
           thresholdRank: Bind.domainProperty(Source.direct(RankingReward, "thresholdRank")),
           metadata: Bind.static(""),
-        })
-        .addArrayChild("acquireActions", acquireAction => {
-          acquireAction
-            .model(GS2.transaction.AcquireAction)
-            .mountLocal(RankingReward)
-            .actionProgram(
-              ActionProgram.domainProperty(
+        },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: RankingReward,
+  actionProgram: ActionProgram.domainProperty(
                 Source.parent(Source.direct(RankingReward, "acquireActions"))
-              )
-            );
-        });
-    })
-);
+              ),
+}),
+    ],
+  },
+}),
+    ],
+  },
+});
 
-export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.1")
-  .display({
+const ReceiveRankingRewardTransform = defineActionTransform("ReceiveRankingReward", {
+  category: "consume",
+  parameters: {
+    ranking: { type: PT.ref(Ranking) },
+    season: { type: PT.int64() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Ranking2:CreateGlobalRankingReceivedRewardByUserId",
+    resource: () => GlobalRankingModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      rankingName: OutputMap.parameter("ranking"),
+      userId: OutputMap.placeholder("#{userId}"),
+      season: OutputMap.parameter("season"),
+    },
+  },
+  ],
+});
+
+const VerifyRankingScoreReachedTransform = defineActionTransform("VerifyRankingScoreReached", {
+  category: "verify",
+  parameters: {
+    ranking: { type: PT.ref(Ranking) },
+    season: { type: PT.int64() },
+    score: { type: PT.int64() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Ranking2:VerifyGlobalRankingScoreByUserId",
+    resource: () => GlobalRankingModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      rankingName: OutputMap.parameter("ranking"),
+      verifyType: OutputMap.static("greaterEqual"),
+      season: OutputMap.parameter("season"),
+      score: OutputMap.parameter("score"),
+      multiplyValueSpecifyingQuantity: OutputMap.static(false),
+    },
+  },
+  ],
+});
+
+export const microLiveopsRanking = definePackage({
+  id: "micro-liveops-ranking",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "ランキング",
       description:
@@ -153,89 +231,39 @@ export const microLiveopsRanking = definePackage("micro-liveops-ranking", "0.0.1
       description:
         "A global leaderboard with a scheduled entry period and rewards handed out by rank.",
     },
-  })
-  .displayType(Ranking, {
-    ja: {
-      label: "ランキング",
-      description: "プレイヤーランキングの集計方法、開催期間、参加条件を設定します。",
-    },
-    en: {
-      label: "Ranking",
-      description:
-        "Configures scoring, availability, and participation rules for a player ranking.",
-    },
-  })
-  .displayType(RankingReward, {
-    ja: {
-      label: "ランキング報酬",
-      description: "ランキングの順位範囲ごとに配布する報酬を設定します。",
-    },
-    en: {
-      label: "Ranking reward",
-      description: "Defines rewards distributed for each ranking placement range.",
-    },
-  })
-  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  .domainType(Ranking)
-  .domainType(RankingReward)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.ranking2.Namespace)
-      .bindings({
+  },
+  dependencies: {
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [Ranking, RankingReward],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.ranking2.Namespace,
+  bindings: {
         name: Bind.static("Ranking"),
         logSetting: Bind.null(),
         // Auto-run executes the reward transaction; atomic commit keeps the receipt record and payout together.
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(GlobalRankingModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.ranking2.GlobalRankingScore)
-      .mountLocal(Ranking)
-      .linkedMasterResourceId(GlobalRankingModel)
-      .bindings({
+      },
+  children: [
+    GlobalRankingModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.ranking2.GlobalRankingScore,
+  mount: Ranking,
+  linkedMaster: GlobalRankingModel,
+  bindings: {
         score: Bind.domainProperties([Source.direct(Ranking, "score")]),
         globalRankingScoreId: Bind.skip(),
         rankingName: Bind.domainProperty(Source.direct(Ranking, "id")),
         season: Bind.skip(),
         metadata: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .actionTransform("ReceiveRankingReward", at =>
-    at
-      .category("consume")
-      .parameter("ranking", { type: PT.ref("Ranking") })
-      .parameter("season", { type: PT.int64() })
-      .output("Gs2Ranking2:CreateGlobalRankingReceivedRewardByUserId", o =>
-        o
-          .resourceRef(() => GlobalRankingModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("rankingName", "ranking")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("season", "season")
-      )
-  )
-  .actionTransform("VerifyRankingScoreReached", at =>
-    at
-      .category("verify")
-      .parameter("ranking", { type: PT.ref("Ranking") })
-      .parameter("season", { type: PT.int64() })
-      .parameter("score", { type: PT.int64() })
-      .output("Gs2Ranking2:VerifyGlobalRankingScoreByUserId", o =>
-        o
-          .resourceRef(() => GlobalRankingModel)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("rankingName", "ranking")
-          .mapStatic("verifyType", "greaterEqual")
-          .mapParameter("season", "season")
-          .mapParameter("score", "score")
-          .mapStatic("multiplyValueSpecifyingQuantity", false)
-      )
-  )
-  .build();
+      },
+}),
+  ],
+  actionTransforms: [ReceiveRankingRewardTransform, VerifyRankingScoreReachedTransform],
+});

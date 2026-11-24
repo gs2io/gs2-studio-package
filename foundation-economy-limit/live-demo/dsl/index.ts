@@ -5,34 +5,41 @@ import {
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  defineUiComponent,
   dependencyPackage,
+  instance,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+
 import limitSurface from "../../dsl/dependency-surface.json";
+
 import adSurface from "../../../foundation-economy-ad/dsl/dependency-surface.json";
+
 import adDemoSurface from "../../../foundation-economy-ad/live-demo/dsl/dependency-surface.json";
 
 const limit = dependencyPackage(limitSurface);
+
 const ad = dependencyPackage(adSurface);
+
 const adDemo = dependencyPackage(adDemoSurface);
 
 const UsageLimit = limit.type("UsageLimit");
 
-/** Bind both ceilings through authored properties so generated readers recover the deployed values instead of duplicating them in the page. */
-const UsageLimitCounter = defineOverlayDomainType(
-  "UsageLimitCounter",
-  limit.overlay("UsageLimitCounter"),
-  domainType =>
-    domainType
-      .property(PT.int32("freeMax").masterData().required())
-      .property(PT.int32("adMax").masterData().required())
-      .localizedProperties({
+const UsageLimitCounter = defineOverlayDomainType("UsageLimitCounter", limit.overlay("UsageLimitCounter"), {
+  properties: {
+    freeMax: PT.int32().masterData().required(),
+    adMax: PT.int32().masterData().required(),
+  },
+  localizedProperties: {
         freeMax: jaEnField(
           "無料回数の上限",
           "Free uses limit",
@@ -47,32 +54,33 @@ const UsageLimitCounter = defineOverlayDomainType(
           "How many times this can be used by watching an ad in each period.",
           { ja: "回", en: "uses" }
         ),
-      })
-);
+      },
+});
 
-/** Use the dependency handle for inherited property ids; the local overlay handle owns its new property names. */
 const UsageLimitCounterRow = limit.type("UsageLimitCounter");
 
-/** Use the published property id because this DSL evaluation does not load the dependency closure to resolve inherited names. */
 const COUNTER_LIMIT = limit.propertyId("UsageLimitCounter", "limit");
 
 const DAILY = "daily";
+
 const WEEKLY = "weekly";
 
 const RESET_HOUR = 0;
 
 const WEEKLY_RESET_DAY = "monday";
 
-/** Format the shared reset values here because template labels cannot pad or capitalize their bound values. */
 const RESET_CLOCK = `${String(RESET_HOUR).padStart(2, "0")}:00`;
+
 const WEEKLY_RESET_DAY_LABEL = WEEKLY_RESET_DAY.charAt(0).toUpperCase() + WEEKLY_RESET_DAY.slice(1);
 
 const COUNTER_1 = "counter1";
+
 const COUNTER_2 = "counter2";
+
 const COUNTER_3 = "counter3";
+
 const COUNTER_4 = "counter4";
 
-/** Derive deployed rows and reset actions from one list so a new counter cannot be omitted from reset. Only the first counter offers an ad-backed extension. */
 const ALLOWANCES = [
   { schedule: DAILY, counter: COUNTER_1, freeMax: 3, adMax: 5 },
   { schedule: DAILY, counter: COUNTER_2, freeMax: 4, adMax: 4 },
@@ -82,19 +90,16 @@ const ALLOWANCES = [
 
 const STEP = 1;
 
-/** Separate rate namespaces because each operation derives the same rate names from the counter ids. */
-const FreeUseRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(UsageLimitCounter)
-    .bindings({ name: Bind.domainProperty(Source.direct(UsageLimitCounter, "id")) })
-    .addArrayChild("consumeActions", consumeAction => {
-      consumeAction
-        .model(GS2.transaction.ConsumeAction)
-        .mountLocal(UsageLimitCounter)
-        .actionProgram(
-          // Read the schedule from the counter reference so the two-part identity cannot drift.
-          ActionProgram.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
+const FreeUseRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: UsageLimitCounter,
+  bindings: { name: Bind.domainProperty(Source.direct(UsageLimitCounter, "id")) },
+  arrayChildren: {
+    consumeActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.ConsumeAction,
+  mount: UsageLimitCounter,
+  actionProgram: ActionProgram.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
             Arg.domainProperty(
               "limit",
               Source.parent(Source.direct(UsageLimitCounterRow, COUNTER_LIMIT))
@@ -103,31 +108,27 @@ const FreeUseRateModel = defineMasterDataResource(resource =>
             Arg.static("countUpValue", STEP),
             // Bind the ceiling to its property so generated readers can recover it from the deployed request.
             Arg.domainProperty("maxValue", Source.direct(UsageLimitCounter, "freeMax")),
-          ])
-        );
-    })
-);
+          ]),
+}),
+    ],
+  },
+});
 
-/** Consume the ad point and count the use in one atomic exchange so a refused count-up cannot spend the point alone. */
-const AdUseRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(UsageLimitCounter)
-    .bindings({ name: Bind.domainProperty(Source.direct(UsageLimitCounter, "id")) })
-    .addArrayChild("consumeActions", consumeAction => {
-      consumeAction
-        .model(GS2.transaction.ConsumeAction)
-        .mountLocal(UsageLimitCounter)
-        .actionProgram(
-          ActionProgram.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), [])
-        );
-    })
-    .addArrayChild("consumeActions", consumeAction => {
-      consumeAction
-        .model(GS2.transaction.ConsumeAction)
-        .mountLocal(UsageLimitCounter)
-        .actionProgram(
-          ActionProgram.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
+const AdUseRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: UsageLimitCounter,
+  bindings: { name: Bind.domainProperty(Source.direct(UsageLimitCounter, "id")) },
+  arrayChildren: {
+    consumeActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.ConsumeAction,
+  mount: UsageLimitCounter,
+  actionProgram: ActionProgram.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), []),
+}),
+      defineMasterDataResource({
+  model: GS2.transaction.ConsumeAction,
+  mount: UsageLimitCounter,
+  actionProgram: ActionProgram.transform(limit.packageId, limit.transformId("CountUpUsageLimit"), [
             Arg.domainProperty(
               "limit",
               Source.parent(Source.direct(UsageLimitCounterRow, COUNTER_LIMIT))
@@ -135,34 +136,35 @@ const AdUseRateModel = defineMasterDataResource(resource =>
             Arg.domainProperty("counter", Source.direct(UsageLimitCounter, "id")),
             Arg.static("countUpValue", STEP),
             Arg.domainProperty("maxValue", Source.direct(UsageLimitCounter, "adMax")),
-          ])
-        );
-    })
-);
-
-/** Reset all counters together so visitors can retry without waiting for either cadence. */
-const ResetEveryAllowanceRateModel = defineMasterDataResource(resource => {
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(UsageLimitCounter)
-    .bindings({ name: Bind.domainProperty(Source.direct(UsageLimitCounter, "id")) });
-  for (const { schedule, counter } of ALLOWANCES) {
-    resource.addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(UsageLimitCounter)
-        .actionProgram(
-          ActionProgram.transform(limit.packageId, limit.transformId("ResetUsageLimitCounter"), [
-            Arg.static("limit", schedule),
-            Arg.static("counter", counter),
-          ])
-        );
-    });
-  }
+          ]),
+}),
+    ],
+  },
 });
 
-const withSchedules = definePackage("foundation-economy-limit-demo", "0.0.1")
-  .display({
+const ResetEveryAllowanceRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: UsageLimitCounter,
+  bindings: { name: Bind.domainProperty(Source.direct(UsageLimitCounter, "id")) },
+  arrayChildren: {
+    acquireActions: ALLOWANCES.map(({ schedule, counter }) =>
+      defineMasterDataResource({
+        model: GS2.transaction.AcquireAction,
+        mount: UsageLimitCounter,
+        actionProgram: ActionProgram.transform(
+          limit.packageId,
+          limit.transformId("ResetUsageLimitCounter"),
+          [Arg.static("limit", schedule), Arg.static("counter", counter)]
+        ),
+      })
+    ),
+  },
+});
+
+export const foundationEconomyLimitDemo = definePackage({
+  id: "foundation-economy-limit-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "回数制限（デモデータ）",
       description:
@@ -173,42 +175,38 @@ const withSchedules = definePackage("foundation-economy-limit-demo", "0.0.1")
       description:
         "Supplies the daily and weekly schedules the live demo shows, the four allowances that follow them, the free and ad-backed presses that use one, and the reset that puts them all back. The view point it spends comes from the ad demo.",
     },
-  })
-  .dependency(limit.packageId, "github:gs2io/gs2-studio-package")
-  // Reuse the ad demo stack so its point grant and namespace cannot diverge between demo deployments.
-  .dependency(adDemo.packageId, "github:gs2io/gs2-studio-package")
-  // Declare the base ad package because this rate directly calls its ConsumeAdViewPoint transform.
-  .dependency(ad.packageId, "github:gs2io/gs2-studio-package")
-
-  .domainType(UsageLimitCounter)
-
-  .instance(UsageLimit, DAILY, {
+  },
+  dependencies: {
+    [limit.packageId]: "github:gs2io/gs2-studio-package",
+    [adDemo.packageId]: "github:gs2io/gs2-studio-package",
+    [ad.packageId]: "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [UsageLimitCounter],
+  instances: [
+    instance(UsageLimit, DAILY, {
     [limit.propertyId("UsageLimit", "resetType")]: "daily",
     [limit.propertyId("UsageLimit", "resetHour")]: RESET_HOUR,
-  })
-
-  .instance(UsageLimit, WEEKLY, {
+  }),
+    instance(UsageLimit, WEEKLY, {
     [limit.propertyId("UsageLimit", "resetType")]: "weekly",
     [limit.propertyId("UsageLimit", "resetDayOfWeek")]: WEEKLY_RESET_DAY,
     [limit.propertyId("UsageLimit", "resetHour")]: RESET_HOUR,
-  });
-
-const withCounters = ALLOWANCES.reduce(
-  (builder, { schedule, counter, freeMax, adMax }) =>
-    // Use the local type name so authored rows can include overlay properties absent from the dependency surface.
-    builder.instance("UsageLimitCounter", counter, {
+  }),
+    ...ALLOWANCES.map(({ schedule, counter, freeMax, adMax }) => instance(UsageLimitCounter, counter, {
       [COUNTER_LIMIT]: schedule,
       freeMax,
       adMax,
-    }),
-  withSchedules
-);
-
-export const foundationEconomyLimitDemo = withCounters
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+    })),
+  ],
+  delegatedActions: [
+    { target: UsageLimitCounter, methodName: "UseFree", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: FreeUseRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+    { target: UsageLimitCounter, methodName: "UseWithAd", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: AdUseRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+    { target: UsageLimitCounter, methodName: "ResetEveryAllowance", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: ResetEveryAllowanceRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("LimitFreeUse"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -218,14 +216,14 @@ export const foundationEconomyLimitDemo = withCounters
         ),
         // Auto-run executes the transaction without a second client request after the exchange.
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(FreeUseRateModel)
-  )
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+      },
+  children: [
+    FreeUseRateModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("LimitAdUse"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -234,14 +232,14 @@ export const foundationEconomyLimitDemo = withCounters
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(AdUseRateModel)
-  )
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+      },
+  children: [
+    AdUseRateModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("LimitReset"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -250,104 +248,55 @@ export const foundationEconomyLimitDemo = withCounters
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(ResetEveryAllowanceRateModel)
-  )
-
-  // Keep separate cadence labels because the weekly schedule must also name its reset day.
-  .uiComponent(UsageLimit, ui =>
-    ui
-      .templateLabel(
-        "ScheduleLabel",
-        `Resets every day at ${RESET_CLOCK} UTC`,
-        {},
-        { name: "UsageLimit" }
-      )
-      .templateLabel(
-        "WeeklyScheduleLabel",
-        `Resets every ${WEEKLY_RESET_DAY_LABEL} at ${RESET_CLOCK} UTC`,
-        {},
-        { name: "UsageLimit" }
-      )
-      .activeToggle("WeeklyActiveToggle", UiCond.eq(ui.prop("resetType"), ui.lit(WEEKLY)), {
+      },
+  children: [
+    ResetEveryAllowanceRateModel,
+  ],
+}),
+  ],
+  uiComponents: [
+    defineUiComponent(UsageLimit, {
+  items: [
+    UiItem.templateLabel("ScheduleLabel", `Resets every day at ${RESET_CLOCK} UTC`, {}, { name: "UsageLimit" }),
+    UiItem.templateLabel("WeeklyScheduleLabel", `Resets every ${WEEKLY_RESET_DAY_LABEL} at ${RESET_CLOCK} UTC`, {}, { name: "UsageLimit" }),
+    UiItem.activeToggle("WeeklyActiveToggle", UiCond.eq(UiSource.prop("resetType"), UiSource.lit(WEEKLY)), {
         name: "UsageLimit",
-      })
-      .activeToggle("NotWeeklyActiveToggle", UiCond.neq(ui.prop("resetType"), ui.lit(WEEKLY)), {
+      }),
+    UiItem.activeToggle("NotWeeklyActiveToggle", UiCond.neq(UiSource.prop("resetType"), UiSource.lit(WEEKLY)), {
         name: "UsageLimit",
-      })
-  )
-
-  .uiComponent(UsageLimitCounter, ui =>
-    ui
-      .templateLabel(
-        "UsageLabel",
-        "{count} used. Free uses stop at {free}, ad-backed uses at {adBacked}.",
-        {
-          count: ui.prop("count"),
-          free: ui.prop("freeMax"),
-          adBacked: ui.prop("adMax"),
-        },
-        { name: "UsageLimitCounter" }
-      )
-      .templateLabel(
-        "AllowanceLabel",
-        "{count} of {free} used",
-        { count: ui.prop("count"), free: ui.prop("freeMax") },
-        { name: "UsageLimitCounter" }
-      )
-      // Show exhaustion before a press so an unavailable use is distinguishable from a button that failed silently.
-      .templateLabel(
-        "NoFreeUsesLeftLabel",
-        "{count} of {free} free uses are spent. Free uses come back at the next reset.",
-        { count: ui.prop("count"), free: ui.prop("freeMax") },
-        { name: "UsageLimitCounter" }
-      )
-      .templateLabel(
-        "NothingLeftLabel",
-        "{count} of {adBacked} uses are spent. Nothing more until the next reset.",
-        { count: ui.prop("count"), adBacked: ui.prop("adMax") },
-        { name: "UsageLimitCounter" }
-      )
-      // Page toggle bindings hide their rows while the condition holds, so each condition describes when its rows are unnecessary.
-      .activeToggle("FreeUsesSpentActiveToggle", UiCond.gte(ui.prop("count"), ui.prop("freeMax")), {
+      }),
+  ],
+}),
+    defineUiComponent(UsageLimitCounter, {
+  items: [
+    UiItem.templateLabel("UsageLabel", "{count} used. Free uses stop at {free}, ad-backed uses at {adBacked}.", {
+          count: UiSource.prop("count"),
+          free: UiSource.prop("freeMax"),
+          adBacked: UiSource.prop("adMax"),
+        }, { name: "UsageLimitCounter" }),
+    UiItem.templateLabel("AllowanceLabel", "{count} of {free} used", { count: UiSource.prop("count"), free: UiSource.prop("freeMax") }, { name: "UsageLimitCounter" }),
+    UiItem.templateLabel("NoFreeUsesLeftLabel", "{count} of {free} free uses are spent. Free uses come back at the next reset.", { count: UiSource.prop("count"), free: UiSource.prop("freeMax") }, { name: "UsageLimitCounter" }),
+    UiItem.templateLabel("NothingLeftLabel", "{count} of {adBacked} uses are spent. Nothing more until the next reset.", { count: UiSource.prop("count"), adBacked: UiSource.prop("adMax") }, { name: "UsageLimitCounter" }),
+    UiItem.activeToggle("FreeUsesSpentActiveToggle", UiCond.gte(UiSource.prop("count"), UiSource.prop("freeMax")), {
         name: "UsageLimitCounter",
-      })
-      .activeToggle("FreeUsesLeftActiveToggle", UiCond.lt(ui.prop("count"), ui.prop("freeMax")), {
+      }),
+    UiItem.activeToggle("FreeUsesLeftActiveToggle", UiCond.lt(UiSource.prop("count"), UiSource.prop("freeMax")), {
         name: "UsageLimitCounter",
-      })
-      // Combine both unavailable ranges because separate toggles targeting one row would overwrite each other. The page grants an ad point before exchanging it, so hide that flow when the count already rules out a use.
-      .activeToggle(
-        "AdUsesUnavailableActiveToggle",
-        UiCond.or(
-          UiCond.lt(ui.prop("count"), ui.prop("freeMax")),
-          UiCond.gte(ui.prop("count"), ui.prop("adMax"))
-        ),
-        { name: "UsageLimitCounter" }
-      )
-      .activeToggle("AnyUseLeftActiveToggle", UiCond.lt(ui.prop("count"), ui.prop("adMax")), {
+      }),
+    UiItem.activeToggle("AdUsesUnavailableActiveToggle", UiCond.or(
+          UiCond.lt(UiSource.prop("count"), UiSource.prop("freeMax")),
+          UiCond.gte(UiSource.prop("count"), UiSource.prop("adMax"))
+        ), { name: "UsageLimitCounter" }),
+    UiItem.activeToggle("AnyUseLeftActiveToggle", UiCond.lt(UiSource.prop("count"), UiSource.prop("adMax")), {
         name: "UsageLimitCounter",
-      })
-      .value("NextResetInValue", ui.prop("nextResetAt"), { name: "UsageLimitCounter" })
-      .buttonAction("UseFreeButton", "UseFree", undefined, { name: "UsageLimitCounter" })
-      .buttonAction("UseWithAdButton", "UseWithAd", undefined, { name: "UsageLimitCounter" })
-      .buttonAction("ResetEveryAllowanceButton", "ResetEveryAllowance", undefined, {
+      }),
+    UiItem.value("NextResetInValue", UiSource.prop("nextResetAt"), { name: "UsageLimitCounter" }),
+    UiItem.buttonAction("UseFreeButton", "UseFree", undefined, { name: "UsageLimitCounter" }),
+    UiItem.buttonAction("UseWithAdButton", "UseWithAd", undefined, { name: "UsageLimitCounter" }),
+    UiItem.buttonAction("ResetEveryAllowanceButton", "ResetEveryAllowance", undefined, {
         name: "UsageLimitCounter",
-      })
-  )
-
-  .delegatedAction(UsageLimitCounter, "UseFree", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: FreeUseRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .delegatedAction(UsageLimitCounter, "UseWithAd", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: AdUseRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .delegatedAction(UsageLimitCounter, "ResetEveryAllowance", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: ResetEveryAllowanceRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .build();
+      }),
+  ],
+}),
+  ],
+});

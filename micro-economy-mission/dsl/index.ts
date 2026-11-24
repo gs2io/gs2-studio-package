@@ -1,15 +1,22 @@
 import {
   ActionProgram,
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
+  defineUserDataResource,
   dependencyPackage,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -18,22 +25,26 @@ import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-su
 
 const schedule = dependencyPackage(scheduleSurface);
 
-const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
+const Schedule = schedule.type("Schedule");
 
-const MissionSetting = defineDomainType("MissionSetting", dt =>
-  dt
-    .singleEntry()
-    .property(
-      PT.prop(
-        "resetDayOfWeek",
-        PT.enum("sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday")
-      )
-        .masterData()
-        .required()
-    )
-    .property(PT.int32("resetDayOfMonth").masterData().required())
-    .property(PT.int32("resetHour").masterData().required())
-    .localizedProperties({
+const MissionSetting = defineDomainType("MissionSetting", {
+  singleEntry: true,
+  properties: {
+    resetDayOfWeek: PT.enum("sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday").masterData().required(),
+    resetDayOfMonth: PT.int32().masterData().required(),
+    resetHour: PT.int32().masterData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ミッション設定",
+      description: "ミッションカウンターのリセット方法や共通動作を設定します。",
+    },
+    en: {
+      label: "Mission setting",
+      description: "Configures counter reset rules and shared mission behavior.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ミッション設定", "mission settings"),
       resetDayOfWeek: jaEnField(
         "週次リセット曜日",
@@ -55,16 +66,27 @@ const MissionSetting = defineDomainType("MissionSetting", dt =>
         "UTC hour when missions reset.",
         { ja: "時", en: "hour" }
       ),
-    })
-);
+    },
+});
 
-const MissionCounter = defineDomainType("MissionCounter", dt =>
-  dt
-    .property(PT.int64("todayValue").userData().required())
-    .property(PT.int64("weeklyValue").userData().required())
-    .property(PT.int64("monthlyValue").userData().required())
-    .property(PT.int64("totalValue").userData().required())
-    .localizedProperties({
+const MissionCounter = defineDomainType("MissionCounter", {
+  properties: {
+    todayValue: PT.int64().userData().required(),
+    weeklyValue: PT.int64().userData().required(),
+    monthlyValue: PT.int64().userData().required(),
+    totalValue: PT.int64().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ミッションカウンター",
+      description: "ミッション達成条件に使用するプレイヤーごとの進捗値を管理します。",
+    },
+    en: {
+      label: "Mission counter",
+      description: "Tracks per-player progress values used by mission completion conditions.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ミッションカウンター", "mission counter"),
       todayValue: jaEnField(
         "本日の値",
@@ -90,18 +112,25 @@ const MissionCounter = defineDomainType("MissionCounter", dt =>
         "リセットされない累計の進捗値です。",
         "All-time progress value that is not reset."
       ),
-    })
-);
+    },
+});
 
-const MissionCollection = defineDomainType("MissionCollection", dt =>
-  dt
-    .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).assetDelivery())
-    .property(
-      PT.prop("scope", PT.enum("daily", "weekly", "monthly", "notReset"))
-        .masterData()
-        .required()
-    )
-    .localizedProperties({
+const MissionCollection = defineDomainType("MissionCollection", {
+  properties: {
+    schedule: PT.ref(Schedule).assetDelivery(),
+    scope: PT.enum("daily", "weekly", "monthly", "notReset").masterData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ミッショングループ",
+      description: "ミッションの公開範囲と開催スケジュールをまとめて設定します。",
+    },
+    en: {
+      label: "Mission group",
+      description: "Groups missions by scope and availability schedule.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ミッショングループ", "mission group"),
       schedule: jaEnField(
         "開催スケジュール",
@@ -115,20 +144,30 @@ const MissionCollection = defineDomainType("MissionCollection", dt =>
         "グループ内ミッションの進捗をリセットする単位です。",
         "Reset cadence used by missions in this group."
       ),
-    })
-);
+    },
+});
 
-const Mission = defineDomainType("Mission", dt =>
-  dt
-    .property(PT.prop("missionCollection", PT.ref("MissionCollection")).masterData().required())
-    .property(
-      PT.prop("completeAcquireActions", PT.listOf(PT.acquireAction())).masterData().required()
-    )
-    .property(PT.prop("counter", PT.ref("MissionCounter")).masterData().required())
-    .property(PT.int64("targetValue").masterData().required())
-    .property(PT.bool("completed").userData().required())
-    .property(PT.bool("received").userData().required())
-    .localizedProperties({
+const Mission = defineDomainType("Mission", {
+  properties: {
+    missionCollection: PT.ref(MissionCollection).masterData().required(),
+    completeAcquireActions: PT.listOf(PT.acquireAction()).masterData().required(),
+    counter: PT.ref(MissionCounter).masterData().required(),
+    targetValue: PT.int64().masterData().required(),
+    completed: PT.bool().userData().required(),
+    received: PT.bool().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ミッション",
+      description: "達成カウンター、目標値、完了報酬と受取状態を設定・管理します。",
+    },
+    en: {
+      label: "Mission",
+      description:
+        "Defines a mission's counter, target value, completion rewards, and claim state.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ミッション", "mission"),
       missionCollection: jaEnField(
         "ミッショングループ",
@@ -166,117 +205,110 @@ const Mission = defineDomainType("Mission", dt =>
         "プレイヤーが完了報酬を受け取ったかを示します。",
         "Whether the player has claimed the completion reward."
       ),
-    })
-);
-
-const CounterModel = defineMasterDataResource(resource => {
-  const model = resource
-    .model(GS2.mission.CounterModel)
-    .mountLocal(MissionCounter)
-    .bindings({
-      name: Bind.domainProperty(Source.direct(MissionCounter, "id")),
-      challengePeriodEventId: Bind.null(),
-    });
-  model.addArrayChild("scopes", scope => {
-    scope
-      .model(GS2.mission.CounterScopeModel)
-      .mountLocal(MissionCounter)
-      .bindings({
-        scopeType: Bind.static("resetTiming"),
-        resetType: Bind.static("daily"),
-        resetHour: Bind.domainProperty(
-          Source.parent(Source.parent(Source.direct(MissionSetting, "resetHour")))
-        ),
-      });
-  });
-  model.addArrayChild("scopes", scope => {
-    scope
-      .model(GS2.mission.CounterScopeModel)
-      .mountLocal(MissionCounter)
-      .bindings({
-        scopeType: Bind.static("resetTiming"),
-        resetType: Bind.static("weekly"),
-        resetDayOfWeek: Bind.domainProperty(
-          Source.parent(Source.parent(Source.direct(MissionSetting, "resetDayOfWeek")))
-        ),
-        resetHour: Bind.domainProperty(
-          Source.parent(Source.parent(Source.direct(MissionSetting, "resetHour")))
-        ),
-      });
-  });
-  model.addArrayChild("scopes", scope => {
-    scope
-      .model(GS2.mission.CounterScopeModel)
-      .mountLocal(MissionCounter)
-      .bindings({
-        scopeType: Bind.static("resetTiming"),
-        resetType: Bind.static("monthly"),
-        resetDayOfMonth: Bind.domainProperty(
-          Source.parent(Source.parent(Source.direct(MissionSetting, "resetDayOfMonth")))
-        ),
-        resetHour: Bind.domainProperty(
-          Source.parent(Source.parent(Source.direct(MissionSetting, "resetHour")))
-        ),
-      });
-  });
-  model.addArrayChild("scopes", scope => {
-    scope
-      .model(GS2.mission.CounterScopeModel)
-      .mountLocal(MissionCounter)
-      .bindings({
-        scopeType: Bind.static("resetTiming"),
-        resetType: Bind.static("notReset"),
-      });
-  });
-  return model;
+    },
 });
 
-const MissionTaskModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.mission.MissionTaskModel)
-    .mountLocal(Mission)
-    .bindings({
+const CounterModel = defineMasterDataResource({
+  model: GS2.mission.CounterModel,
+  mount: MissionCounter,
+  bindings: {
+    name: Bind.domainProperty(Source.direct(MissionCounter, "id")),
+    challengePeriodEventId: Bind.null(),
+  },
+  arrayChildren: {
+    scopes: [
+      defineMasterDataResource({
+        model: GS2.mission.CounterScopeModel,
+        mount: MissionCounter,
+        bindings: {
+          scopeType: Bind.static("resetTiming"),
+          resetType: Bind.static("daily"),
+          resetHour: Bind.domainProperty(
+            Source.parent(Source.parent(Source.direct(MissionSetting, "resetHour")))
+          ),
+        },
+      }),
+      defineMasterDataResource({
+        model: GS2.mission.CounterScopeModel,
+        mount: MissionCounter,
+        bindings: {
+          scopeType: Bind.static("resetTiming"),
+          resetType: Bind.static("weekly"),
+          resetDayOfWeek: Bind.domainProperty(
+            Source.parent(Source.parent(Source.direct(MissionSetting, "resetDayOfWeek")))
+          ),
+          resetHour: Bind.domainProperty(
+            Source.parent(Source.parent(Source.direct(MissionSetting, "resetHour")))
+          ),
+        },
+      }),
+      defineMasterDataResource({
+        model: GS2.mission.CounterScopeModel,
+        mount: MissionCounter,
+        bindings: {
+          scopeType: Bind.static("resetTiming"),
+          resetType: Bind.static("monthly"),
+          resetDayOfMonth: Bind.domainProperty(
+            Source.parent(Source.parent(Source.direct(MissionSetting, "resetDayOfMonth")))
+          ),
+          resetHour: Bind.domainProperty(
+            Source.parent(Source.parent(Source.direct(MissionSetting, "resetHour")))
+          ),
+        },
+      }),
+      defineMasterDataResource({
+        model: GS2.mission.CounterScopeModel,
+        mount: MissionCounter,
+        bindings: {
+          scopeType: Bind.static("resetTiming"),
+          resetType: Bind.static("notReset"),
+        },
+      }),
+    ],
+  },
+});
+
+const MissionTaskModel = defineMasterDataResource({
+  model: GS2.mission.MissionTaskModel,
+  mount: Mission,
+  bindings: {
       name: Bind.domainProperty(Source.direct(Mission, "id")),
       verifyCompleteType: Bind.static("counter"),
       targetCounter: {
         conditionName: Bind.static(""),
         counterName: Bind.domainProperty(
-          Source.idRef(
-            "Mission",
-            [{ refPropertyName: "counter", targetTypeName: "MissionCounter" }],
-            "id"
-          )
+          Source.idRef(Mission, [{ refPropertyName: "counter", target: MissionCounter }], "id")
         ),
         resetType: Bind.static("notReset"),
         scopeType: Bind.null(),
         value: Bind.domainProperty(Source.direct(Mission, "targetValue")),
       },
-    })
-    .grnFieldMount("challengePeriodEventId", schedule.resourceId("schedule.Namespace"), [
+    },
+  grnFieldMounts: [
+    { parameterName: "challengePeriodEventId", mountedResource: schedule.resourceId("schedule.Namespace"), keyMappings: [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
-    ])
-    .grnKeyBinding(
-      "challengePeriodEventId",
-      "eventName",
-      Bind.domainProperty(Source.parent(Source.direct(MissionCollection, "schedule")))
-    )
-    .addArrayChild("completeAcquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(Mission)
-        .actionProgram(
-          ActionProgram.domainProperty(
+    ] },
+  ],
+  grnKeyBindings: [
+    { parameterName: "challengePeriodEventId", keyName: "eventName", directive: Bind.domainProperty(Source.parent(Source.direct(MissionCollection, "schedule"))) },
+  ],
+  arrayChildren: {
+    completeAcquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: Mission,
+  actionProgram: ActionProgram.domainProperty(
             Source.parent(Source.direct(Mission, "completeAcquireActions"))
-          )
-        );
-    })
-);
+          ),
+}),
+    ],
+  },
+});
 
-const MissionGroupModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.mission.MissionGroupModel)
-    .mountLocal(MissionCollection)
-    .bindings({
+const MissionGroupModel = defineMasterDataResource({
+  model: GS2.mission.MissionGroupModel,
+  mount: MissionCollection,
+  bindings: {
       name: Bind.domainProperty(Source.direct(MissionCollection, "id")),
       completeNotificationNamespaceId: Bind.null(),
       resetType: Bind.domainProperty(Source.direct(MissionCollection, "scope")),
@@ -287,12 +319,39 @@ const MissionGroupModel = defineMasterDataResource(resource =>
         Source.parent(Source.direct(MissionSetting, "resetDayOfWeek"))
       ),
       resetHour: Bind.domainProperty(Source.parent(Source.direct(MissionSetting, "resetHour"))),
-    })
-    .addArrayChild("tasks", MissionTaskModel)
-);
+    },
+  arrayChildren: {
+    tasks: [
+      MissionTaskModel,
+    ],
+  },
+});
 
-export const microEconomyMission = definePackage("micro-economy-mission", "0.0.1")
-  .display({
+const IncreaseMissionCounterTransform = defineActionTransform("IncreaseMissionCounter", {
+  category: "acquire",
+  parameters: {
+    counter: { type: PT.ref(MissionCounter) },
+    value: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Mission:IncreaseCounterByUserId",
+    resource: () => CounterModel,
+    parameterMappings: {
+      namespaceName: OutputMap.mountedResourceProperty(() => CounterModel),
+      counterName: OutputMap.parameter("counter"),
+      userId: OutputMap.placeholder("#{userId}"),
+      value: OutputMap.parameter("value"),
+    },
+  },
+  ],
+});
+
+export const microEconomyMission = definePackage({
+  id: "micro-economy-mission",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "ミッション",
       description: "日次・週次・月次・リセットなしのミッションと、その達成条件・報酬を管理します。",
@@ -302,74 +361,20 @@ export const microEconomyMission = definePackage("micro-economy-mission", "0.0.1
       description:
         "Manages missions that reset daily, weekly, monthly or never, along with their conditions and rewards.",
     },
-  })
-  .displayType(MissionCollection, {
-    ja: {
-      label: "ミッショングループ",
-      description: "ミッションの公開範囲と開催スケジュールをまとめて設定します。",
-    },
-    en: {
-      label: "Mission group",
-      description: "Groups missions by scope and availability schedule.",
-    },
-  })
-  .displayType(MissionCounter, {
-    ja: {
-      label: "ミッションカウンター",
-      description: "ミッション達成条件に使用するプレイヤーごとの進捗値を管理します。",
-    },
-    en: {
-      label: "Mission counter",
-      description: "Tracks per-player progress values used by mission completion conditions.",
-    },
-  })
-  .displayType(MissionSetting, {
-    ja: {
-      label: "ミッション設定",
-      description: "ミッションカウンターのリセット方法や共通動作を設定します。",
-    },
-    en: {
-      label: "Mission setting",
-      description: "Configures counter reset rules and shared mission behavior.",
-    },
-  })
-  .displayType(Mission, {
-    ja: {
-      label: "ミッション",
-      description: "達成カウンター、目標値、完了報酬と受取状態を設定・管理します。",
-    },
-    en: {
-      label: "Mission",
-      description:
-        "Defines a mission's counter, target value, completion rewards, and claim state.",
-    },
-  })
-  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  .domainType(MissionCollection)
-  .domainType(MissionCounter)
-  .domainType(MissionSetting)
-  .domainType(Mission)
-
-  .uiComponent(Mission, ui =>
-    ui
-      .activeToggle("CompletedActiveToggle", UiCond.truthy(ui.prop("completed")), {
-        name: "Mission",
-      })
-      .activeToggle("ReceivedActiveToggle", UiCond.truthy(ui.prop("received")), { name: "Mission" })
-  )
-  .uiComponent(MissionCounter, ui =>
-    ui
-      .label("TodayValueLabel", ui.prop("todayValue"), { name: "MissionCounter" })
-      .label("WeeklyValueLabel", ui.prop("weeklyValue"), { name: "MissionCounter" })
-      .label("MonthlyValueLabel", ui.prop("monthlyValue"), { name: "MissionCounter" })
-      .label("TotalValueLabel", ui.prop("totalValue"), { name: "MissionCounter" })
-  )
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.mission.Namespace)
-      .mountLocal(MissionSetting)
-      .bindings({
+  },
+  dependencies: {
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [MissionCollection, MissionCounter, MissionSetting, Mission],
+  delegatedActions: [
+    { target: MissionCollection, methodName: "Receive", action: { targetActionKey: "Gs2Mission:MissionGroupModel.BatchComplete", targetResource: MissionGroupModel, parameterOverrides: [] } },
+    { target: Mission, methodName: "Receive", action: { targetActionKey: "Gs2Mission:MissionTaskModel.Complete", targetResource: MissionTaskModel, parameterOverrides: [] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.mission.Namespace,
+  mount: MissionSetting,
+  bindings: {
         name: Bind.static("Mission"),
         ...Bind.nulls(
           "counterIncrementScript",
@@ -384,89 +389,87 @@ export const microEconomyMission = definePackage("micro-economy-mission", "0.0.1
           sound: Bind.static(""),
         },
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(CounterModel)
-      .addChild(MissionGroupModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.mission.Complete)
-      .mountLocal(MissionCollection)
-      .linkedMasterResourceId(MissionGroupModel)
-      .bindings({
+      },
+  children: [
+    CounterModel,
+    MissionGroupModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.mission.Complete,
+  mount: MissionCollection,
+  linkedMaster: MissionGroupModel,
+  bindings: {
         completeId: Bind.skip(),
         missionGroupName: Bind.skip(),
         userId: Bind.skip(),
-      })
-      .arrayMembershipMapping("completedMissionTaskNames", Mission, "id", "completed")
-      .arrayMembershipMapping("receivedMissionTaskNames", Mission, "id", "received")
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.mission.Counter)
-      .linkedMasterResourceId(CounterModel)
-      .bindings({
+      },
+  arrayMembershipMappings: [
+    { parameterName: "completedMissionTaskNames", child: Mission, targetKeyProperty: "id", targetProperty: "completed" },
+    { parameterName: "receivedMissionTaskNames", child: Mission, targetKeyProperty: "id", targetProperty: "received" },
+  ],
+}),
+    defineUserDataResource({
+  model: GS2.mission.Counter,
+  linkedMaster: CounterModel,
+  bindings: {
         counterId: Bind.skip(),
         name: Bind.skip(),
         userId: Bind.skip(),
-      })
-      .elementProjectionBinding("values", MissionCounter, [
+      },
+  elementProjectionBindings: [
+    { parameterName: "values", target: MissionCounter, entries: [
         {
           selectors: [
             { fieldName: "scopeType", value: "resetTiming" },
             { fieldName: "resetType", value: "daily" },
           ],
-          projections: [{ fieldName: "value", targetPropertyName: "todayValue" }],
+          projections: [{ fieldName: "value", targetProperty: "todayValue" }],
         },
         {
           selectors: [
             { fieldName: "scopeType", value: "resetTiming" },
             { fieldName: "resetType", value: "weekly" },
           ],
-          projections: [{ fieldName: "value", targetPropertyName: "weeklyValue" }],
+          projections: [{ fieldName: "value", targetProperty: "weeklyValue" }],
         },
         {
           selectors: [
             { fieldName: "scopeType", value: "resetTiming" },
             { fieldName: "resetType", value: "monthly" },
           ],
-          projections: [{ fieldName: "value", targetPropertyName: "monthlyValue" }],
+          projections: [{ fieldName: "value", targetProperty: "monthlyValue" }],
         },
         {
           selectors: [
             { fieldName: "scopeType", value: "resetTiming" },
             { fieldName: "resetType", value: "notReset" },
           ],
-          projections: [{ fieldName: "value", targetPropertyName: "totalValue" }],
+          projections: [{ fieldName: "value", targetProperty: "totalValue" }],
         },
-      ])
-  )
-
-  .actionTransform("IncreaseMissionCounter", at =>
-    at
-      .category("acquire")
-      .parameter("counter", { type: PT.ref("MissionCounter") })
-      .parameter("value", { type: PT.int32() })
-      .output("Gs2Mission:IncreaseCounterByUserId", o =>
-        o
-          .resourceRef(() => CounterModel)
-          .mapMountedResourceProperty("namespaceName", () => CounterModel)
-          .mapParameter("counterName", "counter")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("value", "value")
-      )
-  )
-
-  .delegatedAction(MissionCollection, "Receive", {
-    targetActionKey: "Gs2Mission:MissionGroupModel.BatchComplete",
-    targetResource: MissionGroupModel,
-    parameterOverrides: [],
-  })
-  .delegatedAction(Mission, "Receive", {
-    targetActionKey: "Gs2Mission:MissionTaskModel.Complete",
-    targetResource: MissionTaskModel,
-    parameterOverrides: [],
-  })
-  .build();
+      ] },
+  ],
+}),
+  ],
+  actionTransforms: [IncreaseMissionCounterTransform],
+  uiComponents: [
+    defineUiComponent(Mission, {
+  items: [
+    UiItem.activeToggle("CompletedActiveToggle", UiCond.truthy(UiSource.prop("completed")), {
+        name: "Mission",
+      }),
+    UiItem.activeToggle("ReceivedActiveToggle", UiCond.truthy(UiSource.prop("received")), { name: "Mission" }),
+  ],
+}),
+    defineUiComponent(MissionCounter, {
+  items: [
+    UiItem.label("TodayValueLabel", UiSource.prop("todayValue"), { name: "MissionCounter" }),
+    UiItem.label("WeeklyValueLabel", UiSource.prop("weeklyValue"), { name: "MissionCounter" }),
+    UiItem.label("MonthlyValueLabel", UiSource.prop("monthlyValue"), { name: "MissionCounter" }),
+    UiItem.label("TotalValueLabel", UiSource.prop("totalValue"), { name: "MissionCounter" }),
+  ],
+}),
+  ],
+});

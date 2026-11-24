@@ -1,29 +1,51 @@
 import {
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
+  defineUserDataResource,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-const EquipmentCategory = defineDomainType("EquipmentCategory", dt =>
-  dt.localizedProperties({
+const EquipmentCategory = defineDomainType("EquipmentCategory", {
+  localizedDisplay: {
+    ja: { label: "装備カテゴリ", description: "装備を分類するカテゴリを登録します。" },
+    en: {
+      label: "Equipment category",
+      description: "Registers categories used to classify equipment.",
+    },
+  },
+  localizedProperties: {
     id: jaEnId("装備カテゴリ", "equipment category"),
-  })
-);
+  },
+});
 
-const Equipment = defineDomainType("Equipment", dt =>
-  dt
-    .property(PT.prop("category", PT.ref("EquipmentCategory")).assetDelivery().required())
-    .property(PT.int32("sortValue").masterData().required())
-    .property(PT.string("propertyId").userData().required())
-    .localizedProperties({
+const Equipment = defineDomainType("Equipment", {
+  properties: {
+    category: PT.ref(EquipmentCategory).assetDelivery().required(),
+    sortValue: PT.int32().masterData().required(),
+    propertyId: PT.string().userData().required(),
+  },
+  localizedDisplay: {
+    ja: { label: "装備", description: "ゲームに登場する装備、カテゴリ、表示順を登録します。" },
+    en: {
+      label: "Equipment",
+      description: "Registers equipment available in the game, its category, and display order.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("装備", "equipment item"),
       category: jaEnField(
         "装備カテゴリ",
@@ -43,18 +65,29 @@ const Equipment = defineDomainType("Equipment", dt =>
         "プレイヤーが所持する装備個体の識別子です。",
         "Identifier of the equipment instance owned by the player."
       ),
-    })
-);
+    },
+});
 
-// A constant inventory name gives each player one bag, so the collection has a single entry.
-const EquipmentCollection = defineDomainType("EquipmentCollection", dt =>
-  dt
-    .singleEntry()
-    .property(PT.int32("defaultCapacity").masterData().required())
-    .property(PT.int32("maximumCapacity").masterData().required())
-    .property(PT.int32("currentCapacityUsage").userData().required())
-    .property(PT.int32("currentMaximumCapacity").userData().required())
-    .localizedProperties({
+const EquipmentCollection = defineDomainType("EquipmentCollection", {
+  singleEntry: true,
+  properties: {
+    defaultCapacity: PT.int32().masterData().required(),
+    maximumCapacity: PT.int32().masterData().required(),
+    currentCapacityUsage: PT.int32().userData().required(),
+    currentMaximumCapacity: PT.int32().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "装備所持枠",
+      description: "プレイヤーが所持できる装備数の初期値・上限・現在値を管理します。",
+    },
+    en: {
+      label: "Equipment slots",
+      description:
+        "Manages the initial, maximum, and current number of equipment slots a player owns.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("装備所持枠", "equipment inventory"),
       defaultCapacity: jaEnField(
         "初期所持枠",
@@ -84,37 +117,108 @@ const EquipmentCollection = defineDomainType("EquipmentCollection", dt =>
         "Equipment capacity currently available to the player.",
         { ja: "枠", en: "slots" }
       ),
-    })
-);
+    },
+});
 
-const ItemModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.inventory.ItemModel)
-    .mountLocal(Equipment)
-    .bindings({
+const ItemModel = defineMasterDataResource({
+  model: GS2.inventory.ItemModel,
+  mount: Equipment,
+  bindings: {
       name: Bind.domainProperty(Source.direct(Equipment, "id")),
       sortValue: Bind.domainProperty(Source.direct(Equipment, "sortValue")),
       allowMultipleStacks: Bind.static(true),
       stackingLimit: Bind.static(1),
-    })
-);
+    },
+});
 
-const InventoryModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.inventory.InventoryModel)
-    .mountLocal(EquipmentCollection)
-    .bindings({
+const InventoryModel = defineMasterDataResource({
+  model: GS2.inventory.InventoryModel,
+  mount: EquipmentCollection,
+  bindings: {
       name: Bind.static("Equipment"),
       initialCapacity: Bind.domainProperty(Source.direct(EquipmentCollection, "defaultCapacity")),
       maxCapacity: Bind.domainProperty(Source.direct(EquipmentCollection, "maximumCapacity")),
       // Referenced equipment must remain available to the character wearing it.
       protectReferencedItem: Bind.static(true),
-    })
-    .addArrayChild("itemModels", ItemModel)
-);
+    },
+  arrayChildren: {
+    itemModels: [
+      ItemModel,
+    ],
+  },
+});
 
-export const foundationEconomyEquipment = definePackage("foundation-economy-equipment", "0.0.1")
-  .display({
+const AcquireEquipmentTransform = defineActionTransform("AcquireEquipment", {
+  category: "acquire",
+  parameters: {
+    equipment: { type: PT.ref(Equipment) },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Inventory:AcquireItemSetByUserId",
+    resource: () => InventoryModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      inventoryName: OutputMap.resourceKey(),
+      itemName: OutputMap.parameter("equipment"),
+      userId: OutputMap.placeholder("#{userId}"),
+      acquireCount: OutputMap.static(1),
+      expiresAt: OutputMap.static(null),
+      createNewItemSet: OutputMap.static(null),
+      itemSetName: OutputMap.static(null),
+    },
+  },
+  ],
+});
+
+const DeleteEquipmentTransform = defineActionTransform("DeleteEquipment", {
+  category: "consume",
+  parameters: {
+    equipment: { type: PT.ref(Equipment) },
+    equipmentPropertyId: { type: PT.string(), required: false },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Inventory:ConsumeItemSetByUserId",
+    resource: () => InventoryModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      inventoryName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      itemName: OutputMap.parameter("equipment"),
+      consumeCount: OutputMap.static(1),
+      itemSetName: OutputMap.parameter("equipmentPropertyId"),
+    },
+  },
+  ],
+});
+
+const AddEquipmentCapacityTransform = defineActionTransform("AddEquipmentCapacity", {
+  category: "acquire",
+  parameters: {
+    value: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Inventory:AddCapacityByUserId",
+    resource: () => InventoryModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      inventoryName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      addCapacityValue: OutputMap.parameter("value"),
+    },
+  },
+  ],
+});
+
+export const foundationEconomyEquipment = definePackage({
+  id: "foundation-economy-equipment",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "装備",
       description: "プレイヤーが所持する武器や防具を、カテゴリごとに管理します。",
@@ -123,40 +227,12 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
       label: "Equipment",
       description: "Manages the weapons and gear a player owns, grouped by category.",
     },
-  })
-  .displayType(EquipmentCategory, {
-    ja: { label: "装備カテゴリ", description: "装備を分類するカテゴリを登録します。" },
-    en: {
-      label: "Equipment category",
-      description: "Registers categories used to classify equipment.",
-    },
-  })
-  .displayType(EquipmentCollection, {
-    ja: {
-      label: "装備所持枠",
-      description: "プレイヤーが所持できる装備数の初期値・上限・現在値を管理します。",
-    },
-    en: {
-      label: "Equipment slots",
-      description:
-        "Manages the initial, maximum, and current number of equipment slots a player owns.",
-    },
-  })
-  .displayType(Equipment, {
-    ja: { label: "装備", description: "ゲームに登場する装備、カテゴリ、表示順を登録します。" },
-    en: {
-      label: "Equipment",
-      description: "Registers equipment available in the game, its category, and display order.",
-    },
-  })
-  .domainType(EquipmentCategory)
-  .domainType(Equipment)
-  .domainType(EquipmentCollection)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.inventory.Namespace)
-      .bindings({
+  },
+  domainTypes: [EquipmentCategory, Equipment, EquipmentCollection],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.inventory.Namespace,
+  bindings: {
         name: Bind.static("Equipment"),
         ...Bind.nulls(
           "acquireScript",
@@ -169,15 +245,17 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(InventoryModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.inventory.Inventory)
-      .linkedMasterResourceId(InventoryModel)
-      .bindings({
+      },
+  children: [
+    InventoryModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.inventory.Inventory,
+  linkedMaster: InventoryModel,
+  bindings: {
         currentInventoryCapacityUsage: Bind.domainProperties([
           Source.direct(EquipmentCollection, "currentCapacityUsage"),
         ]),
@@ -187,15 +265,13 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
         inventoryId: Bind.skip(),
         inventoryName: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.inventory.ItemSet)
-      .linkedMasterResourceId(ItemModel)
-      .mountLocal(Equipment)
-      .bindings({
+      },
+}),
+    defineUserDataResource({
+  model: GS2.inventory.ItemSet,
+  mount: Equipment,
+  linkedMaster: ItemModel,
+  bindings: {
         count: Bind.skip(),
         inventoryName: Bind.skip(),
         itemName: Bind.skip(),
@@ -203,89 +279,30 @@ export const foundationEconomyEquipment = definePackage("foundation-economy-equi
         name: Bind.domainProperty(Source.direct(Equipment, "propertyId")),
         sortValue: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .uiComponent(EquipmentCollection, ui =>
-    ui
-      // Use the player's expanded capacity rather than the authored starting capacity.
-      .gauge("CapacityGauge", ui.prop("currentCapacityUsage"), ui.prop("currentMaximumCapacity"), {
+      },
+}),
+  ],
+  actionTransforms: [AcquireEquipmentTransform, DeleteEquipmentTransform, AddEquipmentCapacityTransform],
+  uiComponents: [
+    defineUiComponent(EquipmentCollection, {
+  items: [
+    UiItem.gauge("CapacityGauge", UiSource.prop("currentCapacityUsage"), UiSource.prop("currentMaximumCapacity"), {
         name: "EquipmentCollection",
         clamp: true,
-      })
-      .templateLabel(
-        "CapacityLabel",
-        "{currentCapacityUsage}/{currentMaximumCapacity}",
-        {
-          currentCapacityUsage: ui.prop("currentCapacityUsage"),
-          currentMaximumCapacity: ui.prop("currentMaximumCapacity"),
-        },
-        { name: "EquipmentCollection" }
-      )
-      .interactable(
-        "ExpandableInteractable",
-        UiCond.lt(ui.prop("currentMaximumCapacity"), ui.prop("maximumCapacity")),
-        { name: "EquipmentCollection" }
-      )
-      .activeToggle(
-        "FullActiveToggle",
-        UiCond.gte(ui.prop("currentCapacityUsage"), ui.prop("currentMaximumCapacity")),
-        { name: "EquipmentCollection" }
-      )
-  )
-
-  .uiComponent(Equipment, ui =>
-    ui
-      // Include instance identity alongside the equipment name so callers can distinguish two owned copies.
-      .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Equipment" })
-      .value("PropertyIdValue", ui.prop("propertyId"), { name: "Equipment" })
-  )
-
-  .actionTransform("AcquireEquipment", at =>
-    at
-      .category("acquire")
-      .parameter("equipment", { type: PT.ref("Equipment") })
-      .output("Gs2Inventory:AcquireItemSetByUserId", o =>
-        o
-          .resourceRef(() => InventoryModel)
-          .mapResourceKey("namespaceName")
-          .mapResourceKey("inventoryName")
-          .mapParameter("itemName", "equipment")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapStatic("acquireCount", 1)
-          .mapStatic("expiresAt", null)
-          .mapStatic("createNewItemSet", null)
-          .mapStatic("itemSetName", null)
-      )
-  )
-  .actionTransform("DeleteEquipment", at =>
-    at
-      .category("consume")
-      .parameter("equipment", { type: PT.ref("Equipment") })
-      // Keep instance selection optional because a rate model authored at deploy time cannot name a player-owned item set.
-      .parameter("equipmentPropertyId", { type: PT.string(), required: false })
-      .output("Gs2Inventory:ConsumeItemSetByUserId", o =>
-        o
-          .resourceRef(() => InventoryModel)
-          .mapResourceKey("namespaceName")
-          .mapResourceKey("inventoryName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("itemName", "equipment")
-          .mapStatic("consumeCount", 1)
-          .mapParameter("itemSetName", "equipmentPropertyId")
-      )
-  )
-  .actionTransform("AddEquipmentCapacity", at =>
-    at
-      .category("acquire")
-      .parameter("value", { type: PT.int32() })
-      .output("Gs2Inventory:AddCapacityByUserId", o =>
-        o
-          .resourceRef(() => InventoryModel)
-          .mapResourceKey("namespaceName")
-          .mapResourceKey("inventoryName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("addCapacityValue", "value")
-      )
-  )
-  .build();
+      }),
+    UiItem.templateLabel("CapacityLabel", "{currentCapacityUsage}/{currentMaximumCapacity}", {
+          currentCapacityUsage: UiSource.prop("currentCapacityUsage"),
+          currentMaximumCapacity: UiSource.prop("currentMaximumCapacity"),
+        }, { name: "EquipmentCollection" }),
+    UiItem.interactable("ExpandableInteractable", UiCond.lt(UiSource.prop("currentMaximumCapacity"), UiSource.prop("maximumCapacity")), { name: "EquipmentCollection" }),
+    UiItem.activeToggle("FullActiveToggle", UiCond.gte(UiSource.prop("currentCapacityUsage"), UiSource.prop("currentMaximumCapacity")), { name: "EquipmentCollection" }),
+  ],
+}),
+    defineUiComponent(Equipment, {
+  items: [
+    UiItem.templateLabel("NameLabel", "{id}", { id: UiSource.prop("id") }, { name: "Equipment" }),
+    UiItem.value("PropertyIdValue", UiSource.prop("propertyId"), { name: "Equipment" }),
+  ],
+}),
+  ],
+});

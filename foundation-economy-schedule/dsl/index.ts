@@ -1,14 +1,21 @@
 import {
   Bind,
   Cond,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
+  defineUserDataResource,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -24,40 +31,46 @@ const dayOfWeekEnum = PT.enum(
 );
 
 const isDaily = Cond.eq("repeatType", "daily");
+
 const isWeekly = Cond.eq("repeatType", "weekly");
+
 const isMonthly = Cond.eq("repeatType", "monthly");
+
 const isCustom = Cond.eq("repeatType", "custom");
+
 const isDailyWeeklyOrMonthly = Cond.or(isDaily, isWeekly, isMonthly);
 
-const Schedule = defineDomainType("Schedule", dt =>
-  dt
-    .property(PT.prop("scheduleType", PT.enum("absolute", "relative")).masterData().required())
-    .property(
-      PT.timestamp("startAt").masterData().requiredWhen(Cond.eq("scheduleType", "absolute"))
-    )
-    .property(PT.timestamp("endAt").masterData().requiredWhen(Cond.eq("scheduleType", "absolute")))
-    .property(
-      PT.string("trigger").assetDelivery().requiredWhen(Cond.eq("scheduleType", "relative"))
-    )
-    // Relative windows belong to each player's trigger; the shared absolute timestamps cannot represent them.
-    .property(PT.bool("triggerFired").userData())
-    .property(PT.timestamp("relativeStartAt").userData())
-    .property(PT.timestamp("relativeEndAt").userData())
-    .property(
-      PT.prop("repeatType", PT.enum("always", "daily", "weekly", "monthly", "custom"))
-        .masterData()
-        .required()
-    )
-    .property(PT.int32("beginHour").masterData().requiredWhen(isDailyWeeklyOrMonthly))
-    .property(PT.int32("endHour").masterData().requiredWhen(isDailyWeeklyOrMonthly))
-    .property(PT.prop("beginDayOfWeek", dayOfWeekEnum).masterData().requiredWhen(isWeekly))
-    .property(PT.prop("endDayOfWeek", dayOfWeekEnum).masterData().requiredWhen(isWeekly))
-    .property(PT.int32("beginDayOfMonth").masterData().requiredWhen(isMonthly))
-    .property(PT.int32("endDayOfMonth").masterData().requiredWhen(isMonthly))
-    .property(PT.timestamp("anchorTimestamp").masterData().requiredWhen(isCustom))
-    .property(PT.int32("activeDays").masterData().requiredWhen(isCustom))
-    .property(PT.int32("inactiveDays").masterData().requiredWhen(isCustom))
-    .localizedProperties({
+const Schedule = defineDomainType("Schedule", {
+  properties: {
+    scheduleType: PT.enum("absolute", "relative").masterData().required(),
+    startAt: PT.timestamp().masterData().requiredWhen(Cond.eq("scheduleType", "absolute")),
+    endAt: PT.timestamp().masterData().requiredWhen(Cond.eq("scheduleType", "absolute")),
+    trigger: PT.string().assetDelivery().requiredWhen(Cond.eq("scheduleType", "relative")),
+    triggerFired: PT.bool().userData(),
+    relativeStartAt: PT.timestamp().userData(),
+    relativeEndAt: PT.timestamp().userData(),
+    repeatType: PT.enum("always", "daily", "weekly", "monthly", "custom").masterData().required(),
+    beginHour: PT.int32().masterData().requiredWhen(isDailyWeeklyOrMonthly),
+    endHour: PT.int32().masterData().requiredWhen(isDailyWeeklyOrMonthly),
+    beginDayOfWeek: dayOfWeekEnum.masterData().requiredWhen(isWeekly),
+    endDayOfWeek: dayOfWeekEnum.masterData().requiredWhen(isWeekly),
+    beginDayOfMonth: PT.int32().masterData().requiredWhen(isMonthly),
+    endDayOfMonth: PT.int32().masterData().requiredWhen(isMonthly),
+    anchorTimestamp: PT.timestamp().masterData().requiredWhen(isCustom),
+    activeDays: PT.int32().masterData().requiredWhen(isCustom),
+    inactiveDays: PT.int32().masterData().requiredWhen(isCustom),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "スケジュール",
+      description: "イベントや機能を有効にする開始・終了日時と繰り返し条件を設定します。",
+    },
+    en: {
+      label: "Schedule",
+      description: "Defines start and end times and recurrence rules for events or features.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("スケジュール", "schedule"),
       scheduleType: jaEnField(
         "スケジュール方式",
@@ -167,15 +180,26 @@ const Schedule = defineDomainType("Schedule", dt =>
         "Number of inactive days in a custom cycle.",
         { ja: "日", en: "days" }
       ),
-    })
-);
+    },
+});
 
-const Trigger = defineDomainType("Trigger", dt =>
-  dt
-    .property(PT.bool("triggered").userData().required())
-    .property(PT.timestamp("triggeredAt").userData().required())
-    .property(PT.timestamp("expiresAt").userData().required())
-    .localizedProperties({
+const Trigger = defineDomainType("Trigger", {
+  properties: {
+    triggered: PT.bool().userData().required(),
+    triggeredAt: PT.timestamp().userData().required(),
+    expiresAt: PT.timestamp().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "トリガー",
+      description: "プレイヤーごとのトリガー発火状態と有効期限を管理します。",
+    },
+    en: {
+      label: "Trigger",
+      description: "Tracks each player's trigger state, trigger time, and expiration.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("トリガー", "trigger"),
       triggered: jaEnField(
         "発火済み",
@@ -195,22 +219,21 @@ const Trigger = defineDomainType("Trigger", dt =>
         "トリガー状態が有効な期限です。",
         "Time until which the trigger state remains valid."
       ),
-    })
-);
+    },
+});
 
-const Namespace = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.schedule.Namespace)
-    .bindings({
+const Namespace = defineMasterDataResource({
+  model: GS2.schedule.Namespace,
+  bindings: {
       name: Bind.static("Schedule"),
       logSetting: Bind.null(),
       transactionSettingV2: transactionSettingV2(),
-    })
-    .addChild(child => {
-      child
-        .model(GS2.schedule.Event)
-        .mountLocal(Schedule)
-        .bindings({
+    },
+  children: [
+    defineMasterDataResource({
+  model: GS2.schedule.Event,
+  mount: Schedule,
+  bindings: {
           name: Bind.domainProperty(Source.direct(Schedule, "id")),
           metadata: Bind.static(""),
           scheduleType: Bind.domainProperty(Source.direct(Schedule, "scheduleType")),
@@ -229,12 +252,78 @@ const Namespace = defineMasterDataResource(resource =>
             activeDays: Bind.domainProperty(Source.direct(Schedule, "activeDays")),
             inactiveDays: Bind.domainProperty(Source.direct(Schedule, "inactiveDays")),
           },
-        });
-    })
-);
+        },
+}),
+  ],
+});
 
-export const foundationEconomySchedule = definePackage("foundation-economy-schedule", "0.0.1")
-  .display({
+const PullTriggerTransform = defineActionTransform("PullTrigger", {
+  category: "acquire",
+  parameters: {
+    trigger: { type: PT.ref(Trigger) },
+    ttlSeconds: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Schedule:TriggerByUserId",
+    resource: () => Namespace,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      triggerName: OutputMap.parameter("trigger"),
+      userId: OutputMap.placeholder("#{userId}"),
+      triggerStrategy: OutputMap.static("renew"),
+      ttl: OutputMap.parameter("ttlSeconds"),
+      eventId: OutputMap.static(null),
+    },
+  },
+  ],
+});
+
+const ClearTriggerTransform = defineActionTransform("ClearTrigger", {
+  category: "consume",
+  parameters: {
+    trigger: { type: PT.ref(Trigger) },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Schedule:DeleteTriggerByUserId",
+    resource: () => Namespace,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      triggerName: OutputMap.parameter("trigger"),
+      userId: OutputMap.placeholder("#{userId}"),
+    },
+  },
+  ],
+});
+
+const TriggerScheduleTransform = defineActionTransform("TriggerSchedule", {
+  category: "acquire",
+  parameters: {
+    trigger: { type: PT.ref(Trigger) },
+    extendSeconds: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Schedule:ExtendTriggerByUserId",
+    resource: () => Namespace,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      triggerName: OutputMap.parameter("trigger"),
+      userId: OutputMap.placeholder("#{userId}"),
+      extendSeconds: OutputMap.parameter("extendSeconds"),
+    },
+  },
+  ],
+});
+
+export const foundationEconomySchedule = definePackage({
+  id: "foundation-economy-schedule",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "スケジュール基盤",
       description: "期間限定イベントなど、他の機能が使う日程とトリガーを共通基盤として提供します。",
@@ -243,154 +332,65 @@ export const foundationEconomySchedule = definePackage("foundation-economy-sched
       label: "Scheduling",
       description: "Shared date-range and trigger infrastructure other features build on.",
     },
-  })
-  .displayType(Schedule, {
-    ja: {
-      label: "スケジュール",
-      description: "イベントや機能を有効にする開始・終了日時と繰り返し条件を設定します。",
-    },
-    en: {
-      label: "Schedule",
-      description: "Defines start and end times and recurrence rules for events or features.",
-    },
-  })
-  .displayType(Trigger, {
-    ja: {
-      label: "トリガー",
-      description: "プレイヤーごとのトリガー発火状態と有効期限を管理します。",
-    },
-    en: {
-      label: "Trigger",
-      description: "Tracks each player's trigger state, trigger time, and expiration.",
-    },
-  })
-  .domainType(Schedule)
-  .domainType(Trigger)
-
-  .masterDataResource(Namespace)
-
-  .userDataResource(r =>
-    r
-      .model(GS2.schedule.Trigger)
-      .mountLocal(Trigger)
-      .existenceProperty("triggered")
-      .bindings({
+  },
+  domainTypes: [Schedule, Trigger],
+  masterDataResources: [
+    Namespace,
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.schedule.Trigger,
+  mount: Trigger,
+  existenceProperty: "triggered",
+  bindings: {
         name: Bind.domainProperty(Source.direct(Trigger, "id")),
         triggeredAt: Bind.domainProperties([Source.direct(Trigger, "triggeredAt")]),
         expiresAt: Bind.domainProperties([Source.direct(Trigger, "expiresAt")]),
         triggerId: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  // Read through the schedule's trigger key so its window follows the same player record as the standalone trigger.
-  .userDataResource(r =>
-    r
-      .model(GS2.schedule.Trigger)
-      .mountLocal(Schedule)
-      .existenceProperty("triggerFired")
-      .bindings({
+      },
+}),
+    defineUserDataResource({
+  model: GS2.schedule.Trigger,
+  mount: Schedule,
+  existenceProperty: "triggerFired",
+  bindings: {
         name: Bind.domainProperty(Source.direct(Schedule, "trigger")),
         triggeredAt: Bind.domainProperties([Source.direct(Schedule, "relativeStartAt")]),
         expiresAt: Bind.domainProperties([Source.direct(Schedule, "relativeEndAt")]),
         triggerId: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .actionTransform("PullTrigger", at =>
-    at
-      .category("acquire")
-      .parameter("trigger", { type: PT.ref("Trigger") })
-      .parameter("ttlSeconds", { type: PT.int32() })
-      .output("Gs2Schedule:TriggerByUserId", o =>
-        o
-          .resourceRef(() => Namespace)
-          .mapResourceKey("namespaceName")
-          .mapParameter("triggerName", "trigger")
-          .mapPlaceholder("userId", "#{userId}")
-          // Renew on pull so repeating this action restarts the window instead of extending it.
-          .mapStatic("triggerStrategy", "renew")
-          .mapParameter("ttl", "ttlSeconds")
-          .mapStatic("eventId", null)
-      )
-  )
-  .actionTransform("ClearTrigger", at =>
-    at
-      .category("consume")
-      .parameter("trigger", { type: PT.ref("Trigger") })
-      .output("Gs2Schedule:DeleteTriggerByUserId", o =>
-        o
-          .resourceRef(() => Namespace)
-          .mapResourceKey("namespaceName")
-          .mapParameter("triggerName", "trigger")
-          .mapPlaceholder("userId", "#{userId}")
-      )
-  )
-
-  .uiComponent(Schedule, ui =>
-    ui
-      .templateLabel(
-        "PeriodLabel",
-        "{startAt} - {endAt}",
-        { startAt: ui.prop("startAt"), endAt: ui.prop("endAt") },
-        { name: "Schedule" }
-      )
-      .value("EndAtValue", ui.prop("endAt"), { name: "Schedule" })
-      .value("StartAtValue", ui.prop("startAt"), { name: "Schedule" })
-      .templateLabel(
-        "RelativeWindowLabel",
-        "{relativeStartAt} - {relativeEndAt}",
-        {
-          relativeStartAt: ui.prop("relativeStartAt"),
-          relativeEndAt: ui.prop("relativeEndAt"),
-        },
-        { name: "Schedule" }
-      )
-      .value("RelativeEndAtValue", ui.prop("relativeEndAt"), { name: "Schedule" })
-      // Page hide rules use the opposite kind toggle to suppress fields that do not belong to this schedule kind.
-      .activeToggle(
-        "RelativeActiveToggle",
-        UiCond.eq(ui.prop("scheduleType"), ui.lit("relative")),
-        { name: "Schedule" }
-      )
-      .activeToggle(
-        "AbsoluteActiveToggle",
-        UiCond.eq(ui.prop("scheduleType"), ui.lit("absolute")),
-        { name: "Schedule" }
-      )
-  )
-
-  .uiComponent(Trigger, ui =>
-    ui
-      .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Trigger" })
-      .templateLabel(
-        "WindowLabel",
-        "{triggeredAt} - {expiresAt}",
-        { triggeredAt: ui.prop("triggeredAt"), expiresAt: ui.prop("expiresAt") },
-        { name: "Trigger" }
-      )
-      .value("ExpiresAtValue", ui.prop("expiresAt"), { name: "Trigger" })
-      .activeToggle("TriggeredActiveToggle", UiCond.truthy(ui.prop("triggered")), {
+      },
+}),
+  ],
+  actionTransforms: [PullTriggerTransform, ClearTriggerTransform, TriggerScheduleTransform],
+  uiComponents: [
+    defineUiComponent(Schedule, {
+  items: [
+    UiItem.templateLabel("PeriodLabel", "{startAt} - {endAt}", { startAt: UiSource.prop("startAt"), endAt: UiSource.prop("endAt") }, { name: "Schedule" }),
+    UiItem.value("EndAtValue", UiSource.prop("endAt"), { name: "Schedule" }),
+    UiItem.value("StartAtValue", UiSource.prop("startAt"), { name: "Schedule" }),
+    UiItem.templateLabel("RelativeWindowLabel", "{relativeStartAt} - {relativeEndAt}", {
+          relativeStartAt: UiSource.prop("relativeStartAt"),
+          relativeEndAt: UiSource.prop("relativeEndAt"),
+        }, { name: "Schedule" }),
+    UiItem.value("RelativeEndAtValue", UiSource.prop("relativeEndAt"), { name: "Schedule" }),
+    UiItem.activeToggle("RelativeActiveToggle", UiCond.eq(UiSource.prop("scheduleType"), UiSource.lit("relative")), { name: "Schedule" }),
+    UiItem.activeToggle("AbsoluteActiveToggle", UiCond.eq(UiSource.prop("scheduleType"), UiSource.lit("absolute")), { name: "Schedule" }),
+  ],
+}),
+    defineUiComponent(Trigger, {
+  items: [
+    UiItem.templateLabel("NameLabel", "{id}", { id: UiSource.prop("id") }, { name: "Trigger" }),
+    UiItem.templateLabel("WindowLabel", "{triggeredAt} - {expiresAt}", { triggeredAt: UiSource.prop("triggeredAt"), expiresAt: UiSource.prop("expiresAt") }, { name: "Trigger" }),
+    UiItem.value("ExpiresAtValue", UiSource.prop("expiresAt"), { name: "Trigger" }),
+    UiItem.activeToggle("TriggeredActiveToggle", UiCond.truthy(UiSource.prop("triggered")), {
         name: "Trigger",
-      })
-      .interactable("TriggeredInteractable", UiCond.truthy(ui.prop("triggered")), {
+      }),
+    UiItem.interactable("TriggeredInteractable", UiCond.truthy(UiSource.prop("triggered")), {
         name: "Trigger",
-      })
-  )
-
-  .actionTransform("TriggerSchedule", at =>
-    at
-      .category("acquire")
-      .parameter("trigger", { type: PT.ref("Trigger") })
-      .parameter("extendSeconds", { type: PT.int32() })
-      .output("Gs2Schedule:ExtendTriggerByUserId", o =>
-        o
-          .resourceRef(() => Namespace)
-          .mapResourceKey("namespaceName")
-          .mapParameter("triggerName", "trigger")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("extendSeconds", "extendSeconds")
-      )
-  )
-  .build();
+      }),
+  ],
+}),
+  ],
+});

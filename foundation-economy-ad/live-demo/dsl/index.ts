@@ -1,14 +1,19 @@
-/** The page simulates ad completion; the demo owns point grants because the feature package cannot decide when a view qualifies. */
-
 import {
   ActionProgram,
   Bind,
+  defineActionTransform,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
   dependencyPackage,
+  instance,
+  OutputMap,
   Source,
   transactionSettingV2,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import adSurface from "../../dsl/dependency-surface.json";
@@ -21,50 +26,68 @@ const AdViewPoint = ad.type("AdViewPoint");
 
 const DEMO_PACKAGE_ID = "foundation-economy-ad-demo";
 
-/** Match the fixed single-entry identities used by generated handlers so they address the authored rows. */
 const AD_PLATFORM = "adplatform";
+
 const AD_VIEW_POINT = "adviewpoint";
 
-/** Use explicit placeholders because this simulated ad flow does not authenticate a network SDK. */
 const UNITY_AD_KEYS = ["showroom-demo-placeholder"];
+
 const ADMOB_AD_UNIT_IDS = ["showroom-demo-placeholder"];
 
 const POINT_STEP = 1;
 
 const AcquireAdViewPointTransform = "AcquireAdViewPoint";
 
-/** Keep watch and spend in separate namespaces because both rates derive the same name from AdViewPoint. */
-const WatchRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(AdViewPoint)
-    .bindings({ name: Bind.domainProperty(Source.direct(AdViewPoint, "id")) })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(AdViewPoint)
-        .actionProgram(ActionProgram.transform(DEMO_PACKAGE_ID, AcquireAdViewPointTransform, []));
-    })
-);
+const WatchRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: AdViewPoint,
+  bindings: { name: Bind.domainProperty(Source.direct(AdViewPoint, "id")) },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: AdViewPoint,
+  actionProgram: ActionProgram.transform(() => AcquireAdViewPoint, []),
+}),
+    ],
+  },
+});
 
-/** Omit a reward payload so this action demonstrates consumption of the point alone. */
-const SpendRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(AdViewPoint)
-    .bindings({ name: Bind.domainProperty(Source.direct(AdViewPoint, "id")) })
-    .addArrayChild("consumeActions", consumeAction => {
-      consumeAction
-        .model(GS2.transaction.ConsumeAction)
-        .mountLocal(AdViewPoint)
-        .actionProgram(
-          ActionProgram.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), [])
-        );
-    })
-);
+const SpendRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: AdViewPoint,
+  bindings: { name: Bind.domainProperty(Source.direct(AdViewPoint, "id")) },
+  arrayChildren: {
+    consumeActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.ConsumeAction,
+  mount: AdViewPoint,
+  actionProgram: ActionProgram.transform(ad.packageId, ad.transformId("ConsumeAdViewPoint"), []),
+}),
+    ],
+  },
+});
 
-export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.1")
-  .display({
+const AcquireAdViewPoint = defineActionTransform(AcquireAdViewPointTransform, {
+  category: "acquire",
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2AdReward:AcquirePointByUserId",
+    resource: { kind: "external", sourcePackageId: ad.packageId, resourceKind: "masterData", resourceId: ad.resourceId("adReward.Namespace") },
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      point: OutputMap.static(POINT_STEP),
+    },
+  },
+  ],
+});
+
+export const foundationEconomyAdDemo = definePackage({
+  id: DEMO_PACKAGE_ID,
+  version: "0.0.1",
+  display: {
     ja: {
       label: "広告（デモデータ）",
       description:
@@ -75,35 +98,25 @@ export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.1")
       description:
         "Supplies the ad platform settings used by the live demo, and the presses that earn and spend a view point. No advertisement is actually played.",
     },
-  })
-  .dependency(ad.packageId, "github:gs2io/gs2-studio-package")
-
-  /** Use the published resource identity because this DSL evaluation does not load the dependency's resource handles. */
-  .actionTransform(AcquireAdViewPointTransform, actionTransform =>
-    actionTransform
-      .category("acquire")
-      .output("Gs2AdReward:AcquirePointByUserId", output =>
-        output
-          .externalResourceRef(ad.packageId, "masterData", ad.resourceId("adReward.Namespace"))
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapStatic("point", POINT_STEP)
-      )
-  )
-
-  // Populate both platform lists so the authored AdMob configuration does not contain a missing allow-list.
-  .instance(AdPlatform, AD_PLATFORM, {
+  },
+  dependencies: {
+    [ad.packageId]: "github:gs2io/gs2-studio-package",
+  },
+  instances: [
+    instance(AdPlatform, AD_PLATFORM, {
     [ad.propertyId("AdPlatform", "unityAdKeys")]: UNITY_AD_KEYS,
     [ad.propertyId("AdPlatform", "adMobAdUnitIds")]: ADMOB_AD_UNIT_IDS,
-  })
-
-  // Author the otherwise empty balance row because it supplies the identity used by both exchange rates.
-  .instance(AdViewPoint, AD_VIEW_POINT, {})
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+  }),
+    instance(AdViewPoint, AD_VIEW_POINT, {}),
+  ],
+  delegatedActions: [
+    { target: AdViewPoint, methodName: "Watch", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: WatchRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+    { target: AdViewPoint, methodName: "Spend", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: SpendRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("AdWatch"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -113,14 +126,14 @@ export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.1")
         ),
         // Auto-run avoids a second client request to execute the transaction after the exchange succeeds.
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(WatchRateModel)
-  )
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+      },
+  children: [
+    WatchRateModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("AdSpend"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -129,30 +142,20 @@ export const foundationEconomyAdDemo = definePackage(DEMO_PACKAGE_ID, "0.0.1")
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(SpendRateModel)
-  )
-
-  .uiComponent(AdViewPoint, ui =>
-    ui
-      .templateLabel(
-        "BalanceLabel",
-        "{value} view(s) banked",
-        { value: ui.prop("value") },
-        { name: "AdViewPoint" }
-      )
-      .buttonAction("WatchButton", "Watch", undefined, { name: "AdViewPoint" })
-      .buttonAction("SpendButton", "Spend", undefined, { name: "AdViewPoint" })
-  )
-
-  .delegatedAction(AdViewPoint, "Watch", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: WatchRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .delegatedAction(AdViewPoint, "Spend", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: SpendRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .build();
+      },
+  children: [
+    SpendRateModel,
+  ],
+}),
+  ],
+  actionTransforms: [AcquireAdViewPoint],
+  uiComponents: [
+    defineUiComponent(AdViewPoint, {
+  items: [
+    UiItem.templateLabel("BalanceLabel", "{value} view(s) banked", { value: UiSource.prop("value") }, { name: "AdViewPoint" }),
+    UiItem.buttonAction("WatchButton", "Watch", undefined, { name: "AdViewPoint" }),
+    UiItem.buttonAction("SpendButton", "Spend", undefined, { name: "AdViewPoint" }),
+  ],
+}),
+  ],
+});

@@ -1,25 +1,44 @@
 import {
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
+  defineUserDataResource,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { CHARACTER_LEVEL_KEY_SUFFIX } from "../../dsl/characterLevelKey";
+
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-const CharacterExperience = defineDomainType("CharacterExperience", dt =>
-  dt
-    .singleEntry()
-    .property(PT.prop("threshold", PT.listOf(PT.int64())).masterData().required())
-    .property(PT.int32("defaultLevelCap").masterData().required())
-    .property(PT.int32("maxLevelCap").masterData().required())
-    .localizedProperties({
+const CharacterExperience = defineDomainType("CharacterExperience", {
+  singleEntry: true,
+  properties: {
+    threshold: PT.listOf(PT.int64()).masterData().required(),
+    defaultLevelCap: PT.int32().masterData().required(),
+    maxLevelCap: PT.int32().masterData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "キャラクター経験値",
+      description: "レベルアップに必要な経験値と、初期・最大レベル上限を設定します。",
+    },
+    en: {
+      label: "Character experience",
+      description: "Sets level-up experience thresholds and the initial and maximum level caps.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("キャラクター経験値設定", "character experience configuration"),
       threshold: jaEnField(
         "必要経験値テーブル",
@@ -42,18 +61,29 @@ const CharacterExperience = defineDomainType("CharacterExperience", dt =>
         "Highest level cap a character can reach.",
         { ja: "レベル", en: "levels" }
       ),
-    })
-);
+    },
+});
 
-const Character = defineDomainType("Character", dt =>
-  dt
-    .property(PT.int32("sort").masterData().required())
-    .property(PT.string("propertyId").userData().required())
-    .property(PT.int64("level").userData().required())
-    .property(PT.int64("levelCap").userData().required())
-    .property(PT.int64("experience").userData().required())
-    .property(PT.int64("nextLevelExperience").userData().required())
-    .localizedProperties({
+const Character = defineDomainType("Character", {
+  properties: {
+    sort: PT.int32().masterData().required(),
+    propertyId: PT.string().userData().required(),
+    level: PT.int64().userData().required(),
+    levelCap: PT.int64().userData().required(),
+    experience: PT.int64().userData().required(),
+    nextLevelExperience: PT.int64().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "キャラクター",
+      description: "ゲームに登場するキャラクターと表示順を登録します。",
+    },
+    en: {
+      label: "Character",
+      description: "Registers the characters available in the game and their display order.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("キャラクター", "character"),
       sort: jaEnField(
         "表示順",
@@ -95,17 +125,28 @@ const Character = defineDomainType("Character", dt =>
         "Cumulative experience needed to reach the next level; 0 once the level cap is reached.",
         { ja: "経験値", en: "experience" }
       ),
-    })
-);
+    },
+});
 
-const CharacterCollection = defineDomainType("CharacterCollection", dt =>
-  dt
-    .singleEntry()
-    .property(PT.int32("maximumCapacity").masterData().required())
-    .property(PT.int32("defaultCapacity").masterData().required())
-    .property(PT.int32("currentCpacityUsage").userData().required())
-    .property(PT.int32("currentCpacity").userData().required())
-    .localizedProperties({
+const CharacterCollection = defineDomainType("CharacterCollection", {
+  singleEntry: true,
+  properties: {
+    maximumCapacity: PT.int32().masterData().required(),
+    defaultCapacity: PT.int32().masterData().required(),
+    currentCpacityUsage: PT.int32().userData().required(),
+    currentCpacity: PT.int32().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "キャラクター所持枠",
+      description: "プレイヤーが所持できるキャラクター数の上限と初期値を設定します。",
+    },
+    en: {
+      label: "Character slots",
+      description: "Sets the maximum and initial number of characters a player can own.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("キャラクター所持枠", "character inventory"),
       maximumCapacity: jaEnField(
         "最大所持枠",
@@ -135,97 +176,160 @@ const CharacterCollection = defineDomainType("CharacterCollection", dt =>
         "Character capacity currently available to the player.",
         { ja: "枠", en: "slots" }
       ),
-    })
-);
+    },
+});
 
-const ExperienceModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.experience.ExperienceModel)
-    .mountLocal(CharacterExperience)
-    .bindings({
+const ExperienceModel = defineMasterDataResource({
+  model: GS2.experience.ExperienceModel,
+  mount: CharacterExperience,
+  bindings: {
       name: Bind.static("Experience"),
       defaultRankCap: Bind.domainProperty(Source.direct(CharacterExperience, "defaultLevelCap")),
       maxRankCap: Bind.domainProperty(Source.direct(CharacterExperience, "maxLevelCap")),
       defaultExperience: Bind.null(),
-    })
-    .addArrayChild("rankThreshold", threshold => {
-      threshold
-        .model(GS2.experience.Threshold)
-        .mountLocal(CharacterExperience)
-        .bindings({
+    },
+  arrayChildren: {
+    rankThreshold: [
+      defineMasterDataResource({
+  model: GS2.experience.Threshold,
+  mount: CharacterExperience,
+  bindings: {
           values: Bind.domainProperty(Source.direct(CharacterExperience, "threshold")),
           metadata: Bind.null(),
-        });
-    })
-);
+        },
+}),
+    ],
+  },
+});
 
-const ItemModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.inventory.ItemModel)
-    .mountLocal(Character)
-    .bindings({
+const ItemModel = defineMasterDataResource({
+  model: GS2.inventory.ItemModel,
+  mount: Character,
+  bindings: {
       name: Bind.domainProperty(Source.direct(Character, "id")),
       sortValue: Bind.domainProperty(Source.direct(Character, "sort")),
       allowMultipleStacks: Bind.static(true),
       stackingLimit: Bind.static(1),
-    })
-);
+    },
+});
 
-const InventoryModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.inventory.InventoryModel)
-    .mountLocal(CharacterCollection)
-    .bindings({
+const InventoryModel = defineMasterDataResource({
+  model: GS2.inventory.InventoryModel,
+  mount: CharacterCollection,
+  bindings: {
       name: Bind.static("Character"),
       initialCapacity: Bind.domainProperty(Source.direct(CharacterCollection, "defaultCapacity")),
       maxCapacity: Bind.domainProperty(Source.direct(CharacterCollection, "maximumCapacity")),
-    })
-    .addArrayChild("itemModels", ItemModel)
-);
+    },
+  arrayChildren: {
+    itemModels: [
+      ItemModel,
+    ],
+  },
+});
 
-export const foundationEconomyCharacter = definePackage("foundation-economy-character", "0.0.1")
-  .display({
+const AcquireCharacterTransform = defineActionTransform("AcquireCharacter", {
+  category: "acquire",
+  parameters: {
+    character: { type: PT.ref(Character) },
+    count: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Inventory:AcquireItemSetByUserId",
+    resource: () => ItemModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      inventoryName: OutputMap.resourceKey(),
+      itemName: OutputMap.parameter("character"),
+      userId: OutputMap.placeholder("#{userId}"),
+      acquireCount: OutputMap.parameter("count"),
+      expiresAt: OutputMap.static(null),
+      createNewItemSet: OutputMap.static(null),
+      itemSetName: OutputMap.static(null),
+    },
+  },
+  ],
+});
+
+const AddCharacterCapacityTransform = defineActionTransform("AddCharacterCapacity", {
+  category: "acquire",
+  parameters: {
+    value: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Inventory:AddCapacityByUserId",
+    resource: () => InventoryModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      inventoryName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      addCapacityValue: OutputMap.parameter("value"),
+    },
+  },
+  ],
+});
+
+const AcquireCharacterExperienceTransform = defineActionTransform("AcquireCharacterExperience", {
+  category: "acquire",
+  parameters: {
+    propertyId: { type: PT.ref(Character) },
+    value: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Experience:AddExperienceByUserId",
+    resource: () => ExperienceModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      experienceName: OutputMap.resourceKey(),
+      propertyId: OutputMap.parameter("propertyId"),
+      experienceValue: OutputMap.parameter("value"),
+      truncateExperienceWhenRankUp: OutputMap.static(null),
+    },
+  },
+  ],
+});
+
+const IncreaseCharacterLevelCapTransform = defineActionTransform("IncreaseCharacterLevelCap", {
+  category: "acquire",
+  parameters: {
+    propertyId: { type: PT.ref(Character) },
+    value: { type: PT.int64() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Experience:AddRankCapByUserId",
+    resource: () => ExperienceModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      experienceName: OutputMap.resourceKey(),
+      propertyId: OutputMap.parameter("propertyId"),
+      rankCapValue: OutputMap.parameter("value"),
+    },
+  },
+  ],
+});
+
+export const foundationEconomyCharacter = definePackage({
+  id: "foundation-economy-character",
+  version: "0.0.1",
+  display: {
     ja: { label: "キャラクター", description: "キャラクターの所持・レベル・経験値を扱います。" },
     en: { label: "Characters", description: "Handles character ownership, level, and experience." },
-  })
-  .displayType(CharacterCollection, {
-    ja: {
-      label: "キャラクター所持枠",
-      description: "プレイヤーが所持できるキャラクター数の上限と初期値を設定します。",
-    },
-    en: {
-      label: "Character slots",
-      description: "Sets the maximum and initial number of characters a player can own.",
-    },
-  })
-  .displayType(CharacterExperience, {
-    ja: {
-      label: "キャラクター経験値",
-      description: "レベルアップに必要な経験値と、初期・最大レベル上限を設定します。",
-    },
-    en: {
-      label: "Character experience",
-      description: "Sets level-up experience thresholds and the initial and maximum level caps.",
-    },
-  })
-  .displayType(Character, {
-    ja: {
-      label: "キャラクター",
-      description: "ゲームに登場するキャラクターと表示順を登録します。",
-    },
-    en: {
-      label: "Character",
-      description: "Registers the characters available in the game and their display order.",
-    },
-  })
-  .domainType(CharacterExperience)
-  .domainType(Character)
-  .domainType(CharacterCollection)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.experience.Namespace)
-      .bindings({
+  },
+  domainTypes: [CharacterExperience, Character, CharacterCollection],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.experience.Namespace,
+  bindings: {
         name: Bind.static("CharacterExperience"),
         ...Bind.nulls(
           "changeExperienceScript",
@@ -236,14 +340,14 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(ExperienceModel)
-  )
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.inventory.Namespace)
-      .bindings({
+      },
+  children: [
+    ExperienceModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.inventory.Namespace,
+  bindings: {
         name: Bind.static("Character"),
         ...Bind.nulls(
           "acquireScript",
@@ -256,16 +360,18 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(InventoryModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.experience.Status)
-      .linkedMasterResourceId(ExperienceModel)
-      .mountLocal(Character)
-      .bindings({
+      },
+  children: [
+    InventoryModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.experience.Status,
+  mount: Character,
+  linkedMaster: ExperienceModel,
+  bindings: {
         // Match the suffixed key used by enhancement so reads and experience grants address the same status.
         propertyId: Bind.domainPropertyKey(
           Source.direct(Character, "propertyId"),
@@ -280,14 +386,12 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
         experienceName: Bind.skip(),
         statusId: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.inventory.Inventory)
-      .linkedMasterResourceId(InventoryModel)
-      .bindings({
+      },
+}),
+    defineUserDataResource({
+  model: GS2.inventory.Inventory,
+  linkedMaster: InventoryModel,
+  bindings: {
         currentInventoryCapacityUsage: Bind.domainProperties([
           Source.direct(CharacterCollection, "currentCpacityUsage"),
         ]),
@@ -297,14 +401,12 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
         inventoryId: Bind.skip(),
         inventoryName: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.inventory.ItemSet)
-      .linkedMasterResourceId(ItemModel)
-      .bindings({
+      },
+}),
+    defineUserDataResource({
+  model: GS2.inventory.ItemSet,
+  linkedMaster: ItemModel,
+  bindings: {
         count: Bind.skip(),
         inventoryName: Bind.skip(),
         itemName: Bind.skip(),
@@ -312,99 +414,28 @@ export const foundationEconomyCharacter = definePackage("foundation-economy-char
         name: Bind.skip(),
         sortValue: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .actionTransform("AcquireCharacter", at =>
-    at
-      .category("acquire")
-      .parameter("character", { type: PT.ref("Character") })
-      .parameter("count", { type: PT.int32() })
-      .output("Gs2Inventory:AcquireItemSetByUserId", o =>
-        o
-          .resourceRef(() => ItemModel)
-          .mapResourceKey("namespaceName")
-          .mapResourceKey("inventoryName")
-          .mapParameter("itemName", "character")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("acquireCount", "count")
-          .mapStatic("expiresAt", null)
-          .mapStatic("createNewItemSet", null)
-          .mapStatic("itemSetName", null)
-      )
-  )
-  .actionTransform("AddCharacterCapacity", at =>
-    at
-      .category("acquire")
-      .parameter("value", { type: PT.int32() })
-      .output("Gs2Inventory:AddCapacityByUserId", o =>
-        o
-          .resourceRef(() => InventoryModel)
-          .mapResourceKey("namespaceName")
-          .mapResourceKey("inventoryName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("addCapacityValue", "value")
-      )
-  )
-  // Callers must pass the suffixed level-status key; the bare item-set GRN would update a different status.
-  .actionTransform("AcquireCharacterExperience", at =>
-    at
-      .category("acquire")
-      .parameter("propertyId", { type: PT.ref("Character") })
-      .parameter("value", { type: PT.int32() })
-      .output("Gs2Experience:AddExperienceByUserId", o =>
-        o
-          .resourceRef(() => ExperienceModel)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapResourceKey("experienceName")
-          .mapParameter("propertyId", "propertyId")
-          .mapParameter("experienceValue", "value")
-          .mapStatic("truncateExperienceWhenRankUp", null)
-      )
-  )
-  // Use the same suffixed status key as experience grants so the cap applies to the status being read.
-  .actionTransform("IncreaseCharacterLevelCap", at =>
-    at
-      .category("acquire")
-      .parameter("propertyId", { type: PT.ref("Character") })
-      .parameter("value", { type: PT.int64() })
-      .output("Gs2Experience:AddRankCapByUserId", o =>
-        o
-          .resourceRef(() => ExperienceModel)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapResourceKey("experienceName")
-          .mapParameter("propertyId", "propertyId")
-          .mapParameter("rankCapValue", "value")
-      )
-  )
-  .uiComponent(Character, ui =>
-    ui
-      .templateLabel(
-        "LevelLabel",
-        "{level}/{levelCap}",
-        { level: ui.prop("level"), levelCap: ui.prop("levelCap") },
-        { name: "Character" }
-      )
-      // Derive both bounds from cumulative experience so simulated progress cannot use a stale server-reported next threshold.
-      .gauge(
-        "ExperienceGauge",
-        ui.prop("experience"),
-        ui.bandUpper(CharacterExperience, "threshold", ui.prop("experience")),
-        {
+      },
+}),
+  ],
+  actionTransforms: [AcquireCharacterTransform, AddCharacterCapacityTransform, AcquireCharacterExperienceTransform, IncreaseCharacterLevelCapTransform],
+  uiComponents: [
+    defineUiComponent(Character, {
+  items: [
+    UiItem.templateLabel("LevelLabel", "{level}/{levelCap}", { level: UiSource.prop("level"), levelCap: UiSource.prop("levelCap") }, { name: "Character" }),
+    UiItem.gauge("ExperienceGauge", UiSource.prop("experience"), UiSource.bandUpper(CharacterExperience, "threshold", UiSource.prop("experience")), {
           name: "Character",
           clamp: true,
-          min: ui.bandLower(CharacterExperience, "threshold", ui.prop("experience")),
-        }
-      )
-      .activeToggle("LevelActiveToggle", UiCond.eq(ui.prop("level"), ui.prop("levelCap")), {
+          min: UiSource.bandLower(CharacterExperience, "threshold", UiSource.prop("experience")),
+        }),
+    UiItem.activeToggle("LevelActiveToggle", UiCond.eq(UiSource.prop("level"), UiSource.prop("levelCap")), {
         name: "CharacterReachLevelCap",
-      })
-      .interactable("LevelInteractable", UiCond.eq(ui.prop("level"), ui.prop("levelCap")), {
+      }),
+    UiItem.interactable("LevelInteractable", UiCond.eq(UiSource.prop("level"), UiSource.prop("levelCap")), {
         name: "CharacterReachLevelCap",
-      })
-      .value("IdValue", ui.prop("id"), { name: "Character" })
-      .value("PropertyIdValue", ui.prop("propertyId"), { name: "Character" })
-  )
-  .build();
+      }),
+    UiItem.value("IdValue", UiSource.prop("id"), { name: "Character" }),
+    UiItem.value("PropertyIdValue", UiSource.prop("propertyId"), { name: "Character" }),
+  ],
+}),
+  ],
+});

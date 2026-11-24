@@ -1,14 +1,21 @@
 import {
   Bind,
+  defineActionTransform,
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  defineUiComponent,
+  defineUserDataResource,
   dependencyPackage,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
@@ -17,11 +24,23 @@ import { jaEnField } from "../../dsl/jaEnField";
 
 const character = dependencyPackage(characterSurface);
 
-const Character = defineOverlayDomainType("Character", character.overlay("Character"), domainType =>
-  domainType
-    .property(PT.bool("acquired").userData().required())
-    .property(PT.timestamp("acquiredAt").userData().required())
-    .localizedProperties({
+const Character = defineOverlayDomainType("Character", character.overlay("Character"), {
+  properties: {
+    acquired: PT.bool().userData().required(),
+    acquiredAt: PT.timestamp().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "キャラクター",
+      description: "キャラクター図鑑に表示するキャラクターと閲覧状態を管理します。",
+    },
+    en: {
+      label: "Character",
+      description:
+        "Manages the characters shown in the character encyclopedia and their view state.",
+    },
+  },
+  localizedProperties: {
       acquired: jaEnField(
         "図鑑登録済み",
         "Registered",
@@ -34,23 +53,40 @@ const Character = defineOverlayDomainType("Character", character.overlay("Charac
         "このキャラクターを初めて獲得した日時です。",
         "Time when this character was first acquired."
       ),
-    })
-);
+    },
+});
 
-const EntryModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.dictionary.EntryModel)
-    .mountLocal(Character)
-    .bindings({
+const EntryModel = defineMasterDataResource({
+  model: GS2.dictionary.EntryModel,
+  mount: Character,
+  bindings: {
       name: Bind.domainProperty(Source.direct(Character, "id")),
-    })
-);
+    },
+});
 
-export const foundationEconomyCharacterDictionary = definePackage(
-  "foundation-economy-character-dictionary",
-  "0.0.1"
-)
-  .display({
+const MarkCharacterDictionaryTransform = defineActionTransform("MarkCharacterDictionary", {
+  category: "acquire",
+  parameters: {
+    character: { type: PT.ref(Character) },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Dictionary:AddEntriesByUserId",
+    resource: () => EntryModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      "entryModelNames[0]": OutputMap.parameter("character"),
+    },
+  },
+  ],
+});
+
+export const foundationEconomyCharacterDictionary = definePackage({
+  id: "foundation-economy-character-dictionary",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "キャラクター図鑑",
       description: "これまでに入手したキャラクターの種類を図鑑に記録します。",
@@ -59,77 +95,54 @@ export const foundationEconomyCharacterDictionary = definePackage(
       label: "Character Dex",
       description: "Keeps a dex of every character species the player has ever obtained.",
     },
-  })
-  .displayType(Character, {
-    ja: {
-      label: "キャラクター",
-      description: "キャラクター図鑑に表示するキャラクターと閲覧状態を管理します。",
-    },
-    en: {
-      label: "Character",
-      description:
-        "Manages the characters shown in the character encyclopedia and their view state.",
-    },
-  })
-  .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
-  .domainType(Character)
-
-  .masterDataResource(r => {
-    r.model(GS2.dictionary.Namespace)
-      .bindings({
+  },
+  dependencies: {
+    "foundation-economy-character": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [Character],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.dictionary.Namespace,
+  bindings: {
         name: Bind.static("CharacterDictionary"),
         transactionSettingV2: transactionSettingV2(),
         ...Bind.nulls("logSetting", "entryScript", "duplicateEntryScript"),
-      })
-      .addChild(EntryModel);
-  })
-
-  .userDataResource(r => {
-    r.model(GS2.dictionary.Entry)
-      .linkedMasterResourceId(EntryModel)
-      .existenceProperty("acquired")
-      .bindings({
+      },
+  children: [
+    EntryModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.dictionary.Entry,
+  linkedMaster: EntryModel,
+  existenceProperty: "acquired",
+  bindings: {
         acquiredAt: Bind.domainProperties([Source.direct(Character, "acquiredAt")]),
         entryId: Bind.skip(),
         name: Bind.skip(),
-      });
-  })
-
-  .uiComponent(Character, ui =>
-    ui
-      .templateLabel("NameLabel", "{id}", { id: ui.prop("id") }, { name: "Character" })
-      .templateLabel(
-        "AcquiredAtLabel",
-        "{acquiredAt}",
-        { acquiredAt: ui.prop("acquiredAt") },
-        { name: "Character" }
-      )
-      .value("AcquiredAtValue", ui.prop("acquiredAt"), { name: "Character" })
-      .interactable("UnregisteredInteractable", UiCond.not(UiCond.truthy(ui.prop("acquired"))), {
+      },
+}),
+  ],
+  actionTransforms: [MarkCharacterDictionaryTransform],
+  uiComponents: [
+    defineUiComponent(Character, {
+  items: [
+    UiItem.templateLabel("NameLabel", "{id}", { id: UiSource.prop("id") }, { name: "Character" }),
+    UiItem.templateLabel("AcquiredAtLabel", "{acquiredAt}", { acquiredAt: UiSource.prop("acquiredAt") }, { name: "Character" }),
+    UiItem.value("AcquiredAtValue", UiSource.prop("acquiredAt"), { name: "Character" }),
+    UiItem.interactable("UnregisteredInteractable", UiCond.not(UiCond.truthy(UiSource.prop("acquired"))), {
         name: "Character",
-      })
-      // Unacquired rows have no acquisition date; show an explicit empty state instead of formatting the zero timestamp.
-      // The page derives captions from component names, so AcquiredLabel pairs the caption "Acquired" with "Not yet".
-      .label("AcquiredLabel", ui.lit("Not yet"), { name: "Character" })
-      // Page hide rules use these state toggles to suppress the date or the empty-state label.
-      .activeToggle("UnacquiredActiveToggle", UiCond.not(UiCond.truthy(ui.prop("acquired"))), {
+      }),
+    UiItem.label("AcquiredLabel", UiSource.lit("Not yet"), { name: "Character" }),
+    UiItem.activeToggle("UnacquiredActiveToggle", UiCond.not(UiCond.truthy(UiSource.prop("acquired"))), {
         name: "Character",
-      })
-      .activeToggle("AcquiredActiveToggle", UiCond.truthy(ui.prop("acquired")), {
+      }),
+    UiItem.activeToggle("AcquiredActiveToggle", UiCond.truthy(UiSource.prop("acquired")), {
         name: "Character",
-      })
-  )
-
-  .actionTransform("MarkCharacterDictionary", at =>
-    at
-      .category("acquire")
-      .parameter("character", { type: PT.ref("Character") })
-      .output("Gs2Dictionary:AddEntriesByUserId", o =>
-        o
-          .resourceRef(() => EntryModel)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("entryModelNames[0]", "character")
-      )
-  )
-  .build();
+      }),
+  ],
+}),
+  ],
+});

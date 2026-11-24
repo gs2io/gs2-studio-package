@@ -1,20 +1,35 @@
-import { defineOverlayDomainType, definePackage, dependencyPackage, PT, UiCond } from "gs2-studio-dsl";
+import {
+  defineOverlayDomainType,
+  definePackage,
+  defineUiComponent,
+  dependencyPackage,
+  instance,
+  PT,
+  UiCond,
+  UiItem,
+  UiSource,
+} from "gs2-studio-dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+
 import questSurface from "../../dsl/dependency-surface.json";
+
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
+
 import energySurface from "../../../foundation-economy-energy/dsl/dependency-surface.json";
 
 const quest = dependencyPackage(questSurface);
+
 const currency = dependencyPackage(currencySurface);
+
 const energy = dependencyPackage(energySurface);
 
 const QuestCollection = quest.type("QuestCollection");
+
 const Progress = quest.type("Progress");
 
 const WALLET_SLOT = 0;
 
-/** Match the stamina row owned by the shared energy demo rather than authoring a second meter. */
 const STAMINA = "stamina";
 
 const MAIN = "main";
@@ -54,44 +69,37 @@ function depositEntry(propertyName: string) {
   } as const;
 }
 
-/** Use published ids for inherited action slots because this DSL evaluation does not resolve the dependency closure. The feature binds completion rewards under contents[0]. */
-const Quest = defineOverlayDomainType(
-  "Quest",
-  {
-    ...quest.overlay("Quest"),
-    actionPropertyTransforms: [
-      {
-        targetProperty: quest.propertyId("Quest", "consumeActions"),
-        mode: "append",
-        transformPackageId: energy.packageId,
-        transformId: energy.transformId("ConsumeEnergy"),
-        arguments: [
+const Quest = defineOverlayDomainType("Quest", quest.overlay("Quest"), {
+  properties: {
+    displayName: PT.string().assetDelivery().required(),
+    staminaCost: PT.int32().masterData().required(),
+    reward: PT.int32().masterData().required(),
+    firstClearReward: PT.int32().masterData().required(),
+  },
+  actionPropertyTransforms: [
+    { targetProperty: quest.propertyId("Quest", "consumeActions"), mode: "append", transformPackageId: energy.packageId, transformId: energy.transformId("ConsumeEnergy"), arguments: [
           { parameterName: "energy", source: { kind: "static", value: STAMINA } },
           {
             parameterName: "value",
             source: { kind: "domainProperty", propertyName: "staminaCost" },
           },
-        ],
-      },
-      {
-        targetProperty: quest.propertyId("Quest", "completeAcquireActions"),
-        mode: "append",
-        ...depositEntry("reward"),
-      },
-      {
-        targetProperty: quest.propertyId("Quest", "firstCompleteAcquireActions"),
-        mode: "append",
-        ...depositEntry("firstClearReward"),
-      },
-    ],
+        ] },
+    { targetProperty: quest.propertyId("Quest", "completeAcquireActions"), mode: "append", ...depositEntry("reward") },
+    { targetProperty: quest.propertyId("Quest", "firstCompleteAcquireActions"), mode: "append", ...depositEntry("firstClearReward") },
+  ],
+  localizedDisplay: {
+    ja: {
+      label: "クエスト",
+      description:
+        "デモのクエストに、表示名・消費スタミナ・クリア報酬・初回クリアボーナスを足します。",
+    },
+    en: {
+      label: "Quest",
+      description:
+        "Adds a display name, stamina cost, clear reward and first-clear bonus to a demo quest.",
+    },
   },
-  domainType =>
-    domainType
-      .property(PT.string("displayName").assetDelivery().required())
-      .property(PT.int32("staminaCost").masterData().required())
-      .property(PT.int32("reward").masterData().required())
-      .property(PT.int32("firstClearReward").masterData().required())
-      .localizedProperties({
+  localizedProperties: {
         displayName: jaEnField(
           "表示名",
           "Display name",
@@ -119,106 +127,98 @@ const Quest = defineOverlayDomainType(
           "Free currency paid on top of the reward on the first clear only.",
           { ja: "通貨", en: "currency" }
         ),
-      })
-);
+      },
+});
 
-const withQuests = QUESTS.reduce(
-  (builder, { id, displayName, staminaCost, reward, firstClearReward }) =>
-    // Use the local overlay name for its added properties; initialize required action lists before appending costs and rewards. Failure has no payout.
-    builder.instance("Quest", id, {
-      [quest.propertyId("Quest", "collection")]: MAIN,
-      [quest.propertyId("Quest", "consumeActions")]: [],
-      [quest.propertyId("Quest", "completeAcquireActions")]: [],
-      [quest.propertyId("Quest", "firstCompleteAcquireActions")]: [],
-      [quest.propertyId("Quest", "failedAcquireActions")]: [],
-      displayName,
-      staminaCost,
-      reward,
-      firstClearReward,
+export const microEconomyQuestDemo = definePackage({
+  id: "micro-economy-quest-demo",
+  version: "0.0.1",
+  display: {
+    ja: {
+      label: "クエスト（デモデータ）",
+      description:
+        "ライブデモ用のクエストグループと 3 つのクエスト、その消費スタミナ・クリア報酬・初回クリアボーナスを提供します。",
+    },
+    en: {
+      label: "Quests (demo data)",
+      description:
+        "Supplies the live demo's quest group and three quests, with the stamina each costs, the reward each pays, and a first-clear bonus.",
+    },
+  },
+  dependencies: {
+    [quest.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
+    [energy.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-energy-demo": "github:gs2io/gs2-studio-package",
+    [currency.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [Quest],
+  instances: [
+    instance(QuestCollection, MAIN, {}),
+    ...QUESTS.map(({ id, displayName, staminaCost, reward, firstClearReward }) =>
+      instance(Quest, id, {
+        [quest.propertyId("Quest", "collection")]: MAIN,
+        [quest.propertyId("Quest", "consumeActions")]: [],
+        [quest.propertyId("Quest", "completeAcquireActions")]: [],
+        [quest.propertyId("Quest", "firstCompleteAcquireActions")]: [],
+        [quest.propertyId("Quest", "failedAcquireActions")]: [],
+        displayName,
+        staminaCost,
+        reward,
+        firstClearReward,
+      })
+    ),
+  ],
+  uiComponents: [
+    defineUiComponent(Quest, {
+      items: [
+        UiItem.templateLabel(
+          "NameLabel",
+          "{displayName}",
+          { displayName: UiSource.prop("displayName") },
+          { name: "Quest" }
+        ),
+        UiItem.templateLabel(
+          "BriefLabel",
+          "Costs {staminaCost} stamina. Pays {reward} coins, plus {firstClearReward} on the first clear.",
+          {
+            staminaCost: UiSource.prop("staminaCost"),
+            reward: UiSource.prop("reward"),
+            firstClearReward: UiSource.prop("firstClearReward"),
+          },
+          { name: "Quest" }
+        ),
+        UiItem.templateLabel(
+          "RunningLabel",
+          "Running: {displayName} ({staminaCost} stamina spent)",
+          { displayName: UiSource.prop("displayName"), staminaCost: UiSource.prop("staminaCost") },
+          { name: "Quest" }
+        ),
+        UiItem.buttonAction("StartButton", "Start", undefined, { name: "Quest" }),
+        UiItem.templateLabel("ClearedLabel", "Cleared", {}, { name: "Quest" }),
+        UiItem.activeToggle(
+          "UnclearedActiveToggle",
+          UiCond.not(UiCond.truthy(UiSource.prop("completed"))),
+          { name: "Quest" }
+        ),
+      ],
     }),
-  definePackage("micro-economy-quest-demo", "0.0.1")
-    .display({
-      ja: {
-        label: "クエスト（デモデータ）",
-        description:
-          "ライブデモ用のクエストグループと 3 つのクエスト、その消費スタミナ・クリア報酬・初回クリアボーナスを提供します。",
-      },
-      en: {
-        label: "Quests (demo data)",
-        description:
-          "Supplies the live demo's quest group and three quests, with the stamina each costs, the reward each pays, and a first-clear bonus.",
-      },
-    })
-    .displayType(Quest, {
-      ja: {
-        label: "クエスト",
-        description:
-          "デモのクエストに、表示名・消費スタミナ・クリア報酬・初回クリアボーナスを足します。",
-      },
-      en: {
-        label: "Quest",
-        description:
-          "Adds a display name, stamina cost, clear reward and first-clear bonus to a demo quest.",
-      },
-    })
-    .dependency(quest.packageId, "github:gs2io/gs2-studio-package")
-    .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-    // Reuse shared schedule content so this demo cannot remove event windows from that stack.
-    .dependency("foundation-economy-schedule-demo", "github:gs2io/gs2-studio-package")
-    // Reuse the shared energy and currency demo content so their stacks stay identical across deployments.
-    .dependency(energy.packageId, "github:gs2io/gs2-studio-package")
-    .dependency("foundation-economy-energy-demo", "github:gs2io/gs2-studio-package")
-    .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-    .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-    .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
-
-    .domainType(Quest)
-    .instance(QuestCollection, MAIN, {})
-);
-
-export const microEconomyQuestDemo = withQuests
-  .uiComponent(Quest, ui =>
-    ui
-      .templateLabel(
-        "NameLabel",
-        "{displayName}",
-        { displayName: ui.prop("displayName") },
-        { name: "Quest" }
-      )
-      .templateLabel(
-        "BriefLabel",
-        "Costs {staminaCost} stamina. Pays {reward} coins, plus {firstClearReward} on the first clear.",
-        {
-          staminaCost: ui.prop("staminaCost"),
-          reward: ui.prop("reward"),
-          firstClearReward: ui.prop("firstClearReward"),
-        },
-        { name: "Quest" }
-      )
-      .templateLabel(
-        "RunningLabel",
-        "Running: {displayName} ({staminaCost} stamina spent)",
-        { displayName: ui.prop("displayName"), staminaCost: ui.prop("staminaCost") },
-        { name: "Quest" }
-      )
-      .buttonAction("StartButton", "Start", undefined, { name: "Quest" })
-      .templateLabel("ClearedLabel", "Cleared", {}, { name: "Quest" })
-      // Negate completed because the toggle hides the cleared mark while its condition is true.
-      .activeToggle("UnclearedActiveToggle", UiCond.not(UiCond.truthy(ui.prop("completed"))), {
-        name: "Quest",
-      })
-  )
-
-  .uiComponent(Progress, ui =>
-    ui
-      .buttonAction("CompleteButton", "Complete", undefined, { name: "Progress" })
-      .templateLabel("IdleLabel", "No quest in progress", {}, { name: "Progress" })
-      // Hide Complete without an active run and the idle label while one exists.
-      .activeToggle("IdleActiveToggle", UiCond.not(UiCond.truthy(ui.prop("inProgress"))), {
-        name: "Progress",
-      })
-      .activeToggle("RunningActiveToggle", UiCond.truthy(ui.prop("inProgress")), {
-        name: "Progress",
-      })
-  )
-  .build();
+    defineUiComponent(Progress, {
+      items: [
+        UiItem.buttonAction("CompleteButton", "Complete", undefined, { name: "Progress" }),
+        UiItem.templateLabel("IdleLabel", "No quest in progress", {}, { name: "Progress" }),
+        UiItem.activeToggle(
+          "IdleActiveToggle",
+          UiCond.not(UiCond.truthy(UiSource.prop("inProgress"))),
+          { name: "Progress" }
+        ),
+        UiItem.activeToggle("RunningActiveToggle", UiCond.truthy(UiSource.prop("inProgress")), {
+          name: "Progress",
+        }),
+      ],
+    }),
+  ],
+});

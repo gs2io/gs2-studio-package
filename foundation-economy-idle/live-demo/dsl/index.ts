@@ -1,52 +1,66 @@
-/** The page refreshes idle predictions separately because elapsed time alone does not change the stored status. */
-
-import { defineOverlayDomainType, definePackage, dependencyPackage, PT } from "gs2-studio-dsl";
+import {
+  defineOverlayDomainType,
+  definePackage,
+  defineUiComponent,
+  dependencyPackage,
+  instance,
+  PT,
+  UiItem,
+} from "gs2-studio-dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+
 import idleSurface from "../../dsl/dependency-surface.json";
+
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
 
 const idle = dependencyPackage(idleSurface);
+
 const currency = dependencyPackage(currencySurface);
 
 const WALLET_SLOT = 0;
 
 const REWARD_INTERVAL_MINUTES = 5;
+
 const MAXIMUM_IDLE_MINUTES = 8 * 60;
 
 const COINS_PER_INTERVAL = 5;
+
 const COINS_PER_HOUR_DROP = 50;
 
-/** Pad ids so lexical row ordering preserves interval order and leaves the hourly drop last. */
 const REWARDS = Array.from({ length: 60 / REWARD_INTERVAL_MINUTES }, (_, index) => ({
   id: `interval${String(index + 1).padStart(2, "0")}`,
   coins: index === 60 / REWARD_INTERVAL_MINUTES - 1 ? COINS_PER_HOUR_DROP : COINS_PER_INTERVAL,
 }));
 
-const IdleStatus = defineOverlayDomainType("IdleStatus", idle.overlay("IdleStatus"));
+const IdleStatus = defineOverlayDomainType("IdleStatus", idle.overlay("IdleStatus"), {
+  localizedDisplay: {
+    ja: { label: "放置状況", description: "デモの放置状況に、受け取りの操作と説明を付けます。" },
+    en: {
+      label: "Idle status",
+      description: "Gives the demo idle status its receive press and its rule.",
+    },
+  },
+});
 
-const IdleReward = defineOverlayDomainType(
-  "IdleReward",
-  {
-    ...idle.overlay("IdleReward"),
-    actionPropertyTransforms: [
-      {
-        targetProperty: idle.propertyId("IdleReward", "acquireActions"),
-        mode: "append",
-        transformPackageId: currency.packageId,
-        transformId: currency.transformId("DepositFreeCurrency"),
-        arguments: [
+const IdleReward = defineOverlayDomainType("IdleReward", idle.overlay("IdleReward"), {
+  properties: {
+    coins: PT.int32().masterData().required(),
+  },
+  actionPropertyTransforms: [
+    { targetProperty: idle.propertyId("IdleReward", "acquireActions"), mode: "append", transformPackageId: currency.packageId, transformId: currency.transformId("DepositFreeCurrency"), arguments: [
           { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
           {
             parameterName: "count",
             source: { kind: "domainProperty", propertyName: "coins" },
           },
-        ],
-      },
-    ],
+        ] },
+  ],
+  localizedDisplay: {
+    ja: { label: "放置報酬", description: "デモの放置報酬に、報酬コインを足します。" },
+    en: { label: "Idle reward", description: "Adds the coins it pays to a demo idle reward." },
   },
-  domainType =>
-    domainType.property(PT.int32("coins").masterData().required()).localizedProperties({
+  localizedProperties: {
       coins: jaEnField(
         "報酬コイン",
         "Reward coins",
@@ -54,11 +68,13 @@ const IdleReward = defineOverlayDomainType(
         "Coins paid for each interval away.",
         { ja: "通貨", en: "currency" }
       ),
-    })
-);
+    },
+});
 
-const withStatus = definePackage("foundation-economy-idle-demo", "0.0.1")
-  .display({
+export const foundationEconomyIdleDemo = definePackage({
+  id: "foundation-economy-idle-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "放置報酬（デモデータ）",
       description:
@@ -69,52 +85,30 @@ const withStatus = definePackage("foundation-economy-idle-demo", "0.0.1")
       description:
         "Supplies the live demo's idle reward: a few coins every five minutes away and a bigger drop every hour, up to eight hours. The rewards land in the currency package's wallet.",
     },
-  })
-  .displayType(IdleStatus, {
-    ja: { label: "放置状況", description: "デモの放置状況に、受け取りの操作と説明を付けます。" },
-    en: {
-      label: "Idle status",
-      description: "Gives the demo idle status its receive press and its rule.",
-    },
-  })
-  .displayType(IdleReward, {
-    ja: { label: "放置報酬", description: "デモの放置報酬に、報酬コインを足します。" },
-    en: { label: "Idle reward", description: "Adds the coins it pays to a demo idle reward." },
-  })
-  .dependency(idle.packageId, "github:gs2io/gs2-studio-package")
-  // Reuse the currency demo content so this demo cannot deploy a conflicting version of the shared wallet stack.
-  .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-  .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
-
-  .domainType(IdleStatus)
-  .domainType(IdleReward)
-
-  .instance(IdleStatus.typeName, "idlestatus", {
+  },
+  dependencies: {
+    [idle.packageId]: "github:gs2io/gs2-studio-package",
+    [currency.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [IdleStatus, IdleReward],
+  instances: [
+    instance(IdleStatus, "idlestatus", {
     [idle.propertyId("IdleStatus", "rewardIntervalMinutes")]: REWARD_INTERVAL_MINUTES,
     [idle.propertyId("IdleStatus", "defaultMaximumIdleMinutes")]: MAXIMUM_IDLE_MINUTES,
-  });
-
-// Address the local overlay by name so its coins property is available; keep the required acquire slot empty for the appended deposit.
-const withRewards = REWARDS.reduce(
-  (builder, { id, coins }) =>
-    builder.instance(IdleReward.typeName, id, {
+  }),
+    ...REWARDS.map(({ id, coins }) => instance(IdleReward, id, {
       [idle.propertyId("IdleReward", "acquireActions")]: [],
       coins,
-    }),
-  withStatus
-);
-
-export const foundationEconomyIdleDemo = withRewards
-
-  .uiComponent(IdleStatus, ui =>
-    ui
-      .templateLabel(
-        "RuleLabel",
-        `Every ${REWARD_INTERVAL_MINUTES} minutes away pays ${COINS_PER_INTERVAL} coins, and every ${REWARDS.length}th interval pays ${COINS_PER_HOUR_DROP} instead, for up to ${MAXIMUM_IDLE_MINUTES / 60} hours. Receive pays what has built up and starts the count again; minutes short of a full ${REWARD_INTERVAL_MINUTES} are dropped.`,
-        {},
-        { name: "IdleStatus" }
-      )
-      .buttonAction("ReceiveButton", "Receive", undefined, { name: "IdleStatus" })
-  )
-  .build();
+    })),
+  ],
+  uiComponents: [
+    defineUiComponent(IdleStatus, {
+  items: [
+    UiItem.templateLabel("RuleLabel", `Every ${REWARD_INTERVAL_MINUTES} minutes away pays ${COINS_PER_INTERVAL} coins, and every ${REWARDS.length}th interval pays ${COINS_PER_HOUR_DROP} instead, for up to ${MAXIMUM_IDLE_MINUTES / 60} hours. Receive pays what has built up and starts the count again; minutes short of a full ${REWARD_INTERVAL_MINUTES} are dropped.`, {}, { name: "IdleStatus" }),
+    UiItem.buttonAction("ReceiveButton", "Receive", undefined, { name: "IdleStatus" }),
+  ],
+}),
+  ],
+});

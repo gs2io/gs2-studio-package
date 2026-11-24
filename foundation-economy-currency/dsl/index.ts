@@ -1,22 +1,41 @@
 import {
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
+  defineUserDataResource,
+  instance,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-const Wallet = defineDomainType("Wallet", dt =>
-  dt
-    .property(PT.int32("free").userData().required())
-    .property(PT.int32("paid").userData().required())
-    .property(PT.int32("total").userData().required())
-    .localizedProperties({
+const Wallet = defineDomainType("Wallet", {
+  properties: {
+    free: PT.int32().userData().required(),
+    paid: PT.int32().userData().required(),
+    total: PT.int32().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ウォレット",
+      description: "プレイヤーの1つのウォレットスロットにある有償・無償通貨の残高です。",
+    },
+    en: {
+      label: "Wallet",
+      description: "A player's paid and free currency balances in one GS2 Money2 wallet slot.",
+    },
+  },
+  localizedProperties: {
       id: jaEnField(
         "ID",
         "ID",
@@ -44,14 +63,25 @@ const Wallet = defineDomainType("Wallet", dt =>
         "Current combined paid and free currency balance.",
         { ja: "通貨", en: "currency" }
       ),
-    })
-);
+    },
+});
 
-const StoreProduct = defineDomainType("StoreProduct", dt =>
-  dt
-    .property(PT.string("appleAppStoreProductId").masterData())
-    .property(PT.string("googlePlayProductId").masterData())
-    .localizedProperties({
+const StoreProduct = defineDomainType("StoreProduct", {
+  properties: {
+    appleAppStoreProductId: PT.string().masterData(),
+    googlePlayProductId: PT.string().masterData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ストア商品",
+      description: "ストア商品とApp Store・Google Playの商品IDの対応を設定します。",
+    },
+    en: {
+      label: "Store product",
+      description: "Maps a store product to its App Store and Google Play product identifiers.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ストア商品", "store product"),
       appleAppStoreProductId: jaEnField(
         "App Store商品ID",
@@ -65,14 +95,26 @@ const StoreProduct = defineDomainType("StoreProduct", dt =>
         "Google Play Consoleで登録した商品の識別子です。",
         "Product identifier registered in Google Play Console."
       ),
-    })
-);
+    },
+});
 
-const CurrencyStore = defineDomainType("CurrencyStore", dt =>
-  dt
-    .singleEntry()
-    .property(PT.prop("enableFakeReceipt", PT.enum("Accept", "Reject")).masterData().required())
-    .localizedProperties({
+const CurrencyStore = defineDomainType("CurrencyStore", {
+  singleEntry: true,
+  properties: {
+    enableFakeReceipt: PT.enum("Accept", "Reject").masterData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "通貨ストア",
+      description: "レシート検証とテスト購入に関する通貨ストア設定を管理します。",
+    },
+    en: {
+      label: "Currency store",
+      description:
+        "Configures receipt validation and test-purchase behavior for the currency store.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("通貨ストア", "currency store"),
       enableFakeReceipt: jaEnField(
         "テストレシート",
@@ -80,17 +122,16 @@ const CurrencyStore = defineDomainType("CurrencyStore", dt =>
         "テスト購入用の偽レシートを受け付けるかを設定します。",
         "Whether fake receipts used for test purchases are accepted."
       ),
-    })
-);
+    },
+});
 
 const SLOT_PARAMETER =
   'GS2 Money2 wallet slot. The Wallet whose id is the slot as a decimal string (slot 0 is "0") shows its balance; no Wallet row is needed. Free and paid balances are separate per slot.';
 
-const Namespace = defineMasterDataResource(resource => {
-  resource
-    .model(GS2.money2.Namespace)
-    .mountLocal(CurrencyStore)
-    .bindings({
+const Namespace = defineMasterDataResource({
+  model: GS2.money2.Namespace,
+  mount: CurrencyStore,
+  bindings: {
       name: Bind.static("Currency"),
       changeSubscriptionStatusNotification: Bind.null(),
       currencyUsagePriority: Bind.static("PrioritizeFree"),
@@ -113,12 +154,12 @@ const Namespace = defineMasterDataResource(resource => {
       ...Bind.nulls("subscribeScript", "takeOverScript"),
       transactionSettingV2: transactionSettingV2(),
       ...Bind.nulls("unsubscribeScript", "verifyReceiptScript", "withdrawBalanceScript"),
-    })
-    .addChild(child => {
-      child
-        .model(GS2.money2.StoreContentModel)
-        .mountLocal(StoreProduct)
-        .bindings({
+    },
+  children: [
+    defineMasterDataResource({
+  model: GS2.money2.StoreContentModel,
+  mount: StoreProduct,
+  bindings: {
           name: Bind.domainProperty(Source.direct(StoreProduct, "id")),
           appleAppStore: {
             productId: Bind.domainProperty(Source.direct(StoreProduct, "appleAppStoreProductId")),
@@ -126,12 +167,153 @@ const Namespace = defineMasterDataResource(resource => {
           googlePlay: {
             productId: Bind.domainProperty(Source.direct(StoreProduct, "googlePlayProductId")),
           },
-        });
-    });
+        },
+}),
+  ],
 });
 
-export const foundationEconomyCurrency = definePackage("foundation-economy-currency", "0.0.1")
-  .display({
+const DepositFreeCurrencyTransform = defineActionTransform("DepositFreeCurrency", {
+  category: "acquire",
+  parameters: {
+    slot: { type: PT.int32(), description: SLOT_PARAMETER },
+    count: {
+        type: PT.int32(),
+        description: "Amount of free currency to deposit (price 0).",
+      },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Money2:DepositByUserId",
+    resource: () => Namespace,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      slot: OutputMap.parameter("slot"),
+      "depositTransactions[0].price": OutputMap.static(0),
+      "depositTransactions[0].currency": OutputMap.static(""),
+      "depositTransactions[0].count": OutputMap.parameter("count"),
+    },
+  },
+  ],
+});
+
+const DepositCurrencyTransform = defineActionTransform("DepositCurrency", {
+  category: "acquire",
+  parameters: {
+    slot: { type: PT.int32(), description: SLOT_PARAMETER },
+    count: {
+        type: PT.int32(),
+        description: "Amount of currency to deposit; it is paid currency when price > 0.",
+      },
+    currencyType: {
+        type: PT.string(),
+        description:
+          "ISO currency code of the purchase price, such as JPY; used only when price > 0.",
+      },
+    price: {
+        type: PT.float64(),
+        description:
+          "Purchase price in currencyType; GS2 Money2 treats a deposit with price 0 as free currency.",
+      },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Money2:DepositByUserId",
+    resource: () => Namespace,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      slot: OutputMap.parameter("slot"),
+      "depositTransactions[0].price": OutputMap.parameter("price"),
+      "depositTransactions[0].currency": OutputMap.parameter("currencyType"),
+      "depositTransactions[0].count": OutputMap.parameter("count"),
+    },
+  },
+  ],
+});
+
+const WithdrawCurrencyTransform = defineActionTransform("WithdrawCurrency", {
+  category: "consume",
+  parameters: {
+    slot: { type: PT.int32(), description: SLOT_PARAMETER },
+    paidOnly: {
+        type: PT.bool(),
+        required: false,
+        description:
+          "When true, only paid currency is withdrawn; otherwise free currency is used first (the namespace sets PrioritizeFree).",
+      },
+    count: { type: PT.int32(), description: "Amount of currency to withdraw." },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Money2:WithdrawByUserId",
+    resource: () => Namespace,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      slot: OutputMap.parameter("slot"),
+      withdrawCount: OutputMap.parameter("count"),
+      paidOnly: OutputMap.parameter("paidOnly"),
+    },
+  },
+  ],
+});
+
+const WithdrawPaidCurrencyTransform = defineActionTransform("WithdrawPaidCurrency", {
+  category: "consume",
+  parameters: {
+    slot: { type: PT.int32(), description: SLOT_PARAMETER },
+    count: {
+        type: PT.int32(),
+        description: "Amount of paid currency to withdraw.",
+      },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Money2:WithdrawByUserId",
+    resource: () => Namespace,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      slot: OutputMap.parameter("slot"),
+      withdrawCount: OutputMap.parameter("count"),
+      paidOnly: OutputMap.static(true),
+    },
+  },
+  ],
+});
+
+const VerifyReceiptTransform = defineActionTransform("VerifyReceipt", {
+  category: "consume",
+  parameters: {
+    contentName: {
+        type: PT.ref(StoreProduct),
+        description: "StoreProduct id, which is the GS2 Money2 store content model name.",
+      },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Money2:VerifyReceiptByUserId",
+    resource: () => Namespace,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      contentName: OutputMap.parameter("contentName"),
+      receipt: OutputMap.placeholder("#{receipt}"),
+    },
+  },
+  ],
+});
+
+export const foundationEconomyCurrency = definePackage({
+  id: "foundation-economy-currency",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "通貨",
       description: "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。",
@@ -141,53 +323,19 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
       description:
         "Manages an in-game currency balance (wallet) and the store products that sell it.",
     },
-  })
-  .displayType(CurrencyStore, {
-    ja: {
-      label: "通貨ストア",
-      description: "レシート検証とテスト購入に関する通貨ストア設定を管理します。",
-    },
-    en: {
-      label: "Currency store",
-      description:
-        "Configures receipt validation and test-purchase behavior for the currency store.",
-    },
-  })
-  .displayType(StoreProduct, {
-    ja: {
-      label: "ストア商品",
-      description: "ストア商品とApp Store・Google Playの商品IDの対応を設定します。",
-    },
-    en: {
-      label: "Store product",
-      description: "Maps a store product to its App Store and Google Play product identifiers.",
-    },
-  })
-  .displayType(Wallet, {
-    ja: {
-      label: "ウォレット",
-      description: "プレイヤーの1つのウォレットスロットにある有償・無償通貨の残高です。",
-    },
-    en: {
-      label: "Wallet",
-      description: "A player's paid and free currency balances in one GS2 Money2 wallet slot.",
-    },
-  })
-  .domainType(Wallet)
-  .domainType(StoreProduct)
-  .domainType(CurrencyStore)
-  .instance(CurrencyStore, "currencystore", { enableFakeReceipt: "Reject" })
-  .uiComponent(Wallet, ui =>
-    ui
-      .label("FreeBalanceLabel", ui.prop("free"), { name: "FreeBalance" })
-      .label("PaidBalanceLabel", ui.prop("paid"), { name: "PaidBalance" })
-      .label("TotalBalanceLabel", ui.prop("total"), { name: "TotalBalance" })
-  )
-  .masterDataResource(Namespace)
-  .userDataResource(r => {
-    r.model(GS2.money2.Wallet)
-      .mountLocal(Wallet)
-      .bindings({
+  },
+  domainTypes: [Wallet, StoreProduct, CurrencyStore],
+  instances: [
+    instance(CurrencyStore, "currencystore", { enableFakeReceipt: "Reject" }),
+  ],
+  masterDataResources: [
+    Namespace,
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.money2.Wallet,
+  mount: Wallet,
+  bindings: {
         // Use the exposed wallet slot as identity; a separate slot property would duplicate the reserved id.
         slot: Bind.domainProperty(Source.direct(Wallet, "id")),
         summary: {
@@ -198,110 +346,17 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
         userId: Bind.skip(),
         walletId: Bind.skip(),
         sharedFreeCurrency: Bind.skip(),
-      });
-  })
-
-  .actionTransform("DepositFreeCurrency", at =>
-    at
-      .category("acquire")
-      .parameter("slot", { type: PT.int32(), description: SLOT_PARAMETER })
-      .parameter("count", {
-        type: PT.int32(),
-        description: "Amount of free currency to deposit (price 0).",
-      })
-      .output("Gs2Money2:DepositByUserId", o =>
-        o
-          .resourceRef(() => Namespace)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("slot", "slot")
-          .mapStatic("depositTransactions[0].price", 0)
-          .mapStatic("depositTransactions[0].currency", "")
-          .mapParameter("depositTransactions[0].count", "count")
-      )
-  )
-  .actionTransform("DepositCurrency", at =>
-    at
-      .category("acquire")
-      .parameter("slot", { type: PT.int32(), description: SLOT_PARAMETER })
-      .parameter("count", {
-        type: PT.int32(),
-        description: "Amount of currency to deposit; it is paid currency when price > 0.",
-      })
-      .parameter("currencyType", {
-        type: PT.string(),
-        description:
-          "ISO currency code of the purchase price, such as JPY; used only when price > 0.",
-      })
-      .parameter("price", {
-        type: PT.float64(),
-        description:
-          "Purchase price in currencyType; GS2 Money2 treats a deposit with price 0 as free currency.",
-      })
-      .output("Gs2Money2:DepositByUserId", o =>
-        o
-          .resourceRef(() => Namespace)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("slot", "slot")
-          .mapParameter("depositTransactions[0].price", "price")
-          .mapParameter("depositTransactions[0].currency", "currencyType")
-          .mapParameter("depositTransactions[0].count", "count")
-      )
-  )
-  .actionTransform("WithdrawCurrency", at =>
-    at
-      .category("consume")
-      .parameter("slot", { type: PT.int32(), description: SLOT_PARAMETER })
-      .parameter("paidOnly", {
-        type: PT.bool(),
-        required: false,
-        description:
-          "When true, only paid currency is withdrawn; otherwise free currency is used first (the namespace sets PrioritizeFree).",
-      })
-      .parameter("count", { type: PT.int32(), description: "Amount of currency to withdraw." })
-      .output("Gs2Money2:WithdrawByUserId", o =>
-        o
-          .resourceRef(() => Namespace)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("slot", "slot")
-          .mapParameter("withdrawCount", "count")
-          .mapParameter("paidOnly", "paidOnly")
-      )
-  )
-  .actionTransform("WithdrawPaidCurrency", at =>
-    at
-      .category("consume")
-      .parameter("slot", { type: PT.int32(), description: SLOT_PARAMETER })
-      .parameter("count", {
-        type: PT.int32(),
-        description: "Amount of paid currency to withdraw.",
-      })
-      .output("Gs2Money2:WithdrawByUserId", o =>
-        o
-          .resourceRef(() => Namespace)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("slot", "slot")
-          .mapParameter("withdrawCount", "count")
-          .mapStatic("paidOnly", true)
-      )
-  )
-  .actionTransform("VerifyReceipt", at =>
-    at
-      .category("consume")
-      .parameter("contentName", {
-        type: PT.ref("StoreProduct"),
-        description: "StoreProduct id, which is the GS2 Money2 store content model name.",
-      })
-      .output("Gs2Money2:VerifyReceiptByUserId", o =>
-        o
-          .resourceRef(() => Namespace)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("contentName", "contentName")
-          .mapPlaceholder("receipt", "#{receipt}")
-      )
-  )
-  .build();
+      },
+}),
+  ],
+  actionTransforms: [DepositFreeCurrencyTransform, DepositCurrencyTransform, WithdrawCurrencyTransform, WithdrawPaidCurrencyTransform, VerifyReceiptTransform],
+  uiComponents: [
+    defineUiComponent(Wallet, {
+  items: [
+    UiItem.label("FreeBalanceLabel", UiSource.prop("free"), { name: "FreeBalance" }),
+    UiItem.label("PaidBalanceLabel", UiSource.prop("paid"), { name: "PaidBalance" }),
+    UiItem.label("TotalBalanceLabel", UiSource.prop("total"), { name: "TotalBalance" }),
+  ],
+}),
+  ],
+});

@@ -4,10 +4,14 @@ import {
   Bind,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
   dependencyPackage,
+  instance,
   Source,
   transactionSettingV2,
+  UiItem,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import energySurface from "../../dsl/dependency-surface.json";
@@ -18,56 +22,54 @@ const Energy = energy.type("Energy");
 
 const DEFAULT_MAXIMUM = 50;
 
-/** Allow purchases above the normal capacity so a refill bought while full is not immediately discarded. */
 const OVERFLOW_MAXIMUM = 100;
 
-/** Use a short recovery interval so visitors can observe passive recovery during a demo session. */
 const RECOVERY_INTERVAL_MINUTES = 1;
 
-/** Use the same amount for recovery ticks and manual recovery so the button demonstrates skipping one wait. */
 const RECOVERY_VALUE = 5;
 
 const CONSUME_VALUE = 10;
 
-/** Keep spend and recovery in separate namespaces because both rates derive the same name from Energy. */
-const ConsumeRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(Energy)
-    .bindings({ name: Bind.domainProperty(Source.direct(Energy, "id")) })
-    .addArrayChild("consumeActions", consumeAction => {
-      consumeAction
-        .model(GS2.transaction.ConsumeAction)
-        .mountLocal(Energy)
-        .actionProgram(
-          ActionProgram.transform(energy.packageId, energy.transformId("ConsumeEnergy"), [
+const ConsumeRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: Energy,
+  bindings: { name: Bind.domainProperty(Source.direct(Energy, "id")) },
+  arrayChildren: {
+    consumeActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.ConsumeAction,
+  mount: Energy,
+  actionProgram: ActionProgram.transform(energy.packageId, energy.transformId("ConsumeEnergy"), [
             Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", CONSUME_VALUE),
-          ])
-        );
-    })
-);
+          ]),
+}),
+    ],
+  },
+});
 
-const RecoverRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(Energy)
-    .bindings({ name: Bind.domainProperty(Source.direct(Energy, "id")) })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(Energy)
-        .actionProgram(
-          ActionProgram.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
+const RecoverRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: Energy,
+  bindings: { name: Bind.domainProperty(Source.direct(Energy, "id")) },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: Energy,
+  actionProgram: ActionProgram.transform(energy.packageId, energy.transformId("RecoveryEnergy"), [
             Arg.domainProperty("energy", Source.direct(Energy, "id")),
             Arg.static("value", RECOVERY_VALUE),
-          ])
-        );
-    })
-);
+          ]),
+}),
+    ],
+  },
+});
 
-export const foundationEconomyEnergyDemo = definePackage("foundation-economy-energy-demo", "0.0.1")
-  .display({
+export const foundationEconomyEnergyDemo = definePackage({
+  id: "foundation-economy-energy-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "スタミナ（デモデータ）",
       description: "ライブデモ用のスタミナ設定と、消費・回復の操作を提供します。",
@@ -77,21 +79,27 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
       description:
         "Supplies the stamina settings used by the live demo, and the spend and recover presses.",
     },
-  })
-  .dependency(energy.packageId, "github:gs2io/gs2-studio-package")
-
-  .instance(Energy, "stamina", {
+  },
+  dependencies: {
+    [energy.packageId]: "github:gs2io/gs2-studio-package",
+  },
+  instances: [
+    instance(Energy, "stamina", {
     [energy.propertyId("Energy", "defaultMaximum")]: DEFAULT_MAXIMUM,
     [energy.propertyId("Energy", "useOverflow")]: true,
     [energy.propertyId("Energy", "overflowedMaximum")]: OVERFLOW_MAXIMUM,
     [energy.propertyId("Energy", "recoveryIntervalMinutes")]: RECOVERY_INTERVAL_MINUTES,
     [energy.propertyId("Energy", "recoveryValue")]: RECOVERY_VALUE,
-  })
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+  }),
+  ],
+  delegatedActions: [
+    { target: Energy, methodName: "Spend", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: ConsumeRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+    { target: Energy, methodName: "Recover", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: RecoverRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("EnergyConsume"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -101,14 +109,14 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
         ),
         // Auto-run executes the exchange transaction without a second client request.
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(ConsumeRateModel)
-  )
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+      },
+  children: [
+    ConsumeRateModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("EnergyRecover"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -117,24 +125,18 @@ export const foundationEconomyEnergyDemo = definePackage("foundation-economy-ene
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(RecoverRateModel)
-  )
-
-  .uiComponent(Energy, ui =>
-    ui
-      .buttonAction("SpendButton", "Spend", undefined, { name: "Energy" })
-      .buttonAction("RecoverButton", "Recover", undefined, { name: "Energy" })
-  )
-
-  .delegatedAction(Energy, "Spend", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: ConsumeRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .delegatedAction(Energy, "Recover", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: RecoverRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .build();
+      },
+  children: [
+    RecoverRateModel,
+  ],
+}),
+  ],
+  uiComponents: [
+    defineUiComponent(Energy, {
+  items: [
+    UiItem.buttonAction("SpendButton", "Spend", undefined, { name: "Energy" }),
+    UiItem.buttonAction("RecoverButton", "Recover", undefined, { name: "Energy" }),
+  ],
+}),
+  ],
+});

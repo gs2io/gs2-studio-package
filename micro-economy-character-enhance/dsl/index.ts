@@ -1,16 +1,21 @@
 import {
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
   dependencyPackage,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { CHARACTER_LEVEL_KEY_SUFFIX } from "../../dsl/characterLevelKey";
+
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
 import characterSurface from "../../foundation-economy-character/dsl/dependency-surface.json";
@@ -18,34 +23,56 @@ import characterSurface from "../../foundation-economy-character/dsl/dependency-
 const character = dependencyPackage(characterSurface);
 
 const CHARACTER_INVENTORY_MODEL_RESOURCE_ID = character.resourceId("inventory.InventoryModel");
+
 const CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID = character.resourceId("experience.ExperienceModel");
 
 const MATERIAL_NAMESPACE_NAME = "CharacterEnhanceMaterial";
+
 const MATERIAL_INVENTORY_NAME = "Material";
 
-/** Write the simple-inventory GRN explicitly because the catalog mount uses the standard inventory form. */
 const MATERIAL_INVENTORY_MODEL_ID = `grn:gs2:{region}:{ownerId}:inventory:${MATERIAL_NAMESPACE_NAME}:simple:model:${MATERIAL_INVENTORY_NAME}`;
 
-/** Keep the literal {userId} segment: an unreplaced #{userId} in transaction config would not match the simple-item GRN pattern. */
 export function characterEnhanceMaterialItemId(materialName: string): string {
   return `grn:gs2:{region}:{ownerId}:inventory:${MATERIAL_NAMESPACE_NAME}:user:{userId}:simple:inventory:${MATERIAL_INVENTORY_NAME}:item:${materialName}`;
 }
 
 const MATERIAL_EXPERIENCE_HIERARCHY = ["experience"];
 
-/** Target inventory, materials and experience destination are fixed by this package, so recipes need only identity; bonus rows reference that identity. */
-const CharacterEnhance = defineDomainType("CharacterEnhance", dt =>
-  dt.localizedProperties({
+const CharacterEnhance = defineDomainType("CharacterEnhance", {
+  localizedDisplay: {
+    ja: {
+      label: "強化レシピ",
+      description:
+        "キャラクター強化のレシピを登録します。強化を実行するときはこの ID で指定します。",
+    },
+    en: {
+      label: "Enhancement recipe",
+      description:
+        "Registers a character enhancement recipe; an enhancement names the recipe by this ID.",
+    },
+  },
+  localizedProperties: {
     id: jaEnId("強化レシピ", "enhancement recipe"),
-  })
-);
+  },
+});
 
-/** Store material experience at MATERIAL_EXPERIENCE_HIERARCHY so the rate model can read it from metadata. */
-const CharacterEnhanceMaterial = defineDomainType("CharacterEnhanceMaterial", dt =>
-  dt
-    .property(PT.string("metadata").masterData().required())
-    .property(PT.int64("count").userData().required())
-    .localizedProperties({
+const CharacterEnhanceMaterial = defineDomainType("CharacterEnhanceMaterial", {
+  properties: {
+    metadata: PT.string().masterData().required(),
+    count: PT.int64().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "強化素材",
+      description: "キャラクター強化に使う素材アイテムと、1 個あたりの経験値を設定します。",
+    },
+    en: {
+      label: "Enhancement material",
+      description:
+        "Configures the material items used to enhance characters and the experience each one grants.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("強化素材", "enhancement material"),
       metadata: jaEnField(
         "素材メタデータ",
@@ -60,15 +87,27 @@ const CharacterEnhanceMaterial = defineDomainType("CharacterEnhanceMaterial", dt
         "Quantity of the enhancement material owned by the player.",
         { ja: "個", en: "items" }
       ),
-    })
-);
+    },
+});
 
-const CharacterEnhanceBonus = defineDomainType("CharacterEnhanceBonus", dt =>
-  dt
-    .property(PT.prop("enhance", PT.ref("CharacterEnhance")).assetDelivery().required())
-    .property(PT.float32("rate").masterData().required())
-    .property(PT.int32("weight").masterData().required())
-    .localizedProperties({
+const CharacterEnhanceBonus = defineDomainType("CharacterEnhanceBonus", {
+  properties: {
+    enhance: PT.ref(CharacterEnhance).assetDelivery().required(),
+    rate: PT.float32().masterData().required(),
+    weight: PT.int32().masterData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "大成功倍率",
+      description: "キャラクター強化の成功種別ごとの発生率と経験値倍率を設定します。",
+    },
+    en: {
+      label: "Bonus rate",
+      description:
+        "Configures the probability and experience multiplier for each enhancement result.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("強化ボーナス", "enhancement bonus"),
       enhance: jaEnField(
         "強化レシピ",
@@ -89,14 +128,13 @@ const CharacterEnhanceBonus = defineDomainType("CharacterEnhanceBonus", dt =>
         "このボーナスが選ばれる相対的な重みです。",
         "Relative weight used when drawing this bonus."
       ),
-    })
-);
+    },
+});
 
-const RateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.enhance.RateModel)
-    .mountLocal(CharacterEnhance)
-    .bindings({
+const RateModel = defineMasterDataResource({
+  model: GS2.enhance.RateModel,
+  mount: CharacterEnhance,
+  bindings: {
       name: Bind.domainProperty(Source.direct(CharacterEnhance, "id")),
       description: Bind.static(""),
       metadata: Bind.static(""),
@@ -104,41 +142,92 @@ const RateModel = defineMasterDataResource(resource =>
       acquireExperienceSuffix: Bind.static(CHARACTER_LEVEL_KEY_SUFFIX),
       acquireExperienceHierarchy: Bind.static(MATERIAL_EXPERIENCE_HIERARCHY),
       materialInventoryModelId: Bind.static(MATERIAL_INVENTORY_MODEL_ID),
-    })
-    .grnFieldMount("targetInventoryModelId", CHARACTER_INVENTORY_MODEL_RESOURCE_ID, [
+    },
+  grnFieldMounts: [
+    { parameterName: "targetInventoryModelId", mountedResource: CHARACTER_INVENTORY_MODEL_RESOURCE_ID, keyMappings: [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
       { grnKeyName: "inventoryName", sourceKeyName: "inventoryName" },
-    ])
-    .grnFieldMount("experienceModelId", CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID, [
+    ] },
+    { parameterName: "experienceModelId", mountedResource: CHARACTER_EXPERIENCE_MODEL_RESOURCE_ID, keyMappings: [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
       { grnKeyName: "experienceName", sourceKeyName: "experienceName" },
-    ])
-    .addArrayChild("bonusRates", bonusRate => {
-      bonusRate
-        .model(GS2.enhance.BonusRate)
-        .mountLocal(CharacterEnhanceBonus)
-        .bindings({
+    ] },
+  ],
+  arrayChildren: {
+    bonusRates: [
+      defineMasterDataResource({
+  model: GS2.enhance.BonusRate,
+  mount: CharacterEnhanceBonus,
+  bindings: {
           rate: Bind.domainProperty(Source.direct(CharacterEnhanceBonus, "rate")),
           weight: Bind.domainProperty(Source.direct(CharacterEnhanceBonus, "weight")),
-        });
-    })
-);
+        },
+}),
+    ],
+  },
+});
 
-const MaterialItemModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.inventory.SimpleItemModel)
-    .mountLocal(CharacterEnhanceMaterial)
-    .bindings({
+const MaterialItemModel = defineMasterDataResource({
+  model: GS2.inventory.SimpleItemModel,
+  mount: CharacterEnhanceMaterial,
+  bindings: {
       name: Bind.domainProperty(Source.direct(CharacterEnhanceMaterial, "id")),
       metadata: Bind.domainProperty(Source.direct(CharacterEnhanceMaterial, "metadata")),
-    })
-);
+    },
+});
 
-export const microEconomyCharacterEnhance = definePackage(
-  "micro-economy-character-enhance",
-  "0.0.1"
-)
-  .display({
+const AcquireCharacterEnhanceMaterialTransform = defineActionTransform("AcquireCharacterEnhanceMaterial", {
+  category: "acquire",
+  parameters: {
+    material: { type: PT.ref(CharacterEnhanceMaterial) },
+    count: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Inventory:AcquireSimpleItemsByUserId",
+    resource: () => MaterialItemModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      inventoryName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      "acquireCounts[0].itemName": OutputMap.parameter("material"),
+      "acquireCounts[0].count": OutputMap.parameter("count"),
+    },
+  },
+  ],
+});
+
+const EnhanceCharacterTransform = defineActionTransform("EnhanceCharacter", {
+  category: "acquire",
+  parameters: {
+    enhance: { type: PT.ref(CharacterEnhance) },
+    targetItemSetId: { type: PT.string() },
+    materialItemSetId: { type: PT.string() },
+    count: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Enhance:DirectEnhanceByUserId",
+    resource: () => RateModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      rateName: OutputMap.parameter("enhance"),
+      userId: OutputMap.placeholder("#{userId}"),
+      targetItemSetId: OutputMap.parameter("targetItemSetId"),
+      "materials[0].materialItemSetId": OutputMap.parameter("materialItemSetId"),
+      "materials[0].count": OutputMap.parameter("count"),
+      config: OutputMap.static(null),
+    },
+  },
+  ],
+});
+
+export const microEconomyCharacterEnhance = definePackage({
+  id: "micro-economy-character-enhance",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "キャラクター強化",
       description:
@@ -149,117 +238,52 @@ export const microEconomyCharacterEnhance = definePackage(
       description:
         "Enhances a character with material items, turning them into experience, with configurable bonus multipliers.",
     },
-  })
-  .displayType(CharacterEnhance, {
-    ja: {
-      label: "強化レシピ",
-      description:
-        "キャラクター強化のレシピを登録します。強化を実行するときはこの ID で指定します。",
-    },
-    en: {
-      label: "Enhancement recipe",
-      description:
-        "Registers a character enhancement recipe; an enhancement names the recipe by this ID.",
-    },
-  })
-  .displayType(CharacterEnhanceMaterial, {
-    ja: {
-      label: "強化素材",
-      description: "キャラクター強化に使う素材アイテムと、1 個あたりの経験値を設定します。",
-    },
-    en: {
-      label: "Enhancement material",
-      description:
-        "Configures the material items used to enhance characters and the experience each one grants.",
-    },
-  })
-  .displayType(CharacterEnhanceBonus, {
-    ja: {
-      label: "大成功倍率",
-      description: "キャラクター強化の成功種別ごとの発生率と経験値倍率を設定します。",
-    },
-    en: {
-      label: "Bonus rate",
-      description:
-        "Configures the probability and experience multiplier for each enhancement result.",
-    },
-  })
-  .dependency("foundation-economy-character", "github:gs2io/gs2-studio-package")
-  .domainType(CharacterEnhance)
-  .domainType(CharacterEnhanceMaterial)
-  .domainType(CharacterEnhanceBonus)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.enhance.Namespace)
-      .bindings({
+  },
+  dependencies: {
+    "foundation-economy-character": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [CharacterEnhance, CharacterEnhanceMaterial, CharacterEnhanceBonus],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.enhance.Namespace,
+  bindings: {
         name: Bind.static("CharacterEnhance"),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(RateModel)
-  )
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.inventory.Namespace)
-      .bindings({
+      },
+  children: [
+    RateModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.inventory.Namespace,
+  bindings: {
         name: Bind.static(MATERIAL_NAMESPACE_NAME),
-      })
-      .addChild(child => {
-        child
-          .model(GS2.inventory.SimpleInventoryModel)
-          .bindings({
+      },
+  children: [
+    defineMasterDataResource({
+  model: GS2.inventory.SimpleInventoryModel,
+  bindings: {
             name: Bind.static(MATERIAL_INVENTORY_NAME),
-          })
-          .addArrayChild("simpleItemModels", MaterialItemModel);
-      })
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.inventory.SimpleItem)
-      .linkedMasterResourceId(MaterialItemModel)
-      .bindings({
+          },
+  arrayChildren: {
+    simpleItemModels: [
+      MaterialItemModel,
+    ],
+  },
+}),
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.inventory.SimpleItem,
+  linkedMaster: MaterialItemModel,
+  bindings: {
         count: Bind.domainProperties([Source.direct(CharacterEnhanceMaterial, "count")]),
         itemName: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .actionTransform("AcquireCharacterEnhanceMaterial", at =>
-    at
-      .category("acquire")
-      .parameter("material", { type: PT.ref("CharacterEnhanceMaterial") })
-      .parameter("count", { type: PT.int32() })
-      .output("Gs2Inventory:AcquireSimpleItemsByUserId", o =>
-        o
-          .resourceRef(() => MaterialItemModel)
-          .mapResourceKey("namespaceName")
-          .mapResourceKey("inventoryName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("acquireCounts[0].itemName", "material")
-          .mapParameter("acquireCounts[0].count", "count")
-      )
-  )
-  // Pass the bare target item-set GRN because enhancement appends the recipe suffix; the recipe name remains a caller parameter because it varies per row.
-  .actionTransform("EnhanceCharacter", at =>
-    at
-      .category("acquire")
-      .parameter("enhance", { type: PT.ref("CharacterEnhance") })
-      .parameter("targetItemSetId", { type: PT.string() })
-      .parameter("materialItemSetId", { type: PT.string() })
-      .parameter("count", { type: PT.int32() })
-      .output("Gs2Enhance:DirectEnhanceByUserId", o =>
-        o
-          .resourceRef(() => RateModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("rateName", "enhance")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("targetItemSetId", "targetItemSetId")
-          .mapParameter("materials[0].materialItemSetId", "materialItemSetId")
-          .mapParameter("materials[0].count", "count")
-          .mapStatic("config", null)
-      )
-  )
-
-  .build();
+      },
+}),
+  ],
+  actionTransforms: [AcquireCharacterEnhanceMaterialTransform, EnhanceCharacterTransform],
+});

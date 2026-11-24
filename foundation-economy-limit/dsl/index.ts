@@ -1,35 +1,40 @@
 import {
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-/** Keep maxima on count-up requests so one reset cadence can support different allowances. */
-const UsageLimit = defineDomainType("UsageLimit", dt =>
-  dt
-    .property(
-      PT.prop("resetType", PT.enum("notReset", "daily", "weekly", "monthly", "days"))
-        .masterData()
-        .required()
-    )
-    .property(
-      PT.prop(
-        "resetDayOfWeek",
-        PT.enum("sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday")
-      ).masterData()
-    )
-    .property(PT.int32("resetDayOfMonth").masterData())
-    .property(PT.int32("resetHour").masterData())
-    .property(PT.int32("days").masterData())
-    .property(PT.timestamp("anchorTimestamp").masterData())
-    .localizedProperties({
+const UsageLimit = defineDomainType("UsageLimit", {
+  properties: {
+    resetType: PT.enum("notReset", "daily", "weekly", "monthly", "days").masterData().required(),
+    resetDayOfWeek: PT.enum("sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday").masterData(),
+    resetDayOfMonth: PT.int32().masterData(),
+    resetHour: PT.int32().masterData(),
+    days: PT.int32().masterData(),
+    anchorTimestamp: PT.timestamp().masterData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "リセット設定",
+      description: "利用回数カウンターのリセット方法と周期を設定します。",
+    },
+    en: {
+      label: "Reset schedule",
+      description: "Configures how and when a usage counter is reset.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("リセット設定", "reset schedule"),
       resetType: jaEnField(
         "リセット方式",
@@ -70,16 +75,20 @@ const UsageLimit = defineDomainType("UsageLimit", dt =>
         "日数指定方式のリセット周期を数える基準日時です。",
         "Reference time used to calculate a days-based reset cadence."
       ),
-    })
-);
+    },
+});
 
-/** Separate counter identity from reset cadence so multiple allowances can reset together without sharing counts. */
-const UsageLimitCounter = defineDomainType("UsageLimitCounter", dt =>
-  dt
-    .property(PT.prop("limit", PT.ref("UsageLimit")).assetDelivery().required())
-    .property(PT.int64("count").userData().required())
-    .property(PT.timestamp("nextResetAt").userData().required())
-    .localizedProperties({
+const UsageLimitCounter = defineDomainType("UsageLimitCounter", {
+  properties: {
+    limit: PT.ref(UsageLimit).assetDelivery().required(),
+    count: PT.int64().userData().required(),
+    nextResetAt: PT.timestamp().userData().required(),
+  },
+  localizedDisplay: {
+    ja: { label: "回数カウンター", description: "プレイヤーごとの利用回数と上限を管理します。" },
+    en: { label: "Usage counter", description: "Tracks each player's usage count and its limit." },
+  },
+  localizedProperties: {
       id: jaEnId("回数カウンター", "usage counter"),
       limit: jaEnField(
         "リセット設定",
@@ -100,14 +109,13 @@ const UsageLimitCounter = defineDomainType("UsageLimitCounter", dt =>
         "このカウンターを次にリセットする日時です。",
         "Time when this counter will next be reset."
       ),
-    })
-);
+    },
+});
 
-const LimitModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.limit.LimitModel)
-    .mountLocal(UsageLimit)
-    .bindings({
+const LimitModel = defineMasterDataResource({
+  model: GS2.limit.LimitModel,
+  mount: UsageLimit,
+  bindings: {
       name: Bind.domainProperty(Source.direct(UsageLimit, "id")),
       metadata: Bind.static(""),
       resetType: Bind.domainProperty(Source.direct(UsageLimit, "resetType")),
@@ -116,11 +124,107 @@ const LimitModel = defineMasterDataResource(resource =>
       resetHour: Bind.domainProperty(Source.direct(UsageLimit, "resetHour")),
       days: Bind.domainProperty(Source.direct(UsageLimit, "days")),
       anchorTimestamp: Bind.domainProperty(Source.direct(UsageLimit, "anchorTimestamp")),
-    })
-);
+    },
+});
 
-export const foundationEconomyLimit = definePackage("foundation-economy-limit", "0.0.1")
-  .display({
+const CountUpUsageLimitTransform = defineActionTransform("CountUpUsageLimit", {
+  category: "consume",
+  parameters: {
+    limit: { type: PT.ref(UsageLimit) },
+    counter: { type: PT.ref(UsageLimitCounter) },
+    countUpValue: { type: PT.int32() },
+    maxValue: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Limit:CountUpByUserId",
+    resource: () => LimitModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      limitName: OutputMap.parameter("limit"),
+      counterName: OutputMap.parameter("counter"),
+      userId: OutputMap.placeholder("#{userId}"),
+      countUpValue: OutputMap.parameter("countUpValue"),
+      maxValue: OutputMap.parameter("maxValue"),
+    },
+  },
+  ],
+});
+
+const VerifyUsageLimitNotReachedTransform = defineActionTransform("VerifyUsageLimitNotReached", {
+  category: "verify",
+  parameters: {
+    limit: { type: PT.ref(UsageLimit) },
+    counter: { type: PT.ref(UsageLimitCounter) },
+    maxValue: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Limit:VerifyCounterByUserId",
+    resource: () => LimitModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      userId: OutputMap.placeholder("#{userId}"),
+      limitName: OutputMap.parameter("limit"),
+      counterName: OutputMap.parameter("counter"),
+      verifyType: OutputMap.static("less"),
+      count: OutputMap.parameter("maxValue"),
+      multiplyValueSpecifyingQuantity: OutputMap.static(false),
+    },
+  },
+  ],
+});
+
+const CountDownUsageLimitTransform = defineActionTransform("CountDownUsageLimit", {
+  category: "acquire",
+  parameters: {
+    limit: { type: PT.ref(UsageLimit) },
+    counter: { type: PT.ref(UsageLimitCounter) },
+    countDownValue: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Limit:CountDownByUserId",
+    resource: () => LimitModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      limitName: OutputMap.parameter("limit"),
+      counterName: OutputMap.parameter("counter"),
+      userId: OutputMap.placeholder("#{userId}"),
+      countDownValue: OutputMap.parameter("countDownValue"),
+    },
+  },
+  ],
+});
+
+const ResetUsageLimitCounterTransform = defineActionTransform("ResetUsageLimitCounter", {
+  category: "acquire",
+  parameters: {
+    limit: { type: PT.ref(UsageLimit) },
+    counter: { type: PT.ref(UsageLimitCounter) },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Limit:DeleteCounterByUserId",
+    resource: () => LimitModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      limitName: OutputMap.parameter("limit"),
+      userId: OutputMap.placeholder("#{userId}"),
+      counterName: OutputMap.parameter("counter"),
+    },
+  },
+  ],
+});
+
+export const foundationEconomyLimit = definePackage({
+  id: "foundation-economy-limit",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "回数制限",
       description:
@@ -131,114 +235,34 @@ export const foundationEconomyLimit = definePackage("foundation-economy-limit", 
       description:
         "Handles allowances such as 'three times a day': one reset schedule, a separate counter per thing being counted, and a maximum supplied by the caller.",
     },
-  })
-  .displayType(UsageLimit, {
-    ja: {
-      label: "リセット設定",
-      description: "利用回数カウンターのリセット方法と周期を設定します。",
-    },
-    en: {
-      label: "Reset schedule",
-      description: "Configures how and when a usage counter is reset.",
-    },
-  })
-  .displayType(UsageLimitCounter, {
-    ja: { label: "回数カウンター", description: "プレイヤーごとの利用回数と上限を管理します。" },
-    en: { label: "Usage counter", description: "Tracks each player's usage count and its limit." },
-  })
-  .domainType(UsageLimit)
-  .domainType(UsageLimitCounter)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.limit.Namespace)
-      .bindings({
+  },
+  domainTypes: [UsageLimit, UsageLimitCounter],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.limit.Namespace,
+  bindings: {
         name: Bind.static("Limit"),
         ...Bind.nulls("countUpScript", "logSetting"),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(LimitModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.limit.Counter)
-      .mountLocal(UsageLimitCounter)
-      .linkedMasterResourceId(LimitModel)
-      .bindings({
+      },
+  children: [
+    LimitModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.limit.Counter,
+  mount: UsageLimitCounter,
+  linkedMaster: LimitModel,
+  bindings: {
         name: Bind.domainProperty(Source.direct(UsageLimitCounter, "id")),
         count: Bind.domainProperties([Source.direct(UsageLimitCounter, "count")]),
         nextResetAt: Bind.domainProperties([Source.direct(UsageLimitCounter, "nextResetAt")]),
         counterId: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  // Pass the counter's own limit reference so the two request keys identify the same allowance.
-  .actionTransform("CountUpUsageLimit", at =>
-    at
-      .category("consume")
-      .parameter("limit", { type: PT.ref("UsageLimit") })
-      .parameter("counter", { type: PT.ref("UsageLimitCounter") })
-      .parameter("countUpValue", { type: PT.int32() })
-      .parameter("maxValue", { type: PT.int32() })
-      .output("Gs2Limit:CountUpByUserId", o =>
-        o
-          .resourceRef(() => LimitModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("limitName", "limit")
-          .mapParameter("counterName", "counter")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("countUpValue", "countUpValue")
-          .mapParameter("maxValue", "maxValue")
-      )
-  )
-  .actionTransform("VerifyUsageLimitNotReached", at =>
-    at
-      .category("verify")
-      .parameter("limit", { type: PT.ref("UsageLimit") })
-      .parameter("counter", { type: PT.ref("UsageLimitCounter") })
-      .parameter("maxValue", { type: PT.int32() })
-      .output("Gs2Limit:VerifyCounterByUserId", o =>
-        o
-          .resourceRef(() => LimitModel)
-          .mapResourceKey("namespaceName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("limitName", "limit")
-          .mapParameter("counterName", "counter")
-          .mapStatic("verifyType", "less")
-          .mapParameter("count", "maxValue")
-          .mapStatic("multiplyValueSpecifyingQuantity", false)
-      )
-  )
-  .actionTransform("CountDownUsageLimit", at =>
-    at
-      .category("acquire")
-      .parameter("limit", { type: PT.ref("UsageLimit") })
-      .parameter("counter", { type: PT.ref("UsageLimitCounter") })
-      .parameter("countDownValue", { type: PT.int32() })
-      .output("Gs2Limit:CountDownByUserId", o =>
-        o
-          .resourceRef(() => LimitModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("limitName", "limit")
-          .mapParameter("counterName", "counter")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("countDownValue", "countDownValue")
-      )
-  )
-  .actionTransform("ResetUsageLimitCounter", at =>
-    at
-      .category("acquire")
-      .parameter("limit", { type: PT.ref("UsageLimit") })
-      .parameter("counter", { type: PT.ref("UsageLimitCounter") })
-      .output("Gs2Limit:DeleteCounterByUserId", o =>
-        o
-          .resourceRef(() => LimitModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("limitName", "limit")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapParameter("counterName", "counter")
-      )
-  )
-  .build();
+      },
+}),
+  ],
+  actionTransforms: [CountUpUsageLimitTransform, VerifyUsageLimitNotReachedTransform, CountDownUsageLimitTransform, ResetUsageLimitCounterTransform],
+});

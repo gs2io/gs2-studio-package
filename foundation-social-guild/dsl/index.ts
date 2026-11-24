@@ -1,19 +1,35 @@
 import {
   Bind,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-/** Keep policy text in GS2 grammar rather than introducing a second permission model here. */
-const GuildRole = defineDomainType("GuildRole", dt =>
-  dt.property(PT.string("policyDocument").masterData().required()).localizedProperties({
+const GuildRole = defineDomainType("GuildRole", {
+  properties: {
+    policyDocument: PT.string().masterData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ギルド権限",
+      description: "ギルドメンバーに割り当てる役職と操作権限を設定します。",
+    },
+    en: {
+      label: "Guild role",
+      description: "Configures guild member roles and their permissions.",
+    },
+  },
+  localizedProperties: {
     id: jaEnId("ギルド権限", "guild role"),
     policyDocument: jaEnField(
       "権限ポリシー",
@@ -21,21 +37,34 @@ const GuildRole = defineDomainType("GuildRole", dt =>
       "このロールのメンバーがギルドとして振る舞うとき（Assume）に許可する操作を記述した GS2 ポリシーです。何も許可しないロールは、空にせず、Effect を Deny、Actions と Resources を * にした文で、すべてを拒否するポリシーを明示してください。空のポリシーは、GS2 の版によっては全許可として扱われます。",
       "GS2 policy document describing what a member with this role may do while acting as the guild (Assume). For a role that may do nothing, do not leave it empty: write a policy that denies everything, with one statement whose Effect is Deny and whose Actions and Resources are *. Some GS2 versions treat an empty policy as allowing everything."
     ),
-  })
-);
+  },
+});
 
-const Guild = defineDomainType("Guild", dt =>
-  dt
-    .property(PT.int32("defaultMaximumMemberCount").masterData().required())
-    .property(PT.int32("maximumMemberCount").masterData().required())
-    .property(PT.int32("inactivityPeriodDays").masterData())
-    .property(PT.int32("rejoinCoolTimeMinutes").masterData())
-    .property(PT.int32("maxConcurrentJoinGuilds").masterData())
-    .property(PT.int32("maxConcurrentGuildMasterCount").masterData())
-    .property(PT.prop("guildMasterRole", PT.ref("GuildRole")).assetDelivery().required())
-    .property(PT.prop("guildMemberDefaultRole", PT.ref("GuildRole")).assetDelivery().required())
-    .property(PT.string("joinedGuildName").userData())
-    .localizedProperties({
+const Guild = defineDomainType("Guild", {
+  properties: {
+    defaultMaximumMemberCount: PT.int32().masterData().required(),
+    maximumMemberCount: PT.int32().masterData().required(),
+    inactivityPeriodDays: PT.int32().masterData(),
+    rejoinCoolTimeMinutes: PT.int32().masterData(),
+    maxConcurrentJoinGuilds: PT.int32().masterData(),
+    maxConcurrentGuildMasterCount: PT.int32().masterData(),
+    guildMasterRole: PT.ref(GuildRole).assetDelivery().required(),
+    guildMemberDefaultRole: PT.ref(GuildRole).assetDelivery().required(),
+    joinedGuildName: PT.string().userData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ギルド種別",
+      description:
+        "ギルドの種類ごとに、定員・マスターの交代・再参加の待機・権限ロールを設定します。1 行は、プレイヤーが所属しているその種類のギルドを表します。",
+    },
+    en: {
+      label: "Guild kind",
+      description:
+        "Configures a guild kind's capacity, master succession, rejoin wait and roles. A row is a guild of that kind the player belongs to.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ギルド種別", "guild kind"),
       defaultMaximumMemberCount: jaEnField(
         "初期定員",
@@ -97,14 +126,13 @@ const Guild = defineDomainType("Guild", dt =>
         "プレイヤーが現在所属しているギルド名です。",
         "Name of the guild the player currently belongs to."
       ),
-    })
-);
+    },
+});
 
-const GuildModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.guild.GuildModel)
-    .mountLocal(Guild)
-    .bindings({
+const GuildModel = defineMasterDataResource({
+  model: GS2.guild.GuildModel,
+  mount: Guild,
+  bindings: {
       name: Bind.domainProperty(Source.direct(Guild, "id")),
       metadata: Bind.static(""),
       defaultMaximumMemberCount: Bind.domainProperty(
@@ -119,19 +147,22 @@ const GuildModel = defineMasterDataResource(resource =>
       ),
       guildMasterRole: Bind.domainProperty(Source.direct(Guild, "guildMasterRole")),
       guildMemberDefaultRole: Bind.domainProperty(Source.direct(Guild, "guildMemberDefaultRole")),
-    })
-    .addArrayChild("roles", role => {
-      role
-        .model(GS2.guild.RoleModel)
-        .mountLocal(GuildRole)
-        .rowScopeAllRows()
-        .bindings({
+    },
+  arrayChildren: {
+    roles: [
+      defineMasterDataResource({
+  model: GS2.guild.RoleModel,
+  mount: GuildRole,
+  bindings: {
           name: Bind.domainProperty(Source.direct(GuildRole, "id")),
           metadata: Bind.static(""),
           policyDocument: Bind.domainProperty(Source.direct(GuildRole, "policyDocument")),
-        });
-    })
-);
+        },
+  rowScope: { kind: "allRows" },
+}),
+    ],
+  },
+});
 
 const notificationConfig = {
   enable: Bind.static("Enabled"),
@@ -140,8 +171,54 @@ const notificationConfig = {
   sound: Bind.static(""),
 };
 
-export const foundationSocialGuild = definePackage("foundation-social-guild", "0.0.1")
-  .display({
+const IncreaseGuildCapacityTransform = defineActionTransform("IncreaseGuildCapacity", {
+  category: "acquire",
+  parameters: {
+    guild: { type: PT.ref(Guild) },
+    guildName: { type: PT.string() },
+    value: { type: PT.int32() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Guild:IncreaseMaximumCurrentMaximumMemberCountByGuildName",
+    resource: () => GuildModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      guildModelName: OutputMap.parameter("guild"),
+      guildName: OutputMap.parameter("guildName"),
+      value: OutputMap.parameter("value"),
+    },
+  },
+  ],
+});
+
+const VerifyGuildMembershipTransform = defineActionTransform("VerifyGuildMembership", {
+  category: "verify",
+  parameters: {
+    guild: { type: PT.ref(Guild) },
+    guildName: { type: PT.string() },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2Guild:VerifyIncludeMemberByUserId",
+    resource: () => GuildModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      guildModelName: OutputMap.parameter("guild"),
+      guildName: OutputMap.parameter("guildName"),
+      userId: OutputMap.placeholder("#{userId}"),
+      verifyType: OutputMap.static("include"),
+    },
+  },
+  ],
+});
+
+export const foundationSocialGuild = definePackage({
+  id: "foundation-social-guild",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "ギルド",
       description: "プレイヤーが集まるギルドを扱います。定員・権限ロール・所属状況を管理します。",
@@ -151,36 +228,12 @@ export const foundationSocialGuild = definePackage("foundation-social-guild", "0
       description:
         "Handles player guilds: capacity, permission roles, and which guild a player belongs to.",
     },
-  })
-  .displayType(Guild, {
-    ja: {
-      label: "ギルド種別",
-      description:
-        "ギルドの種類ごとに、定員・マスターの交代・再参加の待機・権限ロールを設定します。1 行は、プレイヤーが所属しているその種類のギルドを表します。",
-    },
-    en: {
-      label: "Guild kind",
-      description:
-        "Configures a guild kind's capacity, master succession, rejoin wait and roles. A row is a guild of that kind the player belongs to.",
-    },
-  })
-  .displayType(GuildRole, {
-    ja: {
-      label: "ギルド権限",
-      description: "ギルドメンバーに割り当てる役職と操作権限を設定します。",
-    },
-    en: {
-      label: "Guild role",
-      description: "Configures guild member roles and their permissions.",
-    },
-  })
-  .domainType(Guild)
-  .domainType(GuildRole)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.guild.Namespace)
-      .bindings({
+  },
+  domainTypes: [Guild, GuildRole],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.guild.Namespace,
+  bindings: {
         name: Bind.static("Guild"),
         // Notify affected clients so joined-guild and join-request views can refresh after membership changes.
         joinNotification: notificationConfig,
@@ -200,52 +253,25 @@ export const foundationSocialGuild = definePackage("foundation-social-guild", "0
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(GuildModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.guild.JoinedGuild)
-      .mountLocal(Guild)
-      .linkedMasterResourceId(GuildModel)
-      .bindings({
+      },
+  children: [
+    GuildModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.guild.JoinedGuild,
+  mount: Guild,
+  linkedMaster: GuildModel,
+  bindings: {
         guildName: Bind.domainProperty(Source.direct(Guild, "joinedGuildName")),
         joinedGuildId: Bind.skip(),
         guildModelName: Bind.skip(),
         userId: Bind.skip(),
         createdAt: Bind.skip(),
-      })
-  )
-
-  .actionTransform("IncreaseGuildCapacity", at =>
-    at
-      .category("acquire")
-      .parameter("guild", { type: PT.ref("Guild") })
-      .parameter("guildName", { type: PT.string() })
-      .parameter("value", { type: PT.int32() })
-      .output("Gs2Guild:IncreaseMaximumCurrentMaximumMemberCountByGuildName", o =>
-        o
-          .resourceRef(() => GuildModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("guildModelName", "guild")
-          .mapParameter("guildName", "guildName")
-          .mapParameter("value", "value")
-      )
-  )
-  .actionTransform("VerifyGuildMembership", at =>
-    at
-      .category("verify")
-      .parameter("guild", { type: PT.ref("Guild") })
-      .parameter("guildName", { type: PT.string() })
-      .output("Gs2Guild:VerifyIncludeMemberByUserId", o =>
-        o
-          .resourceRef(() => GuildModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("guildModelName", "guild")
-          .mapParameter("guildName", "guildName")
-          .mapPlaceholder("userId", "#{userId}")
-          .mapStatic("verifyType", "include")
-      )
-  )
-  .build();
+      },
+}),
+  ],
+  actionTransforms: [IncreaseGuildCapacityTransform, VerifyGuildMembershipTransform],
+});

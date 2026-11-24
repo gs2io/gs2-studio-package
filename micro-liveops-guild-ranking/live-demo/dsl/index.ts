@@ -1,18 +1,37 @@
-import { defineOverlayDomainType, definePackage, dependencyPackage, PT } from "gs2-studio-dsl";
+import {
+  defineOverlayDomainType,
+  definePackage,
+  defineUiComponent,
+  dependencyPackage,
+  instance,
+  PT,
+  UiItem,
+} from "gs2-studio-dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+
 import guildRankingSurface from "../../dsl/dependency-surface.json";
+
 import guildDemoSurface from "../../../foundation-social-guild/live-demo/dsl/dependency-surface.json";
+
 import guildSurface from "../../../foundation-social-guild/dsl/dependency-surface.json";
+
 import scheduleDemoSurface from "../../../foundation-economy-schedule/live-demo/dsl/dependency-surface.json";
+
 import scheduleSurface from "../../../foundation-economy-schedule/dsl/dependency-surface.json";
+
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
 
 const guildRanking = dependencyPackage(guildRankingSurface);
+
 const guild = dependencyPackage(guildSurface);
+
 const guildDemo = dependencyPackage(guildDemoSurface);
+
 const schedule = dependencyPackage(scheduleSurface);
+
 const scheduleDemo = dependencyPackage(scheduleDemoSurface);
+
 const currency = dependencyPackage(currencySurface);
 
 const GuildRanking = guildRanking.type("GuildRanking");
@@ -22,6 +41,7 @@ const RANKING = "guild";
 const SEASON_EVENT = "guild-season";
 
 const MINIMUM_SCORE = 1;
+
 const MAXIMUM_SCORE = 100;
 
 const WALLET_SLOT = 0;
@@ -32,7 +52,6 @@ const TIERS = [
   { thresholdRank: 10, coins: 50 },
 ] as const;
 
-/** Derive the rule and deployed rewards from the same tier table so their numbers cannot drift. */
 const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }, index) => {
   const from = index === 0 ? 1 : TIERS[index - 1].thresholdRank + 1;
   const ranks =
@@ -55,28 +74,30 @@ function ordinal(rank: number): string {
   }
 }
 
-const GuildRankingReward = defineOverlayDomainType(
-  "GuildRankingReward",
-  {
-    ...guildRanking.overlay("GuildRankingReward"),
-    actionPropertyTransforms: [
-      {
-        targetProperty: guildRanking.propertyId("GuildRankingReward", "acquireActions"),
-        mode: "append",
-        transformPackageId: currency.packageId,
-        transformId: currency.transformId("DepositFreeCurrency"),
-        arguments: [
+const GuildRankingReward = defineOverlayDomainType("GuildRankingReward", guildRanking.overlay("GuildRankingReward"), {
+  properties: {
+    coins: PT.int32().masterData().required(),
+  },
+  actionPropertyTransforms: [
+    { targetProperty: guildRanking.propertyId("GuildRankingReward", "acquireActions"), mode: "append", transformPackageId: currency.packageId, transformId: currency.transformId("DepositFreeCurrency"), arguments: [
           { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
           {
             parameterName: "count",
             source: { kind: "domainProperty", propertyName: "coins" },
           },
-        ],
-      },
-    ],
+        ] },
+  ],
+  localizedDisplay: {
+    ja: {
+      label: "ギルドランキング報酬",
+      description: "デモのギルドランキング報酬に、報酬コインを足します。",
+    },
+    en: {
+      label: "Guild ranking reward",
+      description: "Adds the coins it pays to a demo guild ranking reward tier.",
+    },
   },
-  domainType =>
-    domainType.property(PT.int32("coins").masterData().required()).localizedProperties({
+  localizedProperties: {
       coins: jaEnField(
         "報酬コイン",
         "Reward coins",
@@ -84,11 +105,13 @@ const GuildRankingReward = defineOverlayDomainType(
         "Coins paid when this tier's reward is received.",
         { ja: "通貨", en: "currency" }
       ),
-    })
-);
+    },
+});
 
-const withRanking = definePackage("micro-liveops-guild-ranking-demo", "0.0.1")
-  .display({
+export const microLiveopsGuildRankingDemo = definePackage({
+  id: "micro-liveops-guild-ranking-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "ギルドランキング（デモデータ）",
       description:
@@ -99,59 +122,38 @@ const withRanking = definePackage("micro-liveops-guild-ranking-demo", "0.0.1")
       description:
         "Supplies the live demo's per-guild ranking, the coins each reward tier pays, and the rule of its daily season. The rewards land in the currency package's wallet.",
     },
-  })
-  .displayType(GuildRankingReward, {
-    ja: {
-      label: "ギルドランキング報酬",
-      description: "デモのギルドランキング報酬に、報酬コインを足します。",
-    },
-    en: {
-      label: "Guild ranking reward",
-      description: "Adds the coins it pays to a demo guild ranking reward tier.",
-    },
-  })
-  .dependency(guildRanking.packageId, "github:gs2io/gs2-studio-package")
-  .dependency(guild.packageId, "github:gs2io/gs2-studio-package")
-  // Reuse the shared guild demo content so this demo cannot replace its kind and roles with a different stack.
-  .dependency(guildDemo.packageId, "github:gs2io/gs2-studio-package")
-  .dependency(schedule.packageId, "github:gs2io/gs2-studio-package")
-  // Reuse the shared schedule content so the season event stays identical across demo deployments.
-  .dependency(scheduleDemo.packageId, "github:gs2io/gs2-studio-package")
-  // Reuse the currency demo content so the wallet and store products stay identical across demos.
-  .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-  .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
-
-  .domainType(GuildRankingReward)
-
-  .instance(GuildRanking, RANKING, {
+  },
+  dependencies: {
+    [guildRanking.packageId]: "github:gs2io/gs2-studio-package",
+    [guild.packageId]: "github:gs2io/gs2-studio-package",
+    [guildDemo.packageId]: "github:gs2io/gs2-studio-package",
+    [schedule.packageId]: "github:gs2io/gs2-studio-package",
+    [scheduleDemo.packageId]: "github:gs2io/gs2-studio-package",
+    [currency.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [GuildRankingReward],
+  instances: [
+    instance(GuildRanking, RANKING, {
     [guildRanking.propertyId("GuildRanking", "orderDirection")]: "desc",
     [guildRanking.propertyId("GuildRanking", "sum")]: true,
     [guildRanking.propertyId("GuildRanking", "minimumValue")]: MINIMUM_SCORE,
     [guildRanking.propertyId("GuildRanking", "maximumValue")]: MAXIMUM_SCORE,
     [guildRanking.propertyId("GuildRanking", "schedule")]: SEASON_EVENT,
-  });
-
-// Use the local overlay name for its coins property; keep the required acquire slot empty for the appended deposit.
-const withTiers = TIERS.reduce(
-  (builder, { thresholdRank, coins }) =>
-    // Match the composite key order expected by the reward model so these authored ids identify the same tiers.
-    builder.instance(GuildRankingReward.typeName, `${thresholdRank}.${RANKING}`, {
+  }),
+    ...TIERS.map(({ thresholdRank, coins }) => instance(GuildRankingReward, `${thresholdRank}.${RANKING}`, {
       [guildRanking.propertyId("GuildRankingReward", "ranking")]: RANKING,
       [guildRanking.propertyId("GuildRankingReward", "thresholdRank")]: thresholdRank,
       [guildRanking.propertyId("GuildRankingReward", "acquireActions")]: [],
       coins,
-    }),
-  withRanking
-);
-
-export const microLiveopsGuildRankingDemo = withTiers
-  .uiComponent(GuildRanking, ui =>
-    ui.templateLabel(
-      "RuleLabel",
-      `You are ranked within your guild, not guild against guild. Each play adds ${MINIMUM_SCORE} to ${MAXIMUM_SCORE} points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: ${TIER_SUMMARY}. Advance one day ends the season for you right away; guildmates who did not advance are still in it.`,
-      {},
-      { name: "GuildRanking" }
-    )
-  )
-  .build();
+    })),
+  ],
+  uiComponents: [
+    defineUiComponent(GuildRanking, {
+  items: [
+    UiItem.templateLabel("RuleLabel", `You are ranked within your guild, not guild against guild. Each play adds ${MINIMUM_SCORE} to ${MAXIMUM_SCORE} points to today's season, which turns over at 00:00 UTC. Once a season is over, receive coins by your rank in your guild: ${TIER_SUMMARY}. Advance one day ends the season for you right away; guildmates who did not advance are still in it.`, {}, { name: "GuildRanking" }),
+  ],
+}),
+  ],
+});

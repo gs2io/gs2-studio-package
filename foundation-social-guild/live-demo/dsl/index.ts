@@ -1,15 +1,24 @@
-import { definePackage, dependencyPackage } from "gs2-studio-dsl";
+import {
+  definePackage,
+  defineUiComponent,
+  dependencyPackage,
+  instance,
+  UiItem,
+  UiSource,
+} from "gs2-studio-dsl";
 
 import guildSurface from "../../dsl/dependency-surface.json";
 
 const guild = dependencyPackage(guildSurface);
 
 const Guild = guild.type("Guild");
+
 const GuildRole = guild.type("GuildRole");
 
 const GUILD_KIND = "adventurers";
 
 const STARTING_CAPACITY = 5;
+
 const MAXIMUM_CAPACITY = 10;
 
 const MASTER_POLICY = JSON.stringify({
@@ -29,14 +38,15 @@ const MASTER_POLICY = JSON.stringify({
   ],
 });
 
-/** Deny guild actions explicitly for ordinary members so the policy does not depend on empty-policy semantics. */
 const MEMBER_POLICY = JSON.stringify({
   Version: "2016-04-01",
   Statements: [{ Effect: "Deny", Actions: ["*"], Resources: ["*"] }],
 });
 
-export const foundationSocialGuildDemo = definePackage("foundation-social-guild-demo", "0.0.1")
-  .display({
+export const foundationSocialGuildDemo = definePackage({
+  id: "foundation-social-guild-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "ギルド（デモデータ）",
       description:
@@ -46,18 +56,18 @@ export const foundationSocialGuildDemo = definePackage("foundation-social-guild-
       label: "Guilds (demo data)",
       description: "Supplies the live demo's one guild kind and its two roles, master and member.",
     },
-  })
-  .dependency(guild.packageId, "github:gs2io/gs2-studio-package")
-
-  .instance(GuildRole, "master", {
+  },
+  dependencies: {
+    [guild.packageId]: "github:gs2io/gs2-studio-package",
+  },
+  instances: [
+    instance(GuildRole, "master", {
     [guild.propertyId("GuildRole", "policyDocument")]: MASTER_POLICY,
-  })
-  .instance(GuildRole, "member", {
+  }),
+    instance(GuildRole, "member", {
     [guild.propertyId("GuildRole", "policyDocument")]: MEMBER_POLICY,
-  })
-
-  // Allow immediate rejoining for repeated demos; leave master count uncapped because handover promotes the successor before the current master leaves.
-  .instance(Guild, GUILD_KIND, {
+  }),
+    instance(Guild, GUILD_KIND, {
     [guild.propertyId("Guild", "defaultMaximumMemberCount")]: STARTING_CAPACITY,
     [guild.propertyId("Guild", "maximumMemberCount")]: MAXIMUM_CAPACITY,
     [guild.propertyId("Guild", "inactivityPeriodDays")]: 7,
@@ -65,27 +75,17 @@ export const foundationSocialGuildDemo = definePackage("foundation-social-guild-
     [guild.propertyId("Guild", "maxConcurrentJoinGuilds")]: 1,
     [guild.propertyId("Guild", "guildMasterRole")]: "master",
     [guild.propertyId("Guild", "guildMemberDefaultRole")]: "member",
-  })
-
-  // Membership exposes the guild id, so leave name lookup to the lobby panel instead of presenting the id as its name.
-  .uiComponent(Guild, ui =>
-    ui
-      .templateLabel(
-        "MembershipLabel",
-        "You are a member. The lobby above shows which guild.",
-        {},
-        { name: "Guild" }
-      )
-      .templateLabel(
-        "CapacityLabel",
-        "Room for {defaultMaximumMemberCount}, up to {maximumMemberCount}",
-        {
-          defaultMaximumMemberCount: ui.inheritedProp(
-            guild.propertyId("Guild", "defaultMaximumMemberCount")
-          ),
-          maximumMemberCount: ui.inheritedProp(guild.propertyId("Guild", "maximumMemberCount")),
-        },
-        { name: "Guild" }
-      )
-  )
-  .build();
+  }),
+  ],
+  uiComponents: [
+    defineUiComponent(Guild, {
+  items: [
+    UiItem.templateLabel("MembershipLabel", "You are a member. The lobby above shows which guild.", {}, { name: "Guild" }),
+    UiItem.templateLabel("CapacityLabel", "Room for {defaultMaximumMemberCount}, up to {maximumMemberCount}", {
+          defaultMaximumMemberCount: UiSource.inheritedProp(guild.propertyId("Guild", "defaultMaximumMemberCount")),
+          maximumMemberCount: UiSource.inheritedProp(guild.propertyId("Guild", "maximumMemberCount")),
+        }, { name: "Guild" }),
+  ],
+}),
+  ],
+});

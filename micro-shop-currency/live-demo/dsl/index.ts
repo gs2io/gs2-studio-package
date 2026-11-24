@@ -1,17 +1,25 @@
-/** Reuse the currency demo shelf and receipt settings so every demo deploys the same shared store content. */
-
-import { definePackage, dependencyPackage } from "gs2-studio-dsl";
+import {
+  definePackage,
+  defineUiComponent,
+  dependencyPackage,
+  UiItem,
+  UiSource,
+} from "gs2-studio-dsl";
 
 import shopSurface from "../../dsl/dependency-surface.json";
+
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
 
 const shop = dependencyPackage(shopSurface);
+
 const currency = dependencyPackage(currencySurface);
 
 const StoreProduct = shop.type("StoreProduct");
 
-export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "0.0.1")
-  .display({
+export const microShopCurrencyDemo = definePackage({
+  id: "micro-shop-currency-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "通貨ショップ（デモデータ）",
       description: "ライブデモ用に、通貨デモの商品棚を通貨ショップへ並べます。",
@@ -20,19 +28,17 @@ export const microShopCurrencyDemo = definePackage("micro-shop-currency-demo", "
       label: "Currency Shop (demo data)",
       description: "Puts the currency demo's shelf in front of the currency shop.",
     },
-  })
-  .dependency(shop.packageId, "github:gs2io/gs2-studio-package")
-  .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-
-  .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-
-  // Label the pack amount because prices belong to individual store currencies, not one product-wide price.
-  .uiComponent(StoreProduct, ui =>
-    ui.templateLabel(
-      "CoinsLabel",
-      "{count} coins",
-      { count: ui.inheritedProp(shop.propertyId("StoreProduct", "count")) },
-      { name: "StoreProduct" }
-    )
-  )
-  .build();
+  },
+  dependencies: {
+    [shop.packageId]: "github:gs2io/gs2-studio-package",
+    [currency.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+  },
+  uiComponents: [
+    defineUiComponent(StoreProduct, {
+  items: [
+    UiItem.templateLabel("CoinsLabel", "{count} coins", { count: UiSource.inheritedProp(shop.propertyId("StoreProduct", "count")) }, { name: "StoreProduct" }),
+  ],
+}),
+  ],
+});

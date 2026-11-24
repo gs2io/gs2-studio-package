@@ -1,5 +1,3 @@
-/** Supply a free recruit action so a new account can populate the otherwise empty owned-character list. */
-
 import {
   ActionProgram,
   Arg,
@@ -7,32 +5,41 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
   dependencyPackage,
+  instance,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { CHARACTER_LEVEL_KEY_PLACEHOLDER } from "../../../dsl/characterLevelKey";
+
 import characterSurface from "../../dsl/dependency-surface.json";
 
 const character = dependencyPackage(characterSurface);
 
 const Character = character.type("Character");
+
 const CharacterCollection = character.type("CharacterCollection");
+
 const CharacterExperience = character.type("CharacterExperience");
 
-const CharacterRecruit = defineDomainType("CharacterRecruit", domainType =>
-  domainType
-    .property(
-      PT.prop("character", PT.ref(character.typeId("Character")))
-        .masterData()
-        .required()
-    )
-    .property(PT.prop("extraActions", PT.listOf(PT.acquireAction())).masterData())
-    .localizedProperties({
+const CharacterRecruit = defineDomainType("CharacterRecruit", {
+  properties: {
+    character: PT.ref(character.type("Character")).masterData().required(),
+    extraActions: PT.listOf(PT.acquireAction()).masterData(),
+  },
+  localizedDisplay: {
+    ja: { label: "勧誘", description: "無償でキャラクターを1体入手できるデモ用の交換です。" },
+    en: { label: "Recruit", description: "A demo exchange that grants one character for nothing." },
+  },
+  localizedProperties: {
       id: {
         ja: { label: "勧誘", description: "デモでキャラクターを1体入手します。" },
         en: { label: "Recruit", description: "Grants one character in the demo." },
@@ -53,67 +60,61 @@ const CharacterRecruit = defineDomainType("CharacterRecruit", domainType =>
             "Acquire actions other installed packages add to this recruit. Not authored here.",
         },
       },
-    })
-);
+    },
+});
 
-const RecruitRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(CharacterRecruit)
-    .bindings({
+const RecruitRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: CharacterRecruit,
+  bindings: {
       name: Bind.domainProperty(Source.direct(CharacterRecruit, "id")),
-    })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(CharacterRecruit)
-        .actionProgram(
-          ActionProgram.transform(character.packageId, character.transformId("AcquireCharacter"), [
+    },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: CharacterRecruit,
+  actionProgram: ActionProgram.transform(character.packageId, character.transformId("AcquireCharacter"), [
             Arg.domainProperty(
               "character",
               Source.parent(Source.direct(CharacterRecruit, "character"))
             ),
             Arg.static("count", 1),
-          ])
-        );
-    })
-    // Leave this binding empty in demo rows so installing the base demo adds no extra acquisition actions.
-    .addArrayChild("acquireActions", extraAction => {
-      extraAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(CharacterRecruit)
-        .actionProgram(
-          ActionProgram.domainProperty(
+          ]),
+}),
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: CharacterRecruit,
+  actionProgram: ActionProgram.domainProperty(
             Source.parent(Source.direct(CharacterRecruit, "extraActions"))
-          )
-        );
-    })
-);
+          ),
+}),
+    ],
+  },
+});
 
-/** Use a separate namespace because training and recruitment derive identical rate names; target the owned instance through click-time config. */
-const TrainRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(Character)
-    .bindings({ name: Bind.domainProperty(Source.direct(Character, "id")) })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(Character)
-        .actionProgram(
-          ActionProgram.transform(
+const TrainRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: Character,
+  bindings: { name: Bind.domainProperty(Source.direct(Character, "id")) },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: Character,
+  actionProgram: ActionProgram.transform(
             character.packageId,
             character.transformId("AcquireCharacterExperience"),
             [
               Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
               Arg.static("value", 40),
             ]
-          )
-        );
-    })
-);
+          ),
+}),
+    ],
+  },
+});
 
-/** Start thresholds at 1 and retain levels above the default cap so grade-up demos can raise the cap without replacing the shared curve. */
 const EXPERIENCE_CURVE = [
   1, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 3800, 4400, 5000, 5600, 6200, 6800, 7400,
   8000, 8600, 9200, 9800, 10400, 11000, 11600, 12200, 12800, 13400, 14000, 14600,
@@ -121,11 +122,10 @@ const EXPERIENCE_CURVE = [
 
 const ROSTER = ["knight", "mage", "archer", "healer"] as const;
 
-export const foundationEconomyCharacterDemo = definePackage(
-  "foundation-economy-character-demo",
-  "0.0.1"
-)
-  .display({
+export const foundationEconomyCharacterDemo = definePackage({
+  id: "foundation-economy-character-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "キャラクター（デモデータ）",
       description: "ライブデモ用のキャラクター編成・レベル曲線・所持枠・勧誘を提供します。",
@@ -134,108 +134,33 @@ export const foundationEconomyCharacterDemo = definePackage(
       label: "Characters (demo data)",
       description: "Supplies the roster, level curve, capacity and recruits used by the live demo.",
     },
-  })
-  .displayType(CharacterRecruit, {
-    ja: { label: "勧誘", description: "無償でキャラクターを1体入手できるデモ用の交換です。" },
-    en: { label: "Recruit", description: "A demo exchange that grants one character for nothing." },
-  })
-  .dependency(character.packageId, "github:gs2io/gs2-studio-package")
-  .domainType(CharacterRecruit)
-
-  .instance(CharacterExperience, "characterexperience", {
+  },
+  dependencies: {
+    [character.packageId]: "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [CharacterRecruit],
+  instances: [
+    instance(CharacterExperience, "characterexperience", {
     [character.propertyId("CharacterExperience", "threshold")]: EXPERIENCE_CURVE,
     [character.propertyId("CharacterExperience", "defaultLevelCap")]: 10,
     [character.propertyId("CharacterExperience", "maxLevelCap")]: EXPERIENCE_CURVE.length + 1,
-  })
-  .instance(CharacterCollection, "charactercollection", {
+  }),
+    instance(CharacterCollection, "charactercollection", {
     [character.propertyId("CharacterCollection", "defaultCapacity")]: 20,
     [character.propertyId("CharacterCollection", "maximumCapacity")]: 100,
-  })
-
-  .instance(Character, "knight", { [character.propertyId("Character", "sort")]: 100 })
-  .instance(Character, "mage", { [character.propertyId("Character", "sort")]: 200 })
-  .instance(Character, "archer", { [character.propertyId("Character", "sort")]: 300 })
-  .instance(Character, "healer", { [character.propertyId("Character", "sort")]: 400 })
-
-  .instance("CharacterRecruit", ROSTER[0], { character: ROSTER[0] })
-  .instance("CharacterRecruit", ROSTER[1], { character: ROSTER[1] })
-  .instance("CharacterRecruit", ROSTER[2], { character: ROSTER[2] })
-  .instance("CharacterRecruit", ROSTER[3], { character: ROSTER[3] })
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
-        name: Bind.static("CharacterRecruit"),
-        ...Bind.nulls(
-          "acquireAwaitScript",
-          "exchangeScript",
-          "incrementalExchangeScript",
-          "logSetting"
-        ),
-        // Auto-run executes the grant without requiring a second client request after the exchange.
-        transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(RecruitRateModel)
-  )
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
-        name: Bind.static("CharacterTrain"),
-        ...Bind.nulls(
-          "acquireAwaitScript",
-          "exchangeScript",
-          "incrementalExchangeScript",
-          "logSetting"
-        ),
-        transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(TrainRateModel)
-  )
-  .uiComponent(CharacterRecruit, ui =>
-    ui
-      .templateLabel(
-        "CharacterLabel",
-        "Recruit {character}",
-        { character: ui.prop("character") },
-        { name: "CharacterRecruit" }
-      )
-      .buttonAction("RecruitButton", "Recruit", undefined, { name: "CharacterRecruit" })
-  )
-
-  .uiComponent(Character, ui =>
-    ui.buttonAction("TrainButton", "Train", undefined, { name: "Character" })
-  )
-
-  // Keep the empty-state hint on the collection because an empty owned list has no row on which to display it.
-  .uiComponent(CharacterCollection, ui =>
-    ui
-      .templateLabel(
-        "SlotsLabel",
-        "{usage} of {capacity} used",
-        { usage: ui.prop("currentCpacityUsage"), capacity: ui.prop("currentCpacity") },
-        { name: "CharacterCollection" }
-      )
-      .label("NoneYetLabel", ui.lit("Recruit a character above to start."), {
-        name: "CharacterCollection",
-      })
-      .activeToggle("OwnsAnyActiveToggle", UiCond.gt(ui.prop("currentCpacityUsage"), ui.lit(0)), {
-        name: "CharacterCollection",
-      })
-  )
-
-  .delegatedAction(CharacterRecruit, "Recruit", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: RecruitRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-
-  .delegatedAction(Character, "Train", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: TrainRateModel,
-    parameterOverrides: [
+  }),
+    instance(Character, "knight", { [character.propertyId("Character", "sort")]: 100 }),
+    instance(Character, "mage", { [character.propertyId("Character", "sort")]: 200 }),
+    instance(Character, "archer", { [character.propertyId("Character", "sort")]: 300 }),
+    instance(Character, "healer", { [character.propertyId("Character", "sort")]: 400 }),
+    instance(CharacterRecruit, ROSTER[0], { character: ROSTER[0] }),
+    instance(CharacterRecruit, ROSTER[1], { character: ROSTER[1] }),
+    instance(CharacterRecruit, ROSTER[2], { character: ROSTER[2] }),
+    instance(CharacterRecruit, ROSTER[3], { character: ROSTER[3] }),
+  ],
+  delegatedActions: [
+    { target: CharacterRecruit, methodName: "Recruit", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: RecruitRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+    { target: Character, methodName: "Train", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: TrainRateModel, parameterOverrides: [
       { parameterName: "count", source: { kind: "static", value: 1 } },
       // Resolve the instance at click time because its propertyId does not exist when the rate model is deployed.
       {
@@ -260,6 +185,65 @@ export const foundationEconomyCharacterDemo = definePackage(
           ],
         },
       },
-    ],
-  })
-  .build();
+    ] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
+        name: Bind.static("CharacterRecruit"),
+        ...Bind.nulls(
+          "acquireAwaitScript",
+          "exchangeScript",
+          "incrementalExchangeScript",
+          "logSetting"
+        ),
+        // Auto-run executes the grant without requiring a second client request after the exchange.
+        transactionSettingV2: transactionSettingV2(),
+      },
+  children: [
+    RecruitRateModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
+        name: Bind.static("CharacterTrain"),
+        ...Bind.nulls(
+          "acquireAwaitScript",
+          "exchangeScript",
+          "incrementalExchangeScript",
+          "logSetting"
+        ),
+        transactionSettingV2: transactionSettingV2(),
+      },
+  children: [
+    TrainRateModel,
+  ],
+}),
+  ],
+  uiComponents: [
+    defineUiComponent(CharacterRecruit, {
+  items: [
+    UiItem.templateLabel("CharacterLabel", "Recruit {character}", { character: UiSource.prop("character") }, { name: "CharacterRecruit" }),
+    UiItem.buttonAction("RecruitButton", "Recruit", undefined, { name: "CharacterRecruit" }),
+  ],
+}),
+    defineUiComponent(Character, {
+  items: [
+    UiItem.buttonAction("TrainButton", "Train", undefined, { name: "Character" }),
+  ],
+}),
+    defineUiComponent(CharacterCollection, {
+  items: [
+    UiItem.templateLabel("SlotsLabel", "{usage} of {capacity} used", { usage: UiSource.prop("currentCpacityUsage"), capacity: UiSource.prop("currentCpacity") }, { name: "CharacterCollection" }),
+    UiItem.label("NoneYetLabel", UiSource.lit("Recruit a character above to start."), {
+        name: "CharacterCollection",
+      }),
+    UiItem.activeToggle("OwnsAnyActiveToggle", UiCond.gt(UiSource.prop("currentCpacityUsage"), UiSource.lit(0)), {
+        name: "CharacterCollection",
+      }),
+  ],
+}),
+  ],
+});

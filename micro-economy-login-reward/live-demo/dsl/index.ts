@@ -5,22 +5,29 @@ import {
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  defineUiComponent,
   dependencyPackage,
+  instance,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+
 import loginRewardSurface from "../../dsl/dependency-surface.json";
+
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
 
 const loginReward = dependencyPackage(loginRewardSurface);
+
 const currency = dependencyPackage(currencySurface);
 
-/** Use the published collection handle so the row-element condition resolves the inherited receivedSteps list. */
 const PublishedLoginRewardCollection = loginReward.type("LoginRewardCollection");
 
 const WALLET_SLOT = 0;
@@ -30,11 +37,12 @@ const DAILY = "daily";
 const RESET_HOUR = 15;
 
 const RESET_TIME = `${String(RESET_HOUR).padStart(2, "0")}:00 UTC`;
+
 const RESET_HOUR_IN_JAPAN = (RESET_HOUR + 9) % 24;
+
 const RESET_TIME_IN_JAPAN =
   RESET_HOUR_IN_JAPAN === 0 ? "midnight in Japan" : `${RESET_HOUR_IN_JAPAN}:00 in Japan`;
 
-/** Preserve lexical id order because it determines the reward array index used by each day row. */
 const DAYS = [
   { id: "day1", displayName: "Day 1", coins: 10 },
   { id: "day2", displayName: "Day 2", coins: 20 },
@@ -45,36 +53,45 @@ const DAYS = [
   { id: "day7", displayName: "Day 7", coins: 100 },
 ] as const;
 
-const LoginRewardCollection = defineOverlayDomainType(
-  "LoginRewardCollection",
-  loginReward.overlay("LoginRewardCollection")
-);
+const LoginRewardCollection = defineOverlayDomainType("LoginRewardCollection", loginReward.overlay("LoginRewardCollection"), {
+  localizedDisplay: {
+    ja: {
+      label: "ログインボーナスグループ",
+      description: "デモのログインボーナスグループに、受け取り・やり直しの操作と表示を付けます。",
+    },
+    en: {
+      label: "Login reward group",
+      description:
+        "Gives a demo login reward group its receive and start-over presses and its labels.",
+    },
+  },
+});
 
-const LoginReward = defineOverlayDomainType(
-  "LoginReward",
-  {
-    ...loginReward.overlay("LoginReward"),
-    actionPropertyTransforms: [
-      {
-        targetProperty: loginReward.propertyId("LoginReward", "acquireActions"),
-        mode: "append",
-        transformPackageId: currency.packageId,
-        transformId: currency.transformId("DepositFreeCurrency"),
-        arguments: [
+const LoginReward = defineOverlayDomainType("LoginReward", loginReward.overlay("LoginReward"), {
+  properties: {
+    displayName: PT.string().assetDelivery().required(),
+    coins: PT.int32().masterData().required(),
+  },
+  actionPropertyTransforms: [
+    { targetProperty: loginReward.propertyId("LoginReward", "acquireActions"), mode: "append", transformPackageId: currency.packageId, transformId: currency.transformId("DepositFreeCurrency"), arguments: [
           { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
           {
             parameterName: "count",
             source: { kind: "domainProperty", propertyName: "coins" },
           },
-        ],
-      },
-    ],
+        ] },
+  ],
+  localizedDisplay: {
+    ja: {
+      label: "ログインボーナス",
+      description: "デモのログインボーナスに、表示名と報酬コインを足します。",
+    },
+    en: {
+      label: "Login reward",
+      description: "Adds a display name and the coins it pays to a demo login reward.",
+    },
   },
-  domainType =>
-    domainType
-      .property(PT.string("displayName").assetDelivery().required())
-      .property(PT.int32("coins").masterData().required())
-      .localizedProperties({
+  localizedProperties: {
         displayName: jaEnField(
           "表示名",
           "Display name",
@@ -88,20 +105,19 @@ const LoginReward = defineOverlayDomainType(
           "Coins paid when this day is claimed.",
           { ja: "通貨", en: "currency" }
         ),
-      })
-);
+      },
+});
 
-const StartOverRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(LoginRewardCollection)
-    .bindings({ name: Bind.domainProperty(Source.direct(LoginRewardCollection, "id")) })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(LoginRewardCollection)
-        .actionProgram(
-          ActionProgram.transform(
+const StartOverRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: LoginRewardCollection,
+  bindings: { name: Bind.domainProperty(Source.direct(LoginRewardCollection, "id")) },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: LoginRewardCollection,
+  actionProgram: ActionProgram.transform(
             loginReward.packageId,
             loginReward.transformId("ResetReceiveStatus"),
             [
@@ -110,13 +126,16 @@ const StartOverRateModel = defineMasterDataResource(resource =>
                 Source.direct(LoginRewardCollection, "id")
               ),
             ]
-          )
-        );
-    })
-);
+          ),
+}),
+    ],
+  },
+});
 
-const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.1")
-  .display({
+export const microEconomyLoginRewardDemo = definePackage({
+  id: "micro-economy-login-reward-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "ログインボーナス（デモデータ）",
       description:
@@ -127,65 +146,37 @@ const withGroup = definePackage("micro-economy-login-reward-demo", "0.0.1")
       description:
         "Supplies the live demo's seven-day login bonus, the coins each day pays, and the press that starts the track over. The rewards land in the currency package's wallet.",
     },
-  })
-  .displayType(LoginRewardCollection, {
-    ja: {
-      label: "ログインボーナスグループ",
-      description: "デモのログインボーナスグループに、受け取り・やり直しの操作と表示を付けます。",
-    },
-    en: {
-      label: "Login reward group",
-      description:
-        "Gives a demo login reward group its receive and start-over presses and its labels.",
-    },
-  })
-  .displayType(LoginReward, {
-    ja: {
-      label: "ログインボーナス",
-      description: "デモのログインボーナスに、表示名と報酬コインを足します。",
-    },
-    en: {
-      label: "Login reward",
-      description: "Adds a display name and the coins it pays to a demo login reward.",
-    },
-  })
-  .dependency(loginReward.packageId, "github:gs2io/gs2-studio-package")
-  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  // Reuse the shared schedule content so this demo cannot remove event windows from that stack.
-  .dependency("foundation-economy-schedule-demo", "github:gs2io/gs2-studio-package")
-  // Reuse the currency demo content so the wallet and store products stay identical across demos.
-  .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-  .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
-
-  .domainType(LoginRewardCollection)
-  .domainType(LoginReward)
-
-  // Use streaming mode so a fresh visitor starts at day one without requiring an open event window.
-  .instance(LoginRewardCollection.typeName, DAILY, {
+  },
+  dependencies: {
+    [loginReward.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
+    [currency.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [LoginRewardCollection, LoginReward],
+  instances: [
+    instance(LoginRewardCollection, DAILY, {
     [loginReward.propertyId("LoginRewardCollection", "mode")]: "streaming",
     [loginReward.propertyId("LoginRewardCollection", "repeat")]: "disabled",
     [loginReward.propertyId("LoginRewardCollection", "missedReceiveRelief")]: "disabled",
     [loginReward.propertyId("LoginRewardCollection", "resetHour")]: RESET_HOUR,
-  });
-
-// Use the local overlay name for its added properties; keep the required acquire slot empty for the appended deposit.
-const withDays = DAYS.reduce(
-  (builder, { id, displayName, coins }) =>
-    builder.instance(LoginReward.typeName, id, {
+  }),
+    ...DAYS.map(({ id, displayName, coins }) => instance(LoginReward, id, {
       [loginReward.propertyId("LoginReward", "loginRewardCollection")]: DAILY,
       [loginReward.propertyId("LoginReward", "acquireActions")]: [],
       displayName,
       coins,
-    }),
-  withGroup
-);
-
-export const microEconomyLoginRewardDemo = withDays
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+    })),
+  ],
+  delegatedActions: [
+    { target: LoginRewardCollection, methodName: "StartOver", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: StartOverRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("LoginRewardStartOver"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -195,82 +186,39 @@ export const microEconomyLoginRewardDemo = withDays
         ),
         // Auto-run executes the reset without a second client request after the exchange.
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(StartOverRateModel)
-  )
-
-  .uiComponent(LoginRewardCollection, ui =>
-    ui
-      .buttonAction("ReceiveButton", "Receive", undefined, { name: "LoginRewardCollection" })
-      .buttonAction("StartOverButton", "StartOver", undefined, { name: "LoginRewardCollection" })
-      // Use a label because the page renders timestamp values as countdowns, while this reading is a past instant.
-      .templateLabel(
-        "LastReceivedLabel",
-        "Last received: {lastReceivedAt} (UTC)",
-        {
-          lastReceivedAt: ui.inheritedProp(
-            loginReward.propertyId("LoginRewardCollection", "lastReceivedAt")
-          ),
-        },
-        { name: "LoginRewardCollection" }
-      )
-      // Provide an explicit never-received label so the first visit does not show an empty timestamp.
-      .templateLabel(
-        "NeverReceivedLabel",
-        "Last received: not yet",
-        {},
-        { name: "LoginRewardCollection" }
-      )
-      .activeToggle(
-        "NeverReceivedActiveToggle",
-        UiCond.not(
+      },
+  children: [
+    StartOverRateModel,
+  ],
+}),
+  ],
+  uiComponents: [
+    defineUiComponent(LoginRewardCollection, {
+  items: [
+    UiItem.buttonAction("ReceiveButton", "Receive", undefined, { name: "LoginRewardCollection" }),
+    UiItem.buttonAction("StartOverButton", "StartOver", undefined, { name: "LoginRewardCollection" }),
+    UiItem.templateLabel("LastReceivedLabel", "Last received: {lastReceivedAt} (UTC)", {
+          lastReceivedAt: UiSource.inheritedProp(loginReward.propertyId("LoginRewardCollection", "lastReceivedAt")),
+        }, { name: "LoginRewardCollection" }),
+    UiItem.templateLabel("NeverReceivedLabel", "Last received: not yet", {}, { name: "LoginRewardCollection" }),
+    UiItem.activeToggle("NeverReceivedActiveToggle", UiCond.not(
           UiCond.truthy(
-            ui.inheritedProp(loginReward.propertyId("LoginRewardCollection", "lastReceivedAt"))
+            UiSource.inheritedProp(loginReward.propertyId("LoginRewardCollection", "lastReceivedAt"))
           )
-        ),
-        { name: "LoginRewardCollection" }
-      )
-      .activeToggle(
-        "ReceivedOnceActiveToggle",
-        UiCond.truthy(
-          ui.inheritedProp(loginReward.propertyId("LoginRewardCollection", "lastReceivedAt"))
-        ),
-        { name: "LoginRewardCollection" }
-      )
-      .templateLabel(
-        "RuleLabel",
-        `A new day starts at ${RESET_TIME} (${RESET_TIME_IN_JAPAN}). Advance one day moves your clock forward 24 hours, so the next day can be received now.`,
-        {},
-        { name: "LoginRewardCollection" }
-      )
-  )
-
-  .uiComponent(LoginReward, ui =>
-    ui
-      .templateLabel(
-        "DayLabel",
-        "{displayName}: {coins} coins",
-        { displayName: ui.prop("displayName"), coins: ui.prop("coins") },
-        { name: "LoginReward" }
-      )
-      .templateLabel("ReceivedLabel", "Received", {}, { name: "LoginReward" })
-      // Use the row element index to match receivedSteps to the deployed reward order.
-      .activeToggle(
-        "ReceivedActiveToggle",
-        UiCond.rowElement(PublishedLoginRewardCollection, "receivedSteps"),
-        { name: "LoginReward" }
-      )
-      // Negate the condition because page toggle bindings hide their target rows while true.
-      .activeToggle(
-        "UnreceivedActiveToggle",
-        UiCond.not(UiCond.rowElement(PublishedLoginRewardCollection, "receivedSteps")),
-        { name: "LoginReward" }
-      )
-  )
-
-  .delegatedAction(LoginRewardCollection, "StartOver", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: StartOverRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .build();
+        ), { name: "LoginRewardCollection" }),
+    UiItem.activeToggle("ReceivedOnceActiveToggle", UiCond.truthy(
+          UiSource.inheritedProp(loginReward.propertyId("LoginRewardCollection", "lastReceivedAt"))
+        ), { name: "LoginRewardCollection" }),
+    UiItem.templateLabel("RuleLabel", `A new day starts at ${RESET_TIME} (${RESET_TIME_IN_JAPAN}). Advance one day moves your clock forward 24 hours, so the next day can be received now.`, {}, { name: "LoginRewardCollection" }),
+  ],
+}),
+    defineUiComponent(LoginReward, {
+  items: [
+    UiItem.templateLabel("DayLabel", "{displayName}: {coins} coins", { displayName: UiSource.prop("displayName"), coins: UiSource.prop("coins") }, { name: "LoginReward" }),
+    UiItem.templateLabel("ReceivedLabel", "Received", {}, { name: "LoginReward" }),
+    UiItem.activeToggle("ReceivedActiveToggle", UiCond.rowElement(PublishedLoginRewardCollection, "receivedSteps"), { name: "LoginReward" }),
+    UiItem.activeToggle("UnreceivedActiveToggle", UiCond.not(UiCond.rowElement(PublishedLoginRewardCollection, "receivedSteps")), { name: "LoginReward" }),
+  ],
+}),
+  ],
+});

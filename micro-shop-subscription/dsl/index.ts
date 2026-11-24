@@ -3,11 +3,13 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
   dependencyPackage,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -18,18 +20,29 @@ const schedule = dependencyPackage(scheduleSurface);
 
 const SCHEDULE_NAMESPACE_RESOURCE_ID = schedule.resourceId("schedule.Namespace");
 
-/** Use a separate Money2 namespace so subscription setup does not replace the currency package's wallet configuration. */
-const StoreSubscription = defineDomainType("StoreSubscription", dt =>
-  dt
-    .property(PT.string("appleSubscriptionGroupIdentifier").masterData())
-    .property(PT.string("googlePlayProductId").masterData())
-    .property(PT.string("renewalTrigger").assetDelivery().required())
-    .property(PT.prop("triggerExtendMode", PT.enum("just", "rollupHour")).masterData())
-    .property(PT.int32("rollupHour").masterData())
-    .property(PT.int32("reallocateSpanDays").masterData())
-    .property(PT.prop("status", PT.enum("active", "inactive")).userData().required())
-    .property(PT.timestamp("expiresAt").userData().required())
-    .localizedProperties({
+const StoreSubscription = defineDomainType("StoreSubscription", {
+  properties: {
+    appleSubscriptionGroupIdentifier: PT.string().masterData(),
+    googlePlayProductId: PT.string().masterData(),
+    renewalTrigger: PT.string().assetDelivery().required(),
+    triggerExtendMode: PT.enum("just", "rollupHour").masterData(),
+    rollupHour: PT.int32().masterData(),
+    reallocateSpanDays: PT.int32().masterData(),
+    status: PT.enum("active", "inactive").userData().required(),
+    expiresAt: PT.timestamp().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "サブスク商品",
+      description: "App Store・Google Playの商品識別子、更新トリガー、有効期限を設定・管理します。",
+    },
+    en: {
+      label: "Subscription",
+      description:
+        "Configures store product identifiers and renewal triggers, and tracks subscription status and expiration.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("サブスクリプション商品", "subscription product"),
       appleSubscriptionGroupIdentifier: jaEnField(
         "App StoreサブスクリプショングループID",
@@ -81,14 +94,13 @@ const StoreSubscription = defineDomainType("StoreSubscription", dt =>
         "プレイヤーのサブスクリプションが失効する日時です。",
         "Time when the player's subscription expires."
       ),
-    })
-);
+    },
+});
 
-const StoreSubscriptionContentModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.money2.StoreSubscriptionContentModel)
-    .mountLocal(StoreSubscription)
-    .bindings({
+const StoreSubscriptionContentModel = defineMasterDataResource({
+  model: GS2.money2.StoreSubscriptionContentModel,
+  mount: StoreSubscription,
+  bindings: {
       name: Bind.domainProperty(Source.direct(StoreSubscription, "id")),
       metadata: Bind.static(""),
       triggerName: Bind.domainProperty(Source.direct(StoreSubscription, "renewalTrigger")),
@@ -105,14 +117,18 @@ const StoreSubscriptionContentModel = defineMasterDataResource(resource =>
       googlePlay: {
         productId: Bind.domainProperty(Source.direct(StoreSubscription, "googlePlayProductId")),
       },
-    })
-    .grnFieldMount("scheduleNamespaceId", SCHEDULE_NAMESPACE_RESOURCE_ID, [
+    },
+  grnFieldMounts: [
+    { parameterName: "scheduleNamespaceId", mountedResource: SCHEDULE_NAMESPACE_RESOURCE_ID, keyMappings: [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
-    ])
-);
+    ] },
+  ],
+});
 
-export const microShopSubscription = definePackage("micro-shop-subscription", "0.0.1")
-  .display({
+export const microShopSubscription = definePackage({
+  id: "micro-shop-subscription",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "サブスクリプション",
       description:
@@ -123,25 +139,15 @@ export const microShopSubscription = definePackage("micro-shop-subscription", "0
       description:
         "Handles recurring store purchases such as a monthly pass, pulling a schedule trigger on each renewal and tracking who currently holds it.",
     },
-  })
-  .displayType(StoreSubscription, {
-    ja: {
-      label: "サブスク商品",
-      description: "App Store・Google Playの商品識別子、更新トリガー、有効期限を設定・管理します。",
-    },
-    en: {
-      label: "Subscription",
-      description:
-        "Configures store product identifiers and renewal triggers, and tracks subscription status and expiration.",
-    },
-  })
-  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  .domainType(StoreSubscription)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.money2.Namespace)
-      .bindings({
+  },
+  dependencies: {
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [StoreSubscription],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.money2.Namespace,
+  bindings: {
         name: Bind.static("Subscription"),
         currencyUsagePriority: Bind.static("PrioritizeFree"),
         sharedFreeCurrency: Bind.static(false),
@@ -168,19 +174,22 @@ export const microShopSubscription = definePackage("micro-shop-subscription", "0
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(StoreSubscriptionContentModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.money2.SubscriptionStatus)
-      .mountLocal(StoreSubscription)
-      .bindings({
+      },
+  children: [
+    StoreSubscriptionContentModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.money2.SubscriptionStatus,
+  mount: StoreSubscription,
+  bindings: {
         contentName: Bind.domainProperty(Source.direct(StoreSubscription, "id")),
         status: Bind.domainProperties([Source.direct(StoreSubscription, "status")]),
         expiresAt: Bind.domainProperties([Source.direct(StoreSubscription, "expiresAt")]),
         userId: Bind.skip(),
-      })
-  )
-  .build();
+      },
+}),
+  ],
+});

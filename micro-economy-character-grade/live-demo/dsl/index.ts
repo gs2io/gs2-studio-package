@@ -4,78 +4,89 @@ import {
   Bind,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
   dependencyPackage,
+  instance,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { CHARACTER_LEVEL_KEY_PLACEHOLDER } from "../../../dsl/characterLevelKey";
+
 import gradeSurface from "../../dsl/dependency-surface.json";
+
 import characterDemoSurface from "../../../foundation-economy-character/live-demo/dsl/dependency-surface.json";
+
 import characterSurface from "../../../foundation-economy-character/dsl/dependency-surface.json";
 
 const grade = dependencyPackage(gradeSurface);
+
 const character = dependencyPackage(characterSurface);
+
 const characterDemo = dependencyPackage(characterDemoSurface);
 
 const Character = grade.type("Character");
+
 const CharacterGradeStep = grade.type("CharacterGradeStep");
 
 const GRADE = grade.propertyId("Character", "grade");
+
 const LEVEL = character.propertyId("Character", "level");
+
 const LEVEL_CAP = character.propertyId("Character", "levelCap");
+
 const PROPERTY_ID = character.propertyId("Character", "propertyId");
 
-/** Keep the grade caps within the shared character curve, starting at its default cap. */
 const GRADE_CAPS = [10, 20, 30] as const;
 
 const MAX_GRADE = GRADE_CAPS.length;
 
-/** Keep the experience grant large enough to demonstrate successive caps in a few presses. */
 const TRAIN_HARD_EXPERIENCE = 1000;
 
-/** Supply the instance id at click time because the owned character does not exist at deployment; grade and experience address the same suffixed status key. */
-const LimitBreakRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(Character)
-    .bindings({ name: Bind.domainProperty(Source.direct(Character, "id")) })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(Character)
-        .actionProgram(
-          ActionProgram.transform(grade.packageId, grade.transformId("PromoteCharacterGrade"), [
+const LimitBreakRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: Character,
+  bindings: { name: Bind.domainProperty(Source.direct(Character, "id")) },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: Character,
+  actionProgram: ActionProgram.transform(grade.packageId, grade.transformId("PromoteCharacterGrade"), [
             Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
             Arg.static("gradeValue", 1),
-          ])
-        );
-    })
-);
+          ]),
+}),
+    ],
+  },
+});
 
-const TrainHardRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(Character)
-    .bindings({ name: Bind.domainProperty(Source.direct(Character, "id")) })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(Character)
-        .actionProgram(
-          ActionProgram.transform(
+const TrainHardRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: Character,
+  bindings: { name: Bind.domainProperty(Source.direct(Character, "id")) },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: Character,
+  actionProgram: ActionProgram.transform(
             character.packageId,
             character.transformId("AcquireCharacterExperience"),
             [
               Arg.placeholder("propertyId", CHARACTER_LEVEL_KEY_PLACEHOLDER),
               Arg.static("value", TRAIN_HARD_EXPERIENCE),
             ]
-          )
-        );
-    })
-);
+          ),
+}),
+    ],
+  },
+});
 
 function gradeStep(rankCapValue: number) {
   return { rankCapValue, propertyIdRegex: ".*", gradeUpPropertyIdRegex: ".*" };
@@ -98,11 +109,10 @@ const PROPERTY_ID_CONFIG = {
   },
 } as const;
 
-export const microEconomyCharacterGradeDemo = definePackage(
-  "micro-economy-character-grade-demo",
-  "0.0.1"
-)
-  .display({
+export const microEconomyCharacterGradeDemo = definePackage({
+  id: "micro-economy-character-grade-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "キャラクター限界突破（デモデータ）",
       description: "ライブデモ用の限界突破の段階表と、限界突破・強い訓練の操作を提供します。",
@@ -112,22 +122,31 @@ export const microEconomyCharacterGradeDemo = definePackage(
       description:
         "Supplies the grade steps the live demo raises through, and the presses that train and break the limit.",
     },
-  })
-  .dependency(grade.packageId, "github:gs2io/gs2-studio-package")
-  // Declare the character package because training directly calls its AcquireCharacterExperience transform.
-  .dependency(character.packageId, "github:gs2io/gs2-studio-package")
-  // Reuse the shared roster and level curve so this demo cannot deploy conflicting character content.
-  .dependency(characterDemo.packageId, "github:gs2io/gs2-studio-package")
-
-  // Grade rows use lexical id order; pad ids before a tenth grade would sort ahead of grade2.
-  .instance(CharacterGradeStep, "grade1", gradeStep(GRADE_CAPS[0]))
-  .instance(CharacterGradeStep, "grade2", gradeStep(GRADE_CAPS[1]))
-  .instance(CharacterGradeStep, "grade3", gradeStep(GRADE_CAPS[2]))
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+  },
+  dependencies: {
+    [grade.packageId]: "github:gs2io/gs2-studio-package",
+    [character.packageId]: "github:gs2io/gs2-studio-package",
+    [characterDemo.packageId]: "github:gs2io/gs2-studio-package",
+  },
+  instances: [
+    instance(CharacterGradeStep, "grade1", gradeStep(GRADE_CAPS[0])),
+    instance(CharacterGradeStep, "grade2", gradeStep(GRADE_CAPS[1])),
+    instance(CharacterGradeStep, "grade3", gradeStep(GRADE_CAPS[2])),
+  ],
+  delegatedActions: [
+    { target: Character, methodName: "LimitBreak", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: LimitBreakRateModel, parameterOverrides: [
+      { parameterName: "count", source: { kind: "static", value: 1 } },
+      PROPERTY_ID_CONFIG,
+    ] } },
+    { target: Character, methodName: "TrainHard", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: TrainHardRateModel, parameterOverrides: [
+      { parameterName: "count", source: { kind: "static", value: 1 } },
+      PROPERTY_ID_CONFIG,
+    ] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("CharacterLimitBreak"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -137,13 +156,14 @@ export const microEconomyCharacterGradeDemo = definePackage(
         ),
         // Auto-run executes the transaction without a second client request after the exchange.
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(LimitBreakRateModel)
-  )
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+      },
+  children: [
+    LimitBreakRateModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("CharacterGradeTrain"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -152,45 +172,23 @@ export const microEconomyCharacterGradeDemo = definePackage(
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(TrainHardRateModel)
-  )
-
-  .uiComponent(Character, ui =>
-    ui
-      .templateLabel(
-        "GradeLabel",
-        "Grade {grade}",
-        { grade: ui.inheritedProp(GRADE) },
-        { name: "Character" }
-      )
-      // Combine cap and remaining-grade checks in one interactable because two components would overwrite the same button flag.
-      .interactable(
-        "LimitBreakInteractable",
-        UiCond.and(
-          UiCond.eq(ui.inheritedProp(LEVEL), ui.inheritedProp(LEVEL_CAP)),
-          UiCond.lt(ui.inheritedProp(GRADE), ui.lit(MAX_GRADE))
-        ),
-        { name: "Character" }
-      )
-      .buttonAction("LimitBreakButton", "LimitBreak", undefined, { name: "Character" })
-      .buttonAction("TrainHardButton", "TrainHard", undefined, { name: "Character" })
-  )
-
-  .delegatedAction(Character, "LimitBreak", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: LimitBreakRateModel,
-    parameterOverrides: [
-      { parameterName: "count", source: { kind: "static", value: 1 } },
-      PROPERTY_ID_CONFIG,
-    ],
-  })
-  .delegatedAction(Character, "TrainHard", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: TrainHardRateModel,
-    parameterOverrides: [
-      { parameterName: "count", source: { kind: "static", value: 1 } },
-      PROPERTY_ID_CONFIG,
-    ],
-  })
-  .build();
+      },
+  children: [
+    TrainHardRateModel,
+  ],
+}),
+  ],
+  uiComponents: [
+    defineUiComponent(Character, {
+  items: [
+    UiItem.templateLabel("GradeLabel", "Grade {grade}", { grade: UiSource.inheritedProp(GRADE) }, { name: "Character" }),
+    UiItem.interactable("LimitBreakInteractable", UiCond.and(
+          UiCond.eq(UiSource.inheritedProp(LEVEL), UiSource.inheritedProp(LEVEL_CAP)),
+          UiCond.lt(UiSource.inheritedProp(GRADE), UiSource.lit(MAX_GRADE))
+        ), { name: "Character" }),
+    UiItem.buttonAction("LimitBreakButton", "LimitBreak", undefined, { name: "Character" }),
+    UiItem.buttonAction("TrainHardButton", "TrainHard", undefined, { name: "Character" }),
+  ],
+}),
+  ],
+});

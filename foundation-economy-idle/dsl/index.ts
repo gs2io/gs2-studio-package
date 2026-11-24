@@ -4,18 +4,28 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUserDataResource,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
 
-const IdleReward = defineDomainType("IdleReward", dt =>
-  dt
-    .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
-    .localizedProperties({
+const IdleReward = defineDomainType("IdleReward", {
+  properties: {
+    acquireActions: PT.listOf(PT.acquireAction()).masterData().required(),
+  },
+  localizedDisplay: {
+    ja: { label: "放置報酬", description: "放置時間に応じて付与する報酬アクションを設定します。" },
+    en: {
+      label: "Idle reward",
+      description: "Defines reward actions granted for accumulated idle time.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("放置報酬", "idle reward"),
       acquireActions: jaEnField(
         "獲得アクション",
@@ -23,19 +33,26 @@ const IdleReward = defineDomainType("IdleReward", dt =>
         "放置報酬として実行する獲得アクションです。",
         "Acquire actions executed as idle rewards."
       ),
-    })
-);
+    },
+});
 
-const IdleStatus = defineDomainType("IdleStatus", dt =>
-  dt
-    // The namespace has one fixed idle category, so a list key would not identify distinct statuses.
-    .singleEntry()
-    .property(PT.int32("rewardIntervalMinutes").masterData().required())
-    .property(PT.int32("defaultMaximumIdleMinutes").masterData().required())
-    .property(PT.int32("currentIdleMinutes").userData().required())
-    .property(PT.timestamp("nextRewardsAt").userData().required())
-    .property(PT.int32("maximumIdleMinutes").userData().required())
-    .localizedProperties({
+const IdleStatus = defineDomainType("IdleStatus", {
+  singleEntry: true,
+  properties: {
+    rewardIntervalMinutes: PT.int32().masterData().required(),
+    defaultMaximumIdleMinutes: PT.int32().masterData().required(),
+    currentIdleMinutes: PT.int32().userData().required(),
+    nextRewardsAt: PT.timestamp().userData().required(),
+    maximumIdleMinutes: PT.int32().userData().required(),
+  },
+  localizedDisplay: {
+    ja: { label: "放置状況", description: "プレイヤーの放置開始時刻と受け取り状況を管理します。" },
+    en: {
+      label: "Idle status",
+      description: "Tracks when a player's idle period began and the associated claim state.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("放置状況", "idle status"),
       rewardIntervalMinutes: jaEnField(
         "報酬間隔",
@@ -71,14 +88,13 @@ const IdleStatus = defineDomainType("IdleStatus", dt =>
         "Current maximum idle duration applied to the player.",
         { ja: "分", en: "minutes" }
       ),
-    })
-);
+    },
+});
 
-const CategoryModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.idle.CategoryModel)
-    .mountLocal(IdleStatus)
-    .bindings({
+const CategoryModel = defineMasterDataResource({
+  model: GS2.idle.CategoryModel,
+  mount: IdleStatus,
+  bindings: {
       defaultMaximumIdleMinutes: Bind.domainProperty(
         Source.direct(IdleStatus, "defaultMaximumIdleMinutes")
       ),
@@ -88,68 +104,63 @@ const CategoryModel = defineMasterDataResource(resource =>
       rewardIntervalMinutes: Bind.domainProperty(
         Source.direct(IdleStatus, "rewardIntervalMinutes")
       ),
-    })
-    .addArrayChild("acquireActions", acquireActionList => {
-      acquireActionList
-        .model(GS2.idle.AcquireActionList)
-        .mountLocal(IdleReward)
-        .bindings({})
-        .addArrayChild("acquireActions", transactionAction => {
-          transactionAction
-            .model(GS2.transaction.AcquireAction)
-            .mountLocal(IdleReward)
-            .actionProgram(
-              ActionProgram.domainProperty(
+    },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.idle.AcquireActionList,
+  mount: IdleReward,
+  bindings: {},
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: IdleReward,
+  actionProgram: ActionProgram.domainProperty(
                 Source.parent(Source.direct(IdleReward, "acquireActions"))
-              )
-            );
-        });
-    })
-);
+              ),
+}),
+    ],
+  },
+}),
+    ],
+  },
+});
 
-export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0.0.1")
-  .display({
+export const foundationEconomyIdle = definePackage({
+  id: "foundation-economy-idle",
+  version: "0.0.1",
+  display: {
     ja: { label: "放置報酬", description: "遊んでいない間にたまる放置報酬を計算・付与します。" },
     en: {
       label: "Idle Rewards",
       description: "Accrues and grants rewards that build up while the player is away.",
     },
-  })
-  .displayType(IdleReward, {
-    ja: { label: "放置報酬", description: "放置時間に応じて付与する報酬アクションを設定します。" },
-    en: {
-      label: "Idle reward",
-      description: "Defines reward actions granted for accumulated idle time.",
-    },
-  })
-  .displayType(IdleStatus, {
-    ja: { label: "放置状況", description: "プレイヤーの放置開始時刻と受け取り状況を管理します。" },
-    en: {
-      label: "Idle status",
-      description: "Tracks when a player's idle period began and the associated claim state.",
-    },
-  })
-  .domainType(IdleReward)
-  .domainType(IdleStatus)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.idle.Namespace)
-      .bindings({
+  },
+  domainTypes: [IdleReward, IdleStatus],
+  delegatedActions: [
+    { target: IdleStatus, methodName: "Receive", action: { targetActionKey: "Gs2Idle:CategoryModel.Receive", targetResource: CategoryModel } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.idle.Namespace,
+  bindings: {
         logSetting: Bind.null(),
         name: Bind.static("Idle"),
         ...Bind.nulls("overrideAcquireActionsScriptId", "receiveScript"),
         // Auto-run executes the reward transaction; atomic commit keeps the idle reset and payout together.
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(CategoryModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.idle.Status)
-      .linkedMasterResourceId(CategoryModel)
-      .bindings({
+      },
+  children: [
+    CategoryModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.idle.Status,
+  linkedMaster: CategoryModel,
+  bindings: {
         categoryName: Bind.skip(),
         idleMinutes: Bind.domainProperties([Source.direct(IdleStatus, "currentIdleMinutes")]),
         maximumIdleMinutes: Bind.domainProperties([
@@ -158,12 +169,7 @@ export const foundationEconomyIdle = definePackage("foundation-economy-idle", "0
         nextRewardsAt: Bind.domainProperties([Source.direct(IdleStatus, "nextRewardsAt")]),
         statusId: Bind.skip(),
         userId: Bind.skip(),
-      })
-  )
-
-  .delegatedAction(IdleStatus, "Receive", {
-    targetActionKey: "Gs2Idle:CategoryModel.Receive",
-    targetResource: CategoryModel,
-  })
-
-  .build();
+      },
+}),
+  ],
+});

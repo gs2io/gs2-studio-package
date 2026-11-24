@@ -10,6 +10,7 @@ import {
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -18,13 +19,24 @@ import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-su
 
 const schedule = dependencyPackage(scheduleSurface);
 
-const SCHEDULE_EVENT_TYPE_ID = schedule.typeId("Schedule");
+const Schedule = schedule.type("Schedule");
 
-const ProgressReward = defineDomainType("ProgressReward", dt =>
-  dt
-    .property(PT.string("itemId").userData().required())
-    .property(PT.int32("value").userData().required())
-    .localizedProperties({
+const ProgressReward = defineDomainType("ProgressReward", {
+  properties: {
+    itemId: PT.string().userData().required(),
+    value: PT.int32().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "クエスト報酬",
+      description: "進行中のクエストをクリアしたときに付与される報酬です。",
+    },
+    en: {
+      label: "Quest reward",
+      description: "A reward the quest in progress grants when it is completed.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("クエスト報酬", "quest reward"),
       itemId: jaEnField(
         "報酬アイテムID",
@@ -39,18 +51,29 @@ const ProgressReward = defineDomainType("ProgressReward", dt =>
         "Quantity of the reward granted when the quest is completed.",
         { ja: "個", en: "items" }
       ),
-    })
-);
+    },
+});
 
-/** A player has one current run, so progress uses a single entry and exposes absence separately through inProgress. */
-const Progress = defineDomainType("Progress", dt =>
-  dt
-    .singleEntry()
-    .property(PT.bool("inProgress").userData().required())
-    .property(PT.prop("quest", PT.ref("Quest")).userData().required())
-    .property(PT.prop("questCollection", PT.ref("QuestCollection")).userData().required())
-    .property(PT.prop("rewards", PT.listOf(PT.inline("ProgressReward"))).userData())
-    .localizedProperties({
+const Progress = defineDomainType("Progress", {
+  singleEntry: true,
+  properties: {
+    inProgress: PT.bool().userData().required(),
+    quest: PT.ref(() => Quest).userData().required(),
+    questCollection: PT.ref(() => QuestCollection).userData().required(),
+    rewards: PT.listOf(PT.inline(ProgressReward)).userData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "クエスト進行",
+      description: "プレイヤーが進行中のクエストと、クリア時に付与される報酬を管理します。",
+    },
+    en: {
+      label: "Quest progress",
+      description:
+        "Tracks the quest a player has in progress and the rewards completing it grants.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("クエスト進行", "quest progress"),
       inProgress: jaEnField(
         "進行中",
@@ -76,13 +99,24 @@ const Progress = defineDomainType("Progress", dt =>
         "進行中のクエストをクリアしたときに付与される報酬の一覧です。開始時に決まります。",
         "Rewards granted when the quest in progress is completed; decided when it starts."
       ),
-    })
-);
+    },
+});
 
-const QuestCollection = defineDomainType("QuestCollection", dt =>
-  dt
-    .property(PT.prop("schedule", PT.ref(SCHEDULE_EVENT_TYPE_ID)).masterData())
-    .localizedProperties({
+const QuestCollection = defineDomainType("QuestCollection", {
+  properties: {
+    schedule: PT.ref(Schedule).masterData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "クエストグループ",
+      description: "関連するクエストをまとめ、開催スケジュールを設定します。",
+    },
+    en: {
+      label: "Quest group",
+      description: "Groups related quests and sets the schedule they are available on.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("クエストグループ", "quest group"),
       schedule: jaEnField(
         "開催スケジュール",
@@ -90,24 +124,30 @@ const QuestCollection = defineDomainType("QuestCollection", dt =>
         "このクエストグループを開催するスケジュールです。",
         "Schedule during which this quest group is available."
       ),
-    })
-);
+    },
+});
 
-const Quest = defineDomainType("Quest", dt =>
-  dt
-    .property(PT.prop("collection", PT.ref("QuestCollection")).assetDelivery().required())
-    .property(PT.prop("consumeActions", PT.listOf(PT.consumeAction())).masterData().required())
-    .property(
-      PT.prop("firstCompleteAcquireActions", PT.listOf(PT.acquireAction())).masterData().required()
-    )
-    .property(
-      PT.prop("completeAcquireActions", PT.listOf(PT.acquireAction())).masterData().required()
-    )
-    .property(
-      PT.prop("failedAcquireActions", PT.listOf(PT.acquireAction())).masterData().required()
-    )
-    .property(PT.bool("completed").userData().required())
-    .localizedProperties({
+const Quest = defineDomainType("Quest", {
+  properties: {
+    collection: PT.ref(QuestCollection).assetDelivery().required(),
+    consumeActions: PT.listOf(PT.consumeAction()).masterData().required(),
+    firstCompleteAcquireActions: PT.listOf(PT.acquireAction()).masterData().required(),
+    completeAcquireActions: PT.listOf(PT.acquireAction()).masterData().required(),
+    failedAcquireActions: PT.listOf(PT.acquireAction()).masterData().required(),
+    completed: PT.bool().userData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "クエスト",
+      description: "開始時の消費、初回・通常クリア報酬、失敗時アクションを設定します。",
+    },
+    en: {
+      label: "Quest",
+      description:
+        "Defines start costs, first-clear and repeat-clear rewards, and failure actions.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("クエスト", "quest"),
       collection: jaEnField(
         "クエストグループ",
@@ -145,110 +185,107 @@ const Quest = defineDomainType("Quest", dt =>
         "プレイヤーがこのクエストをクリア済みかを示します。",
         "Whether the player has completed this quest."
       ),
-    })
-);
+    },
+});
 
-const QuestModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.quest.QuestModel)
-    .mountLocal(Quest)
-    .bindings({
+const QuestModel = defineMasterDataResource({
+  model: GS2.quest.QuestModel,
+  mount: Quest,
+  bindings: {
       name: Bind.domainProperty(Source.direct(Quest, "id")),
       challengePeriodEventId: Bind.null(),
-    })
-    .addArrayChild("contents", contents => {
-      contents
-        .model(GS2.quest.Contents)
-        .bindings({})
-        .addArrayChild("completeAcquireActions", acquireAction => {
-          acquireAction
-            .model(GS2.transaction.AcquireAction)
-            .mountLocal(Quest)
-            .actionProgram(
-              ActionProgram.domainProperty(
+    },
+  arrayChildren: {
+    contents: [
+      defineMasterDataResource({
+  model: GS2.quest.Contents,
+  bindings: {},
+  arrayChildren: {
+    completeAcquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: Quest,
+  actionProgram: ActionProgram.domainProperty(
                 Source.parent(Source.parent(Source.direct(Quest, "completeAcquireActions")))
-              )
-            );
-        });
-    })
-    .addArrayChild("consumeActions", consumeAction => {
-      consumeAction
-        .model(GS2.transaction.ConsumeAction)
-        .mountLocal(Quest)
-        .actionProgram(
-          ActionProgram.domainProperty(Source.parent(Source.direct(Quest, "consumeActions")))
-        );
-    })
-    .addArrayChild("failedAcquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(Quest)
-        .actionProgram(
-          ActionProgram.domainProperty(Source.parent(Source.direct(Quest, "failedAcquireActions")))
-        );
-    })
-    .addArrayChild("firstCompleteAcquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(Quest)
-        .actionProgram(
-          ActionProgram.domainProperty(
+              ),
+}),
+    ],
+  },
+}),
+    ],
+    consumeActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.ConsumeAction,
+  mount: Quest,
+  actionProgram: ActionProgram.domainProperty(Source.parent(Source.direct(Quest, "consumeActions"))),
+}),
+    ],
+    failedAcquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: Quest,
+  actionProgram: ActionProgram.domainProperty(Source.parent(Source.direct(Quest, "failedAcquireActions"))),
+}),
+    ],
+    firstCompleteAcquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: Quest,
+  actionProgram: ActionProgram.domainProperty(
             Source.parent(Source.direct(Quest, "firstCompleteAcquireActions"))
-          )
-        );
-    })
-);
+          ),
+}),
+    ],
+  },
+});
 
-const QuestGroupModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.quest.QuestGroupModel)
-    .mountLocal(QuestCollection)
-    .bindings({
+const QuestGroupModel = defineMasterDataResource({
+  model: GS2.quest.QuestGroupModel,
+  mount: QuestCollection,
+  bindings: {
       name: Bind.domainProperty(Source.direct(QuestCollection, "id")),
-    })
-    .grnFieldMount("challengePeriodEventId", schedule.resourceId("schedule.Namespace"), [
+    },
+  grnFieldMounts: [
+    { parameterName: "challengePeriodEventId", mountedResource: schedule.resourceId("schedule.Namespace"), keyMappings: [
       { grnKeyName: "namespaceName", sourceKeyName: "namespaceName" },
-    ])
-    .grnKeyBinding(
-      "challengePeriodEventId",
-      "eventName",
-      Bind.domainProperty(Source.direct(QuestCollection, "schedule"))
-    )
-    .addArrayChild("quests", QuestModel)
-);
+    ] },
+  ],
+  grnKeyBindings: [
+    { parameterName: "challengePeriodEventId", keyName: "eventName", directive: Bind.domainProperty(Source.direct(QuestCollection, "schedule")) },
+  ],
+  arrayChildren: {
+    quests: [
+      QuestModel,
+    ],
+  },
+});
 
 const QUEST_MODEL_GRN_FORMAT =
   "grn:gs2:{region}:{ownerId}:quest:{namespaceName}:group:{questGroupName}:quest:{questName}";
 
-/** Skip the progress GRN because the single-entry row keeps a fixed identity even when the current run changes. */
-const ProgressResource = defineUserDataResource(resource =>
-  resource
-    .model(GS2.quest.Progress)
-    .mountLocal(Progress)
-    .linkedMasterResourceId(QuestModel)
-    .existenceProperty("inProgress")
-    .bindings({
+const ProgressResource = defineUserDataResource({
+  model: GS2.quest.Progress,
+  mount: Progress,
+  linkedMaster: QuestModel,
+  existenceProperty: "inProgress",
+  bindings: {
       progressId: Bind.skip(),
       randomSeed: Bind.skip(),
       transactionId: Bind.skip(),
       userId: Bind.skip(),
-    })
-    .grnRefBinding("questModelId", QUEST_MODEL_GRN_FORMAT, [
-      { extractedKeyName: "questName", target: Quest, targetKeyPropertyName: "id" },
-      {
-        extractedKeyName: "questGroupName",
-        target: QuestCollection,
-        targetKeyPropertyName: "id",
-      },
-    ])
-    .modelArrayDecodeBinding("rewards", Progress, "rewards", [
-      { fieldName: "itemId", targetPropertyName: "itemId" },
-      { fieldName: "value", targetPropertyName: "value" },
-    ])
-);
+    },
+  grnRefBindings: [
+    { parameterName: "questModelId", grnFormat: QUEST_MODEL_GRN_FORMAT, keyMappings: [{ extractedKeyName: "questName", target: Quest, targetKeyProperty: "id" }, { extractedKeyName: "questGroupName", target: QuestCollection, targetKeyProperty: "id" }] },
+  ],
+  modelArrayDecodeBindings: [
+    { parameterName: "rewards", target: Progress, targetListProperty: "rewards", fieldMappings: [{ fieldName: "itemId", targetProperty: "itemId" }, { fieldName: "value", targetProperty: "value" }] },
+  ],
+});
 
-export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.1")
-  .display({
+export const microEconomyQuest = definePackage({
+  id: "micro-economy-quest",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "クエスト",
       description: "プレイヤーが進めるクエストと、その進行状況・クリア報酬を管理します。",
@@ -257,90 +294,41 @@ export const microEconomyQuest = definePackage("micro-economy-quest", "0.0.1")
       label: "Quests",
       description: "Manages quests players take on, their progress and their clear rewards.",
     },
-  })
-  .displayType(ProgressReward, {
-    ja: {
-      label: "クエスト報酬",
-      description: "進行中のクエストをクリアしたときに付与される報酬です。",
-    },
-    en: {
-      label: "Quest reward",
-      description: "A reward the quest in progress grants when it is completed.",
-    },
-  })
-  .displayType(Progress, {
-    ja: {
-      label: "クエスト進行",
-      description: "プレイヤーが進行中のクエストと、クリア時に付与される報酬を管理します。",
-    },
-    en: {
-      label: "Quest progress",
-      description:
-        "Tracks the quest a player has in progress and the rewards completing it grants.",
-    },
-  })
-  .displayType(QuestCollection, {
-    ja: {
-      label: "クエストグループ",
-      description: "関連するクエストをまとめ、開催スケジュールを設定します。",
-    },
-    en: {
-      label: "Quest group",
-      description: "Groups related quests and sets the schedule they are available on.",
-    },
-  })
-  .displayType(Quest, {
-    ja: {
-      label: "クエスト",
-      description: "開始時の消費、初回・通常クリア報酬、失敗時アクションを設定します。",
-    },
-    en: {
-      label: "Quest",
-      description:
-        "Defines start costs, first-clear and repeat-clear rewards, and failure actions.",
-    },
-  })
-  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  .domainType(ProgressReward)
-  .domainType(Progress)
-  .domainType(QuestCollection)
-  .domainType(Quest)
-
-  .masterDataResource(r =>
-    r
-      .model(GS2.quest.Namespace)
-      .bindings({
+  },
+  dependencies: {
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [ProgressReward, Progress, QuestCollection, Quest],
+  delegatedActions: [
+    { target: Quest, methodName: "Start", action: { targetActionKey: "Gs2Quest:QuestModel.Start", targetResource: QuestModel, parameterOverrides: [{ parameterName: "force", source: { kind: "static", value: false } }] } },
+    { target: Progress, methodName: "Complete", action: { targetActionKey: "Gs2Quest:Progress.End", targetResource: ProgressResource, parameterOverrides: [{ parameterName: "isComplete", source: { kind: "static", value: true } }] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.quest.Namespace,
+  bindings: {
         name: Bind.static("Quest"),
         ...Bind.nulls("startQuestScript", "completeQuestScript", "failedQuestScript", "logSetting"),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(QuestGroupModel)
-  )
-
-  .userDataResource(r =>
-    r
-      .model(GS2.quest.CompletedQuestList)
-      .linkedMasterResourceId(QuestGroupModel)
-      .bindings({
+      },
+  children: [
+    QuestGroupModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    defineUserDataResource({
+  model: GS2.quest.CompletedQuestList,
+  linkedMaster: QuestGroupModel,
+  bindings: {
         completedQuestListId: Bind.skip(),
         questGroupName: Bind.skip(),
         userId: Bind.skip(),
-      })
-      .arrayMembershipMapping("completeQuestNames", Quest, "id", "completed")
-  )
-
-  .userDataResource(ProgressResource)
-
-  // Keep force false so starting cannot discard an unfinished run and spend its start cost again.
-  .delegatedAction(Quest, "Start", {
-    targetActionKey: "Gs2Quest:QuestModel.Start",
-    targetResource: QuestModel,
-    parameterOverrides: [{ parameterName: "force", source: { kind: "static", value: false } }],
-  })
-  // Leave rewards unspecified so completion uses the rewards drawn when the run started.
-  .delegatedAction(Progress, "Complete", {
-    targetActionKey: "Gs2Quest:Progress.End",
-    targetResource: ProgressResource,
-    parameterOverrides: [{ parameterName: "isComplete", source: { kind: "static", value: true } }],
-  })
-  .build();
+      },
+  arrayMembershipMappings: [
+    { parameterName: "completeQuestNames", child: Quest, targetKeyProperty: "id", targetProperty: "completed" },
+  ],
+}),
+    ProgressResource,
+  ],
+});

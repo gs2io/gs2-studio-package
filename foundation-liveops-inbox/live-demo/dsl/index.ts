@@ -5,20 +5,27 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
   dependencyPackage,
+  instance,
   PT,
   Source,
   transactionSettingV2,
   UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../../dsl/jaEnField";
 
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
+
 import inboxSurface from "../../dsl/dependency-surface.json";
 
 const inbox = dependencyPackage(inboxSurface);
+
 const currency = dependencyPackage(currencySurface);
 
 const GlobalMessage = inbox.type("GlobalMessage");
@@ -31,13 +38,13 @@ const WALLET_SLOT = 0;
 
 const GIFT_AMOUNT = 100;
 
-/** Use a separate gift type so every gift has an amount while plain announcements need no reward. */
-const Gift = defineDomainType("Gift", domainType =>
-  domainType
-    .singleEntry()
-    .property(PT.string("payload").masterData().required())
-    .property(PT.int32("amount").masterData().required())
-    .localizedProperties({
+const Gift = defineDomainType("Gift", {
+  singleEntry: true,
+  properties: {
+    payload: PT.string().masterData().required(),
+    amount: PT.int32().masterData().required(),
+  },
+  localizedProperties: {
       id: jaEnId("贈り物", "gift"),
       payload: jaEnField(
         "メッセージ内容",
@@ -52,20 +59,19 @@ const Gift = defineDomainType("Gift", domainType =>
         "Coins received when the message is opened.",
         { ja: "通貨", en: "currency" }
       ),
-    })
-);
+    },
+});
 
-const DeliverRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(GlobalMessage)
-    .bindings({ name: Bind.domainProperty(Source.direct(GlobalMessage, "id")) })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(GlobalMessage)
-        .actionProgram(
-          ActionProgram.transform(inbox.packageId, inbox.transformId("SendMessage"), [
+const DeliverRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: GlobalMessage,
+  bindings: { name: Bind.domainProperty(Source.direct(GlobalMessage, "id")) },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: GlobalMessage,
+  actionProgram: ActionProgram.transform(inbox.packageId, inbox.transformId("SendMessage"), [
             Arg.domainProperty(
               "metadata",
               Source.parent(
@@ -73,23 +79,22 @@ const DeliverRateModel = defineMasterDataResource(resource =>
               )
             ),
             Arg.static("expireDays", EXPIRE_DAYS),
-          ])
-        );
-    })
-);
+          ]),
+}),
+    ],
+  },
+});
 
-/** Reuse the currency deposit transform so gift rewards resolve the same namespace and player as ordinary deposits. */
-const GiftRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(Gift)
-    .bindings({ name: Bind.domainProperty(Source.direct(Gift, "id")) })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(Gift)
-        .actionProgram(
-          ActionProgram.transform(inbox.packageId, inbox.transformId("SendMessageWithReward"), [
+const GiftRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: Gift,
+  bindings: { name: Bind.domainProperty(Source.direct(Gift, "id")) },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: Gift,
+  actionProgram: ActionProgram.transform(inbox.packageId, inbox.transformId("SendMessageWithReward"), [
             Arg.domainProperty("metadata", Source.parent(Source.direct(Gift, "payload"))),
             Arg.static("expireDays", EXPIRE_DAYS),
             Arg.actionTransformRef(
@@ -101,13 +106,16 @@ const GiftRateModel = defineMasterDataResource(resource =>
                 Arg.domainProperty("count", Source.parent(Source.direct(Gift, "amount"))),
               ]
             ),
-          ])
-        );
-    })
-);
+          ]),
+}),
+    ],
+  },
+});
 
-export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbox-demo", "0.0.1")
-  .display({
+export const foundationLiveopsInboxDemo = definePackage({
+  id: "foundation-liveops-inbox-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "お知らせ・受信箱（デモデータ）",
       description: "ライブデモ用のお知らせと、それを自分の受信箱へ届ける操作を提供します。",
@@ -117,30 +125,33 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
       description:
         "Supplies the announcement used by the live demo, and the press that delivers it to your own inbox.",
     },
-  })
-  .dependency(inbox.packageId, "github:gs2io/gs2-studio-package")
-  .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-  // Reuse the currency demo content so every dependent demo deploys the same wallet and store products.
-  .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
-  .domainType(Gift)
-
-  // Keep the required reception window wide enough for long-lived demo deployments.
-  .instance(GlobalMessage, "welcome", {
+  },
+  dependencies: {
+    [inbox.packageId]: "github:gs2io/gs2-studio-package",
+    [currency.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [Gift],
+  instances: [
+    instance(GlobalMessage, "welcome", {
     [inbox.propertyId("GlobalMessage", "payload")]: "Welcome to the GS2 inbox demo!",
     [inbox.propertyId("GlobalMessage", "begin")]: "2026-09-10T18:22:42.011Z",
     [inbox.propertyId("GlobalMessage", "end")]: "2031-01-01T00:00:00.000Z",
-  })
-
-  .instance("Gift", "gift", {
+  }),
+    instance(Gift, "gift", {
     payload: `A gift from the operator: ${GIFT_AMOUNT} coins.`,
     amount: GIFT_AMOUNT,
-  })
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+  }),
+  ],
+  delegatedActions: [
+    { target: Gift, methodName: "Deliver", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: GiftRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+    { target: GlobalMessage, methodName: "Deliver", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: DeliverRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("InboxDeliver"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -150,14 +161,14 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
         ),
         // Auto-run delivers the message without a second client request to execute the transaction.
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(DeliverRateModel)
-  )
-
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings({
+      },
+  children: [
+    DeliverRateModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: {
         name: Bind.static("InboxGift"),
         ...Bind.nulls(
           "acquireAwaitScript",
@@ -166,43 +177,32 @@ export const foundationLiveopsInboxDemo = definePackage("foundation-liveops-inbo
           "logSetting"
         ),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(GiftRateModel)
-  )
-
-  .uiComponent(GlobalMessage, ui =>
-    ui.buttonAction("DeliverButton", "Deliver", undefined, { name: "GlobalMessage" })
-  )
-
-  .uiComponent(Message, ui =>
-    ui
-      .buttonAction("OpenButton", "Read", undefined, { name: "Message" })
-      .templateLabel("OpenedLabel", "Opened.", {}, { name: "Message" })
-      // Hide the opened note while unread; the feature toggle separately hides the Open button after reading.
-      .activeToggle("UnreadActiveToggle", UiCond.not(UiCond.truthy(ui.prop("isRead"))), {
+      },
+  children: [
+    GiftRateModel,
+  ],
+}),
+  ],
+  uiComponents: [
+    defineUiComponent(GlobalMessage, {
+  items: [
+    UiItem.buttonAction("DeliverButton", "Deliver", undefined, { name: "GlobalMessage" }),
+  ],
+}),
+    defineUiComponent(Message, {
+  items: [
+    UiItem.buttonAction("OpenButton", "Read", undefined, { name: "Message" }),
+    UiItem.templateLabel("OpenedLabel", "Opened.", {}, { name: "Message" }),
+    UiItem.activeToggle("UnreadActiveToggle", UiCond.not(UiCond.truthy(UiSource.prop("isRead"))), {
         name: "Message",
-      })
-  )
-
-  .uiComponent(Gift, ui =>
-    ui
-      .templateLabel(
-        "AmountLabel",
-        "Carries {amount} coins.",
-        { amount: ui.prop("amount") },
-        { name: "Gift" }
-      )
-      .buttonAction("DeliverButton", "Deliver", undefined, { name: "Gift" })
-  )
-
-  .delegatedAction(Gift, "Deliver", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: GiftRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .delegatedAction(GlobalMessage, "Deliver", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: DeliverRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .build();
+      }),
+  ],
+}),
+    defineUiComponent(Gift, {
+  items: [
+    UiItem.templateLabel("AmountLabel", "Carries {amount} coins.", { amount: UiSource.prop("amount") }, { name: "Gift" }),
+    UiItem.buttonAction("DeliverButton", "Deliver", undefined, { name: "Gift" }),
+  ],
+}),
+  ],
+});

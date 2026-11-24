@@ -6,22 +6,33 @@ import {
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
+  defineUiComponent,
   dependencyPackage,
+  instance,
   PT,
   Source,
   transactionSettingV2,
+  UiItem,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+
 import rankingSurface from "../../dsl/dependency-surface.json";
+
 import scheduleDemoSurface from "../../../foundation-economy-schedule/live-demo/dsl/dependency-surface.json";
+
 import scheduleSurface from "../../../foundation-economy-schedule/dsl/dependency-surface.json";
+
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
 
 const ranking = dependencyPackage(rankingSurface);
+
 const schedule = dependencyPackage(scheduleSurface);
+
 const scheduleDemo = dependencyPackage(scheduleDemoSurface);
+
 const currency = dependencyPackage(currencySurface);
 
 const Ranking = ranking.type("Ranking");
@@ -43,7 +54,6 @@ const TIERS = [
   { thresholdRank: 1001, coins: 30 },
 ] as const;
 
-/** Derive the rule and deployed rewards from the same tier table so their numbers cannot drift. */
 const TIER_SUMMARY = TIERS.map(({ thresholdRank, coins }, index) => {
   if (thresholdRank === 1001) return `anyone else who played ${coins}`;
   const from = index === 0 ? 1 : TIERS[index - 1].thresholdRank + 1;
@@ -67,28 +77,27 @@ function ordinal(rank: number): string {
   }
 }
 
-const RankingReward = defineOverlayDomainType(
-  "RankingReward",
-  {
-    ...ranking.overlay("RankingReward"),
-    actionPropertyTransforms: [
-      {
-        targetProperty: ranking.propertyId("RankingReward", "acquireActions"),
-        mode: "append",
-        transformPackageId: currency.packageId,
-        transformId: currency.transformId("DepositFreeCurrency"),
-        arguments: [
+const RankingReward = defineOverlayDomainType("RankingReward", ranking.overlay("RankingReward"), {
+  properties: {
+    coins: PT.int32().masterData().required(),
+  },
+  actionPropertyTransforms: [
+    { targetProperty: ranking.propertyId("RankingReward", "acquireActions"), mode: "append", transformPackageId: currency.packageId, transformId: currency.transformId("DepositFreeCurrency"), arguments: [
           { parameterName: "slot", source: { kind: "static", value: WALLET_SLOT } },
           {
             parameterName: "count",
             source: { kind: "domainProperty", propertyName: "coins" },
           },
-        ],
-      },
-    ],
+        ] },
+  ],
+  localizedDisplay: {
+    ja: { label: "ランキング報酬", description: "デモのランキング報酬に、報酬コインを足します。" },
+    en: {
+      label: "Ranking reward",
+      description: "Adds the coins it pays to a demo ranking reward tier.",
+    },
   },
-  domainType =>
-    domainType.property(PT.int32("coins").masterData().required()).localizedProperties({
+  localizedProperties: {
       coins: jaEnField(
         "報酬コイン",
         "Reward coins",
@@ -96,55 +105,58 @@ const RankingReward = defineOverlayDomainType(
         "Coins paid when this tier's reward is received.",
         { ja: "通貨", en: "currency" }
       ),
-    })
-);
+    },
+});
 
-/** Separate the visitor-owned contest window from the ranking shared by all visitors. */
-const RankingContest = defineDomainType("RankingContest", dt =>
-  dt.singleEntry().localizedProperties({
+const RankingContest = defineDomainType("RankingContest", {
+  singleEntry: true,
+  localizedDisplay: {
+    ja: { label: "コンテスト", description: "コンテストの開始・終了の操作と説明です。" },
+    en: { label: "Contest", description: "The contest's start and finish presses and its rule." },
+  },
+  localizedProperties: {
     id: {
       ja: { label: "コンテスト", description: "ランキングに参加できる数分間の枠です。" },
       en: { label: "Contest", description: "The few minutes in which a visitor can score." },
     },
-  })
-);
+  },
+});
 
-const StartRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(RankingContest)
-    .bindings({ name: Bind.domainProperty(Source.direct(RankingContest, "id")) })
-    .addArrayChild("acquireActions", acquireAction => {
-      acquireAction
-        .model(GS2.transaction.AcquireAction)
-        .mountLocal(RankingContest)
-        .actionProgram(
-          ActionProgram.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
+const StartRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: RankingContest,
+  bindings: { name: Bind.domainProperty(Source.direct(RankingContest, "id")) },
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: RankingContest,
+  actionProgram: ActionProgram.transform(schedule.packageId, schedule.transformId("PullTrigger"), [
             Arg.static("trigger", CONTEST_TRIGGER),
             Arg.static("ttlSeconds", CONTEST_SECONDS),
-          ])
-        );
-    })
-);
+          ]),
+}),
+    ],
+  },
+});
 
-const FinishRateModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.exchange.RateModel)
-    .mountLocal(RankingContest)
-    .bindings({ name: Bind.domainProperty(Source.direct(RankingContest, "id")) })
-    .addArrayChild("consumeActions", consumeAction => {
-      consumeAction
-        .model(GS2.transaction.ConsumeAction)
-        .mountLocal(RankingContest)
-        .actionProgram(
-          ActionProgram.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
+const FinishRateModel = defineMasterDataResource({
+  model: GS2.exchange.RateModel,
+  mount: RankingContest,
+  bindings: { name: Bind.domainProperty(Source.direct(RankingContest, "id")) },
+  arrayChildren: {
+    consumeActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.ConsumeAction,
+  mount: RankingContest,
+  actionProgram: ActionProgram.transform(schedule.packageId, schedule.transformId("ClearTrigger"), [
             Arg.static("trigger", CONTEST_TRIGGER),
-          ])
-        );
-    })
-);
+          ]),
+}),
+    ],
+  },
+});
 
-/** Separate namespaces because both contest operations derive the same rate name. */
 function contestExchange(name: string) {
   return {
     name: Bind.static(name),
@@ -159,8 +171,10 @@ function contestExchange(name: string) {
   };
 }
 
-const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.1")
-  .display({
+export const microLiveopsRankingDemo = definePackage({
+  id: "micro-liveops-ranking-demo",
+  version: "0.0.1",
+  display: {
     ja: {
       label: "ランキング（デモデータ）",
       description:
@@ -171,87 +185,61 @@ const withRanking = definePackage("micro-liveops-ranking-demo", "0.0.1")
       description:
         "Supplies the live demo's shared ranking, the coins each reward tier pays, and the presses that start and finish a contest. The rewards land in the currency package's wallet.",
     },
-  })
-  .displayType(RankingReward, {
-    ja: { label: "ランキング報酬", description: "デモのランキング報酬に、報酬コインを足します。" },
-    en: {
-      label: "Ranking reward",
-      description: "Adds the coins it pays to a demo ranking reward tier.",
-    },
-  })
-  .displayType(RankingContest, {
-    ja: { label: "コンテスト", description: "コンテストの開始・終了の操作と説明です。" },
-    en: { label: "Contest", description: "The contest's start and finish presses and its rule." },
-  })
-  .dependency(ranking.packageId, "github:gs2io/gs2-studio-package")
-  .dependency(schedule.packageId, "github:gs2io/gs2-studio-package")
-  // Reuse the shared schedule content so the contest event stays identical across demo deployments.
-  .dependency(scheduleDemo.packageId, "github:gs2io/gs2-studio-package")
-  // Reuse the currency demo content so the wallet and store products stay identical across demos.
-  .dependency(currency.packageId, "github:gs2io/gs2-studio-package")
-  .dependency("foundation-economy-currency-demo", "github:gs2io/gs2-studio-package")
-  .dependency("micro-shop-currency", "github:gs2io/gs2-studio-package")
-
-  .domainType(RankingReward)
-  .domainType(RankingContest)
-
-  .instance(Ranking, CONTEST, {
+  },
+  dependencies: {
+    [ranking.packageId]: "github:gs2io/gs2-studio-package",
+    [schedule.packageId]: "github:gs2io/gs2-studio-package",
+    [scheduleDemo.packageId]: "github:gs2io/gs2-studio-package",
+    [currency.packageId]: "github:gs2io/gs2-studio-package",
+    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
+    "micro-shop-currency": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [RankingReward, RankingContest],
+  instances: [
+    instance(Ranking, CONTEST, {
     [ranking.propertyId("Ranking", "orderDirection")]: "desc",
     [ranking.propertyId("Ranking", "sum")]: false,
     [ranking.propertyId("Ranking", "minimumValue")]: 1,
     [ranking.propertyId("Ranking", "maximumValue")]: MAXIMUM_SCORE,
     [ranking.propertyId("Ranking", "schedule")]: CONTEST_TRIGGER,
-  })
-  .instance(RankingContest, "rankingcontest", {});
-
-// Use the local overlay name for its coins property; keep the required acquire slot empty for the appended deposit.
-const withTiers = TIERS.reduce(
-  (builder, { thresholdRank, coins }) =>
-    // Match the composite key order expected by the reward model so these authored ids identify the same tiers.
-    builder.instance(RankingReward.typeName, `${thresholdRank}.${CONTEST}`, {
+  }),
+    instance(RankingContest, "rankingcontest", {}),
+    ...TIERS.map(({ thresholdRank, coins }) => instance(RankingReward, `${thresholdRank}.${CONTEST}`, {
       [ranking.propertyId("RankingReward", "ranking")]: CONTEST,
       [ranking.propertyId("RankingReward", "thresholdRank")]: thresholdRank,
       [ranking.propertyId("RankingReward", "acquireActions")]: [],
       coins,
-    }),
-  withRanking
-);
-
-export const microLiveopsRankingDemo = withTiers
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings(contestExchange("RankingContestStart"))
-      .addChild(StartRateModel)
-  )
-  .masterDataResource(resource =>
-    resource
-      .model(GS2.exchange.Namespace)
-      .bindings(contestExchange("RankingContestFinish"))
-      .addChild(FinishRateModel)
-  )
-
-  .uiComponent(RankingContest, ui =>
-    ui
-      .templateLabel(
-        "RuleLabel",
-        `Start a contest to get ${CONTEST_SECONDS / 60} minutes to play. Each play scores 1 to ${MAXIMUM_SCORE}, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: ${TIER_SUMMARY}. You receive once, for the rank you hold at that moment.`,
-        {},
-        { name: "RankingContest" }
-      )
-      .buttonAction("StartContestButton", "StartContest", undefined, { name: "RankingContest" })
-      .buttonAction("FinishContestButton", "FinishContest", undefined, {
+    })),
+  ],
+  delegatedActions: [
+    { target: RankingContest, methodName: "StartContest", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: StartRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+    { target: RankingContest, methodName: "FinishContest", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: FinishRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: contestExchange("RankingContestStart"),
+  children: [
+    StartRateModel,
+  ],
+}),
+    defineMasterDataResource({
+  model: GS2.exchange.Namespace,
+  bindings: contestExchange("RankingContestFinish"),
+  children: [
+    FinishRateModel,
+  ],
+}),
+  ],
+  uiComponents: [
+    defineUiComponent(RankingContest, {
+  items: [
+    UiItem.templateLabel("RuleLabel", `Start a contest to get ${CONTEST_SECONDS / 60} minutes to play. Each play scores 1 to ${MAXIMUM_SCORE}, and your best counts on the board every visitor shares. Once your contest is over, receive coins by your rank: ${TIER_SUMMARY}. You receive once, for the rank you hold at that moment.`, {}, { name: "RankingContest" }),
+    UiItem.buttonAction("StartContestButton", "StartContest", undefined, { name: "RankingContest" }),
+    UiItem.buttonAction("FinishContestButton", "FinishContest", undefined, {
         name: "RankingContest",
-      })
-  )
-  .delegatedAction(RankingContest, "StartContest", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: StartRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .delegatedAction(RankingContest, "FinishContest", {
-    targetActionKey: "Gs2Exchange:RateModel.Exchange",
-    targetResource: FinishRateModel,
-    parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }],
-  })
-  .build();
+      }),
+  ],
+}),
+  ],
+});

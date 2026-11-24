@@ -2,16 +2,19 @@ import {
   ActionProgram,
   Bind,
   Cond,
+  defineActionTransform,
   defineDomainType,
   defineMasterDataResource,
   defineOverlayDomainType,
   definePackage,
   defineUserDataResource,
   dependencyPackage,
+  OutputMap,
   PT,
   Source,
   transactionSettingV2,
 } from "gs2-studio-dsl";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../dsl/jaEnField";
@@ -20,29 +23,28 @@ import scheduleSurface from "../../foundation-economy-schedule/dsl/dependency-su
 
 const schedule = dependencyPackage(scheduleSurface);
 
-// Receive status belongs to the bonus group, so claim actions must not be attached to individual reward rows.
-const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
-  dt
-    .property(PT.prop("mode", PT.enum("schedule", "streaming")).masterData().required())
-    .property(
-      PT.prop("schedule", PT.ref("Schedule"))
-        .assetDelivery()
-        .requiredWhen(Cond.eq("mode", "schedule"))
-    )
-    .property(PT.int32("resetHour").masterData().requiredWhen(Cond.eq("mode", "streaming")))
-    .property(
-      PT.prop("repeat", PT.enum("enabled", "disabled"))
-        .masterData()
-        .requiredWhen(Cond.eq("mode", "streaming"))
-    )
-    .property(PT.prop("missedReceiveRelief", PT.enum("enabled", "disabled")).masterData())
-    // Do not require consumption actions when relief is enabled: an empty list represents free relief.
-    .property(
-      PT.prop("missedReceiveReliefConsumeActions", PT.listOf(PT.consumeAction())).masterData()
-    )
-    .property(PT.prop("receivedSteps", PT.listOf(PT.bool())).userData())
-    .property(PT.timestamp("lastReceivedAt").userData())
-    .localizedProperties({
+const LoginRewardCollection = defineDomainType("LoginRewardCollection", {
+  properties: {
+    mode: PT.enum("schedule", "streaming").masterData().required(),
+    schedule: PT.ref(() => Schedule).assetDelivery().requiredWhen(Cond.eq("mode", "schedule")),
+    resetHour: PT.int32().masterData().requiredWhen(Cond.eq("mode", "streaming")),
+    repeat: PT.enum("enabled", "disabled").masterData().requiredWhen(Cond.eq("mode", "streaming")),
+    missedReceiveRelief: PT.enum("enabled", "disabled").masterData(),
+    missedReceiveReliefConsumeActions: PT.listOf(PT.consumeAction()).masterData(),
+    receivedSteps: PT.listOf(PT.bool()).userData(),
+    lastReceivedAt: PT.timestamp().userData(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ログインボーナスグループ",
+      description: "ログインボーナスをまとめるグループと開催スケジュールを設定します。",
+    },
+    en: {
+      label: "Login reward group",
+      description: "Groups login rewards and associates them with an availability schedule.",
+    },
+  },
+  localizedProperties: {
       id: jaEnId("ログインボーナスグループ", "login reward group"),
       mode: jaEnField(
         "進行モード",
@@ -93,16 +95,22 @@ const LoginRewardCollection = defineDomainType("LoginRewardCollection", dt =>
         "プレイヤーが最後に報酬を受け取った日時です。",
         "When the player last claimed a reward."
       ),
-    })
-);
+    },
+});
 
-const LoginReward = defineDomainType("LoginReward", dt =>
-  dt
-    .property(
-      PT.prop("loginRewardCollection", PT.ref("LoginRewardCollection")).assetDelivery().required()
-    )
-    .property(PT.prop("acquireActions", PT.listOf(PT.acquireAction())).masterData().required())
-    .localizedProperties({
+const LoginReward = defineDomainType("LoginReward", {
+  properties: {
+    loginRewardCollection: PT.ref(LoginRewardCollection).assetDelivery().required(),
+    acquireActions: PT.listOf(PT.acquireAction()).masterData().required(),
+  },
+  localizedDisplay: {
+    ja: {
+      label: "ログインボーナス",
+      description: "ログイン日数ごとに付与する報酬内容を設定します。",
+    },
+    en: { label: "Login reward", description: "Defines the rewards granted for each login day." },
+  },
+  localizedProperties: {
       id: jaEnId("ログインボーナス", "login reward"),
       loginRewardCollection: jaEnField(
         "ボーナスグループ",
@@ -116,101 +124,11 @@ const LoginReward = defineDomainType("LoginReward", dt =>
         "このログイン段階で実行する報酬アクションです。",
         "Reward actions executed for this login step."
       ),
-    })
-);
+    },
+});
 
-const Schedule = defineOverlayDomainType("Schedule", schedule.overlay("Schedule"));
-
-const BonusModel = defineMasterDataResource(resource =>
-  resource
-    .model(GS2.loginReward.BonusModel)
-    .mountLocal(LoginRewardCollection)
-    .bindings({
-      mode: Bind.domainProperty(Source.direct(LoginRewardCollection, "mode")),
-      repeat: Bind.domainProperty(Source.direct(LoginRewardCollection, "repeat")),
-      missedReceiveRelief: Bind.domainProperty(
-        Source.direct(LoginRewardCollection, "missedReceiveRelief")
-      ),
-      name: Bind.domainProperty(Source.direct(LoginRewardCollection, "id")),
-      resetHour: Bind.domainProperty(Source.direct(LoginRewardCollection, "resetHour")),
-    })
-    .grnKeyBinding("periodEventId", "namespaceName", Bind.static("Schedule"))
-    .grnKeyBinding(
-      "periodEventId",
-      "eventName",
-      Bind.domainProperty(Source.direct(LoginRewardCollection, "schedule"))
-    )
-    .addArrayChild("rewards", reward => {
-      reward
-        .model(GS2.loginReward.Reward)
-        .mountLocal(LoginReward)
-        .bindings({})
-        .addArrayChild("acquireActions", acquireAction => {
-          acquireAction
-            .model(GS2.transaction.AcquireAction)
-            .mountLocal(LoginReward)
-            .actionProgram(
-              ActionProgram.domainProperty(
-                Source.parent(Source.direct(LoginReward, "acquireActions"))
-              )
-            );
-        });
-    })
-    .addArrayChild("missedReceiveReliefConsumeActions", consumeAction => {
-      consumeAction
-        .model(GS2.transaction.ConsumeAction)
-        .mountLocal(LoginRewardCollection)
-        .actionProgram(
-          ActionProgram.domainProperty(
-            Source.parent(Source.direct(LoginRewardCollection, "missedReceiveReliefConsumeActions"))
-          )
-        );
-    })
-);
-
-const ReceiveStatus = defineUserDataResource(resource =>
-  resource
-    .model(GS2.loginReward.ReceiveStatus)
-    .mountLocal(LoginRewardCollection)
-    .linkedMasterResourceId(BonusModel)
-    .bindings({
-      bonusModelName: Bind.domainProperty(Source.direct(LoginRewardCollection, "id")),
-      receiveStatusId: Bind.skip(),
-      lastReceivedAt: Bind.domainProperty(Source.direct(LoginRewardCollection, "lastReceivedAt")),
-      receivedSteps: Bind.domainProperties([Source.direct(LoginRewardCollection, "receivedSteps")]),
-      userId: Bind.skip(),
-    })
-);
-
-export const microEconomyLoginReward = definePackage("micro-economy-login-reward", "0.0.1")
-  .display({
-    ja: {
-      label: "ログインボーナス",
-      description: "毎日・連続ログインなどに応じて報酬を配布します。",
-    },
-    en: {
-      label: "Login Rewards",
-      description: "Grants rewards for daily or consecutive-day logins.",
-    },
-  })
-  .displayType(LoginRewardCollection, {
-    ja: {
-      label: "ログインボーナスグループ",
-      description: "ログインボーナスをまとめるグループと開催スケジュールを設定します。",
-    },
-    en: {
-      label: "Login reward group",
-      description: "Groups login rewards and associates them with an availability schedule.",
-    },
-  })
-  .displayType(LoginReward, {
-    ja: {
-      label: "ログインボーナス",
-      description: "ログイン日数ごとに付与する報酬内容を設定します。",
-    },
-    en: { label: "Login reward", description: "Defines the rewards granted for each login day." },
-  })
-  .displayType(Schedule, {
+const Schedule = defineOverlayDomainType("Schedule", schedule.overlay("Schedule"), {
+  localizedDisplay: {
     ja: {
       label: "スケジュール",
       description: "ログインボーナスを利用できる開催期間を参照します。",
@@ -219,43 +137,125 @@ export const microEconomyLoginReward = definePackage("micro-economy-login-reward
       label: "Schedule",
       description: "References the period during which a login reward campaign is available.",
     },
-  })
-  .dependency("foundation-economy-schedule", "github:gs2io/gs2-studio-package")
-  .domainType(LoginRewardCollection)
-  .domainType(LoginReward)
-  .domainType(Schedule)
-  .masterDataResource(r =>
-    r
-      .model(GS2.loginReward.Namespace)
-      .bindings({
+  },
+});
+
+const BonusModel = defineMasterDataResource({
+  model: GS2.loginReward.BonusModel,
+  mount: LoginRewardCollection,
+  bindings: {
+      mode: Bind.domainProperty(Source.direct(LoginRewardCollection, "mode")),
+      repeat: Bind.domainProperty(Source.direct(LoginRewardCollection, "repeat")),
+      missedReceiveRelief: Bind.domainProperty(
+        Source.direct(LoginRewardCollection, "missedReceiveRelief")
+      ),
+      name: Bind.domainProperty(Source.direct(LoginRewardCollection, "id")),
+      resetHour: Bind.domainProperty(Source.direct(LoginRewardCollection, "resetHour")),
+    },
+  grnKeyBindings: [
+    { parameterName: "periodEventId", keyName: "namespaceName", directive: Bind.static("Schedule") },
+    { parameterName: "periodEventId", keyName: "eventName", directive: Bind.domainProperty(Source.direct(LoginRewardCollection, "schedule")) },
+  ],
+  arrayChildren: {
+    rewards: [
+      defineMasterDataResource({
+  model: GS2.loginReward.Reward,
+  mount: LoginReward,
+  bindings: {},
+  arrayChildren: {
+    acquireActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.AcquireAction,
+  mount: LoginReward,
+  actionProgram: ActionProgram.domainProperty(
+                Source.parent(Source.direct(LoginReward, "acquireActions"))
+              ),
+}),
+    ],
+  },
+}),
+    ],
+    missedReceiveReliefConsumeActions: [
+      defineMasterDataResource({
+  model: GS2.transaction.ConsumeAction,
+  mount: LoginRewardCollection,
+  actionProgram: ActionProgram.domainProperty(
+            Source.parent(Source.direct(LoginRewardCollection, "missedReceiveReliefConsumeActions"))
+          ),
+}),
+    ],
+  },
+});
+
+const ReceiveStatus = defineUserDataResource({
+  model: GS2.loginReward.ReceiveStatus,
+  mount: LoginRewardCollection,
+  linkedMaster: BonusModel,
+  bindings: {
+      bonusModelName: Bind.domainProperty(Source.direct(LoginRewardCollection, "id")),
+      receiveStatusId: Bind.skip(),
+      lastReceivedAt: Bind.domainProperty(Source.direct(LoginRewardCollection, "lastReceivedAt")),
+      receivedSteps: Bind.domainProperties([Source.direct(LoginRewardCollection, "receivedSteps")]),
+      userId: Bind.skip(),
+    },
+});
+
+const ResetReceiveStatusTransform = defineActionTransform("ResetReceiveStatus", {
+  category: "acquire",
+  parameters: {
+    loginRewardCollection: { type: PT.ref(LoginRewardCollection) },
+  },
+  outputs: [
+    {
+    kind: "direct",
+    actionName: "Gs2LoginReward:DeleteReceiveStatusByUserId",
+    resource: () => BonusModel,
+    parameterMappings: {
+      namespaceName: OutputMap.resourceKey(),
+      bonusModelName: OutputMap.parameter("loginRewardCollection"),
+      userId: OutputMap.placeholder("#{userId}"),
+    },
+  },
+  ],
+});
+
+export const microEconomyLoginReward = definePackage({
+  id: "micro-economy-login-reward",
+  version: "0.0.1",
+  display: {
+    ja: {
+      label: "ログインボーナス",
+      description: "毎日・連続ログインなどに応じて報酬を配布します。",
+    },
+    en: {
+      label: "Login Rewards",
+      description: "Grants rewards for daily or consecutive-day logins.",
+    },
+  },
+  dependencies: {
+    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
+  },
+  domainTypes: [LoginRewardCollection, LoginReward, Schedule],
+  delegatedActions: [
+    { target: LoginRewardCollection, methodName: "Receive", action: { targetActionKey: "Gs2LoginReward:ReceiveStatus.Receive", targetResource: ReceiveStatus } },
+    { target: LoginRewardCollection, methodName: "MissedReceive", action: { targetActionKey: "Gs2LoginReward:ReceiveStatus.MissedReceive", targetResource: ReceiveStatus } },
+  ],
+  masterDataResources: [
+    defineMasterDataResource({
+  model: GS2.loginReward.Namespace,
+  bindings: {
         logSetting: Bind.null(),
         name: Bind.static("LoginReward"),
         receiveScript: Bind.null(),
         transactionSettingV2: transactionSettingV2(),
-      })
-      .addChild(BonusModel)
-  )
-  .userDataResource(ReceiveStatus)
-
-  .delegatedAction(LoginRewardCollection, "Receive", {
-    targetActionKey: "Gs2LoginReward:ReceiveStatus.Receive",
-    targetResource: ReceiveStatus,
-  })
-  .delegatedAction(LoginRewardCollection, "MissedReceive", {
-    targetActionKey: "Gs2LoginReward:ReceiveStatus.MissedReceive",
-    targetResource: ReceiveStatus,
-  })
-  // Take the group as a parameter so reset removes its own receive status.
-  .actionTransform("ResetReceiveStatus", at =>
-    at
-      .category("acquire")
-      .parameter("loginRewardCollection", { type: PT.ref("LoginRewardCollection") })
-      .output("Gs2LoginReward:DeleteReceiveStatusByUserId", o =>
-        o
-          .resourceRef(() => BonusModel)
-          .mapResourceKey("namespaceName")
-          .mapParameter("bonusModelName", "loginRewardCollection")
-          .mapPlaceholder("userId", "#{userId}")
-      )
-  )
-  .build();
+      },
+  children: [
+    BonusModel,
+  ],
+}),
+  ],
+  userDataResources: [
+    ReceiveStatus,
+  ],
+  actionTransforms: [ResetReceiveStatusTransform],
+});
