@@ -14,7 +14,8 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_1GGPJSBVVQB1MAWJR3VTQ9Y7QK"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {}
         },
         "Reroll": {
           "targetResource": {
@@ -22,7 +23,8 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_7B5FM276ZTBNSAQYJ948JES7GM"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {}
         }
       },
       "properties": {

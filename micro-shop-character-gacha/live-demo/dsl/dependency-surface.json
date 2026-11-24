@@ -14,7 +14,17 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_5PRP4NWC3688X91404V01TV2F9"
           },
-          "targetActionKey": "Gs2Showcase:DisplayItem.Buy"
+          "targetActionKey": "Gs2Showcase:DisplayItem.Buy",
+          "parameters": {
+            "quantity": {
+              "type": "int32",
+              "required": false
+            },
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {

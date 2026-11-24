@@ -72,7 +72,17 @@
             "resourceKind": "userData",
             "resourceId": "udr_1P119645K49QZA8WP1Z2M8DV2J"
           },
-          "targetActionKey": "Gs2LoginReward:ReceiveStatus.MissedReceive"
+          "targetActionKey": "Gs2LoginReward:ReceiveStatus.MissedReceive",
+          "parameters": {
+            "stepNumber": {
+              "type": "int32",
+              "required": false
+            },
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         },
         "Receive": {
           "targetResource": {
@@ -80,7 +90,13 @@
             "resourceKind": "userData",
             "resourceId": "udr_1P119645K49QZA8WP1Z2M8DV2J"
           },
-          "targetActionKey": "Gs2LoginReward:ReceiveStatus.Receive"
+          "targetActionKey": "Gs2LoginReward:ReceiveStatus.Receive",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {

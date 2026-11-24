@@ -142,7 +142,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_2B66P1TX2CA2EV81HAS32228JF"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         },
         "UseFree": {
           "targetResource": {
@@ -150,7 +156,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_3QQV27BR5AA419F2032R6T95RZ"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         },
         "UseWithAd": {
           "targetResource": {
@@ -158,7 +170,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_6TC5FMVGD2AE0BT03QA7GCXZS0"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {

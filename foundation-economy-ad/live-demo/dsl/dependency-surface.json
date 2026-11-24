@@ -14,7 +14,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_50881G8A8QBAWTRD6J25BKQBE8"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         },
         "Watch": {
           "targetResource": {
@@ -22,7 +28,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_097S3NBVT0AH9A94KKQCBHPNG5"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {

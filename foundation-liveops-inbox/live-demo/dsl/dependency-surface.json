@@ -14,7 +14,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_44P0A9V3FSB7EV2X3G12PT5Y3Q"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {
@@ -84,7 +90,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_3V90RSG8MJB8BVY29ZQGS45EZZ"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {
@@ -168,7 +180,8 @@
             "resourceKind": "userData",
             "resourceId": "udr_5B2DBE3P7M977TXCSEYBR6973N"
           },
-          "targetActionKey": "Gs2Inbox:Message.ReadMessage"
+          "targetActionKey": "Gs2Inbox:Message.ReadMessage",
+          "parameters": {}
         }
       },
       "properties": {

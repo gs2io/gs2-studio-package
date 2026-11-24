@@ -324,7 +324,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_0EW19XBQ94A2PB07R85WZ9TE2H"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         },
         "Extend": {
           "targetResource": {
@@ -332,7 +338,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_43ANN972MFBQHAXGP4CHFKDN2K"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {
@@ -416,7 +428,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_3VCDNWHPCXA3YSDAT2G6GFVYBC"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {

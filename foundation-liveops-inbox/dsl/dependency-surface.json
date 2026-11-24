@@ -88,7 +88,8 @@
             "resourceKind": "userData",
             "resourceId": "udr_5B2DBE3P7M977TXCSEYBR6973N"
           },
-          "targetActionKey": "Gs2Inbox:Message.ReadMessage"
+          "targetActionKey": "Gs2Inbox:Message.ReadMessage",
+          "parameters": {}
         }
       },
       "properties": {

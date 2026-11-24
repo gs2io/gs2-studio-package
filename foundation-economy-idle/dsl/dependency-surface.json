@@ -56,7 +56,8 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_720YFK0MG497KRH6159H7NKWHY"
           },
-          "targetActionKey": "Gs2Idle:CategoryModel.Receive"
+          "targetActionKey": "Gs2Idle:CategoryModel.Receive",
+          "parameters": {}
         }
       },
       "properties": {

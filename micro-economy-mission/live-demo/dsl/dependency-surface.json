@@ -14,7 +14,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_4QWBNQ5KM59ZERS381QKYXGJCB"
           },
-          "targetActionKey": "Gs2Mission:MissionTaskModel.Complete"
+          "targetActionKey": "Gs2Mission:MissionTaskModel.Complete",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {
@@ -164,7 +170,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_21DB51BXCRBDQBFYF1JB1TQQ8M"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {

@@ -14,7 +14,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_4AGHB6Q7XM9449CE6A6SQB4263"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {

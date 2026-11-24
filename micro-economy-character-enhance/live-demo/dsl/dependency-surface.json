@@ -14,7 +14,8 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_60ASBHRZH1A1KVZ36PFE432PZX"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {}
         },
         "EnhanceWithPotion": {
           "targetResource": {
@@ -22,7 +23,8 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_5AWR0ERPJFBV383B9RDMGW53W0"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {}
         },
         "Train": {
           "targetResource": {
@@ -30,7 +32,8 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_610EXTERWVB0FRCTCXD30A4ZX6"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {}
         }
       },
       "properties": {
@@ -170,7 +173,13 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_5MBDT874NCB50AGHC6NS8XH9NP"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
         }
       },
       "properties": {

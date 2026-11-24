@@ -14,7 +14,8 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_1NXX629711BHJBYFNF7Q2QG8D9"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {}
         },
         "TrainHard": {
           "targetResource": {
@@ -22,7 +23,8 @@
             "resourceKind": "masterData",
             "resourceId": "mdr_6NZTG6G7F8ACCRD6NFACZYDDPH"
           },
-          "targetActionKey": "Gs2Exchange:RateModel.Exchange"
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {}
         }
       },
       "properties": {
