@@ -12,6 +12,68 @@
         "end": "prop_28HE0VGFDJZC3C2B949D7TZD2W",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "payload": "prop_19YMYXB5NJHVCEEQY795WH711C"
+      },
+      "propertyDetails": {
+        "begin": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Delivery start",
+              "description": "Time when the message becomes available."
+            },
+            "ja": {
+              "label": "配信開始日時",
+              "description": "メッセージの受け取りを開始する日時です。"
+            }
+          }
+        },
+        "end": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Delivery end",
+              "description": "Time when the message stops being available."
+            },
+            "ja": {
+              "label": "配信終了日時",
+              "description": "メッセージの受け取りを終了する日時です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the global message."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "全体メッセージを一意に識別します。"
+            }
+          }
+        },
+        "payload": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Message payload",
+              "description": "Content delivered to all players."
+            },
+            "ja": {
+              "label": "メッセージ内容",
+              "description": "全プレイヤーへ配信するメッセージの内容です。"
+            }
+          }
+        }
       }
     },
     "Message": {
@@ -35,12 +97,121 @@
         "isRead": "prop_3JX5PM4TDM36YWSQFMA0CXKKBW",
         "payload": "prop_7WYH08M0F6N02WHFBRJ4TXX5VD",
         "receivedAt": "prop_0AV2AGGK2HFK600HXSCDGP0CNC"
+      },
+      "propertyDetails": {
+        "expiresAt": {
+          "type": "timestamp",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Expiration time",
+              "description": "Time until which the message remains available."
+            },
+            "ja": {
+              "label": "有効期限",
+              "description": "メッセージを保持する期限です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the message."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "メッセージを一意に識別します。"
+            }
+          }
+        },
+        "isRead": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Read",
+              "description": "Whether the player has opened this message."
+            },
+            "ja": {
+              "label": "既読",
+              "description": "プレイヤーがこのメッセージを開いたかを示します。"
+            }
+          }
+        },
+        "payload": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Message payload",
+              "description": "Content of the message delivered to the player's inbox."
+            },
+            "ja": {
+              "label": "メッセージ内容",
+              "description": "プレイヤーの受信箱へ届いたメッセージの内容です。"
+            }
+          }
+        },
+        "receivedAt": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Received at",
+              "description": "Time when the message was received."
+            },
+            "ja": {
+              "label": "受信日時",
+              "description": "メッセージを受信した日時です。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "SendMessage": "at_7DVPXYKCMX8GQ8HZV2NGV1VFXA",
     "SendMessageWithReward": "at_1RG4YKDR299ERAM1FKTZC304C6"
+  },
+  "actionTransformSignatures": {
+    "SendMessage": {
+      "category": "acquire",
+      "parameters": {
+        "metadata": {
+          "type": "string",
+          "required": true
+        },
+        "expireDays": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "SendMessageWithReward": {
+      "category": "acquire",
+      "parameters": {
+        "metadata": {
+          "type": "string",
+          "required": true
+        },
+        "expireDays": {
+          "type": "int32",
+          "required": true
+        },
+        "rewards": {
+          "type": "list<acquireAction>",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "inbox.GlobalMessage": "mdr_53WXDED04D83MTF9Z40JH8CMXH",

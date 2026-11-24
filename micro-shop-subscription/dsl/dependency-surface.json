@@ -17,10 +17,152 @@
         "rollupHour": "prop_00D033GGSVBD5YJ273A72E5PQ1",
         "status": "prop_00D033GGSVBDYMEZGHGPV44S50",
         "triggerExtendMode": "prop_00D033GGSVFR969HA1TD6S77GD"
+      },
+      "propertyDetails": {
+        "appleSubscriptionGroupIdentifier": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "App Store subscription group ID",
+              "description": "Subscription group identifier registered in App Store Connect."
+            },
+            "ja": {
+              "label": "App StoreサブスクリプショングループID",
+              "description": "App Store Connectで登録したサブスクリプショングループの識別子です。"
+            }
+          }
+        },
+        "expiresAt": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Expiration time",
+              "description": "Time when the player's subscription expires."
+            },
+            "ja": {
+              "label": "有効期限",
+              "description": "プレイヤーのサブスクリプションが失効する日時です。"
+            }
+          }
+        },
+        "googlePlayProductId": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Google Play product ID",
+              "description": "Subscription product identifier registered in Google Play Console."
+            },
+            "ja": {
+              "label": "Google Play商品ID",
+              "description": "Google Play Consoleで登録した定期購入商品の識別子です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the subscription product."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "サブスクリプション商品を一意に識別します。"
+            }
+          }
+        },
+        "reallocateSpanDays": {
+          "type": "int32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reallocation period",
+              "description": "Period before expiration during which the store may re-bill.",
+              "unit": "days"
+            },
+            "ja": {
+              "label": "再請求猶予期間",
+              "description": "期限前にストアが再請求を行える期間です。",
+              "unit": "日"
+            }
+          }
+        },
+        "renewalTrigger": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Renewal trigger",
+              "description": "Schedule trigger fired whenever the subscription renews."
+            },
+            "ja": {
+              "label": "更新トリガー",
+              "description": "サブスクリプション更新時に発火するスケジュールトリガーです。"
+            }
+          }
+        },
+        "rollupHour": {
+          "type": "int32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Rollup hour",
+              "description": "Hour used when renewal triggers are rounded.",
+              "unit": "hour"
+            },
+            "ja": {
+              "label": "丸め時刻",
+              "description": "更新トリガーを丸める場合の時刻です。",
+              "unit": "時"
+            }
+          }
+        },
+        "status": {
+          "type": "enum<active|inactive>",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Subscription status",
+              "description": "Player's current subscription status."
+            },
+            "ja": {
+              "label": "加入状態",
+              "description": "プレイヤーの現在のサブスクリプション加入状態です。"
+            }
+          }
+        },
+        "triggerExtendMode": {
+          "type": "enum<just|rollupHour>",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Trigger extension mode",
+              "description": "Whether renewal extends exactly or is rounded to a configured hour."
+            },
+            "ja": {
+              "label": "トリガー延長方式",
+              "description": "更新日時をそのまま使うか指定時刻へ丸めるかを設定します。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "money2.Namespace": "mdr_1EWQQMHD9XBEFTRKZV5TGG814D",
     "money2.StoreSubscriptionContentModel": "mdr_125MHEE6BZBRB90GGBPD1JQ9DZ"

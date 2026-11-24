@@ -22,10 +22,79 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "initialSaveArea": "prop_0F9XHSDTRNNY0TGSAM1K2Q5QFS",
         "maximumSaveArea": "prop_2PBKJC9BR7P00EG4DQYQGAFFGP"
+      },
+      "propertyDetails": {
+        "currentSaveArea": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current save slots",
+              "description": "Formation save slots currently available to the player.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "現在の保存枠",
+              "description": "プレイヤーが現在利用できる編成保存枠です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the formation configuration."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "編成を一意に識別します。"
+            }
+          }
+        },
+        "initialSaveArea": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Initial save slots",
+              "description": "Formation save slots granted to a new player.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "初期保存枠",
+              "description": "新規プレイヤーに付与する編成保存枠です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "maximumSaveArea": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Maximum save slots",
+              "description": "Maximum number of formation save slots.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "最大保存枠",
+              "description": "拡張できる編成保存枠の最大値です。",
+              "unit": "枠"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_4XN0R3DYNCBQM8MKTANBTN8WAY",
     "exchange.RateModel": "mdr_0XW8Q5N7XHAKQ9NSP0GVBBFFWQ",

@@ -11,9 +11,57 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "registered": "prop_00D0XSWNPHK742VSBENVHWQX25",
         "userIdentifier": "prop_00D0XSWNPHGADEPTVEW5ASX023"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the transfer code."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "引き継ぎコードを一意に識別します。"
+            }
+          }
+        },
+        "registered": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Registered",
+              "description": "Whether the player has registered a transfer code."
+            },
+            "ja": {
+              "label": "登録済み",
+              "description": "プレイヤーが引き継ぎコードを登録しているかを示します。"
+            }
+          }
+        },
+        "userIdentifier": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Transfer ID",
+              "description": "Identifier registered as the transfer code. The password is never stored, so it cannot be shown."
+            },
+            "ja": {
+              "label": "引き継ぎ用ID",
+              "description": "引き継ぎコードとして登録した識別子です。パスワードは保存されないため表示できません。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {}
 }

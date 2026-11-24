@@ -24,9 +24,252 @@
         "warningMajor": "prop_00D05Q4S5W51ASB747VGW2QRXK",
         "warningMicro": "prop_00D05Q4S5W2SKTP42MZPMK3GW3",
         "warningMinor": "prop_00D05Q4S5W18JS83RNRWD5MKDY"
+      },
+      "propertyDetails": {
+        "acceptedMajor": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Accepted major version",
+              "description": "Major component of the agreement version accepted by the player."
+            },
+            "ja": {
+              "label": "同意済みメジャーバージョン",
+              "description": "プレイヤーが同意した規約バージョンのメジャー値です。"
+            }
+          }
+        },
+        "acceptedMicro": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Accepted micro version",
+              "description": "Micro component of the agreement version accepted by the player."
+            },
+            "ja": {
+              "label": "同意済みマイクロバージョン",
+              "description": "プレイヤーが同意した規約バージョンのマイクロ値です。"
+            }
+          }
+        },
+        "acceptedMinor": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Accepted minor version",
+              "description": "Minor component of the agreement version accepted by the player."
+            },
+            "ja": {
+              "label": "同意済みマイナーバージョン",
+              "description": "プレイヤーが同意した規約バージョンのマイナー値です。"
+            }
+          }
+        },
+        "currentMajor": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Current major version",
+              "description": "Major component of the currently published agreement version."
+            },
+            "ja": {
+              "label": "公開メジャーバージョン",
+              "description": "現在公開している規約のメジャーバージョンです。"
+            }
+          }
+        },
+        "currentMicro": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Current micro version",
+              "description": "Micro component of the currently published agreement version."
+            },
+            "ja": {
+              "label": "公開マイクロバージョン",
+              "description": "現在公開している規約のマイクロバージョンです。"
+            }
+          }
+        },
+        "currentMinor": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Current minor version",
+              "description": "Minor component of the currently published agreement version."
+            },
+            "ja": {
+              "label": "公開マイナーバージョン",
+              "description": "現在公開している規約のマイナーバージョンです。"
+            }
+          }
+        },
+        "errorMajor": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Error major version",
+              "description": "Major component of the version at or below which an acceptance blocks use."
+            },
+            "ja": {
+              "label": "拒否メジャーバージョン",
+              "description": "このバージョン以下に同意しているとき利用を拒否するバージョンのメジャー値です。"
+            }
+          }
+        },
+        "errorMicro": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Error micro version",
+              "description": "Micro component of the version at or below which an acceptance blocks use."
+            },
+            "ja": {
+              "label": "拒否マイクロバージョン",
+              "description": "このバージョン以下に同意しているとき利用を拒否するバージョンのマイクロ値です。"
+            }
+          }
+        },
+        "errorMinor": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Error minor version",
+              "description": "Minor component of the version at or below which an acceptance blocks use."
+            },
+            "ja": {
+              "label": "拒否マイナーバージョン",
+              "description": "このバージョン以下に同意しているとき利用を拒否するバージョンのマイナー値です。"
+            }
+          }
+        },
+        "exists": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Has approval record",
+              "description": "Whether an agreement approval record exists for the player."
+            },
+            "ja": {
+              "label": "同意記録あり",
+              "description": "プレイヤーの規約同意記録が存在するかを示します。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the agreement version."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "規約バージョンを一意に識別します。"
+            }
+          }
+        },
+        "required": {
+          "type": "enum<required|optional>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Approval requirement",
+              "description": "Whether approval of this agreement is required. An optional one can also be rejected, but a player who has neither accepted nor rejected it fails the version check."
+            },
+            "ja": {
+              "label": "同意要否",
+              "description": "この規約への同意を必須にするかを設定します。任意にすると拒否もできますが、同意も拒否もしていないプレイヤーはバージョン確認でエラーになります。"
+            }
+          }
+        },
+        "status": {
+          "type": "enum<accept|reject>",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Approval status",
+              "description": "Whether the player accepted or rejected the agreement."
+            },
+            "ja": {
+              "label": "同意状態",
+              "description": "プレイヤーが規約へ同意または拒否した状態です。"
+            }
+          }
+        },
+        "warningMajor": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Warning major version",
+              "description": "Major component of the version at or below which an acceptance triggers a warning."
+            },
+            "ja": {
+              "label": "警告メジャーバージョン",
+              "description": "このバージョン以下に同意しているとき警告になるバージョンのメジャー値です。"
+            }
+          }
+        },
+        "warningMicro": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Warning micro version",
+              "description": "Micro component of the version at or below which an acceptance triggers a warning."
+            },
+            "ja": {
+              "label": "警告マイクロバージョン",
+              "description": "このバージョン以下に同意しているとき警告になるバージョンのマイクロ値です。"
+            }
+          }
+        },
+        "warningMinor": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Warning minor version",
+              "description": "Minor component of the version at or below which an acceptance triggers a warning."
+            },
+            "ja": {
+              "label": "警告マイナーバージョン",
+              "description": "このバージョン以下に同意しているとき警告になるバージョンのマイナー値です。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {}
 }

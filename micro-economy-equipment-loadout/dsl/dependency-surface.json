@@ -16,6 +16,136 @@
         "nextLevelExperience": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77",
         "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
         "sort": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
+      },
+      "propertyDetails": {
+        "equipmentSlots": {
+          "type": "list<inline<EquipmentSlotAssignment>>",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Equipment slots",
+              "description": "Equipment assigned to each slot on the character."
+            },
+            "ja": {
+              "label": "装備スロット",
+              "description": "キャラクターの各スロットに装着されている装備です。"
+            }
+          }
+        },
+        "experience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current experience",
+              "description": "Cumulative experience currently earned by the character.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "現在経験値",
+              "description": "キャラクターが現在獲得している累積経験値です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the character."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "キャラクターを一意に識別します。"
+            }
+          }
+        },
+        "level": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level",
+              "description": "Current level of the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在レベル",
+              "description": "キャラクターの現在レベルです。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "levelCap": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level cap",
+              "description": "Level cap currently applied to the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在のレベル上限",
+              "description": "キャラクターに現在適用されているレベル上限です。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "nextLevelExperience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Experience for the next level",
+              "description": "Cumulative experience needed to reach the next level; 0 once the level cap is reached.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "次レベルまでの必要経験値",
+              "description": "次のレベルに到達するために必要な累積経験値です。レベル上限に達している場合は 0 です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "propertyId": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Character instance ID",
+              "description": "Identifier of the character instance owned by the player."
+            },
+            "ja": {
+              "label": "キャラクター個体ID",
+              "description": "プレイヤーが所持するキャラクター個体の識別子です。"
+            }
+          }
+        },
+        "sort": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Sort order",
+              "description": "Value used to order characters in lists."
+            },
+            "ja": {
+              "label": "表示順",
+              "description": "キャラクター一覧で使用する並び順の値です。"
+            }
+          }
+        }
       }
     },
     "EquipmentSlot": {
@@ -26,6 +156,38 @@
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "propertyRegex": "prop_00D033FNASBHYZ9W1VK8EE39WP"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the equipment slot."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "装備スロットを一意に識別します。"
+            }
+          }
+        },
+        "propertyRegex": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Equipment pattern",
+              "description": "Regular expression matching equipment instance IDs accepted by this slot."
+            },
+            "ja": {
+              "label": "装着条件",
+              "description": "このスロットへ装着できる装備個体IDの正規表現です。"
+            }
+          }
+        }
       }
     },
     "EquipmentSlotAssignment": {
@@ -36,10 +198,43 @@
       "properties": {
         "equipment": "prop_00D033FNAS8DNWPTTNV21SG9XF",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "equipment": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Equipped item",
+              "description": "Equipment instance ID assigned to this slot; empty when the slot is free."
+            },
+            "ja": {
+              "label": "装着中の装備",
+              "description": "このスロットに装着されている装備個体IDです。空の場合は未装着です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the equipment slot assignment."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "装着スロットを一意に識別します。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "formation.Namespace": "mdr_3A74BFMXHXAHSSSKQ47QZ161VJ",
     "formation.PropertyFormModel": "mdr_7CTY9GDCB5AER8PB2VNW6V2GX8",

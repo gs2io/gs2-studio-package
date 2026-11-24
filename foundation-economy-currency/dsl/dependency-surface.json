@@ -10,6 +10,38 @@
       "properties": {
         "enableFakeReceipt": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "enableFakeReceipt": {
+          "type": "enum<Accept|Reject>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Test receipts",
+              "description": "Whether fake receipts used for test purchases are accepted."
+            },
+            "ja": {
+              "label": "テストレシート",
+              "description": "テスト購入用の偽レシートを受け付けるかを設定します。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the currency store."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "通貨ストアを一意に識別します。"
+            }
+          }
+        }
       }
     },
     "StoreProduct": {
@@ -21,6 +53,53 @@
         "appleAppStoreProductId": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
         "googlePlayProductId": "prop_7TADZ4DEA40BBKZ46GN2R05E4J",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "appleAppStoreProductId": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "App Store product ID",
+              "description": "Product identifier registered in App Store Connect."
+            },
+            "ja": {
+              "label": "App Store商品ID",
+              "description": "App Store Connectで登録した商品の識別子です。"
+            }
+          }
+        },
+        "googlePlayProductId": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Google Play product ID",
+              "description": "Product identifier registered in Google Play Console."
+            },
+            "ja": {
+              "label": "Google Play商品ID",
+              "description": "Google Play Consoleで登録した商品の識別子です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the store product."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ストア商品を一意に識別します。"
+            }
+          }
+        }
       }
     },
     "Wallet": {
@@ -33,6 +112,74 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "paid": "prop_6R2VWF0VG1FFZD7G3F2NB0W132",
         "total": "prop_3VQCQ7RXRT5DS14GV01R3MRB4J"
+      },
+      "propertyDetails": {
+        "free": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Free balance",
+              "description": "Current free-currency balance.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "無償残高",
+              "description": "無償通貨の現在残高です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the wallet."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ウォレットを一意に識別します。"
+            }
+          }
+        },
+        "paid": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Paid balance",
+              "description": "Current paid-currency balance.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "有償残高",
+              "description": "有償通貨の現在残高です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "total": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Total balance",
+              "description": "Current combined paid and free currency balance.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "合計残高",
+              "description": "有償・無償通貨を合わせた現在残高です。",
+              "unit": "通貨"
+            }
+          }
+        }
       }
     }
   },
@@ -42,6 +189,81 @@
     "VerifyReceipt": "at_0K0C5C0TAX954RK77HDAPJWBEG",
     "WithdrawCurrency": "at_1HH2KQVVENVPN5K0X2W69EB7D5",
     "WithdrawPaidCurrency": "at_0Q3S8P50EGKX0R74RAS4HWMC6F"
+  },
+  "actionTransformSignatures": {
+    "DepositCurrency": {
+      "category": "acquire",
+      "parameters": {
+        "slot": {
+          "type": "int32",
+          "required": true
+        },
+        "count": {
+          "type": "int32",
+          "required": true
+        },
+        "currencyType": {
+          "type": "string",
+          "required": true
+        },
+        "price": {
+          "type": "float64",
+          "required": true
+        }
+      }
+    },
+    "DepositFreeCurrency": {
+      "category": "acquire",
+      "parameters": {
+        "slot": {
+          "type": "int32",
+          "required": true
+        },
+        "count": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "VerifyReceipt": {
+      "category": "consume",
+      "parameters": {
+        "contentName": {
+          "type": "ref<StoreProduct>",
+          "required": true
+        }
+      }
+    },
+    "WithdrawCurrency": {
+      "category": "consume",
+      "parameters": {
+        "slot": {
+          "type": "int32",
+          "required": true
+        },
+        "paidOnly": {
+          "type": "bool",
+          "required": false
+        },
+        "count": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "WithdrawPaidCurrency": {
+      "category": "consume",
+      "parameters": {
+        "slot": {
+          "type": "int32",
+          "required": true
+        },
+        "count": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "money2.Namespace": "mdr_2E7WSMWGBTATQSVTMCW3T2R2AJ",

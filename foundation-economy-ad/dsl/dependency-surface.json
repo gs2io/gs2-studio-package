@@ -11,6 +11,53 @@
         "adMobAdUnitIds": "prop_2E144V2D4DR6774190N39P62XT",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "unityAdKeys": "prop_242M4XQ9VWCWPDXV75ACHQVJD1"
+      },
+      "propertyDetails": {
+        "adMobAdUnitIds": {
+          "type": "list<string>",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "AdMob ad unit IDs",
+              "description": "AdMob ad unit identifiers allowed by this configuration."
+            },
+            "ja": {
+              "label": "AdMob広告ユニットID",
+              "description": "許可するAdMob広告ユニットIDの一覧です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the ad platform."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "広告プラットフォームを一意に識別します。"
+            }
+          }
+        },
+        "unityAdKeys": {
+          "type": "list<string>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Unity Ads keys",
+              "description": "Game keys used by Unity Ads."
+            },
+            "ja": {
+              "label": "Unity Adsキー",
+              "description": "Unity Adsで使用するゲームキーの一覧です。"
+            }
+          }
+        }
       }
     },
     "AdViewPoint": {
@@ -21,11 +68,51 @@
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "value": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the ad view point."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "広告視聴枠を一意に識別します。"
+            }
+          }
+        },
+        "value": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Available views",
+              "description": "Current number of ad-view points available to the player.",
+              "unit": "views"
+            },
+            "ja": {
+              "label": "視聴可能回数",
+              "description": "プレイヤーが利用できる広告視聴ポイントの現在値です。",
+              "unit": "回"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "ConsumeAdViewPoint": "at_7K72HBMY1D9CTR7V0JF15PGRS6"
+  },
+  "actionTransformSignatures": {
+    "ConsumeAdViewPoint": {
+      "category": "consume",
+      "parameters": {}
+    }
   },
   "masterDataResources": {
     "adReward.Namespace": "mdr_753Q723JBB9AWB63KRPYZA6ZXN"

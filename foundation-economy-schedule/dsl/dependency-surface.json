@@ -26,6 +26,290 @@
         "startAt": "prop_7FMECH33GC393EZ4PGCPR1QCSE",
         "trigger": "prop_4T7XKM1CTQ7X9D94DB6868ZXR3",
         "triggerFired": "prop_00D0N014B09H9M51PEBHNW82F9"
+      },
+      "propertyDetails": {
+        "activeDays": {
+          "type": "int32",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Active days",
+              "description": "Number of active days in a custom cycle.",
+              "unit": "days"
+            },
+            "ja": {
+              "label": "有効日数",
+              "description": "カスタム周期で機能を有効にする日数です。",
+              "unit": "日"
+            }
+          }
+        },
+        "anchorTimestamp": {
+          "type": "timestamp",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Anchor time",
+              "description": "Reference time used to calculate a custom cycle."
+            },
+            "ja": {
+              "label": "基準日時",
+              "description": "カスタム周期を数える基準日時です。"
+            }
+          }
+        },
+        "beginDayOfMonth": {
+          "type": "int32",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Start day of month",
+              "description": "Day of the month when a monthly active period begins.",
+              "unit": "day"
+            },
+            "ja": {
+              "label": "開始日",
+              "description": "月次スケジュールの有効期間が始まる日です。",
+              "unit": "日"
+            }
+          }
+        },
+        "beginDayOfWeek": {
+          "type": "enum<sunday|monday|tuesday|wednesday|thursday|friday|saturday>",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Start weekday",
+              "description": "Weekday when a weekly active period begins."
+            },
+            "ja": {
+              "label": "開始曜日",
+              "description": "週次スケジュールの有効期間が始まる曜日です。"
+            }
+          }
+        },
+        "beginHour": {
+          "type": "int32",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Start hour",
+              "description": "Hour when the active period begins for daily, weekly, or monthly repetition.",
+              "unit": "hour"
+            },
+            "ja": {
+              "label": "開始時刻",
+              "description": "日次・週次・月次の有効時間帯が始まる時刻です。",
+              "unit": "時"
+            }
+          }
+        },
+        "endAt": {
+          "type": "timestamp",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "End time",
+              "description": "End time for an absolute schedule."
+            },
+            "ja": {
+              "label": "終了日時",
+              "description": "絶対日時方式で機能を終了する日時です。"
+            }
+          }
+        },
+        "endDayOfMonth": {
+          "type": "int32",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "End day of month",
+              "description": "Day of the month when a monthly active period ends.",
+              "unit": "day"
+            },
+            "ja": {
+              "label": "終了日",
+              "description": "月次スケジュールの有効期間が終わる日です。",
+              "unit": "日"
+            }
+          }
+        },
+        "endDayOfWeek": {
+          "type": "enum<sunday|monday|tuesday|wednesday|thursday|friday|saturday>",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "End weekday",
+              "description": "Weekday when a weekly active period ends."
+            },
+            "ja": {
+              "label": "終了曜日",
+              "description": "週次スケジュールの有効期間が終わる曜日です。"
+            }
+          }
+        },
+        "endHour": {
+          "type": "int32",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "End hour",
+              "description": "Hour when the active period ends for daily, weekly, or monthly repetition.",
+              "unit": "hour"
+            },
+            "ja": {
+              "label": "終了時刻",
+              "description": "日次・週次・月次の有効時間帯が終わる時刻です。",
+              "unit": "時"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the schedule."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "スケジュールを一意に識別します。"
+            }
+          }
+        },
+        "inactiveDays": {
+          "type": "int32",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Inactive days",
+              "description": "Number of inactive days in a custom cycle.",
+              "unit": "days"
+            },
+            "ja": {
+              "label": "無効日数",
+              "description": "カスタム周期で機能を無効にする日数です。",
+              "unit": "日"
+            }
+          }
+        },
+        "relativeEndAt": {
+          "type": "timestamp",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Relative end time",
+              "description": "When this player's relative schedule closes. Equals the reference trigger's expiration."
+            },
+            "ja": {
+              "label": "相対終了日時",
+              "description": "相対日時方式で、このプレイヤーの開催期間が終わる日時です。基準トリガーの有効期限と一致します。"
+            }
+          }
+        },
+        "relativeStartAt": {
+          "type": "timestamp",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Relative start time",
+              "description": "When this player's relative schedule opened. Equals the reference trigger's fire time."
+            },
+            "ja": {
+              "label": "相対開始日時",
+              "description": "相対日時方式で、このプレイヤーの開催期間が始まった日時です。基準トリガーの発火日時と一致します。"
+            }
+          }
+        },
+        "repeatType": {
+          "type": "enum<always|daily|weekly|monthly|custom>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Repeat type",
+              "description": "Cadence used to repeat the schedule."
+            },
+            "ja": {
+              "label": "繰り返し方式",
+              "description": "スケジュールを繰り返す周期の種類です。"
+            }
+          }
+        },
+        "scheduleType": {
+          "type": "enum<absolute|relative>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Schedule type",
+              "description": "Whether the schedule uses absolute times or times relative to a trigger."
+            },
+            "ja": {
+              "label": "スケジュール方式",
+              "description": "絶対日時またはトリガー基準の相対日時を選択します。"
+            }
+          }
+        },
+        "startAt": {
+          "type": "timestamp",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Start time",
+              "description": "Start time for an absolute schedule."
+            },
+            "ja": {
+              "label": "開始日時",
+              "description": "絶対日時方式で機能を開始する日時です。"
+            }
+          }
+        },
+        "trigger": {
+          "type": "string",
+          "requirement": "conditional",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Reference trigger",
+              "description": "Trigger used as the reference for a relative schedule."
+            },
+            "ja": {
+              "label": "基準トリガー",
+              "description": "相対日時方式の基準にするトリガーです。"
+            }
+          }
+        },
+        "triggerFired": {
+          "type": "bool",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Trigger fired",
+              "description": "Whether the reference trigger has fired for this player."
+            },
+            "ja": {
+              "label": "トリガー発火済み",
+              "description": "このプレイヤーに対して基準トリガーが発火済みかを示します。"
+            }
+          }
+        }
       }
     },
     "Trigger": {
@@ -38,6 +322,68 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "triggered": "prop_1N32JT4VHQX89BMMSNSA8QE1W2",
         "triggeredAt": "prop_3TE65WFVTTMBGJ8C08F2PMTGQJ"
+      },
+      "propertyDetails": {
+        "expiresAt": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Expiration time",
+              "description": "Time until which the trigger state remains valid."
+            },
+            "ja": {
+              "label": "有効期限",
+              "description": "トリガー状態が有効な期限です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the trigger."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "トリガーを一意に識別します。"
+            }
+          }
+        },
+        "triggered": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Triggered",
+              "description": "Whether this trigger has fired for the player."
+            },
+            "ja": {
+              "label": "発火済み",
+              "description": "このトリガーがプレイヤーに対して発火済みかを示します。"
+            }
+          }
+        },
+        "triggeredAt": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Triggered at",
+              "description": "Time when the trigger fired."
+            },
+            "ja": {
+              "label": "発火日時",
+              "description": "トリガーが発火した日時です。"
+            }
+          }
+        }
       }
     }
   },
@@ -45,6 +391,43 @@
     "ClearTrigger": "at_6F6C7GXB118PF9RTSGY69S57DC",
     "PullTrigger": "at_4FW3DYR9BB85TTH03JVZRFRTV3",
     "TriggerSchedule": "at_0FN6A3W4MR9VRA2RD233HW6NEV"
+  },
+  "actionTransformSignatures": {
+    "ClearTrigger": {
+      "category": "consume",
+      "parameters": {
+        "trigger": {
+          "type": "ref<Trigger>",
+          "required": true
+        }
+      }
+    },
+    "PullTrigger": {
+      "category": "acquire",
+      "parameters": {
+        "trigger": {
+          "type": "ref<Trigger>",
+          "required": true
+        },
+        "ttlSeconds": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "TriggerSchedule": {
+      "category": "acquire",
+      "parameters": {
+        "trigger": {
+          "type": "ref<Trigger>",
+          "required": true
+        },
+        "extendSeconds": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "schedule.Event": "mdr_44PB7J1MKEA3HB951V9904EYQW",

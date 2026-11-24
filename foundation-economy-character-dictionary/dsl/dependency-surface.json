@@ -17,11 +17,167 @@
         "nextLevelExperience": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77",
         "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
         "sort": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
+      },
+      "propertyDetails": {
+        "acquired": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Registered",
+              "description": "Whether this character is registered in the encyclopedia."
+            },
+            "ja": {
+              "label": "図鑑登録済み",
+              "description": "このキャラクターが図鑑に登録済みかを示します。"
+            }
+          }
+        },
+        "acquiredAt": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "First acquired at",
+              "description": "Time when this character was first acquired."
+            },
+            "ja": {
+              "label": "初回獲得日時",
+              "description": "このキャラクターを初めて獲得した日時です。"
+            }
+          }
+        },
+        "experience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current experience",
+              "description": "Cumulative experience currently earned by the character.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "現在経験値",
+              "description": "キャラクターが現在獲得している累積経験値です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the character."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "キャラクターを一意に識別します。"
+            }
+          }
+        },
+        "level": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level",
+              "description": "Current level of the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在レベル",
+              "description": "キャラクターの現在レベルです。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "levelCap": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level cap",
+              "description": "Level cap currently applied to the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在のレベル上限",
+              "description": "キャラクターに現在適用されているレベル上限です。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "nextLevelExperience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Experience for the next level",
+              "description": "Cumulative experience needed to reach the next level; 0 once the level cap is reached.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "次レベルまでの必要経験値",
+              "description": "次のレベルに到達するために必要な累積経験値です。レベル上限に達している場合は 0 です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "propertyId": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Character instance ID",
+              "description": "Identifier of the character instance owned by the player."
+            },
+            "ja": {
+              "label": "キャラクター個体ID",
+              "description": "プレイヤーが所持するキャラクター個体の識別子です。"
+            }
+          }
+        },
+        "sort": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Sort order",
+              "description": "Value used to order characters in lists."
+            },
+            "ja": {
+              "label": "表示順",
+              "description": "キャラクター一覧で使用する並び順の値です。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "MarkCharacterDictionary": "at_4VZ2TBH3QD8MMAGS76VXBJ6CZ6"
+  },
+  "actionTransformSignatures": {
+    "MarkCharacterDictionary": {
+      "category": "acquire",
+      "parameters": {
+        "character": {
+          "type": "ref<foundation-economy-character:Character>",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "dictionary.EntryModel": "mdr_50VBE9ASKA930RKYC6YDCG9E49",

@@ -13,6 +13,85 @@
         "displayName": "prop_00D0VGDFNZ70VKSTDKTYVSP1NJ",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "loginRewardCollection": "prop_0596SK59HPEYXW9Y868ZT82B8A"
+      },
+      "propertyDetails": {
+        "acquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Acquire actions",
+              "description": "Reward actions executed for this login step."
+            },
+            "ja": {
+              "label": "獲得アクション",
+              "description": "このログイン段階で実行する報酬アクションです。"
+            }
+          }
+        },
+        "coins": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reward coins",
+              "description": "Coins paid when this day is claimed.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "報酬コイン",
+              "description": "この日を受け取ったときに付与するコインの額です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "displayName": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Display name",
+              "description": "Name shown in the login reward track."
+            },
+            "ja": {
+              "label": "表示名",
+              "description": "ログインボーナスの一覧に表示する名前です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the login reward."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ログインボーナスを一意に識別します。"
+            }
+          }
+        },
+        "loginRewardCollection": {
+          "type": "ref<micro-economy-login-reward:LoginRewardCollection>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Reward group",
+              "description": "Login reward group this reward belongs to."
+            },
+            "ja": {
+              "label": "ボーナスグループ",
+              "description": "この報酬が属するログインボーナスグループです。"
+            }
+          }
+        }
       }
     },
     "LoginRewardCollection": {
@@ -56,10 +135,150 @@
         "repeat": "prop_00D0V3E8RR3GSCNAW1JAKAQRRD",
         "resetHour": "prop_5BWDJGV41VX2E7914HXAQ5PGBP",
         "schedule": "prop_2GPQQQHZ70FS0R1N1B43CP2VMW"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the login reward group."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ログインボーナスグループを一意に識別します。"
+            }
+          }
+        },
+        "lastReceivedAt": {
+          "type": "timestamp",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Last received at",
+              "description": "When the player last claimed a reward."
+            },
+            "ja": {
+              "label": "最終受取日時",
+              "description": "プレイヤーが最後に報酬を受け取った日時です。"
+            }
+          }
+        },
+        "missedReceiveRelief": {
+          "type": "enum<enabled|disabled>",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Missed-receive relief",
+              "description": "Lets a player claim a missed step in exchange for the relief consume actions. In schedule mode the step to claim must be given."
+            },
+            "ja": {
+              "label": "取り逃し救済",
+              "description": "受け取り損ねた段階を、救済の消費アクションと引き換えに受け取れるようにします。schedule では受け取る段階の指定が必要です。"
+            }
+          }
+        },
+        "missedReceiveReliefConsumeActions": {
+          "type": "list<consumeAction>",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Relief consume actions",
+              "description": "Consume actions executed when claiming a missed step."
+            },
+            "ja": {
+              "label": "救済の消費アクション",
+              "description": "取り逃した段階を受け取るときに実行する消費アクションです。"
+            }
+          }
+        },
+        "mode": {
+          "type": "enum<schedule|streaming>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Progress mode",
+              "description": "schedule picks the step by days since the schedule started; streaming by days claimed."
+            },
+            "ja": {
+              "label": "進行モード",
+              "description": "schedule は開催開始からの日数で、streaming は受け取った日数で段階を決めます。"
+            }
+          }
+        },
+        "receivedSteps": {
+          "type": "list<bool>",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Received steps",
+              "description": "Steps the player has claimed, in step order."
+            },
+            "ja": {
+              "label": "受取済み段階",
+              "description": "プレイヤーが受け取り済みの段階を、先頭から順に示します。"
+            }
+          }
+        },
+        "repeat": {
+          "type": "enum<enabled|disabled>",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Repeat",
+              "description": "Whether streaming returns to the first step after the last one is claimed. Missed-receive relief is unavailable while it is enabled."
+            },
+            "ja": {
+              "label": "繰り返し",
+              "description": "streaming で最後の段階まで受け取った後、最初の段階へ戻るかどうかです。有効にすると取り逃し救済は使えません。"
+            }
+          }
+        },
+        "resetHour": {
+          "type": "int32",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Daily reset hour",
+              "description": "UTC hour when streaming moves on to the next day. Not used when a schedule is set.",
+              "unit": "hour"
+            },
+            "ja": {
+              "label": "日付更新時刻",
+              "description": "streaming で受け取り日を次の日へ進めるUTC時刻です。開催スケジュールを指定したときは使われません。",
+              "unit": "時"
+            }
+          }
+        },
+        "schedule": {
+          "type": "ref<foundation-economy-schedule:Schedule>",
+          "requirement": "conditional",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Availability schedule",
+              "description": "Schedule during which this login reward is available."
+            },
+            "ja": {
+              "label": "開催スケジュール",
+              "description": "このログインボーナスを開催するスケジュールです。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_3VWTCVEBB8BP0R7X7PNFFM14YJ",
     "exchange.RateModel": "mdr_764ATR9HCQB89B3EVDJZ7D08VS",

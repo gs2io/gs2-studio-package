@@ -18,6 +18,170 @@
         "maxConcurrentJoinGuilds": "prop_00D031EHJKV14ABPBSZYSZE6ZC",
         "maximumMemberCount": "prop_00D031EHJKXY4J4TES2QHN8F8E",
         "rejoinCoolTimeMinutes": "prop_00D031EHJKRC55TT07BAPX05CG"
+      },
+      "propertyDetails": {
+        "defaultMaximumMemberCount": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Initial member capacity",
+              "description": "Initial member capacity of a newly created guild.",
+              "unit": "members"
+            },
+            "ja": {
+              "label": "初期定員",
+              "description": "新規作成したギルドに適用する初期定員です。",
+              "unit": "人"
+            }
+          }
+        },
+        "guildMasterRole": {
+          "type": "ref<GuildRole>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Guild master role",
+              "description": "Permission role assigned to the guild master."
+            },
+            "ja": {
+              "label": "マスターロール",
+              "description": "ギルドマスターに割り当てる権限ロールです。"
+            }
+          }
+        },
+        "guildMemberDefaultRole": {
+          "type": "ref<GuildRole>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Default member role",
+              "description": "Permission role initially assigned to regular members."
+            },
+            "ja": {
+              "label": "一般メンバーロール",
+              "description": "一般メンバーに初期割り当てする権限ロールです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the guild kind."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ギルド種別を一意に識別します。"
+            }
+          }
+        },
+        "inactivityPeriodDays": {
+          "type": "int32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Master inactivity period",
+              "description": "Days of guild master inactivity after which the most senior member may promote themselves to master (PromoteSeniorMember).",
+              "unit": "days"
+            },
+            "ja": {
+              "label": "マスター不在判定期間",
+              "description": "ギルドマスターの無活動がこの日数続くと、最古参のメンバーがマスターに昇格できる（PromoteSeniorMember）ようになります。",
+              "unit": "日"
+            }
+          }
+        },
+        "joinedGuildName": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Joined guild name",
+              "description": "Name of the guild the player currently belongs to."
+            },
+            "ja": {
+              "label": "所属ギルド名",
+              "description": "プレイヤーが現在所属しているギルド名です。"
+            }
+          }
+        },
+        "maxConcurrentGuildMasterCount": {
+          "type": "int32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Concurrent master limit",
+              "description": "Maximum number of guild masters one guild may have at once.",
+              "unit": "masters"
+            },
+            "ja": {
+              "label": "同時マスター上限",
+              "description": "1 つのギルドに同時に置けるギルドマスターの人数です。",
+              "unit": "人"
+            }
+          }
+        },
+        "maxConcurrentJoinGuilds": {
+          "type": "int32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Concurrent guild limit",
+              "description": "Maximum number of guilds a player may join at once.",
+              "unit": "guilds"
+            },
+            "ja": {
+              "label": "同時所属上限",
+              "description": "プレイヤーが同時に所属できるギルド数です。",
+              "unit": "件"
+            }
+          }
+        },
+        "maximumMemberCount": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Maximum member capacity",
+              "description": "Highest member capacity a guild can reach.",
+              "unit": "members"
+            },
+            "ja": {
+              "label": "最大定員",
+              "description": "ギルドが拡張できる定員の最大値です。",
+              "unit": "人"
+            }
+          }
+        },
+        "rejoinCoolTimeMinutes": {
+          "type": "int32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Rejoin cooldown",
+              "description": "Wait time after leaving before a player may join any guild again.",
+              "unit": "minutes"
+            },
+            "ja": {
+              "label": "再参加待機時間",
+              "description": "脱退した後、どのギルドにも参加できるようになるまでの待機時間です。",
+              "unit": "分"
+            }
+          }
+        }
       }
     },
     "GuildRole": {
@@ -28,12 +192,76 @@
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "policyDocument": "prop_00D031EHJKR6BBM9VDKF7BEEG6"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the guild role."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ギルド権限を一意に識別します。"
+            }
+          }
+        },
+        "policyDocument": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Permission policy",
+              "description": "GS2 policy document describing what a member with this role may do while acting as the guild (Assume). For a role that may do nothing, do not leave it empty: write a policy that denies everything, with one statement whose Effect is Deny and whose Actions and Resources are *. Some GS2 versions treat an empty policy as allowing everything."
+            },
+            "ja": {
+              "label": "権限ポリシー",
+              "description": "このロールのメンバーがギルドとして振る舞うとき（Assume）に許可する操作を記述した GS2 ポリシーです。何も許可しないロールは、空にせず、Effect を Deny、Actions と Resources を * にした文で、すべてを拒否するポリシーを明示してください。空のポリシーは、GS2 の版によっては全許可として扱われます。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "IncreaseGuildCapacity": "at_2CVP0VMSNYSCJY7J93T0091WZ3",
     "VerifyGuildMembership": "at_0Q6TEZY5S19NY8W9TDYPA66718"
+  },
+  "actionTransformSignatures": {
+    "IncreaseGuildCapacity": {
+      "category": "acquire",
+      "parameters": {
+        "guild": {
+          "type": "ref<Guild>",
+          "required": true
+        },
+        "guildName": {
+          "type": "string",
+          "required": true
+        },
+        "value": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "VerifyGuildMembership": {
+      "category": "verify",
+      "parameters": {
+        "guild": {
+          "type": "ref<Guild>",
+          "required": true
+        },
+        "guildName": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "guild.GuildModel": "mdr_3Z6R23PDPVAEDBGKEQPQ1S60B9",

@@ -23,10 +23,92 @@
         "energy": "prop_01M3YJ1DNJ3MS5AZDA6EMDZJTA",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "recoveryValue": "prop_11FCJPVBK2AQFDD6DXHKWSV827"
+      },
+      "propertyDetails": {
+        "consumeActions": {
+          "type": "list<consumeAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Purchase costs",
+              "description": "Consume actions executed to purchase the product."
+            },
+            "ja": {
+              "label": "購入コスト",
+              "description": "商品購入時に実行する消費アクションです。"
+            }
+          }
+        },
+        "cost": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Price",
+              "description": "Free currency spent to buy this product.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "価格",
+              "description": "この商品を購入するときに消費する無償通貨の量です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "energy": {
+          "type": "ref<foundation-economy-energy:Energy>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Refilled stamina",
+              "description": "The stamina this product refills when it is bought."
+            },
+            "ja": {
+              "label": "回復対象",
+              "description": "購入時に回復するスタミナです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the stamina product."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "スタミナ商品を一意に識別します。"
+            }
+          }
+        },
+        "recoveryValue": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Recovery amount",
+              "description": "Amount of stamina restored by purchasing this product.",
+              "unit": "points"
+            },
+            "ja": {
+              "label": "回復量",
+              "description": "購入時に回復するスタミナ量です。",
+              "unit": "ポイント"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_7KRSZZ8CATAZNRF01MVH1DPMWC",
     "exchange.RateModel": "mdr_316T157DF8AHNBQJVWHABKV8MZ",

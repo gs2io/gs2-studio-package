@@ -10,6 +10,38 @@
       "properties": {
         "enableCampaignCode": "prop_00D031EZFZM4YG8CZFHGS7HMHD",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "enableCampaignCode": {
+          "type": "bool",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Shared campaign code",
+              "description": "Marks the campaign id as a code shared by every player. GS2 currently accepts the id whatever this says, any number of times."
+            },
+            "ja": {
+              "label": "共通キャンペーンコード",
+              "description": "キャンペーン ID を全員共通のコードとして扱うことを示します。現在の GS2 はこの設定に関係なくキャンペーン ID を受け付け、何度でも使えます。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the serial-code campaign."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "コードキャンペーンを一意に識別します。"
+            }
+          }
+        }
       }
     }
   },
@@ -17,6 +49,39 @@
     "RevertSerialCodeUse": "at_6F1PXD6D4E9918TRGXQHDJHTS9",
     "UseSerialCode": "at_2AE8RTB8GFNY68C7AYTV813N9B",
     "VerifySerialCodeActive": "at_7V1ZWZC8KXW0ACRVWSK39HMHNX"
+  },
+  "actionTransformSignatures": {
+    "RevertSerialCodeUse": {
+      "category": "acquire",
+      "parameters": {
+        "code": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "UseSerialCode": {
+      "category": "consume",
+      "parameters": {
+        "code": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "VerifySerialCodeActive": {
+      "category": "verify",
+      "parameters": {
+        "campaign": {
+          "type": "ref<SerialCodeCampaign>",
+          "required": true
+        },
+        "code": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "serialKey.CampaignModel": "mdr_58FN3CZJ7XB3BRN5MCP90SMFSJ",

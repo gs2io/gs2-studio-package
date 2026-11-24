@@ -9,12 +9,39 @@
       "canonicalTypeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "Code redemption",
+              "description": "Redeeming a serial code."
+            },
+            "ja": {
+              "label": "コードの引き換え",
+              "description": "シリアルコードの引き換えです。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "ClearRedemption": "at_0ANYB1CF038B2RMMTVPA8C9X3B",
     "CountRedemption": "at_2HMSD4AP729NXVQMK5RM8CRXEQ"
+  },
+  "actionTransformSignatures": {
+    "ClearRedemption": {
+      "category": "acquire",
+      "parameters": {}
+    },
+    "CountRedemption": {
+      "category": "consume",
+      "parameters": {}
+    }
   },
   "masterDataResources": {
     "limit.LimitModel": "mdr_7SMW1JXZZPB748SJB0THQW9XK1",

@@ -12,6 +12,68 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "rarity": "prop_1N7H0DM41KAPYE0ZPFH7KEQPDQ",
         "weight": "prop_0QQ39TDDTA8E2W3B2GWBQWC3EJ"
+      },
+      "propertyDetails": {
+        "character": {
+          "type": "ref<foundation-economy-character:Character>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Character",
+              "description": "Character included in the draw pool."
+            },
+            "ja": {
+              "label": "キャラクター",
+              "description": "排出対象にするキャラクターです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the character draw rate."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "キャラクター排出率を一意に識別します。"
+            }
+          }
+        },
+        "rarity": {
+          "type": "ref<GachaRarity>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Rarity",
+              "description": "Gacha rarity this character belongs to."
+            },
+            "ja": {
+              "label": "レアリティ",
+              "description": "このキャラクターが属するガチャレアリティです。"
+            }
+          }
+        },
+        "weight": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Draw weight",
+              "description": "Relative weight used to draw this character within its rarity."
+            },
+            "ja": {
+              "label": "抽選重み",
+              "description": "同じレアリティ内でこのキャラクターが選ばれる相対的な重みです。"
+            }
+          }
+        }
       }
     },
     "Gacha": {
@@ -33,6 +95,53 @@
         "consumeActions": "prop_641SVQJRC0GWZ43QNEPB429MND",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "schedule": "prop_42BYHE1CR1TEXDMCWR9B91PP5K"
+      },
+      "propertyDetails": {
+        "consumeActions": {
+          "type": "list<consumeAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Draw costs",
+              "description": "Consume actions executed for one gacha draw."
+            },
+            "ja": {
+              "label": "1回の抽選コスト",
+              "description": "ガチャを1回実行するときの消費アクションです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the gacha."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ガチャを一意に識別します。"
+            }
+          }
+        },
+        "schedule": {
+          "type": "ref<foundation-economy-schedule:Schedule>",
+          "requirement": "never",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Availability schedule",
+              "description": "Schedule during which this gacha is available."
+            },
+            "ja": {
+              "label": "開催スケジュール",
+              "description": "このガチャを開催するスケジュールです。"
+            }
+          }
+        }
       }
     },
     "GachaRarity": {
@@ -42,6 +151,23 @@
       "canonicalTypeId": "dt_479NFNV95H92HYQE8252JBRZ9Z",
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the gacha rarity."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ガチャレアリティを一意に識別します。"
+            }
+          }
+        }
       }
     },
     "GachaRarityRate": {
@@ -54,10 +180,73 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "rarity": "prop_61V2Q6GDX782JAG5F3ZJQNRFHY",
         "weight": "prop_4FZRY1TPG3AT3E8S78CR5XY0XT"
+      },
+      "propertyDetails": {
+        "gacha": {
+          "type": "ref<Gacha>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Gacha",
+              "description": "Gacha to which this rarity rate applies."
+            },
+            "ja": {
+              "label": "対象ガチャ",
+              "description": "この排出率を適用するガチャです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the rarity draw rate."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "レアリティ排出率を一意に識別します。"
+            }
+          }
+        },
+        "rarity": {
+          "type": "ref<GachaRarity>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Rarity",
+              "description": "Gacha rarity whose rate is configured."
+            },
+            "ja": {
+              "label": "レアリティ",
+              "description": "排出率を設定するガチャレアリティです。"
+            }
+          }
+        },
+        "weight": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Draw weight",
+              "description": "Relative weight used to draw this rarity."
+            },
+            "ja": {
+              "label": "抽選重み",
+              "description": "このレアリティが選ばれる相対的な重みです。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "lottery.LotteryModel": "mdr_0RHJ2THW6N8MT9CJQ9W0309GPP",
     "lottery.Namespace": "mdr_5TKE5CS1CT9B6VNQNSBWPWVDNJ",

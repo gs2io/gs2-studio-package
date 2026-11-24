@@ -23,6 +23,83 @@
         "quest": "prop_1VVD0ASXTKMHVXA7F1P0R3QC86",
         "questCollection": "prop_00D0TSH4BEJSJYX1BYEN7N5QWK",
         "rewards": "prop_5CJ0VWR32T9SD0RSQSYMEXF3HX"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the quest progress."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "クエスト進行を一意に識別します。"
+            }
+          }
+        },
+        "inProgress": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "In progress",
+              "description": "Whether the player has a quest in progress."
+            },
+            "ja": {
+              "label": "進行中",
+              "description": "プレイヤーが進行中のクエストを持っているかを示します。"
+            }
+          }
+        },
+        "quest": {
+          "type": "ref<micro-economy-quest:Quest>",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Active quest",
+              "description": "Quest currently in progress for the player."
+            },
+            "ja": {
+              "label": "進行中のクエスト",
+              "description": "プレイヤーが現在進行しているクエストです。"
+            }
+          }
+        },
+        "questCollection": {
+          "type": "ref<micro-economy-quest:QuestCollection>",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Active quest group",
+              "description": "Quest group of the quest currently in progress."
+            },
+            "ja": {
+              "label": "進行中のクエストグループ",
+              "description": "進行中のクエストが属するクエストグループです。"
+            }
+          }
+        },
+        "rewards": {
+          "type": "list<inline<micro-economy-quest:ProgressReward>>",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Completion rewards",
+              "description": "Rewards granted when the quest in progress is completed; decided when it starts."
+            },
+            "ja": {
+              "label": "クリア報酬",
+              "description": "進行中のクエストをクリアしたときに付与される報酬の一覧です。開始時に決まります。"
+            }
+          }
+        }
       }
     },
     "Quest": {
@@ -52,9 +129,183 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "reward": "prop_00D0TT9XC90ZNF8NCGHP5RHNBR",
         "staminaCost": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
+      },
+      "propertyDetails": {
+        "collection": {
+          "type": "ref<micro-economy-quest:QuestCollection>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Quest group",
+              "description": "Quest group this quest belongs to."
+            },
+            "ja": {
+              "label": "クエストグループ",
+              "description": "このクエストが属するグループです。"
+            }
+          }
+        },
+        "completeAcquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Completion rewards",
+              "description": "Acquire actions executed on each completion."
+            },
+            "ja": {
+              "label": "通常クリア報酬",
+              "description": "クリア時に毎回実行する獲得アクションです。"
+            }
+          }
+        },
+        "completed": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Completed",
+              "description": "Whether the player has completed this quest."
+            },
+            "ja": {
+              "label": "クリア済み",
+              "description": "プレイヤーがこのクエストをクリア済みかを示します。"
+            }
+          }
+        },
+        "consumeActions": {
+          "type": "list<consumeAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Start costs",
+              "description": "Consume actions executed when the quest starts."
+            },
+            "ja": {
+              "label": "開始時消費",
+              "description": "クエスト開始時に実行する消費アクションです。"
+            }
+          }
+        },
+        "displayName": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Display name",
+              "description": "Name shown in the quest list and the running panel."
+            },
+            "ja": {
+              "label": "表示名",
+              "description": "クエスト一覧と進行中パネルに表示する名前です。"
+            }
+          }
+        },
+        "failedAcquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Failure actions",
+              "description": "Acquire actions executed when the quest fails."
+            },
+            "ja": {
+              "label": "失敗時アクション",
+              "description": "クエスト失敗時に実行する獲得アクションです。"
+            }
+          }
+        },
+        "firstClearReward": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "First-clear bonus",
+              "description": "Free currency paid on top of the reward on the first clear only.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "初回クリアボーナス",
+              "description": "初回クリア時だけ追加で付与する無償通貨です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "firstCompleteAcquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "First-clear rewards",
+              "description": "Acquire actions executed on the first completion."
+            },
+            "ja": {
+              "label": "初回クリア報酬",
+              "description": "初回クリア時に実行する獲得アクションです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the quest."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "クエストを一意に識別します。"
+            }
+          }
+        },
+        "reward": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Clear reward",
+              "description": "Free currency paid on every clear.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "クリア報酬",
+              "description": "クリアするたびに付与する無償通貨です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "staminaCost": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Stamina cost",
+              "description": "Stamina spent when the quest starts.",
+              "unit": "stamina"
+            },
+            "ja": {
+              "label": "消費スタミナ",
+              "description": "クエスト開始時に消費するスタミナです。",
+              "unit": "スタミナ"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {}
 }

@@ -12,6 +12,74 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "initialSaveArea": "prop_0F9XHSDTRNNY0TGSAM1K2Q5QFS",
         "maximumSaveArea": "prop_2PBKJC9BR7P00EG4DQYQGAFFGP"
+      },
+      "propertyDetails": {
+        "currentSaveArea": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current save slots",
+              "description": "Formation save slots currently available to the player.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "現在の保存枠",
+              "description": "プレイヤーが現在利用できる編成保存枠です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the formation configuration."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "編成を一意に識別します。"
+            }
+          }
+        },
+        "initialSaveArea": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Initial save slots",
+              "description": "Formation save slots granted to a new player.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "初期保存枠",
+              "description": "新規プレイヤーに付与する編成保存枠です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "maximumSaveArea": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Maximum save slots",
+              "description": "Maximum number of formation save slots.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "最大保存枠",
+              "description": "拡張できる編成保存枠の最大値です。",
+              "unit": "枠"
+            }
+          }
+        }
       }
     },
     "CharacterFormationForm": {
@@ -22,6 +90,38 @@
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "slots": "prop_0B395S1GETW77ZBQ7FK8Z7TPGS"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the formation form."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "編成フォームを一意に識別します。"
+            }
+          }
+        },
+        "slots": {
+          "type": "list<inline<CharacterFormationFormSlot>>",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Assigned slots",
+              "description": "Character assignments contained in the saved formation."
+            },
+            "ja": {
+              "label": "配置スロット",
+              "description": "保存した編成に含まれるキャラクター配置です。"
+            }
+          }
+        }
       }
     },
     "CharacterFormationFormSlot": {
@@ -32,6 +132,38 @@
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "propertyId": "prop_5YCV8XNQCMSWBB0KJEHTTDMTTQ"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the formation form slot."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "フォームスロットを一意に識別します。"
+            }
+          }
+        },
+        "propertyId": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Character instance ID",
+              "description": "Identifier of the character instance assigned to this slot."
+            },
+            "ja": {
+              "label": "キャラクター個体ID",
+              "description": "このスロットに配置されたキャラクター個体の識別子です。"
+            }
+          }
+        }
       }
     },
     "CharacterFormationSlot": {
@@ -42,12 +174,64 @@
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "propertyRegex": "prop_1KTAJF5QGZJNR6EA3HVSC8QQBT"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the formation slot."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "編成スロットを一意に識別します。"
+            }
+          }
+        },
+        "propertyRegex": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Eligibility pattern",
+              "description": "Regular expression matching character instance IDs eligible for this slot."
+            },
+            "ja": {
+              "label": "配置条件",
+              "description": "このスロットへ配置できるキャラクター個体IDの正規表現です。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "AcquireToCharacterFormation": "at_19DKKF7AKA89JB5SY1CDA44B63",
     "IncreaseSaveArea": "at_4NRP2334FY75C65TXQZ4PCT9QH"
+  },
+  "actionTransformSignatures": {
+    "AcquireToCharacterFormation": {
+      "category": "acquire",
+      "parameters": {
+        "index": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "IncreaseSaveArea": {
+      "category": "acquire",
+      "parameters": {
+        "value": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "formation.FormModel": "mdr_01RMR25QP499X8QWHZX922SPR5",

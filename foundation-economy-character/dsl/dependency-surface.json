@@ -15,6 +15,121 @@
         "nextLevelExperience": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77",
         "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
         "sort": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
+      },
+      "propertyDetails": {
+        "experience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current experience",
+              "description": "Cumulative experience currently earned by the character.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "現在経験値",
+              "description": "キャラクターが現在獲得している累積経験値です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the character."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "キャラクターを一意に識別します。"
+            }
+          }
+        },
+        "level": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level",
+              "description": "Current level of the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在レベル",
+              "description": "キャラクターの現在レベルです。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "levelCap": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level cap",
+              "description": "Level cap currently applied to the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在のレベル上限",
+              "description": "キャラクターに現在適用されているレベル上限です。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "nextLevelExperience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Experience for the next level",
+              "description": "Cumulative experience needed to reach the next level; 0 once the level cap is reached.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "次レベルまでの必要経験値",
+              "description": "次のレベルに到達するために必要な累積経験値です。レベル上限に達している場合は 0 です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "propertyId": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Character instance ID",
+              "description": "Identifier of the character instance owned by the player."
+            },
+            "ja": {
+              "label": "キャラクター個体ID",
+              "description": "プレイヤーが所持するキャラクター個体の識別子です。"
+            }
+          }
+        },
+        "sort": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Sort order",
+              "description": "Value used to order characters in lists."
+            },
+            "ja": {
+              "label": "表示順",
+              "description": "キャラクター一覧で使用する並び順の値です。"
+            }
+          }
+        }
       }
     },
     "CharacterCollection": {
@@ -28,6 +143,91 @@
         "defaultCapacity": "prop_2GW5Y3B5C72XV6HSRV8R9RZX58",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "maximumCapacity": "prop_0YMDYAY5JDK7N10HPS96137T2V"
+      },
+      "propertyDetails": {
+        "currentCpacity": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current capacity",
+              "description": "Character capacity currently available to the player.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "現在の所持枠",
+              "description": "プレイヤーが現在利用できるキャラクター所持枠です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "currentCpacityUsage": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Used capacity",
+              "description": "Character capacity currently in use.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "使用中の所持枠",
+              "description": "現在キャラクターが使用している所持枠数です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "defaultCapacity": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Initial capacity",
+              "description": "Character capacity granted to a new player.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "初期所持枠",
+              "description": "新規プレイヤーに付与するキャラクター所持枠です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the character inventory."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "キャラクター所持枠を一意に識別します。"
+            }
+          }
+        },
+        "maximumCapacity": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Maximum capacity",
+              "description": "Maximum character capacity a player can reach.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "最大所持枠",
+              "description": "拡張できるキャラクター所持枠の最大値です。",
+              "unit": "枠"
+            }
+          }
+        }
       }
     },
     "CharacterExperience": {
@@ -40,6 +240,74 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "maxLevelCap": "prop_224DYPA75PEZKHXJMGJZP3G393",
         "threshold": "prop_35HPHKJZ5BQQ2PBY7EX482J65K"
+      },
+      "propertyDetails": {
+        "defaultLevelCap": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Initial level cap",
+              "description": "Initial level cap applied to a character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "初期レベル上限",
+              "description": "キャラクターに最初に適用するレベル上限です。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the character experience configuration."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "キャラクター経験値設定を一意に識別します。"
+            }
+          }
+        },
+        "maxLevelCap": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Maximum level cap",
+              "description": "Highest level cap a character can reach.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "最大レベル上限",
+              "description": "キャラクターが到達できるレベル上限の最大値です。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "threshold": {
+          "type": "list<int64>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Experience thresholds",
+              "description": "Cumulative experience required to reach each level.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "必要経験値テーブル",
+              "description": "各レベルへ到達するために必要な累積経験値です。",
+              "unit": "経験値"
+            }
+          }
+        }
       }
     }
   },
@@ -48,6 +316,56 @@
     "AcquireCharacterExperience": "at_0TEHD9M5M58SY923NTA3T75DDM",
     "AddCharacterCapacity": "at_2V8JQ64ZTY8F3AQZFZZWW8E0XR",
     "IncreaseCharacterLevelCap": "at_5DM9CS976M9NSA3X7BR25NTPR3"
+  },
+  "actionTransformSignatures": {
+    "AcquireCharacter": {
+      "category": "acquire",
+      "parameters": {
+        "character": {
+          "type": "ref<Character>",
+          "required": true
+        },
+        "count": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "AcquireCharacterExperience": {
+      "category": "acquire",
+      "parameters": {
+        "propertyId": {
+          "type": "ref<Character>",
+          "required": true
+        },
+        "value": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "AddCharacterCapacity": {
+      "category": "acquire",
+      "parameters": {
+        "value": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "IncreaseCharacterLevelCap": {
+      "category": "acquire",
+      "parameters": {
+        "propertyId": {
+          "type": "ref<Character>",
+          "required": true
+        },
+        "value": {
+          "type": "int64",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "experience.ExperienceModel": "mdr_4D3TBCYQKS94GAV9WSFVNJEXQY",

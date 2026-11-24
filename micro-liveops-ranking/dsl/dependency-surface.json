@@ -15,6 +15,115 @@
         "schedule": "prop_00D031DYK085H3KN6JQ04P6PST",
         "score": "prop_00D031DYK0992AG7MFZHFPE8KQ",
         "sum": "prop_00D031DYK09YX8Q1K3QBKCFV3Q"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the ranking."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ランキングを一意に識別します。"
+            }
+          }
+        },
+        "maximumValue": {
+          "type": "int64",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Maximum score",
+              "description": "Highest score accepted by the ranking."
+            },
+            "ja": {
+              "label": "最大スコア",
+              "description": "受け付けるスコアの最大値です。"
+            }
+          }
+        },
+        "minimumValue": {
+          "type": "int64",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Minimum score",
+              "description": "Lowest score accepted by the ranking."
+            },
+            "ja": {
+              "label": "最小スコア",
+              "description": "受け付けるスコアの最小値です。"
+            }
+          }
+        },
+        "orderDirection": {
+          "type": "enum<asc|desc>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Ranking order",
+              "description": "Whether higher or lower scores rank first."
+            },
+            "ja": {
+              "label": "順位方向",
+              "description": "高いスコアと低いスコアのどちらを上位にするかを設定します。"
+            }
+          }
+        },
+        "schedule": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Entry schedule",
+              "description": "Schedule during which scores may be submitted."
+            },
+            "ja": {
+              "label": "開催スケジュール",
+              "description": "ランキングへスコアを登録できる開催スケジュールです。"
+            }
+          }
+        },
+        "score": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Player score",
+              "description": "Player's current score in this ranking.",
+              "unit": "points"
+            },
+            "ja": {
+              "label": "プレイヤースコア",
+              "description": "このランキングにおけるプレイヤーの現在スコアです。",
+              "unit": "点"
+            }
+          }
+        },
+        "sum": {
+          "type": "bool",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Sum scores",
+              "description": "Whether submitted scores are added up. Otherwise the last score submitted replaces the one before."
+            },
+            "ja": {
+              "label": "スコアを合算",
+              "description": "複数回送信したスコアを合算するかを設定します。合算しない場合は、最後に送信したスコアで上書きされます。"
+            }
+          }
+        }
       }
     },
     "RankingReward": {
@@ -27,12 +136,108 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "ranking": "prop_00D031DYK0DPGPB0KD153VWA20",
         "thresholdRank": "prop_00D031DYK0BEEZ9PX7AGRDHYGE"
+      },
+      "propertyDetails": {
+        "acquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Acquire actions",
+              "description": "Reward actions executed for players who meet the placement threshold."
+            },
+            "ja": {
+              "label": "獲得アクション",
+              "description": "順位条件を満たしたプレイヤーへ実行する報酬アクションです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the ranking reward."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ランキング報酬を一意に識別します。"
+            }
+          }
+        },
+        "ranking": {
+          "type": "ref<Ranking>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Ranking",
+              "description": "Ranking that distributes this reward."
+            },
+            "ja": {
+              "label": "対象ランキング",
+              "description": "この報酬を配布するランキングです。"
+            }
+          }
+        },
+        "thresholdRank": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Rank threshold",
+              "description": "Lowest placement eligible for this reward. 1001 is for players outside the top 1000.",
+              "unit": "place"
+            },
+            "ja": {
+              "label": "順位しきい値",
+              "description": "この報酬を受け取れる最下位の順位です。1001 は上位 1000 位に入らなかったプレイヤー向けです。",
+              "unit": "位"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "ReceiveRankingReward": "at_14BNWJKZBZ8B1AW16TPFSHX7KY",
     "VerifyRankingScoreReached": "at_21RD4Y7BR38AQ9N31TQ5KZ9861"
+  },
+  "actionTransformSignatures": {
+    "ReceiveRankingReward": {
+      "category": "consume",
+      "parameters": {
+        "ranking": {
+          "type": "ref<Ranking>",
+          "required": true
+        },
+        "season": {
+          "type": "int64",
+          "required": true
+        }
+      }
+    },
+    "VerifyRankingScoreReached": {
+      "category": "verify",
+      "parameters": {
+        "ranking": {
+          "type": "ref<Ranking>",
+          "required": true
+        },
+        "season": {
+          "type": "int64",
+          "required": true
+        },
+        "score": {
+          "type": "int64",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "ranking2.GlobalRankingModel": "mdr_00KHZZ4XYNBK8S4GF1AEJHV5RR",

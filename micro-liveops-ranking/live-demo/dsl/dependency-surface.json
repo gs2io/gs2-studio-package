@@ -27,6 +27,23 @@
       },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "Contest",
+              "description": "The few minutes in which a visitor can score."
+            },
+            "ja": {
+              "label": "コンテスト",
+              "description": "ランキングに参加できる数分間の枠です。"
+            }
+          }
+        }
       }
     },
     "RankingReward": {
@@ -40,10 +57,92 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "ranking": "prop_00D031DYK0DPGPB0KD153VWA20",
         "thresholdRank": "prop_00D031DYK0BEEZ9PX7AGRDHYGE"
+      },
+      "propertyDetails": {
+        "acquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Acquire actions",
+              "description": "Reward actions executed for players who meet the placement threshold."
+            },
+            "ja": {
+              "label": "獲得アクション",
+              "description": "順位条件を満たしたプレイヤーへ実行する報酬アクションです。"
+            }
+          }
+        },
+        "coins": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reward coins",
+              "description": "Coins paid when this tier's reward is received.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "報酬コイン",
+              "description": "この順位帯の報酬を受け取ったときに付与するコインの額です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the ranking reward."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ランキング報酬を一意に識別します。"
+            }
+          }
+        },
+        "ranking": {
+          "type": "ref<micro-liveops-ranking:Ranking>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Ranking",
+              "description": "Ranking that distributes this reward."
+            },
+            "ja": {
+              "label": "対象ランキング",
+              "description": "この報酬を配布するランキングです。"
+            }
+          }
+        },
+        "thresholdRank": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Rank threshold",
+              "description": "Lowest placement eligible for this reward. 1001 is for players outside the top 1000.",
+              "unit": "place"
+            },
+            "ja": {
+              "label": "順位しきい値",
+              "description": "この報酬を受け取れる最下位の順位です。1001 は上位 1000 位に入らなかったプレイヤー向けです。",
+              "unit": "位"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_5JX9G1DX8VBRFS9TXTCGRP7Y7C",
     "transaction.ConsumeAction": "mdr_47ZSCBNGYQA8WV5CPB3EFQNE5N"

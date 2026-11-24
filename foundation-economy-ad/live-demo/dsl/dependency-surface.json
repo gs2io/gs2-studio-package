@@ -28,11 +28,51 @@
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "value": "prop_2HDPNCCQPB7F19C0PQ0SSM5GSK"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the ad view point."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "広告視聴枠を一意に識別します。"
+            }
+          }
+        },
+        "value": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Available views",
+              "description": "Current number of ad-view points available to the player.",
+              "unit": "views"
+            },
+            "ja": {
+              "label": "視聴可能回数",
+              "description": "プレイヤーが利用できる広告視聴ポイントの現在値です。",
+              "unit": "回"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "AcquireAdViewPoint": "at_1BKB0K494K8R6BV7VA50ZJ2T0D"
+  },
+  "actionTransformSignatures": {
+    "AcquireAdViewPoint": {
+      "category": "acquire",
+      "parameters": {}
+    }
   },
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_3ESNRVY21ZAPJS612007NXVYD0",

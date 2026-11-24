@@ -16,6 +16,138 @@
         "nextLevelExperience": "prop_00D0MAV1CKRDXX4KXDJP3ZKQ77",
         "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
         "sort": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
+      },
+      "propertyDetails": {
+        "experience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current experience",
+              "description": "Cumulative experience currently earned by the character.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "現在経験値",
+              "description": "キャラクターが現在獲得している累積経験値です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "grade": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current grade",
+              "description": "Current grade reached by the character.",
+              "unit": "grades"
+            },
+            "ja": {
+              "label": "現在グレード",
+              "description": "キャラクターが現在到達しているグレードです。",
+              "unit": "段階"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the character."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "キャラクターを一意に識別します。"
+            }
+          }
+        },
+        "level": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level",
+              "description": "Current level of the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在レベル",
+              "description": "キャラクターの現在レベルです。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "levelCap": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level cap",
+              "description": "Level cap currently applied to the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在のレベル上限",
+              "description": "キャラクターに現在適用されているレベル上限です。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "nextLevelExperience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Experience for the next level",
+              "description": "Cumulative experience needed to reach the next level; 0 once the level cap is reached.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "次レベルまでの必要経験値",
+              "description": "次のレベルに到達するために必要な累積経験値です。レベル上限に達している場合は 0 です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "propertyId": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Character instance ID",
+              "description": "Identifier of the character instance owned by the player."
+            },
+            "ja": {
+              "label": "キャラクター個体ID",
+              "description": "プレイヤーが所持するキャラクター個体の識別子です。"
+            }
+          }
+        },
+        "sort": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Sort order",
+              "description": "Value used to order characters in lists."
+            },
+            "ja": {
+              "label": "表示順",
+              "description": "キャラクター一覧で使用する並び順の値です。"
+            }
+          }
+        }
       }
     },
     "CharacterGradeStep": {
@@ -28,6 +160,70 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "propertyIdRegex": "prop_00D0320HQ4HKJ6EW5M3Z8QS8PG",
         "rankCapValue": "prop_00D0320HQ4H7XNC4RCNDDV9W35"
+      },
+      "propertyDetails": {
+        "gradeUpPropertyIdRegex": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Material character pattern",
+              "description": "Regular expression matching characters that may be consumed for grade-up. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended."
+            },
+            "ja": {
+              "label": "素材キャラクター条件",
+              "description": "グレードアップ素材として消費できるキャラクターの正規表現です。照合対象はキャラクター個体ID（アイテムセットの GRN）にレベル用の接尾辞 `:level` を付けた値です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the grade step."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "グレード段階を一意に識別します。"
+            }
+          }
+        },
+        "propertyIdRegex": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Target character pattern",
+              "description": "Regular expression matching characters eligible for this grade. It is matched against the character instance ID (its item set GRN) with the level suffix `:level` appended."
+            },
+            "ja": {
+              "label": "対象キャラクター条件",
+              "description": "このグレード段階を適用できるキャラクターの正規表現です。照合対象はキャラクター個体ID（アイテムセットの GRN）にレベル用の接尾辞 `:level` を付けた値です。"
+            }
+          }
+        },
+        "rankCapValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Level cap",
+              "description": "Level cap unlocked by this grade.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "レベル上限",
+              "description": "このグレードで到達可能になるレベル上限です。",
+              "unit": "レベル"
+            }
+          }
+        }
       }
     }
   },
@@ -35,6 +231,43 @@
     "ApplyCharacterGradeRankCap": "at_41T41XDEZE59HSDY1D8HV4F32X",
     "PromoteCharacterGrade": "at_0AV65RY3CPHDE6VDR8XQ9MH72H",
     "VerifyCharacterGradeReached": "at_0ZS4W918W38968ZST9EBSZJWTH"
+  },
+  "actionTransformSignatures": {
+    "ApplyCharacterGradeRankCap": {
+      "category": "acquire",
+      "parameters": {
+        "propertyId": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "PromoteCharacterGrade": {
+      "category": "acquire",
+      "parameters": {
+        "propertyId": {
+          "type": "string",
+          "required": true
+        },
+        "gradeValue": {
+          "type": "int64",
+          "required": true
+        }
+      }
+    },
+    "VerifyCharacterGradeReached": {
+      "category": "verify",
+      "parameters": {
+        "propertyId": {
+          "type": "string",
+          "required": true
+        },
+        "gradeValue": {
+          "type": "int64",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "grade.GradeEntryModel": "mdr_6FMYQBP94FAQRRQNCBHDWRD8NM",

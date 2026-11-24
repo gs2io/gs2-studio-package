@@ -9,6 +9,23 @@
       "canonicalTypeId": "dt_5X0WV26CPKD17193EPDQD24EP3",
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the currency type."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "通貨種別を一意に識別します。"
+            }
+          }
+        }
       }
     },
     "StoreProduct": {
@@ -44,10 +61,90 @@
         "googlePlayProductId": "prop_7TADZ4DEA40BBKZ46GN2R05E4J",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "prices": "prop_01M40RS7N08DEDFYE3YFC4TRYV"
+      },
+      "propertyDetails": {
+        "appleAppStoreProductId": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "App Store product ID",
+              "description": "Product identifier registered in App Store Connect."
+            },
+            "ja": {
+              "label": "App Store商品ID",
+              "description": "App Store Connectで登録した商品の識別子です。"
+            }
+          }
+        },
+        "count": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Currency amount",
+              "description": "Amount of currency granted when this store product is purchased.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "付与通貨量",
+              "description": "このストア商品を購入したときに付与する通貨量です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "googlePlayProductId": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Google Play product ID",
+              "description": "Product identifier registered in Google Play Console."
+            },
+            "ja": {
+              "label": "Google Play商品ID",
+              "description": "Google Play Consoleで登録した商品の識別子です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the store product."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ストア商品を一意に識別します。"
+            }
+          }
+        },
+        "prices": {
+          "type": "list<inlineElement>",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Prices",
+              "description": "Prices of this store product, one per currency it sells for."
+            },
+            "ja": {
+              "label": "販売価格",
+              "description": "販売通貨ごとのこのストア商品の価格です。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "showcase.DisplayItem": "mdr_5G3AX0767581SRB6QPW3FRXDBR",
     "showcase.Namespace": "mdr_437BHZT32X81A850WH802NN8BP",

@@ -19,6 +19,173 @@
         "targetFieldName": "prop_00D0322BN7Z2CA8G16H48JGTJ5",
         "targetModelName": "prop_00D0W9XTYQ1EVCPWBQX16G20VV",
         "targetType": "prop_00D0W9XTYQ1A7B8FZE88WBY1R0"
+      },
+      "propertyDetails": {
+        "conditionGrn": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Condition GRN",
+              "description": "GRN of what this buff applies to."
+            },
+            "ja": {
+              "label": "条件 GRN",
+              "description": "このバフを適用する対象の GRN です。"
+            }
+          }
+        },
+        "conditionModelName": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Condition model",
+              "description": "Model the condition GRN refers to."
+            },
+            "ja": {
+              "label": "条件モデル",
+              "description": "適用条件の GRN が指すモデル名です。"
+            }
+          }
+        },
+        "expression": {
+          "type": "enum<rate_add|mul|value_add>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Expression",
+              "description": "How the modifier is combined with the original value."
+            },
+            "ja": {
+              "label": "計算方式",
+              "description": "補正値を元の値へ加算または乗算する方式です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the buff."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "バフを一意に識別します。"
+            }
+          }
+        },
+        "priority": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Priority",
+              "description": "Order used when multiple buffs affect the same field."
+            },
+            "ja": {
+              "label": "優先度",
+              "description": "同じフィールドへ複数のバフを適用する順序です。"
+            }
+          }
+        },
+        "rate": {
+          "type": "float32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Modifier value",
+              "description": "Multiplier or additive value applied to the target field."
+            },
+            "ja": {
+              "label": "補正値",
+              "description": "対象フィールドへ適用する倍率または加算値です。"
+            }
+          }
+        },
+        "schedule": {
+          "type": "ref<foundation-economy-schedule:Schedule>",
+          "requirement": "never",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Active schedule",
+              "description": "Schedule during which this buff is active."
+            },
+            "ja": {
+              "label": "有効期間",
+              "description": "このバフを有効にするスケジュールです。"
+            }
+          }
+        },
+        "targetActionName": {
+          "type": "string",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Target action",
+              "description": "GS2 action whose value is modified."
+            },
+            "ja": {
+              "label": "対象アクション",
+              "description": "補正対象にするGS2アクション名です。"
+            }
+          }
+        },
+        "targetFieldName": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Target field",
+              "description": "Field within the target action or model that is modified."
+            },
+            "ja": {
+              "label": "対象フィールド",
+              "description": "対象アクションまたはモデルの中で補正するフィールド名です。"
+            }
+          }
+        },
+        "targetModelName": {
+          "type": "string",
+          "requirement": "conditional",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Target model",
+              "description": "GS2 model whose field is modified."
+            },
+            "ja": {
+              "label": "対象モデル",
+              "description": "補正対象にするGS2モデル名です。"
+            }
+          }
+        },
+        "targetType": {
+          "type": "enum<action|model>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Target type",
+              "description": "Whether an action's request or a model's field is modified."
+            },
+            "ja": {
+              "label": "対象の種類",
+              "description": "アクションのリクエストを補正するか、モデルのフィールドを補正するかです。"
+            }
+          }
+        }
       }
     },
     "BuffCampaign": {
@@ -46,10 +213,28 @@
       },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "Campaign",
+              "description": "The double idle rewards campaign."
+            },
+            "ja": {
+              "label": "キャンペーン",
+              "description": "放置報酬 2 倍のキャンペーンです。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_3H9P4VT5JMB66S833SAD8518VF",
     "transaction.ConsumeAction": "mdr_4TJ98WDB33BXFVPDTMACYMCW4H"

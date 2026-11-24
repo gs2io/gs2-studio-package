@@ -22,6 +22,68 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "propertyId": "prop_699T9K7XAW73CF6ECCEGBK006H",
         "sortValue": "prop_494Q17EMVWXF1PQJW4HZ1K09SD"
+      },
+      "propertyDetails": {
+        "category": {
+          "type": "ref<foundation-economy-equipment:EquipmentCategory>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Equipment category",
+              "description": "Category this equipment belongs to."
+            },
+            "ja": {
+              "label": "装備カテゴリ",
+              "description": "この装備が属するカテゴリです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the equipment item."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "装備を一意に識別します。"
+            }
+          }
+        },
+        "propertyId": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Equipment instance ID",
+              "description": "Identifier of the equipment instance owned by the player."
+            },
+            "ja": {
+              "label": "装備個体ID",
+              "description": "プレイヤーが所持する装備個体の識別子です。"
+            }
+          }
+        },
+        "sortValue": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Sort order",
+              "description": "Value used to order equipment in lists."
+            },
+            "ja": {
+              "label": "表示順",
+              "description": "装備一覧で使用する並び順の値です。"
+            }
+          }
+        }
       }
     },
     "EquipmentCatalog": {
@@ -42,6 +104,38 @@
       "properties": {
         "equipment": "prop_00D0MNZ5T9XQ44ABYAZSQHEVCA",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "equipment": {
+          "type": "ref<foundation-economy-equipment:Equipment>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Equipment",
+              "description": "The equipment this catalog row grants."
+            },
+            "ja": {
+              "label": "装備",
+              "description": "このカタログ行が付与する装備です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "Catalog",
+              "description": "Grants one piece of equipment in the demo."
+            },
+            "ja": {
+              "label": "装備カタログ",
+              "description": "デモで装備を1つ入手します。"
+            }
+          }
+        }
       }
     },
     "EquipmentCollection": {
@@ -65,10 +159,96 @@
         "defaultCapacity": "prop_071QWPTV93WY3RCTPXN9CBG00F",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "maximumCapacity": "prop_4J8TTATGZND7RB0CSEKFY3AG9Z"
+      },
+      "propertyDetails": {
+        "currentCapacityUsage": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Used capacity",
+              "description": "Equipment capacity currently in use.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "使用中の所持枠",
+              "description": "現在装備が使用している所持枠数です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "currentMaximumCapacity": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current capacity",
+              "description": "Equipment capacity currently available to the player.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "現在の所持枠",
+              "description": "プレイヤーが現在利用できる装備所持枠です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "defaultCapacity": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Initial capacity",
+              "description": "Equipment capacity granted to a new player.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "初期所持枠",
+              "description": "新規プレイヤーに付与する装備所持枠です。",
+              "unit": "枠"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the equipment inventory."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "装備所持枠を一意に識別します。"
+            }
+          }
+        },
+        "maximumCapacity": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Maximum capacity",
+              "description": "Maximum equipment capacity a player can reach.",
+              "unit": "slots"
+            },
+            "ja": {
+              "label": "最大所持枠",
+              "description": "拡張できる装備所持枠の最大値です。",
+              "unit": "枠"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "transaction.ConsumeAction": "mdr_7MKHR4NGCCAFNB6HEK9ND6PBGD"
   }

@@ -3,5 +3,6 @@
   "packageId": "micro-economy-equipment-loadout-demo",
   "types": {},
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {}
 }

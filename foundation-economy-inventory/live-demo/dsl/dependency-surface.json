@@ -28,10 +28,45 @@
       "properties": {
         "count": "prop_4RM1PKMWET4WYQBAW013CTF8YD",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "count": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Owned quantity",
+              "description": "Quantity of the item owned by the player.",
+              "unit": "items"
+            },
+            "ja": {
+              "label": "所持数",
+              "description": "プレイヤーが所持しているアイテムの数量です。",
+              "unit": "個"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the item."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "アイテムを一意に識別します。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "transaction.AcquireAction": "mdr_21Q1YPP3PZAHASAJ6VZZ3VRY34",
     "transaction.ConsumeAction": "mdr_6JJ4125ACZB15R6FRY606PP89G"

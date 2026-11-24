@@ -11,6 +11,53 @@
         "followerProfile": "prop_73QSS5XZ6NRSZZM9W4XV4JB0F2",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "publicProfile": "prop_0037P8GKD1Y37HERP8N6DHZM9F"
+      },
+      "propertyDetails": {
+        "followerProfile": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Follower profile",
+              "description": "Profile information visible because the player is a follower."
+            },
+            "ja": {
+              "label": "フォロワー向けプロフィール",
+              "description": "フォロワーとして閲覧できるプロフィール情報です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the follow relationship."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "フォロー関係を一意に識別します。"
+            }
+          }
+        },
+        "publicProfile": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Public profile",
+              "description": "Public profile information of the followed player."
+            },
+            "ja": {
+              "label": "公開プロフィール",
+              "description": "フォロー相手の公開プロフィール情報です。"
+            }
+          }
+        }
       }
     },
     "Friend": {
@@ -22,6 +69,53 @@
         "friendProfile": "prop_24MC6NM8NQ2X1W8TPT2T1V69RK",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "publicProfile": "prop_2W4YWVQAX34Q9GNRA5PBY282CF"
+      },
+      "propertyDetails": {
+        "friendProfile": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Friend profile",
+              "description": "Profile information visible because the players are friends."
+            },
+            "ja": {
+              "label": "フレンド向けプロフィール",
+              "description": "フレンドとして閲覧できるプロフィール情報です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the friend relationship."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "フレンド関係を一意に識別します。"
+            }
+          }
+        },
+        "publicProfile": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Public profile",
+              "description": "Public profile information of the friend."
+            },
+            "ja": {
+              "label": "公開プロフィール",
+              "description": "フレンドの公開プロフィール情報です。"
+            }
+          }
+        }
       }
     },
     "Profile": {
@@ -34,6 +128,68 @@
         "friendProfile": "prop_1D82CH5SP6SD8KM3DMX71SZ738",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "publicProfile": "prop_1MYTKGMH9W77112THJZ3HSMDF9"
+      },
+      "propertyDetails": {
+        "followerProfile": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Follower profile",
+              "description": "Profile information visible to followers."
+            },
+            "ja": {
+              "label": "フォロワー向けプロフィール",
+              "description": "フォロワーへ公開するプロフィール情報です。"
+            }
+          }
+        },
+        "friendProfile": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Friend profile",
+              "description": "Profile information visible to friends."
+            },
+            "ja": {
+              "label": "フレンド向けプロフィール",
+              "description": "フレンドへ公開するプロフィール情報です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the profile."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "プロフィールを一意に識別します。"
+            }
+          }
+        },
+        "publicProfile": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Public profile",
+              "description": "Profile information visible to every player."
+            },
+            "ja": {
+              "label": "公開プロフィール",
+              "description": "すべてのプレイヤーへ公開するプロフィール情報です。"
+            }
+          }
+        }
       }
     },
     "ReceiveFriendRequest": {
@@ -43,6 +199,23 @@
       "canonicalTypeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK",
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the incoming friend request."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "受信フレンド申請を一意に識別します。"
+            }
+          }
+        }
       }
     },
     "SendFriendRequest": {
@@ -52,9 +225,27 @@
       "canonicalTypeId": "dt_6JV3Y0KG2J3C3460P6WD93NW62",
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the outgoing friend request."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "送信フレンド申請を一意に識別します。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {}
 }

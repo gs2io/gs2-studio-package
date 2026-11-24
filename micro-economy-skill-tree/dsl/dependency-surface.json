@@ -16,6 +16,136 @@
         "propertyId": "prop_0SWMGSVKA475QW8AGC95HVCHCV",
         "releasedSkillNodes": "prop_00D0RCHP2Q6QHD0C070KPNT284",
         "sort": "prop_2HBBFFAAQW5JZ63Z9R78FWXE03"
+      },
+      "propertyDetails": {
+        "experience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current experience",
+              "description": "Cumulative experience currently earned by the character.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "現在経験値",
+              "description": "キャラクターが現在獲得している累積経験値です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the character."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "キャラクターを一意に識別します。"
+            }
+          }
+        },
+        "level": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level",
+              "description": "Current level of the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在レベル",
+              "description": "キャラクターの現在レベルです。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "levelCap": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current level cap",
+              "description": "Level cap currently applied to the character.",
+              "unit": "levels"
+            },
+            "ja": {
+              "label": "現在のレベル上限",
+              "description": "キャラクターに現在適用されているレベル上限です。",
+              "unit": "レベル"
+            }
+          }
+        },
+        "nextLevelExperience": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Experience for the next level",
+              "description": "Cumulative experience needed to reach the next level; 0 once the level cap is reached.",
+              "unit": "experience"
+            },
+            "ja": {
+              "label": "次レベルまでの必要経験値",
+              "description": "次のレベルに到達するために必要な累積経験値です。レベル上限に達している場合は 0 です。",
+              "unit": "経験値"
+            }
+          }
+        },
+        "propertyId": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Character instance ID",
+              "description": "Identifier of the character instance owned by the player."
+            },
+            "ja": {
+              "label": "キャラクター個体ID",
+              "description": "プレイヤーが所持するキャラクター個体の識別子です。"
+            }
+          }
+        },
+        "releasedSkillNodes": {
+          "type": "list<string>",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Unlocked skill nodes",
+              "description": "Skill nodes this character has already unlocked."
+            },
+            "ja": {
+              "label": "解放済みスキルノード",
+              "description": "このキャラクターが解放済みのスキルノードの一覧です。"
+            }
+          }
+        },
+        "sort": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Sort order",
+              "description": "Value used to order characters in lists."
+            },
+            "ja": {
+              "label": "表示順",
+              "description": "キャラクター一覧で使用する並び順の値です。"
+            }
+          }
+        }
       }
     },
     "SkillNode": {
@@ -30,12 +160,134 @@
         "releaseConsumeActions": "prop_00D05R0KFCTFK6442MMAKE56Y9",
         "released": "prop_00D0321TWK6CDMBJRD83E6G2K2",
         "restrainReturnRate": "prop_00D0321TWK5R5K4W0KWNR49SHT"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the skill node."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "スキルノードを一意に識別します。"
+            }
+          }
+        },
+        "owner": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "Owning character",
+              "description": "Identifier of the character whose unlock state these flags are read for."
+            },
+            "ja": {
+              "label": "対象キャラクター",
+              "description": "解放状況を読み出す対象のキャラクターを指す識別子です。"
+            }
+          }
+        },
+        "premiseNodes": {
+          "type": "list<string>",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Prerequisite nodes",
+              "description": "Nodes that must be unlocked before this node."
+            },
+            "ja": {
+              "label": "前提ノード",
+              "description": "先に解放しておく必要があるノードの一覧です。"
+            }
+          }
+        },
+        "releaseConsumeActions": {
+          "type": "list<consumeAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Unlock costs",
+              "description": "Consume actions executed to unlock this node."
+            },
+            "ja": {
+              "label": "解放コスト",
+              "description": "このノードを解放するときに実行する消費アクションです。"
+            }
+          }
+        },
+        "released": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Unlocked",
+              "description": "Whether the player has unlocked this node."
+            },
+            "ja": {
+              "label": "解放済み",
+              "description": "プレイヤーがこのノードを解放済みかを示します。"
+            }
+          }
+        },
+        "restrainReturnRate": {
+          "type": "float32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reset refund rate",
+              "description": "Share of the unlock cost refunded when the node is reset.",
+              "unit": "ratio"
+            },
+            "ja": {
+              "label": "リセット返却率",
+              "description": "ノードをリセットしたときに解放コストを返却する割合です。",
+              "unit": "倍"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "ReleaseSkillNode": "at_5WT3G6Z2TK8KETEF100N0T9FQK",
     "RestrainSkillNode": "at_0T4E2X5NJ896J92H8ZAD72DD60"
+  },
+  "actionTransformSignatures": {
+    "ReleaseSkillNode": {
+      "category": "acquire",
+      "parameters": {
+        "propertyId": {
+          "type": "string",
+          "required": true
+        },
+        "node": {
+          "type": "ref<SkillNode>",
+          "required": true
+        }
+      }
+    },
+    "RestrainSkillNode": {
+      "category": "consume",
+      "parameters": {
+        "propertyId": {
+          "type": "string",
+          "required": true
+        },
+        "node": {
+          "type": "ref<SkillNode>",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "skillTree.Namespace": "mdr_5GN698F83ABYK82ZGJ8SXHSGYF",

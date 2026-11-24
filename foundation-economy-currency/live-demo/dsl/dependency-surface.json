@@ -20,6 +20,30 @@
       "properties": {
         "count": "prop_00D0KZCKABE9VVHET0Z8R3QD2M",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "count": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Amount",
+              "description": "How much this deposit adds."
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "Free deposit",
+              "description": "Adds currency to the free balance, the way a reward would."
+            }
+          }
+        }
       }
     },
     "PaidDeposit": {
@@ -40,10 +64,35 @@
       "properties": {
         "count": "prop_00D0KZCKAB8JMZWPNE82NRXE0W",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "count": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Amount",
+              "description": "How much this deposit adds."
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "Paid deposit",
+              "description": "Adds currency to the paid balance, the way a purchase would."
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_6WN3KXB9J0BQJ9FXDG1HFJ09MH"
   }

@@ -25,6 +25,113 @@
         "missionCollection": "prop_22KB372ZE4T79JBJKZGR5M596B",
         "received": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB",
         "targetValue": "prop_4Q0FZ49AS61KZCN0Z8MS0DE7SN"
+      },
+      "propertyDetails": {
+        "completeAcquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Completion rewards",
+              "description": "Acquire actions executed when the mission is completed."
+            },
+            "ja": {
+              "label": "完了報酬",
+              "description": "ミッション完了時に実行する獲得アクションです。"
+            }
+          }
+        },
+        "completed": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Completed",
+              "description": "Whether the player has completed this mission."
+            },
+            "ja": {
+              "label": "完了済み",
+              "description": "プレイヤーがこのミッションを完了したかを示します。"
+            }
+          }
+        },
+        "counter": {
+          "type": "ref<MissionCounter>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Progress counter",
+              "description": "Mission counter used to determine completion."
+            },
+            "ja": {
+              "label": "進捗カウンター",
+              "description": "達成判定に使用するミッションカウンターです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the mission."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ミッションを一意に識別します。"
+            }
+          }
+        },
+        "missionCollection": {
+          "type": "ref<MissionCollection>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Mission group",
+              "description": "Mission group this mission belongs to."
+            },
+            "ja": {
+              "label": "ミッショングループ",
+              "description": "このミッションが属するグループです。"
+            }
+          }
+        },
+        "received": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Reward claimed",
+              "description": "Whether the player has claimed the completion reward."
+            },
+            "ja": {
+              "label": "報酬受取済み",
+              "description": "プレイヤーが完了報酬を受け取ったかを示します。"
+            }
+          }
+        },
+        "targetValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Target value",
+              "description": "Counter value required to complete the mission."
+            },
+            "ja": {
+              "label": "目標値",
+              "description": "ミッションを完了するために必要なカウンター値です。"
+            }
+          }
+        }
       }
     },
     "MissionCollection": {
@@ -46,6 +153,53 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "schedule": "prop_4SWXMEBZDC8Y2G8NHXBQSMNEXJ",
         "scope": "prop_56NPGQ1SCN4Y44TB7EE3JSQZ12"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the mission group."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ミッショングループを一意に識別します。"
+            }
+          }
+        },
+        "schedule": {
+          "type": "ref<foundation-economy-schedule:Schedule>",
+          "requirement": "never",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Availability schedule",
+              "description": "Schedule during which this mission group is available."
+            },
+            "ja": {
+              "label": "開催スケジュール",
+              "description": "このミッショングループを開催するスケジュールです。"
+            }
+          }
+        },
+        "scope": {
+          "type": "enum<daily|weekly|monthly|notReset>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reset scope",
+              "description": "Reset cadence used by missions in this group."
+            },
+            "ja": {
+              "label": "リセット単位",
+              "description": "グループ内ミッションの進捗をリセットする単位です。"
+            }
+          }
+        }
       }
     },
     "MissionCounter": {
@@ -59,6 +213,83 @@
         "todayValue": "prop_3C8D5YDPFSJ3QVC205RWZ7XDZ2",
         "totalValue": "prop_3HTNC82KPKW5J7DFN98H4PPGCW",
         "weeklyValue": "prop_5917YYM3N8ZDDKYH7PDDHE20GG"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the mission counter."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ミッションカウンターを一意に識別します。"
+            }
+          }
+        },
+        "monthlyValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Monthly value",
+              "description": "Progress accumulated in the current monthly reset period."
+            },
+            "ja": {
+              "label": "今月の値",
+              "description": "当月のリセット期間で蓄積した進捗値です。"
+            }
+          }
+        },
+        "todayValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Daily value",
+              "description": "Progress accumulated in the current daily reset period."
+            },
+            "ja": {
+              "label": "本日の値",
+              "description": "当日のリセット期間で蓄積した進捗値です。"
+            }
+          }
+        },
+        "totalValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Total value",
+              "description": "All-time progress value that is not reset."
+            },
+            "ja": {
+              "label": "累計値",
+              "description": "リセットされない累計の進捗値です。"
+            }
+          }
+        },
+        "weeklyValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Weekly value",
+              "description": "Progress accumulated in the current weekly reset period."
+            },
+            "ja": {
+              "label": "今週の値",
+              "description": "当週のリセット期間で蓄積した進捗値です。"
+            }
+          }
+        }
       }
     },
     "MissionSetting": {
@@ -71,11 +302,92 @@
         "resetDayOfMonth": "prop_00D060QP7EVETDNC4SPNMZG6RB",
         "resetDayOfWeek": "prop_0WRXYNE61HNQT4RJNRZ35FNPGP",
         "resetHour": "prop_05MKE4B6YY206260EBQGMX43NW"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the mission settings."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ミッション設定を一意に識別します。"
+            }
+          }
+        },
+        "resetDayOfMonth": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Monthly reset day",
+              "description": "Day of the month when monthly missions reset.",
+              "unit": "day"
+            },
+            "ja": {
+              "label": "月次リセット日",
+              "description": "月次ミッションをリセットする日です。",
+              "unit": "日"
+            }
+          }
+        },
+        "resetDayOfWeek": {
+          "type": "enum<sunday|monday|tuesday|wednesday|thursday|friday|saturday>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Weekly reset day",
+              "description": "Weekday when weekly missions reset."
+            },
+            "ja": {
+              "label": "週次リセット曜日",
+              "description": "週次ミッションをリセットする曜日です。"
+            }
+          }
+        },
+        "resetHour": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reset hour",
+              "description": "UTC hour when missions reset.",
+              "unit": "hour"
+            },
+            "ja": {
+              "label": "リセット時刻",
+              "description": "ミッションをリセットするUTC時刻です。",
+              "unit": "時"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "IncreaseMissionCounter": "at_683TMFPM3A87S843CGWG5PFWCJ"
+  },
+  "actionTransformSignatures": {
+    "IncreaseMissionCounter": {
+      "category": "acquire",
+      "parameters": {
+        "counter": {
+          "type": "ref<MissionCounter>",
+          "required": true
+        },
+        "value": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "mission.CounterModel": "mdr_5Z7G0Z6F359G1APS9TBY5BFARQ",

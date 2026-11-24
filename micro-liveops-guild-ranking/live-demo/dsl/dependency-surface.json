@@ -15,6 +15,115 @@
         "schedule": "prop_00D033H0GPV00M3DBQVFQC6VA2",
         "score": "prop_00D033H0GPYB1S1KXMMSCNDR8E",
         "sum": "prop_00D033H0GPZ8M64WY0868P8S2T"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the guild ranking."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ギルドランキングを一意に識別します。"
+            }
+          }
+        },
+        "maximumValue": {
+          "type": "int64",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Maximum score",
+              "description": "Highest score accepted by the ranking."
+            },
+            "ja": {
+              "label": "最大スコア",
+              "description": "受け付けるスコアの最大値です。"
+            }
+          }
+        },
+        "minimumValue": {
+          "type": "int64",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Minimum score",
+              "description": "Lowest score accepted by the ranking."
+            },
+            "ja": {
+              "label": "最小スコア",
+              "description": "受け付けるスコアの最小値です。"
+            }
+          }
+        },
+        "orderDirection": {
+          "type": "enum<asc|desc>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Ranking order",
+              "description": "Whether higher or lower scores rank first."
+            },
+            "ja": {
+              "label": "順位方向",
+              "description": "高いスコアと低いスコアのどちらを上位にするかを設定します。"
+            }
+          }
+        },
+        "schedule": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Entry schedule",
+              "description": "Schedule during which guild-ranking scores may be submitted."
+            },
+            "ja": {
+              "label": "開催スケジュール",
+              "description": "ギルドランキングへスコアを登録できる開催スケジュールです。"
+            }
+          }
+        },
+        "score": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Player score",
+              "description": "Player's current contribution to the guild ranking.",
+              "unit": "points"
+            },
+            "ja": {
+              "label": "プレイヤースコア",
+              "description": "ギルドランキングに対するプレイヤーの現在スコアです。",
+              "unit": "点"
+            }
+          }
+        },
+        "sum": {
+          "type": "bool",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Sum scores",
+              "description": "Whether scores a member submits are added up. Otherwise the member's last score submitted replaces the one before."
+            },
+            "ja": {
+              "label": "スコアを合算",
+              "description": "同じメンバーが複数回送信したスコアを合算するかを設定します。合算しない場合は、最後に送信したスコアで上書きされます。"
+            }
+          }
+        }
       }
     },
     "GuildRankingReward": {
@@ -28,9 +137,91 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "ranking": "prop_00D033H0GPW6DTTEFEGK4CXBVX",
         "thresholdRank": "prop_00D033H0GPTR5V04T6YPBYCG0Q"
+      },
+      "propertyDetails": {
+        "acquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Acquire actions",
+              "description": "Reward actions executed for members who meet the placement threshold."
+            },
+            "ja": {
+              "label": "獲得アクション",
+              "description": "順位条件を満たしたメンバーへ実行する報酬アクションです。"
+            }
+          }
+        },
+        "coins": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reward coins",
+              "description": "Coins paid when this tier's reward is received.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "報酬コイン",
+              "description": "この順位帯の報酬を受け取ったときに付与するコインの額です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the guild ranking reward."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ギルドランキング報酬を一意に識別します。"
+            }
+          }
+        },
+        "ranking": {
+          "type": "ref<micro-liveops-guild-ranking:GuildRanking>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Guild ranking",
+              "description": "Guild ranking that distributes this reward."
+            },
+            "ja": {
+              "label": "対象ランキング",
+              "description": "この報酬を配布するギルドランキングです。"
+            }
+          }
+        },
+        "thresholdRank": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Rank threshold",
+              "description": "Lowest placement eligible for this reward.",
+              "unit": "place"
+            },
+            "ja": {
+              "label": "順位しきい値",
+              "description": "この報酬を受け取れる最下位の順位です。",
+              "unit": "位"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {}
 }

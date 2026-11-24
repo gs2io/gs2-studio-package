@@ -10,6 +10,38 @@
       "properties": {
         "acquireActions": "prop_00D05P2SE3WMNG5C27EG74BM38",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "acquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Acquire actions",
+              "description": "Acquire actions executed as idle rewards."
+            },
+            "ja": {
+              "label": "獲得アクション",
+              "description": "放置報酬として実行する獲得アクションです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the idle reward."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "放置報酬を一意に識別します。"
+            }
+          }
+        }
       }
     },
     "IdleStatus": {
@@ -34,10 +66,111 @@
         "maximumIdleMinutes": "prop_4RV2VH9G7RME7HVFFF1KSCK60P",
         "nextRewardsAt": "prop_5651SXBQZ535SAK2H3JZBTZ5XS",
         "rewardIntervalMinutes": "prop_343KJVJCADHD7053A0N9JQ0M7W"
+      },
+      "propertyDetails": {
+        "currentIdleMinutes": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current idle duration",
+              "description": "Idle duration accumulated so far.",
+              "unit": "minutes"
+            },
+            "ja": {
+              "label": "現在の放置時間",
+              "description": "現在までに蓄積した放置時間です。",
+              "unit": "分"
+            }
+          }
+        },
+        "defaultMaximumIdleMinutes": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Initial idle limit",
+              "description": "Initial maximum idle duration for a new player.",
+              "unit": "minutes"
+            },
+            "ja": {
+              "label": "初期放置上限",
+              "description": "新規プレイヤーに適用する放置時間の上限です。",
+              "unit": "分"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the idle status."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "放置状況を一意に識別します。"
+            }
+          }
+        },
+        "maximumIdleMinutes": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current idle limit",
+              "description": "Current maximum idle duration applied to the player.",
+              "unit": "minutes"
+            },
+            "ja": {
+              "label": "現在の放置上限",
+              "description": "プレイヤーに適用されている放置時間の上限です。",
+              "unit": "分"
+            }
+          }
+        },
+        "nextRewardsAt": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Next reward time",
+              "description": "Time when the next idle reward becomes available."
+            },
+            "ja": {
+              "label": "次回報酬日時",
+              "description": "次の放置報酬が確定する日時です。"
+            }
+          }
+        },
+        "rewardIntervalMinutes": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reward interval",
+              "description": "Interval at which idle rewards accumulate.",
+              "unit": "minutes"
+            },
+            "ja": {
+              "label": "報酬間隔",
+              "description": "放置報酬を積み上げる間隔です。",
+              "unit": "分"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "idle.AcquireActionList": "mdr_75CRRC6C7V83S8R3QPX5T50Q9Z",
     "idle.CategoryModel": "mdr_720YFK0MG497KRH6159H7NKWHY",

@@ -23,6 +23,83 @@
         "quest": "prop_1VVD0ASXTKMHVXA7F1P0R3QC86",
         "questCollection": "prop_00D0TSH4BEJSJYX1BYEN7N5QWK",
         "rewards": "prop_5CJ0VWR32T9SD0RSQSYMEXF3HX"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the quest progress."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "クエスト進行を一意に識別します。"
+            }
+          }
+        },
+        "inProgress": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "In progress",
+              "description": "Whether the player has a quest in progress."
+            },
+            "ja": {
+              "label": "進行中",
+              "description": "プレイヤーが進行中のクエストを持っているかを示します。"
+            }
+          }
+        },
+        "quest": {
+          "type": "ref<Quest>",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Active quest",
+              "description": "Quest currently in progress for the player."
+            },
+            "ja": {
+              "label": "進行中のクエスト",
+              "description": "プレイヤーが現在進行しているクエストです。"
+            }
+          }
+        },
+        "questCollection": {
+          "type": "ref<QuestCollection>",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Active quest group",
+              "description": "Quest group of the quest currently in progress."
+            },
+            "ja": {
+              "label": "進行中のクエストグループ",
+              "description": "進行中のクエストが属するクエストグループです。"
+            }
+          }
+        },
+        "rewards": {
+          "type": "list<inline<ProgressReward>>",
+          "requirement": "never",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Completion rewards",
+              "description": "Rewards granted when the quest in progress is completed; decided when it starts."
+            },
+            "ja": {
+              "label": "クリア報酬",
+              "description": "進行中のクエストをクリアしたときに付与される報酬の一覧です。開始時に決まります。"
+            }
+          }
+        }
       }
     },
     "ProgressReward": {
@@ -34,6 +111,55 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "itemId": "prop_1Y4C4J39XVY8GXQ1SCV6N3TZHT",
         "value": "prop_67KF4GJSKA9NANA1AKT6BFB88K"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the quest reward."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "クエスト報酬を一意に識別します。"
+            }
+          }
+        },
+        "itemId": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Reward item ID",
+              "description": "GRN of the resource granted as a reward when the quest is completed."
+            },
+            "ja": {
+              "label": "報酬アイテムID",
+              "description": "クリア時に付与される報酬リソースの GRN です。"
+            }
+          }
+        },
+        "value": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Reward quantity",
+              "description": "Quantity of the reward granted when the quest is completed.",
+              "unit": "items"
+            },
+            "ja": {
+              "label": "報酬数",
+              "description": "クリア時に付与される報酬の数量です。",
+              "unit": "個"
+            }
+          }
+        }
       }
     },
     "Quest": {
@@ -59,6 +185,113 @@
         "failedAcquireActions": "prop_5FQSXKRKJNEMGY0SBCNZ9QF7CC",
         "firstCompleteAcquireActions": "prop_49CWPE451G4S2NWECN50J39WNY",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "collection": {
+          "type": "ref<QuestCollection>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Quest group",
+              "description": "Quest group this quest belongs to."
+            },
+            "ja": {
+              "label": "クエストグループ",
+              "description": "このクエストが属するグループです。"
+            }
+          }
+        },
+        "completeAcquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Completion rewards",
+              "description": "Acquire actions executed on each completion."
+            },
+            "ja": {
+              "label": "通常クリア報酬",
+              "description": "クリア時に毎回実行する獲得アクションです。"
+            }
+          }
+        },
+        "completed": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Completed",
+              "description": "Whether the player has completed this quest."
+            },
+            "ja": {
+              "label": "クリア済み",
+              "description": "プレイヤーがこのクエストをクリア済みかを示します。"
+            }
+          }
+        },
+        "consumeActions": {
+          "type": "list<consumeAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Start costs",
+              "description": "Consume actions executed when the quest starts."
+            },
+            "ja": {
+              "label": "開始時消費",
+              "description": "クエスト開始時に実行する消費アクションです。"
+            }
+          }
+        },
+        "failedAcquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Failure actions",
+              "description": "Acquire actions executed when the quest fails."
+            },
+            "ja": {
+              "label": "失敗時アクション",
+              "description": "クエスト失敗時に実行する獲得アクションです。"
+            }
+          }
+        },
+        "firstCompleteAcquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "First-clear rewards",
+              "description": "Acquire actions executed on the first completion."
+            },
+            "ja": {
+              "label": "初回クリア報酬",
+              "description": "初回クリア時に実行する獲得アクションです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the quest."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "クエストを一意に識別します。"
+            }
+          }
+        }
       }
     },
     "QuestCollection": {
@@ -69,10 +302,43 @@
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "schedule": "prop_1VTB4EWHTR7ZVYPG5X71RQVCDN"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the quest group."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "クエストグループを一意に識別します。"
+            }
+          }
+        },
+        "schedule": {
+          "type": "ref<foundation-economy-schedule:Schedule>",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Availability schedule",
+              "description": "Schedule during which this quest group is available."
+            },
+            "ja": {
+              "label": "開催スケジュール",
+              "description": "このクエストグループを開催するスケジュールです。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "quest.Contents": "mdr_5354WY82118TB9R28D6Y8Q7EZQ",
     "quest.Namespace": "mdr_1F06WG3VDZ9AB9A5ZHKG7WWP95",

@@ -15,6 +15,119 @@
         "resetDayOfWeek": "prop_00D031CCJCA2HJ6M98DXZEDTKY",
         "resetHour": "prop_00D031CCJCCJ5FTKVFFRSFJQZ0",
         "resetType": "prop_00D031CCJC935P6N8JH9QZET3R"
+      },
+      "propertyDetails": {
+        "anchorTimestamp": {
+          "type": "timestamp",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Anchor time",
+              "description": "Reference time used to calculate a days-based reset cadence."
+            },
+            "ja": {
+              "label": "基準日時",
+              "description": "日数指定方式のリセット周期を数える基準日時です。"
+            }
+          }
+        },
+        "days": {
+          "type": "int32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reset interval",
+              "description": "Number of days between resets for the days-based cadence.",
+              "unit": "days"
+            },
+            "ja": {
+              "label": "リセット間隔",
+              "description": "日数指定方式でリセットする間隔です。",
+              "unit": "日"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the reset schedule."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "リセット設定を一意に識別します。"
+            }
+          }
+        },
+        "resetDayOfMonth": {
+          "type": "int32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reset day of month",
+              "description": "Day of the month on which a monthly reset occurs.",
+              "unit": "day"
+            },
+            "ja": {
+              "label": "リセット日",
+              "description": "月次リセットを実行する日です。",
+              "unit": "日"
+            }
+          }
+        },
+        "resetDayOfWeek": {
+          "type": "enum<sunday|monday|tuesday|wednesday|thursday|friday|saturday>",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reset weekday",
+              "description": "Weekday on which a weekly reset occurs."
+            },
+            "ja": {
+              "label": "リセット曜日",
+              "description": "週次リセットを実行する曜日です。"
+            }
+          }
+        },
+        "resetHour": {
+          "type": "int32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reset hour",
+              "description": "UTC hour at which the reset occurs.",
+              "unit": "hour"
+            },
+            "ja": {
+              "label": "リセット時刻",
+              "description": "リセットを実行するUTC時刻です。",
+              "unit": "時"
+            }
+          }
+        },
+        "resetType": {
+          "type": "enum<notReset|daily|weekly|monthly|days>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reset type",
+              "description": "Cadence used to reset usage counts."
+            },
+            "ja": {
+              "label": "リセット方式",
+              "description": "利用回数をリセットする周期の種類です。"
+            }
+          }
+        }
       }
     },
     "UsageLimitCounter": {
@@ -55,9 +168,108 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "limit": "prop_00D031N0N8XCG9EJ25SDVPGMYT",
         "nextResetAt": "prop_00D031N0N8S7KC5GNB45BP0PGT"
+      },
+      "propertyDetails": {
+        "adMax": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Ad uses limit",
+              "description": "How many times this can be used by watching an ad in each period.",
+              "unit": "uses"
+            },
+            "ja": {
+              "label": "広告視聴回数の上限",
+              "description": "この期間に広告を見て使える回数の上限です。",
+              "unit": "回"
+            }
+          }
+        },
+        "count": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Usage count",
+              "description": "Number of uses since the previous reset.",
+              "unit": "uses"
+            },
+            "ja": {
+              "label": "利用回数",
+              "description": "前回のリセット以降に利用した回数です。",
+              "unit": "回"
+            }
+          }
+        },
+        "freeMax": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Free uses limit",
+              "description": "How many times this can be used for free in each period.",
+              "unit": "uses"
+            },
+            "ja": {
+              "label": "無料回数の上限",
+              "description": "この期間に無料で使える回数の上限です。",
+              "unit": "回"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the usage counter."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "回数カウンターを一意に識別します。"
+            }
+          }
+        },
+        "limit": {
+          "type": "ref<foundation-economy-limit:UsageLimit>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Reset schedule",
+              "description": "Reset schedule followed by this counter."
+            },
+            "ja": {
+              "label": "リセット設定",
+              "description": "このカウンターが従うリセット設定です。"
+            }
+          }
+        },
+        "nextResetAt": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Next reset time",
+              "description": "Time when this counter will next be reset."
+            },
+            "ja": {
+              "label": "次回リセット日時",
+              "description": "このカウンターを次にリセットする日時です。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {}
 }

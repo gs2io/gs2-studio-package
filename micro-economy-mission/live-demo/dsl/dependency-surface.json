@@ -26,6 +26,130 @@
         "received": "prop_3PRS9MYRJT5P8QBDBC51WP3VEB",
         "rewardAmount": "prop_00D0QVYTV99Q49SBAE7J7GC9EG",
         "targetValue": "prop_4Q0FZ49AS61KZCN0Z8MS0DE7SN"
+      },
+      "propertyDetails": {
+        "completeAcquireActions": {
+          "type": "list<acquireAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Completion rewards",
+              "description": "Acquire actions executed when the mission is completed."
+            },
+            "ja": {
+              "label": "完了報酬",
+              "description": "ミッション完了時に実行する獲得アクションです。"
+            }
+          }
+        },
+        "completed": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Completed",
+              "description": "Whether the player has completed this mission."
+            },
+            "ja": {
+              "label": "完了済み",
+              "description": "プレイヤーがこのミッションを完了したかを示します。"
+            }
+          }
+        },
+        "counter": {
+          "type": "ref<micro-economy-mission:MissionCounter>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Progress counter",
+              "description": "Mission counter used to determine completion."
+            },
+            "ja": {
+              "label": "進捗カウンター",
+              "description": "達成判定に使用するミッションカウンターです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the mission."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ミッションを一意に識別します。"
+            }
+          }
+        },
+        "missionCollection": {
+          "type": "ref<micro-economy-mission:MissionCollection>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Mission group",
+              "description": "Mission group this mission belongs to."
+            },
+            "ja": {
+              "label": "ミッショングループ",
+              "description": "このミッションが属するグループです。"
+            }
+          }
+        },
+        "received": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Reward claimed",
+              "description": "Whether the player has claimed the completion reward."
+            },
+            "ja": {
+              "label": "報酬受取済み",
+              "description": "プレイヤーが完了報酬を受け取ったかを示します。"
+            }
+          }
+        },
+        "rewardAmount": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reward coins",
+              "description": "Coins paid when this mission's reward is received.",
+              "unit": "currency"
+            },
+            "ja": {
+              "label": "報酬コイン",
+              "description": "このミッションの報酬を受け取ったときに付与するコインの額です。",
+              "unit": "通貨"
+            }
+          }
+        },
+        "targetValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Target value",
+              "description": "Counter value required to complete the mission."
+            },
+            "ja": {
+              "label": "目標値",
+              "description": "ミッションを完了するために必要なカウンター値です。"
+            }
+          }
+        }
       }
     },
     "MissionCounter": {
@@ -49,10 +173,88 @@
         "todayValue": "prop_3C8D5YDPFSJ3QVC205RWZ7XDZ2",
         "totalValue": "prop_3HTNC82KPKW5J7DFN98H4PPGCW",
         "weeklyValue": "prop_5917YYM3N8ZDDKYH7PDDHE20GG"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the mission counter."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "ミッションカウンターを一意に識別します。"
+            }
+          }
+        },
+        "monthlyValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Monthly value",
+              "description": "Progress accumulated in the current monthly reset period."
+            },
+            "ja": {
+              "label": "今月の値",
+              "description": "当月のリセット期間で蓄積した進捗値です。"
+            }
+          }
+        },
+        "todayValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Daily value",
+              "description": "Progress accumulated in the current daily reset period."
+            },
+            "ja": {
+              "label": "本日の値",
+              "description": "当日のリセット期間で蓄積した進捗値です。"
+            }
+          }
+        },
+        "totalValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Total value",
+              "description": "All-time progress value that is not reset."
+            },
+            "ja": {
+              "label": "累計値",
+              "description": "リセットされない累計の進捗値です。"
+            }
+          }
+        },
+        "weeklyValue": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Weekly value",
+              "description": "Progress accumulated in the current weekly reset period."
+            },
+            "ja": {
+              "label": "今週の値",
+              "description": "当週のリセット期間で蓄積した進捗値です。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {
     "exchange.Namespace": "mdr_5QRSP9RSGWA7ZT6RJJAVF5BXYT",
     "exchange.RateModel": "mdr_21DB51BXCRBDQBFYF1JB1TQQ8M",

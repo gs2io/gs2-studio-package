@@ -15,9 +15,119 @@
         "releaseConsumeActions": "prop_00D05R0KFCTFK6442MMAKE56Y9",
         "released": "prop_00D0321TWK6CDMBJRD83E6G2K2",
         "restrainReturnRate": "prop_00D0321TWK5R5K4W0KWNR49SHT"
+      },
+      "propertyDetails": {
+        "cost": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Unlock cost",
+              "description": "Coins spent to unlock this node."
+            },
+            "ja": {
+              "label": "解放コスト",
+              "description": "このノードを解放するときに消費するコインの額です。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the skill node."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "スキルノードを一意に識別します。"
+            }
+          }
+        },
+        "owner": {
+          "type": "string",
+          "requirement": "never",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "Owning character",
+              "description": "Identifier of the character whose unlock state these flags are read for."
+            },
+            "ja": {
+              "label": "対象キャラクター",
+              "description": "解放状況を読み出す対象のキャラクターを指す識別子です。"
+            }
+          }
+        },
+        "premiseNodes": {
+          "type": "list<string>",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Prerequisite nodes",
+              "description": "Nodes that must be unlocked before this node."
+            },
+            "ja": {
+              "label": "前提ノード",
+              "description": "先に解放しておく必要があるノードの一覧です。"
+            }
+          }
+        },
+        "releaseConsumeActions": {
+          "type": "list<consumeAction>",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Unlock costs",
+              "description": "Consume actions executed to unlock this node."
+            },
+            "ja": {
+              "label": "解放コスト",
+              "description": "このノードを解放するときに実行する消費アクションです。"
+            }
+          }
+        },
+        "released": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Unlocked",
+              "description": "Whether the player has unlocked this node."
+            },
+            "ja": {
+              "label": "解放済み",
+              "description": "プレイヤーがこのノードを解放済みかを示します。"
+            }
+          }
+        },
+        "restrainReturnRate": {
+          "type": "float32",
+          "requirement": "never",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Reset refund rate",
+              "description": "Share of the unlock cost refunded when the node is reset.",
+              "unit": "ratio"
+            },
+            "ja": {
+              "label": "リセット返却率",
+              "description": "ノードをリセットしたときに解放コストを返却する割合です。",
+              "unit": "倍"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {},
+  "actionTransformSignatures": {},
   "masterDataResources": {}
 }

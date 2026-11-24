@@ -9,6 +9,23 @@
       "canonicalTypeId": "dt_00D031YG89PXH0J9RYZKY8NP6R",
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the enhancement recipe."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "強化レシピを一意に識別します。"
+            }
+          }
+        }
       }
     },
     "CharacterEnhanceBonus": {
@@ -21,6 +38,70 @@
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "rate": "prop_00D031YG89J65RAXGD0XK0JGDC",
         "weight": "prop_00D031YG89HJ35D4WH1RHDYSN0"
+      },
+      "propertyDetails": {
+        "enhance": {
+          "type": "ref<CharacterEnhance>",
+          "requirement": "always",
+          "bindingHint": "assetDelivery",
+          "display": {
+            "en": {
+              "label": "Enhancement recipe",
+              "description": "Enhancement recipe to which this bonus applies."
+            },
+            "ja": {
+              "label": "強化レシピ",
+              "description": "このボーナスを適用する強化レシピです。"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the enhancement bonus."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "強化ボーナスを一意に識別します。"
+            }
+          }
+        },
+        "rate": {
+          "type": "float32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Experience multiplier",
+              "description": "Multiplier applied to experience when this bonus is drawn.",
+              "unit": "x"
+            },
+            "ja": {
+              "label": "経験値倍率",
+              "description": "抽選されたときに獲得経験値へ適用する倍率です。",
+              "unit": "倍"
+            }
+          }
+        },
+        "weight": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Draw weight",
+              "description": "Relative weight used when drawing this bonus."
+            },
+            "ja": {
+              "label": "抽選重み",
+              "description": "このボーナスが選ばれる相対的な重みです。"
+            }
+          }
+        }
       }
     },
     "CharacterEnhanceMaterial": {
@@ -32,12 +113,97 @@
         "count": "prop_00D0TAXWR8X0NVB2HS99J298KV",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "metadata": "prop_00D0TAXWR8ZNBCPP520RH8KRHD"
+      },
+      "propertyDetails": {
+        "count": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Owned quantity",
+              "description": "Quantity of the enhancement material owned by the player.",
+              "unit": "items"
+            },
+            "ja": {
+              "label": "所持数",
+              "description": "プレイヤーが所持している強化素材の数量です。",
+              "unit": "個"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the enhancement material."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "強化素材を一意に識別します。"
+            }
+          }
+        },
+        "metadata": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Material metadata",
+              "description": "JSON carrying the experience one material grants, written under experience, e.g. {\"experience\": 100}."
+            },
+            "ja": {
+              "label": "素材メタデータ",
+              "description": "素材 1 個が与える経験値を持つ JSON です。{\"experience\": 100} のように experience に経験値を書きます。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "AcquireCharacterEnhanceMaterial": "at_1N85Q9X5J29M9BXPXJYV8V4Q5Z",
     "EnhanceCharacter": "at_7A632P7NEB88WT2T9JAAWMTK45"
+  },
+  "actionTransformSignatures": {
+    "AcquireCharacterEnhanceMaterial": {
+      "category": "acquire",
+      "parameters": {
+        "material": {
+          "type": "ref<CharacterEnhanceMaterial>",
+          "required": true
+        },
+        "count": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "EnhanceCharacter": {
+      "category": "acquire",
+      "parameters": {
+        "enhance": {
+          "type": "ref<CharacterEnhance>",
+          "required": true
+        },
+        "targetItemSetId": {
+          "type": "string",
+          "required": true
+        },
+        "materialItemSetId": {
+          "type": "string",
+          "required": true
+        },
+        "count": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "enhance.BonusRate": "mdr_5ZD4J3CEE5B9K9981BTW05HQT1",

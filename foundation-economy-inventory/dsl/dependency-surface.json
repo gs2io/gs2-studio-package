@@ -10,12 +10,74 @@
       "properties": {
         "count": "prop_4RM1PKMWET4WYQBAW013CTF8YD",
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+      },
+      "propertyDetails": {
+        "count": {
+          "type": "int64",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Owned quantity",
+              "description": "Quantity of the item owned by the player.",
+              "unit": "items"
+            },
+            "ja": {
+              "label": "所持数",
+              "description": "プレイヤーが所持しているアイテムの数量です。",
+              "unit": "個"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the item."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "アイテムを一意に識別します。"
+            }
+          }
+        }
       }
     }
   },
   "actionTransforms": {
     "AcquireItem": "at_4AHYMDX4JN8BHV2Q0MHBGXCA0Z",
     "ConsumeItem": "at_5MZS971WV985R8Q1TP98MGN18Y"
+  },
+  "actionTransformSignatures": {
+    "AcquireItem": {
+      "category": "acquire",
+      "parameters": {
+        "itemName": {
+          "type": "ref<Item>",
+          "required": true
+        },
+        "count": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    },
+    "ConsumeItem": {
+      "category": "consume",
+      "parameters": {
+        "itemName": {
+          "type": "ref<Item>",
+          "required": true
+        },
+        "count": {
+          "type": "int32",
+          "required": true
+        }
+      }
+    }
   },
   "masterDataResources": {
     "inventory.Namespace": "mdr_09W5HV054N82491HH6HA6CS2JQ",
