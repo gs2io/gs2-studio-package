@@ -13,7 +13,7 @@ namespace GS2Studio.Generated.Wallet
     public interface Wallet
     {
         /// <summary>
-        /// Uniquely identifies the wallet.
+        /// GS2 Money2 wallet slot number as a decimal string (slot 0 is "0"). The slot parameter of this package's transforms names the same wallet. No row is needed; an authored row changes neither deploy output nor generated code.
         /// </summary>
         WalletId Id { get; }
 

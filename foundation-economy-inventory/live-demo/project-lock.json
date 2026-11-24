@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "d09d08a18eaaf63b7b8cd37421daa523afa36fc4",
-      "integrity": "sha256-KGJqsj8U6uhMg6PhOQpTBpxmOeyTkf/IzFTIQqJLxhI=",
+      "commitSha": "1cd6a94a07498b8aa15da063fd4f130b06c00620",
+      "integrity": "sha256-6wuUH83wOa5iP1l6XdVj0JtWBs97v9GaNOQv0hKX+2I=",
       "owner": "gs2io",
       "packageId": "foundation-economy-inventory",
       "repo": "gs2-studio-package",

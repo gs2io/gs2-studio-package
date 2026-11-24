@@ -18,17 +18,17 @@ namespace GS2Studio.Generated.Energy
         EnergyId Id { get; }
 
         /// <summary>
-        /// Initial stamina capacity available to a player.
+        /// Starting normal stamina capacity of each player (GS2 Stamina initialCapacity).
         /// </summary>
         int DefaultMaximum { get; }
 
         /// <summary>
-        /// Whether recovered stamina may exceed the normal capacity.
+        /// Whether recovery actions such as RecoveryEnergy may raise stamina above the current maximum, up to overflowedMaximum (GS2 Stamina isOverflow). Time-based recovery still stops at the current maximum.
         /// </summary>
         bool UseOverflow { get; }
 
         /// <summary>
-        /// Maximum stamina retained when overflow is allowed.
+        /// Absolute stamina cap including overflow (GS2 Stamina maxCapacity), at least defaultMaximum. Deployed only when useOverflow is true; otherwise set it to defaultMaximum.
         /// </summary>
         int OverflowedMaximum { get; }
 
@@ -43,12 +43,12 @@ namespace GS2Studio.Generated.Energy
         int RecoveryValue { get; }
 
         /// <summary>
-        /// Current stamina held by the player.
+        /// Player's current stamina (GS2 Stamina value), excluding any overflow held above the current maximum. The overflow amount is not exposed by this type.
         /// </summary>
         int CurrentValue { get; }
 
         /// <summary>
-        /// Current stamina capacity applied to the player.
+        /// Stamina capacity currently applied to the player (GS2 Stamina maxValue). Time-based recovery stops at this value.
         /// </summary>
         int CurrentMaximumValue { get; }
 
