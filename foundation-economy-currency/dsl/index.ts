@@ -17,7 +17,12 @@ const Wallet = defineDomainType("Wallet", dt =>
     .property(PT.int32("paid").userData().required())
     .property(PT.int32("total").userData().required())
     .localizedProperties({
-      id: jaEnId("ウォレット", "wallet"),
+      id: jaEnField(
+        "ID",
+        "ID",
+        'GS2 Money2 のウォレットのスロット番号を10進の文字列にしたものです（スロット 0 は "0"）。このパッケージの transform の slot 引数と同じウォレットを指します。行は不要で、作成してもデプロイ内容と生成コードは変わりません。',
+        'GS2 Money2 wallet slot number as a decimal string (slot 0 is "0"). The slot parameter of this package\'s transforms names the same wallet. No row is needed; an authored row changes neither deploy output nor generated code.'
+      ),
       free: jaEnField(
         "無償残高",
         "Free balance",
@@ -77,6 +82,9 @@ const CurrencyStore = defineDomainType("CurrencyStore", dt =>
       ),
     })
 );
+
+const SLOT_PARAMETER =
+  'GS2 Money2 wallet slot. The Wallet whose id is the slot as a decimal string (slot 0 is "0") shows its balance; no Wallet row is needed. Free and paid balances are separate per slot.';
 
 const Namespace = defineMasterDataResource(resource => {
   resource
@@ -158,9 +166,12 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .displayType(Wallet, {
     ja: {
       label: "ウォレット",
-      description: "プレイヤーが保有する有償・無償通貨の残高を管理します。",
+      description: "プレイヤーの1つのウォレットスロットにある有償・無償通貨の残高です。",
     },
-    en: { label: "Wallet", description: "Tracks a player's paid and free currency balances." },
+    en: {
+      label: "Wallet",
+      description: "A player's paid and free currency balances in one GS2 Money2 wallet slot.",
+    },
   })
   .domainType(Wallet)
   .domainType(StoreProduct)
@@ -193,8 +204,11 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .actionTransform("DepositFreeCurrency", at =>
     at
       .category("acquire")
-      .parameter("slot", { type: PT.int32() })
-      .parameter("count", { type: PT.int32() })
+      .parameter("slot", { type: PT.int32(), description: SLOT_PARAMETER })
+      .parameter("count", {
+        type: PT.int32(),
+        description: "Amount of free currency to deposit (price 0).",
+      })
       .output("Gs2Money2:DepositByUserId", o =>
         o
           .resourceRef(() => Namespace)
@@ -209,10 +223,21 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .actionTransform("DepositCurrency", at =>
     at
       .category("acquire")
-      .parameter("slot", { type: PT.int32() })
-      .parameter("count", { type: PT.int32() })
-      .parameter("currencyType", { type: PT.string() })
-      .parameter("price", { type: PT.float64() })
+      .parameter("slot", { type: PT.int32(), description: SLOT_PARAMETER })
+      .parameter("count", {
+        type: PT.int32(),
+        description: "Amount of currency to deposit; it is paid currency when price > 0.",
+      })
+      .parameter("currencyType", {
+        type: PT.string(),
+        description:
+          "ISO currency code of the purchase price, such as JPY; used only when price > 0.",
+      })
+      .parameter("price", {
+        type: PT.float64(),
+        description:
+          "Purchase price in currencyType; GS2 Money2 treats a deposit with price 0 as free currency.",
+      })
       .output("Gs2Money2:DepositByUserId", o =>
         o
           .resourceRef(() => Namespace)
@@ -227,9 +252,14 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .actionTransform("WithdrawCurrency", at =>
     at
       .category("consume")
-      .parameter("slot", { type: PT.int32() })
-      .parameter("paidOnly", { type: PT.bool(), required: false })
-      .parameter("count", { type: PT.int32() })
+      .parameter("slot", { type: PT.int32(), description: SLOT_PARAMETER })
+      .parameter("paidOnly", {
+        type: PT.bool(),
+        required: false,
+        description:
+          "When true, only paid currency is withdrawn; otherwise free currency is used first (the namespace sets PrioritizeFree).",
+      })
+      .parameter("count", { type: PT.int32(), description: "Amount of currency to withdraw." })
       .output("Gs2Money2:WithdrawByUserId", o =>
         o
           .resourceRef(() => Namespace)
@@ -243,8 +273,11 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .actionTransform("WithdrawPaidCurrency", at =>
     at
       .category("consume")
-      .parameter("slot", { type: PT.int32() })
-      .parameter("count", { type: PT.int32() })
+      .parameter("slot", { type: PT.int32(), description: SLOT_PARAMETER })
+      .parameter("count", {
+        type: PT.int32(),
+        description: "Amount of paid currency to withdraw.",
+      })
       .output("Gs2Money2:WithdrawByUserId", o =>
         o
           .resourceRef(() => Namespace)
@@ -258,7 +291,10 @@ export const foundationEconomyCurrency = definePackage("foundation-economy-curre
   .actionTransform("VerifyReceipt", at =>
     at
       .category("consume")
-      .parameter("contentName", { type: PT.ref("StoreProduct") })
+      .parameter("contentName", {
+        type: PT.ref("StoreProduct"),
+        description: "StoreProduct id, which is the GS2 Money2 store content model name.",
+      })
       .output("Gs2Money2:VerifyReceiptByUserId", o =>
         o
           .resourceRef(() => Namespace)

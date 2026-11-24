@@ -44,6 +44,7 @@
   ],
   "parameters": [
     {
+      "description": "StoreProduct id, which is the GS2 Money2 store content model name.",
       "name": "contentName",
       "required": true,
       "type": {

@@ -153,11 +153,11 @@
           "display": {
             "en": {
               "label": "Completion rewards",
-              "description": "Acquire actions executed on each completion."
+              "description": "Acquire actions executed on every completion, the first one included."
             },
             "ja": {
               "label": "通常クリア報酬",
-              "description": "クリア時に毎回実行する獲得アクションです。"
+              "description": "初回を含め、クリアのたびに実行する獲得アクションです。"
             }
           }
         },
@@ -245,11 +245,11 @@
           "display": {
             "en": {
               "label": "First-clear rewards",
-              "description": "Acquire actions executed on the first completion."
+              "description": "Acquire actions executed only on the first completion, in addition to the completion rewards."
             },
             "ja": {
               "label": "初回クリア報酬",
-              "description": "初回クリア時に実行する獲得アクションです。"
+              "description": "初回クリア時にだけ、通常クリア報酬に加えて実行する獲得アクションです。"
             }
           }
         },

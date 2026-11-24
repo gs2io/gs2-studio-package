@@ -44,12 +44,12 @@
           "display": {
             "en": {
               "label": "Current maximum",
-              "description": "Current stamina capacity applied to the player.",
+              "description": "Stamina capacity currently applied to the player (GS2 Stamina maxValue). Time-based recovery stops at this value.",
               "unit": "points"
             },
             "ja": {
               "label": "現在の上限",
-              "description": "プレイヤーに適用されている現在のスタミナ上限です。",
+              "description": "プレイヤーに適用されている現在のスタミナ上限（GS2 Stamina の maxValue）です。時間経過による回復はこの値で止まります。",
               "unit": "ポイント"
             }
           }
@@ -61,12 +61,12 @@
           "display": {
             "en": {
               "label": "Current value",
-              "description": "Current stamina held by the player.",
+              "description": "Player's current stamina (GS2 Stamina value), excluding any overflow held above the current maximum. The overflow amount is not exposed by this type.",
               "unit": "points"
             },
             "ja": {
               "label": "現在値",
-              "description": "プレイヤーが現在持っているスタミナです。",
+              "description": "プレイヤーが現在持っているスタミナ（GS2 Stamina の value）です。上限超過で保持している分は含まず、超過分はこの型では参照できません。",
               "unit": "ポイント"
             }
           }
@@ -78,12 +78,12 @@
           "display": {
             "en": {
               "label": "Initial maximum",
-              "description": "Initial stamina capacity available to a player.",
+              "description": "Starting normal stamina capacity of each player (GS2 Stamina initialCapacity).",
               "unit": "points"
             },
             "ja": {
               "label": "初期上限",
-              "description": "プレイヤーが最初に持つスタミナ上限です。",
+              "description": "プレイヤーの通常のスタミナ上限の初期値（GS2 Stamina の initialCapacity）です。",
               "unit": "ポイント"
             }
           }
@@ -125,12 +125,12 @@
           "display": {
             "en": {
               "label": "Overflow maximum",
-              "description": "Maximum stamina retained when overflow is allowed.",
+              "description": "Absolute stamina cap including overflow (GS2 Stamina maxCapacity), at least defaultMaximum. Deployed only when useOverflow is true; otherwise set it to defaultMaximum.",
               "unit": "points"
             },
             "ja": {
               "label": "超過時上限",
-              "description": "上限超過を許可した場合に保持できる最大値です。",
+              "description": "上限超過分を含めたスタミナの絶対上限（GS2 Stamina の maxCapacity）で、defaultMaximum 以上にします。useOverflow が true のときだけデプロイされ、false のときは defaultMaximum と同じ値を入れます。",
               "unit": "ポイント"
             }
           }
@@ -176,11 +176,11 @@
           "display": {
             "en": {
               "label": "Allow overflow",
-              "description": "Whether recovered stamina may exceed the normal capacity."
+              "description": "Whether recovery actions such as RecoveryEnergy may raise stamina above the current maximum, up to overflowedMaximum (GS2 Stamina isOverflow). Time-based recovery still stops at the current maximum."
             },
             "ja": {
               "label": "上限超過を許可",
-              "description": "回復時にスタミナ上限を超えて保持できるかを設定します。"
+              "description": "RecoveryEnergy などの回復アクションで、現在の上限を超えて overflowedMaximum までスタミナを増やせるかを設定します（GS2 Stamina の isOverflow）。時間経過による回復は現在の上限で止まります。"
             }
           }
         }

@@ -124,14 +124,14 @@ const Quest = defineDomainType("Quest", dt =>
       firstCompleteAcquireActions: jaEnField(
         "初回クリア報酬",
         "First-clear rewards",
-        "初回クリア時に実行する獲得アクションです。",
-        "Acquire actions executed on the first completion."
+        "初回クリア時にだけ、通常クリア報酬に加えて実行する獲得アクションです。",
+        "Acquire actions executed only on the first completion, in addition to the completion rewards."
       ),
       completeAcquireActions: jaEnField(
         "通常クリア報酬",
         "Completion rewards",
-        "クリア時に毎回実行する獲得アクションです。",
-        "Acquire actions executed on each completion."
+        "初回を含め、クリアのたびに実行する獲得アクションです。",
+        "Acquire actions executed on every completion, the first one included."
       ),
       failedAcquireActions: jaEnField(
         "失敗時アクション",

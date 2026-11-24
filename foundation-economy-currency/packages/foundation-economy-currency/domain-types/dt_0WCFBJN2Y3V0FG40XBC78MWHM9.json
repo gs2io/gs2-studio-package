@@ -77,22 +77,22 @@
   "id": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
   "idLocalizedDisplay": {
     "en": {
-      "description": "Uniquely identifies the wallet.",
+      "description": "GS2 Money2 wallet slot number as a decimal string (slot 0 is \"0\"). The slot parameter of this package's transforms names the same wallet. No row is needed; an authored row changes neither deploy output nor generated code.",
       "label": "ID"
     },
     "ja": {
-      "description": "ウォレットを一意に識別します。",
+      "description": "GS2 Money2 のウォレットのスロット番号を10進の文字列にしたものです（スロット 0 は \"0\"）。このパッケージの transform の slot 引数と同じウォレットを指します。行は不要で、作成してもデプロイ内容と生成コードは変わりません。",
       "label": "ID"
     }
   },
   "kind": "local",
   "localizedDisplay": {
     "en": {
-      "description": "Tracks a player's paid and free currency balances.",
+      "description": "A player's paid and free currency balances in one GS2 Money2 wallet slot.",
       "label": "Wallet"
     },
     "ja": {
-      "description": "プレイヤーが保有する有償・無償通貨の残高を管理します。",
+      "description": "プレイヤーの1つのウォレットスロットにある有償・無償通貨の残高です。",
       "label": "ウォレット"
     }
   },

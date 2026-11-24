@@ -44,6 +44,7 @@
   ],
   "parameters": [
     {
+      "description": "Id of the Energy row, which is the GS2 Stamina model name.",
       "name": "energy",
       "required": true,
       "type": {
@@ -52,6 +53,7 @@
       }
     },
     {
+      "description": "Amount of stamina to consume.",
       "name": "value",
       "required": true,
       "type": {

@@ -49,6 +49,7 @@
   ],
   "parameters": [
     {
+      "description": "GS2 Money2 wallet slot. The Wallet whose id is the slot as a decimal string (slot 0 is \"0\") shows its balance; no Wallet row is needed. Free and paid balances are separate per slot.",
       "name": "slot",
       "required": true,
       "type": {
@@ -57,6 +58,7 @@
       }
     },
     {
+      "description": "Amount of paid currency to withdraw.",
       "name": "count",
       "required": true,
       "type": {

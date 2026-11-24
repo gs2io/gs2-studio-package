@@ -27,21 +27,21 @@ const Energy = defineDomainType("Energy", dt =>
       defaultMaximum: jaEnField(
         "初期上限",
         "Initial maximum",
-        "プレイヤーが最初に持つスタミナ上限です。",
-        "Initial stamina capacity available to a player.",
+        "プレイヤーの通常のスタミナ上限の初期値（GS2 Stamina の initialCapacity）です。",
+        "Starting normal stamina capacity of each player (GS2 Stamina initialCapacity).",
         { ja: "ポイント", en: "points" }
       ),
       useOverflow: jaEnField(
         "上限超過を許可",
         "Allow overflow",
-        "回復時にスタミナ上限を超えて保持できるかを設定します。",
-        "Whether recovered stamina may exceed the normal capacity."
+        "RecoveryEnergy などの回復アクションで、現在の上限を超えて overflowedMaximum までスタミナを増やせるかを設定します（GS2 Stamina の isOverflow）。時間経過による回復は現在の上限で止まります。",
+        "Whether recovery actions such as RecoveryEnergy may raise stamina above the current maximum, up to overflowedMaximum (GS2 Stamina isOverflow). Time-based recovery still stops at the current maximum."
       ),
       overflowedMaximum: jaEnField(
         "超過時上限",
         "Overflow maximum",
-        "上限超過を許可した場合に保持できる最大値です。",
-        "Maximum stamina retained when overflow is allowed.",
+        "上限超過分を含めたスタミナの絶対上限（GS2 Stamina の maxCapacity）で、defaultMaximum 以上にします。useOverflow が true のときだけデプロイされ、false のときは defaultMaximum と同じ値を入れます。",
+        "Absolute stamina cap including overflow (GS2 Stamina maxCapacity), at least defaultMaximum. Deployed only when useOverflow is true; otherwise set it to defaultMaximum.",
         { ja: "ポイント", en: "points" }
       ),
       recoveryIntervalMinutes: jaEnField(
@@ -61,15 +61,15 @@ const Energy = defineDomainType("Energy", dt =>
       currentValue: jaEnField(
         "現在値",
         "Current value",
-        "プレイヤーが現在持っているスタミナです。",
-        "Current stamina held by the player.",
+        "プレイヤーが現在持っているスタミナ（GS2 Stamina の value）です。上限超過で保持している分は含まず、超過分はこの型では参照できません。",
+        "Player's current stamina (GS2 Stamina value), excluding any overflow held above the current maximum. The overflow amount is not exposed by this type.",
         { ja: "ポイント", en: "points" }
       ),
       currentMaximumValue: jaEnField(
         "現在の上限",
         "Current maximum",
-        "プレイヤーに適用されている現在のスタミナ上限です。",
-        "Current stamina capacity applied to the player.",
+        "プレイヤーに適用されている現在のスタミナ上限（GS2 Stamina の maxValue）です。時間経過による回復はこの値で止まります。",
+        "Stamina capacity currently applied to the player (GS2 Stamina maxValue). Time-based recovery stops at this value.",
         { ja: "ポイント", en: "points" }
       ),
       nextRecoverdAt: jaEnField(
@@ -80,6 +80,8 @@ const Energy = defineDomainType("Energy", dt =>
       ),
     })
 );
+
+const ENERGY_PARAMETER = "Id of the Energy row, which is the GS2 Stamina model name.";
 
 const StaminaModel = defineMasterDataResource(resource =>
   resource
@@ -144,8 +146,8 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
   .actionTransform("ConsumeEnergy", at =>
     at
       .category("consume")
-      .parameter("energy", { type: PT.ref("Energy") })
-      .parameter("value", { type: PT.int32() })
+      .parameter("energy", { type: PT.ref("Energy"), description: ENERGY_PARAMETER })
+      .parameter("value", { type: PT.int32(), description: "Amount of stamina to consume." })
       .output("Gs2Stamina:ConsumeStaminaByUserId", o =>
         o
           .resourceRef(() => StaminaModel)
@@ -183,8 +185,8 @@ export const foundationEconomyEnergy = definePackage("foundation-economy-energy"
   .actionTransform("RecoveryEnergy", at =>
     at
       .category("acquire")
-      .parameter("energy", { type: PT.ref("Energy") })
-      .parameter("value", { type: PT.int32() })
+      .parameter("energy", { type: PT.ref("Energy"), description: ENERGY_PARAMETER })
+      .parameter("value", { type: PT.int32(), description: "Amount of stamina to recover." })
       .output("Gs2Stamina:RecoverStaminaByUserId", o =>
         o
           .resourceRef(() => StaminaModel)

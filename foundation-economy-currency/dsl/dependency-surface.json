@@ -138,11 +138,11 @@
           "display": {
             "en": {
               "label": "ID",
-              "description": "Uniquely identifies the wallet."
+              "description": "GS2 Money2 wallet slot number as a decimal string (slot 0 is \"0\"). The slot parameter of this package's transforms names the same wallet. No row is needed; an authored row changes neither deploy output nor generated code."
             },
             "ja": {
               "label": "ID",
-              "description": "ウォレットを一意に識別します。"
+              "description": "GS2 Money2 のウォレットのスロット番号を10進の文字列にしたものです（スロット 0 は \"0\"）。このパッケージの transform の slot 引数と同じウォレットを指します。行は不要で、作成してもデプロイ内容と生成コードは変わりません。"
             }
           }
         },
@@ -196,19 +196,23 @@
       "parameters": {
         "slot": {
           "type": "int32",
-          "required": true
+          "required": true,
+          "description": "GS2 Money2 wallet slot. The Wallet whose id is the slot as a decimal string (slot 0 is \"0\") shows its balance; no Wallet row is needed. Free and paid balances are separate per slot."
         },
         "count": {
           "type": "int32",
-          "required": true
+          "required": true,
+          "description": "Amount of currency to deposit; it is paid currency when price > 0."
         },
         "currencyType": {
           "type": "string",
-          "required": true
+          "required": true,
+          "description": "ISO currency code of the purchase price, such as JPY; used only when price > 0."
         },
         "price": {
           "type": "float64",
-          "required": true
+          "required": true,
+          "description": "Purchase price in currencyType; GS2 Money2 treats a deposit with price 0 as free currency."
         }
       }
     },
@@ -217,11 +221,13 @@
       "parameters": {
         "slot": {
           "type": "int32",
-          "required": true
+          "required": true,
+          "description": "GS2 Money2 wallet slot. The Wallet whose id is the slot as a decimal string (slot 0 is \"0\") shows its balance; no Wallet row is needed. Free and paid balances are separate per slot."
         },
         "count": {
           "type": "int32",
-          "required": true
+          "required": true,
+          "description": "Amount of free currency to deposit (price 0)."
         }
       }
     },
@@ -230,7 +236,8 @@
       "parameters": {
         "contentName": {
           "type": "ref<StoreProduct>",
-          "required": true
+          "required": true,
+          "description": "StoreProduct id, which is the GS2 Money2 store content model name."
         }
       }
     },
@@ -239,15 +246,18 @@
       "parameters": {
         "slot": {
           "type": "int32",
-          "required": true
+          "required": true,
+          "description": "GS2 Money2 wallet slot. The Wallet whose id is the slot as a decimal string (slot 0 is \"0\") shows its balance; no Wallet row is needed. Free and paid balances are separate per slot."
         },
         "paidOnly": {
           "type": "bool",
-          "required": false
+          "required": false,
+          "description": "When true, only paid currency is withdrawn; otherwise free currency is used first (the namespace sets PrioritizeFree)."
         },
         "count": {
           "type": "int32",
-          "required": true
+          "required": true,
+          "description": "Amount of currency to withdraw."
         }
       }
     },
@@ -256,11 +266,13 @@
       "parameters": {
         "slot": {
           "type": "int32",
-          "required": true
+          "required": true,
+          "description": "GS2 Money2 wallet slot. The Wallet whose id is the slot as a decimal string (slot 0 is \"0\") shows its balance; no Wallet row is needed. Free and paid balances are separate per slot."
         },
         "count": {
           "type": "int32",
-          "required": true
+          "required": true,
+          "description": "Amount of paid currency to withdraw."
         }
       }
     }
