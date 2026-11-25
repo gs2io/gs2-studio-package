@@ -90,7 +90,7 @@ namespace GS2Studio.Generated.Energy
         bool LoadedTransactionConsumeAction { get; }
 
         /// <summary>
-        /// This construction path permits the <c>Gs2Bind.Gs2Stamina.StaminaLoader</c> load on <c>__userdataStaminaEnergyStaminaModelLoader</c> or its composition from a list item. False means this path does not supply <c>CurrentMaximumValue</c>, <c>NextRecoverdAt</c>, <c>CurrentValue</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
+        /// This construction path permits the <c>Gs2Bind.Gs2Stamina.StaminaLoader</c> load on <c>__userdataStaminaEnergyStaminaModelLoader</c> or its composition from a list item. False means this path does not supply <c>CurrentMaximumValue</c>, <c>NextRecoveredAt</c>, <c>CurrentValue</c> through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
         /// </summary>
         /// <remarks>StaminaEnergyMaster: does not supply SDK backing key staminaName.</remarks>
         /// <remarks>ExchangeEnergyRecoverMaster: does not supply SDK backing key staminaName.</remarks>
@@ -146,8 +146,8 @@ namespace GS2Studio.Generated.Energy
         public int CurrentValue => _model.CurrentValue;
         /// <inheritdoc cref="Energy.CurrentMaximumValue" />
         public int CurrentMaximumValue => _model.CurrentMaximumValue;
-        /// <inheritdoc cref="Energy.NextRecoverdAt" />
-        public DateTime NextRecoverdAt => _model.NextRecoverdAt;
+        /// <inheritdoc cref="Energy.NextRecoveredAt" />
+        public DateTime NextRecoveredAt => _model.NextRecoveredAt;
 
         /// <inheritdoc />
         public abstract EnergyMountSurface MountSurface { get; }
@@ -295,12 +295,12 @@ namespace GS2Studio.Generated.Energy
                     get => __setCurrentMaximumValue ? __valueCurrentMaximumValue : __scopeOwner.Value.CurrentMaximumValue;
                     set { __setCurrentMaximumValue = true; __valueCurrentMaximumValue = value; }
                 }
-                internal bool __setNextRecoverdAt;
-                internal DateTime __valueNextRecoverdAt = default!;
-                public DateTime NextRecoverdAt
+                internal bool __setNextRecoveredAt;
+                internal DateTime __valueNextRecoveredAt = default!;
+                public DateTime NextRecoveredAt
                 {
-                    get => __setNextRecoverdAt ? __valueNextRecoverdAt : __scopeOwner.Value.NextRecoverdAt;
-                    set { __setNextRecoverdAt = true; __valueNextRecoverdAt = value; }
+                    get => __setNextRecoveredAt ? __valueNextRecoveredAt : __scopeOwner.Value.NextRecoveredAt;
+                    set { __setNextRecoveredAt = true; __valueNextRecoveredAt = value; }
                 }
             }
             public Changes CreateChanges()
@@ -320,7 +320,7 @@ namespace GS2Studio.Generated.Energy
                 if (changes.__setRecoveryValue) { _owner._model.RecoveryValue = changes.__valueRecoveryValue; changes.__setRecoveryValue = false; }
                 if (changes.__setCurrentValue) { _owner._model.CurrentValue = changes.__valueCurrentValue; changes.__setCurrentValue = false; }
                 if (changes.__setCurrentMaximumValue) { _owner._model.CurrentMaximumValue = changes.__valueCurrentMaximumValue; changes.__setCurrentMaximumValue = false; }
-                if (changes.__setNextRecoverdAt) { _owner._model.NextRecoverdAt = changes.__valueNextRecoverdAt; changes.__setNextRecoverdAt = false; }
+                if (changes.__setNextRecoveredAt) { _owner._model.NextRecoveredAt = changes.__valueNextRecoveredAt; changes.__setNextRecoveredAt = false; }
                 return true;
             }
         }
@@ -738,13 +738,13 @@ namespace GS2Studio.Generated.Energy
             if (source != null)
             {
                 model.CurrentMaximumValue = source.MaxValue;
-                model.NextRecoverdAt = DateTimeOffset.FromUnixTimeMilliseconds(source.NextRecoverAt).UtcDateTime;
+                model.NextRecoveredAt = DateTimeOffset.FromUnixTimeMilliseconds(source.NextRecoverAt).UtcDateTime;
                 model.CurrentValue = source.Value;
             }
             else
             {
                 model.CurrentMaximumValue = default;
-                model.NextRecoverdAt = default;
+                model.NextRecoveredAt = default;
                 model.CurrentValue = default;
             }
         }

@@ -74,7 +74,7 @@ namespace GS2Studio.Generated.Energy.UI
         private void OnUpdated(Energy model)
         {
             WarnUnloadedLoadersOnce();
-            _onUpdate.Invoke(model.NextRecoverdAt);
+            _onUpdate.Invoke(model.NextRecoveredAt);
         }
 
         // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
@@ -86,7 +86,7 @@ namespace GS2Studio.Generated.Energy.UI
             if (binder.LoadedUserdataStaminaEnergyStaminaModel) return;
             _warnedUnloadedLoaders = true;
             Debug.LogWarning(
-                $"{nameof(EnergyNextRecoveryValue)} on '{name}': this row's mount surface did not run UserdataStaminaEnergyStaminaModel, which fills what this component reads (NextRecoverdAt); those readings render as their default, not as an absent value.", this);
+                $"{nameof(EnergyNextRecoveryValue)} on '{name}': this row's mount surface did not run UserdataStaminaEnergyStaminaModel, which fills what this component reads (NextRecoveredAt); those readings render as their default, not as an absent value.", this);
         }
 
         /// <summary>Selection consumers own persistence; publishing a choice does not mutate the displayed model.</summary>

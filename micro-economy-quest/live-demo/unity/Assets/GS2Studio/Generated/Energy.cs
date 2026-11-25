@@ -55,7 +55,7 @@ namespace GS2Studio.Generated.Energy
         /// <summary>
         /// Time of the next automatic stamina recovery.
         /// </summary>
-        DateTime NextRecoverdAt { get; }
+        DateTime NextRecoveredAt { get; }
     }
 
     /// <summary>Public setters let external stub models reuse generated Apply methods without exposing the bound mutable model.</summary>
@@ -69,7 +69,7 @@ namespace GS2Studio.Generated.Energy
         new int RecoveryValue { get; set; }
         new int CurrentValue { get; set; }
         new int CurrentMaximumValue { get; set; }
-        new DateTime NextRecoverdAt { get; set; }
+        new DateTime NextRecoveredAt { get; set; }
     }
 
     internal sealed class MutableEnergy : IMutableEnergy
@@ -90,6 +90,6 @@ namespace GS2Studio.Generated.Energy
 
         public int CurrentMaximumValue { get; set; }
 
-        public DateTime NextRecoverdAt { get; set; }
+        public DateTime NextRecoveredAt { get; set; }
     }
 }
