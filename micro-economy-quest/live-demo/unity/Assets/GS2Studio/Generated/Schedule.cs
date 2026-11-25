@@ -23,12 +23,12 @@ namespace GS2Studio.Generated.Schedule
         string ScheduleType { get; }
 
         /// <summary>
-        /// Start time for an absolute schedule.
+        /// Start time for an absolute schedule, as a UTC ISO 8601 timestamp ending in Z (e.g. 2026-11-30T15:00:00Z); offsets such as +09:00 are not accepted.
         /// </summary>
         DateTime? StartAt { get; }
 
         /// <summary>
-        /// End time for an absolute schedule.
+        /// End time for an absolute schedule, as a UTC ISO 8601 timestamp ending in Z; offsets such as +09:00 are not accepted. GS2's documentation does not say whether this instant is inside the period, so give the last moment that must be inside (e.g. 2026-12-31T14:59:59Z).
         /// </summary>
         DateTime? EndAt { get; }
 
