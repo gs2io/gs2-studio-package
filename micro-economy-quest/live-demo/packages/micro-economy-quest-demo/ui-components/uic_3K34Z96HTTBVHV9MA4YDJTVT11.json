@@ -71,34 +71,37 @@
       "template": "Running: {displayName} ({staminaCost} stamina spent)"
     },
     {
-      "arguments": [],
-      "componentClassName": "StartButton",
-      "id": "uii_7MPDEPYA3YAEG8WMC5HTW5EGWY",
-      "kind": "buttonAction",
-      "name": "Quest",
-      "targetActionKey": "Gs2Quest:QuestModel.Start",
-      "targetResource": {
-        "kind": "external",
-        "resourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
-        "resourceKind": "masterData",
-        "sourcePackageId": "micro-economy-quest"
-      }
-    },
-    {
       "componentClassName": "StartInteractable",
       "condition": {
-        "kind": "comparison",
-        "lhs": {
-          "kind": "foreignRow",
-          "propertyId": "prop_7BX7N28W6KRGHGC40MXEWB2ESC",
-          "rowId": "stamina",
-          "sourceDomainTypeId": "dt_7HR7A7JXK6BHF9B91KEKTDD656"
-        },
-        "operator": "gte",
-        "rhs": {
-          "kind": "property",
-          "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
-        }
+        "children": [
+          {
+            "kind": "comparison",
+            "lhs": {
+              "kind": "foreignRow",
+              "propertyId": "prop_7BX7N28W6KRGHGC40MXEWB2ESC",
+              "rowId": "stamina",
+              "sourceDomainTypeId": "dt_7HR7A7JXK6BHF9B91KEKTDD656"
+            },
+            "operator": "gte",
+            "rhs": {
+              "kind": "property",
+              "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
+            }
+          },
+          {
+            "child": {
+              "kind": "truthy",
+              "source": {
+                "kind": "foreignRow",
+                "propertyId": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW",
+                "rowId": "progress",
+                "sourceDomainTypeId": "dt_00D0TT9XC903SNVA7P9GFM98G3"
+              }
+            },
+            "kind": "not"
+          }
+        ],
+        "kind": "and"
       },
       "id": "uii_1AQB97J6FRBWJSPT3QVRJPAAWN",
       "kind": "interactable",

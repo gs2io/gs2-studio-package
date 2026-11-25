@@ -1,0 +1,22 @@
+{
+  "id": "uic_4A0T3CX7GCARXTMVQQ96BCBPDD",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "StartButton",
+      "id": "uii_5FACC2Z9VKACXV8QKNSW0N2H38",
+      "kind": "buttonAction",
+      "name": "Quest",
+      "targetActionKey": "Gs2Quest:QuestModel.Start",
+      "targetResource": {
+        "kind": "local",
+        "resourceId": "mdr_1E79KV3GSN9K19S1G9P9PRYHEE",
+        "resourceKind": "masterData"
+      }
+    }
+  ],
+  "target": {
+    "hostTypeId": "dt_4ZKFNK30Z2RV6Z2SXM9M9EK2ZK",
+    "propertyPath": []
+  }
+}

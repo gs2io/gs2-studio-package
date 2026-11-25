@@ -243,7 +243,14 @@
         ],
         "userData": []
       },
-      "uiComponents": {},
+      "uiComponents": {
+        "StartButton": {
+          "kind": "buttonAction",
+          "name": "Quest",
+          "packageId": "micro-economy-quest",
+          "method": "Start"
+        }
+      },
       "properties": {
         "collection": "prop_5KZQK7RQTRZAX02G1K0EYEMQ35",
         "completeAcquireActions": "prop_72QMZSMD6NC4XN5AYJQWE0SYC8",

@@ -443,7 +443,7 @@
         "StartButton": {
           "kind": "buttonAction",
           "name": "Quest",
-          "packageId": "micro-economy-quest-demo",
+          "packageId": "micro-economy-quest",
           "method": "Start"
         },
         "StartInteractable": {

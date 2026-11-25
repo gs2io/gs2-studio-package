@@ -349,5 +349,10 @@ export const microEconomyQuest = definePackage({
       }),
   ],
 }),
+    defineUiComponent(Quest, {
+  items: [
+    UiItem.buttonAction("StartButton", "Start", undefined, { name: "Quest" }),
+  ],
+}),
   ],
 });

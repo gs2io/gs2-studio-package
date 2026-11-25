@@ -34,6 +34,9 @@ const STAMINA = "stamina";
 
 const MAIN = "main";
 
+// ProgressHandler holds the player's single progress row under this id.
+const PROGRESS_ROW = "progress";
+
 const QUESTS = [
   {
     id: "quest1",
@@ -197,14 +200,19 @@ export const microEconomyQuestDemo = definePackage({
           { displayName: UiSource.prop("displayName"), staminaCost: UiSource.prop("staminaCost") },
           { name: "Quest" }
         ),
-        UiItem.buttonAction("StartButton", "Start", undefined, { name: "Quest" }),
-        // Start is usable only while the player's stamina covers the cost; the page reads the
-        // stamina row from the Energy handler that sits above the quest rows.
+        // micro-economy-quest ships QuestStartButton. It is usable only while the player's stamina covers the
+        // cost and no quest is in progress (GS2 refuses Start with alreadyExists then); the page reads the
+        // stamina row and the progress row from the Energy and Progress handlers that sit above the quest rows.
+        // The page builder wires a section's toggles to that section's rows only, so the quest list cannot be
+        // gated by ProgressIdleActiveToggle from the progress section; one condition here gates the same button.
         UiItem.interactable(
           "StartInteractable",
-          UiCond.gte(
-            UiSource.rowProp(energy.type("Energy"), STAMINA, "currentValue"),
-            UiSource.prop("staminaCost")
+          UiCond.and(
+            UiCond.gte(
+              UiSource.rowProp(energy.type("Energy"), STAMINA, "currentValue"),
+              UiSource.prop("staminaCost")
+            ),
+            UiCond.not(UiCond.truthy(UiSource.rowProp(Progress, PROGRESS_ROW, "inProgress")))
           ),
           { name: "Quest" }
         ),
