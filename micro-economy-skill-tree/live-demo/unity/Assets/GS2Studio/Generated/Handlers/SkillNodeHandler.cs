@@ -95,7 +95,7 @@ namespace GS2Studio.Generated.SkillNode
                     throw new InvalidOperationException("Identity key '_id' is not set.");
                 if (string.IsNullOrEmpty(_owner))
                     throw new InvalidOperationException("Identity key '_owner' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new SkillNodeId(_id ?? string.Empty), _owner, gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new SkillNodeId(_id), _owner, gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

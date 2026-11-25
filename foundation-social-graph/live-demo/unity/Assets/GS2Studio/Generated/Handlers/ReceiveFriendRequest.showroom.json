@@ -32,6 +32,9 @@
   "components": [
     {
       "className": "ReceiveFriendRequestIdLabel",
+      "itemIds": [
+        "uii_1F020Q74BVBA5SFMV047VFDP9G"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

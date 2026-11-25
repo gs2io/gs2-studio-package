@@ -93,6 +93,9 @@
   "components": [
     {
       "className": "CharacterAcquiredActiveToggle",
+      "itemIds": [
+        "uii_6YXTN2NHHSBTA8VK6X20WJEAJP"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -109,6 +112,9 @@
     },
     {
       "className": "CharacterAcquiredAtLabel",
+      "itemIds": [
+        "uii_7TPXVGR7RFA7VBQZHFPE0FX4MW"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -116,6 +122,9 @@
     },
     {
       "className": "CharacterAcquiredAtValue",
+      "itemIds": [
+        "uii_7DYFKQVHRVB6Q8A2G76G09XKNA"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -123,6 +132,9 @@
     },
     {
       "className": "CharacterAcquiredLabel",
+      "itemIds": [
+        "uii_2Z05MV6C11AJF9GKBG66HV5KDQ"
+      ],
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
@@ -130,6 +142,9 @@
     },
     {
       "className": "CharacterExperienceGauge",
+      "itemIds": [
+        "uii_23G7RYNPJEBRN9AY2CAA73N1XM"
+      ],
       "kind": "gauge",
       "valueType": "",
       "reportsFailure": false,
@@ -142,6 +157,9 @@
     },
     {
       "className": "CharacterIdValue",
+      "itemIds": [
+        "uii_3ABJFWQ9R08C8VWJWN5M5QCKFF"
+      ],
       "kind": "value",
       "valueType": "string",
       "reportsFailure": false,
@@ -149,6 +167,9 @@
     },
     {
       "className": "CharacterLevelActiveToggle",
+      "itemIds": [
+        "uii_5SPWRP6NZ09K284G0XM880GR6K"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -165,6 +186,9 @@
     },
     {
       "className": "CharacterLevelInteractable",
+      "itemIds": [
+        "uii_3VD9F1G94G8FEA1WE1ND2W2S1M"
+      ],
       "kind": "interactable",
       "valueType": "",
       "reportsFailure": false,
@@ -181,6 +205,9 @@
     },
     {
       "className": "CharacterLevelLabel",
+      "itemIds": [
+        "uii_0HV1CC6T5H9XPT03MWPD75WQKJ"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -188,6 +215,9 @@
     },
     {
       "className": "CharacterNameLabel",
+      "itemIds": [
+        "uii_6MXQM79ETQAWZAXM43139TC92X"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -195,6 +225,9 @@
     },
     {
       "className": "CharacterPropertyIdValue",
+      "itemIds": [
+        "uii_0T6NVEXS5494GRX18K827ZXS0C"
+      ],
       "kind": "value",
       "valueType": "string",
       "reportsFailure": false,
@@ -202,6 +235,9 @@
     },
     {
       "className": "CharacterRecruitButton",
+      "itemIds": [
+        "uii_3PAHZDCDXT8A7VSQBFZ09VBYAM"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -214,6 +250,9 @@
     },
     {
       "className": "CharacterTrainButton",
+      "itemIds": [
+        "uii_6Q7KC4M407B80AT6WPH1G97SKR"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -226,6 +265,9 @@
     },
     {
       "className": "CharacterUnacquiredActiveToggle",
+      "itemIds": [
+        "uii_2NB1S9S2ASBCA8DFS9BRAAN0QP"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -242,6 +284,9 @@
     },
     {
       "className": "CharacterUnregisteredInteractable",
+      "itemIds": [
+        "uii_6B8ZEK9W4MAMWS23SD8VVFJZEM"
+      ],
       "kind": "interactable",
       "valueType": "",
       "reportsFailure": false,

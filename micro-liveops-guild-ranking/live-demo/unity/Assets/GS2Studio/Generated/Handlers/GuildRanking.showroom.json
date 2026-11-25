@@ -74,6 +74,9 @@
   "components": [
     {
       "className": "GuildRankingRuleLabel",
+      "itemIds": [
+        "uii_2HJ6X1JE3AA2Q94A7AR6NGFXX2"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

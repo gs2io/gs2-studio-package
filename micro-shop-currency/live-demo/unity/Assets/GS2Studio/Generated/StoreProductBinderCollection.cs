@@ -106,7 +106,7 @@ namespace GS2Studio.Generated.StoreProduct
     {
         private readonly Gs2Domain _gs2;
         private readonly IGameSession _session;
-        private readonly string _showcaseName;
+        private readonly string? _showcaseName;
         private readonly List<StoreProductBinder> _binders = new List<StoreProductBinder>();
         // Reconcile by backing row key because distinct rows may share a domain ID.
         private readonly Dictionary<string, StoreProductBinder> _bindersByRowKey = new Dictionary<string, StoreProductBinder>();
@@ -167,7 +167,7 @@ namespace GS2Studio.Generated.StoreProduct
         public StoreProductBinderCollection(
             Gs2Domain gs2,
             IGameSession session,
-            string showcaseName)
+            string? showcaseName)
         {
             _gs2 = gs2;
             _session = session;
@@ -178,7 +178,7 @@ namespace GS2Studio.Generated.StoreProduct
         {
             ThrowIfDisposed();
             new Gs2Bind.Gs2Money2.StoreContentModelArrayLoader("Currency").Invalidate(_gs2, _session);
-            new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _showcaseName).Invalidate(_gs2, _session);
+            if (_showcaseName != null) new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _showcaseName).Invalidate(_gs2, _session);
         }
 
         // Stable sorting preserves row order when both the sort key and domain ID compare equal.
@@ -240,7 +240,7 @@ namespace GS2Studio.Generated.StoreProduct
         public static async Task<StoreProductBinderCollection> CreateFromMoney2CurrencyMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string showcaseName,
+            string? showcaseName,
             CancellationToken cancellationToken = default)
         {
             var coll = new StoreProductBinderCollection(gs2, session, showcaseName);
@@ -444,7 +444,7 @@ namespace GS2Studio.Generated.StoreProduct
         public static async Task<StoreProductBinderCollection> CreateFromShowcaseShopCurrencyMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string showcaseName,
+            string? showcaseName,
             CancellationToken cancellationToken = default)
         {
             var coll = new StoreProductBinderCollection(gs2, session, showcaseName);
@@ -465,7 +465,7 @@ namespace GS2Studio.Generated.StoreProduct
             _pendingCollectionMounts++;
             try
             {
-                var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _showcaseName);
+                var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", (_showcaseName ?? throw new InvalidOperationException("_showcaseName is not set; the mounted axis reads it.")));
                 var loadedItems = await arrayLoader.Load(_gs2, _session);
                 cancellationToken.ThrowIfCancellationRequested();
                 if (!IsCurrentAxisUpdate("ReconcileFromShowcaseShopCurrencyMasterItems", updateVersion)) return;
@@ -495,7 +495,7 @@ namespace GS2Studio.Generated.StoreProduct
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _showcaseName);
+            var arrayLoader = new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", (_showcaseName ?? throw new InvalidOperationException("_showcaseName is not set; the mounted axis reads it.")));
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,

@@ -32,6 +32,9 @@
   "components": [
     {
       "className": "StoreProductPricesPriceLabel",
+      "itemIds": [
+        "uii_5VGTE4HTM99SGS3RRP3R90H8Q2"
+      ],
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
@@ -39,6 +42,9 @@
     },
     {
       "className": "StoreProductPricesPriceValue",
+      "itemIds": [
+        "uii_35VSZWBCP39NVSBP3ERQPMJCRW"
+      ],
       "kind": "value",
       "valueType": "double",
       "reportsFailure": false,

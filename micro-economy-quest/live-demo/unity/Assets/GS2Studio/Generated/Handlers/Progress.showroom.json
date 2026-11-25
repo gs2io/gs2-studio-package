@@ -21,6 +21,9 @@
   "components": [
     {
       "className": "ProgressCompleteButton",
+      "itemIds": [
+        "uii_306DRJCPBABDXS2HMQGM28D8DD"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -33,6 +36,9 @@
     },
     {
       "className": "ProgressIdleActiveToggle",
+      "itemIds": [
+        "uii_71GS9B7DJNBG7TXXYEXK1XH899"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -49,6 +55,9 @@
     },
     {
       "className": "ProgressIdleLabel",
+      "itemIds": [
+        "uii_77EX8RHZWPA4D8WH5GVWGBA7ED"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -56,6 +65,9 @@
     },
     {
       "className": "ProgressRunningActiveToggle",
+      "itemIds": [
+        "uii_1V8YS10416ADGR7GGFFZ5NA8HJ"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,

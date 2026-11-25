@@ -32,6 +32,9 @@
   "components": [
     {
       "className": "FriendFriendProfileLabel",
+      "itemIds": [
+        "uii_2MHPEAC8XDBCT8NT5T0P321XCZ"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -39,6 +42,9 @@
     },
     {
       "className": "FriendNameLabel",
+      "itemIds": [
+        "uii_7FC2M12D99A2ZAWGZ7S6YF4S3W"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

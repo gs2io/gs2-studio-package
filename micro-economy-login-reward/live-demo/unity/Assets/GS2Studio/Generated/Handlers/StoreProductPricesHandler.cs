@@ -105,7 +105,7 @@ namespace GS2Studio.Generated.StoreProductPrices
                     throw new InvalidOperationException("Composite key part '_storeProduct' is not set.");
                 if (string.IsNullOrEmpty(_currencyType))
                     throw new InvalidOperationException("Composite key part '_currencyType' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new StoreProductId(_storeProduct ?? string.Empty), new CurrencyTypeId(_currencyType ?? string.Empty), gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new StoreProductId(_storeProduct), new CurrencyTypeId(_currencyType), gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

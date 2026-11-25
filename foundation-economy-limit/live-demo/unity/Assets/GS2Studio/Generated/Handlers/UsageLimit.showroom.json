@@ -32,6 +32,9 @@
   "components": [
     {
       "className": "UsageLimitNotWeeklyActiveToggle",
+      "itemIds": [
+        "uii_62F5K8HNEMA9NRNAM4PKEZXMD5"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -48,6 +51,9 @@
     },
     {
       "className": "UsageLimitScheduleLabel",
+      "itemIds": [
+        "uii_1VRYCX7ZWDARDBPD2GD3ZMTXYP"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -55,6 +61,9 @@
     },
     {
       "className": "UsageLimitWeeklyActiveToggle",
+      "itemIds": [
+        "uii_1BR6G75XNKBPMTX6FNR1YTM5KY"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -71,6 +80,9 @@
     },
     {
       "className": "UsageLimitWeeklyScheduleLabel",
+      "itemIds": [
+        "uii_6W2GASSKWGA0PAD6V8PPAQ6YNA"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

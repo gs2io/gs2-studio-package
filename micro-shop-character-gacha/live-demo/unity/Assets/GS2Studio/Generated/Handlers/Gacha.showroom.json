@@ -53,6 +53,9 @@
   "components": [
     {
       "className": "GachaBuyButton",
+      "itemIds": [
+        "uii_10KGDX96WTAC991BGF5HBHZY69"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -65,6 +68,9 @@
     },
     {
       "className": "GachaDrawLabel",
+      "itemIds": [
+        "uii_4YSV3FZT2FBNF8XDDQKWR62YNB"
+      ],
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,

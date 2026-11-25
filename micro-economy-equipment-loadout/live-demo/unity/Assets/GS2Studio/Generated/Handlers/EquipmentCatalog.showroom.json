@@ -32,6 +32,9 @@
   "components": [
     {
       "className": "EquipmentCatalogNameLabel",
+      "itemIds": [
+        "uii_04C1D5QNHYBK4VCBKD1PS3MWGE"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -39,6 +42,9 @@
     },
     {
       "className": "EquipmentCatalogTakeButton",
+      "itemIds": [
+        "uii_7T0JKK8YRAA1NV39GY9Z531AAA"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

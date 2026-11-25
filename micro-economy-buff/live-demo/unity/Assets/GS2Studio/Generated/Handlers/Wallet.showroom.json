@@ -32,6 +32,9 @@
   "components": [
     {
       "className": "WalletFreeBalanceLabel",
+      "itemIds": [
+        "uii_61Z6Z202DS98CRDCCRC6WPKH3J"
+      ],
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
@@ -39,6 +42,9 @@
     },
     {
       "className": "WalletPaidBalanceLabel",
+      "itemIds": [
+        "uii_5MVWS6P35W942RKQQB6KJR83CG"
+      ],
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
@@ -46,6 +52,9 @@
     },
     {
       "className": "WalletTotalBalanceLabel",
+      "itemIds": [
+        "uii_0J5VV2JWE99MQVQSAKQF6TH40W"
+      ],
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,

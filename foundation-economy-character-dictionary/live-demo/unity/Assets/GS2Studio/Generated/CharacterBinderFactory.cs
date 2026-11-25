@@ -44,7 +44,7 @@ namespace GS2Studio.Generated.Character
             string? __sdk__userdataInventoryCharacterItemModel_3 = null,
             string? __sdk__userdataExperienceCharacterExperienceExperienceModel_1 = null,
             string? __sdk__userdataExperienceCharacterExperienceExperienceModel_2 = null);
-        ICharacterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string propertyId);
+        ICharacterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string? propertyId);
     }
 
     public sealed class DefaultCharacterBinderFactory : ICharacterBinderFactory
@@ -71,7 +71,7 @@ namespace GS2Studio.Generated.Character
         {
             return await CharacterBinder.CreateAsync(id, propertyId, gs2, session, cancellationToken, __sdk__transactionAcquireAction_1, __sdk__exchangeCharacterTrainNamespaceRateModel_1, __sdk__dictionaryCharacterDictionaryNamespaceEntryModel_1, __sdk__transactionAcquireAction2_1, __sdk__transactionAcquireAction3_1, __sdk__exchangeCharacterDexRecruitNamespaceRateModel_1, __sdk__inventoryCharacterNamespaceInventoryModelItemModel_2, __sdk__userdataDictionaryCharacterDictionaryEntryModel_1, __sdk__userdataInventoryCharacterItemModel_2, __sdk__userdataInventoryCharacterItemModel_3, __sdk__userdataExperienceCharacterExperienceExperienceModel_1, __sdk__userdataExperienceCharacterExperienceExperienceModel_2);
         }
-        public ICharacterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string propertyId)
+        public ICharacterBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string? propertyId)
         {
             return new CharacterBinderCollection(gs2, session, propertyId);
         }

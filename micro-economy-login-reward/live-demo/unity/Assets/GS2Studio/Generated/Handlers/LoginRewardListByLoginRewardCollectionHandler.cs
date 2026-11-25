@@ -195,7 +195,7 @@ namespace GS2Studio.Generated.LoginReward
                     throw new InvalidOperationException("Parent LoginRewardCollectionHandlerBase has no bound binder yet.");
                 _parentId = parentBinder.Id;
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new LoginRewardCollectionId(_loginRewardCollection ?? string.Empty));
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new LoginRewardCollectionId(_loginRewardCollection));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

@@ -174,7 +174,7 @@ namespace GS2Studio.Generated.Quest
                 if (string.IsNullOrEmpty(_collection))
                     throw new InvalidOperationException("'_collection' is not set.");
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new QuestCollectionId(_collection ?? string.Empty));
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new QuestCollectionId(_collection));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

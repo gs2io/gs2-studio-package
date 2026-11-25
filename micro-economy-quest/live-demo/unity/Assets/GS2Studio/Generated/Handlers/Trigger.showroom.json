@@ -53,6 +53,9 @@
   "components": [
     {
       "className": "TriggerClearButton",
+      "itemIds": [
+        "uii_4YVDW9FMKEA5W8AJA0MSMK3QBF"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -65,6 +68,9 @@
     },
     {
       "className": "TriggerExpiresAtValue",
+      "itemIds": [
+        "uii_3F3CGAZQ0ABP3RBFKHB5NX12F2"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -72,6 +78,9 @@
     },
     {
       "className": "TriggerExpiresInValue",
+      "itemIds": [
+        "uii_3A1JK1MQZRAW9TWQBX5NKXEFK5"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -79,6 +88,9 @@
     },
     {
       "className": "TriggerExtendButton",
+      "itemIds": [
+        "uii_2EQAMNN34ZAEF9D72YMDC8YJJ4"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -91,6 +103,9 @@
     },
     {
       "className": "TriggerNameLabel",
+      "itemIds": [
+        "uii_2675N170VFA99REWHFRQA7Z9AX"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -98,6 +113,9 @@
     },
     {
       "className": "TriggerTriggeredActiveToggle",
+      "itemIds": [
+        "uii_1DDFP4NJXXA8NATPEMCF6MGC55"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -114,6 +132,9 @@
     },
     {
       "className": "TriggerTriggeredInteractable",
+      "itemIds": [
+        "uii_625D1A2XV5A60RCYQX9NDKGVKA"
+      ],
       "kind": "interactable",
       "valueType": "",
       "reportsFailure": false,
@@ -130,6 +151,9 @@
     },
     {
       "className": "TriggerWindowLabel",
+      "itemIds": [
+        "uii_2X3FN815QHBKC9GSEEQ5JAD3N2"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

@@ -103,7 +103,7 @@ namespace GS2Studio.Generated.GachaRarityRate
                     throw new InvalidOperationException("Composite key part '_gacha' is not set.");
                 if (string.IsNullOrEmpty(_rarity))
                     throw new InvalidOperationException("Composite key part '_rarity' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new GachaId(_gacha ?? string.Empty), new GachaRarityId(_rarity ?? string.Empty), gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new GachaId(_gacha), new GachaRarityId(_rarity), gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

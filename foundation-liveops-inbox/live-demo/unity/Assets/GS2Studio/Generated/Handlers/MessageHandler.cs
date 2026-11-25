@@ -103,7 +103,7 @@ namespace GS2Studio.Generated.Message
                     throw new InvalidOperationException("Identity key '_id' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new MessageId(_id ?? string.Empty), gs2, session, cancellationToken, __sdk__userdataInboxMessage_1: _sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName);
+                var binder = await ResolveBinderFactory().CreateAsync(new MessageId(_id), gs2, session, cancellationToken, __sdk__userdataInboxMessage_1: _sdk_foundation_x2d_liveops_x2d_inbox_userData_udr_5B2DBE3P7M977TXCSEYBR6973N_inbox_Message_messageName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

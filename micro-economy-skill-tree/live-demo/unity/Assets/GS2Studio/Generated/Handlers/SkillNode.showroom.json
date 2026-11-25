@@ -48,6 +48,9 @@
   "components": [
     {
       "className": "SkillNodeReleasedActiveToggle",
+      "itemIds": [
+        "uii_6KNSRM8V3XBDF99Z0VK8QPSJQ6"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -64,6 +67,9 @@
     },
     {
       "className": "SkillNodeUnreleasedActiveToggle",
+      "itemIds": [
+        "uii_5ZQ4DY67XZBBM8DWVR1RT82668"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,

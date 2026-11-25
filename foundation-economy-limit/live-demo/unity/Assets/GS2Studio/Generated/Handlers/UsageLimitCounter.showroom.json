@@ -77,6 +77,9 @@
   "components": [
     {
       "className": "UsageLimitCounterAdUsesUnavailableActiveToggle",
+      "itemIds": [
+        "uii_3G781JCKX4A2Z93RQNBK5KCTE7"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -93,6 +96,9 @@
     },
     {
       "className": "UsageLimitCounterAllowanceLabel",
+      "itemIds": [
+        "uii_5G4EY7E0DQBWKRQXZJBV1GC3SK"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -100,6 +106,9 @@
     },
     {
       "className": "UsageLimitCounterAnyUseLeftActiveToggle",
+      "itemIds": [
+        "uii_3JQ9EJQS23AC3R9NJ0A9EYEVQT"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -116,6 +125,9 @@
     },
     {
       "className": "UsageLimitCounterFreeUsesLeftActiveToggle",
+      "itemIds": [
+        "uii_2C5Z0QYW4KBB9VE1ZNMSXX49NW"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -132,6 +144,9 @@
     },
     {
       "className": "UsageLimitCounterFreeUsesSpentActiveToggle",
+      "itemIds": [
+        "uii_4T4TMX27EMBQ8B7NNYANP8EW4N"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -148,6 +163,9 @@
     },
     {
       "className": "UsageLimitCounterNextResetInValue",
+      "itemIds": [
+        "uii_5YGA6A1Z86A33T5Q5WVF14VMWN"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -155,6 +173,9 @@
     },
     {
       "className": "UsageLimitCounterNoFreeUsesLeftLabel",
+      "itemIds": [
+        "uii_11RWTPD3Y3A2C93AHFPA1DBK2C"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -162,6 +183,9 @@
     },
     {
       "className": "UsageLimitCounterNothingLeftLabel",
+      "itemIds": [
+        "uii_4AS1987Y9FBSCV4YM334JAANTE"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -169,6 +193,9 @@
     },
     {
       "className": "UsageLimitCounterResetEveryAllowanceButton",
+      "itemIds": [
+        "uii_71CMYTD760BME93XMH90Q1RG6T"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -181,6 +208,9 @@
     },
     {
       "className": "UsageLimitCounterUsageLabel",
+      "itemIds": [
+        "uii_7YGWDRGYADASV8M7VRDSMXJGB3"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -188,6 +218,9 @@
     },
     {
       "className": "UsageLimitCounterUseFreeButton",
+      "itemIds": [
+        "uii_67NWFF07T4BJAV6WVF92Q4X8V0"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -200,6 +233,9 @@
     },
     {
       "className": "UsageLimitCounterUseWithAdButton",
+      "itemIds": [
+        "uii_3QWMQDCT8KAP6BF0F3KYVYFSZE"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

@@ -27,6 +27,9 @@
   "components": [
     {
       "className": "ProfileFollowerProfileLabel",
+      "itemIds": [
+        "uii_4ER4YQFVQEBG0S7Y0W7WCJRKCA"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -34,6 +37,9 @@
     },
     {
       "className": "ProfileFriendProfileLabel",
+      "itemIds": [
+        "uii_3ZHR5T222AABN8NBBC9E6CD2JS"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -41,6 +47,9 @@
     },
     {
       "className": "ProfileNameLabel",
+      "itemIds": [
+        "uii_2CTVZWCFRJACCSZ0W304E543QP"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

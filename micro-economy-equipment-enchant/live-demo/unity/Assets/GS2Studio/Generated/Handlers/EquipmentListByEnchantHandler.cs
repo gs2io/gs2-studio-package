@@ -194,6 +194,8 @@ namespace GS2Studio.Generated.Equipment
                 var unusableAxisReason = UnusableAxisReason();
                 if (unusableAxisReason != null)
                     throw new InvalidOperationException(unusableAxisReason);
+                if (string.IsNullOrEmpty(_enchant))
+                    throw new InvalidOperationException("'_enchant' is not set.");
                 ResolveParentHandler();
                 if (_parentHandler == null)
                     throw new InvalidOperationException("Parent EquipmentEnchantHandlerBase is not assigned and none was found in the parent hierarchy.");
@@ -203,7 +205,7 @@ namespace GS2Studio.Generated.Equipment
                     throw new InvalidOperationException("Parent EquipmentEnchantHandlerBase has no bound binder yet.");
                 _parentId = parentBinder.Id;
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new EquipmentEnchantId(_enchant ?? string.Empty));
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new EquipmentEnchantId(_enchant));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

@@ -103,7 +103,7 @@ namespace GS2Studio.Generated.RankingReward
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_ranking))
                     throw new InvalidOperationException("Composite key part '_ranking' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new RankingId(_ranking ?? string.Empty), new RankingRewardThresholdRank(_thresholdRank), gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new RankingId(_ranking), new RankingRewardThresholdRank(_thresholdRank), gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

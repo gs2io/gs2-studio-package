@@ -115,7 +115,7 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new UsageLimitCounterId(_id ?? string.Empty), new UsageLimitId(_limit ?? string.Empty), gs2, session, cancellationToken, __sdk__userdataLimitLimitLimitModel_1: _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName, __sdk__userdataLimitLimitLimitModel_2: _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName);
+                var binder = await ResolveBinderFactory().CreateAsync(new UsageLimitCounterId(_id), new UsageLimitId(_limit), gs2, session, cancellationToken, __sdk__userdataLimitLimitLimitModel_1: _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName, __sdk__userdataLimitLimitLimitModel_2: _sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

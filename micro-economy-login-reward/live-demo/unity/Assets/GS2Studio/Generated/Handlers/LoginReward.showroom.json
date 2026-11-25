@@ -53,6 +53,9 @@
   "components": [
     {
       "className": "LoginRewardDayLabel",
+      "itemIds": [
+        "uii_67DN9NYDBDA58RDAG1KTTMQ8J0"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -60,6 +63,9 @@
     },
     {
       "className": "LoginRewardReceivedActiveToggle",
+      "itemIds": [
+        "uii_31Y2485DHQAW2A6AWN8XTGB95E"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -76,6 +82,9 @@
     },
     {
       "className": "LoginRewardReceivedLabel",
+      "itemIds": [
+        "uii_7T0YVKWD12AE3TQ318CKZBVS60"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -83,6 +92,9 @@
     },
     {
       "className": "LoginRewardUnreceivedActiveToggle",
+      "itemIds": [
+        "uii_5029EZ620RBPJTP2YEK2TVE1A4"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,

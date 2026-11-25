@@ -174,7 +174,7 @@ namespace GS2Studio.Generated.LoginReward
                 if (string.IsNullOrEmpty(_loginRewardCollection))
                     throw new InvalidOperationException("'_loginRewardCollection' is not set.");
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new LoginRewardCollectionId(_loginRewardCollection ?? string.Empty));
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new LoginRewardCollectionId(_loginRewardCollection));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

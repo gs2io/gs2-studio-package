@@ -104,9 +104,9 @@ namespace GS2Studio.Generated.GuildRanking
     {
         private readonly Gs2Domain _gs2;
         private readonly IGameSession _session;
-        private readonly string _rankingName;
-        private readonly string _clusterName;
-        private readonly long _season;
+        private readonly string? _rankingName;
+        private readonly string? _clusterName;
+        private readonly long? _season;
         private readonly List<GuildRankingBinder> _binders = new List<GuildRankingBinder>();
         // Reconcile by backing row key because distinct rows may share a domain ID.
         private readonly Dictionary<string, GuildRankingBinder> _bindersByRowKey = new Dictionary<string, GuildRankingBinder>();
@@ -167,9 +167,9 @@ namespace GS2Studio.Generated.GuildRanking
         public GuildRankingBinderCollection(
             Gs2Domain gs2,
             IGameSession session,
-            string rankingName,
-            string clusterName,
-            long season)
+            string? rankingName,
+            string? clusterName,
+            long? season)
         {
             _gs2 = gs2;
             _session = session;
@@ -182,7 +182,7 @@ namespace GS2Studio.Generated.GuildRanking
         {
             ThrowIfDisposed();
             new Gs2Bind.Gs2Ranking2.ClusterRankingModelArrayLoader("GuildRanking").Invalidate(_gs2, _session);
-            new Gs2Bind.Gs2Ranking2.ClusterRankingScoreArrayLoader("GuildRanking", _rankingName, _clusterName, _season).Invalidate(_gs2, _session);
+            if (_rankingName != null && _clusterName != null && _season != null) new Gs2Bind.Gs2Ranking2.ClusterRankingScoreArrayLoader("GuildRanking", _rankingName, _clusterName, _season).Invalidate(_gs2, _session);
         }
 
         // Stable sorting preserves row order when both the sort key and domain ID compare equal.
@@ -244,9 +244,9 @@ namespace GS2Studio.Generated.GuildRanking
         public static async Task<GuildRankingBinderCollection> CreateFromRanking2GuildRankingMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string rankingName,
-            string clusterName,
-            long season,
+            string? rankingName,
+            string? clusterName,
+            long? season,
             CancellationToken cancellationToken = default)
         {
             var coll = new GuildRankingBinderCollection(gs2, session, rankingName, clusterName, season);
@@ -450,9 +450,9 @@ namespace GS2Studio.Generated.GuildRanking
         public static async Task<GuildRankingBinderCollection> CreateFromRanking2GuildRankingUserDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string rankingName,
-            string clusterName,
-            long season,
+            string? rankingName,
+            string? clusterName,
+            long? season,
             CancellationToken cancellationToken = default)
         {
             var coll = new GuildRankingBinderCollection(gs2, session, rankingName, clusterName, season);
@@ -473,7 +473,7 @@ namespace GS2Studio.Generated.GuildRanking
             _pendingCollectionMounts++;
             try
             {
-                var arrayLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingScoreArrayLoader("GuildRanking", _rankingName, _clusterName, _season);
+                var arrayLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingScoreArrayLoader("GuildRanking", (_rankingName ?? throw new InvalidOperationException("_rankingName is not set; the mounted axis reads it.")), (_clusterName ?? throw new InvalidOperationException("_clusterName is not set; the mounted axis reads it.")), (_season ?? throw new InvalidOperationException("_season is not set; the mounted axis reads it.")));
                 var loadedItems = await arrayLoader.Load(_gs2, _session);
                 cancellationToken.ThrowIfCancellationRequested();
                 if (!IsCurrentAxisUpdate("ReconcileFromRanking2GuildRankingUserItems", updateVersion)) return;
@@ -503,7 +503,7 @@ namespace GS2Studio.Generated.GuildRanking
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            var arrayLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingScoreArrayLoader("GuildRanking", _rankingName, _clusterName, _season);
+            var arrayLoader = new Gs2Bind.Gs2Ranking2.ClusterRankingScoreArrayLoader("GuildRanking", (_rankingName ?? throw new InvalidOperationException("_rankingName is not set; the mounted axis reads it.")), (_clusterName ?? throw new InvalidOperationException("_clusterName is not set; the mounted axis reads it.")), (_season ?? throw new InvalidOperationException("_season is not set; the mounted axis reads it.")));
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,

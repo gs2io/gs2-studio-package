@@ -21,6 +21,9 @@
   "components": [
     {
       "className": "GiftAmountLabel",
+      "itemIds": [
+        "uii_2VFYE3J7QDBS8V4STBJPBRJ98V"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -28,6 +31,9 @@
     },
     {
       "className": "GiftDeliverButton",
+      "itemIds": [
+        "uii_2D8E7ANET0BQD9J3GKY1ZXK50K"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

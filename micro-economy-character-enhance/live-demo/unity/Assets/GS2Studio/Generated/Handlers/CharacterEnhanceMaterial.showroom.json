@@ -53,6 +53,9 @@
   "components": [
     {
       "className": "CharacterEnhanceMaterialGetButton",
+      "itemIds": [
+        "uii_0EVAZ6XV15A1RBJ7BN5TP9WK87"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -65,6 +68,9 @@
     },
     {
       "className": "CharacterEnhanceMaterialStockLabel",
+      "itemIds": [
+        "uii_4Y2XYZNVX4AX3TREQ7EYT0GDAG"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

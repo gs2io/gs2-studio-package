@@ -98,7 +98,7 @@ namespace GS2Studio.Generated.LoginReward
                     throw new InvalidOperationException("Identity key '_id' is not set.");
                 if (string.IsNullOrEmpty(_loginRewardCollection))
                     throw new InvalidOperationException("Identity key '_loginRewardCollection' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new LoginRewardId(_id ?? string.Empty), _rewardIndex, new LoginRewardCollectionId(_loginRewardCollection ?? string.Empty), gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new LoginRewardId(_id), _rewardIndex, new LoginRewardCollectionId(_loginRewardCollection), gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

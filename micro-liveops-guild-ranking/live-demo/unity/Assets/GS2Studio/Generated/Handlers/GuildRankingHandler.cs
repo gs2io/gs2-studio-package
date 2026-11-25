@@ -103,7 +103,7 @@ namespace GS2Studio.Generated.GuildRanking
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new GuildRankingId(_id ?? string.Empty), gs2, session, cancellationToken, clusterName: _clusterNameKey, season: _seasonKey);
+                var binder = await ResolveBinderFactory().CreateAsync(new GuildRankingId(_id), gs2, session, cancellationToken, clusterName: _clusterNameKey, season: _seasonKey);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

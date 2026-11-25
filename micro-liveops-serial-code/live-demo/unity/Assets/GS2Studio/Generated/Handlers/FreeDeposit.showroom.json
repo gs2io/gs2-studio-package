@@ -21,6 +21,9 @@
   "components": [
     {
       "className": "FreeDepositCountLabel",
+      "itemIds": [
+        "uii_4CNXDKJSQ2A75TDQV59RK0JGGS"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -28,6 +31,9 @@
     },
     {
       "className": "FreeDepositDepositButton",
+      "itemIds": [
+        "uii_19EGYBKPA1BDJVCNAK5FN5BQT4"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

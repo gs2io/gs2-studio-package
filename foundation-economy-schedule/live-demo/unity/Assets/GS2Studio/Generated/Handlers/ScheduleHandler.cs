@@ -107,7 +107,7 @@ namespace GS2Studio.Generated.Schedule
                     throw new InvalidOperationException("Identity key '_trigger' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new ScheduleId(_id ?? string.Empty), _trigger, gs2, session, cancellationToken, __sdk__userdataScheduleTrigger_1: _sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName);
+                var binder = await ResolveBinderFactory().CreateAsync(new ScheduleId(_id), _trigger, gs2, session, cancellationToken, __sdk__userdataScheduleTrigger_1: _sdk_foundation_x2d_economy_x2d_schedule_userData_udr_4A5V227Z8JBZ2SXGBDFSS39GRH_schedule_Trigger_triggerName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

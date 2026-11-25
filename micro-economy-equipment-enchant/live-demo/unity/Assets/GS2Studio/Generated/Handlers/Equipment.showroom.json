@@ -90,6 +90,9 @@
   "components": [
     {
       "className": "EquipmentAddBonusButton",
+      "itemIds": [
+        "uii_691EKKVZ32A52T5BDB368R16YF"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -102,6 +105,9 @@
     },
     {
       "className": "EquipmentDiscardButton",
+      "itemIds": [
+        "uii_5JGH7ZSMEWBCEAK62CPAQV70RA"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -114,6 +120,9 @@
     },
     {
       "className": "EquipmentNameLabel",
+      "itemIds": [
+        "uii_62GTQGG18AAGFVV9JWJ7BEZ269"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -121,6 +130,9 @@
     },
     {
       "className": "EquipmentPropertyIdValue",
+      "itemIds": [
+        "uii_1T96RH541DBMZAJSRP2JN7V7RP"
+      ],
       "kind": "value",
       "valueType": "string",
       "reportsFailure": false,
@@ -128,6 +140,9 @@
     },
     {
       "className": "EquipmentRerollButton",
+      "itemIds": [
+        "uii_1EEX75T7GWAY3TWJ644145G7TN"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

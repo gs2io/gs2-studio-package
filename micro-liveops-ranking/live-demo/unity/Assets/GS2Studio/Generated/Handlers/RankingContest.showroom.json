@@ -21,6 +21,9 @@
   "components": [
     {
       "className": "RankingContestFinishContestButton",
+      "itemIds": [
+        "uii_08SAH87PZ6AZB8NPG6EQPFM1WJ"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -33,6 +36,9 @@
     },
     {
       "className": "RankingContestRuleLabel",
+      "itemIds": [
+        "uii_1J82GNYYRGB5HVMN94RR74RWCM"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -40,6 +46,9 @@
     },
     {
       "className": "RankingContestStartContestButton",
+      "itemIds": [
+        "uii_7JWPVM4BS6AR18AVDYY7KZMB4W"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

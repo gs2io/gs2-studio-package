@@ -196,7 +196,7 @@ namespace GS2Studio.Generated.Mission
                     throw new InvalidOperationException("Parent MissionCollectionHandlerBase has no bound binder yet.");
                 _parentId = parentBinder.Id;
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new MissionCollectionId(_missionCollection ?? string.Empty));
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new MissionCollectionId(_missionCollection));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

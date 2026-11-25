@@ -45,6 +45,9 @@
   "components": [
     {
       "className": "EnergyProductBuyButton",
+      "itemIds": [
+        "uii_432ZG9G0QNBTTABMTFFQXFM5ED"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -57,6 +60,9 @@
     },
     {
       "className": "EnergyProductOfferLabel",
+      "itemIds": [
+        "uii_431JA2VKHHATSTDVRJCV7HA1A4"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

@@ -119,7 +119,7 @@ namespace GS2Studio.Generated.Character
     {
         private readonly Gs2Domain _gs2;
         private readonly IGameSession _session;
-        private readonly string _propertyId;
+        private readonly string? _propertyId;
         private readonly List<CharacterBinder> _binders = new List<CharacterBinder>();
         // Reconcile by backing row key because distinct rows may share a domain ID.
         private readonly Dictionary<string, CharacterBinder> _bindersByRowKey = new Dictionary<string, CharacterBinder>();
@@ -180,7 +180,7 @@ namespace GS2Studio.Generated.Character
         public CharacterBinderCollection(
             Gs2Domain gs2,
             IGameSession session,
-            string propertyId)
+            string? propertyId)
         {
             _gs2 = gs2;
             _session = session;
@@ -257,7 +257,7 @@ namespace GS2Studio.Generated.Character
         public static async Task<CharacterBinderCollection> CreateFromInventoryCharacterMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string propertyId,
+            string? propertyId,
             CancellationToken cancellationToken = default)
         {
             var coll = new CharacterBinderCollection(gs2, session, propertyId);
@@ -461,7 +461,7 @@ namespace GS2Studio.Generated.Character
         public static async Task<CharacterBinderCollection> CreateFromExchangeCharacterTrainMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string propertyId,
+            string? propertyId,
             CancellationToken cancellationToken = default)
         {
             var coll = new CharacterBinderCollection(gs2, session, propertyId);
@@ -665,7 +665,7 @@ namespace GS2Studio.Generated.Character
         public static async Task<CharacterBinderCollection> CreateFromDictionaryCharacterDictionaryMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string propertyId,
+            string? propertyId,
             CancellationToken cancellationToken = default)
         {
             var coll = new CharacterBinderCollection(gs2, session, propertyId);
@@ -869,7 +869,7 @@ namespace GS2Studio.Generated.Character
         public static async Task<CharacterBinderCollection> CreateFromExchangeCharacterDexRecruitMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string propertyId,
+            string? propertyId,
             CancellationToken cancellationToken = default)
         {
             var coll = new CharacterBinderCollection(gs2, session, propertyId);
@@ -1073,7 +1073,7 @@ namespace GS2Studio.Generated.Character
         public static async Task<CharacterBinderCollection> CreateFromInventoryCharacterUserDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string propertyId,
+            string? propertyId,
             CancellationToken cancellationToken = default)
         {
             var coll = new CharacterBinderCollection(gs2, session, propertyId);
@@ -1276,7 +1276,7 @@ namespace GS2Studio.Generated.Character
         public static async Task<CharacterBinderCollection> CreateFromDictionaryCharacterDictionaryUserDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string propertyId,
+            string? propertyId,
             CancellationToken cancellationToken = default)
         {
             var coll = new CharacterBinderCollection(gs2, session, propertyId);
@@ -1449,7 +1449,7 @@ namespace GS2Studio.Generated.Character
 
         private async Task<CharacterBinder?> BuildBinderFromDictionaryCharacterDictionaryUserItem(Gs2.Unity.Gs2Dictionary.Model.EzEntry item, CancellationToken cancellationToken, long updateVersion, bool attachChildSubscribe)
         {
-            var model = CharacterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name)), _propertyId);
+            var model = CharacterBinder.CreateModel((string.IsNullOrEmpty(item.Name) ? default(CharacterId) : new CharacterId(item.Name)), (_propertyId ?? throw new InvalidOperationException("_propertyId is not set; the mounted axis reads it.")));
             ApplyDictionaryCharacterDictionaryUserItemTo(model, item);
             var binder = new CharacterBinder(model, _gs2, _session, _mountSurface: CharacterMountSurface.DictionaryCharacterDictionaryUser, __sdk__dictionaryCharacterDictionaryNamespaceEntryModel_1: item.Name, __sdk__userdataDictionaryCharacterDictionaryEntryModel_1: item.Name);
             try { await binder.MountAsync(cancellationToken); return binder; }

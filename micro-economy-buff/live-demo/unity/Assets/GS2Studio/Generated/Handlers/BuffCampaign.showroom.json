@@ -21,6 +21,9 @@
   "components": [
     {
       "className": "BuffCampaignEndCampaignButton",
+      "itemIds": [
+        "uii_7RW0NMS3WABK096BPWYW5CWZQA"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -33,6 +36,9 @@
     },
     {
       "className": "BuffCampaignRuleLabel",
+      "itemIds": [
+        "uii_0SHK1Y0BJFAP4B4N34KDM99EFG"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -40,6 +46,9 @@
     },
     {
       "className": "BuffCampaignStartCampaignButton",
+      "itemIds": [
+        "uii_3GNEQ7TZJRAXQTBP1YC5JVTZ39"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

@@ -181,8 +181,10 @@ namespace GS2Studio.Generated.Equipment
                 var unusableAxisReason = UnusableAxisReason();
                 if (unusableAxisReason != null)
                     throw new InvalidOperationException(unusableAxisReason);
+                if (string.IsNullOrEmpty(_enchant))
+                    throw new InvalidOperationException("'_enchant' is not set.");
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new EquipmentEnchantId(_enchant ?? string.Empty));
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new EquipmentEnchantId(_enchant));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

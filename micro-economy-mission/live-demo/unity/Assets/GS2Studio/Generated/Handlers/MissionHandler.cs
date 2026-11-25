@@ -110,7 +110,7 @@ namespace GS2Studio.Generated.Mission
                     throw new InvalidOperationException("Identity key '_missionCollection' is not set.");
                 if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName))
                     throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new MissionId(_id ?? string.Empty), new MissionCollectionId(_missionCollection ?? string.Empty), gs2, session, cancellationToken, __sdk__membershipMissionComplete_1: _sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName);
+                var binder = await ResolveBinderFactory().CreateAsync(new MissionId(_id), new MissionCollectionId(_missionCollection), gs2, session, cancellationToken, __sdk__membershipMissionComplete_1: _sdk_micro_x2d_economy_x2d_mission_userData_udr_2TY87RWWCV9KJVRVXSHVSAGBVE_mission_Complete_missionGroupName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

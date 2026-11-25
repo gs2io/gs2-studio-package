@@ -177,7 +177,7 @@ namespace GS2Studio.Generated.Ranking
                 if (unusableAxisReason != null)
                     throw new InvalidOperationException(unusableAxisReason);
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, _rankingName ?? string.Empty, _season);
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, (string.IsNullOrEmpty(_rankingName) ? null : _rankingName), _season);
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

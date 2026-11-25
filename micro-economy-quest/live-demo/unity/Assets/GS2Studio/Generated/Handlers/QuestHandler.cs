@@ -109,7 +109,7 @@ namespace GS2Studio.Generated.Quest
                     throw new InvalidOperationException("Identity key '_collection' is not set.");
                 if (string.IsNullOrEmpty(_sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName))
                     throw new InvalidOperationException("SDK backing key 'sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new QuestId(_id ?? string.Empty), new QuestCollectionId(_collection ?? string.Empty), gs2, session, cancellationToken, __sdk__membershipQuestCompletedQuestList_1: _sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName);
+                var binder = await ResolveBinderFactory().CreateAsync(new QuestId(_id), new QuestCollectionId(_collection), gs2, session, cancellationToken, __sdk__membershipQuestCompletedQuestList_1: _sdk_micro_x2d_economy_x2d_quest_userData_udr_4WA8P7P2679A4AQVAPWQHKN6VN_quest_CompletedQuestList_questGroupName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

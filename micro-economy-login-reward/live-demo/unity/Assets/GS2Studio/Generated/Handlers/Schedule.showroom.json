@@ -37,6 +37,9 @@
   "components": [
     {
       "className": "ScheduleAbsoluteActiveToggle",
+      "itemIds": [
+        "uii_3N7KWAD6VNB7597Q5HF4MEVBBG"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -53,6 +56,9 @@
     },
     {
       "className": "ScheduleClosesInValue",
+      "itemIds": [
+        "uii_3XX913TG27AVVRRKSESXYY19CE"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -60,6 +66,9 @@
     },
     {
       "className": "ScheduleEndAtValue",
+      "itemIds": [
+        "uii_7MEPW30C74BQZVSN7NZS7GCNVC"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -67,6 +76,9 @@
     },
     {
       "className": "ScheduleEndsInValue",
+      "itemIds": [
+        "uii_6KZFSH9K4HA5AVCCBY1TAAW903"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -74,6 +86,9 @@
     },
     {
       "className": "SchedulePeriodLabel",
+      "itemIds": [
+        "uii_1MD6V5M418AN5AY26VRX4DRQ1T"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -81,6 +96,9 @@
     },
     {
       "className": "ScheduleRelativeActiveToggle",
+      "itemIds": [
+        "uii_6XEX3CY1VYAW2B8H2AC5HSWV9G"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -97,6 +115,9 @@
     },
     {
       "className": "ScheduleRelativeEndAtValue",
+      "itemIds": [
+        "uii_5F9001FT1XBMH9F9W4GKTCCC7G"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -104,6 +125,9 @@
     },
     {
       "className": "ScheduleRelativeWindowLabel",
+      "itemIds": [
+        "uii_1B5PKBCY2XB30ARQVBMBQA7D97"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -111,6 +135,9 @@
     },
     {
       "className": "ScheduleStartAtValue",
+      "itemIds": [
+        "uii_5X3S5EDY87BXAAPQH4FTST77XZ"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -118,6 +145,9 @@
     },
     {
       "className": "ScheduleWindowLabel",
+      "itemIds": [
+        "uii_5ADSH0KPHBB8QTWA1S648RR581"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

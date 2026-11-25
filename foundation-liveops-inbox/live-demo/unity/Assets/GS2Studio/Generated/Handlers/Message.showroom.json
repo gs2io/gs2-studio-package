@@ -32,6 +32,9 @@
   "components": [
     {
       "className": "MessageOpenButton",
+      "itemIds": [
+        "uii_4VXRB3HT8FBC2BBZST0FVRQVKR"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -44,6 +47,9 @@
     },
     {
       "className": "MessageOpenedLabel",
+      "itemIds": [
+        "uii_0QDBE8GXB6B1YSATGX9SHJSRN0"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -51,6 +57,9 @@
     },
     {
       "className": "MessagePayloadLabel",
+      "itemIds": [
+        "uii_0SHYNK3RTEBR0TB2FC0XVJ756B"
+      ],
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
@@ -58,6 +67,9 @@
     },
     {
       "className": "MessageReadActiveToggle",
+      "itemIds": [
+        "uii_0Z4M79SYE2BY5SFV6HGJ77DR2M"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -74,6 +86,9 @@
     },
     {
       "className": "MessageUnreadActiveToggle",
+      "itemIds": [
+        "uii_1NFZY63FKCBWZ8FW378AWJ9EC5"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,

@@ -48,6 +48,9 @@
   "components": [
     {
       "className": "MissionBriefLabel",
+      "itemIds": [
+        "uii_2KDNMCCY5TB58B060KWFWKEY93"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -55,6 +58,9 @@
     },
     {
       "className": "MissionCompletedActiveToggle",
+      "itemIds": [
+        "uii_4QD0SB9MKV9WNBRMZKPV2REJ88"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -71,6 +77,9 @@
     },
     {
       "className": "MissionNotReceivedActiveToggle",
+      "itemIds": [
+        "uii_43YMVPGY0ABTWBVMAK7KTQPKXG"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -87,6 +96,9 @@
     },
     {
       "className": "MissionReceiveButton",
+      "itemIds": [
+        "uii_47AEFA8X40B3BSN00PKHPYX2ZZ"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -99,6 +111,9 @@
     },
     {
       "className": "MissionReceiveUnavailableActiveToggle",
+      "itemIds": [
+        "uii_2CYH82D6Q5A7AS7AZE2CQB84TZ"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -115,6 +130,9 @@
     },
     {
       "className": "MissionReceivedActiveToggle",
+      "itemIds": [
+        "uii_7N399MGTQP9T4RK5F1ATYWS6WW"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -131,6 +149,9 @@
     },
     {
       "className": "MissionReceivedLabel",
+      "itemIds": [
+        "uii_5XXW58G7Z8A47SJK80BDF54WB1"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

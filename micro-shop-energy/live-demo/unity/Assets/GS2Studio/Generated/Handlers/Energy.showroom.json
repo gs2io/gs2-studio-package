@@ -61,6 +61,9 @@
   "components": [
     {
       "className": "EnergyFullActiveToggle",
+      "itemIds": [
+        "uii_1RMA1JK4EFBMG904TJXTZ1KMD7"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -77,6 +80,9 @@
     },
     {
       "className": "EnergyNextRecoveryValue",
+      "itemIds": [
+        "uii_6MCW3HYG84AMTT7145KZDGVE1N"
+      ],
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
@@ -84,6 +90,9 @@
     },
     {
       "className": "EnergyRecoverButton",
+      "itemIds": [
+        "uii_4HQ21MKDA5BN5BNZW4AC8S46CW"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -96,6 +105,9 @@
     },
     {
       "className": "EnergySpendButton",
+      "itemIds": [
+        "uii_7YQXS5DM6KBSTAJMSR5YB20DC8"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -108,6 +120,9 @@
     },
     {
       "className": "EnergyStaminaGauge",
+      "itemIds": [
+        "uii_58A169ZXNQBKTA5X236KKZ0Z59"
+      ],
       "kind": "gauge",
       "valueType": "",
       "reportsFailure": false,
@@ -120,6 +135,9 @@
     },
     {
       "className": "EnergyStaminaLabel",
+      "itemIds": [
+        "uii_2GR98W5SK2APQ9VC0PCQ25YS70"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

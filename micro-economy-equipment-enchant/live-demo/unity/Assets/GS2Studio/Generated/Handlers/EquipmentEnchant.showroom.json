@@ -32,6 +32,9 @@
   "components": [
     {
       "className": "EquipmentEnchantRuleLabel",
+      "itemIds": [
+        "uii_7PHCAEN45MAZNT3BQF3YY26T20"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

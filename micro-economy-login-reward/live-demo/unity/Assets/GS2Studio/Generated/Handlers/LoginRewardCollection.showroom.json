@@ -53,6 +53,9 @@
   "components": [
     {
       "className": "LoginRewardCollectionLastReceivedLabel",
+      "itemIds": [
+        "uii_70KV0DW8K8BBVBSPSD0TRD353T"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -60,6 +63,9 @@
     },
     {
       "className": "LoginRewardCollectionNeverReceivedActiveToggle",
+      "itemIds": [
+        "uii_5VZAGW8PGJAG6S350RTDAXQF4J"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -76,6 +82,9 @@
     },
     {
       "className": "LoginRewardCollectionNeverReceivedLabel",
+      "itemIds": [
+        "uii_7X73YYT833AZM88Z5Y4MH855EA"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -83,6 +92,9 @@
     },
     {
       "className": "LoginRewardCollectionReceiveButton",
+      "itemIds": [
+        "uii_2ZTVMMWPMTA219EG17Q4VY9RZS"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -95,6 +107,9 @@
     },
     {
       "className": "LoginRewardCollectionReceivedOnceActiveToggle",
+      "itemIds": [
+        "uii_3W61NJMVTSBT9T86H0KEBSK6DT"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -111,6 +126,9 @@
     },
     {
       "className": "LoginRewardCollectionRuleLabel",
+      "itemIds": [
+        "uii_5PTW9EHF0EBGWTHY7J5K784C30"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -118,6 +136,9 @@
     },
     {
       "className": "LoginRewardCollectionStartOverButton",
+      "itemIds": [
+        "uii_7GVR1GBB5XAEVATS7FN8VZA2MQ"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

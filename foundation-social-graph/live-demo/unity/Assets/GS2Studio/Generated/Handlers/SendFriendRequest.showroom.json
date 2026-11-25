@@ -32,6 +32,9 @@
   "components": [
     {
       "className": "SendFriendRequestIdLabel",
+      "itemIds": [
+        "uii_5DX74SV61ABH1BK5ZD93BP6XTY"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

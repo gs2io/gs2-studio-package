@@ -178,8 +178,10 @@ namespace GS2Studio.Generated.UsageLimitCounter
                 var unusableAxisReason = UnusableAxisReason();
                 if (unusableAxisReason != null)
                     throw new InvalidOperationException(unusableAxisReason);
+                if (string.IsNullOrEmpty(_limit))
+                    throw new InvalidOperationException("'_limit' is not set.");
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new UsageLimitId(_limit ?? string.Empty));
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new UsageLimitId(_limit));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

@@ -58,6 +58,9 @@
   "components": [
     {
       "className": "CharacterExperienceGauge",
+      "itemIds": [
+        "uii_23G7RYNPJEBRN9AY2CAA73N1XM"
+      ],
       "kind": "gauge",
       "valueType": "",
       "reportsFailure": false,
@@ -70,6 +73,9 @@
     },
     {
       "className": "CharacterIdValue",
+      "itemIds": [
+        "uii_3ABJFWQ9R08C8VWJWN5M5QCKFF"
+      ],
       "kind": "value",
       "valueType": "string",
       "reportsFailure": false,
@@ -77,6 +83,9 @@
     },
     {
       "className": "CharacterLevelActiveToggle",
+      "itemIds": [
+        "uii_5SPWRP6NZ09K284G0XM880GR6K"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
@@ -93,6 +102,9 @@
     },
     {
       "className": "CharacterLevelInteractable",
+      "itemIds": [
+        "uii_3VD9F1G94G8FEA1WE1ND2W2S1M"
+      ],
       "kind": "interactable",
       "valueType": "",
       "reportsFailure": false,
@@ -109,6 +121,9 @@
     },
     {
       "className": "CharacterLevelLabel",
+      "itemIds": [
+        "uii_0HV1CC6T5H9XPT03MWPD75WQKJ"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -116,6 +131,9 @@
     },
     {
       "className": "CharacterPropertyIdValue",
+      "itemIds": [
+        "uii_0T6NVEXS5494GRX18K827ZXS0C"
+      ],
       "kind": "value",
       "valueType": "string",
       "reportsFailure": false,
@@ -123,6 +141,9 @@
     },
     {
       "className": "CharacterTrainButton",
+      "itemIds": [
+        "uii_6Q7KC4M407B80AT6WPH1G97SKR"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

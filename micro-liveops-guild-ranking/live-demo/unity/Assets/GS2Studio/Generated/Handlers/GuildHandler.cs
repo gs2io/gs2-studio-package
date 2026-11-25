@@ -108,7 +108,7 @@ namespace GS2Studio.Generated.Guild
                     throw new InvalidOperationException("Identity key '_joinedGuildName' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new GuildId(_id ?? string.Empty), _joinedGuildName, gs2, session, cancellationToken, __sdk__userdataGuildGuildGuildModel_1: _sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName);
+                var binder = await ResolveBinderFactory().CreateAsync(new GuildId(_id), _joinedGuildName, gs2, session, cancellationToken, __sdk__userdataGuildGuildGuildModel_1: _sdk_foundation_x2d_social_x2d_guild_userData_udr_1PHY4ZVE32AG6A9KTCK0AQZFSZ_guild_JoinedGuild_guildModelName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

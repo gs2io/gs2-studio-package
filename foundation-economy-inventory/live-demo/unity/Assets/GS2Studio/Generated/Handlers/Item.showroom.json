@@ -61,6 +61,9 @@
   "components": [
     {
       "className": "ItemCountValue",
+      "itemIds": [
+        "uii_1JHGCKACH5AT3VCT1FSBEJWC5Y"
+      ],
       "kind": "value",
       "valueType": "long",
       "reportsFailure": false,
@@ -68,6 +71,9 @@
     },
     {
       "className": "ItemGainButton",
+      "itemIds": [
+        "uii_4YKHERBJXMA8QAR6M7A20N75FC"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -80,6 +86,9 @@
     },
     {
       "className": "ItemOwnedInteractable",
+      "itemIds": [
+        "uii_3JMSAN2PP3B9Y86B5ZG50GYMKS"
+      ],
       "kind": "interactable",
       "valueType": "",
       "reportsFailure": false,
@@ -96,6 +105,9 @@
     },
     {
       "className": "ItemSpendButton",
+      "itemIds": [
+        "uii_42BFYHYAJFAX09N32W7GX5GESP"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -108,6 +120,9 @@
     },
     {
       "className": "ItemStockLabel",
+      "itemIds": [
+        "uii_2YSSS3EXQ7AHHBFFFEJR4Q2QXF"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

@@ -50,6 +50,9 @@
   "components": [
     {
       "className": "GuildCapacityLabel",
+      "itemIds": [
+        "uii_2QB7A9VFDVB8TS9N10N6WJCPMA"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -57,6 +60,9 @@
     },
     {
       "className": "GuildMembershipLabel",
+      "itemIds": [
+        "uii_11ZT8KV2WDB88BFJX5JREJ456R"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

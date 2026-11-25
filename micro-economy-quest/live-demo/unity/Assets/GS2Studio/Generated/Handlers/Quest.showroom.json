@@ -48,6 +48,9 @@
   "components": [
     {
       "className": "QuestBriefLabel",
+      "itemIds": [
+        "uii_283H0T6S5HA8D8WPNMEA472Y0Q"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -55,6 +58,9 @@
     },
     {
       "className": "QuestClearedLabel",
+      "itemIds": [
+        "uii_321VVA5XN9AJWSYCCEV3QDDW8A"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -62,6 +68,9 @@
     },
     {
       "className": "QuestNameLabel",
+      "itemIds": [
+        "uii_3SYAVPHMMHBD1STWB702V3NR99"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -69,6 +78,9 @@
     },
     {
       "className": "QuestRunningLabel",
+      "itemIds": [
+        "uii_6NT3FWMGZSAQZBF3T0Z6V3JBNW"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
@@ -76,6 +88,9 @@
     },
     {
       "className": "QuestStartButton",
+      "itemIds": [
+        "uii_5FACC2Z9VKACXV8QKNSW0N2H38"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -88,6 +103,9 @@
     },
     {
       "className": "QuestStartInteractable",
+      "itemIds": [
+        "uii_1AQB97J6FRBWJSPT3QVRJPAAWN"
+      ],
       "kind": "interactable",
       "valueType": "",
       "reportsFailure": false,
@@ -104,6 +122,9 @@
     },
     {
       "className": "QuestUnclearedActiveToggle",
+      "itemIds": [
+        "uii_3RCVQN0824BJCT3RF3ZKNKZNF5"
+      ],
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,

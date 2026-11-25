@@ -45,6 +45,9 @@
   "components": [
     {
       "className": "GlobalMessageDeliverButton",
+      "itemIds": [
+        "uii_50523NKZFXBP6A9TXZ25C0BSNS"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,

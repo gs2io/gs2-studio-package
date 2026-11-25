@@ -103,7 +103,7 @@ namespace GS2Studio.Generated.CharacterRate
                     throw new InvalidOperationException("Composite key part '_rarity' is not set.");
                 if (string.IsNullOrEmpty(_character))
                     throw new InvalidOperationException("Composite key part '_character' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new GachaRarityId(_rarity ?? string.Empty), new CharacterId(_character ?? string.Empty), gs2, session, cancellationToken);
+                var binder = await ResolveBinderFactory().CreateAsync(new GachaRarityId(_rarity), new CharacterId(_character), gs2, session, cancellationToken);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

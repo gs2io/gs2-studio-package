@@ -104,8 +104,8 @@ namespace GS2Studio.Generated.Ranking
     {
         private readonly Gs2Domain _gs2;
         private readonly IGameSession _session;
-        private readonly string _rankingName;
-        private readonly long _season;
+        private readonly string? _rankingName;
+        private readonly long? _season;
         private readonly List<RankingBinder> _binders = new List<RankingBinder>();
         // Reconcile by backing row key because distinct rows may share a domain ID.
         private readonly Dictionary<string, RankingBinder> _bindersByRowKey = new Dictionary<string, RankingBinder>();
@@ -166,8 +166,8 @@ namespace GS2Studio.Generated.Ranking
         public RankingBinderCollection(
             Gs2Domain gs2,
             IGameSession session,
-            string rankingName,
-            long season)
+            string? rankingName,
+            long? season)
         {
             _gs2 = gs2;
             _session = session;
@@ -179,7 +179,7 @@ namespace GS2Studio.Generated.Ranking
         {
             ThrowIfDisposed();
             new Gs2Bind.Gs2Ranking2.GlobalRankingModelArrayLoader("Ranking").Invalidate(_gs2, _session);
-            new Gs2Bind.Gs2Ranking2.GlobalRankingScoreArrayLoader("Ranking", _rankingName, _season).Invalidate(_gs2, _session);
+            if (_rankingName != null && _season != null) new Gs2Bind.Gs2Ranking2.GlobalRankingScoreArrayLoader("Ranking", _rankingName, _season).Invalidate(_gs2, _session);
         }
 
         // Stable sorting preserves row order when both the sort key and domain ID compare equal.
@@ -241,8 +241,8 @@ namespace GS2Studio.Generated.Ranking
         public static async Task<RankingBinderCollection> CreateFromRanking2RankingMasterDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string rankingName,
-            long season,
+            string? rankingName,
+            long? season,
             CancellationToken cancellationToken = default)
         {
             var coll = new RankingBinderCollection(gs2, session, rankingName, season);
@@ -446,8 +446,8 @@ namespace GS2Studio.Generated.Ranking
         public static async Task<RankingBinderCollection> CreateFromRanking2RankingUserDataAsync(
             Gs2Domain gs2,
             IGameSession session,
-            string rankingName,
-            long season,
+            string? rankingName,
+            long? season,
             CancellationToken cancellationToken = default)
         {
             var coll = new RankingBinderCollection(gs2, session, rankingName, season);
@@ -468,7 +468,7 @@ namespace GS2Studio.Generated.Ranking
             _pendingCollectionMounts++;
             try
             {
-                var arrayLoader = new Gs2Bind.Gs2Ranking2.GlobalRankingScoreArrayLoader("Ranking", _rankingName, _season);
+                var arrayLoader = new Gs2Bind.Gs2Ranking2.GlobalRankingScoreArrayLoader("Ranking", (_rankingName ?? throw new InvalidOperationException("_rankingName is not set; the mounted axis reads it.")), (_season ?? throw new InvalidOperationException("_season is not set; the mounted axis reads it.")));
                 var loadedItems = await arrayLoader.Load(_gs2, _session);
                 cancellationToken.ThrowIfCancellationRequested();
                 if (!IsCurrentAxisUpdate("ReconcileFromRanking2RankingUserItems", updateVersion)) return;
@@ -498,7 +498,7 @@ namespace GS2Studio.Generated.Ranking
                 catch (Exception ex) { if (onError != null) onError(ex); else UnityEngine.Debug.LogException(ex); }
             };
             _onChange = notify;
-            var arrayLoader = new Gs2Bind.Gs2Ranking2.GlobalRankingScoreArrayLoader("Ranking", _rankingName, _season);
+            var arrayLoader = new Gs2Bind.Gs2Ranking2.GlobalRankingScoreArrayLoader("Ranking", (_rankingName ?? throw new InvalidOperationException("_rankingName is not set; the mounted axis reads it.")), (_season ?? throw new InvalidOperationException("_season is not set; the mounted axis reads it.")));
             _unsubscribers.Add(arrayLoader.Subscribe(
                 _gs2,
                 _session,

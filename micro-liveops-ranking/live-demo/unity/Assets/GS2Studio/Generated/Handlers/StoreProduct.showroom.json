@@ -56,6 +56,9 @@
   "components": [
     {
       "className": "StoreProductAppleAppStoreProductIdValue",
+      "itemIds": [
+        "uii_09BE4FVQDY8TF9R5XS1VW6TM5N"
+      ],
       "kind": "value",
       "valueType": "string",
       "reportsFailure": false,
@@ -63,6 +66,9 @@
     },
     {
       "className": "StoreProductCountLabel",
+      "itemIds": [
+        "uii_1228MYDK1N8BWV1AVQNQS8R74T"
+      ],
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
@@ -70,6 +76,9 @@
     },
     {
       "className": "StoreProductCountValue",
+      "itemIds": [
+        "uii_3XMV39C0ZN8QYARGPJFMXQJJ0K"
+      ],
       "kind": "value",
       "valueType": "int",
       "reportsFailure": false,
@@ -77,6 +86,9 @@
     },
     {
       "className": "StoreProductGooglePlayProductIdValue",
+      "itemIds": [
+        "uii_7V1J8W2P268AGA818P33WKTCT1"
+      ],
       "kind": "value",
       "valueType": "string",
       "reportsFailure": false,
@@ -84,6 +96,9 @@
     },
     {
       "className": "StoreProductIdValue",
+      "itemIds": [
+        "uii_5SQR7KJQ668PNRP6Y8Z0GYGK4S"
+      ],
       "kind": "value",
       "valueType": "string",
       "reportsFailure": false,

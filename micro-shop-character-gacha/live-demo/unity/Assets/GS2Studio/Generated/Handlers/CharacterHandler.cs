@@ -118,7 +118,7 @@ namespace GS2Studio.Generated.Character
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName' is not set.");
-                var binder = await ResolveBinderFactory().CreateAsync(new CharacterId(_id ?? string.Empty), _propertyId, gs2, session, cancellationToken, __sdk__userdataInventoryCharacterItemModel_2: _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName, __sdk__userdataInventoryCharacterItemModel_3: _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName);
+                var binder = await ResolveBinderFactory().CreateAsync(new CharacterId(_id), _propertyId, gs2, session, cancellationToken, __sdk__userdataInventoryCharacterItemModel_2: _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName, __sdk__userdataInventoryCharacterItemModel_3: _sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName);
                 // A stale factory result still needs disposal even though it must never become the active binder.
                 if (generation != _bindingIntentGeneration)
                 {

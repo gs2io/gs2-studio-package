@@ -175,7 +175,7 @@ namespace GS2Studio.Generated.Mission
                 if (string.IsNullOrEmpty(_missionCollection))
                     throw new InvalidOperationException("'_missionCollection' is not set.");
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new MissionCollectionId(_missionCollection ?? string.Empty));
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, new MissionCollectionId(_missionCollection));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

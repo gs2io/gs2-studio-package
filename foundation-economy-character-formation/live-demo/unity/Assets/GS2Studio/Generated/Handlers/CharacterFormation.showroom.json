@@ -21,6 +21,9 @@
   "components": [
     {
       "className": "CharacterFormationExpandButton",
+      "itemIds": [
+        "uii_5EYNM5TSA3B3HS860MSFZJAR1E"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -33,6 +36,9 @@
     },
     {
       "className": "CharacterFormationExpandInteractable",
+      "itemIds": [
+        "uii_17VE96GGZNA1PTN02YG7FJBPW0"
+      ],
       "kind": "interactable",
       "valueType": "",
       "reportsFailure": false,
@@ -49,6 +55,9 @@
     },
     {
       "className": "CharacterFormationSaveAreaLabel",
+      "itemIds": [
+        "uii_7T6B4YFH8AAAY95PMD74WSX67S"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

@@ -45,6 +45,9 @@
   "components": [
     {
       "className": "AgreementVersionRuleLabel",
+      "itemIds": [
+        "uii_63KH6EETS2B4CRNH26MYH383YX"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

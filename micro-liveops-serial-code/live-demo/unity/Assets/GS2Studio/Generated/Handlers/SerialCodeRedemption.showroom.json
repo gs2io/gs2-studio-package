@@ -21,6 +21,9 @@
   "components": [
     {
       "className": "SerialCodeRedemptionRuleLabel",
+      "itemIds": [
+        "uii_65971STQ19BHYVSDVV84Q1Q47G"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

@@ -30,7 +30,7 @@ namespace GS2Studio.Generated.StoreProduct
             IGameSession session,
             CancellationToken cancellationToken = default,
             string? __sdk__money2CurrencyNamespaceStoreContentModel_1 = null);
-        IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string showcaseName);
+        IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string? showcaseName);
     }
 
     public sealed class DefaultStoreProductBinderFactory : IStoreProductBinderFactory
@@ -46,7 +46,7 @@ namespace GS2Studio.Generated.StoreProduct
         {
             return await StoreProductBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__money2CurrencyNamespaceStoreContentModel_1);
         }
-        public IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string showcaseName)
+        public IStoreProductBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session, string? showcaseName)
         {
             return new StoreProductBinderCollection(gs2, session, showcaseName);
         }

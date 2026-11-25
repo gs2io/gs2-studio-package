@@ -21,6 +21,9 @@
   "components": [
     {
       "className": "IdleStatusReceiveButton",
+      "itemIds": [
+        "uii_65BAXJF97WB6HBNT0S6RF4J8FW"
+      ],
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
@@ -33,6 +36,9 @@
     },
     {
       "className": "IdleStatusRuleLabel",
+      "itemIds": [
+        "uii_2ZWHE77FSXAG2BCZ4N4S537552"
+      ],
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,

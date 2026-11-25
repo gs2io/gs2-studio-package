@@ -177,7 +177,7 @@ namespace GS2Studio.Generated.StoreProduct
                 if (unusableAxisReason != null)
                     throw new InvalidOperationException(unusableAxisReason);
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, _showcaseName ?? string.Empty);
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, (string.IsNullOrEmpty(_showcaseName) ? null : _showcaseName));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

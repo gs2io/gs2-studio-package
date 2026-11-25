@@ -172,7 +172,7 @@ namespace GS2Studio.Generated.CharacterFormationForm
                 if (string.IsNullOrEmpty(_moldModelName))
                     throw new InvalidOperationException("'_moldModelName' is not set.");
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, _moldModelName ?? string.Empty);
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, _moldModelName);
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {

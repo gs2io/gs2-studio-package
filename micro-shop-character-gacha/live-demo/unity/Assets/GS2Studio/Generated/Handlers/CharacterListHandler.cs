@@ -182,7 +182,7 @@ namespace GS2Studio.Generated.Character
                 if (unusableAxisReason != null)
                     throw new InvalidOperationException(unusableAxisReason);
 
-                var collection = ResolveBinderFactory().CreateCollection(gs2, session, _propertyId);
+                var collection = ResolveBinderFactory().CreateCollection(gs2, session, (string.IsNullOrEmpty(_propertyId) ? null : _propertyId));
                 operationCollection = collection;
                 if (!IsCurrentOperation(operationGeneration, null))
                 {
