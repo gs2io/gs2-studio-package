@@ -332,7 +332,7 @@ namespace GS2Studio.Generated.Guild
 
             _mountSurfaceValue = _mountSurface;
             __guildGuildNamespaceGuildModelLoader = new Gs2Bind.Gs2Guild.GuildModelLoader("Guild", (string.IsNullOrEmpty(__sdk__guildGuildNamespaceGuildModel_1) ? _model.Id : __sdk__guildGuildNamespaceGuildModel_1!));
-            __userdataGuildGuildGuildModelLoader = Runs__userdataGuildGuildGuildModelLoader ? new Gs2Bind.Gs2Guild.JoinedGuildLoader("Guild", (string.IsNullOrEmpty(__sdk__userdataGuildGuildGuildModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataGuildGuildGuildModel_1!), (string.IsNullOrEmpty(__sdk__userdataGuildGuildGuildModel_2) ? _model.JoinedGuildName : __sdk__userdataGuildGuildGuildModel_2!)) : null!;
+            __userdataGuildGuildGuildModelLoader = Runs__userdataGuildGuildGuildModelLoader ? new Gs2Bind.Gs2Guild.JoinedGuildLoader("Guild", (string.IsNullOrEmpty(__sdk__userdataGuildGuildGuildModel_1) ? throw new InvalidOperationException("An SDK backing key is required for this loader.") : __sdk__userdataGuildGuildGuildModel_1!), (string.IsNullOrEmpty(__sdk__userdataGuildGuildGuildModel_2) ? (_model.JoinedGuildName ?? throw new InvalidOperationException("The model property supplying this loader's SDK key is not set.")) : __sdk__userdataGuildGuildGuildModel_2!)) : null!;
         }
 
 

@@ -247,7 +247,7 @@ namespace GS2Studio.Generated.SkillNode
 
             __transactionConsumeActionLoader = new Gs2Bind.Gs2SkillTree.NodeModelConsumeActionArrayLoader("SkillTree", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? _model.Id : __sdk__transactionConsumeAction_1!));
             __skillTreeSkillTreeNamespaceNodeModelLoader = new Gs2Bind.Gs2SkillTree.NodeModelLoader("SkillTree", (string.IsNullOrEmpty(__sdk__skillTreeSkillTreeNamespaceNodeModel_1) ? _model.Id : __sdk__skillTreeSkillTreeNamespaceNodeModel_1!));
-            __membershipSkillTreeStatusLoader = new Gs2Bind.Gs2SkillTree.StatusLoader("SkillTree", (string.IsNullOrEmpty(__sdk__membershipSkillTreeStatus_1) ? _model.Owner : __sdk__membershipSkillTreeStatus_1!));
+            __membershipSkillTreeStatusLoader = new Gs2Bind.Gs2SkillTree.StatusLoader("SkillTree", (string.IsNullOrEmpty(__sdk__membershipSkillTreeStatus_1) ? (_model.Owner ?? throw new InvalidOperationException("The model property supplying this loader's SDK key is not set.")) : __sdk__membershipSkillTreeStatus_1!));
         }
 
 

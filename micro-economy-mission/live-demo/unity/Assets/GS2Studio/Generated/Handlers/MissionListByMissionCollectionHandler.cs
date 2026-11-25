@@ -185,6 +185,8 @@ namespace GS2Studio.Generated.Mission
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
+                if (string.IsNullOrEmpty(_missionCollection))
+                    throw new InvalidOperationException("'_missionCollection' is not set.");
                 ResolveParentHandler();
                 if (_parentHandler == null)
                     throw new InvalidOperationException("Parent MissionCollectionHandlerBase is not assigned and none was found in the parent hierarchy.");

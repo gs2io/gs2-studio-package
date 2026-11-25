@@ -107,6 +107,8 @@ namespace GS2Studio.Generated.Equipment
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
+                if (string.IsNullOrEmpty(_propertyId))
+                    throw new InvalidOperationException("Identity key '_propertyId' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_equipment_userData_udr_6RWZH5HSNCACRV1YWW9AG4J6A4_inventory_ItemSet_itemName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_equipment_userData_udr_6RWZH5HSNCACRV1YWW9AG4J6A4_inventory_ItemSet_itemName' is not set.");
                 var binder = await ResolveBinderFactory().CreateAsync(new EquipmentId(_id ?? string.Empty), _propertyId, gs2, session, cancellationToken, __sdk__userdataInventoryEquipmentItemModel_2: _sdk_foundation_x2d_economy_x2d_equipment_userData_udr_6RWZH5HSNCACRV1YWW9AG4J6A4_inventory_ItemSet_itemName);

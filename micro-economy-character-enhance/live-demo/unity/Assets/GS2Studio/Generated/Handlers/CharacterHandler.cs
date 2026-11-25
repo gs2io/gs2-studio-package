@@ -110,6 +110,8 @@ namespace GS2Studio.Generated.Character
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
+                if (string.IsNullOrEmpty(_propertyId))
+                    throw new InvalidOperationException("Identity key '_propertyId' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemName' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_character_userData_udr_0C241F70MA9JYTJQ9V554ZKC5Q_inventory_ItemSet_itemSetName))

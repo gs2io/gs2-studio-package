@@ -109,6 +109,8 @@ namespace GS2Studio.Generated.UsageLimitCounter
                     throw new InvalidOperationException("GS2 runtime context is not available.");
                 if (string.IsNullOrEmpty(_id))
                     throw new InvalidOperationException("Identity key '_id' is not set.");
+                if (string.IsNullOrEmpty(_limit))
+                    throw new InvalidOperationException("Identity key '_limit' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName))
                     throw new InvalidOperationException("SDK backing key 'sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_limitName' is not set.");
                 if (string.IsNullOrEmpty(_sdk_foundation_x2d_economy_x2d_limit_userData_udr_6QV98XRJE8B8R8TDT3FYN967PS_limit_Counter_counterName))

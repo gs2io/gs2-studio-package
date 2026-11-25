@@ -169,6 +169,8 @@ namespace GS2Studio.Generated.CharacterFormationForm
                     throw new InvalidOperationException("Runtime provider is not assigned and no Gs2HolderRuntimeContextProvider found in the active scene.");
                 if (!provider.TryGet(out var gs2, out var session) || gs2 == null || session == null)
                     throw new InvalidOperationException("GS2 runtime context is not available.");
+                if (string.IsNullOrEmpty(_moldModelName))
+                    throw new InvalidOperationException("'_moldModelName' is not set.");
 
                 var collection = ResolveBinderFactory().CreateCollection(gs2, session, _moldModelName ?? string.Empty);
                 operationCollection = collection;
