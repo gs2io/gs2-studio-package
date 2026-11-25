@@ -186,14 +186,14 @@ namespace GS2Studio.Generated.Gacha
                 // UnusableAxisReason rejects unset and obsolete values before this switch, so no default axis is needed.
                 switch (_axis)
                 {
-                    case GachaListAxis.ShowcaseCharacterGachaMaster:
-                        await collection.MountFromShowcaseCharacterGachaMasterDataAsync(cancellationToken);
+                    case GachaListAxis.ShowcaseCharacterGacha_SalesItemMaster:
+                        await collection.MountFromShowcaseCharacterGacha_SalesItemMasterDataAsync(cancellationToken);
                         break;
                     case GachaListAxis.LotteryCharacterGachaMaster:
                         await collection.MountFromLotteryCharacterGachaMasterDataAsync(cancellationToken);
                         break;
-                    case GachaListAxis.ShowcaseCharacterGacha2Master:
-                        await collection.MountFromShowcaseCharacterGacha2MasterDataAsync(cancellationToken);
+                    case GachaListAxis.ShowcaseCharacterGacha_DisplayItemMaster:
+                        await collection.MountFromShowcaseCharacterGacha_DisplayItemMasterDataAsync(cancellationToken);
                         break;
                 }
 
@@ -207,14 +207,14 @@ namespace GS2Studio.Generated.Gacha
                     Action<Exception> collectionFailed = ex => OnCollectionFailed(operationGeneration, collection, ex);
                     switch (_axis)
                     {
-                        case GachaListAxis.ShowcaseCharacterGachaMaster:
-                            collection.SubscribeFromShowcaseCharacterGachaMasterData(collectionChanged, collectionFailed);
+                        case GachaListAxis.ShowcaseCharacterGacha_SalesItemMaster:
+                            collection.SubscribeFromShowcaseCharacterGacha_SalesItemMasterData(collectionChanged, collectionFailed);
                             break;
                         case GachaListAxis.LotteryCharacterGachaMaster:
                             collection.SubscribeFromLotteryCharacterGachaMasterData(collectionChanged, collectionFailed);
                             break;
-                        case GachaListAxis.ShowcaseCharacterGacha2Master:
-                            collection.SubscribeFromShowcaseCharacterGacha2MasterData(collectionChanged, collectionFailed);
+                        case GachaListAxis.ShowcaseCharacterGacha_DisplayItemMaster:
+                            collection.SubscribeFromShowcaseCharacterGacha_DisplayItemMasterData(collectionChanged, collectionFailed);
                             break;
                     }
                 }
@@ -296,7 +296,7 @@ namespace GS2Studio.Generated.Gacha
             }
         }
 
-        private const string AxisMemberNames = "ShowcaseCharacterGachaMaster, LotteryCharacterGachaMaster, ShowcaseCharacterGacha2Master";
+        private const string AxisMemberNames = "ShowcaseCharacterGacha_SalesItemMaster, LotteryCharacterGachaMaster, ShowcaseCharacterGacha_DisplayItemMaster";
 
         // Readiness is polled each frame; latch invalid-axis warnings to avoid repeating the same error.
         private bool _warnedAxis;
@@ -338,11 +338,11 @@ namespace GS2Studio.Generated.Gacha
             // Fields from other axes may never be set; waiting on them would block a valid selected axis.
             switch (_axis)
             {
-                case GachaListAxis.ShowcaseCharacterGachaMaster:
+                case GachaListAxis.ShowcaseCharacterGacha_SalesItemMaster:
                     break;
                 case GachaListAxis.LotteryCharacterGachaMaster:
                     break;
-                case GachaListAxis.ShowcaseCharacterGacha2Master:
+                case GachaListAxis.ShowcaseCharacterGacha_DisplayItemMaster:
                     break;
             }
             return true;

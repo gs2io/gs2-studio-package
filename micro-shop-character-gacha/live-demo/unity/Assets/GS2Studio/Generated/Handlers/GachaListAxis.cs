@@ -13,10 +13,10 @@ namespace GS2Studio.Generated.Gacha
         /// <summary>Zero keeps an unbaked scene from silently selecting a mount axis.</summary>
         Unset = 0,
 
-        ShowcaseCharacterGachaMaster = -1510273743,
+        ShowcaseCharacterGacha_SalesItemMaster = 747361849,
 
         LotteryCharacterGachaMaster = 1593753399,
 
-        ShowcaseCharacterGacha2Master = 1869961521,
+        ShowcaseCharacterGacha_DisplayItemMaster = -513354969,
     }
 }

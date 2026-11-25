@@ -570,8 +570,8 @@ namespace GS2Studio.Generated.Schedule
 
         private async Task<GS2Studio.Generated.Gacha.GachaBinderCollection> BuildGachasRootAsync(CancellationToken cancellationToken)
         {
-            var root = await GS2Studio.Generated.Gacha.GachaBinderCollection.CreateFromShowcaseCharacterGachaMasterDataAsync(_gs2, _session, cancellationToken);
-            try { root.SubscribeFromShowcaseCharacterGachaMasterData(); }
+            var root = await GS2Studio.Generated.Gacha.GachaBinderCollection.CreateFromShowcaseCharacterGacha_SalesItemMasterDataAsync(_gs2, _session, cancellationToken);
+            try { root.SubscribeFromShowcaseCharacterGacha_SalesItemMasterData(); }
             catch { root.Dispose(); throw; }
             return root;
         }

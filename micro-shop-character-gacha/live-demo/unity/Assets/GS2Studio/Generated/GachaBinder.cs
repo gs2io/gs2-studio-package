@@ -36,17 +36,17 @@ namespace GS2Studio.Generated.Gacha
         /// <summary>Built outside any list axis (CreateAsync, or an overlay collection), with the identities its caller supplied.</summary>
         Full,
 
-        /// <summary>Built by the ShowcaseCharacterGacha master-data list axis.</summary>
+        /// <summary>Built by the ShowcaseCharacterGacha_SalesItem master-data list axis.</summary>
         [Gs2SkipsLoaders("LotteryCharacterGachaNamespaceLotteryModel")]
-        ShowcaseCharacterGachaMaster,
+        ShowcaseCharacterGacha_SalesItemMaster,
 
         /// <summary>Built by the LotteryCharacterGacha master-data list axis.</summary>
         [Gs2SkipsLoaders("ShowcaseCharacterGachaNamespaceShowcaseDisplayItem")]
         LotteryCharacterGachaMaster,
 
-        /// <summary>Built by the ShowcaseCharacterGacha2 master-data list axis.</summary>
+        /// <summary>Built by the ShowcaseCharacterGacha_DisplayItem master-data list axis.</summary>
         [Gs2SkipsLoaders("LotteryCharacterGachaNamespaceLotteryModel")]
-        ShowcaseCharacterGacha2Master,
+        ShowcaseCharacterGacha_DisplayItemMaster,
     }
 
     /// <summary>Read consumers can substitute this contract without implementing server actions or owning binder lifecycle.</summary>
@@ -58,8 +58,8 @@ namespace GS2Studio.Generated.Gacha
         /// <summary>
         /// This construction path permits the <c>Gs2Bind.Gs2Lottery.LotteryModelLoader</c> load on <c>__lotteryCharacterGachaNamespaceLotteryModelLoader</c>. False means this path does not supply the readings it fills through this load; a default value alone cannot distinguish that from absent data. This flag describes eligibility, not load completion.
         /// </summary>
-        /// <remarks>ShowcaseCharacterGachaMaster: does not supply SDK backing key name.</remarks>
-        /// <remarks>ShowcaseCharacterGacha2Master: does not supply SDK backing key name.</remarks>
+        /// <remarks>ShowcaseCharacterGacha_SalesItemMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ShowcaseCharacterGacha_DisplayItemMaster: does not supply SDK backing key name.</remarks>
         bool LoadedLotteryCharacterGachaNamespaceLotteryModel { get; }
 
         /// <summary>
@@ -259,13 +259,13 @@ namespace GS2Studio.Generated.Gacha
         private readonly GachaMountSurface _mountSurfaceValue;
 
         /// <summary>Avoid loading unless this path supplies every key <c>__lotteryCharacterGachaNamespaceLotteryModelLoader</c> reads.</summary>
-        /// <remarks>ShowcaseCharacterGachaMaster: does not supply SDK backing key name.</remarks>
-        /// <remarks>ShowcaseCharacterGacha2Master: does not supply SDK backing key name.</remarks>
+        /// <remarks>ShowcaseCharacterGacha_SalesItemMaster: does not supply SDK backing key name.</remarks>
+        /// <remarks>ShowcaseCharacterGacha_DisplayItemMaster: does not supply SDK backing key name.</remarks>
         private bool Runs__lotteryCharacterGachaNamespaceLotteryModelLoader => _mountSurfaceValue is GachaMountSurface.Full or GachaMountSurface.LotteryCharacterGachaMaster;
 
         /// <summary>Avoid loading unless this path supplies every key <c>__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader</c> reads.</summary>
         /// <remarks>LotteryCharacterGachaMaster: does not supply SDK backing key displayItemId.</remarks>
-        private bool Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader => _mountSurfaceValue is GachaMountSurface.Full or GachaMountSurface.ShowcaseCharacterGachaMaster or GachaMountSurface.ShowcaseCharacterGacha2Master;
+        private bool Runs__showcaseCharacterGachaNamespaceShowcaseDisplayItemLoader => _mountSurfaceValue is GachaMountSurface.Full or GachaMountSurface.ShowcaseCharacterGacha_SalesItemMaster or GachaMountSurface.ShowcaseCharacterGacha_DisplayItemMaster;
 
         /// <inheritdoc />
         public override GachaMountSurface MountSurface => _mountSurfaceValue;

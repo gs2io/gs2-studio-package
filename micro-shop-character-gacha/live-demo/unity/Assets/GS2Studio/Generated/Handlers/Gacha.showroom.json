@@ -23,30 +23,30 @@
   "listAxisField": "_axis",
   "listAxisMembers": [
     {
-      "name": "ShowcaseCharacterGachaMaster",
-      "value": -1510273743
+      "name": "ShowcaseCharacterGacha_SalesItemMaster",
+      "value": 747361849
     },
     {
       "name": "LotteryCharacterGachaMaster",
       "value": 1593753399
     },
     {
-      "name": "ShowcaseCharacterGacha2Master",
-      "value": 1869961521
+      "name": "ShowcaseCharacterGacha_DisplayItemMaster",
+      "value": -513354969
     }
   ],
   "listAxes": [
     {
-      "memberName": "ShowcaseCharacterGachaMaster",
-      "mountMethodName": "MountFromShowcaseCharacterGachaMasterDataAsync"
+      "memberName": "ShowcaseCharacterGacha_SalesItemMaster",
+      "mountMethodName": "MountFromShowcaseCharacterGacha_SalesItemMasterDataAsync"
     },
     {
       "memberName": "LotteryCharacterGachaMaster",
       "mountMethodName": "MountFromLotteryCharacterGachaMasterDataAsync"
     },
     {
-      "memberName": "ShowcaseCharacterGacha2Master",
-      "mountMethodName": "MountFromShowcaseCharacterGacha2MasterDataAsync"
+      "memberName": "ShowcaseCharacterGacha_DisplayItemMaster",
+      "mountMethodName": "MountFromShowcaseCharacterGacha_DisplayItemMasterDataAsync"
     }
   ],
   "mountFields": [],
