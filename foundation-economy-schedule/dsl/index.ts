@@ -81,14 +81,14 @@ const Schedule = defineDomainType("Schedule", {
       startAt: jaEnField(
         "開始日時",
         "Start time",
-        "絶対日時方式で機能を開始する日時です。",
-        "Start time for an absolute schedule."
+        "絶対日時方式で機能を開始する日時です。UTC の ISO 8601 形式（末尾 Z）で指定します（例: 2026-11-30T15:00:00Z）。+09:00 などのオフセットは使えません。",
+        "Start time for an absolute schedule, as a UTC ISO 8601 timestamp ending in Z (e.g. 2026-11-30T15:00:00Z); offsets such as +09:00 are not accepted."
       ),
       endAt: jaEnField(
         "終了日時",
         "End time",
-        "絶対日時方式で機能を終了する日時です。",
-        "End time for an absolute schedule."
+        "絶対日時方式で機能を終了する日時です。UTC の ISO 8601 形式（末尾 Z）で指定し、+09:00 などのオフセットは使えません。この時刻自体が期間に含まれるかは GS2 のドキュメントに記載がないため、期間内に含めたい最後の時刻を指定します（例: 2026-12-31T14:59:59Z）。",
+        "End time for an absolute schedule, as a UTC ISO 8601 timestamp ending in Z; offsets such as +09:00 are not accepted. GS2's documentation does not say whether this instant is inside the period, so give the last moment that must be inside (e.g. 2026-12-31T14:59:59Z)."
       ),
       trigger: jaEnField(
         "基準トリガー",
