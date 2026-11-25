@@ -61,7 +61,7 @@ const QUESTS = [
   },
 ] as const;
 
-function depositEntry(propertyName: string) {
+function depositEntry<TName extends string>(propertyName: TName) {
   return {
     transformPackageId: currency.packageId,
     transformId: currency.transformId("DepositFreeCurrency"),
