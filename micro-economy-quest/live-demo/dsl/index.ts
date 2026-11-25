@@ -216,18 +216,11 @@ export const microEconomyQuestDemo = definePackage({
         ),
       ],
     }),
+    // micro-economy-quest ships Progress's CompleteButton and its idle and running toggles; the demo adds only its
+    // English caption for the idle state.
     defineUiComponent(Progress, {
       items: [
-        UiItem.buttonAction("CompleteButton", "Complete", undefined, { name: "Progress" }),
         UiItem.templateLabel("IdleLabel", "No quest in progress", {}, { name: "Progress" }),
-        UiItem.activeToggle(
-          "IdleActiveToggle",
-          UiCond.not(UiCond.truthy(UiSource.prop("inProgress"))),
-          { name: "Progress" }
-        ),
-        UiItem.activeToggle("RunningActiveToggle", UiCond.truthy(UiSource.prop("inProgress")), {
-          name: "Progress",
-        }),
       ],
     }),
   ],

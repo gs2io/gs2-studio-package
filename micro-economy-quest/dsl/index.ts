@@ -4,11 +4,15 @@ import {
   defineDomainType,
   defineMasterDataResource,
   definePackage,
+  defineUiComponent,
   defineUserDataResource,
   dependencyPackage,
   PT,
   Source,
   transactionSettingV2,
+  UiCond,
+  UiItem,
+  UiSource,
 } from "gs2-studio-dsl";
 
 import { GS2 } from "gs2-studio-dsl/gs2";
@@ -330,5 +334,20 @@ export const microEconomyQuest = definePackage({
   ],
 }),
     ProgressResource,
+  ],
+  uiComponents: [
+    defineUiComponent(Progress, {
+  items: [
+    UiItem.buttonAction("CompleteButton", "Complete", undefined, { name: "Progress" }),
+    // GS2 holds one progress per player, so Start fails with alreadyExists while a quest runs: wire the idle
+    // toggle to the quest list (its Start buttons or their container) and the running toggle to what shows the run.
+    UiItem.activeToggle("IdleActiveToggle", UiCond.not(UiCond.truthy(UiSource.prop("inProgress"))), {
+        name: "Progress",
+      }),
+    UiItem.activeToggle("RunningActiveToggle", UiCond.truthy(UiSource.prop("inProgress")), {
+        name: "Progress",
+      }),
+  ],
+}),
   ],
 });

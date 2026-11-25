@@ -1,0 +1,51 @@
+{
+  "id": "uic_27J7HJ95G2AA8VV1H4F8515MVM",
+  "items": [
+    {
+      "arguments": [],
+      "componentClassName": "CompleteButton",
+      "id": "uii_306DRJCPBABDXS2HMQGM28D8DD",
+      "kind": "buttonAction",
+      "name": "Progress",
+      "targetActionKey": "Gs2Quest:Progress.End",
+      "targetResource": {
+        "kind": "local",
+        "resourceId": "udr_4TR60HC6M28STTKPCST9SRAVZA",
+        "resourceKind": "userData"
+      }
+    },
+    {
+      "componentClassName": "IdleActiveToggle",
+      "condition": {
+        "child": {
+          "kind": "truthy",
+          "source": {
+            "kind": "property",
+            "propertyId": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW"
+          }
+        },
+        "kind": "not"
+      },
+      "id": "uii_71GS9B7DJNBG7TXXYEXK1XH899",
+      "kind": "activeToggle",
+      "name": "Progress"
+    },
+    {
+      "componentClassName": "RunningActiveToggle",
+      "condition": {
+        "kind": "truthy",
+        "source": {
+          "kind": "property",
+          "propertyId": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW"
+        }
+      },
+      "id": "uii_1V8YS10416ADGR7GGFFZ5NA8HJ",
+      "kind": "activeToggle",
+      "name": "Progress"
+    }
+  ],
+  "target": {
+    "hostTypeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
+    "propertyPath": []
+  }
+}

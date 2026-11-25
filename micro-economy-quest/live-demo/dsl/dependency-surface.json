@@ -279,13 +279,13 @@
         "CompleteButton": {
           "kind": "buttonAction",
           "name": "Progress",
-          "packageId": "micro-economy-quest-demo",
+          "packageId": "micro-economy-quest",
           "method": "Complete"
         },
         "IdleActiveToggle": {
           "kind": "activeToggle",
           "name": "Progress",
-          "packageId": "micro-economy-quest-demo"
+          "packageId": "micro-economy-quest"
         },
         "IdleLabel": {
           "kind": "templateLabel",
@@ -295,7 +295,7 @@
         "RunningActiveToggle": {
           "kind": "activeToggle",
           "name": "Progress",
-          "packageId": "micro-economy-quest-demo"
+          "packageId": "micro-economy-quest"
         }
       },
       "properties": {

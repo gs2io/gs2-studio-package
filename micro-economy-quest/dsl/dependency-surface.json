@@ -37,7 +37,24 @@
           "quest.Progress"
         ]
       },
-      "uiComponents": {},
+      "uiComponents": {
+        "CompleteButton": {
+          "kind": "buttonAction",
+          "name": "Progress",
+          "packageId": "micro-economy-quest",
+          "method": "Complete"
+        },
+        "IdleActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Progress",
+          "packageId": "micro-economy-quest"
+        },
+        "RunningActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Progress",
+          "packageId": "micro-economy-quest"
+        }
+      },
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
         "inProgress": "prop_00D0TSH4BEGXWNJDS0Y2HKVAJW",
