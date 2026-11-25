@@ -179,7 +179,7 @@
           "label": "次回回復日時"
         }
       },
-      "name": "nextRecoverdAt",
+      "name": "nextRecoveredAt",
       "requirement": {
         "kind": "always"
       },

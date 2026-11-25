@@ -28,7 +28,7 @@ const Energy = defineDomainType("Energy", {
     recoveryValue: PT.int32().masterData().required(),
     currentValue: PT.int32().userData().required(),
     currentMaximumValue: PT.int32().userData().required(),
-    nextRecoverdAt: PT.timestamp().userData().required(),
+    nextRecoveredAt: PT.timestamp().userData().required(),
   },
   localizedDisplay: {
     ja: {
@@ -91,7 +91,7 @@ const Energy = defineDomainType("Energy", {
         "Stamina capacity currently applied to the player (GS2 Stamina maxValue). Time-based recovery stops at this value.",
         { ja: "ポイント", en: "points" }
       ),
-      nextRecoverdAt: jaEnField(
+      nextRecoveredAt: jaEnField(
         "次回回復日時",
         "Next recovery time",
         "次にスタミナが自動回復する日時です。",
@@ -187,7 +187,7 @@ export const foundationEconomyEnergy = definePackage({
   bindings: {
         value: Bind.domainProperties([Source.direct(Energy, "currentValue")]),
         maxValue: Bind.domainProperties([Source.direct(Energy, "currentMaximumValue")]),
-        nextRecoverAt: Bind.domainProperties([Source.direct(Energy, "nextRecoverdAt")]),
+        nextRecoverAt: Bind.domainProperties([Source.direct(Energy, "nextRecoveredAt")]),
         overflowValue: Bind.skip(),
         staminaName: Bind.skip(),
         userId: Bind.skip(),
@@ -206,7 +206,7 @@ export const foundationEconomyEnergy = definePackage({
           currentValue: UiSource.prop("currentValue"),
           currentMaximumValue: UiSource.prop("currentMaximumValue"),
         }, { name: "Energy" }),
-    UiItem.value("NextRecoveryValue", UiSource.prop("nextRecoverdAt"), { name: "Energy" }),
+    UiItem.value("NextRecoveryValue", UiSource.prop("nextRecoveredAt"), { name: "Energy" }),
     UiItem.activeToggle("FullActiveToggle", UiCond.gte(UiSource.prop("currentValue"), UiSource.prop("currentMaximumValue")), { name: "Energy" }),
   ],
 }),
