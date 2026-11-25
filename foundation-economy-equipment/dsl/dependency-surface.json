@@ -138,6 +138,7 @@
     "EquipmentCollection": {
       "id": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
       "singleEntry": true,
+      "singleEntryRowId": "equipmentcollection",
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",

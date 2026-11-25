@@ -5,6 +5,7 @@
     "CharacterFormation": {
       "id": "dt_00D0VQ0PMPJRN1ZPASAHZC0CQ6",
       "singleEntry": true,
+      "singleEntryRowId": "characterformation",
       "shippedRowIds": [
         "characterformation"
       ],

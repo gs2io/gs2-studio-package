@@ -219,6 +219,7 @@
     "EquipmentCollection": {
       "id": "dt_00D0MNXASRRPHW8RV3NXTHX8AY",
       "singleEntry": true,
+      "singleEntryRowId": "equipmentcollection",
       "shippedRowIds": [
         "equipmentcollection"
       ],

@@ -5,6 +5,7 @@
     "SerialCodeRedemption": {
       "id": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
       "singleEntry": true,
+      "singleEntryRowId": "serialcoderedemption",
       "shippedRowIds": [
         "serialcoderedemption"
       ],

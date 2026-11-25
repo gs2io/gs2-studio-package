@@ -87,6 +87,7 @@
     "IdleStatus": {
       "id": "dt_00D0W2TXV2PQDBXBC7NAGTZ9FA",
       "singleEntry": true,
+      "singleEntryRowId": "idlestatus",
       "shippedRowIds": [
         "idlestatus"
       ],

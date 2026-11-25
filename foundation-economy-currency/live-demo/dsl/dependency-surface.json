@@ -5,6 +5,7 @@
     "FreeDeposit": {
       "id": "dt_00D0KZCKAB7KQVFSZ4K42TCZY2",
       "singleEntry": true,
+      "singleEntryRowId": "freedeposit",
       "shippedRowIds": [
         "freedeposit"
       ],
@@ -81,6 +82,7 @@
     "PaidDeposit": {
       "id": "dt_00D0KZCKABCV24BN2XEDTB4NG3",
       "singleEntry": true,
+      "singleEntryRowId": "paiddeposit",
       "shippedRowIds": [
         "paiddeposit"
       ],

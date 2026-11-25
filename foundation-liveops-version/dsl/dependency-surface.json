@@ -421,6 +421,7 @@
     "VersionGate": {
       "id": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
       "singleEntry": true,
+      "singleEntryRowId": "versiongate",
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",

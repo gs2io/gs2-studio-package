@@ -59,6 +59,7 @@
     "IdleStatus": {
       "id": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",
       "singleEntry": true,
+      "singleEntryRowId": "idlestatus",
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-idle",
       "canonicalTypeId": "dt_7SPFB5VJQAYT6GKDB9NFHTPBQQ",

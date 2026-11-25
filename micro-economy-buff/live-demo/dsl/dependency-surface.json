@@ -217,6 +217,7 @@
     "BuffCampaign": {
       "id": "dt_00D0WA93FK0QYTWVRADQJVQ57K",
       "singleEntry": true,
+      "singleEntryRowId": "buffcampaign",
       "shippedRowIds": [
         "buffcampaign"
       ],

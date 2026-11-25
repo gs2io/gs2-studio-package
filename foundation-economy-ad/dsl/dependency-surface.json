@@ -5,6 +5,7 @@
     "AdPlatform": {
       "id": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
       "singleEntry": true,
+      "singleEntryRowId": "adplatform",
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-ad",
       "canonicalTypeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
@@ -72,6 +73,7 @@
     "AdViewPoint": {
       "id": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
       "singleEntry": true,
+      "singleEntryRowId": "adviewpoint",
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-ad",
       "canonicalTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",

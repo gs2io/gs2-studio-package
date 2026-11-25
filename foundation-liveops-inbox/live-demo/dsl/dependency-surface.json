@@ -5,6 +5,7 @@
     "Gift": {
       "id": "dt_00D0SHMWJ1K42G74YQPF2DJNV6",
       "singleEntry": true,
+      "singleEntryRowId": "gift",
       "shippedRowIds": [
         "gift"
       ],

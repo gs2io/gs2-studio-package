@@ -5,6 +5,7 @@
     "CharacterFormation": {
       "id": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
       "singleEntry": true,
+      "singleEntryRowId": "characterformation",
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN",

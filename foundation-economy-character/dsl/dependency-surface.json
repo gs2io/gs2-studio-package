@@ -182,6 +182,7 @@
     "CharacterCollection": {
       "id": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
       "singleEntry": true,
+      "singleEntryRowId": "charactercollection",
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
@@ -293,6 +294,7 @@
     "CharacterExperience": {
       "id": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
       "singleEntry": true,
+      "singleEntryRowId": "characterexperience",
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",

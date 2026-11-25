@@ -5,6 +5,7 @@
     "CurrencyStore": {
       "id": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
       "singleEntry": true,
+      "singleEntryRowId": "currencystore",
       "shippedRowIds": [
         "currencystore"
       ],

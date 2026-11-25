@@ -245,6 +245,7 @@
     "Progress": {
       "id": "dt_00D0TT9XC903SNVA7P9GFM98G3",
       "singleEntry": true,
+      "singleEntryRowId": "progress",
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_0ZB7EBZ6TG6NN3AJX7GX6WWG61",
